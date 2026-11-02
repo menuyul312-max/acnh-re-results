@@ -1,0 +1,176 @@
+{
+  "groups": {
+    "coordinate_converter_and_guards": 562,
+    "world_to_index_constructor": 452,
+    "coordinate_roundtrip": 128,
+    "base_overlay_lookup": 576,
+    "out_of_bounds_no_output_write": 6,
+    "four_point_native_call_trace": 1,
+    "complete_four_ground_aggregators": 48,
+    "complete_aggregator_invalid_coordinates": 12,
+    "complete_aggregator_missing_world": 6
+  },
+  "cases": 1791,
+  "mismatches": [],
+  "coordinate_rule": "XZ = f32(f32(f32(s32 index)*5.0)+2.5); Y and other bytes are preserved; null output is a no-op.",
+  "reverse_coordinate_rule": "For bounded finite world v: trunc(f32(f32(trunc(v))/5.0)) - int(v<0). This differs from floor(v/5) at negative exact multiples.",
+  "reverse_coordinate_negative_edges": [
+    {
+      "x": -10.0,
+      "index": -3
+    },
+    {
+      "x": -10.0,
+      "index": -3
+    },
+    {
+      "x": -5.0,
+      "index": -2
+    },
+    {
+      "x": -5.0,
+      "index": -2
+    },
+    {
+      "x": 0.0,
+      "index": 0
+    },
+    {
+      "x": 0.0,
+      "index": 0
+    },
+    {
+      "x": 5.0,
+      "index": 1
+    },
+    {
+      "x": 5.0,
+      "index": 1
+    },
+    {
+      "x": 10.0,
+      "index": 2
+    },
+    {
+      "x": 10.0,
+      "index": 2
+    },
+    {
+      "x": -0.0,
+      "index": 0
+    },
+    {
+      "x": -0.0,
+      "index": 0
+    }
+  ],
+  "grid_contract": {
+    "record_stride": 52,
+    "attribute_offsets": [
+      48,
+      49,
+      50,
+      51
+    ],
+    "index": "x + width*z",
+    "overlay_sentinel": 7,
+    "rule": "Each overlay byte independently replaces base unless it equals 7; missing/out-of-count overlay uses base.",
+    "bounds": "Negative coordinates or x>=width/z>=height return false without writing output."
+  },
+  "aggregators": [
+    {
+      "function": "0x187420",
+      "field": "WaterCheck",
+      "rule": "all",
+      "true_source_row": 1,
+      "false_source_row": 0
+    },
+    {
+      "function": "0x1874f0",
+      "field": "PlayerNoEntry",
+      "rule": "any",
+      "true_source_row": 1,
+      "false_source_row": 0
+    },
+    {
+      "function": "0x187610",
+      "field": "WaterCheck",
+      "rule": "exactly_two",
+      "true_source_row": 1,
+      "false_source_row": 0
+    }
+  ],
+  "dependencies_stubbed": [],
+  "native_sample_xz_positions_at_index_0_0": [
+    [
+      2.5,
+      1.25
+    ],
+    [
+      1.25,
+      2.5
+    ],
+    [
+      2.5,
+      3.75
+    ],
+    [
+      3.75,
+      2.5
+    ]
+  ],
+  "native_chain": [
+    "0x187420/0x1874f0/0x187610",
+    "0x162dc0",
+    "0x181cd0",
+    "0x52b5a0",
+    "0x18b570",
+    "0x880740",
+    "ground readers + 0x18f070"
+  ],
+  "reconstructed_state": [
+    "Runtime grid/base/overlay arrays",
+    "Ground row-pointer lookup and metadata cache",
+    "World/ground singleton pointers",
+    "Context manager at *ptr(0x32d71a0) is null: original 0x880740 returns false, original 0x18b570 returns sentinel 7."
+  ],
+  "limits": [
+    "Active dynamic object-ground overrides are not covered.",
+    "Grid 52-byte runtime records are not the 14-byte terrain preset; conversion between them remains unproven.",
+    "Coordinate units relative to Godot and all gameplay coordinate classes remain unproven.",
+    "These aggregators do not represent every rule for walking, burying or water interactions."
+  ],
+  "elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+  "evidence": [
+    {
+      "va": "0x52b5a0",
+      "bytes": 56,
+      "sha256": "09bfb5d232054d1a46b2137e99d3e597b42bc5778dc7c6cb4d46aca4fad11161"
+    },
+    {
+      "va": "0x52b280",
+      "bytes": 128,
+      "sha256": "3223169ccbc90cb8f271b213e0641744e80ca8681e7b8da6b1195e2ce4e35ba8"
+    },
+    {
+      "va": "0x181cd0",
+      "bytes": 252,
+      "sha256": "eca69f0eedf472900544630c5fd852387768b9d60883e73744d449ea3f791e45"
+    },
+    {
+      "va": "0x162dc0",
+      "bytes": 288,
+      "sha256": "d62fdcbd4ddcdc9a0ec73a1791d249a838a1557e1744831dbce61b5a222ead7f"
+    },
+    {
+      "va": "0x18b570",
+      "bytes": 112,
+      "sha256": "1d6a0e3a83c37f2455c6e3f9855deb3732259a56070231bd53512eda29131097"
+    },
+    {
+      "va": "0x880740",
+      "bytes": 80,
+      "sha256": "a8b8d05aaeb06adab0de7d34c6310183223159fcf289b406d0af3f237e9efedd"
+    }
+  ]
+}
