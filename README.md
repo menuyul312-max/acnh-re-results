@@ -8,7 +8,7 @@ Paket hasil reverse engineering untuk menjadi referensi konversi ke Godot. Proye
 
 [Halaman Release](https://github.com/menuyul312-max/acnh-re-results/releases/tag/hasil-re-2026-11-02) · [Checksum ZIP](https://github.com/menuyul312-max/acnh-re-results/releases/download/hasil-re-2026-11-02/acnh-re-results.sha256)
 
-Repo ini privat; masuk menggunakan akun GitHub yang memiliki akses sebelum mengunduh.
+Repo ini publik; hasil dapat diunduh melalui halaman Release atau direktori downloads.
 
 ZIP lengkap berisi 86.653 entry: hasil JSON, blob yang dirujuk, pseudocode/disassembly, indeks SQLite, tool, tes, dan laporan. Repo Git menyimpan tool, laporan, ringkasan JSON, dan ZIP cadangan; seluruh keluaran terurai tersedia dalam paket lengkap.
 
