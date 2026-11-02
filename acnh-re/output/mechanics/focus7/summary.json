@@ -64,11 +64,13 @@
       "evidence_files": [
         "collision_states.json",
         "player_parameter_bindings.json",
-        "player_motion_native.json"
+        "player_motion_native.json",
+        "player_position_native.json",
+        "player_root_motion_native.json"
       ],
       "remaining": [
-        "Full state/input -> velocity -> position update",
-        "All traversal/landing/ladder/jump conditions and timestep units"
+        "Input/state, gravity and collision -> full frame update; isolated position/root-motion consumer is verified",
+        "Animation sample production, all traversal/landing/ladder/jump conditions and timestep units"
       ],
       "complete": false
     },
@@ -194,10 +196,11 @@
       "missing_requested_table_names": [],
       "evidence_files": [
         "dynamic_ground_native.json",
-        "terrain_native.json"
+        "terrain_native.json",
+        "ground_context_gate_native.json"
       ],
       "remaining": [
-        "Active room/object context dispatch and lookup-map selection",
+        "Nonempty context item -> actual template/map selection; Stage task/world dispatch guards are verified",
         "All dynamic override loader and reachability conditions"
       ],
       "complete": false
@@ -562,11 +565,12 @@
       "missing_requested_table_names": [],
       "evidence_files": [
         "crafting_materials_native.json",
+        "inventory_requirements_native.json",
         "focus7/item_tool_event_calls.json"
       ],
       "remaining": [
-        "Inventory availability and atomic ingredient consumption",
-        "Recipe unlocks, tool durability and all use/remake transactions"
+        "Cold-cache inventory gathering and A/B/C counter producers; warm-cache normal-item requirement check is verified",
+        "Atomic ingredient consumption, recipe unlocks, tool durability and all use/remake transactions"
       ],
       "complete": false
     }
@@ -591,5 +595,12 @@
   "table_json_root": "output/",
   "model_sound_policy": "Supplied catalogues only; no missing model/audio source requirement for this focus.",
   "full_requested_focus_complete": false,
-  "scope": "Evidence map over supplied corpus and existing native index. It does not claim all code paths or functions are known."
+  "scope": "Evidence map over supplied corpus and existing native index. It does not claim all code paths or functions are known.",
+  "continuation": {
+    "report": "../docs/MECHANICS_CONTINUATION.md",
+    "progress": "mechanics/continuation_progress.json",
+    "frontier": "mechanics/continuation_frontier.json",
+    "new_native_cases": 6828,
+    "native_helper_cases_total": 1123294
+  }
 }

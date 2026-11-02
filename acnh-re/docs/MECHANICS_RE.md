@@ -97,3 +97,9 @@ Tahap kedekatan dan izin ground: lihat [PROXIMITY_GROUND.md](PROXIMITY_GROUND.md
 Tahap runtime terrain: [koordinat, overlay dan rangkaian ground](TERRAIN_RUNTIME.md), 1.791 kasus tambahan, termasuk tiga pemanggil yang dijalankan utuh pada konteks terkontrol. Total terbaru 1.110.231; override dinamis dan runtime lengkap tetap terbuka.
 
 Fokus tujuh sistem: [peta bukti, ground dinamis, parameter gerak/NPC dan getter crafting](FOCUS7_MECHANICS.md). Tambahan 6.235 kasus native dan pemetaan statis 292 parameter; total terbaru 1.116.466. Seluruh tujuh sistem belum dinyatakan selesai.
+
+Lanjutan: [pemeriksaan bahan, posisi/root motion dan gerbang Stage/world](MECHANICS_CONTINUATION.md).
+Tambahan 6.828 kasus tanpa mismatch; total helper/blok terbaru **1.123.294**.
+Consumer posisi dan hasil animasi kini berjalan utuh pada context terkontrol;
+producer input/gravity, collision solver, pathfinding dan transaksi inventory
+masih terbuka. Frontier JSON mencatat titik lanjut dan batas setiap pembuktian.

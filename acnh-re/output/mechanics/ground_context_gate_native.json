@@ -1,0 +1,63 @@
+{
+  "native_functions": [
+    "0xfef6b0",
+    "0x880740",
+    "0x18b570"
+  ],
+  "callees_executed": [
+    "0x1f027b0",
+    "0x1f02870",
+    "0xa8a0",
+    "0x1bf0",
+    "0x157ab0 (empty-item branch)",
+    "0x880ff0",
+    "0x878230"
+  ],
+  "groups": {
+    "stage_gate_chain": 64,
+    "dynamic_dispatch_guards": 48
+  },
+  "cases": 112,
+  "mismatches": [],
+  "task_registry": {
+    "vtable": "0x301c990",
+    "entries": [
+      {
+        "index": 0,
+        "descriptor_va": "0x301c950",
+        "name_va": "0x29b4cfb",
+        "name": "SceneBoot"
+      },
+      {
+        "index": 1,
+        "descriptor_va": "0x301c968",
+        "name_va": "0x2929550",
+        "name": "Stage"
+      }
+    ],
+    "evidence": "Root vtable 0x301c5b8 includes initializer 0x5ca0; slot+0x38 is 0x5950, which installs *(0x32d0838)+16. Initializer stores that result through GOT 0x32d08d8 at0x5f54.",
+    "count_getter": "0xa890",
+    "entry_getter": "0xa8a0",
+    "entry_contract": "Readonly base0x301c950 + signed(index)*24. Getter itself does not check bounds."
+  },
+  "stage_hash": "758f7eaf",
+  "hash_algorithm": "Murmur3_32_seed0 (original0x1bf0)",
+  "rules": [
+    "0xfef6b0 returns context+0x244 u32 only when the current task name hashes to Stage; otherwise0.",
+    "0x880740 additionally requires a non-null stage-manager global and converts that u32 to boolean.",
+    "0x18b570 returns7 unless this gate succeeds, the world pointer and world+0xa0 pointer exist, and world+0xf60 byte is0.",
+    "When those guards pass it enters original0x157ab0. Empty context item0xfffe returns7 inside that selector."
+  ],
+  "reconstructed_state": [
+    "Task-manager/context, Stage-manager and world memory",
+    "Original registry vtable on its8-byte instance; original readonly task descriptors unchanged"
+  ],
+  "dependencies_stubbed": [],
+  "code_hooks": "Observation of function entry only; no register or instruction changes.",
+  "limits": [
+    "Positive selector path with nonempty context item, actual template/map choice and fallback attributes not executed.",
+    "Task scheduler, constructors, allocation and lifecycle transitions not executed.",
+    "Only the two valid task indices were dereferenced."
+  ],
+  "elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74"
+}

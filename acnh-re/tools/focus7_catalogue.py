@@ -104,20 +104,20 @@ def main():
     dump('npc_native_state_labels.json',{'states':states,'scope':'Native state-name evidence; not a complete transition or scheduling graph.'})
     proofs={
       'physics_collision':['collision_native_verification.json','collision_response_native.json','proximity_native.json'],
-      'player_movement':['collision_states.json','player_parameter_bindings.json','player_motion_native.json'],
+      'player_movement':['collision_states.json','player_parameter_bindings.json','player_motion_native.json','player_position_native.json','player_root_motion_native.json'],
       'terrain':['terrain_native.json','terrain_collision_parameters.json'],
-      'dynamic_ground':['dynamic_ground_native.json','terrain_native.json'],
+      'dynamic_ground':['dynamic_ground_native.json','terrain_native.json','ground_context_gate_native.json'],
       'position_checks':['proximity_native.json','terrain_native.json'],
       'npc_navigation':['npc_activity_bindings.json','focus7/npc_ai_eventflows.json','focus7/npc_ai_flow_graphs.json','focus7/npc_native_state_labels.json'],
-      'items_tools_crafting':['crafting_materials_native.json','focus7/item_tool_event_calls.json']}
+      'items_tools_crafting':['crafting_materials_native.json','inventory_requirements_native.json','focus7/item_tool_event_calls.json']}
     remaining={
       'physics_collision':['Geometric penetration response, friction and moving-body solver','Complete collision mask meanings'],
-      'player_movement':['Full state/input -> velocity -> position update','All traversal/landing/ladder/jump conditions and timestep units'],
+      'player_movement':['Input/state, gravity and collision -> full frame update; isolated position/root-motion consumer is verified','Animation sample production, all traversal/landing/ladder/jump conditions and timestep units'],
       'terrain':['Raw 14-byte preset -> 52-byte runtime construction','Live terraform update and all building/placement restrictions'],
-      'dynamic_ground':['Active room/object context dispatch and lookup-map selection','All dynamic override loader and reachability conditions'],
+      'dynamic_ground':['Nonempty context item -> actual template/map selection; Stage task/world dispatch guards are verified','All dynamic override loader and reachability conditions'],
       'position_checks':['Full candidate collection, actor/type filtering and object registry','Complete placement queries and callers'],
       'npc_navigation':['Full pathfinding, obstacle avoidance and route selection','Scheduler priorities, social/interest decisions and all AI transitions'],
-      'items_tools_crafting':['Inventory availability and atomic ingredient consumption','Recipe unlocks, tool durability and all use/remake transactions']}
+      'items_tools_crafting':['Cold-cache inventory gathering and A/B/C counter producers; warm-cache normal-item requirement check is verified','Atomic ingredient consumption, recipe unlocks, tool durability and all use/remake transactions']}
     domains={k:{'tables':[table_refs[n]for n in dict.fromkeys(v)if n in table_refs],
         'missing_requested_table_names':[n for n in v if n not in table_refs],
         'evidence_files':proofs[k],'remaining':remaining[k],'complete':False}for k,v in groups.items()}

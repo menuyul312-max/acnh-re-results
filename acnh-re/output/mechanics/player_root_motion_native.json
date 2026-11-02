@@ -1,0 +1,138 @@
+{
+  "helper": "0xdac550",
+  "groups": {
+    "valid": 192,
+    "missing_model": 192,
+    "disabled_model": 192,
+    "blocked_model": 192,
+    "missing_controller": 192,
+    "missing_data": 192,
+    "controller_masked": 192
+  },
+  "cases": 1344,
+  "mismatches": [],
+  "callees_executed": [
+    "0x7bc0b0",
+    "0x46f70",
+    "0x46fa0",
+    "0x1662fa0",
+    "0x1662ff0",
+    "0x1f280c0",
+    "0x1f27e80",
+    "0x1f27fa0",
+    "0x1ce20",
+    "0x26250",
+    "0x1cbd0",
+    "0x7d1f00",
+    "0xdb4fb0"
+  ],
+  "angle_conversion_scale_f32": 683565248.0,
+  "rules": [
+    "Flags bit1 adds the sampled root translation times player+0x12d8 before yaw/scale.",
+    "With bit5 also set, it uses the XZ length along local Z; sampled root Y is ignored.",
+    "Flags bit2 converts the sampled float rotation to packed u32 and accumulates actor rotation.",
+    "With bit2 set and bit5 clear, all three player angles also accumulate with u32 wrap.",
+    "With bits2/5 set, player yaw is replaced by player+0x1308; player X/Z angles remain unchanged.",
+    "Model absent/disabled/blocked, controller absent, data absent or controller mask bit2 suppresses sampled contributions."
+  ],
+  "actor_rotation_offset": "0x2b0",
+  "samples": [
+    {
+      "flags": 2,
+      "local_delta": [
+        0.9375,
+        0.375,
+        0.23749995231628418
+      ],
+      "angle32_after": "0x0",
+      "world_delta": [
+        0.9375,
+        0.375,
+        0.23749995231628418
+      ]
+    },
+    {
+      "flags": 4,
+      "local_delta": [
+        0.0,
+        -0.25,
+        1.7999999523162842
+      ],
+      "angle32_after": "0xf5d067d0",
+      "world_delta": [
+        -0.44530385732650757,
+        -0.25,
+        1.744045376777649
+      ]
+    },
+    {
+      "flags": 6,
+      "local_delta": [
+        0.9375,
+        0.375,
+        0.23749995231628418
+      ],
+      "angle32_after": "0xf5d067d0",
+      "world_delta": [
+        0.8496016263961792,
+        0.375,
+        0.46204614639282227
+      ]
+    },
+    {
+      "flags": 34,
+      "local_delta": [
+        0.0,
+        -0.25,
+        3.6221723556518555
+      ],
+      "angle32_after": "0x0",
+      "world_delta": [
+        0.0,
+        -0.25,
+        3.6221723556518555
+      ]
+    },
+    {
+      "flags": 36,
+      "local_delta": [
+        0.0,
+        -0.25,
+        1.7999999523162842
+      ],
+      "angle32_after": "0x40000000",
+      "world_delta": [
+        1.7999998331069946,
+        -0.25,
+        1.0728835775353218e-07
+      ]
+    },
+    {
+      "flags": 38,
+      "local_delta": [
+        0.0,
+        -0.25,
+        3.6221723556518555
+      ],
+      "angle32_after": "0x40000000",
+      "world_delta": [
+        3.6221721172332764,
+        -0.25,
+        2.1589829657386872e-07
+      ]
+    }
+  ],
+  "max_delta_error_against_math": 8.780237982386474e-05,
+  "oracle": "Independent mathematical yaw rotation with f32 additions/scaling, bounded error .0003*max(1,abs(local components)); angle wrap and memory effects checked exactly.",
+  "dependencies_stubbed": [],
+  "reconstructed_state": [
+    "Original actor vtable",
+    "Existing animation model/controller, channel0 descriptor and sampled translation/rotation buffers"
+  ],
+  "limits": [
+    "Animation samples are supplied data. Playback, animation blending, resource loading and sample generation not executed.",
+    "Input/velocity/gravity/collision updates and full player-frame scheduling not executed.",
+    "Only finite samples and valid channel0 are exercised. Invalid controller-index logging paths not executed."
+  ],
+  "elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74"
+}

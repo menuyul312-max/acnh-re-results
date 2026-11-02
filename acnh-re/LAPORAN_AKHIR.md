@@ -4,7 +4,7 @@
 
 Proyek Godot hanya menjadi referensi dan tidak diubah. Hasil baru berada di `/workspace/acnh-re`, untuk menjadi sumber konversi berikutnya tanpa ketergantungan engine.
 
-**Fokus terbaru sesuai arahan pengguna:** [tujuh sistem mekanik](docs/FOCUS7_MECHANICS.md), meliputi fisika/collision, gerakan, terrain, ground dinamis, posisi, NPC/navigasi, dan item/alat/crafting. Tambahan tahap ini: 6.235 kasus native, pemetaan 194 parameter PlayerActor dan 98 NpcActivityParam, serta 55 graf AI. Total helper/blok terbaru 1.116.466; angka pada uraian tahap lama adalah snapshot historis. Seluruh tujuh sistem belum selesai dipahami.
+**Fokus terbaru sesuai arahan pengguna:** [tujuh sistem mekanik](docs/FOCUS7_MECHANICS.md), meliputi fisika/collision, gerakan, terrain, ground dinamis, posisi, NPC/navigasi, dan item/alat/crafting. Peta awal mencakup 194 parameter PlayerActor, 98 NpcActivityParam dan 55 graf AI. [Lanjutan terbaru](docs/MECHANICS_CONTINUATION.md) menambah 6.828 kasus native: pemeriksaan bahan pada initialized cache, pembaruan posisi serta consumer translasi/rotasi animasi, dan gerbang task Stage/world. Total helper/blok terbaru **1.123.294**; angka tahap lama adalah snapshot historis. Seluruh tujuh sistem belum selesai dipahami.
 
 **Tahap mekanik:** [audit collision dan ledger seluruh sistem](docs/MECHANICS_RE.md) menambah 262.164 perbandingan blok native, pemetaan mode collision pada 235 state pemain, parameter terrain dan 465 fungsi titik masuk riset lintas sistem. Jumlah helper/blok kumulatif menjadi 1.042.503; angka lama pada uraian tahap sebelumnya adalah snapshot historis. Model/sound selanjutnya memakai katalog sebagai referensi, sesuai arahan pengguna. Seluruh perilaku game tetap belum selesai dipahami.
 

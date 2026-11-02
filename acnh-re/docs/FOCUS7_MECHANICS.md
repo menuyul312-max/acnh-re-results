@@ -5,6 +5,12 @@ ground dinamis, pemeriksaan posisi, NPC/navigasi, serta item/alat/crafting.
 Model dan sound memakai katalog sebagai referensi. Godot tidak dikerjakan.
 Seluruh mekanik tujuh sistem belum dinyatakan selesai.
 
+Lanjutan terbaru: [pemeriksaan bahan, posisi/root motion dan gerbang ground](MECHANICS_CONTINUATION.md).
+Ada **6.828 kasus native tambahan**, sehingga total helper/blok menjadi
+**1.123.294**. Angka dan batas tahap sebelumnya di bawah tetap berguna sebagai
+riwayat; status terbaru per jalur dijelaskan pada laporan lanjutan dan
+`output/mechanics/continuation_frontier.json`.
+
 ## Peta lintas sistem
 
 `output/mechanics/focus7/summary.json` menjadi pintu masuk. Peta ini menghubungkan:
@@ -64,7 +70,9 @@ Pada 0xdb17f0, override gravitasi negatif dipakai langsung; nilai nonnegative
 memakai gravitasi konfigurasi. Argumen limit negatif dipakai, selain itu fallback
 native berupa **-0.0**. Pada 0xda91a0, batas nonzero menjadi magnitude negatif,
 tetapi signed zero mengikuti urutan instruksi aslinya, bukan disederhanakan
-menjadi -abs(v). Ini masih pembentukan parameter, bukan integrasi posisi/solver.
+menjadi -abs(v). Ketiga helper tersebut membentuk parameter. Pembaruan posisi
+0xdac550 dan consumer hasil animasi kini sudah diuji terpisah pada tahap
+lanjutan; input, integrasi gravitasi dan solver lengkap tetap terbuka.
 
 ## Terrain dan ground dinamis
 
@@ -93,7 +101,8 @@ dikembalikan apa adanya, termasuk 7; inheritance dikerjakan consumer berikutnya.
 Sebanyak 2.494 kasus cocok: origin positif/negatif, enam sel, batas/diagonal,
 map null, posisi di luar map, dan seluruh 256 nilai byte pada tiap sektor.
 Buffer sumber dan guard dipertahankan. Ini memvalidasi inti lookup map yang
-dipakai jalur ground dinamis; pemilihan map oleh room/object/context aktif dan
+dipakai jalur ground dinamis. Tahap lanjutan menguji gerbang task Stage/world
+dan selector dengan item kosong; pemilihan map oleh item context terisi dan
 loader map belum dijalankan. Konversi preset 14 byte ke record runtime 52 byte
 juga masih terbuka.
 
@@ -148,23 +157,25 @@ menganggap setiap slot kosong mengembalikan item 0xfffe akan menghasilkan kontra
 yang salah.
 
 Peta handler item/alat dan tabel mencakup jalur penelusuran penggunaan alat,
-recipe, equip, remake dan interaksi furnitur. Pemeriksaan kepemilikan bahan,
-pengurangan inventory, unlock resep dan durability belum terbukti lengkap.
+recipe, equip, remake dan interaksi furnitur. Pemeriksa kecukupan pada cache
+yang sudah terisi kini diuji pada tahap lanjutan. Pengumpulan inventory asli,
+pengurangan bahan, unlock resep dan durability belum terbukti lengkap.
 
 ## Cakupan yang masih terbuka
 
 | Area | Langkah pembuktian berikutnya |
 |---|---|
 | Fisika/collision | Penetration response, gesekan, moving-body solver, makna lengkap mask |
-| Gerakan | Input/state -> velocity -> posisi, seluruh traversal dan timestep |
+| Gerakan | Producer input/state/velocity/gravity, full frame, seluruh traversal dan timestep |
 | Terrain | Loader runtime dan pembaruan setelah edit, seluruh syarat placement |
-| Ground dinamis | Pemilihan map dan override pada context room/object aktif |
+| Ground dinamis | Item context terisi menuju template/map aktif dan override |
 | Posisi | Kandidat spatial query, registry actor dan seluruh filter/type |
 | NPC/navigasi | Scheduler, route/pathfinder, obstacle avoidance dan transisi AI |
-| Item/alat/crafting | Inventory dan transaksi bahan, unlock, durability dan semua aksi |
+| Item/alat/crafting | Pengumpulan inventory, producer counter, transaksi bahan, unlock dan durability |
 
-Tahap ini menambah **6.235 kasus native**, terpisah dari pemetaan statis 292
-parameter. Kumulatif helper/blok 1.116.466; pemeriksaan BYML tetap dihitung
+Tahap pemetaan awal di dokumen ini menambah **6.235 kasus native**, terpisah
+dari pemetaan statis 292 parameter, dan mencapai total 1.116.466. Lanjutan
+terbaru menambah 6.828 menjadi 1.123.294. Pemeriksaan BYML tetap dihitung
 terpisah. Angka validasi bukan persentase penyelesaian tujuh sistem.
 
 ## Berkas utama dan reproduksi
@@ -182,6 +193,11 @@ terpisah. Angka validasi bukan persentase penyelesaian tujuh sistem.
 - output/mechanics/player_motion_native.json
 - output/mechanics/dynamic_ground_native.json
 - output/mechanics/crafting_materials_native.json
+- output/mechanics/inventory_requirements_native.json
+- output/mechanics/player_position_native.json
+- output/mechanics/player_root_motion_native.json
+- output/mechanics/ground_context_gate_native.json
+- output/mechanics/continuation_frontier.json
 
 Jalankan tool berikut dengan input ELF, indeks dan output baseline yang sama:
 

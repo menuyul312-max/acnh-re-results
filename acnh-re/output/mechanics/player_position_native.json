@@ -1,0 +1,91 @@
+{
+  "helper": "0xdac550",
+  "groups": {
+    "position_update_non_animation": 3200,
+    "absent_actor": 5
+  },
+  "cases": 3205,
+  "mismatches": [],
+  "callees_executed": [
+    "0x7bc0b0",
+    "0x1cbd0",
+    "0x7d1f00",
+    "0xdb4fb0"
+  ],
+  "actor_vtable": "0x30e38f8",
+  "actor_vtable_evidence": "0xdb4e70 stores *(0x32fbc00)+16 at actor+0",
+  "actor_position_offset": "0x278",
+  "actor_delta_offset": "0x294",
+  "scale": "Float context+0xd30, obtained through actual 0x7d1f00; units and update frequency unproven.",
+  "branch": "Player flags at +0xefc have bits1/2 clear; player+0x60 is an existing context pointer.",
+  "rules": [
+    "Local input [0, player.f58, player.f50] is yaw-rotated and multiplied by the context scale.",
+    "The full XYZ delta is added to actor position and copied to actor+0x294.",
+    "Player+0x12dc receives X/Z delta with its middle Y field explicitly zero.",
+    "Actor+0x2dc is sampled into a 30-entry player history at +0x16c8.",
+    "Unsigned history index >=30 resets to0 before the write; the stored next index is1..30.",
+    "No actor means the updater returns without changing player fields."
+  ],
+  "oracle": "Independent mathematical yaw rotation, absolute bound 0.0004*max(1,abs(forward*scale)); separate native-table quaternion reference bound0.000001*max(1,abs(forward*scale)). Position integration and memory effects checked exactly.",
+  "trig_contract": "Linear interpolation at half angle yields qs/qc; X coefficient is2*qs*qc, Z coefficient is1-2*qs*qs. Quaternion is not renormalized, so exact mathematical yaw is only an approximation.",
+  "max_delta_error_against_math": 0.002512179478949328,
+  "max_delta_error_against_table_quaternion": 0.0,
+  "samples": [
+    {
+      "angle32": "0x0",
+      "delta": [
+        0.0,
+        -0.25,
+        1.7999999523162842
+      ],
+      "position": [
+        13.25,
+        -4.25,
+        102.30000305175781
+      ],
+      "history_index_after": 30,
+      "max_math_oracle_error": 0.0
+    },
+    {
+      "angle32": "0x40000000",
+      "delta": [
+        1.7999998331069946,
+        -0.25,
+        1.0728835775353218e-07
+      ],
+      "position": [
+        15.050000190734863,
+        -4.25,
+        100.5
+      ],
+      "history_index_after": 30,
+      "max_math_oracle_error": 1.1920928955078125e-07
+    },
+    {
+      "angle32": "0x80000000",
+      "delta": [
+        0.0,
+        -0.25,
+        -1.7999999523162842
+      ],
+      "position": [
+        13.25,
+        -4.25,
+        98.69999694824219
+      ],
+      "history_index_after": 30,
+      "max_math_oracle_error": 2.2043641800695258e-16
+    }
+  ],
+  "dependencies_stubbed": [],
+  "reconstructed_state": [
+    "Player/context/actor memory",
+    "Original actor vtable from constructor; constructor itself not executed"
+  ],
+  "limits": [
+    "Animation/root-motion branches are not executed.",
+    "Input acquisition, gravity/velocity updates, collision resolution and full frame scheduling remain unverified.",
+    "Finite inputs only; this is an isolated native updater, not a running game."
+  ],
+  "elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74"
+}
