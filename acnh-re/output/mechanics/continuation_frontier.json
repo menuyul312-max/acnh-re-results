@@ -28,36 +28,43 @@
     "player_movement": {
       "verified_reference": [
         "mechanics/player_position_native.json",
-        "mechanics/player_root_motion_native.json"
+        "mechanics/player_root_motion_native.json",
+        "mechanics/ballistic_velocity_native.json"
       ],
-      "verified_boundary": "Complete0xdac550 with existing context and original actor vtable, finite local inputs and supplied animation-result buffers.",
+      "verified_boundary": "Complete position/root-motion consumer0xdac550 on reconstructed context; complete ballistic helper0x1d280; bounded player block0xe17e54..before0xe17e94.",
       "remaining": [
-        "Input/state to velocity/gravity producer",
+        "Input/state -> real runtime velocity/gravity integration",
         "Post-motion collision and landing correction",
-        "Full traversal/state transition scheduling",
-        "Animation sample production",
-        "Timestep/units"
+        "Full traversal/state scheduling",
+        "Animation sample/timing production",
+        "Duration units and frame scheduling"
       ],
       "next_functions": [
+        "0xe17cb0",
+        "0xe42b30",
         "0xdac780",
-        "0xda86b0",
-        "0xdd7df0"
+        "0xda86b0"
       ],
       "function_references": [
         {
+          "va": "0xe17cb0",
+          "pseudocode": "binary/analysis_decomp/e17cb0.c",
+          "evidence": "Existing native index. Proposed next target; full semantics not inferred from its pseudocode."
+        },
+        {
+          "va": "0xe42b30",
+          "pseudocode": "binary/analysis_decomp/e42b30.c",
+          "evidence": "Existing native index. Proposed next target; full semantics not inferred from its pseudocode."
+        },
+        {
           "va": "0xdac780",
           "pseudocode": "binary/analysis_decomp/dac780.c",
-          "evidence": "Existing native address index; semantic role must be checked against instructions."
+          "evidence": "Existing native index. Proposed next target; full semantics not inferred from its pseudocode."
         },
         {
           "va": "0xda86b0",
           "pseudocode": "binary/analysis_decomp/da86b0.c",
-          "evidence": "Existing native address index; semantic role must be checked against instructions."
-        },
-        {
-          "va": "0xdd7df0",
-          "pseudocode": "binary/analysis_decomp/dd7df0.c",
-          "evidence": "Existing native address index; semantic role must be checked against instructions."
+          "evidence": "Existing native index. Proposed next target; full semantics not inferred from its pseudocode."
         }
       ]
     },
@@ -76,53 +83,42 @@
     "dynamic_ground": {
       "verified_reference": [
         "mechanics/ground_context_gate_native.json",
-        "mechanics/dynamic_ground_native.json"
+        "mechanics/dynamic_ground_native.json",
+        "mechanics/room_floor_ground_native.json"
       ],
-      "verified_boundary": "Stage task hash/status and world readiness dispatch; selector0x157ab0 only empty-item path. Sector map lookup verified separately.",
+      "verified_boundary": "Real RoomFloor items,173 source floor rows, native HasJmp/Horizon discovery, variant dispatch, no-resident-map fallback and active ground-permission consumers with paired inactive controls.",
       "remaining": [
-        "Nonempty context item -> template/variant lookup",
-        "Actual map selection and fallback",
-        "Context transform/rotation consumers"
+        "Resident JMP resource/container lookup and actual map selection",
+        "Position transform/rotation with an actual resident map",
+        "All loader and non-RoomFloor override sources"
       ],
       "next_functions": [
-        "0x157ab0",
-        "0x856270",
         "0x16e6d0",
-        "0x855fa0",
-        "0x880680",
-        "0x881e50"
+        "0xc69e0",
+        "0x1c84e50",
+        "0x880680"
       ],
       "address_note": "FUN_0026e6d0 is ELF0x16e6d0, not0x26e6d0.",
       "function_references": [
         {
-          "va": "0x157ab0",
-          "pseudocode": "binary/analysis_decomp/157ab0.c",
-          "evidence": "Existing native address index; semantic role must be checked against instructions."
-        },
-        {
-          "va": "0x856270",
-          "pseudocode": "binary/analysis_decomp/856270.c",
-          "evidence": "Existing native address index; semantic role must be checked against instructions."
-        },
-        {
           "va": "0x16e6d0",
           "pseudocode": "binary/analysis_decomp/16e6d0.c",
-          "evidence": "Existing native address index; semantic role must be checked against instructions."
+          "evidence": "Existing native index. Proposed next target; full semantics not inferred from its pseudocode."
         },
         {
-          "va": "0x855fa0",
-          "pseudocode": "binary/analysis_decomp/855fa0.c",
-          "evidence": "Existing native address index; semantic role must be checked against instructions."
+          "va": "0xc69e0",
+          "pseudocode": "binary/analysis_decomp/c69e0.c",
+          "evidence": "Existing native index. Proposed next target; full semantics not inferred from its pseudocode."
+        },
+        {
+          "va": "0x1c84e50",
+          "pseudocode": "binary/analysis_decomp/1c84e50.c",
+          "evidence": "Existing native index. Proposed next target; full semantics not inferred from its pseudocode."
         },
         {
           "va": "0x880680",
           "pseudocode": "binary/analysis_decomp/880680.c",
-          "evidence": "Existing native address index; semantic role must be checked against instructions."
-        },
-        {
-          "va": "0x881e50",
-          "pseudocode": "binary/analysis_decomp/881e50.c",
-          "evidence": "Existing native address index; semantic role must be checked against instructions."
+          "evidence": "Existing native index. Proposed next target; full semantics not inferred from its pseudocode."
         }
       ]
     },
@@ -154,47 +150,60 @@
     "items_tools_crafting": {
       "verified_reference": [
         "mechanics/inventory_requirements_native.json",
-        "mechanics/crafting_materials_native.json"
+        "mechanics/crafting_materials_native.json",
+        "mechanics/inventory_cache_native.json"
       ],
-      "verified_boundary": "Complete0xee0be0 on initialized-cache path for six source normal material IDs; A/B/C producers not assigned gameplay names.",
+      "verified_boundary": "All three source-record loaders and original counter producers, normal-item stack rules, marked-slot producer lists, u16 wrap and producer->requirement chain. Parent save-wrapper acquisition remains unexecuted.",
       "remaining": [
-        "Cold-cache gathering and real save context",
-        "Counter A/B/C producer semantics",
-        "Wrapped/remade/special-count branches",
+        "Actual save-wrapper acquisition and full parent cold-cache path",
+        "A/B/C bindings to named save members",
+        "Wrapped/remade/special-count item paths",
         "Atomic ingredient removal/result award/rollback",
         "Recipe unlocks",
         "Tool durability and all use/remake actions"
       ],
       "next_functions": [
+        "0xee0be0",
         "0xedc240",
-        "0xeda040",
-        "0xeff110",
-        "0xf9ec10"
+        "0xed9c20",
+        "0xee9350",
+        "0xf8f540"
       ],
       "abi_note": "0xedc240 has hidden X8 output; do not call it as a simple scalar-return method.",
       "function_references": [
         {
+          "va": "0xee0be0",
+          "pseudocode": "binary/analysis_decomp/ee0be0.c",
+          "evidence": "Existing native index. Proposed next target; full semantics not inferred from its pseudocode."
+        },
+        {
           "va": "0xedc240",
           "pseudocode": "binary/analysis_decomp/edc240.c",
-          "evidence": "Existing native address index; semantic role must be checked against instructions."
+          "evidence": "Existing native index. Proposed next target; full semantics not inferred from its pseudocode."
         },
         {
-          "va": "0xeda040",
-          "pseudocode": "binary/analysis_decomp/eda040.c",
-          "evidence": "Existing native address index; semantic role must be checked against instructions."
+          "va": "0xed9c20",
+          "pseudocode": "binary/analysis_decomp/ed9c20.c",
+          "evidence": "Existing native index. Proposed next target; full semantics not inferred from its pseudocode."
         },
         {
-          "va": "0xeff110",
-          "pseudocode": "binary/analysis_decomp/eff110.c",
-          "evidence": "Existing native address index; semantic role must be checked against instructions."
+          "va": "0xee9350",
+          "pseudocode": "binary/analysis_decomp/ee9350.c",
+          "evidence": "Existing native index. Proposed next target; full semantics not inferred from its pseudocode."
         },
         {
-          "va": "0xf9ec10",
-          "pseudocode": "binary/analysis_decomp/f9ec10.c",
-          "evidence": "Existing native address index; semantic role must be checked against instructions."
+          "va": "0xf8f540",
+          "pseudocode": "binary/analysis_decomp/f8f540.c",
+          "evidence": "Existing native index. Proposed next target; full semantics not inferred from its pseudocode."
         }
       ]
     }
   },
-  "scope": "Concrete proof boundaries and selected next targets; neither all unknown functions nor a complete game specification."
+  "scope": "Concrete proof boundaries and selected next targets; neither all unknown functions nor a complete game specification.",
+  "latest_phase": {
+    "report": "../docs/ACTIVE_CONTEXT_FOLLOWUP.md",
+    "progress": "mechanics/active_context_progress.json",
+    "new_native_cases": 3926,
+    "native_helper_cases_total": 1127220
+  }
 }

@@ -103,3 +103,9 @@ Tambahan 6.828 kasus tanpa mismatch; total helper/blok terbaru **1.123.294**.
 Consumer posisi dan hasil animasi kini berjalan utuh pada context terkontrol;
 producer input/gravity, collision solver, pathfinding dan transaksi inventory
 masih terbuka. Frontier JSON mencatat titik lanjut dan batas setiap pembuktian.
+
+Lanjutan context terisi: [override RoomFloor, producer counter dan pembentuk velocity](ACTIVE_CONTEXT_FOLLOWUP.md).
+Tambahan 3.926 kasus (3.422 mekanik dan 504 pendukung SDK), total terbaru
+**1.127.220**. Ground tanpa resident map, producer record ke requirement dan
+blok solver pemain teruji; resource map aktif, save-wrapper, transaksi,
+collision solver dan navigasi NPC tetap terbuka.

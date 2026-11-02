@@ -1,0 +1,42 @@
+{
+  "groups": {
+    "SDK_memset": 288,
+    "SDK_memcpy": 216
+  },
+  "cases": 504,
+  "mismatches": [],
+  "dependencies_stubbed": [],
+  "sdk": {
+    "module": "sdk",
+    "module_sha256": "31ce67e8701584ba812dceeae9b590d7a6ad642bcb5aa74d2fe3ea5c5474250d",
+    "build_id": "ad3fdfbd62a5f4b082d385ffe420d4400abb831d000000000000000000000000",
+    "base": "0x70000000",
+    "bindings": {
+      "memcpy": {
+        "module_va": "0x4f11b8",
+        "emulated_va": "0x704f11b8",
+        "main_got_sites": [
+          "0x32ce7e0"
+        ]
+      },
+      "memset": {
+        "module_va": "0x4f1850",
+        "emulated_va": "0x704f1850",
+        "main_got_sites": [
+          "0x32ce7e8"
+        ]
+      },
+      "strcmp": {
+        "module_va": "0x4d7900",
+        "emulated_va": "0x704d7900",
+        "main_got_sites": [
+          "0x32cede0"
+        ]
+      }
+    },
+    "scope": "Original SDK text; main GOT import relocation only. No instruction patching or simulated libc.",
+    "dependencies_stubbed": []
+  },
+  "scope": "Nonoverlapping memcpy and memset with length/alignment/guard boundaries. SDK support validation, not gameplay-rule completion.",
+  "elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74"
+}

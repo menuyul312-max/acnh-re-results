@@ -1,0 +1,196 @@
+{
+  "groups": {
+    "source_A": 264,
+    "source_B": 264,
+    "source_C": 98,
+    "producer_to_requirement": 96
+  },
+  "cases": 722,
+  "mismatches": [],
+  "native_components": {
+    "A": {
+      "offset": 16,
+      "loader": 15573056,
+      "vtable_got": 53470512,
+      "producer": 15626928,
+      "slots_copied": 20,
+      "limit": 20,
+      "count": 176,
+      "normal": 720,
+      "counters": 760,
+      "list": 208,
+      "size": 30760,
+      "vtable": "0x30e7c08"
+    },
+    "B": {
+      "offset": 30776,
+      "loader": 15573344,
+      "vtable_got": 53470504,
+      "producer": 15627600,
+      "slots_copied": 20,
+      "limit": 20,
+      "count": 176,
+      "normal": 720,
+      "counters": 760,
+      "list": 208,
+      "size": 30760,
+      "vtable": "0x30e7c98"
+    },
+    "C": {
+      "offset": 61536,
+      "loader": 15573632,
+      "vtable_got": 53470496,
+      "producer": 15628288,
+      "slots_copied": 5000,
+      "limit": 1600,
+      "count": 40016,
+      "normal": 78656,
+      "counters": 81856,
+      "list": 40224,
+      "size": 111856,
+      "vtable": "0x30e7d28"
+    }
+  },
+  "source_item_ids": [
+    2511,
+    5983,
+    2624,
+    109
+  ],
+  "source_item_stack_limits": {
+    "2511": 30,
+    "5983": 10,
+    "2624": 99,
+    "109": 0
+  },
+  "cases_with_selected_slot_nodes": 220,
+  "u16_wrap_samples": [
+    {
+      "item": 2624,
+      "free_param": 98,
+      "source_count": 1599,
+      "mathematical_sum": 158301,
+      "u16_counter": 27229
+    },
+    {
+      "item": 2624,
+      "free_param": 98,
+      "source_count": 1600,
+      "mathematical_sum": 158400,
+      "u16_counter": 27328
+    },
+    {
+      "item": 2624,
+      "free_param": 98,
+      "source_count": 1601,
+      "mathematical_sum": 158400,
+      "u16_counter": 27328
+    },
+    {
+      "item": 2624,
+      "free_param": 98,
+      "source_count": 5000,
+      "mathematical_sum": 158400,
+      "u16_counter": 27328
+    },
+    {
+      "item": 2624,
+      "free_param": 98,
+      "source_count": 4294967295,
+      "mathematical_sum": 158400,
+      "u16_counter": 27328
+    }
+  ],
+  "source_to_requirement_samples": [
+    {
+      "A": 0,
+      "B": 0,
+      "C": 0,
+      "item": 2511
+    },
+    {
+      "A": 5,
+      "B": 10,
+      "C": 15,
+      "item": 2511
+    },
+    {
+      "A": 30,
+      "B": 30,
+      "C": 30,
+      "item": 2511
+    }
+  ],
+  "rules": [
+    "A/B copy20 item words and scan min(u32 count,20); C copies5000 and scans min(u32 count,1600).",
+    "Native item validity/normalization and MultiHoldMaxNum/FreeParam stack readers populate 15000 u16 counters per group.",
+    "For the selected unwrapped normal items with stack limit>=2, quantity is((low16 FreeParam+1)&255); above-limit quantity falls back to1. Nonstack items count as1.",
+    "Counter additions wrap modulo65536. Source records are not modified.",
+    "The copy loaders clear the cache slot mask/list. Separately marking A/B cache slots and rebuilding creates a slot/item node list without subtracting them from the counters.",
+    "Counters produced by these loaders feed the original requirement checker0xee0be0, without manually assigning counter totals."
+  ],
+  "dependencies_stubbed": [],
+  "sdk": {
+    "module": "sdk",
+    "module_sha256": "31ce67e8701584ba812dceeae9b590d7a6ad642bcb5aa74d2fe3ea5c5474250d",
+    "build_id": "ad3fdfbd62a5f4b082d385ffe420d4400abb831d000000000000000000000000",
+    "base": "0x70000000",
+    "bindings": {
+      "memcpy": {
+        "module_va": "0x4f11b8",
+        "emulated_va": "0x704f11b8",
+        "main_got_sites": [
+          "0x32ce7e0"
+        ]
+      },
+      "memset": {
+        "module_va": "0x4f1850",
+        "emulated_va": "0x704f1850",
+        "main_got_sites": [
+          "0x32ce7e8"
+        ]
+      },
+      "strcmp": {
+        "module_va": "0x4d7900",
+        "emulated_va": "0x704d7900",
+        "main_got_sites": [
+          "0x32cede0"
+        ]
+      }
+    },
+    "scope": "Original SDK text; main GOT import relocation only. No instruction patching or simulated libc.",
+    "dependencies_stubbed": []
+  },
+  "reconstructed_state": [
+    "Original cache component vtables from constructor0xed8870",
+    "Source-layout item records/count/metadata and preallocated node pools",
+    "Real original ItemParam/ItemKind blobs, metadata and native enum order"
+  ],
+  "limits": [
+    "Save-wrapper acquisition and the parent cold-cache path of0xee0be0 are not executed.",
+    "A/B/C are structural names; user-facing pocket/storage names require a validated save-member binding.",
+    "Wrapped/remade items, special save-count branches and all invalid item types are not covered.",
+    "No ingredient removal, result award, rollback, unlock or durability operation is claimed."
+  ],
+  "source_tables": {
+    "ItemParam": {
+      "json": "tables_resolved/ItemParam.json",
+      "source_id": 72,
+      "raw": {
+        "$blob": "blobs/89230e97fc877ff2b2b48ac1c707ef32b3a7760118839c307f19797e2553458c.bin",
+        "size": 4104780,
+        "sha256": "89230e97fc877ff2b2b48ac1c707ef32b3a7760118839c307f19797e2553458c"
+      }
+    },
+    "ItemKind": {
+      "json": "tables_resolved/ItemKind.json",
+      "source_id": 63,
+      "raw": {
+        "$blob": "blobs/4cac0178cc69519585528b24ceef022ccb1fefa12b23fc9a9e4280e40185ba7b.bin",
+        "size": 17532,
+        "sha256": "4cac0178cc69519585528b24ceef022ccb1fefa12b23fc9a9e4280e40185ba7b"
+      }
+    }
+  },
+  "elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74"
+}

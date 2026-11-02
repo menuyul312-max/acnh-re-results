@@ -1,0 +1,198 @@
+{
+  "groups": {
+    "source_floor_contexts": 1038,
+    "stage_state_classification": 48,
+    "active_ground_permission_callers": 42,
+    "non_jmp_keeps_terrain": 3
+  },
+  "cases": 1131,
+  "mismatches": [],
+  "native_functions": [
+    "0x18b570",
+    "0x157ab0",
+    "0x856270",
+    "0x16e6d0 (no resident maps)",
+    "0x855fa0",
+    "0x18ee80",
+    "0x881760",
+    "0x881e50",
+    "0x187420",
+    "0x1874f0",
+    "0x187610"
+  ],
+  "source_floor_rows": 173,
+  "source_has_jmp_rows": 14,
+  "source_item_floor_joins": 173,
+  "native_variant_counts": {
+    "0": 50,
+    "1": 60,
+    "2": 16,
+    "3": 16
+  },
+  "active_inactive_context_paired_controls": 42,
+  "metadata_offsets_discovered_by_native": {
+    "HasJmp": 159,
+    "Floorboards": 24,
+    "Horizon": 93
+  },
+  "samples": [
+    {
+      "item_id": 4996,
+      "floor_id": 145,
+      "resource_name": "RoomTexFloorAthletics00",
+      "floorboards_id": 18,
+      "ground_row_index": 18
+    },
+    {
+      "item_id": 5007,
+      "floor_id": 156,
+      "resource_name": "RoomTexFloorSidewalk00",
+      "floorboards_id": 3,
+      "ground_row_index": 3
+    },
+    {
+      "item_id": 5009,
+      "floor_id": 158,
+      "resource_name": "RoomTexFloorPlatform00",
+      "floorboards_id": 3,
+      "ground_row_index": 3
+    },
+    {
+      "item_id": 5012,
+      "floor_id": 161,
+      "resource_name": "RoomTexFloorDynasty00",
+      "floorboards_id": 3,
+      "ground_row_index": 3
+    },
+    {
+      "item_id": 5013,
+      "floor_id": 162,
+      "resource_name": "RoomTexFloorArena00",
+      "floorboards_id": 2,
+      "ground_row_index": 2
+    },
+    {
+      "item_id": 5234,
+      "floor_id": 170,
+      "resource_name": "RoomTexFloorMoss00",
+      "floorboards_id": 51,
+      "ground_row_index": 48
+    },
+    {
+      "item_id": 5235,
+      "floor_id": 171,
+      "resource_name": "RoomTexFloorConstruction00",
+      "floorboards_id": 3,
+      "ground_row_index": 3
+    },
+    {
+      "item_id": 5237,
+      "floor_id": 173,
+      "resource_name": "RoomTexFloorHighway00",
+      "floorboards_id": 3,
+      "ground_row_index": 3
+    },
+    {
+      "item_id": 5253,
+      "floor_id": 185,
+      "resource_name": "RoomSpFloorIceFloe00",
+      "floorboards_id": 2,
+      "ground_row_index": 2
+    },
+    {
+      "item_id": 5255,
+      "floor_id": 186,
+      "resource_name": "RoomSpFloorOasis00",
+      "floorboards_id": 4,
+      "ground_row_index": 4
+    },
+    {
+      "item_id": 5268,
+      "floor_id": 188,
+      "resource_name": "RoomSpFloorFishTank00",
+      "floorboards_id": 23,
+      "ground_row_index": 23
+    },
+    {
+      "item_id": 5274,
+      "floor_id": 191,
+      "resource_name": "RoomSpFloorVolcano00",
+      "floorboards_id": 3,
+      "ground_row_index": 3
+    },
+    {
+      "item_id": 5273,
+      "floor_id": 192,
+      "resource_name": "RoomSpFloorRiver00",
+      "floorboards_id": 19,
+      "ground_row_index": 19
+    },
+    {
+      "item_id": 5515,
+      "floor_id": 200,
+      "resource_name": "RoomTexFloorJungle00",
+      "floorboards_id": 20,
+      "ground_row_index": 20
+    }
+  ],
+  "rules": [
+    "This selector reads ItemKind.RoomFloor, ItemParam.FloorTableId and RoomFloorParam.HasJmp.",
+    "HasJmp false returns sentinel7 before map lookup, even for a real floor item.",
+    "When no resident map is found, Floorboards ID is resolved through ColGroundAttributeParam to its row index (or configured remap).",
+    "Stage state2..5 selects variant0;6..16 selects1;17..18 selects2/3 via source Horizon XOR context orientation bit6.",
+    "State1 and19 reject the selector; other tested signed states select category3/variant1.",
+    "The active override reaches original WaterCheck and PlayerNoEntry aggregate callers."
+  ],
+  "dependencies_stubbed": [],
+  "reconstructed_state": [
+    "Real item/kind definitions and enum cache",
+    "Dense floor/ground managers and original complete BCSV blobs",
+    "Original task registry vtable and active Stage/world context",
+    "Resource manager with resident-map count0"
+  ],
+  "limits": [
+    "No actual resident JMP map or resource loader path executed.",
+    "Ground remap vector is absent; the native row-index path is exercised.",
+    "This is the RoomFloor override path, not proof of island terrain editing or all dynamic-ground sources.",
+    "Inventory/save acquisition and complete scene lifecycle remain unexecuted."
+  ],
+  "source_tables": {
+    "RoomFloorParam": {
+      "json": "tables_resolved/RoomFloorParam.json",
+      "source_id": 133,
+      "raw": {
+        "$blob": "blobs/19a6c3fe0b7c89c4d160df3f6c18814aae1d80cea0f5aec7e47b8102b3edf288.bin",
+        "size": 27820,
+        "sha256": "19a6c3fe0b7c89c4d160df3f6c18814aae1d80cea0f5aec7e47b8102b3edf288"
+      }
+    },
+    "ColGroundAttributeParam": {
+      "json": "tables_resolved/ColGroundAttributeParam.json",
+      "source_id": 14,
+      "raw": {
+        "$blob": "blobs/33705cfa93db0695a632afc8e891655518c1a3fbff5ae3f598062191075aefcb.bin",
+        "size": 5432,
+        "sha256": "33705cfa93db0695a632afc8e891655518c1a3fbff5ae3f598062191075aefcb"
+      }
+    },
+    "ItemParam": {
+      "json": "tables_resolved/ItemParam.json",
+      "source_id": 72,
+      "raw": {
+        "$blob": "blobs/89230e97fc877ff2b2b48ac1c707ef32b3a7760118839c307f19797e2553458c.bin",
+        "size": 4104780,
+        "sha256": "89230e97fc877ff2b2b48ac1c707ef32b3a7760118839c307f19797e2553458c"
+      }
+    },
+    "ItemKind": {
+      "json": "tables_resolved/ItemKind.json",
+      "source_id": 63,
+      "raw": {
+        "$blob": "blobs/4cac0178cc69519585528b24ceef022ccb1fefa12b23fc9a9e4280e40185ba7b.bin",
+        "size": 17532,
+        "sha256": "4cac0178cc69519585528b24ceef022ccb1fefa12b23fc9a9e4280e40185ba7b"
+      }
+    }
+  },
+  "elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74"
+}

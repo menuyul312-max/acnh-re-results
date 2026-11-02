@@ -6,7 +6,7 @@ Paket hasil reverse engineering untuk menjadi referensi konversi ke Godot. Proye
 
 [Laporan fokus](acnh-re/docs/FOCUS7_MECHANICS.md) · [Peta JSON tujuh area](acnh-re/output/mechanics/focus7/summary.json)
 
-Fokus: fisika/collision, pergerakan pemain, terrain, ground dinamis, pemeriksaan posisi, NPC/navigasi, serta item/alat/crafting. Peta mencakup 68 tabel, 55 graf AI dan binding statis 292 parameter. [Lanjutan terbaru](acnh-re/docs/MECHANICS_CONTINUATION.md) menambah **6.828 kasus native** untuk pemeriksaan bahan pada cache terisi, pembaruan posisi/consumer hasil animasi, serta gerbang task Stage/world. Total helper/blok kini **1.123.294**. Model/sound memakai katalog. Seluruh mekanik belum selesai; [frontier JSON](acnh-re/output/mechanics/continuation_frontier.json) mencatat yang terbukti dan yang masih terbuka. Pembaruan tersedia langsung di repo; ZIP lama tetap snapshot historis.
+Fokus: fisika/collision, pergerakan pemain, terrain, ground dinamis, pemeriksaan posisi, NPC/navigasi, serta item/alat/crafting. Peta mencakup 69 tabel, 55 graf AI dan binding statis 292 parameter. [Lanjutan terbaru](acnh-re/docs/ACTIVE_CONTEXT_FOLLOWUP.md) menambah **3.926 kasus** (3.422 mekanik dan 504 pendukung SDK): context RoomFloor terisi dengan fallback ground, producer counter bahan dan pembentuk velocity XYZ beserta blok pemanggil pemain. Total helper/blok kini **1.127.220**. Model/sound memakai katalog. Seluruh mekanik belum selesai; [frontier JSON](acnh-re/output/mechanics/continuation_frontier.json) mencatat yang terbukti dan yang masih terbuka. Pembaruan tersedia langsung di repo; ZIP lama tetap snapshot historis.
 
 Pembaruan mekanik: [collision, terrain dan ledger seluruh sistem](acnh-re/docs/MECHANICS_RE.md). Data baru tersedia langsung dalam [output/mechanics](acnh-re/output/mechanics), terpisah dari ZIP snapshot sebelumnya. Tahap ini menambah 262.164 perbandingan blok native dan memetakan konfigurasi 235 state pemain. Model dan sound memakai katalog sebagai referensi.
 
@@ -50,7 +50,7 @@ Tautan laporan ke data terinci yang belum berada di tree Git dapat dibuka setela
 
 - Seluruh subset B_data yang tersedia dipetakan secara struktural: 1.171 berkas, 2.986 entri kontainer/data.
 - Nama pulih: 1.957/2.048 kolom BCSV; 2.979/3.410 jenis key BYML. Cakupan kemunculan key BYML 99,452% bukan persentase RE seluruh game.
-- 1.123.294 kasus helper/blok native dan 2.546.185 pemeriksaan BYML; 34 uji integrasi baseline sebelumnya lulus. Jumlah kasus bukan persentase penyelesaian game.
+- 1.127.220 kasus helper/blok native dan 2.546.185 pemeriksaan BYML; 34 uji integrasi baseline sebelumnya lulus. Jumlah kasus bukan persentase penyelesaian game.
 - Pemetaan Stage, item, terrain, EventFlow, SDK, cuaca, kalender, suara NPC, gen bunga dan item anakan.
 - Perilaku lengkap game belum selesai; batas dan kasus yang belum diketahui dicatat eksplisit.
 
@@ -70,4 +70,4 @@ Konsumen collision: [override mode, mask dan perubahan scalar](acnh-re/docs/COLL
 
 Kedekatan dan terrain: [uji XZ, batas tinggi dan pembaca izin ground](acnh-re/docs/PROXIMITY_GROUND.md), dengan 3.235 kasus tambahan. JSON/tool tersedia langsung di repo, terpisah dari ZIP snapshot sebelumnya.
 
-Runtime terrain: [koordinat, overlay dan tiga pemanggil ground utuh](acnh-re/docs/TERRAIN_RUNTIME.md), 1.791 kasus tambahan pada konteks terkontrol. Gerbang Stage/world sudah diuji pada [lanjutan terbaru](acnh-re/docs/MECHANICS_CONTINUATION.md); pemilihan map override aktif tetap terbuka.
+Runtime terrain: [koordinat, overlay dan tiga pemanggil ground utuh](acnh-re/docs/TERRAIN_RUNTIME.md), 1.791 kasus tambahan pada konteks terkontrol. [Context RoomFloor terisi](acnh-re/docs/ACTIVE_CONTEXT_FOLLOWUP.md) kini teruji pada fallback tanpa resident map; pemilihan resident map dan loader tetap terbuka.

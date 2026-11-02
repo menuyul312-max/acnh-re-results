@@ -19,7 +19,7 @@ def main():
       'physics_collision':['ColGroundAttributeParam','PlayerStateParam','ItemSize','NmlNpcRaceParam','NpcSpModelScale'],
       'player_movement':['PlayerStateParam','HumanAnimParam'],
       'terrain':[n for n in table_paths if n.startswith('Field')]+['MysteryTourFieldParam','EventPlazaGround'],
-      'dynamic_ground':['ColGroundAttributeParam','FieldOutsideParts','FieldOutsideTemplate'],
+      'dynamic_ground':['ColGroundAttributeParam','FieldOutsideParts','FieldOutsideTemplate','RoomFloorParam'],
       'position_checks':['ColGroundAttributeParam','ItemSize','FieldMainFieldParam'],
       'npc_navigation':[n for n in table_paths if n.startswith(('Npc','NmlNpc','SpNpc','MuseumNPC'))]+['AITag'],
       'items_tools_crafting':[n for n in table_paths if n.startswith('Item')]+['RecipeCraftParam']}
@@ -103,21 +103,21 @@ def main():
             states.append({'label':text,'string_va':hex(va),'owner_va':hex(owner) if owner else None})
     dump('npc_native_state_labels.json',{'states':states,'scope':'Native state-name evidence; not a complete transition or scheduling graph.'})
     proofs={
-      'physics_collision':['collision_native_verification.json','collision_response_native.json','proximity_native.json'],
-      'player_movement':['collision_states.json','player_parameter_bindings.json','player_motion_native.json','player_position_native.json','player_root_motion_native.json'],
+      'physics_collision':['collision_native_verification.json','collision_response_native.json','proximity_native.json','ballistic_velocity_native.json'],
+      'player_movement':['collision_states.json','player_parameter_bindings.json','player_motion_native.json','player_position_native.json','player_root_motion_native.json','ballistic_velocity_native.json'],
       'terrain':['terrain_native.json','terrain_collision_parameters.json'],
-      'dynamic_ground':['dynamic_ground_native.json','terrain_native.json','ground_context_gate_native.json'],
+      'dynamic_ground':['dynamic_ground_native.json','terrain_native.json','ground_context_gate_native.json','room_floor_ground_native.json'],
       'position_checks':['proximity_native.json','terrain_native.json'],
       'npc_navigation':['npc_activity_bindings.json','focus7/npc_ai_eventflows.json','focus7/npc_ai_flow_graphs.json','focus7/npc_native_state_labels.json'],
-      'items_tools_crafting':['crafting_materials_native.json','inventory_requirements_native.json','focus7/item_tool_event_calls.json']}
+      'items_tools_crafting':['crafting_materials_native.json','inventory_requirements_native.json','inventory_cache_native.json','focus7/item_tool_event_calls.json']}
     remaining={
       'physics_collision':['Geometric penetration response, friction and moving-body solver','Complete collision mask meanings'],
-      'player_movement':['Input/state, gravity and collision -> full frame update; isolated position/root-motion consumer is verified','Animation sample production, all traversal/landing/ladder/jump conditions and timestep units'],
+      'player_movement':['Input/state, runtime gravity integration and collision -> full frame; position/root-motion consumer and ballistic solver are verified in bounded contexts','Animation sample production, all traversal/landing/ladder/jump conditions and timestep units'],
       'terrain':['Raw 14-byte preset -> 52-byte runtime construction','Live terraform update and all building/placement restrictions'],
-      'dynamic_ground':['Nonempty context item -> actual template/map selection; Stage task/world dispatch guards are verified','All dynamic override loader and reachability conditions'],
+      'dynamic_ground':['Resident JMP map/resource selection and point transform; real RoomFloor items with no-resident-map fallback are verified','All dynamic override loader and reachability conditions'],
       'position_checks':['Full candidate collection, actor/type filtering and object registry','Complete placement queries and callers'],
       'npc_navigation':['Full pathfinding, obstacle avoidance and route selection','Scheduler priorities, social/interest decisions and all AI transitions'],
-      'items_tools_crafting':['Cold-cache inventory gathering and A/B/C counter producers; warm-cache normal-item requirement check is verified','Atomic ingredient consumption, recipe unlocks, tool durability and all use/remake transactions']}
+      'items_tools_crafting':['Save-wrapper acquisition and full parent cold-cache path; A/B/C producers on supplied-layout records and the requirement checker are verified','Atomic ingredient consumption, recipe unlocks, tool durability and all use/remake transactions']}
     domains={k:{'tables':[table_refs[n]for n in dict.fromkeys(v)if n in table_refs],
         'missing_requested_table_names':[n for n in v if n not in table_refs],
         'evidence_files':proofs[k],'remaining':remaining[k],'complete':False}for k,v in groups.items()}

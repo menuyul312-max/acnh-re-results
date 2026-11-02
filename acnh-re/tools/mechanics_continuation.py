@@ -21,7 +21,9 @@ def write(path, value):
 def main():
     coverage = json.loads((OUT/'coverage.json').read_text())
     checks = coverage['native_helper_checks']
-    before = sum(v for k, v in checks.items() if k not in PROOFS)
+    # Historical baseline for this phase. Later proof groups must not change
+    # its snapshot totals or make this historical aggregator fail on rerun.
+    before = 1116466
     added = {}; results = {}
     for name in PROOFS:
         value = json.loads((OUT/f'mechanics/{name}.json').read_text())
@@ -29,8 +31,8 @@ def main():
         assert value['cases'] == sum(value['groups'].values())
         if 'elf_sha256' in value: assert value['elf_sha256'] == ELF_SHA256
         checks[name] = value['cases']; added[name] = value['cases']; results[name] = value
-    assert before == 1116466
-    after = sum(checks.values())
+    after = before+sum(added.values())
+    assert sum(checks.values()) >= after
     progress = {
         'native_helper_cases_before': before, 'new_native_case_groups': added,
         'new_native_cases': sum(added.values()), 'native_helper_cases_after': after,

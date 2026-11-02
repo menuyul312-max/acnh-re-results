@@ -1,0 +1,162 @@
+{
+  "groups": {
+    "three_register_solver": 1500,
+    "zero_duration": 6,
+    "duration_low32_alias": 3,
+    "bounded_player_consumer": 60
+  },
+  "cases": 1569,
+  "mismatches": [],
+  "solver": "0x1d280",
+  "return_abi": "Homogeneous float3 returned in S0/S1/S2, not a single float.",
+  "rules": [
+    "Input X0=start vec3, X1=target vec3, W2=duration, S0=gravity, S1=negative cap or nonnegative disabled cap.",
+    "Build a zero-initialized gravity velocity sequence: subtract magnitude gravity each step; apply lower cap only if cap<0; sum f32 displacements.",
+    "Return[(targetX-startX)/N, (targetY-startY-gravity_sum)/N, (targetZ-startZ)/N], with native f32 operation order.",
+    "Duration0 uses native default X/Z but still divides the vertical difference by0: nonzero deltaY gives signed infinity, zero gives NaN.",
+    "Duration uses low32 bits. Tested positive durations1..120; very large durations are not executed."
+  ],
+  "samples": [
+    {
+      "start": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "target": [
+        10.0,
+        5.0,
+        -5.0
+      ],
+      "duration": 1,
+      "gravity": -0.25,
+      "cap": 0.0,
+      "gravity_displacement_sum": -0.25,
+      "velocity_xyz": [
+        10.0,
+        5.25,
+        -5.0
+      ]
+    },
+    {
+      "start": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "target": [
+        10.0,
+        5.0,
+        -5.0
+      ],
+      "duration": 1,
+      "gravity": -0.25,
+      "cap": -0.0,
+      "gravity_displacement_sum": -0.25,
+      "velocity_xyz": [
+        10.0,
+        5.25,
+        -5.0
+      ]
+    },
+    {
+      "start": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "target": [
+        10.0,
+        5.0,
+        -5.0
+      ],
+      "duration": 2,
+      "gravity": -0.25,
+      "cap": 0.0,
+      "gravity_displacement_sum": -0.75,
+      "velocity_xyz": [
+        5.0,
+        2.875,
+        -2.5
+      ]
+    },
+    {
+      "start": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "target": [
+        10.0,
+        5.0,
+        -5.0
+      ],
+      "duration": 2,
+      "gravity": -0.25,
+      "cap": -0.0,
+      "gravity_displacement_sum": -0.75,
+      "velocity_xyz": [
+        5.0,
+        2.875,
+        -2.5
+      ]
+    },
+    {
+      "start": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "target": [
+        10.0,
+        5.0,
+        -5.0
+      ],
+      "duration": 60,
+      "gravity": -0.25,
+      "cap": 0.0,
+      "gravity_displacement_sum": -457.5,
+      "velocity_xyz": [
+        0.1666666716337204,
+        7.708333492279053,
+        -0.0833333358168602
+      ]
+    }
+  ],
+  "player_consumer": {
+    "begin": "0xe17e54",
+    "stop_before": "0xe17e94",
+    "enclosing_function": "0xe17cb0",
+    "reconstructed_registers": [
+      "X19=player",
+      "W22=positive duration",
+      "SP+0x40=target vec3"
+    ],
+    "callees_executed": [
+      "0xdb17b0",
+      "0x1d280",
+      "0xdb17f0",
+      "native parameter resolver/typed getter"
+    ],
+    "stores": {
+      "player+0x574": "velocity XYZ",
+      "player+0xf58": "[velocityY, native terminal fallback -0.0, configured gravity]"
+    },
+    "scope": "Bounded original instruction block only. State prefix and continuation after0xe17e94 are not executed."
+  },
+  "source_parameter": {
+    "json": "byml_resolved/01079.json",
+    "source": "B_data/Pack/StaticParam.pack!Param/Actor/PlayerActor.byml",
+    "descriptor": "mDefaultGravity.f32",
+    "source_value": -0.25,
+    "source_sha256": "61ded0ac054f3f97e288c7a5a605f6ebed5d727b94d4665c52643815b65764a7"
+  },
+  "dependencies_stubbed": [],
+  "limits": [
+    "Selected finite inputs plus documented duration0 behavior; arbitrary NaN/infinite inputs are not covered.",
+    "The gravity sum begins at zero velocity. It is not proof that every runtime motion integrator uses the same cap semantics.",
+    "No full jump/vault state, collision response, landing or animation timing is executed.",
+    "Positive duration units are not proven seconds or a fixed frame rate."
+  ],
+  "elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74"
+}

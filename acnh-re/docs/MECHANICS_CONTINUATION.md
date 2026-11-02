@@ -1,5 +1,10 @@
 # Lanjutan RE: pemeriksaan bahan, posisi pemain dan gerbang ground
 
+Dokumen ini menyimpan tahap sebelumnya. [Lanjutan terbaru](ACTIVE_CONTEXT_FOLLOWUP.md)
+menambah 3.926 kasus dan mencapai total helper/blok1.127.220, termasuk producer
+counter, context RoomFloor terisi dan pemecah velocity XYZ. Angka dan batas
+di bawah adalah snapshot tahap ini.
+
 Seluruh alamat di sini adalah VA ELF ACNH 1.0.0 dengan SHA-256
 `5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74`.
 Pseudocode Ghidra memakai tambahan base `0x100000`; signature otomatis tetap
