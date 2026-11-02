@@ -59,3 +59,5 @@ SHA-256 ZIP lengkap lokal sebelum pembagian (verifikasi lima berkas unduhan mema
 ```text
 52ad5f6ecf1a185b3ca40de5391822ee8109323378eec52cbdb651e003229af1
 ```
+
+Konsumen collision: [override mode, mask dan perubahan scalar](acnh-re/docs/COLLISION_RESPONSE.md), dengan 62.702 kasus validasi tambahan. JSON dan tool tersedia langsung dalam repo; ZIP snapshot lama tidak diperbarui.

@@ -1,0 +1,163 @@
+{
+  "groups": {
+    "full_mask_set_get_and_guards": 262,
+    "policy_fragment_cases": 61440,
+    "finite_nonnegative_scalar_smoothing_cases": 1000
+  },
+  "cases": 62702,
+  "mismatches": [],
+  "elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+  "evidence": [
+    {
+      "va": "0x33dd0",
+      "bytes": 12,
+      "sha256": "c6569f0e99275b2ece6a65e7ea7cc5b7d4d282c525bc5449fc82c4527d2494c9"
+    },
+    {
+      "va": "0x33de0",
+      "bytes": 12,
+      "sha256": "1473a609fbc59bc091731479a5af693d330b4a8232c82c6e5c009943dde1bbec"
+    },
+    {
+      "va": "0xdc80a0",
+      "bytes": 16,
+      "sha256": "0d447ce417f5654d2a78c9a584734d74965bc414b766a99ef0aa4d83d37b3532"
+    },
+    {
+      "va": "0xda9a60",
+      "bytes": 208,
+      "sha256": "efd3cf86027ad7b3ba61cbab54a562d9fd1170880e16bd11313251e79c031151"
+    },
+    {
+      "va": "0xda9844",
+      "bytes": 48,
+      "sha256": "cbaa3dfd942f913a194355f6a0b842c25b1f5a918258b4f40e7551c7d2d8c3ff"
+    },
+    {
+      "va": "0xda99a0",
+      "bytes": 28,
+      "sha256": "a382766a3cfca605b4a3b65f08cb4b2550359e993bd32c901d795db86c5d8a72"
+    }
+  ],
+  "policy_samples": [
+    {
+      "table": 0,
+      "override": 0,
+      "gate": 0,
+      "predicate_input": 0,
+      "mask": 128
+    },
+    {
+      "table": 0,
+      "override": 0,
+      "gate": 0,
+      "predicate_input": 1,
+      "mask": 513
+    },
+    {
+      "table": 0,
+      "override": 0,
+      "gate": 0,
+      "predicate_input": 2,
+      "mask": 513
+    },
+    {
+      "table": 0,
+      "override": 0,
+      "gate": 0,
+      "predicate_input": 4294967295,
+      "mask": 513
+    },
+    {
+      "table": 0,
+      "override": 0,
+      "gate": 1,
+      "predicate_input": 0,
+      "mask": 0
+    },
+    {
+      "table": 0,
+      "override": 0,
+      "gate": 1,
+      "predicate_input": 1,
+      "mask": 0
+    },
+    {
+      "table": 0,
+      "override": 0,
+      "gate": 1,
+      "predicate_input": 2,
+      "mask": 0
+    },
+    {
+      "table": 0,
+      "override": 0,
+      "gate": 1,
+      "predicate_input": 4294967295,
+      "mask": 0
+    },
+    {
+      "table": 0,
+      "override": 1,
+      "gate": 0,
+      "predicate_input": 0,
+      "mask": 513
+    },
+    {
+      "table": 0,
+      "override": 1,
+      "gate": 0,
+      "predicate_input": 1,
+      "mask": 513
+    },
+    {
+      "table": 0,
+      "override": 1,
+      "gate": 0,
+      "predicate_input": 2,
+      "mask": 513
+    },
+    {
+      "table": 0,
+      "override": 1,
+      "gate": 0,
+      "predicate_input": 4294967295,
+      "mask": 513
+    }
+  ],
+  "dependencies_stubbed": [],
+  "externally_supplied_fragment_inputs": [],
+  "executed_predicate": {
+    "callee": "0xdc80a0",
+    "rule": "u32 at player+0x178 equals zero",
+    "field_inputs": [
+      0,
+      1,
+      2,
+      4294967295
+    ],
+    "semantics": "Field gameplay meaning remains unproven."
+  },
+  "policy": {
+    "override_offset": "player+0x12ec",
+    "override_passthrough_value": 2,
+    "flag_offset": "player+0xf03",
+    "flag_bit": 6,
+    "flag_rule": "If set and effective mode != 2, select mode 1.",
+    "collider_flag": "collider+0x178 bit0; other bits preserved",
+    "mask_storage": "*(collider+0x278)+0x40",
+    "mask_values": [
+      0,
+      128,
+      513
+    ],
+    "mask_bit_meanings": "Not yet proven; do not assign solver semantics from numeric values."
+  },
+  "scalar_rule": {
+    "storage": "player+0x12f0",
+    "step": "f32(base/20)",
+    "behavior": "Move toward target, clamping overshoot, with f32 operations.",
+    "limits": "Only finite nonnegative cases; no NaN/Inf or full update tested. Units and timestep interpretation unproven."
+  },
+  "scope": "Whole mask storage helpers plus bounded policy/scalar fragments; no full collision solver, navigation, or movement runtime."
+}
