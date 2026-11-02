@@ -4,15 +4,15 @@ Paket hasil reverse engineering untuk menjadi referensi konversi ke Godot. Proye
 
 ## Unduh hasil lengkap
 
-**[Unduh ZIP lengkap — 117 MB](https://github.com/menuyul312-max/acnh-re-results/releases/download/hasil-re-2026-11-02/acnh-re-results.zip)**
+**[Unduh repo beserta lima ZIP hasil](https://github.com/menuyul312-max/acnh-re-results/archive/refs/heads/main.zip)**
 
-[Halaman Release](https://github.com/menuyul312-max/acnh-re-results/releases/tag/hasil-re-2026-11-02) · [Checksum ZIP](https://github.com/menuyul312-max/acnh-re-results/releases/download/hasil-re-2026-11-02/acnh-re-results.sha256)
+[Halaman Release](https://github.com/menuyul312-max/acnh-re-results/releases/tag/hasil-re-2026-11-02) · [Checksum lima ZIP](downloads/SHA256SUMS.txt)
 
-Repo ini publik; hasil dapat diunduh melalui halaman Release atau direktori downloads.
+Repo ini publik; hasil tersedia dalam lima ZIP mandiri di direktori downloads. Unduh kelimanya, atau gunakan tautan unduh repo di atas. Ekstrak kelima ZIP ke folder tujuan yang sama.
 
-ZIP lengkap berisi 86.653 entry: hasil JSON, blob yang dirujuk, pseudocode/disassembly, indeks SQLite, tool, tes, dan laporan. Repo Git menyimpan tool, laporan, ringkasan JSON, dan ZIP cadangan; seluruh keluaran terurai tersedia dalam paket lengkap.
+Gabungan lima ZIP berisi 86.653 entry: hasil JSON, blob yang dirujuk, pseudocode/disassembly, indeks SQLite, tool, tes, dan laporan. Isinya telah diperiksa setara dengan paket ZIP lengkap lokal. Repo Git juga menyimpan tool, laporan, serta ringkasan JSON yang dapat dibaca langsung.
 
-### Jika ZIP lengkap sulit diunduh
+### Cara mengekstrak hasil
 
 Unduh semua lima ZIP pada [downloads/](downloads/). Masing-masing adalah ZIP mandiri. Ekstrak kelimanya ke **folder tujuan yang sama**; tidak perlu perintah penggabungan. Gabungan isinya telah diperiksa setara dengan ZIP lengkap.
 
@@ -28,7 +28,7 @@ Jika memilih **Code → Download ZIP**, ekstrak arsip repo, lalu ekstrak kelima 
 - [Perbandingan tahap terakhir](acnh-re/output/progress_calendar_flowers.json)
 - [Log 34 uji integrasi](acnh-re/output/verification.log)
 
-Tautan laporan ke data terinci yang belum berada di tree Git dapat dibuka setelah paket lengkap diekstrak.
+Tautan laporan ke data terinci yang belum berada di tree Git dapat dibuka setelah kelima ZIP diekstrak.
 
 ## Cakupan terkini
 
@@ -44,7 +44,7 @@ Executable unggahan asli (main.elf/NPDM, main, rtld, subsdk0, sdk), instalasi to
 
 Lisensi setiap rujukan tetap berlaku; lihat [NOTICE rujukan](acnh-re/tools/external/NOTICE.md). Tidak ada lisensi umum baru yang diberikan untuk konten game.
 
-SHA-256 ZIP lengkap:
+SHA-256 ZIP lengkap lokal sebelum pembagian (verifikasi lima berkas unduhan memakai downloads/SHA256SUMS.txt):
 
 ```text
 52ad5f6ecf1a185b3ca40de5391822ee8109323378eec52cbdb651e003229af1
