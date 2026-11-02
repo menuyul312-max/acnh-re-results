@@ -1,0 +1,122 @@
+{
+  "audit_kind": "public_source_review",
+  "canonical_mapping_updated": true,
+  "sources": [
+    {
+      "repository": "Nycolazs/ACNHRecomp",
+      "url": "https://github.com/Nycolazs/ACNHRecomp",
+      "revision": "b0c357c13b22cc6419c6ae6ca9711de55c6d08fe",
+      "license": "MIT (project code)",
+      "use": "AArch64 recompiler, runtime HLE, NVN/Vulkan layer, version hooks, diagnostics",
+      "checked": [
+        "README.md",
+        "games/acnh/versions.txt",
+        "games/acnh/hooks-1.0.0.txt",
+        "docs/ACNH.md",
+        "runtime/src/hle_time.cpp",
+        "runtime/src/hle_fs.cpp",
+        "LICENSE"
+      ],
+      "limitations": "No original game assets/modules or generated game C++ in the public repository; runtime implementations may contain stubs.",
+      "local_build_id_match": {
+        "build_id": "7FC1BAFF976AECA414520CB89F4616CB",
+        "repository_version": "1.0.0",
+        "local_elf_byte_offset": 50444884
+      }
+    },
+    {
+      "repository": "Treeki/CylindricalEarth",
+      "url": "https://github.com/Treeki/CylindricalEarth",
+      "revision": "bb09c0ee71a4aa6011de088b88ea55fdee0bf6e9",
+      "license": "GPL-3.0",
+      "use": "BCSV schemas, enums, EventFlow/RTTI references, save schema and field-name dictionaries, PBC reader",
+      "checked": [
+        "README.md",
+        "savefile/save_keys.json"
+      ],
+      "already_used": "BCSV reference schemas and preset descriptors used in earlier validated name recovery.",
+      "limitations": "Version-specific offsets and possible hash collisions must be checked against the local ELF/data.",
+      "local_dictionary_audit": {
+        "valid_murmur_pairs": 1101,
+        "rejected_mismatched_pairs": 1,
+        "external_only_names": "candidate_only"
+      }
+    },
+    {
+      "repository": "kwsch/NHSE",
+      "url": "https://github.com/kwsch/NHSE",
+      "revision": "cb0745415945776f73375bf0a434a8babf059307",
+      "license": "GPL-3.0; LICENSE snapshot included",
+      "use": "Item eight-byte layout, item flags, flowers, villagers, map structures and versioned save offsets",
+      "checked": [
+        "README.md",
+        "NHSE.Core/Structures/Item/Item.cs",
+        "NHSE.Core/Structures/Item/FlowerGene.cs",
+        "NHSE.Core/Structures/TurnipStonk.cs",
+        "LICENSE"
+      ],
+      "limitations": "Community save-editor knowledge is a reference; version/layout applicability still requires local verification.",
+      "local_validation": "8-byte layout, empty reset, wrapped lookup ID, paper table, extension coordinate read. Latest flags/flower/turnip algorithms not promoted."
+    },
+    {
+      "repository": "Slattz/LibACNH",
+      "url": "https://github.com/Slattz/LibACNH",
+      "revision": "master (moving reference)",
+      "license": "GPL; verify exact repository license before reuse",
+      "use": "BCSV/BYML/MSBT/SARC parsing, CRC32/Murmur3, SaveCrypto, EncryptedInt, sead Random",
+      "checked": [
+        "README.md"
+      ],
+      "limitations": "Provides algorithms and parsers, not the missing full RomFS or SDK modules."
+    },
+    {
+      "repository": "Treeki/MeteoNook",
+      "url": "https://github.com/Treeki/MeteoNook",
+      "revision": "a7ea07aa9b3db8859b0f476c549a1a2245ad1b07",
+      "license": "AGPL-3.0",
+      "use": "Weather prediction/seed research and Rust weather core",
+      "checked": [
+        "README.md",
+        "LICENSE",
+        "src/lib.rs",
+        "src/data.rs"
+      ],
+      "limitations": "No missing SDK/assets supplied. No claim about event overrides, early-hour SDK calendar behavior or full weather visuals.",
+      "local_validation": "Native RNG core verified; all local weather/weight/calendar literals compared. Four public weather-hour differences preserved. Ordinary-day selector and weighted-loop execution recorded separately."
+    },
+    {
+      "repository": "mikebryant/ac-nh-turnip-prices",
+      "url": "https://github.com/mikebryant/ac-nh-turnip-prices",
+      "revision": "master (moving reference)",
+      "license": "Not inspected in this audit",
+      "use": "Turnip-price pattern/probability research",
+      "checked": [
+        "README.md"
+      ],
+      "limitations": "Candidate reference identified; implementation and license not yet audited."
+    },
+    {
+      "repository": "acnhmodding/HeavenTool",
+      "url": "https://github.com/acnhmodding/HeavenTool",
+      "revision": "e3ddf830a4ae360657917d3d598c79170273d056",
+      "license": "No root license identified; source implementation not copied or bundled",
+      "checked": [
+        "HeavenTool.WinForms/extra/hashes/headers.txt",
+        "related type/name lists"
+      ],
+      "local_validation": "10 matching BCSV column occurrences: seven candidates exceed local spans, zero names promoted.",
+      "limitations": "CRC32 matches alone do not establish original descriptors. Five matched facts and source line/checksums retained for audit only."
+    }
+  ],
+  "local_integration": {
+    "version": "ACNH 1.0.0, matching build ID",
+    "byml_descriptor_evidence": "output/schemas/byml_names.json",
+    "item_helper_evidence": "output/items/native_verification.json",
+    "external_snapshots": "tools/external/PINNED_SOURCES.json",
+    "note": "Native descriptor recovery is independent of public source; NHSE layout suggestions independently compared to local instructions. Semantic coverage remains partial.",
+    "native_byml_reader": "output/byml_typed/native_verification.json",
+    "stage": "output/stage/native_summary.json",
+    "weather": "output/weather/native_verification.json",
+    "public_descriptor_audit": "output/schemas/public_descriptor_audit.json"
+  }
+}

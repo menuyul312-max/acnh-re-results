@@ -1,0 +1,25 @@
+{
+  "scope": "Murmur3 name candidates corroborated by the native key-index registry and its consumers. The release binary stores these property keys as hex strings, not the original identifier text.",
+  "fields": [
+    {
+      "hash": "a1ddf1de", "name": "ActorName", "algorithm": "Murmur3_32_seed0",
+      "native_index": 12, "registry_getter": "0xffa690",
+      "consumer": "0xfeb390", "role": "Reads actor-kind hash, then passes it to the actor-kind index lookup at 0x628b0."
+    },
+    {
+      "hash": "3cbaa541", "name": "ActorList", "algorithm": "Murmur3_32_seed0",
+      "native_index": 7, "registry_getter": "0xffa690",
+      "consumer": "0xfeabc0", "role": "Opens the actor array and invokes actor ordering/creation readers 0xfeb390 and 0xfeb5e0."
+    },
+    {
+      "hash": "2ccc87db", "name": "UIList", "algorithm": "Murmur3_32_seed0",
+      "native_index": 9, "registry_getter": "0xffa690",
+      "consumer": "0xfeacc0", "role": "Iterates UI entries; each successful UIName lookup is resolved to a layout name and appended to the UI list."
+    },
+    {
+      "hash": "691a4d18", "name": "UIName", "algorithm": "Murmur3_32_seed0",
+      "native_index": 38, "registry_getter": "0xffa690",
+      "consumer": "0xfeacc0", "role": "Reads the UI-name hash and resolves it through 0x1567c40 before storing the layout name."
+    }
+  ]
+}
