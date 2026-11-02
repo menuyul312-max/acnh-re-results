@@ -2,7 +2,15 @@
 
 Paket hasil reverse engineering untuk menjadi referensi konversi ke Godot. Proyek Godot dan sumber pengguna tidak diubah. Status semantik masih parsial.
 
-## Unduh hasil lengkap
+## Pembaruan RomFS tambahan — 2 November 2026
+
+[Laporan tambahan](acnh-re/docs/ADDITIONAL_ROMFS.md) · [Unduh tiga ZIP tambahan](downloads/additional_romfs/) · [Ringkasan JSON](acnh-re/output/additional_romfs/summary.json)
+
+Tambahan ini memetakan 965.426 pesan dalam 14 varian bahasa, 888.034 label BDLI, 83 state machine animasi, 523 layout UI dan metadata 3.336 record tekstur. Sebanyak 8.030/8.093 rujukan pesan EventFlow serta nama tampilan 8.074/8.208 baris item terhubung ke teks yang tersedia. Katalog model/audio tetap referensi; folder Model dan Sound/Resource tidak ikut arsip tambahan.
+
+Unduh dan ekstrak **ketiga ZIP tambahan** ke folder yang sama dengan hasil baseline. Kelima ZIP baseline di bawah tetap tersedia dan isinya tidak berubah. Jika menggunakan Code → Download ZIP, ekstrak seluruh ZIP baseline dan tambahan dari folder downloads ke folder repo yang sama. Arsip sumber RomFS dan executable asli tidak disertakan.
+
+## Unduh hasil baseline
 
 **[Unduh repo beserta lima ZIP hasil](https://github.com/menuyul312-max/acnh-re-results/archive/refs/heads/main.zip)**
 

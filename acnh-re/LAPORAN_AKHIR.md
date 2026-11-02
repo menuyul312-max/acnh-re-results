@@ -4,6 +4,8 @@
 
 Proyek Godot hanya menjadi referensi dan tidak diubah. Hasil baru berada di `/workspace/acnh-re`, untuk menjadi sumber konversi berikutnya tanpa ketergantungan engine.
 
+**Tambahan 2 November 2026:** arsip RomFS baru berisi 25.597 berkas, termasuk seluruh 1.171 B_data awal yang identik. Audit tambahan memetakan 965.426 pesan dalam 14 varian bahasa, 888.034 label BDLI, 83 state machine animasi dan metadata UI/shader. [Laporan tambahan dan batasnya](docs/ADDITIONAL_ROMFS.md). Angka cakupan tabel/BYML di bagian lama tetap merujuk korpus awal; shader/VFX kini tersedia sebagian, sementara direktori Model dan Sound/Resource tetap tidak tersedia. Ini belum menyelesaikan perilaku seluruh game.
+
 Perubahan terhadap laporan sebelumnya: [progress_since_previous.json](output/progress_since_previous.json). Tahap ini menambah validasi pembaca BYML asli, nama array bertipe, registry/record Stage, view byte BCSV, predicate flag, RNG, dan pemilih cuaca hari biasa. Nama key BYML yang pulih bertambah dari 2.910 menjadi 2.979; nama asli kolom BCSV tetap 1.957, dengan empat view baca native baru untuk kolom unresolved.
 
 ## Sumber dan batas input
@@ -158,7 +160,7 @@ Model probabilitas Mendelian mencakup 6.561 pasangan genotipe kanonis dengan bob
 1. **91 kemunculan kolom BCSV** belum memiliki nama asli yang terverifikasi; sebagian kini mempunyai tipe baca atau peran fungsional yang teruji. Setiap kolom tetap mempunyai hash, offset, tipe, contoh nilai, dan kandidat fungsi pembaca: [daftar bukti](output/schemas/unresolved_evidence.json).
 2. BYML primer masih memiliki 431 key hash/ID tanpa descriptor unik yang dipilih, mencakup 2.407 kemunculan. [Daftar tersisa](output/schemas/byml_names_unresolved.json). Indeks kandidat lama lintas format tetap disimpan di `hash_names_expanded.json`; hitungannya bukan cakupan pemulihan BYML terbaru. Banyak key merupakan ID dinamis; pemulihan nama tidak otomatis menentukan perilaku.
 3. Perilaku lengkap seluruh handler, penjadwalan event, AI, ekonomi, pertumbuhan, fisika, save, dan sinkronisasi belum mempunyai spesifikasi dan uji menyeluruh. Pemetaan fungsi menyediakan jalur penelusuran, bukan pengganti pekerjaan tersebut.
-4. Geometry, animasi, audio gelombang, VFX, shader, dan Havok yang hanya disebut tool lama tidak dapat dipulihkan dari metadata JSON saja jika sumber biner tidak ikut paket. Dua tekstur lingkungan yang memang tersedia sudah dipulihkan.
+4. Geometry model, animasi skeletal, audio gelombang dan Havok yang tidak ikut sumber tetap tidak dapat dipulihkan dari katalog saja. Tambahan RomFS menyediakan state machine ASB, UI/font, sebagian shader dan dua VFXB/PTCL serta database XLNK, tetapi pemahaman runtime format-format tersebut masih parsial. Dua tekstur lingkungan dari paket awal sudah dipulihkan; tekstur UI tambahan baru diinventarisasi metadatanya.
 5. Uji native memakai emulasi helper terisolasi, bukan menjalankan game lengkap. Integrasi runtime dan konversi Godot tidak dikerjakan sesuai batas tugas.
 
 Karena bagian ini masih ada, laporan **tidak menyatakan seluruh ACNH selesai direkayasa balik**. Syarat pengguna “semuanya terpetakan” pada tingkat perilaku belum terpenuhi; `output/coverage.json` menandainya eksplisit dengan `full_user_goal_completed=false`.
