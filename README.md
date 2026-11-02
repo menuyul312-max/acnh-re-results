@@ -2,6 +2,12 @@
 
 Paket hasil reverse engineering untuk menjadi referensi konversi ke Godot. Proyek Godot dan sumber pengguna tidak diubah. Status semantik masih parsial.
 
+## Fokus terbaru: tujuh sistem mekanik
+
+[Laporan fokus](acnh-re/docs/FOCUS7_MECHANICS.md) · [Peta JSON tujuh area](acnh-re/output/mechanics/focus7/summary.json)
+
+Fokus: fisika/collision, pergerakan pemain, terrain, ground dinamis, pemeriksaan posisi, NPC/navigasi, serta item/alat/crafting. Hasil terbaru mencakup peta 68 tabel, 55 graf AI, binding statis 292 parameter, serta 6.235 kasus native tambahan untuk lookup ground dinamis, parameter gerak dan getter bahan crafting. Model/sound memakai katalog. Seluruh mekanik belum dinyatakan selesai; batas pembuktian dijelaskan per sistem. Pembaruan ini tersedia langsung di repo, bukan di ZIP snapshot lama.
+
 Pembaruan mekanik: [collision, terrain dan ledger seluruh sistem](acnh-re/docs/MECHANICS_RE.md). Data baru tersedia langsung dalam [output/mechanics](acnh-re/output/mechanics), terpisah dari ZIP snapshot sebelumnya. Tahap ini menambah 262.164 perbandingan blok native dan memetakan konfigurasi 235 state pemain. Model dan sound memakai katalog sebagai referensi.
 
 ## Pembaruan RomFS tambahan — 2 November 2026

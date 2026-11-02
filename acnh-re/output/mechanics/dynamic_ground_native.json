@@ -1,0 +1,44 @@
+{
+  "groups": {
+    "map_sector_lookup": 1458,
+    "null_map": 3,
+    "all_attribute_byte_values": 1024,
+    "outside_map": 9
+  },
+  "cases": 2494,
+  "mismatches": [],
+  "helper": "0x18adf0",
+  "native_callees": [
+    "0x52b420",
+    "0x52b430",
+    "0x52b280",
+    "0x52b4c0",
+    "0x52b3e0"
+  ],
+  "header": {
+    "width": 4,
+    "height": 8,
+    "origin_x_s32": 12,
+    "origin_z_s32": 16,
+    "record_start": 20,
+    "record_stride": 52
+  },
+  "sector_rule": "u = localX - indexX*5; v = localZ - indexZ*5; a=f32(v-u); b=f32(f32(u+v)-5). a>=0,b>=0 -> lane2; a>=0,b<0 -> lane1; a<0,b>=0 -> lane3; both negative -> lane0.",
+  "sector_bytes": [
+    48,
+    49,
+    50,
+    51
+  ],
+  "invalid_or_null_map_result": 7,
+  "byte_semantics": "All u8 values returned unchanged, including 7; inheritance is handled by consumers.",
+  "dependencies_stubbed": [],
+  "scope": "Complete ground-map lookup and its original coordinate helpers, with reconstructed map records. World/object selection and active global override dispatch are not executed.",
+  "limits": [
+    "Map loader and selection by active room/object context remain unverified.",
+    "Map record geometry before the last four bytes is not decoded by this helper.",
+    "No complete collision response or movement simulation."
+  ],
+  "elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+  "helper_sha256": "0b7677596b3c6df0f71db8c526a46c83338739f4087023d427dfd74372a160ed"
+}

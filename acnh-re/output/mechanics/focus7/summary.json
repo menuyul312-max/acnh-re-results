@@ -1,0 +1,595 @@
+{
+  "domains": {
+    "physics_collision": {
+      "tables": [
+        {
+          "json": "tables_resolved/ColGroundAttributeParam.json",
+          "rows": 63,
+          "columns": 14,
+          "columns_without_original_name": 3
+        },
+        {
+          "json": "tables_resolved/PlayerStateParam.json",
+          "rows": 235,
+          "columns": 36,
+          "columns_without_original_name": 12
+        },
+        {
+          "json": "tables_resolved/ItemSize.json",
+          "rows": 25,
+          "columns": 8,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/NmlNpcRaceParam.json",
+          "rows": 35,
+          "columns": 15,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/NpcSpModelScale.json",
+          "rows": 4,
+          "columns": 19,
+          "columns_without_original_name": 0
+        }
+      ],
+      "missing_requested_table_names": [],
+      "evidence_files": [
+        "collision_native_verification.json",
+        "collision_response_native.json",
+        "proximity_native.json"
+      ],
+      "remaining": [
+        "Geometric penetration response, friction and moving-body solver",
+        "Complete collision mask meanings"
+      ],
+      "complete": false
+    },
+    "player_movement": {
+      "tables": [
+        {
+          "json": "tables_resolved/PlayerStateParam.json",
+          "rows": 235,
+          "columns": 36,
+          "columns_without_original_name": 12
+        },
+        {
+          "json": "tables_resolved/HumanAnimParam.json",
+          "rows": 455,
+          "columns": 12,
+          "columns_without_original_name": 2
+        }
+      ],
+      "missing_requested_table_names": [],
+      "evidence_files": [
+        "collision_states.json",
+        "player_parameter_bindings.json",
+        "player_motion_native.json"
+      ],
+      "remaining": [
+        "Full state/input -> velocity -> position update",
+        "All traversal/landing/ladder/jump conditions and timestep units"
+      ],
+      "complete": false
+    },
+    "terrain": {
+      "tables": [
+        {
+          "json": "tables_resolved/FieldOutsideParts.json",
+          "rows": 136,
+          "columns": 4,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/FieldLandMakingActionParam.json",
+          "rows": 17,
+          "columns": 12,
+          "columns_without_original_name": 2
+        },
+        {
+          "json": "tables_resolved/FieldLandMakingUnitModelParam.json",
+          "rows": 246,
+          "columns": 42,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/FieldLandMakingError.json",
+          "rows": 12,
+          "columns": 7,
+          "columns_without_original_name": 1
+        },
+        {
+          "json": "tables_resolved/FieldLandMakingRoadKindParam.json",
+          "rows": 9,
+          "columns": 3,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/FieldMysteryTourParam.json",
+          "rows": 3,
+          "columns": 7,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/FieldDistantViewParam.json",
+          "rows": 3,
+          "columns": 2,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/FieldMysteryTourFieldParam.json",
+          "rows": 3,
+          "columns": 2,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/FieldOutsideTemplate.json",
+          "rows": 36,
+          "columns": 27,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/FieldMysteryTourItemParam.json",
+          "rows": 3,
+          "columns": 1,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/FieldCreateParam.json",
+          "rows": 89,
+          "columns": 6,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/FieldMainFieldParam.json",
+          "rows": 96,
+          "columns": 6,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/MysteryTourFieldParam.json",
+          "rows": 23,
+          "columns": 2,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/EventPlazaGround.json",
+          "rows": 2,
+          "columns": 2,
+          "columns_without_original_name": 0
+        }
+      ],
+      "missing_requested_table_names": [],
+      "evidence_files": [
+        "terrain_native.json",
+        "terrain_collision_parameters.json"
+      ],
+      "remaining": [
+        "Raw 14-byte preset -> 52-byte runtime construction",
+        "Live terraform update and all building/placement restrictions"
+      ],
+      "complete": false
+    },
+    "dynamic_ground": {
+      "tables": [
+        {
+          "json": "tables_resolved/ColGroundAttributeParam.json",
+          "rows": 63,
+          "columns": 14,
+          "columns_without_original_name": 3
+        },
+        {
+          "json": "tables_resolved/FieldOutsideParts.json",
+          "rows": 136,
+          "columns": 4,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/FieldOutsideTemplate.json",
+          "rows": 36,
+          "columns": 27,
+          "columns_without_original_name": 0
+        }
+      ],
+      "missing_requested_table_names": [],
+      "evidence_files": [
+        "dynamic_ground_native.json",
+        "terrain_native.json"
+      ],
+      "remaining": [
+        "Active room/object context dispatch and lookup-map selection",
+        "All dynamic override loader and reachability conditions"
+      ],
+      "complete": false
+    },
+    "position_checks": {
+      "tables": [
+        {
+          "json": "tables_resolved/ColGroundAttributeParam.json",
+          "rows": 63,
+          "columns": 14,
+          "columns_without_original_name": 3
+        },
+        {
+          "json": "tables_resolved/ItemSize.json",
+          "rows": 25,
+          "columns": 8,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/FieldMainFieldParam.json",
+          "rows": 96,
+          "columns": 6,
+          "columns_without_original_name": 0
+        }
+      ],
+      "missing_requested_table_names": [],
+      "evidence_files": [
+        "proximity_native.json",
+        "terrain_native.json"
+      ],
+      "remaining": [
+        "Full candidate collection, actor/type filtering and object registry",
+        "Complete placement queries and callers"
+      ],
+      "complete": false
+    },
+    "npc_navigation": {
+      "tables": [
+        {
+          "json": "tables_resolved/NpcCastScheduleData.json",
+          "rows": 29,
+          "columns": 11,
+          "columns_without_original_name": 1
+        },
+        {
+          "json": "tables_resolved/MuseumNPCSpotTalk.json",
+          "rows": 9,
+          "columns": 5,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/SpNpcParam.json",
+          "rows": 62,
+          "columns": 22,
+          "columns_without_original_name": 3
+        },
+        {
+          "json": "tables_resolved/MuseumNPCLayoutInfo.json",
+          "rows": 83,
+          "columns": 7,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/NpcLooksParam.json",
+          "rows": 8,
+          "columns": 35,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/NpcEquipRule.json",
+          "rows": 19,
+          "columns": 20,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/NpcSpClothSetParam.json",
+          "rows": 17,
+          "columns": 10,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/NpcRoomTemplate.json",
+          "rows": 342,
+          "columns": 6,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/NpcLife.json",
+          "rows": 47,
+          "columns": 40,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/NmlNpcParam.json",
+          "rows": 397,
+          "columns": 39,
+          "columns_without_original_name": 8
+        },
+        {
+          "json": "tables_resolved/MuseumNPCSilhouette.json",
+          "rows": 17,
+          "columns": 6,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/NpcMsgBullfestParam.json",
+          "rows": 21,
+          "columns": 24,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/NpcInterest.json",
+          "rows": 18,
+          "columns": 27,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/NpcMoveRoomTemplate.json",
+          "rows": 28,
+          "columns": 6,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/NpcSpServiceMotionRandom.json",
+          "rows": 53,
+          "columns": 8,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/NpcSpServiceMotionWork.json",
+          "rows": 8,
+          "columns": 18,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/NmlNpcRaceParam.json",
+          "rows": 35,
+          "columns": 15,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/NpcCastLabelData.json",
+          "rows": 29,
+          "columns": 4,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/NpcSpServiceMotionWorkSp.json",
+          "rows": 3,
+          "columns": 5,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/NpcSpModelScale.json",
+          "rows": 4,
+          "columns": 19,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/AITag.json",
+          "rows": 31,
+          "columns": 4,
+          "columns_without_original_name": 0
+        }
+      ],
+      "missing_requested_table_names": [],
+      "evidence_files": [
+        "npc_activity_bindings.json",
+        "focus7/npc_ai_eventflows.json",
+        "focus7/npc_ai_flow_graphs.json",
+        "focus7/npc_native_state_labels.json"
+      ],
+      "remaining": [
+        "Full pathfinding, obstacle avoidance and route selection",
+        "Scheduler priorities, social/interest decisions and all AI transitions"
+      ],
+      "complete": false
+    },
+    "items_tools_crafting": {
+      "tables": [
+        {
+          "json": "tables_resolved/ItemStrSort.json",
+          "rows": 8208,
+          "columns": 15,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/ItemShareTexture.json",
+          "rows": 2,
+          "columns": 2,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/ItemSeasonalityParam.json",
+          "rows": 5,
+          "columns": 9,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/ItemClothGroup.json",
+          "rows": 1106,
+          "columns": 18,
+          "columns_without_original_name": 1
+        },
+        {
+          "json": "tables_resolved/ItemFrom.json",
+          "rows": 119,
+          "columns": 4,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/ItemColor.json",
+          "rows": 15,
+          "columns": 3,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/ItemNpcOutfitInfo.json",
+          "rows": 20,
+          "columns": 5,
+          "columns_without_original_name": 1
+        },
+        {
+          "json": "tables_resolved/ItemPlayerInitialOutfitBoySSParam.json",
+          "rows": 8,
+          "columns": 9,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/ItemPlayerInitialOutfitGirlSSParam.json",
+          "rows": 8,
+          "columns": 9,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/ItemMailAttachCategoryGroup.json",
+          "rows": 3,
+          "columns": 4,
+          "columns_without_original_name": 1
+        },
+        {
+          "json": "tables_resolved/ItemNpcRoomReplaceCategory.json",
+          "rows": 21,
+          "columns": 10,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/ItemPlayerInitialOutfitBoyAWParam.json",
+          "rows": 8,
+          "columns": 9,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/ItemUIContextMenu.json",
+          "rows": 54,
+          "columns": 6,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/ItemOutfitInfo.json",
+          "rows": 108,
+          "columns": 16,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/ItemRemake.json",
+          "rows": 654,
+          "columns": 56,
+          "columns_without_original_name": 1
+        },
+        {
+          "json": "tables_resolved/ItemSize.json",
+          "rows": 25,
+          "columns": 8,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/ItemPlayerInitialOutfitGirlAWParam.json",
+          "rows": 8,
+          "columns": 9,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/ItemOutfitCategory.json",
+          "rows": 65,
+          "columns": 12,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/ItemFilter.json",
+          "rows": 7,
+          "columns": 19,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/ItemPlayerTopsForm.json",
+          "rows": 75,
+          "columns": 11,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/ItemNpcTopsForm.json",
+          "rows": 35,
+          "columns": 31,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/ItemAct.json",
+          "rows": 55,
+          "columns": 6,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/ItemParam.json",
+          "rows": 8208,
+          "columns": 94,
+          "columns_without_original_name": 6
+        },
+        {
+          "json": "tables_resolved/ItemUnitIcon.json",
+          "rows": 159,
+          "columns": 8,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/ItemRemakeCommonPatternCategory.json",
+          "rows": 11,
+          "columns": 3,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/ItemKind.json",
+          "rows": 120,
+          "columns": 28,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/ItemMenuIcon.json",
+          "rows": 470,
+          "columns": 4,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/ItemRemakeCommonPattern.json",
+          "rows": 200,
+          "columns": 7,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/ItemNpcFtrActionParam.json",
+          "rows": 17,
+          "columns": 7,
+          "columns_without_original_name": 0
+        },
+        {
+          "json": "tables_resolved/RecipeCraftParam.json",
+          "rows": 552,
+          "columns": 19,
+          "columns_without_original_name": 0
+        }
+      ],
+      "missing_requested_table_names": [],
+      "evidence_files": [
+        "crafting_materials_native.json",
+        "focus7/item_tool_event_calls.json"
+      ],
+      "remaining": [
+        "Inventory availability and atomic ingredient consumption",
+        "Recipe unlocks, tool durability and all use/remake transactions"
+      ],
+      "complete": false
+    }
+  },
+  "counts": {
+    "tables": 68,
+    "parameter_files": 4,
+    "ai_flows": 53,
+    "ai_action_query_occurrences": 1233,
+    "npc_native_state_label_records": 67,
+    "unique_npc_state_labels": 67,
+    "ai_graphs": 55,
+    "ai_graph_nodes": 1414,
+    "ai_graph_edges": 1401,
+    "ai_entry_points": 236,
+    "ai_subflow_calls": 181,
+    "item_tool_action_query_occurrences": 1261,
+    "selected_native_handler_entries": 221,
+    "ai_exact_handler_matches": 1233
+  },
+  "evidence_root": "output/mechanics/",
+  "table_json_root": "output/",
+  "model_sound_policy": "Supplied catalogues only; no missing model/audio source requirement for this focus.",
+  "full_requested_focus_complete": false,
+  "scope": "Evidence map over supplied corpus and existing native index. It does not claim all code paths or functions are known."
+}

@@ -1,0 +1,56 @@
+{
+  "groups": {
+    "gravity_getter": 5,
+    "terminal_gravity_triplet": 30,
+    "custom_motion_triplet": 375
+  },
+  "cases": 410,
+  "mismatches": [],
+  "native_functions": [
+    "0xdb17b0",
+    "0xda91a0",
+    "0xdb17f0"
+  ],
+  "callees_executed": [
+    "0xe6fb50",
+    "0xe70ea0",
+    "0x5df70",
+    "0x37a50"
+  ],
+  "parameter_bindings": {
+    "mDefaultGravity": {
+      "member_offset": "0x780",
+      "value_offset": "0x7a4",
+      "source_value": -0.25
+    },
+    "mSpeedYMin": {
+      "member_offset": "0x7b0",
+      "value_offset": "0x7d4",
+      "source_value": -2.0999999046325684
+    }
+  },
+  "typed_float_getter": {
+    "vtable": "0x3020ad8",
+    "getter": "0x37a50",
+    "value_offset": 36
+  },
+  "terminal_fallback_constant": -0.0,
+  "rules": {
+    "0xdb17b0": "Returns mDefaultGravity through actual singleton and typed property getter.",
+    "0xda91a0": "Writes [negative magnitude of mSpeedYMin, same value, mDefaultGravity], preserving original signed-zero behavior.",
+    "0xdb17f0": "Writes [S0, S2 if negative else native fallback, S1 if negative else mDefaultGravity]."
+  },
+  "dependencies_stubbed": [],
+  "reconstructed_state": [
+    "Actor-type registry with absent type entry",
+    "Initialized fallback PlayerActor parameter object",
+    "Real typed float vtable and selected field values"
+  ],
+  "scope": "Complete parameter getter and motion-triplet builders on selected resolver path. Full gravity integration, collision response and player state update are not executed.",
+  "limits": [
+    "Parameter constructors and per-actor registry success branch are not executed.",
+    "Finite values only; NaN and infinity behavior is not covered.",
+    "Field/argument units and update frequency remain unproven."
+  ],
+  "elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74"
+}

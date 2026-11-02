@@ -1,0 +1,34 @@
+{
+  "groups": {
+    "source_recipe_slots": 3312,
+    "invalid_recipe_no_output_write": 4,
+    "u16_recipe_id_narrowing": 3,
+    "quantity_low_byte": 6,
+    "null_output_guards": 2,
+    "slot_boundary_and_u8_alias": 4
+  },
+  "cases": 3331,
+  "mismatches": [],
+  "recipes": 552,
+  "getter": "0xedac50",
+  "all_source_rows_unchanged": true,
+  "source_sha256": "97fe6d73e183dab43dad7358627a0a1a43f5764f0a18fa044a63a9ecf56ba919",
+  "dependencies_stubbed": [],
+  "source_slot_outputs_written": 1020,
+  "source_slot_outputs_untouched": 2292,
+  "native_return_contract": "W0 boolean: one when outputs are written, zero when not written. Automatic pseudocode void signature is incomplete.",
+  "rules": [
+    "Six slots 0..5 write complete eight-byte material item and u8 quantity only if material != 0xfffe and low quantity byte != 0.",
+    "Empty material or zero low quantity byte leaves caller output unchanged.",
+    "Recipe ID uses low 16 bits; slot argument uses low 8 bits.",
+    "Missing recipe and invalid slot leave caller output unchanged.",
+    "Source quantity storage is u16 but this output uses its low byte; callers must initialize outputs."
+  ],
+  "reconstructed_state": [
+    "Dense recipe lookup with sparse null entries",
+    "Native field metadata cache offsets",
+    "Raw BCSV rows"
+  ],
+  "scope": "Complete material getter and actual item construction/copy helpers. Inventory availability, crafting transaction, ingredient consumption and recipe unlock rules are not executed.",
+  "elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74"
+}

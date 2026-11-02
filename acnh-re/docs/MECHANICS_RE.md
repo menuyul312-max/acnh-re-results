@@ -95,3 +95,5 @@ Tahap konsumen mode: lihat [kebijakan mask dan perubahan scalar](COLLISION_RESPO
 Tahap kedekatan dan izin ground: lihat [PROXIMITY_GROUND.md](PROXIMITY_GROUND.md). Tambahan 3.235 kasus teruji; total terbaru 1.108.440. Solver gerak dan collision lengkap masih terbuka.
 
 Tahap runtime terrain: [koordinat, overlay dan rangkaian ground](TERRAIN_RUNTIME.md), 1.791 kasus tambahan, termasuk tiga pemanggil yang dijalankan utuh pada konteks terkontrol. Total terbaru 1.110.231; override dinamis dan runtime lengkap tetap terbuka.
+
+Fokus tujuh sistem: [peta bukti, ground dinamis, parameter gerak/NPC dan getter crafting](FOCUS7_MECHANICS.md). Tambahan 6.235 kasus native dan pemetaan statis 292 parameter; total terbaru 1.116.466. Seluruh tujuh sistem belum dinyatakan selesai.
