@@ -1,0 +1,98 @@
+{
+  "groups": {
+    "source_rows": 252,
+    "all_byte_values": 1024,
+    "out_of_range_indices": 16,
+    "missing_field_cache": 4
+  },
+  "cases": 1296,
+  "mismatches": [],
+  "fields": [
+    {
+      "field": "WaterCheck",
+      "reader": "0x18ef20",
+      "offset": 12,
+      "hash": "58da05ed",
+      "metadata_cache_cell_offset": 16,
+      "cache_load_pc": "0x18ef88",
+      "reader_sha256_first_256_bytes": "536bdc4e5d118db6931c244bd12161c56474bbda2e5bd9ff7656287ab9fb7225",
+      "enabled_rows": [
+        1,
+        5,
+        12,
+        54
+      ]
+    },
+    {
+      "field": "CanBury",
+      "reader": "0x18f1c0",
+      "offset": 13,
+      "hash": "472724ed",
+      "metadata_cache_cell_offset": 20,
+      "cache_load_pc": "0x18f228",
+      "reader_sha256_first_256_bytes": "59e791276e6423b573ef425964735138fa979ac55bd3d5c375d3b7aaea5b98a9",
+      "enabled_rows": [
+        0,
+        4,
+        26,
+        31,
+        32
+      ]
+    },
+    {
+      "field": "PlayerNoEntry",
+      "reader": "0x18f5b0",
+      "offset": 47,
+      "hash": "e7e965db",
+      "metadata_cache_cell_offset": 32,
+      "cache_load_pc": "0x18f618",
+      "reader_sha256_first_256_bytes": "33b8116a78ebf0752f96e99286e0d7c9102a39498df201093cc6df1dafa5a442",
+      "enabled_rows": [
+        1,
+        7,
+        8,
+        12,
+        28,
+        37,
+        42,
+        43,
+        46,
+        47,
+        54,
+        58,
+        59
+      ]
+    },
+    {
+      "field": "NpcNoEntry",
+      "reader": "0x18f700",
+      "offset": 48,
+      "hash": "5baf48a0",
+      "metadata_cache_cell_offset": 36,
+      "cache_load_pc": "0x18f768",
+      "reader_sha256_first_256_bytes": "7be1156261b68bfe408c2dc7ea7278d4872ae5e04403db1fd679e54a4d3c1c8d",
+      "enabled_rows": [
+        1,
+        7,
+        8,
+        12,
+        28,
+        37,
+        42,
+        43,
+        46,
+        47,
+        54,
+        58,
+        59
+      ]
+    }
+  ],
+  "elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+  "source_sha256": "33705cfa93db0695a632afc8e891655518c1a3fbff5ae3f598062191075aefcb",
+  "lookup_helper": "0x18f070",
+  "lookup_rows": 63,
+  "rule": "Byte zero -> false; every nonzero byte -> true; out-of-range lookup or cached missing field -> false.",
+  "dependencies_stubbed": [],
+  "scope": "Complete four readers and their actual dense lookup helper. Raw BCSV rows preserved; row-pointer arrays and cached metadata offsets reconstructed. Table constructors, metadata discovery and caller gameplay eligibility not executed."
+}

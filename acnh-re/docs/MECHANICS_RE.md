@@ -91,3 +91,5 @@ kumulatif menjadi 1.042.503; pemeriksaan BYML 2.546.185 tetap dihitung terpisah.
 Jumlah tersebut adalah volume validasi, bukan persentase selesainya seluruh game.
 
 Tahap konsumen mode: lihat [kebijakan mask dan perubahan scalar](COLLISION_RESPONSE.md), yang menambah 62.702 kasus dan menjalankan predicate asli. Total terbaru 1.105.205; angka di uraian awal adalah snapshot tahap sebelumnya.
+
+Tahap kedekatan dan izin ground: lihat [PROXIMITY_GROUND.md](PROXIMITY_GROUND.md). Tambahan 3.235 kasus teruji; total terbaru 1.108.440. Solver gerak dan collision lengkap masih terbuka.

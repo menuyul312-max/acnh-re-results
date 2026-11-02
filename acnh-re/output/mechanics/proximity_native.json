@@ -1,0 +1,71 @@
+{
+  "groups": {
+    "whole_xz_helper_and_source_guards": 1339,
+    "masked_caller_fragment": 600
+  },
+  "cases": 1939,
+  "mismatches": [],
+  "accepted_caller_cases": 51,
+  "scale": 0.9800000190734863,
+  "scale_bits": "0x3f7ae148",
+  "xz_formula": "f32(sqrt(f32(f32(dx*dx)+f32(dz*dz)))) < f32(r0+f32(r1*scale))",
+  "abi": {
+    "helper": "0x7c94f0",
+    "x0": "pointer to float[3] A",
+    "x1": "pointer to float[3] B",
+    "s0": "r0",
+    "s1": "r1",
+    "w0": "boolean result"
+  },
+  "caller_contract": {
+    "start": "0x7f6b10",
+    "reject_stop": "0x7f6b64",
+    "accept_stop": "0x7f6c9c",
+    "rule": "mask == 0x201 and XZ proximity and (height_limit <= 0 or abs(dy) < height_limit)",
+    "native_callees_executed": [
+      "0x33de0",
+      "0x7c94f0"
+    ]
+  },
+  "dependencies_stubbed": [],
+  "sqrtf_fallback_executed": false,
+  "limits": [
+    "XZ/radius inputs finite and bounded; Y nonfinite probes prove this helper does not use Y.",
+    "NaN/overflow XZ path and SDK sqrtf fallback are not covered.",
+    "Caller fragment begins after actor/type filters; candidate collection and full query are not executed.",
+    "Detection predicate, not full penetration response or movement solver.",
+    "Coordinate units and physical interpretation of radius inputs remain unproven."
+  ],
+  "direct_callers": [
+    {
+      "pc": "0x7f6b34",
+      "owner_va": "0x7f6910"
+    },
+    {
+      "pc": "0x7f6c28",
+      "owner_va": "0x7f6910"
+    },
+    {
+      "pc": "0xe667fc",
+      "owner_va": "0xe667a0"
+    }
+  ],
+  "evidence": [
+    {
+      "va": "0x7c94f0",
+      "bytes": 108,
+      "sha256": "84e16c02dd26f164ad93aa9c45d38044e776be254d9c78a33f2882d0658d9629"
+    },
+    {
+      "va": "0x7f6b10",
+      "bytes": 84,
+      "sha256": "15659826797e346ec5aacbd5d454950d18ca66847afaa4cbec05f0f4f39816ad"
+    },
+    {
+      "va": "0x29d5fb8",
+      "bytes": 4,
+      "sha256": "6cd00ccbb89fc4145ef09d9250e8fcb9c61e06567d5cd499cb136cc0d35a4441"
+    }
+  ],
+  "elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74"
+}

@@ -61,3 +61,5 @@ SHA-256 ZIP lengkap lokal sebelum pembagian (verifikasi lima berkas unduhan mema
 ```
 
 Konsumen collision: [override mode, mask dan perubahan scalar](acnh-re/docs/COLLISION_RESPONSE.md), dengan 62.702 kasus validasi tambahan. JSON dan tool tersedia langsung dalam repo; ZIP snapshot lama tidak diperbarui.
+
+Kedekatan dan terrain: [uji XZ, batas tinggi dan pembaca izin ground](acnh-re/docs/PROXIMITY_GROUND.md), dengan 3.235 kasus tambahan. JSON/tool tersedia langsung di repo, terpisah dari ZIP snapshot sebelumnya.
