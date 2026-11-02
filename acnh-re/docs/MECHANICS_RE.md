@@ -1,0 +1,91 @@
+# RE mekanik: collision, terrain dan jalur seluruh sistem
+
+Status: pekerjaan berlanjut; seluruh mekanik game belum selesai dipahami.
+Model dan sound memakai katalog sebagai referensi sesuai arahan pengguna.
+Proyek Godot tidak dikerjakan. Ketiadaan mesh/waveform tidak menjadi syarat
+untuk meneruskan analisis mekanik executable yang tersedia.
+
+## Hasil native baru
+
+Pembaca field `BgCheckType` berada di ELF VA `0xe8dbf0`, dengan hash descriptor
+`4045796c`. Pembaca `ObjCheckType` berada di `0xe8d830`, hash `c5567172`.
+Rujukan instruksi dan pseudocode dicocokkan; pseudocode memakai base +0x100000.
+
+Literal enum BG asli pada `0x2965b0c` memuat tujuh nama dalam urutan:
+
+1. Normal
+2. OnlyWallNoGravity
+3. OnlyWall
+4. OnlyFloor
+5. OnlyOriginalFloor
+6. NoBgCheckNoGravity
+7. NoBgCheckUseGravity
+
+Seluruh hash BG pada 235 baris PlayerStateParam cocok CRC32 salah satu nama ini.
+Distribusinya: Normal 151, NoBgCheckNoGravity 66, OnlyFloor 14,
+NoBgCheckUseGravity 2, OnlyWallNoGravity 2. Dua mode lainnya tidak digunakan
+oleh tabel yang tersedia. Nama tambahan dari referensi enum eksternal tidak
+otomatis diperlakukan sebagai mode yang didukung build lokal.
+
+Mode objek pada tabel: Heavy 223, None 6, Normal 6. Ini adalah nama konfigurasi;
+respons benturan fisik masing-masing mode belum diverifikasi.
+
+Empat blok compare/select asli diperiksa melalui emulasi:
+
+| Blok ELF VA | Batas unsigned |
+|---|---:|
+| 0xe8dd20..0xe8dd28 | 7 |
+| 0xe8dd74..0xe8dd7c | 7 |
+| 0xe8d960..0xe8d968 | 3 |
+| 0xe8d9b4..0xe8d9bc | 3 |
+
+Masing-masing diperiksa pada 65.536 nilai rendah u32 ditambah lima nilai batas
+tinggi. Total **262.164 perbandingan**, tanpa mismatch atau stub. Aturannya:
+nilai unsigned di bawah batas dipertahankan, lainnya menjadi nol. Pengujian
+dimulai setelah pemanggilan konversi enum dan berhenti sebelum store berikutnya.
+Tidak ada klaim eksekusi pembaca tabel lengkap, resolver enum lengkap, solver
+collision atau layanan OS. Ini bukan 262.164 aturan gameplay yang berbeda.
+
+Hasil data mencakup semua state pemain dengan mode BG, mode objek, ObjCheckRate,
+StopAutoSave dan EnableStageChange. Nama state dan nilai flag berasal dari tabel;
+efek lengkap flag belum diuji melalui runtime game.
+
+## Terrain dan batas interaksi
+
+Disediakan JSON terhubung untuk 63 baris ColGroundAttributeParam, 17 baris
+FieldLandMakingActionParam dan 12 baris FieldLandMakingError. Metadata menyimpan
+offset/tipe kolom serta kandidat instruksi pembaca hash dari indeks native.
+Data mencakup larangan masuk player/NPC, kelayakan penempatan/bury, atribut
+suara/efek, aksi perubahan terrain, dan label error. Keberadaan flag tidak
+membuktikan seluruh pengecekan yang dijalankan pemanggilnya. Kolom tanpa nama
+asli tetap dipertahankan sebagai hash.
+
+## Ledger penelusuran seluruh sistem
+
+Ledger membagi bukti string dan fungsi ke collision/fisika, terrain, AI/navigasi,
+inventory/crafting, save, multiplayer, tanaman, cuaca/kalender, animasi/efek/audio,
+serta ekonomi/progres. Tiap target menyimpan alamat ELF, path pseudocode bila
+tersedia dan caller langsung yang diketahui.
+
+Ini kumpulan titik masuk berdasarkan bukti string pada indeks yang tersedia,
+bukan inventaris lengkap seluruh fungsi suatu sistem. Fungsi dapat masuk lebih
+dari satu domain. Kecocokan kata kunci dan caller tidak membuktikan semantik.
+
+Urutan penelusuran lanjutan: konsumen mode collision dan integrasi gerak pemain;
+pemeriksaan larangan terrain dan aksi terraforming; scheduler/interaksi actor;
+AI/pathfinding; transaksi item dan ekonomi; save/network; kemudian hubungan
+animasi, XLNK dan VFX dengan pemicu gameplay. Sistem lainnya tetap tercatat
+sebagai pekerjaan terbuka, bukan dianggap selesai karena sudah ada pseudocode.
+
+## Berkas hasil
+
+- output/mechanics/collision_states.json
+- output/mechanics/collision_native_verification.json
+- output/mechanics/terrain_collision_parameters.json
+- output/mechanics/systems_research_ledger.json
+- tools/mechanics_atlas.py
+
+Reproduksi: `python /workspace/acnh-re/tools/mechanics_atlas.py` dengan input ELF,
+indeks SQLite dan tabel baseline yang sama. Jumlah perbandingan helper/blok
+kumulatif menjadi 1.042.503; pemeriksaan BYML 2.546.185 tetap dihitung terpisah.
+Jumlah tersebut adalah volume validasi, bukan persentase selesainya seluruh game.

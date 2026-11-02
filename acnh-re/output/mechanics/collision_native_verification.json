@@ -1,0 +1,59 @@
+{
+  "blocks": [
+    {
+      "begin": "0xe8dd20",
+      "end_exclusive": "0xe8dd28",
+      "limit": 7,
+      "cases": 65541,
+      "sha256": "e598ce73317d5f124bdff04ad2cc7e8d2d809768cbff88afcdace938fa5c5ba3",
+      "instructions": [
+        "cmp w0, #7",
+        "csel w8, w0, wzr, lo"
+      ]
+    },
+    {
+      "begin": "0xe8dd74",
+      "end_exclusive": "0xe8dd7c",
+      "limit": 7,
+      "cases": 65541,
+      "sha256": "e598ce73317d5f124bdff04ad2cc7e8d2d809768cbff88afcdace938fa5c5ba3",
+      "instructions": [
+        "cmp w0, #7",
+        "csel w8, w0, wzr, lo"
+      ]
+    },
+    {
+      "begin": "0xe8d960",
+      "end_exclusive": "0xe8d968",
+      "limit": 3,
+      "cases": 65541,
+      "sha256": "5ae46a3a45bc0dec717b29202685aa995ae74bacd0e2d17c26ecd3cd557bcc90",
+      "instructions": [
+        "cmp w0, #3",
+        "csel w8, w0, wzr, lo"
+      ]
+    },
+    {
+      "begin": "0xe8d9b4",
+      "end_exclusive": "0xe8d9bc",
+      "limit": 3,
+      "cases": 65541,
+      "sha256": "5ae46a3a45bc0dec717b29202685aa995ae74bacd0e2d17c26ecd3cd557bcc90",
+      "instructions": [
+        "cmp w0, #3",
+        "csel w8, w0, wzr, lo"
+      ]
+    }
+  ],
+  "comparisons": 262164,
+  "mismatches": [],
+  "dependencies_stubbed": [],
+  "scope": "Only the four original unsigned compare/select blocks after enum conversion. Enclosing loaders and enum conversion calls are not executed.",
+  "rule": "u32 mode < limit retains value; all other u32 values become zero.",
+  "native_bg_literal_va": "0x2965b0c",
+  "native_bg_literal": "Normal,OnlyWallNoGravity,OnlyWall,OnlyFloor,OnlyOriginalFloor,NoBgCheckNoGravity,NoBgCheckUseGravity,",
+  "bg_field_reader": "0xe8dbf0",
+  "obj_field_reader": "0xe8d830",
+  "bg_field_hash": "4045796c",
+  "obj_field_hash": "c5567172"
+}

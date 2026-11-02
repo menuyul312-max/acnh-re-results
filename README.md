@@ -2,6 +2,8 @@
 
 Paket hasil reverse engineering untuk menjadi referensi konversi ke Godot. Proyek Godot dan sumber pengguna tidak diubah. Status semantik masih parsial.
 
+Pembaruan mekanik: [collision, terrain dan ledger seluruh sistem](acnh-re/docs/MECHANICS_RE.md). Data baru tersedia langsung dalam [output/mechanics](acnh-re/output/mechanics), terpisah dari ZIP snapshot sebelumnya. Tahap ini menambah 262.164 perbandingan blok native dan memetakan konfigurasi 235 state pemain. Model dan sound memakai katalog sebagai referensi.
+
 ## Pembaruan RomFS tambahan — 2 November 2026
 
 [Laporan tambahan](acnh-re/docs/ADDITIONAL_ROMFS.md) · [Unduh tiga ZIP tambahan](downloads/additional_romfs/) · [Ringkasan JSON](acnh-re/output/additional_romfs/summary.json)

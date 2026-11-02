@@ -4,6 +4,8 @@
 
 Proyek Godot hanya menjadi referensi dan tidak diubah. Hasil baru berada di `/workspace/acnh-re`, untuk menjadi sumber konversi berikutnya tanpa ketergantungan engine.
 
+**Tahap mekanik:** [audit collision dan ledger seluruh sistem](docs/MECHANICS_RE.md) menambah 262.164 perbandingan blok native, pemetaan mode collision pada 235 state pemain, parameter terrain dan 465 fungsi titik masuk riset lintas sistem. Jumlah helper/blok kumulatif menjadi 1.042.503; angka lama pada uraian tahap sebelumnya adalah snapshot historis. Model/sound selanjutnya memakai katalog sebagai referensi, sesuai arahan pengguna. Seluruh perilaku game tetap belum selesai dipahami.
+
 **Tambahan 2 November 2026:** arsip RomFS baru berisi 25.597 berkas, termasuk seluruh 1.171 B_data awal yang identik. Audit tambahan memetakan 965.426 pesan dalam 14 varian bahasa, 888.034 label BDLI, 83 state machine animasi dan metadata UI/shader. [Laporan tambahan dan batasnya](docs/ADDITIONAL_ROMFS.md). Angka cakupan tabel/BYML di bagian lama tetap merujuk korpus awal; shader/VFX kini tersedia sebagian, sementara direktori Model dan Sound/Resource tetap tidak tersedia. Ini belum menyelesaikan perilaku seluruh game.
 
 Perubahan terhadap laporan sebelumnya: [progress_since_previous.json](output/progress_since_previous.json). Tahap ini menambah validasi pembaca BYML asli, nama array bertipe, registry/record Stage, view byte BCSV, predicate flag, RNG, dan pemilih cuaca hari biasa. Nama key BYML yang pulih bertambah dari 2.910 menjadi 2.979; nama asli kolom BCSV tetap 1.957, dengan empat view baca native baru untuk kolom unresolved.
