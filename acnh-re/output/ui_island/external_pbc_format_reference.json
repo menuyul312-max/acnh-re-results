@@ -1,0 +1,62 @@
+{
+  "scope": "Independent source-code corroboration for the 52-byte collision/PBC record layout. This is not a copy of game assets and does not prove the local runtime loader's conversion path.",
+  "source": {
+    "repository": "Treeki/CylindricalEarth",
+    "commit": "bb09c0ee71a4aa6011de088b88ea55fdee0bf6e9",
+    "readme": "https://github.com/Treeki/CylindricalEarth/blob/bb09c0ee71a4aa6011de088b88ea55fdee0bf6e9/README.md",
+    "pbc_parser": "https://github.com/Treeki/CylindricalEarth/blob/bb09c0ee71a4aa6011de088b88ea55fdee0bf6e9/pbc.py",
+    "pbc_display": "https://github.com/Treeki/CylindricalEarth/blob/bb09c0ee71a4aa6011de088b88ea55fdee0bf6e9/display_pbc.py",
+    "map_renderer": "https://github.com/Treeki/CylindricalEarth/blob/bb09c0ee71a4aa6011de088b88ea55fdee0bf6e9/render_map.py",
+    "limitations_declared_upstream": [
+      "README describes pbc.py as a minimal reader for collision and heightmap files.",
+      "README describes render_map.py as pretty incomplete and says it uses collision data as a layout proxy because it does not render BFRES geometry.",
+      "The checked-in map renderer is an older community tool; its version-specific map palette/comments are not treated as native semantics for the analyzed ELF build."
+    ]
+  },
+  "pbc_binary_layout_reported_by_parser": {
+    "magic": "pbc\\0",
+    "header": [
+      {"offset": 0, "size": 4, "field": "magic"},
+      {"offset": 4, "size": 4, "field": "width_s32_le"},
+      {"offset": 8, "size": 4, "field": "height_s32_le"},
+      {"offset": 12, "size": 4, "field": "offset_x_s32_le"},
+      {"offset": 16, "size": 4, "field": "offset_y_s32_le"}
+    ],
+    "first_record_offset": 20,
+    "record_stride_bytes": 52,
+    "record_fields_supported_by_external_parser": [
+      {"offset": 0, "size": 48, "encoding": "12 little-endian float32 values", "semantic_names": "unresolved by this source"},
+      {"offset": 48, "size": 4, "encoding": "four one-byte collision/material attribute values"}
+    ],
+    "attribute_rasterization_in_render_map": "For each 52-byte PBC record, bytes +48..+51 are placed into a 2x2 sample block; total image dimensions are PBC width*2 by height*2.",
+    "heightmap_scope": "The parser advances over the 48-byte float portion but does not interpret it; no float semantics or height reconstruction are claimed."
+  },
+  "cross_check_against_local_elf_analysis": {
+    "local_runtime_record_stride": 52,
+    "local_runtime_attribute_offsets": [48, 49, 50, 51],
+    "local_native_record_reader": "0x181cd0 reads a linear x+width*z array and resolves the four attribute bytes; see output/mechanics/terrain_native.json.",
+    "local_native_float_reader": "0x180d20 reads the first 48 bytes as twelve float32 values; see output/mechanics/world_nav_bridge_map.json.",
+    "result": "External parsing independently agrees with the local 52-byte record's 48-byte float prefix and four attribute bytes.",
+    "remaining_gap": "Neither this external parser nor local evidence proves that the 14-byte LandMaking preset cells are converted into these PBC/runtime records by a particular constructor or loader."
+  },
+  "selected_palette_cross_checks": [
+    {"attribute": 0, "external_comment": "Grass", "local_col_ground_name": "草", "local_water_check": 0},
+    {"attribute": 1, "external_comment": "River", "local_col_ground_name": "川", "local_water_check": 1},
+    {"attribute": 5, "external_comment": "Sea", "local_col_ground_name": "海", "local_water_check": 1},
+    {"attribute": 7, "external_comment": "Null", "local_col_ground_name": "Null", "local_water_check": 0},
+    {"attribute": 12, "external_comment": "Water at mouths of river", "local_col_ground_name": "汽水地", "local_water_check": 1}
+  ],
+  "asset_availability": {
+    "archive_name_patterns_from_pinned_tool_and_local_loader": [
+      "FldUnit_pbc.Nin_NX_NVN.zs",
+      "FldUnitRiver_pbc.Nin_NX_NVN.zs",
+      "FldUnitFall_pbc.Nin_NX_NVN.zs"
+    ],
+    "local_source_manifest_pbc_member_hits": 0,
+    "external_repository_tree": "https://api.github.com/repos/Treeki/CylindricalEarth/git/trees/bb09c0ee71a4aa6011de088b88ea55fdee0bf6e9?recursive=1",
+    "external_tree_entry_count": 172,
+    "external_pbc_related_paths": ["display_pbc.py", "pbc.py"],
+    "external_pbc_archive_asset_paths": [],
+    "interpretation": "The public repository documents expected archive/member handling and record format, but its pinned tree contains only the parser/viewer scripts and no PBC archives. The local source manifest also has no PBC member hits."
+  }
+}
