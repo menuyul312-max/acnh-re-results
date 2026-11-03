@@ -71,14 +71,41 @@
     "terrain": {
       "verified_reference": [
         "mechanics/terrain_native.json",
-        "mechanics/dynamic_ground_native.json"
+        "mechanics/dynamic_ground_native.json",
+        "mechanics/terrain_nav_flags_native.json"
       ],
       "remaining": [
-        "14-byte preset ->52-byte runtime constructor",
-        "Live terraform mutation",
-        "All placement restrictions"
+        "14-byte preset ->52-byte runtime constructor and source loader",
+        "Other surface attributes, all height/spread thresholds and overlay-height branches",
+        "Live terraform mutation and all placement restrictions"
       ],
-      "status_this_continuation": "No new terrain-loader execution."
+      "status_this_continuation": "New runtime height/flag producer proof; no preset loader or live edit execution.",
+      "verified_boundary": "Original runtime12-float height writer0x180d20, world word reader0x185e70 and node transform, on reconstructed attribute0 records and tested height patterns. Eight original height->word->node->A* chains.",
+      "next_functions": [
+        "0x180d20",
+        "0x174070",
+        "0x558f40"
+      ],
+      "function_references": [
+        {
+          "va": "0x180d20",
+          "pseudocode": "binary/analysis_decomp/180d20.c",
+          "indexed_function_size": 3008,
+          "evidence": "Original address index; proposed next target, not a full semantic claim."
+        },
+        {
+          "va": "0x174070",
+          "pseudocode": "binary/analysis_decomp/174070.c",
+          "indexed_function_size": 828,
+          "evidence": "Original address index; proposed next target, not a full semantic claim."
+        },
+        {
+          "va": "0x558f40",
+          "pseudocode": "binary/analysis_decomp/558f40.c",
+          "indexed_function_size": 1864,
+          "evidence": "Original address index; proposed next target, not a full semantic claim."
+        }
+      ]
     },
     "dynamic_ground": {
       "verified_reference": [
@@ -143,69 +170,73 @@
         "mechanics/npc_pathfinding_native.json",
         "mechanics/npc_route_handoff_native.json",
         "mechanics/npc_route_target_native.json",
-        "mechanics/npc_navigation_kernel_map.json"
+        "mechanics/npc_navigation_kernel_map.json",
+        "mechanics/terrain_nav_flags_native.json",
+        "mechanics/npc_route_evaluator_native.json",
+        "mechanics/npc_reachable_mask_native.json",
+        "mechanics/world_nav_bridge_map.json"
       ],
       "remaining": [
-        "Live island terrain/collision/actor data -> node flags, direction masks, cost categories and eligibility bitsets",
-        "Async request submission, worker lifecycle, cancellation and result publication",
-        "Active child-state evaluator0xc87710 and steering/position integration",
-        "All NPC scheduler priorities, social/interest decisions and state-transition logic",
-        "Other actor-reference branches and all request parameter meanings/units"
+        "Full world producer and nonempty actor/constraint predicates; other terrain surface classes and dynamic sources",
+        "Async request submission, lifecycle, cancellation and result publication",
+        "Remaining active evaluator branches, nonexpired wait predicates and steering geometry helpers0xc88310/0xc88660",
+        "Position/physics integration, scheduler, social/interest decisions and all transitions",
+        "All parameter meanings/units and proof of original constructor bindings"
       ],
       "candidate_ledger": "mechanics/systems_research_ledger.json#/domains/npc_ai_navigation",
-      "verified_boundary": "Original A* kernel with original cost/heuristic callbacks, Dijkstra comparison on prepared grids, complete route extraction/list recycling, matched-context target/lookahead functions, bounded worker search/parent handoff/controller setup and ten native search-to-consumer chains.",
+      "verified_boundary": "Prior A*/route consumers plus runtime terrain/word/node callbacks, native reset weights and classifier, flood/wrapper with queue oracle, selected complete active evaluator paths and setup/evaluator to FSM handoff. Context remains reconstructed.",
       "next_functions": [
-        "0x15c3390",
-        "0x15c24a0",
-        "0x15c2910",
-        "0x15bf150",
+        "0x15c1690",
         "0x15c3190",
-        "0xc87710",
-        "0xc87ea0"
+        "0x15c3390",
+        "0xc88310",
+        "0xc88660",
+        "0xc88b80",
+        "0xc21310"
       ],
-      "next_function_scope": "World-grid production, async request entry and active movement evaluators; only explicitly bounded worker/controller blocks have run in this phase.",
+      "next_function_scope": "Remaining world producer, async lifecycle and steering/interruption paths; some enclosing functions now have selected path proofs.",
       "function_references": [
         {
-          "va": "0x15c3390",
-          "pseudocode": null,
-          "indexed_function_size": 464,
-          "evidence": "Existing native address index; proposed next target, not completed semantics."
-        },
-        {
-          "va": "0x15c24a0",
-          "pseudocode": null,
-          "indexed_function_size": 364,
-          "evidence": "Existing native address index; proposed next target, not completed semantics."
-        },
-        {
-          "va": "0x15c2910",
-          "pseudocode": null,
-          "indexed_function_size": 500,
-          "evidence": "Existing native address index; proposed next target, not completed semantics."
-        },
-        {
-          "va": "0x15bf150",
-          "pseudocode": "binary/analysis_decomp/15bf150.c",
-          "indexed_function_size": 1764,
-          "evidence": "Existing native address index; proposed next target, not completed semantics."
+          "va": "0x15c1690",
+          "pseudocode": "binary/analysis_decomp/15c1690.c",
+          "indexed_function_size": 1200,
+          "evidence": "Original address index; proposed next target, not a full semantic claim."
         },
         {
           "va": "0x15c3190",
           "pseudocode": "binary/analysis_decomp/15c3190.c",
           "indexed_function_size": 452,
-          "evidence": "Existing native address index; proposed next target, not completed semantics."
+          "evidence": "Original address index; proposed next target, not a full semantic claim."
         },
         {
-          "va": "0xc87710",
-          "pseudocode": "binary/analysis_decomp/c87710.c",
-          "indexed_function_size": 1488,
-          "evidence": "Existing native address index; proposed next target, not completed semantics."
+          "va": "0x15c3390",
+          "pseudocode": null,
+          "indexed_function_size": 464,
+          "evidence": "Original address index; proposed next target, not a full semantic claim."
         },
         {
-          "va": "0xc87ea0",
-          "pseudocode": "binary/analysis_decomp/c87ea0.c",
-          "indexed_function_size": 1124,
-          "evidence": "Existing native address index; proposed next target, not completed semantics."
+          "va": "0xc88310",
+          "pseudocode": "binary/analysis_decomp/c88310.c",
+          "indexed_function_size": 848,
+          "evidence": "Original address index; proposed next target, not a full semantic claim."
+        },
+        {
+          "va": "0xc88660",
+          "pseudocode": "binary/analysis_decomp/c88660.c",
+          "indexed_function_size": 296,
+          "evidence": "Original address index; proposed next target, not a full semantic claim."
+        },
+        {
+          "va": "0xc88b80",
+          "pseudocode": "binary/analysis_decomp/c88b80.c",
+          "indexed_function_size": 336,
+          "evidence": "Original address index; proposed next target, not a full semantic claim."
+        },
+        {
+          "va": "0xc21310",
+          "pseudocode": "binary/analysis_decomp/c21310.c",
+          "indexed_function_size": 520,
+          "evidence": "Original address index; proposed next target, not a full semantic claim."
         }
       ]
     },
@@ -263,9 +294,9 @@
   },
   "scope": "Concrete proof boundaries and selected next targets; neither all unknown functions nor a complete game specification.",
   "latest_phase": {
-    "report": "../docs/NPC_NAVIGATION_KERNEL.md",
-    "progress": "mechanics/npc_navigation_progress.json",
-    "new_native_cases": 2083,
-    "native_helper_cases_total": 1134009
+    "report": "../docs/WORLD_NAV_BRIDGE.md",
+    "progress": "mechanics/world_nav_bridge_progress.json",
+    "new_native_cases": 1568,
+    "native_helper_cases_total": 1135577
   }
 }

@@ -1,0 +1,147 @@
+{
+  "cases": 175,
+  "groups": {
+    "zero_target_failure": 3,
+    "endpoint_reached_priority": 27,
+    "strict_distance_boundary": 12,
+    "last_waypoint_promotion": 18,
+    "explicit_endpoint_resume": 9,
+    "expired_wait_rng": 100,
+    "setup_evaluator_to_fsm_blocks": 6
+  },
+  "mismatches": [],
+  "samples": [
+    {
+      "case": "strict_endpoint_boundary",
+      "xz_distance": 5.0,
+      "threshold": 4.75,
+      "endpoint_y": 100.0,
+      "next_state": 4,
+      "status": 1,
+      "promoted_waypoint_xyz": [
+        35.0,
+        7.0,
+        40.0
+      ]
+    },
+    {
+      "case": "strict_endpoint_boundary",
+      "xz_distance": 5.0,
+      "threshold": 5.0,
+      "endpoint_y": 100.0,
+      "next_state": 4,
+      "status": 1,
+      "promoted_waypoint_xyz": [
+        35.0,
+        7.0,
+        40.0
+      ]
+    },
+    {
+      "case": "strict_endpoint_boundary",
+      "xz_distance": 10.0,
+      "threshold": 9.75,
+      "endpoint_y": 100.0,
+      "next_state": 4,
+      "status": 1,
+      "promoted_waypoint_xyz": [
+        35.0,
+        7.0,
+        40.0
+      ]
+    },
+    {
+      "case": "strict_endpoint_boundary",
+      "xz_distance": 10.0,
+      "threshold": 10.0,
+      "endpoint_y": 100.0,
+      "next_state": 4,
+      "status": 1,
+      "promoted_waypoint_xyz": [
+        35.0,
+        7.0,
+        40.0
+      ]
+    }
+  ],
+  "next_state_status_pairs": {
+    "1/3": 3,
+    "1/4": 27,
+    "4/1": 39,
+    "3/2": 100
+  },
+  "expired_wait_delays": {
+    "90": 20,
+    "210": 16,
+    "150": 26,
+    "120": 20,
+    "180": 18
+  },
+  "setup_samples": [
+    {
+      "case": "near",
+      "explicit_parameter": false,
+      "fsm_next": 1,
+      "status": 4
+    },
+    {
+      "case": "near",
+      "explicit_parameter": true,
+      "fsm_next": 1,
+      "status": 4
+    },
+    {
+      "case": "empty",
+      "explicit_parameter": false,
+      "fsm_next": 1,
+      "status": 3
+    },
+    {
+      "case": "empty",
+      "explicit_parameter": true,
+      "fsm_next": 1,
+      "status": 3
+    },
+    {
+      "case": "last_waypoint",
+      "explicit_parameter": false,
+      "fsm_next": 4,
+      "status": 1
+    },
+    {
+      "case": "last_waypoint",
+      "explicit_parameter": true,
+      "fsm_next": 4,
+      "status": 1
+    }
+  ],
+  "native_functions": {
+    "evaluator": "0xc87710",
+    "lookahead": "0xc86970",
+    "waypoint_peek": "0x1967d30",
+    "rng_u32": "0x19aa0e0",
+    "setup_entry": "0xc862b0",
+    "setup_stop_before": "0x1f067b0"
+  },
+  "rules": [
+    "A zero selected vec3 returns next-state1/status3. An enabled explicit endpoint with XZ distance strictly below child+0x18 returns next-state1/status4; endpoint Y is ignored by that distance.",
+    "For the tested final-waypoint context, the evaluator promotes the remaining grid point to child+0xe0 using X/Z*5 and actor Y, sets bytes+0x121/+0x122 to1, and returns next-state4/status1.",
+    "An enabled pending explicit endpoint resumes it at child+0xe0 and returns next-state4/status1 in the tested far-target context.",
+    "Expired wait-state4 increments the counter, resets it, draws the original RNG and stores90+30*floor(u32_draw*5/2^32). It returns next-state3/status2, records actor position and clears the pending byte.",
+    "The original setup/evaluator chain reaches the generic FSM transition with checked manager and next-state arguments; transition callbacks are not run."
+  ],
+  "scope": "Selected complete paths of the original active route evaluator, plus bounded setup through evaluator to FSM handoff.",
+  "limits": [
+    "This is not full branch coverage of0xc87710. Steering/geometry helpers0xc88310/0xc88660, nonexpired waits, interruption predicates and all state transitions remain open.",
+    "Owner, actor, controller and route state are reconstructed. No live scheduler, async worker or position/physics integration runs.",
+    "Numeric next-state indices and statuses are verified; names of all child FSM states and timer time units remain unassigned.",
+    "No completion/arrival claim is made for the full NPC game system from these bounded contexts."
+  ],
+  "source_reference": [
+    "mechanics/npc_route_target_native.json",
+    "mechanics/npc_route_handoff_native.json",
+    "random/native_rng.json"
+  ],
+  "dependencies_stubbed": [],
+  "elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74"
+}

@@ -5,10 +5,10 @@ ground dinamis, pemeriksaan posisi, NPC/navigasi, serta item/alat/crafting.
 Model dan sound memakai katalog sebagai referensi. Godot tidak dikerjakan.
 Seluruh mekanik tujuh sistem belum dinyatakan selesai.
 
-Lanjutan terbaru: [kernel navigasi NPC](NPC_NAVIGATION_KERNEL.md).
-Ada **2.083 kasus tambahan** pada A*, biaya/heuristik, pemindahan rute dan
-pemilihan target, sehingga total helper/blok menjadi **1.134.009**.
-[Tahap sebelumnya](RESIDENT_MAP_NPC_FOLLOWUP.md) menambah 4.706 kasus.
+Lanjutan terbaru: [terrain runtime, bitset dan evaluator NPC](WORLD_NAV_BRIDGE.md).
+Ada **1.568 kasus tambahan** pada writer ketinggian/flag, callback node,
+biaya default, flood-fill dan jalur evaluator, sehingga total helper/blok
+menjadi **1.135.577**. [Tahap sebelumnya](NPC_NAVIGATION_KERNEL.md) menambah 2.083 kasus.
 Status terbaru per jalur dijelaskan pada laporan lanjutan
 dan `output/mechanics/continuation_frontier.json`; angka tahap lama di bawah
 tetap menjadi riwayat pembuktian.
@@ -123,6 +123,12 @@ dan consumer ground. Map dibentuk untuk pengujian; PBC asli tidak tersedia.
 Atribut 7 dari map terpilih mempertahankan base tanpa fallback Floorboards.
 Ini override RoomFloor, bukan bukti editor terrain pulau selesai.
 
+Tahap terbaru menjalankan writer runtime 0x180d20: 48 byte awal record 52 byte
+dikonsumsi sebagai 12 float ketinggian. Pada atribut sektor 0 yang diuji, batas
+selisih internal dan antar sel 1,25 serta word flag dapat ditelusuri ke callback
+node navigasi dan A*. Constructor preset 14 byte, PBC asli dan live terraform
+tetap terbuka; arti seluruh field source tidak disimpulkan dari stride yang sama.
+
 ## NPC dan navigasi
 
 Seluruh 98 descriptor bernama NpcActivityParam dipetakan ke store nama/offset
@@ -158,6 +164,12 @@ Callback biaya/heuristik, extractor/list pool, batas 256 node, target/lookahead
 dan bitset eligibility juga diuji. Sepuluh rantai native menghubungkan hasil
 pencarian ke consumer tanpa mengganti path di tengah. Producer terrain/collision
 menjadi grid, worker async, steering dan seluruh scheduler tetap terbuka.
+
+Tahap world kini membuktikan sebagian producer runtime dan classifier biaya,
+flood/wrapper versus queue oracle serta jalur evaluator 0xc87710 hingga return.
+Arrival memakai jarak XZ dengan batas strict; waypoint mempertahankan Y aktor;
+expired wait memakai RNG asli. Seluruh evaluator, actor predicates, lifecycle
+async dan integrasi posisi/physics belum terbukti penuh.
 
 ## Item, alat dan crafting
 
@@ -203,7 +215,7 @@ ditetapkan untuk A/B/C.
 | Terrain | Loader runtime dan pembaruan setelah edit, seluruh syarat placement |
 | Ground dinamis | PBC asli/field opaque, loader/async/lifetime dan override selain RoomFloor |
 | Posisi | Kandidat spatial query, registry actor dan seluruh filter/type |
-| NPC/navigasi | World ke grid, worker async, steering/avoidance, scheduler dan transisi AI |
+| NPC/navigasi | Sisa producer world/surface classes, actor predicates, worker async, steering, scheduler dan transisi AI |
 | Item/alat/crafting | Akses record save, transaksi bahan, unlock dan durability |
 
 Tahap pemetaan awal di dokumen ini menambah **6.235 kasus native**, terpisah
@@ -215,6 +227,9 @@ dihitung terpisah. Angka validasi bukan persentase penyelesaian tujuh sistem.
 
 Tahap kernel navigasi menambah 2.083 menjadi **1.134.009**. Seluruh tambahan
 adalah kasus mekanik/blok; tidak ada tambahan tes pendukung SDK/arsip.
+
+Tahap world menambah 1.568 menjadi **1.135.577**. Semua tambahan merupakan kasus
+mekanik/blok dengan context yang dinyatakan.
 
 ## Berkas utama dan reproduksi
 
@@ -251,6 +266,11 @@ adalah kasus mekanik/blok; tidak ada tambahan tes pendukung SDK/arsip.
 - output/mechanics/npc_route_target_native.json
 - output/mechanics/npc_navigation_kernel_map.json
 - output/mechanics/npc_navigation_progress.json
+- output/mechanics/terrain_nav_flags_native.json
+- output/mechanics/npc_reachable_mask_native.json
+- output/mechanics/npc_route_evaluator_native.json
+- output/mechanics/world_nav_bridge_map.json
+- output/mechanics/world_nav_bridge_progress.json
 
 Jalankan tool berikut dengan input ELF, indeks dan output baseline yang sama:
 
@@ -266,4 +286,4 @@ python tools/focus7_catalogue.py
 Tool berjalan pada direktori RE, tidak membuka editor Godot. ZIP lama tetap
 snapshot historis; pembaruan tahap ini berada langsung di repo.
 
-Reproduksi fase terbaru mengikuti [urutan tool kernel navigasi](NPC_NAVIGATION_KERNEL.md#reproduksi).
+Reproduksi fase terbaru mengikuti [urutan tool world/navigation](WORLD_NAV_BRIDGE.md#reproduksi).

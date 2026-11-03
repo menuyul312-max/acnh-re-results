@@ -1,5 +1,9 @@
 # Kernel navigasi NPC: A*, pemindahan rute dan pemilihan target
 
+Snapshot ini dilanjutkan oleh [terrain runtime dan evaluator aktif](WORLD_NAV_BRIDGE.md).
+Sebagian jalur world-height/flag, flood-fill, bobot default dan evaluator kini
+memiliki bukti native tambahan; steering dan lifecycle async tetap terbuka.
+
 Tahap setelah commit `c22e342` menambahkan **2.083 kasus native tanpa mismatch**.
 Total helper/blok menjadi **1.134.009**, dari 1.131.926. Pemeriksaan BYML tetap
 2.546.185 dan dihitung terpisah. Ini volume validasi konteks terkontrol, bukan

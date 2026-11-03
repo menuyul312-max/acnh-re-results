@@ -104,7 +104,12 @@ Consumer posisi dan hasil animasi kini berjalan utuh pada context terkontrol;
 producer input/gravity, collision solver, pathfinding dan transaksi inventory
 masih terbuka. Frontier JSON mencatat titik lanjut dan batas setiap pembuktian.
 
-Lanjutan terbaru: [kernel A*, extractor rute dan pemilihan target NPC](NPC_NAVIGATION_KERNEL.md)
+Lanjutan terbaru: [terrain runtime, bitset dan evaluator aktif](WORLD_NAV_BRIDGE.md)
+menambah 1.568 kasus menjadi **1.135.577**. Ini mencakup 12 sampel tinggi runtime,
+flag/node navigasi, bobot default, flood-fill dan sebagian jalur evaluator;
+loader, live world, worker async dan steering tetap terbuka.
+
+Tahap kernel: [kernel A*, extractor rute dan pemilihan target NPC](NPC_NAVIGATION_KERNEL.md)
 menambah 2.083 kasus menjadi **1.134.009**. Kernel dan consumer dijalankan dengan
 instruksi asli pada input yang dinyatakan; world-grid producer, async worker,
 steering dan collision penuh belum terbukti.

@@ -1,0 +1,255 @@
+{
+  "complete": false,
+  "source_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+  "addresses": "ELF VA; Ghidra base is ELF+0x100000",
+  "functions": [
+    {
+      "role": "height_to_word",
+      "va": "0x180d20",
+      "pseudocode": "binary/analysis_decomp/180d20.c",
+      "indexed_function_size": 3008,
+      "proof_json": "mechanics/terrain_nav_flags_native.json",
+      "scope": "Original runtime height/flag and terrain-to-navigation consumers, including eight native height->word->node->A* chains on reconstructed terrain. Callback checks cover direct mask upper bounds, flag low nibble, state/mode and source integrity; full resulting masks/flag bytes are recorded."
+    },
+    {
+      "role": "word_decoder",
+      "va": "0x185e70",
+      "pseudocode": "binary/analysis_decomp/185e70.c",
+      "indexed_function_size": 392,
+      "proof_json": "mechanics/terrain_nav_flags_native.json",
+      "scope": "Original runtime height/flag and terrain-to-navigation consumers, including eight native height->word->node->A* chains on reconstructed terrain. Callback checks cover direct mask upper bounds, flag low nibble, state/mode and source integrity; full resulting masks/flag bytes are recorded."
+    },
+    {
+      "role": "world_node_callback",
+      "va": "0x15c24a0",
+      "pseudocode": null,
+      "indexed_function_size": 364,
+      "proof_json": "mechanics/terrain_nav_flags_native.json",
+      "scope": "Original runtime height/flag and terrain-to-navigation consumers, including eight native height->word->node->A* chains on reconstructed terrain. Callback checks cover direct mask upper bounds, flag low nibble, state/mode and source integrity; full resulting masks/flag bytes are recorded."
+    },
+    {
+      "role": "terrain_node_transform",
+      "va": "0x15c26b0",
+      "pseudocode": "binary/analysis_decomp/15c26b0.c",
+      "indexed_function_size": 600,
+      "proof_json": "mechanics/terrain_nav_flags_native.json",
+      "scope": "Original runtime height/flag and terrain-to-navigation consumers, including eight native height->word->node->A* chains on reconstructed terrain. Callback checks cover direct mask upper bounds, flag low nibble, state/mode and source integrity; full resulting masks/flag bytes are recorded."
+    },
+    {
+      "role": "iterate_grid",
+      "va": "0x15bc200",
+      "pseudocode": "binary/analysis_decomp/15bc200.c",
+      "indexed_function_size": 224,
+      "proof_json": "mechanics/terrain_nav_flags_native.json",
+      "scope": "Original runtime height/flag and terrain-to-navigation consumers, including eight native height->word->node->A* chains on reconstructed terrain. Callback checks cover direct mask upper bounds, flag low nibble, state/mode and source integrity; full resulting masks/flag bytes are recorded."
+    },
+    {
+      "role": "search",
+      "va": "0x15bd700",
+      "pseudocode": "binary/analysis_decomp/15bd700.c",
+      "indexed_function_size": 812,
+      "proof_json": "mechanics/terrain_nav_flags_native.json",
+      "scope": "Original runtime height/flag and terrain-to-navigation consumers, including eight native height->word->node->A* chains on reconstructed terrain. Callback checks cover direct mask upper bounds, flag low nibble, state/mode and source integrity; full resulting masks/flag bytes are recorded."
+    },
+    {
+      "role": "cost_reset",
+      "va": "0x15c2ce0",
+      "pseudocode": "binary/analysis_decomp/15c2ce0.c",
+      "indexed_function_size": 336,
+      "proof_json": "mechanics/terrain_nav_flags_native.json",
+      "scope": "Original runtime height/flag and terrain-to-navigation consumers, including eight native height->word->node->A* chains on reconstructed terrain. Callback checks cover direct mask upper bounds, flag low nibble, state/mode and source integrity; full resulting masks/flag bytes are recorded."
+    },
+    {
+      "role": "cost_category_producer",
+      "va": "0x15c2910",
+      "pseudocode": null,
+      "indexed_function_size": 500,
+      "proof_json": "mechanics/terrain_nav_flags_native.json",
+      "scope": "Original runtime height/flag and terrain-to-navigation consumers, including eight native height->word->node->A* chains on reconstructed terrain. Callback checks cover direct mask upper bounds, flag low nibble, state/mode and source integrity; full resulting masks/flag bytes are recorded."
+    },
+    {
+      "role": "evaluator",
+      "va": "0xc87710",
+      "pseudocode": "binary/analysis_decomp/c87710.c",
+      "indexed_function_size": 1488,
+      "proof_json": "mechanics/npc_route_evaluator_native.json",
+      "scope": "Selected complete paths of the original active route evaluator, plus bounded setup through evaluator to FSM handoff."
+    },
+    {
+      "role": "lookahead",
+      "va": "0xc86970",
+      "pseudocode": "binary/analysis_decomp/c86970.c",
+      "indexed_function_size": 488,
+      "proof_json": "mechanics/npc_route_evaluator_native.json",
+      "scope": "Selected complete paths of the original active route evaluator, plus bounded setup through evaluator to FSM handoff."
+    },
+    {
+      "role": "waypoint_peek",
+      "va": "0x1967d30",
+      "pseudocode": "binary/analysis_decomp/1967d30.c",
+      "indexed_function_size": 96,
+      "proof_json": "mechanics/npc_route_evaluator_native.json",
+      "scope": "Selected complete paths of the original active route evaluator, plus bounded setup through evaluator to FSM handoff."
+    },
+    {
+      "role": "rng_u32",
+      "va": "0x19aa0e0",
+      "pseudocode": "binary/analysis_decomp/19aa0e0.c",
+      "indexed_function_size": 44,
+      "proof_json": "mechanics/npc_route_evaluator_native.json",
+      "scope": "Selected complete paths of the original active route evaluator, plus bounded setup through evaluator to FSM handoff."
+    },
+    {
+      "role": "setup_entry",
+      "va": "0xc862b0",
+      "pseudocode": "binary/analysis_decomp/c862b0.c",
+      "indexed_function_size": 396,
+      "proof_json": "mechanics/npc_route_evaluator_native.json",
+      "scope": "Selected complete paths of the original active route evaluator, plus bounded setup through evaluator to FSM handoff."
+    },
+    {
+      "role": "setup_stop_before",
+      "va": "0x1f067b0",
+      "pseudocode": "binary/analysis_decomp/1f067b0.c",
+      "indexed_function_size": 288,
+      "proof_json": "mechanics/npc_route_evaluator_native.json",
+      "scope": "Selected complete paths of the original active route evaluator, plus bounded setup through evaluator to FSM handoff."
+    },
+    {
+      "role": "flood",
+      "va": "0x15bf150",
+      "pseudocode": "binary/analysis_decomp/15bf150.c",
+      "indexed_function_size": 1764,
+      "proof_json": "mechanics/npc_reachable_mask_native.json",
+      "scope": "Complete original flood/wrapper on declared graphs, including terrain-produced graphs and a composed mask-to-lookahead boundary."
+    },
+    {
+      "role": "source_repair_wrapper",
+      "va": "0x15bf840",
+      "pseudocode": "binary/analysis_decomp/15bf840.c",
+      "indexed_function_size": 84,
+      "proof_json": "mechanics/npc_reachable_mask_native.json",
+      "scope": "Complete original flood/wrapper on declared graphs, including terrain-produced graphs and a composed mask-to-lookahead boundary."
+    },
+    {
+      "role": "source_repair",
+      "va": "0x15bf8a0",
+      "pseudocode": "binary/analysis_decomp/15bf8a0.c",
+      "indexed_function_size": 788,
+      "proof_json": "mechanics/npc_reachable_mask_native.json",
+      "scope": "Complete original flood/wrapper on declared graphs, including terrain-produced graphs and a composed mask-to-lookahead boundary."
+    },
+    {
+      "role": "bitset_clear",
+      "va": "0x166aad0",
+      "pseudocode": "binary/analysis_decomp/166aad0.c",
+      "indexed_function_size": 52,
+      "proof_json": "mechanics/npc_reachable_mask_native.json",
+      "scope": "Complete original flood/wrapper on declared graphs, including terrain-produced graphs and a composed mask-to-lookahead boundary."
+    },
+    {
+      "role": "bitset_set",
+      "va": "0x166ac00",
+      "pseudocode": "binary/analysis_decomp/166ac00.c",
+      "indexed_function_size": 60,
+      "proof_json": "mechanics/npc_reachable_mask_native.json",
+      "scope": "Complete original flood/wrapper on declared graphs, including terrain-produced graphs and a composed mask-to-lookahead boundary."
+    },
+    {
+      "role": "lookahead",
+      "va": "0xc86970",
+      "pseudocode": "binary/analysis_decomp/c86970.c",
+      "indexed_function_size": 488,
+      "proof_json": "mechanics/npc_reachable_mask_native.json",
+      "scope": "Complete original flood/wrapper on declared graphs, including terrain-produced graphs and a composed mask-to-lookahead boundary."
+    }
+  ],
+  "runtime_layout": {
+    "world_width_height": [
+      "0x30",
+      "0x34"
+    ],
+    "base_count_pointer": [
+      "0x40",
+      "0x48"
+    ],
+    "word_count_pointer": [
+      "0x60",
+      "0x68"
+    ],
+    "runtime_record_stride": 52,
+    "runtime_height_samples_f32": {
+      "offset": 0,
+      "count": 12
+    },
+    "sector_attributes_u8": [
+      48,
+      49,
+      50,
+      51
+    ]
+  },
+  "word_decode": {
+    "bit8": "output bit2",
+    "bit9": "output bit3",
+    "bit10": "output bit0",
+    "bit11": "output bit1",
+    "bit12": "output bit4 only when source bit6 is clear",
+    "bit13": "output bit5",
+    "bit14": "output bit6"
+  },
+  "native_reset_cost_weights": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    99999.0,
+    6.0,
+    3.0,
+    2.0
+  ],
+  "evaluator_pairs": {
+    "1/3": 3,
+    "1/4": 27,
+    "4/1": 39,
+    "3/2": 100
+  },
+  "layers": [
+    {
+      "name": "14-byte preset to runtime52-byte records",
+      "status": "Unproven constructor/loader"
+    },
+    {
+      "name": "Runtime12 heights to word flags",
+      "status": "Verified tested attribute0 geometry; other surface classes remain open"
+    },
+    {
+      "name": "Word to node flags/directions",
+      "status": "Complete native callbacks execute; direct low nibble/mode/mask bounds checked; full resulting bytes recorded"
+    },
+    {
+      "name": "Cost initialization/classification",
+      "status": "Original reset and tested classifier priority; actor predicate registry empty"
+    },
+    {
+      "name": "Reachable mask",
+      "status": "Original flood/wrapper versus queue oracle on declared graphs; null predicate"
+    },
+    {
+      "name": "Active evaluator",
+      "status": "Selected complete arrival/promotion/resume/wait paths and setup-to-FSM boundary"
+    },
+    {
+      "name": "Live async/steering/physics",
+      "status": "Unexecuted full lifecycle, all steering helpers and collision response"
+    }
+  ],
+  "source_data_references": {
+    "terrain_presets_and_models_catalogue": "relations/terrain_native.json",
+    "ground_attribute_table": "tables_resolved/ColGroundAttributeParam.json",
+    "npc_parameter_bindings": "mechanics/npc_activity_bindings.json",
+    "npc_state_registry": "mechanics/npc_state_registry_native.json",
+    "previous_kernel_map": "mechanics/npc_navigation_kernel_map.json"
+  },
+  "source_data_limit": "Ground table is a semantic reference for numeric attribute0. These reconstructed runtime tests do not load source presets/PBC or establish all parameter-table bindings."
+}

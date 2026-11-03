@@ -166,7 +166,8 @@
       "missing_requested_table_names": [],
       "evidence_files": [
         "terrain_native.json",
-        "terrain_collision_parameters.json"
+        "terrain_collision_parameters.json",
+        "terrain_nav_flags_native.json"
       ],
       "remaining": [
         "Raw 14-byte preset -> 52-byte runtime construction",
@@ -387,11 +388,15 @@
         "npc_pathfinding_native.json",
         "npc_route_handoff_native.json",
         "npc_route_target_native.json",
-        "npc_navigation_kernel_map.json"
+        "npc_navigation_kernel_map.json",
+        "terrain_nav_flags_native.json",
+        "npc_route_evaluator_native.json",
+        "npc_reachable_mask_native.json",
+        "world_nav_bridge_map.json"
       ],
       "remaining": [
-        "Live terrain/collision-to-grid production, async worker and obstacle avoidance; native A* search/costs, route extraction and lookahead are now verified on declared reconstructed contexts",
-        "Active child-state handlers, steering/movement, scheduler priorities, social/interest decisions and all AI transitions"
+        "Complete world producer, actor constraints, terrain classes beyond tested attribute0, async worker and steering/avoidance; runtime height/word/node paths and reachable masks now have bounded native proofs",
+        "All evaluator branches, movement/physics, scheduler priorities, social/interest decisions and state transitions"
       ],
       "complete": false
     },
@@ -637,5 +642,11 @@
     "progress": "mechanics/npc_navigation_progress.json",
     "new_native_cases": 2083,
     "native_helper_cases_total": 1134009
+  },
+  "world_nav_bridge_followup": {
+    "report": "../docs/WORLD_NAV_BRIDGE.md",
+    "progress": "mechanics/world_nav_bridge_progress.json",
+    "new_native_cases": 1568,
+    "native_helper_cases_total": 1135577
   }
 }
