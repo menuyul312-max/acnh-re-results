@@ -2,7 +2,13 @@
 
 Paket hasil reverse engineering untuk menjadi referensi konversi ke Godot. Proyek Godot dan sumber pengguna tidak diubah. Status semantik masih parsial.
 
-## Fokus terbaru: tujuh sistem mekanik
+## Fokus terbaru: UI dan penataan pulau
+
+[Laporan UI/pulau](acnh-re/docs/UI_ISLAND_MAPPING.md) · [Ringkasan JSON](acnh-re/output/ui_island/summary.json) · [Cakupan per komponen](acnh-re/output/ui_island/component_coverage.json).
+
+523 layout dan 10.882 pane, 2.095 animasi UI dengan 16.162 track/92.038 keyframe, 36 template pantai/792 slot/136 part, serta 96 bundel preset terrain–plaza–struktur–item kini tersedia sebagai JSON. Semua keyframe diverifikasi kembali terhadap byte sumber. Pemetaan ini struktural: handler UI, controller, perakitan pantai, penempatan dan perilaku air belum terbukti lengkap. Tahap ini menambah 0 kasus native; Godot tidak diubah. File rinci tersedia langsung di repo, tanpa ZIP baru.
+
+## Fokus sebelumnya: tujuh sistem mekanik
 
 Lanjutan terbaru: [pelepasan entry registry wilayah](acnh-re/docs/WORLD_REGISTRY_RELEASE.md), **126 kasus tambahan**, total **1.136.083** helper/blok. Unlink, counter, pemilihan tiga world dan wrapper lifecycle teruji pada context rekonstruksi. Registry/placement lengkap tetap terbuka.
 
