@@ -169,7 +169,8 @@
         "terrain_collision_parameters.json",
         "terrain_nav_flags_native.json",
         "terrain_region_check_native.json",
-        "terrain_region_mutation_native.json"
+        "terrain_region_mutation_native.json",
+        "world_registry_release_native.json"
       ],
       "remaining": [
         "Raw 14-byte preset -> 52-byte runtime construction",
@@ -244,7 +245,8 @@
         "proximity_native.json",
         "terrain_native.json",
         "terrain_region_check_native.json",
-        "terrain_region_mutation_native.json"
+        "terrain_region_mutation_native.json",
+        "world_registry_release_native.json"
       ],
       "remaining": [
         "Full candidate collection, actor/type filtering and object registry",
@@ -397,7 +399,8 @@
         "npc_route_evaluator_native.json",
         "npc_reachable_mask_native.json",
         "world_nav_bridge_map.json",
-        "terrain_region_mutation_native.json"
+        "terrain_region_mutation_native.json",
+        "world_registry_release_native.json"
       ],
       "remaining": [
         "Complete world producer, actor constraints, terrain classes beyond tested attribute0, async worker and steering/avoidance; runtime height/word/node paths and reachable masks now have bounded native proofs",
@@ -668,5 +671,14 @@
     "full_game_semantics_complete": false,
     "source_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
     "report": "../docs/TERRAIN_REGION_MUTATION.md"
+  },
+  "world_registry_followup": {
+    "native_helper_cases_before": 1135957,
+    "new_native_cases": 126,
+    "native_helper_cases_after": 1136083,
+    "mismatches": [],
+    "full_game_semantics_complete": false,
+    "source_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+    "report": "../docs/WORLD_REGISTRY_RELEASE.md"
   }
 }

@@ -1,5 +1,8 @@
 # Mutasi flag wilayah dan wrapper world
 
+Lanjutan terbaru: [pelepasan registry wilayah](WORLD_REGISTRY_RELEASE.md).
+Kandidat0x165240 yang belum dieksekusi pada snapshot ini kini diuji pada entry/list rekonstruksi.
+
 Tahap setelah `88ad5a9` menambah **164 kasus native tanpa mismatch**; total
 helper/blok menjadi **1.135.957**. Ketujuh sistem masih parsial. Context world
 rekonstruksi; Godot dan input sumber tidak diubah.
