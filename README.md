@@ -4,7 +4,9 @@ Paket hasil reverse engineering untuk menjadi referensi konversi ke Godot. Proye
 
 ## Fokus terbaru: tujuh sistem mekanik
 
-Lanjutan terbaru: [pemeriksaan wilayah terrain](acnh-re/docs/TERRAIN_REGION_CHECK.md),216 kasus tambahan; total **1.135.793** helper/blok. Mode base/overlay, flag dan batas rentang tinggi sekitar0,11 teruji pada context rekonstruksi. Sistem game lengkap tetap parsial.
+Lanjutan terbaru: [mutasi flag wilayah dan wrapper world](acnh-re/docs/TERRAIN_REGION_MUTATION.md), **164 kasus tambahan**, total **1.135.957** helper/blok. Set/clear flag wilayah dan pengaruh bit6 terhadap decoder navigasi teruji pada grid rekonstruksi. Placement lengkap tetap terbuka.
+
+Tahap sebelumnya: [pemeriksaan wilayah terrain](acnh-re/docs/TERRAIN_REGION_CHECK.md),216 kasus tambahan; total **1.135.793** helper/blok. Mode base/overlay, flag dan batas rentang tinggi sekitar0,11 teruji pada context rekonstruksi. Sistem game lengkap tetap parsial.
 
 [Laporan fokus](acnh-re/docs/FOCUS7_MECHANICS.md) · [Peta JSON tujuh area](acnh-re/output/mechanics/focus7/summary.json)
 
@@ -52,7 +54,7 @@ Tautan laporan ke data terinci yang belum berada di tree Git dapat dibuka setela
 
 - Seluruh subset B_data yang tersedia dipetakan secara struktural: 1.171 berkas, 2.986 entri kontainer/data.
 - Nama pulih: 1.957/2.048 kolom BCSV; 2.979/3.410 jenis key BYML. Cakupan kemunculan key BYML 99,452% bukan persentase RE seluruh game.
-- 1.135.793 kasus helper/blok native dan 2.546.185 pemeriksaan BYML; 34 uji integrasi baseline sebelumnya lulus. Jumlah kasus bukan persentase penyelesaian game.
+- 1.135.957 kasus helper/blok native dan 2.546.185 pemeriksaan BYML; 34 uji integrasi baseline sebelumnya lulus. Jumlah kasus bukan persentase penyelesaian game.
 - Pemetaan Stage, item, terrain, EventFlow, SDK, cuaca, kalender, suara NPC, gen bunga dan item anakan.
 - Perilaku lengkap game belum selesai; batas dan kasus yang belum diketahui dicatat eksplisit.
 

@@ -73,7 +73,8 @@
         "mechanics/terrain_native.json",
         "mechanics/dynamic_ground_native.json",
         "mechanics/terrain_nav_flags_native.json",
-        "mechanics/terrain_region_check_native.json"
+        "mechanics/terrain_region_check_native.json",
+        "mechanics/terrain_region_mutation_native.json"
       ],
       "remaining": [
         "14-byte preset ->52-byte runtime constructor and source loader",
@@ -155,7 +156,8 @@
       "verified_reference": [
         "mechanics/proximity_native.json",
         "mechanics/terrain_native.json",
-        "mechanics/terrain_region_check_native.json"
+        "mechanics/terrain_region_check_native.json",
+        "mechanics/terrain_region_mutation_native.json"
       ],
       "remaining": [
         "Candidate collection",
@@ -163,7 +165,8 @@
         "Full placement queries"
       ],
       "status_this_continuation": "No new spatial-query execution.",
-      "region_predicate_boundary": "Original0x181fa0 on finite reconstructed rectangular base/overlay heights and world-word flags. Live placement callers remain unexecuted."
+      "region_predicate_boundary": "Original0x181fa0 on finite reconstructed rectangular base/overlay heights and world-word flags. Live placement callers remain unexecuted.",
+      "region_mutation_boundary": "Original region word-bit2/6 setters, world-member wrappers and bit6-to-navigation decoder chain. Registry removal and live placement policy remain open."
     },
     "npc_navigation": {
       "verified_reference": [
@@ -178,7 +181,8 @@
         "mechanics/terrain_nav_flags_native.json",
         "mechanics/npc_route_evaluator_native.json",
         "mechanics/npc_reachable_mask_native.json",
-        "mechanics/world_nav_bridge_map.json"
+        "mechanics/world_nav_bridge_map.json",
+        "mechanics/terrain_region_mutation_native.json"
       ],
       "remaining": [
         "Full world producer and nonempty actor/constraint predicates; other terrain surface classes and dynamic sources",
@@ -298,9 +302,9 @@
   },
   "scope": "Concrete proof boundaries and selected next targets; neither all unknown functions nor a complete game specification.",
   "latest_phase": {
-    "report": "../docs/TERRAIN_REGION_CHECK.md",
-    "progress": "mechanics/terrain_region_progress.json",
-    "new_native_cases": 216,
-    "native_helper_cases_total": 1135793
+    "report": "../docs/TERRAIN_REGION_MUTATION.md",
+    "progress": "mechanics/terrain_mutation_progress.json",
+    "new_native_cases": 164,
+    "native_helper_cases_total": 1135957
   }
 }

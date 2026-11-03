@@ -1,0 +1,60 @@
+{
+  "cases": 164,
+  "groups": {
+    "complete_region_bit_mutators": 120,
+    "world_height_forwarders": 16,
+    "null_world_mutation_wrapper": 4,
+    "active_world_mutation_wrapper": 20,
+    "region_to_navigation_decoder": 4
+  },
+  "mismatches": [],
+  "samples": [
+    {
+      "mode": 0,
+      "runtime_word": "0x1f00",
+      "decoded_navigation_byte": 31
+    },
+    {
+      "mode": 1,
+      "runtime_word": "0x1f40",
+      "decoded_navigation_byte": 15
+    },
+    {
+      "mode": 2,
+      "runtime_word": "0x1f00",
+      "decoded_navigation_byte": 31
+    },
+    {
+      "mode": 3,
+      "runtime_word": "0x1f40",
+      "decoded_navigation_byte": 15
+    }
+  ],
+  "native_functions": {
+    "word_bit6_region": "0x181ae0",
+    "word_bit2_region": "0x185c80",
+    "guarded_world_mutator": "0x1637b0",
+    "height_forwarders": [
+      "0x163740",
+      "0x164e90"
+    ],
+    "word_decoder": "0x185e70"
+  },
+  "rules": [
+    "Original inclusive region iterators modify only the in-world intersection. Mode low bit chooses set/clear; unrelated word bits are preserved.",
+    "0x181ae0 modifies word bit6;0x185c80 modifies bit2.0x1637b0 uses owner+0x78 and safely skips a null world.",
+    "Height predicate forwarders0x163740/0x164e90 select owner+0x78/+0x60 respectively and return the original boolean, despite void pseudocode signatures.",
+    "A native region bit6 mutation changes whether word bit12 reaches navigation byte bit4; setting and clearing are verified through the original decoder."
+  ],
+  "scope": "Complete region mutation functions, native world wrappers and a decoder integration on reconstructed grids.",
+  "limits": [
+    "This does not establish all gameplay meanings of word bits2/6 or a complete placement rule.",
+    "Actor registry removal0x165240, live caller reachability, dynamic terraform, steering and async lifecycle remain unexecuted."
+  ],
+  "source_reference": [
+    "mechanics/terrain_region_check_native.json",
+    "mechanics/terrain_nav_flags_native.json"
+  ],
+  "dependencies_stubbed": [],
+  "elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74"
+}

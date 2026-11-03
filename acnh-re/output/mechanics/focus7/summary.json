@@ -168,7 +168,8 @@
         "terrain_native.json",
         "terrain_collision_parameters.json",
         "terrain_nav_flags_native.json",
-        "terrain_region_check_native.json"
+        "terrain_region_check_native.json",
+        "terrain_region_mutation_native.json"
       ],
       "remaining": [
         "Raw 14-byte preset -> 52-byte runtime construction",
@@ -242,7 +243,8 @@
       "evidence_files": [
         "proximity_native.json",
         "terrain_native.json",
-        "terrain_region_check_native.json"
+        "terrain_region_check_native.json",
+        "terrain_region_mutation_native.json"
       ],
       "remaining": [
         "Full candidate collection, actor/type filtering and object registry",
@@ -394,7 +396,8 @@
         "terrain_nav_flags_native.json",
         "npc_route_evaluator_native.json",
         "npc_reachable_mask_native.json",
-        "world_nav_bridge_map.json"
+        "world_nav_bridge_map.json",
+        "terrain_region_mutation_native.json"
       ],
       "remaining": [
         "Complete world producer, actor constraints, terrain classes beyond tested attribute0, async worker and steering/avoidance; runtime height/word/node paths and reachable masks now have bounded native proofs",
@@ -656,5 +659,14 @@
     "progress": "mechanics/terrain_region_progress.json",
     "new_native_cases": 216,
     "native_helper_cases_total": 1135793
+  },
+  "terrain_mutation_followup": {
+    "native_helper_cases_before": 1135793,
+    "new_native_cases": 164,
+    "native_helper_cases_after": 1135957,
+    "mismatches": [],
+    "full_game_semantics_complete": false,
+    "source_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+    "report": "../docs/TERRAIN_REGION_MUTATION.md"
   }
 }
