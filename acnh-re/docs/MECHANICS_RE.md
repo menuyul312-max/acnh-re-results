@@ -104,7 +104,12 @@ Consumer posisi dan hasil animasi kini berjalan utuh pada context terkontrol;
 producer input/gravity, collision solver, pathfinding dan transaksi inventory
 masih terbuka. Frontier JSON mencatat titik lanjut dan batas setiap pembuktian.
 
-Lanjutan context terisi: [override RoomFloor, producer counter dan pembentuk velocity](ACTIVE_CONTEXT_FOLLOWUP.md).
+Lanjutan terbaru: [resident PBC, arsip asli dan callback NPC](RESIDENT_MAP_NPC_FOLLOWUP.md)
+menambah 4.706 kasus menjadi **1.131.926**. Ini mencakup resident ground pada map
+rekonstruksi, registry 67 state/201 target callback, request navigasi terkontrol
+dan dukungan reader SARC. Pathfinder/solver lengkap tetap terbuka.
+
+Tahap context terisi: [override RoomFloor, producer counter dan pembentuk velocity](ACTIVE_CONTEXT_FOLLOWUP.md).
 Tambahan 3.926 kasus (3.422 mekanik dan 504 pendukung SDK), total terbaru
 **1.127.220**. Ground tanpa resident map, producer record ke requirement dan
 blok solver pemain teruji; resource map aktif, save-wrapper, transaksi,

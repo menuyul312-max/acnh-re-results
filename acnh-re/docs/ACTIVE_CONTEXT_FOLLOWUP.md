@@ -1,5 +1,9 @@
 # Lanjutan: lantai aktif, producer bahan dan pembentuk lintasan
 
+Snapshot tahap ini dilanjutkan oleh [resident PBC dan callback NPC](RESIDENT_MAP_NPC_FOLLOWUP.md).
+Bagian resident map/transform yang di bawah masih terbuka kini diuji pada map
+rekonstruksi; ekstensi file native yang ditemukan adalah `.pbc`.
+
 Tahap ini melanjutkan bagian yang terbuka setelah commit `379531f`.
 Semua alamat adalah VA ELF build ACNH 1.0.0 yang sama, SHA-256
 `5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74`.

@@ -206,11 +206,12 @@
         "dynamic_ground_native.json",
         "terrain_native.json",
         "ground_context_gate_native.json",
-        "room_floor_ground_native.json"
+        "room_floor_ground_native.json",
+        "resident_floor_map_native.json"
       ],
       "remaining": [
-        "Resident JMP map/resource selection and point transform; real RoomFloor items with no-resident-map fallback are verified",
-        "All dynamic override loader and reachability conditions"
+        "Original PBC map contents and first48 bytes of each52-byte record; selection, transforms and consumers now execute on reconstructed resident maps",
+        "All dynamic override loader and reachability conditions; filesystem/async resource lifecycle"
       ],
       "complete": false
     },
@@ -380,11 +381,13 @@
         "npc_activity_bindings.json",
         "focus7/npc_ai_eventflows.json",
         "focus7/npc_ai_flow_graphs.json",
-        "focus7/npc_native_state_labels.json"
+        "focus7/npc_native_state_labels.json",
+        "npc_state_registry_native.json",
+        "npc_navigation_request_native.json"
       ],
       "remaining": [
-        "Full pathfinding, obstacle avoidance and route selection",
-        "Scheduler priorities, social/interest decisions and all AI transitions"
+        "Full pathfinding, obstacle avoidance and route selection; native67-state registry/201 callback targets and bounded request plumbing are verified",
+        "Active child-state handlers, scheduler priorities, social/interest decisions and all AI transitions"
       ],
       "complete": false
     },
@@ -618,5 +621,11 @@
     "progress": "mechanics/active_context_progress.json",
     "new_native_cases": 3926,
     "native_helper_cases_total": 1127220
+  },
+  "resident_npc_followup": {
+    "report": "../docs/RESIDENT_MAP_NPC_FOLLOWUP.md",
+    "progress": "mechanics/resident_npc_progress.json",
+    "new_native_cases": 4706,
+    "native_helper_cases_total": 1131926
   }
 }

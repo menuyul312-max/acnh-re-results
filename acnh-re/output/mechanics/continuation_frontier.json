@@ -84,43 +84,43 @@
       "verified_reference": [
         "mechanics/ground_context_gate_native.json",
         "mechanics/dynamic_ground_native.json",
-        "mechanics/room_floor_ground_native.json"
+        "mechanics/room_floor_ground_native.json",
+        "mechanics/resident_floor_map_native.json",
+        "mechanics/native_archive_verification.json"
       ],
-      "verified_boundary": "Real RoomFloor items,173 source floor rows, native HasJmp/Horizon discovery, variant dispatch, no-resident-map fallback and active ground-permission consumers with paired inactive controls.",
+      "verified_boundary": "Complete resident RoomFloor selector, ready-handle checks, typed SARC lookup, position transform, PBC attribute reader and ground consumers on reconstructed resident archives/maps with original source floor/item tables.",
       "remaining": [
-        "Resident JMP resource/container lookup and actual map selection",
-        "Position transform/rotation with an actual resident map",
-        "All loader and non-RoomFloor override sources"
+        "Original PBC files are absent; map content and unconsumed first48 bytes of52-byte records remain unproven",
+        "Filesystem loading, decompression, async jobs and resource allocation/lifetime",
+        "Non-RoomFloor dynamic sources and live-scene reachability"
       ],
       "next_functions": [
         "0x16e6d0",
-        "0xc69e0",
         "0x1c84e50",
-        "0x880680"
+        "0x18adf0"
       ],
       "address_note": "FUN_0026e6d0 is ELF0x16e6d0, not0x26e6d0.",
       "function_references": [
         {
           "va": "0x16e6d0",
           "pseudocode": "binary/analysis_decomp/16e6d0.c",
-          "evidence": "Existing native index. Proposed next target; full semantics not inferred from its pseudocode."
-        },
-        {
-          "va": "0xc69e0",
-          "pseudocode": "binary/analysis_decomp/c69e0.c",
-          "evidence": "Existing native index. Proposed next target; full semantics not inferred from its pseudocode."
+          "indexed_function_size": 1444,
+          "evidence": "Original ELF VA and existing native index; proposed next target, not a completed semantic claim."
         },
         {
           "va": "0x1c84e50",
           "pseudocode": "binary/analysis_decomp/1c84e50.c",
-          "evidence": "Existing native index. Proposed next target; full semantics not inferred from its pseudocode."
+          "indexed_function_size": 116,
+          "evidence": "Original ELF VA and existing native index; proposed next target, not a completed semantic claim."
         },
         {
-          "va": "0x880680",
-          "pseudocode": "binary/analysis_decomp/880680.c",
-          "evidence": "Existing native index. Proposed next target; full semantics not inferred from its pseudocode."
+          "va": "0x18adf0",
+          "pseudocode": "binary/analysis_decomp/18adf0.c",
+          "indexed_function_size": 324,
+          "evidence": "Original ELF VA and existing native index; proposed next target, not a completed semantic claim."
         }
-      ]
+      ],
+      "next_function_scope": "Already-verified resolver/reader boundaries; trace their loaders and original PBC field users next. A specific loader entry is not yet assigned."
     },
     "position_checks": {
       "verified_reference": [
@@ -137,15 +137,73 @@
     "npc_navigation": {
       "verified_reference": [
         "mechanics/focus7/npc_ai_flow_graphs.json",
-        "mechanics/npc_activity_bindings.json"
+        "mechanics/npc_activity_bindings.json",
+        "mechanics/npc_state_registry_native.json",
+        "mechanics/npc_navigation_request_native.json"
       ],
       "remaining": [
-        "C++ scheduler and priorities",
-        "Routes/pathfinder/obstacle avoidance",
-        "All native AI state transitions"
+        "Active native AI state handlers and all state-transition decisions",
+        "Routes/pathfinder, costs, obstacle avoidance and async route worker",
+        "Accepted request initialization, route node collection and movement integration",
+        "C++ scheduler, priorities and social/interest decisions",
+        "Opaque request32-byte parameter semantics and default initializer"
       ],
       "candidate_ledger": "mechanics/systems_research_ledger.json#/domains/npc_ai_navigation",
-      "status_this_continuation": "Previous static graphs/bindings remain static; no new NPC runtime proof."
+      "verified_boundary": "Original registration for67 states,201 original callback-target dispatches, three request writers/status predicates, inactive-child polling and bounded grid-admission/EscapeHighCostArea update blocks. AI callback bodies are not generally executed.",
+      "next_functions": [
+        "0xcb5470",
+        "0xcb5840",
+        "0xc86440",
+        "0xc862b0",
+        "0x15c3570",
+        "0xc31c40",
+        "0xc0f9d0"
+      ],
+      "next_function_scope": "Concrete handlers/route handoff targets recovered from original registrations and direct calls; not proof their algorithms are understood.",
+      "function_references": [
+        {
+          "va": "0xcb5470",
+          "pseudocode": null,
+          "indexed_function_size": 600,
+          "evidence": "Original ELF VA and existing native index; proposed next target, not a completed semantic claim."
+        },
+        {
+          "va": "0xcb5840",
+          "pseudocode": "binary/analysis_decomp/cb5840.c",
+          "indexed_function_size": 556,
+          "evidence": "Original ELF VA and existing native index; proposed next target, not a completed semantic claim."
+        },
+        {
+          "va": "0xc86440",
+          "pseudocode": "binary/analysis_decomp/c86440.c",
+          "indexed_function_size": 520,
+          "evidence": "Original ELF VA and existing native index; proposed next target, not a completed semantic claim."
+        },
+        {
+          "va": "0xc862b0",
+          "pseudocode": "binary/analysis_decomp/c862b0.c",
+          "indexed_function_size": 396,
+          "evidence": "Original ELF VA and existing native index; proposed next target, not a completed semantic claim."
+        },
+        {
+          "va": "0x15c3570",
+          "pseudocode": "binary/analysis_decomp/15c3570.c",
+          "indexed_function_size": 480,
+          "evidence": "Original ELF VA and existing native index; proposed next target, not a completed semantic claim."
+        },
+        {
+          "va": "0xc31c40",
+          "pseudocode": null,
+          "indexed_function_size": 480,
+          "evidence": "Original ELF VA and existing native index; proposed next target, not a completed semantic claim."
+        },
+        {
+          "va": "0xc0f9d0",
+          "pseudocode": null,
+          "indexed_function_size": 300,
+          "evidence": "Original ELF VA and existing native index; proposed next target, not a completed semantic claim."
+        }
+      ]
     },
     "items_tools_crafting": {
       "verified_reference": [
@@ -201,9 +259,9 @@
   },
   "scope": "Concrete proof boundaries and selected next targets; neither all unknown functions nor a complete game specification.",
   "latest_phase": {
-    "report": "../docs/ACTIVE_CONTEXT_FOLLOWUP.md",
-    "progress": "mechanics/active_context_progress.json",
-    "new_native_cases": 3926,
-    "native_helper_cases_total": 1127220
+    "report": "../docs/RESIDENT_MAP_NPC_FOLLOWUP.md",
+    "progress": "mechanics/resident_npc_progress.json",
+    "new_native_cases": 4706,
+    "native_helper_cases_total": 1131926
   }
 }

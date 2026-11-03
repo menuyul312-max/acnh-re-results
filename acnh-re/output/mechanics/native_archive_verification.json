@@ -1,0 +1,124 @@
+{
+  "groups": {
+    "source_archive_open": 3,
+    "source_member_lookup": 1813,
+    "source_missing_name": 3,
+    "synthetic_endian_lookup": 6
+  },
+  "cases": 1825,
+  "mismatches": [],
+  "sources": [
+    {
+      "source_id": 165,
+      "source": "B_data/Env/GameEnv.szs!decompressed",
+      "raw": {
+        "$blob": "blobs/cf2e0abe268f8c1ce81a6d3b332adf75c11302516778fac2603df470c668c49a.bin",
+        "size": 2934180,
+        "sha256": "cf2e0abe268f8c1ce81a6d3b332adf75c11302516778fac2603df470c668c49a"
+      },
+      "native_members_read": 1,
+      "member_offsets_sizes_sha256_match": true
+    },
+    {
+      "source_id": 166,
+      "source": "B_data/Env/GameEnv.szs!decompressed!GameEnv.genvb",
+      "raw": {
+        "$blob": "blobs/85b140b30fb09ed33f3551a1c9aa8f40b738ac98b0b6c432a448bc2a24a7fcbb.bin",
+        "size": 2925988,
+        "sha256": "85b140b30fb09ed33f3551a1c9aa8f40b738ac98b0b6c432a448bc2a24a7fcbb"
+      },
+      "native_members_read": 48,
+      "member_offsets_sizes_sha256_match": true
+    },
+    {
+      "source_id": 674,
+      "source": "B_data/Pack/StaticParam.pack",
+      "raw": {
+        "$blob": "blobs/f3863b91cb5eac4533cec9737360672787dc936f7dcc8929d9187ac074b9eff4.bin",
+        "size": 4908444,
+        "sha256": "f3863b91cb5eac4533cec9737360672787dc936f7dcc8929d9187ac074b9eff4"
+      },
+      "native_members_read": 1764,
+      "member_offsets_sizes_sha256_match": true
+    }
+  ],
+  "native_functions": [
+    "0x199a580",
+    "0x199a610",
+    "0x1c84e50",
+    "0x1f05d90",
+    "original archive vtable lookup/index/data routines"
+  ],
+  "archive_vtable": "0x31a63c8",
+  "rtti_cells_reconstructed": [
+    {
+      "guard_got": "0x32d4b38",
+      "object_got": "0x32d4b40",
+      "vtable_got": "0x32d4b48"
+    },
+    {
+      "guard_got": "0x32d4b50",
+      "object_got": "0x32d4b58",
+      "vtable_got": "0x32d0ee8"
+    },
+    {
+      "guard_got": "0x32d0ed8",
+      "object_got": "0x32d0ee0",
+      "vtable_got": "0x32d0ee8"
+    },
+    {
+      "guard_got": "0x32d0e68",
+      "object_got": "0x32d0e70",
+      "vtable_got": "0x32d0e88"
+    },
+    {
+      "guard_got": "0x32d0e20",
+      "object_got": "0x32d0e28",
+      "vtable_got": "0x32d0e60"
+    },
+    {
+      "guard_got": "0x32d0ec8",
+      "object_got": "0x32d0ed0",
+      "vtable_got": "0x32d0520"
+    }
+  ],
+  "sdk": {
+    "module": "sdk",
+    "module_sha256": "31ce67e8701584ba812dceeae9b590d7a6ad642bcb5aa74d2fe3ea5c5474250d",
+    "build_id": "ad3fdfbd62a5f4b082d385ffe420d4400abb831d000000000000000000000000",
+    "base": "0x70000000",
+    "bindings": {
+      "memcpy": {
+        "module_va": "0x4f11b8",
+        "emulated_va": "0x704f11b8",
+        "main_got_sites": [
+          "0x32ce7e0"
+        ]
+      },
+      "memset": {
+        "module_va": "0x4f1850",
+        "emulated_va": "0x704f1850",
+        "main_got_sites": [
+          "0x32ce7e8"
+        ]
+      },
+      "strcmp": {
+        "module_va": "0x4d7900",
+        "emulated_va": "0x704d7900",
+        "main_got_sites": [
+          "0x32cede0"
+        ]
+      }
+    },
+    "scope": "Original SDK text; main GOT import relocation only. No instruction patching or simulated libc.",
+    "dependencies_stubbed": []
+  },
+  "dependencies_stubbed": [],
+  "scope": "Original native SARC constructor, parser and filename lookup on all3 supplied SARC containers and all1813 members, plus synthetic little/big-endian containers.",
+  "limits": [
+    "No filesystem, decompression or asynchronous resource loader is executed.",
+    "Malformed-file safety is not inferred from valid-source checks.",
+    "Ready RTTI state and archive wrapper are reconstructed; SDK startup is not executed."
+  ],
+  "elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74"
+}

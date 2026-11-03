@@ -1,0 +1,236 @@
+{
+  "groups": {
+    "request_record_writers": 18,
+    "native_status_predicates": 96,
+    "inactive_child_polling": 72,
+    "grid_admission_boundary_blocks": 75,
+    "full_distance_rejections": 66,
+    "escape_state_result_dispatch_blocks": 6
+  },
+  "cases": 333,
+  "mismatches": [],
+  "poll_outcomes": {
+    "mode1:0x11": 9,
+    "mode1:0x01": 2,
+    "mode1:0x03": 7,
+    "mode1:0x19": 3,
+    "mode1:0x09": 2,
+    "mode1:0x0b": 1,
+    "mode1:0x51": 3,
+    "mode1:0x41": 2,
+    "mode1:0x43": 1,
+    "mode1:0x91": 3,
+    "mode1:0x81": 2,
+    "mode1:0x83": 1,
+    "mode2:0x01": 4,
+    "mode2:0x03": 8,
+    "mode2:0x09": 4,
+    "mode2:0x0b": 2,
+    "mode2:0x11": 4,
+    "mode2:0x13": 2,
+    "mode2:0x41": 4,
+    "mode2:0x43": 2,
+    "mode2:0x81": 4,
+    "mode2:0x83": 2
+  },
+  "admission_outcomes": {
+    "reject": 66,
+    "admit": 9
+  },
+  "escape_outcomes": {
+    "fallback_dispatch": 4,
+    "remain": 2
+  },
+  "writer_samples": [
+    {
+      "mode": 0,
+      "explicit_parameters": false,
+      "native_parameter_hex": "070a0d101316191c1f2225282b2e3134373a3d404346494c4f5255585b5e6164"
+    },
+    {
+      "mode": 0,
+      "explicit_parameters": true,
+      "native_parameter_hex": "0b10151a1f24292e33383d42474c51565b60656a6f74797e83888d92979ca1a6"
+    },
+    {
+      "mode": 0,
+      "explicit_parameters": false,
+      "native_parameter_hex": "070a0d101316191c1f2225282b2e3134373a3d404346494c4f5255585b5e6164"
+    }
+  ],
+  "admission_samples": [
+    {
+      "world_actor": [
+        0.0,
+        3.0,
+        0.0
+      ],
+      "actor_grid_native": [
+        0,
+        0
+      ],
+      "target_grid_native": [
+        -25,
+        -21
+      ],
+      "branch": "reject"
+    },
+    {
+      "world_actor": [
+        0.0,
+        3.0,
+        0.0
+      ],
+      "actor_grid_native": [
+        0,
+        0
+      ],
+      "target_grid_native": [
+        -25,
+        -20
+      ],
+      "branch": "reject"
+    },
+    {
+      "world_actor": [
+        0.0,
+        3.0,
+        0.0
+      ],
+      "actor_grid_native": [
+        0,
+        0
+      ],
+      "target_grid_native": [
+        -25,
+        0
+      ],
+      "branch": "reject"
+    },
+    {
+      "world_actor": [
+        0.0,
+        3.0,
+        0.0
+      ],
+      "actor_grid_native": [
+        0,
+        0
+      ],
+      "target_grid_native": [
+        -25,
+        20
+      ],
+      "branch": "reject"
+    },
+    {
+      "world_actor": [
+        0.0,
+        3.0,
+        0.0
+      ],
+      "actor_grid_native": [
+        0,
+        0
+      ],
+      "target_grid_native": [
+        -25,
+        21
+      ],
+      "branch": "reject"
+    },
+    {
+      "world_actor": [
+        0.0,
+        3.0,
+        0.0
+      ],
+      "actor_grid_native": [
+        0,
+        0
+      ],
+      "target_grid_native": [
+        -24,
+        -21
+      ],
+      "branch": "reject"
+    },
+    {
+      "world_actor": [
+        0.0,
+        3.0,
+        0.0
+      ],
+      "actor_grid_native": [
+        0,
+        0
+      ],
+      "target_grid_native": [
+        -24,
+        -20
+      ],
+      "branch": "admit"
+    },
+    {
+      "world_actor": [
+        0.0,
+        3.0,
+        0.0
+      ],
+      "actor_grid_native": [
+        0,
+        0
+      ],
+      "target_grid_native": [
+        -24,
+        0
+      ],
+      "branch": "admit"
+    }
+  ],
+  "native_functions": {
+    "request_writers": [
+      "0xcb5150",
+      "0xcb51c0",
+      "0xcb5240"
+    ],
+    "poll": "0xcb5370",
+    "child_step": "0xc86cb0",
+    "child_fsm_step": "0x1f06900",
+    "completion_predicate": "0xc86cc0",
+    "failure_predicate": "0xc86d00",
+    "grid_request": "0xc86440",
+    "escape_update": "0xc31e20"
+  },
+  "layout": {
+    "npc_request_offset": "0x8838",
+    "request_target_vec3": "0x2058",
+    "request_target_id": "0x2064",
+    "request_mode": "0x2068",
+    "request_parameters_opaque32": "0x206c",
+    "request_flags": "0x20ac",
+    "request_child_pointer": "0x20",
+    "child_state": "0x58",
+    "child_status": "0x9c",
+    "child_completion_enable_byte": "0x121"
+  },
+  "rules": [
+    "Mode0/1 store a world vec3, mode2 stores an integer target; mode0/1 null parameter uses request+0x208c, mode2 uses native default32 bytes at0x357ba08.",
+    "For an already-started mode1 request, flags0x12 suppress polling; otherwise completion adds0x10, failure adds2. Mode2 suppresses on2 and only adds failure2.",
+    "Completion is true when child+0x121 is zero, or current state1 and status4. Failure is exactly status3.",
+    "The grid request compares absolute X/Z cell differences against24/20 inclusively; actor uses world+2.5 -> packed16 coordinates, target uses direct world conversion. Actor Y and target Y are not compared in this gate.",
+    "EscapeHighCostArea update dispatches0xc1e2c0 on request flags0x12; dispatch arguments checked, destination routine not executed."
+  ],
+  "scope": "Native request data and result propagation, with a deliberately inactive lower FSM and a bounded admission block.",
+  "limits": [
+    "No route search, obstacle tests, path costs, movement integration, active child-state handler, scheduler or async navigation worker executes.",
+    "Already-started polling is tested. First-start initialization and async route collection remain open.",
+    "Admission stops before accepted-request mutation; only distance rejection cases execute the complete request function.",
+    "Parameter32 bytes remain opaque; both request-local and BSS default parameter values are prepared patterns, not recovered gameplay defaults. Startup initializers are not run.",
+    "Input coordinates and child statuses are reconstructed, not observed in a running game.",
+    "Grid threshold values are cells for this request gate, not a proven global pathfinder radius."
+  ],
+  "source_reference": "mechanics/npc_state_registry_native.json#/states/32",
+  "dependencies_stubbed": [],
+  "elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74"
+}

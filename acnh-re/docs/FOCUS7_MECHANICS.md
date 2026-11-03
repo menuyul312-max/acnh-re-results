@@ -5,10 +5,10 @@ ground dinamis, pemeriksaan posisi, NPC/navigasi, serta item/alat/crafting.
 Model dan sound memakai katalog sebagai referensi. Godot tidak dikerjakan.
 Seluruh mekanik tujuh sistem belum dinyatakan selesai.
 
-Lanjutan terbaru: [lantai aktif, producer bahan dan pembentuk lintasan](ACTIVE_CONTEXT_FOLLOWUP.md).
-Ada **3.926 kasus tambahan**: 3.422 mekanik dan 504 pendukung SDK, sehingga
-total helper/blok menjadi **1.127.220**. [Tahap sebelumnya](MECHANICS_CONTINUATION.md)
-menambah 6.828 kasus. Status terbaru per jalur dijelaskan pada laporan lanjutan
+Lanjutan terbaru: [resident PBC, arsip asli dan callback NPC](RESIDENT_MAP_NPC_FOLLOWUP.md).
+Ada **4.706 kasus tambahan**: 2.881 mekanik/blok dan 1.825 pendukung arsip,
+sehingga total helper/blok menjadi **1.131.926**. [Tahap sebelumnya](ACTIVE_CONTEXT_FOLLOWUP.md)
+menambah 3.926 kasus. Status terbaru per jalur dijelaskan pada laporan lanjutan
 dan `output/mechanics/continuation_frontier.json`; angka tahap lama di bawah
 tetap menjadi riwayat pembuktian.
 
@@ -20,7 +20,7 @@ tetap menjadi riwayat pembuktian.
 - empat berkas konfigurasi PlayerActor/NPC, mempertahankan nilai dan descriptor;
 - 55 graf AI_NPC EventFlow; 53 di antaranya memiliki total 1.233 kemunculan action/query yang terindeks;
 - seluruh 1.233 kemunculan AI tersebut cocok exact dengan entry registry handler;
-- 67 label state NPC native yang tersedia dalam indeks string;
+- 67 state NPC dengan indeks/descriptor dan 201 target callback asli yang terverifikasi;
 - 1.261 kemunculan action/query terkait kata kunci item, alat dan crafting;
 - 221 entry handler native, termasuk factory, constructor dan vtable yang sudah
   dipetakan pada tahap sebelumnya.
@@ -112,13 +112,15 @@ dan selector dengan item kosong; pemilihan map oleh item context terisi dan
 loader map belum dijalankan. Konversi preset 14 byte ke record runtime 52 byte
 juga masih terbuka.
 
-Pada tahap terbaru, item context terisi telah dijalankan untuk seluruh 173
+Pada tahap context terisi, item context telah dijalankan untuk seluruh 173
 pasangan item lantai dan RoomFloorParam. Empat belas lantai mengaktifkan
 HasJmp. State 17/18 memilih variasi 2/3 lewat Horizon XOR bit orientasi, dan
 ketiadaan resident map memakai fallback Floorboards. Sebanyak 1.131 kasus
-mencakup 42 kontrol query ground aktif/nonaktif. Jalur resident map dan
-transform posisi ketika map tersedia tetap terbuka. Ini override RoomFloor,
-bukan bukti editor terrain pulau selesai.
+mencakup 42 kontrol query ground aktif/nonaktif. Tahap terbaru menambah 2.278
+kasus resident map: file `.pbc`, transform posisi, Rotatable, kesiapan resource
+dan consumer ground. Map dibentuk untuk pengujian; PBC asli tidak tersedia.
+Atribut 7 dari map terpilih mempertahankan base tanpa fallback Floorboards.
+Ini override RoomFloor, bukan bukti editor terrain pulau selesai.
 
 ## NPC dan navigasi
 
@@ -143,8 +145,11 @@ pemanggilan action/query.
 
 Graf AI dan handler native-nya tersedia dalam satu peta terfokus.
 Ini melengkapi hubungan skrip ke factory/vtable; C++ scheduler, pemilihan route,
-pathfinding dan obstacle avoidance belum diuji end-to-end. Nama 67 state bukan
-graf transisi lengkap dan bukan jumlah seluruh state NPC dalam executable.
+pathfinding dan obstacle avoidance belum diuji end-to-end. Tahap terbaru
+menjalankan registrasi 67 state dan 201 dispatcher sampai handler tujuan, sebelum
+badan handler berjalan. Tambahan 333 kasus menguji request/status navigasi,
+polling dengan child tidak aktif dan blok batas grid/escape. Ini belum menjadi
+graf transisi lengkap atau jumlah seluruh state NPC dalam executable.
 
 ## Item, alat dan crafting
 
@@ -177,7 +182,7 @@ pengurangan bahan, unlock resep dan durability belum terbukti lengkap.
 
 Producer A/B/C kini dijalankan dengan record input: salinan20/20/5.000 slot,
 batas scan20/20/1.600, jumlah stack, u16 wrap dan node list. Ada 722 kasus,
-termasuk96 alur producer ke pemeriksa requirement. Save-wrapper parent dan
+termasuk 96 alur producer ke pemeriksa requirement. Save-wrapper parent dan
 transaksi pengurangan bahan belum dijalankan; nama pocket/storage belum
 ditetapkan untuk A/B/C.
 
@@ -188,15 +193,16 @@ ditetapkan untuk A/B/C.
 | Fisika/collision | Penetration response, gesekan, moving-body solver, makna lengkap mask |
 | Gerakan | Producer input/state/velocity/gravity, full frame, seluruh traversal dan timestep |
 | Terrain | Loader runtime dan pembaruan setelah edit, seluruh syarat placement |
-| Ground dinamis | Resident JMP resource/map, transform posisi dan loader |
+| Ground dinamis | PBC asli/field opaque, loader/async/lifetime dan override selain RoomFloor |
 | Posisi | Kandidat spatial query, registry actor dan seluruh filter/type |
 | NPC/navigasi | Scheduler, route/pathfinder, obstacle avoidance dan transisi AI |
 | Item/alat/crafting | Akses record save, transaksi bahan, unlock dan durability |
 
 Tahap pemetaan awal di dokumen ini menambah **6.235 kasus native**, terpisah
 dari pemetaan statis 292 parameter, dan mencapai total 1.116.466. Lanjutan
-berikutnya menambah 6.828 menjadi 1.123.294. Tahap terbaru menambah 3.926
-menjadi 1.127.220, termasuk504 kasus pendukung SDK. Pemeriksaan BYML tetap
+berikutnya menambah 6.828 menjadi 1.123.294. Tahap context terisi menambah 3.926
+menjadi 1.127.220, termasuk 504 pendukung SDK. Tahap resident/NPC menambah 4.706
+menjadi **1.131.926**, termasuk 1.825 pendukung arsip. Pemeriksaan BYML tetap
 dihitung terpisah. Angka validasi bukan persentase penyelesaian tujuh sistem.
 
 ## Berkas utama dan reproduksi
@@ -223,6 +229,11 @@ dihitung terpisah. Angka validasi bukan persentase penyelesaian tujuh sistem.
 - output/mechanics/inventory_cache_native.json
 - output/mechanics/ballistic_velocity_native.json
 - output/mechanics/sdk_memory_native.json
+- output/mechanics/resident_floor_map_native.json
+- output/mechanics/native_archive_verification.json
+- output/mechanics/npc_state_registry_native.json
+- output/mechanics/npc_navigation_request_native.json
+- output/mechanics/resident_npc_progress.json
 - output/mechanics/active_context_progress.json
 
 Jalankan tool berikut dengan input ELF, indeks dan output baseline yang sama:

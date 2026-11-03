@@ -1,0 +1,2533 @@
+{
+  "cases": 270,
+  "groups": {
+    "original_state_getters": 2,
+    "registered_source_states": 67,
+    "member_callback_target_dispatch": 201
+  },
+  "mismatches": [],
+  "states": [
+    {
+      "index": 0,
+      "label": "NpcAIState::cIdle",
+      "string_va": "0x29708ab",
+      "registered_name": "cIdle",
+      "registration_owner_va": "0xc1ac50",
+      "descriptor_vtable": "0x30d69d0",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc221a0",
+          "member_function_or_vtable_offset": "0xc2be50",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc2be50",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc221d0",
+          "member_function_or_vtable_offset": "0xc2be60",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc2be60",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc22200",
+          "member_function_or_vtable_offset": "0xc2be70",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc2be70",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 1,
+      "label": "NpcAIState::cWait",
+      "string_va": "0x2997fc3",
+      "registered_name": "cWait",
+      "registration_owner_va": "0xc1ac50",
+      "descriptor_vtable": "0x30d69d0",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc221a0",
+          "member_function_or_vtable_offset": "0xb0",
+          "raw_adjustment_flag": "0x1",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "virtual",
+          "target_va": "0xc0a2f0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc221d0",
+          "member_function_or_vtable_offset": "0xb8",
+          "raw_adjustment_flag": "0x1",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "virtual",
+          "target_va": "0xc0a300",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc22200",
+          "member_function_or_vtable_offset": "0xc0",
+          "raw_adjustment_flag": "0x1",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "virtual",
+          "target_va": "0xc0a360",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 2,
+      "label": "NpcAIState::cTurn",
+      "string_va": "0x296b622",
+      "registered_name": "cTurn",
+      "registration_owner_va": "0xc1ac50",
+      "descriptor_vtable": "0x30d69d0",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc221a0",
+          "member_function_or_vtable_offset": "0xc2c2c0",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc2c2c0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc221d0",
+          "member_function_or_vtable_offset": "0xc2c360",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc2c360",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc22200",
+          "member_function_or_vtable_offset": "0xc2c5d0",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc2c5d0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 3,
+      "label": "NpcAIState::cTalk",
+      "string_va": "0x292f23c",
+      "registered_name": "cTalk",
+      "registration_owner_va": "0xc1ac50",
+      "descriptor_vtable": "0x30d69d0",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc221a0",
+          "member_function_or_vtable_offset": "0xc8",
+          "raw_adjustment_flag": "0x1",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "virtual",
+          "target_va": "0xc2c5e0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc221d0",
+          "member_function_or_vtable_offset": "0xd0",
+          "raw_adjustment_flag": "0x1",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "virtual",
+          "target_va": "0xc2c7b0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc22200",
+          "member_function_or_vtable_offset": "0xd8",
+          "raw_adjustment_flag": "0x1",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "virtual",
+          "target_va": "0xc2c7c0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 4,
+      "label": "NpcAIState::cTalkCast",
+      "string_va": "0x29b118a",
+      "registered_name": "cTalkCast",
+      "registration_owner_va": "0xc1ac50",
+      "descriptor_vtable": "0x30d69d0",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc221a0",
+          "member_function_or_vtable_offset": "0xe0",
+          "raw_adjustment_flag": "0x1",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "virtual",
+          "target_va": "0xc2c7d0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc221d0",
+          "member_function_or_vtable_offset": "0xe8",
+          "raw_adjustment_flag": "0x1",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "virtual",
+          "target_va": "0xc2c830",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc22200",
+          "member_function_or_vtable_offset": "0xf0",
+          "raw_adjustment_flag": "0x1",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "virtual",
+          "target_va": "0xc2c840",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 5,
+      "label": "NpcAIState::cWaitTalkStart",
+      "string_va": "0x296b634",
+      "registered_name": "cWaitTalkStart",
+      "registration_owner_va": "0xc1ac50",
+      "descriptor_vtable": "0x30d69d0",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc221a0",
+          "member_function_or_vtable_offset": "0xf8",
+          "raw_adjustment_flag": "0x1",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "virtual",
+          "target_va": "0xc2c850",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc221d0",
+          "member_function_or_vtable_offset": "0x100",
+          "raw_adjustment_flag": "0x1",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "virtual",
+          "target_va": "0xc2c870",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc22200",
+          "member_function_or_vtable_offset": "0x108",
+          "raw_adjustment_flag": "0x1",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "virtual",
+          "target_va": "0xc2c970",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 6,
+      "label": "NpcAIState::cSpeak",
+      "string_va": "0x2925bb4",
+      "registered_name": "cSpeak",
+      "registration_owner_va": "0xc1ac50",
+      "descriptor_vtable": "0x30d69d0",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc221a0",
+          "member_function_or_vtable_offset": "0x110",
+          "raw_adjustment_flag": "0x1",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "virtual",
+          "target_va": "0xc2c990",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc221d0",
+          "member_function_or_vtable_offset": "0x118",
+          "raw_adjustment_flag": "0x1",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "virtual",
+          "target_va": "0xc2cb10",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc22200",
+          "member_function_or_vtable_offset": "0x120",
+          "raw_adjustment_flag": "0x1",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "virtual",
+          "target_va": "0xc2cc50",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 7,
+      "label": "NpcAIState::cContinueSpeak",
+      "string_va": "0x2920cc2",
+      "registered_name": "cContinueSpeak",
+      "registration_owner_va": "0xc1ac50",
+      "descriptor_vtable": "0x30d69d0",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc221a0",
+          "member_function_or_vtable_offset": "0x128",
+          "raw_adjustment_flag": "0x1",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "virtual",
+          "target_va": "0xc2cc60",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc221d0",
+          "member_function_or_vtable_offset": "0x130",
+          "raw_adjustment_flag": "0x1",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "virtual",
+          "target_va": "0xc2cd00",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc22200",
+          "member_function_or_vtable_offset": "0x138",
+          "raw_adjustment_flag": "0x1",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "virtual",
+          "target_va": "0xc2cdd0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 8,
+      "label": "NpcAIState::cWander",
+      "string_va": "0x2951bf4",
+      "registered_name": "cWander",
+      "registration_owner_va": "0xc1ac50",
+      "descriptor_vtable": "0x30d69d0",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc221a0",
+          "member_function_or_vtable_offset": "0x140",
+          "raw_adjustment_flag": "0x1",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "virtual",
+          "target_va": "0xc2cde0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc221d0",
+          "member_function_or_vtable_offset": "0x148",
+          "raw_adjustment_flag": "0x1",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "virtual",
+          "target_va": "0xc2cf30",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc22200",
+          "member_function_or_vtable_offset": "0x150",
+          "raw_adjustment_flag": "0x1",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "virtual",
+          "target_va": "0xc2cf80",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 9,
+      "label": "NpcAIState::cGoToDestination",
+      "string_va": "0x2960693",
+      "registered_name": "cGoToDestination",
+      "registration_owner_va": "0xc1ac50",
+      "descriptor_vtable": "0x30d69d0",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc221a0",
+          "member_function_or_vtable_offset": "0x158",
+          "raw_adjustment_flag": "0x1",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "virtual",
+          "target_va": "0xc2cf90",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc221d0",
+          "member_function_or_vtable_offset": "0x160",
+          "raw_adjustment_flag": "0x1",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "virtual",
+          "target_va": "0xc2d1e0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc22200",
+          "member_function_or_vtable_offset": "0x168",
+          "raw_adjustment_flag": "0x1",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "virtual",
+          "target_va": "0xc2d2e0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 10,
+      "label": "NpcAIState::cBlockWander",
+      "string_va": "0x29ccc1d",
+      "registered_name": "cBlockWander",
+      "registration_owner_va": "0xc1ac50",
+      "descriptor_vtable": "0x30d69d0",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc221a0",
+          "member_function_or_vtable_offset": "0x170",
+          "raw_adjustment_flag": "0x1",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "virtual",
+          "target_va": "0xc17590",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc221d0",
+          "member_function_or_vtable_offset": "0x178",
+          "raw_adjustment_flag": "0x1",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "virtual",
+          "target_va": "0xc175a0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc22200",
+          "member_function_or_vtable_offset": "0x180",
+          "raw_adjustment_flag": "0x1",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "virtual",
+          "target_va": "0xc17650",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 11,
+      "label": "NpcAIState::cBlockWanderWait",
+      "string_va": "0x293ae61",
+      "registered_name": "cBlockWanderWait",
+      "registration_owner_va": "0xc1ac50",
+      "descriptor_vtable": "0x30d69d0",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc221a0",
+          "member_function_or_vtable_offset": "0x188",
+          "raw_adjustment_flag": "0x1",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "virtual",
+          "target_va": "0xc17660",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc221d0",
+          "member_function_or_vtable_offset": "0x190",
+          "raw_adjustment_flag": "0x1",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "virtual",
+          "target_va": "0xc17670",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc22200",
+          "member_function_or_vtable_offset": "0x198",
+          "raw_adjustment_flag": "0x1",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "virtual",
+          "target_va": "0xc178c0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 12,
+      "label": "NpcAIState::cFollowPlayer",
+      "string_va": "0x29890e2",
+      "registered_name": "cFollowPlayer",
+      "registration_owner_va": "0xc1ac50",
+      "descriptor_vtable": "0x30d69d0",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc221a0",
+          "member_function_or_vtable_offset": "0xc2e5a0",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc2e5a0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc221d0",
+          "member_function_or_vtable_offset": "0xc2e600",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc2e600",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc22200",
+          "member_function_or_vtable_offset": "0xc2e610",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc2e610",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 13,
+      "label": "NpcAIState::cEscapeFromPlayer",
+      "string_va": "0x29d1542",
+      "registered_name": "cEscapeFromPlayer",
+      "registration_owner_va": "0xc1ac50",
+      "descriptor_vtable": "0x30d69d0",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc221a0",
+          "member_function_or_vtable_offset": "0xc2e620",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc2e620",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc221d0",
+          "member_function_or_vtable_offset": "0xc2e680",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc2e680",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc22200",
+          "member_function_or_vtable_offset": "0xc2e690",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc2e690",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 14,
+      "label": "NpcAIState::cFollowNpc",
+      "string_va": "0x2942438",
+      "registered_name": "cFollowNpc",
+      "registration_owner_va": "0xc1ac50",
+      "descriptor_vtable": "0x30d69d0",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc221a0",
+          "member_function_or_vtable_offset": "0xc2e6a0",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc2e6a0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc221d0",
+          "member_function_or_vtable_offset": "0xc2e760",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc2e760",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc22200",
+          "member_function_or_vtable_offset": "0xc2e770",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc2e770",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 15,
+      "label": "NpcAIState::cFollowTargetPos",
+      "string_va": "0x29474f4",
+      "registered_name": "cFollowTargetPos",
+      "registration_owner_va": "0xc1ac50",
+      "descriptor_vtable": "0x30d69d0",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc221a0",
+          "member_function_or_vtable_offset": "0xc2e780",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc2e780",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc221d0",
+          "member_function_or_vtable_offset": "0xc2e810",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc2e810",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc22200",
+          "member_function_or_vtable_offset": "0xc2e870",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc2e870",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 16,
+      "label": "NpcAIState::cInvisible",
+      "string_va": "0x29656f5",
+      "registered_name": "cInvisible",
+      "registration_owner_va": "0xc1ac50",
+      "descriptor_vtable": "0x30d69d0",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc221a0",
+          "member_function_or_vtable_offset": "0xc2e880",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc2e880",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc221d0",
+          "member_function_or_vtable_offset": "0xc2e890",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc2e890",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc22200",
+          "member_function_or_vtable_offset": "0xc2e8d0",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc2e8d0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 17,
+      "label": "NpcAIState::cChangeHandTool",
+      "string_va": "0x29a6f82",
+      "registered_name": "cChangeHandTool",
+      "registration_owner_va": "0xc1ac50",
+      "descriptor_vtable": "0x30d69d0",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc221a0",
+          "member_function_or_vtable_offset": "0xc2e8e0",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc2e8e0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc221d0",
+          "member_function_or_vtable_offset": "0xc2e900",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc2e900",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc22200",
+          "member_function_or_vtable_offset": "0xc2ea80",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc2ea80",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 18,
+      "label": "NpcAIState::cChangeHandToolSimple",
+      "string_va": "0x29c7339",
+      "registered_name": "cChangeHandToolSimple",
+      "registration_owner_va": "0xc1ac50",
+      "descriptor_vtable": "0x30d69d0",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc221a0",
+          "member_function_or_vtable_offset": "0xc2ea90",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc2ea90",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc221d0",
+          "member_function_or_vtable_offset": "0xc2eab0",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc2eab0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc22200",
+          "member_function_or_vtable_offset": "0xc2eb20",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc2eb20",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 19,
+      "label": "NpcAIState::cChangeCloth",
+      "string_va": "0x297620b",
+      "registered_name": "cChangeCloth",
+      "registration_owner_va": "0xc1ac50",
+      "descriptor_vtable": "0x30d69d0",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc221a0",
+          "member_function_or_vtable_offset": "0xc2eb30",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc2eb30",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc221d0",
+          "member_function_or_vtable_offset": "0xc2ee90",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc2ee90",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc22200",
+          "member_function_or_vtable_offset": "0xc2ef00",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc2ef00",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 20,
+      "label": "NpcAIState::cSitChair",
+      "string_va": "0x2956b18",
+      "registered_name": "cSitChair",
+      "registration_owner_va": "0xc1ac50",
+      "descriptor_vtable": "0x30d69d0",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc221a0",
+          "member_function_or_vtable_offset": "0xc2ef10",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc2ef10",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc221d0",
+          "member_function_or_vtable_offset": "0xc2f060",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc2f060",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc22200",
+          "member_function_or_vtable_offset": "0xc2f320",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc2f320",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 21,
+      "label": "NpcAIState::cStandupChair",
+      "string_va": "0x29ccc36",
+      "registered_name": "cStandupChair",
+      "registration_owner_va": "0xc1ac50",
+      "descriptor_vtable": "0x30d69d0",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc221a0",
+          "member_function_or_vtable_offset": "0xc2f330",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc2f330",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc221d0",
+          "member_function_or_vtable_offset": "0xc2f370",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc2f370",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc22200",
+          "member_function_or_vtable_offset": "0xc2f4f0",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc2f4f0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 22,
+      "label": "NpcAIState::cSitOnGround",
+      "string_va": "0x29606b0",
+      "registered_name": "cSitOnGround",
+      "registration_owner_va": "0xc1ac50",
+      "descriptor_vtable": "0x30d69d0",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc221a0",
+          "member_function_or_vtable_offset": "0xc2f500",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc2f500",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc221d0",
+          "member_function_or_vtable_offset": "0xc2f540",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc2f540",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc22200",
+          "member_function_or_vtable_offset": "0xc2f570",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc2f570",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 23,
+      "label": "NpcAIState::cStandupGround",
+      "string_va": "0x2992d0f",
+      "registered_name": "cStandupGround",
+      "registration_owner_va": "0xc1ac50",
+      "descriptor_vtable": "0x30d69d0",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc221a0",
+          "member_function_or_vtable_offset": "0xc2f580",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc2f580",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc221d0",
+          "member_function_or_vtable_offset": "0xc2f590",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc2f590",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc22200",
+          "member_function_or_vtable_offset": "0xc2f710",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc2f710",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 24,
+      "label": "NpcAIState::cBedIn",
+      "string_va": "0x29c735b",
+      "registered_name": "cBedIn",
+      "registration_owner_va": "0xc1ac50",
+      "descriptor_vtable": "0x30d69d0",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc221a0",
+          "member_function_or_vtable_offset": "0xc2f720",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc2f720",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc221d0",
+          "member_function_or_vtable_offset": "0xc2fa00",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc2fa00",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc22200",
+          "member_function_or_vtable_offset": "0xc2fbc0",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc2fbc0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 25,
+      "label": "NpcAIState::cBedOut",
+      "string_va": "0x294244f",
+      "registered_name": "cBedOut",
+      "registration_owner_va": "0xc1ac50",
+      "descriptor_vtable": "0x30d69d0",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc221a0",
+          "member_function_or_vtable_offset": "0xc2fbd0",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc2fbd0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc221d0",
+          "member_function_or_vtable_offset": "0xc2fc10",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc2fc10",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc22200",
+          "member_function_or_vtable_offset": "0xc2fd90",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc2fd90",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 26,
+      "label": "NpcAIState::cWearNewYearHat",
+      "string_va": "0x293ae7e",
+      "registered_name": "cWearNewYearHat",
+      "registration_owner_va": "0xc1ac50",
+      "descriptor_vtable": "0x30d69d0",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc221a0",
+          "member_function_or_vtable_offset": "0xc2fda0",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc2fda0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc221d0",
+          "member_function_or_vtable_offset": "0xc2ff20",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc2ff20",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc22200",
+          "member_function_or_vtable_offset": "0xc2ff80",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc2ff80",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 27,
+      "label": "NpcAIState::cConversationPretense",
+      "string_va": "0x29890fc",
+      "registered_name": "cConversationPretense",
+      "registration_owner_va": "0xc1ac50",
+      "descriptor_vtable": "0x30d69d0",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc221a0",
+          "member_function_or_vtable_offset": "0x1a0",
+          "raw_adjustment_flag": "0x1",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "virtual",
+          "target_va": "0xc31000",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc221d0",
+          "member_function_or_vtable_offset": "0x1a8",
+          "raw_adjustment_flag": "0x1",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "virtual",
+          "target_va": "0xc31100",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc22200",
+          "member_function_or_vtable_offset": "0x1b0",
+          "raw_adjustment_flag": "0x1",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "virtual",
+          "target_va": "0xc31250",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 28,
+      "label": "NpcAIState::cWaitUntilAnimEnd",
+      "string_va": "0x29b633f",
+      "registered_name": "cWaitUntilAnimEnd",
+      "registration_owner_va": "0xc1ac50",
+      "descriptor_vtable": "0x30d69d0",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc221a0",
+          "member_function_or_vtable_offset": "0xc312b0",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc312b0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc221d0",
+          "member_function_or_vtable_offset": "0xc312e0",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc312e0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc22200",
+          "member_function_or_vtable_offset": "0xc313a0",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc313a0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 29,
+      "label": "NpcAIState::cStingByPoisonReaction",
+      "string_va": "0x2997fd5",
+      "registered_name": "cStingByPoisonReaction",
+      "registration_owner_va": "0xc1ac50",
+      "descriptor_vtable": "0x30d69d0",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc221a0",
+          "member_function_or_vtable_offset": "0xc313c0",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc313c0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc221d0",
+          "member_function_or_vtable_offset": "0xc314b0",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc314b0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc22200",
+          "member_function_or_vtable_offset": "0xc31550",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc31550",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 30,
+      "label": "NpcAIState::cStandSleep",
+      "string_va": "0x29a1b03",
+      "registered_name": "cStandSleep",
+      "registration_owner_va": "0xc1ac50",
+      "descriptor_vtable": "0x30d69d0",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc221a0",
+          "member_function_or_vtable_offset": "0xc31560",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc31560",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc221d0",
+          "member_function_or_vtable_offset": "0xc31a80",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc31a80",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc22200",
+          "member_function_or_vtable_offset": "0xc31b00",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc31b00",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 31,
+      "label": "NpcAIState::cStoreHandTool",
+      "string_va": "0x2920cdd",
+      "registered_name": "cStoreHandTool",
+      "registration_owner_va": "0xc1ac50",
+      "descriptor_vtable": "0x30d69d0",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc221a0",
+          "member_function_or_vtable_offset": "0xc31ba0",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc31ba0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc221d0",
+          "member_function_or_vtable_offset": "0xc31bc0",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc31bc0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc22200",
+          "member_function_or_vtable_offset": "0xc31c30",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc31c30",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 32,
+      "label": "NpcAIState::cEscapeHighCostArea",
+      "string_va": "0x298dd7c",
+      "registered_name": "cEscapeHighCostArea",
+      "registration_owner_va": "0xc1ac50",
+      "descriptor_vtable": "0x30d69d0",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc221a0",
+          "member_function_or_vtable_offset": "0xc31c40",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc31c40",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc221d0",
+          "member_function_or_vtable_offset": "0xc31e20",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc31e20",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc22200",
+          "member_function_or_vtable_offset": "0xc31e80",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc31e80",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 33,
+      "label": "NpcAIState::cRhythmSound",
+      "string_va": "0x29a1b1b",
+      "registered_name": "cRhythmSound",
+      "registration_owner_va": "0xc1ac50",
+      "descriptor_vtable": "0x30d69d0",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc221a0",
+          "member_function_or_vtable_offset": "0x1b8",
+          "raw_adjustment_flag": "0x1",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "virtual",
+          "target_va": "0xc0e610",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc221d0",
+          "member_function_or_vtable_offset": "0x1c0",
+          "raw_adjustment_flag": "0x1",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "virtual",
+          "target_va": "0xc0e650",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc22200",
+          "member_function_or_vtable_offset": "0x1c8",
+          "raw_adjustment_flag": "0x1",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "virtual",
+          "target_va": "0xc0e680",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 34,
+      "label": "NpcAIState::cSingSong",
+      "string_va": "0x294c22d",
+      "registered_name": "cSingSong",
+      "registration_owner_va": "0xc1ac50",
+      "descriptor_vtable": "0x30d69d0",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc221a0",
+          "member_function_or_vtable_offset": "0x1d0",
+          "raw_adjustment_flag": "0x1",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "virtual",
+          "target_va": "0xc0e690",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc221d0",
+          "member_function_or_vtable_offset": "0x1d8",
+          "raw_adjustment_flag": "0x1",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "virtual",
+          "target_va": "0xc0e6d0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc22200",
+          "member_function_or_vtable_offset": "0x1e0",
+          "raw_adjustment_flag": "0x1",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "virtual",
+          "target_va": "0xc0e700",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 35,
+      "label": "NpcAIState::cPlayMusic",
+      "string_va": "0x29bd365",
+      "registered_name": "cPlayMusic",
+      "registration_owner_va": "0xc1ac50",
+      "descriptor_vtable": "0x30d69d0",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc221a0",
+          "member_function_or_vtable_offset": "0x1e8",
+          "raw_adjustment_flag": "0x1",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "virtual",
+          "target_va": "0xc0e710",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc221d0",
+          "member_function_or_vtable_offset": "0x1f0",
+          "raw_adjustment_flag": "0x1",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "virtual",
+          "target_va": "0xc0e7c0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc22200",
+          "member_function_or_vtable_offset": "0x1f8",
+          "raw_adjustment_flag": "0x1",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "virtual",
+          "target_va": "0xc0e830",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 36,
+      "label": "NpcAIState::cCountdownWait",
+      "string_va": "0x298dd9c",
+      "registered_name": "cCountdownWait",
+      "registration_owner_va": "0xc1ac50",
+      "descriptor_vtable": "0x30d69d0",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc221a0",
+          "member_function_or_vtable_offset": "0xc349f0",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc349f0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc221d0",
+          "member_function_or_vtable_offset": "0xc34b60",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc34b60",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc22200",
+          "member_function_or_vtable_offset": "0xc34da0",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc34da0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 37,
+      "label": "NpcAIState::cLookFireworksAndClap",
+      "string_va": "0x29708bd",
+      "registered_name": "cLookFireworksAndClap",
+      "registration_owner_va": "0xc1ac50",
+      "descriptor_vtable": "0x30d69d0",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc221a0",
+          "member_function_or_vtable_offset": "0xc34dd0",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc34dd0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc221d0",
+          "member_function_or_vtable_offset": "0xc34e90",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc34e90",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc22200",
+          "member_function_or_vtable_offset": "0xc35010",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc35010",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 38,
+      "label": "NpcAIState::cUseCracker",
+      "string_va": "0x2920cf8",
+      "registered_name": "cUseCracker",
+      "registration_owner_va": "0xc1ac50",
+      "descriptor_vtable": "0x30d69d0",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc221a0",
+          "member_function_or_vtable_offset": "0xc35030",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc35030",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc221d0",
+          "member_function_or_vtable_offset": "0xc35110",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc35110",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc22200",
+          "member_function_or_vtable_offset": "0xc35240",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc35240",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 39,
+      "label": "NpcAIState::cSwingStickLight",
+      "string_va": "0x292f24e",
+      "registered_name": "cSwingStickLight",
+      "registration_owner_va": "0xc1ac50",
+      "descriptor_vtable": "0x30d69d0",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc221a0",
+          "member_function_or_vtable_offset": "0xc35290",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc35290",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc221d0",
+          "member_function_or_vtable_offset": "0xc35380",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc35380",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc22200",
+          "member_function_or_vtable_offset": "0xc355c0",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc355c0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 40,
+      "label": "NpcAIState::cHit",
+      "string_va": "0x2920d10",
+      "registered_name": "cHit",
+      "registration_owner_va": "0xc1ac50",
+      "descriptor_vtable": "0x30d69d0",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc221a0",
+          "member_function_or_vtable_offset": "0x200",
+          "raw_adjustment_flag": "0x1",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "virtual",
+          "target_va": "0xc35a30",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc221d0",
+          "member_function_or_vtable_offset": "0x208",
+          "raw_adjustment_flag": "0x1",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "virtual",
+          "target_va": "0xc35cf0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc22200",
+          "member_function_or_vtable_offset": "0x210",
+          "raw_adjustment_flag": "0x1",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "virtual",
+          "target_va": "0xc35f50",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 41,
+      "label": "NpcAIState::cFallPit",
+      "string_va": "0x29b11a0",
+      "registered_name": "cFallPit",
+      "registration_owner_va": "0xc1ac50",
+      "descriptor_vtable": "0x30d69d0",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc221a0",
+          "member_function_or_vtable_offset": "0xc36180",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc36180",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc221d0",
+          "member_function_or_vtable_offset": "0xc36350",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc36350",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc22200",
+          "member_function_or_vtable_offset": "0xc36dd0",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc36dd0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 42,
+      "label": "NpcAIState::cWorkMotion",
+      "string_va": "0x2956b2e",
+      "registered_name": "cWorkMotion",
+      "registration_owner_va": "0xc1ac50",
+      "descriptor_vtable": "0x30d69d0",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc221a0",
+          "member_function_or_vtable_offset": "0xc36e80",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc36e80",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc221d0",
+          "member_function_or_vtable_offset": "0xc36ea0",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc36ea0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc22200",
+          "member_function_or_vtable_offset": "0xc36fb0",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc36fb0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 43,
+      "label": "NpcAIActivityState::cMoveFacility",
+      "string_va": "0x296b5ea",
+      "registered_name": "cMoveFacility",
+      "registration_owner_va": "0xbfee00",
+      "descriptor_vtable": "0x30d6318",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc00070",
+          "member_function_or_vtable_offset": "0xc0f480",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc0f480",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc000a0",
+          "member_function_or_vtable_offset": "0xc0f880",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc0f880",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc000d0",
+          "member_function_or_vtable_offset": "0xc0f9c0",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc0f9c0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 44,
+      "label": "NpcAIActivityState::cMoveVillage",
+      "string_va": "0x2960629",
+      "registered_name": "cMoveVillage",
+      "registration_owner_va": "0xbfee00",
+      "descriptor_vtable": "0x30d6318",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc00070",
+          "member_function_or_vtable_offset": "0xc0f9d0",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc0f9d0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc000a0",
+          "member_function_or_vtable_offset": "0xc0fbc0",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc0fbc0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc000d0",
+          "member_function_or_vtable_offset": "0xc0fcb0",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc0fcb0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 45,
+      "label": "NpcAIActivityState::cCleaningIndoor",
+      "string_va": "0x296064a",
+      "registered_name": "cCleaningIndoor",
+      "registration_owner_va": "0xbfee00",
+      "descriptor_vtable": "0x30d6318",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc00070",
+          "member_function_or_vtable_offset": "0xc10d00",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc10d00",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc000a0",
+          "member_function_or_vtable_offset": "0xc10e10",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc10e10",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc000d0",
+          "member_function_or_vtable_offset": "0xc11550",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc11550",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 46,
+      "label": "NpcAIActivityState::cCatchInsect",
+      "string_va": "0x294c1ef",
+      "registered_name": "cCatchInsect",
+      "registration_owner_va": "0xbfee00",
+      "descriptor_vtable": "0x30d6318",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc00070",
+          "member_function_or_vtable_offset": "0xc11560",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc11560",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc000a0",
+          "member_function_or_vtable_offset": "0xc11730",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc11730",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc000d0",
+          "member_function_or_vtable_offset": "0xc11d80",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc11d80",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 47,
+      "label": "NpcAIActivityState::cCatchFish",
+      "string_va": "0x29bd31d",
+      "registered_name": "cCatchFish",
+      "registration_owner_va": "0xbfee00",
+      "descriptor_vtable": "0x30d6318",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc00070",
+          "member_function_or_vtable_offset": "0xc12070",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc12070",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc000a0",
+          "member_function_or_vtable_offset": "0xc121b0",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc121b0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc000d0",
+          "member_function_or_vtable_offset": "0xc12280",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc12280",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 48,
+      "label": "NpcAIActivityState::cWatering",
+      "string_va": "0x29a6f30",
+      "registered_name": "cWatering",
+      "registration_owner_va": "0xbfee00",
+      "descriptor_vtable": "0x30d6318",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc00070",
+          "member_function_or_vtable_offset": "0xc15bd0",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc15bd0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc000a0",
+          "member_function_or_vtable_offset": "0xc15c10",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc15c10",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc000d0",
+          "member_function_or_vtable_offset": "0xc16240",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc16240",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 49,
+      "label": "NpcAIActivityState::cTotakekeLive",
+      "string_va": "0x2992cc7",
+      "registered_name": "cTotakekeLive",
+      "registration_owner_va": "0xbfee00",
+      "descriptor_vtable": "0x30d6318",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc00070",
+          "member_function_or_vtable_offset": "0xc16250",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc16250",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc000a0",
+          "member_function_or_vtable_offset": "0xc166c0",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc166c0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc000d0",
+          "member_function_or_vtable_offset": "0xc16e30",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc16e30",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 50,
+      "label": "NpcAIActivityState::cAirplaneRun",
+      "string_va": "0x295b38e",
+      "registered_name": "cAirplaneRun",
+      "registration_owner_va": "0xbfee00",
+      "descriptor_vtable": "0x30d6318",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc00070",
+          "member_function_or_vtable_offset": "0xc16e40",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc16e40",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc000a0",
+          "member_function_or_vtable_offset": "0xc16f40",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc16f40",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc000d0",
+          "member_function_or_vtable_offset": "0xc173c0",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc173c0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 51,
+      "label": "NpcAIActivityState::cMoveSpotOut",
+      "string_va": "0x2997f94",
+      "registered_name": "cMoveSpotOut",
+      "registration_owner_va": "0xbfee00",
+      "descriptor_vtable": "0x30d6318",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc00070",
+          "member_function_or_vtable_offset": "0xc178d0",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc178d0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc000a0",
+          "member_function_or_vtable_offset": "0xc178f0",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc178f0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc000d0",
+          "member_function_or_vtable_offset": "0xc18430",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc18430",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 52,
+      "label": "NpcAIActivityState::cSpotWait",
+      "string_va": "0x29a6f4e",
+      "registered_name": "cSpotWait",
+      "registration_owner_va": "0xbfee00",
+      "descriptor_vtable": "0x30d6318",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc00070",
+          "member_function_or_vtable_offset": "0xc18440",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc18440",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc000a0",
+          "member_function_or_vtable_offset": "0xc185b0",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc185b0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc000d0",
+          "member_function_or_vtable_offset": "0xc18680",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc18680",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 53,
+      "label": "NpcAIActivityState::cSitStandupChair",
+      "string_va": "0x2920c59",
+      "registered_name": "cSitStandupChair",
+      "registration_owner_va": "0xbfee00",
+      "descriptor_vtable": "0x30d6318",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc00070",
+          "member_function_or_vtable_offset": "0xc0a370",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc0a370",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc000a0",
+          "member_function_or_vtable_offset": "0xc0a380",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc0a380",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc000d0",
+          "member_function_or_vtable_offset": "0xc0a500",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc0a500",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 54,
+      "label": "NpcAIActivityState::cBedInOut",
+      "string_va": "0x2956afa",
+      "registered_name": "cBedInOut",
+      "registration_owner_va": "0xbfee00",
+      "descriptor_vtable": "0x30d6318",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc00070",
+          "member_function_or_vtable_offset": "0xc0a510",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc0a510",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc000a0",
+          "member_function_or_vtable_offset": "0xc0a520",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc0a520",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc000d0",
+          "member_function_or_vtable_offset": "0xc0a680",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc0a680",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 55,
+      "label": "NpcAIActivityState::cDoNothing",
+      "string_va": "0x29bd33c",
+      "registered_name": "cDoNothing",
+      "registration_owner_va": "0xbfee00",
+      "descriptor_vtable": "0x30d6318",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc00070",
+          "member_function_or_vtable_offset": "0xc0a690",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc0a690",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc000a0",
+          "member_function_or_vtable_offset": "0xc0aa90",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc0aa90",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc000d0",
+          "member_function_or_vtable_offset": "0xc0acf0",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc0acf0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 56,
+      "label": "NpcAIActivityState::cApproach",
+      "string_va": "0x29761df",
+      "registered_name": "cApproach",
+      "registration_owner_va": "0xbfee00",
+      "descriptor_vtable": "0x30d6318",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc00070",
+          "member_function_or_vtable_offset": "0xc0ad00",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc0ad00",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc000a0",
+          "member_function_or_vtable_offset": "0xc0ad70",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc0ad70",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc000d0",
+          "member_function_or_vtable_offset": "0xc0ad80",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc0ad80",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 57,
+      "label": "NpcAIActivityState::cDoze",
+      "string_va": "0x2951bbd",
+      "registered_name": "cDoze",
+      "registration_owner_va": "0xbfee00",
+      "descriptor_vtable": "0x30d6318",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc00070",
+          "member_function_or_vtable_offset": "0xc0ad90",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc0ad90",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc000a0",
+          "member_function_or_vtable_offset": "0xc0af00",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc0af00",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc000d0",
+          "member_function_or_vtable_offset": "0xc0b040",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc0b040",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 58,
+      "label": "NpcAIActivityState::cDeliveryWait",
+      "string_va": "0x2920c7e",
+      "registered_name": "cDeliveryWait",
+      "registration_owner_va": "0xbfee00",
+      "descriptor_vtable": "0x30d6318",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc00070",
+          "member_function_or_vtable_offset": "0xc0b2a0",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc0b2a0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc000a0",
+          "member_function_or_vtable_offset": "0xc0b380",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc0b380",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc000d0",
+          "member_function_or_vtable_offset": "0xc0b3d0",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc0b3d0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 59,
+      "label": "NpcAIActivityState::cRequestQuestWait",
+      "string_va": "0x29c2ab6",
+      "registered_name": "cRequestQuestWait",
+      "registration_owner_va": "0xbfee00",
+      "descriptor_vtable": "0x30d6318",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc00070",
+          "member_function_or_vtable_offset": "0xc0b3e0",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc0b3e0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc000a0",
+          "member_function_or_vtable_offset": "0xc0b490",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc0b490",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc000d0",
+          "member_function_or_vtable_offset": "0xc0b500",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc0b500",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 60,
+      "label": "NpcAIActivityState::cConversationHost",
+      "string_va": "0x2992ce9",
+      "registered_name": "cConversationHost",
+      "registration_owner_va": "0xbfee00",
+      "descriptor_vtable": "0x30d6318",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc00070",
+          "member_function_or_vtable_offset": "0xc0b510",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc0b510",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc000a0",
+          "member_function_or_vtable_offset": "0xc0bd20",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc0bd20",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc000d0",
+          "member_function_or_vtable_offset": "0xc0c280",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc0c280",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 61,
+      "label": "NpcAIActivityState::cConversationGuest",
+      "string_va": "0x29a1ad0",
+      "registered_name": "cConversationGuest",
+      "registration_owner_va": "0xbfee00",
+      "descriptor_vtable": "0x30d6318",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc00070",
+          "member_function_or_vtable_offset": "0xc0c9e0",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc0c9e0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc000a0",
+          "member_function_or_vtable_offset": "0xc0cb20",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc0cb20",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc000d0",
+          "member_function_or_vtable_offset": "0xc0cc70",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc0cc70",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 62,
+      "label": "NpcAIActivityState::cGreet",
+      "string_va": "0x298dd32",
+      "registered_name": "cGreet",
+      "registration_owner_va": "0xbfee00",
+      "descriptor_vtable": "0x30d6318",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc00070",
+          "member_function_or_vtable_offset": "0xc0d8f0",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc0d8f0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc000a0",
+          "member_function_or_vtable_offset": "0xc0da00",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc0da00",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc000d0",
+          "member_function_or_vtable_offset": "0xc0dcc0",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc0dcc0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 63,
+      "label": "NpcAIActivityState::cTakeFtrPhoto",
+      "string_va": "0x29b113a",
+      "registered_name": "cTakeFtrPhoto",
+      "registration_owner_va": "0xbfee00",
+      "descriptor_vtable": "0x30d6318",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc00070",
+          "member_function_or_vtable_offset": "0xc0dcd0",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc0dcd0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc000a0",
+          "member_function_or_vtable_offset": "0xc0dd90",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc0dd90",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc000d0",
+          "member_function_or_vtable_offset": "0xc0df80",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc0df80",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 64,
+      "label": "NpcAIActivityState::cOperateSwitch",
+      "string_va": "0x29c7316",
+      "registered_name": "cOperateSwitch",
+      "registration_owner_va": "0xbfee00",
+      "descriptor_vtable": "0x30d6318",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc00070",
+          "member_function_or_vtable_offset": "0xc0df90",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc0df90",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc000a0",
+          "member_function_or_vtable_offset": "0xc0e1c0",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc0e1c0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc000d0",
+          "member_function_or_vtable_offset": "0xc0e4a0",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc0e4a0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 65,
+      "label": "NpcAIActivityState::cWateringOnetime",
+      "string_va": "0x296066e",
+      "registered_name": "cWateringOnetime",
+      "registration_owner_va": "0xbfee00",
+      "descriptor_vtable": "0x30d6318",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc00070",
+          "member_function_or_vtable_offset": "0xc0e840",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc0e840",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc000a0",
+          "member_function_or_vtable_offset": "0xc0e8d0",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc0e8d0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc000d0",
+          "member_function_or_vtable_offset": "0xc0e990",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc0e990",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    },
+    {
+      "index": 66,
+      "label": "NpcAIActivityState::cFollowInsect",
+      "string_va": "0x2920ca0",
+      "registered_name": "cFollowInsect",
+      "registration_owner_va": "0xbfee00",
+      "descriptor_vtable": "0x30d6318",
+      "callbacks": {
+        "entry": {
+          "dispatcher_va": "0xc00070",
+          "member_function_or_vtable_offset": "0xc0e9a0",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc0e9a0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "update": {
+          "dispatcher_va": "0xc000a0",
+          "member_function_or_vtable_offset": "0xc0ea30",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc0ea30",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        },
+        "exit": {
+          "dispatcher_va": "0xc000d0",
+          "member_function_or_vtable_offset": "0xc0ecb0",
+          "raw_adjustment_flag": "0x0",
+          "receiver_byte_adjustment": 0,
+          "dispatch_mode": "direct",
+          "target_va": "0xc0ecb0",
+          "validation": "Original dispatcher reached handler entry; handler not executed."
+        }
+      }
+    }
+  ],
+  "dispatch_modes": {
+    "direct": 156,
+    "virtual": 45
+  },
+  "registration_block": {
+    "entry_va": "0xc1acb8",
+    "stop_before_va": "0xc1bb08",
+    "common_registration_function": "0xc1ac50",
+    "extension_registration_function": "0xbfee00",
+    "owner_vtable": "0x30d5f28",
+    "state_manager_offset": "0x7760",
+    "record_size": 64,
+    "name_record_size": 16,
+    "common_states": 43,
+    "activity_states": 24,
+    "initial_state": 0
+  },
+  "role_evidence": {
+    "entry": {
+      "native_consumer_va": "0x1f06750",
+      "descriptor_virtual_slot": "0x0"
+    },
+    "update": {
+      "native_consumer_va": "0x1f06900",
+      "descriptor_virtual_slot": "0x8"
+    },
+    "exit": {
+      "native_consumer_va": "0x1f067b0",
+      "descriptor_virtual_slot": "0x10",
+      "argument_W1": "new state index"
+    }
+  },
+  "member_pointer_rule": "Receiver=owner+(signed adjustment_flag>>1); low bit chooses owner vtable lookup by offset versus direct function. Null direct members return.",
+  "source_reference": "mechanics/focus7/npc_native_state_labels.json",
+  "dependencies_stubbed": [],
+  "scope": "Original registration and callback dispatch targets for all67 states of this activity-NPC owner vtable.",
+  "limits": [
+    "Owner and preallocated descriptor/string buffers are reconstructed; allocator prefix and full NPC constructor do not execute.",
+    "Callback dispatch checks stop BEFORE the actual handler executes. State-role consumers are statically verified, not a complete FSM simulation.",
+    "This does not execute state decisions, movement, path searches, collision avoidance, world schedules or all NPC subclasses.",
+    "State names such as EscapeHighCostArea are native labels, not proof of a particular pathfinding algorithm."
+  ],
+  "elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74"
+}
