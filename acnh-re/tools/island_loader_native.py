@@ -42,6 +42,7 @@ def main():
     regions = {
         "preset_cell_loader": (0x558F40, 0x748),
         "preset_grid_wrapper_buffer_init": (0x559690, 0x1A8),
+        "preset_grid_wrapper_payload_accessor": (0x55AC40, 8),
         "preset_object_setup": (0x528BF0, 0x130),
         "outside_template_generation_prefix": (0x529910, 0x1B0),
         "variation_max_reader": (0x547520, 0x154),
@@ -54,6 +55,10 @@ def main():
             "bytes": size,
             "sha256": hashlib.sha256(raw).hexdigest(),
         }
+
+    wrapper_vtable = image.ptr(0x32E4838) + 0x10
+    wrapper_payload_accessor = image.ptr(wrapper_vtable + 0xF0)
+    assert wrapper_payload_accessor == 0x55AC40
 
     result = {
         "scope": "Static main.elf dataflow plus validation of every decoded LandMaking preset. The full loader and its runtime dependencies were not emulated.",
@@ -96,10 +101,15 @@ def main():
             },
             "wrapper_backing_store": {
                 "constructor_elf_va": "0x559690",
+                "nested_vtable_global_elf_va": "0x32e4838",
+                "nested_vtable_address_point": hex(wrapper_vtable),
+                "payload_accessor_vtable_offset": "0xf0",
+                "payload_accessor_elf_va": hex(wrapper_payload_accessor),
+                "payload_accessor_rule": "0x55ac40 returns this+0x28; constructor copies at returned_pointer+8, i.e. constructor_object+0xf0.",
                 "zeroed_bytes": 0x24C00,
                 "copy_bytes": 0x24C00,
                 "size_equation": "0x24c00 = 112 * 96 * 14",
-                "interpretation": "A temporary wrapper backing buffer is initialized/copied at the same total size as the decoded 14-byte preset grid.",
+                "interpretation": "The wrapper's inline backing buffer begins at constructor_object+0xf0 and has the same total size as the decoded 14-byte preset grid.",
                 "does_not_prove": "This size match does not establish that the wrapper buffer is the destination accessor's cell storage or the separate 52-byte ground/collision grid.",
             },
             "destination_cell_writes": [
@@ -139,6 +149,13 @@ def main():
         "\n".join(
             f"{i.address:08x} {i.bytes.hex():8s} {i.mnemonic:8s} {i.op_str}".rstrip()
             for i in wrapper_asm
+        ) + "\n"
+    )
+    accessor_asm = image.disasm(0x55AC40, 8)
+    (ROOT / "output/ui_island/island_terrain_wrapper_accessor.asm").write_text(
+        "\n".join(
+            f"{i.address:08x} {i.bytes.hex():8s} {i.mnemonic:8s} {i.op_str}".rstrip()
+            for i in accessor_asm
         ) + "\n"
     )
     print(json.dumps({

@@ -675,10 +675,15 @@
     },
     "wrapper_backing_store": {
       "constructor_elf_va": "0x559690",
+      "nested_vtable_global_elf_va": "0x32e4838",
+      "nested_vtable_address_point": "0x3065e88",
+      "payload_accessor_vtable_offset": "0xf0",
+      "payload_accessor_elf_va": "0x55ac40",
+      "payload_accessor_rule": "0x55ac40 returns this+0x28; constructor copies at returned_pointer+8, i.e. constructor_object+0xf0.",
       "zeroed_bytes": 150528,
       "copy_bytes": 150528,
       "size_equation": "0x24c00 = 112 * 96 * 14",
-      "interpretation": "A temporary wrapper backing buffer is initialized/copied at the same total size as the decoded 14-byte preset grid.",
+      "interpretation": "The wrapper's inline backing buffer begins at constructor_object+0xf0 and has the same total size as the decoded 14-byte preset grid.",
       "does_not_prove": "This size match does not establish that the wrapper buffer is the destination accessor's cell storage or the separate 52-byte ground/collision grid."
     },
     "destination_cell_writes": [
@@ -740,6 +745,11 @@
       "elf_va": "0x559690",
       "bytes": 424,
       "sha256": "971418bea5c2da969e3d8e7f9a482c43078f5d52829624791846baa0fe1cd0ae"
+    },
+    "preset_grid_wrapper_payload_accessor": {
+      "elf_va": "0x55ac40",
+      "bytes": 8,
+      "sha256": "da8e434aac24641c2ccf1a5923875612a22897c4dbe65cc13c69c8c1362c0420"
     },
     "preset_object_setup": {
       "elf_va": "0x528bf0",
