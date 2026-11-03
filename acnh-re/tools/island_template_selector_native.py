@@ -4,10 +4,11 @@ Prepared cache categories are deliberately synthetic; enum hash/category wiring
 and resource loading remain separate research questions. No patched instructions.
 """
 from pathlib import Path
-import json, struct, random, hashlib, zlib
+import json, struct, random, hashlib, zlib, os
 from native_emulator import Sandbox
 
 ROOT=Path(__file__).resolve().parents[1]
+SOURCE_ROOT=Path(os.environ.get('ACNH_RESEARCH_ROOT',ROOT))
 
 def next_draw(state):
     a,b,c,d=state
@@ -20,10 +21,10 @@ def main():
     def q(p,v):u.mem_write(p,struct.pack('<Q',v))
     def w(p,v):u.mem_write(p,struct.pack('<I',v&0xffffffff))
     def h(p,v):u.mem_write(p,struct.pack('<H',v))
-    data=json.loads((ROOT/'output/tables_resolved/FieldOutsideTemplate.json').read_text())
-    manifest=json.loads((ROOT/'output/manifest.json').read_text())['entries']
-    start=json.loads((ROOT/'output'/manifest[data['source_id']]['decoded']).read_text())['data']['data_start']
-    raw=(ROOT/'output'/data['raw']['$blob']).read_bytes()
+    data=json.loads((SOURCE_ROOT/'output/tables_resolved/FieldOutsideTemplate.json').read_text())
+    manifest=json.loads((SOURCE_ROOT/'output/manifest.json').read_text())['entries']
+    start=json.loads((SOURCE_ROOT/'output'/manifest[data['source_id']]['decoded']).read_text())['data']['data_start']
+    raw=(SOURCE_ROOT/'output'/data['raw']['$blob']).read_bytes()
     base=s.HEAP;owner=base+0x10000;ptrs=base+0x20000;cache=base+0x30000;category=base+0x31000;rng=base+0x32000;resource=base+0x33000
     u.mem_write(base,raw)
     q(im.ptr(0x32d1ba8),owner)

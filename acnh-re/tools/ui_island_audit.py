@@ -9,12 +9,14 @@ from collections import Counter, defaultdict
 import hashlib
 import json
 import math
+import os
 import struct
 import sqlite3
 
 from audit_additional_romfs import ROMFS, inflate, sarc_members, dump
 
 ROOT = Path(__file__).resolve().parents[1]
+SOURCE_ROOT = Path(os.environ.get('ACNH_RESEARCH_ROOT', ROOT))
 OUT = ROOT / 'output/ui_island'
 
 
@@ -108,7 +110,7 @@ def main():
     counts, errors = Counter(), []
     layouts, anims, other = [], [], []
     parsed = {}
-    for p in sorted((ROOT/'output/additional_romfs/ui').glob('*.json')):
+    for p in sorted((SOURCE_ROOT/'output/additional_romfs/ui').glob('*.json')):
         d = json.loads(p.read_text())
         parsed[(d['source'], d['member'])] = (p, d['layout'])
 
@@ -139,8 +141,14 @@ def main():
                 errors.append({**ref, 'error': str(e), 'scope': 'animation'})
         elif data[:4] == b'FLYT':
             counts['layout_members'] += 1
-            p, tree = parsed[(source, member)]
-            record = {**ref, 'decoded_json': str(p.relative_to(ROOT/'output')),
+            parsed_entry = parsed.get((source, member))
+            if parsed_entry is None:
+                counts['layout_members_without_decoded_json'] += 1
+                errors.append({**ref, 'error':'decoded layout JSON missing from source inventory', 'scope':'layout'})
+                other.append({**ref, 'magic_hex':data[:8].hex()})
+                return
+            p, tree = parsed_entry
+            record = {**ref, 'decoded_json': str(p.relative_to(SOURCE_ROOT/'output')),
                       'name': tree['layout'].get('name'), 'components': [],
                       'materials': tree['materials'], 'textures': tree['textures'],
                       'fonts': tree['fonts'], 'groups': tree['groups'], 'sections': []}
@@ -168,7 +176,7 @@ def main():
     # Exact names only; alternatives retained instead of selecting an arbitrary component.
     by_name = defaultdict(list)
     by_container = defaultdict(list)
-    resources = json.loads((ROOT/'output/additional_romfs/resource_inventory.json').read_text())['resources']
+    resources = json.loads((SOURCE_ROOT/'output/additional_romfs/resource_inventory.json').read_text())['resources']
     texture_sources = defaultdict(list)
     font_sources = defaultdict(list)
     for resource in resources:
@@ -249,7 +257,7 @@ def main():
     dump(OUT/'other_layout_members.json', {'members':other})
 
     def table(name):
-        d = json.loads((ROOT/'output/tables_resolved'/f'{name}.json').read_text())
+        d = json.loads((SOURCE_ROOT/'output/tables_resolved'/f'{name}.json').read_text())
         cols = [x['name'] for x in d['columns']]
         return d, [dict(zip(cols, row)) for row in d['rows']]
     td, templates = table('FieldOutsideTemplate')
@@ -269,7 +277,7 @@ def main():
             counts['coast_slots'] += 1
             counts['coast_slots_without_candidates'] += not bool(candidates)
         coast.append({'template':{k:v for k,v in t.items() if not k.endswith('Parts')}, 'slots':slots})
-    catalog = json.loads((ROOT/'output/byml_resolved/catalogue.json').read_text())
+    catalog = json.loads((SOURCE_ROOT/'output/byml_resolved/catalogue.json').read_text())
     by_stem = defaultdict(list)
     for c in catalog:
         by_stem[Path(c['source']).stem].append(c)
@@ -301,7 +309,7 @@ def main():
         ]})
     counts.update(coast_templates=len(templates), coast_parts=len(parts), main_presets=len(main_rows))
     # Source-derived strings are candidate code entry points, never proven handlers.
-    db = sqlite3.connect(ROOT/'output/index.sqlite')
+    db = sqlite3.connect(SOURCE_ROOT/'output/index.sqlite')
     candidates = []
     exact = defaultdict(list)
     for va, owner, text in db.execute('SELECT DISTINCT string_va,function_va,text FROM string_refs WHERE length(text)<100'):
@@ -323,8 +331,8 @@ def main():
             {'component':'UI input/focus/modal/lifecycle','level':'C','evidence':'ui_island/native_candidates.json','open':'String candidates do not prove button handlers or input routing'},
             {'component':'Main terrain/event-plaza/structure/item preset joins','level':'L','evidence':'ui_island/island.json','open':'Label/VillagePreset is not proven to be a filename; structure identities and packed item bits need code proof'},
             {'component':'Outer coast template slots, part candidates, sea ring and instance placement','level':'L','evidence':'ui_island/coast_part_assembly_native.json; ui_island/coast_part_instantiation_native.json; ui_island/island.json','open':'Parent RNG end-to-end, parent/world transform, per-part rotation, model/PBC loading, seams and collision'},
-            {'component':'Terrain unit schema/variation/height','level':'S','evidence':'relations/terrain_native.json','open':'Runtime world-loader chain; prior native proof scope is recorded separately'},
-            {'component':'River/waterfall/ocean rendering and simulation','level':'U','evidence':'relations/terrain_native.json; ui_island/river_grid_topology.json; ui_island/coast_part_assembly_native.json; ui_island/coast_part_instantiation_native.json','open':'River-to-coast seam, geometry, flow, foam, shoreline, crossing and runtime editing'},
+            {'component':'Terrain unit schema/variation/height','level':'S','evidence':'relations/terrain_native.json; ui_island/island_terrain_loader_native.json','open':'0x558f40 field transfer and the temporary 0x24c00-byte wrapper are mapped; destination callback allocation/chunk layout, PBC contents and conversion to ground/collision 52-byte records remain open'},
+            {'component':'River/waterfall/ocean rendering and simulation','level':'U','evidence':'relations/terrain_native.json; ui_island/river_grid_topology.json; ui_island/river_inner_grid_topology.json; ui_island/coast_part_assembly_native.json; ui_island/coast_part_instantiation_native.json','open':'Counterclockwise ranks best among three InnerType0 mask conventions but leaves 244810/8177664 sample mismatches, concentrated in River-to-River edges including River5B self-pairs; native rotation, River-to-coast seam, geometry, flow, foam, shoreline, crossing and runtime editing remain unproven'},
             {'component':'Island placement validation and commit','level':'U','evidence':'mechanics/continuation_frontier.json','open':'Footprints, previews, terrain edits, permissions, atomic save/rollback and runtime integration'}]})
     summary = {'schema':'acnh-ui-island/1', 'date':'2026-11-03', 'counts':dict(counts), 'errors':errors,
                'native_case_count_added':0,
