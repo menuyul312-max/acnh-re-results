@@ -72,7 +72,8 @@
       "verified_reference": [
         "mechanics/terrain_native.json",
         "mechanics/dynamic_ground_native.json",
-        "mechanics/terrain_nav_flags_native.json"
+        "mechanics/terrain_nav_flags_native.json",
+        "mechanics/terrain_region_check_native.json"
       ],
       "remaining": [
         "14-byte preset ->52-byte runtime constructor and source loader",
@@ -105,7 +106,8 @@
           "indexed_function_size": 1864,
           "evidence": "Original address index; proposed next target, not a full semantic claim."
         }
-      ]
+      ],
+      "region_predicate_boundary": "Original0x181fa0 on finite reconstructed rectangular base/overlay heights and world-word flags. Live placement callers remain unexecuted."
     },
     "dynamic_ground": {
       "verified_reference": [
@@ -152,14 +154,16 @@
     "position_checks": {
       "verified_reference": [
         "mechanics/proximity_native.json",
-        "mechanics/terrain_native.json"
+        "mechanics/terrain_native.json",
+        "mechanics/terrain_region_check_native.json"
       ],
       "remaining": [
         "Candidate collection",
         "Actor registry and all type/filter predicates",
         "Full placement queries"
       ],
-      "status_this_continuation": "No new spatial-query execution."
+      "status_this_continuation": "No new spatial-query execution.",
+      "region_predicate_boundary": "Original0x181fa0 on finite reconstructed rectangular base/overlay heights and world-word flags. Live placement callers remain unexecuted."
     },
     "npc_navigation": {
       "verified_reference": [
@@ -294,9 +298,9 @@
   },
   "scope": "Concrete proof boundaries and selected next targets; neither all unknown functions nor a complete game specification.",
   "latest_phase": {
-    "report": "../docs/WORLD_NAV_BRIDGE.md",
-    "progress": "mechanics/world_nav_bridge_progress.json",
-    "new_native_cases": 1568,
-    "native_helper_cases_total": 1135577
+    "report": "../docs/TERRAIN_REGION_CHECK.md",
+    "progress": "mechanics/terrain_region_progress.json",
+    "new_native_cases": 216,
+    "native_helper_cases_total": 1135793
   }
 }
