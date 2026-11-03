@@ -38,3 +38,13 @@ Poin 1–4 belum dinyatakan selesai. Hasil baru ini menutup aturan pemilihan dar
 - `tools/island_template_selector_native.py`: menjalankan selector dari main.elf sumber pengguna dan membandingkan hasil serta state RNG.
 
 Jalankan `python tools/island_template_selector_native.py` dari akar proyek penelitian dengan dependensi dan sumber lokal yang sama. Bukti baru ini dihitung sebagai 528 kasus pada laporan mandiri; generator ringkasan mekanik historis belum diperbarui dan total lamanya tidak digunakan untuk mengklaim cakupan baru.
+
+## Tambahan: konektivitas unit sungai pada preset terrain
+
+Pemeriksaan grid atas seluruh 96 preset LandMaking mengelompokkan layer0 unit ID yang metadata native petakan sebagai River0A..River8A/B/C. Ditemukan 84.759 sel River pada 96 preset; flood fill 4-arah menghasilkan 576 komponen (setiap preset lebih dari satu komponen pada klasifikasi semua tipe River). Tidak ada sel River pada layer1. Tidak ada komponen River yang menyentuh tepi grid daratan. Relasi tetangga terbanyak mencakup unit 17↔21 (24.622 sisi bersama) dan 20↔21 (23.148 sisi bersama); hitungan adalah sisi sel, bukan aliran air.
+
+Hasil ini menunjukkan sel River preset merupakan jaringan internal yang terpisah dari edge grid, sementara record pantai menggunakan slot `S_River`, `W_River`, atau `E_River`. Ini **belum** membuktikan unit mana yang menjadi terminal muara atau bagaimana jaringan tersebut tersambung ke part pantai; perbedaan grid daratan dan template luar justru menyisakan seam penghubung yang perlu dicari di loader/factory native. File lengkap: `output/ui_island/river_grid_topology.json`.
+
+## Capaian poin 1–4 setelah lanjutan
+
+Poin 1–4 belum selesai. Loader 0x558f40 statis membaca 112×96 data sel 14-byte dan meneruskan melalui objek resource; cache grid runtime 52-byte dan writer callback belum direkonstruksi sebagai satu rantai teruji. Poin 2 kini memiliki selector native teruji serta urutan kategori enum yang dipulihkan. Poin 3 masih belum memiliki transform dan sambungan part teruji. Poin 4 kini memiliki topologi sel River source dan daftar kandidat factory, tetapi terminal muara, geometri, flow, collision, dan render belum terbukti. Batas PBC asli yang absen menghalangi pembandingan langsung collision unit.
