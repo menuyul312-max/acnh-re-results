@@ -1,0 +1,4086 @@
+{
+  "scope": "Static resource-name path from terrain unit ModelName rows to the PBC resource helper. This does not recover or parse the expected PBC members.",
+  "source_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+  "table": {
+    "name": "FieldLandMakingUnitModelParam",
+    "source_id": 40,
+    "source": "B_data/Bcsv/FieldLandMakingUnitModelParam.bcsv",
+    "row_count": 246,
+    "source_sha256": "289ad2fb68d511121a0779f24e21dfc5f8c627a6053c6aaf334b6a56481d36fc",
+    "model_name_field": {
+      "crc32": "0x39b5a93d",
+      "native_reader": "0x16bae0"
+    },
+    "variation_field": {
+      "crc32": "0xc733aa77",
+      "type": "u16 maximum valid index"
+    }
+  },
+  "native_path": {
+    "function": "0x169b90",
+    "relevant_block": "0x16a43c-0x16a488",
+    "steps": [
+      "0x16bae0 reads a ModelName BCSV field (hash 0x39b5a93d).",
+      "0x12930 formats the returned name with literal '%s_pbc'.",
+      "0xc9bc0 receives the generated resource name and resource manager arguments."
+    ],
+    "group_literal_va": "0x2955998",
+    "archive_groups": [
+      "FldUnit_pbc",
+      "FldUnitCliff_pbc",
+      "FldUnitFall_pbc",
+      "FldUnitRiver_pbc",
+      "FldUnitRoadStone_pbc",
+      "FldUnitRoadSoil_pbc",
+      "FldUnitRoadBrick_pbc",
+      "FldUnitRoadDarkSoil_pbc",
+      "FldUnitRoadFanPattern_pbc",
+      "FldUnitRoadSand_pbc",
+      "FldUnitRoadTile_pbc",
+      "FldUnitRoadWood_pbc"
+    ],
+    "native_loader_call_is_not_execution_proof": true
+  },
+  "catalog": {
+    "rows": 246,
+    "unique_model_names": 242,
+    "unique_candidate_archive_members": 242,
+    "rows_without_archive_hint": [
+      41
+    ],
+    "archive_row_counts_from_terrain_native_relation": {
+      "FldUnit": 1,
+      "FldUnitCliff": 20,
+      "FldUnitFall": 47,
+      "FldUnitRiver": 17,
+      "FldUnitRoadBrick": 20,
+      "FldUnitRoadDarkSoil": 20,
+      "FldUnitRoadFanPattern": 20,
+      "FldUnitRoadSand": 20,
+      "FldUnitRoadSoil": 20,
+      "FldUnitRoadStone": 20,
+      "FldUnitRoadTile": 20,
+      "FldUnitRoadWood": 20
+    },
+    "entries": [
+      {
+        "unique_id": 0,
+        "variation_limit": 0,
+        "model_name": "Base",
+        "native_resource_name_candidate": "Base_pbc",
+        "archive_group_hint": "FldUnit",
+        "archive_name_candidate": "FldUnit_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Base_0",
+            "archive": "FldUnit"
+          }
+        ]
+      },
+      {
+        "unique_id": 1,
+        "variation_limit": 0,
+        "model_name": "River0A",
+        "native_resource_name_candidate": "River0A_pbc",
+        "archive_group_hint": "FldUnitRiver",
+        "archive_name_candidate": "FldUnitRiver_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "River0A_0",
+            "archive": "FldUnitRiver"
+          }
+        ]
+      },
+      {
+        "unique_id": 4,
+        "variation_limit": 3,
+        "model_name": "River1A",
+        "native_resource_name_candidate": "River1A_pbc",
+        "archive_group_hint": "FldUnitRiver",
+        "archive_name_candidate": "FldUnitRiver_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "River1A_0",
+            "archive": "FldUnitRiver"
+          },
+          {
+            "index": 1,
+            "model": "River1A_1",
+            "archive": "FldUnitRiver"
+          },
+          {
+            "index": 2,
+            "model": "River1A_2",
+            "archive": "FldUnitRiver"
+          },
+          {
+            "index": 3,
+            "model": "River1A_3",
+            "archive": "FldUnitRiver"
+          }
+        ]
+      },
+      {
+        "unique_id": 7,
+        "variation_limit": 1,
+        "model_name": "River2A",
+        "native_resource_name_candidate": "River2A_pbc",
+        "archive_group_hint": "FldUnitRiver",
+        "archive_name_candidate": "FldUnitRiver_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "River2A_0",
+            "archive": "FldUnitRiver"
+          },
+          {
+            "index": 1,
+            "model": "River2A_1",
+            "archive": "FldUnitRiver"
+          }
+        ]
+      },
+      {
+        "unique_id": 8,
+        "variation_limit": 3,
+        "model_name": "River2B",
+        "native_resource_name_candidate": "River2B_pbc",
+        "archive_group_hint": "FldUnitRiver",
+        "archive_name_candidate": "FldUnitRiver_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "River2B_0",
+            "archive": "FldUnitRiver"
+          },
+          {
+            "index": 1,
+            "model": "River2B_1",
+            "archive": "FldUnitRiver"
+          },
+          {
+            "index": 2,
+            "model": "River2B_2",
+            "archive": "FldUnitRiver"
+          },
+          {
+            "index": 3,
+            "model": "River2B_3",
+            "archive": "FldUnitRiver"
+          }
+        ]
+      },
+      {
+        "unique_id": 9,
+        "variation_limit": 3,
+        "model_name": "River2C",
+        "native_resource_name_candidate": "River2C_pbc",
+        "archive_group_hint": "FldUnitRiver",
+        "archive_name_candidate": "FldUnitRiver_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "River2C_0",
+            "archive": "FldUnitRiver"
+          },
+          {
+            "index": 1,
+            "model": "River2C_1",
+            "archive": "FldUnitRiver"
+          },
+          {
+            "index": 2,
+            "model": "River2C_2",
+            "archive": "FldUnitRiver"
+          },
+          {
+            "index": 3,
+            "model": "River2C_3",
+            "archive": "FldUnitRiver"
+          }
+        ]
+      },
+      {
+        "unique_id": 10,
+        "variation_limit": 3,
+        "model_name": "River3A",
+        "native_resource_name_candidate": "River3A_pbc",
+        "archive_group_hint": "FldUnitRiver",
+        "archive_name_candidate": "FldUnitRiver_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "River3A_0",
+            "archive": "FldUnitRiver"
+          },
+          {
+            "index": 1,
+            "model": "River3A_1",
+            "archive": "FldUnitRiver"
+          },
+          {
+            "index": 2,
+            "model": "River3A_2",
+            "archive": "FldUnitRiver"
+          },
+          {
+            "index": 3,
+            "model": "River3A_3",
+            "archive": "FldUnitRiver"
+          }
+        ]
+      },
+      {
+        "unique_id": 11,
+        "variation_limit": 3,
+        "model_name": "River3B",
+        "native_resource_name_candidate": "River3B_pbc",
+        "archive_group_hint": "FldUnitRiver",
+        "archive_name_candidate": "FldUnitRiver_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "River3B_0",
+            "archive": "FldUnitRiver"
+          },
+          {
+            "index": 1,
+            "model": "River3B_1",
+            "archive": "FldUnitRiver"
+          },
+          {
+            "index": 2,
+            "model": "River3B_2",
+            "archive": "FldUnitRiver"
+          },
+          {
+            "index": 3,
+            "model": "River3B_3",
+            "archive": "FldUnitRiver"
+          }
+        ]
+      },
+      {
+        "unique_id": 12,
+        "variation_limit": 3,
+        "model_name": "River3C",
+        "native_resource_name_candidate": "River3C_pbc",
+        "archive_group_hint": "FldUnitRiver",
+        "archive_name_candidate": "FldUnitRiver_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "River3C_0",
+            "archive": "FldUnitRiver"
+          },
+          {
+            "index": 1,
+            "model": "River3C_1",
+            "archive": "FldUnitRiver"
+          },
+          {
+            "index": 2,
+            "model": "River3C_2",
+            "archive": "FldUnitRiver"
+          },
+          {
+            "index": 3,
+            "model": "River3C_3",
+            "archive": "FldUnitRiver"
+          }
+        ]
+      },
+      {
+        "unique_id": 13,
+        "variation_limit": 3,
+        "model_name": "River4A",
+        "native_resource_name_candidate": "River4A_pbc",
+        "archive_group_hint": "FldUnitRiver",
+        "archive_name_candidate": "FldUnitRiver_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "River4A_0",
+            "archive": "FldUnitRiver"
+          },
+          {
+            "index": 1,
+            "model": "River4A_1",
+            "archive": "FldUnitRiver"
+          },
+          {
+            "index": 2,
+            "model": "River4A_2",
+            "archive": "FldUnitRiver"
+          },
+          {
+            "index": 3,
+            "model": "River4A_3",
+            "archive": "FldUnitRiver"
+          }
+        ]
+      },
+      {
+        "unique_id": 14,
+        "variation_limit": 3,
+        "model_name": "River4B",
+        "native_resource_name_candidate": "River4B_pbc",
+        "archive_group_hint": "FldUnitRiver",
+        "archive_name_candidate": "FldUnitRiver_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "River4B_0",
+            "archive": "FldUnitRiver"
+          },
+          {
+            "index": 1,
+            "model": "River4B_1",
+            "archive": "FldUnitRiver"
+          },
+          {
+            "index": 2,
+            "model": "River4B_2",
+            "archive": "FldUnitRiver"
+          },
+          {
+            "index": 3,
+            "model": "River4B_3",
+            "archive": "FldUnitRiver"
+          }
+        ]
+      },
+      {
+        "unique_id": 15,
+        "variation_limit": 0,
+        "model_name": "River4C",
+        "native_resource_name_candidate": "River4C_pbc",
+        "archive_group_hint": "FldUnitRiver",
+        "archive_name_candidate": "FldUnitRiver_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "River4C_0",
+            "archive": "FldUnitRiver"
+          }
+        ]
+      },
+      {
+        "unique_id": 16,
+        "variation_limit": 0,
+        "model_name": "River5A",
+        "native_resource_name_candidate": "River5A_pbc",
+        "archive_group_hint": "FldUnitRiver",
+        "archive_name_candidate": "FldUnitRiver_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "River5A_0",
+            "archive": "FldUnitRiver"
+          }
+        ]
+      },
+      {
+        "unique_id": 17,
+        "variation_limit": 3,
+        "model_name": "River5B",
+        "native_resource_name_candidate": "River5B_pbc",
+        "archive_group_hint": "FldUnitRiver",
+        "archive_name_candidate": "FldUnitRiver_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "River5B_0",
+            "archive": "FldUnitRiver"
+          },
+          {
+            "index": 1,
+            "model": "River5B_1",
+            "archive": "FldUnitRiver"
+          },
+          {
+            "index": 2,
+            "model": "River5B_2",
+            "archive": "FldUnitRiver"
+          },
+          {
+            "index": 3,
+            "model": "River5B_3",
+            "archive": "FldUnitRiver"
+          }
+        ]
+      },
+      {
+        "unique_id": 18,
+        "variation_limit": 0,
+        "model_name": "River6A",
+        "native_resource_name_candidate": "River6A_pbc",
+        "archive_group_hint": "FldUnitRiver",
+        "archive_name_candidate": "FldUnitRiver_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "River6A_0",
+            "archive": "FldUnitRiver"
+          }
+        ]
+      },
+      {
+        "unique_id": 19,
+        "variation_limit": 0,
+        "model_name": "River6B",
+        "native_resource_name_candidate": "River6B_pbc",
+        "archive_group_hint": "FldUnitRiver",
+        "archive_name_candidate": "FldUnitRiver_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "River6B_0",
+            "archive": "FldUnitRiver"
+          }
+        ]
+      },
+      {
+        "unique_id": 20,
+        "variation_limit": 0,
+        "model_name": "River7A",
+        "native_resource_name_candidate": "River7A_pbc",
+        "archive_group_hint": "FldUnitRiver",
+        "archive_name_candidate": "FldUnitRiver_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "River7A_0",
+            "archive": "FldUnitRiver"
+          }
+        ]
+      },
+      {
+        "unique_id": 21,
+        "variation_limit": 0,
+        "model_name": "River8A",
+        "native_resource_name_candidate": "River8A_pbc",
+        "archive_group_hint": "FldUnitRiver",
+        "archive_name_candidate": "FldUnitRiver_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "River8A_0",
+            "archive": "FldUnitRiver"
+          }
+        ]
+      },
+      {
+        "unique_id": 22,
+        "variation_limit": 0,
+        "model_name": "Cliff0A",
+        "native_resource_name_candidate": "Cliff0A_pbc",
+        "archive_group_hint": "FldUnitCliff",
+        "archive_name_candidate": "FldUnitCliff_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Cliff0A_0",
+            "archive": "FldUnitCliff"
+          }
+        ]
+      },
+      {
+        "unique_id": 23,
+        "variation_limit": 0,
+        "model_name": "Cliff0A",
+        "native_resource_name_candidate": "Cliff0A_pbc",
+        "archive_group_hint": "FldUnitCliff",
+        "archive_name_candidate": "FldUnitCliff_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Cliff0A_0",
+            "archive": "FldUnitCliff"
+          }
+        ]
+      },
+      {
+        "unique_id": 24,
+        "variation_limit": 0,
+        "model_name": "Cliff0A",
+        "native_resource_name_candidate": "Cliff0A_pbc",
+        "archive_group_hint": "FldUnitCliff",
+        "archive_name_candidate": "FldUnitCliff_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Cliff0A_0",
+            "archive": "FldUnitCliff"
+          }
+        ]
+      },
+      {
+        "unique_id": 25,
+        "variation_limit": 3,
+        "model_name": "Cliff1A",
+        "native_resource_name_candidate": "Cliff1A_pbc",
+        "archive_group_hint": "FldUnitCliff",
+        "archive_name_candidate": "FldUnitCliff_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Cliff1A_0",
+            "archive": "FldUnitCliff"
+          },
+          {
+            "index": 1,
+            "model": "Cliff1A_1",
+            "archive": "FldUnitCliff"
+          },
+          {
+            "index": 2,
+            "model": "Cliff1A_2",
+            "archive": "FldUnitCliff"
+          },
+          {
+            "index": 3,
+            "model": "Cliff1A_3",
+            "archive": "FldUnitCliff"
+          }
+        ]
+      },
+      {
+        "unique_id": 26,
+        "variation_limit": 3,
+        "model_name": "Cliff1A",
+        "native_resource_name_candidate": "Cliff1A_pbc",
+        "archive_group_hint": "FldUnitCliff",
+        "archive_name_candidate": "FldUnitCliff_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Cliff1A_0",
+            "archive": "FldUnitCliff"
+          },
+          {
+            "index": 1,
+            "model": "Cliff1A_1",
+            "archive": "FldUnitCliff"
+          },
+          {
+            "index": 2,
+            "model": "Cliff1A_2",
+            "archive": "FldUnitCliff"
+          },
+          {
+            "index": 3,
+            "model": "Cliff1A_3",
+            "archive": "FldUnitCliff"
+          }
+        ]
+      },
+      {
+        "unique_id": 27,
+        "variation_limit": 3,
+        "model_name": "Cliff1A",
+        "native_resource_name_candidate": "Cliff1A_pbc",
+        "archive_group_hint": "FldUnitCliff",
+        "archive_name_candidate": "FldUnitCliff_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Cliff1A_0",
+            "archive": "FldUnitCliff"
+          },
+          {
+            "index": 1,
+            "model": "Cliff1A_1",
+            "archive": "FldUnitCliff"
+          },
+          {
+            "index": 2,
+            "model": "Cliff1A_2",
+            "archive": "FldUnitCliff"
+          },
+          {
+            "index": 3,
+            "model": "Cliff1A_3",
+            "archive": "FldUnitCliff"
+          }
+        ]
+      },
+      {
+        "unique_id": 28,
+        "variation_limit": 1,
+        "model_name": "Cliff2A",
+        "native_resource_name_candidate": "Cliff2A_pbc",
+        "archive_group_hint": "FldUnitCliff",
+        "archive_name_candidate": "FldUnitCliff_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Cliff2A_0",
+            "archive": "FldUnitCliff"
+          },
+          {
+            "index": 1,
+            "model": "Cliff2A_1",
+            "archive": "FldUnitCliff"
+          }
+        ]
+      },
+      {
+        "unique_id": 29,
+        "variation_limit": 3,
+        "model_name": "Cliff2C",
+        "native_resource_name_candidate": "Cliff2C_pbc",
+        "archive_group_hint": "FldUnitCliff",
+        "archive_name_candidate": "FldUnitCliff_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Cliff2C_0",
+            "archive": "FldUnitCliff"
+          },
+          {
+            "index": 1,
+            "model": "Cliff2C_1",
+            "archive": "FldUnitCliff"
+          },
+          {
+            "index": 2,
+            "model": "Cliff2C_2",
+            "archive": "FldUnitCliff"
+          },
+          {
+            "index": 3,
+            "model": "Cliff2C_3",
+            "archive": "FldUnitCliff"
+          }
+        ]
+      },
+      {
+        "unique_id": 30,
+        "variation_limit": 3,
+        "model_name": "Cliff3A",
+        "native_resource_name_candidate": "Cliff3A_pbc",
+        "archive_group_hint": "FldUnitCliff",
+        "archive_name_candidate": "FldUnitCliff_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Cliff3A_0",
+            "archive": "FldUnitCliff"
+          },
+          {
+            "index": 1,
+            "model": "Cliff3A_1",
+            "archive": "FldUnitCliff"
+          },
+          {
+            "index": 2,
+            "model": "Cliff3A_2",
+            "archive": "FldUnitCliff"
+          },
+          {
+            "index": 3,
+            "model": "Cliff3A_3",
+            "archive": "FldUnitCliff"
+          }
+        ]
+      },
+      {
+        "unique_id": 31,
+        "variation_limit": 3,
+        "model_name": "Cliff3B",
+        "native_resource_name_candidate": "Cliff3B_pbc",
+        "archive_group_hint": "FldUnitCliff",
+        "archive_name_candidate": "FldUnitCliff_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Cliff3B_0",
+            "archive": "FldUnitCliff"
+          },
+          {
+            "index": 1,
+            "model": "Cliff3B_1",
+            "archive": "FldUnitCliff"
+          },
+          {
+            "index": 2,
+            "model": "Cliff3B_2",
+            "archive": "FldUnitCliff"
+          },
+          {
+            "index": 3,
+            "model": "Cliff3B_3",
+            "archive": "FldUnitCliff"
+          }
+        ]
+      },
+      {
+        "unique_id": 32,
+        "variation_limit": 3,
+        "model_name": "Cliff3C",
+        "native_resource_name_candidate": "Cliff3C_pbc",
+        "archive_group_hint": "FldUnitCliff",
+        "archive_name_candidate": "FldUnitCliff_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Cliff3C_0",
+            "archive": "FldUnitCliff"
+          },
+          {
+            "index": 1,
+            "model": "Cliff3C_1",
+            "archive": "FldUnitCliff"
+          },
+          {
+            "index": 2,
+            "model": "Cliff3C_2",
+            "archive": "FldUnitCliff"
+          },
+          {
+            "index": 3,
+            "model": "Cliff3C_3",
+            "archive": "FldUnitCliff"
+          }
+        ]
+      },
+      {
+        "unique_id": 33,
+        "variation_limit": 3,
+        "model_name": "Cliff4A",
+        "native_resource_name_candidate": "Cliff4A_pbc",
+        "archive_group_hint": "FldUnitCliff",
+        "archive_name_candidate": "FldUnitCliff_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Cliff4A_0",
+            "archive": "FldUnitCliff"
+          },
+          {
+            "index": 1,
+            "model": "Cliff4A_1",
+            "archive": "FldUnitCliff"
+          },
+          {
+            "index": 2,
+            "model": "Cliff4A_2",
+            "archive": "FldUnitCliff"
+          },
+          {
+            "index": 3,
+            "model": "Cliff4A_3",
+            "archive": "FldUnitCliff"
+          }
+        ]
+      },
+      {
+        "unique_id": 34,
+        "variation_limit": 3,
+        "model_name": "Cliff4B",
+        "native_resource_name_candidate": "Cliff4B_pbc",
+        "archive_group_hint": "FldUnitCliff",
+        "archive_name_candidate": "FldUnitCliff_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Cliff4B_0",
+            "archive": "FldUnitCliff"
+          },
+          {
+            "index": 1,
+            "model": "Cliff4B_1",
+            "archive": "FldUnitCliff"
+          },
+          {
+            "index": 2,
+            "model": "Cliff4B_2",
+            "archive": "FldUnitCliff"
+          },
+          {
+            "index": 3,
+            "model": "Cliff4B_3",
+            "archive": "FldUnitCliff"
+          }
+        ]
+      },
+      {
+        "unique_id": 35,
+        "variation_limit": 0,
+        "model_name": "Cliff4C",
+        "native_resource_name_candidate": "Cliff4C_pbc",
+        "archive_group_hint": "FldUnitCliff",
+        "archive_name_candidate": "FldUnitCliff_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Cliff4C_0",
+            "archive": "FldUnitCliff"
+          }
+        ]
+      },
+      {
+        "unique_id": 36,
+        "variation_limit": 0,
+        "model_name": "Cliff5A",
+        "native_resource_name_candidate": "Cliff5A_pbc",
+        "archive_group_hint": "FldUnitCliff",
+        "archive_name_candidate": "FldUnitCliff_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Cliff5A_0",
+            "archive": "FldUnitCliff"
+          }
+        ]
+      },
+      {
+        "unique_id": 37,
+        "variation_limit": 3,
+        "model_name": "Cliff5B",
+        "native_resource_name_candidate": "Cliff5B_pbc",
+        "archive_group_hint": "FldUnitCliff",
+        "archive_name_candidate": "FldUnitCliff_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Cliff5B_0",
+            "archive": "FldUnitCliff"
+          },
+          {
+            "index": 1,
+            "model": "Cliff5B_1",
+            "archive": "FldUnitCliff"
+          },
+          {
+            "index": 2,
+            "model": "Cliff5B_2",
+            "archive": "FldUnitCliff"
+          },
+          {
+            "index": 3,
+            "model": "Cliff5B_3",
+            "archive": "FldUnitCliff"
+          }
+        ]
+      },
+      {
+        "unique_id": 38,
+        "variation_limit": 0,
+        "model_name": "Cliff6A",
+        "native_resource_name_candidate": "Cliff6A_pbc",
+        "archive_group_hint": "FldUnitCliff",
+        "archive_name_candidate": "FldUnitCliff_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Cliff6A_0",
+            "archive": "FldUnitCliff"
+          }
+        ]
+      },
+      {
+        "unique_id": 39,
+        "variation_limit": 0,
+        "model_name": "Cliff6B",
+        "native_resource_name_candidate": "Cliff6B_pbc",
+        "archive_group_hint": "FldUnitCliff",
+        "archive_name_candidate": "FldUnitCliff_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Cliff6B_0",
+            "archive": "FldUnitCliff"
+          }
+        ]
+      },
+      {
+        "unique_id": 40,
+        "variation_limit": 0,
+        "model_name": "Cliff7A",
+        "native_resource_name_candidate": "Cliff7A_pbc",
+        "archive_group_hint": "FldUnitCliff",
+        "archive_name_candidate": "FldUnitCliff_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Cliff7A_0",
+            "archive": "FldUnitCliff"
+          }
+        ]
+      },
+      {
+        "unique_id": 41,
+        "variation_limit": 0,
+        "model_name": "Cliff8",
+        "native_resource_name_candidate": "Cliff8_pbc",
+        "archive_group_hint": null,
+        "archive_name_candidate": null,
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Cliff8_0",
+            "archive": null
+          }
+        ]
+      },
+      {
+        "unique_id": 58,
+        "variation_limit": 0,
+        "model_name": "Fall101",
+        "native_resource_name_candidate": "Fall101_pbc",
+        "archive_group_hint": "FldUnitFall",
+        "archive_name_candidate": "FldUnitFall_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Fall101_0",
+            "archive": "FldUnitFall"
+          }
+        ]
+      },
+      {
+        "unique_id": 59,
+        "variation_limit": 0,
+        "model_name": "Fall100",
+        "native_resource_name_candidate": "Fall100_pbc",
+        "archive_group_hint": "FldUnitFall",
+        "archive_name_candidate": "FldUnitFall_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Fall100_0",
+            "archive": "FldUnitFall"
+          }
+        ]
+      },
+      {
+        "unique_id": 60,
+        "variation_limit": 0,
+        "model_name": "Fall300",
+        "native_resource_name_candidate": "Fall300_pbc",
+        "archive_group_hint": "FldUnitFall",
+        "archive_name_candidate": "FldUnitFall_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Fall300_0",
+            "archive": "FldUnitFall"
+          }
+        ]
+      },
+      {
+        "unique_id": 61,
+        "variation_limit": 0,
+        "model_name": "Fall301",
+        "native_resource_name_candidate": "Fall301_pbc",
+        "archive_group_hint": "FldUnitFall",
+        "archive_name_candidate": "FldUnitFall_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Fall301_0",
+            "archive": "FldUnitFall"
+          }
+        ]
+      },
+      {
+        "unique_id": 62,
+        "variation_limit": 0,
+        "model_name": "Fall302",
+        "native_resource_name_candidate": "Fall302_pbc",
+        "archive_group_hint": "FldUnitFall",
+        "archive_name_candidate": "FldUnitFall_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Fall302_0",
+            "archive": "FldUnitFall"
+          }
+        ]
+      },
+      {
+        "unique_id": 63,
+        "variation_limit": 0,
+        "model_name": "Fall200",
+        "native_resource_name_candidate": "Fall200_pbc",
+        "archive_group_hint": "FldUnitFall",
+        "archive_name_candidate": "FldUnitFall_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Fall200_0",
+            "archive": "FldUnitFall"
+          }
+        ]
+      },
+      {
+        "unique_id": 64,
+        "variation_limit": 0,
+        "model_name": "Fall201",
+        "native_resource_name_candidate": "Fall201_pbc",
+        "archive_group_hint": "FldUnitFall",
+        "archive_name_candidate": "FldUnitFall_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Fall201_0",
+            "archive": "FldUnitFall"
+          }
+        ]
+      },
+      {
+        "unique_id": 65,
+        "variation_limit": 0,
+        "model_name": "Fall202",
+        "native_resource_name_candidate": "Fall202_pbc",
+        "archive_group_hint": "FldUnitFall",
+        "archive_name_candidate": "FldUnitFall_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Fall202_0",
+            "archive": "FldUnitFall"
+          }
+        ]
+      },
+      {
+        "unique_id": 66,
+        "variation_limit": 0,
+        "model_name": "Fall400",
+        "native_resource_name_candidate": "Fall400_pbc",
+        "archive_group_hint": "FldUnitFall",
+        "archive_name_candidate": "FldUnitFall_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Fall400_0",
+            "archive": "FldUnitFall"
+          }
+        ]
+      },
+      {
+        "unique_id": 67,
+        "variation_limit": 0,
+        "model_name": "Fall401",
+        "native_resource_name_candidate": "Fall401_pbc",
+        "archive_group_hint": "FldUnitFall",
+        "archive_name_candidate": "FldUnitFall_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Fall401_0",
+            "archive": "FldUnitFall"
+          }
+        ]
+      },
+      {
+        "unique_id": 68,
+        "variation_limit": 0,
+        "model_name": "Fall402",
+        "native_resource_name_candidate": "Fall402_pbc",
+        "archive_group_hint": "FldUnitFall",
+        "archive_name_candidate": "FldUnitFall_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Fall402_0",
+            "archive": "FldUnitFall"
+          }
+        ]
+      },
+      {
+        "unique_id": 69,
+        "variation_limit": 0,
+        "model_name": "Fall403",
+        "native_resource_name_candidate": "Fall403_pbc",
+        "archive_group_hint": "FldUnitFall",
+        "archive_name_candidate": "FldUnitFall_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Fall403_0",
+            "archive": "FldUnitFall"
+          }
+        ]
+      },
+      {
+        "unique_id": 70,
+        "variation_limit": 0,
+        "model_name": "Fall404",
+        "native_resource_name_candidate": "Fall404_pbc",
+        "archive_group_hint": "FldUnitFall",
+        "archive_name_candidate": "FldUnitFall_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Fall404_0",
+            "archive": "FldUnitFall"
+          }
+        ]
+      },
+      {
+        "unique_id": 71,
+        "variation_limit": 0,
+        "model_name": "RoadSoil0A",
+        "native_resource_name_candidate": "RoadSoil0A_pbc",
+        "archive_group_hint": "FldUnitRoadSoil",
+        "archive_name_candidate": "FldUnitRoadSoil_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadSoil0A_0",
+            "archive": "FldUnitRoadSoil"
+          }
+        ]
+      },
+      {
+        "unique_id": 72,
+        "variation_limit": 0,
+        "model_name": "RoadSoil1A",
+        "native_resource_name_candidate": "RoadSoil1A_pbc",
+        "archive_group_hint": "FldUnitRoadSoil",
+        "archive_name_candidate": "FldUnitRoadSoil_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadSoil1A_0",
+            "archive": "FldUnitRoadSoil"
+          }
+        ]
+      },
+      {
+        "unique_id": 73,
+        "variation_limit": 0,
+        "model_name": "RoadSoil0B",
+        "native_resource_name_candidate": "RoadSoil0B_pbc",
+        "archive_group_hint": "FldUnitRoadSoil",
+        "archive_name_candidate": "FldUnitRoadSoil_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadSoil0B_0",
+            "archive": "FldUnitRoadSoil"
+          }
+        ]
+      },
+      {
+        "unique_id": 75,
+        "variation_limit": 0,
+        "model_name": "RoadSoil1B",
+        "native_resource_name_candidate": "RoadSoil1B_pbc",
+        "archive_group_hint": "FldUnitRoadSoil",
+        "archive_name_candidate": "FldUnitRoadSoil_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadSoil1B_0",
+            "archive": "FldUnitRoadSoil"
+          }
+        ]
+      },
+      {
+        "unique_id": 76,
+        "variation_limit": 0,
+        "model_name": "RoadSoil1C",
+        "native_resource_name_candidate": "RoadSoil1C_pbc",
+        "archive_group_hint": "FldUnitRoadSoil",
+        "archive_name_candidate": "FldUnitRoadSoil_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadSoil1C_0",
+            "archive": "FldUnitRoadSoil"
+          }
+        ]
+      },
+      {
+        "unique_id": 77,
+        "variation_limit": 0,
+        "model_name": "RoadSoil2A",
+        "native_resource_name_candidate": "RoadSoil2A_pbc",
+        "archive_group_hint": "FldUnitRoadSoil",
+        "archive_name_candidate": "FldUnitRoadSoil_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadSoil2A_0",
+            "archive": "FldUnitRoadSoil"
+          }
+        ]
+      },
+      {
+        "unique_id": 78,
+        "variation_limit": 0,
+        "model_name": "RoadSoil2B",
+        "native_resource_name_candidate": "RoadSoil2B_pbc",
+        "archive_group_hint": "FldUnitRoadSoil",
+        "archive_name_candidate": "FldUnitRoadSoil_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadSoil2B_0",
+            "archive": "FldUnitRoadSoil"
+          }
+        ]
+      },
+      {
+        "unique_id": 79,
+        "variation_limit": 0,
+        "model_name": "RoadSoil2C",
+        "native_resource_name_candidate": "RoadSoil2C_pbc",
+        "archive_group_hint": "FldUnitRoadSoil",
+        "archive_name_candidate": "FldUnitRoadSoil_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadSoil2C_0",
+            "archive": "FldUnitRoadSoil"
+          }
+        ]
+      },
+      {
+        "unique_id": 80,
+        "variation_limit": 0,
+        "model_name": "RoadSoil3A",
+        "native_resource_name_candidate": "RoadSoil3A_pbc",
+        "archive_group_hint": "FldUnitRoadSoil",
+        "archive_name_candidate": "FldUnitRoadSoil_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadSoil3A_0",
+            "archive": "FldUnitRoadSoil"
+          }
+        ]
+      },
+      {
+        "unique_id": 81,
+        "variation_limit": 0,
+        "model_name": "RoadSoil3B",
+        "native_resource_name_candidate": "RoadSoil3B_pbc",
+        "archive_group_hint": "FldUnitRoadSoil",
+        "archive_name_candidate": "FldUnitRoadSoil_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadSoil3B_0",
+            "archive": "FldUnitRoadSoil"
+          }
+        ]
+      },
+      {
+        "unique_id": 82,
+        "variation_limit": 0,
+        "model_name": "RoadSoil3C",
+        "native_resource_name_candidate": "RoadSoil3C_pbc",
+        "archive_group_hint": "FldUnitRoadSoil",
+        "archive_name_candidate": "FldUnitRoadSoil_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadSoil3C_0",
+            "archive": "FldUnitRoadSoil"
+          }
+        ]
+      },
+      {
+        "unique_id": 83,
+        "variation_limit": 0,
+        "model_name": "RoadSoil4A",
+        "native_resource_name_candidate": "RoadSoil4A_pbc",
+        "archive_group_hint": "FldUnitRoadSoil",
+        "archive_name_candidate": "FldUnitRoadSoil_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadSoil4A_0",
+            "archive": "FldUnitRoadSoil"
+          }
+        ]
+      },
+      {
+        "unique_id": 84,
+        "variation_limit": 0,
+        "model_name": "RoadSoil4B",
+        "native_resource_name_candidate": "RoadSoil4B_pbc",
+        "archive_group_hint": "FldUnitRoadSoil",
+        "archive_name_candidate": "FldUnitRoadSoil_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadSoil4B_0",
+            "archive": "FldUnitRoadSoil"
+          }
+        ]
+      },
+      {
+        "unique_id": 85,
+        "variation_limit": 0,
+        "model_name": "RoadSoil4C",
+        "native_resource_name_candidate": "RoadSoil4C_pbc",
+        "archive_group_hint": "FldUnitRoadSoil",
+        "archive_name_candidate": "FldUnitRoadSoil_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadSoil4C_0",
+            "archive": "FldUnitRoadSoil"
+          }
+        ]
+      },
+      {
+        "unique_id": 86,
+        "variation_limit": 0,
+        "model_name": "RoadSoil5A",
+        "native_resource_name_candidate": "RoadSoil5A_pbc",
+        "archive_group_hint": "FldUnitRoadSoil",
+        "archive_name_candidate": "FldUnitRoadSoil_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadSoil5A_0",
+            "archive": "FldUnitRoadSoil"
+          }
+        ]
+      },
+      {
+        "unique_id": 87,
+        "variation_limit": 0,
+        "model_name": "RoadSoil5B",
+        "native_resource_name_candidate": "RoadSoil5B_pbc",
+        "archive_group_hint": "FldUnitRoadSoil",
+        "archive_name_candidate": "FldUnitRoadSoil_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadSoil5B_0",
+            "archive": "FldUnitRoadSoil"
+          }
+        ]
+      },
+      {
+        "unique_id": 88,
+        "variation_limit": 0,
+        "model_name": "RoadSoil6A",
+        "native_resource_name_candidate": "RoadSoil6A_pbc",
+        "archive_group_hint": "FldUnitRoadSoil",
+        "archive_name_candidate": "FldUnitRoadSoil_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadSoil6A_0",
+            "archive": "FldUnitRoadSoil"
+          }
+        ]
+      },
+      {
+        "unique_id": 89,
+        "variation_limit": 0,
+        "model_name": "RoadSoil6B",
+        "native_resource_name_candidate": "RoadSoil6B_pbc",
+        "archive_group_hint": "FldUnitRoadSoil",
+        "archive_name_candidate": "FldUnitRoadSoil_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadSoil6B_0",
+            "archive": "FldUnitRoadSoil"
+          }
+        ]
+      },
+      {
+        "unique_id": 90,
+        "variation_limit": 0,
+        "model_name": "RoadSoil7A",
+        "native_resource_name_candidate": "RoadSoil7A_pbc",
+        "archive_group_hint": "FldUnitRoadSoil",
+        "archive_name_candidate": "FldUnitRoadSoil_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadSoil7A_0",
+            "archive": "FldUnitRoadSoil"
+          }
+        ]
+      },
+      {
+        "unique_id": 91,
+        "variation_limit": 0,
+        "model_name": "RoadSoil8A",
+        "native_resource_name_candidate": "RoadSoil8A_pbc",
+        "archive_group_hint": "FldUnitRoadSoil",
+        "archive_name_candidate": "FldUnitRoadSoil_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadSoil8A_0",
+            "archive": "FldUnitRoadSoil"
+          }
+        ]
+      },
+      {
+        "unique_id": 92,
+        "variation_limit": 0,
+        "model_name": "RoadStone0A",
+        "native_resource_name_candidate": "RoadStone0A_pbc",
+        "archive_group_hint": "FldUnitRoadStone",
+        "archive_name_candidate": "FldUnitRoadStone_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadStone0A_0",
+            "archive": "FldUnitRoadStone"
+          }
+        ]
+      },
+      {
+        "unique_id": 93,
+        "variation_limit": 0,
+        "model_name": "RoadStone0B",
+        "native_resource_name_candidate": "RoadStone0B_pbc",
+        "archive_group_hint": "FldUnitRoadStone",
+        "archive_name_candidate": "FldUnitRoadStone_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadStone0B_0",
+            "archive": "FldUnitRoadStone"
+          }
+        ]
+      },
+      {
+        "unique_id": 95,
+        "variation_limit": 0,
+        "model_name": "RoadStone1A",
+        "native_resource_name_candidate": "RoadStone1A_pbc",
+        "archive_group_hint": "FldUnitRoadStone",
+        "archive_name_candidate": "FldUnitRoadStone_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadStone1A_0",
+            "archive": "FldUnitRoadStone"
+          }
+        ]
+      },
+      {
+        "unique_id": 96,
+        "variation_limit": 0,
+        "model_name": "RoadStone1B",
+        "native_resource_name_candidate": "RoadStone1B_pbc",
+        "archive_group_hint": "FldUnitRoadStone",
+        "archive_name_candidate": "FldUnitRoadStone_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadStone1B_0",
+            "archive": "FldUnitRoadStone"
+          }
+        ]
+      },
+      {
+        "unique_id": 97,
+        "variation_limit": 0,
+        "model_name": "RoadStone1C",
+        "native_resource_name_candidate": "RoadStone1C_pbc",
+        "archive_group_hint": "FldUnitRoadStone",
+        "archive_name_candidate": "FldUnitRoadStone_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadStone1C_0",
+            "archive": "FldUnitRoadStone"
+          }
+        ]
+      },
+      {
+        "unique_id": 98,
+        "variation_limit": 0,
+        "model_name": "RoadStone2A",
+        "native_resource_name_candidate": "RoadStone2A_pbc",
+        "archive_group_hint": "FldUnitRoadStone",
+        "archive_name_candidate": "FldUnitRoadStone_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadStone2A_0",
+            "archive": "FldUnitRoadStone"
+          }
+        ]
+      },
+      {
+        "unique_id": 99,
+        "variation_limit": 0,
+        "model_name": "RoadStone2B",
+        "native_resource_name_candidate": "RoadStone2B_pbc",
+        "archive_group_hint": "FldUnitRoadStone",
+        "archive_name_candidate": "FldUnitRoadStone_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadStone2B_0",
+            "archive": "FldUnitRoadStone"
+          }
+        ]
+      },
+      {
+        "unique_id": 100,
+        "variation_limit": 0,
+        "model_name": "RoadStone2C",
+        "native_resource_name_candidate": "RoadStone2C_pbc",
+        "archive_group_hint": "FldUnitRoadStone",
+        "archive_name_candidate": "FldUnitRoadStone_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadStone2C_0",
+            "archive": "FldUnitRoadStone"
+          }
+        ]
+      },
+      {
+        "unique_id": 101,
+        "variation_limit": 0,
+        "model_name": "RoadStone3A",
+        "native_resource_name_candidate": "RoadStone3A_pbc",
+        "archive_group_hint": "FldUnitRoadStone",
+        "archive_name_candidate": "FldUnitRoadStone_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadStone3A_0",
+            "archive": "FldUnitRoadStone"
+          }
+        ]
+      },
+      {
+        "unique_id": 102,
+        "variation_limit": 0,
+        "model_name": "RoadStone3B",
+        "native_resource_name_candidate": "RoadStone3B_pbc",
+        "archive_group_hint": "FldUnitRoadStone",
+        "archive_name_candidate": "FldUnitRoadStone_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadStone3B_0",
+            "archive": "FldUnitRoadStone"
+          }
+        ]
+      },
+      {
+        "unique_id": 103,
+        "variation_limit": 0,
+        "model_name": "RoadStone3C",
+        "native_resource_name_candidate": "RoadStone3C_pbc",
+        "archive_group_hint": "FldUnitRoadStone",
+        "archive_name_candidate": "FldUnitRoadStone_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadStone3C_0",
+            "archive": "FldUnitRoadStone"
+          }
+        ]
+      },
+      {
+        "unique_id": 104,
+        "variation_limit": 0,
+        "model_name": "RoadStone4A",
+        "native_resource_name_candidate": "RoadStone4A_pbc",
+        "archive_group_hint": "FldUnitRoadStone",
+        "archive_name_candidate": "FldUnitRoadStone_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadStone4A_0",
+            "archive": "FldUnitRoadStone"
+          }
+        ]
+      },
+      {
+        "unique_id": 105,
+        "variation_limit": 0,
+        "model_name": "RoadStone4B",
+        "native_resource_name_candidate": "RoadStone4B_pbc",
+        "archive_group_hint": "FldUnitRoadStone",
+        "archive_name_candidate": "FldUnitRoadStone_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadStone4B_0",
+            "archive": "FldUnitRoadStone"
+          }
+        ]
+      },
+      {
+        "unique_id": 106,
+        "variation_limit": 0,
+        "model_name": "RoadStone4C",
+        "native_resource_name_candidate": "RoadStone4C_pbc",
+        "archive_group_hint": "FldUnitRoadStone",
+        "archive_name_candidate": "FldUnitRoadStone_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadStone4C_0",
+            "archive": "FldUnitRoadStone"
+          }
+        ]
+      },
+      {
+        "unique_id": 107,
+        "variation_limit": 0,
+        "model_name": "RoadStone5A",
+        "native_resource_name_candidate": "RoadStone5A_pbc",
+        "archive_group_hint": "FldUnitRoadStone",
+        "archive_name_candidate": "FldUnitRoadStone_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadStone5A_0",
+            "archive": "FldUnitRoadStone"
+          }
+        ]
+      },
+      {
+        "unique_id": 108,
+        "variation_limit": 0,
+        "model_name": "RoadStone5B",
+        "native_resource_name_candidate": "RoadStone5B_pbc",
+        "archive_group_hint": "FldUnitRoadStone",
+        "archive_name_candidate": "FldUnitRoadStone_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadStone5B_0",
+            "archive": "FldUnitRoadStone"
+          }
+        ]
+      },
+      {
+        "unique_id": 109,
+        "variation_limit": 0,
+        "model_name": "RoadStone6A",
+        "native_resource_name_candidate": "RoadStone6A_pbc",
+        "archive_group_hint": "FldUnitRoadStone",
+        "archive_name_candidate": "FldUnitRoadStone_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadStone6A_0",
+            "archive": "FldUnitRoadStone"
+          }
+        ]
+      },
+      {
+        "unique_id": 110,
+        "variation_limit": 0,
+        "model_name": "RoadStone6B",
+        "native_resource_name_candidate": "RoadStone6B_pbc",
+        "archive_group_hint": "FldUnitRoadStone",
+        "archive_name_candidate": "FldUnitRoadStone_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadStone6B_0",
+            "archive": "FldUnitRoadStone"
+          }
+        ]
+      },
+      {
+        "unique_id": 111,
+        "variation_limit": 0,
+        "model_name": "RoadStone7A",
+        "native_resource_name_candidate": "RoadStone7A_pbc",
+        "archive_group_hint": "FldUnitRoadStone",
+        "archive_name_candidate": "FldUnitRoadStone_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadStone7A_0",
+            "archive": "FldUnitRoadStone"
+          }
+        ]
+      },
+      {
+        "unique_id": 112,
+        "variation_limit": 0,
+        "model_name": "RoadStone8A",
+        "native_resource_name_candidate": "RoadStone8A_pbc",
+        "archive_group_hint": "FldUnitRoadStone",
+        "archive_name_candidate": "FldUnitRoadStone_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadStone8A_0",
+            "archive": "FldUnitRoadStone"
+          }
+        ]
+      },
+      {
+        "unique_id": 113,
+        "variation_limit": 0,
+        "model_name": "Fall103",
+        "native_resource_name_candidate": "Fall103_pbc",
+        "archive_group_hint": "FldUnitFall",
+        "archive_name_candidate": "FldUnitFall_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Fall103_0",
+            "archive": "FldUnitFall"
+          }
+        ]
+      },
+      {
+        "unique_id": 114,
+        "variation_limit": 0,
+        "model_name": "Fall102",
+        "native_resource_name_candidate": "Fall102_pbc",
+        "archive_group_hint": "FldUnitFall",
+        "archive_name_candidate": "FldUnitFall_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Fall102_0",
+            "archive": "FldUnitFall"
+          }
+        ]
+      },
+      {
+        "unique_id": 115,
+        "variation_limit": 0,
+        "model_name": "Fall303",
+        "native_resource_name_candidate": "Fall303_pbc",
+        "archive_group_hint": "FldUnitFall",
+        "archive_name_candidate": "FldUnitFall_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Fall303_0",
+            "archive": "FldUnitFall"
+          }
+        ]
+      },
+      {
+        "unique_id": 116,
+        "variation_limit": 0,
+        "model_name": "Fall304",
+        "native_resource_name_candidate": "Fall304_pbc",
+        "archive_group_hint": "FldUnitFall",
+        "archive_name_candidate": "FldUnitFall_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Fall304_0",
+            "archive": "FldUnitFall"
+          }
+        ]
+      },
+      {
+        "unique_id": 117,
+        "variation_limit": 0,
+        "model_name": "Fall305",
+        "native_resource_name_candidate": "Fall305_pbc",
+        "archive_group_hint": "FldUnitFall",
+        "archive_name_candidate": "FldUnitFall_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Fall305_0",
+            "archive": "FldUnitFall"
+          }
+        ]
+      },
+      {
+        "unique_id": 118,
+        "variation_limit": 0,
+        "model_name": "Fall306",
+        "native_resource_name_candidate": "Fall306_pbc",
+        "archive_group_hint": "FldUnitFall",
+        "archive_name_candidate": "FldUnitFall_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Fall306_0",
+            "archive": "FldUnitFall"
+          }
+        ]
+      },
+      {
+        "unique_id": 119,
+        "variation_limit": 0,
+        "model_name": "Fall307",
+        "native_resource_name_candidate": "Fall307_pbc",
+        "archive_group_hint": "FldUnitFall",
+        "archive_name_candidate": "FldUnitFall_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Fall307_0",
+            "archive": "FldUnitFall"
+          }
+        ]
+      },
+      {
+        "unique_id": 120,
+        "variation_limit": 0,
+        "model_name": "Fall308",
+        "native_resource_name_candidate": "Fall308_pbc",
+        "archive_group_hint": "FldUnitFall",
+        "archive_name_candidate": "FldUnitFall_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Fall308_0",
+            "archive": "FldUnitFall"
+          }
+        ]
+      },
+      {
+        "unique_id": 121,
+        "variation_limit": 0,
+        "model_name": "Fall203",
+        "native_resource_name_candidate": "Fall203_pbc",
+        "archive_group_hint": "FldUnitFall",
+        "archive_name_candidate": "FldUnitFall_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Fall203_0",
+            "archive": "FldUnitFall"
+          }
+        ]
+      },
+      {
+        "unique_id": 122,
+        "variation_limit": 0,
+        "model_name": "Fall204",
+        "native_resource_name_candidate": "Fall204_pbc",
+        "archive_group_hint": "FldUnitFall",
+        "archive_name_candidate": "FldUnitFall_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Fall204_0",
+            "archive": "FldUnitFall"
+          }
+        ]
+      },
+      {
+        "unique_id": 123,
+        "variation_limit": 0,
+        "model_name": "Fall205",
+        "native_resource_name_candidate": "Fall205_pbc",
+        "archive_group_hint": "FldUnitFall",
+        "archive_name_candidate": "FldUnitFall_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Fall205_0",
+            "archive": "FldUnitFall"
+          }
+        ]
+      },
+      {
+        "unique_id": 124,
+        "variation_limit": 0,
+        "model_name": "Fall206",
+        "native_resource_name_candidate": "Fall206_pbc",
+        "archive_group_hint": "FldUnitFall",
+        "archive_name_candidate": "FldUnitFall_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Fall206_0",
+            "archive": "FldUnitFall"
+          }
+        ]
+      },
+      {
+        "unique_id": 125,
+        "variation_limit": 0,
+        "model_name": "Fall207",
+        "native_resource_name_candidate": "Fall207_pbc",
+        "archive_group_hint": "FldUnitFall",
+        "archive_name_candidate": "FldUnitFall_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Fall207_0",
+            "archive": "FldUnitFall"
+          }
+        ]
+      },
+      {
+        "unique_id": 126,
+        "variation_limit": 0,
+        "model_name": "Fall208",
+        "native_resource_name_candidate": "Fall208_pbc",
+        "archive_group_hint": "FldUnitFall",
+        "archive_name_candidate": "FldUnitFall_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Fall208_0",
+            "archive": "FldUnitFall"
+          }
+        ]
+      },
+      {
+        "unique_id": 127,
+        "variation_limit": 0,
+        "model_name": "Fall405",
+        "native_resource_name_candidate": "Fall405_pbc",
+        "archive_group_hint": "FldUnitFall",
+        "archive_name_candidate": "FldUnitFall_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Fall405_0",
+            "archive": "FldUnitFall"
+          }
+        ]
+      },
+      {
+        "unique_id": 128,
+        "variation_limit": 0,
+        "model_name": "Fall406",
+        "native_resource_name_candidate": "Fall406_pbc",
+        "archive_group_hint": "FldUnitFall",
+        "archive_name_candidate": "FldUnitFall_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Fall406_0",
+            "archive": "FldUnitFall"
+          }
+        ]
+      },
+      {
+        "unique_id": 129,
+        "variation_limit": 0,
+        "model_name": "Fall407",
+        "native_resource_name_candidate": "Fall407_pbc",
+        "archive_group_hint": "FldUnitFall",
+        "archive_name_candidate": "FldUnitFall_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Fall407_0",
+            "archive": "FldUnitFall"
+          }
+        ]
+      },
+      {
+        "unique_id": 130,
+        "variation_limit": 0,
+        "model_name": "Fall408",
+        "native_resource_name_candidate": "Fall408_pbc",
+        "archive_group_hint": "FldUnitFall",
+        "archive_name_candidate": "FldUnitFall_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Fall408_0",
+            "archive": "FldUnitFall"
+          }
+        ]
+      },
+      {
+        "unique_id": 131,
+        "variation_limit": 0,
+        "model_name": "Fall410",
+        "native_resource_name_candidate": "Fall410_pbc",
+        "archive_group_hint": "FldUnitFall",
+        "archive_name_candidate": "FldUnitFall_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Fall410_0",
+            "archive": "FldUnitFall"
+          }
+        ]
+      },
+      {
+        "unique_id": 132,
+        "variation_limit": 0,
+        "model_name": "Fall409",
+        "native_resource_name_candidate": "Fall409_pbc",
+        "archive_group_hint": "FldUnitFall",
+        "archive_name_candidate": "FldUnitFall_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Fall409_0",
+            "archive": "FldUnitFall"
+          }
+        ]
+      },
+      {
+        "unique_id": 133,
+        "variation_limit": 0,
+        "model_name": "Fall411",
+        "native_resource_name_candidate": "Fall411_pbc",
+        "archive_group_hint": "FldUnitFall",
+        "archive_name_candidate": "FldUnitFall_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Fall411_0",
+            "archive": "FldUnitFall"
+          }
+        ]
+      },
+      {
+        "unique_id": 134,
+        "variation_limit": 0,
+        "model_name": "Fall412",
+        "native_resource_name_candidate": "Fall412_pbc",
+        "archive_group_hint": "FldUnitFall",
+        "archive_name_candidate": "FldUnitFall_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Fall412_0",
+            "archive": "FldUnitFall"
+          }
+        ]
+      },
+      {
+        "unique_id": 135,
+        "variation_limit": 0,
+        "model_name": "Fall414",
+        "native_resource_name_candidate": "Fall414_pbc",
+        "archive_group_hint": "FldUnitFall",
+        "archive_name_candidate": "FldUnitFall_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Fall414_0",
+            "archive": "FldUnitFall"
+          }
+        ]
+      },
+      {
+        "unique_id": 136,
+        "variation_limit": 0,
+        "model_name": "Fall413",
+        "native_resource_name_candidate": "Fall413_pbc",
+        "archive_group_hint": "FldUnitFall",
+        "archive_name_candidate": "FldUnitFall_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Fall413_0",
+            "archive": "FldUnitFall"
+          }
+        ]
+      },
+      {
+        "unique_id": 137,
+        "variation_limit": 0,
+        "model_name": "Fall415",
+        "native_resource_name_candidate": "Fall415_pbc",
+        "archive_group_hint": "FldUnitFall",
+        "archive_name_candidate": "FldUnitFall_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Fall415_0",
+            "archive": "FldUnitFall"
+          }
+        ]
+      },
+      {
+        "unique_id": 138,
+        "variation_limit": 0,
+        "model_name": "Fall416",
+        "native_resource_name_candidate": "Fall416_pbc",
+        "archive_group_hint": "FldUnitFall",
+        "archive_name_candidate": "FldUnitFall_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Fall416_0",
+            "archive": "FldUnitFall"
+          }
+        ]
+      },
+      {
+        "unique_id": 139,
+        "variation_limit": 0,
+        "model_name": "Fall418",
+        "native_resource_name_candidate": "Fall418_pbc",
+        "archive_group_hint": "FldUnitFall",
+        "archive_name_candidate": "FldUnitFall_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Fall418_0",
+            "archive": "FldUnitFall"
+          }
+        ]
+      },
+      {
+        "unique_id": 140,
+        "variation_limit": 0,
+        "model_name": "Fall417",
+        "native_resource_name_candidate": "Fall417_pbc",
+        "archive_group_hint": "FldUnitFall",
+        "archive_name_candidate": "FldUnitFall_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Fall417_0",
+            "archive": "FldUnitFall"
+          }
+        ]
+      },
+      {
+        "unique_id": 141,
+        "variation_limit": 0,
+        "model_name": "Fall419",
+        "native_resource_name_candidate": "Fall419_pbc",
+        "archive_group_hint": "FldUnitFall",
+        "archive_name_candidate": "FldUnitFall_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Fall419_0",
+            "archive": "FldUnitFall"
+          }
+        ]
+      },
+      {
+        "unique_id": 142,
+        "variation_limit": 0,
+        "model_name": "Fall420",
+        "native_resource_name_candidate": "Fall420_pbc",
+        "archive_group_hint": "FldUnitFall",
+        "archive_name_candidate": "FldUnitFall_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Fall420_0",
+            "archive": "FldUnitFall"
+          }
+        ]
+      },
+      {
+        "unique_id": 143,
+        "variation_limit": 0,
+        "model_name": "Fall422",
+        "native_resource_name_candidate": "Fall422_pbc",
+        "archive_group_hint": "FldUnitFall",
+        "archive_name_candidate": "FldUnitFall_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Fall422_0",
+            "archive": "FldUnitFall"
+          }
+        ]
+      },
+      {
+        "unique_id": 144,
+        "variation_limit": 0,
+        "model_name": "Fall421",
+        "native_resource_name_candidate": "Fall421_pbc",
+        "archive_group_hint": "FldUnitFall",
+        "archive_name_candidate": "FldUnitFall_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Fall421_0",
+            "archive": "FldUnitFall"
+          }
+        ]
+      },
+      {
+        "unique_id": 145,
+        "variation_limit": 0,
+        "model_name": "Fall423",
+        "native_resource_name_candidate": "Fall423_pbc",
+        "archive_group_hint": "FldUnitFall",
+        "archive_name_candidate": "FldUnitFall_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Fall423_0",
+            "archive": "FldUnitFall"
+          }
+        ]
+      },
+      {
+        "unique_id": 146,
+        "variation_limit": 0,
+        "model_name": "Fall424",
+        "native_resource_name_candidate": "Fall424_pbc",
+        "archive_group_hint": "FldUnitFall",
+        "archive_name_candidate": "FldUnitFall_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Fall424_0",
+            "archive": "FldUnitFall"
+          }
+        ]
+      },
+      {
+        "unique_id": 147,
+        "variation_limit": 3,
+        "model_name": "Cliff2B",
+        "native_resource_name_candidate": "Cliff2B_pbc",
+        "archive_group_hint": "FldUnitCliff",
+        "archive_name_candidate": "FldUnitCliff_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "Cliff2B_0",
+            "archive": "FldUnitCliff"
+          },
+          {
+            "index": 1,
+            "model": "Cliff2B_1",
+            "archive": "FldUnitCliff"
+          },
+          {
+            "index": 2,
+            "model": "Cliff2B_2",
+            "archive": "FldUnitCliff"
+          },
+          {
+            "index": 3,
+            "model": "Cliff2B_3",
+            "archive": "FldUnitCliff"
+          }
+        ]
+      },
+      {
+        "unique_id": 148,
+        "variation_limit": 0,
+        "model_name": "RoadBrick0A",
+        "native_resource_name_candidate": "RoadBrick0A_pbc",
+        "archive_group_hint": "FldUnitRoadBrick",
+        "archive_name_candidate": "FldUnitRoadBrick_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadBrick0A_0",
+            "archive": "FldUnitRoadBrick"
+          }
+        ]
+      },
+      {
+        "unique_id": 149,
+        "variation_limit": 0,
+        "model_name": "RoadBrick0B",
+        "native_resource_name_candidate": "RoadBrick0B_pbc",
+        "archive_group_hint": "FldUnitRoadBrick",
+        "archive_name_candidate": "FldUnitRoadBrick_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadBrick0B_0",
+            "archive": "FldUnitRoadBrick"
+          }
+        ]
+      },
+      {
+        "unique_id": 151,
+        "variation_limit": 0,
+        "model_name": "RoadBrick1A",
+        "native_resource_name_candidate": "RoadBrick1A_pbc",
+        "archive_group_hint": "FldUnitRoadBrick",
+        "archive_name_candidate": "FldUnitRoadBrick_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadBrick1A_0",
+            "archive": "FldUnitRoadBrick"
+          }
+        ]
+      },
+      {
+        "unique_id": 152,
+        "variation_limit": 0,
+        "model_name": "RoadBrick1B",
+        "native_resource_name_candidate": "RoadBrick1B_pbc",
+        "archive_group_hint": "FldUnitRoadBrick",
+        "archive_name_candidate": "FldUnitRoadBrick_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadBrick1B_0",
+            "archive": "FldUnitRoadBrick"
+          }
+        ]
+      },
+      {
+        "unique_id": 153,
+        "variation_limit": 0,
+        "model_name": "RoadBrick1C",
+        "native_resource_name_candidate": "RoadBrick1C_pbc",
+        "archive_group_hint": "FldUnitRoadBrick",
+        "archive_name_candidate": "FldUnitRoadBrick_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadBrick1C_0",
+            "archive": "FldUnitRoadBrick"
+          }
+        ]
+      },
+      {
+        "unique_id": 154,
+        "variation_limit": 0,
+        "model_name": "RoadBrick2A",
+        "native_resource_name_candidate": "RoadBrick2A_pbc",
+        "archive_group_hint": "FldUnitRoadBrick",
+        "archive_name_candidate": "FldUnitRoadBrick_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadBrick2A_0",
+            "archive": "FldUnitRoadBrick"
+          }
+        ]
+      },
+      {
+        "unique_id": 155,
+        "variation_limit": 0,
+        "model_name": "RoadBrick2B",
+        "native_resource_name_candidate": "RoadBrick2B_pbc",
+        "archive_group_hint": "FldUnitRoadBrick",
+        "archive_name_candidate": "FldUnitRoadBrick_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadBrick2B_0",
+            "archive": "FldUnitRoadBrick"
+          }
+        ]
+      },
+      {
+        "unique_id": 156,
+        "variation_limit": 0,
+        "model_name": "RoadBrick2C",
+        "native_resource_name_candidate": "RoadBrick2C_pbc",
+        "archive_group_hint": "FldUnitRoadBrick",
+        "archive_name_candidate": "FldUnitRoadBrick_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadBrick2C_0",
+            "archive": "FldUnitRoadBrick"
+          }
+        ]
+      },
+      {
+        "unique_id": 157,
+        "variation_limit": 0,
+        "model_name": "RoadBrick3A",
+        "native_resource_name_candidate": "RoadBrick3A_pbc",
+        "archive_group_hint": "FldUnitRoadBrick",
+        "archive_name_candidate": "FldUnitRoadBrick_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadBrick3A_0",
+            "archive": "FldUnitRoadBrick"
+          }
+        ]
+      },
+      {
+        "unique_id": 158,
+        "variation_limit": 0,
+        "model_name": "RoadBrick3B",
+        "native_resource_name_candidate": "RoadBrick3B_pbc",
+        "archive_group_hint": "FldUnitRoadBrick",
+        "archive_name_candidate": "FldUnitRoadBrick_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadBrick3B_0",
+            "archive": "FldUnitRoadBrick"
+          }
+        ]
+      },
+      {
+        "unique_id": 159,
+        "variation_limit": 0,
+        "model_name": "RoadBrick3C",
+        "native_resource_name_candidate": "RoadBrick3C_pbc",
+        "archive_group_hint": "FldUnitRoadBrick",
+        "archive_name_candidate": "FldUnitRoadBrick_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadBrick3C_0",
+            "archive": "FldUnitRoadBrick"
+          }
+        ]
+      },
+      {
+        "unique_id": 160,
+        "variation_limit": 0,
+        "model_name": "RoadBrick4A",
+        "native_resource_name_candidate": "RoadBrick4A_pbc",
+        "archive_group_hint": "FldUnitRoadBrick",
+        "archive_name_candidate": "FldUnitRoadBrick_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadBrick4A_0",
+            "archive": "FldUnitRoadBrick"
+          }
+        ]
+      },
+      {
+        "unique_id": 161,
+        "variation_limit": 0,
+        "model_name": "RoadBrick4B",
+        "native_resource_name_candidate": "RoadBrick4B_pbc",
+        "archive_group_hint": "FldUnitRoadBrick",
+        "archive_name_candidate": "FldUnitRoadBrick_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadBrick4B_0",
+            "archive": "FldUnitRoadBrick"
+          }
+        ]
+      },
+      {
+        "unique_id": 162,
+        "variation_limit": 0,
+        "model_name": "RoadBrick4C",
+        "native_resource_name_candidate": "RoadBrick4C_pbc",
+        "archive_group_hint": "FldUnitRoadBrick",
+        "archive_name_candidate": "FldUnitRoadBrick_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadBrick4C_0",
+            "archive": "FldUnitRoadBrick"
+          }
+        ]
+      },
+      {
+        "unique_id": 163,
+        "variation_limit": 0,
+        "model_name": "RoadBrick5A",
+        "native_resource_name_candidate": "RoadBrick5A_pbc",
+        "archive_group_hint": "FldUnitRoadBrick",
+        "archive_name_candidate": "FldUnitRoadBrick_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadBrick5A_0",
+            "archive": "FldUnitRoadBrick"
+          }
+        ]
+      },
+      {
+        "unique_id": 164,
+        "variation_limit": 0,
+        "model_name": "RoadBrick5B",
+        "native_resource_name_candidate": "RoadBrick5B_pbc",
+        "archive_group_hint": "FldUnitRoadBrick",
+        "archive_name_candidate": "FldUnitRoadBrick_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadBrick5B_0",
+            "archive": "FldUnitRoadBrick"
+          }
+        ]
+      },
+      {
+        "unique_id": 165,
+        "variation_limit": 0,
+        "model_name": "RoadBrick6A",
+        "native_resource_name_candidate": "RoadBrick6A_pbc",
+        "archive_group_hint": "FldUnitRoadBrick",
+        "archive_name_candidate": "FldUnitRoadBrick_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadBrick6A_0",
+            "archive": "FldUnitRoadBrick"
+          }
+        ]
+      },
+      {
+        "unique_id": 166,
+        "variation_limit": 0,
+        "model_name": "RoadBrick6B",
+        "native_resource_name_candidate": "RoadBrick6B_pbc",
+        "archive_group_hint": "FldUnitRoadBrick",
+        "archive_name_candidate": "FldUnitRoadBrick_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadBrick6B_0",
+            "archive": "FldUnitRoadBrick"
+          }
+        ]
+      },
+      {
+        "unique_id": 167,
+        "variation_limit": 0,
+        "model_name": "RoadBrick7A",
+        "native_resource_name_candidate": "RoadBrick7A_pbc",
+        "archive_group_hint": "FldUnitRoadBrick",
+        "archive_name_candidate": "FldUnitRoadBrick_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadBrick7A_0",
+            "archive": "FldUnitRoadBrick"
+          }
+        ]
+      },
+      {
+        "unique_id": 168,
+        "variation_limit": 0,
+        "model_name": "RoadBrick8A",
+        "native_resource_name_candidate": "RoadBrick8A_pbc",
+        "archive_group_hint": "FldUnitRoadBrick",
+        "archive_name_candidate": "FldUnitRoadBrick_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadBrick8A_0",
+            "archive": "FldUnitRoadBrick"
+          }
+        ]
+      },
+      {
+        "unique_id": 169,
+        "variation_limit": 0,
+        "model_name": "RoadDarkSoil0A",
+        "native_resource_name_candidate": "RoadDarkSoil0A_pbc",
+        "archive_group_hint": "FldUnitRoadDarkSoil",
+        "archive_name_candidate": "FldUnitRoadDarkSoil_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadDarkSoil0A_0",
+            "archive": "FldUnitRoadDarkSoil"
+          }
+        ]
+      },
+      {
+        "unique_id": 170,
+        "variation_limit": 0,
+        "model_name": "RoadDarkSoil0B",
+        "native_resource_name_candidate": "RoadDarkSoil0B_pbc",
+        "archive_group_hint": "FldUnitRoadDarkSoil",
+        "archive_name_candidate": "FldUnitRoadDarkSoil_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadDarkSoil0B_0",
+            "archive": "FldUnitRoadDarkSoil"
+          }
+        ]
+      },
+      {
+        "unique_id": 172,
+        "variation_limit": 0,
+        "model_name": "RoadDarkSoil1A",
+        "native_resource_name_candidate": "RoadDarkSoil1A_pbc",
+        "archive_group_hint": "FldUnitRoadDarkSoil",
+        "archive_name_candidate": "FldUnitRoadDarkSoil_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadDarkSoil1A_0",
+            "archive": "FldUnitRoadDarkSoil"
+          }
+        ]
+      },
+      {
+        "unique_id": 173,
+        "variation_limit": 0,
+        "model_name": "RoadDarkSoil1B",
+        "native_resource_name_candidate": "RoadDarkSoil1B_pbc",
+        "archive_group_hint": "FldUnitRoadDarkSoil",
+        "archive_name_candidate": "FldUnitRoadDarkSoil_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadDarkSoil1B_0",
+            "archive": "FldUnitRoadDarkSoil"
+          }
+        ]
+      },
+      {
+        "unique_id": 174,
+        "variation_limit": 0,
+        "model_name": "RoadDarkSoil1C",
+        "native_resource_name_candidate": "RoadDarkSoil1C_pbc",
+        "archive_group_hint": "FldUnitRoadDarkSoil",
+        "archive_name_candidate": "FldUnitRoadDarkSoil_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadDarkSoil1C_0",
+            "archive": "FldUnitRoadDarkSoil"
+          }
+        ]
+      },
+      {
+        "unique_id": 175,
+        "variation_limit": 0,
+        "model_name": "RoadDarkSoil2A",
+        "native_resource_name_candidate": "RoadDarkSoil2A_pbc",
+        "archive_group_hint": "FldUnitRoadDarkSoil",
+        "archive_name_candidate": "FldUnitRoadDarkSoil_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadDarkSoil2A_0",
+            "archive": "FldUnitRoadDarkSoil"
+          }
+        ]
+      },
+      {
+        "unique_id": 176,
+        "variation_limit": 0,
+        "model_name": "RoadDarkSoil2B",
+        "native_resource_name_candidate": "RoadDarkSoil2B_pbc",
+        "archive_group_hint": "FldUnitRoadDarkSoil",
+        "archive_name_candidate": "FldUnitRoadDarkSoil_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadDarkSoil2B_0",
+            "archive": "FldUnitRoadDarkSoil"
+          }
+        ]
+      },
+      {
+        "unique_id": 177,
+        "variation_limit": 0,
+        "model_name": "RoadDarkSoil2C",
+        "native_resource_name_candidate": "RoadDarkSoil2C_pbc",
+        "archive_group_hint": "FldUnitRoadDarkSoil",
+        "archive_name_candidate": "FldUnitRoadDarkSoil_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadDarkSoil2C_0",
+            "archive": "FldUnitRoadDarkSoil"
+          }
+        ]
+      },
+      {
+        "unique_id": 178,
+        "variation_limit": 0,
+        "model_name": "RoadDarkSoil3A",
+        "native_resource_name_candidate": "RoadDarkSoil3A_pbc",
+        "archive_group_hint": "FldUnitRoadDarkSoil",
+        "archive_name_candidate": "FldUnitRoadDarkSoil_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadDarkSoil3A_0",
+            "archive": "FldUnitRoadDarkSoil"
+          }
+        ]
+      },
+      {
+        "unique_id": 179,
+        "variation_limit": 0,
+        "model_name": "RoadDarkSoil3B",
+        "native_resource_name_candidate": "RoadDarkSoil3B_pbc",
+        "archive_group_hint": "FldUnitRoadDarkSoil",
+        "archive_name_candidate": "FldUnitRoadDarkSoil_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadDarkSoil3B_0",
+            "archive": "FldUnitRoadDarkSoil"
+          }
+        ]
+      },
+      {
+        "unique_id": 180,
+        "variation_limit": 0,
+        "model_name": "RoadDarkSoil3C",
+        "native_resource_name_candidate": "RoadDarkSoil3C_pbc",
+        "archive_group_hint": "FldUnitRoadDarkSoil",
+        "archive_name_candidate": "FldUnitRoadDarkSoil_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadDarkSoil3C_0",
+            "archive": "FldUnitRoadDarkSoil"
+          }
+        ]
+      },
+      {
+        "unique_id": 181,
+        "variation_limit": 0,
+        "model_name": "RoadDarkSoil4A",
+        "native_resource_name_candidate": "RoadDarkSoil4A_pbc",
+        "archive_group_hint": "FldUnitRoadDarkSoil",
+        "archive_name_candidate": "FldUnitRoadDarkSoil_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadDarkSoil4A_0",
+            "archive": "FldUnitRoadDarkSoil"
+          }
+        ]
+      },
+      {
+        "unique_id": 182,
+        "variation_limit": 0,
+        "model_name": "RoadDarkSoil4B",
+        "native_resource_name_candidate": "RoadDarkSoil4B_pbc",
+        "archive_group_hint": "FldUnitRoadDarkSoil",
+        "archive_name_candidate": "FldUnitRoadDarkSoil_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadDarkSoil4B_0",
+            "archive": "FldUnitRoadDarkSoil"
+          }
+        ]
+      },
+      {
+        "unique_id": 183,
+        "variation_limit": 0,
+        "model_name": "RoadDarkSoil4C",
+        "native_resource_name_candidate": "RoadDarkSoil4C_pbc",
+        "archive_group_hint": "FldUnitRoadDarkSoil",
+        "archive_name_candidate": "FldUnitRoadDarkSoil_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadDarkSoil4C_0",
+            "archive": "FldUnitRoadDarkSoil"
+          }
+        ]
+      },
+      {
+        "unique_id": 184,
+        "variation_limit": 0,
+        "model_name": "RoadDarkSoil5A",
+        "native_resource_name_candidate": "RoadDarkSoil5A_pbc",
+        "archive_group_hint": "FldUnitRoadDarkSoil",
+        "archive_name_candidate": "FldUnitRoadDarkSoil_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadDarkSoil5A_0",
+            "archive": "FldUnitRoadDarkSoil"
+          }
+        ]
+      },
+      {
+        "unique_id": 185,
+        "variation_limit": 0,
+        "model_name": "RoadDarkSoil5B",
+        "native_resource_name_candidate": "RoadDarkSoil5B_pbc",
+        "archive_group_hint": "FldUnitRoadDarkSoil",
+        "archive_name_candidate": "FldUnitRoadDarkSoil_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadDarkSoil5B_0",
+            "archive": "FldUnitRoadDarkSoil"
+          }
+        ]
+      },
+      {
+        "unique_id": 186,
+        "variation_limit": 0,
+        "model_name": "RoadDarkSoil6A",
+        "native_resource_name_candidate": "RoadDarkSoil6A_pbc",
+        "archive_group_hint": "FldUnitRoadDarkSoil",
+        "archive_name_candidate": "FldUnitRoadDarkSoil_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadDarkSoil6A_0",
+            "archive": "FldUnitRoadDarkSoil"
+          }
+        ]
+      },
+      {
+        "unique_id": 187,
+        "variation_limit": 0,
+        "model_name": "RoadDarkSoil6B",
+        "native_resource_name_candidate": "RoadDarkSoil6B_pbc",
+        "archive_group_hint": "FldUnitRoadDarkSoil",
+        "archive_name_candidate": "FldUnitRoadDarkSoil_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadDarkSoil6B_0",
+            "archive": "FldUnitRoadDarkSoil"
+          }
+        ]
+      },
+      {
+        "unique_id": 188,
+        "variation_limit": 0,
+        "model_name": "RoadDarkSoil7A",
+        "native_resource_name_candidate": "RoadDarkSoil7A_pbc",
+        "archive_group_hint": "FldUnitRoadDarkSoil",
+        "archive_name_candidate": "FldUnitRoadDarkSoil_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadDarkSoil7A_0",
+            "archive": "FldUnitRoadDarkSoil"
+          }
+        ]
+      },
+      {
+        "unique_id": 189,
+        "variation_limit": 0,
+        "model_name": "RoadDarkSoil8A",
+        "native_resource_name_candidate": "RoadDarkSoil8A_pbc",
+        "archive_group_hint": "FldUnitRoadDarkSoil",
+        "archive_name_candidate": "FldUnitRoadDarkSoil_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadDarkSoil8A_0",
+            "archive": "FldUnitRoadDarkSoil"
+          }
+        ]
+      },
+      {
+        "unique_id": 190,
+        "variation_limit": 0,
+        "model_name": "RoadFanPattern0A",
+        "native_resource_name_candidate": "RoadFanPattern0A_pbc",
+        "archive_group_hint": "FldUnitRoadFanPattern",
+        "archive_name_candidate": "FldUnitRoadFanPattern_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadFanPattern0A_0",
+            "archive": "FldUnitRoadFanPattern"
+          }
+        ]
+      },
+      {
+        "unique_id": 191,
+        "variation_limit": 0,
+        "model_name": "RoadFanPattern0B",
+        "native_resource_name_candidate": "RoadFanPattern0B_pbc",
+        "archive_group_hint": "FldUnitRoadFanPattern",
+        "archive_name_candidate": "FldUnitRoadFanPattern_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadFanPattern0B_0",
+            "archive": "FldUnitRoadFanPattern"
+          }
+        ]
+      },
+      {
+        "unique_id": 193,
+        "variation_limit": 0,
+        "model_name": "RoadFanPattern1A",
+        "native_resource_name_candidate": "RoadFanPattern1A_pbc",
+        "archive_group_hint": "FldUnitRoadFanPattern",
+        "archive_name_candidate": "FldUnitRoadFanPattern_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadFanPattern1A_0",
+            "archive": "FldUnitRoadFanPattern"
+          }
+        ]
+      },
+      {
+        "unique_id": 194,
+        "variation_limit": 0,
+        "model_name": "RoadFanPattern1B",
+        "native_resource_name_candidate": "RoadFanPattern1B_pbc",
+        "archive_group_hint": "FldUnitRoadFanPattern",
+        "archive_name_candidate": "FldUnitRoadFanPattern_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadFanPattern1B_0",
+            "archive": "FldUnitRoadFanPattern"
+          }
+        ]
+      },
+      {
+        "unique_id": 195,
+        "variation_limit": 0,
+        "model_name": "RoadFanPattern1C",
+        "native_resource_name_candidate": "RoadFanPattern1C_pbc",
+        "archive_group_hint": "FldUnitRoadFanPattern",
+        "archive_name_candidate": "FldUnitRoadFanPattern_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadFanPattern1C_0",
+            "archive": "FldUnitRoadFanPattern"
+          }
+        ]
+      },
+      {
+        "unique_id": 196,
+        "variation_limit": 0,
+        "model_name": "RoadFanPattern2A",
+        "native_resource_name_candidate": "RoadFanPattern2A_pbc",
+        "archive_group_hint": "FldUnitRoadFanPattern",
+        "archive_name_candidate": "FldUnitRoadFanPattern_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadFanPattern2A_0",
+            "archive": "FldUnitRoadFanPattern"
+          }
+        ]
+      },
+      {
+        "unique_id": 197,
+        "variation_limit": 0,
+        "model_name": "RoadFanPattern2B",
+        "native_resource_name_candidate": "RoadFanPattern2B_pbc",
+        "archive_group_hint": "FldUnitRoadFanPattern",
+        "archive_name_candidate": "FldUnitRoadFanPattern_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadFanPattern2B_0",
+            "archive": "FldUnitRoadFanPattern"
+          }
+        ]
+      },
+      {
+        "unique_id": 198,
+        "variation_limit": 0,
+        "model_name": "RoadFanPattern2C",
+        "native_resource_name_candidate": "RoadFanPattern2C_pbc",
+        "archive_group_hint": "FldUnitRoadFanPattern",
+        "archive_name_candidate": "FldUnitRoadFanPattern_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadFanPattern2C_0",
+            "archive": "FldUnitRoadFanPattern"
+          }
+        ]
+      },
+      {
+        "unique_id": 199,
+        "variation_limit": 0,
+        "model_name": "RoadFanPattern3A",
+        "native_resource_name_candidate": "RoadFanPattern3A_pbc",
+        "archive_group_hint": "FldUnitRoadFanPattern",
+        "archive_name_candidate": "FldUnitRoadFanPattern_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadFanPattern3A_0",
+            "archive": "FldUnitRoadFanPattern"
+          }
+        ]
+      },
+      {
+        "unique_id": 200,
+        "variation_limit": 0,
+        "model_name": "RoadFanPattern3B",
+        "native_resource_name_candidate": "RoadFanPattern3B_pbc",
+        "archive_group_hint": "FldUnitRoadFanPattern",
+        "archive_name_candidate": "FldUnitRoadFanPattern_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadFanPattern3B_0",
+            "archive": "FldUnitRoadFanPattern"
+          }
+        ]
+      },
+      {
+        "unique_id": 201,
+        "variation_limit": 0,
+        "model_name": "RoadFanPattern3C",
+        "native_resource_name_candidate": "RoadFanPattern3C_pbc",
+        "archive_group_hint": "FldUnitRoadFanPattern",
+        "archive_name_candidate": "FldUnitRoadFanPattern_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadFanPattern3C_0",
+            "archive": "FldUnitRoadFanPattern"
+          }
+        ]
+      },
+      {
+        "unique_id": 202,
+        "variation_limit": 0,
+        "model_name": "RoadFanPattern4A",
+        "native_resource_name_candidate": "RoadFanPattern4A_pbc",
+        "archive_group_hint": "FldUnitRoadFanPattern",
+        "archive_name_candidate": "FldUnitRoadFanPattern_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadFanPattern4A_0",
+            "archive": "FldUnitRoadFanPattern"
+          }
+        ]
+      },
+      {
+        "unique_id": 203,
+        "variation_limit": 0,
+        "model_name": "RoadFanPattern4B",
+        "native_resource_name_candidate": "RoadFanPattern4B_pbc",
+        "archive_group_hint": "FldUnitRoadFanPattern",
+        "archive_name_candidate": "FldUnitRoadFanPattern_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadFanPattern4B_0",
+            "archive": "FldUnitRoadFanPattern"
+          }
+        ]
+      },
+      {
+        "unique_id": 204,
+        "variation_limit": 0,
+        "model_name": "RoadFanPattern4C",
+        "native_resource_name_candidate": "RoadFanPattern4C_pbc",
+        "archive_group_hint": "FldUnitRoadFanPattern",
+        "archive_name_candidate": "FldUnitRoadFanPattern_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadFanPattern4C_0",
+            "archive": "FldUnitRoadFanPattern"
+          }
+        ]
+      },
+      {
+        "unique_id": 205,
+        "variation_limit": 0,
+        "model_name": "RoadFanPattern5A",
+        "native_resource_name_candidate": "RoadFanPattern5A_pbc",
+        "archive_group_hint": "FldUnitRoadFanPattern",
+        "archive_name_candidate": "FldUnitRoadFanPattern_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadFanPattern5A_0",
+            "archive": "FldUnitRoadFanPattern"
+          }
+        ]
+      },
+      {
+        "unique_id": 206,
+        "variation_limit": 0,
+        "model_name": "RoadFanPattern5B",
+        "native_resource_name_candidate": "RoadFanPattern5B_pbc",
+        "archive_group_hint": "FldUnitRoadFanPattern",
+        "archive_name_candidate": "FldUnitRoadFanPattern_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadFanPattern5B_0",
+            "archive": "FldUnitRoadFanPattern"
+          }
+        ]
+      },
+      {
+        "unique_id": 207,
+        "variation_limit": 0,
+        "model_name": "RoadFanPattern6A",
+        "native_resource_name_candidate": "RoadFanPattern6A_pbc",
+        "archive_group_hint": "FldUnitRoadFanPattern",
+        "archive_name_candidate": "FldUnitRoadFanPattern_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadFanPattern6A_0",
+            "archive": "FldUnitRoadFanPattern"
+          }
+        ]
+      },
+      {
+        "unique_id": 208,
+        "variation_limit": 0,
+        "model_name": "RoadFanPattern6B",
+        "native_resource_name_candidate": "RoadFanPattern6B_pbc",
+        "archive_group_hint": "FldUnitRoadFanPattern",
+        "archive_name_candidate": "FldUnitRoadFanPattern_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadFanPattern6B_0",
+            "archive": "FldUnitRoadFanPattern"
+          }
+        ]
+      },
+      {
+        "unique_id": 209,
+        "variation_limit": 0,
+        "model_name": "RoadFanPattern7A",
+        "native_resource_name_candidate": "RoadFanPattern7A_pbc",
+        "archive_group_hint": "FldUnitRoadFanPattern",
+        "archive_name_candidate": "FldUnitRoadFanPattern_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadFanPattern7A_0",
+            "archive": "FldUnitRoadFanPattern"
+          }
+        ]
+      },
+      {
+        "unique_id": 210,
+        "variation_limit": 0,
+        "model_name": "RoadFanPattern8A",
+        "native_resource_name_candidate": "RoadFanPattern8A_pbc",
+        "archive_group_hint": "FldUnitRoadFanPattern",
+        "archive_name_candidate": "FldUnitRoadFanPattern_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadFanPattern8A_0",
+            "archive": "FldUnitRoadFanPattern"
+          }
+        ]
+      },
+      {
+        "unique_id": 211,
+        "variation_limit": 0,
+        "model_name": "RoadSand0A",
+        "native_resource_name_candidate": "RoadSand0A_pbc",
+        "archive_group_hint": "FldUnitRoadSand",
+        "archive_name_candidate": "FldUnitRoadSand_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadSand0A_0",
+            "archive": "FldUnitRoadSand"
+          }
+        ]
+      },
+      {
+        "unique_id": 212,
+        "variation_limit": 0,
+        "model_name": "RoadSand0B",
+        "native_resource_name_candidate": "RoadSand0B_pbc",
+        "archive_group_hint": "FldUnitRoadSand",
+        "archive_name_candidate": "FldUnitRoadSand_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadSand0B_0",
+            "archive": "FldUnitRoadSand"
+          }
+        ]
+      },
+      {
+        "unique_id": 214,
+        "variation_limit": 0,
+        "model_name": "RoadSand1A",
+        "native_resource_name_candidate": "RoadSand1A_pbc",
+        "archive_group_hint": "FldUnitRoadSand",
+        "archive_name_candidate": "FldUnitRoadSand_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadSand1A_0",
+            "archive": "FldUnitRoadSand"
+          }
+        ]
+      },
+      {
+        "unique_id": 215,
+        "variation_limit": 0,
+        "model_name": "RoadSand1B",
+        "native_resource_name_candidate": "RoadSand1B_pbc",
+        "archive_group_hint": "FldUnitRoadSand",
+        "archive_name_candidate": "FldUnitRoadSand_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadSand1B_0",
+            "archive": "FldUnitRoadSand"
+          }
+        ]
+      },
+      {
+        "unique_id": 216,
+        "variation_limit": 0,
+        "model_name": "RoadSand1C",
+        "native_resource_name_candidate": "RoadSand1C_pbc",
+        "archive_group_hint": "FldUnitRoadSand",
+        "archive_name_candidate": "FldUnitRoadSand_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadSand1C_0",
+            "archive": "FldUnitRoadSand"
+          }
+        ]
+      },
+      {
+        "unique_id": 217,
+        "variation_limit": 0,
+        "model_name": "RoadSand2A",
+        "native_resource_name_candidate": "RoadSand2A_pbc",
+        "archive_group_hint": "FldUnitRoadSand",
+        "archive_name_candidate": "FldUnitRoadSand_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadSand2A_0",
+            "archive": "FldUnitRoadSand"
+          }
+        ]
+      },
+      {
+        "unique_id": 218,
+        "variation_limit": 0,
+        "model_name": "RoadSand2B",
+        "native_resource_name_candidate": "RoadSand2B_pbc",
+        "archive_group_hint": "FldUnitRoadSand",
+        "archive_name_candidate": "FldUnitRoadSand_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadSand2B_0",
+            "archive": "FldUnitRoadSand"
+          }
+        ]
+      },
+      {
+        "unique_id": 219,
+        "variation_limit": 0,
+        "model_name": "RoadSand2C",
+        "native_resource_name_candidate": "RoadSand2C_pbc",
+        "archive_group_hint": "FldUnitRoadSand",
+        "archive_name_candidate": "FldUnitRoadSand_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadSand2C_0",
+            "archive": "FldUnitRoadSand"
+          }
+        ]
+      },
+      {
+        "unique_id": 220,
+        "variation_limit": 0,
+        "model_name": "RoadSand3A",
+        "native_resource_name_candidate": "RoadSand3A_pbc",
+        "archive_group_hint": "FldUnitRoadSand",
+        "archive_name_candidate": "FldUnitRoadSand_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadSand3A_0",
+            "archive": "FldUnitRoadSand"
+          }
+        ]
+      },
+      {
+        "unique_id": 221,
+        "variation_limit": 0,
+        "model_name": "RoadSand3B",
+        "native_resource_name_candidate": "RoadSand3B_pbc",
+        "archive_group_hint": "FldUnitRoadSand",
+        "archive_name_candidate": "FldUnitRoadSand_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadSand3B_0",
+            "archive": "FldUnitRoadSand"
+          }
+        ]
+      },
+      {
+        "unique_id": 222,
+        "variation_limit": 0,
+        "model_name": "RoadSand3C",
+        "native_resource_name_candidate": "RoadSand3C_pbc",
+        "archive_group_hint": "FldUnitRoadSand",
+        "archive_name_candidate": "FldUnitRoadSand_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadSand3C_0",
+            "archive": "FldUnitRoadSand"
+          }
+        ]
+      },
+      {
+        "unique_id": 223,
+        "variation_limit": 0,
+        "model_name": "RoadSand4A",
+        "native_resource_name_candidate": "RoadSand4A_pbc",
+        "archive_group_hint": "FldUnitRoadSand",
+        "archive_name_candidate": "FldUnitRoadSand_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadSand4A_0",
+            "archive": "FldUnitRoadSand"
+          }
+        ]
+      },
+      {
+        "unique_id": 224,
+        "variation_limit": 0,
+        "model_name": "RoadSand4B",
+        "native_resource_name_candidate": "RoadSand4B_pbc",
+        "archive_group_hint": "FldUnitRoadSand",
+        "archive_name_candidate": "FldUnitRoadSand_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadSand4B_0",
+            "archive": "FldUnitRoadSand"
+          }
+        ]
+      },
+      {
+        "unique_id": 225,
+        "variation_limit": 0,
+        "model_name": "RoadSand4C",
+        "native_resource_name_candidate": "RoadSand4C_pbc",
+        "archive_group_hint": "FldUnitRoadSand",
+        "archive_name_candidate": "FldUnitRoadSand_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadSand4C_0",
+            "archive": "FldUnitRoadSand"
+          }
+        ]
+      },
+      {
+        "unique_id": 226,
+        "variation_limit": 0,
+        "model_name": "RoadSand5A",
+        "native_resource_name_candidate": "RoadSand5A_pbc",
+        "archive_group_hint": "FldUnitRoadSand",
+        "archive_name_candidate": "FldUnitRoadSand_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadSand5A_0",
+            "archive": "FldUnitRoadSand"
+          }
+        ]
+      },
+      {
+        "unique_id": 227,
+        "variation_limit": 0,
+        "model_name": "RoadSand5B",
+        "native_resource_name_candidate": "RoadSand5B_pbc",
+        "archive_group_hint": "FldUnitRoadSand",
+        "archive_name_candidate": "FldUnitRoadSand_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadSand5B_0",
+            "archive": "FldUnitRoadSand"
+          }
+        ]
+      },
+      {
+        "unique_id": 228,
+        "variation_limit": 0,
+        "model_name": "RoadSand6A",
+        "native_resource_name_candidate": "RoadSand6A_pbc",
+        "archive_group_hint": "FldUnitRoadSand",
+        "archive_name_candidate": "FldUnitRoadSand_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadSand6A_0",
+            "archive": "FldUnitRoadSand"
+          }
+        ]
+      },
+      {
+        "unique_id": 229,
+        "variation_limit": 0,
+        "model_name": "RoadSand6B",
+        "native_resource_name_candidate": "RoadSand6B_pbc",
+        "archive_group_hint": "FldUnitRoadSand",
+        "archive_name_candidate": "FldUnitRoadSand_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadSand6B_0",
+            "archive": "FldUnitRoadSand"
+          }
+        ]
+      },
+      {
+        "unique_id": 230,
+        "variation_limit": 0,
+        "model_name": "RoadSand7A",
+        "native_resource_name_candidate": "RoadSand7A_pbc",
+        "archive_group_hint": "FldUnitRoadSand",
+        "archive_name_candidate": "FldUnitRoadSand_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadSand7A_0",
+            "archive": "FldUnitRoadSand"
+          }
+        ]
+      },
+      {
+        "unique_id": 231,
+        "variation_limit": 0,
+        "model_name": "RoadSand8A",
+        "native_resource_name_candidate": "RoadSand8A_pbc",
+        "archive_group_hint": "FldUnitRoadSand",
+        "archive_name_candidate": "FldUnitRoadSand_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadSand8A_0",
+            "archive": "FldUnitRoadSand"
+          }
+        ]
+      },
+      {
+        "unique_id": 232,
+        "variation_limit": 0,
+        "model_name": "RoadTile0A",
+        "native_resource_name_candidate": "RoadTile0A_pbc",
+        "archive_group_hint": "FldUnitRoadTile",
+        "archive_name_candidate": "FldUnitRoadTile_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadTile0A_0",
+            "archive": "FldUnitRoadTile"
+          }
+        ]
+      },
+      {
+        "unique_id": 233,
+        "variation_limit": 0,
+        "model_name": "RoadTile0B",
+        "native_resource_name_candidate": "RoadTile0B_pbc",
+        "archive_group_hint": "FldUnitRoadTile",
+        "archive_name_candidate": "FldUnitRoadTile_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadTile0B_0",
+            "archive": "FldUnitRoadTile"
+          }
+        ]
+      },
+      {
+        "unique_id": 235,
+        "variation_limit": 0,
+        "model_name": "RoadTile1A",
+        "native_resource_name_candidate": "RoadTile1A_pbc",
+        "archive_group_hint": "FldUnitRoadTile",
+        "archive_name_candidate": "FldUnitRoadTile_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadTile1A_0",
+            "archive": "FldUnitRoadTile"
+          }
+        ]
+      },
+      {
+        "unique_id": 236,
+        "variation_limit": 0,
+        "model_name": "RoadTile1B",
+        "native_resource_name_candidate": "RoadTile1B_pbc",
+        "archive_group_hint": "FldUnitRoadTile",
+        "archive_name_candidate": "FldUnitRoadTile_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadTile1B_0",
+            "archive": "FldUnitRoadTile"
+          }
+        ]
+      },
+      {
+        "unique_id": 237,
+        "variation_limit": 0,
+        "model_name": "RoadTile1C",
+        "native_resource_name_candidate": "RoadTile1C_pbc",
+        "archive_group_hint": "FldUnitRoadTile",
+        "archive_name_candidate": "FldUnitRoadTile_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadTile1C_0",
+            "archive": "FldUnitRoadTile"
+          }
+        ]
+      },
+      {
+        "unique_id": 238,
+        "variation_limit": 0,
+        "model_name": "RoadTile2A",
+        "native_resource_name_candidate": "RoadTile2A_pbc",
+        "archive_group_hint": "FldUnitRoadTile",
+        "archive_name_candidate": "FldUnitRoadTile_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadTile2A_0",
+            "archive": "FldUnitRoadTile"
+          }
+        ]
+      },
+      {
+        "unique_id": 239,
+        "variation_limit": 0,
+        "model_name": "RoadTile2B",
+        "native_resource_name_candidate": "RoadTile2B_pbc",
+        "archive_group_hint": "FldUnitRoadTile",
+        "archive_name_candidate": "FldUnitRoadTile_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadTile2B_0",
+            "archive": "FldUnitRoadTile"
+          }
+        ]
+      },
+      {
+        "unique_id": 240,
+        "variation_limit": 0,
+        "model_name": "RoadTile2C",
+        "native_resource_name_candidate": "RoadTile2C_pbc",
+        "archive_group_hint": "FldUnitRoadTile",
+        "archive_name_candidate": "FldUnitRoadTile_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadTile2C_0",
+            "archive": "FldUnitRoadTile"
+          }
+        ]
+      },
+      {
+        "unique_id": 241,
+        "variation_limit": 0,
+        "model_name": "RoadTile3A",
+        "native_resource_name_candidate": "RoadTile3A_pbc",
+        "archive_group_hint": "FldUnitRoadTile",
+        "archive_name_candidate": "FldUnitRoadTile_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadTile3A_0",
+            "archive": "FldUnitRoadTile"
+          }
+        ]
+      },
+      {
+        "unique_id": 242,
+        "variation_limit": 0,
+        "model_name": "RoadTile3B",
+        "native_resource_name_candidate": "RoadTile3B_pbc",
+        "archive_group_hint": "FldUnitRoadTile",
+        "archive_name_candidate": "FldUnitRoadTile_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadTile3B_0",
+            "archive": "FldUnitRoadTile"
+          }
+        ]
+      },
+      {
+        "unique_id": 243,
+        "variation_limit": 0,
+        "model_name": "RoadTile3C",
+        "native_resource_name_candidate": "RoadTile3C_pbc",
+        "archive_group_hint": "FldUnitRoadTile",
+        "archive_name_candidate": "FldUnitRoadTile_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadTile3C_0",
+            "archive": "FldUnitRoadTile"
+          }
+        ]
+      },
+      {
+        "unique_id": 244,
+        "variation_limit": 0,
+        "model_name": "RoadTile4A",
+        "native_resource_name_candidate": "RoadTile4A_pbc",
+        "archive_group_hint": "FldUnitRoadTile",
+        "archive_name_candidate": "FldUnitRoadTile_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadTile4A_0",
+            "archive": "FldUnitRoadTile"
+          }
+        ]
+      },
+      {
+        "unique_id": 245,
+        "variation_limit": 0,
+        "model_name": "RoadTile4B",
+        "native_resource_name_candidate": "RoadTile4B_pbc",
+        "archive_group_hint": "FldUnitRoadTile",
+        "archive_name_candidate": "FldUnitRoadTile_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadTile4B_0",
+            "archive": "FldUnitRoadTile"
+          }
+        ]
+      },
+      {
+        "unique_id": 246,
+        "variation_limit": 0,
+        "model_name": "RoadTile4C",
+        "native_resource_name_candidate": "RoadTile4C_pbc",
+        "archive_group_hint": "FldUnitRoadTile",
+        "archive_name_candidate": "FldUnitRoadTile_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadTile4C_0",
+            "archive": "FldUnitRoadTile"
+          }
+        ]
+      },
+      {
+        "unique_id": 247,
+        "variation_limit": 0,
+        "model_name": "RoadTile5A",
+        "native_resource_name_candidate": "RoadTile5A_pbc",
+        "archive_group_hint": "FldUnitRoadTile",
+        "archive_name_candidate": "FldUnitRoadTile_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadTile5A_0",
+            "archive": "FldUnitRoadTile"
+          }
+        ]
+      },
+      {
+        "unique_id": 248,
+        "variation_limit": 0,
+        "model_name": "RoadTile5B",
+        "native_resource_name_candidate": "RoadTile5B_pbc",
+        "archive_group_hint": "FldUnitRoadTile",
+        "archive_name_candidate": "FldUnitRoadTile_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadTile5B_0",
+            "archive": "FldUnitRoadTile"
+          }
+        ]
+      },
+      {
+        "unique_id": 249,
+        "variation_limit": 0,
+        "model_name": "RoadTile6A",
+        "native_resource_name_candidate": "RoadTile6A_pbc",
+        "archive_group_hint": "FldUnitRoadTile",
+        "archive_name_candidate": "FldUnitRoadTile_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadTile6A_0",
+            "archive": "FldUnitRoadTile"
+          }
+        ]
+      },
+      {
+        "unique_id": 250,
+        "variation_limit": 0,
+        "model_name": "RoadTile6B",
+        "native_resource_name_candidate": "RoadTile6B_pbc",
+        "archive_group_hint": "FldUnitRoadTile",
+        "archive_name_candidate": "FldUnitRoadTile_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadTile6B_0",
+            "archive": "FldUnitRoadTile"
+          }
+        ]
+      },
+      {
+        "unique_id": 251,
+        "variation_limit": 0,
+        "model_name": "RoadTile7A",
+        "native_resource_name_candidate": "RoadTile7A_pbc",
+        "archive_group_hint": "FldUnitRoadTile",
+        "archive_name_candidate": "FldUnitRoadTile_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadTile7A_0",
+            "archive": "FldUnitRoadTile"
+          }
+        ]
+      },
+      {
+        "unique_id": 252,
+        "variation_limit": 0,
+        "model_name": "RoadTile8A",
+        "native_resource_name_candidate": "RoadTile8A_pbc",
+        "archive_group_hint": "FldUnitRoadTile",
+        "archive_name_candidate": "FldUnitRoadTile_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadTile8A_0",
+            "archive": "FldUnitRoadTile"
+          }
+        ]
+      },
+      {
+        "unique_id": 253,
+        "variation_limit": 0,
+        "model_name": "RoadWood0A",
+        "native_resource_name_candidate": "RoadWood0A_pbc",
+        "archive_group_hint": "FldUnitRoadWood",
+        "archive_name_candidate": "FldUnitRoadWood_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadWood0A_0",
+            "archive": "FldUnitRoadWood"
+          }
+        ]
+      },
+      {
+        "unique_id": 254,
+        "variation_limit": 0,
+        "model_name": "RoadWood0B",
+        "native_resource_name_candidate": "RoadWood0B_pbc",
+        "archive_group_hint": "FldUnitRoadWood",
+        "archive_name_candidate": "FldUnitRoadWood_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadWood0B_0",
+            "archive": "FldUnitRoadWood"
+          }
+        ]
+      },
+      {
+        "unique_id": 256,
+        "variation_limit": 0,
+        "model_name": "RoadWood1A",
+        "native_resource_name_candidate": "RoadWood1A_pbc",
+        "archive_group_hint": "FldUnitRoadWood",
+        "archive_name_candidate": "FldUnitRoadWood_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadWood1A_0",
+            "archive": "FldUnitRoadWood"
+          }
+        ]
+      },
+      {
+        "unique_id": 257,
+        "variation_limit": 0,
+        "model_name": "RoadWood1B",
+        "native_resource_name_candidate": "RoadWood1B_pbc",
+        "archive_group_hint": "FldUnitRoadWood",
+        "archive_name_candidate": "FldUnitRoadWood_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadWood1B_0",
+            "archive": "FldUnitRoadWood"
+          }
+        ]
+      },
+      {
+        "unique_id": 258,
+        "variation_limit": 0,
+        "model_name": "RoadWood1C",
+        "native_resource_name_candidate": "RoadWood1C_pbc",
+        "archive_group_hint": "FldUnitRoadWood",
+        "archive_name_candidate": "FldUnitRoadWood_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadWood1C_0",
+            "archive": "FldUnitRoadWood"
+          }
+        ]
+      },
+      {
+        "unique_id": 259,
+        "variation_limit": 0,
+        "model_name": "RoadWood2A",
+        "native_resource_name_candidate": "RoadWood2A_pbc",
+        "archive_group_hint": "FldUnitRoadWood",
+        "archive_name_candidate": "FldUnitRoadWood_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadWood2A_0",
+            "archive": "FldUnitRoadWood"
+          }
+        ]
+      },
+      {
+        "unique_id": 260,
+        "variation_limit": 0,
+        "model_name": "RoadWood2B",
+        "native_resource_name_candidate": "RoadWood2B_pbc",
+        "archive_group_hint": "FldUnitRoadWood",
+        "archive_name_candidate": "FldUnitRoadWood_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadWood2B_0",
+            "archive": "FldUnitRoadWood"
+          }
+        ]
+      },
+      {
+        "unique_id": 261,
+        "variation_limit": 0,
+        "model_name": "RoadWood2C",
+        "native_resource_name_candidate": "RoadWood2C_pbc",
+        "archive_group_hint": "FldUnitRoadWood",
+        "archive_name_candidate": "FldUnitRoadWood_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadWood2C_0",
+            "archive": "FldUnitRoadWood"
+          }
+        ]
+      },
+      {
+        "unique_id": 262,
+        "variation_limit": 0,
+        "model_name": "RoadWood3A",
+        "native_resource_name_candidate": "RoadWood3A_pbc",
+        "archive_group_hint": "FldUnitRoadWood",
+        "archive_name_candidate": "FldUnitRoadWood_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadWood3A_0",
+            "archive": "FldUnitRoadWood"
+          }
+        ]
+      },
+      {
+        "unique_id": 263,
+        "variation_limit": 0,
+        "model_name": "RoadWood3B",
+        "native_resource_name_candidate": "RoadWood3B_pbc",
+        "archive_group_hint": "FldUnitRoadWood",
+        "archive_name_candidate": "FldUnitRoadWood_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadWood3B_0",
+            "archive": "FldUnitRoadWood"
+          }
+        ]
+      },
+      {
+        "unique_id": 264,
+        "variation_limit": 0,
+        "model_name": "RoadWood3C",
+        "native_resource_name_candidate": "RoadWood3C_pbc",
+        "archive_group_hint": "FldUnitRoadWood",
+        "archive_name_candidate": "FldUnitRoadWood_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadWood3C_0",
+            "archive": "FldUnitRoadWood"
+          }
+        ]
+      },
+      {
+        "unique_id": 265,
+        "variation_limit": 0,
+        "model_name": "RoadWood4A",
+        "native_resource_name_candidate": "RoadWood4A_pbc",
+        "archive_group_hint": "FldUnitRoadWood",
+        "archive_name_candidate": "FldUnitRoadWood_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadWood4A_0",
+            "archive": "FldUnitRoadWood"
+          }
+        ]
+      },
+      {
+        "unique_id": 266,
+        "variation_limit": 0,
+        "model_name": "RoadWood4B",
+        "native_resource_name_candidate": "RoadWood4B_pbc",
+        "archive_group_hint": "FldUnitRoadWood",
+        "archive_name_candidate": "FldUnitRoadWood_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadWood4B_0",
+            "archive": "FldUnitRoadWood"
+          }
+        ]
+      },
+      {
+        "unique_id": 267,
+        "variation_limit": 0,
+        "model_name": "RoadWood4C",
+        "native_resource_name_candidate": "RoadWood4C_pbc",
+        "archive_group_hint": "FldUnitRoadWood",
+        "archive_name_candidate": "FldUnitRoadWood_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadWood4C_0",
+            "archive": "FldUnitRoadWood"
+          }
+        ]
+      },
+      {
+        "unique_id": 268,
+        "variation_limit": 0,
+        "model_name": "RoadWood5A",
+        "native_resource_name_candidate": "RoadWood5A_pbc",
+        "archive_group_hint": "FldUnitRoadWood",
+        "archive_name_candidate": "FldUnitRoadWood_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadWood5A_0",
+            "archive": "FldUnitRoadWood"
+          }
+        ]
+      },
+      {
+        "unique_id": 269,
+        "variation_limit": 0,
+        "model_name": "RoadWood5B",
+        "native_resource_name_candidate": "RoadWood5B_pbc",
+        "archive_group_hint": "FldUnitRoadWood",
+        "archive_name_candidate": "FldUnitRoadWood_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadWood5B_0",
+            "archive": "FldUnitRoadWood"
+          }
+        ]
+      },
+      {
+        "unique_id": 270,
+        "variation_limit": 0,
+        "model_name": "RoadWood6A",
+        "native_resource_name_candidate": "RoadWood6A_pbc",
+        "archive_group_hint": "FldUnitRoadWood",
+        "archive_name_candidate": "FldUnitRoadWood_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadWood6A_0",
+            "archive": "FldUnitRoadWood"
+          }
+        ]
+      },
+      {
+        "unique_id": 271,
+        "variation_limit": 0,
+        "model_name": "RoadWood6B",
+        "native_resource_name_candidate": "RoadWood6B_pbc",
+        "archive_group_hint": "FldUnitRoadWood",
+        "archive_name_candidate": "FldUnitRoadWood_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadWood6B_0",
+            "archive": "FldUnitRoadWood"
+          }
+        ]
+      },
+      {
+        "unique_id": 272,
+        "variation_limit": 0,
+        "model_name": "RoadWood7A",
+        "native_resource_name_candidate": "RoadWood7A_pbc",
+        "archive_group_hint": "FldUnitRoadWood",
+        "archive_name_candidate": "FldUnitRoadWood_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadWood7A_0",
+            "archive": "FldUnitRoadWood"
+          }
+        ]
+      },
+      {
+        "unique_id": 273,
+        "variation_limit": 0,
+        "model_name": "RoadWood8A",
+        "native_resource_name_candidate": "RoadWood8A_pbc",
+        "archive_group_hint": "FldUnitRoadWood",
+        "archive_name_candidate": "FldUnitRoadWood_pbc",
+        "native_model_variants": [
+          {
+            "index": 0,
+            "model": "RoadWood8A_0",
+            "archive": "FldUnitRoadWood"
+          }
+        ]
+      }
+    ]
+  },
+  "corpus_check": {
+    "pbc_or_fldunit_source_manifest_matches": 0,
+    "meaning": "No PBC/FldUnit-named member is present in the currently indexed source manifest. This says nothing about resources outside that supplied corpus."
+  },
+  "limits": [
+    "Archive group assignment for each row is linked from decoded terrain metadata; only the 12 group names and ModelName_PBC formatting are directly visible in native code here.",
+    "One unit (UniqueID 41, Cliff8) has no archive hint in the current terrain metadata link.",
+    "Presence, byte layout, geometry, collision semantics and runtime load success for any generated PBC name remain unverified.",
+    "The PBC resource helper 0xc9bc0 was not executed with the original resource archive."
+  ],
+  "instruction_evidence": {
+    "loader_block_sha256": "ff2fead9a2d60e99ef246b794ceab0035241f7968fccea0f41876acd21a890b0",
+    "model_name_reader_va": "0x16bae0",
+    "model_name_reader_sha256": "6c1b1031c800bbb05d34411a5e262d38c1441a64698105203ab751500e1f2020",
+    "format_string_va": "0x2946397",
+    "format_string": "%s_pbc",
+    "archive_list_sha256": "517a56b864cadd8d340e7d77a3fd6ec57a0addef676caa03446840cf22b4b170"
+  }
+}

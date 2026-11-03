@@ -5,6 +5,8 @@ These checks validate structural fidelity, not animation playback or handlers.
 from collections import Counter
 import hashlib
 import json
+import os
+from pathlib import Path
 import struct
 from ui_island_audit import ROOT, OUT, ROMFS, inflate, sarc_members
 
@@ -24,7 +26,8 @@ def main():
     anims = json.loads((OUT/'animations.json').read_text())['animations']
     assert len(layouts)==523 and len(anims)==2095
     assert {(x['source'],x['member']) for x in layouts+anims} == set(raw)
-    inventory = json.loads((ROOT/'output/additional_romfs/resource_inventory.json').read_text())['resources']
+    source_root = Path(os.environ.get('ACNH_RESEARCH_ROOT', ROOT))
+    inventory = json.loads((source_root/'output/additional_romfs/resource_inventory.json').read_text())['resources']
     inv = {(x['source'],x['member']):x for x in inventory}
     counts = Counter()
     for x in layouts+anims:

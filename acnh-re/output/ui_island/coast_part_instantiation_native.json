@@ -1,0 +1,226 @@
+{
+  "scope": "Static instruction/dataflow map from the selected FieldOutsideTemplate grid to the guarded coast-part instance loop. Local cell spacing is resolved; parent/world transform composition and runtime resource success are unresolved.",
+  "source_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+  "resolved_rodata_constants": {
+    "scale_x": {
+      "global_elf_va": "0x32e2950",
+      "relocated_pointer_target": "0x29f6120",
+      "value_f32": 160.0,
+      "bytes": "00002043"
+    },
+    "scale_z": {
+      "global_elf_va": "0x32e2958",
+      "relocated_pointer_target": "0x29f6124",
+      "value_f32": 160.0,
+      "bytes": "00002043"
+    },
+    "base_position": {
+      "global_elf_va": "0x32d06b0",
+      "relocated_pointer_target": "0x2a3e2cc",
+      "xyz_f32": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "bytes": "000000000000000000000000"
+    }
+  },
+  "terrain_grid_relation": {
+    "landmaking_source_dimensions_cells": [
+      112,
+      96
+    ],
+    "coastline_segment_dimensions": [
+      7,
+      6
+    ],
+    "source_cells_per_coast_segment": [
+      16,
+      16
+    ],
+    "coast_segment_spacing_local_units": [
+      160.0,
+      160.0
+    ],
+    "implied_landmaking_cell_spacing_if_same_axes_and_transform": [
+      10.0,
+      10.0
+    ],
+    "implied_cell_spacing": [
+      10.0,
+      10.0
+    ],
+    "status": "exact dimension ratio across source grids; 10-unit terrain-cell spacing is a cross-grid inference, not a proven native transform or origin alignment"
+  },
+  "call_chain": [
+    {
+      "caller": "0x528bf0",
+      "callee": "0x4de9a0",
+      "call_site": "0x528cbc",
+      "operation": "copy the 16-bit setup value at object +0xe into a temporary grid header field"
+    },
+    {
+      "caller": "0x528bf0",
+      "callee": "0x4de9b0",
+      "call_site": "0x528ccc",
+      "operation": "build the 9x8 UID grid; the wrapper runs the sea fill, interior clear, and copy only when the temporary header low bit is set"
+    },
+    {
+      "caller": "0x528bf0",
+      "callee": "0x4e0c90",
+      "call_site": "0x528cdc",
+      "operation": "write dimensions and 72 UID/x/z records into the selected template resource object"
+    },
+    {
+      "caller": "0x529de0",
+      "callee": "0x528e60",
+      "call_site": "0x529e44",
+      "operation": "guarded update dispatch for the selected template object"
+    },
+    {
+      "caller": "0x528e60",
+      "callee": "0x4dd4d0",
+      "call_site": "0x528ed4",
+      "operation": "when the object state permits, iterate the template resource's part grid using descriptor type 0x6622bd46"
+    }
+  ],
+  "resource_grid_layout": {
+    "header_dimensions_offset": 8,
+    "header_dimensions_u64": "0x0000000800000009",
+    "dimensions_xz": [
+      9,
+      8
+    ],
+    "records_offset": 16,
+    "record_count": 72,
+    "record_stride": 24,
+    "record_bytes": 1728,
+    "record_fields": [
+      {
+        "offset": 8,
+        "size": 2,
+        "field": "FieldOutsideParts UniqueID"
+      },
+      {
+        "offset": 12,
+        "size": 4,
+        "field": "grid_x"
+      },
+      {
+        "offset": 16,
+        "size": 4,
+        "field": "grid_z"
+      }
+    ],
+    "trailing_zero_u32_offset": 1744,
+    "bounds_helper": "0x4e0d80 accepts x<=width and z<=height; caller loops x=0..8 and z=0..7",
+    "record_getter": "0x4e0d60 returns records_offset + (z*9+x)*24; out-of-range linear indices fall back to first record"
+  },
+  "part_instantiation": {
+    "function": "0x4dd4d0",
+    "iteration": "8 rows x 9 columns; skip cells whose UniqueID is zero",
+    "source_count": {
+      "coast_parts": 22,
+      "outside_sea_parts": 30,
+      "expected_nonzero_cells": 52
+    },
+    "lookup": {
+      "function": "0x551bf0",
+      "operation": "resolve a 16-bit UniqueID against the registered part table's base ID, count, and row-pointer array"
+    },
+    "position_descriptor": {
+      "x": "160 * grid_x + 80",
+      "y": 0.0,
+      "z": "160 * grid_z + 80",
+      "cell_spacing": {
+        "x": 160.0,
+        "z": 160.0
+      },
+      "sample_ranges_for_full_grid": {
+        "x": [
+          80.0,
+          1360.0
+        ],
+        "z": [
+          80.0,
+          1200.0
+        ]
+      },
+      "status": "native factory descriptor receives exact center-of-cell coordinates; parent/world transform composition remains unresolved"
+    },
+    "outside_sea_condition": {
+      "function": "0x551d20",
+      "operation": "test the resolved row's PartsKind cache index against 0x18 (OutsideSea)",
+      "effect": "the result selects descriptor option 0 or 2 before the object factory call; the option's engine meaning is unresolved"
+    },
+    "factory": {
+      "call_site": "0x4dd61c",
+      "target": "0x1490f0",
+      "operation": "dispatch one object-construction call for each valid nonzero cell",
+      "success": "static dispatch is proven; model load, collision creation, and runtime object success are not"
+    }
+  },
+  "instruction_evidence": {
+    "template_setup": {
+      "elf_va": "0x528bf0",
+      "size": 476,
+      "sha256": "725d2c3f3ddebcb59103aab321d735e8625155987ca2eff0b71ebc1eaf67feb1"
+    },
+    "template_update_dispatch": {
+      "elf_va": "0x529de0",
+      "size": 104,
+      "sha256": "12b14577389ce9b849ee63a56a317e9929373634ffb74fdaf79f085665c3f47d"
+    },
+    "coast_instance_update": {
+      "elf_va": "0x528e60",
+      "size": 528,
+      "sha256": "5da662546e997a7255a959d3bace16d93f22eb9ca8bf346fcfbed4077aaa5291"
+    },
+    "template_grid_enable_flag": {
+      "elf_va": "0x4de9a0",
+      "size": 8,
+      "sha256": "f40f917bec7a5e49fface58890afdec1bd2dd554f06991a76e10b145eae2525c"
+    },
+    "coast_grid_assembly_wrapper": {
+      "elf_va": "0x4de9b0",
+      "size": 136,
+      "sha256": "fd6355df87ba75d0f6613e8d3d4e999987246a20fac2e51fec59b60b3ad3be36"
+    },
+    "coast_grid_to_part_records": {
+      "elf_va": "0x4e0c90",
+      "size": 204,
+      "sha256": "8bed71370f14461551a3d699dcce9ac72c0fe4ea765d9182f762a8550a32943c"
+    },
+    "part_record_getter": {
+      "elf_va": "0x4e0d60",
+      "size": 32,
+      "sha256": "181bb23812eef93ee8fe12679c082fdfae286dc7db94bca2491cbb9b41187748"
+    },
+    "part_grid_bounds_check": {
+      "elf_va": "0x4e0d80",
+      "size": 40,
+      "sha256": "f00c9f2c847cf6ab48ac14d67c9a5a0dc8af2c58b992186f13a48b85ce1e7550"
+    },
+    "coast_part_instance_loop": {
+      "elf_va": "0x4dd4d0",
+      "size": 428,
+      "sha256": "3089b821d3b940ade66f1d8d55385367071909b47d8293149050ea14898c6170"
+    },
+    "part_unique_id_lookup": {
+      "elf_va": "0x551bf0",
+      "size": 72,
+      "sha256": "aec82bd71035bcc01ab002bf45b8dad017d78127517588ea2a82a54102b5ac30"
+    },
+    "outside_sea_kind_check": {
+      "elf_va": "0x551d20",
+      "size": 76,
+      "sha256": "c0527fd969b15251f74651be1bf6f7b23a140969cf14074232562e79e63908c8"
+    }
+  },
+  "limits": [
+    "The position constants are resolved to 160.0 units per coast cell and a zero base XYZ vector. The object's parent/world transform composition remains unresolved.",
+    "No coast-part rotation, terrain-height snapping, seam construction, or collision generation is proven by this path.",
+    "The 52 nonzero records imply 52 guarded factory dispatches when this update branch runs, not 52 confirmed loaded/rendered objects.",
+    "The setup flag copied from object +0xe controls whether the wrapper copies a populated grid; the source field's higher-level meaning is unresolved."
+  ]
+}

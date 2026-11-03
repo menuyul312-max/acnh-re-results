@@ -1,7 +1,607 @@
 {
-  "scope": "Static direct call edges from index.sqlite; decompiler references use Ghidra VA = ELF VA + 0x100000. Indirect calls absent.",
+  "scope": "Static direct call edges from index.sqlite plus instruction-verified coast assembly/instantiation callsites; decompiler references use Ghidra VA = ELF VA + 0x100000 where applicable. Indirect calls absent.",
   "source_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
   "nodes": [
+    {
+      "elf_va": "0x1490f0",
+      "evidence": "ui_island/coast_part_instantiation_native.asm",
+      "callers": [
+        {
+          "pc": "0x4dd61c",
+          "owner": "0x4dd4d0"
+        }
+      ]
+    },
+    {
+      "elf_va": "0x4dd4d0",
+      "evidence": "ui_island/coast_part_assembly_native.asm; ui_island/coast_part_instantiation_native.asm",
+      "callers": [
+        {
+          "pc": "0x4dd100",
+          "owner": "0x4dd060"
+        },
+        {
+          "pc": "0x4dd148",
+          "owner": "0x4dd060"
+        },
+        {
+          "pc": "0x528ed4",
+          "owner": "0x528e60"
+        }
+      ]
+    },
+    {
+      "elf_va": "0x4de610",
+      "evidence": "ui_island/coast_part_assembly_native.asm; ui_island/coast_part_instantiation_native.asm",
+      "callers": [
+        {
+          "pc": "0x4e0d18",
+          "owner": "0x4e0c90"
+        }
+      ]
+    },
+    {
+      "elf_va": "0x4de8c0",
+      "evidence": "ui_island/coast_part_assembly_native.asm; ui_island/coast_part_instantiation_native.asm",
+      "callers": [
+        {
+          "pc": "0x4e0ce8",
+          "owner": "0x4e0c90"
+        },
+        {
+          "pc": "0x565f04",
+          "owner": "0x565e30"
+        },
+        {
+          "pc": "0x565f58",
+          "owner": "0x565e30"
+        },
+        {
+          "pc": "0x565fb0",
+          "owner": "0x565e30"
+        },
+        {
+          "pc": "0x566004",
+          "owner": "0x565e30"
+        },
+        {
+          "pc": "0x566058",
+          "owner": "0x565e30"
+        },
+        {
+          "pc": "0x5660ac",
+          "owner": "0x565e30"
+        },
+        {
+          "pc": "0x566100",
+          "owner": "0x565e30"
+        },
+        {
+          "pc": "0x566154",
+          "owner": "0x565e30"
+        },
+        {
+          "pc": "0x5661a8",
+          "owner": "0x565e30"
+        }
+      ]
+    },
+    {
+      "elf_va": "0x4de9a0",
+      "evidence": "ui_island/coast_part_assembly_native.asm; ui_island/coast_part_instantiation_native.asm",
+      "callers": [
+        {
+          "pc": "0x528cbc",
+          "owner": "0x528bf0"
+        },
+        {
+          "pc": "0x5663a0",
+          "owner": "0x5662e0"
+        }
+      ]
+    },
+    {
+      "elf_va": "0x4de9b0",
+      "evidence": "ui_island/coast_part_assembly_native.asm; ui_island/coast_part_instantiation_native.asm",
+      "callers": [
+        {
+          "pc": "0x528ccc",
+          "owner": "0x528bf0"
+        },
+        {
+          "pc": "0x5663ac",
+          "owner": "0x5662e0"
+        }
+      ]
+    },
+    {
+      "elf_va": "0x4dea40",
+      "evidence": "ui_island/coast_part_assembly_native.asm",
+      "callers": [
+        {
+          "pc": "0x4de9dc",
+          "owner": "0x4de9b0"
+        }
+      ]
+    },
+    {
+      "elf_va": "0x4deeb0",
+      "evidence": "ui_island/coast_part_assembly_native.asm",
+      "callers": [
+        {
+          "pc": "0x4de9ec",
+          "owner": "0x4de9b0"
+        }
+      ]
+    },
+    {
+      "elf_va": "0x4dfcb0",
+      "evidence": "ui_island/coast_part_assembly_native.asm",
+      "callers": [
+        {
+          "pc": "0x4de9f4",
+          "owner": "0x4de9b0"
+        }
+      ]
+    },
+    {
+      "elf_va": "0x4dfeb0",
+      "evidence": "ui_island/coast_part_assembly_native.asm",
+      "callers": [
+        {
+          "pc": "0x4dea90",
+          "owner": "0x4dea40"
+        },
+        {
+          "pc": "0x4deac0",
+          "owner": "0x4dea40"
+        },
+        {
+          "pc": "0x4deaf0",
+          "owner": "0x4dea40"
+        },
+        {
+          "pc": "0x4deb20",
+          "owner": "0x4dea40"
+        },
+        {
+          "pc": "0x4deb50",
+          "owner": "0x4dea40"
+        },
+        {
+          "pc": "0x4deb80",
+          "owner": "0x4dea40"
+        },
+        {
+          "pc": "0x4debb0",
+          "owner": "0x4dea40"
+        },
+        {
+          "pc": "0x4debe0",
+          "owner": "0x4dea40"
+        },
+        {
+          "pc": "0x4dec10",
+          "owner": "0x4dea40"
+        },
+        {
+          "pc": "0x4dec40",
+          "owner": "0x4dea40"
+        },
+        {
+          "pc": "0x4dec70",
+          "owner": "0x4dea40"
+        },
+        {
+          "pc": "0x4deca0",
+          "owner": "0x4dea40"
+        },
+        {
+          "pc": "0x4decd0",
+          "owner": "0x4dea40"
+        },
+        {
+          "pc": "0x4ded00",
+          "owner": "0x4dea40"
+        },
+        {
+          "pc": "0x4ded30",
+          "owner": "0x4dea40"
+        },
+        {
+          "pc": "0x4ded60",
+          "owner": "0x4dea40"
+        },
+        {
+          "pc": "0x4ded90",
+          "owner": "0x4dea40"
+        },
+        {
+          "pc": "0x4dedc0",
+          "owner": "0x4dea40"
+        },
+        {
+          "pc": "0x4dedf0",
+          "owner": "0x4dea40"
+        },
+        {
+          "pc": "0x4dee20",
+          "owner": "0x4dea40"
+        },
+        {
+          "pc": "0x4dee50",
+          "owner": "0x4dea40"
+        },
+        {
+          "pc": "0x4dee80",
+          "owner": "0x4dea40"
+        }
+      ]
+    },
+    {
+      "elf_va": "0x4e01d0",
+      "evidence": "ui_island/coast_part_assembly_native.asm",
+      "callers": [
+        {
+          "pc": "0x4def10",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4def68",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4defc0",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df018",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df074",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df0cc",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df124",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df17c",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df1d4",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df22c",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df288",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df2e0",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df338",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df390",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df3e8",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df440",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df49c",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df4f4",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df54c",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df5a4",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df5fc",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df654",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df6ac",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df708",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df760",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df7b8",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df810",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df86c",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df8d8",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df92c",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df988",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df9f4",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4dfa48",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4dfaa4",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4dfb10",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4dfb64",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4dfbc0",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4dfc2c",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4dfc80",
+          "owner": "0x4deeb0"
+        }
+      ]
+    },
+    {
+      "elf_va": "0x4e0c90",
+      "evidence": "ui_island/coast_part_assembly_native.asm",
+      "callers": [
+        {
+          "pc": "0x528cdc",
+          "owner": "0x528bf0"
+        }
+      ]
+    },
+    {
+      "elf_va": "0x4e0d60",
+      "evidence": "ui_island/coast_part_assembly_native.asm; ui_island/coast_part_instantiation_native.asm",
+      "callers": [
+        {
+          "pc": "0x160240",
+          "owner": "0x1601d0"
+        },
+        {
+          "pc": "0x160298",
+          "owner": "0x1601d0"
+        },
+        {
+          "pc": "0x1602f4",
+          "owner": "0x1601d0"
+        },
+        {
+          "pc": "0x160350",
+          "owner": "0x1601d0"
+        },
+        {
+          "pc": "0x1603ac",
+          "owner": "0x1601d0"
+        },
+        {
+          "pc": "0x160408",
+          "owner": "0x1601d0"
+        },
+        {
+          "pc": "0x160464",
+          "owner": "0x1601d0"
+        },
+        {
+          "pc": "0x1604c0",
+          "owner": "0x1601d0"
+        },
+        {
+          "pc": "0x16051c",
+          "owner": "0x1601d0"
+        },
+        {
+          "pc": "0x4dd57c",
+          "owner": "0x4dd4d0"
+        },
+        {
+          "pc": "0x551938",
+          "owner": "0x5517e0"
+        },
+        {
+          "pc": "0x565d70",
+          "owner": "0x565c90"
+        },
+        {
+          "pc": "0x10df21c",
+          "owner": "0x10df1c0"
+        },
+        {
+          "pc": "0x10df25c",
+          "owner": "0x10df1c0"
+        },
+        {
+          "pc": "0x10df29c",
+          "owner": "0x10df1c0"
+        },
+        {
+          "pc": "0x10df2dc",
+          "owner": "0x10df1c0"
+        },
+        {
+          "pc": "0x10df31c",
+          "owner": "0x10df1c0"
+        },
+        {
+          "pc": "0x10df35c",
+          "owner": "0x10df1c0"
+        },
+        {
+          "pc": "0x10df39c",
+          "owner": "0x10df1c0"
+        },
+        {
+          "pc": "0x10df3dc",
+          "owner": "0x10df1c0"
+        },
+        {
+          "pc": "0x10df41c",
+          "owner": "0x10df1c0"
+        }
+      ]
+    },
+    {
+      "elf_va": "0x4e0d80",
+      "evidence": "ui_island/coast_part_assembly_native.asm; ui_island/coast_part_instantiation_native.asm",
+      "callers": [
+        {
+          "pc": "0x4dd568",
+          "owner": "0x4dd4d0"
+        }
+      ]
+    },
+    {
+      "elf_va": "0x5026c0",
+      "decomp": "binary/analysis_decomp/5026c0.c",
+      "callers": [
+        {
+          "pc": "0x5024cc",
+          "owner": "0x502430"
+        }
+      ]
+    },
+    {
+      "elf_va": "0x5089e0",
+      "decomp": "binary/analysis_decomp/5089e0.c",
+      "callers": [
+        {
+          "pc": "0x508580",
+          "owner": "0x508560"
+        }
+      ]
+    },
+    {
+      "elf_va": "0x508bb0",
+      "decomp": "binary/analysis_decomp/508bb0.c",
+      "callers": [
+        {
+          "pc": "0x508588",
+          "owner": "0x508560"
+        }
+      ]
+    },
+    {
+      "elf_va": "0x50a8b0",
+      "decomp": "binary/analysis_decomp/50a8b0.c",
+      "callers": [
+        {
+          "pc": "0x508608",
+          "owner": "0x508560"
+        }
+      ]
+    },
+    {
+      "elf_va": "0x528bf0",
+      "decomp": "binary/analysis_decomp/528bf0.c",
+      "callers": [
+        {
+          "pc": "0x529a80",
+          "owner": "0x529910"
+        },
+        {
+          "pc": "0x529b90",
+          "owner": "0x529910"
+        },
+        {
+          "pc": "0x529ca0",
+          "owner": "0x529910"
+        },
+        {
+          "pc": "0x529db0",
+          "owner": "0x529910"
+        }
+      ]
+    },
+    {
+      "elf_va": "0x528e60",
+      "evidence": "ui_island/coast_part_assembly_native.asm; ui_island/coast_part_instantiation_native.asm",
+      "callers": [
+        {
+          "pc": "0x529e44",
+          "owner": "0x529de0"
+        }
+      ]
+    },
+    {
+      "elf_va": "0x529910",
+      "decomp": "binary/analysis_decomp/529910.c",
+      "callers": [
+        {
+          "pc": "0x5298b4",
+          "owner": "0x529860"
+        }
+      ]
+    },
+    {
+      "elf_va": "0x529de0",
+      "evidence": "ui_island/coast_part_assembly_native.asm; ui_island/coast_part_instantiation_native.asm",
+      "callers": [
+        {
+          "pc": "0x5652d0",
+          "owner": "0x5652a0"
+        }
+      ]
+    },
     {
       "elf_va": "0x54e330",
       "decomp": "binary/analysis_decomp/54e330.c",
@@ -43,42 +643,236 @@
       ]
     },
     {
-      "elf_va": "0x5089e0",
-      "decomp": "binary/analysis_decomp/5089e0.c",
+      "elf_va": "0x551bf0",
+      "evidence": "ui_island/coast_part_assembly_native.asm; ui_island/coast_part_instantiation_native.asm",
       "callers": [
         {
-          "pc": "0x508580",
-          "owner": "0x508560"
+          "pc": "0x4dc740",
+          "owner": null
+        },
+        {
+          "pc": "0x4dd5ac",
+          "owner": "0x4dd4d0"
+        },
+        {
+          "pc": "0x4de548",
+          "owner": "0x4de530"
+        },
+        {
+          "pc": "0x4de5a8",
+          "owner": "0x4de590"
+        },
+        {
+          "pc": "0x4deefc",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4def54",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4defac",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df004",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df060",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df0b8",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df110",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df168",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df1c0",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df218",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df274",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df2cc",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df324",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df37c",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df3d4",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df42c",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df488",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df4e0",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df538",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df590",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df5e8",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df640",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df698",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df6f4",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df74c",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df7a4",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df7fc",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df858",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df888",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df974",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4df9a4",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4dfa90",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4dfac0",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4dfbac",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x4dfbdc",
+          "owner": "0x4deeb0"
+        },
+        {
+          "pc": "0x10df234",
+          "owner": "0x10df1c0"
+        },
+        {
+          "pc": "0x10df274",
+          "owner": "0x10df1c0"
+        },
+        {
+          "pc": "0x10df2b4",
+          "owner": "0x10df1c0"
+        },
+        {
+          "pc": "0x10df2f4",
+          "owner": "0x10df1c0"
+        },
+        {
+          "pc": "0x10df334",
+          "owner": "0x10df1c0"
+        },
+        {
+          "pc": "0x10df374",
+          "owner": "0x10df1c0"
+        },
+        {
+          "pc": "0x10df3b4",
+          "owner": "0x10df1c0"
+        },
+        {
+          "pc": "0x10df3f4",
+          "owner": "0x10df1c0"
+        },
+        {
+          "pc": "0x10df434",
+          "owner": "0x10df1c0"
         }
       ]
     },
     {
-      "elf_va": "0x508bb0",
-      "decomp": "binary/analysis_decomp/508bb0.c",
+      "elf_va": "0x551d20",
+      "evidence": "ui_island/coast_part_assembly_native.asm; ui_island/coast_part_instantiation_native.asm",
       "callers": [
         {
-          "pc": "0x508588",
-          "owner": "0x508560"
+          "pc": "0x4dd5ec",
+          "owner": "0x4dd4d0"
         }
       ]
     },
     {
-      "elf_va": "0x50a8b0",
-      "decomp": "binary/analysis_decomp/50a8b0.c",
+      "elf_va": "0x552bb0",
+      "decomp": "binary/analysis_decomp/552bb0.c",
       "callers": [
         {
-          "pc": "0x508608",
-          "owner": "0x508560"
-        }
-      ]
-    },
-    {
-      "elf_va": "0x5026c0",
-      "decomp": "binary/analysis_decomp/5026c0.c",
-      "callers": [
+          "pc": "0x529a0c",
+          "owner": "0x529910"
+        },
         {
-          "pc": "0x5024cc",
-          "owner": "0x502430"
+          "pc": "0x529b1c",
+          "owner": "0x529910"
+        },
+        {
+          "pc": "0x529c2c",
+          "owner": "0x529910"
+        },
+        {
+          "pc": "0x529d3c",
+          "owner": "0x529910"
+        },
+        {
+          "pc": "0x566388",
+          "owner": "0x5662e0"
         }
       ]
     },
@@ -93,6 +887,16 @@
         {
           "pc": "0x558f28",
           "owner": "0x558ef0"
+        }
+      ]
+    },
+    {
+      "elf_va": "0x5662e0",
+      "decomp": "binary/analysis_decomp/5662e0.c",
+      "callers": [
+        {
+          "pc": "0xfc3b08",
+          "owner": "0xfc3b00"
         }
       ]
     },
@@ -127,70 +931,12 @@
       ]
     },
     {
-      "elf_va": "0x552bb0",
-      "decomp": "binary/analysis_decomp/552bb0.c",
+      "elf_va": "0x16436c0",
+      "decomp": "binary/analysis_decomp/16436c0.c",
       "callers": [
         {
-          "pc": "0x529a0c",
-          "owner": "0x529910"
-        },
-        {
-          "pc": "0x529b1c",
-          "owner": "0x529910"
-        },
-        {
-          "pc": "0x529c2c",
-          "owner": "0x529910"
-        },
-        {
-          "pc": "0x529d3c",
-          "owner": "0x529910"
-        },
-        {
-          "pc": "0x566388",
-          "owner": "0x5662e0"
-        }
-      ]
-    },
-    {
-      "elf_va": "0x529910",
-      "decomp": "binary/analysis_decomp/529910.c",
-      "callers": [
-        {
-          "pc": "0x5298b4",
-          "owner": "0x529860"
-        }
-      ]
-    },
-    {
-      "elf_va": "0x5662e0",
-      "decomp": "binary/analysis_decomp/5662e0.c",
-      "callers": [
-        {
-          "pc": "0xfc3b08",
-          "owner": "0xfc3b00"
-        }
-      ]
-    },
-    {
-      "elf_va": "0x528bf0",
-      "decomp": "binary/analysis_decomp/528bf0.c",
-      "callers": [
-        {
-          "pc": "0x529a80",
-          "owner": "0x529910"
-        },
-        {
-          "pc": "0x529b90",
-          "owner": "0x529910"
-        },
-        {
-          "pc": "0x529ca0",
-          "owner": "0x529910"
-        },
-        {
-          "pc": "0x529db0",
-          "owner": "0x529910"
+          "pc": "0x1054434",
+          "owner": "0x1051e50"
         }
       ]
     },
@@ -203,26 +949,47 @@
           "owner": "0x164f910"
         }
       ]
-    },
-    {
-      "elf_va": "0x16436c0",
-      "decomp": "binary/analysis_decomp/16436c0.c",
-      "callers": [
-        {
-          "pc": "0x1054434",
-          "owner": "0x1051e50"
-        }
-      ]
     }
   ],
   "observations": [
-    "0x529910 and 0x5662e0 invoke 0x54e330 then 0x552bb0 in pseudocode; register and calling convention must be confirmed in disassembly before assigning argument and return semantics.",
-    "0x529910 calls 0x528bf0, which conditionally invokes 0x558f40. This is a candidate preset-to-world chain, not yet tested end-to-end.",
-    "0x508560 calls column helpers including 0x5089e0, 0x508bb0, 0x50a8b0; likely table setup, not proven runtime placement.",
-    "Corrected prior VA offset: decompiler FUN_00652bb0 is ELF 0x552bb0, not ELF 0x652bb0. Its static pseudocode compares candidate values to 0x54e330 result, but full selection behavior is unverified."
+    "ELF disassembly confirms four repeated slots in 0x529910; each reads OutsideTemplateKind through 0x54e330, calls selector 0x552bb0 with that category and shared RNG state, then passes the selected template UID into 0x528bf0.",
+    "The 0x529910 source-row candidate mask removes the chosen row bit after each selection. Parent RNG/cache/resource setup is not yet executed end-to-end.",
+    "Selector 0x552bb0 has a separate original-instruction validation with 528 cases; this validates selector semantics, not the full island-generation parent.",
+    "0x528bf0 conditionally invokes 0x558f40; the loader cell-field transfer is statically mapped in island_terrain_loader_native.json.",
+    "0x502430 invokes ReefType getter 0x502500 (hash 0xb5a652fa) and PartsKind getter 0x5026c0 (hash 0x493eed57) for source rows. That initializer proves enum/cache population; separate coast functions map selection, grid assembly, and guarded instance placement.",
+    "0x508560 calls FieldOutsideTemplate column accessors, including TemplateKind reader 0x5089e0; its role is table accessor setup.",
+    "0x528bf0 calls 0x4de9a0, 0x4de9b0, then 0x4e0c90. The first copies the setup field at object +0xe; the grid wrapper only fills the sea ring, clears the interior, and copies the 9x8 grid when temporary header bit 0 is set.",
+    "0x4dea40 places selected FieldOutsideParts UniqueIDs in 22 fixed coast cells. Across all 36 templates, all 792 slots have nonempty candidate pools.",
+    "0x4dfeb0 filters by PartsKind, preserves source-row order, and chooses floor(draw_u32*N/2^32); the largest coast-slot pool is 7, below its 32-entry capacity.",
+    "0x4deeb0 uses 0x4e01d0 for the OutsideSea perimeter. Native predicates select ReefType-compatible variants at edges/corners; the source join confirms all 22 used ReefType classes have sea candidates.",
+    "0x4e0c90 writes packed 9x8 dimensions and 72 0x18-byte records into the template resource object; each record stores UniqueID at +8 and grid x/z at +12/+16.",
+    "The guarded update path 0x529de0 -> 0x528e60 -> 0x4dd4d0 iterates the 9x8 records, skips UID zero, resolves each other UID with 0x551bf0, and dispatches the instance factory at 0x1490f0.",
+    "0x4dd4d0 builds the local descriptor at (160*grid_x+80, 0, 160*grid_z+80). The two 160.0 values come from relocated pointers to rodata at 0x29f6120/0x29f6124; the engine base-position vector at 0x2a3e2cc has XYZ=(0,0,0).",
+    "0x551d20 checks whether the resolved row PartsKind is cache index 0x18 (OutsideSea); the boolean selects descriptor option 0 or 2, whose engine meaning is unresolved. A populated grid has 52 nonzero cells, implying 52 guarded factory dispatches, not verified successful model loads.",
+    "The decoded FieldOutsideTemplate join gives two River-labelled coast slots on all 36 rows: 12 3B_S2 rows use S0+S4, 12 3B_SW rows use W1+S3, and 12 3B_SE rows use E1+S1. This maps named outlet-piece slots, not a proven mesh/water seam to the inland River cells.",
+    "Cross-source dimensional check: the 112x96 LandMaking grid divides exactly into 16x16 source cells per 7x6 coast-part segment; at 160.0 local units per coast segment, this implies 10 units per terrain cell if axes and origins align. That grid-to-world relation remains an inference, not direct transform proof."
   ],
   "limits": [
-    "Call graph is static evidence; control flow and argument values are not validated.",
-    "No new native execution, geometry, collision, water or full loader behavior is established."
-  ]
+    "The 0x529910 parent generator, original cache bootstrap, and resource load are not executed as one native pipeline; final selected template UID is not derived without parent RNG/cache state.",
+    "The local cell-center formula and 160.0 spacing are resolved, but parent/world transform composition and per-part rotation remain unresolved.",
+    "No FieldOutsideParts PBC geometry/member was present in the supplied source manifest, so the static factory dispatch does not prove model rendering, collision creation, or runtime success.",
+    "The coast instance update is state/flag guarded. River-to-coast seam, water rendering/simulation, and runtime editing remain unproven."
+  ],
+  "field_outside_parts_cache": {
+    "table": "FieldOutsideParts",
+    "initializer": "0x502430",
+    "row_accessors": [
+      {
+        "function": "0x502500",
+        "column": "ReefType",
+        "hash": "0xb5a652fa"
+      },
+      {
+        "function": "0x5026c0",
+        "column": "PartsKind",
+        "hash": "0x493eed57"
+      }
+    ],
+    "interpretation": "Static row iteration and typed enum cache population only. Separate functions 0x4dea40-0x4e0c90 prove coast grid selection/assembly; 0x4dd4d0 proves guarded factory dispatch at (160*x+80, 0, 160*z+80). Parent/world transform, rotation, and runtime resource success remain unresolved."
+  }
 }

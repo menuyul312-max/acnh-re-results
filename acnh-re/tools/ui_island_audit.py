@@ -285,14 +285,14 @@ def main():
                 links[key] = candidates
                 counts['preset_'+key+'_matched'] += len(candidates) == 1
         bindings.append({'row': row, 'links':links,
-                         'outside_template_selection': 'unproven: numeric OutsideTemplateKind is not assumed to be a template UniqueID'})
+                         'outside_template_selection': 'OutsideTemplateKind is a category, not a template UniqueID; native category selection and all 96 candidate pools are documented in preset_template_candidate_pools.json; final UID remains RNG/cache-dependent'})
     dump(OUT/'island.json', {
         'tables': {n:{'source_id':d['source_id'],'json':f'tables_resolved/{n}.json'} for n,d in
                    [('FieldOutsideTemplate',td),('FieldOutsideParts',pd),('FieldMainFieldParam',md)]},
         'coast_templates':coast, 'parts':parts, 'preset_bindings':bindings,
         'native_terrain_reference':'relations/terrain_native.json',
         'contracts':[
-            'Slot PartsKind hash selects a candidate set; final variant selection, coordinates and assembly are unproven.',
+            'Slot PartsKind hash selects a candidate set. Native 0x4dea40/0x4dfeb0 prove per-slot selection; 9x8 assembly and guarded center-of-cell instance placement are documented in ui_island/coast_part_assembly_native.json and coast_part_instantiation_native.json.',
             'Main-field preset links are exact filename-stem matches, not proof of loader order.',
             'Structure site coordinates do not identify building types without further code evidence.',
             'ItemNameParam u64 remains packed; do not equate the full value to an item ID.',
@@ -322,9 +322,9 @@ def main():
             {'component':'UI controller definitions/user data','level':'U','evidence':'ui_island/layouts.json sections cnt1/usd1','open':'356 cnt1 sections and 2164 usd1 sections remain semantically unparsed'},
             {'component':'UI input/focus/modal/lifecycle','level':'C','evidence':'ui_island/native_candidates.json','open':'String candidates do not prove button handlers or input routing'},
             {'component':'Main terrain/event-plaza/structure/item preset joins','level':'L','evidence':'ui_island/island.json','open':'Label/VillagePreset is not proven to be a filename; structure identities and packed item bits need code proof'},
-            {'component':'Outer coast template slots and part candidates','level':'L','evidence':'ui_island/island.json','open':'Variant choice, template-kind decoding, world transforms, seams and collision'},
+            {'component':'Outer coast template slots, part candidates, sea ring and instance placement','level':'L','evidence':'ui_island/coast_part_assembly_native.json; ui_island/coast_part_instantiation_native.json; ui_island/island.json','open':'Parent RNG end-to-end, parent/world transform, per-part rotation, model/PBC loading, seams and collision'},
             {'component':'Terrain unit schema/variation/height','level':'S','evidence':'relations/terrain_native.json','open':'Runtime world-loader chain; prior native proof scope is recorded separately'},
-            {'component':'River/waterfall/ocean rendering and simulation','level':'U','evidence':'relations/terrain_native.json models','open':'Geometry, flow, foam, shoreline, crossing and runtime editing'},
+            {'component':'River/waterfall/ocean rendering and simulation','level':'U','evidence':'relations/terrain_native.json; ui_island/river_grid_topology.json; ui_island/coast_part_assembly_native.json; ui_island/coast_part_instantiation_native.json','open':'River-to-coast seam, geometry, flow, foam, shoreline, crossing and runtime editing'},
             {'component':'Island placement validation and commit','level':'U','evidence':'mechanics/continuation_frontier.json','open':'Footprints, previews, terrain edits, permissions, atomic save/rollback and runtime integration'}]})
     summary = {'schema':'acnh-ui-island/1', 'date':'2026-11-03', 'counts':dict(counts), 'errors':errors,
                'native_case_count_added':0,
@@ -332,7 +332,7 @@ def main():
                'limits':['UI input routing, handlers, focus/navigation, modal/lifecycle and text substitution remain unproven.',
                          'FLAN numeric property IDs and engine interpolation are not runtime validated.',
                          'Additional layout members (including control definitions) are inventoried, not semantically decoded.',
-                         'Coast selection/assembly, placement transactions and full river physics remain open.',
+                         'Coast parent/world transform, rotation and model loading, placement transactions and full river physics remain open.',
                          'Godot remains unchanged.']}
     dump(OUT/'summary.json', summary)
     print(json.dumps(summary, ensure_ascii=False, indent=2))
