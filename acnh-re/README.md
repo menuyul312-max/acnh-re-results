@@ -3,7 +3,7 @@
 Seluruh B_data yang tersedia sudah dibaca secara struktural. Semantik seluruh game belum terpetakan 100%; batas dan field yang belum diketahui dicatat, tanpa mengubah proyek Godot asal.
 
 - [Laporan temuan, keberhasilan, validasi, dan batas cakupan](LAPORAN_AKHIR.md).
-- [Lanjutan terbaru: resident PBC, arsip asli dan callback NPC](docs/RESIDENT_MAP_NPC_FOLLOWUP.md): 4.706 kasus tambahan; total 1.131.926 helper/blok. Ketujuh sistem tetap parsial.
+- [Lanjutan terbaru: kernel A*, extractor rute dan target NPC](docs/NPC_NAVIGATION_KERNEL.md): 2.083 kasus tambahan; total 1.134.009 helper/blok. Ketujuh sistem tetap parsial.
 - [Manifest sumber](output/manifest.json), [inventaris seluruh paket](output/source_inventory.json), [cakupan yang dapat dibaca mesin](output/coverage.json).
 - [Perubahan dari laporan sebelumnya](output/progress_since_previous.json).
 - [Katalog tabel JSON terbaru](output/schemas/catalogue.json), [katalog aset JSON](output/assets/catalogue.json), [kontrak data](docs/DATA_CONTRACT.md).

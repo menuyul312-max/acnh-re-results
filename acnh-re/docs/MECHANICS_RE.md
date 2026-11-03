@@ -104,7 +104,12 @@ Consumer posisi dan hasil animasi kini berjalan utuh pada context terkontrol;
 producer input/gravity, collision solver, pathfinding dan transaksi inventory
 masih terbuka. Frontier JSON mencatat titik lanjut dan batas setiap pembuktian.
 
-Lanjutan terbaru: [resident PBC, arsip asli dan callback NPC](RESIDENT_MAP_NPC_FOLLOWUP.md)
+Lanjutan terbaru: [kernel A*, extractor rute dan pemilihan target NPC](NPC_NAVIGATION_KERNEL.md)
+menambah 2.083 kasus menjadi **1.134.009**. Kernel dan consumer dijalankan dengan
+instruksi asli pada input yang dinyatakan; world-grid producer, async worker,
+steering dan collision penuh belum terbukti.
+
+Tahap resident: [resident PBC, arsip asli dan callback NPC](RESIDENT_MAP_NPC_FOLLOWUP.md)
 menambah 4.706 kasus menjadi **1.131.926**. Ini mencakup resident ground pada map
 rekonstruksi, registry 67 state/201 target callback, request navigasi terkontrol
 dan dukungan reader SARC. Pathfinder/solver lengkap tetap terbuka.

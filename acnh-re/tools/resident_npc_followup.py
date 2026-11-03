@@ -28,7 +28,8 @@ def main():
         coverage['mechanics_research'][name] = f'mechanics/{name}.json'
         added[name] = result['cases']; totals[category] += result['cases']
     after = before+sum(added.values())
-    assert sum(coverage['native_helper_checks'].values()) == after
+    # This phase is a historical snapshot when later native groups exist.
+    assert sum(coverage['native_helper_checks'].values()) >= after
     progress = {'native_helper_cases_before': before, 'new_native_case_groups': added,
                 'new_game_mechanics_cases': totals['mechanics'],
                 'new_archive_support_cases': totals['archive_support'],

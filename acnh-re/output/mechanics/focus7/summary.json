@@ -383,11 +383,15 @@
         "focus7/npc_ai_flow_graphs.json",
         "focus7/npc_native_state_labels.json",
         "npc_state_registry_native.json",
-        "npc_navigation_request_native.json"
+        "npc_navigation_request_native.json",
+        "npc_pathfinding_native.json",
+        "npc_route_handoff_native.json",
+        "npc_route_target_native.json",
+        "npc_navigation_kernel_map.json"
       ],
       "remaining": [
-        "Full pathfinding, obstacle avoidance and route selection; native67-state registry/201 callback targets and bounded request plumbing are verified",
-        "Active child-state handlers, scheduler priorities, social/interest decisions and all AI transitions"
+        "Live terrain/collision-to-grid production, async worker and obstacle avoidance; native A* search/costs, route extraction and lookahead are now verified on declared reconstructed contexts",
+        "Active child-state handlers, steering/movement, scheduler priorities, social/interest decisions and all AI transitions"
       ],
       "complete": false
     },
@@ -627,5 +631,11 @@
     "progress": "mechanics/resident_npc_progress.json",
     "new_native_cases": 4706,
     "native_helper_cases_total": 1131926
+  },
+  "npc_navigation_followup": {
+    "report": "../docs/NPC_NAVIGATION_KERNEL.md",
+    "progress": "mechanics/npc_navigation_progress.json",
+    "new_native_cases": 2083,
+    "native_helper_cases_total": 1134009
   }
 }

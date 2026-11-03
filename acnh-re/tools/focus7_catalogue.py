@@ -108,7 +108,7 @@ def main():
       'terrain':['terrain_native.json','terrain_collision_parameters.json'],
       'dynamic_ground':['dynamic_ground_native.json','terrain_native.json','ground_context_gate_native.json','room_floor_ground_native.json','resident_floor_map_native.json'],
       'position_checks':['proximity_native.json','terrain_native.json'],
-      'npc_navigation':['npc_activity_bindings.json','focus7/npc_ai_eventflows.json','focus7/npc_ai_flow_graphs.json','focus7/npc_native_state_labels.json','npc_state_registry_native.json','npc_navigation_request_native.json'],
+      'npc_navigation':['npc_activity_bindings.json','focus7/npc_ai_eventflows.json','focus7/npc_ai_flow_graphs.json','focus7/npc_native_state_labels.json','npc_state_registry_native.json','npc_navigation_request_native.json','npc_pathfinding_native.json','npc_route_handoff_native.json','npc_route_target_native.json','npc_navigation_kernel_map.json'],
       'items_tools_crafting':['crafting_materials_native.json','inventory_requirements_native.json','inventory_cache_native.json','focus7/item_tool_event_calls.json']}
     remaining={
       'physics_collision':['Geometric penetration response, friction and moving-body solver','Complete collision mask meanings'],
@@ -116,7 +116,7 @@ def main():
       'terrain':['Raw 14-byte preset -> 52-byte runtime construction','Live terraform update and all building/placement restrictions'],
       'dynamic_ground':['Original PBC map contents and first48 bytes of each52-byte record; selection, transforms and consumers now execute on reconstructed resident maps','All dynamic override loader and reachability conditions; filesystem/async resource lifecycle'],
       'position_checks':['Full candidate collection, actor/type filtering and object registry','Complete placement queries and callers'],
-      'npc_navigation':['Full pathfinding, obstacle avoidance and route selection; native67-state registry/201 callback targets and bounded request plumbing are verified','Active child-state handlers, scheduler priorities, social/interest decisions and all AI transitions'],
+      'npc_navigation':['Live terrain/collision-to-grid production, async worker and obstacle avoidance; native A* search/costs, route extraction and lookahead are now verified on declared reconstructed contexts','Active child-state handlers, steering/movement, scheduler priorities, social/interest decisions and all AI transitions'],
       'items_tools_crafting':['Save-wrapper acquisition and full parent cold-cache path; A/B/C producers on supplied-layout records and the requirement checker are verified','Atomic ingredient consumption, recipe unlocks, tool durability and all use/remake transactions']}
     domains={k:{'tables':[table_refs[n]for n in dict.fromkeys(v)if n in table_refs],
         'missing_requested_table_names':[n for n in v if n not in table_refs],

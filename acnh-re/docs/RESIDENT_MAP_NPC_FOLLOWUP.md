@@ -1,5 +1,9 @@
 # Lanjutan: resident PBC, arsip asli dan callback NPC
 
+Snapshot ini dilanjutkan oleh [kernel navigasi NPC](NPC_NAVIGATION_KERNEL.md):
+A* dan consumer rute kini dijalankan pada grid rekonstruksi; pembentukan grid
+dari world, worker async dan gerakan penuh tetap terbuka.
+
 Tahap setelah commit `73a79a0` menambahkan **4.706 kasus native tanpa mismatch**:
 2.881 kasus mekanik/blok dan 1.825 pendukung arsip. Total helper/blok menjadi
 **1.131.926**, dari 1.127.220. Pemeriksaan struktural BYML tetap 2.546.185 dan

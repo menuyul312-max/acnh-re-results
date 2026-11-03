@@ -5,10 +5,11 @@ ground dinamis, pemeriksaan posisi, NPC/navigasi, serta item/alat/crafting.
 Model dan sound memakai katalog sebagai referensi. Godot tidak dikerjakan.
 Seluruh mekanik tujuh sistem belum dinyatakan selesai.
 
-Lanjutan terbaru: [resident PBC, arsip asli dan callback NPC](RESIDENT_MAP_NPC_FOLLOWUP.md).
-Ada **4.706 kasus tambahan**: 2.881 mekanik/blok dan 1.825 pendukung arsip,
-sehingga total helper/blok menjadi **1.131.926**. [Tahap sebelumnya](ACTIVE_CONTEXT_FOLLOWUP.md)
-menambah 3.926 kasus. Status terbaru per jalur dijelaskan pada laporan lanjutan
+Lanjutan terbaru: [kernel navigasi NPC](NPC_NAVIGATION_KERNEL.md).
+Ada **2.083 kasus tambahan** pada A*, biaya/heuristik, pemindahan rute dan
+pemilihan target, sehingga total helper/blok menjadi **1.134.009**.
+[Tahap sebelumnya](RESIDENT_MAP_NPC_FOLLOWUP.md) menambah 4.706 kasus.
+Status terbaru per jalur dijelaskan pada laporan lanjutan
 dan `output/mechanics/continuation_frontier.json`; angka tahap lama di bawah
 tetap menjadi riwayat pembuktian.
 
@@ -151,6 +152,13 @@ badan handler berjalan. Tambahan 333 kasus menguji request/status navigasi,
 polling dengan child tidak aktif dan blok batas grid/escape. Ini belum menjadi
 graf transisi lengkap atau jumlah seluruh state NPC dalam executable.
 
+Kernel A* asli kini dieksekusi dalam 619 pencarian pada grid yang disiapkan,
+dibandingkan dengan Dijkstra untuk reachability, legalitas langkah dan biaya.
+Callback biaya/heuristik, extractor/list pool, batas 256 node, target/lookahead
+dan bitset eligibility juga diuji. Sepuluh rantai native menghubungkan hasil
+pencarian ke consumer tanpa mengganti path di tengah. Producer terrain/collision
+menjadi grid, worker async, steering dan seluruh scheduler tetap terbuka.
+
 ## Item, alat dan crafting
 
 Getter bahan 0xedac50 kini dijalankan lengkap pada seluruh **552 resep x enam
@@ -195,7 +203,7 @@ ditetapkan untuk A/B/C.
 | Terrain | Loader runtime dan pembaruan setelah edit, seluruh syarat placement |
 | Ground dinamis | PBC asli/field opaque, loader/async/lifetime dan override selain RoomFloor |
 | Posisi | Kandidat spatial query, registry actor dan seluruh filter/type |
-| NPC/navigasi | Scheduler, route/pathfinder, obstacle avoidance dan transisi AI |
+| NPC/navigasi | World ke grid, worker async, steering/avoidance, scheduler dan transisi AI |
 | Item/alat/crafting | Akses record save, transaksi bahan, unlock dan durability |
 
 Tahap pemetaan awal di dokumen ini menambah **6.235 kasus native**, terpisah
@@ -204,6 +212,9 @@ berikutnya menambah 6.828 menjadi 1.123.294. Tahap context terisi menambah 3.926
 menjadi 1.127.220, termasuk 504 pendukung SDK. Tahap resident/NPC menambah 4.706
 menjadi **1.131.926**, termasuk 1.825 pendukung arsip. Pemeriksaan BYML tetap
 dihitung terpisah. Angka validasi bukan persentase penyelesaian tujuh sistem.
+
+Tahap kernel navigasi menambah 2.083 menjadi **1.134.009**. Seluruh tambahan
+adalah kasus mekanik/blok; tidak ada tambahan tes pendukung SDK/arsip.
 
 ## Berkas utama dan reproduksi
 
@@ -235,6 +246,11 @@ dihitung terpisah. Angka validasi bukan persentase penyelesaian tujuh sistem.
 - output/mechanics/npc_navigation_request_native.json
 - output/mechanics/resident_npc_progress.json
 - output/mechanics/active_context_progress.json
+- output/mechanics/npc_pathfinding_native.json
+- output/mechanics/npc_route_handoff_native.json
+- output/mechanics/npc_route_target_native.json
+- output/mechanics/npc_navigation_kernel_map.json
+- output/mechanics/npc_navigation_progress.json
 
 Jalankan tool berikut dengan input ELF, indeks dan output baseline yang sama:
 
@@ -249,3 +265,5 @@ python tools/focus7_catalogue.py
 
 Tool berjalan pada direktori RE, tidak membuka editor Godot. ZIP lama tetap
 snapshot historis; pembaruan tahap ini berada langsung di repo.
+
+Reproduksi fase terbaru mengikuti [urutan tool kernel navigasi](NPC_NAVIGATION_KERNEL.md#reproduksi).

@@ -1,0 +1,236 @@
+{
+  "source_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+  "addresses": "ELF VA; Ghidra display base is ELF+0x100000",
+  "functions": [
+    {
+      "role": "initialize_grid",
+      "va": "0x15bc0c0",
+      "pseudocode": "binary/analysis_decomp/15bc0c0.c",
+      "indexed_function_size": 308,
+      "proof_json": "mechanics/npc_pathfinding_native.json",
+      "boundary": "Named entry/stop addresses describe bounded blocks; full-function coverage applies only to the declared contexts in the proof JSON."
+    },
+    {
+      "role": "astar_search",
+      "va": "0x15bd700",
+      "pseudocode": "binary/analysis_decomp/15bd700.c",
+      "indexed_function_size": 812,
+      "proof_json": "mechanics/npc_pathfinding_native.json",
+      "boundary": "Named entry/stop addresses describe bounded blocks; full-function coverage applies only to the declared contexts in the proof JSON."
+    },
+    {
+      "role": "expand_neighbors",
+      "va": "0x15bda30",
+      "pseudocode": "binary/analysis_decomp/15bda30.c",
+      "indexed_function_size": 956,
+      "proof_json": "mechanics/npc_pathfinding_native.json",
+      "boundary": "Named entry/stop addresses describe bounded blocks; full-function coverage applies only to the declared contexts in the proof JSON."
+    },
+    {
+      "role": "edge_cost",
+      "va": "0x15c38a0",
+      "pseudocode": null,
+      "indexed_function_size": 220,
+      "proof_json": "mechanics/npc_pathfinding_native.json",
+      "boundary": "Named entry/stop addresses describe bounded blocks; full-function coverage applies only to the declared contexts in the proof JSON."
+    },
+    {
+      "role": "base_edge_distance",
+      "va": "0x15c15a0",
+      "pseudocode": "binary/analysis_decomp/15c15a0.c",
+      "indexed_function_size": 100,
+      "proof_json": "mechanics/npc_pathfinding_native.json",
+      "boundary": "Named entry/stop addresses describe bounded blocks; full-function coverage applies only to the declared contexts in the proof JSON."
+    },
+    {
+      "role": "heuristic",
+      "va": "0x15c1610",
+      "pseudocode": null,
+      "indexed_function_size": 68,
+      "proof_json": "mechanics/npc_pathfinding_native.json",
+      "boundary": "Named entry/stop addresses describe bounded blocks; full-function coverage applies only to the declared contexts in the proof JSON."
+    },
+    {
+      "role": "worker_bounded_entry",
+      "va": "0x15c34f0",
+      "pseudocode": null,
+      "indexed_function_size": null,
+      "proof_json": "mechanics/npc_pathfinding_native.json",
+      "boundary": "Named entry/stop addresses describe bounded blocks; full-function coverage applies only to the declared contexts in the proof JSON."
+    },
+    {
+      "role": "worker_stop_before",
+      "va": "0x15c3534",
+      "pseudocode": null,
+      "indexed_function_size": null,
+      "proof_json": "mechanics/npc_pathfinding_native.json",
+      "boundary": "Named entry/stop addresses describe bounded blocks; full-function coverage applies only to the declared contexts in the proof JSON."
+    },
+    {
+      "role": "extractor",
+      "va": "0x15c3570",
+      "pseudocode": "binary/analysis_decomp/15c3570.c",
+      "indexed_function_size": 480,
+      "proof_json": "mechanics/npc_route_handoff_native.json",
+      "boundary": "Named entry/stop addresses describe bounded blocks; full-function coverage applies only to the declared contexts in the proof JSON."
+    },
+    {
+      "role": "unlink_node",
+      "va": "0x1967c60",
+      "pseudocode": "binary/analysis_decomp/1967c60.c",
+      "indexed_function_size": 40,
+      "proof_json": "mechanics/npc_route_handoff_native.json",
+      "boundary": "Named entry/stop addresses describe bounded blocks; full-function coverage applies only to the declared contexts in the proof JSON."
+    },
+    {
+      "role": "append_node",
+      "va": "0x1967c40",
+      "pseudocode": "binary/analysis_decomp/1967c40.c",
+      "indexed_function_size": 24,
+      "proof_json": "mechanics/npc_route_handoff_native.json",
+      "boundary": "Named entry/stop addresses describe bounded blocks; full-function coverage applies only to the declared contexts in the proof JSON."
+    },
+    {
+      "role": "coordinate_destructor",
+      "va": "0x25730",
+      "pseudocode": null,
+      "indexed_function_size": 4,
+      "proof_json": "mechanics/npc_route_handoff_native.json",
+      "boundary": "Named entry/stop addresses describe bounded blocks; full-function coverage applies only to the declared contexts in the proof JSON."
+    },
+    {
+      "role": "parent_block_entry",
+      "va": "0xcb5518",
+      "pseudocode": null,
+      "indexed_function_size": null,
+      "proof_json": "mechanics/npc_route_handoff_native.json",
+      "boundary": "Named entry/stop addresses describe bounded blocks; full-function coverage applies only to the declared contexts in the proof JSON."
+    },
+    {
+      "role": "parent_handoff_stop_before",
+      "va": "0xc862b0",
+      "pseudocode": "binary/analysis_decomp/c862b0.c",
+      "indexed_function_size": 396,
+      "proof_json": "mechanics/npc_route_handoff_native.json",
+      "boundary": "Named entry/stop addresses describe bounded blocks; full-function coverage applies only to the declared contexts in the proof JSON."
+    },
+    {
+      "role": "astar",
+      "va": "0x15bd700",
+      "pseudocode": "binary/analysis_decomp/15bd700.c",
+      "indexed_function_size": 812,
+      "proof_json": "mechanics/npc_route_handoff_native.json",
+      "boundary": "Named entry/stop addresses describe bounded blocks; full-function coverage applies only to the declared contexts in the proof JSON."
+    },
+    {
+      "role": "default_target_selector",
+      "va": "0xc86650",
+      "pseudocode": "binary/analysis_decomp/c86650.c",
+      "indexed_function_size": 800,
+      "proof_json": "mechanics/npc_route_target_native.json",
+      "boundary": "Named entry/stop addresses describe bounded blocks; full-function coverage applies only to the declared contexts in the proof JSON."
+    },
+    {
+      "role": "route_lookahead",
+      "va": "0xc86970",
+      "pseudocode": "binary/analysis_decomp/c86970.c",
+      "indexed_function_size": 488,
+      "proof_json": "mechanics/npc_route_target_native.json",
+      "boundary": "Named entry/stop addresses describe bounded blocks; full-function coverage applies only to the declared contexts in the proof JSON."
+    },
+    {
+      "role": "bitset_test",
+      "va": "0x166ab50",
+      "pseudocode": "binary/analysis_decomp/166ab50.c",
+      "indexed_function_size": 32,
+      "proof_json": "mechanics/npc_route_target_native.json",
+      "boundary": "Named entry/stop addresses describe bounded blocks; full-function coverage applies only to the declared contexts in the proof JSON."
+    },
+    {
+      "role": "grid_to_world",
+      "va": "0x52b4c0",
+      "pseudocode": "binary/analysis_decomp/52b4c0.c",
+      "indexed_function_size": 44,
+      "proof_json": "mechanics/npc_route_target_native.json",
+      "boundary": "Named entry/stop addresses describe bounded blocks; full-function coverage applies only to the declared contexts in the proof JSON."
+    },
+    {
+      "role": "controller_setup_entry",
+      "va": "0xc862b0",
+      "pseudocode": "binary/analysis_decomp/c862b0.c",
+      "indexed_function_size": 396,
+      "proof_json": "mechanics/npc_route_target_native.json",
+      "boundary": "Named entry/stop addresses describe bounded blocks; full-function coverage applies only to the declared contexts in the proof JSON."
+    },
+    {
+      "role": "setup_stop_before",
+      "va": "0xc87710",
+      "pseudocode": "binary/analysis_decomp/c87710.c",
+      "indexed_function_size": 1488,
+      "proof_json": "mechanics/npc_route_target_native.json",
+      "boundary": "Named entry/stop addresses describe bounded blocks; full-function coverage applies only to the declared contexts in the proof JSON."
+    }
+  ],
+  "graph_layout": {
+    "grid_origin_u16_xz": "0x0",
+    "grid_width_s32": "0xc",
+    "grid_height_s32": "0x10",
+    "node_count_u64": "0x18",
+    "node_array": "0x20",
+    "sorted_open_head": "0x28",
+    "path_head": "0x38",
+    "node_stride": 40,
+    "node_fields": {
+      "u16_xz": "0x0",
+      "direction_mask": "0x4",
+      "flags": "0x5",
+      "search_state": "0x6",
+      "g_cost_f32": "0x8",
+      "f_score_f32": "0xc",
+      "parent": "0x10",
+      "open_or_path_next": "0x18"
+    }
+  },
+  "route_list_layout": {
+    "sentinel": "list+0",
+    "size_s32": "list+0x10",
+    "free_head": "list+0x18",
+    "capacity_s32": "list+0x28",
+    "node_vtable": "node+0",
+    "node_xz_u32": "node+8",
+    "node_link": "node+0x10"
+  },
+  "layers": [
+    {
+      "layer": "A* kernel",
+      "proof": "mechanics/npc_pathfinding_native.json",
+      "status": "Verified on prepared cell states, costs and original callbacks"
+    },
+    {
+      "layer": "Result extraction/list reuse",
+      "proof": "mechanics/npc_route_handoff_native.json",
+      "status": "Complete extractor; parent stops before child initialization"
+    },
+    {
+      "layer": "Route target/lookahead",
+      "proof": "mechanics/npc_route_target_native.json",
+      "status": "Complete matched-context selectors; bounded controller setup"
+    },
+    {
+      "layer": "World/async producer",
+      "status": "Unexecuted: live terrain/collision-to-grid, task lifecycle and result publication"
+    },
+    {
+      "layer": "Movement/avoidance",
+      "status": "Unexecuted: active state decisions, steering and collision integration"
+    }
+  ],
+  "data_references": {
+    "source_parameter_bindings": "mechanics/npc_activity_bindings.json",
+    "native_states": "mechanics/npc_state_registry_native.json",
+    "eventflow_graphs": "mechanics/focus7/npc_ai_flow_graphs.json",
+    "focus_tables": "mechanics/focus7/table_field_links.json#/tables"
+  },
+  "parameter_binding_limit": "Prepared kernel weights and eligibility bitsets are not assigned to BCSV/BYML fields without a proven producer.",
+  "complete": false
+}

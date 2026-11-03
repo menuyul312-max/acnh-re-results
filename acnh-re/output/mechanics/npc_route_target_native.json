@@ -1,0 +1,266 @@
+{
+  "cases": 562,
+  "groups": {
+    "full_default_target_selector": 56,
+    "full_route_lookahead_unfiltered": 98,
+    "full_route_lookahead_bitset_filter": 392,
+    "controller_setup_blocks": 12,
+    "native_search_extraction_target_chain": 4
+  },
+  "mismatches": [],
+  "samples": [
+    {
+      "selector": "0xc86650",
+      "route_nodes": 9,
+      "explicit_target": [
+        400.0,
+        7.5,
+        600.0
+      ],
+      "selected_world_xyz": [
+        400.0,
+        7.5,
+        600.0
+      ]
+    },
+    {
+      "selector": "0xc86650",
+      "route_nodes": 10,
+      "explicit_target": [
+        400.0,
+        7.5,
+        600.0
+      ],
+      "selected_world_xyz": [
+        70.0,
+        0.0,
+        25.0
+      ]
+    },
+    {
+      "selector": "0xc86650",
+      "route_nodes": 11,
+      "explicit_target": [
+        400.0,
+        7.5,
+        600.0
+      ],
+      "selected_world_xyz": [
+        70.0,
+        0.0,
+        25.0
+      ]
+    },
+    {
+      "selector": "0xc86970",
+      "route_nodes": 11,
+      "budget": 10,
+      "eligibility": "unfiltered",
+      "selected_world_xyz": [
+        70.0,
+        0.0,
+        25.0
+      ]
+    },
+    {
+      "selector": "0xc86970",
+      "route_nodes": 11,
+      "budget": 10,
+      "eligibility": "all",
+      "selected_world_xyz": [
+        70.0,
+        0.0,
+        25.0
+      ]
+    },
+    {
+      "selector": "0xc86970",
+      "route_nodes": 11,
+      "budget": 10,
+      "eligibility": "none",
+      "selected_world_xyz": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "selector": "0xc86970",
+      "route_nodes": 11,
+      "budget": 10,
+      "eligibility": "odd",
+      "selected_world_xyz": [
+        75.0,
+        0.0,
+        25.0
+      ]
+    },
+    {
+      "selector": "0xc86970",
+      "route_nodes": 11,
+      "budget": 10,
+      "eligibility": "last",
+      "selected_world_xyz": [
+        75.0,
+        0.0,
+        25.0
+      ]
+    }
+  ],
+  "setup_samples": [
+    {
+      "route_nodes": 11,
+      "explicit_parameter_argument": false,
+      "target_enabled": false,
+      "effective_first_five_floats": [
+        16.0,
+        25.0,
+        -1.0,
+        -1.0,
+        -1.0
+      ]
+    },
+    {
+      "route_nodes": 11,
+      "explicit_parameter_argument": true,
+      "target_enabled": false,
+      "effective_first_five_floats": [
+        0.5,
+        10.0,
+        -1.0,
+        -1.0,
+        -1.0
+      ]
+    },
+    {
+      "route_nodes": 11,
+      "explicit_parameter_argument": false,
+      "target_enabled": true,
+      "effective_first_five_floats": [
+        16.0,
+        25.0,
+        -1.0,
+        -1.0,
+        -1.0
+      ]
+    },
+    {
+      "route_nodes": 11,
+      "explicit_parameter_argument": true,
+      "target_enabled": true,
+      "effective_first_five_floats": [
+        0.5,
+        10.0,
+        -1.0,
+        -1.0,
+        -1.0
+      ]
+    }
+  ],
+  "native_pipeline_samples": [
+    {
+      "start": [
+        0,
+        0
+      ],
+      "goal": [
+        7,
+        7
+      ],
+      "native_path_steps": 7,
+      "lookahead_budget": 10,
+      "selected_world_xyz": [
+        35.0,
+        0.0,
+        35.0
+      ]
+    },
+    {
+      "start": [
+        0,
+        0
+      ],
+      "goal": [
+        31,
+        31
+      ],
+      "native_path_steps": 31,
+      "lookahead_budget": 10,
+      "selected_world_xyz": [
+        50.0,
+        0.0,
+        50.0
+      ]
+    },
+    {
+      "start": [
+        31,
+        31
+      ],
+      "goal": [
+        0,
+        0
+      ],
+      "native_path_steps": 31,
+      "lookahead_budget": 10,
+      "selected_world_xyz": [
+        105.0,
+        0.0,
+        105.0
+      ]
+    },
+    {
+      "start": [
+        2,
+        2
+      ],
+      "goal": [
+        2,
+        2
+      ],
+      "native_path_steps": 0,
+      "lookahead_budget": 10,
+      "selected_world_xyz": [
+        10.0,
+        0.0,
+        10.0
+      ]
+    }
+  ],
+  "eligibility_patterns_tested": {
+    "unfiltered": 98,
+    "all": 98,
+    "none": 98,
+    "odd": 98,
+    "last": 98
+  },
+  "native_functions": {
+    "default_target_selector": "0xc86650",
+    "route_lookahead": "0xc86970",
+    "bitset_test": "0x166ab50",
+    "grid_to_world": "0x52b4c0",
+    "controller_setup_entry": "0xc862b0",
+    "setup_stop_before": "0xc87710"
+  },
+  "rules": [
+    "For matched target-reference context,0xc86650 returns explicit target if byte+0x121 is set. Otherwise it selects the10th route node; a shorter exhausted route uses the nonzero explicit endpoint or the last converted node.",
+    "Route coordinates map to X/Z*5.0; Y stays at the native zero-vector value on route-node conversion. An explicit endpoint preserves its Y.",
+    "0xc86970 unfiltered mode selects max(1,budget)-th node. Filtered mode returns the first eligible node at or after that position; the budget counts visited nodes, including ineligible ones.",
+    "Eligibility mode uses a bounded grid coordinate check and a real native bitset lookup. Its live-world bit meaning is not assigned here.",
+    "Selection updates the iterator but does not unlink route nodes. On exhaustion, an explicit nonzero endpoint takes precedence over the last eligible converted node.",
+    "Controller setup copies32 parameter bytes when provided; effective first five float defaults on the null-argument path are16,25,-1,-1,-1; list/target and flags are set before calling0xc87710."
+  ],
+  "scope": "Complete original target/lookahead functions on matched-reference routes and prepared eligibility grids, plus a bounded controller setup block and four native search/extraction/lookahead chains.",
+  "limits": [
+    "Other actor-reference resolution branches in0xc86650 are not executed.",
+    "Eligibility mask generation from terrain/collision is not run; this does not prove obstacle avoidance, line of sight or a steering solver.",
+    "Controller setup stops before0xc87710; active state decisions, steering and position integration remain unproven.",
+    "Parameter copy/default values are instruction-derived; all eight parameter meanings, units and reachable gameplay values are not assigned."
+  ],
+  "source_reference": [
+    "mechanics/npc_pathfinding_native.json",
+    "mechanics/npc_route_handoff_native.json"
+  ],
+  "dependencies_stubbed": [],
+  "elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74"
+}
