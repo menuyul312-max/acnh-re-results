@@ -4,6 +4,9 @@ Paket hasil reverse engineering untuk menjadi referensi konversi ke Godot. Proye
 
 ## Fokus terbaru: UI dan penataan pulau
 
+Lanjutan native: [selector template pulau](acnh-re/docs/ISLAND_TEMPLATE_SELECTOR_NATIVE.md), **528 kasus**, instruksi asli tanpa stub pada registry/cache rekonstruksi. Filter kategori, bitset ID dan pemilihan RNG teruji; loader lengkap, perakitan pantai dan air tetap parsial.
+
+
 [Laporan UI/pulau](acnh-re/docs/UI_ISLAND_MAPPING.md) · [Ringkasan JSON](acnh-re/output/ui_island/summary.json) · [Cakupan per komponen](acnh-re/output/ui_island/component_coverage.json).
 
 523 layout dan 10.882 pane, 2.095 animasi UI dengan 16.162 track/92.038 keyframe, 36 template pantai/792 slot/136 part, serta 96 bundel preset terrain–plaza–struktur–item kini tersedia sebagai JSON. Semua keyframe diverifikasi kembali terhadap byte sumber. Pemetaan ini struktural: handler UI, controller, perakitan pantai, penempatan dan perilaku air belum terbukti lengkap. Tahap ini menambah 0 kasus native; Godot tidak diubah. File rinci tersedia langsung di repo, tanpa ZIP baru.

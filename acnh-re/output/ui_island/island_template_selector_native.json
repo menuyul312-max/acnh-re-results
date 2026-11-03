@@ -1,0 +1,10983 @@
+{
+  "source_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+  "function": "0x552bb0",
+  "scope": "Full original selector with original 36-row BCSV and reconstructed registry/typed-cache fixtures.",
+  "cases": 528,
+  "mismatches": [],
+  "dependencies_stubbed": [],
+  "enum_static_evidence": {
+    "literal_va": "0x2933de2",
+    "literal": "3B_S2,3B_SE,3B_SW,",
+    "order": [
+      "3B_S2",
+      "3B_SE",
+      "3B_SW"
+    ],
+    "enum_initializer": "0x50ea00",
+    "hash_to_index_initializer": "0x50dff0",
+    "contract": "Order comes from static code and CRC32 labels; cache is reconstructed, original initialization not executed."
+  },
+  "fixture_contract": "First seven scenarios retain original source IDs; last four use synthetic IDs for upper words, >=128 rejection and duplicate collapse.",
+  "verified": [
+    "Filter uses existing u16 category cache indexed by native row index; values >2 become 0.",
+    "Eligible source UniqueID values populate a 128-bit bitset; duplicate IDs collapse.",
+    "Selection uses floor(next_u32 * popcount / 2^32) as rank among ascending set bits.",
+    "Empty eligible set returns 0 without consuming RNG; nonempty consumes one draw."
+  ],
+  "limits": [
+    "Enum order is supported by static initialization and original CRC32 labels; actual cache initialization remains unexecuted.",
+    "No proof of live registry allocation, resource loading, transforms, collision or water behavior."
+  ],
+  "fixtures": [
+    {
+      "fixture": 0,
+      "requested_kind": 0,
+      "eligible_ids": [
+        16,
+        19,
+        20,
+        23,
+        26,
+        29,
+        32,
+        35,
+        38,
+        41,
+        44,
+        47
+      ],
+      "rng_before": [
+        398340369,
+        1631775357,
+        415393687,
+        1541804686
+      ],
+      "result": 38
+    },
+    {
+      "fixture": 0,
+      "requested_kind": 0,
+      "eligible_ids": [
+        16,
+        19,
+        20,
+        23,
+        26,
+        29,
+        32,
+        35,
+        38,
+        41,
+        44,
+        47
+      ],
+      "rng_before": [
+        3639960595,
+        1477278577,
+        2592983555,
+        1136108454
+      ],
+      "result": 20
+    },
+    {
+      "fixture": 0,
+      "requested_kind": 0,
+      "eligible_ids": [
+        16,
+        19,
+        20,
+        23,
+        26,
+        29,
+        32,
+        35,
+        38,
+        41,
+        44,
+        47
+      ],
+      "rng_before": [
+        3466589567,
+        186618211,
+        3134174160,
+        1973214822
+      ],
+      "result": 23
+    },
+    {
+      "fixture": 0,
+      "requested_kind": 0,
+      "eligible_ids": [
+        16,
+        19,
+        20,
+        23,
+        26,
+        29,
+        32,
+        35,
+        38,
+        41,
+        44,
+        47
+      ],
+      "rng_before": [
+        2303082117,
+        536124280,
+        4179500364,
+        3961228449
+      ],
+      "result": 23
+    },
+    {
+      "fixture": 0,
+      "requested_kind": 0,
+      "eligible_ids": [
+        16,
+        19,
+        20,
+        23,
+        26,
+        29,
+        32,
+        35,
+        38,
+        41,
+        44,
+        47
+      ],
+      "rng_before": [
+        1625792787,
+        338444264,
+        2370996465,
+        1259191105
+      ],
+      "result": 19
+    },
+    {
+      "fixture": 0,
+      "requested_kind": 0,
+      "eligible_ids": [
+        16,
+        19,
+        20,
+        23,
+        26,
+        29,
+        32,
+        35,
+        38,
+        41,
+        44,
+        47
+      ],
+      "rng_before": [
+        3562265906,
+        2699987374,
+        2656522106,
+        3802986287
+      ],
+      "result": 35
+    },
+    {
+      "fixture": 0,
+      "requested_kind": 0,
+      "eligible_ids": [
+        16,
+        19,
+        20,
+        23,
+        26,
+        29,
+        32,
+        35,
+        38,
+        41,
+        44,
+        47
+      ],
+      "rng_before": [
+        3701002945,
+        1553210608,
+        2479708607,
+        825873196
+      ],
+      "result": 20
+    },
+    {
+      "fixture": 0,
+      "requested_kind": 0,
+      "eligible_ids": [
+        16,
+        19,
+        20,
+        23,
+        26,
+        29,
+        32,
+        35,
+        38,
+        41,
+        44,
+        47
+      ],
+      "rng_before": [
+        3026113008,
+        298737106,
+        196814233,
+        2840104345
+      ],
+      "result": 47
+    },
+    {
+      "fixture": 0,
+      "requested_kind": 0,
+      "eligible_ids": [
+        16,
+        19,
+        20,
+        23,
+        26,
+        29,
+        32,
+        35,
+        38,
+        41,
+        44,
+        47
+      ],
+      "rng_before": [
+        978815630,
+        3320303242,
+        1242911821,
+        4231494220
+      ],
+      "result": 29
+    },
+    {
+      "fixture": 0,
+      "requested_kind": 0,
+      "eligible_ids": [
+        16,
+        19,
+        20,
+        23,
+        26,
+        29,
+        32,
+        35,
+        38,
+        41,
+        44,
+        47
+      ],
+      "rng_before": [
+        342703921,
+        3673561638,
+        999829240,
+        3721519026
+      ],
+      "result": 35
+    },
+    {
+      "fixture": 0,
+      "requested_kind": 0,
+      "eligible_ids": [
+        16,
+        19,
+        20,
+        23,
+        26,
+        29,
+        32,
+        35,
+        38,
+        41,
+        44,
+        47
+      ],
+      "rng_before": [
+        433797840,
+        1632629719,
+        1193887545,
+        1947382419
+      ],
+      "result": 38
+    },
+    {
+      "fixture": 0,
+      "requested_kind": 0,
+      "eligible_ids": [
+        16,
+        19,
+        20,
+        23,
+        26,
+        29,
+        32,
+        35,
+        38,
+        41,
+        44,
+        47
+      ],
+      "rng_before": [
+        2730243887,
+        3582477022,
+        1566942273,
+        698594025
+      ],
+      "result": 29
+    },
+    {
+      "fixture": 0,
+      "requested_kind": 1,
+      "eligible_ids": [
+        15,
+        17,
+        21,
+        25,
+        27,
+        30,
+        33,
+        36,
+        39,
+        42,
+        45,
+        48
+      ],
+      "rng_before": [
+        1589915144,
+        1525876051,
+        899825838,
+        2878380452
+      ],
+      "result": 42
+    },
+    {
+      "fixture": 0,
+      "requested_kind": 1,
+      "eligible_ids": [
+        15,
+        17,
+        21,
+        25,
+        27,
+        30,
+        33,
+        36,
+        39,
+        42,
+        45,
+        48
+      ],
+      "rng_before": [
+        1146660997,
+        3014295294,
+        4022900809,
+        2935814872
+      ],
+      "result": 21
+    },
+    {
+      "fixture": 0,
+      "requested_kind": 1,
+      "eligible_ids": [
+        15,
+        17,
+        21,
+        25,
+        27,
+        30,
+        33,
+        36,
+        39,
+        42,
+        45,
+        48
+      ],
+      "rng_before": [
+        2783290795,
+        306671447,
+        2616197747,
+        2727210979
+      ],
+      "result": 21
+    },
+    {
+      "fixture": 0,
+      "requested_kind": 1,
+      "eligible_ids": [
+        15,
+        17,
+        21,
+        25,
+        27,
+        30,
+        33,
+        36,
+        39,
+        42,
+        45,
+        48
+      ],
+      "rng_before": [
+        735034881,
+        2294113287,
+        3131575764,
+        1051454923
+      ],
+      "result": 27
+    },
+    {
+      "fixture": 0,
+      "requested_kind": 1,
+      "eligible_ids": [
+        15,
+        17,
+        21,
+        25,
+        27,
+        30,
+        33,
+        36,
+        39,
+        42,
+        45,
+        48
+      ],
+      "rng_before": [
+        701808367,
+        1985392498,
+        1629748727,
+        1159417075
+      ],
+      "result": 42
+    },
+    {
+      "fixture": 0,
+      "requested_kind": 1,
+      "eligible_ids": [
+        15,
+        17,
+        21,
+        25,
+        27,
+        30,
+        33,
+        36,
+        39,
+        42,
+        45,
+        48
+      ],
+      "rng_before": [
+        4249970406,
+        3974524834,
+        2748778024,
+        2955633092
+      ],
+      "result": 42
+    },
+    {
+      "fixture": 0,
+      "requested_kind": 1,
+      "eligible_ids": [
+        15,
+        17,
+        21,
+        25,
+        27,
+        30,
+        33,
+        36,
+        39,
+        42,
+        45,
+        48
+      ],
+      "rng_before": [
+        2392080953,
+        943239974,
+        2940395823,
+        1392783743
+      ],
+      "result": 30
+    },
+    {
+      "fixture": 0,
+      "requested_kind": 1,
+      "eligible_ids": [
+        15,
+        17,
+        21,
+        25,
+        27,
+        30,
+        33,
+        36,
+        39,
+        42,
+        45,
+        48
+      ],
+      "rng_before": [
+        3620021413,
+        3299881676,
+        3332894265,
+        240251661
+      ],
+      "result": 48
+    },
+    {
+      "fixture": 0,
+      "requested_kind": 1,
+      "eligible_ids": [
+        15,
+        17,
+        21,
+        25,
+        27,
+        30,
+        33,
+        36,
+        39,
+        42,
+        45,
+        48
+      ],
+      "rng_before": [
+        983753977,
+        3529615275,
+        137869475,
+        3457645390
+      ],
+      "result": 45
+    },
+    {
+      "fixture": 0,
+      "requested_kind": 1,
+      "eligible_ids": [
+        15,
+        17,
+        21,
+        25,
+        27,
+        30,
+        33,
+        36,
+        39,
+        42,
+        45,
+        48
+      ],
+      "rng_before": [
+        1354860540,
+        1722989659,
+        1149938334,
+        284277889
+      ],
+      "result": 25
+    },
+    {
+      "fixture": 0,
+      "requested_kind": 1,
+      "eligible_ids": [
+        15,
+        17,
+        21,
+        25,
+        27,
+        30,
+        33,
+        36,
+        39,
+        42,
+        45,
+        48
+      ],
+      "rng_before": [
+        906164396,
+        3921889760,
+        4049766372,
+        2436019774
+      ],
+      "result": 39
+    },
+    {
+      "fixture": 0,
+      "requested_kind": 1,
+      "eligible_ids": [
+        15,
+        17,
+        21,
+        25,
+        27,
+        30,
+        33,
+        36,
+        39,
+        42,
+        45,
+        48
+      ],
+      "rng_before": [
+        3763970286,
+        3083418319,
+        1351531223,
+        913224047
+      ],
+      "result": 17
+    },
+    {
+      "fixture": 0,
+      "requested_kind": 2,
+      "eligible_ids": [
+        14,
+        18,
+        22,
+        24,
+        28,
+        31,
+        34,
+        37,
+        40,
+        43,
+        46,
+        49
+      ],
+      "rng_before": [
+        2815087637,
+        2144181937,
+        1699226064,
+        3799685197
+      ],
+      "result": 14
+    },
+    {
+      "fixture": 0,
+      "requested_kind": 2,
+      "eligible_ids": [
+        14,
+        18,
+        22,
+        24,
+        28,
+        31,
+        34,
+        37,
+        40,
+        43,
+        46,
+        49
+      ],
+      "rng_before": [
+        3927951973,
+        2761027762,
+        1970753705,
+        613628803
+      ],
+      "result": 22
+    },
+    {
+      "fixture": 0,
+      "requested_kind": 2,
+      "eligible_ids": [
+        14,
+        18,
+        22,
+        24,
+        28,
+        31,
+        34,
+        37,
+        40,
+        43,
+        46,
+        49
+      ],
+      "rng_before": [
+        1137651678,
+        599707677,
+        1059257080,
+        3199703321
+      ],
+      "result": 34
+    },
+    {
+      "fixture": 0,
+      "requested_kind": 2,
+      "eligible_ids": [
+        14,
+        18,
+        22,
+        24,
+        28,
+        31,
+        34,
+        37,
+        40,
+        43,
+        46,
+        49
+      ],
+      "rng_before": [
+        2411057787,
+        2314889832,
+        1128466620,
+        3208399878
+      ],
+      "result": 37
+    },
+    {
+      "fixture": 0,
+      "requested_kind": 2,
+      "eligible_ids": [
+        14,
+        18,
+        22,
+        24,
+        28,
+        31,
+        34,
+        37,
+        40,
+        43,
+        46,
+        49
+      ],
+      "rng_before": [
+        2510777721,
+        1840109255,
+        3856119925,
+        2506254832
+      ],
+      "result": 22
+    },
+    {
+      "fixture": 0,
+      "requested_kind": 2,
+      "eligible_ids": [
+        14,
+        18,
+        22,
+        24,
+        28,
+        31,
+        34,
+        37,
+        40,
+        43,
+        46,
+        49
+      ],
+      "rng_before": [
+        1715412119,
+        1554762903,
+        941975480,
+        4283481572
+      ],
+      "result": 28
+    },
+    {
+      "fixture": 0,
+      "requested_kind": 2,
+      "eligible_ids": [
+        14,
+        18,
+        22,
+        24,
+        28,
+        31,
+        34,
+        37,
+        40,
+        43,
+        46,
+        49
+      ],
+      "rng_before": [
+        4284391408,
+        594130308,
+        2188398760,
+        2119634399
+      ],
+      "result": 31
+    },
+    {
+      "fixture": 0,
+      "requested_kind": 2,
+      "eligible_ids": [
+        14,
+        18,
+        22,
+        24,
+        28,
+        31,
+        34,
+        37,
+        40,
+        43,
+        46,
+        49
+      ],
+      "rng_before": [
+        390452952,
+        3246059658,
+        202363285,
+        3698408854
+      ],
+      "result": 46
+    },
+    {
+      "fixture": 0,
+      "requested_kind": 2,
+      "eligible_ids": [
+        14,
+        18,
+        22,
+        24,
+        28,
+        31,
+        34,
+        37,
+        40,
+        43,
+        46,
+        49
+      ],
+      "rng_before": [
+        470939445,
+        656448479,
+        2694860228,
+        687117441
+      ],
+      "result": 40
+    },
+    {
+      "fixture": 0,
+      "requested_kind": 2,
+      "eligible_ids": [
+        14,
+        18,
+        22,
+        24,
+        28,
+        31,
+        34,
+        37,
+        40,
+        43,
+        46,
+        49
+      ],
+      "rng_before": [
+        3401954956,
+        2922644564,
+        1813163240,
+        2561557300
+      ],
+      "result": 31
+    },
+    {
+      "fixture": 0,
+      "requested_kind": 2,
+      "eligible_ids": [
+        14,
+        18,
+        22,
+        24,
+        28,
+        31,
+        34,
+        37,
+        40,
+        43,
+        46,
+        49
+      ],
+      "rng_before": [
+        272849424,
+        1652563013,
+        1639042338,
+        2559321289
+      ],
+      "result": 34
+    },
+    {
+      "fixture": 0,
+      "requested_kind": 2,
+      "eligible_ids": [
+        14,
+        18,
+        22,
+        24,
+        28,
+        31,
+        34,
+        37,
+        40,
+        43,
+        46,
+        49
+      ],
+      "rng_before": [
+        4278308761,
+        2010258946,
+        2272528809,
+        1079815404
+      ],
+      "result": 40
+    },
+    {
+      "fixture": 0,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        4170749881,
+        2376087131,
+        3697020653,
+        4047709743
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 0,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        49310608,
+        2921794983,
+        3095476665,
+        491995979
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 0,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        2927923735,
+        3800137469,
+        2306270004,
+        3224995600
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 0,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        1146005448,
+        3301106403,
+        2752909971,
+        1461042543
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 0,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        479112937,
+        1260573448,
+        1867302554,
+        679282378
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 0,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        1948728483,
+        13938521,
+        4096608204,
+        3101361778
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 0,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        3761759725,
+        3091004939,
+        1131247330,
+        4174227595
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 0,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        2150000991,
+        3272602734,
+        767303988,
+        2180476188
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 0,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        3919706735,
+        457031004,
+        3738848790,
+        2685643886
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 0,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        1281810600,
+        3614942327,
+        2744267175,
+        2180395476
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 0,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        2615507143,
+        854316681,
+        656439677,
+        1605947756
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 0,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        3274958945,
+        693847829,
+        2316615266,
+        4095250239
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 1,
+      "requested_kind": 0,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        3344175247,
+        3961824197,
+        2277851678,
+        3944899549
+      ],
+      "result": 33
+    },
+    {
+      "fixture": 1,
+      "requested_kind": 0,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        2456273,
+        2572447412,
+        1392239675,
+        2098545541
+      ],
+      "result": 26
+    },
+    {
+      "fixture": 1,
+      "requested_kind": 0,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        83651970,
+        480468219,
+        3990448177,
+        1558990517
+      ],
+      "result": 40
+    },
+    {
+      "fixture": 1,
+      "requested_kind": 0,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        3774081712,
+        4231923083,
+        3571976249,
+        3465071405
+      ],
+      "result": 38
+    },
+    {
+      "fixture": 1,
+      "requested_kind": 0,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        1320763135,
+        1028439863,
+        248786714,
+        1034535593
+      ],
+      "result": 40
+    },
+    {
+      "fixture": 1,
+      "requested_kind": 0,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        3771022520,
+        2436779490,
+        4067116918,
+        338258951
+      ],
+      "result": 45
+    },
+    {
+      "fixture": 1,
+      "requested_kind": 0,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        367878761,
+        3143519183,
+        2087313121,
+        3504793184
+      ],
+      "result": 38
+    },
+    {
+      "fixture": 1,
+      "requested_kind": 0,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        297265480,
+        4200411392,
+        3266761413,
+        2287955558
+      ],
+      "result": 19
+    },
+    {
+      "fixture": 1,
+      "requested_kind": 0,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        3289233844,
+        540137296,
+        551437149,
+        2833608204
+      ],
+      "result": 14
+    },
+    {
+      "fixture": 1,
+      "requested_kind": 0,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        2041322270,
+        4066684108,
+        2361388464,
+        709214891
+      ],
+      "result": 21
+    },
+    {
+      "fixture": 1,
+      "requested_kind": 0,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        1138409539,
+        2266341635,
+        3747071386,
+        2605301030
+      ],
+      "result": 15
+    },
+    {
+      "fixture": 1,
+      "requested_kind": 0,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        1817363615,
+        4141907136,
+        909666337,
+        3989653086
+      ],
+      "result": 17
+    },
+    {
+      "fixture": 1,
+      "requested_kind": 1,
+      "eligible_ids": [],
+      "rng_before": [
+        2316259067,
+        3243839315,
+        3135030058,
+        2962958940
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 1,
+      "requested_kind": 1,
+      "eligible_ids": [],
+      "rng_before": [
+        863937247,
+        3062092518,
+        1338811290,
+        1713658874
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 1,
+      "requested_kind": 1,
+      "eligible_ids": [],
+      "rng_before": [
+        4274133950,
+        2884873529,
+        2791205006,
+        1603828849
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 1,
+      "requested_kind": 1,
+      "eligible_ids": [],
+      "rng_before": [
+        1881625505,
+        3863813067,
+        2222971316,
+        1939118223
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 1,
+      "requested_kind": 1,
+      "eligible_ids": [],
+      "rng_before": [
+        519709079,
+        1064746525,
+        965067727,
+        274989148
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 1,
+      "requested_kind": 1,
+      "eligible_ids": [],
+      "rng_before": [
+        1452066459,
+        90341465,
+        2526766690,
+        2379074819
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 1,
+      "requested_kind": 1,
+      "eligible_ids": [],
+      "rng_before": [
+        988335251,
+        2527331058,
+        945826486,
+        30884438
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 1,
+      "requested_kind": 1,
+      "eligible_ids": [],
+      "rng_before": [
+        304912982,
+        3040153710,
+        2710566582,
+        252860896
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 1,
+      "requested_kind": 1,
+      "eligible_ids": [],
+      "rng_before": [
+        983297492,
+        289482182,
+        3888749350,
+        134917627
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 1,
+      "requested_kind": 1,
+      "eligible_ids": [],
+      "rng_before": [
+        3692105921,
+        1419179580,
+        304330003,
+        2208283728
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 1,
+      "requested_kind": 1,
+      "eligible_ids": [],
+      "rng_before": [
+        1022222125,
+        1196050747,
+        2873237671,
+        2084839399
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 1,
+      "requested_kind": 1,
+      "eligible_ids": [],
+      "rng_before": [
+        920140090,
+        2315992115,
+        568275055,
+        3106775595
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 1,
+      "requested_kind": 2,
+      "eligible_ids": [],
+      "rng_before": [
+        4018003062,
+        3789806435,
+        2452611418,
+        2474810179
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 1,
+      "requested_kind": 2,
+      "eligible_ids": [],
+      "rng_before": [
+        2030106617,
+        1043665192,
+        3369914783,
+        2031403296
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 1,
+      "requested_kind": 2,
+      "eligible_ids": [],
+      "rng_before": [
+        3468173213,
+        1748309234,
+        817804383,
+        405126228
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 1,
+      "requested_kind": 2,
+      "eligible_ids": [],
+      "rng_before": [
+        416314667,
+        2830309370,
+        1851350739,
+        1521696479
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 1,
+      "requested_kind": 2,
+      "eligible_ids": [],
+      "rng_before": [
+        1819256337,
+        1765670844,
+        2005855667,
+        3710150572
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 1,
+      "requested_kind": 2,
+      "eligible_ids": [],
+      "rng_before": [
+        3131356954,
+        232663462,
+        2892078691,
+        2806569935
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 1,
+      "requested_kind": 2,
+      "eligible_ids": [],
+      "rng_before": [
+        4226957392,
+        2775320897,
+        422701550,
+        260329455
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 1,
+      "requested_kind": 2,
+      "eligible_ids": [],
+      "rng_before": [
+        1729245242,
+        3127653547,
+        1457293575,
+        3438518641
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 1,
+      "requested_kind": 2,
+      "eligible_ids": [],
+      "rng_before": [
+        3700855390,
+        469306919,
+        1067970820,
+        822873088
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 1,
+      "requested_kind": 2,
+      "eligible_ids": [],
+      "rng_before": [
+        816941039,
+        2303329764,
+        1926780541,
+        602078388
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 1,
+      "requested_kind": 2,
+      "eligible_ids": [],
+      "rng_before": [
+        1811967841,
+        788075126,
+        1196342297,
+        1986972437
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 1,
+      "requested_kind": 2,
+      "eligible_ids": [],
+      "rng_before": [
+        1072910527,
+        3755888575,
+        3965395580,
+        323775634
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 1,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        1903232052,
+        3470429115,
+        3699466215,
+        3676349806
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 1,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        2363629219,
+        420514789,
+        217275224,
+        2800940984
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 1,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        4291885525,
+        2321807489,
+        3590711152,
+        63384488
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 1,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        4161807235,
+        400560567,
+        3978715881,
+        3236539184
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 1,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        3645120421,
+        1015242176,
+        714300770,
+        1745535098
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 1,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        2085812759,
+        2067418686,
+        918037633,
+        3713645169
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 1,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        1722454917,
+        3875962612,
+        251837136,
+        707111048
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 1,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        1627677155,
+        9257255,
+        4231869256,
+        1676848676
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 1,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        1139038460,
+        3979364815,
+        3367557574,
+        3372104909
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 1,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        1954246074,
+        1225136114,
+        1816803306,
+        2991837720
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 1,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        4111647939,
+        3137496438,
+        4275307901,
+        3364512142
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 1,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        2387006772,
+        2842715617,
+        3085540042,
+        2090237817
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 2,
+      "requested_kind": 0,
+      "eligible_ids": [],
+      "rng_before": [
+        664847319,
+        815605132,
+        1274350418,
+        935018220
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 2,
+      "requested_kind": 0,
+      "eligible_ids": [],
+      "rng_before": [
+        4160575046,
+        251183830,
+        2487560384,
+        3159967109
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 2,
+      "requested_kind": 0,
+      "eligible_ids": [],
+      "rng_before": [
+        2328710672,
+        261810763,
+        3212530587,
+        1346922426
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 2,
+      "requested_kind": 0,
+      "eligible_ids": [],
+      "rng_before": [
+        245522987,
+        215359682,
+        2509023674,
+        2047791082
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 2,
+      "requested_kind": 0,
+      "eligible_ids": [],
+      "rng_before": [
+        2159725924,
+        3948737639,
+        3662404042,
+        2281169403
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 2,
+      "requested_kind": 0,
+      "eligible_ids": [],
+      "rng_before": [
+        676168421,
+        244295904,
+        4126513954,
+        2181106786
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 2,
+      "requested_kind": 0,
+      "eligible_ids": [],
+      "rng_before": [
+        344076115,
+        3656488400,
+        798112150,
+        294296873
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 2,
+      "requested_kind": 0,
+      "eligible_ids": [],
+      "rng_before": [
+        2555656321,
+        291889680,
+        2900015820,
+        3701485292
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 2,
+      "requested_kind": 0,
+      "eligible_ids": [],
+      "rng_before": [
+        1010193046,
+        1734202799,
+        514909066,
+        4044124555
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 2,
+      "requested_kind": 0,
+      "eligible_ids": [],
+      "rng_before": [
+        3823754905,
+        2446737272,
+        1057486868,
+        2486438403
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 2,
+      "requested_kind": 0,
+      "eligible_ids": [],
+      "rng_before": [
+        2553440342,
+        170689150,
+        2660223333,
+        352116052
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 2,
+      "requested_kind": 0,
+      "eligible_ids": [],
+      "rng_before": [
+        1800557283,
+        2823396242,
+        2506853388,
+        2427631155
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 2,
+      "requested_kind": 1,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        2245334677,
+        1358798143,
+        4014532821,
+        1119980130
+      ],
+      "result": 29
+    },
+    {
+      "fixture": 2,
+      "requested_kind": 1,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        877286584,
+        2876451163,
+        3076020365,
+        1349409434
+      ],
+      "result": 21
+    },
+    {
+      "fixture": 2,
+      "requested_kind": 1,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        1025148381,
+        1140805649,
+        1699887270,
+        562117925
+      ],
+      "result": 42
+    },
+    {
+      "fixture": 2,
+      "requested_kind": 1,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        2884887548,
+        2772404776,
+        1288477634,
+        1963764597
+      ],
+      "result": 23
+    },
+    {
+      "fixture": 2,
+      "requested_kind": 1,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        1357970698,
+        3990103355,
+        3229233394,
+        4018948187
+      ],
+      "result": 21
+    },
+    {
+      "fixture": 2,
+      "requested_kind": 1,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        311570307,
+        40009587,
+        1968321319,
+        2667858669
+      ],
+      "result": 17
+    },
+    {
+      "fixture": 2,
+      "requested_kind": 1,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        4288329154,
+        2418039268,
+        4278201677,
+        429416213
+      ],
+      "result": 21
+    },
+    {
+      "fixture": 2,
+      "requested_kind": 1,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        314652384,
+        2309122187,
+        915490795,
+        2172758220
+      ],
+      "result": 35
+    },
+    {
+      "fixture": 2,
+      "requested_kind": 1,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        1139027119,
+        568896616,
+        4008318526,
+        1498981529
+      ],
+      "result": 22
+    },
+    {
+      "fixture": 2,
+      "requested_kind": 1,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        3783282817,
+        295456419,
+        3776436931,
+        1049193572
+      ],
+      "result": 45
+    },
+    {
+      "fixture": 2,
+      "requested_kind": 1,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        1587106770,
+        1224011538,
+        677517496,
+        1881988384
+      ],
+      "result": 46
+    },
+    {
+      "fixture": 2,
+      "requested_kind": 1,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        3580907314,
+        2333103372,
+        3021680963,
+        1299301222
+      ],
+      "result": 17
+    },
+    {
+      "fixture": 2,
+      "requested_kind": 2,
+      "eligible_ids": [],
+      "rng_before": [
+        2627135980,
+        4225617788,
+        4240133721,
+        3466467857
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 2,
+      "requested_kind": 2,
+      "eligible_ids": [],
+      "rng_before": [
+        2808806886,
+        2271782991,
+        33599984,
+        2868450609
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 2,
+      "requested_kind": 2,
+      "eligible_ids": [],
+      "rng_before": [
+        3509435546,
+        2381998678,
+        1285821930,
+        4001861726
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 2,
+      "requested_kind": 2,
+      "eligible_ids": [],
+      "rng_before": [
+        2849232839,
+        444900634,
+        4032673646,
+        3771526597
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 2,
+      "requested_kind": 2,
+      "eligible_ids": [],
+      "rng_before": [
+        576775951,
+        1135872495,
+        495762348,
+        3821286999
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 2,
+      "requested_kind": 2,
+      "eligible_ids": [],
+      "rng_before": [
+        459716009,
+        3188655387,
+        2376077463,
+        667643690
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 2,
+      "requested_kind": 2,
+      "eligible_ids": [],
+      "rng_before": [
+        1169726681,
+        1210133979,
+        2597724331,
+        904647469
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 2,
+      "requested_kind": 2,
+      "eligible_ids": [],
+      "rng_before": [
+        3082120871,
+        1472659626,
+        874443787,
+        2952777682
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 2,
+      "requested_kind": 2,
+      "eligible_ids": [],
+      "rng_before": [
+        2724031273,
+        3663232650,
+        1133802214,
+        2170715377
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 2,
+      "requested_kind": 2,
+      "eligible_ids": [],
+      "rng_before": [
+        2098228320,
+        1078557553,
+        3888390599,
+        3900513400
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 2,
+      "requested_kind": 2,
+      "eligible_ids": [],
+      "rng_before": [
+        3633987776,
+        218179599,
+        396418889,
+        2724230947
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 2,
+      "requested_kind": 2,
+      "eligible_ids": [],
+      "rng_before": [
+        1819244083,
+        3562022940,
+        1188332531,
+        189351213
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 2,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        15228622,
+        1432614422,
+        3311931853,
+        561866144
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 2,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        2736381108,
+        4208200162,
+        1125089309,
+        693989311
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 2,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        3183562527,
+        1897669065,
+        2369449369,
+        3030818620
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 2,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        1836901321,
+        2409076656,
+        41531046,
+        480494664
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 2,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        323169889,
+        4058962851,
+        3792913072,
+        2967906665
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 2,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        3882343658,
+        640183291,
+        2343292475,
+        154739678
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 2,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        3584558315,
+        1585770584,
+        2501859536,
+        2373077218
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 2,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        636057975,
+        1845919895,
+        547374338,
+        179653598
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 2,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        1323959527,
+        1566166314,
+        3861096073,
+        4007582471
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 2,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        3419319262,
+        4175551143,
+        3696689457,
+        171347175
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 2,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        3860851904,
+        1536778950,
+        902271852,
+        2929454134
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 2,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        1071722055,
+        2864457210,
+        441495235,
+        1519038154
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 3,
+      "requested_kind": 0,
+      "eligible_ids": [],
+      "rng_before": [
+        3350573756,
+        2404681399,
+        3797329628,
+        3756862531
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 3,
+      "requested_kind": 0,
+      "eligible_ids": [],
+      "rng_before": [
+        1745377599,
+        4182598148,
+        2665720874,
+        3218981849
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 3,
+      "requested_kind": 0,
+      "eligible_ids": [],
+      "rng_before": [
+        663801533,
+        3976125337,
+        3993808565,
+        1016779084
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 3,
+      "requested_kind": 0,
+      "eligible_ids": [],
+      "rng_before": [
+        3713453204,
+        697939765,
+        4192772969,
+        3435488617
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 3,
+      "requested_kind": 0,
+      "eligible_ids": [],
+      "rng_before": [
+        3482238042,
+        760434128,
+        3785653776,
+        1770791023
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 3,
+      "requested_kind": 0,
+      "eligible_ids": [],
+      "rng_before": [
+        106456634,
+        770348179,
+        3163520297,
+        3970642689
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 3,
+      "requested_kind": 0,
+      "eligible_ids": [],
+      "rng_before": [
+        1426725702,
+        3360324392,
+        3997823785,
+        1768294570
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 3,
+      "requested_kind": 0,
+      "eligible_ids": [],
+      "rng_before": [
+        3445573666,
+        2877229210,
+        3711126727,
+        3157048077
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 3,
+      "requested_kind": 0,
+      "eligible_ids": [],
+      "rng_before": [
+        3482141802,
+        1065870178,
+        1145921803,
+        683749521
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 3,
+      "requested_kind": 0,
+      "eligible_ids": [],
+      "rng_before": [
+        3381747775,
+        3011966884,
+        464267175,
+        1643004186
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 3,
+      "requested_kind": 0,
+      "eligible_ids": [],
+      "rng_before": [
+        3745927824,
+        166320906,
+        3687629943,
+        2021598245
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 3,
+      "requested_kind": 0,
+      "eligible_ids": [],
+      "rng_before": [
+        955345537,
+        857158768,
+        3507212752,
+        3944720882
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 3,
+      "requested_kind": 1,
+      "eligible_ids": [],
+      "rng_before": [
+        1976987348,
+        1501771491,
+        1310784794,
+        3524176919
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 3,
+      "requested_kind": 1,
+      "eligible_ids": [],
+      "rng_before": [
+        3415982886,
+        3742303947,
+        977515194,
+        957449367
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 3,
+      "requested_kind": 1,
+      "eligible_ids": [],
+      "rng_before": [
+        101637979,
+        2834820954,
+        829486135,
+        1711398352
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 3,
+      "requested_kind": 1,
+      "eligible_ids": [],
+      "rng_before": [
+        1409874348,
+        1196591018,
+        3712367625,
+        298159856
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 3,
+      "requested_kind": 1,
+      "eligible_ids": [],
+      "rng_before": [
+        4152757072,
+        3321412630,
+        1198832728,
+        1508161137
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 3,
+      "requested_kind": 1,
+      "eligible_ids": [],
+      "rng_before": [
+        2755143093,
+        2187880715,
+        1716605598,
+        2918508077
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 3,
+      "requested_kind": 1,
+      "eligible_ids": [],
+      "rng_before": [
+        4214005797,
+        3623497101,
+        2303029031,
+        1422277848
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 3,
+      "requested_kind": 1,
+      "eligible_ids": [],
+      "rng_before": [
+        4033992825,
+        118543408,
+        495389030,
+        3766851291
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 3,
+      "requested_kind": 1,
+      "eligible_ids": [],
+      "rng_before": [
+        4167838882,
+        1121910732,
+        766942939,
+        2493613917
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 3,
+      "requested_kind": 1,
+      "eligible_ids": [],
+      "rng_before": [
+        4134053399,
+        4224317562,
+        1140169349,
+        164313410
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 3,
+      "requested_kind": 1,
+      "eligible_ids": [],
+      "rng_before": [
+        465585404,
+        2562254028,
+        1866437132,
+        1484714820
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 3,
+      "requested_kind": 1,
+      "eligible_ids": [],
+      "rng_before": [
+        3129077209,
+        3377683299,
+        1347233823,
+        1874297457
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 3,
+      "requested_kind": 2,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        2603647189,
+        4227260783,
+        2196545325,
+        496694873
+      ],
+      "result": 14
+    },
+    {
+      "fixture": 3,
+      "requested_kind": 2,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        1654401763,
+        3863343401,
+        2476426797,
+        816382125
+      ],
+      "result": 39
+    },
+    {
+      "fixture": 3,
+      "requested_kind": 2,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        1094024844,
+        190638698,
+        3044209616,
+        1872852789
+      ],
+      "result": 32
+    },
+    {
+      "fixture": 3,
+      "requested_kind": 2,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        7263971,
+        2233040884,
+        3975315062,
+        3463937792
+      ],
+      "result": 39
+    },
+    {
+      "fixture": 3,
+      "requested_kind": 2,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        2312633708,
+        2950028965,
+        3089928308,
+        4038399339
+      ],
+      "result": 41
+    },
+    {
+      "fixture": 3,
+      "requested_kind": 2,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        3186651306,
+        3165552769,
+        2880327491,
+        846259450
+      ],
+      "result": 15
+    },
+    {
+      "fixture": 3,
+      "requested_kind": 2,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        1564319318,
+        1852408227,
+        300535210,
+        4075384877
+      ],
+      "result": 23
+    },
+    {
+      "fixture": 3,
+      "requested_kind": 2,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        2852879124,
+        3954680709,
+        1418198351,
+        2676432103
+      ],
+      "result": 29
+    },
+    {
+      "fixture": 3,
+      "requested_kind": 2,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        1348257414,
+        2849227494,
+        3642197907,
+        535261654
+      ],
+      "result": 37
+    },
+    {
+      "fixture": 3,
+      "requested_kind": 2,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        3091320992,
+        3865671731,
+        1289874320,
+        2178074590
+      ],
+      "result": 21
+    },
+    {
+      "fixture": 3,
+      "requested_kind": 2,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        1328367510,
+        2864283209,
+        1754034197,
+        1400944900
+      ],
+      "result": 30
+    },
+    {
+      "fixture": 3,
+      "requested_kind": 2,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        1728296502,
+        2994487334,
+        1269829408,
+        2381183483
+      ],
+      "result": 48
+    },
+    {
+      "fixture": 3,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        546696950,
+        823946934,
+        1805803262,
+        2855850145
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 3,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        4038831207,
+        1628416575,
+        2909058412,
+        3213213454
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 3,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        3877520294,
+        747441732,
+        2643616431,
+        2444288473
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 3,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        1292569882,
+        1744079573,
+        2353372386,
+        3580822352
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 3,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        1743499,
+        1305132983,
+        1232285036,
+        902727745
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 3,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        1846355528,
+        3374808475,
+        2491015654,
+        2605591588
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 3,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        2811939242,
+        1384049914,
+        1997109065,
+        1897456484
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 3,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        1899061865,
+        2901796894,
+        917840538,
+        2195475598
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 3,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        2032319170,
+        3409067573,
+        3870542148,
+        4122447047
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 3,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        3418900313,
+        3160930353,
+        728818981,
+        2829742424
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 3,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        364194056,
+        1218853328,
+        2213849513,
+        2851230518
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 3,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        2718460279,
+        2659704908,
+        1439622619,
+        401094954
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 4,
+      "requested_kind": 0,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        3515101988,
+        4088807393,
+        3226113732,
+        1008752943
+      ],
+      "result": 42
+    },
+    {
+      "fixture": 4,
+      "requested_kind": 0,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        2889635392,
+        1333241445,
+        964824319,
+        3464161270
+      ],
+      "result": 32
+    },
+    {
+      "fixture": 4,
+      "requested_kind": 0,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        855256552,
+        632880459,
+        104906255,
+        198486416
+      ],
+      "result": 46
+    },
+    {
+      "fixture": 4,
+      "requested_kind": 0,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        1051590706,
+        4225973028,
+        2040695043,
+        2625401719
+      ],
+      "result": 43
+    },
+    {
+      "fixture": 4,
+      "requested_kind": 0,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        3649595613,
+        3300636585,
+        312794864,
+        1955997540
+      ],
+      "result": 47
+    },
+    {
+      "fixture": 4,
+      "requested_kind": 0,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        1780010572,
+        3805929053,
+        2704821724,
+        2472487690
+      ],
+      "result": 22
+    },
+    {
+      "fixture": 4,
+      "requested_kind": 0,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        835092972,
+        3085272193,
+        2990818727,
+        1649174966
+      ],
+      "result": 28
+    },
+    {
+      "fixture": 4,
+      "requested_kind": 0,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        2123333781,
+        1716495971,
+        1047905204,
+        633814084
+      ],
+      "result": 19
+    },
+    {
+      "fixture": 4,
+      "requested_kind": 0,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        2817747689,
+        2953315788,
+        23814791,
+        3833944737
+      ],
+      "result": 44
+    },
+    {
+      "fixture": 4,
+      "requested_kind": 0,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        3225367864,
+        3695564089,
+        3307323181,
+        3803044105
+      ],
+      "result": 44
+    },
+    {
+      "fixture": 4,
+      "requested_kind": 0,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        457788949,
+        3343290201,
+        1825989011,
+        939915527
+      ],
+      "result": 28
+    },
+    {
+      "fixture": 4,
+      "requested_kind": 0,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        755427535,
+        3453625530,
+        4114432816,
+        2988918316
+      ],
+      "result": 37
+    },
+    {
+      "fixture": 4,
+      "requested_kind": 1,
+      "eligible_ids": [],
+      "rng_before": [
+        2224611603,
+        1995226582,
+        215686308,
+        2394039673
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 4,
+      "requested_kind": 1,
+      "eligible_ids": [],
+      "rng_before": [
+        1070298438,
+        3940503685,
+        3643576871,
+        521231222
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 4,
+      "requested_kind": 1,
+      "eligible_ids": [],
+      "rng_before": [
+        1960488639,
+        572687073,
+        3442058095,
+        1995627518
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 4,
+      "requested_kind": 1,
+      "eligible_ids": [],
+      "rng_before": [
+        2867224513,
+        2281194061,
+        4242965764,
+        2400565848
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 4,
+      "requested_kind": 1,
+      "eligible_ids": [],
+      "rng_before": [
+        2557448229,
+        1362784338,
+        4080389027,
+        3243774098
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 4,
+      "requested_kind": 1,
+      "eligible_ids": [],
+      "rng_before": [
+        3828645201,
+        1900838388,
+        2631321682,
+        3500426290
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 4,
+      "requested_kind": 1,
+      "eligible_ids": [],
+      "rng_before": [
+        3089258120,
+        3831197998,
+        2168005699,
+        1832837596
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 4,
+      "requested_kind": 1,
+      "eligible_ids": [],
+      "rng_before": [
+        3567267411,
+        3894911417,
+        2353092123,
+        1915184358
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 4,
+      "requested_kind": 1,
+      "eligible_ids": [],
+      "rng_before": [
+        3853479481,
+        683577992,
+        3193975799,
+        3700092464
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 4,
+      "requested_kind": 1,
+      "eligible_ids": [],
+      "rng_before": [
+        2038711176,
+        1933034905,
+        1113219231,
+        3228856718
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 4,
+      "requested_kind": 1,
+      "eligible_ids": [],
+      "rng_before": [
+        1061886576,
+        3607183629,
+        2738735023,
+        1191043170
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 4,
+      "requested_kind": 1,
+      "eligible_ids": [],
+      "rng_before": [
+        3289144721,
+        3340087993,
+        2238965651,
+        2081328344
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 4,
+      "requested_kind": 2,
+      "eligible_ids": [],
+      "rng_before": [
+        2691864041,
+        1027553177,
+        1179387055,
+        1889238423
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 4,
+      "requested_kind": 2,
+      "eligible_ids": [],
+      "rng_before": [
+        332788471,
+        3064651867,
+        1227193073,
+        1007142260
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 4,
+      "requested_kind": 2,
+      "eligible_ids": [],
+      "rng_before": [
+        1167007513,
+        1442454200,
+        1373142116,
+        3835521053
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 4,
+      "requested_kind": 2,
+      "eligible_ids": [],
+      "rng_before": [
+        2319936135,
+        346078411,
+        594312071,
+        647812758
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 4,
+      "requested_kind": 2,
+      "eligible_ids": [],
+      "rng_before": [
+        993260504,
+        1645124051,
+        2980491761,
+        656293602
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 4,
+      "requested_kind": 2,
+      "eligible_ids": [],
+      "rng_before": [
+        3034047118,
+        918920620,
+        275860817,
+        1781844052
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 4,
+      "requested_kind": 2,
+      "eligible_ids": [],
+      "rng_before": [
+        1750625978,
+        1421124738,
+        2330497115,
+        2001129658
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 4,
+      "requested_kind": 2,
+      "eligible_ids": [],
+      "rng_before": [
+        1785736751,
+        267429212,
+        888346940,
+        3577240334
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 4,
+      "requested_kind": 2,
+      "eligible_ids": [],
+      "rng_before": [
+        1804502687,
+        1672790155,
+        3886251649,
+        3306247679
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 4,
+      "requested_kind": 2,
+      "eligible_ids": [],
+      "rng_before": [
+        2508601974,
+        4063305495,
+        2987248494,
+        83889094
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 4,
+      "requested_kind": 2,
+      "eligible_ids": [],
+      "rng_before": [
+        3679636056,
+        3782391589,
+        3288203651,
+        2472571231
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 4,
+      "requested_kind": 2,
+      "eligible_ids": [],
+      "rng_before": [
+        1633724084,
+        2048612358,
+        25323460,
+        4049044592
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 4,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        1510792572,
+        1282531582,
+        3236151037,
+        1674979897
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 4,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        3665531029,
+        3829571259,
+        4094952113,
+        3589427315
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 4,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        1799682701,
+        2311639723,
+        3210555359,
+        3155229266
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 4,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        2345620385,
+        3435407619,
+        2590950133,
+        3856070374
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 4,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        947206476,
+        2096929657,
+        942408767,
+        1172248246
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 4,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        1871901278,
+        2085816511,
+        124660666,
+        1670128972
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 4,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        1443665390,
+        2872790327,
+        2916892179,
+        3427995190
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 4,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        1736526879,
+        3110335359,
+        708861714,
+        3609944328
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 4,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        2007425404,
+        3949401194,
+        548157187,
+        4212168831
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 4,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        2672573305,
+        2294043548,
+        115820025,
+        3895229819
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 4,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        1692304102,
+        2542160120,
+        2424045110,
+        2847562279
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 4,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        116402431,
+        360551585,
+        2760588734,
+        1840877826
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 5,
+      "requested_kind": 0,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        26,
+        27,
+        30,
+        31,
+        32,
+        33,
+        35,
+        36,
+        38,
+        39,
+        41,
+        43,
+        49
+      ],
+      "rng_before": [
+        582824840,
+        3723098211,
+        1982979741,
+        780520225
+      ],
+      "result": 41
+    },
+    {
+      "fixture": 5,
+      "requested_kind": 0,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        26,
+        27,
+        30,
+        31,
+        32,
+        33,
+        35,
+        36,
+        38,
+        39,
+        41,
+        43,
+        49
+      ],
+      "rng_before": [
+        215970859,
+        1117362852,
+        1628238707,
+        1405969000
+      ],
+      "result": 33
+    },
+    {
+      "fixture": 5,
+      "requested_kind": 0,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        26,
+        27,
+        30,
+        31,
+        32,
+        33,
+        35,
+        36,
+        38,
+        39,
+        41,
+        43,
+        49
+      ],
+      "rng_before": [
+        909074012,
+        1952918745,
+        1403792057,
+        1449553823
+      ],
+      "result": 16
+    },
+    {
+      "fixture": 5,
+      "requested_kind": 0,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        26,
+        27,
+        30,
+        31,
+        32,
+        33,
+        35,
+        36,
+        38,
+        39,
+        41,
+        43,
+        49
+      ],
+      "rng_before": [
+        3269456693,
+        3778024983,
+        1628334692,
+        1195103064
+      ],
+      "result": 30
+    },
+    {
+      "fixture": 5,
+      "requested_kind": 0,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        26,
+        27,
+        30,
+        31,
+        32,
+        33,
+        35,
+        36,
+        38,
+        39,
+        41,
+        43,
+        49
+      ],
+      "rng_before": [
+        3229857594,
+        4085390589,
+        3573087602,
+        1810607153
+      ],
+      "result": 35
+    },
+    {
+      "fixture": 5,
+      "requested_kind": 0,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        26,
+        27,
+        30,
+        31,
+        32,
+        33,
+        35,
+        36,
+        38,
+        39,
+        41,
+        43,
+        49
+      ],
+      "rng_before": [
+        1083497965,
+        3585915088,
+        351784589,
+        2019952485
+      ],
+      "result": 33
+    },
+    {
+      "fixture": 5,
+      "requested_kind": 0,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        26,
+        27,
+        30,
+        31,
+        32,
+        33,
+        35,
+        36,
+        38,
+        39,
+        41,
+        43,
+        49
+      ],
+      "rng_before": [
+        83250566,
+        3217034696,
+        2316787198,
+        223705953
+      ],
+      "result": 36
+    },
+    {
+      "fixture": 5,
+      "requested_kind": 0,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        26,
+        27,
+        30,
+        31,
+        32,
+        33,
+        35,
+        36,
+        38,
+        39,
+        41,
+        43,
+        49
+      ],
+      "rng_before": [
+        4294571397,
+        4088463963,
+        1503068227,
+        963026855
+      ],
+      "result": 14
+    },
+    {
+      "fixture": 5,
+      "requested_kind": 0,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        26,
+        27,
+        30,
+        31,
+        32,
+        33,
+        35,
+        36,
+        38,
+        39,
+        41,
+        43,
+        49
+      ],
+      "rng_before": [
+        2792347639,
+        294713656,
+        3355370399,
+        4111510355
+      ],
+      "result": 17
+    },
+    {
+      "fixture": 5,
+      "requested_kind": 0,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        26,
+        27,
+        30,
+        31,
+        32,
+        33,
+        35,
+        36,
+        38,
+        39,
+        41,
+        43,
+        49
+      ],
+      "rng_before": [
+        2799264931,
+        172907376,
+        3239406957,
+        133272825
+      ],
+      "result": 26
+    },
+    {
+      "fixture": 5,
+      "requested_kind": 0,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        26,
+        27,
+        30,
+        31,
+        32,
+        33,
+        35,
+        36,
+        38,
+        39,
+        41,
+        43,
+        49
+      ],
+      "rng_before": [
+        4078551333,
+        1062073697,
+        856247605,
+        3604460472
+      ],
+      "result": 43
+    },
+    {
+      "fixture": 5,
+      "requested_kind": 0,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        26,
+        27,
+        30,
+        31,
+        32,
+        33,
+        35,
+        36,
+        38,
+        39,
+        41,
+        43,
+        49
+      ],
+      "rng_before": [
+        87531510,
+        2668616333,
+        654477195,
+        1024542722
+      ],
+      "result": 30
+    },
+    {
+      "fixture": 5,
+      "requested_kind": 1,
+      "eligible_ids": [
+        23,
+        24,
+        25,
+        28,
+        29,
+        34,
+        37,
+        42,
+        46,
+        47
+      ],
+      "rng_before": [
+        542114964,
+        2033929266,
+        2875303857,
+        491298929
+      ],
+      "result": 42
+    },
+    {
+      "fixture": 5,
+      "requested_kind": 1,
+      "eligible_ids": [
+        23,
+        24,
+        25,
+        28,
+        29,
+        34,
+        37,
+        42,
+        46,
+        47
+      ],
+      "rng_before": [
+        2422230882,
+        4070585433,
+        936150587,
+        1997305752
+      ],
+      "result": 46
+    },
+    {
+      "fixture": 5,
+      "requested_kind": 1,
+      "eligible_ids": [
+        23,
+        24,
+        25,
+        28,
+        29,
+        34,
+        37,
+        42,
+        46,
+        47
+      ],
+      "rng_before": [
+        3004179184,
+        1100558303,
+        3293802269,
+        1584392711
+      ],
+      "result": 29
+    },
+    {
+      "fixture": 5,
+      "requested_kind": 1,
+      "eligible_ids": [
+        23,
+        24,
+        25,
+        28,
+        29,
+        34,
+        37,
+        42,
+        46,
+        47
+      ],
+      "rng_before": [
+        720648887,
+        2602289301,
+        2608108101,
+        4139209207
+      ],
+      "result": 29
+    },
+    {
+      "fixture": 5,
+      "requested_kind": 1,
+      "eligible_ids": [
+        23,
+        24,
+        25,
+        28,
+        29,
+        34,
+        37,
+        42,
+        46,
+        47
+      ],
+      "rng_before": [
+        3212316223,
+        3085320828,
+        491914923,
+        3340590688
+      ],
+      "result": 42
+    },
+    {
+      "fixture": 5,
+      "requested_kind": 1,
+      "eligible_ids": [
+        23,
+        24,
+        25,
+        28,
+        29,
+        34,
+        37,
+        42,
+        46,
+        47
+      ],
+      "rng_before": [
+        3518871744,
+        703368777,
+        4143444172,
+        1335901990
+      ],
+      "result": 29
+    },
+    {
+      "fixture": 5,
+      "requested_kind": 1,
+      "eligible_ids": [
+        23,
+        24,
+        25,
+        28,
+        29,
+        34,
+        37,
+        42,
+        46,
+        47
+      ],
+      "rng_before": [
+        464280597,
+        2485432021,
+        110287971,
+        3989540022
+      ],
+      "result": 34
+    },
+    {
+      "fixture": 5,
+      "requested_kind": 1,
+      "eligible_ids": [
+        23,
+        24,
+        25,
+        28,
+        29,
+        34,
+        37,
+        42,
+        46,
+        47
+      ],
+      "rng_before": [
+        1339846171,
+        2473028098,
+        2909184445,
+        3899942615
+      ],
+      "result": 25
+    },
+    {
+      "fixture": 5,
+      "requested_kind": 1,
+      "eligible_ids": [
+        23,
+        24,
+        25,
+        28,
+        29,
+        34,
+        37,
+        42,
+        46,
+        47
+      ],
+      "rng_before": [
+        4115320994,
+        1611931113,
+        1703617827,
+        4043585413
+      ],
+      "result": 28
+    },
+    {
+      "fixture": 5,
+      "requested_kind": 1,
+      "eligible_ids": [
+        23,
+        24,
+        25,
+        28,
+        29,
+        34,
+        37,
+        42,
+        46,
+        47
+      ],
+      "rng_before": [
+        3070964768,
+        851819913,
+        326402374,
+        2543040948
+      ],
+      "result": 29
+    },
+    {
+      "fixture": 5,
+      "requested_kind": 1,
+      "eligible_ids": [
+        23,
+        24,
+        25,
+        28,
+        29,
+        34,
+        37,
+        42,
+        46,
+        47
+      ],
+      "rng_before": [
+        2966166331,
+        3567277991,
+        2693985578,
+        1043030161
+      ],
+      "result": 47
+    },
+    {
+      "fixture": 5,
+      "requested_kind": 1,
+      "eligible_ids": [
+        23,
+        24,
+        25,
+        28,
+        29,
+        34,
+        37,
+        42,
+        46,
+        47
+      ],
+      "rng_before": [
+        437662764,
+        2994421136,
+        3317780148,
+        1295287749
+      ],
+      "result": 46
+    },
+    {
+      "fixture": 5,
+      "requested_kind": 2,
+      "eligible_ids": [
+        22,
+        40,
+        44,
+        45,
+        48
+      ],
+      "rng_before": [
+        3651981656,
+        2938870196,
+        2578748240,
+        3459716271
+      ],
+      "result": 44
+    },
+    {
+      "fixture": 5,
+      "requested_kind": 2,
+      "eligible_ids": [
+        22,
+        40,
+        44,
+        45,
+        48
+      ],
+      "rng_before": [
+        519927529,
+        3419769846,
+        4225579315,
+        2430661792
+      ],
+      "result": 40
+    },
+    {
+      "fixture": 5,
+      "requested_kind": 2,
+      "eligible_ids": [
+        22,
+        40,
+        44,
+        45,
+        48
+      ],
+      "rng_before": [
+        3361393222,
+        176390590,
+        1491228808,
+        2288123416
+      ],
+      "result": 44
+    },
+    {
+      "fixture": 5,
+      "requested_kind": 2,
+      "eligible_ids": [
+        22,
+        40,
+        44,
+        45,
+        48
+      ],
+      "rng_before": [
+        1839869544,
+        2841212515,
+        1591589823,
+        296166921
+      ],
+      "result": 22
+    },
+    {
+      "fixture": 5,
+      "requested_kind": 2,
+      "eligible_ids": [
+        22,
+        40,
+        44,
+        45,
+        48
+      ],
+      "rng_before": [
+        2173085046,
+        2781177100,
+        1465576748,
+        54340558
+      ],
+      "result": 45
+    },
+    {
+      "fixture": 5,
+      "requested_kind": 2,
+      "eligible_ids": [
+        22,
+        40,
+        44,
+        45,
+        48
+      ],
+      "rng_before": [
+        3648899533,
+        1804138557,
+        3531884396,
+        2105400301
+      ],
+      "result": 40
+    },
+    {
+      "fixture": 5,
+      "requested_kind": 2,
+      "eligible_ids": [
+        22,
+        40,
+        44,
+        45,
+        48
+      ],
+      "rng_before": [
+        453285987,
+        1861968817,
+        4126551191,
+        1555585773
+      ],
+      "result": 40
+    },
+    {
+      "fixture": 5,
+      "requested_kind": 2,
+      "eligible_ids": [
+        22,
+        40,
+        44,
+        45,
+        48
+      ],
+      "rng_before": [
+        2729817240,
+        3829285512,
+        3559270786,
+        1974565461
+      ],
+      "result": 44
+    },
+    {
+      "fixture": 5,
+      "requested_kind": 2,
+      "eligible_ids": [
+        22,
+        40,
+        44,
+        45,
+        48
+      ],
+      "rng_before": [
+        3037867512,
+        657091982,
+        1870403050,
+        756502473
+      ],
+      "result": 22
+    },
+    {
+      "fixture": 5,
+      "requested_kind": 2,
+      "eligible_ids": [
+        22,
+        40,
+        44,
+        45,
+        48
+      ],
+      "rng_before": [
+        3151626818,
+        2240885202,
+        4146678097,
+        2793693337
+      ],
+      "result": 48
+    },
+    {
+      "fixture": 5,
+      "requested_kind": 2,
+      "eligible_ids": [
+        22,
+        40,
+        44,
+        45,
+        48
+      ],
+      "rng_before": [
+        1159995046,
+        2645323395,
+        3471189200,
+        3949727766
+      ],
+      "result": 44
+    },
+    {
+      "fixture": 5,
+      "requested_kind": 2,
+      "eligible_ids": [
+        22,
+        40,
+        44,
+        45,
+        48
+      ],
+      "rng_before": [
+        2311435034,
+        3327059683,
+        2076605983,
+        1996617659
+      ],
+      "result": 48
+    },
+    {
+      "fixture": 5,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        1870778191,
+        3546503094,
+        3139733667,
+        2544659112
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 5,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        1152750071,
+        1384287616,
+        3658080160,
+        1054393708
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 5,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        3567962531,
+        4014170428,
+        372214308,
+        1197987692
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 5,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        3786577118,
+        1936179853,
+        1047385483,
+        3223271103
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 5,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        1995907669,
+        2447485590,
+        2621354709,
+        2869847630
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 5,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        1627746667,
+        1444812497,
+        123265537,
+        2123030247
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 5,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        3654814605,
+        1395925222,
+        780996231,
+        2094011037
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 5,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        911047815,
+        1523961606,
+        3426663902,
+        1109615163
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 5,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        1461744198,
+        1201124041,
+        3780945510,
+        2560466250
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 5,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        3011561274,
+        3780032269,
+        1186564497,
+        2387104291
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 5,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        43598698,
+        2218897149,
+        4071897791,
+        820581106
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 5,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        367704871,
+        1036616336,
+        3092697141,
+        1745595491
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 6,
+      "requested_kind": 0,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25
+      ],
+      "rng_before": [
+        2098425880,
+        2384463652,
+        3256292393,
+        1032183433
+      ],
+      "result": 24
+    },
+    {
+      "fixture": 6,
+      "requested_kind": 0,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25
+      ],
+      "rng_before": [
+        2966144543,
+        2044804330,
+        2774131811,
+        3057339843
+      ],
+      "result": 18
+    },
+    {
+      "fixture": 6,
+      "requested_kind": 0,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25
+      ],
+      "rng_before": [
+        2108061573,
+        1924895021,
+        3405620755,
+        74059253
+      ],
+      "result": 17
+    },
+    {
+      "fixture": 6,
+      "requested_kind": 0,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25
+      ],
+      "rng_before": [
+        399661102,
+        1263732197,
+        951749308,
+        1736889606
+      ],
+      "result": 24
+    },
+    {
+      "fixture": 6,
+      "requested_kind": 0,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25
+      ],
+      "rng_before": [
+        2971203213,
+        1044987715,
+        1315144891,
+        2851686578
+      ],
+      "result": 24
+    },
+    {
+      "fixture": 6,
+      "requested_kind": 0,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25
+      ],
+      "rng_before": [
+        2497762234,
+        1584930775,
+        2032638323,
+        2377148230
+      ],
+      "result": 15
+    },
+    {
+      "fixture": 6,
+      "requested_kind": 0,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25
+      ],
+      "rng_before": [
+        2280292341,
+        1476426754,
+        1827524957,
+        4280499551
+      ],
+      "result": 16
+    },
+    {
+      "fixture": 6,
+      "requested_kind": 0,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25
+      ],
+      "rng_before": [
+        3203768294,
+        2363900493,
+        1420737819,
+        1511014697
+      ],
+      "result": 17
+    },
+    {
+      "fixture": 6,
+      "requested_kind": 0,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25
+      ],
+      "rng_before": [
+        3018739003,
+        1948821078,
+        1163577186,
+        1316935719
+      ],
+      "result": 20
+    },
+    {
+      "fixture": 6,
+      "requested_kind": 0,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25
+      ],
+      "rng_before": [
+        1079770569,
+        990153355,
+        518213060,
+        3097892639
+      ],
+      "result": 15
+    },
+    {
+      "fixture": 6,
+      "requested_kind": 0,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25
+      ],
+      "rng_before": [
+        827143233,
+        1355268102,
+        513483708,
+        3190649866
+      ],
+      "result": 24
+    },
+    {
+      "fixture": 6,
+      "requested_kind": 0,
+      "eligible_ids": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25
+      ],
+      "rng_before": [
+        2301518177,
+        4083988011,
+        3273579452,
+        2964229896
+      ],
+      "result": 17
+    },
+    {
+      "fixture": 6,
+      "requested_kind": 1,
+      "eligible_ids": [
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        795212538,
+        822662216,
+        929364954,
+        3172282824
+      ],
+      "result": 46
+    },
+    {
+      "fixture": 6,
+      "requested_kind": 1,
+      "eligible_ids": [
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        2079617090,
+        1187556862,
+        3112068867,
+        2532256470
+      ],
+      "result": 41
+    },
+    {
+      "fixture": 6,
+      "requested_kind": 1,
+      "eligible_ids": [
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        4194495212,
+        3265068044,
+        2253298195,
+        2563196714
+      ],
+      "result": 43
+    },
+    {
+      "fixture": 6,
+      "requested_kind": 1,
+      "eligible_ids": [
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        1215470157,
+        4211261115,
+        431756350,
+        3576111591
+      ],
+      "result": 38
+    },
+    {
+      "fixture": 6,
+      "requested_kind": 1,
+      "eligible_ids": [
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        833728665,
+        1272368870,
+        977032766,
+        1549972386
+      ],
+      "result": 48
+    },
+    {
+      "fixture": 6,
+      "requested_kind": 1,
+      "eligible_ids": [
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        770695571,
+        1298229437,
+        60766757,
+        3040916238
+      ],
+      "result": 48
+    },
+    {
+      "fixture": 6,
+      "requested_kind": 1,
+      "eligible_ids": [
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        2294092753,
+        543669676,
+        1178158203,
+        195488441
+      ],
+      "result": 43
+    },
+    {
+      "fixture": 6,
+      "requested_kind": 1,
+      "eligible_ids": [
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        4184564874,
+        234187462,
+        2376658660,
+        1254717325
+      ],
+      "result": 48
+    },
+    {
+      "fixture": 6,
+      "requested_kind": 1,
+      "eligible_ids": [
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        2995384868,
+        4054834021,
+        542366274,
+        2739629302
+      ],
+      "result": 42
+    },
+    {
+      "fixture": 6,
+      "requested_kind": 1,
+      "eligible_ids": [
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        3730012426,
+        3233217762,
+        2108307952,
+        440610570
+      ],
+      "result": 42
+    },
+    {
+      "fixture": 6,
+      "requested_kind": 1,
+      "eligible_ids": [
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        3748302739,
+        52679490,
+        2465587067,
+        1221228113
+      ],
+      "result": 47
+    },
+    {
+      "fixture": 6,
+      "requested_kind": 1,
+      "eligible_ids": [
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "rng_before": [
+        2016044512,
+        2056061866,
+        1891799103,
+        1463320861
+      ],
+      "result": 43
+    },
+    {
+      "fixture": 6,
+      "requested_kind": 2,
+      "eligible_ids": [
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37
+      ],
+      "rng_before": [
+        791835934,
+        4146780827,
+        220661337,
+        1084386400
+      ],
+      "result": 37
+    },
+    {
+      "fixture": 6,
+      "requested_kind": 2,
+      "eligible_ids": [
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37
+      ],
+      "rng_before": [
+        4041837371,
+        3701071948,
+        2051831252,
+        490000526
+      ],
+      "result": 33
+    },
+    {
+      "fixture": 6,
+      "requested_kind": 2,
+      "eligible_ids": [
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37
+      ],
+      "rng_before": [
+        3530959836,
+        280647907,
+        1721025347,
+        2112035409
+      ],
+      "result": 27
+    },
+    {
+      "fixture": 6,
+      "requested_kind": 2,
+      "eligible_ids": [
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37
+      ],
+      "rng_before": [
+        318180503,
+        2478286982,
+        2703448716,
+        2948284698
+      ],
+      "result": 26
+    },
+    {
+      "fixture": 6,
+      "requested_kind": 2,
+      "eligible_ids": [
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37
+      ],
+      "rng_before": [
+        230249217,
+        651662547,
+        640798731,
+        3483828685
+      ],
+      "result": 26
+    },
+    {
+      "fixture": 6,
+      "requested_kind": 2,
+      "eligible_ids": [
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37
+      ],
+      "rng_before": [
+        2417377633,
+        4076463610,
+        1304963614,
+        365849190
+      ],
+      "result": 28
+    },
+    {
+      "fixture": 6,
+      "requested_kind": 2,
+      "eligible_ids": [
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37
+      ],
+      "rng_before": [
+        4268845844,
+        1065972034,
+        508745584,
+        2396905421
+      ],
+      "result": 37
+    },
+    {
+      "fixture": 6,
+      "requested_kind": 2,
+      "eligible_ids": [
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37
+      ],
+      "rng_before": [
+        3283259600,
+        1787453807,
+        2604114475,
+        2560345306
+      ],
+      "result": 35
+    },
+    {
+      "fixture": 6,
+      "requested_kind": 2,
+      "eligible_ids": [
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37
+      ],
+      "rng_before": [
+        3396205985,
+        2656086594,
+        969318858,
+        3331578385
+      ],
+      "result": 30
+    },
+    {
+      "fixture": 6,
+      "requested_kind": 2,
+      "eligible_ids": [
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37
+      ],
+      "rng_before": [
+        2244431947,
+        1633711193,
+        1934944879,
+        3901996605
+      ],
+      "result": 30
+    },
+    {
+      "fixture": 6,
+      "requested_kind": 2,
+      "eligible_ids": [
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37
+      ],
+      "rng_before": [
+        1901472238,
+        1277121963,
+        3694387705,
+        2527696207
+      ],
+      "result": 30
+    },
+    {
+      "fixture": 6,
+      "requested_kind": 2,
+      "eligible_ids": [
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37
+      ],
+      "rng_before": [
+        4252151888,
+        1841810119,
+        1311598149,
+        2442244963
+      ],
+      "result": 37
+    },
+    {
+      "fixture": 6,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        2667292043,
+        258687184,
+        2618344818,
+        4123635783
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 6,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        3178659381,
+        426204934,
+        4069868910,
+        3275930923
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 6,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        892442253,
+        2686566602,
+        906346324,
+        1136646449
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 6,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        2836517266,
+        348697524,
+        674555072,
+        1030213097
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 6,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        746523513,
+        2370788647,
+        322401182,
+        672302490
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 6,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        11492154,
+        1754569613,
+        1934898666,
+        2960826470
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 6,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        2550399650,
+        2018258729,
+        1250949136,
+        140187131
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 6,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        994182853,
+        1237401063,
+        3036352185,
+        1214266162
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 6,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        3019308557,
+        3691982799,
+        1950049698,
+        305714736
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 6,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        2952295757,
+        1002547591,
+        3968167735,
+        1136253459
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 6,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        3383695608,
+        3398383187,
+        2684603688,
+        2533126989
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 6,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        2839759520,
+        3452748602,
+        4010075517,
+        849627058
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 7,
+      "requested_kind": 0,
+      "eligible_ids": [
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43
+      ],
+      "rng_before": [
+        1825957977,
+        492960451,
+        2338877621,
+        965549222
+      ],
+      "result": 43
+    },
+    {
+      "fixture": 7,
+      "requested_kind": 0,
+      "eligible_ids": [
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43
+      ],
+      "rng_before": [
+        2781569954,
+        639904576,
+        3901597465,
+        1140882778
+      ],
+      "result": 40
+    },
+    {
+      "fixture": 7,
+      "requested_kind": 0,
+      "eligible_ids": [
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43
+      ],
+      "rng_before": [
+        3550353803,
+        610900200,
+        306702926,
+        256143439
+      ],
+      "result": 34
+    },
+    {
+      "fixture": 7,
+      "requested_kind": 0,
+      "eligible_ids": [
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43
+      ],
+      "rng_before": [
+        712632936,
+        3404313767,
+        1321182659,
+        2555694670
+      ],
+      "result": 37
+    },
+    {
+      "fixture": 7,
+      "requested_kind": 0,
+      "eligible_ids": [
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43
+      ],
+      "rng_before": [
+        3216748927,
+        3540085129,
+        2444725646,
+        3956491798
+      ],
+      "result": 38
+    },
+    {
+      "fixture": 7,
+      "requested_kind": 0,
+      "eligible_ids": [
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43
+      ],
+      "rng_before": [
+        1239573053,
+        1886149718,
+        534094883,
+        2013042435
+      ],
+      "result": 34
+    },
+    {
+      "fixture": 7,
+      "requested_kind": 0,
+      "eligible_ids": [
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43
+      ],
+      "rng_before": [
+        2957849462,
+        1306061701,
+        3005333281,
+        1728760924
+      ],
+      "result": 40
+    },
+    {
+      "fixture": 7,
+      "requested_kind": 0,
+      "eligible_ids": [
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43
+      ],
+      "rng_before": [
+        4048763624,
+        1169288485,
+        2149511642,
+        2319203166
+      ],
+      "result": 42
+    },
+    {
+      "fixture": 7,
+      "requested_kind": 0,
+      "eligible_ids": [
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43
+      ],
+      "rng_before": [
+        2120834317,
+        1880160025,
+        345495128,
+        2568547910
+      ],
+      "result": 40
+    },
+    {
+      "fixture": 7,
+      "requested_kind": 0,
+      "eligible_ids": [
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43
+      ],
+      "rng_before": [
+        171200764,
+        3820042236,
+        1855548990,
+        3154799197
+      ],
+      "result": 32
+    },
+    {
+      "fixture": 7,
+      "requested_kind": 0,
+      "eligible_ids": [
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43
+      ],
+      "rng_before": [
+        1384360647,
+        2592930364,
+        1075321966,
+        111088881
+      ],
+      "result": 35
+    },
+    {
+      "fixture": 7,
+      "requested_kind": 0,
+      "eligible_ids": [
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43
+      ],
+      "rng_before": [
+        392245997,
+        983222878,
+        4131376705,
+        2896089430
+      ],
+      "result": 40
+    },
+    {
+      "fixture": 7,
+      "requested_kind": 1,
+      "eligible_ids": [
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67
+      ],
+      "rng_before": [
+        3590414903,
+        3695891819,
+        2470461357,
+        2521673791
+      ],
+      "result": 59
+    },
+    {
+      "fixture": 7,
+      "requested_kind": 1,
+      "eligible_ids": [
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67
+      ],
+      "rng_before": [
+        4083595988,
+        89101055,
+        4293130825,
+        3284620817
+      ],
+      "result": 56
+    },
+    {
+      "fixture": 7,
+      "requested_kind": 1,
+      "eligible_ids": [
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67
+      ],
+      "rng_before": [
+        2887427412,
+        3527977383,
+        1157541038,
+        2474961963
+      ],
+      "result": 67
+    },
+    {
+      "fixture": 7,
+      "requested_kind": 1,
+      "eligible_ids": [
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67
+      ],
+      "rng_before": [
+        172793727,
+        3277528204,
+        3248149900,
+        752438459
+      ],
+      "result": 59
+    },
+    {
+      "fixture": 7,
+      "requested_kind": 1,
+      "eligible_ids": [
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67
+      ],
+      "rng_before": [
+        2020785643,
+        2228932714,
+        2798211967,
+        1899360801
+      ],
+      "result": 63
+    },
+    {
+      "fixture": 7,
+      "requested_kind": 1,
+      "eligible_ids": [
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67
+      ],
+      "rng_before": [
+        3934502656,
+        1194673401,
+        779489931,
+        4281848220
+      ],
+      "result": 56
+    },
+    {
+      "fixture": 7,
+      "requested_kind": 1,
+      "eligible_ids": [
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67
+      ],
+      "rng_before": [
+        2513971584,
+        1872111746,
+        2726379588,
+        3497155420
+      ],
+      "result": 62
+    },
+    {
+      "fixture": 7,
+      "requested_kind": 1,
+      "eligible_ids": [
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67
+      ],
+      "rng_before": [
+        2111946238,
+        4162060546,
+        391883149,
+        2018679284
+      ],
+      "result": 56
+    },
+    {
+      "fixture": 7,
+      "requested_kind": 1,
+      "eligible_ids": [
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67
+      ],
+      "rng_before": [
+        1494481363,
+        1753841726,
+        1431548670,
+        1378934717
+      ],
+      "result": 62
+    },
+    {
+      "fixture": 7,
+      "requested_kind": 1,
+      "eligible_ids": [
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67
+      ],
+      "rng_before": [
+        2878201524,
+        449253056,
+        3683935600,
+        690737494
+      ],
+      "result": 67
+    },
+    {
+      "fixture": 7,
+      "requested_kind": 1,
+      "eligible_ids": [
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67
+      ],
+      "rng_before": [
+        1416495962,
+        1768002206,
+        2979305739,
+        2128023255
+      ],
+      "result": 60
+    },
+    {
+      "fixture": 7,
+      "requested_kind": 1,
+      "eligible_ids": [
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67
+      ],
+      "rng_before": [
+        1237886015,
+        2845774616,
+        4059575358,
+        1719929315
+      ],
+      "result": 60
+    },
+    {
+      "fixture": 7,
+      "requested_kind": 2,
+      "eligible_ids": [
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55
+      ],
+      "rng_before": [
+        3494239516,
+        3266321661,
+        2362646960,
+        157612991
+      ],
+      "result": 55
+    },
+    {
+      "fixture": 7,
+      "requested_kind": 2,
+      "eligible_ids": [
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55
+      ],
+      "rng_before": [
+        1953462417,
+        378213925,
+        1350840898,
+        1084044802
+      ],
+      "result": 47
+    },
+    {
+      "fixture": 7,
+      "requested_kind": 2,
+      "eligible_ids": [
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55
+      ],
+      "rng_before": [
+        1388450337,
+        497879474,
+        4166911649,
+        3318068090
+      ],
+      "result": 50
+    },
+    {
+      "fixture": 7,
+      "requested_kind": 2,
+      "eligible_ids": [
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55
+      ],
+      "rng_before": [
+        1735918651,
+        3714762680,
+        2210174072,
+        3543035341
+      ],
+      "result": 49
+    },
+    {
+      "fixture": 7,
+      "requested_kind": 2,
+      "eligible_ids": [
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55
+      ],
+      "rng_before": [
+        4243939720,
+        4943787,
+        2824629834,
+        3733904907
+      ],
+      "result": 50
+    },
+    {
+      "fixture": 7,
+      "requested_kind": 2,
+      "eligible_ids": [
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55
+      ],
+      "rng_before": [
+        2330421741,
+        1984173309,
+        1774884818,
+        232804774
+      ],
+      "result": 52
+    },
+    {
+      "fixture": 7,
+      "requested_kind": 2,
+      "eligible_ids": [
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55
+      ],
+      "rng_before": [
+        805660882,
+        2226680251,
+        1553830525,
+        2674192109
+      ],
+      "result": 50
+    },
+    {
+      "fixture": 7,
+      "requested_kind": 2,
+      "eligible_ids": [
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55
+      ],
+      "rng_before": [
+        3248898619,
+        2141011556,
+        2686110098,
+        1898551433
+      ],
+      "result": 50
+    },
+    {
+      "fixture": 7,
+      "requested_kind": 2,
+      "eligible_ids": [
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55
+      ],
+      "rng_before": [
+        3264134512,
+        221670908,
+        874275988,
+        1146997816
+      ],
+      "result": 55
+    },
+    {
+      "fixture": 7,
+      "requested_kind": 2,
+      "eligible_ids": [
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55
+      ],
+      "rng_before": [
+        2358880404,
+        562697526,
+        3984324182,
+        1237075775
+      ],
+      "result": 44
+    },
+    {
+      "fixture": 7,
+      "requested_kind": 2,
+      "eligible_ids": [
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55
+      ],
+      "rng_before": [
+        1881694278,
+        3783207393,
+        2998961044,
+        2081821325
+      ],
+      "result": 47
+    },
+    {
+      "fixture": 7,
+      "requested_kind": 2,
+      "eligible_ids": [
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55
+      ],
+      "rng_before": [
+        521521078,
+        123993296,
+        4179633740,
+        2705925058
+      ],
+      "result": 44
+    },
+    {
+      "fixture": 7,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        2615083895,
+        3433026356,
+        1027774780,
+        3048494026
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 7,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        680229045,
+        1334661688,
+        2365835550,
+        58731376
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 7,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        2371901750,
+        1752306681,
+        400330495,
+        965081954
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 7,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        4261711961,
+        3613809882,
+        3921003983,
+        487311805
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 7,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        1981903597,
+        4067594934,
+        504513251,
+        2781891923
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 7,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        3574027737,
+        661300942,
+        2140506492,
+        4005714396
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 7,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        3077787850,
+        1253535854,
+        2185588660,
+        3029719886
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 7,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        1174350979,
+        1784517419,
+        3585112032,
+        2072319898
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 7,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        4210118640,
+        2028168523,
+        1046816259,
+        1961882949
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 7,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        2367665472,
+        621232513,
+        1647489402,
+        818665301
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 7,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        3959393557,
+        2574307168,
+        2182878006,
+        3205302077
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 7,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        3776677517,
+        586298866,
+        3710967433,
+        299832023
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 8,
+      "requested_kind": 0,
+      "eligible_ids": [
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75
+      ],
+      "rng_before": [
+        1186473561,
+        3318614428,
+        3393050713,
+        3669673229
+      ],
+      "result": 68
+    },
+    {
+      "fixture": 8,
+      "requested_kind": 0,
+      "eligible_ids": [
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75
+      ],
+      "rng_before": [
+        1782164134,
+        1459753033,
+        4012566291,
+        3383220511
+      ],
+      "result": 69
+    },
+    {
+      "fixture": 8,
+      "requested_kind": 0,
+      "eligible_ids": [
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75
+      ],
+      "rng_before": [
+        2180716723,
+        1147497835,
+        3524233168,
+        11017705
+      ],
+      "result": 68
+    },
+    {
+      "fixture": 8,
+      "requested_kind": 0,
+      "eligible_ids": [
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75
+      ],
+      "rng_before": [
+        1214784185,
+        3118365242,
+        1282287615,
+        3596931684
+      ],
+      "result": 74
+    },
+    {
+      "fixture": 8,
+      "requested_kind": 0,
+      "eligible_ids": [
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75
+      ],
+      "rng_before": [
+        2520878317,
+        2490751945,
+        4290252845,
+        2834423953
+      ],
+      "result": 66
+    },
+    {
+      "fixture": 8,
+      "requested_kind": 0,
+      "eligible_ids": [
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75
+      ],
+      "rng_before": [
+        2102989254,
+        3716265973,
+        638212450,
+        1917906456
+      ],
+      "result": 73
+    },
+    {
+      "fixture": 8,
+      "requested_kind": 0,
+      "eligible_ids": [
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75
+      ],
+      "rng_before": [
+        2313185971,
+        2080230418,
+        1482296058,
+        1427818730
+      ],
+      "result": 74
+    },
+    {
+      "fixture": 8,
+      "requested_kind": 0,
+      "eligible_ids": [
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75
+      ],
+      "rng_before": [
+        2370467256,
+        3276513211,
+        2334014365,
+        1620104855
+      ],
+      "result": 72
+    },
+    {
+      "fixture": 8,
+      "requested_kind": 0,
+      "eligible_ids": [
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75
+      ],
+      "rng_before": [
+        1955690228,
+        4006569938,
+        1382023198,
+        3734910807
+      ],
+      "result": 65
+    },
+    {
+      "fixture": 8,
+      "requested_kind": 0,
+      "eligible_ids": [
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75
+      ],
+      "rng_before": [
+        810255760,
+        4212394947,
+        2995732958,
+        1025662000
+      ],
+      "result": 67
+    },
+    {
+      "fixture": 8,
+      "requested_kind": 0,
+      "eligible_ids": [
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75
+      ],
+      "rng_before": [
+        2455852189,
+        1644847276,
+        1003143045,
+        3676547724
+      ],
+      "result": 67
+    },
+    {
+      "fixture": 8,
+      "requested_kind": 0,
+      "eligible_ids": [
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75
+      ],
+      "rng_before": [
+        3330938159,
+        1764265618,
+        187463722,
+        1366556920
+      ],
+      "result": 73
+    },
+    {
+      "fixture": 8,
+      "requested_kind": 1,
+      "eligible_ids": [
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99
+      ],
+      "rng_before": [
+        3198484273,
+        2031417512,
+        3028930672,
+        3923152675
+      ],
+      "result": 93
+    },
+    {
+      "fixture": 8,
+      "requested_kind": 1,
+      "eligible_ids": [
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99
+      ],
+      "rng_before": [
+        3484974703,
+        1637375316,
+        1658195603,
+        4245205804
+      ],
+      "result": 99
+    },
+    {
+      "fixture": 8,
+      "requested_kind": 1,
+      "eligible_ids": [
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99
+      ],
+      "rng_before": [
+        2850521812,
+        3403304832,
+        3525083896,
+        2800400286
+      ],
+      "result": 90
+    },
+    {
+      "fixture": 8,
+      "requested_kind": 1,
+      "eligible_ids": [
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99
+      ],
+      "rng_before": [
+        4212581851,
+        653287375,
+        2127420335,
+        4143889422
+      ],
+      "result": 96
+    },
+    {
+      "fixture": 8,
+      "requested_kind": 1,
+      "eligible_ids": [
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99
+      ],
+      "rng_before": [
+        158998032,
+        542223599,
+        2157324056,
+        4146162107
+      ],
+      "result": 90
+    },
+    {
+      "fixture": 8,
+      "requested_kind": 1,
+      "eligible_ids": [
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99
+      ],
+      "rng_before": [
+        2534805646,
+        1425906387,
+        3735334423,
+        431062656
+      ],
+      "result": 90
+    },
+    {
+      "fixture": 8,
+      "requested_kind": 1,
+      "eligible_ids": [
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99
+      ],
+      "rng_before": [
+        3754619063,
+        3629416688,
+        1891100776,
+        428258482
+      ],
+      "result": 94
+    },
+    {
+      "fixture": 8,
+      "requested_kind": 1,
+      "eligible_ids": [
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99
+      ],
+      "rng_before": [
+        2258942692,
+        3910317247,
+        1962491159,
+        65917432
+      ],
+      "result": 95
+    },
+    {
+      "fixture": 8,
+      "requested_kind": 1,
+      "eligible_ids": [
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99
+      ],
+      "rng_before": [
+        3102872611,
+        619142798,
+        1760844750,
+        3740628617
+      ],
+      "result": 99
+    },
+    {
+      "fixture": 8,
+      "requested_kind": 1,
+      "eligible_ids": [
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99
+      ],
+      "rng_before": [
+        2812264367,
+        4165932723,
+        662976399,
+        321384892
+      ],
+      "result": 91
+    },
+    {
+      "fixture": 8,
+      "requested_kind": 1,
+      "eligible_ids": [
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99
+      ],
+      "rng_before": [
+        2016446768,
+        3356625550,
+        4162697889,
+        1138264176
+      ],
+      "result": 96
+    },
+    {
+      "fixture": 8,
+      "requested_kind": 1,
+      "eligible_ids": [
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99
+      ],
+      "rng_before": [
+        1454109425,
+        2676878743,
+        2975143612,
+        1707177877
+      ],
+      "result": 93
+    },
+    {
+      "fixture": 8,
+      "requested_kind": 2,
+      "eligible_ids": [
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87
+      ],
+      "rng_before": [
+        2791027186,
+        344951668,
+        3658304095,
+        1411178445
+      ],
+      "result": 78
+    },
+    {
+      "fixture": 8,
+      "requested_kind": 2,
+      "eligible_ids": [
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87
+      ],
+      "rng_before": [
+        3660778145,
+        2896343368,
+        3690846590,
+        2291890389
+      ],
+      "result": 85
+    },
+    {
+      "fixture": 8,
+      "requested_kind": 2,
+      "eligible_ids": [
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87
+      ],
+      "rng_before": [
+        1632127923,
+        4097998347,
+        1360049298,
+        2692081959
+      ],
+      "result": 82
+    },
+    {
+      "fixture": 8,
+      "requested_kind": 2,
+      "eligible_ids": [
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87
+      ],
+      "rng_before": [
+        3086867825,
+        3811520099,
+        3261605950,
+        2095718469
+      ],
+      "result": 77
+    },
+    {
+      "fixture": 8,
+      "requested_kind": 2,
+      "eligible_ids": [
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87
+      ],
+      "rng_before": [
+        3746856528,
+        2323646093,
+        154185462,
+        2651968205
+      ],
+      "result": 86
+    },
+    {
+      "fixture": 8,
+      "requested_kind": 2,
+      "eligible_ids": [
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87
+      ],
+      "rng_before": [
+        293864877,
+        1008330525,
+        2710815922,
+        2939473765
+      ],
+      "result": 83
+    },
+    {
+      "fixture": 8,
+      "requested_kind": 2,
+      "eligible_ids": [
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87
+      ],
+      "rng_before": [
+        3955360367,
+        1234283419,
+        4283911723,
+        977046129
+      ],
+      "result": 85
+    },
+    {
+      "fixture": 8,
+      "requested_kind": 2,
+      "eligible_ids": [
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87
+      ],
+      "rng_before": [
+        3207337120,
+        388176285,
+        1863893256,
+        4201928545
+      ],
+      "result": 77
+    },
+    {
+      "fixture": 8,
+      "requested_kind": 2,
+      "eligible_ids": [
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87
+      ],
+      "rng_before": [
+        422809996,
+        3265762953,
+        2721926191,
+        3023188080
+      ],
+      "result": 78
+    },
+    {
+      "fixture": 8,
+      "requested_kind": 2,
+      "eligible_ids": [
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87
+      ],
+      "rng_before": [
+        3747699292,
+        431675310,
+        1905584866,
+        714531298
+      ],
+      "result": 87
+    },
+    {
+      "fixture": 8,
+      "requested_kind": 2,
+      "eligible_ids": [
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87
+      ],
+      "rng_before": [
+        2980712298,
+        1286196999,
+        3880176825,
+        124327519
+      ],
+      "result": 86
+    },
+    {
+      "fixture": 8,
+      "requested_kind": 2,
+      "eligible_ids": [
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87
+      ],
+      "rng_before": [
+        197529702,
+        1393178591,
+        3419410162,
+        241030242
+      ],
+      "result": 78
+    },
+    {
+      "fixture": 8,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        1260005019,
+        1539588337,
+        1609930218,
+        1849785671
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 8,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        625217504,
+        1048819999,
+        2281341978,
+        1769748771
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 8,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        2430642523,
+        2928310291,
+        3403845222,
+        773338452
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 8,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        730074215,
+        751917162,
+        339166473,
+        2617747281
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 8,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        3740227599,
+        1643015259,
+        2661635754,
+        2934040683
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 8,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        1034356087,
+        2137464556,
+        3920570781,
+        2504640817
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 8,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        614685938,
+        997241761,
+        1980623803,
+        2739779525
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 8,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        1090824373,
+        1973840257,
+        1096619850,
+        2864059081
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 8,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        40361651,
+        3860782736,
+        3455872736,
+        1998247509
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 8,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        3870665004,
+        1235368585,
+        2910316591,
+        2347621138
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 8,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        678500147,
+        317234448,
+        1897214963,
+        4059756133
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 8,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        1484193033,
+        4241931722,
+        2523601252,
+        1284857706
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 9,
+      "requested_kind": 0,
+      "eligible_ids": [
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107
+      ],
+      "rng_before": [
+        2744220825,
+        4131883398,
+        1822393017,
+        2964873967
+      ],
+      "result": 103
+    },
+    {
+      "fixture": 9,
+      "requested_kind": 0,
+      "eligible_ids": [
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107
+      ],
+      "rng_before": [
+        1074163698,
+        1962094851,
+        3630552730,
+        1297602688
+      ],
+      "result": 98
+    },
+    {
+      "fixture": 9,
+      "requested_kind": 0,
+      "eligible_ids": [
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107
+      ],
+      "rng_before": [
+        855630484,
+        4292276786,
+        1652244897,
+        3665047890
+      ],
+      "result": 97
+    },
+    {
+      "fixture": 9,
+      "requested_kind": 0,
+      "eligible_ids": [
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107
+      ],
+      "rng_before": [
+        2075362821,
+        458072318,
+        1018790736,
+        1637947177
+      ],
+      "result": 102
+    },
+    {
+      "fixture": 9,
+      "requested_kind": 0,
+      "eligible_ids": [
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107
+      ],
+      "rng_before": [
+        2456389272,
+        1541717841,
+        2468798461,
+        1270762239
+      ],
+      "result": 102
+    },
+    {
+      "fixture": 9,
+      "requested_kind": 0,
+      "eligible_ids": [
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107
+      ],
+      "rng_before": [
+        4263579856,
+        3003380792,
+        1268006448,
+        94229853
+      ],
+      "result": 107
+    },
+    {
+      "fixture": 9,
+      "requested_kind": 0,
+      "eligible_ids": [
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107
+      ],
+      "rng_before": [
+        4200239562,
+        3564984187,
+        2827075539,
+        1699972733
+      ],
+      "result": 99
+    },
+    {
+      "fixture": 9,
+      "requested_kind": 0,
+      "eligible_ids": [
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107
+      ],
+      "rng_before": [
+        1178884276,
+        34780500,
+        2430646623,
+        3715436184
+      ],
+      "result": 104
+    },
+    {
+      "fixture": 9,
+      "requested_kind": 0,
+      "eligible_ids": [
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107
+      ],
+      "rng_before": [
+        2945486396,
+        3342822939,
+        3198328318,
+        4181592277
+      ],
+      "result": 105
+    },
+    {
+      "fixture": 9,
+      "requested_kind": 0,
+      "eligible_ids": [
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107
+      ],
+      "rng_before": [
+        210643427,
+        3911070030,
+        2604496061,
+        3200490039
+      ],
+      "result": 105
+    },
+    {
+      "fixture": 9,
+      "requested_kind": 0,
+      "eligible_ids": [
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107
+      ],
+      "rng_before": [
+        2133427445,
+        3577015837,
+        3883317382,
+        3878075939
+      ],
+      "result": 105
+    },
+    {
+      "fixture": 9,
+      "requested_kind": 0,
+      "eligible_ids": [
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107
+      ],
+      "rng_before": [
+        1229194523,
+        3331782118,
+        3431078106,
+        988350974
+      ],
+      "result": 99
+    },
+    {
+      "fixture": 9,
+      "requested_kind": 1,
+      "eligible_ids": [
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127
+      ],
+      "rng_before": [
+        2607324296,
+        3444271529,
+        1513206988,
+        940617318
+      ],
+      "result": 127
+    },
+    {
+      "fixture": 9,
+      "requested_kind": 1,
+      "eligible_ids": [
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127
+      ],
+      "rng_before": [
+        2734252963,
+        816610683,
+        2666707262,
+        1076433900
+      ],
+      "result": 121
+    },
+    {
+      "fixture": 9,
+      "requested_kind": 1,
+      "eligible_ids": [
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127
+      ],
+      "rng_before": [
+        2910976189,
+        3245179885,
+        3096363800,
+        3296261873
+      ],
+      "result": 123
+    },
+    {
+      "fixture": 9,
+      "requested_kind": 1,
+      "eligible_ids": [
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127
+      ],
+      "rng_before": [
+        2831163141,
+        2924250367,
+        3600630513,
+        587462342
+      ],
+      "result": 124
+    },
+    {
+      "fixture": 9,
+      "requested_kind": 1,
+      "eligible_ids": [
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127
+      ],
+      "rng_before": [
+        2698305085,
+        417315900,
+        3880089348,
+        2694912057
+      ],
+      "result": 125
+    },
+    {
+      "fixture": 9,
+      "requested_kind": 1,
+      "eligible_ids": [
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127
+      ],
+      "rng_before": [
+        2776011793,
+        169318686,
+        1326856608,
+        3387056244
+      ],
+      "result": 126
+    },
+    {
+      "fixture": 9,
+      "requested_kind": 1,
+      "eligible_ids": [
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127
+      ],
+      "rng_before": [
+        1893321208,
+        143299564,
+        2489250532,
+        1567067057
+      ],
+      "result": 127
+    },
+    {
+      "fixture": 9,
+      "requested_kind": 1,
+      "eligible_ids": [
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127
+      ],
+      "rng_before": [
+        3145461251,
+        564409423,
+        387119894,
+        3906821722
+      ],
+      "result": 124
+    },
+    {
+      "fixture": 9,
+      "requested_kind": 1,
+      "eligible_ids": [
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127
+      ],
+      "rng_before": [
+        1267489756,
+        1403247962,
+        3210405862,
+        1784572192
+      ],
+      "result": 122
+    },
+    {
+      "fixture": 9,
+      "requested_kind": 1,
+      "eligible_ids": [
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127
+      ],
+      "rng_before": [
+        754368373,
+        862407093,
+        567622001,
+        3378046814
+      ],
+      "result": 122
+    },
+    {
+      "fixture": 9,
+      "requested_kind": 1,
+      "eligible_ids": [
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127
+      ],
+      "rng_before": [
+        2316738668,
+        3764369596,
+        4172515979,
+        1571346130
+      ],
+      "result": 123
+    },
+    {
+      "fixture": 9,
+      "requested_kind": 1,
+      "eligible_ids": [
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127
+      ],
+      "rng_before": [
+        2279993598,
+        2155192095,
+        3923396682,
+        1170496062
+      ],
+      "result": 127
+    },
+    {
+      "fixture": 9,
+      "requested_kind": 2,
+      "eligible_ids": [
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119
+      ],
+      "rng_before": [
+        3566852761,
+        706712922,
+        1103678092,
+        3925810350
+      ],
+      "result": 119
+    },
+    {
+      "fixture": 9,
+      "requested_kind": 2,
+      "eligible_ids": [
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119
+      ],
+      "rng_before": [
+        3542015770,
+        4055255806,
+        2069520666,
+        4154882964
+      ],
+      "result": 117
+    },
+    {
+      "fixture": 9,
+      "requested_kind": 2,
+      "eligible_ids": [
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119
+      ],
+      "rng_before": [
+        3463841709,
+        1267622868,
+        3206447974,
+        3738326480
+      ],
+      "result": 115
+    },
+    {
+      "fixture": 9,
+      "requested_kind": 2,
+      "eligible_ids": [
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119
+      ],
+      "rng_before": [
+        1454770940,
+        3454152476,
+        494650131,
+        2011467975
+      ],
+      "result": 114
+    },
+    {
+      "fixture": 9,
+      "requested_kind": 2,
+      "eligible_ids": [
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119
+      ],
+      "rng_before": [
+        4135595227,
+        323408297,
+        604546780,
+        3239055974
+      ],
+      "result": 110
+    },
+    {
+      "fixture": 9,
+      "requested_kind": 2,
+      "eligible_ids": [
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119
+      ],
+      "rng_before": [
+        4151086814,
+        969007714,
+        3694275735,
+        2904788278
+      ],
+      "result": 110
+    },
+    {
+      "fixture": 9,
+      "requested_kind": 2,
+      "eligible_ids": [
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119
+      ],
+      "rng_before": [
+        3110487082,
+        2896552701,
+        4208819875,
+        1706869362
+      ],
+      "result": 119
+    },
+    {
+      "fixture": 9,
+      "requested_kind": 2,
+      "eligible_ids": [
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119
+      ],
+      "rng_before": [
+        4154391920,
+        3632444865,
+        3455677607,
+        2393639475
+      ],
+      "result": 114
+    },
+    {
+      "fixture": 9,
+      "requested_kind": 2,
+      "eligible_ids": [
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119
+      ],
+      "rng_before": [
+        1570991899,
+        387847884,
+        3395953188,
+        1694684834
+      ],
+      "result": 109
+    },
+    {
+      "fixture": 9,
+      "requested_kind": 2,
+      "eligible_ids": [
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119
+      ],
+      "rng_before": [
+        59780189,
+        1135840948,
+        2304560537,
+        530809576
+      ],
+      "result": 115
+    },
+    {
+      "fixture": 9,
+      "requested_kind": 2,
+      "eligible_ids": [
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119
+      ],
+      "rng_before": [
+        1953291127,
+        1583063357,
+        2889775885,
+        3216980347
+      ],
+      "result": 116
+    },
+    {
+      "fixture": 9,
+      "requested_kind": 2,
+      "eligible_ids": [
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119
+      ],
+      "rng_before": [
+        2887681752,
+        1125974687,
+        2510666490,
+        1636492037
+      ],
+      "result": 110
+    },
+    {
+      "fixture": 9,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        3532255403,
+        2742548209,
+        4038522943,
+        1595467139
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 9,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        465342967,
+        2898400928,
+        1004257438,
+        2024977737
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 9,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        107480046,
+        2660933507,
+        3797759723,
+        4050880598
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 9,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        2411226340,
+        1408776235,
+        3930994199,
+        2620283102
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 9,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        950764876,
+        2781645815,
+        271515109,
+        2729039064
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 9,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        3538431800,
+        1994013856,
+        3905790156,
+        3011103518
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 9,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        1297896903,
+        2788462200,
+        1753617371,
+        501119337
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 9,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        600337712,
+        194763060,
+        4064162365,
+        159824875
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 9,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        1307235909,
+        4277475494,
+        2115806625,
+        498733671
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 9,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        417436465,
+        1008458444,
+        3810749722,
+        2308745090
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 9,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        582672654,
+        1669221121,
+        1948385094,
+        1593482331
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 9,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        2879716355,
+        4077559346,
+        3191762519,
+        2991375951
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 10,
+      "requested_kind": 0,
+      "eligible_ids": [
+        7
+      ],
+      "rng_before": [
+        4062927768,
+        2320109101,
+        1800135697,
+        2522607583
+      ],
+      "result": 7
+    },
+    {
+      "fixture": 10,
+      "requested_kind": 0,
+      "eligible_ids": [
+        7
+      ],
+      "rng_before": [
+        3188021127,
+        3120719599,
+        663670797,
+        3802823261
+      ],
+      "result": 7
+    },
+    {
+      "fixture": 10,
+      "requested_kind": 0,
+      "eligible_ids": [
+        7
+      ],
+      "rng_before": [
+        1781915481,
+        2812868150,
+        425294682,
+        3580684522
+      ],
+      "result": 7
+    },
+    {
+      "fixture": 10,
+      "requested_kind": 0,
+      "eligible_ids": [
+        7
+      ],
+      "rng_before": [
+        2101729519,
+        2644206129,
+        1752844368,
+        4033202199
+      ],
+      "result": 7
+    },
+    {
+      "fixture": 10,
+      "requested_kind": 0,
+      "eligible_ids": [
+        7
+      ],
+      "rng_before": [
+        4086753847,
+        1201474778,
+        140515379,
+        2964732879
+      ],
+      "result": 7
+    },
+    {
+      "fixture": 10,
+      "requested_kind": 0,
+      "eligible_ids": [
+        7
+      ],
+      "rng_before": [
+        1591414076,
+        933166190,
+        1904315855,
+        1909954149
+      ],
+      "result": 7
+    },
+    {
+      "fixture": 10,
+      "requested_kind": 0,
+      "eligible_ids": [
+        7
+      ],
+      "rng_before": [
+        4082603360,
+        1014096062,
+        3674130601,
+        1557724698
+      ],
+      "result": 7
+    },
+    {
+      "fixture": 10,
+      "requested_kind": 0,
+      "eligible_ids": [
+        7
+      ],
+      "rng_before": [
+        426724858,
+        4213052475,
+        2944974316,
+        1577691630
+      ],
+      "result": 7
+    },
+    {
+      "fixture": 10,
+      "requested_kind": 0,
+      "eligible_ids": [
+        7
+      ],
+      "rng_before": [
+        2338463041,
+        3872755741,
+        4199801677,
+        2769510048
+      ],
+      "result": 7
+    },
+    {
+      "fixture": 10,
+      "requested_kind": 0,
+      "eligible_ids": [
+        7
+      ],
+      "rng_before": [
+        1540492440,
+        260060661,
+        1709996749,
+        1184901787
+      ],
+      "result": 7
+    },
+    {
+      "fixture": 10,
+      "requested_kind": 0,
+      "eligible_ids": [
+        7
+      ],
+      "rng_before": [
+        815221547,
+        4158416864,
+        524671997,
+        4075970287
+      ],
+      "result": 7
+    },
+    {
+      "fixture": 10,
+      "requested_kind": 0,
+      "eligible_ids": [
+        7
+      ],
+      "rng_before": [
+        3642274789,
+        3539873758,
+        1952996248,
+        393734347
+      ],
+      "result": 7
+    },
+    {
+      "fixture": 10,
+      "requested_kind": 1,
+      "eligible_ids": [
+        7
+      ],
+      "rng_before": [
+        2846570058,
+        910987546,
+        2756099698,
+        2746601166
+      ],
+      "result": 7
+    },
+    {
+      "fixture": 10,
+      "requested_kind": 1,
+      "eligible_ids": [
+        7
+      ],
+      "rng_before": [
+        2564722363,
+        4170814022,
+        91729577,
+        217233051
+      ],
+      "result": 7
+    },
+    {
+      "fixture": 10,
+      "requested_kind": 1,
+      "eligible_ids": [
+        7
+      ],
+      "rng_before": [
+        3379257051,
+        1432410914,
+        1046120419,
+        4246953455
+      ],
+      "result": 7
+    },
+    {
+      "fixture": 10,
+      "requested_kind": 1,
+      "eligible_ids": [
+        7
+      ],
+      "rng_before": [
+        540838949,
+        3380045208,
+        2424843951,
+        881351238
+      ],
+      "result": 7
+    },
+    {
+      "fixture": 10,
+      "requested_kind": 1,
+      "eligible_ids": [
+        7
+      ],
+      "rng_before": [
+        294678352,
+        3564040452,
+        3286325893,
+        2380304322
+      ],
+      "result": 7
+    },
+    {
+      "fixture": 10,
+      "requested_kind": 1,
+      "eligible_ids": [
+        7
+      ],
+      "rng_before": [
+        889734128,
+        2518496186,
+        927503999,
+        3492035954
+      ],
+      "result": 7
+    },
+    {
+      "fixture": 10,
+      "requested_kind": 1,
+      "eligible_ids": [
+        7
+      ],
+      "rng_before": [
+        3735313433,
+        1000721711,
+        1411152518,
+        3325887726
+      ],
+      "result": 7
+    },
+    {
+      "fixture": 10,
+      "requested_kind": 1,
+      "eligible_ids": [
+        7
+      ],
+      "rng_before": [
+        633740357,
+        3387199116,
+        3867751337,
+        2559721644
+      ],
+      "result": 7
+    },
+    {
+      "fixture": 10,
+      "requested_kind": 1,
+      "eligible_ids": [
+        7
+      ],
+      "rng_before": [
+        12178595,
+        1190886387,
+        3686826237,
+        4226368665
+      ],
+      "result": 7
+    },
+    {
+      "fixture": 10,
+      "requested_kind": 1,
+      "eligible_ids": [
+        7
+      ],
+      "rng_before": [
+        621430136,
+        4241397494,
+        558311957,
+        2320207740
+      ],
+      "result": 7
+    },
+    {
+      "fixture": 10,
+      "requested_kind": 1,
+      "eligible_ids": [
+        7
+      ],
+      "rng_before": [
+        1076551580,
+        3429590757,
+        749459431,
+        472130062
+      ],
+      "result": 7
+    },
+    {
+      "fixture": 10,
+      "requested_kind": 1,
+      "eligible_ids": [
+        7
+      ],
+      "rng_before": [
+        2839220941,
+        3721365350,
+        110724913,
+        566090561
+      ],
+      "result": 7
+    },
+    {
+      "fixture": 10,
+      "requested_kind": 2,
+      "eligible_ids": [
+        7
+      ],
+      "rng_before": [
+        63824611,
+        1538638860,
+        3392958303,
+        3386287675
+      ],
+      "result": 7
+    },
+    {
+      "fixture": 10,
+      "requested_kind": 2,
+      "eligible_ids": [
+        7
+      ],
+      "rng_before": [
+        1021908455,
+        2529104043,
+        1390587865,
+        67779246
+      ],
+      "result": 7
+    },
+    {
+      "fixture": 10,
+      "requested_kind": 2,
+      "eligible_ids": [
+        7
+      ],
+      "rng_before": [
+        748381742,
+        1139744790,
+        225052083,
+        544423789
+      ],
+      "result": 7
+    },
+    {
+      "fixture": 10,
+      "requested_kind": 2,
+      "eligible_ids": [
+        7
+      ],
+      "rng_before": [
+        3185654811,
+        1808011838,
+        2259520140,
+        488120041
+      ],
+      "result": 7
+    },
+    {
+      "fixture": 10,
+      "requested_kind": 2,
+      "eligible_ids": [
+        7
+      ],
+      "rng_before": [
+        3202607993,
+        272979685,
+        2045460840,
+        1925327382
+      ],
+      "result": 7
+    },
+    {
+      "fixture": 10,
+      "requested_kind": 2,
+      "eligible_ids": [
+        7
+      ],
+      "rng_before": [
+        3341557731,
+        1554945552,
+        2204340231,
+        2549776132
+      ],
+      "result": 7
+    },
+    {
+      "fixture": 10,
+      "requested_kind": 2,
+      "eligible_ids": [
+        7
+      ],
+      "rng_before": [
+        468383404,
+        1941348507,
+        2163970710,
+        951548935
+      ],
+      "result": 7
+    },
+    {
+      "fixture": 10,
+      "requested_kind": 2,
+      "eligible_ids": [
+        7
+      ],
+      "rng_before": [
+        4060529257,
+        2641863774,
+        186251406,
+        3123484878
+      ],
+      "result": 7
+    },
+    {
+      "fixture": 10,
+      "requested_kind": 2,
+      "eligible_ids": [
+        7
+      ],
+      "rng_before": [
+        3363934309,
+        3903058753,
+        3723654635,
+        2829967158
+      ],
+      "result": 7
+    },
+    {
+      "fixture": 10,
+      "requested_kind": 2,
+      "eligible_ids": [
+        7
+      ],
+      "rng_before": [
+        2239615923,
+        1295492409,
+        1967277638,
+        2763127185
+      ],
+      "result": 7
+    },
+    {
+      "fixture": 10,
+      "requested_kind": 2,
+      "eligible_ids": [
+        7
+      ],
+      "rng_before": [
+        4140460939,
+        133790981,
+        261243105,
+        4288897470
+      ],
+      "result": 7
+    },
+    {
+      "fixture": 10,
+      "requested_kind": 2,
+      "eligible_ids": [
+        7
+      ],
+      "rng_before": [
+        2057211631,
+        3639119547,
+        1724932977,
+        1830831254
+      ],
+      "result": 7
+    },
+    {
+      "fixture": 10,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        2946766309,
+        463692519,
+        2105688676,
+        3059740329
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 10,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        3907135299,
+        1905085701,
+        315640205,
+        3862321353
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 10,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        346992476,
+        1383459732,
+        2612617557,
+        637088959
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 10,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        282103057,
+        541988748,
+        1181184718,
+        2681423225
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 10,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        2719043833,
+        2514122177,
+        2355172948,
+        3058672970
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 10,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        1396660850,
+        1635971911,
+        4271893674,
+        2565778475
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 10,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        2278724262,
+        1266576188,
+        1948692883,
+        2171325343
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 10,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        2600288277,
+        1847692041,
+        425968237,
+        3406321789
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 10,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        3014119648,
+        491404673,
+        3662716909,
+        2811970742
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 10,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        2795665767,
+        3769719482,
+        3302669787,
+        2367966782
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 10,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        3095983853,
+        3717261214,
+        923517027,
+        1847136322
+      ],
+      "result": 0
+    },
+    {
+      "fixture": 10,
+      "requested_kind": 3,
+      "eligible_ids": [],
+      "rng_before": [
+        1939413575,
+        3814321889,
+        981372436,
+        1777315761
+      ],
+      "result": 0
+    }
+  ],
+  "instruction_evidence": {
+    "va": "0x552bb0",
+    "bytes": 992,
+    "sha256": "39cdde5183a82f0129aeb26c91abc368b0c0be1998d3556fdd62e7f9d0a7b41b",
+    "listing": "ui_island/island_template_selector.asm"
+  }
+}
