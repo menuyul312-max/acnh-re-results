@@ -188,9 +188,12 @@ def verify(weeks=3000):
     cases['0xfc6d00 turnip prices'] = {'weeks': weeks, 'patterns_seen': per_pattern, 'mismatches': len(mism),
                                       'first_mismatches': mism[:3], 'pass': not mism}
     cases.update(calendar_cases())
+    fac = facility_cases()
+    unhandled_fac = fac.pop('meta_unhandled')
+    cases.update(fac)
     return {'meta': {'source': f'ExeFS main sha256 {NSO_SHA256}', 'harness': 'tools/gameplay_native.py (nso_sandbox, unicorn)',
                      'stubs': {'0x19aa0e0': 'RNG draw replaced by a seeded Python stream', '0xf44d90/0xf44e70': 'flag get/set -> 0'},
-                     'unhandled_imports': sb.unknown_imports},
+                     'unhandled_imports': {**sb.unknown_imports, **unhandled_fac}},
             'cases': cases, 'all_pass': all(c['pass'] for c in cases.values())}
 
 
@@ -289,6 +292,67 @@ def calendar_cases():
     want = {0: 0.0, 1: 0.0, 2: 0.0, 3: 0.055, 4: 0.105, 5: 0.155, 6: 0.205, 7: 0.205, 8: 0.205}
     out['0xf7d7e0 campsite visitor odds'] = {'first_failing_u_by_days': first_fail, 'documented': '0 / 5 / 10 / 15 / 20 %',
                                              'pass': first_fail == want}
+    return out
+
+
+class FacilityRig:
+    """Flags by name (get bool 0xf44d90, get int 0xf44ad0, set 0xf44e70 / 0xf45380, player set 0xf4b870) and a
+    structure query (0x1105130 -> 0x1071bd0 / 0x1072210) answered from a Python set of structure kinds."""
+    def __init__(self):
+        self.sb = sb = Sandbox()
+        self.flags, self.present, self.player = {}, set(), {}
+
+        def name(s):
+            return s.read(s.u64(s.reg('x0') + 8), 64).split(b'\0')[0].decode()
+
+        def setf(s):
+            self.flags[name(s)] = s.reg('x1') & 0xffffffff
+        sb.stub(FLAG_GET, lambda s: 1 if self.flags.get(name(s), 0) else 0)
+        sb.stub(0xf44ad0, lambda s: self.flags.get(name(s), 0))
+        sb.stub(FLAG_SET, setf)
+        sb.stub(0xf45380, setf)
+        sb.stub(0xf4b870, lambda s: self.player.__setitem__(name(s), s.reg('x1') & 0xff))
+        mgr = sb.alloc(0x40)
+        sb.uc.mem_write(mgr + 8, struct.pack('<Q', 1))
+        sb.stub(0x1105130, lambda s: mgr)
+        sb.stub(0x1071bd0, lambda s: s.uc.mem_write(s.reg('x0'), struct.pack('<IIII', s.reg('x1') & 0xff, 0, 1, 0)))
+        sb.stub(0x1072210, lambda s: 1 if s.u32(s.reg('x1')) in self.present else 0)
+        sb.stub(0x1071cd0, lambda s: None)
+        sb.stub(0x1106cb0, lambda s: 1 if (s.reg('x0') & 0xff) in self.present else 0)   # structure of kind present
+        self.state, self.info = sb.alloc(16), sb.alloc(0x20)
+
+    def run(self, va, kind, state, elapsed, kit_from=0, flags=None):
+        self.flags.clear(); self.flags.update(flags or {})
+        self.present.clear(); self.player.clear()
+        self.sb.uc.mem_write(self.state, struct.pack('<I', state))
+        out = []
+        for day, el in enumerate(elapsed):
+            if day >= kit_from:
+                self.present.add(kind)
+            self.sb.uc.mem_write(self.info, struct.pack('<q', el))
+            self.sb.call(va, (self.state, self.info))
+            out.append([self.sb.u32(self.state), dict(sorted(self.flags.items()))])
+        return out
+
+
+def facility_cases():
+    rig, out = FacilityRig(), {}
+    tailor = {'1+1+1': rig.run(0xfcc300, 5, 1, [1, 1, 1]), '2 at once': rig.run(0xfcc300, 5, 1, [2]),
+              'no kit': rig.run(0xfcc300, 5, 1, [1, 1], kit_from=9)}
+    ok = (tailor['1+1+1'][0][0] == 1 and tailor['1+1+1'][0][1].get('TailorConstruction1') == 1
+          and tailor['1+1+1'][1][0] == 2 and tailor['1+1+1'][1][1].get('TailorBuilt') == 1 and tailor['1+1+1'][1][1].get('TailorBuiltToday') == 1
+          and tailor['2 at once'][0][0] == 2 and 'TailorBuiltToday' not in tailor['2 at once'][0][1]
+          and all(r[0] == 1 for r in tailor['no kit']))
+    out['0xfcc300 Able Sisters construction'] = {'runs': tailor, 'pass': ok}
+    museum = {'tent': rig.run(0xf77050, 2, 1, [1]), 'tent 2 days': rig.run(0xf77050, 2, 1, [2])}
+    ok = museum['tent'][0][0] == 2 and museum['tent'][0][1].get('MuseumBuilt') == 1 and museum['tent'][0][1].get('MuseumTentBuiltToday') == 1 \
+        and museum['tent 2 days'][0][0] == 2 and 'MuseumTentBuiltToday' not in museum['tent 2 days'][0][1]
+    out['0xf77050 museum tent'] = {'runs': museum, 'pass': ok}
+    camp = {'kit': rig.run(0xf26330, 6, 1, [1]), 'no kit': rig.run(0xf26330, 6, 1, [1], kit_from=9)}
+    ok = camp['kit'][0][0] == 2 and camp['kit'][0][1].get('CampSiteBuilt') == 1 and camp['kit'][0][1].get('CeremonyBuildCampSite') == 1 \
+        and camp['no kit'][0][0] == 1
+    out['0xf26330 campsite'] = {'runs': camp, 'pass': ok}
+    out['meta_unhandled'] = rig.sb.unknown_imports
     return out
 
 

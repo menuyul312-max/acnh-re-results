@@ -34,6 +34,9 @@ Data mesin untuk dokumen ini: [`output/gameplay/native_flag_refs.json`](../outpu
 | `0xfdafa0` | Daisy Mae: Minggu dan state toko ≥ 2 (§3.5) | lulus |
 | `0xfdc020` | kode pengunjung hari ini = `codes[hari]`, kode ≥ 10 → 0 (§3.2) | lulus |
 | `0xf7d7e0` | tamu campsite: 0/5/10/15/20% untuk ≤2/3/4/5/≥6 hari (§2.1) | lulus |
+| `0xfcc300` | Able Sisters: kit ada → +1 hari `TailorConstruction1` = 1 → +2 hari state 2 (`TailorBuilt`, `TailorBuiltToday`); 2 hari terlewat sekaligus → langsung buka tanpa `Today`; tanpa kit tetap state 1 | lulus |
+| `0xf77050` | tenda museum: kit → state 2, `MuseumBuilt`, dan `MuseumTentBuiltToday` (hanya bila tepat 1 hari) | lulus |
+| `0xf26330` | campsite: kit → state 2, `CampSiteBuilt`, `CeremonyBuildCampSite`, `CampSiteBuiltToday`; tanpa kit tetap state 1 | lulus |
 
 Bacaan lain tetap [PSEUDO] sampai ada kasus emulasinya.
 
@@ -540,6 +543,6 @@ Pertanyaan yang dulu terbuka di jadwal ini sudah terjawab **[PSEUDO]**:
 
 | # | Celah | Titik masuk |
 |---|---|---|
-| 1 | Menaikkan [PSEUDO] lain menjadi terbukti | tambah kasus di `tools/gameplay_native.py`: prosesor fasilitas (`0xf77050`, `0xfc4560`, `0xfcc300`), undian pindah (`0xf847f0`), jadwal pengunjung (`0xfd8a80`), penjumlah skor (`0x15c61f0`) |
+| 1 | Menaikkan [PSEUDO] lain menjadi terbukti | tambah kasus di `tools/gameplay_native.py`: toko `0xfc4560`, gedung museum (tahap 2 `0xf77050`), undian pindah (`0xf847f0`), jadwal pengunjung (`0xfd8a80`), penjumlah skor (`0x15c61f0`) |
 
 Antrian yang sama, dalam bentuk yang bisa dibaca mesin dan ditandai statusnya, ada di [re_queue.json](re_queue.json).

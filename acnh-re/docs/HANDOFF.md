@@ -13,7 +13,7 @@ Baca file ini dulu; tidak perlu membaca seluruh repo. Antrian kerja yang bisa di
 | Jadwal pengunjung mingguan | Terbaca utuh: pembuat `0xfd8a80`, penempatan, validasi harian `0xfd9620`, layout member, kode 0–9 | GAMEPLAY_SCENARIO §3; `native_flag_refs.json` → `data.visitor_schedule` |
 | Pemilihan penghuni plot | Terbaca: filter kepribadian [0,5,4] dan pemilih acak dengan bitset eksklusi | GAMEPLAY_SCENARIO §5 |
 | Pindah keluar dan pengisian slot villager | Terbaca: undian harian, bobot keakraban, pengecualian, peluang pindah masuk, pilihan kepribadian | GAMEPLAY_SCENARIO §5.1–5.2; `native_flag_refs.json` → `data.villager_moves` |
-| Verifikasi native | 8 kasus lulus: keakraban, bobot/denda skor, harga lobak (3000 minggu), NormalLive, Daisy Mae, kode pengunjung, peluang tamu campsite | GAMEPLAY_SCENARIO §1 "Bacaan yang sudah terbukti native" |
+| Verifikasi native | 11 kasus lulus: keakraban, bobot/denda skor, harga lobak (3000 minggu), NormalLive, Daisy Mae, kode pengunjung, peluang tamu campsite, konstruksi Able Sisters, tenda museum, campsite | GAMEPLAY_SCENARIO §1 "Bacaan yang sudah terbukti native" |
 | Layout save | Terbukti native: 88 member teratas dengan offset node/data dan ukuran | GAMEPLAY_SCENARIO §1; `output/gameplay/save_layout.json` |
 | Rumus skor pulau | Terbaca: 11 kategori item, bobot Natural/Life, bonus harga/jembatan/fasilitas, poin minus | GAMEPLAY_FLOW §10.1; `native_flag_refs.json` → `data.island_score` |
 | Tanggal konser K.K. | Terbaca: NormalLive = Sabtu (geser sesuai `TkkSkipNormal`), BirthdayLive dari jadwal ulang tahun per pemain | GAMEPLAY_SCENARIO §3.6 |
@@ -90,3 +90,4 @@ Level bukti: **[EF]** EventFlow, **[TBL]** tabel, **[PSEUDO]** pseudocode/disass
 | 2026-11-04 | Layout save lewat emulasi `0xf32fa0`; `nso_sandbox.py`, `save_layout_native.py` | `28efa7d` |
 | 2026-11-04 | Verifikasi native 8 bacaan lewat emulasi (`gameplay_native.py`) | `a48fa4d` |
 | 2026-11-04 | Sisa kecil: RNG thread, level rumah, posisi plaza, penulis `AbandonedHouse`, jalur pindah masuk, kategori 10, bungkus item, mode sesi, tanggal ulang tahun, stok toko, harga jual, `EarlyOrLate`, botol pesan, layout pemain | `a607f18` |
+| 2026-11-04 | Verifikasi native prosesor fasilitas (`0xfcc300`, `0xf77050` tenda, `0xf26330`) | (commit ini) |
