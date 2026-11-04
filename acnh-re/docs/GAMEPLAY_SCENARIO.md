@@ -12,6 +12,15 @@ Data mesin untuk dokumen ini: [`output/gameplay/native_flag_refs.json`](../outpu
 
 ## 1. Model state
 
+### Layout save
+
+**Terbukti native (emulasi).** `tools/save_layout_native.py` menjalankan konstruktor layout save `0xf32fa0` langsung dari NSO lewat `tools/nso_sandbox.py`, lalu menulis `output/gameplay/save_layout.json`. JSON itu memuat 88 member: semua member sampai kedalaman 2, plus member yang sudah bernama. Pohon lengkapnya berisi ±43 ribu node.
+
+- **Struktur node** (0x38 byte): `+0x00` vtable (tipe), `+0x10` offset data, `+0x18` anak pertama, `+0x20` saudara. Ukuran data dikembalikan oleh slot vtable 3.
+- **Offset `base + OFF`** di pseudocode (`F_ee9350`) adalah offset node (`node`), bukan offset data.
+- **Data save utama** berukuran `0x4fa0d8` byte.
+- **Ukuran yang cocok dengan bacaan [PSEUDO] sebelumnya:** member villager `0xa8` = `0x1d6d48`, jadwal pengunjung `0x20a210` = `0x78`, skor pulau `0x24fdb0` = `0x250`.
+
 ### Flag
 
 **[TBL]** Ada 1.555 flag di 11 tabel `EventFlags*`. Kolom kebijakan reset (`h_fdb1f290` di Land; `h_5140e4b4` di tabel lain) menentukan kapan sebuah flag di-reset. Predikat reset sudah terbukti native (`0xf54530`, lihat [NATIVE_STAGE_WEATHER](NATIVE_STAGE_WEATHER.md)), dan pembacanya `0xf46200` dipanggil di pergantian hari.
@@ -484,6 +493,5 @@ Yang masih terbuka dari jadwal ini:
 | # | Celah | Titik masuk |
 |---|---|---|
 | 1 | Menaikkan [PSEUDO] menjadi terbukti | emulasi fungsi fasilitas dan rumus skor pulau seperti tahap mekanik terdahulu |
-| 2 | Format save | konstruktor layout save `0xf32fa0` (pemanggil `0xf30220`, `0xf416c0`) |
 
 Antrian yang sama, dalam bentuk yang bisa dibaca mesin dan ditandai statusnya, ada di [re_queue.json](re_queue.json).

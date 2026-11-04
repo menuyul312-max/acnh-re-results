@@ -13,6 +13,7 @@ Baca file ini dulu; tidak perlu membaca seluruh repo. Antrian kerja yang bisa di
 | Jadwal pengunjung mingguan | Terbaca utuh: pembuat `0xfd8a80`, penempatan, validasi harian `0xfd9620`, layout member, kode 0–9 | GAMEPLAY_SCENARIO §3; `native_flag_refs.json` → `data.visitor_schedule` |
 | Pemilihan penghuni plot | Terbaca: filter kepribadian [0,5,4] dan pemilih acak dengan bitset eksklusi | GAMEPLAY_SCENARIO §5 |
 | Pindah keluar dan pengisian slot villager | Terbaca: undian harian, bobot keakraban, pengecualian, peluang pindah masuk, pilihan kepribadian | GAMEPLAY_SCENARIO §5.1–5.2; `native_flag_refs.json` → `data.villager_moves` |
+| Layout save | Terbukti native: 88 member teratas dengan offset node/data dan ukuran | GAMEPLAY_SCENARIO §1; `output/gameplay/save_layout.json` |
 | Rumus skor pulau | Terbaca: 11 kategori item, bobot Natural/Life, bonus harga/jembatan/fasilitas, poin minus | GAMEPLAY_FLOW §10.1; `native_flag_refs.json` → `data.island_score` |
 | Tanggal konser K.K. | Terbaca: NormalLive = Sabtu (geser sesuai `TkkSkipNormal`), BirthdayLive dari jadwal ulang tahun per pemain | GAMEPLAY_SCENARIO §3.6 |
 | Lobak dan stok toko | Terbaca: generator harga 4 pola, tabel transisi; pool stok per toko (`ItemKind` × `ItemFrom` × musim) | GAMEPLAY_SCENARIO §3.7 |
@@ -31,7 +32,7 @@ Level bukti: **[EF]** EventFlow, **[TBL]** tabel, **[PSEUDO]** pseudocode/disass
    Alternatifnya, ekstrak ke folder lain dan pakai `--output-root <folder>/acnh-re/output` di setiap tool.
 2. Untuk `rodata` dan `disasm`, letakkan ExeFS `main` (NSO0) di `acnh-re/inputs/additional_exefs/main`. Folder ini di-ignore git. Sumbernya file `extracted_exefs.zip` milik pemilik repo, `main` SHA-256 `f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900`; minta ke pemilik repo, jangan di-commit.
 3. Pasang `capstone` lewat `pip install -r acnh-re/requirements-native.txt`, atau `pip install capstone` saja untuk `disasm`.
-4. Cek: `python3 -m unittest discover -s acnh-re/tests -p 'test_gameplay_flow.py'`. Dengan data terekstrak dan `main` di tempatnya, hasilnya 17 OK. Tanpa `main`, 7 tes NSO di-skip.
+4. Cek: `python3 -m unittest discover -s acnh-re/tests -p 'test_gameplay_flow.py'`. Dengan data terekstrak dan `main` di tempatnya, hasilnya 19 OK. Tanpa `main`, 8 tes NSO di-skip; emulasi butuh `unicorn`.
 
 ## Alat yang dipakai
 
@@ -45,6 +46,8 @@ Level bukti: **[EF]** EventFlow, **[TBL]** tabel, **[PSEUDO]** pseudocode/disass
 | `re_helpers.py handler <NamaAksi>` | Aksi/query EventFlow → factory, vtable, slot (slot terakhir = execute/evaluate) |
 | `re_helpers.py rodata 0xVA --u32 0xVA:N` / `disasm 0xVA` | Baca string pendek/angka dari rodata, dan disassembly fungsi tanpa pseudocode |
 | `re_helpers.py table <Tabel>` / `item <ID>` / `msg <regex>` | Tabel BCSV, nama item, pencarian pesan (lokal; teks jangan di-commit) |
+| `tools/nso_sandbox.py` (modul) | Emulasi fungsi native langsung dari NSO `main` (unicorn): relokasi MOD0, stub import libc, `Sandbox.call(va, args)`, `stub(va, fn)` |
+| `python3 acnh-re/tools/save_layout_native.py` | Bangun ulang `output/gameplay/save_layout.json` (layout member save, terbukti native) |
 
 ## Aturan penting
 
@@ -82,3 +85,4 @@ Level bukti: **[EF]** EventFlow, **[TBL]** tabel, **[PSEUDO]** pseudocode/disass
 | 2026-11-04 | Tanggal konser K.K. (`0xf1360`, `0xf0330`, `0xf11b0`, `0xf920f0`) | `7ace148` |
 | 2026-11-04 | Harga lobak (`0xfc6d00`) dan stok toko (`0xfd0630`, `0xfc56c0`, `0xfc8760`, `0xfca870`) | `a15223c` |
 | 2026-11-04 | Prosesor pergantian hari tersisa (`0xf7d4c0`, `0xf8b460`, `0xbdfd40`, `0xf6130`, `0x4ae640`, `0xd21110`, `0xfc1b80`, `0xf8f190`) | `5589793` |
+| 2026-11-04 | Layout save lewat emulasi `0xf32fa0`; `nso_sandbox.py`, `save_layout_native.py` | (commit ini) |

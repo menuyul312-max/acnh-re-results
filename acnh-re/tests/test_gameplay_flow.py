@@ -169,6 +169,15 @@ class GameplayFlowTests(unittest.TestCase):
             self.assertEqual(self.flags[key]['eventflow_writers'], [], key)
 
 
+class SaveLayoutTests(unittest.TestCase):
+    def test_committed_layout_matches_pseudocode_sizes(self):
+        doc = json.loads((ROOT/'output'/'gameplay'/'save_layout.json').read_text())
+        by = {m['node']: m for m in doc['members']}
+        self.assertEqual(by['0x0']['size'], '0x4fa0d8')
+        self.assertEqual((by['0xa8']['size'], by['0x20a210']['size'], by['0x24fdb0']['size']), ('0x1d6d48', '0x78', '0x250'))
+        self.assertEqual(doc['meta']['unhandled_imports'], {})
+
+
 NSO = Path(os.environ.get('ACNH_RE_NSO', ROOT/'inputs'/'additional_exefs'/'main'))
 
 
@@ -232,6 +241,17 @@ class VisitorScheduleNsoTests(unittest.TestCase):
         frm = self.read(0x29b535d, 4096).split(b'\0', 1)[0].decode().split(',')
         self.assertEqual([frm[i] for i in (1, 2, 3, 4, 48, 49, 50, 51, 52)],
                          ['ShopDefault', 'ShopMiscGoods', 'ShopLargeGoods', 'ShopHighClass', 'RugS', 'RugM', 'RugL', 'LaurentWallFloor', 'ShoesBagShop'])
+
+    def test_save_layout_emulation(self):
+        try:
+            import unicorn  # noqa: F401
+        except ImportError:
+            self.skipTest('pip install unicorn')
+        import save_layout_native
+        rows, unknown = save_layout_native.build(1)
+        by = {r['node']: r for r in rows}
+        self.assertEqual(unknown, {})
+        self.assertEqual((by['0x0']['size'], by['0x20a210']['data'], by['0x24fdb0']['data']), ('0x4fa0d8', '0x414e84', '0x4f8b34'))
 
     def test_island_score_enum_lists(self):
         lst = lambda a: self.read(a, 4096).split(b'\0', 1)[0].decode().split(',')  # noqa: E731
