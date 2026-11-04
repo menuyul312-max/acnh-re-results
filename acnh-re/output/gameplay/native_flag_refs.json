@@ -1047,6 +1047,18 @@
      "price = int(rate * base + 0.99999); pattern 0: high (0.9-1.4) / falling (0.6-0.8, -0.04..-0.10) phases totalling 12 slots; pattern 1: peak at rand(7)+3 with 0.9-1.4, 1.4-2.0, 2.0-6.0, 1.4-2.0, 0.9-1.4, then 0.4-0.9; pattern 2: falling from 0.85-0.9 by 0.03-0.05; pattern 3: peak at rand(8)+2 with 0.9-1.4, 0.9-1.4, r1-1, r, r1-1 (r 1.4-2.0, r1 = rand(1.4, r) * base)"
     ]
    },
+   "0x4cca80": {
+    "role": "query that reads the turnip base-price save member",
+    "reading": [
+     "resolves node +0x208ed0, reads its first u32 at data +0x00, then uses that value in a quantity-scaled purchase amount comparison; direct UI/EventFlow caller and message-page binding are not recovered"
+    ]
+   },
+   "0xfc7c70": {
+    "role": "read a turnip price for a weekday and AM/PM slot",
+    "reading": [
+     "clamps weekday to 0..6 and selects u32 at data +0x04 + 4*(2*weekday + pm); called by 0xaab8c0 for the turnip sale-price path"
+    ]
+   },
    "0xfc56c0": {
     "role": "Saharah daily stock",
     "reading": [
@@ -1057,7 +1069,16 @@
     "role": "Nook's Cranny stock (calls 0xfce9e0, 0xfceb90, 0xfcf660)",
     "reading": [
      "shop state <2 -> 0xfce9e0, state 2 -> 0xfceb90, state 3 -> 0xfcf660",
-     "candidate ItemFrom tags seen across the three state filters: ShopDefault, ShopMiscGoods, ShopLv1/2, ShopLargeGoods, ShopHighClass, ShopSeasonSale, ShopUmbrellaLv1/2, ShopWrappingPaper; exact inclusion/exclusion per pick remains unresolved"
+     "state <2 first pick: in-season mask AND ItemKind values {0,77,32} (Ftr, DoorDeco, Tambourine) AND ItemFrom value 1 (ShopDefault), then sample 2; 0xfcdfe0 performs the extra pick(s) from source values read from save node +0x20d0e0",
+     "state 2 and 3 builders also construct the seasonal mask intersected with ItemKind {0,77,32}; this is one component of their filters, not a complete per-pick rule",
+     "candidate ItemFrom tags seen across all three states: ShopDefault, ShopMiscGoods, ShopLv1/2, ShopLargeGoods, ShopHighClass, ShopSeasonSale, ShopUmbrellaLv1/2, ShopWrappingPaper; state 2/3 per-pick filter class and source mapping remain unresolved"
+    ]
+   },
+   "0xfcdfe0": {
+    "role": "additional Nook stock picks",
+    "reading": [
+     "uses two ItemFrom values obtained from save node +0x20d0e0 and a third source value derived from the shop argument; for each, builds a filter and calls 0xce170 with the requested count (1 for state <2, 2 for state 2, -1 for state 3)",
+     "the three runtime source values are not yet mapped to ItemFrom labels"
     ]
    },
    "0xfc6300": {

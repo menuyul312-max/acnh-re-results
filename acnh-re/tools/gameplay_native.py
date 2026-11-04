@@ -348,6 +348,13 @@ def facility_cases():
     ok = museum['tent'][0][0] == 2 and museum['tent'][0][1].get('MuseumBuilt') == 1 and museum['tent'][0][1].get('MuseumTentBuiltToday') == 1 \
         and museum['tent 2 days'][0][0] == 2 and 'MuseumTentBuiltToday' not in museum['tent 2 days'][0][1]
     out['0xf77050 museum tent'] = {'runs': museum, 'pass': ok}
+    museum_upgrade = rig.run(0xf77050, 2, 2, [1, 1], flags={'MuseumGrowupEnable1': 1})
+    ok = (museum_upgrade[0][0] == 2 and museum_upgrade[0][1].get('MuseumConstruction1') == 1
+          and museum_upgrade[0][1].get('MuseumConstructionToday') == 1
+          and museum_upgrade[1][0] == 3 and museum_upgrade[1][1].get('Museum2Built') == 1
+          and museum_upgrade[1][1].get('Museum2BuiltToday') == 1
+          and museum_upgrade[1][1].get('MuseumConstruction1') == 0)
+    out['0xf77050 museum upgrade'] = {'runs': museum_upgrade, 'pass': ok}
     camp = {'kit': rig.run(0xf26330, 6, 1, [1]), 'no kit': rig.run(0xf26330, 6, 1, [1], kit_from=9)}
     ok = camp['kit'][0][0] == 2 and camp['kit'][0][1].get('CampSiteBuilt') == 1 and camp['kit'][0][1].get('CeremonyBuildCampSite') == 1 \
         and camp['no kit'][0][0] == 1

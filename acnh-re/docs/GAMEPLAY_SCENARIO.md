@@ -14,7 +14,7 @@ Data mesin untuk dokumen ini: [`output/gameplay/native_flag_refs.json`](../outpu
 
 ### Layout save
 
-**Terbukti native (emulasi).** `tools/save_layout_native.py` menjalankan konstruktor layout save `0xf32fa0` langsung dari NSO lewat `tools/nso_sandbox.py`, lalu menulis `output/gameplay/save_layout.json`. JSON itu memuat 88 member yang dipilih sampai kedalaman 2 atau bernama, serta sensus penuh 43.292 node: 151 alamat vtable unik dan 76 ukuran data. Ukuran setiap tipe terbukti lewat slot vtable 3; nama kelas C++-nya belum ditemukan.
+**Terbukti native (emulasi).** `tools/save_layout_native.py` menjalankan konstruktor layout save `0xf32fa0` langsung dari NSO lewat `tools/nso_sandbox.py`, lalu menulis `output/gameplay/save_layout.json`. JSON itu memuat 88 member yang dipilih sampai kedalaman 2 atau bernama, serta sensus penuh 43.292 node: 151 alamat vtable unik dan 76 ukuran data. Ukuran setiap tipe terbukti lewat slot vtable 3; nama kelas C++-nya belum ditemukan. Pemindaian string ExeFS `main` juga tidak menemukan anchor RTTI standar `__ZTI`/`__ZTS` atau `_ZTI`/`_ZTS`, jadi label kelas tidak dapat dipulihkan dari nama RTTI yang tertanam di biner.
 
 - **Struktur node** (0x38 byte): `+0x00` vtable (tipe), `+0x10` offset data, `+0x18` anak pertama, `+0x20` saudara. Ukuran data dikembalikan oleh slot vtable 3.
 - **Offset `base + OFF`** di pseudocode (`F_ee9350`) adalah offset node (`node`), bukan offset data.
@@ -35,7 +35,7 @@ Data mesin untuk dokumen ini: [`output/gameplay/native_flag_refs.json`](../outpu
 | `0xfdc020` | kode pengunjung hari ini = `codes[hari]`, kode ≥ 10 → 0 (§3.2) | lulus |
 | `0xf7d7e0` | tamu campsite: 0/5/10/15/20% untuk ≤2/3/4/5/≥6 hari (§2.1) | lulus |
 | `0xfcc300` | Able Sisters: kit ada → +1 hari `TailorConstruction1` = 1 → +2 hari state 2 (`TailorBuilt`, `TailorBuiltToday`); 2 hari terlewat sekaligus → langsung buka tanpa `Today`; tanpa kit tetap state 1 | lulus |
-| `0xf77050` | tenda museum: kit → state 2, `MuseumBuilt`, dan `MuseumTentBuiltToday` (hanya bila tepat 1 hari) | lulus |
+| `0xf77050` | tenda museum dan upgrade: kit → state 2; `MuseumGrowupEnable1` + satu hari → hitungan 1; hari berikutnya → state 3 dan `Museum2Built`. Flag `*Today` hanya pada tepat satu hari berlalu | lulus |
 | `0xf26330` | campsite: kit → state 2, `CampSiteBuilt`, `CeremonyBuildCampSite`, `CampSiteBuiltToday`; tanpa kit tetap state 1 | lulus |
 
 Bacaan lain tetap [PSEUDO] sampai ada kasus emulasinya.
@@ -334,7 +334,11 @@ Konstanta float dibaca dari rodata (`0x29d5e8c` = 0.9, `0x29d5d94` = 1.4, `0x29d
 
 Enum `ItemFrom` ada di rodata `0x29b535d`.
 
-Untuk Nook's Cranny, `0xfd0630` memilih pembuat stok dari state toko: state 0–1 → `0xfce9e0`, state 2 → `0xfceb90`, dan state 3 → `0xfcf660`. Nilai `ItemFrom` yang terlihat pada filter mencakup `ShopDefault`/`ShopMiscGoods` untuk state awal; `ShopLv1`/`ShopLv2` serta filter payung/kertas bungkus pada state 2; dan tambahan `ShopSeasonSale`, `ShopLargeGoods`, serta `ShopHighClass` pada state 3. Ini membuktikan pemisahan berdasarkan state dan tag sumber, tetapi belum mengungkap kelas filter mana yang menjadi syarat wajib atau pengecualian pada setiap ambilan.
+Untuk Nook's Cranny, `0xfd0630` memilih pembuat stok dari state toko: state 0–1 → `0xfce9e0`, state 2 → `0xfceb90`, dan state 3 → `0xfcf660`. Ketiga pembuat stok menyusun komponen mask musim ∩ `ItemKind` `{Ftr, DoorDeco, Tambourine}`; pembuat state 2–3 menggabungkannya dengan filter tambahan. Nilai `ItemFrom` yang terlihat pada filter mencakup `ShopDefault`/`ShopMiscGoods` untuk state awal; `ShopLv1`/`ShopLv2` serta filter payung/kertas bungkus pada state 2; dan tambahan `ShopSeasonSale`, `ShopLargeGoods`, serta `ShopHighClass` pada state 3. Filter untuk dua pilihan awal state 0–1 sudah dapat dipastikan; rincian per ambilan state 2–3 dan pemetaan nilai sumber tambahan state awal belum terpetakan.
+
+**Filter state awal yang terbukti dari pseudocode dan tabel.** Pada `0xfce9e0`, dua pilihan pertama dibuat dari irisan mask item musim, `ItemKind` `{0, 77, 32}`, dan `ItemFrom` `{1}`. Daftar enum `ItemKind` memberi label `Ftr`, `DoorDeco`, dan `Tambourine`; baris `ItemFrom` bernilai 1 adalah `ShopDefault`. Dari 23 baris `ItemParam` dengan `ItemFrom=ShopDefault`, semuanya berjenis `Ftr` sebelum filter musim. Ketiga pembuat state toko juga menyusun komponen mask musim ∩ `ItemKind` `{0, 77, 32}`; state 2–3 menambahkan filter lain yang belum dapat dipasangkan dengan tiap ambilan. Fungsi itu lalu memanggil `0xfcdfe0` untuk satu pilihan tambahan; pemilih tambahan membaca tiga nilai sumber dari save node `+0x20d0e0`, tetapi pemetaan ketiga nilai itu ke label `ItemFrom` belum terbukti. Filter per ambilan state 2 dan 3 juga masih terbuka.
+
+**Pembaca harga dasar lobak.** Generator `0xfc6d00` menulis harga dasar pada kata pertama blok. Query native `0x4cca80` mengambil node save `+0x208ed0`, membaca `u32` pada `data +0x00`, lalu memakai nilainya pada perbandingan jumlah pembelian yang dikalikan kuantitas. Pembaca harga jual harian terpisah: `0xaab8c0` memanggil `0xfc7c70`, yang memilih slot di `data +0x04 + 4 × (2 × hari + pagi/sore)`. Hubungan langsung query `0x4cca80` dengan halaman UI `KabuBuyPage` belum ditemukan.
 
 | Fungsi | Toko | Pool |
 |---|---|---|

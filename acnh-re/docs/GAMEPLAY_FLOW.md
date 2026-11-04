@@ -283,7 +283,7 @@ Pergantian hari (`0xf545f0`) memaksa hitung ulang penuh. Hal yang sama terjadi b
 - 2 = `DummyPresentbox` (`0x1180`);
 - 3 = `DummyCardboard` (`0x1225`).
 
-`0xf58d00`/`0xf59370` mencari ItemParam pembungkusnya, sehingga hadiah terbungkus dihitung sebagai bungkusnya. Arti bit 2 dan 5 byte `+2` item dan bit 0/1 flag struktur belum terbukti.
+`0xf58d00`/`0xf59370` mencari ItemParam pembungkusnya, sehingga hadiah terbungkus dihitung sebagai bungkusnya. Arti bit 2 dan 5 byte `+2` item belum terbukti. Untuk struktur, `0x11074d0` dan `0x11076a0` hanya menambah jembatan/tanjakan saat bit 0 dan bit 1 pada flag byte `+8` keduanya bersih; nama serta arti kedua bit itu belum teridentifikasi.
 
 Alur menuju konser:
 
