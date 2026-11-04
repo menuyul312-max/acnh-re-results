@@ -77,4 +77,4 @@ Level bukti: **[EF]** EventFlow, **[TBL]** tabel, **[PSEUDO]** pseudocode/disass
 | 2026-11-04 | Jadwal pengunjung (konsumen dan kode), seed RNG harian, pemilihan penghuni plot, `re_helpers.py`, handoff ini | `00669b6` |
 | 2026-11-04 | Pembuat jadwal pengunjung mingguan `0xfd8a80` dan validasinya `0xfd9620`; tes NSO | `6d79bcc` |
 | 2026-11-04 | Pindah keluar villager (`0xf847f0`, `0xf87670`) dan pengisian slot (`0xf84f10`) | `5993e20` |
-| 2026-11-04 | Rumus skor pulau (`VillageScoreMgr` `0x15c4590`, `0x15c61f0`, penulis save `0x15c68c0`) | (commit ini) |
+| 2026-11-04 | Rumus skor pulau (`VillageScoreMgr` `0x15c4590`, `0x15c61f0`, penulis save `0x15c68c0`) | `59a5b34` |
