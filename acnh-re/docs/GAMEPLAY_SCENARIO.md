@@ -45,7 +45,16 @@ Kebijakan reset di tabel Land: `None` 200 flag, `Pre` 41 flag, `Plus` 2, `Start`
 
 ### Rating pulau
 
-**[EF]** Ambang dan tabel bintang ada di GAMEPLAY_FLOW §10. **[PSEUDO]** Handler `VillageScoreCheckNatural` (`0x3e0b80`) membandingkan ambang dengan float di objek save offset `+0x240`. Jadi skornya disimpan, lalu dibandingkan. Penghitung skornya (string `VillageScoreMgr`/`ASysVillageScoreMgr`) belum dibaca.
+**[EF]** Ambang dan tabel bintang ada di GAMEPLAY_FLOW §10.
+
+**[PSEUDO]** Rumusnya ada di GAMEPLAY_FLOW §10.1. Natural dan Life adalah float di member save `+0x24fdb0`, offset `+0x240`/`+0x244`, yang diperbarui `VillageScoreMgr` setiap ada blok 8×8 yang berubah.
+
+- **Natural** = 0.25 × furnitur DIY kecil + furnitur DIY lebar 3 + min(pohon dewasa, 190) + bunga.
+- **Life** = furnitur, dengan bobot 4 untuk furnitur lebar 3, ditambah:
+  - 0.2 × pagar;
+  - bonus harga (+1/+2, dan +0.5 untuk `DirectionOutdoor`);
+  - 15 per jembatan (kecuali yang pertama) dan per tanjakan;
+  - 15 per fasilitas: toko state 3, museum state 3, penjahit.
 
 ## 2. Satu hari
 
@@ -364,11 +373,10 @@ Yang masih terbuka dari jadwal ini:
 
 | # | Celah | Titik masuk |
 |---|---|---|
-| 1 | Rumus skor Nature/Life | penulis float `+0x240`, `VillageScoreMgr` |
-| 2 | Hari konser K.K. biasa | penentu tanggal event `NormalLive` di kalender native `0xf2a30` (§3.5) |
-| 3 | Harga lobak dan stok toko | belum ada titik masuk string; mulai dari flag `FirstKabuPattern` |
-| 4 | Prosesor yang belum dibaca | `0xf8f190`, `0xf7d4c0`, `0xfc1b80`, `0xbdfd40`, `0xf8b460` (tujuan RNG) |
-| 5 | Menaikkan [PSEUDO] menjadi terbukti | emulasi fungsi fasilitas seperti tahap mekanik terdahulu |
-| 6 | Format save | konstruktor layout save `0xf32fa0` (pemanggil `0xf30220`, `0xf416c0`) |
+| 1 | Hari konser K.K. biasa | penentu tanggal event `NormalLive` di kalender native `0xf2a30` (§3.5) |
+| 2 | Harga lobak dan stok toko | belum ada titik masuk string; mulai dari flag `FirstKabuPattern` |
+| 3 | Prosesor yang belum dibaca | `0xf8f190`, `0xf7d4c0`, `0xfc1b80`, `0xbdfd40`, `0xf8b460` (tujuan RNG) |
+| 4 | Menaikkan [PSEUDO] menjadi terbukti | emulasi fungsi fasilitas dan rumus skor pulau seperti tahap mekanik terdahulu |
+| 5 | Format save | konstruktor layout save `0xf32fa0` (pemanggil `0xf30220`, `0xf416c0`) |
 
 Antrian yang sama, dalam bentuk yang bisa dibaca mesin dan ditandai statusnya, ada di [re_queue.json](re_queue.json).

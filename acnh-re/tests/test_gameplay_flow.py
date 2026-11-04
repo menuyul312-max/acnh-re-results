@@ -143,6 +143,25 @@ class GameplayFlowTests(unittest.TestCase):
         self.assertIn('NNpcContractProbablityAddPoint', strings)
         db.close()
 
+    def test_island_score_chain_and_save_writer(self):
+        import sqlite3
+        db = sqlite3.connect(OUT/'index.sqlite')
+
+        def callees(f):
+            return {t for (t,) in db.execute('SELECT target_va FROM direct_calls WHERE owner_va=?', (f,))}
+        self.assertTrue({0x15c5120, 0x15c5420} <= callees(0x15c61c0))
+        self.assertTrue({0x15c4240, 0x15c48b0} <= callees(0x15c5120))
+        self.assertIn(0x15c4590, callees(0x15c4240))
+        self.assertTrue({0x15c58f0, 0x15c59d0} <= callees(0x15c61f0))
+        self.assertTrue({0x11074d0, 0x11076a0, 0x1106cb0, 0x1106df0} <= callees(0x15c5ef0))
+        # the actor calls are inside a span index.sqlite has no function for; pc is still recorded
+        calls = dict(db.execute('SELECT pc, target_va FROM direct_calls WHERE pc IN (?, ?)', (0xd4f34, 0xd50d4)).fetchall())
+        self.assertEqual(calls, {0xd4f34: 0x15c68c0, 0xd50d4: 0x15c61f0})
+        db.close()
+        for va in ('0x15c4590', '0x15c61f0', '0x15c68c0', '0x3e4510'):
+            self.assertIn(va, gf.PSEUDOCODE_READINGS)
+        self.assertEqual(set(gf.ISLAND_SCORE['categories']), {str(i) for i in range(11)})
+
     def test_native_only_progress_flags_have_no_eventflow_writer(self):
         for key in ('cLand:MuseumBuilt', 'cLand:MarketBuilt', 'cLand:Museum2Built', 'cLand:BuiltTownOffice',
                     'cLand:CampSiteBuilt', 'cLand:TkkFirstLive', 'cLand:TkkFirstLiveEnable', 'cLand:ImmQ_A_Complete'):
@@ -178,6 +197,34 @@ class VisitorScheduleNsoTests(unittest.TestCase):
         self.assertEqual(word(0xf84eb4), 0x0b080134)  # add w20, w9, w8          (+ days since talk)
         self.assertEqual(word(0xf852b4), 0x0b080908)  # add w8, w8, w8, lsl #2   (move-in points * 5)
         self.assertEqual(word(0xf852b8), 0x531f7914)  # lsl w20, w8, #1          (* 2 = * 10 percent)
+
+    def test_island_score_weights_and_save_fields(self):
+        word = lambda a: int.from_bytes(self.read(a, 4), 'little')  # noqa: E731
+        self.assertEqual(word(0x15c6920), 0x1e2a1001)  # fmov s1, #0.25  (category 0 -> Natural)
+        self.assertEqual(word(0x15c6950), 0x1e221001)  # fmov s1, #4.0   (category 2 -> Life)
+        self.assertEqual(word(0x29d6328), 0x3e4ccccd)  # 0.2f            (category 4 -> Life)
+        self.assertEqual(word(0x15c6998), 0x1e217800)  # fminnm s0, s0, s1 with 190.0f below
+        self.assertEqual(word(0x29d5f28), 0x433e0000)  # 190.0f          (category 5 cap)
+        self.assertEqual(word(0x15c673c), 0x0aa87d08)  # bic w8, w8, w8, asr #31  (max(bridges - 1, 0))
+        self.assertEqual(word(0x15c6754), 0x1e25d000)  # fmov s0, #15.0
+        self.assertEqual(word(0x15c4e38), 0x1e2c1001)  # fmov s1, #0.5   (duplicate penalty)
+        self.assertEqual(word(0x15c4e40), 0x1e2d1001)  # fmov s1, #0.75
+        self.assertEqual(word(0x15c4790), 0x5289c3e8)  # mov w8, #0x4e1f (price > 19999)
+        self.assertEqual(word(0x15c47a4), 0x711f401f)  # cmp w0, #0x7d0  (price >= 2000)
+        self.assertEqual([word(a) for a in (0x15c68e0, 0x15c68e8, 0x15c68f0, 0x15c68f8)],
+                         [0xb9024268, 0xb9024668, 0xb9024a68, 0xb9024e68])  # str w8, [x19, #0x240/#0x244/#0x248/#0x24c]
+        self.assertEqual([word(a) for a in (0x29d6464, 0x29d613c)], [0x43100000, 0x43000000])  # 144.0f, 128.0f
+
+    def test_island_score_enum_lists(self):
+        lst = lambda a: self.read(a, 4096).split(b'\0', 1)[0].decode().split(',')  # noqa: E731
+        self.assertEqual(lst(0x2955748)[26:28], ['Bridge', 'Slope'])
+        kinds = lst(0x29336c2)
+        self.assertEqual([kinds[i] for i in (0x2e, 0x2f, 0x3f, 0x42)], ['Fruit', 'Mushroom', 'StarPiece', 'ShellDrift'])
+        fg = lst(0x293f104)
+        self.assertEqual((fg[5], fg[10], fg[16], fg[18], fg[26], fg[27], fg[28], fg[29]),
+                         ('TreePalm', 'WeedSpr', 'WeedWin1', 'FlwCosmos', 'FlwSuzuran', 'Hole', 'Fence', 'Stone'))
+        self.assertEqual(lst(0x296542f)[:3], ['None', 'DirectionOutdoor', 'DirectionIndoor'])
+        self.assertEqual(lst(0x29568b7)[3:6], ['3_0x1_0', '3_0x2_0', '3_0x3_0'])
 
 
 if __name__ == '__main__':

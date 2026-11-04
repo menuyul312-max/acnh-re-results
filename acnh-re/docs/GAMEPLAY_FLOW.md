@@ -206,7 +206,77 @@ Bintang = result 0 + 1. Dasarnya: result 4 menampilkan "best possible ranking" d
 | 3 | 2★ | 2★ | 3★ | 4★ | 4★ |
 | 4 | 2★ | 2★ | 3★ | 4★ | 5★, atau 4★ bila ada poin minus |
 
-Cara skor Nature dan Life dihitung ada di query native dan belum di-RE.
+Cara skor dihitung ada di §10.1.
+
+### 10.1 Cara skor dihitung
+
+**[PSEUDO]** Semua bacaan di bagian ini berasal dari disassembly, dengan nama enum dicocokkan ke daftar string di rodata `main`. Belum dieksekusi. Detail per fungsi ada di `native_flag_refs.json` → `data.island_score` dan `all_readings`.
+
+**Tempat simpan.** Member save `+0x24fdb0` (deskriptor `0x33d5320`, data `0x250` byte) ditulis oleh `0x15c68c0`:
+
+| Offset | Isi | Dibaca query |
+|---|---|---|
+| `+0x000` | u16[18][16]: jumlah sel kategori 10 per blok | `VillageScoreVeryMessy` |
+| `+0x240` | f32 Natural | `VillageScoreCheckNatural` |
+| `+0x244` | f32 Life | `VillageScoreCheckLife` |
+| `+0x248` | i32 jumlah kategori 9 | `VillageScorePutUnitIconNum` |
+| `+0x24c` | i32 jumlah kategori 5 (pohon) | `VillageScoreCheckTreeNum` |
+
+**Grid.** `VillageScoreMgr` (`0x15c5e10`) membagi pulau menjadi blok 8×8 unit. Ukuran grid = ⌈144/8⌉ × ⌈128/8⌉ = 18×16 blok. Item dibaca per sel setengah unit (16×16 per blok) pada dua lapisan item.
+
+**Kategori item** (pengklasifikasi `0x15c4590`). Kategori 0–9 dihitung sekali per item, di sel asalnya. Kategori 10 dihitung per sel, dan hanya di lapisan 0.
+
+| # | Isi | Sumber data |
+|---|---|---|
+| 0 | Furnitur kecil yang punya resep DIY | `ItemKind.CanFtr`, `ItemParam.DiyRecipeID`, `ItemSize` bukan `3_0x*` |
+| 1 | Furnitur kecil tanpa resep DIY | idem, `DiyRecipeID` kosong |
+| 2 | Furnitur DIY lebar 3 | `ItemSize` `3_0x1_0`, `3_0x2_0`, `3_0x3_0` |
+| 3 | Furnitur non-DIY lebar 3 | idem |
+| 4 | Pagar | `FgMainParam.Kind` `Fence` |
+| 5 | Pohon dewasa | `FgMainParam.Nature` bit 4 ON dan bit 0 OFF (di tabel: nilai 18 atau 22) |
+| 6 | Pohon kelapa (bagian dari kategori 5) | `Kind` `TreePalm` |
+| 7 | Bunga | `Kind` `FlwCosmos`…`FlwSuzuran`, `Nature` bit 0 OFF |
+| 8 | Rumput liar | `Kind` `WeedSpr`…`WeedWin1` |
+| 9 | Barang tergeletak yang tampil sebagai ikon, bukan furnitur | `ItemUnitIcon` diisi. Tidak termasuk item `0x9c4` (`DIYBranch`), `0x9c6` (`DIYStone`), dan `ItemKind` `Mushroom`/`StarPiece`/`ShellDrift` |
+| 10 | Benda yang memenuhi sel | `Nature` bit 1 ON kecuali `Hole`/`Stone` (di tabel: pohon dan tunggul), ditambah furnitur yang lolos `0xaa8310` (belum dibaca rinci) |
+
+**Nilai per kategori.** C*n* adalah jumlah hitungan kategori *n* di semua blok. Untuk kategori 0 dan 1, setiap blok dikurangi denda duplikat (`0x15c4db0`):
+
+- dup = hitungan − jumlah pasangan (item, varian) berbeda di blok itu;
+- dup 5–9 → dikurangi 0.5 × dup;
+- dup ≥ 10 → dikurangi 0.75 × dup.
+
+**Rumus** (`0x15c61f0`, tabel bobot `0x3149d28`):
+
+```
+Natural = 0.25·C0 + C2 + min(C5, 190) + C7
+Life    = C0 + C1 + 4·C2 + 4·C3 + 0.2·C4
+        + bonus harga
+        + 15 × (max(jembatan − 1, 0) + tanjakan)
+        + 15 × (toko state ≥ 3) + 15 × (museum state ≥ 3) + 15 × (penjahit ada)
+```
+
+- **Bonus harga:** dihitung per furnitur di sel asalnya. `Price × jumlah tumpukan` ≥ 20000 → +2; ≥ 2000 → +1. `ItemPriorityPlace` = `DirectionOutdoor` → +0.5 lagi.
+- **Jembatan dan tanjakan:** struktur tipe 26 (`Bridge`) dan 27 (`Slope`) dari enum string `0x2955748`. Jembatan pertama tidak dihitung.
+- **Bonus fasilitas:** tidak diberikan selama fasilitasnya sedang dibangun (`0x1106df0`, flag `MarketConstruction2`, `MuseumConstruction1`, `TailorConstruction1`). State toko dan museum mengikuti tabel "State fasilitas" di GAMEPLAY_SCENARIO §1: state 3 = toko sesudah upgrade dan gedung museum (`Museum2Built`).
+- **Bobot nol:** kategori 6, 8, 9, 10, dan dua penghitung medan per blok tidak masuk Natural maupun Life. Kategori 9 dan 10 dipakai untuk poin minus.
+
+**Poin minus dan delta harian [EF]+[PSEUDO]:**
+
+| Query | Syarat di `System_IslandEvaluationCheck` |
+|---|---|
+| `VillageScoreVeryMessy` | ≥ 1 blok (`BorderBlockNum`) dengan ≥ 180 sel kategori 10 (`BorderHalfUnit`), dari 256 sel per blok |
+| `VillageScoreCheckTreeNum` | C5 > 220. Isabelle (`SNPC_sza_50`) memakai 180 |
+| `VillageScorePutUnitIconNum` | C9 ≥ 15 |
+| `…NaturalDeltaBeforeDay` / `…LifeDeltaBeforeDay` | int(skor) − flag `SzaIslandEvaluationBeforeNatural`/`Life` ≥ 5 / 10. Nilainya disimpan oleh aksi `VillageScore{Natural,Life}ReflectLandSave` |
+
+**Kapan dihitung ulang.** Fungsi pengubah item dan medan menandai blok 8×8 yang berubah (`0x15c5fc0`). Aktor `ASysVillageScoreMgr` (metode `0xd4c30`–`0xd5160`) lalu:
+
+1. menghitung ulang satu blok kotor (`0x15c61c0`);
+2. menjumlah semua blok (`0x15c61f0`);
+3. menulis hasilnya ke save (`0x15c68c0`).
+
+Pergantian hari (`0xf545f0`) memaksa hitung ulang penuh. Selama masih ada blok yang belum dihitung, C5 dan C9 tercatat 0 (`0x15c59d0`).
 
 Alur menuju konser:
 
@@ -249,7 +319,7 @@ Inilah ujung alur cerita utama di data. Sesudahnya tidak ada flag progres baru y
   - penyelesaian bangunan (museum, toko, penjahit, campsite, Resident Services) dan pembuka konser K.K. sudah dibaca **[PSEUDO]** di atas;
   - yang belum dibaca: `TkkFirstLive` (`0xf0330`, `0xf11b0`), `ImmQ_*_Complete` (`0xfd9d10`), `ImmQ_*_Invited` (tanpa rujukan string), `BridgeBuilt`/`SlopeBuilt` (hanya dibaca `0x10c26e0`), serta prosesor `0xf8f190`, `0xf7d4c0`, `0xfc1b80`.
 - **Bacaan [PSEUDO] perlu dieksekusi native.** Uji emulasi seperti tahap-tahap mekanik sebelumnya dibutuhkan untuk menaikkan statusnya menjadi terbukti. Arti "struktur jenis 0/1/2/5/6" diambil dari argumen `0x1071bd0`/`0x1106cb0` dan konteks flag; enum aslinya belum dipetakan.
-- **Query native yang angkanya dipakai tetapi caranya belum di-RE:** `VillageScoreCheckNatural/Life` (cara skor dihitung), `NpcHouseNum`, `MuseumDonationNumCheck`, `IsSettlerQuestOutsideComplete`, `EventBranch`, `FacilityOpenPastDays`, serta aksi `DecideSettlerNpc` dan `CompleteSettlerQuestSubject`.
+- **Query native yang angkanya dipakai tetapi caranya belum di-RE:** `NpcHouseNum`, `MuseumDonationNumCheck`, `IsSettlerQuestOutsideComplete`, `EventBranch`, `FacilityOpenPastDays`, serta aksi `DecideSettlerNpc` dan `CompleteSettlerQuestSubject`.
 - **Pemilih obrolan oleh AI NPC.** Flow `AI_NPC_*` memilih obrolan lewat `SetNpcSpeakFlow`, `NpcChangeConversationPretenseState`, dan state AI. Kapan state itu dievaluasi (jadwal, jarak, giliran bicara) ditentukan kode native.
 - **Staff roll, perpindahan stage setelah demo, dan penyelesaian konstruksi di pagi hari** berjalan di luar EventFlow.
 - **Batas walker:** subflow tidak di-inline, dan cabang `SubflowResultChoice` tidak dihitung sebagai syarat. Rantai lewat result (contohnya result 13 pada pengumuman pagi) dibaca manual dari pohon flow di atas.

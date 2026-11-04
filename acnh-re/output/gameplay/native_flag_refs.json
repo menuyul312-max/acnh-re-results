@@ -572,7 +572,19 @@
    "0x3e0b80": {
     "role": "EventFlowQueryVillageScoreCheckNatural evaluate slot",
     "reading": [
-     "returns BorderValue <= score, so case 1 = score at least the border; score is a float at +0x240 of a save object"
+     "returns BorderValue <= score, so case 1 = score at least the border; score is the f32 at +0x240 of save member +0x24fdb0 (Life: +0x244, 0x3df930)"
+    ]
+   },
+   "0x3e4510": {
+    "role": "EventFlowQueryVillageScoreVeryMessy evaluate slot",
+    "reading": [
+     "counts blocks of the u16[18][16] grid (+0x000) with value >= BorderHalfUnit (+0xd0); returns count >= BorderBlockNum (+0xf8)"
+    ]
+   },
+   "0x3e1470": {
+    "role": "EventFlowQueryVillageScoreCheckNaturalDeltaBeforeDay evaluate slot",
+    "reading": [
+     "DeltaPoint <= int(Natural) - SzaIslandEvaluationBeforeNatural; 0x2d68c0 (NaturalReflectLandSave) stores int(Natural) in that flag; Life: 0x3e0220 / 0x2d60a0 with SzaIslandEvaluationBeforeLife"
     ]
    }
   },
@@ -716,7 +728,63 @@
    "0x3e0b80": {
     "role": "EventFlowQueryVillageScoreCheckNatural evaluate slot",
     "reading": [
-     "returns BorderValue <= score, so case 1 = score at least the border; score is a float at +0x240 of a save object"
+     "returns BorderValue <= score, so case 1 = score at least the border; score is the f32 at +0x240 of save member +0x24fdb0 (Life: +0x244, 0x3df930)"
+    ]
+   },
+   "0x3e4510": {
+    "role": "EventFlowQueryVillageScoreVeryMessy evaluate slot",
+    "reading": [
+     "counts blocks of the u16[18][16] grid (+0x000) with value >= BorderHalfUnit (+0xd0); returns count >= BorderBlockNum (+0xf8)"
+    ]
+   },
+   "0x3e1470": {
+    "role": "EventFlowQueryVillageScoreCheckNaturalDeltaBeforeDay evaluate slot",
+    "reading": [
+     "DeltaPoint <= int(Natural) - SzaIslandEvaluationBeforeNatural; 0x2d68c0 (NaturalReflectLandSave) stores int(Natural) in that flag; Life: 0x3e0220 / 0x2d60a0 with SzaIslandEvaluationBeforeLife"
+    ]
+   },
+   "0x15c4590": {
+    "role": "island score item classifier (disassembly; pseudocode loses return values)",
+    "reading": [
+     "returns a category bitmask, a class byte (0 = category 0, 1 = category 1, else 0xff) and a float bonus",
+     "ItemParam item (0xf58d00) shown as furniture (0xaa7f80): DiyRecipeID (0xaa8690/0xaa8780) and ItemSize 3..5 (0xaab060) pick bit 0/1/2/3; Price*stack (0xaaaa80) > 19999 -> +2.0, >= 2000 -> +1.0; ItemPriorityPlace (0xaa9590) == 1 DirectionOutdoor -> +0.5",
+     "field item (0xf58f20): FgMainParam Kind (0x4cbd20) and Nature bits (0x4cbc20): bit 0x20 tree, 0x40 palm, 0x80 flower, 0x10 fence, 0x100 weed",
+     "0x200 unit-icon items (0xf59370) at the origin cell, except items 0x9c4/0x9c6 and ItemKind 0x2f/0x3f/0x42; 0x400 only on layer 0"
+    ]
+   },
+   "0x15c4240": {
+    "role": "count one half-unit cell into a block (layer 0; 0x15c48b0 is layer 1 without bit 0x400)",
+    "reading": [
+     "each set bit adds to the u16 counter[bit] (+0x00..+0x14); bonus float added to +0x1c",
+     "class 0/1 items go to a 128-entry (item, variant | class << 4, count) list at +0x20 used by the duplicate penalty 0x15c4db0"
+    ]
+   },
+   "0x15c4db0": {
+    "role": "duplicate penalty for categories 0 and 1",
+    "reading": [
+     "dup = counter - distinct entries of that class; dup < 5 -> 0; dup <= 9 -> dup * 0.5; else dup * 0.75"
+    ]
+   },
+   "0x15c5ef0": {
+    "role": "island score building inputs",
+    "reading": [
+     "+0x8 = bridge count (0x11074d0, structure type 0x1a), +0xc = slope count (0x11076a0, type 0x1b)",
+     "+0x14 shop kind 0 present, state (0x11025d0) >= 3, not under construction (0x1106df0); +0x15 museum kind 2, state (0x11030c0) >= 3, not under construction; +0x16 tailor kind 5 present, not under construction"
+    ]
+   },
+   "0x15c61f0": {
+    "role": "island score sum (called by the actor at 0xd50d4)",
+    "reading": [
+     "per category 0..10: count (functor 0x3149e08) to +0x24+4c; value = sum of counter - penalty (functor 0x3149e58); Natural (+0x18) += table[c].nat(value), Life (+0x1c) += table[c].life(value)",
+     "weight table 0x3149d28 (pairs life, nat): c0 1/0.25, c1 1/0, c2 4/1, c3 4/0, c4 0.2/0, c5 0/min(x,190), c7 0/1, others 0",
+     "two terrain counters (functor 0x3149e30) have zero weights (0x3149dd8)",
+     "Life += sum of block bonus floats + 15 * (max(bridges - 1, 0) + slopes) + 15 per facility flag +0x14/+0x15/+0x16; +0x10 = distinct furniture (item, variant) pairs, not saved"
+    ]
+   },
+   "0x15c68c0": {
+    "role": "copy island score to the save member",
+    "reading": [
+     "+0x000 grid (0x15c5870), +0x240 = Natural, +0x244 = Life, +0x248 = count[9], +0x24c = count[5]"
     ]
    },
    "0xf53a70": {
@@ -961,6 +1029,44 @@
    "move_in_roll": "villagers < 5: always; 5..7: (10 - n + NNpcContractProbablityAddPoint + free plots) * 10%; >= 8: (10 - n + free plots) * 10%",
    "move_in_pick": "personality (id byte 2, 0..7) least present on the island, then uniform pick excluding the bitset",
    "evidence": "[PSEUDO] pseudocode + disassembly, not executed"
+  },
+  "island_score": {
+   "save_member": {
+    "offset": "0x24fdb0",
+    "descriptor": "0x33d5320",
+    "data_size": "0x250",
+    "writer": "0x15c68c0 (actor 0xd4df0)"
+   },
+   "save_fields": {
+    "0x000": "u16[18][16]: category 10 half-unit count per 8x8-unit block (VillageScoreVeryMessy)",
+    "0x240": "f32 Natural (VillageScoreCheckNatural)",
+    "0x244": "f32 Life (VillageScoreCheckLife)",
+    "0x248": "i32 category 9 count (VillageScorePutUnitIconNum)",
+    "0x24c": "i32 category 5 count (VillageScoreCheckTreeNum)"
+   },
+   "grid": "blocks of 8 units; ceil(144/8) x ceil(128/8) = 18 x 16 blocks of 0x228 bytes; items read on a half-unit grid (16 x 16 per block), item layers 0 and 1",
+   "categories": {
+    "0": "ItemParam item shown as furniture (ItemKind.CanFtr, item flag bit 5 off) with a DiyRecipeID, ItemSize not 3_0x*; origin cell only",
+    "1": "same, without DiyRecipeID",
+    "2": "DIY furniture with ItemSize 3_0x1_0 / 3_0x2_0 / 3_0x3_0",
+    "3": "non-DIY furniture with ItemSize 3_0x*",
+    "4": "FgMainParam Kind Fence",
+    "5": "FgMainParam Nature bit 4 on and bit 0 off (table: trees with Nature 18 or 22)",
+    "6": "category 5 with Kind TreePalm",
+    "7": "Kind FlwCosmos..FlwSuzuran with Nature bit 0 off",
+    "8": "Kind WeedSpr..WeedWin1",
+    "9": "dropped item shown as a unit icon (ItemUnitIcon set, not shown as furniture, item flag bit 2 off), except item 0x9c4, 0x9c6 and ItemKind Mushroom/StarPiece/ShellDrift",
+    "10": "layer 0, every half-unit cell: Fg with Nature bit 1 on except Kind Hole/Stone (table: trees and stumps), or furniture passing 0xaa8310"
+   },
+   "block_value": "C[c] = sum over blocks of counter[c]; for c = 0, 1 minus a per-block duplicate penalty: dup = counter - distinct (item, variant); dup 5..9 -> 0.5*dup, dup >= 10 -> 0.75*dup",
+   "natural": "0.25*C0 + C2 + min(C5, 190) + C7",
+   "life": "C0 + C1 + 4*C2 + 4*C3 + 0.2*C4 + price bonus + 15*(max(bridges - 1, 0) + slopes) + 15 per facility (shop state >= 3, museum state >= 3, tailor built; none under construction)",
+   "price_bonus": "per furniture item at its origin cell: Price * stack >= 20000 -> +2, >= 2000 -> +1; ItemPriorityPlace DirectionOutdoor -> +0.5",
+   "zero_weight": "categories 6, 8, 9, 10 and two per-block terrain counters (0x714060, 0x18af40) do not enter Natural or Life",
+   "structures": "bridges = structure type 26 (Bridge), slopes = 27 (Slope), entries with flag byte +8 bits 0 and 1 off (0x11074d0, 0x11076a0)",
+   "recalculation": "edits mark 8x8 blocks dirty (0x15c5fc0, from 0x4ad290, 0x4be720, 0x5fc4c0, 0x61cd80, 0x721b90); the actor recounts one dirty block (0x15c61c0), sums (0x15c61f0) and writes the save member; day change (0xf545f0) and 0xbc82d0() >= 2 force a full recount (+0x58)",
+   "eventflow": "System_IslandEvaluationCheck: Natural 200/270/350/450, Life 80/160/400/650, TreeNum > 220, PutUnitIconNum >= 15, VeryMessy >= 1 block with >= 180 half-units; DeltaBeforeDay compares int(score) with SzaIslandEvaluationBefore{Natural,Life} (5 / 10 points)",
+   "evidence": "[PSEUDO] disassembly + table enums, not executed"
   },
   "day_change_callees_in_order": [
    "0xeecf20",

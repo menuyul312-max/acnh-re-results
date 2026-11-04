@@ -51,6 +51,11 @@ Rincian, cara verifikasi, dan file yang wajib ada: [WORKFLOW §3](acnh-re/docs/W
 
 ## Fokus terbaru (terbaru di atas)
 
+- **Rumus skor pulau (Nature/Life)** — [GAMEPLAY_FLOW §10.1](acnh-re/docs/GAMEPLAY_FLOW.md):
+  - `VillageScoreMgr` menghitung isi pulau per blok 8×8 unit (grid 18×16) dalam 11 kategori item; skor disimpan di member save `+0x24fdb0` (`+0x240` Natural, `+0x244` Life);
+  - Natural = `0.25·furnitur DIY kecil + furnitur DIY lebar 3 + min(pohon dewasa, 190) + bunga`;
+  - Life = furnitur (lebar 3 ×4) + `0.2·pagar` + bonus harga (+1/+2, `DirectionOutdoor` +0.5) + 15 per jembatan (kecuali yang pertama), tanjakan, dan fasilitas (toko/museum state 3, penjahit); duplikat furnitur dalam satu blok didenda;
+  - poin minus: blok penuh pohon/tunggul (`VeryMessy`), pohon >220, barang tergeletak ≥15.
 - **Pindah keluar dan pengisian slot villager** — [GAMEPLAY_SCENARIO §5.1–5.2](acnh-re/docs/GAMEPLAY_SCENARIO.md):
   - undian harian `5 × villager menetap + hari sejak percakapan pindah` persen, dengan RNG harian, jeda 15 hari, minimal 6 villager;
   - bobot pemilihan dari rata-rata `Friendship` (makin tidak akrab, makin mungkin pindah); dikecualikan yang berulang tahun ≤7 hari lagi, yang terakhir pindah masuk, dan yang terakhir dibujuk tinggal;

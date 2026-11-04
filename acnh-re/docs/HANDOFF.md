@@ -13,7 +13,8 @@ Baca file ini dulu; tidak perlu membaca seluruh repo. Antrian kerja yang bisa di
 | Jadwal pengunjung mingguan | Terbaca utuh: pembuat `0xfd8a80`, penempatan, validasi harian `0xfd9620`, layout member, kode 0–9 | GAMEPLAY_SCENARIO §3; `native_flag_refs.json` → `data.visitor_schedule` |
 | Pemilihan penghuni plot | Terbaca: filter kepribadian [0,5,4] dan pemilih acak dengan bitset eksklusi | GAMEPLAY_SCENARIO §5 |
 | Pindah keluar dan pengisian slot villager | Terbaca: undian harian, bobot keakraban, pengecualian, peluang pindah masuk, pilihan kepribadian | GAMEPLAY_SCENARIO §5.1–5.2; `native_flag_refs.json` → `data.villager_moves` |
-| Rumus skor pulau, hari K.K., lobak/stok toko | Belum | `re_queue.json` item 1–3 |
+| Rumus skor pulau | Terbaca: 11 kategori item, bobot Natural/Life, bonus harga/jembatan/fasilitas, poin minus | GAMEPLAY_FLOW §10.1; `native_flag_refs.json` → `data.island_score` |
+| Hari K.K., lobak/stok toko | Belum | `re_queue.json` item 1–2 |
 | Mekanik (collision, terrain, NPC nav, …) dan pembentukan pulau | Dikerjakan agen lain; jangan disentuh tanpa koordinasi | README root "Fokus terbaru" |
 
 Level bukti: **[EF]** EventFlow, **[TBL]** tabel, **[PSEUDO]** pseudocode/disassembly yang belum dieksekusi, **[NATIVE]** belum dibaca, ditambah "terbukti native" untuk hasil emulasi. Jangan menaikkan status tanpa bukti.
@@ -29,7 +30,7 @@ Level bukti: **[EF]** EventFlow, **[TBL]** tabel, **[PSEUDO]** pseudocode/disass
    Alternatifnya, ekstrak ke folder lain dan pakai `--output-root <folder>/acnh-re/output` di setiap tool.
 2. Untuk `rodata` dan `disasm`, letakkan ExeFS `main` (NSO0) di `acnh-re/inputs/additional_exefs/main`. Folder ini di-ignore git. Sumbernya file `extracted_exefs.zip` milik pemilik repo, `main` SHA-256 `f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900`; minta ke pemilik repo, jangan di-commit.
 3. Pasang `capstone` lewat `pip install -r acnh-re/requirements-native.txt`, atau `pip install capstone` saja untuk `disasm`.
-4. Cek: `python3 -m unittest discover -s acnh-re/tests -p 'test_gameplay_flow.py'`. Dengan data terekstrak dan `main` di tempatnya, hasilnya 12 OK. Tanpa `main`, 3 tes NSO di-skip.
+4. Cek: `python3 -m unittest discover -s acnh-re/tests -p 'test_gameplay_flow.py'`. Dengan data terekstrak dan `main` di tempatnya, hasilnya 15 OK. Tanpa `main`, 5 tes NSO di-skip.
 
 ## Alat yang dipakai
 
@@ -48,7 +49,7 @@ Level bukti: **[EF]** EventFlow, **[TBL]** tabel, **[PSEUDO]** pseudocode/disass
 
 - **Alamat:** ELF VA. Pseudocode Ghidra = ELF+0x100000 (`FUN_01077050` = `0xf77050`, `UNK_02a9bcb7` = string `0x299bcb7`).
 - **Cabang flag Bool:** case 0 = ON, case 1 = OFF. `NpcHouseNum`: case 0 = ≥Num. `VillageScoreCheck*`: case 1 = ≥ambang.
-- **Pola fungsi native:** `F_f44d90` get bool, `F_f44ad0` get int, `F_f44e70` set, `F_f45380` increment flag. Pola member save: `F_ee9350(&x, base + OFF, …)` → `F_ee94f0(…, SIZE)` → data = `x[2] + x[1]`; tipe member = `lRam…` tepat sesudahnya. Undian acak pergantian hari: `F_f53420(n)` = acak 0..n−1 dari RNG harian `0x35e9510` (berlaku bila global `0x35ee058` = 1, seperti di dalam `0xf84320`); `F_19aa0e0` dengan state dari TLS adalah RNG lain. Bit acak: popcount `0x198b590`, bit ke-n `0x198b630`.
+- **Pola fungsi native:** `F_f44d90` get bool, `F_f44ad0` get int, `F_f44e70` set, `F_f45380` increment flag. Pola member save: `F_ee9350(&x, base + OFF, …)` → `F_ee94f0(…, SIZE)` → data = `x[2] + x[1]`; tipe member = `lRam…` tepat sesudahnya. Undian acak pergantian hari: `F_f53420(n)` = acak 0..n−1 dari RNG harian `0x35e9510` (berlaku bila global `0x35ee058` = 1, seperti di dalam `0xf84320`); `F_19aa0e0` dengan state dari TLS adalah RNG lain. Bit acak: popcount `0x198b590`, bit ke-n `0x198b630`. Nilai enum kolom tabel (`ItemKind`, `ItemSize`, `FgMainParam.Kind`, …) adalah indeks di daftar string koma di rodata; cari daftarnya dengan `rodata`, bukan dari urutan `UniqueID`.
 - **Repo publik:** jangan meng-commit teks dialog, aset, executable, atau link dump. Output yang di-commit memakai MessageID saja.
 - **File besar, jangan dibaca utuh:**
   - `output/gameplay/flag_index.json` dan `flow_index.json` (±2,5 MB);
@@ -76,3 +77,4 @@ Level bukti: **[EF]** EventFlow, **[TBL]** tabel, **[PSEUDO]** pseudocode/disass
 | 2026-11-04 | Jadwal pengunjung (konsumen dan kode), seed RNG harian, pemilihan penghuni plot, `re_helpers.py`, handoff ini | `00669b6` |
 | 2026-11-04 | Pembuat jadwal pengunjung mingguan `0xfd8a80` dan validasinya `0xfd9620`; tes NSO | `6d79bcc` |
 | 2026-11-04 | Pindah keluar villager (`0xf847f0`, `0xf87670`) dan pengisian slot (`0xf84f10`) | `5993e20` |
+| 2026-11-04 | Rumus skor pulau (`VillageScoreMgr` `0x15c4590`, `0x15c61f0`, penulis save `0x15c68c0`) | (commit ini) |
