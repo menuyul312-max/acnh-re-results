@@ -118,16 +118,18 @@ pasangan item lantai dan RoomFloorParam. Empat belas lantai mengaktifkan
 HasJmp. State 17/18 memilih variasi 2/3 lewat Horizon XOR bit orientasi, dan
 ketiadaan resident map memakai fallback Floorboards. Sebanyak 1.131 kasus
 mencakup 42 kontrol query ground aktif/nonaktif. Tahap terbaru menambah 2.278
-kasus resident map: file `.pbc`, transform posisi, Rotatable, kesiapan resource
-dan consumer ground. Map dibentuk untuk pengujian; PBC asli tidak tersedia.
-Atribut 7 dari map terpilih mempertahankan base tanpa fallback Floorboards.
+kasus resident map: 50 varian PBC RoomFloor hasil ekstraksi diserialisasi untuk
+reader native, termasuk transform posisi, Rotatable, kesiapan resource dan
+consumer ground; seluruh kasus cocok. Atribut 7 dari map terpilih
+mempertahankan base tanpa fallback Floorboards.
 Ini override RoomFloor, bukan bukti editor terrain pulau selesai.
 
 Tahap terbaru menjalankan writer runtime 0x180d20: 48 byte awal record 52 byte
 dikonsumsi sebagai 12 float ketinggian. Pada atribut sektor 0 yang diuji, batas
 selisih internal dan antar sel 1,25 serta word flag dapat ditelusuri ke callback
-node navigasi dan A*. Constructor preset 14 byte, PBC asli dan live terraform
-tetap terbuka; arti seluruh field source tidak disimpulkan dari stride yang sama.
+node navigasi dan A*. Raw PBC container, loader/async resource, constructor
+preset 14 byte, tinggi world-space dan live terraform tetap terbuka; arti
+seluruh field source tidak disimpulkan dari stride yang sama.
 
 ## NPC dan navigasi
 

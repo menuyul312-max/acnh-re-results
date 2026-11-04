@@ -42,13 +42,13 @@ def main():
     write(OUT/'mechanics/resident_npc_progress.json', progress)
     frontier = json.loads((OUT/'mechanics/continuation_frontier.json').read_text())
     dynamic = frontier['areas']['dynamic_ground']
-    dynamic['verified_reference'] = list(dict.fromkeys(dynamic['verified_reference']+['mechanics/resident_floor_map_native.json', 'mechanics/native_archive_verification.json']))
-    dynamic['verified_boundary'] = 'Complete resident RoomFloor selector, ready-handle checks, typed SARC lookup, position transform, PBC attribute reader and ground consumers on reconstructed resident archives/maps with original source floor/item tables.'
-    dynamic['remaining'] = ['Original PBC files are absent; map content and unconsumed first48 bytes of52-byte records remain unproven',
+    dynamic['verified_reference'] = list(dict.fromkeys(dynamic['verified_reference']+['mechanics/resident_floor_map_native.json', 'mechanics/native_archive_verification.json', 'ui_island/manifests_pbc_audit.json']))
+    dynamic['verified_boundary'] = 'Complete resident RoomFloor selector, ready-handle checks, typed SARC lookup, position transform, PBC attribute reader and ground consumers on 50 matched extracted RoomFloor PBC variants, with original source floor/item tables; 2,278 cases match.'
+    dynamic['remaining'] = ['PBC JSON payload values are available, but raw PBC file/container bytes and unconsumed height geometry/world-scale are not proven',
                             'Filesystem loading, decompression, async jobs and resource allocation/lifetime',
                             'Non-RoomFloor dynamic sources and live-scene reachability']
     dynamic['next_functions'] = ['0x16e6d0', '0x1c84e50', '0x18adf0']
-    dynamic['next_function_scope'] = 'Already-verified resolver/reader boundaries; trace their loaders and original PBC field users next. A specific loader entry is not yet assigned.'
+    dynamic['next_function_scope'] = 'Trace the filesystem/async loader and geometry consumers of PBC height fields; the RoomFloor attribute reader and ground consumers now use extracted PBC payload values.'
     npc = frontier['areas']['npc_navigation']
     npc['verified_reference'] = list(dict.fromkeys(npc['verified_reference']+['mechanics/npc_state_registry_native.json', 'mechanics/npc_navigation_request_native.json']))
     npc['verified_boundary'] = 'Original registration for67 states,201 original callback-target dispatches, three request writers/status predicates, inactive-child polling and bounded grid-admission/EscapeHighCostArea update blocks. AI callback bodies are not generally executed.'

@@ -25,24 +25,74 @@
   "pbc_binary_layout_reported_by_parser": {
     "magic": "pbc\\0",
     "header": [
-      {"offset": 0, "size": 4, "field": "magic"},
-      {"offset": 4, "size": 4, "field": "width_s32_le"},
-      {"offset": 8, "size": 4, "field": "height_s32_le"},
-      {"offset": 12, "size": 4, "field": "offset_x_s32_le"},
-      {"offset": 16, "size": 4, "field": "offset_y_s32_le"}
+      {
+        "offset": 0,
+        "size": 4,
+        "field": "magic"
+      },
+      {
+        "offset": 4,
+        "size": 4,
+        "field": "width_s32_le"
+      },
+      {
+        "offset": 8,
+        "size": 4,
+        "field": "height_s32_le"
+      },
+      {
+        "offset": 12,
+        "size": 4,
+        "field": "offset_x_s32_le"
+      },
+      {
+        "offset": 16,
+        "size": 4,
+        "field": "offset_y_s32_le"
+      }
     ],
     "first_record_offset": 20,
     "record_stride_bytes": 52,
     "record_fields_supported_by_external_parser": [
-      {"offset": 0, "size": 48, "encoding": "12 little-endian float32 values", "semantic_names": "four consecutive directional triangle groups; each group is center height, corner 1 height, corner 2 height"},
-      {"offset": 48, "size": 4, "encoding": "four one-byte ground/material attribute values, in the same direction order as the height groups"}
+      {
+        "offset": 0,
+        "size": 48,
+        "encoding": "12 little-endian float32 values",
+        "semantic_names": "four consecutive directional triangle groups; each group is center height, corner 1 height, corner 2 height"
+      },
+      {
+        "offset": 48,
+        "size": 4,
+        "encoding": "four one-byte ground/material attribute values, in the same direction order as the height groups"
+      }
     ],
-    "direction_order": ["Top", "Left", "Bottom", "Right"],
+    "direction_order": [
+      "Top",
+      "Left",
+      "Bottom",
+      "Right"
+    ],
     "direction_corner_order": {
-      "Top": ["center", "top-right", "top-left"],
-      "Left": ["center", "top-left", "bottom-left"],
-      "Bottom": ["center", "bottom-left", "bottom-right"],
-      "Right": ["center", "bottom-right", "top-right"]
+      "Top": [
+        "center",
+        "top-right",
+        "top-left"
+      ],
+      "Left": [
+        "center",
+        "top-left",
+        "bottom-left"
+      ],
+      "Bottom": [
+        "center",
+        "bottom-left",
+        "bottom-right"
+      ],
+      "Right": [
+        "center",
+        "bottom-right",
+        "top-right"
+      ]
     },
     "tile_type_encoding": "The HeavenTool enum documents material IDs as zero-based row indices into ColGroundAttributeParam. Its pinned enum contains 73 entries; this ELF's decoded table has 63 rows, so only local row indices 0-62 are present in the supplied build corpus.",
     "attribute_rasterization_in_render_map": "For each 52-byte PBC record, bytes +48..+51 are placed into a 2x2 sample block; total image dimensions are PBC width*2 by height*2.",
@@ -50,19 +100,49 @@
   },
   "cross_check_against_local_elf_analysis": {
     "local_runtime_record_stride": 52,
-    "local_runtime_attribute_offsets": [48, 49, 50, 51],
+    "local_runtime_attribute_offsets": [
+      48,
+      49,
+      50,
+      51
+    ],
     "local_native_record_reader": "0x181cd0 reads a linear x+width*z array and resolves the four attribute bytes; see output/mechanics/terrain_native.json.",
     "local_native_float_reader": "0x180d20 reads the first 48 bytes as twelve float32 values; see output/mechanics/world_nav_bridge_map.json.",
-    "result": "Two independent public parsers agree on the 52-byte stride. HeavenTool's four-triangle field grouping matches the local reader's twelve-float prefix and four separately returned attribute bytes; this is a strong schema corroboration, not proof of local triangle labels.",
+    "result": "Two public parsers agree on the 52-byte stride; the user-supplied extracted manifest additionally provides 783 decoded PBC payloads in this build corpus. Their directional triangle values and four material bytes can now be compared directly with local tables/readers. The native 14-byte-to-52-byte construction path remains unresolved.",
     "material_index_note": "HeavenTool defines each PBC material byte as a zero-based ColGroundAttributeParam row index. The local table has 63 rows and this mapping must not be conflated with its UniqueID column; for example local row index 26 has UniqueID 29 (dirt path). Full local crosswalk is output/ui_island/pbc_ground_attribute_crosswalk.json.",
-    "remaining_gap": "The local constructor/resource callback that connects a 14-byte LandMaking cell and its model PBC to the 52-byte ground/collision grid is still unresolved. No local PBC payload was available to validate triangle order, height units, or water seams."
+    "remaining_gap": "The local constructor/resource callback connecting a 14-byte LandMaking cell and its model PBC to the 52-byte runtime grid is unresolved. Extracted payload values validate static dimensions, heights and attributes, but not runtime transform, height scale, loading, or rendered collision seam."
   },
   "selected_palette_cross_checks": [
-    {"attribute": 0, "external_comment": "Grass", "local_col_ground_name": "草", "local_water_check": 0},
-    {"attribute": 1, "external_comment": "River", "local_col_ground_name": "川", "local_water_check": 1},
-    {"attribute": 5, "external_comment": "Sea", "local_col_ground_name": "海", "local_water_check": 1},
-    {"attribute": 7, "external_comment": "Null", "local_col_ground_name": "Null", "local_water_check": 0},
-    {"attribute": 12, "external_comment": "Water at mouths of river", "local_col_ground_name": "汽水地", "local_water_check": 1}
+    {
+      "attribute": 0,
+      "external_comment": "Grass",
+      "local_col_ground_name": "草",
+      "local_water_check": 0
+    },
+    {
+      "attribute": 1,
+      "external_comment": "River",
+      "local_col_ground_name": "川",
+      "local_water_check": 1
+    },
+    {
+      "attribute": 5,
+      "external_comment": "Sea",
+      "local_col_ground_name": "海",
+      "local_water_check": 1
+    },
+    {
+      "attribute": 7,
+      "external_comment": "Null",
+      "local_col_ground_name": "Null",
+      "local_water_check": 0
+    },
+    {
+      "attribute": 12,
+      "external_comment": "Water at mouths of river",
+      "local_col_ground_name": "汽水地",
+      "local_water_check": 1
+    }
   ],
   "asset_availability": {
     "archive_name_patterns_from_pinned_tool_and_local_loader": [
@@ -73,10 +153,24 @@
     "local_source_manifest_pbc_member_hits": 0,
     "external_repository_tree": "https://api.github.com/repos/Treeki/CylindricalEarth/git/trees/bb09c0ee71a4aa6011de088b88ea55fdee0bf6e9?recursive=1",
     "external_tree_entry_count": 172,
-    "external_pbc_related_paths": ["display_pbc.py", "pbc.py"],
+    "external_pbc_related_paths": [
+      "display_pbc.py",
+      "pbc.py"
+    ],
     "external_pbc_archive_asset_paths": [],
     "additional_public_reader_tree": "https://api.github.com/repos/acnhmodding/HeavenTool/git/trees/e3ddf830a4ae360657917d3d598c79170273d056?recursive=1",
     "local_crosswalk_artifact": "output/ui_island/pbc_ground_attribute_crosswalk.json",
-    "interpretation": "Public source code documents the PBC record shape and reader behavior, but the checked local corpus has no PBC/FldUnit members. The pinned public repositories provide parsers and tools, not the build-matched PBC payloads needed to validate this island's geometry."
+    "interpretation": "The original indexed source manifest had zero PBC hits. A subsequent user-supplied extracted manifest archive now provides decoded PBC payloads for terrain, coast and resident floor maps; see followup_user_supplied_manifest. This validates payload data but does not prove native resource loading or world-space conversion.",
+    "followup_user_supplied_manifest": {
+      "sha256": "8995d65b09a5cb84b181907c78991806f6da325bc82d35ea24ae6ecf1e263f3a",
+      "decoded_pbc_json_members": 783,
+      "collision_pbc_successes": 783,
+      "collision_pbc_failures": 0,
+      "terrain_unit_pbc_names": 242,
+      "coast_part_pbc_names": 136,
+      "used_unit_pbc_coverage": "13/13",
+      "resident_roomfloor_allowed_variants": "50/50",
+      "audit": "output/ui_island/manifests_pbc_audit.json"
+    }
   }
 }

@@ -56,7 +56,7 @@ def main():
         "local_native_evidence": {
             "pbc_attribute_reader": "0x181cd0 returns bytes at record offsets 48..51 in direction order; see output/mechanics/terrain_native.json.",
             "row_index_resolver": "0x18b570 floor override resolves Floorboards UniqueID through ColGroundAttributeParam and returns the row index; see output/mechanics/room_floor_ground_native.json.",
-            "limit": "No local native trace directly binds each PBC byte to this table, so the external row-index contract is not promoted to a local payload validation."
+            "limit": "No local native trace directly binds each PBC byte to this table. A later user archive exposes values matching row indices 0..62 and the decoded table, but the byte-to-row-index encoding still relies on the pinned external format contract; see output/ui_island/manifests_pbc_audit.json."
         },
         "version_difference": {
             "local_rows": len(rows),

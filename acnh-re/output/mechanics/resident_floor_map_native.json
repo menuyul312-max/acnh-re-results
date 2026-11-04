@@ -8,7 +8,7 @@
   "mismatches": [],
   "outcomes": {
     "resident_map": 1872,
-    "resident_sentinel_without_floorboards_fallback": 356,
+    "resident_sentinel_without_floorboards_fallback": 312,
     "variant3_disallowed_fallback": 144
   },
   "native_filename_contract": {
@@ -43,7 +43,7 @@
         20.0,
         1.25
       ],
-      "attribute": 16
+      "attribute": 18
     },
     {
       "floor_id": 145,
@@ -61,7 +61,7 @@
         20.0,
         -2.5
       ],
-      "attribute": 5
+      "attribute": 18
     },
     {
       "floor_id": 145,
@@ -79,7 +79,7 @@
         20.0,
         1.25
       ],
-      "attribute": 33
+      "attribute": 18
     },
     {
       "floor_id": 145,
@@ -97,7 +97,7 @@
         20.0,
         -2.5
       ],
-      "attribute": 22
+      "attribute": 18
     },
     {
       "floor_id": 145,
@@ -115,7 +115,7 @@
         20.0,
         1.25
       ],
-      "attribute": 50
+      "attribute": 18
     },
     {
       "floor_id": 156,
@@ -133,7 +133,7 @@
         20.0,
         1.25
       ],
-      "attribute": 16
+      "attribute": 3
     },
     {
       "floor_id": 156,
@@ -151,7 +151,7 @@
         20.0,
         -2.5
       ],
-      "attribute": 5
+      "attribute": 3
     },
     {
       "floor_id": 156,
@@ -169,7 +169,7 @@
         20.0,
         1.25
       ],
-      "attribute": 33
+      "attribute": 3
     }
   ],
   "rtti_cells_reconstructed": [
@@ -276,10 +276,17 @@
       }
     }
   },
-  "scope": "Complete resident-map selector and ground-query chain on reconstructed loaded SARC archives and PBC map bytes, with original source floor/item definitions.",
+  "scope": "Complete resident-map selector and ground-query chain on loaded SARC archives and PBC map bytes, with original source floor/item definitions. Use --manifest-zip to drive it from PBC payload values in the user-supplied manifest archive.",
+  "pbc_data_source": {
+    "kind": "user-supplied extracted PBC JSON reserialized into the 20-byte header and 52-byte records",
+    "archive": "/tmp/acnh_manifests.zip",
+    "archive_sha256": "8995d65b09a5cb84b181907c78991806f6da325bc82d35ea24ae6ecf1e263f3a",
+    "matched_variant_files": 50,
+    "has_jmp_floors": 14
+  },
   "limits": [
-    "No original PBC files are present in the supplied corpus; map data and resident-resource state are reconstructed, not extracted from a running scene.",
-    "Only consumed PBC header/sector fields are specified. First4 header bytes and the first48 bytes of each52-byte record remain semantically unproven.",
+    "The PBC payload values are reserialized from parsed JSON; raw PBC container bytes and the original file-loading path are not executed.",
+    "Only consumed PBC header/sector fields are specified. The first48 bytes of each52-byte record remain unproven as inputs to the resident-map ground query.",
     "File-system loading, decompression, async jobs and resource allocation/lifetime are not executed.",
     "Only the native SARC archive constructor/parser is run; ready-resource wrapper/RTTI and variant-string cache state are prepared explicitly.",
     "This does not prove all collision geometry, island terraforming or NPC navigation."

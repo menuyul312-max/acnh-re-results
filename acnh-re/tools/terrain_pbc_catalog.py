@@ -106,7 +106,7 @@ def main():
         },
         "corpus_check": {
             "pbc_or_fldunit_source_manifest_matches": len(absent_from_manifest),
-            "meaning": "No PBC/FldUnit-named member is present in the currently indexed source manifest. This says nothing about resources outside that supplied corpus.",
+            "meaning": "The original indexed source manifest had no PBC/FldUnit-named member. The later user-supplied manifest archive adds decoded PBC payloads; see output/ui_island/manifests_pbc_audit.json.",
         },
         "limits": [
             "Archive group assignment for each row is linked from decoded terrain metadata; only the 12 group names and ModelName_PBC formatting are directly visible in native code here.",

@@ -1,5 +1,5 @@
 {
-  "scope": "Static resource-name path from terrain unit ModelName rows to the PBC resource helper. This does not recover or parse the expected PBC members.",
+  "scope": "Static native resource-name catalog for terrain units; decoded PBC payload inventory and per-asset comparisons from the follow-up user archive are in manifests_pbc_audit.json.",
   "source_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
   "table": {
     "name": "FieldLandMakingUnitModelParam",
@@ -4067,13 +4067,14 @@
   },
   "corpus_check": {
     "pbc_or_fldunit_source_manifest_matches": 0,
-    "meaning": "No PBC/FldUnit-named member is present in the currently indexed source manifest. This says nothing about resources outside that supplied corpus."
+    "meaning": "The original indexed source manifest had no PBC/FldUnit-named member. The later user-supplied manifest archive adds decoded PBC payloads; see output/ui_island/manifests_pbc_audit.json."
   },
   "limits": [
     "Archive group assignment for each row is linked from decoded terrain metadata; only the 12 group names and ModelName_PBC formatting are directly visible in native code here.",
     "One unit (UniqueID 41, Cliff8) has no archive hint in the current terrain metadata link.",
-    "Presence, byte layout, geometry, collision semantics and runtime load success for any generated PBC name remain unverified.",
-    "The PBC resource helper 0xc9bc0 was not executed with the original resource archive."
+    "The follow-up archive provides decoded PBC data for 241/242 unit model names and all 13 names used by the 96 presets. Runtime collision semantics and resource load success remain unverified.",
+    "The PBC resource helper 0xc9bc0 was not executed with the original resource archive.",
+    "Archive coverage evidence is keyed by SHA256 8995d65b09a5cb84b181907c78991806f6da325bc82d35ea24ae6ecf1e263f3a; it is not proof that the game loaded these resources during a live session."
   ],
   "instruction_evidence": {
     "loader_block_sha256": "ff2fead9a2d60e99ef246b794ceab0035241f7968fccea0f41876acd21a890b0",

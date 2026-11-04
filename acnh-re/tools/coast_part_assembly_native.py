@@ -416,7 +416,7 @@ def main():
         "limits": [
             "Selection order and candidate row IDs are derived from the decoded source tables; the RNG parent state for a complete island generation is not reproduced here.",
             "The 9x8 record coordinates are discrete grid x/z only. This function does not reveal placement; the downstream instance pass resolves 160-unit local spacing, while parent/world origin, rotation, and seam geometry remain unresolved.",
-            "No FieldOutsideParts PBC geometry/member was present in the supplied source manifest; a selected UniqueID does not prove its model or collision resource loaded.",
+            "A later user-supplied archive provides decoded PBC payloads for all 136 FieldOutsideParts names; a selected UniqueID still does not prove which model or collision resource loaded at runtime. See output/ui_island/manifests_pbc_audit.json.",
             "The output records contain a UniqueID and integer grid coordinates, but downstream model instantiation, PBC collision, water rendering, and runtime success are outside this proof.",
         ],
     }

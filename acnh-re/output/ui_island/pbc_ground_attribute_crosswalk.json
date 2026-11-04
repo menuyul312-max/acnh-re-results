@@ -1,5 +1,5 @@
 {
-  "scope": "Build-local ColGroundAttributeParam row-index crosswalk for the four PBC material bytes. PBC byte=row index is corroborated by the pinned HeavenTool enum; local native paths resolve ground IDs to row indices, but no local PBC payload is available to test every value.",
+  "scope": "Build-local ColGroundAttributeParam row-index crosswalk for PBC material bytes. PBC JSON payloads in the follow-up user archive directly expose material row values; the byte-to-row-index contract is still corroborated by the pinned HeavenTool enum, and this mapping never conflates row index with UniqueID.",
   "source": {
     "table": "ColGroundAttributeParam",
     "source_id": 14,
@@ -17,7 +17,7 @@
   "local_native_evidence": {
     "pbc_attribute_reader": "0x181cd0 returns bytes at record offsets 48..51 in direction order; see output/mechanics/terrain_native.json.",
     "row_index_resolver": "0x18b570 floor override resolves Floorboards UniqueID through ColGroundAttributeParam and returns the row index; see output/mechanics/room_floor_ground_native.json.",
-    "limit": "No local native trace directly binds each PBC byte to this table, so the external row-index contract is not promoted to a local payload validation."
+    "limit": "No local native trace directly binds every PBC material byte to a ColGround row. The extracted archive bytes fit row indices 0..62 and the table matches, while the row-index encoding itself remains sourced from the pinned external format contract."
   },
   "version_difference": {
     "local_rows": 63,
@@ -570,5 +570,73 @@
       "player_no_entry": 0,
       "npc_no_entry": 0
     }
-  ]
+  ],
+  "followup_payload_validation": {
+    "archive_sha256": "8995d65b09a5cb84b181907c78991806f6da325bc82d35ea24ae6ecf1e263f3a",
+    "pbc_json_members": 783,
+    "observed_material_row_indices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      39,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      51,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62
+    ],
+    "all_observed_indices_fit_local_table": true,
+    "table_values_match_archive": "ColGroundAttributeParam 63 rows; 882 field values, zero mismatches",
+    "audit": "output/ui_island/manifests_pbc_audit.json"
+  }
 }

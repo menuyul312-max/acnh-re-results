@@ -33,10 +33,11 @@ variasi = 6x6, 8x8, 10x6, 10x6_R
 ```
 
 Literal variasi berasal dari `0x293eabb`, ekstensi dari `0x2929873`.
-Sebanyak 14 lantai HasJmp pada tabel sumber diuji dengan empat file map per
+Sebanyak 14 lantai HasJmp pada tabel sumber diuji dengan empat nama varian per
 arsip resident yang direkonstruksi. SARC little/big endian dipakai bergantian.
-**Berkas PBC asli tidak ditemukan pada korpus yang tersedia.** Isi map pengujian
-dibentuk untuk membedakan sektor/variasi; bukan hasil ekstraksi lantai game.
+Arsip manifest lanjutan memuat semua **50 varian PBC yang diizinkan** oleh
+`Rotatable`; payload JSON-nya diserialisasi ke header/record PBC untuk memasok
+data asli ke reader native. Varian wajib yang dicari tidak ada yang hilang.
 
 Rangkaian asli berjalan dari `0x18b570` melalui selector, pencarian floor ID,
 handle resident, kesiapan unit, pemeriksaan tipe resource, wrapper SARC, lookup
@@ -60,17 +61,19 @@ Aturan yang dibedakan melalui eksekusi:
   termasuk ketika posisi berada di luar batas map.
 
 Ada 2.016 kombinasi pemilihan/transform, sepuluh kegagalan resource/file, dan
-252 pemanggilan lengkap query ground. Pengujian memasukkan posisi Stage
-nonzero, orientasi, tiga kelas context, empat sektor dan titik di luar map.
-Map sumber pengujian, guard bytes dan BCSV asli tetap identik setelah eksekusi.
+252 pemanggilan lengkap query ground. Dengan nilai payload PBC yang cocok,
+seluruh **2.278 kasus berjalan tanpa mismatch**. Pengujian memasukkan posisi
+Stage nonzero, orientasi, tiga kelas context, empat sektor dan titik di luar
+map. Guard bytes, SARC sumber uji dan BCSV asli tetap identik setelah eksekusi.
 
 Layout PBC yang dirujuk parser publik: magic `pbc\0`, header 20 byte,
 width/height pada +4/+8, origin X/Z s32 pada +12/+16, lalu record 52 byte.
 Parser publik menamai 48 byte awal tiap record sebagai empat grup tinggi segitiga
-berarah, lalu empat atribut material pada +48..51. Local reader mengonsumsi
-empat atribut dan dua belas float, tetapi file PBC build ini tidak tersedia untuk
-memvalidasi interpretasi atau skala tinggi. Karena itu hasil ini belum menjadi
-spesifikasi collision geometry lengkap.
+berarah, lalu empat atribut material pada +48..51. Payload terurai mengonfirmasi
+ukuran serta nilai field PBC yang tersedia. Jalur resident map memakai atribut
+material; fungsi ground-query ini tidak mengonsumsi 48 byte tinggi. Karena itu
+tinggi world-space, collision mesh dan konversinya tetap memerlukan pembacaan
+consumer geometry tersendiri.
 
 Data: [resident_floor_map_native.json](../output/mechanics/resident_floor_map_native.json).
 Rujukan tabel ItemParam, ItemKind, RoomFloorParam dan ColGroundAttributeParam
@@ -173,16 +176,17 @@ Data: [npc_navigation_request_native.json](../output/mechanics/npc_navigation_re
 | Fisika/collision | Respons penetrasi geometry, friksi, moving body, seluruh arti mask |
 | Gerakan pemain | Input sampai satu frame runtime, integrator gravitasi, koreksi collision dan landing, penjadwalan animasi |
 | Terrain | Constructor preset14 byte menjadi record 52 byte, mutasi terraforming dan seluruh batas placement |
-| Ground dinamis | Isi PBC asli, field yang belum dikonsumsi, loader/async/lifetime, sumber override selain RoomFloor |
+| Ground dinamis | Semantik tinggi PBC yang belum dipakai di query ini, loader/async/lifetime, sumber override selain RoomFloor |
 | Pemeriksaan posisi | Pengumpulan kandidat, registry/filter aktor, seluruh placement query |
 | NPC/navigasi | Handler child aktif, request diterima, worker pencari jalur, route node/cost/obstacle avoidance, scheduler dan keputusan AI |
 | Item/alat/crafting | Akuisisi save-wrapper, nama A/B/C, item khusus, transaksi konsumsi/hasil/rollback, unlock dan durability |
 
 Tidak diperlukan model/sound mentah untuk melanjutkan analisis algoritme ini.
-Sebagian pekerjaan tetap dapat dilanjutkan dari fungsi native yang sudah ada;
-isi PBC yang tidak tersedia tidak dapat diklaim pulih hanya dari pengujian map
-rekonstruksi. [Frontier JSON](../output/mechanics/continuation_frontier.json)
-menyimpan target lanjutan dan batas pembuktian tiap area.
+Hasil uji terdahulu memakai map sintetis; arsip baru menaikkan bukti itu menjadi
+reader native dengan 50 varian PBC nyata hasil ekstraksi. Loader filesystem,
+height geometry, async lifetime dan sumber override lain tetap di luar cakupan.
+[Frontier JSON](../output/mechanics/continuation_frontier.json) menyimpan target
+lanjutan dan batas pembuktian tiap area.
 
 ## Reproduksi
 

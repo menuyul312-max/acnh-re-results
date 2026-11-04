@@ -13,5 +13,7 @@ Seluruh B_data yang tersedia sudah dibaca secara struktural. Semantik seluruh ga
 - [ExeFS tambahan dan simbol SDK](output/native_modules/summary.json), [BYML tanpa stub SDK](output/native_modules/linked_byml_verification.json), [konfigurasi suara NPC](output/npc/voice_configuration_native.json), [kontrak input](docs/ADDITIONAL_EXEFS.md).
 - [Kalender dan batas hari](output/calendar/native_verification.json), [cuaca lintas SDK](output/weather/native_linked_verification.json), [genotipe bunga](output/flowers/genotypes.json), [gen default](output/flowers/default_genes.json), [kasus siklus](output/flowers/growth_cycles.json), [kontrak](docs/CALENDAR_FLOWERS.md).
 - [Field belum bernama beserta bukti](output/schemas/unresolved_evidence.json), [indeks SQLite](output/index.sqlite), [status dekompilasi](output/binary/decompilation_summary.json).
+- [Status reverse engineering pulau poin 1–4 dan audit 783 payload PBC](docs/ISLAND_TEMPLATE_SELECTOR_NATIVE.md), [hasil audit turunan](output/ui_island/manifests_pbc_audit.json).
+- [Resident ground memakai 50 varian PBC hasil ekstraksi dalam 2.278 uji native](docs/RESIDENT_MAP_NPC_FOLLOWUP.md), [hasil](output/mechanics/resident_floor_map_native.json).
 
 Nilai raw dan provenance tetap otoritatif. Nama/hash kandidat, pseudocode otomatis, dan struktur yang valid dibedakan dari perilaku yang sudah diverifikasi native.

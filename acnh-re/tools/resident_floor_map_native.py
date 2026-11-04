@@ -5,11 +5,20 @@ constructor/parser, class checks, filename lookup, map resolver and consumer
 instructions execute without replacement callbacks or patched instructions.
 """
 from pathlib import Path
+import os
+import sys
 from collections import Counter
+import argparse
 import hashlib
 import itertools
 import json
 import struct
+from zipfile import ZipFile
+
+ROOT = Path(os.environ.get('ACNH_RESEARCH_ROOT', Path(__file__).resolve().parent.parent))
+if str(ROOT / 'tools') not in sys.path:
+    sys.path.insert(0, str(ROOT / 'tools'))
+
 from native_emulator import Sandbox, regs
 from native_sdk_memory import install_sdk_memory
 from native_archive import initialize_resource_types, make_sarc, install_ready_archive, open_native_archive
@@ -17,15 +26,48 @@ from room_floor_ground_native import install_floor_context
 from dynamic_ground_native import f, index
 from unicorn import UC_HOOK_CODE
 
-ROOT = Path(__file__).resolve().parent.parent
-
-
 def map_bytes(variant):
     data = bytearray(20+3*2*52)
     struct.pack_into('<IIIii', data, 0, 0, 3, 2, -1, -1)
     for cell in range(6):
         data[20+cell*52+48:20+cell*52+52] = bytes((17*variant+4*cell+lane) % 63 for lane in range(4))
     return bytes(data)
+
+
+def pbc_json_bytes(data):
+    """Rebuild the documented PBC header/records from extracted JSON values."""
+    width, height = data['w'], data['h']
+    ox, oz = data['origin_cell']
+    if len(data['heights']) != width*height or len(data['attributes']) != width*height:
+        raise AssertionError((data['source'], width, height))
+    raw = bytearray(struct.pack('<4sIIii', b'pbc\0', width, height, ox, oz))
+    for heights, attributes in zip(data['heights'], data['attributes']):
+        if len(heights) != 12 or len(attributes) != 4:
+            raise AssertionError((data['source'], len(heights), len(attributes)))
+        raw.extend(struct.pack('<12f', *heights))
+        raw.extend(bytes(attributes))
+    return bytes(raw)
+
+
+def read_roomfloor_pbc_json(manifest_zip, source_floors, floor_cols, variants):
+    wanted = {
+        row[floor_cols['ResourceName']] + '_' + variant
+        for row in source_floors
+        for variant in variants[:3] + [variants[3]] if row[floor_cols['Rotatable']]
+    }
+    # The first three variants are valid for every HasJmp floor.
+    wanted.update(row[floor_cols['ResourceName']] + '_' + variant
+                  for row in source_floors for variant in variants[:3])
+    outputs = {}
+    with ZipFile(manifest_zip) as archive:
+        for name in archive.namelist():
+            if not name.endswith('.pbc.json'):
+                continue
+            data = json.loads(archive.read(name))
+            model_name = data['source'].rsplit('/', 1)[-1].removesuffix('.pbc')
+            if model_name in wanted:
+                outputs[model_name] = pbc_json_bytes(data)
+    return outputs
 
 
 def map_value(raw, x, z):
@@ -39,6 +81,10 @@ def map_value(raw, x, z):
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--manifest-zip', type=Path,
+                        help='user-supplied extracted manifest ZIP containing PBC JSON payloads')
+    args = parser.parse_args()
     s = Sandbox(); u = s.uc; setup = install_floor_context(s)
     sdk = install_sdk_memory(s); type_cells = initialize_resource_types(s)
     def q(p, v): u.mem_write(p, struct.pack('<Q', v))
@@ -50,6 +96,7 @@ def main():
     variants = s.image.cstring(0x293eabb).split(',')
     extension = s.image.cstring(0x2929873)
     assert variants == ['6x6', '8x8', '10x6', '10x6_R'] and extension == '.pbc'
+    archive_pbc = read_roomfloor_pbc_json(args.manifest_zip, source_floors, fc, variants) if args.manifest_zip else {}
     variant_array = 0x51b03000
     for i, label in enumerate(variants):
         pointer = 0x51b03100+32*i
@@ -59,9 +106,17 @@ def main():
     for i, row in enumerate(source_floors):
         floor_id = row[fc['UniqueID']]
         names = [row[fc['ResourceName']]+'_'+label+extension for label in variants]
-        files = {name: map_bytes(v) for v, name in enumerate(names)}
+        if args.manifest_zip:
+            allowed_variants = variants[:3] + ([variants[3]] if row[fc['Rotatable']] else [])
+            missing = [row[fc['ResourceName']]+'_'+label for label in allowed_variants
+                       if row[fc['ResourceName']]+'_'+label not in archive_pbc]
+            assert not missing, (floor_id, missing)
+            files = {name: archive_pbc[name.removesuffix(extension)]
+                     for name in names if name.removesuffix(extension) in archive_pbc}
+        else:
+            files = {name: map_bytes(v) for v, name in enumerate(names)}
         raw, offsets = make_sarc(files, '<' if i % 2 == 0 else '>')
-        state = install_ready_archive(s, records+72*i, 0x51b10000+i*0x10000, raw)
+        state = install_ready_archive(s, records+72*i, 0x51b10000+i*0x20000, raw)
         state.update({'files': files, 'offsets': offsets, 'names': names, 'floor': row, 'endian': '<' if i % 2 == 0 else '>'})
         loaded[floor_id] = state
         u.mem_write(ids+2*i, struct.pack('<H', floor_id))
@@ -106,7 +161,7 @@ def main():
         return map_value(entry['files'][name], local[0], local[2]), entry['blob']+entry['offsets'][name]['offset'], tuple(local)
     local_points = [(-2.5, -3.75), (-2.5, -1.25), (-1.25, -2.5), (-3.75, -2.5),
                     (2.5, 1.25), (1.25, 2.5), (2.5, 3.75), (3.75, 2.5),
-                    (20., 0.), (0., -20.), (0., 0.), (5., 0.)]
+                    (20., 0.), (0., -20.), (-100., 0.), (0., 100.)]
     for row, state, orientation, offset, (x, z) in itertools.product(
             source_floors, [2, 6, 17], [False, True],
             [(0., 0., 0.), (12.5, -4.25, -13.75)], local_points):
@@ -190,9 +245,15 @@ def main():
                         'Higher ground consumers inherit terrain base for sentinel7 and otherwise use the resident-map attribute.'],
               'source_tables': {'RoomFloorParam': {'json': 'tables_resolved/RoomFloorParam.json', 'source_id': floors['table']['source_id'], 'raw': floors['table']['raw']},
                                 'ColGroundAttributeParam': {'json': 'tables_resolved/ColGroundAttributeParam.json', 'source_id': ground['table']['source_id'], 'raw': ground['table']['raw']}},
-              'scope': 'Complete resident-map selector and ground-query chain on reconstructed loaded SARC archives and PBC map bytes, with original source floor/item definitions.',
-              'limits': ['No original PBC files are present in the supplied corpus; map data and resident-resource state are reconstructed, not extracted from a running scene.',
-                         'Only consumed PBC header/sector fields are specified. First4 header bytes and the first48 bytes of each52-byte record remain semantically unproven.',
+              'scope': 'Complete resident-map selector and ground-query chain on loaded SARC archives and PBC map bytes, with original source floor/item definitions. Use --manifest-zip to drive it from PBC payload values in the user-supplied manifest archive.',
+              'pbc_data_source': ({'kind': 'user-supplied extracted PBC JSON reserialized into the 20-byte header and 52-byte records',
+                                  'archive': str(args.manifest_zip.resolve()),
+                                  'archive_sha256': hashlib.sha256(args.manifest_zip.read_bytes()).hexdigest(),
+                                  'matched_variant_files': len(archive_pbc),
+                                  'has_jmp_floors': len(source_floors)} if args.manifest_zip else
+                                 {'kind': 'synthetic test records', 'matched_variant_files': 0}),
+              'limits': ['The PBC payload values are reserialized from parsed JSON; raw PBC container bytes and the original file-loading path are not executed.',
+                         'Only consumed PBC header/sector fields are specified. The first48 bytes of each52-byte record remain unproven as inputs to the resident-map ground query.',
                          'File-system loading, decompression, async jobs and resource allocation/lifetime are not executed.',
                          'Only the native SARC archive constructor/parser is run; ready-resource wrapper/RTTI and variant-string cache state are prepared explicitly.',
                          'This does not prove all collision geometry, island terraforming or NPC navigation.'],

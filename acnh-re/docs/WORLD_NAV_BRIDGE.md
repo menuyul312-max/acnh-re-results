@@ -36,9 +36,11 @@ record tetangga, lalu menulis flag 32-bit per sel pada array terpisah:
 | +0x50/+0x58 | Jumlah/pointer overlay |
 | +0x60/+0x68 | Jumlah/pointer word flag 32-bit |
 
-Ini memperjelas **schema runtime record**, dengan susunan triangle-height
-berdasarkan referensi eksternal. Isi PBC build lokal serta constructor yang
-menghubungkan preset 14-byte ke runtime 52-byte tetap belum terbukti.
+Ini memperjelas **schema runtime record**. Arsip manifest lanjutan juga
+menyediakan payload PBC terurai untuk terrain, pantai dan 50 varian resident
+RoomFloor, sehingga atribut serta tinggi lokalnya kini dapat dibandingkan dengan
+tabel build. Constructor yang menghubungkan preset 14-byte ke runtime 52-byte,
+skala tinggi dunia dan loader/async tetap belum terbukti.
 
 Pengujian writer memakai atribut sektor 0 dan threshold spread world yang
 disiapkan. Nilai0 dapat dirujuk ke ColGroundAttributeParam pada katalog; tabel

@@ -117,11 +117,12 @@
         "mechanics/dynamic_ground_native.json",
         "mechanics/room_floor_ground_native.json",
         "mechanics/resident_floor_map_native.json",
-        "mechanics/native_archive_verification.json"
+        "mechanics/native_archive_verification.json",
+        "ui_island/manifests_pbc_audit.json"
       ],
-      "verified_boundary": "Complete resident RoomFloor selector, ready-handle checks, typed SARC lookup, position transform, PBC attribute reader and ground consumers on reconstructed resident archives/maps with original source floor/item tables.",
+      "verified_boundary": "Complete resident RoomFloor selector, ready-handle checks, typed SARC lookup, position transform, PBC attribute reader and ground consumers on 50 matched extracted RoomFloor PBC variants, with original source floor/item tables; 2,278 cases match.",
       "remaining": [
-        "Original PBC files are absent; map content and unconsumed first48 bytes of52-byte records remain unproven",
+        "PBC JSON payload values are available, but raw PBC file/container bytes and unconsumed height geometry/world-scale are not proven",
         "Filesystem loading, decompression, async jobs and resource allocation/lifetime",
         "Non-RoomFloor dynamic sources and live-scene reachability"
       ],
@@ -151,7 +152,7 @@
           "evidence": "Original ELF VA and existing native index; proposed next target, not a completed semantic claim."
         }
       ],
-      "next_function_scope": "Already-verified resolver/reader boundaries; trace their loaders and original PBC field users next. A specific loader entry is not yet assigned."
+      "next_function_scope": "Trace the filesystem/async loader and geometry consumers of PBC height fields; the RoomFloor attribute reader and ground consumers now use extracted PBC payload values."
     },
     "position_checks": {
       "verified_reference": [
