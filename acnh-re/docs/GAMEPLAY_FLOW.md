@@ -283,7 +283,7 @@ Pergantian hari (`0xf545f0`) memaksa hitung ulang penuh. Hal yang sama terjadi b
 - 2 = `DummyPresentbox` (`0x1180`);
 - 3 = `DummyCardboard` (`0x1225`).
 
-`0xf58d00`/`0xf59370` mencari ItemParam pembungkusnya, sehingga hadiah terbungkus dihitung sebagai bungkusnya. Arti bit 2 dan 5 byte `+2` item belum terbukti. Untuk struktur, `0x11074d0` dan `0x11076a0` hanya menambah jembatan/tanjakan saat bit 0 dan bit 1 pada flag byte `+8` keduanya bersih; nama serta arti kedua bit itu belum teridentifikasi.
+`0xf58d00`/`0xf59370` mencari ItemParam pembungkusnya, sehingga hadiah terbungkus dihitung sebagai bungkusnya. Dampak flag item byte `+2` terbaca: bit 5 harus bersih untuk jalur klasifikasi furnitur, sedangkan bit 2 harus bersih agar barang lepas masuk kategori ikon 9. Nama simbolik kedua bit belum ditemukan. Untuk struktur, `0x1089590`/`0x10895c0` mensyaratkan tipe `0x1a` (jembatan) / `0x1b` (tanjakan) dan bit 0 byte `+8` bersih. Callback `0x110ab50`/`0x110ad60` juga mengecualikan bit 1 bila parameter include bernilai 0; pemanggil skor `0x15c5ef0` memberikan 0, sehingga aturan kedua bit harus bersih terkonfirmasi dari jalur pembaca. Nama simbolik bit 0/1 struktur masih tidak ada di tabel atau simbol yang tersedia.
 
 Alur menuju konser:
 

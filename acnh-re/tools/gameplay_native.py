@@ -187,14 +187,64 @@ def verify(weeks=3000):
             mism.append({'seed': seed, 'prev': prev, 'native': native, 'model': model})
     cases['0xfc6d00 turnip prices'] = {'weeks': weeks, 'patterns_seen': per_pattern, 'mismatches': len(mism),
                                       'first_mismatches': mism[:3], 'pass': not mism}
+    cases.update(turnip_query_cases())
     cases.update(calendar_cases())
     fac = facility_cases()
     unhandled_fac = fac.pop('meta_unhandled')
     cases.update(fac)
     return {'meta': {'source': f'ExeFS main sha256 {NSO_SHA256}', 'harness': 'tools/gameplay_native.py (nso_sandbox, unicorn)',
-                     'stubs': {'0x19aa0e0': 'RNG draw replaced by a seeded Python stream', '0xf44d90/0xf44e70': 'flag get/set -> 0'},
+                     'stubs': {'0x19aa0e0': 'RNG draw replaced by a seeded Python stream', '0xf44d90/0xf44e70': 'flag get/set -> 0',
+                               '0x3cca80 case': 'save-node lookup, base-price member, quantity accessor, requested amount, and quantity setter are controlled; the query function itself is native'},
                      'unhandled_imports': {**sb.unknown_imports, **unhandled_fac}},
             'cases': cases, 'all_pass': all(c['pass'] for c in cases.values())}
+
+
+def turnip_query_cases():
+    """Exercise the native query's three result codes with controlled save/input accessors."""
+    sb = Sandbox()
+    root = sb.alloc(0x209000)
+    descriptor, data = sb.alloc(0x20), sb.alloc(8)
+    sb.uc.mem_write(descriptor + 8, struct.pack('<QQ', 0, data))
+    sb.uc.mem_write(data, struct.pack('<I', 100))
+    quantity_scale = [2]
+    requested_amount = [199]
+    setter_accepts = [1]
+    setter_calls = []
+    sb.stub(0x154a800, lambda s: 0x1234)
+    sb.stub(0x15449f0, lambda s: quantity_scale[0])
+    sb.stub(0xeecf00, lambda s: root)
+
+    def resolve_price_node(s):
+        # FUN_00fe9350 writes a node descriptor; the native query reads data[0] from it.
+        s.uc.mem_write(s.reg('x0') + 8, struct.pack('<Q', descriptor))
+
+    sb.stub(0xee9350, resolve_price_node)
+    sb.stub(0xee93d0, lambda s: 0)
+    sb.stub(0x455d00, lambda s: s.reg('x0'))
+    sb.stub(0xefd1a0, lambda s: requested_amount[0])
+
+    def quantity_setter(s):
+        setter_calls.append({'quantity': s.reg('x1'), 'accepts': setter_accepts[0]})
+        return setter_accepts[0]
+
+    sb.stub(0xefcc40, quantity_setter)
+    obj = sb.alloc(0x20)
+
+    def run(quantity, amount, accepts):
+        sb.uc.mem_write(obj + 8, struct.pack('<Q', quantity))
+        requested_amount[0], setter_accepts[0] = amount, accepts
+        return sb.call(0x3cca80, (obj,))
+
+    got = {
+        'quantity_missing': run(0, 999, 1),
+        'below_base_times_quantity': run(1, 199, 1),
+        'setter_accepts_at_threshold': run(1, 200, 1),
+        'setter_rejects_at_threshold': run(1, 200, 0),
+    }
+    want = {'quantity_missing': 2, 'below_base_times_quantity': 1,
+            'setter_accepts_at_threshold': 0, 'setter_rejects_at_threshold': 2}
+    return {'0x3cca80 Daisy Mae turnip purchase query': {'base_price': 100, 'quantity_scale': quantity_scale[0],
+            'results': got, 'expected': want, 'setter_calls': setter_calls, 'pass': got == want}}
 
 
 def _packed(t):

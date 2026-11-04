@@ -4,7 +4,8 @@
   "harness": "tools/gameplay_native.py (nso_sandbox, unicorn)",
   "stubs": {
    "0x19aa0e0": "RNG draw replaced by a seeded Python stream",
-   "0xf44d90/0xf44e70": "flag get/set -> 0"
+   "0xf44d90/0xf44e70": "flag get/set -> 0",
+   "0x3cca80 case": "save-node lookup, base-price member, quantity accessor, requested amount, and quantity setter are controlled; the query function itself is native"
   },
   "unhandled_imports": {}
  },
@@ -58,6 +59,33 @@
    },
    "mismatches": 0,
    "first_mismatches": [],
+   "pass": true
+  },
+  "0x3cca80 Daisy Mae turnip purchase query": {
+   "base_price": 100,
+   "quantity_scale": 2,
+   "results": {
+    "quantity_missing": 2,
+    "below_base_times_quantity": 1,
+    "setter_accepts_at_threshold": 0,
+    "setter_rejects_at_threshold": 2
+   },
+   "expected": {
+    "quantity_missing": 2,
+    "below_base_times_quantity": 1,
+    "setter_accepts_at_threshold": 0,
+    "setter_rejects_at_threshold": 2
+   },
+   "setter_calls": [
+    {
+     "quantity": 0,
+     "accepts": 1
+    },
+    {
+     "quantity": 0,
+     "accepts": 0
+    }
+   ],
    "pass": true
   },
   "0xf0330 NormalLive date": {

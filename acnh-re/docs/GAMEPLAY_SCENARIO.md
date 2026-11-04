@@ -23,13 +23,14 @@ Data mesin untuk dokumen ini: [`output/gameplay/native_flag_refs.json`](../outpu
 
 ### Bacaan yang sudah terbukti native
 
-`tools/gameplay_native.py` menjalankan fungsi asli dari NSO lewat `tools/nso_sandbox.py` (unicorn). Hasilnya ditulis ke `output/gameplay/gameplay_native.json`. Stub yang dipakai: RNG, flag, dan pencarian baris kalender. `nn::time` dilayani dengan `datetime` Python.
+`tools/gameplay_native.py` menjalankan fungsi asli dari NSO lewat `tools/nso_sandbox.py` (unicorn). Hasilnya ditulis ke `output/gameplay/gameplay_native.json`. Stub yang dipakai meliputi RNG, flag, pencarian baris kalender, serta accessor save/input untuk query lobak. `nn::time` dilayani dengan `datetime` Python.
 
 | Fungsi | Yang dicek | Hasil |
 |---|---|---|
 | `0xd34a20` | level keakraban < 30/60/100/150/200 → 1–6 (§5.1) | lulus |
 | `0x15c6910`…`0x15c69a0`, `0x15c4db0` | bobot kategori skor pulau dan denda duplikat (GAMEPLAY_FLOW §10.1) | lulus |
 | `0xfc6d00` | 3000 minggu harga lobak, RNG sama: 12 harga, pola, dan awal puncak identik dengan model Python di harness (§3.7) | lulus |
+| `0x3cca80` | Query harga lobak: jumlah kosong → 2; di bawah harga dasar × jumlah → 1; setter menerima ambang → 0; setter menolak → 2. Akses save/input/setter memakai stub terkontrol (§3.7) | lulus |
 | `0xf0330` | NormalLive: Sabtu; `Before` mundur; `Skip` batal; `Same` tetap (§3.6) | lulus |
 | `0xfdafa0` | Daisy Mae: Minggu dan state toko ≥ 2 (§3.5) | lulus |
 | `0xfdc020` | kode pengunjung hari ini = `codes[hari]`, kode ≥ 10 → 0 (§3.2) | lulus |
@@ -334,11 +335,13 @@ Konstanta float dibaca dari rodata (`0x29d5e8c` = 0.9, `0x29d5d94` = 1.4, `0x29d
 
 Enum `ItemFrom` ada di rodata `0x29b535d`.
 
-Untuk Nook's Cranny, `0xfd0630` memilih pembuat stok dari state toko: state 0–1 → `0xfce9e0`, state 2 → `0xfceb90`, dan state 3 → `0xfcf660`. Ketiga pembuat stok menyusun komponen mask musim ∩ `ItemKind` `{Ftr, DoorDeco, Tambourine}`; pembuat state 2–3 menggabungkannya dengan filter tambahan. Nilai `ItemFrom` yang terlihat pada filter mencakup `ShopDefault`/`ShopMiscGoods` untuk state awal; `ShopLv1`/`ShopLv2` serta filter payung/kertas bungkus pada state 2; dan tambahan `ShopSeasonSale`, `ShopLargeGoods`, serta `ShopHighClass` pada state 3. Filter dua pilihan pertama state 0–1 sudah dipastikan. Tiga filter tambahan `0xfcdfe0` kini terpetakan sebagai sumber `ItemFrom` yang mengikuti bulan; pengelompokan filter lain ke tiap ambilan state 2–3 masih terbuka.
+Untuk Nook's Cranny, `0xfd0630` memilih pembuat stok dari state toko: state 0–1 → `0xfce9e0`, state 2 → `0xfceb90`, dan state 3 → `0xfcf660`. Ketiga pembuat menyusun komponen mask musim ∩ `ItemKind` `{Ftr, DoorDeco, Tambourine}`. State 2 dan 3 juga membangun filter kelas turunan melalui konstruktor `0xb0fd80`; filter itu berbeda dari predikat `ItemKind` dan `ItemFrom`. Builder sekarang dapat ditelusuri sampai himpunan selector dan pemanggil pengambilan stok, tetapi belum seluruh slot keluaran akhir dapat dipasangkan satu per satu karena bitset digabung sebelum pemilihan.
 
 **Filter state awal dan sumber dinamis yang terbukti dari pseudocode, disassembly, dan tabel.** Pada `0xfce9e0`, dua pilihan pertama dibuat dari irisan mask item musim, `ItemKind` `{0, 77, 32}`, dan `ItemFrom` `{1}`. Daftar enum `ItemKind` memberi label `Ftr`, `DoorDeco`, dan `Tambourine`; baris `ItemFrom` bernilai 1 adalah `ShopDefault`. Dari 23 baris `ItemParam` dengan `ItemFrom=ShopDefault`, semuanya berjenis `Ftr` sebelum filter musim. Ketiga pembuat state toko juga menyusun komponen mask musim ∩ `ItemKind` `{0, 77, 32}`; state 2–3 menambahkan filter lain yang belum dapat dipasangkan dengan tiap ambilan.
 
 `0xfcdfe0` membuat tiga filter `ItemFrom`. Byte `+0x925` dan `+0x924` pada data node save `+0x20d0e0` adalah indeks 0–7 ke tabel sumber; pemilih `0xf50ad0` menggunakan bulan argumen toko `+10`, menggeser bulan enam posisi dalam mode hemisphere alternatif (`+0x651fc`), mengecualikan dua indeks tersimpan, lalu memilih sumber lain yang mask bulannya cocok. `0xf50f50`/`0xf51040` mengubah indeks tersimpan menjadi nilai `ItemFrom`; `0xf50e40` mengubah pilihan baru. `ItemFrom` dibuktikan karena ketiganya masuk ke konstruktor predikat `0xb0fd40` yang sama dengan filter statis di `0xfce9e0`, `0xfc8760`, dan `0xfca870`. Label ordinal dibaca dari enum native berbentuk daftar koma di rodata `0x29b535d`; ordinal `ShopDefault=1` dan `ShoesBagShop=0x34` cocok dengan konstanta filter Nook/Kicks. Mask memakai bit 0 untuk bulan 1 sesudah penyesuaian hemisphere.
+
+**Filter kelas tambahan Nook.** Alamat pada paragraf ini adalah VA NSO mentah kecuali diberi label Ghidra: konstruktor `0xa0fd80` (Ghidra `FUN_00b0fd80`) menyimpan selector; vtable `0x30c6348` (Ghidra `0x31c6348`) mengarah melalui slot 0 ke predikat `0xaa82d0` (Ghidra `FUN_00ba82d0`), yang membandingkan selector dengan hasil helper `0xaa8ce0` (Ghidra `FUN_00ba8ce0`). Helper mengklasifikasikan item lewat lookup berbasis `ItemKind`; salah satu cabangnya membaca `ItemParam.DragSE` pada offset `+0x9c`. Pada cabang DragSE, ordinal 3–6 berarti `VeryHeavy`, `LightWheel`, `HeavyWheel`, dan `Floated`; ordinal 0–2 berarti `Light`, `Normal`, dan `Heavy`. Helper mempunyai cabang lain yang menghasilkan kelas turunan berbeda, jadi label DragSE hanya berlaku saat jalur itu dipakai. `0xfceb90` membangun selector `{5,6}` dan `{0..5}`; `0xfcf660` membangun `{5,6}` dan `{3,4}`. Himpunan ini digabung dengan filter sumber dan mask umum sebelum `0xfce710`/`0xfce170` memilih stok. Filter kelas terbukti ada, tetapi pemetaan akhir tiap himpunan gabungan ke tiap slot stok belum selesai.
 
 | Indeks | Nilai `ItemFrom` | Mask bulan |
 |---:|---|---:|
@@ -353,7 +356,7 @@ Untuk Nook's Cranny, `0xfd0630` memilih pembuat stok dari state toko: state 0–
 
 Nilai sumber ketiga bergantung pada bulan dan indeks yang sudah tersimpan; jumlah kandidat yang diambil dari tiap filter (`1` pada state <2, `2` pada state 2, semua pada state 3). Filter per ambilan lain pada state 2 dan 3 tetap belum dapat dipasangkan satu per satu.
 
-**Pembaca harga dasar lobak.** Generator `0xfc6d00` menulis harga dasar pada kata pertama blok. Query native `0x4cca80` mengambil node save `+0x208ed0`, membaca `u32` pada `data +0x00`, lalu memakai nilainya pada perbandingan jumlah pembelian yang dikalikan kuantitas. Pembaca harga jual harian terpisah: `0xaab8c0` memanggil `0xfc7c70`, yang memilih slot di `data +0x04 + 4 × (2 × hari + pagi/sore)`. Hubungan langsung query `0x4cca80` dengan halaman UI `KabuBuyPage` belum ditemukan.
+**Pembaca harga dasar lobak dan flow Daisy Mae.** Generator `0xfc6d00` menulis harga dasar pada kata pertama blok. Query NSO VA `0x3cca80` (Ghidra `FUN_004cca80`) mengambil node save `+0x208ed0`, membaca `u32` pada `data +0x00`, lalu membandingkannya dengan jumlah pembelian yang dikalikan kuantitas. Metadata registrasi mengidentifikasinya sebagai slot 6 `EventFlowQueryBoaCanSetKabu` (factory `0x45a7f0`, constructor `0x3cca20`, vtable `0x3053ac0`). Satu-satunya pemakaian yang terindeks ada pada `SNPC_boc`, Event32: hasil 0 menuju Event30, hasil 1 ke Event33, dan hasil 2 ke Event47. Query mengembalikan 1 bila nilai permintaan di bawah harga dasar × kuantitas; 0 bila setter menerima jumlah; 2 bila jumlah belum diisi atau setter menolak. Emulasi native dengan accessor save/input/setter terkontrol mengonfirmasi empat cabang ini, termasuk tiga kode hasil; itu memverifikasi logika query, bukan ikatan UI. Ini membuktikan konsumen percakapan Daisy Mae. Ikatan langsung dari halaman UI `KabuBuyPage` belum terbukti; string itu muncul pada fungsi UI `0x1215c30`, tanpa jalur pemanggil menuju query ini.
 
 | Fungsi | Toko | Pool |
 |---|---|---|
@@ -386,7 +389,7 @@ Nilai sumber ketiga bergantung pada bulan dan indeks yang sudah tersimpan; jumla
 - **Lobak:** `rekaman[1 + 2 × hari + (jam > 11)] × ItemParam.Price` (`0xfc7c70`). Karena slot Minggu bernilai 0, lobak tidak bisa dijual hari Minggu.
 - **Item lain:** `Price × tumpukan / 4`.
 
-Pembaca harga dasar `+0x00`, yang diduga menjadi harga beli Daisy Mae, belum terisolasi. `0xfc6d00` menulisnya dan memakai nilai itu untuk membuat 12 harga; `0xfc7c70` memakai harga slot harian untuk harga jual lobak. Rujukan UI `KabuBuyPage` dan `HowmuchBuyItem`/`HowmuchSellKabu` ditemukan, tetapi aliran nilainya menuju harga dasar belum terbukti.
+Harga dasar `+0x00` dan query percakapan Daisy Mae kini terisolasi. Yang belum terbukti adalah aliran query itu ke input halaman UI `KabuBuyPage`; hasil pencarian hanya menghubungkan string halaman ke fungsi UI `0x1215c30`, sedangkan registrasi EventFlow menghubungkan query ke `SNPC_boc`.
 
 ## 4. Satu tahun
 
@@ -520,7 +523,7 @@ Keduanya mereset penghitung hari ke 0 dan menyalakan `NextMoveOutTalk` serta `Is
   - `0xcc5a40`: nilai 2.
   - `0xf889e0`: reset ke 0.
 
-  `0xf889e0` juga dipanggil oleh `0xbc0190` dan `0xbc0430`; keduanya tidak memiliki caller langsung di indeks dan konteks callback-nya belum teridentifikasi, jadi jalur lokal non-jaringan belum terbukti. Jalur lain yang ditemukan adalah dispatcher `0xc7ea00` (← `0xbcef20` ← … ← `0xb65410` `NetConfig`), yang konsisten dengan sinkronisasi multipemain. Fungsi `0xf855c0` hanya menghitung villager yang menetap dengan membaca `AbandonedHouse` dan `MoveInCompletion`; ia bukan penulis flag.
+  `0xf889e0` juga dipanggil oleh `0xbc0190` dan `0xbc0430`. Call graph tidak menemukan caller langsung untuk dua fungsi tersebut; pemindaian relokasi/vtable main dan registrasi EventFlow juga tidak memberi nama dispatch. Keduanya memang mencapai penulis yang sama melalui save node `+0x1d6d48`: `0xbc0190` hanya melakukannya bila argumen bit 0 dan root save tersedia, sedangkan `0xbc0430` melakukannya setelah rangkaian setup dunia yang mencakup `0xd21110`. Ini membuktikan dua jalur tambahan ke penulis, tetapi pemicu/callback serta apakah jalur itu lokal atau bagian dari lifecycle jaringan masih belum diketahui. Jalur jaringan yang jelas terpisah adalah dispatcher `0xc7ea00` (← `0xbcef20` ← … ← `0xb65410` `NetConfig`). Fungsi `0xf855c0` hanya menghitung villager yang menetap dengan membaca `AbandonedHouse` dan `MoveInCompletion`; ia bukan penulis flag.
 
 ## 6. Pengunjung khusus
 
