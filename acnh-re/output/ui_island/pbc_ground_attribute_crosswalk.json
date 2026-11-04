@@ -1,0 +1,574 @@
+{
+  "scope": "Build-local ColGroundAttributeParam row-index crosswalk for the four PBC material bytes. PBC byte=row index is corroborated by the pinned HeavenTool enum; local native paths resolve ground IDs to row indices, but no local PBC payload is available to test every value.",
+  "source": {
+    "table": "ColGroundAttributeParam",
+    "source_id": 14,
+    "source": "B_data/Bcsv/ColGroundAttributeParam.bcsv",
+    "row_count": 63,
+    "raw_sha256": "33705cfa93db0695a632afc8e891655518c1a3fbff5ae3f598062191075aefcb"
+  },
+  "external_reference": {
+    "repository": "acnhmodding/HeavenTool",
+    "commit": "e3ddf830a4ae360657917d3d598c79170273d056",
+    "tile_type_source": "https://github.com/acnhmodding/HeavenTool/blob/e3ddf830a4ae360657917d3d598c79170273d056/HeavenTool.IO/FileFormats/PBC/TileType.cs",
+    "declared_encoding": "zero-based row indices in ColGroundAttributeParam",
+    "pinned_enum_entries": 73
+  },
+  "local_native_evidence": {
+    "pbc_attribute_reader": "0x181cd0 returns bytes at record offsets 48..51 in direction order; see output/mechanics/terrain_native.json.",
+    "row_index_resolver": "0x18b570 floor override resolves Floorboards UniqueID through ColGroundAttributeParam and returns the row index; see output/mechanics/room_floor_ground_native.json.",
+    "limit": "No local native trace directly binds each PBC byte to this table, so the external row-index contract is not promoted to a local payload validation."
+  },
+  "version_difference": {
+    "local_rows": 63,
+    "local_indices_present": [
+      0,
+      62
+    ],
+    "external_enum_values_missing_from_local_table": [
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72
+    ],
+    "row_index_vs_unique_id_example": [
+      {
+        "row_index": 25,
+        "unique_id": 25,
+        "debug_name": "鉄"
+      },
+      {
+        "row_index": 26,
+        "unique_id": 29,
+        "debug_name": "道:つち"
+      },
+      {
+        "row_index": 27,
+        "unique_id": 30,
+        "debug_name": "道:石畳"
+      },
+      {
+        "row_index": 28,
+        "unique_id": 31,
+        "debug_name": "欄干"
+      },
+      {
+        "row_index": 29,
+        "unique_id": 32,
+        "debug_name": "波打ち際"
+      }
+    ]
+  },
+  "rows": [
+    {
+      "pbc_material_row_index": 0,
+      "local_unique_id": 0,
+      "debug_name": "草",
+      "water_check": 0,
+      "player_no_entry": 0,
+      "npc_no_entry": 0
+    },
+    {
+      "pbc_material_row_index": 1,
+      "local_unique_id": 1,
+      "debug_name": "川",
+      "water_check": 1,
+      "player_no_entry": 1,
+      "npc_no_entry": 1
+    },
+    {
+      "pbc_material_row_index": 2,
+      "local_unique_id": 2,
+      "debug_name": "土(固い)",
+      "water_check": 0,
+      "player_no_entry": 0,
+      "npc_no_entry": 0
+    },
+    {
+      "pbc_material_row_index": 3,
+      "local_unique_id": 3,
+      "debug_name": "石",
+      "water_check": 0,
+      "player_no_entry": 0,
+      "npc_no_entry": 0
+    },
+    {
+      "pbc_material_row_index": 4,
+      "local_unique_id": 4,
+      "debug_name": "砂浜",
+      "water_check": 0,
+      "player_no_entry": 0,
+      "npc_no_entry": 0
+    },
+    {
+      "pbc_material_row_index": 5,
+      "local_unique_id": 5,
+      "debug_name": "海",
+      "water_check": 1,
+      "player_no_entry": 0,
+      "npc_no_entry": 0
+    },
+    {
+      "pbc_material_row_index": 6,
+      "local_unique_id": 6,
+      "debug_name": "木(分厚い)",
+      "water_check": 0,
+      "player_no_entry": 0,
+      "npc_no_entry": 0
+    },
+    {
+      "pbc_material_row_index": 7,
+      "local_unique_id": 7,
+      "debug_name": "Null",
+      "water_check": 0,
+      "player_no_entry": 1,
+      "npc_no_entry": 1
+    },
+    {
+      "pbc_material_row_index": 8,
+      "local_unique_id": 8,
+      "debug_name": "建物",
+      "water_check": 0,
+      "player_no_entry": 1,
+      "npc_no_entry": 1
+    },
+    {
+      "pbc_material_row_index": 9,
+      "local_unique_id": 9,
+      "debug_name": "編集不可",
+      "water_check": 0,
+      "player_no_entry": 0,
+      "npc_no_entry": 0
+    },
+    {
+      "pbc_material_row_index": 10,
+      "local_unique_id": 10,
+      "debug_name": "ドア０",
+      "water_check": 0,
+      "player_no_entry": 0,
+      "npc_no_entry": 0
+    },
+    {
+      "pbc_material_row_index": 11,
+      "local_unique_id": 11,
+      "debug_name": "カメラ",
+      "water_check": 0,
+      "player_no_entry": 0,
+      "npc_no_entry": 0
+    },
+    {
+      "pbc_material_row_index": 12,
+      "local_unique_id": 12,
+      "debug_name": "汽水地",
+      "water_check": 1,
+      "player_no_entry": 1,
+      "npc_no_entry": 1
+    },
+    {
+      "pbc_material_row_index": 13,
+      "local_unique_id": 13,
+      "debug_name": "替床",
+      "water_check": 0,
+      "player_no_entry": 0,
+      "npc_no_entry": 0
+    },
+    {
+      "pbc_material_row_index": 14,
+      "local_unique_id": 14,
+      "debug_name": "踊り場",
+      "water_check": 0,
+      "player_no_entry": 0,
+      "npc_no_entry": 0
+    },
+    {
+      "pbc_material_row_index": 15,
+      "local_unique_id": 15,
+      "debug_name": "造成不可",
+      "water_check": 0,
+      "player_no_entry": 0,
+      "npc_no_entry": 0
+    },
+    {
+      "pbc_material_row_index": 16,
+      "local_unique_id": 16,
+      "debug_name": "土(柔らかい)",
+      "water_check": 0,
+      "player_no_entry": 0,
+      "npc_no_entry": 0
+    },
+    {
+      "pbc_material_row_index": 17,
+      "local_unique_id": 17,
+      "debug_name": "大理石",
+      "water_check": 0,
+      "player_no_entry": 0,
+      "npc_no_entry": 0
+    },
+    {
+      "pbc_material_row_index": 18,
+      "local_unique_id": 18,
+      "debug_name": "コーティング床",
+      "water_check": 0,
+      "player_no_entry": 0,
+      "npc_no_entry": 0
+    },
+    {
+      "pbc_material_row_index": 19,
+      "local_unique_id": 19,
+      "debug_name": "砂利",
+      "water_check": 0,
+      "player_no_entry": 0,
+      "npc_no_entry": 0
+    },
+    {
+      "pbc_material_row_index": 20,
+      "local_unique_id": 20,
+      "debug_name": "落ち葉",
+      "water_check": 0,
+      "player_no_entry": 0,
+      "npc_no_entry": 0
+    },
+    {
+      "pbc_material_row_index": 21,
+      "local_unique_id": 21,
+      "debug_name": "雪",
+      "water_check": 0,
+      "player_no_entry": 0,
+      "npc_no_entry": 0
+    },
+    {
+      "pbc_material_row_index": 22,
+      "local_unique_id": 22,
+      "debug_name": "木(薄い)",
+      "water_check": 0,
+      "player_no_entry": 0,
+      "npc_no_entry": 0
+    },
+    {
+      "pbc_material_row_index": 23,
+      "local_unique_id": 23,
+      "debug_name": "じゅうたん",
+      "water_check": 0,
+      "player_no_entry": 0,
+      "npc_no_entry": 0
+    },
+    {
+      "pbc_material_row_index": 24,
+      "local_unique_id": 24,
+      "debug_name": "たたみ",
+      "water_check": 0,
+      "player_no_entry": 0,
+      "npc_no_entry": 0
+    },
+    {
+      "pbc_material_row_index": 25,
+      "local_unique_id": 25,
+      "debug_name": "鉄",
+      "water_check": 0,
+      "player_no_entry": 0,
+      "npc_no_entry": 0
+    },
+    {
+      "pbc_material_row_index": 26,
+      "local_unique_id": 29,
+      "debug_name": "道:つち",
+      "water_check": 0,
+      "player_no_entry": 0,
+      "npc_no_entry": 0
+    },
+    {
+      "pbc_material_row_index": 27,
+      "local_unique_id": 30,
+      "debug_name": "道:石畳",
+      "water_check": 0,
+      "player_no_entry": 0,
+      "npc_no_entry": 0
+    },
+    {
+      "pbc_material_row_index": 28,
+      "local_unique_id": 31,
+      "debug_name": "欄干",
+      "water_check": 0,
+      "player_no_entry": 1,
+      "npc_no_entry": 1
+    },
+    {
+      "pbc_material_row_index": 29,
+      "local_unique_id": 32,
+      "debug_name": "波打ち際",
+      "water_check": 0,
+      "player_no_entry": 0,
+      "npc_no_entry": 0
+    },
+    {
+      "pbc_material_row_index": 30,
+      "local_unique_id": 33,
+      "debug_name": "ラグ専用",
+      "water_check": 0,
+      "player_no_entry": 0,
+      "npc_no_entry": 0
+    },
+    {
+      "pbc_material_row_index": 31,
+      "local_unique_id": 34,
+      "debug_name": "道:濃い色のつち",
+      "water_check": 0,
+      "player_no_entry": 0,
+      "npc_no_entry": 0
+    },
+    {
+      "pbc_material_row_index": 32,
+      "local_unique_id": 35,
+      "debug_name": "道：砂",
+      "water_check": 0,
+      "player_no_entry": 0,
+      "npc_no_entry": 0
+    },
+    {
+      "pbc_material_row_index": 33,
+      "local_unique_id": 36,
+      "debug_name": "道:レンガ",
+      "water_check": 0,
+      "player_no_entry": 0,
+      "npc_no_entry": 0
+    },
+    {
+      "pbc_material_row_index": 34,
+      "local_unique_id": 37,
+      "debug_name": "道:木",
+      "water_check": 0,
+      "player_no_entry": 0,
+      "npc_no_entry": 0
+    },
+    {
+      "pbc_material_row_index": 35,
+      "local_unique_id": 38,
+      "debug_name": "道:タイル",
+      "water_check": 0,
+      "player_no_entry": 0,
+      "npc_no_entry": 0
+    },
+    {
+      "pbc_material_row_index": 36,
+      "local_unique_id": 39,
+      "debug_name": "道:扇状石畳",
+      "water_check": 0,
+      "player_no_entry": 0,
+      "npc_no_entry": 0
+    },
+    {
+      "pbc_material_row_index": 37,
+      "local_unique_id": 40,
+      "debug_name": "進入不可",
+      "water_check": 0,
+      "player_no_entry": 1,
+      "npc_no_entry": 1
+    },
+    {
+      "pbc_material_row_index": 38,
+      "local_unique_id": 41,
+      "debug_name": "スポンジマット",
+      "water_check": 0,
+      "player_no_entry": 0,
+      "npc_no_entry": 0
+    },
+    {
+      "pbc_material_row_index": 39,
+      "local_unique_id": 42,
+      "debug_name": "ビニールシート",
+      "water_check": 0,
+      "player_no_entry": 0,
+      "npc_no_entry": 0
+    },
+    {
+      "pbc_material_row_index": 40,
+      "local_unique_id": 43,
+      "debug_name": "マイデザイン床",
+      "water_check": 0,
+      "player_no_entry": 0,
+      "npc_no_entry": 0
+    },
+    {
+      "pbc_material_row_index": 41,
+      "local_unique_id": 44,
+      "debug_name": "岩場",
+      "water_check": 0,
+      "player_no_entry": 0,
+      "npc_no_entry": 0
+    },
+    {
+      "pbc_material_row_index": 42,
+      "local_unique_id": 45,
+      "debug_name": "岩場進入不可",
+      "water_check": 0,
+      "player_no_entry": 1,
+      "npc_no_entry": 1
+    },
+    {
+      "pbc_material_row_index": 43,
+      "local_unique_id": 46,
+      "debug_name": "岩場水たまり",
+      "water_check": 0,
+      "player_no_entry": 1,
+      "npc_no_entry": 1
+    },
+    {
+      "pbc_material_row_index": 44,
+      "local_unique_id": 47,
+      "debug_name": "砂岩",
+      "water_check": 0,
+      "player_no_entry": 0,
+      "npc_no_entry": 0
+    },
+    {
+      "pbc_material_row_index": 45,
+      "local_unique_id": 48,
+      "debug_name": "桟橋",
+      "water_check": 0,
+      "player_no_entry": 0,
+      "npc_no_entry": 0
+    },
+    {
+      "pbc_material_row_index": 46,
+      "local_unique_id": 49,
+      "debug_name": "波打ち際進入不可 ",
+      "water_check": 0,
+      "player_no_entry": 1,
+      "npc_no_entry": 1
+    },
+    {
+      "pbc_material_row_index": 47,
+      "local_unique_id": 50,
+      "debug_name": "草が生えない建物",
+      "water_check": 0,
+      "player_no_entry": 1,
+      "npc_no_entry": 1
+    },
+    {
+      "pbc_material_row_index": 48,
+      "local_unique_id": 51,
+      "debug_name": "屋内:草",
+      "water_check": 0,
+      "player_no_entry": 0,
+      "npc_no_entry": 0
+    },
+    {
+      "pbc_material_row_index": 49,
+      "local_unique_id": 52,
+      "debug_name": "草が生えない編集不可",
+      "water_check": 0,
+      "player_no_entry": 0,
+      "npc_no_entry": 0
+    },
+    {
+      "pbc_material_row_index": 50,
+      "local_unique_id": 53,
+      "debug_name": "泥沼",
+      "water_check": 0,
+      "player_no_entry": 0,
+      "npc_no_entry": 0
+    },
+    {
+      "pbc_material_row_index": 51,
+      "local_unique_id": 54,
+      "debug_name": "石生成草",
+      "water_check": 0,
+      "player_no_entry": 0,
+      "npc_no_entry": 0
+    },
+    {
+      "pbc_material_row_index": 52,
+      "local_unique_id": 55,
+      "debug_name": "マイデザイン屋外",
+      "water_check": 0,
+      "player_no_entry": 0,
+      "npc_no_entry": 0
+    },
+    {
+      "pbc_material_row_index": 53,
+      "local_unique_id": 56,
+      "debug_name": "水たまり(土)",
+      "water_check": 0,
+      "player_no_entry": 0,
+      "npc_no_entry": 0
+    },
+    {
+      "pbc_material_row_index": 54,
+      "local_unique_id": 57,
+      "debug_name": "博物館水面",
+      "water_check": 1,
+      "player_no_entry": 1,
+      "npc_no_entry": 1
+    },
+    {
+      "pbc_material_row_index": 55,
+      "local_unique_id": 59,
+      "debug_name": "右回転禁止",
+      "water_check": 0,
+      "player_no_entry": 0,
+      "npc_no_entry": 0
+    },
+    {
+      "pbc_material_row_index": 56,
+      "local_unique_id": 60,
+      "debug_name": "左回転禁止",
+      "water_check": 0,
+      "player_no_entry": 0,
+      "npc_no_entry": 0
+    },
+    {
+      "pbc_material_row_index": 57,
+      "local_unique_id": 61,
+      "debug_name": "回転禁止",
+      "water_check": 0,
+      "player_no_entry": 0,
+      "npc_no_entry": 0
+    },
+    {
+      "pbc_material_row_index": 58,
+      "local_unique_id": 62,
+      "debug_name": "土(固い)進入禁止",
+      "water_check": 0,
+      "player_no_entry": 1,
+      "npc_no_entry": 1
+    },
+    {
+      "pbc_material_row_index": 59,
+      "local_unique_id": 63,
+      "debug_name": "砂浜進入禁止",
+      "water_check": 0,
+      "player_no_entry": 1,
+      "npc_no_entry": 1
+    },
+    {
+      "pbc_material_row_index": 60,
+      "local_unique_id": 64,
+      "debug_name": "水(砂)",
+      "water_check": 0,
+      "player_no_entry": 0,
+      "npc_no_entry": 0
+    },
+    {
+      "pbc_material_row_index": 61,
+      "local_unique_id": 65,
+      "debug_name": "水(砂利)",
+      "water_check": 0,
+      "player_no_entry": 0,
+      "npc_no_entry": 0
+    },
+    {
+      "pbc_material_row_index": 62,
+      "local_unique_id": 66,
+      "debug_name": "溶岩",
+      "water_check": 0,
+      "player_no_entry": 0,
+      "npc_no_entry": 0
+    }
+  ]
+}

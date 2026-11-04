@@ -32,13 +32,14 @@ empat byte atribut ada pada offset 48..51. Masing-masing byte overlay menggantik
 atribut base, kecuali nilainya 7. Nilai 7 berarti mewarisi byte base yang sesuai.
 Overlay null atau index di luar jumlah record overlay memakai base.
 
-Layout record ini mendapat corroboration independen dari parser PBC komunitas:
-header PBC menyimpan ukuran dan offset, lalu payload 52 byte per record berisi
-12 float32 pada byte 0..47 dan empat atribut pada byte 48..51. Fungsi lokal
-`0x180d20` juga membaca 48 byte pertama sebagai 12 float, sedangkan `0x181cd0`
-membaca atributnya. Sumber eksternal hanya memastikan bentuk encoding; nama dan
-makna masing-masing float belum diketahui. Parser tersebut lama dan menyebut
-renderer-nya tidak lengkap. Referensi dan tautannya ada di
+Layout record ini mendapat corroboration dari dua parser PBC publik:
+header menyimpan ukuran dan offset; setiap record 52 byte memiliki 12 float32
+pada byte 0..47 dan empat atribut byte pada 48..51. HeavenTool merinci float
+itu sebagai empat grup Top/Left/Bottom/Right, masing-masing tinggi pusat dan dua
+sudut; atribut memakai urutan arah yang sama. Fungsi lokal `0x180d20` membaca
+48 byte pertama sebagai 12 float, sedangkan `0x181cd0` mengambil empat atribut.
+Ini memperkuat skema record, tetapi nama urutan belum divalidasi dengan payload
+PBC build lokal yang tidak tersedia. Referensi dan tautannya ada di
 [`external_pbc_format_reference.json`](../output/ui_island/external_pbc_format_reference.json).
 
 Ada 576 kasus yang memeriksa semua 16 kombinasi inheritance empat byte, overlay
@@ -46,8 +47,9 @@ null/present, jumlah overlay parsial, dan enam sel grid. Enam kasus batas negati
 atau di luar width/height menghasilkan false dan tidak menulis output.
 
 Record runtime 52 byte berbeda dari record preset mentah 14 byte. Tahap ini belum
-menjalankan konversi preset menjadi buffer runtime atau menemukan semantik semua
-12 float pada record PBC. Buffer base yang valid diperlukan dalam konteks uji.
+menjalankan konversi preset menjadi buffer runtime. Struktur eksternal memberi
+nama field bagi 12 float, tetapi scale world-space dan interpolasi lokal belum
+diuji atas file PBC nyata. Buffer base yang valid diperlukan dalam konteks uji.
 
 ## Empat titik dan rangkaian fungsi lengkap
 

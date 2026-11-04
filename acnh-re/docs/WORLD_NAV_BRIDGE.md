@@ -23,7 +23,10 @@ Alamat adalah VA ELF ACNH 1.0.0, SHA-256:
 ## Record runtime memuat 12 sampel float ketinggian
 
 `0x180d20` membaca 48 byte awal record 52 byte sebagai 12 float. Empat byte pada
-+48..51 tetap atribut sektor. Fungsi membandingkan sampel antar sektor dan
++48..51 tetap atribut sektor. HeavenTool secara eksternal menafsirkan 12 float
+sebagai Top/Left/Bottom/Right × (center height, dua corner height), dan empat
+atribut dalam urutan arah yang sama; lihat [referensi format PBC](../output/ui_island/external_pbc_format_reference.json).
+Fungsi lokal membandingkan sampel antar sektor dan
 record tetangga, lalu menulis flag 32-bit per sel pada array terpisah:
 
 | Field world | Peran yang dikonsumsi |
@@ -33,9 +36,9 @@ record tetangga, lalu menulis flag 32-bit per sel pada array terpisah:
 | +0x50/+0x58 | Jumlah/pointer overlay |
 | +0x60/+0x68 | Jumlah/pointer word flag 32-bit |
 
-Ini memperjelas **runtime record**. Isi48 byte awal PBC asli, serta constructor
-yang menghubungkan preset14 byte ke runtime52 byte, tetap belum terbukti.
-Kesamaan stride tidak dipakai untuk mengklaim loader tersebut sudah dipahami.
+Ini memperjelas **schema runtime record**, dengan susunan triangle-height
+berdasarkan referensi eksternal. Isi PBC build lokal serta constructor yang
+menghubungkan preset 14-byte ke runtime 52-byte tetap belum terbukti.
 
 Pengujian writer memakai atribut sektor 0 dan threshold spread world yang
 disiapkan. Nilai0 dapat dirujuk ke ColGroundAttributeParam pada katalog; tabel

@@ -64,10 +64,13 @@ Ada 2.016 kombinasi pemilihan/transform, sepuluh kegagalan resource/file, dan
 nonzero, orientasi, tiga kelas context, empat sektor dan titik di luar map.
 Map sumber pengujian, guard bytes dan BCSV asli tetap identik setelah eksekusi.
 
-Layout PBC yang dikonsumsi reader: header 20 byte, width/height pada +4/+8,
-origin X/Z s32 pada +12/+16, record 52 byte dengan atribut sektor pada +48..51.
-**Makna empat byte awal header dan 48 byte awal tiap record belum terbukti.**
-Karena itu hasil ini belum menjadi spesifikasi collision geometry lengkap.
+Layout PBC yang dirujuk parser publik: magic `pbc\0`, header 20 byte,
+width/height pada +4/+8, origin X/Z s32 pada +12/+16, lalu record 52 byte.
+Parser publik menamai 48 byte awal tiap record sebagai empat grup tinggi segitiga
+berarah, lalu empat atribut material pada +48..51. Local reader mengonsumsi
+empat atribut dan dua belas float, tetapi file PBC build ini tidak tersedia untuk
+memvalidasi interpretasi atau skala tinggi. Karena itu hasil ini belum menjadi
+spesifikasi collision geometry lengkap.
 
 Data: [resident_floor_map_native.json](../output/mechanics/resident_floor_map_native.json).
 Rujukan tabel ItemParam, ItemKind, RoomFloorParam dan ColGroundAttributeParam
