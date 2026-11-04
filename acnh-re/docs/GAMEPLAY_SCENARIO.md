@@ -74,14 +74,14 @@ Kebijakan reset di tabel Land: `None` 200 flag, `Pre` 41 flag, `Plus` 2, `Start`
 | 8 | `0xd257d0` | obrolan sapaan villager (`AppFirstTalk`, `AppWelcomeMigrantsTalk`, …) |
 | 9 | `0xbdfd40` | jenis konser K.K. (`NormalLive`/`BirthdayLive`) |
 | 10 | `0xfd0700` | `DailyQuestFirstFivePointToday` (Nook Miles+ ×5) |
-| 11 | `0xfd9d10` | pengunjung khusus (§6) |
+| 11 | `0xfd9d10`, `0xfda740` | pengunjung khusus (§6) dan posisi spawn pengunjung hari ini (§3) |
 | 12 | `0xf535e0` | `PlayReportDaily` |
 
 Dispatcher `0xf545f0` sendiri memanggil, berurutan:
 1. `0xf234f0` (papan pengumuman);
 2. `0x6601a0` (papan toko, Gyroid plaza, `VillageDaysCount`);
 3. `0xf6130` (event global, `GlobalEventAvailable/Ready`);
-4. `0xfc4560`, `0xf77050`, `0xf7d4c0` (campsite pertama), `0xf26330`, `0xf6a730`, `0xfd8920` (K.K.), `0xfc1b80` (rumor), `0x10c26e0` (struktur);
+4. `0xfc4560`, `0xf77050`, `0xf7d4c0` (campsite pertama), `0xf26330`, `0xf6a730`, `0xfd8920` (K.K., pembuat jadwal pengunjung mingguan `0xfd8a80`, validasi `0xfd9620`; §3), `0xfc1b80` (rumor), `0x10c26e0` (struktur);
 5. `0xf91b90` (hari main, Wisp, `MarketBuiltMyVillage`), `0xf84320` (`MoveInCompletion`), `0xf40e0` (papan event dan ulang tahun).
 
 ### 2.2 Jadwal aktif NPC
@@ -104,19 +104,94 @@ Kolom `NeglectSleep`, `UseRainGoods`, `ApplyNeedActivity`, dan `CanDoze` per bar
 
 ## 3. Satu minggu
 
-- **[PSEUDO] Jadwal pengunjung mingguan.** Bentuknya member save `0x78` byte (descriptor `0x33d50a8`, offset save `+0x20a210`) dengan 7 kode pengunjung, satu per indeks hari (`0x1fbd50`, 0–6). Kode hari ini diambil `0xfdc020`, lalu spawner harian `0xc698d0` → `0xc6f1a0` men-spawn label sesuai kode:
+Semua isi bagian ini **[PSEUDO]** (pseudocode dan disassembly yang belum dieksekusi), kecuali yang diberi label lain. Ringkasan mesinnya ada di `output/gameplay/native_flag_refs.json` → `data.visitor_schedule`.
 
-  | Kode | 1 | 2 | 3 | 5 | 6 | 7 | 8 | 0/4/9 |
-  |---|---|---|---|---|---|---|---|---|
-  | NPC | `gul` Gulliver | `hgc` Label | `cml` Saharah | `hgh` Mabel | `bey` C.J. | `chy` Flick | `skk` Kicks | tidak ada |
+### 3.1 Batas minggu dan member jadwal
 
-  Label diambil dari rodata `main` (`re_helpers.py rodata`). Kode 2 = Label cocok dengan `HgcVisitFlagForTailor` di `0xfd9d10`.
-- **[PSEUDO] Pengunjung lain yang tidak lewat kode:**
-  - Daisy Mae (`boc`, `0xfdafa0`): indeks hari = 0 **dan** sebuah nilai save ≥2 (kemungkinan state Nook's Cranny).
-  - Celeste: indeks hari = int pada `+0x74` di member jadwal (`0xfdb6e0`).
-  - Wisp (`gst`) dan Celeste (`ows`) hanya tampil jam 20:00–04:59 (`0xfdb300`: `jam−5 > 14`).
-  - Harvey: `SpnVisitMainField`, tetapi tidak pada hari K.K. atau event global.
-- **[PSEUDO] Jenis konser K.K. hari ini** (`0xfdb060`): 0 bila `TkkFirstLive` OFF; selain itu dicek lewat event kalender, `FirstLive` → 3, `BirthdayLive` → 2, `NormalLive` → 1. K.K. tampil bila nilainya bukan 0 dan `TkkReturn` OFF (`0xfdbae0`).
+- **Minggu** berjalan dari Senin 05:00 sampai Senin 05:00 berikutnya. `0x1fbe10` menghitung hari sebelum 05:00 sebagai hari sebelumnya, lalu mundur ke Senin (dari Minggu mundur 6 hari).
+- **Indeks hari** memakai `nn::time::GetDayOfWeek` (`0x1fbd50`): 0 = Minggu, 1 = Senin, …, 6 = Sabtu.
+- **Member jadwal** berukuran `0x78` byte (descriptor `0x33d50a8`, offset save `+0x20a210`):
+
+  | Offset | Isi |
+  |---|---|
+  | `+0x00` | `u32 codes[7]`, kode pengunjung per indeks hari |
+  | `+0x1c` | `f32[3]` posisi spawn pengunjung hari ini (`0xfda740`) |
+  | `+0x28` | `f32[3]` titik spawn kedua (`0xfda740`) |
+  | `+0x44` | `u32 copy[7]`, salinan kode saat jadwal dibuat |
+  | `+0x60` | `u8 carry_over[14]` per kode: tertunda minggu lalu, didahulukan |
+  | `+0x70` | `i32` hari tambahan Wisp, atau −1 |
+  | `+0x74` | `i32` hari Celeste, atau −1 |
+
+### 3.2 Kode pengunjung
+
+Daftar label dibaca dari rodata `main` (`0xfdcf60`, string `non,gul,hgc,cml,gstA,hgh,bey,chy,skk,ows`):
+
+| Kode | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |
+|---|---|---|---|---|---|---|---|---|---|---|
+| Label | `non` | `gul` | `hgc` | `cml` | `gst` | `hgh` | `bey` | `chy` | `skk` | `ows` |
+| NPC | – | Gulliver | Label | Saharah | Wisp | Mabel | C.J. | Flick | Kicks | Celeste |
+
+- Spawner harian `0xc698d0` → `0xc6f1a0` men-spawn kode 1–3 dan 5–8 dari `0xfdc020` (kode hari ini).
+- Kode 9 ada di tabel, tetapi tidak pernah ditulis pembuat jadwal; hari Celeste disimpan di `+0x74`.
+- Wisp di-spawn `0xc70060`. Ia hadir bila hari itu bukan hari K.K. dan `codes[hari] == 4` atau hari tambahan Wisp = hari ini (`0xfdbf60`).
+- Celeste di-spawn `0xc6fd70`. Ia hadir bila hari itu bukan hari K.K. dan `+0x74` = hari ini (`0xfdb6e0`).
+- Wisp dan Celeste hanya tampil 20:00–04:59 (`0xfdb300`: `jam−5 > 14`).
+
+### 3.3 Pembuatan jadwal (`0xfd8a80`)
+
+Fungsi ini dipanggil `0xfd8920` dari dispatcher pergantian hari. Jadwal dibuat ulang bila Senin dari waktu main terakhir berbeda dengan Senin sekarang (`0x1fbfa0`), atau bila belum ada waktu main tersimpan (info pergantian hari `+0x18`, yakni main pertama). Langkahnya berurutan:
+
+1. **Kosongkan.** `codes` dan `copy` diisi 0; `+0x70` dan `+0x74` diisi −1.
+2. **Mabel**, bila state penjahit < 2 (penjahit belum berdiri; member `+0x1f40c8`, descriptor `0x33d9ea0`): Sabtu (`0xfdad10`), Minggu (`0xfdae20`), dan satu hari kerja acak.
+3. **Saharah**: satu hari kerja acak, setiap minggu.
+4. **Kicks**, bila state penjahit ≥ 2: satu hari kerja acak.
+5. **Kolam acak**:
+   - Label, bila penjahit ≥ 2;
+   - C.J. dan Flick, bila `BuiltTownOffice` ON;
+   - Gulliver, bila state museum ≥ 2 (tenda Blathers; member `+0x20a168`, state `0xf77050`).
+
+   Kode yang tertunda minggu lalu (`carry_over`) ditempatkan dulu, lalu sisanya. Keduanya dalam urutan acak, dan berhenti begitu tidak ada hari kerja kosong. Kode kolam yang tidak kebagian hari menyalakan `carry_over`-nya untuk minggu depan.
+6. **Hari Celeste**, bila state museum > 2 (gedung museum): hari acak dalam minggu itu (Senin–Minggu) yang pola cuacanya `Fine00`. Bila tidak ada, dipilih dari hari `Fine02`, `Fine04`, atau `Fine06`. Hari dengan event kalender, `NormalLive`, atau `BirthdayLive` dilewati. Nama pola ini sama dengan pola cuaca di `output/weather/patterns.json`.
+7. **Wisp**: sampai 5 hari kerja kosong lagi. Bila tidak satu pun kebagian, `+0x70` = satu hari Senin–Jumat acak yang sudah berisi pengunjung. Setelah itu Wisp juga mengisi Sabtu dan Minggu bila kosong dan bukan hari Celeste.
+8. **Salin** `codes` ke `copy`.
+
+**Penempatan hari kerja** (`0xfda940`):
+- Hanya Senin–Jumat (bit 1–5).
+- Hari dianggap kosong bila `codes[hari] == 0`, tidak ada event kalender (`0xf0790`), bukan hari `NormalLive`/`BirthdayLive`, dan bukan hari Celeste.
+- Hari dipilih seragam acak: popcount `0x198b590`, bit ke-n `0x198b630`, dan xorshift128 `0x19aa0e0` dengan state dari slot TLS. Kaitannya dengan seed harian `0xf53a70` belum dicek.
+
+Akibat langsung dari urutan di atas:
+- Sabtu dan Minggu hanya bisa berisi Mabel (sebelum penjahit) atau Wisp.
+- Saat semua syarat terbuka, ada 6 pengunjung untuk 5 hari kerja (Saharah, Kicks, Label, C.J., Flick, Gulliver). Satu dari empat anggota kolam pasti tertunda ke minggu berikutnya, dan Wisp mendapat hari tambahan bersama pengunjung lain.
+
+### 3.4 Validasi harian (`0xfd9620`)
+
+Setiap pergantian hari, entri hari ini dicek.
+
+**Syarat sah per kode:**
+- Gulliver dan Wisp selalu sah.
+- Saharah sah bila ada pemain dengan nilai ≥ 2. Nilainya dibaca `0xef8520` dari member pemain `+0x17cd48`, descriptor `0x33dc730`, rentang 0–8. Nilai yang sama dipakai syarat Harvey, kemungkinan level rumah.
+- Mabel sah bila `EnableHghStayField` ON, penjahit belum berdiri, dan bukan hari K.K. **[EF]** Flag itu ("Mabel boleh dipilih sebagai NPC pengunjung") dinyalakan `SNPC_rcm_03_RenualOpen:Rcm_RenualOpen1_ConvHgh` dan dimatikan `Player_Demo_HousingFinish:HousingFinish_Tailor_Built`.
+- Kode lain sah bila bukan hari `NormalLive` atau `BirthdayLive`.
+
+**Bila tidak sah:**
+- Hari dengan event kalender atau konser K.K. (`FirstLive`, `NormalLive`, `BirthdayLive`) → kode 0.
+- Selain itu, entri diganti:
+  - bila `JohnnyTalkAnyPlayerFlag` ON ("ada yang sudah bicara dengan Gulliver"; **[EF]** dinyalakan `SNPC_gul:GulTalkChk`), kode 2, 3, 5, 6, 7, 8, dan 9 menjadi Wisp (4);
+  - bila flag itu OFF, bukan Minggu dengan toko sudah buka, museum ≥ 2, dan kodenya bukan 4, entri menjadi Gulliver (1);
+  - selain itu menjadi 0.
+
+Hari tambahan Wisp dan hari Celeste yang jatuh pada hari event atau konser K.K. diubah menjadi −1.
+
+**Pembatalan lain:**
+- Posisi spawn (`0xfda740`): C.J. dibatalkan bila `0x7acda0` tidak menemukan titik spawn.
+- `0xfdc080` (eksekusi `CancelTodayVisitorNpc` lewat `0x2b2ac0`) mengosongkan pengunjung hari ini dan mematikan `SpnVisitMainField`.
+
+### 3.5 Pengunjung lain dan K.K.
+
+- Daisy Mae (`boc`, `0xfdafa0`): indeks hari 0 (Minggu) **dan** state toko ≥ 2 (member `+0x1f3e98`, prosesor `0xfc4560`).
+- Harvey: `SpnVisitMainField`, tetapi tidak pada hari K.K. atau event global.
+- **Jenis konser K.K. hari ini** (`0xfdb060`): 0 bila `TkkFirstLive` OFF; selain itu dicek lewat event kalender, `FirstLive` → 3, `BirthdayLive` → 2, `NormalLive` → 1. K.K. tampil bila nilainya bukan 0 dan `TkkReturn` OFF (`0xfdbae0`).
 - **[TBL]** Konser K.K. biasa (`NormalLive`, `EventBegin=16`) dan konser ulang tahun (`BirthdayLive`, `EventBegin=12`) tidak menyimpan hari dalam minggu di `CalendarEventParam`. Penentu tanggal event `NormalLive` ada di sistem kalender native (`0xf2a30`, dipanggil `0xfdb060`) dan belum dibaca.
 - **[EF]** Hari jual lobak Daisy Mae tidak ada di EventFlow. Harga lobak juga belum di-RE.
 
@@ -165,17 +240,21 @@ Kolom `NeglectSleep`, `UseRainGoods`, `ApplyNeedActivity`, dan `CanDoze` per bar
 | NPC | Yang sudah diketahui | Bukti |
 |---|---|---|
 | Harvey (`spn`) | `SpnVisitMainField`=1 bila sebuah nilai 0–8 ≥2 (kemungkinan level rumah pemain), quest A/B/C selesai, dan Photopia belum terbuka maupun dikunjungi | [PSEUDO] `0xfd9d10` |
-| Label (`hgc`) | Kode jadwal 2 → spawn dan `HgcVisitFlagForTailor`; quest dan keakraban di `KotonoQuest*` | [PSEUDO] / [EF] |
-| Saharah (`cml`), Kicks (`skk`) | Kode jadwal 3 dan 8 | [PSEUDO] |
-| C.J. (`bey`), Flick (`chy`) | Kode jadwal 6 dan 7 (spawn dengan flag 1); juga NPC event turnamen | [PSEUDO] / [EF] |
-| Mabel (`hgh`) | Kode jadwal 5. Kunjungan pedagang menambah `CountTailorBuild` → toko penjahit; `HghStayMarket` di `0xfc4560` | [PSEUDO] / [EF] |
+| Label (`hgc`) | Kode 2, kolam acak setelah penjahit berdiri (§3.3); `HgcVisitFlagForTailor`; quest dan keakraban di `KotonoQuest*` | [PSEUDO] / [EF] |
+| Saharah (`cml`) | Kode 3, satu hari kerja setiap minggu; sah bila ada pemain dengan nilai ≥2 (§3.4) | [PSEUDO] |
+| Kicks (`skk`) | Kode 8, satu hari kerja setiap minggu setelah penjahit berdiri | [PSEUDO] |
+| C.J. (`bey`), Flick (`chy`) | Kode 6 dan 7, kolam acak bila `BuiltTownOffice` (spawn dengan flag 1); C.J. batal bila tidak ada titik spawn; juga NPC event turnamen | [PSEUDO] / [EF] |
+| Mabel (`hgh`) | Kode 5. Sebelum penjahit: Sabtu, Minggu, dan satu hari kerja; sah hanya bila `EnableHghStayField` ON. Kunjungan pedagang menambah `CountTailorBuild` → toko penjahit; `HghStayMarket` di `0xfc4560` | [PSEUDO] / [EF] |
 | Sable (`hgs`) | `HgsCloseness` maks 11, +1 per hari bila diizinkan | [EF] |
-| Wisp (`gst`) | Spawn `0xc70060` (`GstAppearField`); hanya 20:00–04:59; flag quest di-reset pada pergantian hari | [PSEUDO] |
-| Gulliver (`gul`) | Kode jadwal 1; `JohnnyRequirePartsNum`=5 per pergantian hari; `JohnnyHelpCount` 30 → resep golden shovel | [PSEUDO] / [EF] |
+| Wisp (`gst`) | Kode 4: mengisi hari kosong sisa (maks 5 hari kerja, plus Sabtu/Minggu), atau hari tambahan `+0x70`; pengganti entri gugur bila Gulliver sudah diajak bicara. Spawn `0xc70060` (`GstAppearField`); hanya 20:00–04:59; flag quest di-reset pada pergantian hari | [PSEUDO] |
+| Gulliver (`gul`) | Kode 1, kolam acak setelah tenda museum; pengganti entri gugur selama belum diajak bicara (§3.4). `JohnnyRequirePartsNum`=5 per pergantian hari; `JohnnyHelpCount` 30 → resep golden shovel | [PSEUDO] / [EF] |
 | Daisy Mae (`boc`) | Indeks hari 0 dan nilai save ≥2; `BocBuyCount`, `FirstKabuBuy`, `FirstKabuPattern` | [PSEUDO] / [EF]; harga [NATIVE] |
-| Celeste (`ows`) | Indeks hari = `+0x74` di jadwal, malam saja; resep per zodiak (`OwsThisZodiac` 1–12); bintang jatuh (`0x4ae640`) | [PSEUDO] / [EF] |
+| Celeste (`ows`) | Hari = `+0x74`, satu per minggu setelah gedung museum, dipilih dari hari cuaca `Fine00` (cadangan `Fine02/04/06`); malam saja; resep per zodiak (`OwsThisZodiac` 1–12); bintang jatuh (`0x4ae640`) | [PSEUDO] / [EF] |
 
-Yang belum ditemukan **[NATIVE]**: penulis 7 kode dan `+0x74`, yaitu algoritma pembuat jadwal mingguan. Pencariannya lihat §8.
+Yang masih terbuka dari jadwal ini:
+- apakah RNG TLS yang dipakai `0xfd8a80` adalah RNG yang di-seed harian oleh `0xf53a70`;
+- arti pasti nilai pemain 0–8 (syarat Saharah dan Harvey);
+- titik tetap yang menjadi acuan posisi Label, Mabel, dan Kicks (`0x469680`).
 
 ## 7. Timeline progres dalam pergantian hari
 
@@ -200,13 +279,12 @@ Yang belum ditemukan **[NATIVE]**: penulis 7 kode dan `+0x74`, yaitu algoritma p
 
 | # | Celah | Titik masuk |
 |---|---|---|
-| 1 | Pembuat jadwal mingguan (7 kode + `+0x74`) | Sudah disingkirkan: konsumen `0xfdc020`, `0xc6f1a0`, `0xfdb6e0`, `0xcf9cf0`, `0xbe09d0`, `0xf32fa0` (konstruktor layout save). Sisa kandidat yang memakai descriptor `0x33d50a8` lewat vtable (tanpa pemanggil langsung): `0x101400`, `0x260370`, `0xcf420`, `0x2b2ac0` (eksekusi `CancelTodayVisitorNpc`), `0x488980` |
-| 2 | Siapa ingin pindah keluar | `0xf87670` (`IsMovingConsultationToPlayer`), pemanggil `0xf8c540` → `0xf8d860` |
-| 3 | Rumus skor Nature/Life | penulis float `+0x240`, `VillageScoreMgr` |
-| 4 | Hari konser K.K. biasa | fungsi perujuk `NormalLive` (§3) |
-| 5 | Harga lobak dan stok toko | belum ada titik masuk string; mulai dari flag `FirstKabuPattern` |
-| 6 | Prosesor yang belum dibaca | `0xf8f190`, `0xf7d4c0`, `0xfc1b80`, `0xbdfd40`, `0xf8b460` (tujuan RNG) |
-| 7 | Menaikkan [PSEUDO] menjadi terbukti | emulasi fungsi fasilitas seperti tahap mekanik terdahulu |
-| 8 | Format save | konstruktor layout save `0xf32fa0` (pemanggil `0xf30220`, `0xf416c0`) |
+| 1 | Siapa ingin pindah keluar | `0xf87670` (`IsMovingConsultationToPlayer`), pemanggil `0xf8c540` → `0xf8d860` |
+| 2 | Rumus skor Nature/Life | penulis float `+0x240`, `VillageScoreMgr` |
+| 3 | Hari konser K.K. biasa | penentu tanggal event `NormalLive` di kalender native `0xf2a30` (§3.5) |
+| 4 | Harga lobak dan stok toko | belum ada titik masuk string; mulai dari flag `FirstKabuPattern` |
+| 5 | Prosesor yang belum dibaca | `0xf8f190`, `0xf7d4c0`, `0xfc1b80`, `0xbdfd40`, `0xf8b460` (tujuan RNG) |
+| 6 | Menaikkan [PSEUDO] menjadi terbukti | emulasi fungsi fasilitas seperti tahap mekanik terdahulu |
+| 7 | Format save | konstruktor layout save `0xf32fa0` (pemanggil `0xf30220`, `0xf416c0`) |
 
 Antrian yang sama, dalam bentuk yang bisa dibaca mesin dan ditandai statusnya, ada di [re_queue.json](re_queue.json).

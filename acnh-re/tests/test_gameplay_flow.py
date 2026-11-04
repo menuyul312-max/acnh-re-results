@@ -108,17 +108,54 @@ class GameplayFlowTests(unittest.TestCase):
                   'cLand:MarketOpen1stDay1': '0xfc4560'}
         for key, fn in expect.items():
             self.assertIn(fn, refs['flags'][key]['referencing_functions'], key)
-        self.assertEqual({k: v for k, v in refs['visitor_codes'].items() if k != 'source'},
-                         {'1': 'gul', '2': 'hgc', '3': 'cml', '5': 'hgh', '6': 'bey', '7': 'chy', '8': 'skk'})
-        self.assertIn('0xf8dd70', refs['all_readings'])
+        self.assertEqual([refs['visitor_codes'][str(i)] for i in range(10)],
+                         ['non', 'gul', 'hgc', 'cml', 'gst', 'hgh', 'bey', 'chy', 'skk', 'ows'])
+        for fn in ('0xf8dd70', '0xfd8a80', '0xfd9620', '0xfda940'):
+            self.assertIn(fn, refs['all_readings'])
         driver = [r['function'] for r in refs['day_change_driver_pipeline']]
         for fn in ('0xf545f0', '0xf8b460', '0xfd9d10', '0xd21110'):
             self.assertIn(fn, driver)
+
+    def test_weekly_schedule_writer_is_reached_from_the_dispatcher(self):
+        import sqlite3
+        db = sqlite3.connect(OUT/'index.sqlite')
+
+        def callees(f):
+            return {t for (t,) in db.execute('SELECT target_va FROM direct_calls WHERE owner_va=?', (f,))}
+        self.assertIn(0xfd8920, callees(gf.DAY_CHANGE_DISPATCHER))
+        self.assertTrue({0xfd8a80, 0xfd9620} <= callees(0xfd8920))
+        self.assertTrue({0xfda940, 0xfdad10, 0xfdae20, 0x19aa0e0, 0x198b630} <= callees(0xfd8a80))
+        self.assertIn(0xfda740, callees(gf.DAY_CHANGE_DRIVER))
+        db.close()
 
     def test_native_only_progress_flags_have_no_eventflow_writer(self):
         for key in ('cLand:MuseumBuilt', 'cLand:MarketBuilt', 'cLand:Museum2Built', 'cLand:BuiltTownOffice',
                     'cLand:CampSiteBuilt', 'cLand:TkkFirstLive', 'cLand:TkkFirstLiveEnable', 'cLand:ImmQ_A_Complete'):
             self.assertEqual(self.flags[key]['eventflow_writers'], [], key)
+
+
+NSO = Path(os.environ.get('ACNH_RE_NSO', ROOT/'inputs'/'additional_exefs'/'main'))
+
+
+@unittest.skipUnless(NSO.exists(), 'put the original ExeFS main (NSO0) in inputs/additional_exefs/main (see docs/HANDOFF.md)')
+class VisitorScheduleNsoTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        import re_helpers
+        cls.read = staticmethod(lambda addr, n, segs=re_helpers.nso_segments(NSO): re_helpers._read(segs, addr, n))
+
+    def cstr(self, addr):
+        return self.read(addr, 64).split(b'\0', 1)[0].decode()
+
+    def test_code_labels_and_celeste_weather_patterns(self):
+        self.assertEqual(self.cstr(0x2947a90), 'non,gul,hgc,cml,gstA,hgh,bey,chy,skk,ows')
+        self.assertEqual([self.cstr(a) for a in (0x29c0d53, 0x29333a7, 0x297fc20, 0x29a0ae8)],
+                         ['Fine00', 'Fine02', 'Fine04', 'Fine06'])
+
+    def test_generator_stores_celeste_and_wisp_days(self):
+        word = lambda a: int.from_bytes(self.read(a, 4), 'little')  # noqa: E731
+        self.assertEqual(word(0xfd94b4), 0xb9007660)  # str w0, [x19, #0x74] after the n-th-bit pick
+        self.assertEqual(word(0xfd9584), 0xb9007260)  # str w0, [x19, #0x70]
 
 
 if __name__ == '__main__':

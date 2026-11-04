@@ -51,6 +51,13 @@ Rincian, cara verifikasi, dan file yang wajib ada: [WORKFLOW §3](acnh-re/docs/W
 
 ## Fokus terbaru (terbaru di atas)
 
+- **Pembuat jadwal pengunjung mingguan** — [GAMEPLAY_SCENARIO §3](acnh-re/docs/GAMEPLAY_SCENARIO.md):
+  - `0xfd8a80` membuat jadwal tiap Senin 05:00;
+  - urutan penempatan: Mabel, Saharah, Kicks, lalu kolam acak Label/C.J./Flick/Gulliver dengan prioritas carry-over;
+  - hari Celeste dipilih dari hari cuaca `Fine00`;
+  - Wisp mengisi hari kosong;
+  - validasi harian `0xfd9620` membatalkan entri atau menggantinya dengan Gulliver/Wisp;
+  - layout member 0x78 byte dan kode 0–9 ada di `native_flag_refs.json` (`data.visitor_schedule`).
 - **Jadwal pengunjung dan penghuni plot** — [GAMEPLAY_SCENARIO §3, §5, §6](acnh-re/docs/GAMEPLAY_SCENARIO.md):
   - kode pengunjung mingguan 1–8 → Gulliver, Label, Saharah, Mabel, C.J., Flick, Kicks;
   - aturan Daisy Mae (indeks hari 0), Celeste (slot `+0x74`, malam), dan Wisp (malam);
