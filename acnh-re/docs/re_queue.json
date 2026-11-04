@@ -5,18 +5,8 @@
  "how_to_use": "Companion of docs/HANDOFF.md. Pick the first item with status 'open'. Read only its entry_points with tools/re_helpers.py. When done: set status, add findings to docs (GAMEPLAY_SCENARIO/GAMEPLAY_FLOW), add readings to PSEUDOCODE_READINGS in tools/gameplay_flow.py, rebuild output/gameplay, update docs/HANDOFF.md session log.",
  "items": [
   {
-   "id": "villager-move-out",
-   "priority": 1,
-   "status": "open",
-   "goal": "Who decides that a villager wants to move out, when, and how the slot is refilled.",
-   "known": "EventFlow: NNPC_ApproachD:MoveConfirm/MoveCancel set IsMovingConsultationToPlayer; announcements gate IsExistMoveNpc. Random villager pick 0xf8d860 is shared by 0xf8dd70, 0xf84f10, 0xf8c540.",
-   "entry_points": ["0xf87670", "0xf8c540", "0xf84f10", "0xf84320"],
-   "method": "decomp --compact; follow RNG calls and the NpcSave/NpcMemory flag strings they reference",
-   "done_when": "Move-out trigger conditions and probability path documented."
-  },
-  {
    "id": "island-score-formula",
-   "priority": 2,
+   "priority": 1,
    "status": "open",
    "goal": "How the Nature and Life scores (floats, save object +0x240 for Nature) are computed.",
    "known": "Thresholds and star table are in EventFlow (GAMEPLAY_FLOW 10). Query handler 0x3e0b80 compares BorderValue <= score.",
@@ -26,7 +16,7 @@
   },
   {
    "id": "kk-weekly-date",
-   "priority": 3,
+   "priority": 2,
    "status": "open",
    "goal": "Which date the calendar system assigns to NormalLive/BirthdayLive.",
    "known": "0xfdb060 checks events FirstLive/BirthdayLive/NormalLive via 0xf2a30; CalendarEventParam rows have no weekday. The weekly visitor generator 0xfd8a80/0xfda940 and validator 0xfd9620 also test NormalLive/BirthdayLive per date via 0xf2a30(calendar, name, date, 1), so the date rule lives in the calendar system, not in the schedule.",
@@ -35,7 +25,7 @@
   },
   {
    "id": "turnip-and-shop-stock",
-   "priority": 4,
+   "priority": 3,
    "status": "open",
    "goal": "Turnip price pattern and Nook's Cranny daily stock.",
    "known": "Flags FirstKabuBuy, FirstKabuPattern, BocBuyCount; Daisy Mae weekday 0 rule (0xfdafa0).",
@@ -44,7 +34,7 @@
   },
   {
    "id": "unread-day-change-processors",
-   "priority": 5,
+   "priority": 4,
    "status": "open",
    "goal": "Read the remaining day-change processors.",
    "entry_points": ["0xf8f190", "0xf7d4c0", "0xfc1b80", "0xbdfd40", "0xf8b460 (RNG purpose)", "0xf6130", "0x4ae640", "0xd21110"],
@@ -52,7 +42,7 @@
   },
   {
    "id": "pseudo-to-verified",
-   "priority": 6,
+   "priority": 5,
    "status": "open",
    "goal": "Raise [PSEUDO] readings to native-verified by emulation (as done for mechanics phases).",
    "entry_points": ["0xf77050", "0xfcc300", "0xfc4560", "0xf26330", "0xfd8920", "0xf8de30", "0xfdc020"],
@@ -61,7 +51,7 @@
   },
   {
    "id": "save-layout",
-   "priority": 7,
+   "priority": 6,
    "status": "open",
    "goal": "Map save members (offsets, sizes, descriptors) from the save layout constructor.",
    "entry_points": ["0xf32fa0", "0xf30220", "0xf416c0"],
@@ -75,6 +65,7 @@
   {"id": "visitor-schedule-consumers", "result": "codes and Daisy Mae/Celeste/Wisp/Harvey rules, GAMEPLAY_SCENARIO 3 and 6"},
   {"id": "settler-selection", "result": "0x33c660 -> 0xf8dd70 -> 0xf8de30 [0,5,4] -> 0xf8d860, GAMEPLAY_SCENARIO 5"},
   {"id": "query-conventions", "result": "NpcHouseNum 0x419690, VillageScoreCheckNatural 0x3e0b80"},
-  {"id": "visitor-schedule-producer", "result": "0xfd8a80 (via 0xfd8920) builds the week; 0xfda940/0xfdad10/0xfdae20 place codes; 0xfd9620 validates today; code table 0xfdcf60; layout native_flag_refs.json data.visitor_schedule; GAMEPLAY_SCENARIO 3.1-3.4", "left_open": ["TLS RNG of 0xfd8a80 vs day seed of 0xf53a70", "meaning of the player value 0..8 (0xef8520)", "fixed point 0x469680 used for Label/Mabel/Kicks positions"]}
+  {"id": "visitor-schedule-producer", "result": "0xfd8a80 (via 0xfd8920) builds the week; 0xfda940/0xfdad10/0xfdae20 place codes; 0xfd9620 validates today; code table 0xfdcf60; layout native_flag_refs.json data.visitor_schedule; GAMEPLAY_SCENARIO 3.1-3.4", "left_open": ["TLS RNG of 0xfd8a80 vs day seed of 0xf53a70", "meaning of the player value 0..8 (0xef8520)", "fixed point 0x469680 used for Label/Mabel/Kicks positions"]},
+  {"id": "villager-move-out", "result": "0xf84320 -> 0xf847f0 (roll 5*settled + days_since_talk on the day RNG) -> 0xf87670 (friendship weights, birthday/recent exclusions); refill 0xf84f10 (move-in odds, least-present personality); GAMEPLAY_SCENARIO 5.1-5.2; native_flag_refs.json data.villager_moves", "left_open": ["writer of AbandonedHouse (0xd36400, callers 0x10d39d0, 0x1102dc0)", "details of 0xf8c540 and 0xf8d210"]}
  ]
 }

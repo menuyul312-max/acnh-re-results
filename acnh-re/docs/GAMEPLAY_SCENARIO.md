@@ -82,7 +82,7 @@ Dispatcher `0xf545f0` sendiri memanggil, berurutan:
 2. `0x6601a0` (papan toko, Gyroid plaza, `VillageDaysCount`);
 3. `0xf6130` (event global, `GlobalEventAvailable/Ready`);
 4. `0xfc4560`, `0xf77050`, `0xf7d4c0` (campsite pertama), `0xf26330`, `0xf6a730`, `0xfd8920` (K.K., pembuat jadwal pengunjung mingguan `0xfd8a80`, validasi `0xfd9620`; §3), `0xfc1b80` (rumor), `0x10c26e0` (struktur);
-5. `0xf91b90` (hari main, Wisp, `MarketBuiltMyVillage`), `0xf84320` (`MoveInCompletion`), `0xf40e0` (papan event dan ulang tahun).
+5. `0xf91b90` (hari main, Wisp, `MarketBuiltMyVillage`), `0xf84320` (pindah keluar dan masuk villager, §5.1–5.2), `0xf40e0` (papan event dan ulang tahun).
 
 ### 2.2 Jadwal aktif NPC
 
@@ -227,13 +227,98 @@ Hari tambahan Wisp dan hari Celeste yang jatuh pada hari event atau konser K.K. 
 | Mengundang di campsite | `NNPC_Spot_Camp_Invite:CheckOffice` → `CheckCanInduceNpc`: 1 = nama sama sudah tinggal, 2 = nama sama sudah pasti pindah, 3 = penghuni maksimal, 4 = tidak ada lahan dijual | [EF] |
 | Mengundang di Mystery Tour | `NNPC_Spot_MysteryTour` butuh `RcmImmQuestComplete` dan `CheckNpcMoveIn`; menyalakan `InduceInMysteriTourIslandToday` | [EF] |
 | Panggilan amiibo ke campsite | `Obj_RcoMachine_AmiiboCall`; terbuka setelah rumah pengunjung pertama (`TanuportAmiiboCampUnlock`) | [EF] |
-| Peluang kontrak lahan | `NNpcContractCounter` (pergantian hari): `NNpcContractProbablityAddPoint` 0–3 menurut jumlah rumah (≥8 → 0; 5–7 → menurut peringkat Life/Nature) | [EF] |
+| Peluang kontrak lahan | `NNpcContractCounter` (pergantian hari): `NNpcContractProbablityAddPoint` 0–3 menurut jumlah rumah dan peringkat pulau (§5.2) | [EF] |
 | Pindah masuk | `MoveInCompletion`, layout rumah dari `Param/NpcHouse/%s.byml` (`0xd21110`) | [PSEUDO] string |
-| Konsultasi pindah keluar | `NNPC_ApproachD:MoveConfirm`/`MoveCancel` menyalakan `IsMovingConsultationToPlayer` | [EF] |
+| Konsultasi pindah keluar | `NNPC_ApproachD:MoveConfirm`/`MoveCancel` menyalakan `IsMovingConsultationToPlayer` (§5.1) | [EF] |
 | Pengumuman pindah | `Demo_PublicAnnouncement_32_CmnNewsMoveIn`, `_34_CmnNewsMoveOut`, gate `IsExistMoveNpc` | [EF] |
 | Rumah kosong | `AbandonedHouse` (`0xd21110`, `0xf8ab90`, …) | [PSEUDO] string |
-| Pemilih villager acak yang sama | `0xf8d860` juga dipanggil `0xf84f10` (kontrak lahan) dan `0xf8c540` | [PSEUDO] |
-| Siapa yang ingin pindah, dan kapan | belum dibaca (`0xf87670`) | [NATIVE] |
+| Pemilih villager acak yang sama | `0xf8d860` juga dipanggil `0xf84f10` (pengisian slot, §5.2) dan `0xf8c540` | [PSEUDO] |
+| Siapa yang ingin pindah, dan kapan | §5.1 | [PSEUDO] |
+
+Isi §5.1 dan §5.2 adalah **[PSEUDO]** (pseudocode, rumus peluang dicocokkan dengan disassembly), kecuali yang diberi label lain. Ringkasan mesinnya ada di `native_flag_refs.json` → `data.villager_moves`.
+
+### 5.1 Pindah keluar
+
+Data villager ada di member NPC (descriptor `0x33d97d8`, `0x1d6d48` byte): 10 slot × `0x12ab0` byte. Flag `cNpcSave` tiap slot ada di `+0x11efc` slot. State pindahnya:
+
+| Offset | Isi |
+|---|---|
+| `+0x1d6d3d` | slot calon pindah, atau −1 |
+| `+0x1d6d3e` | jeda: 15 setelah ada yang pindah, berkurang sejumlah hari yang berlalu |
+| `+0x1d6d3f` | hari sejak percakapan pindah terakhir, maksimum 30 |
+| `+0x1d6d40` | pindah sudah dikonfirmasi pemain |
+| `+0x1d6d41` | slot villager terakhir yang pindah masuk |
+| `+0x1d6d42` | slot villager terakhir yang dibujuk tetap tinggal |
+
+**Setiap pergantian hari** (minimal satu hari berlalu), `0xf84320` → `0xf847f0` mengerjakan, berurutan:
+1. Calon dengan `AbandonedHouse` ≠ 0 → slot dikosongkan, jeda = 15.
+2. Villager pertama (urut slot) dengan `ForceMoveOut` ON → langsung pindah dan slotnya dikosongkan.
+3. Calon yang sudah dikonfirmasi:
+   - pergantian hari pertama → status slot `+0x11efa` = 2 (`0xf05d00`);
+   - pergantian hari berikutnya → pindah, slot dikosongkan, jeda = 15.
+4. Selain itu jeda dikurangi dan penghitung hari ditambah sejumlah hari yang berlalu. Calon dihapus bila salah satu syarat ini terpenuhi:
+   - jeda > 0;
+   - villager menetap < 6 (`0xf855c0`: slot terisi, `MoveInCompletion` ON, `AbandonedHouse` < 2);
+   - penghitung ≤ 4.
+
+   Bila tidak, `r` = acak 0–99 dari RNG harian `0x35e9510` (`0xf53420`, di-seed `0xf53a70`). Bila `r < 5 × villager menetap + penghitung`, calon baru dipilih (`0xf87670`). Bila undian gagal, calon lama tetap.
+
+   Contoh: 10 villager dan penghitung 30 → 80% per hari; 6 villager dan penghitung 5 → 35%.
+
+**Pemilihan calon** (`0xf87670`):
+- **Dikecualikan:**
+  - slot kosong;
+  - indeks yang disimpan aksi `StructureMoveSaveIndex` (member `+0x4750`; dipakai `SNPC_rco_10_Common_MoveHouse` dan `_MoveNpcFacility`, kemungkinan rumah yang sedang dipindah);
+  - villager terakhir yang pindah masuk;
+  - villager terakhir yang dibujuk tinggal;
+  - villager yang ulang tahunnya 0–7 hari lagi (`BirthMonth`/`BirthMDay` di `NmlNpcParam`).
+- **Bobot** per villager = ⌊(300 − ⌊ΣFriendship ÷ jumlah pemain⌋) × 0.1⌋ − jumlah pemain berlevel keakraban 6.
+  - Friendship diambil dari memori villager untuk tiap dari 8 pemain.
+  - Level (`0xd34a20`): <30 → 1, <60 → 2, <100 → 3, <150 → 4, <200 → 5, ≥200 → 6.
+
+  Makin rendah rata-rata keakraban, makin besar peluang dipilih.
+- **Undian:** `r` = acak 0 sampai Σbobot−1 dari RNG harian; calon dipilih secara kumulatif menurut urutan slot.
+- **Setelah terpilih:** konfirmasi dihapus, `IsMovingConsultationToPlayer` OFF, dan memori per pemain direset (`0xf05b80` → `0xf48c40`, yang merujuk `ChokeOffMoveOut`).
+
+**Konsultasi** (**[EF]** `NNPC_ApproachD` + handler `0x298c10`):
+
+| Pilihan | Aksi | Akibat |
+|---|---|---|
+| `MoveConfirm` | `SetNpcMoveoutStopInfo(MoveOutStatus=1)` | pindah dikonfirmasi: status slot 2 pada pergantian hari berikutnya, pergi pada pergantian hari sesudahnya |
+| `MoveCancel` | `SetNpcMoveoutStopInfo(MoveOutStatus=0)` | `ChokeOffMoveOut` ON di memori pemain; villager ini dicatat sebagai "dibujuk tinggal" |
+
+Keduanya mereset penghitung hari ke 0 dan menyalakan `NextMoveOutTalk` serta `IsMovingConsultationToPlayer`. Jadi undian berikutnya baru mungkin 5 hari kemudian.
+
+### 5.2 Mengisi slot kosong
+
+`0xf84f10` jalan setiap pergantian hari sesudah §5.1. Sasarannya slot kosong pertama yang tidak dikosongkan hari itu.
+
+1. **Jalur plot/kontrak** `0xf8c540` (string `FromSettlerQuest`, `InducementFlag`, `ImmQ_%s_*`). Bila berhasil, selesai.
+2. **`0xf8d210`** (`MoveInOrder`). Bila ada villager hasil `ForceMoveOut`, `0xf8cea0` juga dipanggil untuk slotnya; perannya di sini belum dibaca rinci.
+3. **Plot rumah kosong** wajib ada: `0xef44c0` untuk 10 plot; `0xf8d640` menghitungnya dan memilih satu dengan RNG harian.
+   - Bila ada NPC menunggu (status 3) di salah satu dari 4 struktur NPC tambahan (`+0xcca68 + k×0x12ab0`; kemungkinan villager yang sudah diundang), `0xf8cea0` memindahkannya ke plot itu. Selesai.
+   - Selain itu ada undian harian. Misalkan n = jumlah villager dan P = jumlah plot kosong:
+
+     | n | Peluang pindah masuk |
+     |---|---|
+     | < 5 | 100% |
+     | 5–7 | (10 − n + `NNpcContractProbablityAddPoint` + P) × 10% |
+     | ≥ 8 | (10 − n + P) × 10% |
+   - **Pemilihan villager baru:**
+     - Kepribadian yang dipilih adalah yang paling sedikit di pulau; bila seri, semuanya. Nilainya 0–7, dari byte ke-3 ID NPC (`0xcd3cb0`).
+     - Kandidat disaring `0xf8d7d0` (bitmask `0x35ee084`), lalu dipilih acak seragam oleh `0xf8d860` dengan bitset eksklusi `+0xbaae0`. Villager terpilih ikut ditandai di bitset itu.
+     - Rumah dibuat dari `Param/NpcHouse/%s.byml` (`0xf826c0`, `0xf814c0`).
+
+**[EF] `NNpcContractProbablityAddPoint`** (`System_GrowUp_GameProcess:NNpcContractCounter`, dipanggil dari `ChkwithIslandEvaluation`; peringkat dari `System_IslandEvaluationCheck`: SetIndex 2 = Nature, SetIndex 3 = Life):
+
+| Rumah NPC | Life | Nature | Nilai |
+|---|---|---|---|
+| <5 atau ≥8 | – | – | 0 |
+| 5–7 | 0 | – | 0 |
+| 5–7 | 1 | 0 / ≥1 | 0 / 1 |
+| 5–7 | ≥2 | 0 / 1 / ≥2 | 0 / 1 / 3 |
+
+Yang masih terbuka: penulis `AbandonedHouse` (perujuk `0xd36400`, dipanggil `0x10d39d0`, `0x1102dc0`, …) dan peran `0xf8c540`/`0xf8d210` secara rinci.
 
 ## 6. Pengunjung khusus
 
@@ -279,12 +364,11 @@ Yang masih terbuka dari jadwal ini:
 
 | # | Celah | Titik masuk |
 |---|---|---|
-| 1 | Siapa ingin pindah keluar | `0xf87670` (`IsMovingConsultationToPlayer`), pemanggil `0xf8c540` → `0xf8d860` |
-| 2 | Rumus skor Nature/Life | penulis float `+0x240`, `VillageScoreMgr` |
-| 3 | Hari konser K.K. biasa | penentu tanggal event `NormalLive` di kalender native `0xf2a30` (§3.5) |
-| 4 | Harga lobak dan stok toko | belum ada titik masuk string; mulai dari flag `FirstKabuPattern` |
-| 5 | Prosesor yang belum dibaca | `0xf8f190`, `0xf7d4c0`, `0xfc1b80`, `0xbdfd40`, `0xf8b460` (tujuan RNG) |
-| 6 | Menaikkan [PSEUDO] menjadi terbukti | emulasi fungsi fasilitas seperti tahap mekanik terdahulu |
-| 7 | Format save | konstruktor layout save `0xf32fa0` (pemanggil `0xf30220`, `0xf416c0`) |
+| 1 | Rumus skor Nature/Life | penulis float `+0x240`, `VillageScoreMgr` |
+| 2 | Hari konser K.K. biasa | penentu tanggal event `NormalLive` di kalender native `0xf2a30` (§3.5) |
+| 3 | Harga lobak dan stok toko | belum ada titik masuk string; mulai dari flag `FirstKabuPattern` |
+| 4 | Prosesor yang belum dibaca | `0xf8f190`, `0xf7d4c0`, `0xfc1b80`, `0xbdfd40`, `0xf8b460` (tujuan RNG) |
+| 5 | Menaikkan [PSEUDO] menjadi terbukti | emulasi fungsi fasilitas seperti tahap mekanik terdahulu |
+| 6 | Format save | konstruktor layout save `0xf32fa0` (pemanggil `0xf30220`, `0xf416c0`) |
 
 Antrian yang sama, dalam bentuk yang bisa dibaca mesin dan ditandai statusnya, ada di [re_queue.json](re_queue.json).

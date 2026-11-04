@@ -51,6 +51,11 @@ Rincian, cara verifikasi, dan file yang wajib ada: [WORKFLOW §3](acnh-re/docs/W
 
 ## Fokus terbaru (terbaru di atas)
 
+- **Pindah keluar dan pengisian slot villager** — [GAMEPLAY_SCENARIO §5.1–5.2](acnh-re/docs/GAMEPLAY_SCENARIO.md):
+  - undian harian `5 × villager menetap + hari sejak percakapan pindah` persen, dengan RNG harian, jeda 15 hari, minimal 6 villager;
+  - bobot pemilihan dari rata-rata `Friendship` (makin tidak akrab, makin mungkin pindah); dikecualikan yang berulang tahun ≤7 hari lagi, yang terakhir pindah masuk, dan yang terakhir dibujuk tinggal;
+  - setelah dikonfirmasi: status slot 2 pada pergantian hari berikutnya, pergi sehari sesudahnya;
+  - pengisian slot: peluang `(10 − n + plot kosong [+ AddPoint]) × 10%`, villager baru dari kepribadian yang paling sedikit.
 - **Pembuat jadwal pengunjung mingguan** — [GAMEPLAY_SCENARIO §3](acnh-re/docs/GAMEPLAY_SCENARIO.md):
   - `0xfd8a80` membuat jadwal tiap Senin 05:00;
   - urutan penempatan: Mabel, Saharah, Kicks, lalu kolam acak Label/C.J./Flick/Gulliver dengan prioritas carry-over;

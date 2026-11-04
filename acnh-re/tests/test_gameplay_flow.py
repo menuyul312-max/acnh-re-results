@@ -128,6 +128,21 @@ class GameplayFlowTests(unittest.TestCase):
         self.assertIn(0xfda740, callees(gf.DAY_CHANGE_DRIVER))
         db.close()
 
+    def test_villager_move_chain_is_reached_from_the_dispatcher(self):
+        import sqlite3
+        db = sqlite3.connect(OUT/'index.sqlite')
+
+        def callees(f):
+            return {t for (t,) in db.execute('SELECT target_va FROM direct_calls WHERE owner_va=?', (f,))}
+        self.assertIn(0xf84320, callees(gf.DAY_CHANGE_DISPATCHER))
+        self.assertTrue({0xf847f0, 0xf84f10} <= callees(0xf84320))
+        self.assertTrue({0xf855c0, 0xf53420, 0xf87670} <= callees(0xf847f0))
+        self.assertTrue({0xd34a20, 0xf53420} <= callees(0xf87670))
+        self.assertTrue({0xf8d640, 0xf8d860, 0xf8cea0, 0xf53420} <= callees(0xf84f10))
+        strings = {t for (t,) in db.execute('SELECT text FROM string_refs WHERE function_va=?', (0xf84f10,))}
+        self.assertIn('NNpcContractProbablityAddPoint', strings)
+        db.close()
+
     def test_native_only_progress_flags_have_no_eventflow_writer(self):
         for key in ('cLand:MuseumBuilt', 'cLand:MarketBuilt', 'cLand:Museum2Built', 'cLand:BuiltTownOffice',
                     'cLand:CampSiteBuilt', 'cLand:TkkFirstLive', 'cLand:TkkFirstLiveEnable', 'cLand:ImmQ_A_Complete'):
@@ -156,6 +171,13 @@ class VisitorScheduleNsoTests(unittest.TestCase):
         word = lambda a: int.from_bytes(self.read(a, 4), 'little')  # noqa: E731
         self.assertEqual(word(0xfd94b4), 0xb9007660)  # str w0, [x19, #0x74] after the n-th-bit pick
         self.assertEqual(word(0xfd9584), 0xb9007260)  # str w0, [x19, #0x70]
+
+    def test_move_out_and_move_in_roll_formulas(self):
+        word = lambda a: int.from_bytes(self.read(a, 4), 'little')  # noqa: E731
+        self.assertEqual(word(0xf84eb0), 0x0b000809)  # add w9, w0, w0, lsl #2   (5 * settled)
+        self.assertEqual(word(0xf84eb4), 0x0b080134)  # add w20, w9, w8          (+ days since talk)
+        self.assertEqual(word(0xf852b4), 0x0b080908)  # add w8, w8, w8, lsl #2   (move-in points * 5)
+        self.assertEqual(word(0xf852b8), 0x531f7914)  # lsl w20, w8, #1          (* 2 = * 10 percent)
 
 
 if __name__ == '__main__':

@@ -513,7 +513,13 @@
     "strings": [
      "MoveInCompletion"
     ],
-    "reading": null
+    "reading": {
+     "role": "villager move-out and move-in at day change (dispatcher, NPC member 0x33d97d8 / 0x1d6d48 bytes)",
+     "reading": [
+      "elapsed days > 0: 0xf847f0 (move-out) fills a bitmask of slots emptied today",
+      "then 0xf84f10 (fill an empty slot); per slot with MoveInCompletion: 0xf12aa0, 0xd1cb80, 0xd1e740"
+     ]
+    }
    },
    {
     "function": "0xff2070",
@@ -806,6 +812,79 @@
      "popcount candidates (0x198b590), uniform pick with RNG 0x19aa0e0 (u32 * n >> 32), bit lookup 0x198b630"
     ]
    },
+   "0xf84320": {
+    "role": "villager move-out and move-in at day change (dispatcher, NPC member 0x33d97d8 / 0x1d6d48 bytes)",
+    "reading": [
+     "elapsed days > 0: 0xf847f0 (move-out) fills a bitmask of slots emptied today",
+     "then 0xf84f10 (fill an empty slot); per slot with MoveInCompletion: 0xf12aa0, 0xd1cb80, 0xd1e740"
+    ]
+   },
+   "0xf847f0": {
+    "role": "move-out processor",
+    "reading": [
+     "candidate (+0x1d6d3d) with AbandonedHouse != 0 -> slot cleared, candidate -1, cooldown (+0x1d6d3e) = 15",
+     "first slot with ForceMoveOut -> removed now (0xf8a410 kind 2), index kept at +0x2c674 of the 0xd1fcf0 object for the move-in step",
+     "confirmed candidate (+0x1d6d40): slot state +0x11efa != 2 -> set 2 (0xf05d00); next day change -> removed (0xf8a410 kind 1), cooldown 15",
+     "else cooldown -= days (min 0), days_since_talk (+0x1d6d3f) += days (max 30); cooldown > 0 or settled (0xf855c0) < 6 or days_since_talk <= 4 -> candidate -1",
+     "otherwise r = 0xf53420(100) (day RNG); r < 5*settled + days_since_talk -> 0xf87670; a failed roll keeps the old candidate"
+    ]
+   },
+   "0xf855c0": {
+    "role": "settled villager count (with flag 1)",
+    "reading": [
+     "slots present with AbandonedHouse < 2 and MoveInCompletion on"
+    ]
+   },
+   "0xf53420": {
+    "role": "day RNG draw",
+    "reading": [
+     "xorshift128 0x19aa0e0 on the global state 0x35e9510 (seeded by 0xf53a70); returns u32 * n >> 32"
+    ]
+   },
+   "0xf87670": {
+    "role": "pick the villager who wants to move out",
+    "reading": [
+     "excluded: empty slots, the index saved by StructureMoveSaveIndex (member +0x4750, 0x33dceb0), the last villager that moved in (+0x1d6d41), the last one talked out of moving (+0x1d6d42), birthday (NmlNpcParam BirthMonth/BirthMDay) 0..7 days away",
+     "weight = int((300 - int(sum of Friendship over the 8 player memories / player count)) * 0.1) - players with level 0xd34a20 > 5",
+     "r = 0xf53420(sum of weights); cumulative pick in slot order; candidate stored, +0x1d6d40 = 0, IsMovingConsultationToPlayer = 0; 0xf05b80 resets per-player memory (0xf48c40 refers to ChokeOffMoveOut)"
+    ]
+   },
+   "0xd34a20": {
+    "role": "friendship level",
+    "reading": [
+     "<30 -> 1, <60 -> 2, <100 -> 3, <150 -> 4, <200 -> 5, else 6"
+    ]
+   },
+   "0x298c10": {
+    "role": "EventFlowActionSetNpcMoveoutStopInfo execute slot",
+    "reading": [
+     "MoveOutStatus 0 (NNPC_ApproachD MoveCancel): ChokeOffMoveOut on in the player memory, +0x1d6d42 = this villager, +0x1d6d40 = 0",
+     "MoveOutStatus 1 (MoveConfirm): +0x1d6d40 = 1",
+     "both: days_since_talk +0x1d6d3f = 0"
+    ]
+   },
+   "0xf84f10": {
+    "role": "fill an empty villager slot at day change",
+    "reading": [
+     "counts villagers and their personality (0xcd3cb0 = id byte 2, 0..7); target = first empty slot not emptied today",
+     "target: 0xf8c540 (plot/contract path) first; then 0xf8d210 (MoveInOrder), with 0xf8cea0 for a ForceMoveOut index",
+     "needs a free house plot (0xef44c0 x10; 0xf8d640 counts them and picks one with the day RNG); 0xf8cea0 moves in a waiting NPC (state 3) if any",
+     "else roll rand100: villagers < 5 always; 5..7: < (10 - n + NNpcContractProbablityAddPoint + free plots) * 10; >= 8: < (10 - n + free plots) * 10",
+     "pick: personality bitmask 0x35ee084 = least-present personalities (ties kept), filter 0xf8d7d0, uniform pick 0xf8d860, mark bitset +0xbaae0, house from Param/NpcHouse (0xf826c0, 0xf814c0); IsNpcIncreased/Is3rdNpc"
+    ]
+   },
+   "0xf8d7d0": {
+    "role": "move-in personality filter (disassembly)",
+    "reading": [
+     "same u16 cache as 0xf8de30 (<=7, else 0); passes when its bit is set in 0x35ee084"
+    ]
+   },
+   "0xf8cea0": {
+    "role": "move in a waiting NPC",
+    "reading": [
+     "looks for state byte 3 in the 4 NPC structures at +0xcca68 (stride 0x12ab0); sets MoveInCompletion, builds the house on the given plot"
+    ]
+   },
    "0xf32fa0": {
     "role": "save layout constructor",
     "reading": [
@@ -858,6 +937,29 @@
     "Celeste day (museum > 2): Fine00 day, else Fine02/04/06",
     "Wisp: remaining weekdays (max 5), else extra day; then Sat/Sun if free"
    ],
+   "evidence": "[PSEUDO] pseudocode + disassembly, not executed"
+  },
+  "villager_moves": {
+   "member": {
+    "descriptor": "0x33d97d8",
+    "size": "0x1d6d48",
+    "processor": "0xf84320 (dispatcher 0xf545f0)"
+   },
+   "slots": "10 villagers x 0x12ab0 bytes from +0; NpcSave flags at slot +0x11efc; slot state byte +0x11efa (2 = packing, set by 0xf05d00)",
+   "fields": {
+    "0xbaae0": "u32[35] bitset of villagers already picked (index = id byte 0, bit = id byte 1)",
+    "0xcca68": "4 more NPC structures (stride 0x12ab0); state byte 3 = waiting to move in (0xf8cea0)",
+    "0x1d6d3d": "i8 move-out candidate slot or -1",
+    "0x1d6d3e": "i8 cooldown, 15 after a move-out, minus elapsed days",
+    "0x1d6d3f": "i8 days since the last move-out talk, max 30",
+    "0x1d6d40": "u8 move confirmed by a player",
+    "0x1d6d41": "i8 slot of the last villager that moved in",
+    "0x1d6d42": "i8 slot of the last villager talked out of moving"
+   },
+   "move_out_roll": "cooldown <= 0, settled >= 6, days_since_talk >= 5, then rand100(day RNG) < 5*settled + days_since_talk",
+   "move_out_weight": "floor((300 - floor(sum Friendship / players)) * 0.1) - players with friendship level 6",
+   "move_in_roll": "villagers < 5: always; 5..7: (10 - n + NNpcContractProbablityAddPoint + free plots) * 10%; >= 8: (10 - n + free plots) * 10%",
+   "move_in_pick": "personality (id byte 2, 0..7) least present on the island, then uniform pick excluding the bitset",
    "evidence": "[PSEUDO] pseudocode + disassembly, not executed"
   },
   "day_change_callees_in_order": [
@@ -1907,7 +2009,24 @@
     "day_change": [
      "0xf84f10"
     ],
-    "pseudocode_readings": {}
+    "pseudocode_readings": {
+     "0xf84f10": {
+      "role": "fill an empty villager slot at day change",
+      "reading": [
+       "counts villagers and their personality (0xcd3cb0 = id byte 2, 0..7); target = first empty slot not emptied today",
+       "target: 0xf8c540 (plot/contract path) first; then 0xf8d210 (MoveInOrder), with 0xf8cea0 for a ForceMoveOut index",
+       "needs a free house plot (0xef44c0 x10; 0xf8d640 counts them and picks one with the day RNG); 0xf8cea0 moves in a waiting NPC (state 3) if any",
+       "else roll rand100: villagers < 5 always; 5..7: < (10 - n + NNpcContractProbablityAddPoint + free plots) * 10; >= 8: < (10 - n + free plots) * 10",
+       "pick: personality bitmask 0x35ee084 = least-present personalities (ties kept), filter 0xf8d7d0, uniform pick 0xf8d860, mark bitset +0xbaae0, house from Param/NpcHouse (0xf826c0, 0xf814c0); IsNpcIncreased/Is3rdNpc"
+      ]
+     },
+     "0xf8cea0": {
+      "role": "move in a waiting NPC",
+      "reading": [
+       "looks for state byte 3 in the 4 NPC structures at +0xcca68 (stride 0x12ab0); sets MoveInCompletion, builds the house on the given plot"
+      ]
+     }
+    }
    },
    "cLand:IslandKanaType": {
     "name_ja": "『島』のルビ",
@@ -5620,7 +5739,16 @@
      "0xfb60a0"
     ],
     "day_change": [],
-    "pseudocode_readings": {}
+    "pseudocode_readings": {
+     "0xf87670": {
+      "role": "pick the villager who wants to move out",
+      "reading": [
+       "excluded: empty slots, the index saved by StructureMoveSaveIndex (member +0x4750, 0x33dceb0), the last villager that moved in (+0x1d6d41), the last one talked out of moving (+0x1d6d42), birthday (NmlNpcParam BirthMonth/BirthMDay) 0..7 days away",
+       "weight = int((300 - int(sum of Friendship over the 8 player memories / player count)) * 0.1) - players with level 0xd34a20 > 5",
+       "r = 0xf53420(sum of weights); cumulative pick in slot order; candidate stored, +0x1d6d40 = 0, IsMovingConsultationToPlayer = 0; 0xf05b80 resets per-player memory (0xf48c40 refers to ChokeOffMoveOut)"
+      ]
+     }
+    }
    },
    "cNpcMemory:GEventTalkBeforeFlag": {
     "name_ja": "イベント共通|イベント前に会話した？",
@@ -5818,7 +5946,24 @@
     "day_change": [
      "0xf847f0"
     ],
-    "pseudocode_readings": {}
+    "pseudocode_readings": {
+     "0xf847f0": {
+      "role": "move-out processor",
+      "reading": [
+       "candidate (+0x1d6d3d) with AbandonedHouse != 0 -> slot cleared, candidate -1, cooldown (+0x1d6d3e) = 15",
+       "first slot with ForceMoveOut -> removed now (0xf8a410 kind 2), index kept at +0x2c674 of the 0xd1fcf0 object for the move-in step",
+       "confirmed candidate (+0x1d6d40): slot state +0x11efa != 2 -> set 2 (0xf05d00); next day change -> removed (0xf8a410 kind 1), cooldown 15",
+       "else cooldown -= days (min 0), days_since_talk (+0x1d6d3f) += days (max 30); cooldown > 0 or settled (0xf855c0) < 6 or days_since_talk <= 4 -> candidate -1",
+       "otherwise r = 0xf53420(100) (day RNG); r < 5*settled + days_since_talk -> 0xf87670; a failed roll keeps the old candidate"
+      ]
+     },
+     "0xf855c0": {
+      "role": "settled villager count (with flag 1)",
+      "reading": [
+       "slots present with AbandonedHouse < 2 and MoveInCompletion on"
+      ]
+     }
+    }
    },
    "cNpcSave:ChangeFirstFloor": {
     "name_ja": "初期住人用床板を変更したか",
@@ -5909,7 +6054,18 @@
     "day_change": [
      "0xf847f0"
     ],
-    "pseudocode_readings": {}
+    "pseudocode_readings": {
+     "0xf847f0": {
+      "role": "move-out processor",
+      "reading": [
+       "candidate (+0x1d6d3d) with AbandonedHouse != 0 -> slot cleared, candidate -1, cooldown (+0x1d6d3e) = 15",
+       "first slot with ForceMoveOut -> removed now (0xf8a410 kind 2), index kept at +0x2c674 of the 0xd1fcf0 object for the move-in step",
+       "confirmed candidate (+0x1d6d40): slot state +0x11efa != 2 -> set 2 (0xf05d00); next day change -> removed (0xf8a410 kind 1), cooldown 15",
+       "else cooldown -= days (min 0), days_since_talk (+0x1d6d3f) += days (max 30); cooldown > 0 or settled (0xf855c0) < 6 or days_since_talk <= 4 -> candidate -1",
+       "otherwise r = 0xf53420(100) (day RNG); r < 5*settled + days_since_talk -> 0xf87670; a failed roll keeps the old candidate"
+      ]
+     }
+    }
    },
    "cNpcSave:FromSettlerQuest": {
     "name_ja": "住人移住クエストで来たNPCか",
@@ -5965,7 +6121,24 @@
     "day_change": [
      "0xf84f10"
     ],
-    "pseudocode_readings": {}
+    "pseudocode_readings": {
+     "0xf84f10": {
+      "role": "fill an empty villager slot at day change",
+      "reading": [
+       "counts villagers and their personality (0xcd3cb0 = id byte 2, 0..7); target = first empty slot not emptied today",
+       "target: 0xf8c540 (plot/contract path) first; then 0xf8d210 (MoveInOrder), with 0xf8cea0 for a ForceMoveOut index",
+       "needs a free house plot (0xef44c0 x10; 0xf8d640 counts them and picks one with the day RNG); 0xf8cea0 moves in a waiting NPC (state 3) if any",
+       "else roll rand100: villagers < 5 always; 5..7: < (10 - n + NNpcContractProbablityAddPoint + free plots) * 10; >= 8: < (10 - n + free plots) * 10",
+       "pick: personality bitmask 0x35ee084 = least-present personalities (ties kept), filter 0xf8d7d0, uniform pick 0xf8d860, mark bitset +0xbaae0, house from Param/NpcHouse (0xf826c0, 0xf814c0); IsNpcIncreased/Is3rdNpc"
+      ]
+     },
+     "0xf8cea0": {
+      "role": "move in a waiting NPC",
+      "reading": [
+       "looks for state byte 3 in the 4 NPC structures at +0xcca68 (stride 0x12ab0); sets MoveInCompletion, builds the house on the given plot"
+      ]
+     }
+    }
    },
    "cNpcSave:IsReFabricSmartPhone": {
     "name_ja": "スマホ柄に汎用布地を使うか？",
@@ -6032,7 +6205,27 @@
     "day_change": [
      "0xf84320"
     ],
-    "pseudocode_readings": {}
+    "pseudocode_readings": {
+     "0xf84320": {
+      "role": "villager move-out and move-in at day change (dispatcher, NPC member 0x33d97d8 / 0x1d6d48 bytes)",
+      "reading": [
+       "elapsed days > 0: 0xf847f0 (move-out) fills a bitmask of slots emptied today",
+       "then 0xf84f10 (fill an empty slot); per slot with MoveInCompletion: 0xf12aa0, 0xd1cb80, 0xd1e740"
+      ]
+     },
+     "0xf855c0": {
+      "role": "settled villager count (with flag 1)",
+      "reading": [
+       "slots present with AbandonedHouse < 2 and MoveInCompletion on"
+      ]
+     },
+     "0xf8cea0": {
+      "role": "move in a waiting NPC",
+      "reading": [
+       "looks for state byte 3 in the 4 NPC structures at +0xcca68 (stride 0x12ab0); sets MoveInCompletion, builds the house on the given plot"
+      ]
+     }
+    }
    },
    "cNpcSave:MoveInOrder": {
     "name_ja": "土地売約済み状態のNPCの転入順",
