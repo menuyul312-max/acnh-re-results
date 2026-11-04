@@ -85,4 +85,4 @@ Level bukti: **[EF]** EventFlow, **[TBL]** tabel, **[PSEUDO]** pseudocode/disass
 | 2026-11-04 | Tanggal konser K.K. (`0xf1360`, `0xf0330`, `0xf11b0`, `0xf920f0`) | `7ace148` |
 | 2026-11-04 | Harga lobak (`0xfc6d00`) dan stok toko (`0xfd0630`, `0xfc56c0`, `0xfc8760`, `0xfca870`) | `a15223c` |
 | 2026-11-04 | Prosesor pergantian hari tersisa (`0xf7d4c0`, `0xf8b460`, `0xbdfd40`, `0xf6130`, `0x4ae640`, `0xd21110`, `0xfc1b80`, `0xf8f190`) | `5589793` |
-| 2026-11-04 | Layout save lewat emulasi `0xf32fa0`; `nso_sandbox.py`, `save_layout_native.py` | (commit ini) |
+| 2026-11-04 | Layout save lewat emulasi `0xf32fa0`; `nso_sandbox.py`, `save_layout_native.py` | `28efa7d` |
