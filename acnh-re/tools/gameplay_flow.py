@@ -437,7 +437,8 @@ def render_tree(out, flow, entries=None, msgs=None, max_lines=20000, with_text=F
     return '\n'.join(lines) + '\n'
 
 
-# Native day-change dispatcher (ELF VA). Its callee order comes from index.sqlite direct_calls.
+# Native day-change driver and facility dispatcher (ELF VA). Callee order comes from index.sqlite direct_calls.
+DAY_CHANGE_DRIVER = 0xf53a70
 DAY_CHANGE_DISPATCHER = 0xf545f0
 # Readings of automated pseudocode (binary/analysis_decomp/<va>.c, Ghidra base ELF+0x100000) with
 # string operands resolved. Not executed; flag accessors 0xf44d90 (get bool), 0xf44ad0 (get int),
@@ -462,8 +463,18 @@ PSEUDOCODE_READINGS = {
                   'reading': ['OfficeConstruction1 accumulates elapsed days while BuiltTownOffice is off (reset to 0 above 1)',
                               'structure kind 1 present and BuiltTownOffice off -> BuiltTownOffice=1, GlobalEventReady=1, EventPlazaBuilt=1; BuiltTownOfficeToday=1 if exactly 1 day']},
     '0xfd8920': {'role': 'K.K. unlock and daily resets at day change',
-                 'reading': ['elapsed days >=1 and IslandEvaluationClearTkkLive on (and a second flag off) -> TkkFirstLiveEnable=1',
+                 'reading': ['elapsed days >=1 and IslandEvaluationClearTkkLive on and a second flag off (TkkFirstLive is the other flag string in this function; the call argument is lost in decompilation) -> TkkFirstLiveEnable=1',
                              'RctInTent set from the current hour (5..19 -> off)', 'JohnnyRequirePartsNum=5 on day change']},
+    '0xf8b460': {'role': 'day type at day change',
+                 'reading': ['checks calendar events by name in order FishingConvention, InsectConvention, PlayerBirthday, NpcBirthday, Countdown, NewYear',
+                             'normal day with BuiltTownOffice on: per-player ContinuousNormalDay/EarlyOrLate counters and RNG rolls 0-99; purpose not yet identified']},
+    '0xfd9d10': {'role': 'special visitors at day change',
+                 'reading': ['Gulliver (Johnny*) and Wisp (GstQuest*) quest flags reset/advance',
+                             'SpnVisitMainField=1 when a 0-8 value (likely player house level) >=2, ImmQ_A/B/C_Complete on, CommuneIslandAvailable off and VisitedCommune off',
+                             'HgcVisitFlagForTailor = (7-slot array[day index] == 2): a weekly slot table, value 2 = Label']},
+    '0x419690': {'role': 'EventFlowQueryNpcHouseNum evaluate slot', 'reading': ['returns count < Num, so case 1 = fewer, case 0 = at least Num']},
+    '0x3e0b80': {'role': 'EventFlowQueryVillageScoreCheckNatural evaluate slot',
+                 'reading': ['returns BorderValue <= score, so case 1 = score at least the border; score is a float at +0x240 of a save object']},
     '0x10c26e0': {'role': 'structure counters at day change',
                   'reading': ['reads BridgeBuilt/SlopeBuilt and Count*AfterBuild counters for tailor, museum, shop, office, campsite']},
 }
@@ -491,9 +502,23 @@ def native_refs(out, flag_index):
             'day_change': [hex(fn) for fn in funcs if fn in order or fn in second or fn == DAY_CHANGE_DISPATCHER],
             'pseudocode_readings': {hex(fn): PSEUDOCODE_READINGS[hex(fn)] for fn in funcs if hex(fn) in PSEUDOCODE_READINGS},
         }
+    fanin = dict(db.execute('SELECT target_va, COUNT(DISTINCT owner_va) FROM direct_calls GROUP BY target_va').fetchall())
+
+    def pipeline(root):
+        out = []
+        for t in dict.fromkeys(t for (t,) in db.execute('SELECT target_va FROM direct_calls WHERE owner_va=? ORDER BY pc', (root,))):
+            names = sorted({x for (x,) in db.execute('SELECT text FROM string_refs WHERE function_va=?', (t,))})
+            if names or hex(t) in PSEUDOCODE_READINGS:
+                out.append({'function': hex(t), 'callers': fanin.get(t, 0), 'strings': names[:40],
+                            'reading': PSEUDOCODE_READINGS.get(hex(t))})
+        return out
     return {
         'status': 'string cross-references are static evidence; readings are from automated pseudocode, not native execution',
+        'day_change_driver': hex(DAY_CHANGE_DRIVER),
+        'day_change_driver_pipeline': pipeline(DAY_CHANGE_DRIVER),
         'day_change_dispatcher': hex(DAY_CHANGE_DISPATCHER),
+        'day_change_dispatcher_pipeline': pipeline(DAY_CHANGE_DISPATCHER),
+        'query_handler_readings': {k: PSEUDOCODE_READINGS[k] for k in ('0x419690', '0x3e0b80')},
         'day_change_callees_in_order': [hex(t) for t in order],
         'flags': rows,
         'counts': {'flags_without_eventflow_writer': len(rows),

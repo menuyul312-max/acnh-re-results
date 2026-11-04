@@ -108,6 +108,9 @@ class GameplayFlowTests(unittest.TestCase):
                   'cLand:MarketOpen1stDay1': '0xfc4560'}
         for key, fn in expect.items():
             self.assertIn(fn, refs['flags'][key]['referencing_functions'], key)
+        driver = [r['function'] for r in refs['day_change_driver_pipeline']]
+        for fn in ('0xf545f0', '0xf8b460', '0xfd9d10', '0xd21110'):
+            self.assertIn(fn, driver)
 
     def test_native_only_progress_flags_have_no_eventflow_writer(self):
         for key in ('cLand:MuseumBuilt', 'cLand:MarketBuilt', 'cLand:Museum2Built', 'cLand:BuiltTownOffice',

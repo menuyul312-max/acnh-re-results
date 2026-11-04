@@ -15,11 +15,13 @@ Setiap langkah diberi label bukti:
 
 Aturan cabang query flag Bool: **case 0 = ON, case 1 = OFF**. Buktinya ada dua contoh langsung (`Tutorials_Prologue_Rco` event 9 dan `SNPC_rco_01_Tent_1_Entries` event 17). Uji statistik di `output/gameplay/summary.json` juga mendukungnya: 466 dari 474 penulisan flag yang dijaga flag yang sama konsisten (98,3%).
 
-Query lain punya konvensinya sendiri, yang disimpulkan dari struktur grafnya:
-- `VillageScoreCheck*`: case 1 = skor ≥ batas. Tangga peringkat hanya masuk akal dengan arti ini.
-- `NpcHouseNum`: case 0 = jumlah ≥ `Num`. Cabang case 1 memanggil `NotEnoughNNpc`.
+Query lain punya konvensinya sendiri. Keduanya terbaca dari struktur graf dan dikonfirmasi oleh pseudocode handler-nya:
+- `VillageScoreCheck*`: case 1 = skor ≥ batas. Handler `0x3e0b80` mengembalikan `BorderValue <= skor`.
+- `NpcHouseNum`: case 0 = jumlah ≥ `Num`. Handler `0x419690` mengembalikan `jumlah < Num`, dan cabang case 1 memanggil `NotEnoughNNpc`.
 
-Arti tiap query native belum dibuktikan dengan eksekusi.
+Query lain belum diperiksa handler-nya. Tidak ada yang dieksekusi native.
+
+Skenario menurut skala waktu (hari, minggu, tahun), siklus villager, dan pengunjung ada di [GAMEPLAY_SCENARIO](GAMEPLAY_SCENARIO.md).
 
 Untuk verifikasi, jalankan `python tools/gameplay_flow.py tree <Flow>`. Pohon flow progres utama tersimpan di [`output/gameplay/trees/`](../output/gameplay/trees/). Penulis dan pembaca setiap flag ada di [`output/gameplay/flag_index.json`](../output/gameplay/flag_index.json).
 
@@ -209,7 +211,7 @@ Cara skor Nature dan Life dihitung ada di query native dan belum di-RE.
 Alur menuju konser:
 
 1. **[EF]** `SNPC_sza_50_IslandEvaluation:Sza_Evaluation_CmnImpression`: bila `IslandDevQuestComplete` OFF, result 0 bernilai 2, 3, atau 4 (≥3★), dan pemain adalah perwakilan pulau (`MakeVillagePlayerFlag` ON), Isabelle membacakan komentar dari "K.S.", lalu `ClearTkkFirstLiveScore` dijalankan. Akibatnya `IslandEvaluationClearTkkLive` ON, `IslandDevQuestRunning` OFF, dan `IslandDevQuestComplete` ON.
-2. **[PSEUDO]** `TkkFirstLiveEnable` (EnableReadOnly) ditulis `0xfd8920`: pada pergantian hari, bila `IslandEvaluationClearTkkLive` ON, maka `TkkFirstLiveEnable` ON. Jadi konser terbuka pada pergantian hari setelah penilaian ≥3★ oleh Isabelle, lalu dijadwalkan lewat pengumuman pagi (langkah 3).
+2. **[PSEUDO]** `TkkFirstLiveEnable` (EnableReadOnly) ditulis `0xfd8920`: pada pergantian hari, bila `IslandEvaluationClearTkkLive` ON dan satu flag lain OFF, maka `TkkFirstLiveEnable` ON. Flag lain itu kemungkinan `TkkFirstLive`, satu-satunya string flag lain di fungsi itu; argumennya hilang saat dekompilasi. Jadi konser terbuka pada pergantian hari setelah penilaian ≥3★ oleh Isabelle, lalu dijadwalkan lewat pengumuman pagi (langkah 3).
 3. **[EF]** Pada pengumuman pagi, bila `TkkFirstLiveEnable` ON, pemain adalah perwakilan pulau, dan `EventBranch AddDay=0` bernilai case 0, `Demo_PublicAnnouncement:Root_Init` menyalakan `TkkFirstLiveReserved` dan `TkkFirstLiveSubPlayer`, lalu membatalkan pengunjung hari itu (`CancelTodayVisitorNpc`). Isabelle mengumumkan konser (`Demo_PublicAnnouncement_13_Sza_Once:TownNews_KK1stLive`). Sesudah pengumuman, `PAnnounceSza` memindahkan stage ke **`cMainFieldFirstLive`** (stage `MainFieldDemoFirstLive`).
 
    Catatan: `ClearTkkFirstLiveScore` sudah memeriksa `EventBranch AddDay=1` (kemungkinan bentrok event besok) sebelum menyalakan flag.

@@ -10,6 +10,7 @@ Paket hasil reverse engineering Animal Crossing: New Horizons versi 1.0.0 (build
 |---|---|
 | [Workflow penggunaan data RE](acnh-re/docs/WORKFLOW.md) | Persiapan, ekstrak ZIP, file mana untuk apa, siklus satu tahap RE, verifikasi, kerja multi-agen |
 | [Alur gameplay dari data](acnh-re/docs/GAMEPLAY_FLOW.md) | Alur prolog sampai konser K.K. dan loop setelahnya, dari 456 EventFlow dan 1.555 flag, dengan label bukti per langkah |
+| [Skenario gameplay lengkap](acnh-re/docs/GAMEPLAY_SCENARIO.md) | Satu hari (pipeline pergantian hari native), satu minggu, satu tahun (kalender event, musim), siklus villager, pengunjung khusus, timeline progres dalam pergantian hari |
 | [Kontrak data](acnh-re/docs/DATA_CONTRACT.md) | Format JSON hasil: manifest, BCSV, BYML, item, AAMP, EventFlow |
 | [Laporan lengkap baseline](acnh-re/LAPORAN_AKHIR.md) | Sumber input, pemetaan data, temuan native, lampiran 164 tabel |
 | [Frontier mekanik (JSON)](acnh-re/output/mechanics/continuation_frontier.json) | Yang sudah terbukti, yang masih terbuka, target fungsi berikutnya, total kasus terbaru |
@@ -49,6 +50,13 @@ Rincian, cara verifikasi, dan file yang wajib ada: [WORKFLOW §3](acnh-re/docs/W
 
 ## Fokus terbaru (terbaru di atas)
 
+- **Skenario gameplay lengkap** — [GAMEPLAY_SCENARIO](acnh-re/docs/GAMEPLAY_SCENARIO.md):
+  - driver pergantian hari native `0xf53a70` dan urutan prosesornya;
+  - jadwal aktif NPC, kalender event per belahan bumi, `SeasonCalendar`;
+  - siklus villager: undangan dan kode alasan gagal, kontrak lahan, pindah masuk/keluar;
+  - syarat Harvey dan slot mingguan Label;
+  - timeline progres dalam hitungan pergantian hari;
+  - konvensi query `NpcHouseNum` dan `VillageScoreCheck` dikonfirmasi dari pseudocode handler.
 - **Alur gameplay dari data** — [GAMEPLAY_FLOW](acnh-re/docs/GAMEPLAY_FLOW.md) dan [tool](acnh-re/tools/gameplay_flow.py):
   - indeks penulis/pembaca 1.555 flag pada 456 EventFlow, pohon flow progres di [output/gameplay](acnh-re/output/gameplay/);
   - rumus bintang pulau (ambang Nature/Life, syarat ≥8 rumah NPC);
@@ -78,6 +86,7 @@ Rincian, cara verifikasi, dan file yang wajib ada: [WORKFLOW §3](acnh-re/docs/W
 |---|---|
 | [WORKFLOW](acnh-re/docs/WORKFLOW.md) | Cara memakai dan melanjutkan RE |
 | [GAMEPLAY_FLOW](acnh-re/docs/GAMEPLAY_FLOW.md) | Alur gameplay awal–akhir dari EventFlow |
+| [GAMEPLAY_SCENARIO](acnh-re/docs/GAMEPLAY_SCENARIO.md) | Skenario hari/minggu/tahun, villager, pengunjung |
 | [DATA_CONTRACT](acnh-re/docs/DATA_CONTRACT.md) | Format output |
 | [GITHUB_REFERENCES](acnh-re/docs/GITHUB_REFERENCES.md) | Rujukan publik dan batas versi |
 | [ADDITIONAL_EXEFS](acnh-re/docs/ADDITIONAL_EXEFS.md) | Modul main/sdk/subsdk0/rtld dan kontrak input |

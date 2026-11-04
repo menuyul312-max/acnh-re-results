@@ -18,7 +18,545 @@
  },
  "data": {
   "status": "string cross-references are static evidence; readings are from automated pseudocode, not native execution",
+  "day_change_driver": "0xf53a70",
+  "day_change_driver_pipeline": [
+   {
+    "function": "0xf56c30",
+    "callers": 2,
+    "strings": [
+     "void Game::SaveGrowUpRandomFactor::setGrowUpRandomFactor_(const u32)"
+    ],
+    "reading": null
+   },
+   {
+    "function": "0xf56cb0",
+    "callers": 1,
+    "strings": [
+     "u32 Game::SaveGrowUpRandomFactor::getGrowUpRandomFactor_() const"
+    ],
+    "reading": null
+   },
+   {
+    "function": "0xf545f0",
+    "callers": 1,
+    "strings": [
+     "ActorObject",
+     "FirstPlayAfterMuseumBuiltFlag",
+     "FirstPlayAfterMuseumTentFlag",
+     "FirstPlayAfterOfficeBuiltFlag",
+     "FirstPlayAfterShopBuilt2Flag",
+     "FirstPlayAfterShopBuiltFlag",
+     "FirstPlayAfterTailorBuiltFlag",
+     "HeardCurrentPlayerActivityInfo",
+     "HostPlayerOwsFirstTalk",
+     "OwsFirstTalk",
+     "PlayToday",
+     "State::cHostWaitResponse",
+     "TkkFirstLive",
+     "TkkFirstLiveEnable",
+     "TkkFirstLiveReserved",
+     "TkkFirstLiveSubPlayer",
+     "TkkLiveToday",
+     "TodayCreateVillage",
+     "TodayGrowUp",
+     "TodayMainGrowUp",
+     "TodayStartTown1P",
+     "TotakekeLiveCount",
+     "TownNewsReserve",
+     "ValidatePlayerSaveFlag"
+    ],
+    "reading": null
+   },
+   {
+    "function": "0x6608a0",
+    "callers": 7,
+    "strings": [
+     "VillageExtensionLevel2"
+    ],
+    "reading": null
+   },
+   {
+    "function": "0x4ae640",
+    "callers": 1,
+    "strings": [
+     "IsGetMessageBottle",
+     "MessageBottleAvailable",
+     "OccurrenceCoinStone",
+     "PcMaingameStart",
+     "PickedUpMessageBottle",
+     "PrayStarToday",
+     "StarPieceGrowCount",
+     "VisitorPrayStarToday",
+     "mSpeedY"
+    ],
+    "reading": null
+   },
+   {
+    "function": "0x660280",
+    "callers": 1,
+    "strings": [
+     "AllowNpcGroupActivity"
+    ],
+    "reading": null
+   },
+   {
+    "function": "0xd21110",
+    "callers": 4,
+    "strings": [
+     "%s%02d",
+     "AbandonedHouse",
+     "MoveInCompletion",
+     "NpcHouse",
+     "Param/NpcHouse/%s.byml"
+    ],
+    "reading": null
+   },
+   {
+    "function": "0xf8b460",
+    "callers": 1,
+    "strings": [
+     "BuiltTownOffice",
+     "ContinuousNormalDay",
+     "Countdown",
+     "EarlyOrLate",
+     "FishingConvention",
+     "InsectConvention",
+     "NewYear",
+     "NpcBirthday",
+     "PlayerBirthday"
+    ],
+    "reading": {
+     "role": "day type at day change",
+     "reading": [
+      "checks calendar events by name in order FishingConvention, InsectConvention, PlayerBirthday, NpcBirthday, Countdown, NewYear",
+      "normal day with BuiltTownOffice on: per-player ContinuousNormalDay/EarlyOrLate counters and RNG rolls 0-99; purpose not yet identified"
+     ]
+    }
+   },
+   {
+    "function": "0xd22440",
+    "callers": 4,
+    "strings": [
+     "Countdown",
+     "CountdownFieldNpc",
+     "FishingConvention",
+     "InsectConvention",
+     "TutorialFinishAndPast1day"
+    ],
+    "reading": null
+   },
+   {
+    "function": "0xf8ab90",
+    "callers": 1,
+    "strings": [
+     "AbandonedHouse",
+     "MoveInCompletion",
+     "NpcDIYScheduleSet"
+    ],
+    "reading": null
+   },
+   {
+    "function": "0xf8a6e0",
+    "callers": 1,
+    "strings": [
+     "TalkDIY"
+    ],
+    "reading": null
+   },
+   {
+    "function": "0xd257d0",
+    "callers": 1,
+    "strings": [
+     "AppFirstTalk",
+     "AppWelcomeMigrantsTalk",
+     "HasAcquaintanceship",
+     "IslandRepTalk",
+     "Museum2Built",
+     "NnpcFinishHintTalk",
+     "NnpcHouseBuiltToday"
+    ],
+    "reading": null
+   },
+   {
+    "function": "0xbdbb00",
+    "callers": 1,
+    "strings": [
+     "NetOverwriteData",
+     "setData"
+    ],
+    "reading": null
+   },
+   {
+    "function": "0xbdfd40",
+    "callers": 1,
+    "strings": [
+     "BirthdayLive",
+     "NormalLive",
+     "ValidatePlayerSaveFlag"
+    ],
+    "reading": null
+   },
+   {
+    "function": "0xd29710",
+    "callers": 2,
+    "strings": [
+     "SetCountdownEarlyAggregator"
+    ],
+    "reading": null
+   },
+   {
+    "function": "0xfbd830",
+    "callers": 1,
+    "strings": [
+     "FirstMeetGreetAtThisVillage",
+     "FirstMeetGreetAtThisVillageToday",
+     "MoveInCompletion",
+     "NnpcHouseBuiltToday",
+     "QuestReserveStart"
+    ],
+    "reading": null
+   },
+   {
+    "function": "0xf8bf40",
+    "callers": 1,
+    "strings": [
+     "ContinuousNormalDay",
+     "EarlyOrLate"
+    ],
+    "reading": null
+   },
+   {
+    "function": "0xfd0700",
+    "callers": 1,
+    "strings": [
+     "DailyQuestFirstFivePointToday",
+     "ImmQ_B_OutdoorPattern"
+    ],
+    "reading": null
+   },
+   {
+    "function": "0xfd9d10",
+    "callers": 1,
+    "strings": [
+     "CommuneIslandAvailable",
+     "GstQuestClearFlag",
+     "GstQuestStartLandFlag",
+     "HgcVisitFlagForTailor",
+     "ImmQ_A_Complete",
+     "ImmQ_B_Complete",
+     "ImmQ_C_Complete",
+     "JohnnyQuestFinishFlag",
+     "JohnnyQuestStartFlag",
+     "JohnnySitUpFlag",
+     "SpnVisitMainField",
+     "VisitedCommune"
+    ],
+    "reading": {
+     "role": "special visitors at day change",
+     "reading": [
+      "Gulliver (Johnny*) and Wisp (GstQuest*) quest flags reset/advance",
+      "SpnVisitMainField=1 when a 0-8 value (likely player house level) >=2, ImmQ_A/B/C_Complete on, CommuneIslandAvailable off and VisitedCommune off",
+      "HgcVisitFlagForTailor = (7-slot array[day index] == 2): a weekly slot table, value 2 = Label"
+     ]
+    }
+   },
+   {
+    "function": "0xf535e0",
+    "callers": 1,
+    "strings": [
+     "PlayReportDaily"
+    ],
+    "reading": null
+   }
+  ],
   "day_change_dispatcher": "0xf545f0",
+  "day_change_dispatcher_pipeline": [
+   {
+    "function": "0xf234f0",
+    "callers": 1,
+    "strings": [
+     "0%02d",
+     "1%02d",
+     "Bbs_Information"
+    ],
+    "reading": null
+   },
+   {
+    "function": "0x6601a0",
+    "callers": 1,
+    "strings": [
+     "InstalledMarketTentSign",
+     "PlazaGyroidBuilt",
+     "RcmGotSignboard",
+     "SzaGotGyroid",
+     "VillageDaysCount"
+    ],
+    "reading": null
+   },
+   {
+    "function": "0xf6130",
+    "callers": 1,
+    "strings": [
+     "AnyGlobalEventFinished",
+     "CalendarEventStop",
+     "EventPlazaBuilt",
+     "FishFesFinished",
+     "FishingConventionAutumn",
+     "FishingConventionSpring",
+     "FishingConventionSummer",
+     "FishingConventionWinter",
+     "GlobalEventAvailable",
+     "GlobalEventReady",
+     "InsectConvention1",
+     "InsectConvention2",
+     "InsectConvention3",
+     "InsectConvention4",
+     "InsectFesFinished",
+     "NpcBirthday",
+     "PlayerBirthday",
+     "TodayGlobalEventId",
+     "TodayRegionEventId"
+    ],
+    "reading": null
+   },
+   {
+    "function": "0xfc4560",
+    "callers": 1,
+    "strings": [
+     "Bbs_Information",
+     "CountMarket1AfterBuild",
+     "FirstPlayAfterShopBuilt2Flag",
+     "FirstPlayAfterShopBuiltFlag",
+     "HghStayMarket",
+     "MarketBuilt",
+     "MarketConstruction2",
+     "MarketOpen1stDay1",
+     "MarketOpen1stDay2",
+     "MarketRemodelingFlag2",
+     "ShopItemSet"
+    ],
+    "reading": {
+     "role": "shop facility state at day change (calls 0xfcc300)",
+     "reading": [
+      "state 1 + structure kind 0 present -> state 2; MarketBuilt=1; MarketOpen1stDay1=1 if exactly 1 day",
+      "state 2: second remodel path uses MarketRemodelingFlag2/MarketConstruction2, CountMarket1AfterBuild>30 and an unidentified value >=200000 ((x>>6)>0xc34)",
+      "MarketConstruction2 + elapsed days >= 2 -> state 3; MarketOpen1stDay2=1 if exactly 1 day"
+     ]
+    }
+   },
+   {
+    "function": "0xf77050",
+    "callers": 1,
+    "strings": [
+     "FirstPlayAfterMuseumBuiltFlag",
+     "FirstPlayAfterMuseumTentFlag",
+     "Museum2Built",
+     "Museum2BuiltToday",
+     "MuseumBuilt",
+     "MuseumConstruction1",
+     "MuseumConstructionToday",
+     "MuseumGrowupEnable1",
+     "MuseumTentBuiltToday"
+    ],
+    "reading": {
+     "role": "museum facility state at day change (states 0-4, param_2 = elapsed days)",
+     "reading": [
+      "state 1 + structure kind 2 present -> state 2; MuseumBuilt=1; MuseumTentBuiltToday=1 if exactly 1 day",
+      "state 2: MuseumGrowupEnable1 on -> cleared and construction starts; otherwise needs MuseumConstruction1>=1",
+      "MuseumConstruction1 + elapsed days < 2 -> increment (value 1 sets MuseumConstructionToday)",
+      "otherwise state 3; MuseumConstruction1=0; Museum2Built=1; Museum2BuiltToday=1 if exactly 1 day"
+     ]
+    }
+   },
+   {
+    "function": "0xf7d4c0",
+    "callers": 1,
+    "strings": [
+     "CampFirstCamperVisit"
+    ],
+    "reading": null
+   },
+   {
+    "function": "0xf26330",
+    "callers": 1,
+    "strings": [
+     "CampSiteBuilt",
+     "CampSiteBuiltToday",
+     "CeremonyBuildCampSite"
+    ],
+    "reading": {
+     "role": "campsite facility state at day change",
+     "reading": [
+      "state 1 + structure kind 6 present -> state 2; CampSiteBuilt=1; CeremonyBuildCampSite=1; CampSiteBuiltToday=1 if exactly 1 day"
+     ]
+    }
+   },
+   {
+    "function": "0xf6a730",
+    "callers": 1,
+    "strings": [
+     "MarketBuilt"
+    ],
+    "reading": null
+   },
+   {
+    "function": "0xfd8920",
+    "callers": 1,
+    "strings": [
+     "IslandEvaluationClearTkkLive",
+     "JohnnyRequirePartsNum",
+     "RctInTent",
+     "TkkFirstLive",
+     "TkkFirstLiveEnable"
+    ],
+    "reading": {
+     "role": "K.K. unlock and daily resets at day change",
+     "reading": [
+      "elapsed days >=1 and IslandEvaluationClearTkkLive on and a second flag off (TkkFirstLive is the other flag string in this function; the call argument is lost in decompilation) -> TkkFirstLiveEnable=1",
+      "RctInTent set from the current hour (5..19 -> off)",
+      "JohnnyRequirePartsNum=5 on day change"
+     ]
+    }
+   },
+   {
+    "function": "0xfc1b80",
+    "callers": 1,
+    "strings": [
+     "RumorPFavoriteProgressDays"
+    ],
+    "reading": null
+   },
+   {
+    "function": "0x10c26e0",
+    "callers": 1,
+    "strings": [
+     "BridgeBuilt",
+     "BuiltTownOffice",
+     "CampSiteBuilt",
+     "CountCampSiteAfterBuild",
+     "CountFirstBridgeAfterBuild",
+     "CountFirstSlopeAfterBuild",
+     "CountMarket1AfterBuild",
+     "CountMarket2AfterBuild",
+     "CountMuseumAfterBuild",
+     "CountOfficeAfterBuild",
+     "CountTailorAfterBuild",
+     "SlopeBuilt"
+    ],
+    "reading": {
+     "role": "structure counters at day change",
+     "reading": [
+      "reads BridgeBuilt/SlopeBuilt and Count*AfterBuild counters for tailor, museum, shop, office, campsite"
+     ]
+    }
+   },
+   {
+    "function": "0xf91b90",
+    "callers": 1,
+    "strings": [
+     "DayPlayed",
+     "GstQuestBreakFlag",
+     "GstQuestStartFlag",
+     "JonnyTalkCount",
+     "MainmenuCall",
+     "MakeVillagePlayerFlag",
+     "MarketBuilt",
+     "MarketBuiltMyVillage",
+     "NnpcApproachNoEmoticonCount",
+     "PastDaysFromLastPlay",
+     "PlayerHalfAsleepDemoFlag",
+     "PlayerMainUImenuEnable",
+     "ReachMyBirthday",
+     "StandByGameStartPhoneCall",
+     "StandByPhoneCallSharePlay",
+     "TodayMainGrowUp",
+     "TutorialFinishAndPast1day"
+    ],
+    "reading": null
+   },
+   {
+    "function": "0xf46d40",
+    "callers": 1,
+    "strings": [
+     "FesBoxNotEmpty"
+    ],
+    "reading": null
+   },
+   {
+    "function": "0xd2c830",
+    "callers": 1,
+    "strings": [
+     "GreetAllVillager",
+     "HasTalkedAllVillagerToday",
+     "PcMaingameStart",
+     "TalkCountToday",
+     "mSpeedY"
+    ],
+    "reading": null
+   },
+   {
+    "function": "0xf84320",
+    "callers": 1,
+    "strings": [
+     "MoveInCompletion"
+    ],
+    "reading": null
+   },
+   {
+    "function": "0xff2070",
+    "callers": 1,
+    "strings": [
+     "PlayTime"
+    ],
+    "reading": null
+   },
+   {
+    "function": "0xf40e0",
+    "callers": 1,
+    "strings": [
+     "%s_From",
+     "%s_Msg",
+     "1_%02d_Post",
+     "1_%02d_Pre",
+     "2_%02d_Post",
+     "2_%02d_Pre",
+     "3_%02d_Post",
+     "3_%02d_Pre",
+     "Bbs_EventNotice",
+     "Bbs_EventNotice_Birthday",
+     "BirthdayBbsVariation1",
+     "BirthdayBbsVariation2",
+     "Many_%02d_Post",
+     "Many_%02d_Pre",
+     "Name_N%d",
+     "Name_P%d",
+     "Name_P%dN%d"
+    ],
+    "reading": null
+   },
+   {
+    "function": "0xfb4e60",
+    "callers": 1,
+    "strings": [
+     "%s%02d"
+    ],
+    "reading": null
+   }
+  ],
+  "query_handler_readings": {
+   "0x419690": {
+    "role": "EventFlowQueryNpcHouseNum evaluate slot",
+    "reading": [
+     "returns count < Num, so case 1 = fewer, case 0 = at least Num"
+    ]
+   },
+   "0x3e0b80": {
+    "role": "EventFlowQueryVillageScoreCheckNatural evaluate slot",
+    "reading": [
+     "returns BorderValue <= score, so case 1 = score at least the border; score is a float at +0x240 of a save object"
+    ]
+   }
+  },
   "day_change_callees_in_order": [
    "0xeecf20",
    "0xeecf60",
@@ -297,6 +835,13 @@
      "0x10c2ad0"
     ],
     "pseudocode_readings": {
+     "0xf8b460": {
+      "role": "day type at day change",
+      "reading": [
+       "checks calendar events by name in order FishingConvention, InsectConvention, PlayerBirthday, NpcBirthday, Countdown, NewYear",
+       "normal day with BuiltTownOffice on: per-player ContinuousNormalDay/EarlyOrLate counters and RNG rolls 0-99; purpose not yet identified"
+      ]
+     },
      "0x10c26e0": {
       "role": "structure counters at day change",
       "reading": [
@@ -865,7 +1410,16 @@
     "day_change": [
      "0xfca870"
     ],
-    "pseudocode_readings": {}
+    "pseudocode_readings": {
+     "0xfd9d10": {
+      "role": "special visitors at day change",
+      "reading": [
+       "Gulliver (Johnny*) and Wisp (GstQuest*) quest flags reset/advance",
+       "SpnVisitMainField=1 when a 0-8 value (likely player house level) >=2, ImmQ_A/B/C_Complete on, CommuneIslandAvailable off and VisitedCommune off",
+       "HgcVisitFlagForTailor = (7-slot array[day index] == 2): a weekly slot table, value 2 = Label"
+      ]
+     }
+    }
    },
    "cLand:ImmQ_A_Complete": {
     "name_ja": "移住Quest|住宅A|全工程完了",
@@ -877,7 +1431,16 @@
      "0xfd9d10"
     ],
     "day_change": [],
-    "pseudocode_readings": {}
+    "pseudocode_readings": {
+     "0xfd9d10": {
+      "role": "special visitors at day change",
+      "reading": [
+       "Gulliver (Johnny*) and Wisp (GstQuest*) quest flags reset/advance",
+       "SpnVisitMainField=1 when a 0-8 value (likely player house level) >=2, ImmQ_A/B/C_Complete on, CommuneIslandAvailable off and VisitedCommune off",
+       "HgcVisitFlagForTailor = (7-slot array[day index] == 2): a weekly slot table, value 2 = Label"
+      ]
+     }
+    }
    },
    "cLand:ImmQ_A_InteriorDonateNow": {
     "name_ja": "移住Quest|住宅A|屋内家具を今寄贈した",
@@ -905,7 +1468,16 @@
      "0xfd9d10"
     ],
     "day_change": [],
-    "pseudocode_readings": {}
+    "pseudocode_readings": {
+     "0xfd9d10": {
+      "role": "special visitors at day change",
+      "reading": [
+       "Gulliver (Johnny*) and Wisp (GstQuest*) quest flags reset/advance",
+       "SpnVisitMainField=1 when a 0-8 value (likely player house level) >=2, ImmQ_A/B/C_Complete on, CommuneIslandAvailable off and VisitedCommune off",
+       "HgcVisitFlagForTailor = (7-slot array[day index] == 2): a weekly slot table, value 2 = Label"
+      ]
+     }
+    }
    },
    "cLand:ImmQ_B_InteriorDonateNow": {
     "name_ja": "移住Quest|住宅B|屋内家具の今寄贈した",
@@ -933,7 +1505,16 @@
      "0xfd9d10"
     ],
     "day_change": [],
-    "pseudocode_readings": {}
+    "pseudocode_readings": {
+     "0xfd9d10": {
+      "role": "special visitors at day change",
+      "reading": [
+       "Gulliver (Johnny*) and Wisp (GstQuest*) quest flags reset/advance",
+       "SpnVisitMainField=1 when a 0-8 value (likely player house level) >=2, ImmQ_A/B/C_Complete on, CommuneIslandAvailable off and VisitedCommune off",
+       "HgcVisitFlagForTailor = (7-slot array[day index] == 2): a weekly slot table, value 2 = Label"
+      ]
+     }
+    }
    },
    "cLand:ImmQ_C_InteriorDonateNow": {
     "name_ja": "移住Quest|住宅C|屋内家具の今寄贈した",
@@ -1035,7 +1616,7 @@
      "0xfd8920": {
       "role": "K.K. unlock and daily resets at day change",
       "reading": [
-       "elapsed days >=1 and IslandEvaluationClearTkkLive on (and a second flag off) -> TkkFirstLiveEnable=1",
+       "elapsed days >=1 and IslandEvaluationClearTkkLive on and a second flag off (TkkFirstLive is the other flag string in this function; the call argument is lost in decompilation) -> TkkFirstLiveEnable=1",
        "RctInTent set from the current hour (5..19 -> off)",
        "JohnnyRequirePartsNum=5 on day change"
       ]
@@ -1498,7 +2079,7 @@
      "0xfd8920": {
       "role": "K.K. unlock and daily resets at day change",
       "reading": [
-       "elapsed days >=1 and IslandEvaluationClearTkkLive on (and a second flag off) -> TkkFirstLiveEnable=1",
+       "elapsed days >=1 and IslandEvaluationClearTkkLive on and a second flag off (TkkFirstLive is the other flag string in this function; the call argument is lost in decompilation) -> TkkFirstLiveEnable=1",
        "RctInTent set from the current hour (5..19 -> off)",
        "JohnnyRequirePartsNum=5 on day change"
       ]
@@ -1571,7 +2152,16 @@
      "0xfdc080"
     ],
     "day_change": [],
-    "pseudocode_readings": {}
+    "pseudocode_readings": {
+     "0xfd9d10": {
+      "role": "special visitors at day change",
+      "reading": [
+       "Gulliver (Johnny*) and Wisp (GstQuest*) quest flags reset/advance",
+       "SpnVisitMainField=1 when a 0-8 value (likely player house level) >=2, ImmQ_A/B/C_Complete on, CommuneIslandAvailable off and VisitedCommune off",
+       "HgcVisitFlagForTailor = (7-slot array[day index] == 2): a weekly slot table, value 2 = Label"
+      ]
+     }
+    }
    },
    "cLand:StartBuildingTownOffice": {
     "name_ja": "役場建設＆村長誘致開始可能",
@@ -1742,7 +2332,7 @@
      "0xfd8920": {
       "role": "K.K. unlock and daily resets at day change",
       "reading": [
-       "elapsed days >=1 and IslandEvaluationClearTkkLive on (and a second flag off) -> TkkFirstLiveEnable=1",
+       "elapsed days >=1 and IslandEvaluationClearTkkLive on and a second flag off (TkkFirstLive is the other flag string in this function; the call argument is lost in decompilation) -> TkkFirstLiveEnable=1",
        "RctInTent set from the current hour (5..19 -> off)",
        "JohnnyRequirePartsNum=5 on day change"
       ]
@@ -1767,7 +2357,7 @@
      "0xfd8920": {
       "role": "K.K. unlock and daily resets at day change",
       "reading": [
-       "elapsed days >=1 and IslandEvaluationClearTkkLive on (and a second flag off) -> TkkFirstLiveEnable=1",
+       "elapsed days >=1 and IslandEvaluationClearTkkLive on and a second flag off (TkkFirstLive is the other flag string in this function; the call argument is lost in decompilation) -> TkkFirstLiveEnable=1",
        "RctInTent set from the current hour (5..19 -> off)",
        "JohnnyRequirePartsNum=5 on day change"
       ]
@@ -2081,7 +2671,16 @@
      "0xfdce60"
     ],
     "day_change": [],
-    "pseudocode_readings": {}
+    "pseudocode_readings": {
+     "0xfd9d10": {
+      "role": "special visitors at day change",
+      "reading": [
+       "Gulliver (Johnny*) and Wisp (GstQuest*) quest flags reset/advance",
+       "SpnVisitMainField=1 when a 0-8 value (likely player house level) >=2, ImmQ_A/B/C_Complete on, CommuneIslandAvailable off and VisitedCommune off",
+       "HgcVisitFlagForTailor = (7-slot array[day index] == 2): a weekly slot table, value 2 = Label"
+      ]
+     }
+    }
    },
    "cLandTemp:GstSpiritBlockWanderSpecialPosX": {
     "name_ja": "ゆうたろう|魂化した位置のX座標",
@@ -4897,7 +5496,15 @@
      "0xf8bf40"
     ],
     "day_change": [],
-    "pseudocode_readings": {}
+    "pseudocode_readings": {
+     "0xf8b460": {
+      "role": "day type at day change",
+      "reading": [
+       "checks calendar events by name in order FishingConvention, InsectConvention, PlayerBirthday, NpcBirthday, Countdown, NewYear",
+       "normal day with BuiltTownOffice on: per-player ContinuousNormalDay/EarlyOrLate counters and RNG rolls 0-99; purpose not yet identified"
+      ]
+     }
+    }
    },
    "cNpcSave:CoordinateUpdate": {
     "name_ja": "家具配置更新済か",
@@ -4920,7 +5527,15 @@
      "0xf8bf40"
     ],
     "day_change": [],
-    "pseudocode_readings": {}
+    "pseudocode_readings": {
+     "0xf8b460": {
+      "role": "day type at day change",
+      "reading": [
+       "checks calendar events by name in order FishingConvention, InsectConvention, PlayerBirthday, NpcBirthday, Countdown, NewYear",
+       "normal day with BuiltTownOffice on: per-player ContinuousNormalDay/EarlyOrLate counters and RNG rolls 0-99; purpose not yet identified"
+      ]
+     }
+    }
    },
    "cNpcSave:ForceMoveOut": {
     "name_ja": "強制的に転出させられるフラグ",
@@ -7728,7 +8343,16 @@
      "0xfd9d10"
     ],
     "day_change": [],
-    "pseudocode_readings": {}
+    "pseudocode_readings": {
+     "0xfd9d10": {
+      "role": "special visitors at day change",
+      "reading": [
+       "Gulliver (Johnny*) and Wisp (GstQuest*) quest flags reset/advance",
+       "SpnVisitMainField=1 when a 0-8 value (likely player house level) >=2, ImmQ_A/B/C_Complete on, CommuneIslandAvailable off and VisitedCommune off",
+       "HgcVisitFlagForTailor = (7-slot array[day index] == 2): a weekly slot table, value 2 = Label"
+      ]
+     }
+    }
    },
    "cPlayerTemp:CatchFesGetPoint": {
     "name_ja": "ムシ取り、つり大会|獲得ポイント",

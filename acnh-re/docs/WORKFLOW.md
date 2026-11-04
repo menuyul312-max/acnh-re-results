@@ -67,6 +67,7 @@ Kebutuhan software:
 | Isi tabel BCSV dengan nama kolom | `output/tables_resolved/<Tabel>.json`, indeks `output/schemas/catalogue.json` |
 | Isi BYML dengan nama key | `output/byml_resolved/`; tipe persis di `output/byml_typed/` |
 | Alur cerita/progres: siapa memicu apa | [GAMEPLAY_FLOW.md](GAMEPLAY_FLOW.md), `output/gameplay/flag_index.json`, `output/gameplay/trees/` |
+| Apa yang terjadi per hari/minggu/tahun, villager, pengunjung | [GAMEPLAY_SCENARIO.md](GAMEPLAY_SCENARIO.md), `output/gameplay/native_flag_refs.json` (`day_change_driver_pipeline`) |
 | Graf satu EventFlow | `python acnh-re/tools/gameplay_flow.py tree <Flow>` |
 | Kode native mana yang menulis flag yang tidak ditulis EventFlow | `output/gameplay/native_flag_refs.json` (rujukan string dari `index.sqlite`, prosesor pergantian hari `0xf545f0`) |
 | Teks dialog/nama item | `output/additional_romfs/messages/<bahasa>/*.json`; label pesan dari `MessageID` EventFlow |
