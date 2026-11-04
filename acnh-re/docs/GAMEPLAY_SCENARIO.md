@@ -21,6 +21,22 @@ Data mesin untuk dokumen ini: [`output/gameplay/native_flag_refs.json`](../outpu
 - **Data save utama** berukuran `0x4fa0d8` byte.
 - **Ukuran yang cocok dengan bacaan [PSEUDO] sebelumnya:** member villager `0xa8` = `0x1d6d48`, jadwal pengunjung `0x20a210` = `0x78`, skor pulau `0x24fdb0` = `0x250`.
 
+### Bacaan yang sudah terbukti native
+
+`tools/gameplay_native.py` menjalankan fungsi asli dari NSO lewat `tools/nso_sandbox.py` (unicorn). Hasilnya ditulis ke `output/gameplay/gameplay_native.json`. Stub yang dipakai: RNG, flag, dan pencarian baris kalender. `nn::time` dilayani dengan `datetime` Python.
+
+| Fungsi | Yang dicek | Hasil |
+|---|---|---|
+| `0xd34a20` | level keakraban < 30/60/100/150/200 → 1–6 (§5.1) | lulus |
+| `0x15c6910`…`0x15c69a0`, `0x15c4db0` | bobot kategori skor pulau dan denda duplikat (GAMEPLAY_FLOW §10.1) | lulus |
+| `0xfc6d00` | 3000 minggu harga lobak, RNG sama: 12 harga, pola, dan awal puncak identik dengan model Python di harness (§3.7) | lulus |
+| `0xf0330` | NormalLive: Sabtu; `Before` mundur; `Skip` batal; `Same` tetap (§3.6) | lulus |
+| `0xfdafa0` | Daisy Mae: Minggu dan state toko ≥ 2 (§3.5) | lulus |
+| `0xfdc020` | kode pengunjung hari ini = `codes[hari]`, kode ≥ 10 → 0 (§3.2) | lulus |
+| `0xf7d7e0` | tamu campsite: 0/5/10/15/20% untuk ≤2/3/4/5/≥6 hari (§2.1) | lulus |
+
+Bacaan lain tetap [PSEUDO] sampai ada kasus emulasinya.
+
 ### Flag
 
 **[TBL]** Ada 1.555 flag di 11 tabel `EventFlags*`. Kolom kebijakan reset (`h_fdb1f290` di Land; `h_5140e4b4` di tabel lain) menentukan kapan sebuah flag di-reset. Predikat reset sudah terbukti native (`0xf54530`, lihat [NATIVE_STAGE_WEATHER](NATIVE_STAGE_WEATHER.md)), dan pembacanya `0xf46200` dipanggil di pergantian hari.
@@ -492,6 +508,6 @@ Yang masih terbuka dari jadwal ini:
 
 | # | Celah | Titik masuk |
 |---|---|---|
-| 1 | Menaikkan [PSEUDO] menjadi terbukti | emulasi fungsi fasilitas dan rumus skor pulau seperti tahap mekanik terdahulu |
+| 1 | Menaikkan [PSEUDO] lain menjadi terbukti | tambah kasus di `tools/gameplay_native.py`: prosesor fasilitas (`0xf77050`, `0xfc4560`, `0xfcc300`), undian pindah (`0xf847f0`), jadwal pengunjung (`0xfd8a80`), penjumlah skor (`0x15c61f0`) |
 
 Antrian yang sama, dalam bentuk yang bisa dibaca mesin dan ditandai statusnya, ada di [re_queue.json](re_queue.json).

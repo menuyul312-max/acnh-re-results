@@ -6,6 +6,7 @@ replaced by Python stubs. Needs `pip install unicorn capstone` and the NSO in in
 (or ACNH_RE_NSO). Used by tools/gameplay_native.py; see docs/HANDOFF.md.
 """
 from pathlib import Path
+import datetime
 import os
 import struct
 import sys
@@ -25,6 +26,41 @@ def load_nso(path=DEFAULT_NSO):
     mod0 = struct.unpack_from('<I', text, 4)[0]
     image = {off: bytearray(data) for off, data in segs}
     return segs, bss, mod0, image
+
+
+_EPOCH = datetime.datetime(1970, 1, 1)
+
+
+def _to_posix(sb, ptr, *_):
+    y, mo, d, h, mi, se = struct.unpack('<hbbbbb', sb.read(ptr, 7))
+    return int((datetime.datetime(y, mo, d, h, mi, se) - _EPOCH).total_seconds())
+
+
+def _to_calendar(sb, ptr, *_):
+    t = _EPOCH + datetime.timedelta(seconds=struct.unpack('<q', sb.read(ptr, 8))[0])
+    return struct.unpack('<Q', struct.pack('<hbbbbbx', t.year, t.month, t.day, t.hour, t.minute, t.second))[0]
+
+
+def _day_of_week(sb, y, m, d):
+    y, m, d = (struct.unpack('<i', struct.pack('<I', v & 0xffffffff))[0] for v in (y, m, d))  # int args in w0..w2
+    return (datetime.date(y, m, d).weekday() + 1) % 7  # nn::time: 0 = Sunday
+
+
+def _is_valid_date(sb, y, m, d):
+    try:
+        _day_of_week(sb, y, m, d)
+        return 1
+    except ValueError:
+        return 0
+
+
+# nn::time imports used by the calendar helpers (0x1fb9a0..0x1fd960)
+TIME_IMPORTS = {
+    '_ZN2nn4time11IsValidDateEiii': _is_valid_date,
+    '_ZN2nn4time12GetDayOfWeekEiii': _day_of_week,
+    '_ZN2nn4time18ToPosixTimeFromUtcERKNS0_12CalendarTimeE': _to_posix,
+    '_ZN2nn4time19ToCalendarTimeInUtcERKNS0_9PosixTimeE': _to_calendar,
+}
 
 
 class Sandbox:
@@ -127,6 +163,12 @@ class Sandbox:
             n = x2 if base == 'strncmp' else 4096
             a, b = self.read(x0, n).split(b'\0')[0], self.read(x1, n).split(b'\0')[0]
             self.reg('x0', (a > b) - (a < b))
+        elif name == '_ZN2nn2os11GetTlsValueENS0_7TlsSlotE':
+            if not hasattr(self, 'tls'):
+                self.tls = self.alloc(0x100)
+            self.reg('x0', self.tls)
+        elif name in TIME_IMPORTS:
+            self.reg('x0', TIME_IMPORTS[name](self, x0, x1, x2) & 0xffffffffffffffff)
         else:
             self.unknown_imports[name] = self.unknown_imports.get(name, 0) + 1
             self.reg('x0', 0)

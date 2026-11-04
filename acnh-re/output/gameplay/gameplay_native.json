@@ -1,0 +1,155 @@
+{
+ "meta": {
+  "source": "ExeFS main sha256 f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+  "harness": "tools/gameplay_native.py (nso_sandbox, unicorn)",
+  "stubs": {
+   "0x19aa0e0": "RNG draw replaced by a seeded Python stream",
+   "0xf44d90/0xf44e70": "flag get/set -> 0"
+  },
+  "unhandled_imports": {}
+ },
+ "cases": {
+  "0xd34a20 friendship level": {
+   "inputs": [
+    0,
+    29,
+    30,
+    59,
+    60,
+    99,
+    100,
+    149,
+    150,
+    199,
+    200,
+    255
+   ],
+   "native": [
+    1,
+    1,
+    2,
+    2,
+    3,
+    3,
+    4,
+    4,
+    5,
+    5,
+    6,
+    6
+   ],
+   "pass": true
+  },
+  "0x15c6910..0x15c69a0 island score weights": {
+   "samples": 70,
+   "pass": true
+  },
+  "0x15c4db0 duplicate penalty": {
+   "samples": 48,
+   "pass": true
+  },
+  "0xfc6d00 turnip prices": {
+   "weeks": 3000,
+   "patterns_seen": {
+    "0": 1065,
+    "1": 761,
+    "2": 427,
+    "3": 747
+   },
+   "mismatches": 0,
+   "first_mismatches": [],
+   "pass": true
+  },
+  "0xf0330 NormalLive date": {
+   "results": {
+    "none []": [
+     "Sat"
+    ],
+    "Before [14]": [
+     "Fri"
+    ],
+    "Before [13, 14]": [
+     "Thu"
+    ],
+    "Before [9, 10, 11, 12, 13, 14]": [],
+    "Skip [14]": [],
+    "Same [14]": [
+     "Sat"
+    ],
+    "Same [9, 10, 11, 12, 13, 14]": [
+     "Sat"
+    ]
+   },
+   "pass": true
+  },
+  "0xfdafa0 Daisy Mae (shop state x Sun..Sat)": {
+   "results": {
+    "0": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "1": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "2": [
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "3": [
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "pass": true
+  },
+  "0xfdc020 today visitor code (Sun..Sat)": {
+   "results": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "pass": true
+  },
+  "0xf7d7e0 campsite visitor odds": {
+   "first_failing_u_by_days": {
+    "0": 0.0,
+    "1": 0.0,
+    "2": 0.0,
+    "3": 0.055,
+    "4": 0.105,
+    "5": 0.155,
+    "6": 0.205,
+    "7": 0.205,
+    "8": 0.205
+   },
+   "documented": "0 / 5 / 10 / 15 / 20 %",
+   "pass": true
+  }
+ },
+ "all_pass": true
+}

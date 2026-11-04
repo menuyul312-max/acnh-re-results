@@ -178,6 +178,14 @@ class SaveLayoutTests(unittest.TestCase):
         self.assertEqual(doc['meta']['unhandled_imports'], {})
 
 
+class NativeVerificationTests(unittest.TestCase):
+    def test_committed_native_cases_pass(self):
+        doc = json.loads((ROOT/'output'/'gameplay'/'gameplay_native.json').read_text())
+        self.assertTrue(doc['all_pass'])
+        self.assertEqual(doc['meta']['unhandled_imports'], {})
+        self.assertGreaterEqual(doc['cases']['0xfc6d00 turnip prices']['weeks'], 3000)
+
+
 NSO = Path(os.environ.get('ACNH_RE_NSO', ROOT/'inputs'/'additional_exefs'/'main'))
 
 
@@ -252,6 +260,15 @@ class VisitorScheduleNsoTests(unittest.TestCase):
         by = {r['node']: r for r in rows}
         self.assertEqual(unknown, {})
         self.assertEqual((by['0x0']['size'], by['0x20a210']['data'], by['0x24fdb0']['data']), ('0x4fa0d8', '0x414e84', '0x4f8b34'))
+
+    def test_native_cases_rerun(self):
+        try:
+            import unicorn  # noqa: F401
+        except ImportError:
+            self.skipTest('pip install unicorn')
+        import gameplay_native
+        res = gameplay_native.verify(weeks=200)
+        self.assertTrue(res['all_pass'], {k: v['pass'] for k, v in res['cases'].items()})
 
     def test_island_score_enum_lists(self):
         lst = lambda a: self.read(a, 4096).split(b'\0', 1)[0].decode().split(',')  # noqa: E731

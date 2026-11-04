@@ -1,0 +1,307 @@
+"""Native verification of gameplay readings: run the original functions from the NSO (tools/nso_sandbox.py)
+and compare them with the formulas written in docs/GAMEPLAY_*.md. Writes output/gameplay/gameplay_native.json.
+
+Usage: python3 tools/gameplay_native.py [--output-root DIR] [--weeks 3000]
+"""
+import argparse
+import json
+from pathlib import Path
+import random
+import struct
+import sys
+
+import numpy as np
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from nso_sandbox import Sandbox, NSO_SHA256  # noqa: E402
+
+F = np.float32
+RNG_FN = 0x19aa0e0          # xorshift128 draw; stubbed with a controlled stream
+FLAG_GET, FLAG_SET = 0xf44d90, 0xf44e70
+
+
+# ---- formulas as documented (GAMEPLAY_SCENARIO 5.1, GAMEPLAY_FLOW 10.1, GAMEPLAY_SCENARIO 3.7) ----
+def friendship_level(v):
+    return 1 if v < 30 else 2 if v < 60 else 3 if v < 100 else 4 if v < 150 else 5 if v < 200 else 6
+
+
+def duplicate_penalty(counter, distinct):
+    dup = counter - distinct
+    return 0.0 if dup < 5 else F(dup) * F(0.5 if dup <= 9 else 0.75)
+
+
+SCORE_WEIGHTS = {  # va: f(x)
+    0x15c6910: lambda x: x, 0x15c6920: lambda x: F(x) * F(0.25), 0x15c6930: lambda x: x, 0x15c6940: lambda x: F(0),
+    0x15c6950: lambda x: F(x) * F(4), 0x15c6960: lambda x: x, 0x15c6970: lambda x: F(x) * F(4),
+    0x15c6980: lambda x: F(x) * F(0.2), 0x15c6990: lambda x: min(F(x), F(190)), 0x15c69a0: lambda x: x}
+
+NEXT_PATTERN = {0: (20, 50, 65), 1: (50, 55, 75), 2: (25, 70, 75), 3: (45, 70, 85)}
+
+
+def next_pattern(prev, r):
+    if prev not in NEXT_PATTERN:
+        return 2
+    a, b, c = NEXT_PATTERN[prev]
+    return 0 if r < a else 1 if r < b else 2 if r < c else 3
+
+
+def turnip_week(prev, draws):
+    """Documented generator; draws() returns the next u32 of the RNG. Returns u32[17] like the save struct."""
+    it = iter(draws)
+
+    def u32():
+        return next(it)
+
+    def randint(n):
+        return (u32() * n) >> 32
+
+    def uf():
+        return F(struct.unpack('<f', struct.pack('<I', (u32() >> 9) | 0x3f800000))[0]) - F(1)
+
+    def price(rate):
+        return int(F(F(rate) * F(base)) + F(0.99999))
+    s = [0] * 17
+    base = s[0] = randint(21) + 90
+    pat = s[15] = next_pattern(prev, randint(100))
+    p = {}
+    if pat == 0:
+        dec1 = 3 if u32() >= 0x80000000 else 2
+        dec2 = 5 - dec1
+        hi1 = randint(7)
+        rest = 7 - hi1
+        hi3 = randint(rest)
+        i = 2
+        for _ in range(hi1):
+            p[i] = price(F(uf() * F(0.5)) + F(0.9)); i += 1
+        rate = F(uf() * F(-0.2)) + F(0.8)
+        for _ in range(dec1):
+            p[i] = price(rate); i += 1
+            rate = F(F(rate + F(-0.04)) + F(uf() * F(-0.06)))
+        for _ in range(rest - hi3):
+            p[i] = price(F(uf() * F(0.5)) + F(0.9)); i += 1
+        rate = F(uf() * F(-0.2)) + F(0.8)
+        for _ in range(dec2):
+            p[i] = price(rate); i += 1
+            rate = F(F(rate + F(-0.04)) + F(uf() * F(-0.06)))
+        for _ in range(hi3):
+            p[i] = price(F(uf() * F(0.5)) + F(0.9)); i += 1
+    elif pat in (1, 3):
+        peak = s[16] = randint(7) + 3 if pat == 1 else (u32() >> 29) + 2
+        rate = F(uf() * F(-0.05 if pat == 1 else -0.5)) + F(0.9)
+        i = 2
+        while i < peak:
+            p[i] = price(rate); i += 1
+            rate = F(F(rate + F(-0.03)) + F(uf() * F(-0.02)))
+        if pat == 1:
+            for lo, span in ((0.9, 0.5), (1.4, 0.6), (2.0, 4.0), (1.4, 0.6), (0.9, 0.5)):
+                p[i] = price(F(uf() * F(span)) + F(lo)); i += 1
+            while i < 14:
+                p[i] = price(F(uf() * F(0.5)) + F(0.4)); i += 1
+        else:
+            p[i] = price(F(uf() * F(0.5)) + F(0.9))
+            p[i + 1] = price(F(uf() * F(0.5)) + F(0.9))
+            peak_rate = F(uf() * F(0.6)) + F(1.4)
+            p[i + 3] = price(peak_rate)
+            span = F(peak_rate + F(-1.4))
+            p[i + 2] = int(F(F(int(F(F(F(span * uf()) + F(1.4)) * F(base)) + F(0.99999))) + F(-1)))
+            p[i + 4] = int(F(F(int(F(F(F(span * uf()) + F(1.4)) * F(base)) + F(0.99999))) + F(-1)))
+            i += 5
+            rate = F(uf() * F(-0.5)) + F(0.9)
+            while i < 14:
+                p[i] = price(rate); i += 1
+                rate = F(F(rate + F(-0.03)) + F(uf() * F(-0.02)))
+    elif pat == 2:
+        rate = F(uf() * F(-0.05)) + F(0.9)
+        for i in range(2, 14):
+            p[i] = price(rate)
+            rate = F(F(rate + F(-0.03)) - F(uf() * F(0.02)))
+    for i, v in p.items():
+        s[i + 1] = v
+    return s
+
+
+# ---- emulation ----
+class Stream:
+    def __init__(self, seed):
+        self.r = random.Random(seed)
+        self.used = []
+
+    def __call__(self, sb):
+        v = self.r.getrandbits(32)
+        self.used.append(v)
+        return v
+
+
+def verify(weeks=3000):
+    sb = Sandbox()
+    cases = {}
+    # friendship level 0xd34a20
+    vals = [0, 29, 30, 59, 60, 99, 100, 149, 150, 199, 200, 255]
+    got = [sb.call(0xd34a20, (v,)) for v in vals]
+    cases['0xd34a20 friendship level'] = {'inputs': vals, 'native': got, 'pass': got == [friendship_level(v) for v in vals]}
+    # score weights 0x15c6910..0x15c69a0
+    ok, n = True, 0
+    for va, fn in SCORE_WEIGHTS.items():
+        for x in (0.0, 1.0, 7.0, 37.5, 189.0, 190.0, 250.0):
+            sb.reg('s0', struct.unpack('<I', struct.pack('<f', x))[0])
+            sb.call(va, ())
+            out = struct.unpack('<f', struct.pack('<I', sb.reg('s0') & 0xffffffff))[0]
+            ok &= abs(out - float(fn(F(x)))) < 1e-4
+            n += 1
+    cases['0x15c6910..0x15c69a0 island score weights'] = {'samples': n, 'pass': bool(ok)}
+    # duplicate penalty 0x15c4db0 on a synthetic 0x228-byte block
+    ok, n = True, 0
+    blk = sb.alloc(0x228)
+    for cat in (0, 1, 2):
+        for counter in (0, 4, 5, 9, 10, 20):
+            for distinct in (0, 1, 3):
+                if distinct > counter:
+                    continue
+                buf = bytearray(0x228)
+                struct.pack_into('<H', buf, cat * 2, counter)
+                for k in range(distinct):
+                    struct.pack_into('<HBB', buf, 0x20 + 4 * k, 100 + k, cat << 4, 0)
+                struct.pack_into('<I', buf, 0x220, distinct)
+                sb.uc.mem_write(blk, bytes(buf))
+                sb.call(0x15c4db0, (blk, cat))
+                out = struct.unpack('<f', struct.pack('<I', sb.reg('s0') & 0xffffffff))[0]
+                want = float(duplicate_penalty(counter, distinct)) if cat <= 1 else 0.0
+                ok &= abs(out - want) < 1e-4
+                n += 1
+    cases['0x15c4db0 duplicate penalty'] = {'samples': n, 'pass': bool(ok)}
+    # turnip generator 0xfc6d00 with a controlled RNG stream
+    sb.stub(FLAG_GET, lambda s: 0)
+    sb.stub(FLAG_SET, lambda s: 0)
+    week = sb.alloc(0x44)
+    mism, per_pattern = [], {0: 0, 1: 0, 2: 0, 3: 0}
+    for seed in range(weeks):
+        prev = seed % 4
+        stream = Stream(seed)
+        sb.stub(RNG_FN, stream)
+        sb.uc.mem_write(week, struct.pack('<17I', *([0] * 15 + [prev, 0])))
+        sb.call(0xfc6d00, (week,))
+        native = list(struct.unpack('<17I', sb.read(week, 0x44)))
+        model = turnip_week(prev, stream.used + [0] * 8)
+        per_pattern[native[15]] += 1
+        if native[:16] != model[:16] or (native[15] in (1, 3) and native[16] != model[16]):
+            mism.append({'seed': seed, 'prev': prev, 'native': native, 'model': model})
+    cases['0xfc6d00 turnip prices'] = {'weeks': weeks, 'patterns_seen': per_pattern, 'mismatches': len(mism),
+                                      'first_mismatches': mism[:3], 'pass': not mism}
+    cases.update(calendar_cases())
+    return {'meta': {'source': f'ExeFS main sha256 {NSO_SHA256}', 'harness': 'tools/gameplay_native.py (nso_sandbox, unicorn)',
+                     'stubs': {'0x19aa0e0': 'RNG draw replaced by a seeded Python stream', '0xf44d90/0xf44e70': 'flag get/set -> 0'},
+                     'unhandled_imports': sb.unknown_imports},
+            'cases': cases, 'all_pass': all(c['pass'] for c in cases.values())}
+
+
+def _packed(t):
+    return struct.unpack('<Q', struct.pack('<hbbbbbx', t.year, t.month, t.day, t.hour, t.minute, t.second))[0]
+
+
+def calendar_cases():
+    """NormalLive 0xf0330, Daisy Mae 0xfdafa0 and today's visitor 0xfdc020 with nn::time served by nso_sandbox."""
+    import datetime
+    out = {}
+    sb = Sandbox()
+    sb.stub(FLAG_GET, lambda s: 1)                       # TkkFirstLive on
+    event_days = set()
+    sb.stub(0xf0790, lambda s: 1 if struct.unpack('<HBB', s.read(s.reg('x1'), 4)) in event_days else 0)
+    vt, txt = sb.alloc(0x40), sb.alloc(16)
+    sb.uc.mem_write(vt + 0x18, struct.pack('<Q', 0xd50f0))  # bare 'ret' for the label object's vtable call
+    sb.uc.mem_write(txt, b'Ev\0')
+    sb.stub(0xf0940, lambda s: s.uc.mem_write(s.reg('x8'), struct.pack('<QQ', vt, txt)))
+    sb.stub(0xf6f30, lambda s: 0x1000)                   # calendar row found
+    sb.stub(0x1665ea0, lambda s: 0)                      # row index 0
+    skip_arr = sb.alloc(16)
+    g = sb.u64(0x32d5848)                                # TkkSkipNormal array object
+    sb.uc.mem_write(g, struct.pack('<I', 1))
+    sb.uc.mem_write(g + 8, struct.pack('<Q', skip_arr))
+    cal = sb.alloc(0x1000)
+    week = [datetime.date(2020, 3, d) for d in range(8, 15)]   # Sunday 8 .. Saturday 14 March 2020
+    expect = {('none', ()): ['Sat'],
+              ('Before', (14,)): ['Fri'], ('Before', (13, 14)): ['Thu'], ('Before', tuple(range(9, 15))): [],
+              ('Skip', (14,)): [], ('Same', (14,)): ['Sat'], ('Same', tuple(range(9, 15))): ['Sat']}
+    got = {}
+    for (rule, days), want in expect.items():
+        sb.uc.mem_write(skip_arr, struct.pack('<H', {'none': 0, 'Before': 0, 'Skip': 1, 'Same': 2}[rule]))
+        event_days.clear()
+        event_days.update((2020, 3, d) for d in days)
+        got[f'{rule} {list(days)}'] = [d.strftime('%a') for d in week if sb.call(0xf0330, (cal, d.year, d.month, d.day)) & 1]
+    out['0xf0330 NormalLive date'] = {'results': got, 'pass': list(got.values()) == list(expect.values())}
+
+    sb = Sandbox()
+    root, save = sb.alloc(0x400000), sb.alloc(0x500000)
+    sb.call(0xf32fa0, (root,))
+    stack = [root]
+    while stack:                                        # attach every layout node to the save buffer
+        x = stack.pop()
+        sb.uc.mem_write(x + 8, struct.pack('<Q', save))
+        c = sb.u64(x + 0x18)
+        while c:
+            stack.append(c)
+            c = sb.u64(c + 0x20)
+    sb.stub(0xeecf00, lambda s: root)
+    now = [datetime.datetime(2020, 3, 1, 9)]
+    sb.stub(0x1fcac0, lambda s: _packed(now[0]))
+    shop = sb.u64(root + 0x1f3e98 + 0x10)
+    table = {}
+    for state in range(4):
+        sb.uc.mem_write(save + shop, struct.pack('<I', state))
+        row = []
+        for d in range(1, 8):
+            now[0] = datetime.datetime(2020, 3, d, 9)
+            row.append(sb.call(0xfdafa0, ()) & 1)
+        table[state] = row
+    want = {s: [1 if s >= 2 and d == 0 else 0 for d in range(7)] for s in range(4)}
+    out['0xfdafa0 Daisy Mae (shop state x Sun..Sat)'] = {'results': table, 'pass': table == want}
+
+    var, mgr = sb.u64(0x32d1cd0), sb.alloc(0x5000)
+    sb.uc.mem_write(var, struct.pack('<Q', mgr))
+    sched = sb.alloc(0x78)
+    sb.uc.mem_write(sched, struct.pack('<7I', 10, 1, 2, 3, 4, 5, 6))
+    codes = []
+    for d in range(1, 8):
+        sb.uc.mem_write(mgr + 0x4068, struct.pack('<Q', _packed(datetime.datetime(2020, 3, d, 9))))
+        codes.append(sb.call(0xfdc020, (sched,)))
+    out['0xfdc020 today visitor code (Sun..Sat)'] = {'results': codes, 'pass': codes == [0, 1, 2, 3, 4, 5, 6]}
+
+    # campsite visitor odds 0xf7d7e0: smallest day-RNG float u that fails, per days since the last camper
+    sb.stub(FLAG_GET, lambda s: 0)                       # CampFirstCamperVisit off
+    sb.stub(0xf4db0, lambda s: 0)
+    sb.stub(0xf4e00, lambda s: 0)
+    u = [0.0]
+
+    def draw(s):
+        s.reg('s0', struct.unpack('<I', struct.pack('<f', u[0]))[0])
+    sb.stub(0xf53490, draw)
+    sb.uc.mem_write(save + sb.u64(root + 0x20d4d0 + 0x10), struct.pack('<I', 2))   # campsite state 2
+    camper = sb.alloc(0x200)
+    now[0] = datetime.datetime(2020, 3, 20, 9)
+    first_fail = {}
+    for days in range(9):
+        sb.uc.mem_write(camper + 0x10c, struct.pack('<Q', _packed(now[0] - datetime.timedelta(days=days))))
+        first_fail[days] = 1.0
+        for k in range(0, 1000, 5):
+            u[0] = k / 1000
+            if not sb.call(0xf7d7e0, (camper,)) & 1:
+                first_fail[days] = u[0]
+                break
+    want = {0: 0.0, 1: 0.0, 2: 0.0, 3: 0.055, 4: 0.105, 5: 0.155, 6: 0.205, 7: 0.205, 8: 0.205}
+    out['0xf7d7e0 campsite visitor odds'] = {'first_failing_u_by_days': first_fail, 'documented': '0 / 5 / 10 / 15 / 20 %',
+                                             'pass': first_fail == want}
+    return out
+
+
+def main():
+    ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    ap.add_argument('--output-root', default=str(Path(__file__).resolve().parent.parent/'output'))
+    ap.add_argument('--weeks', type=int, default=3000)
+    a = ap.parse_args()
+    res = verify(a.weeks)
+    path = Path(a.output_root)/'gameplay'/'gameplay_native.json'
+    path.write_text(json.dumps(res, indent=1) + '\n')
+    print(path, {k: v['pass'] for k, v in res['cases'].items()})
+
+
+if __name__ == '__main__':
+    main()
