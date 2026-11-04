@@ -1,0 +1,82 @@
+{
+  "schema": "acnh.kabu-ui-binding.v1",
+  "local_build": "supplied ACNH 1.0.0 NSO and RomFS",
+  "local_eventflow": {
+    "flow": "SNPC_boc",
+    "entry_point": "boc_Buy",
+    "sequence": [
+      {
+        "event_index": 29,
+        "kind": "action",
+        "name": "EventFlowActionUITenKeyHandling",
+        "params": {
+          "Type": "cKabu"
+        }
+      },
+      {
+        "event_index": 30,
+        "kind": "query",
+        "name": "EventFlowQueryUIResultMenuDecide",
+        "case_0_next": 36,
+        "case_1_next": 39
+      },
+      {
+        "event_index": 36,
+        "kind": "query",
+        "name": "EventFlowQueryBoaCanSetKabu",
+        "cases": {
+          "0": 35,
+          "1": 37,
+          "2": 40
+        }
+      }
+    ],
+    "handler_registration": {
+      "input_action": {
+        "factory": "0x4511b0",
+        "constructor": "0x365790",
+        "vtable": "0x304f898"
+      },
+      "purchase_query": {
+        "factory": "0x45a7f0",
+        "constructor": "0x3cca20",
+        "vtable": "0x3053ac0",
+        "evaluate_slot": "0x3cca80"
+      }
+    }
+  },
+  "local_romfs_layout": {
+    "source": "Layout/SwkbdTextAreaKaburiba.Nin_NX_NVN.zs",
+    "archive_member": "SwkbdTextAreaKaburiba.arc!blyt/SwkbdTextAreaKaburiba.bflyt",
+    "sha256": "f5771f4a786b89b1c184b00889ae9b05f1a549ecaa9edc9befb615bfe461900e",
+    "bytes": 7148,
+    "numeric_input_and_result_panes": [
+      "T_InputNum_00",
+      "T_LastNum_00",
+      "T_ResultTitle_00",
+      "T_ResultNum_00",
+      "T_ResultUnit_00",
+      "L_BgSwkbd_00"
+    ]
+  },
+  "local_native_reference": {
+    "page_name_string": "KabuBuyPage",
+    "referencing_function_va": "0x1215c30",
+    "direct_edge_to_purchase_query_found": false
+  },
+  "external_cross_version_corroboration": {
+    "repository": "https://github.com/acnhmodding/nookkit",
+    "commit": "16522dcb71f4b3c4f4d37d9cc6bf6676a5fca0b7",
+    "pages_table": "https://github.com/acnhmodding/nookkit/blob/16522dcb71f4b3c4f4d37d9cc6bf6676a5fca0b7/data/pages-3.0.3.tsv",
+    "mapping": {
+      "page": "KabuBuyPage",
+      "layout": "SwkbdTextAreaKaburiba",
+      "vtable": "0x71049ddec0"
+    },
+    "version_note": "The public page-to-layout table describes version 3.0.3, not the supplied local 1.0.0 build."
+  },
+  "assessment": {
+    "supported": "In the local EventFlow, cKabu ten-key input precedes the purchase query; the local layout contains numeric input and total-result fields. A public later-version page table associates KabuBuyPage with that layout.",
+    "still_unproven": "The exact local 1.0.0 native dispatch edge from EventFlowActionUITenKeyHandling or KabuBuyPage to EventFlowQueryBoaCanSetKabu is not recovered."
+  }
+}

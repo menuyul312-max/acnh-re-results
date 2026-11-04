@@ -30,9 +30,16 @@ Audit lama dengan pengganti strcmp tetap disimpan sebagai pembanding. Dua audit 
 
 Pemetaan suara NPC juga bertambah. Enam kolom tanpa nama, pada seluruh 459 baris NmlNpcParam/SpNpcParam, terikat melalui kode asli ke byte konfigurasi +44/+45/+46. Seluruh nilai byte dan kombinasi metadata yang hilang diuji; fallback 5/4/1. Ada 995 pemeriksaan tanpa mismatch atau stub. Nama asli dan makna akustik tiga byte tersebut belum diketahui. [Bukti dan pointer raw](../output/npc/voice_configuration_native.json).
 
+## Pemindaian nama gameplay pada modul yang tersedia
+
+Pemindaian segment hasil dekompresi mencakup empat NSO yang ada (`main`, `rtld`, `subsdk0`, `sdk`) dan sembilan nama gameplay terkait blocker. Ketiga modul selain `main` memiliki nol kecocokan string untuk seluruh sembilan nama tersebut. `main` sendiri memberi kecocokan untuk nama save, skor pulau, dan halaman UI yang memang sudah dirujuk di peta fungsi.
+
+Pemindaian RTTI-like menemukan lima nama pada `main`: dua anchor `nn::util::IntrusiveListNode` dan tiga vtable ABI C++; tidak ada nama kelas game. `subsdk0` dan `sdk` memang membawa banyak nama C++ (1.350 dan 2.557), tetapi tidak ada satu pun nama target gameplay yang dicari. Hasil ini memperkuat batas bahwa modul tambahan yang tersedia tidak menyediakan nama bagi 151 vtable save maupun identitas dispatch `AbandonedHouse`; identitas itu tetap terbuka. Ini bukan klaim bahwa seluruh ExeFS sudah tersedia. [Hasil rinci dan hash](../output/native_modules/gameplay_symbol_scan.json).
+
 ## Kelanjutan yang kini terbuka
 
 - Menelusuri implementasi SDK dari impor main yang sudah bernama, termasuk file, waktu, save, memory, input, dan audio.
+- Mencocokkan nama struktur save dari metadata publik menghasilkan kandidat lintas versi, tetapi tidak menggantikan RTTI dari build lokal. Alat [`save_layout_schema_crosswalk.py`](../tools/save_layout_schema_crosswalk.py) membaca skema bernama `save_schema_111_103.json` dari [Treeki/CylindricalEarth](https://github.com/Treeki/CylindricalEarth/blob/bb09c0ee71a4aa6011de088b88ea55fdee0bf6e9/savefile/save_schema_111_103.json) dan menulis `output/gameplay/save_layout_external_crosswalk.json`.
 - Menguji helper SDK lain setelah menetapkan dependensi dan state yang dibacanya.
 - Memetakan rtld, relocation lintas modul, TLS dan initializer sebelum mencoba cakupan runtime yang lebih luas.
 - Menelusuri fungsi multimedia dari subsdk0 dan konsumen konfigurasi suara NPC.
@@ -46,6 +53,8 @@ Letakkan lima berkas asli di `inputs/additional_exefs/` dengan nama yang sama. P
 
 ```bash
 python tools/exefs_modules.py
+python tools/exefs_gameplay_scan.py --input-root <folder>/inputs/additional_exefs
+python tools/save_layout_schema_crosswalk.py --schema <folder>/save_schema_111_103.json
 python tools/linked_sdk_verify.py
 python tools/npc_voice.py
 python -m unittest discover -s tests -v

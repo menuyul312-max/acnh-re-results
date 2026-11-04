@@ -413,9 +413,9 @@
     "callers": 1,
     "strings": [],
     "reading": {
-     "role": "day-change reset of member +0x20d310",
+     "role": "day-change reset of save member +0x20d310",
      "reading": [
-      "writes u32 2 to save member +0x20d310 (4 bytes, descriptor GOT 0x32ff640) every day change; no other reader found by constant scan"
+      "writes u32 2 to node +0x20d310 (data +0x4159f0, 4 bytes; descriptor GOT 0x32ff640) every day change; the child +0x20d348 crosswalks to SaveLand.Office.OfficeLevel in external save_schema_111_103 by offset, size, and tree depth; enum meaning and local-build reader remain unknown"
      ]
     }
    },
@@ -642,8 +642,9 @@
     "role": "EventFlowQueryBoaCanSetKabu evaluate slot (NSO VA 0x3cca80; Ghidra FUN_004cca80)",
     "reading": [
      "resolves node +0x208ed0 and reads base price at data +0x00; compares requested quantity-scaled amount against it; returns 1 below price, otherwise 0 when the quantity setter accepts it, or 2 when no quantity is set / setter rejects it",
-     "registered as EventFlowQueryBoaCanSetKabu (factory 0x45a7f0, constructor 0x3cca20, vtable 0x3053ac0 slot 6); its sole indexed EventFlow use is SNPC_boc Event32: result 0 -> Event30, 1 -> Event33, 2 -> Event47",
-     "this proves the Daisy Mae dialogue consumer; KabuBuyPage string at 0x1215c30 is not directly linked to this query"
+     "registered as EventFlowQueryBoaCanSetKabu (factory 0x45a7f0, constructor 0x3cca20, vtable 0x3053ac0 slot 6); in SNPC_boc:boc_Buy, event 29 runs EventFlowActionUITenKeyHandling(Type=cKabu), event 30 checks UIResultMenuDecide, and its case 0 reaches this query at event 36; query results 0/1/2 go to events 35/37/40",
+     "native emulation with controlled save/input/setter accessors confirms all three return codes; local SwkbdTextAreaKaburiba layout contains numeric input and total-result panes; public NookKit 3.0.3 maps KabuBuyPage to that layout, but this is cross-version evidence",
+     "the local input-to-query EventFlow sequence is proven; exact 1.0.0 native mapping from Type=cKabu to page class KabuBuyPage/layout remains unresolved (output/gameplay/kabu_ui_binding.json)"
     ]
    }
   },
@@ -1060,8 +1061,9 @@
     "role": "EventFlowQueryBoaCanSetKabu evaluate slot (NSO VA 0x3cca80; Ghidra FUN_004cca80)",
     "reading": [
      "resolves node +0x208ed0 and reads base price at data +0x00; compares requested quantity-scaled amount against it; returns 1 below price, otherwise 0 when the quantity setter accepts it, or 2 when no quantity is set / setter rejects it",
-     "registered as EventFlowQueryBoaCanSetKabu (factory 0x45a7f0, constructor 0x3cca20, vtable 0x3053ac0 slot 6); its sole indexed EventFlow use is SNPC_boc Event32: result 0 -> Event30, 1 -> Event33, 2 -> Event47",
-     "this proves the Daisy Mae dialogue consumer; KabuBuyPage string at 0x1215c30 is not directly linked to this query"
+     "registered as EventFlowQueryBoaCanSetKabu (factory 0x45a7f0, constructor 0x3cca20, vtable 0x3053ac0 slot 6); in SNPC_boc:boc_Buy, event 29 runs EventFlowActionUITenKeyHandling(Type=cKabu), event 30 checks UIResultMenuDecide, and its case 0 reaches this query at event 36; query results 0/1/2 go to events 35/37/40",
+     "native emulation with controlled save/input/setter accessors confirms all three return codes; local SwkbdTextAreaKaburiba layout contains numeric input and total-result panes; public NookKit 3.0.3 maps KabuBuyPage to that layout, but this is cross-version evidence",
+     "the local input-to-query EventFlow sequence is proven; exact 1.0.0 native mapping from Type=cKabu to page class KabuBuyPage/layout remains unresolved (output/gameplay/kabu_ui_binding.json)"
     ]
    },
    "0xfc7c70": {
@@ -1140,9 +1142,9 @@
     ]
    },
    "0xf8f190": {
-    "role": "day-change reset of member +0x20d310",
+    "role": "day-change reset of save member +0x20d310",
     "reading": [
-     "writes u32 2 to save member +0x20d310 (4 bytes, descriptor GOT 0x32ff640) every day change; no other reader found by constant scan"
+     "writes u32 2 to node +0x20d310 (data +0x4159f0, 4 bytes; descriptor GOT 0x32ff640) every day change; the child +0x20d348 crosswalks to SaveLand.Office.OfficeLevel in external save_schema_111_103 by offset, size, and tree depth; enum meaning and local-build reader remain unknown"
     ]
    },
    "0xf7d4c0": {
@@ -1199,7 +1201,8 @@
    "0xf32fa0": {
     "role": "save layout constructor",
     "reading": [
-     "builds the accessor tree of save members with their offsets; entry point for save-format RE"
+     "builds the accessor tree of save members with their offsets; entry point for save-format RE",
+     "native layout census has 43,292 nodes, 151 vtables, and 76 size signatures; external save_schema_111_103 crosswalk yields 143/151 vtable offset-size paths and 85/88 selected member paths after depth alignment, but these names are cross-version candidates rather than local RTTI proof (output/gameplay/save_layout_external_crosswalk.json)"
     ]
    },
    "0x10c26e0": {
