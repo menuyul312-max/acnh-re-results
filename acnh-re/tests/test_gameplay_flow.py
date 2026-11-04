@@ -108,6 +108,9 @@ class GameplayFlowTests(unittest.TestCase):
                   'cLand:MarketOpen1stDay1': '0xfc4560'}
         for key, fn in expect.items():
             self.assertIn(fn, refs['flags'][key]['referencing_functions'], key)
+        self.assertEqual({k: v for k, v in refs['visitor_codes'].items() if k != 'source'},
+                         {'1': 'gul', '2': 'hgc', '3': 'cml', '5': 'hgh', '6': 'bey', '7': 'chy', '8': 'skk'})
+        self.assertIn('0xf8dd70', refs['all_readings'])
         driver = [r['function'] for r in refs['day_change_driver_pipeline']]
         for fn in ('0xf545f0', '0xf8b460', '0xfd9d10', '0xd21110'):
             self.assertIn(fn, driver)

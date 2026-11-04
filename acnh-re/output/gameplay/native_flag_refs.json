@@ -557,6 +557,195 @@
     ]
    }
   },
+  "all_readings": {
+   "0xf77050": {
+    "role": "museum facility state at day change (states 0-4, param_2 = elapsed days)",
+    "reading": [
+     "state 1 + structure kind 2 present -> state 2; MuseumBuilt=1; MuseumTentBuiltToday=1 if exactly 1 day",
+     "state 2: MuseumGrowupEnable1 on -> cleared and construction starts; otherwise needs MuseumConstruction1>=1",
+     "MuseumConstruction1 + elapsed days < 2 -> increment (value 1 sets MuseumConstructionToday)",
+     "otherwise state 3; MuseumConstruction1=0; Museum2Built=1; Museum2BuiltToday=1 if exactly 1 day"
+    ]
+   },
+   "0xfcc300": {
+    "role": "tailor facility state at day change",
+    "reading": [
+     "state 1: TailorConstruction1 off -> needs structure kind 5 present; else needs TailorConstruction1>=1",
+     "TailorConstruction1 + elapsed days < 2 -> increment",
+     "otherwise state 2; TailorConstruction1=0; TailorBuilt=1; TailorBuiltToday=1 if exactly 1 day"
+    ]
+   },
+   "0xfc4560": {
+    "role": "shop facility state at day change (calls 0xfcc300)",
+    "reading": [
+     "state 1 + structure kind 0 present -> state 2; MarketBuilt=1; MarketOpen1stDay1=1 if exactly 1 day",
+     "state 2: second remodel path uses MarketRemodelingFlag2/MarketConstruction2, CountMarket1AfterBuild>30 and an unidentified value >=200000 ((x>>6)>0xc34)",
+     "MarketConstruction2 + elapsed days >= 2 -> state 3; MarketOpen1stDay2=1 if exactly 1 day"
+    ]
+   },
+   "0xf26330": {
+    "role": "campsite facility state at day change",
+    "reading": [
+     "state 1 + structure kind 6 present -> state 2; CampSiteBuilt=1; CeremonyBuildCampSite=1; CampSiteBuiltToday=1 if exactly 1 day"
+    ]
+   },
+   "0x10c2ad0": {
+    "role": "Resident Services at day change (called from 0x10c26e0)",
+    "reading": [
+     "OfficeConstruction1 accumulates elapsed days while BuiltTownOffice is off (reset to 0 above 1)",
+     "structure kind 1 present and BuiltTownOffice off -> BuiltTownOffice=1, GlobalEventReady=1, EventPlazaBuilt=1; BuiltTownOfficeToday=1 if exactly 1 day"
+    ]
+   },
+   "0xfd8920": {
+    "role": "K.K. unlock and daily resets at day change",
+    "reading": [
+     "elapsed days >=1 and IslandEvaluationClearTkkLive on and a second flag off (TkkFirstLive is the other flag string in this function; the call argument is lost in decompilation) -> TkkFirstLiveEnable=1",
+     "RctInTent set from the current hour (5..19 -> off)",
+     "JohnnyRequirePartsNum=5 on day change"
+    ]
+   },
+   "0xf8b460": {
+    "role": "day type at day change",
+    "reading": [
+     "checks calendar events by name in order FishingConvention, InsectConvention, PlayerBirthday, NpcBirthday, Countdown, NewYear",
+     "normal day with BuiltTownOffice on: per-player ContinuousNormalDay/EarlyOrLate counters and RNG rolls 0-99; purpose not yet identified"
+    ]
+   },
+   "0xfd9d10": {
+    "role": "special visitors at day change",
+    "reading": [
+     "Gulliver (Johnny*) and Wisp (GstQuest*) quest flags reset/advance",
+     "SpnVisitMainField=1 when a 0-8 value (likely player house level) >=2, ImmQ_A/B/C_Complete on, CommuneIslandAvailable off and VisitedCommune off",
+     "HgcVisitFlagForTailor = (7-slot array[day index] == 2): a weekly slot table, value 2 = Label"
+    ]
+   },
+   "0x419690": {
+    "role": "EventFlowQueryNpcHouseNum evaluate slot",
+    "reading": [
+     "returns count < Num, so case 1 = fewer, case 0 = at least Num"
+    ]
+   },
+   "0x3e0b80": {
+    "role": "EventFlowQueryVillageScoreCheckNatural evaluate slot",
+    "reading": [
+     "returns BorderValue <= score, so case 1 = score at least the border; score is a float at +0x240 of a save object"
+    ]
+   },
+   "0xf53a70": {
+    "role": "day-change driver",
+    "reading": [
+     "seeds the global RNG 0x35e9510 (Ghidra 0x36e9510) with year*365 + month + day + GrowUpRandomFactor + 0x1934 (calendar layout <s16 year,u8 month,u8 day>; GrowUpRandomFactor via 0xf56cb0), discards 8 u32 draws, then runs 0xf545f0",
+     "passes the 0x78-byte special-NPC schedule save member (descriptor 0x33d50a8, save offset +0x20a210) to 0xfd0700 and 0xfd9d10"
+    ]
+   },
+   "0xc698d0": {
+    "role": "daily special-NPC spawner (vtable-called)",
+    "reading": [
+     "calls 0xc6eb80 (calendar-event NPCs), 0xc6f1a0 (scheduled visitor, Daisy Mae, K.K.), 0xc6f5d0 (announcement), 0xc6f990 (Tommy), 0xc6fbb0 (Harvey), 0xc6fd70 (Celeste), 0xc70060 (Wisp)"
+    ]
+   },
+   "0xc6eb80": {
+    "role": "calendar-event NPC spawner",
+    "reading": [
+     "today event via 0xf4db0/0xf4cb0, spawns up to 10 E_%s_NPC_%d with AI_NPC_%s / AI_NPC_Rco_%s / AI_NPC_Sza_%s flows"
+    ]
+   },
+   "0xc6f1a0": {
+    "role": "scheduled visitor + Daisy Mae + K.K. spawn",
+    "reading": [
+     "code = 0xfdc020(schedule): 1 gul, 2 hgc, 3 cml, 5 hgh, 6 bey, 7 chy, 8 skk (labels read from rodata); 4/0/9 spawn nothing here",
+     "spawn via 0xc728b0(label, flag): flag 1 for hgh/bey/chy, 0 otherwise",
+     "then boc (Daisy Mae) when 0xfdafa0 is true; then tkkA when 0xfdbae0 is true"
+    ]
+   },
+   "0xfdc020": {
+    "role": "today visitor code",
+    "reading": [
+     "schedule[weekday index from 0x1fbd50], index clamped 0..6, value clamped 0..9"
+    ]
+   },
+   "0xfdafa0": {
+    "role": "Daisy Mae today",
+    "reading": [
+     "a save value (member +0x1f3e98, descriptor 0x33d8a20, likely shop state) >= 2 and weekday index == 0"
+    ]
+   },
+   "0xfdb300": {
+    "role": "special NPC may appear now",
+    "reading": [
+     "gst (Wisp) and ows (Celeste): only when (hour - 5) > 14, i.e. 20:00-04:59; other labels have other checks"
+    ]
+   },
+   "0xfdb060": {
+    "role": "K.K. live type today",
+    "reading": [
+     "0 unless TkkFirstLive on; then calendar event FirstLive -> 3, BirthdayLive -> 2, NormalLive -> 1"
+    ]
+   },
+   "0xfdbae0": {
+    "role": "K.K. performs today",
+    "reading": [
+     "0xfdb060 non-zero and TkkReturn off"
+    ]
+   },
+   "0xfdb6e0": {
+    "role": "is special NPC <label> present today (used by 0xcf9cf0 over 7 entries)",
+    "reading": [
+     "ows: not a K.K. day and schedule int +0x74 == weekday index",
+     "tkk: K.K. day and TkkReturn off",
+     "spn: not a K.K. day, no global event, SpnVisitMainField on",
+     "gst/boc: further helpers 0xfdbf60 ..."
+    ]
+   },
+   "0x33c660": {
+    "role": "EventFlowActionDecideSettlerNpc execute slot",
+    "reading": [
+     "settler save member 0xc0 bytes = 3 entries x 0x3c (plots A/B/C); empty entry -> 0xf8dd70(SettlerType) and 3-byte NPC id stored"
+    ]
+   },
+   "0xf8dd70": {
+    "role": "pick settler for plot",
+    "reading": [
+     "SettlerType < 3: filter value table 0x29fa1dc = [0, 5, 4]; candidate bitset 0xcd29a0, filter 0xf8de30, pick 0xf8d860"
+    ]
+   },
+   "0xf8de30": {
+    "role": "settler filter (from disassembly)",
+    "reading": [
+     "row = 0x1665ea0(npc); u16 cache[row] (<=7, else 0) == global 0x35ee080 (the plot value)",
+     "the only 8-value enum in NmlNpcParam is NpcLooks: 0 Boy_normal, 5 Girl_active, 4 Girl_normal (inference)"
+    ]
+   },
+   "0xf8d860": {
+    "role": "random villager pick (shared by 0xf8dd70, 0xf84f10, 0xf8c540)",
+    "reading": [
+     "removes villagers whose bit is set in the save bitset +0xbaae0 (35 words = 1120 bits)",
+     "popcount candidates (0x198b590), uniform pick with RNG 0x19aa0e0 (u32 * n >> 32), bit lookup 0x198b630"
+    ]
+   },
+   "0xf32fa0": {
+    "role": "save layout constructor",
+    "reading": [
+     "builds the accessor tree of save members with their offsets; entry point for save-format RE"
+    ]
+   },
+   "0x10c26e0": {
+    "role": "structure counters at day change",
+    "reading": [
+     "reads BridgeBuilt/SlopeBuilt and Count*AfterBuild counters for tailor, museum, shop, office, campsite"
+    ]
+   }
+  },
+  "visitor_codes": {
+   "1": "gul",
+   "2": "hgc",
+   "3": "cml",
+   "5": "hgh",
+   "6": "bey",
+   "7": "chy",
+   "8": "skk",
+   "source": "0xc6f1a0 switch on 0xfdc020; labels from main NSO rodata"
+  },
   "day_change_callees_in_order": [
    "0xeecf20",
    "0xeecf60",
@@ -2160,6 +2349,15 @@
        "SpnVisitMainField=1 when a 0-8 value (likely player house level) >=2, ImmQ_A/B/C_Complete on, CommuneIslandAvailable off and VisitedCommune off",
        "HgcVisitFlagForTailor = (7-slot array[day index] == 2): a weekly slot table, value 2 = Label"
       ]
+     },
+     "0xfdb6e0": {
+      "role": "is special NPC <label> present today (used by 0xcf9cf0 over 7 entries)",
+      "reading": [
+       "ows: not a K.K. day and schedule int +0x74 == weekday index",
+       "tkk: K.K. day and TkkReturn off",
+       "spn: not a K.K. day, no global event, SpnVisitMainField on",
+       "gst/boc: further helpers 0xfdbf60 ..."
+      ]
      }
     }
    },
@@ -2336,6 +2534,12 @@
        "RctInTent set from the current hour (5..19 -> off)",
        "JohnnyRequirePartsNum=5 on day change"
       ]
+     },
+     "0xfdb060": {
+      "role": "K.K. live type today",
+      "reading": [
+       "0 unless TkkFirstLive on; then calendar event FirstLive -> 3, BirthdayLive -> 2, NormalLive -> 1"
+      ]
      }
     }
    },
@@ -2376,7 +2580,23 @@
      "0xfdbae0"
     ],
     "day_change": [],
-    "pseudocode_readings": {}
+    "pseudocode_readings": {
+     "0xfdb6e0": {
+      "role": "is special NPC <label> present today (used by 0xcf9cf0 over 7 entries)",
+      "reading": [
+       "ows: not a K.K. day and schedule int +0x74 == weekday index",
+       "tkk: K.K. day and TkkReturn off",
+       "spn: not a K.K. day, no global event, SpnVisitMainField on",
+       "gst/boc: further helpers 0xfdbf60 ..."
+      ]
+     },
+     "0xfdbae0": {
+      "role": "K.K. performs today",
+      "reading": [
+       "0xfdb060 non-zero and TkkReturn off"
+      ]
+     }
+    }
    },
    "cLand:TodayCreateVillage": {
     "name_ja": "今日村作成されたか",

@@ -8,6 +8,7 @@ Paket hasil reverse engineering Animal Crossing: New Horizons versi 1.0.0 (build
 
 | Dokumen | Isi |
 |---|---|
+| [Handoff untuk sesi berikutnya](acnh-re/docs/HANDOFF.md) | Status singkat, setup data, alat, aturan, log sesi; antrian kerja di [re_queue.json](acnh-re/docs/re_queue.json) |
 | [Workflow penggunaan data RE](acnh-re/docs/WORKFLOW.md) | Persiapan, ekstrak ZIP, file mana untuk apa, siklus satu tahap RE, verifikasi, kerja multi-agen |
 | [Alur gameplay dari data](acnh-re/docs/GAMEPLAY_FLOW.md) | Alur prolog sampai konser K.K. dan loop setelahnya, dari 456 EventFlow dan 1.555 flag, dengan label bukti per langkah |
 | [Skenario gameplay lengkap](acnh-re/docs/GAMEPLAY_SCENARIO.md) | Satu hari (pipeline pergantian hari native), satu minggu, satu tahun (kalender event, musim), siklus villager, pengunjung khusus, timeline progres dalam pergantian hari |
@@ -50,6 +51,12 @@ Rincian, cara verifikasi, dan file yang wajib ada: [WORKFLOW §3](acnh-re/docs/W
 
 ## Fokus terbaru (terbaru di atas)
 
+- **Jadwal pengunjung dan penghuni plot** — [GAMEPLAY_SCENARIO §3, §5, §6](acnh-re/docs/GAMEPLAY_SCENARIO.md):
+  - kode pengunjung mingguan 1–8 → Gulliver, Label, Saharah, Mabel, C.J., Flick, Kicks;
+  - aturan Daisy Mae (indeks hari 0), Celeste (slot `+0x74`, malam), dan Wisp (malam);
+  - seed RNG harian `tahun×365+bulan+hari+GrowUpRandomFactor+0x1934`;
+  - pemilihan penghuni plot (filter kepribadian [0,5,4], pemilih acak dengan bitset eksklusi);
+  - alat baru [re_helpers.py](acnh-re/tools/re_helpers.py) dan [handoff](acnh-re/docs/HANDOFF.md).
 - **Skenario gameplay lengkap** — [GAMEPLAY_SCENARIO](acnh-re/docs/GAMEPLAY_SCENARIO.md):
   - driver pergantian hari native `0xf53a70` dan urutan prosesornya;
   - jadwal aktif NPC, kalender event per belahan bumi, `SeasonCalendar`;
@@ -84,6 +91,7 @@ Rincian, cara verifikasi, dan file yang wajib ada: [WORKFLOW §3](acnh-re/docs/W
 
 | Dokumen | Topik |
 |---|---|
+| [HANDOFF](acnh-re/docs/HANDOFF.md) | Titik mulai sesi berikutnya dan antrian kerja |
 | [WORKFLOW](acnh-re/docs/WORKFLOW.md) | Cara memakai dan melanjutkan RE |
 | [GAMEPLAY_FLOW](acnh-re/docs/GAMEPLAY_FLOW.md) | Alur gameplay awal–akhir dari EventFlow |
 | [GAMEPLAY_SCENARIO](acnh-re/docs/GAMEPLAY_SCENARIO.md) | Skenario hari/minggu/tahun, villager, pengunjung |

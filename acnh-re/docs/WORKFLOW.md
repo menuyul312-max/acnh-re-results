@@ -1,6 +1,6 @@
 # Workflow penggunaan data RE
 
-Panduan ini untuk siapa pun (orang atau agen) yang memakai atau melanjutkan hasil RE ACNH 1.0.0 di repo ini. Isinya: cara menyiapkan data, mencari jawaban, melanjutkan RE, dan mencatat hasil tanpa merusak bukti yang sudah ada.
+Panduan ini untuk siapa pun (orang atau agen) yang memakai atau melanjutkan hasil RE ACNH 1.0.0 di repo ini. Untuk langsung melanjutkan pekerjaan terakhir, mulai dari [HANDOFF.md](HANDOFF.md) dan [re_queue.json](re_queue.json). Alat bantu baca kode native ada di `tools/re_helpers.py`. Isinya: cara menyiapkan data, mencari jawaban, melanjutkan RE, dan mencatat hasil tanpa merusak bukti yang sudah ada.
 
 ## 1. Prinsip
 

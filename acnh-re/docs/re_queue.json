@@ -1,0 +1,90 @@
+{
+ "schema": "acnh-re/re-queue/1",
+ "updated": "2026-11-04",
+ "game_version": "1.0.0",
+ "how_to_use": "Companion of docs/HANDOFF.md. Pick the first item with status 'open'. Read only its entry_points with tools/re_helpers.py. When done: set status, add findings to docs (GAMEPLAY_SCENARIO/GAMEPLAY_FLOW), add readings to PSEUDOCODE_READINGS in tools/gameplay_flow.py, rebuild output/gameplay, update docs/HANDOFF.md session log.",
+ "items": [
+  {
+   "id": "visitor-schedule-producer",
+   "priority": 1,
+   "status": "open",
+   "goal": "Find the code that writes the 7 weekly visitor codes and the Celeste weekday int (+0x74) of the 0x78-byte schedule save member.",
+   "known": "Member descriptor 0x33d50a8, save offset +0x20a210. Codes 1 gul, 2 hgc, 3 cml, 5 hgh, 6 bey, 7 chy, 8 skk (0xc6f1a0). Today code = 0xfdc020.",
+   "ruled_out": ["0xfdc020", "0xc6f1a0", "0xfdb6e0", "0xcf9cf0", "0xbe09d0", "0xf32fa0", "0xf53a70 (only seeds the RNG)"],
+   "entry_points": ["0x101400", "0x260370", "0xcf420", "0x2b2ac0", "0x488980", "0x7ab170", "0xc01820", "0xc687f0"],
+   "method": "decomp each candidate; look for writes into param+0..0x1c and +0x74 and calls to RNG 0x19aa0e0/0x19aa110; candidates without callers are vtable slots, find their vtable via binary/code_pointer_arrays.json",
+   "done_when": "Writer identified and the code distribution (which NPC, how often, exclusions) written down."
+  },
+  {
+   "id": "villager-move-out",
+   "priority": 2,
+   "status": "open",
+   "goal": "Who decides that a villager wants to move out, when, and how the slot is refilled.",
+   "known": "EventFlow: NNPC_ApproachD:MoveConfirm/MoveCancel set IsMovingConsultationToPlayer; announcements gate IsExistMoveNpc. Random villager pick 0xf8d860 is shared by 0xf8dd70, 0xf84f10, 0xf8c540.",
+   "entry_points": ["0xf87670", "0xf8c540", "0xf84f10", "0xf84320"],
+   "method": "decomp --compact; follow RNG calls and the NpcSave/NpcMemory flag strings they reference",
+   "done_when": "Move-out trigger conditions and probability path documented."
+  },
+  {
+   "id": "island-score-formula",
+   "priority": 3,
+   "status": "open",
+   "goal": "How the Nature and Life scores (floats, save object +0x240 for Nature) are computed.",
+   "known": "Thresholds and star table are in EventFlow (GAMEPLAY_FLOW 10). Query handler 0x3e0b80 compares BorderValue <= score.",
+   "entry_points": ["refs VillageScoreMgr", "refs ASysVillageScoreMgr", "refs 'VillageScore%d'"],
+   "method": "find the writer of the score floats; list the inputs it sums (trees, flowers, furniture outside, buildings)",
+   "done_when": "Score inputs and weights documented."
+  },
+  {
+   "id": "kk-weekly-date",
+   "priority": 4,
+   "status": "open",
+   "goal": "Which date the calendar system assigns to NormalLive/BirthdayLive.",
+   "known": "0xfdb060 checks events FirstLive/BirthdayLive/NormalLive via 0xf2a30; CalendarEventParam rows have no weekday.",
+   "entry_points": ["0xf2a30", "0xf5130", "0xfe390", "0xd136f0", "0xd21890"],
+   "done_when": "Weekday/date rule for K.K. lives documented."
+  },
+  {
+   "id": "turnip-and-shop-stock",
+   "priority": 5,
+   "status": "open",
+   "goal": "Turnip price pattern and Nook's Cranny daily stock.",
+   "known": "Flags FirstKabuBuy, FirstKabuPattern, BocBuyCount; Daisy Mae weekday 0 rule (0xfdafa0).",
+   "entry_points": ["refs FirstKabuPattern", "refs '%Kabu%'", "0xfc4560 (shop day change)"],
+   "done_when": "Price generator and stock selection located and summarised."
+  },
+  {
+   "id": "unread-day-change-processors",
+   "priority": 6,
+   "status": "open",
+   "goal": "Read the remaining day-change processors.",
+   "entry_points": ["0xf8f190", "0xf7d4c0", "0xfc1b80", "0xbdfd40", "0xf8b460 (RNG purpose)", "0xf6130", "0x4ae640", "0xd21110"],
+   "done_when": "Each has a reading in PSEUDOCODE_READINGS."
+  },
+  {
+   "id": "pseudo-to-verified",
+   "priority": 7,
+   "status": "open",
+   "goal": "Raise [PSEUDO] readings to native-verified by emulation (as done for mechanics phases).",
+   "entry_points": ["0xf77050", "0xfcc300", "0xfc4560", "0xf26330", "0xfd8920", "0xf8de30", "0xfdc020"],
+   "method": "reuse tools/native_image.py and an existing *_native.py harness as template",
+   "done_when": "Cases pass without stubs; JSON result + test added; status upgraded in docs."
+  },
+  {
+   "id": "save-layout",
+   "priority": 8,
+   "status": "open",
+   "goal": "Map save members (offsets, sizes, descriptors) from the save layout constructor.",
+   "entry_points": ["0xf32fa0", "0xf30220", "0xf416c0"],
+   "done_when": "Offset table of save members written as JSON."
+  }
+ ],
+ "done": [
+  {"id": "day-change-pipeline", "result": "docs/GAMEPLAY_SCENARIO.md 2.1; native_flag_refs.json day_change_*_pipeline"},
+  {"id": "facility-completion", "result": "museum/shop/tailor/campsite/office readings, GAMEPLAY_FLOW 3-9"},
+  {"id": "kk-unlock", "result": "0xfd8920 TkkFirstLiveEnable, GAMEPLAY_FLOW 10"},
+  {"id": "visitor-schedule-consumers", "result": "codes and Daisy Mae/Celeste/Wisp/Harvey rules, GAMEPLAY_SCENARIO 3 and 6"},
+  {"id": "settler-selection", "result": "0x33c660 -> 0xf8dd70 -> 0xf8de30 [0,5,4] -> 0xf8d860, GAMEPLAY_SCENARIO 5"},
+  {"id": "query-conventions", "result": "NpcHouseNum 0x419690, VillageScoreCheckNatural 0x3e0b80"}
+ ]
+}
