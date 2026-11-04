@@ -75,15 +75,16 @@
         "mechanics/terrain_nav_flags_native.json",
         "mechanics/terrain_region_check_native.json",
         "mechanics/terrain_region_mutation_native.json",
-        "mechanics/world_registry_release_native.json"
+        "mechanics/world_registry_release_native.json",
+        "mechanics/terrain_pbc_native_consumers.json"
       ],
       "remaining": [
         "14-byte preset ->52-byte runtime constructor and source loader",
         "Other surface attributes, all height/spread thresholds and overlay-height branches",
         "Live terraform mutation and all placement restrictions"
       ],
-      "status_this_continuation": "New runtime height/flag producer proof; no preset loader or live edit execution.",
-      "verified_boundary": "Original runtime12-float height writer0x180d20, world word reader0x185e70 and node transform, on reconstructed attribute0 records and tested height patterns. Eight original height->word->node->A* chains.",
+      "status_this_continuation": "Native height writer now consumes extracted PBC height prefixes in a bounded reconstructed context; no original loader or full island build.",
+      "verified_boundary": "Original runtime 12-float height writer0x180d20 was exercised on 208 reserialized PBC height prefixes across 13 used terrain models, four candidate rotations and four cells; neighbor context repeats each 2x2 PBC on a reconstructed 8x8 grid. This does not execute the original PBC loader or island transform.",
       "next_functions": [
         "0x180d20",
         "0x174070",

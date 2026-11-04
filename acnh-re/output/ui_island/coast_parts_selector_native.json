@@ -1,0 +1,4231 @@
+{
+  "scope": "Original 0x4dfeb0 candidate filtering and 0x4e01d0 reef-filtered OutsideSea selection ran for all 24 PartsKind values used by the 36 coast templates and all 22 reef types with sea parts. Candidate collection was checked at the pre-RNG boundary, then both native selectors completed full selections for eight deterministic system-tick fixtures per pool.",
+  "source_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+  "source_table_sha256": "1d244d825f4ef111afae5df2568486ceab243caccd21c17259b5ec59830650e6",
+  "native_functions": {
+    "parts_kind_selector": "0x4dfeb0",
+    "outside_sea_reef_selector": "0x4e01d0",
+    "tick_seed_expander": "0x19a9fe0",
+    "next_u32": "0x19aa0e0"
+  },
+  "row_index_helper": "0x1665ea0",
+  "native_call_contract": {
+    "source_rows": 136,
+    "row_order_preserved": true,
+    "typed_cache_values_from_source_enum_order": true,
+    "unique_id_cache_offset": 4,
+    "candidate_stack_capacity": 32,
+    "candidate_counts_max": 7,
+    "outside_sea_reef_pool_count": 22,
+    "outside_sea_candidate_counts_max": 6,
+    "unmodified_native_instructions": true,
+    "pre_rng_dependencies_stubbed": [],
+    "full_selection_platform_shim": "nn::os::GetSystemTick import at PLT 0x220e420 returns the deterministic test tick; seed expander, native RNG step, native candidate rank selection, and return path execute unmodified.",
+    "rng_block_executed_for_full_selection_cases": true
+  },
+  "fixtures": {
+    "row_wrappers_reconstructed": true,
+    "warmed_parts_kind_cache_reconstructed": true,
+    "warmed_unique_id_cache_reconstructed": true,
+    "source_field_values_from_decoded_table": true
+  },
+  "cases": [
+    {
+      "parts_kind": "N_Stone",
+      "enum_ordinal": 0,
+      "candidate_count": 7,
+      "candidate_unique_ids_in_native_order": [
+        112,
+        109,
+        108,
+        107,
+        113,
+        110,
+        111
+      ],
+      "native_stop": "before_rng"
+    },
+    {
+      "parts_kind": "N_Tsunekiti",
+      "enum_ordinal": 1,
+      "candidate_count": 3,
+      "candidate_unique_ids_in_native_order": [
+        16,
+        129,
+        128
+      ],
+      "native_stop": "before_rng"
+    },
+    {
+      "parts_kind": "NW_Stone",
+      "enum_ordinal": 2,
+      "candidate_count": 3,
+      "candidate_unique_ids_in_native_order": [
+        125,
+        124,
+        230
+      ],
+      "native_stop": "before_rng"
+    },
+    {
+      "parts_kind": "NE_Stone",
+      "enum_ordinal": 3,
+      "candidate_count": 3,
+      "candidate_unique_ids_in_native_order": [
+        106,
+        123,
+        229
+      ],
+      "native_stop": "before_rng"
+    },
+    {
+      "parts_kind": "W_Beach",
+      "enum_ordinal": 4,
+      "candidate_count": 5,
+      "candidate_unique_ids_in_native_order": [
+        20,
+        21,
+        22,
+        23,
+        127
+      ],
+      "native_stop": "before_rng"
+    },
+    {
+      "parts_kind": "W_UpEnd_Entry",
+      "enum_ordinal": 5,
+      "candidate_count": 3,
+      "candidate_unique_ids_in_native_order": [
+        143,
+        144,
+        224
+      ],
+      "native_stop": "before_rng"
+    },
+    {
+      "parts_kind": "W_DownEnd",
+      "enum_ordinal": 6,
+      "candidate_count": 3,
+      "candidate_unique_ids_in_native_order": [
+        141,
+        142,
+        223
+      ],
+      "native_stop": "before_rng"
+    },
+    {
+      "parts_kind": "W_River",
+      "enum_ordinal": 7,
+      "candidate_count": 2,
+      "candidate_unique_ids_in_native_order": [
+        27,
+        133
+      ],
+      "native_stop": "before_rng"
+    },
+    {
+      "parts_kind": "W_Stone",
+      "enum_ordinal": 8,
+      "candidate_count": 4,
+      "candidate_unique_ids_in_native_order": [
+        120,
+        119,
+        146,
+        232
+      ],
+      "native_stop": "before_rng"
+    },
+    {
+      "parts_kind": "W_Promontory",
+      "enum_ordinal": 9,
+      "candidate_count": 3,
+      "candidate_unique_ids_in_native_order": [
+        126,
+        131,
+        228
+      ],
+      "native_stop": "before_rng"
+    },
+    {
+      "parts_kind": "E_Beach",
+      "enum_ordinal": 10,
+      "candidate_count": 5,
+      "candidate_unique_ids_in_native_order": [
+        29,
+        30,
+        31,
+        32,
+        62
+      ],
+      "native_stop": "before_rng"
+    },
+    {
+      "parts_kind": "E_UpEnd_Entry",
+      "enum_ordinal": 11,
+      "candidate_count": 3,
+      "candidate_unique_ids_in_native_order": [
+        117,
+        118,
+        226
+      ],
+      "native_stop": "before_rng"
+    },
+    {
+      "parts_kind": "E_DownEnd",
+      "enum_ordinal": 12,
+      "candidate_count": 3,
+      "candidate_unique_ids_in_native_order": [
+        116,
+        115,
+        225
+      ],
+      "native_stop": "before_rng"
+    },
+    {
+      "parts_kind": "E_River",
+      "enum_ordinal": 13,
+      "candidate_count": 2,
+      "candidate_unique_ids_in_native_order": [
+        91,
+        134
+      ],
+      "native_stop": "before_rng"
+    },
+    {
+      "parts_kind": "E_Stone",
+      "enum_ordinal": 14,
+      "candidate_count": 4,
+      "candidate_unique_ids_in_native_order": [
+        121,
+        122,
+        145,
+        231
+      ],
+      "native_stop": "before_rng"
+    },
+    {
+      "parts_kind": "E_Promontory",
+      "enum_ordinal": 15,
+      "candidate_count": 3,
+      "candidate_unique_ids_in_native_order": [
+        140,
+        139,
+        227
+      ],
+      "native_stop": "before_rng"
+    },
+    {
+      "parts_kind": "S_Beach",
+      "enum_ordinal": 16,
+      "candidate_count": 5,
+      "candidate_unique_ids_in_native_order": [
+        39,
+        97,
+        104,
+        103,
+        105
+      ],
+      "native_stop": "before_rng"
+    },
+    {
+      "parts_kind": "S_River",
+      "enum_ordinal": 17,
+      "candidate_count": 3,
+      "candidate_unique_ids_in_native_order": [
+        40,
+        132,
+        233
+      ],
+      "native_stop": "before_rng"
+    },
+    {
+      "parts_kind": "S_Airport_L",
+      "enum_ordinal": 18,
+      "candidate_count": 1,
+      "candidate_unique_ids_in_native_order": [
+        41
+      ],
+      "native_stop": "before_rng"
+    },
+    {
+      "parts_kind": "S_Airport_R",
+      "enum_ordinal": 19,
+      "candidate_count": 1,
+      "candidate_unique_ids_in_native_order": [
+        93
+      ],
+      "native_stop": "before_rng"
+    },
+    {
+      "parts_kind": "SW_Beach",
+      "enum_ordinal": 20,
+      "candidate_count": 4,
+      "candidate_unique_ids_in_native_order": [
+        38,
+        92,
+        102,
+        101
+      ],
+      "native_stop": "before_rng"
+    },
+    {
+      "parts_kind": "SW_Jetty",
+      "enum_ordinal": 21,
+      "candidate_count": 2,
+      "candidate_unique_ids_in_native_order": [
+        136,
+        135
+      ],
+      "native_stop": "before_rng"
+    },
+    {
+      "parts_kind": "SE_Beach",
+      "enum_ordinal": 22,
+      "candidate_count": 4,
+      "candidate_unique_ids_in_native_order": [
+        42,
+        98,
+        100,
+        99
+      ],
+      "native_stop": "before_rng"
+    },
+    {
+      "parts_kind": "SE_Jetty",
+      "enum_ordinal": 23,
+      "candidate_count": 2,
+      "candidate_unique_ids_in_native_order": [
+        138,
+        137
+      ],
+      "native_stop": "before_rng"
+    }
+  ],
+  "outside_sea_reef_cases": [
+    {
+      "reef_type": "N_convexity",
+      "enum_ordinal": 0,
+      "candidate_count": 3,
+      "candidate_unique_ids_in_native_order": [
+        163,
+        162,
+        161
+      ],
+      "native_stop": "before_rng"
+    },
+    {
+      "reef_type": "N_flat",
+      "enum_ordinal": 1,
+      "candidate_count": 3,
+      "candidate_unique_ids_in_native_order": [
+        43,
+        148,
+        147
+      ],
+      "native_stop": "before_rng"
+    },
+    {
+      "reef_type": "N_concavity",
+      "enum_ordinal": 2,
+      "candidate_count": 3,
+      "candidate_unique_ids_in_native_order": [
+        166,
+        165,
+        164
+      ],
+      "native_stop": "before_rng"
+    },
+    {
+      "reef_type": "NE_convexity",
+      "enum_ordinal": 3,
+      "candidate_count": 2,
+      "candidate_unique_ids_in_native_order": [
+        219,
+        216
+      ],
+      "native_stop": "before_rng"
+    },
+    {
+      "reef_type": "NE_flat",
+      "enum_ordinal": 4,
+      "candidate_count": 1,
+      "candidate_unique_ids_in_native_order": [
+        45
+      ],
+      "native_stop": "before_rng"
+    },
+    {
+      "reef_type": "E_convexity",
+      "enum_ordinal": 6,
+      "candidate_count": 3,
+      "candidate_unique_ids_in_native_order": [
+        207,
+        206,
+        205
+      ],
+      "native_stop": "before_rng"
+    },
+    {
+      "reef_type": "E_flat",
+      "enum_ordinal": 7,
+      "candidate_count": 3,
+      "candidate_unique_ids_in_native_order": [
+        48,
+        208,
+        209
+      ],
+      "native_stop": "before_rng"
+    },
+    {
+      "reef_type": "E_concavity",
+      "enum_ordinal": 8,
+      "candidate_count": 4,
+      "candidate_unique_ids_in_native_order": [
+        220,
+        211,
+        212,
+        210
+      ],
+      "native_stop": "before_rng"
+    },
+    {
+      "reef_type": "SE_convexity",
+      "enum_ordinal": 9,
+      "candidate_count": 1,
+      "candidate_unique_ids_in_native_order": [
+        198
+      ],
+      "native_stop": "before_rng"
+    },
+    {
+      "reef_type": "SE_flat",
+      "enum_ordinal": 10,
+      "candidate_count": 2,
+      "candidate_unique_ids_in_native_order": [
+        52,
+        200
+      ],
+      "native_stop": "before_rng"
+    },
+    {
+      "reef_type": "SE_concavity",
+      "enum_ordinal": 11,
+      "candidate_count": 1,
+      "candidate_unique_ids_in_native_order": [
+        197
+      ],
+      "native_stop": "before_rng"
+    },
+    {
+      "reef_type": "S_convexity",
+      "enum_ordinal": 12,
+      "candidate_count": 6,
+      "candidate_unique_ids_in_native_order": [
+        193,
+        192,
+        191,
+        196,
+        195,
+        194
+      ],
+      "native_stop": "before_rng"
+    },
+    {
+      "reef_type": "S_flat",
+      "enum_ordinal": 13,
+      "candidate_count": 3,
+      "candidate_unique_ids_in_native_order": [
+        51,
+        156,
+        155
+      ],
+      "native_stop": "before_rng"
+    },
+    {
+      "reef_type": "SW_convexity",
+      "enum_ordinal": 15,
+      "candidate_count": 1,
+      "candidate_unique_ids_in_native_order": [
+        158
+      ],
+      "native_stop": "before_rng"
+    },
+    {
+      "reef_type": "SW_flat",
+      "enum_ordinal": 16,
+      "candidate_count": 2,
+      "candidate_unique_ids_in_native_order": [
+        50,
+        184
+      ],
+      "native_stop": "before_rng"
+    },
+    {
+      "reef_type": "SW_concavity",
+      "enum_ordinal": 17,
+      "candidate_count": 1,
+      "candidate_unique_ids_in_native_order": [
+        157
+      ],
+      "native_stop": "before_rng"
+    },
+    {
+      "reef_type": "W_convexity",
+      "enum_ordinal": 18,
+      "candidate_count": 3,
+      "candidate_unique_ids_in_native_order": [
+        178,
+        176,
+        177
+      ],
+      "native_stop": "before_rng"
+    },
+    {
+      "reef_type": "W_flat",
+      "enum_ordinal": 19,
+      "candidate_count": 3,
+      "candidate_unique_ids_in_native_order": [
+        46,
+        152,
+        151
+      ],
+      "native_stop": "before_rng"
+    },
+    {
+      "reef_type": "W_concavity",
+      "enum_ordinal": 20,
+      "candidate_count": 3,
+      "candidate_unique_ids_in_native_order": [
+        175,
+        174,
+        173
+      ],
+      "native_stop": "before_rng"
+    },
+    {
+      "reef_type": "NW_convexity",
+      "enum_ordinal": 21,
+      "candidate_count": 1,
+      "candidate_unique_ids_in_native_order": [
+        160
+      ],
+      "native_stop": "before_rng"
+    },
+    {
+      "reef_type": "NW_flat",
+      "enum_ordinal": 22,
+      "candidate_count": 2,
+      "candidate_unique_ids_in_native_order": [
+        44,
+        172
+      ],
+      "native_stop": "before_rng"
+    },
+    {
+      "reef_type": "NW_concavity",
+      "enum_ordinal": 23,
+      "candidate_count": 1,
+      "candidate_unique_ids_in_native_order": [
+        159
+      ],
+      "native_stop": "before_rng"
+    }
+  ],
+  "full_selection_cases": [
+    {
+      "selector": "parts_kind",
+      "category": "NW_Stone",
+      "tick_fixture": "0x0",
+      "native_rng_u32": "0x4807714d",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 125,
+      "expected_unique_id": 125
+    },
+    {
+      "selector": "parts_kind",
+      "category": "NW_Stone",
+      "tick_fixture": "0x1",
+      "native_rng_u32": "0x53c36017",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 125,
+      "expected_unique_id": 125
+    },
+    {
+      "selector": "parts_kind",
+      "category": "NW_Stone",
+      "tick_fixture": "0x2",
+      "native_rng_u32": "0xf674161f",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 230,
+      "expected_unique_id": 230
+    },
+    {
+      "selector": "parts_kind",
+      "category": "NW_Stone",
+      "tick_fixture": "0xffffffff",
+      "native_rng_u32": "0xc22b42c3",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 230,
+      "expected_unique_id": 230
+    },
+    {
+      "selector": "parts_kind",
+      "category": "NW_Stone",
+      "tick_fixture": "0x12345678",
+      "native_rng_u32": "0x4bb878ee",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 125,
+      "expected_unique_id": 125
+    },
+    {
+      "selector": "parts_kind",
+      "category": "NW_Stone",
+      "tick_fixture": "0xdeadbeef",
+      "native_rng_u32": "0x2812bed2",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 125,
+      "expected_unique_id": 125
+    },
+    {
+      "selector": "parts_kind",
+      "category": "NW_Stone",
+      "tick_fixture": "0x80000000",
+      "native_rng_u32": "0xfe96bf3d",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 230,
+      "expected_unique_id": 230
+    },
+    {
+      "selector": "parts_kind",
+      "category": "NW_Stone",
+      "tick_fixture": "0xcafebabe",
+      "native_rng_u32": "0x36224a97",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 125,
+      "expected_unique_id": 125
+    },
+    {
+      "selector": "parts_kind",
+      "category": "N_Stone",
+      "tick_fixture": "0x0",
+      "native_rng_u32": "0x4807714d",
+      "candidate_count": 7,
+      "selected_rank": 1,
+      "native_unique_id": 109,
+      "expected_unique_id": 109
+    },
+    {
+      "selector": "parts_kind",
+      "category": "N_Stone",
+      "tick_fixture": "0x1",
+      "native_rng_u32": "0x53c36017",
+      "candidate_count": 7,
+      "selected_rank": 2,
+      "native_unique_id": 108,
+      "expected_unique_id": 108
+    },
+    {
+      "selector": "parts_kind",
+      "category": "N_Stone",
+      "tick_fixture": "0x2",
+      "native_rng_u32": "0xf674161f",
+      "candidate_count": 7,
+      "selected_rank": 6,
+      "native_unique_id": 111,
+      "expected_unique_id": 111
+    },
+    {
+      "selector": "parts_kind",
+      "category": "N_Stone",
+      "tick_fixture": "0xffffffff",
+      "native_rng_u32": "0xc22b42c3",
+      "candidate_count": 7,
+      "selected_rank": 5,
+      "native_unique_id": 110,
+      "expected_unique_id": 110
+    },
+    {
+      "selector": "parts_kind",
+      "category": "N_Stone",
+      "tick_fixture": "0x12345678",
+      "native_rng_u32": "0x4bb878ee",
+      "candidate_count": 7,
+      "selected_rank": 2,
+      "native_unique_id": 108,
+      "expected_unique_id": 108
+    },
+    {
+      "selector": "parts_kind",
+      "category": "N_Stone",
+      "tick_fixture": "0xdeadbeef",
+      "native_rng_u32": "0x2812bed2",
+      "candidate_count": 7,
+      "selected_rank": 1,
+      "native_unique_id": 109,
+      "expected_unique_id": 109
+    },
+    {
+      "selector": "parts_kind",
+      "category": "N_Stone",
+      "tick_fixture": "0x80000000",
+      "native_rng_u32": "0xfe96bf3d",
+      "candidate_count": 7,
+      "selected_rank": 6,
+      "native_unique_id": 111,
+      "expected_unique_id": 111
+    },
+    {
+      "selector": "parts_kind",
+      "category": "N_Stone",
+      "tick_fixture": "0xcafebabe",
+      "native_rng_u32": "0x36224a97",
+      "candidate_count": 7,
+      "selected_rank": 1,
+      "native_unique_id": 109,
+      "expected_unique_id": 109
+    },
+    {
+      "selector": "parts_kind",
+      "category": "N_Tsunekiti",
+      "tick_fixture": "0x0",
+      "native_rng_u32": "0x4807714d",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 16,
+      "expected_unique_id": 16
+    },
+    {
+      "selector": "parts_kind",
+      "category": "N_Tsunekiti",
+      "tick_fixture": "0x1",
+      "native_rng_u32": "0x53c36017",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 16,
+      "expected_unique_id": 16
+    },
+    {
+      "selector": "parts_kind",
+      "category": "N_Tsunekiti",
+      "tick_fixture": "0x2",
+      "native_rng_u32": "0xf674161f",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 128,
+      "expected_unique_id": 128
+    },
+    {
+      "selector": "parts_kind",
+      "category": "N_Tsunekiti",
+      "tick_fixture": "0xffffffff",
+      "native_rng_u32": "0xc22b42c3",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 128,
+      "expected_unique_id": 128
+    },
+    {
+      "selector": "parts_kind",
+      "category": "N_Tsunekiti",
+      "tick_fixture": "0x12345678",
+      "native_rng_u32": "0x4bb878ee",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 16,
+      "expected_unique_id": 16
+    },
+    {
+      "selector": "parts_kind",
+      "category": "N_Tsunekiti",
+      "tick_fixture": "0xdeadbeef",
+      "native_rng_u32": "0x2812bed2",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 16,
+      "expected_unique_id": 16
+    },
+    {
+      "selector": "parts_kind",
+      "category": "N_Tsunekiti",
+      "tick_fixture": "0x80000000",
+      "native_rng_u32": "0xfe96bf3d",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 128,
+      "expected_unique_id": 128
+    },
+    {
+      "selector": "parts_kind",
+      "category": "N_Tsunekiti",
+      "tick_fixture": "0xcafebabe",
+      "native_rng_u32": "0x36224a97",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 16,
+      "expected_unique_id": 16
+    },
+    {
+      "selector": "parts_kind",
+      "category": "NE_Stone",
+      "tick_fixture": "0x0",
+      "native_rng_u32": "0x4807714d",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 106,
+      "expected_unique_id": 106
+    },
+    {
+      "selector": "parts_kind",
+      "category": "NE_Stone",
+      "tick_fixture": "0x1",
+      "native_rng_u32": "0x53c36017",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 106,
+      "expected_unique_id": 106
+    },
+    {
+      "selector": "parts_kind",
+      "category": "NE_Stone",
+      "tick_fixture": "0x2",
+      "native_rng_u32": "0xf674161f",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 229,
+      "expected_unique_id": 229
+    },
+    {
+      "selector": "parts_kind",
+      "category": "NE_Stone",
+      "tick_fixture": "0xffffffff",
+      "native_rng_u32": "0xc22b42c3",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 229,
+      "expected_unique_id": 229
+    },
+    {
+      "selector": "parts_kind",
+      "category": "NE_Stone",
+      "tick_fixture": "0x12345678",
+      "native_rng_u32": "0x4bb878ee",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 106,
+      "expected_unique_id": 106
+    },
+    {
+      "selector": "parts_kind",
+      "category": "NE_Stone",
+      "tick_fixture": "0xdeadbeef",
+      "native_rng_u32": "0x2812bed2",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 106,
+      "expected_unique_id": 106
+    },
+    {
+      "selector": "parts_kind",
+      "category": "NE_Stone",
+      "tick_fixture": "0x80000000",
+      "native_rng_u32": "0xfe96bf3d",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 229,
+      "expected_unique_id": 229
+    },
+    {
+      "selector": "parts_kind",
+      "category": "NE_Stone",
+      "tick_fixture": "0xcafebabe",
+      "native_rng_u32": "0x36224a97",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 106,
+      "expected_unique_id": 106
+    },
+    {
+      "selector": "parts_kind",
+      "category": "W_UpEnd_Entry",
+      "tick_fixture": "0x0",
+      "native_rng_u32": "0x4807714d",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 143,
+      "expected_unique_id": 143
+    },
+    {
+      "selector": "parts_kind",
+      "category": "W_UpEnd_Entry",
+      "tick_fixture": "0x1",
+      "native_rng_u32": "0x53c36017",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 143,
+      "expected_unique_id": 143
+    },
+    {
+      "selector": "parts_kind",
+      "category": "W_UpEnd_Entry",
+      "tick_fixture": "0x2",
+      "native_rng_u32": "0xf674161f",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 224,
+      "expected_unique_id": 224
+    },
+    {
+      "selector": "parts_kind",
+      "category": "W_UpEnd_Entry",
+      "tick_fixture": "0xffffffff",
+      "native_rng_u32": "0xc22b42c3",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 224,
+      "expected_unique_id": 224
+    },
+    {
+      "selector": "parts_kind",
+      "category": "W_UpEnd_Entry",
+      "tick_fixture": "0x12345678",
+      "native_rng_u32": "0x4bb878ee",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 143,
+      "expected_unique_id": 143
+    },
+    {
+      "selector": "parts_kind",
+      "category": "W_UpEnd_Entry",
+      "tick_fixture": "0xdeadbeef",
+      "native_rng_u32": "0x2812bed2",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 143,
+      "expected_unique_id": 143
+    },
+    {
+      "selector": "parts_kind",
+      "category": "W_UpEnd_Entry",
+      "tick_fixture": "0x80000000",
+      "native_rng_u32": "0xfe96bf3d",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 224,
+      "expected_unique_id": 224
+    },
+    {
+      "selector": "parts_kind",
+      "category": "W_UpEnd_Entry",
+      "tick_fixture": "0xcafebabe",
+      "native_rng_u32": "0x36224a97",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 143,
+      "expected_unique_id": 143
+    },
+    {
+      "selector": "parts_kind",
+      "category": "W_DownEnd",
+      "tick_fixture": "0x0",
+      "native_rng_u32": "0x4807714d",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 141,
+      "expected_unique_id": 141
+    },
+    {
+      "selector": "parts_kind",
+      "category": "W_DownEnd",
+      "tick_fixture": "0x1",
+      "native_rng_u32": "0x53c36017",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 141,
+      "expected_unique_id": 141
+    },
+    {
+      "selector": "parts_kind",
+      "category": "W_DownEnd",
+      "tick_fixture": "0x2",
+      "native_rng_u32": "0xf674161f",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 223,
+      "expected_unique_id": 223
+    },
+    {
+      "selector": "parts_kind",
+      "category": "W_DownEnd",
+      "tick_fixture": "0xffffffff",
+      "native_rng_u32": "0xc22b42c3",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 223,
+      "expected_unique_id": 223
+    },
+    {
+      "selector": "parts_kind",
+      "category": "W_DownEnd",
+      "tick_fixture": "0x12345678",
+      "native_rng_u32": "0x4bb878ee",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 141,
+      "expected_unique_id": 141
+    },
+    {
+      "selector": "parts_kind",
+      "category": "W_DownEnd",
+      "tick_fixture": "0xdeadbeef",
+      "native_rng_u32": "0x2812bed2",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 141,
+      "expected_unique_id": 141
+    },
+    {
+      "selector": "parts_kind",
+      "category": "W_DownEnd",
+      "tick_fixture": "0x80000000",
+      "native_rng_u32": "0xfe96bf3d",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 223,
+      "expected_unique_id": 223
+    },
+    {
+      "selector": "parts_kind",
+      "category": "W_DownEnd",
+      "tick_fixture": "0xcafebabe",
+      "native_rng_u32": "0x36224a97",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 141,
+      "expected_unique_id": 141
+    },
+    {
+      "selector": "parts_kind",
+      "category": "W_Beach",
+      "tick_fixture": "0x0",
+      "native_rng_u32": "0x4807714d",
+      "candidate_count": 5,
+      "selected_rank": 1,
+      "native_unique_id": 21,
+      "expected_unique_id": 21
+    },
+    {
+      "selector": "parts_kind",
+      "category": "W_Beach",
+      "tick_fixture": "0x1",
+      "native_rng_u32": "0x53c36017",
+      "candidate_count": 5,
+      "selected_rank": 1,
+      "native_unique_id": 21,
+      "expected_unique_id": 21
+    },
+    {
+      "selector": "parts_kind",
+      "category": "W_Beach",
+      "tick_fixture": "0x2",
+      "native_rng_u32": "0xf674161f",
+      "candidate_count": 5,
+      "selected_rank": 4,
+      "native_unique_id": 127,
+      "expected_unique_id": 127
+    },
+    {
+      "selector": "parts_kind",
+      "category": "W_Beach",
+      "tick_fixture": "0xffffffff",
+      "native_rng_u32": "0xc22b42c3",
+      "candidate_count": 5,
+      "selected_rank": 3,
+      "native_unique_id": 23,
+      "expected_unique_id": 23
+    },
+    {
+      "selector": "parts_kind",
+      "category": "W_Beach",
+      "tick_fixture": "0x12345678",
+      "native_rng_u32": "0x4bb878ee",
+      "candidate_count": 5,
+      "selected_rank": 1,
+      "native_unique_id": 21,
+      "expected_unique_id": 21
+    },
+    {
+      "selector": "parts_kind",
+      "category": "W_Beach",
+      "tick_fixture": "0xdeadbeef",
+      "native_rng_u32": "0x2812bed2",
+      "candidate_count": 5,
+      "selected_rank": 0,
+      "native_unique_id": 20,
+      "expected_unique_id": 20
+    },
+    {
+      "selector": "parts_kind",
+      "category": "W_Beach",
+      "tick_fixture": "0x80000000",
+      "native_rng_u32": "0xfe96bf3d",
+      "candidate_count": 5,
+      "selected_rank": 4,
+      "native_unique_id": 127,
+      "expected_unique_id": 127
+    },
+    {
+      "selector": "parts_kind",
+      "category": "W_Beach",
+      "tick_fixture": "0xcafebabe",
+      "native_rng_u32": "0x36224a97",
+      "candidate_count": 5,
+      "selected_rank": 1,
+      "native_unique_id": 21,
+      "expected_unique_id": 21
+    },
+    {
+      "selector": "parts_kind",
+      "category": "W_Stone",
+      "tick_fixture": "0x0",
+      "native_rng_u32": "0x4807714d",
+      "candidate_count": 4,
+      "selected_rank": 1,
+      "native_unique_id": 119,
+      "expected_unique_id": 119
+    },
+    {
+      "selector": "parts_kind",
+      "category": "W_Stone",
+      "tick_fixture": "0x1",
+      "native_rng_u32": "0x53c36017",
+      "candidate_count": 4,
+      "selected_rank": 1,
+      "native_unique_id": 119,
+      "expected_unique_id": 119
+    },
+    {
+      "selector": "parts_kind",
+      "category": "W_Stone",
+      "tick_fixture": "0x2",
+      "native_rng_u32": "0xf674161f",
+      "candidate_count": 4,
+      "selected_rank": 3,
+      "native_unique_id": 232,
+      "expected_unique_id": 232
+    },
+    {
+      "selector": "parts_kind",
+      "category": "W_Stone",
+      "tick_fixture": "0xffffffff",
+      "native_rng_u32": "0xc22b42c3",
+      "candidate_count": 4,
+      "selected_rank": 3,
+      "native_unique_id": 232,
+      "expected_unique_id": 232
+    },
+    {
+      "selector": "parts_kind",
+      "category": "W_Stone",
+      "tick_fixture": "0x12345678",
+      "native_rng_u32": "0x4bb878ee",
+      "candidate_count": 4,
+      "selected_rank": 1,
+      "native_unique_id": 119,
+      "expected_unique_id": 119
+    },
+    {
+      "selector": "parts_kind",
+      "category": "W_Stone",
+      "tick_fixture": "0xdeadbeef",
+      "native_rng_u32": "0x2812bed2",
+      "candidate_count": 4,
+      "selected_rank": 0,
+      "native_unique_id": 120,
+      "expected_unique_id": 120
+    },
+    {
+      "selector": "parts_kind",
+      "category": "W_Stone",
+      "tick_fixture": "0x80000000",
+      "native_rng_u32": "0xfe96bf3d",
+      "candidate_count": 4,
+      "selected_rank": 3,
+      "native_unique_id": 232,
+      "expected_unique_id": 232
+    },
+    {
+      "selector": "parts_kind",
+      "category": "W_Stone",
+      "tick_fixture": "0xcafebabe",
+      "native_rng_u32": "0x36224a97",
+      "candidate_count": 4,
+      "selected_rank": 0,
+      "native_unique_id": 120,
+      "expected_unique_id": 120
+    },
+    {
+      "selector": "parts_kind",
+      "category": "E_Beach",
+      "tick_fixture": "0x0",
+      "native_rng_u32": "0x4807714d",
+      "candidate_count": 5,
+      "selected_rank": 1,
+      "native_unique_id": 30,
+      "expected_unique_id": 30
+    },
+    {
+      "selector": "parts_kind",
+      "category": "E_Beach",
+      "tick_fixture": "0x1",
+      "native_rng_u32": "0x53c36017",
+      "candidate_count": 5,
+      "selected_rank": 1,
+      "native_unique_id": 30,
+      "expected_unique_id": 30
+    },
+    {
+      "selector": "parts_kind",
+      "category": "E_Beach",
+      "tick_fixture": "0x2",
+      "native_rng_u32": "0xf674161f",
+      "candidate_count": 5,
+      "selected_rank": 4,
+      "native_unique_id": 62,
+      "expected_unique_id": 62
+    },
+    {
+      "selector": "parts_kind",
+      "category": "E_Beach",
+      "tick_fixture": "0xffffffff",
+      "native_rng_u32": "0xc22b42c3",
+      "candidate_count": 5,
+      "selected_rank": 3,
+      "native_unique_id": 32,
+      "expected_unique_id": 32
+    },
+    {
+      "selector": "parts_kind",
+      "category": "E_Beach",
+      "tick_fixture": "0x12345678",
+      "native_rng_u32": "0x4bb878ee",
+      "candidate_count": 5,
+      "selected_rank": 1,
+      "native_unique_id": 30,
+      "expected_unique_id": 30
+    },
+    {
+      "selector": "parts_kind",
+      "category": "E_Beach",
+      "tick_fixture": "0xdeadbeef",
+      "native_rng_u32": "0x2812bed2",
+      "candidate_count": 5,
+      "selected_rank": 0,
+      "native_unique_id": 29,
+      "expected_unique_id": 29
+    },
+    {
+      "selector": "parts_kind",
+      "category": "E_Beach",
+      "tick_fixture": "0x80000000",
+      "native_rng_u32": "0xfe96bf3d",
+      "candidate_count": 5,
+      "selected_rank": 4,
+      "native_unique_id": 62,
+      "expected_unique_id": 62
+    },
+    {
+      "selector": "parts_kind",
+      "category": "E_Beach",
+      "tick_fixture": "0xcafebabe",
+      "native_rng_u32": "0x36224a97",
+      "candidate_count": 5,
+      "selected_rank": 1,
+      "native_unique_id": 30,
+      "expected_unique_id": 30
+    },
+    {
+      "selector": "parts_kind",
+      "category": "E_Stone",
+      "tick_fixture": "0x0",
+      "native_rng_u32": "0x4807714d",
+      "candidate_count": 4,
+      "selected_rank": 1,
+      "native_unique_id": 122,
+      "expected_unique_id": 122
+    },
+    {
+      "selector": "parts_kind",
+      "category": "E_Stone",
+      "tick_fixture": "0x1",
+      "native_rng_u32": "0x53c36017",
+      "candidate_count": 4,
+      "selected_rank": 1,
+      "native_unique_id": 122,
+      "expected_unique_id": 122
+    },
+    {
+      "selector": "parts_kind",
+      "category": "E_Stone",
+      "tick_fixture": "0x2",
+      "native_rng_u32": "0xf674161f",
+      "candidate_count": 4,
+      "selected_rank": 3,
+      "native_unique_id": 231,
+      "expected_unique_id": 231
+    },
+    {
+      "selector": "parts_kind",
+      "category": "E_Stone",
+      "tick_fixture": "0xffffffff",
+      "native_rng_u32": "0xc22b42c3",
+      "candidate_count": 4,
+      "selected_rank": 3,
+      "native_unique_id": 231,
+      "expected_unique_id": 231
+    },
+    {
+      "selector": "parts_kind",
+      "category": "E_Stone",
+      "tick_fixture": "0x12345678",
+      "native_rng_u32": "0x4bb878ee",
+      "candidate_count": 4,
+      "selected_rank": 1,
+      "native_unique_id": 122,
+      "expected_unique_id": 122
+    },
+    {
+      "selector": "parts_kind",
+      "category": "E_Stone",
+      "tick_fixture": "0xdeadbeef",
+      "native_rng_u32": "0x2812bed2",
+      "candidate_count": 4,
+      "selected_rank": 0,
+      "native_unique_id": 121,
+      "expected_unique_id": 121
+    },
+    {
+      "selector": "parts_kind",
+      "category": "E_Stone",
+      "tick_fixture": "0x80000000",
+      "native_rng_u32": "0xfe96bf3d",
+      "candidate_count": 4,
+      "selected_rank": 3,
+      "native_unique_id": 231,
+      "expected_unique_id": 231
+    },
+    {
+      "selector": "parts_kind",
+      "category": "E_Stone",
+      "tick_fixture": "0xcafebabe",
+      "native_rng_u32": "0x36224a97",
+      "candidate_count": 4,
+      "selected_rank": 0,
+      "native_unique_id": 121,
+      "expected_unique_id": 121
+    },
+    {
+      "selector": "parts_kind",
+      "category": "E_Promontory",
+      "tick_fixture": "0x0",
+      "native_rng_u32": "0x4807714d",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 140,
+      "expected_unique_id": 140
+    },
+    {
+      "selector": "parts_kind",
+      "category": "E_Promontory",
+      "tick_fixture": "0x1",
+      "native_rng_u32": "0x53c36017",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 140,
+      "expected_unique_id": 140
+    },
+    {
+      "selector": "parts_kind",
+      "category": "E_Promontory",
+      "tick_fixture": "0x2",
+      "native_rng_u32": "0xf674161f",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 227,
+      "expected_unique_id": 227
+    },
+    {
+      "selector": "parts_kind",
+      "category": "E_Promontory",
+      "tick_fixture": "0xffffffff",
+      "native_rng_u32": "0xc22b42c3",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 227,
+      "expected_unique_id": 227
+    },
+    {
+      "selector": "parts_kind",
+      "category": "E_Promontory",
+      "tick_fixture": "0x12345678",
+      "native_rng_u32": "0x4bb878ee",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 140,
+      "expected_unique_id": 140
+    },
+    {
+      "selector": "parts_kind",
+      "category": "E_Promontory",
+      "tick_fixture": "0xdeadbeef",
+      "native_rng_u32": "0x2812bed2",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 140,
+      "expected_unique_id": 140
+    },
+    {
+      "selector": "parts_kind",
+      "category": "E_Promontory",
+      "tick_fixture": "0x80000000",
+      "native_rng_u32": "0xfe96bf3d",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 227,
+      "expected_unique_id": 227
+    },
+    {
+      "selector": "parts_kind",
+      "category": "E_Promontory",
+      "tick_fixture": "0xcafebabe",
+      "native_rng_u32": "0x36224a97",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 140,
+      "expected_unique_id": 140
+    },
+    {
+      "selector": "parts_kind",
+      "category": "SW_Beach",
+      "tick_fixture": "0x0",
+      "native_rng_u32": "0x4807714d",
+      "candidate_count": 4,
+      "selected_rank": 1,
+      "native_unique_id": 92,
+      "expected_unique_id": 92
+    },
+    {
+      "selector": "parts_kind",
+      "category": "SW_Beach",
+      "tick_fixture": "0x1",
+      "native_rng_u32": "0x53c36017",
+      "candidate_count": 4,
+      "selected_rank": 1,
+      "native_unique_id": 92,
+      "expected_unique_id": 92
+    },
+    {
+      "selector": "parts_kind",
+      "category": "SW_Beach",
+      "tick_fixture": "0x2",
+      "native_rng_u32": "0xf674161f",
+      "candidate_count": 4,
+      "selected_rank": 3,
+      "native_unique_id": 101,
+      "expected_unique_id": 101
+    },
+    {
+      "selector": "parts_kind",
+      "category": "SW_Beach",
+      "tick_fixture": "0xffffffff",
+      "native_rng_u32": "0xc22b42c3",
+      "candidate_count": 4,
+      "selected_rank": 3,
+      "native_unique_id": 101,
+      "expected_unique_id": 101
+    },
+    {
+      "selector": "parts_kind",
+      "category": "SW_Beach",
+      "tick_fixture": "0x12345678",
+      "native_rng_u32": "0x4bb878ee",
+      "candidate_count": 4,
+      "selected_rank": 1,
+      "native_unique_id": 92,
+      "expected_unique_id": 92
+    },
+    {
+      "selector": "parts_kind",
+      "category": "SW_Beach",
+      "tick_fixture": "0xdeadbeef",
+      "native_rng_u32": "0x2812bed2",
+      "candidate_count": 4,
+      "selected_rank": 0,
+      "native_unique_id": 38,
+      "expected_unique_id": 38
+    },
+    {
+      "selector": "parts_kind",
+      "category": "SW_Beach",
+      "tick_fixture": "0x80000000",
+      "native_rng_u32": "0xfe96bf3d",
+      "candidate_count": 4,
+      "selected_rank": 3,
+      "native_unique_id": 101,
+      "expected_unique_id": 101
+    },
+    {
+      "selector": "parts_kind",
+      "category": "SW_Beach",
+      "tick_fixture": "0xcafebabe",
+      "native_rng_u32": "0x36224a97",
+      "candidate_count": 4,
+      "selected_rank": 0,
+      "native_unique_id": 38,
+      "expected_unique_id": 38
+    },
+    {
+      "selector": "parts_kind",
+      "category": "S_River",
+      "tick_fixture": "0x0",
+      "native_rng_u32": "0x4807714d",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 40,
+      "expected_unique_id": 40
+    },
+    {
+      "selector": "parts_kind",
+      "category": "S_River",
+      "tick_fixture": "0x1",
+      "native_rng_u32": "0x53c36017",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 40,
+      "expected_unique_id": 40
+    },
+    {
+      "selector": "parts_kind",
+      "category": "S_River",
+      "tick_fixture": "0x2",
+      "native_rng_u32": "0xf674161f",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 233,
+      "expected_unique_id": 233
+    },
+    {
+      "selector": "parts_kind",
+      "category": "S_River",
+      "tick_fixture": "0xffffffff",
+      "native_rng_u32": "0xc22b42c3",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 233,
+      "expected_unique_id": 233
+    },
+    {
+      "selector": "parts_kind",
+      "category": "S_River",
+      "tick_fixture": "0x12345678",
+      "native_rng_u32": "0x4bb878ee",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 40,
+      "expected_unique_id": 40
+    },
+    {
+      "selector": "parts_kind",
+      "category": "S_River",
+      "tick_fixture": "0xdeadbeef",
+      "native_rng_u32": "0x2812bed2",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 40,
+      "expected_unique_id": 40
+    },
+    {
+      "selector": "parts_kind",
+      "category": "S_River",
+      "tick_fixture": "0x80000000",
+      "native_rng_u32": "0xfe96bf3d",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 233,
+      "expected_unique_id": 233
+    },
+    {
+      "selector": "parts_kind",
+      "category": "S_River",
+      "tick_fixture": "0xcafebabe",
+      "native_rng_u32": "0x36224a97",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 40,
+      "expected_unique_id": 40
+    },
+    {
+      "selector": "parts_kind",
+      "category": "S_Airport_L",
+      "tick_fixture": "0x0",
+      "native_rng_u32": "0x4807714d",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 41,
+      "expected_unique_id": 41
+    },
+    {
+      "selector": "parts_kind",
+      "category": "S_Airport_L",
+      "tick_fixture": "0x1",
+      "native_rng_u32": "0x53c36017",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 41,
+      "expected_unique_id": 41
+    },
+    {
+      "selector": "parts_kind",
+      "category": "S_Airport_L",
+      "tick_fixture": "0x2",
+      "native_rng_u32": "0xf674161f",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 41,
+      "expected_unique_id": 41
+    },
+    {
+      "selector": "parts_kind",
+      "category": "S_Airport_L",
+      "tick_fixture": "0xffffffff",
+      "native_rng_u32": "0xc22b42c3",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 41,
+      "expected_unique_id": 41
+    },
+    {
+      "selector": "parts_kind",
+      "category": "S_Airport_L",
+      "tick_fixture": "0x12345678",
+      "native_rng_u32": "0x4bb878ee",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 41,
+      "expected_unique_id": 41
+    },
+    {
+      "selector": "parts_kind",
+      "category": "S_Airport_L",
+      "tick_fixture": "0xdeadbeef",
+      "native_rng_u32": "0x2812bed2",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 41,
+      "expected_unique_id": 41
+    },
+    {
+      "selector": "parts_kind",
+      "category": "S_Airport_L",
+      "tick_fixture": "0x80000000",
+      "native_rng_u32": "0xfe96bf3d",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 41,
+      "expected_unique_id": 41
+    },
+    {
+      "selector": "parts_kind",
+      "category": "S_Airport_L",
+      "tick_fixture": "0xcafebabe",
+      "native_rng_u32": "0x36224a97",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 41,
+      "expected_unique_id": 41
+    },
+    {
+      "selector": "parts_kind",
+      "category": "S_Airport_R",
+      "tick_fixture": "0x0",
+      "native_rng_u32": "0x4807714d",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 93,
+      "expected_unique_id": 93
+    },
+    {
+      "selector": "parts_kind",
+      "category": "S_Airport_R",
+      "tick_fixture": "0x1",
+      "native_rng_u32": "0x53c36017",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 93,
+      "expected_unique_id": 93
+    },
+    {
+      "selector": "parts_kind",
+      "category": "S_Airport_R",
+      "tick_fixture": "0x2",
+      "native_rng_u32": "0xf674161f",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 93,
+      "expected_unique_id": 93
+    },
+    {
+      "selector": "parts_kind",
+      "category": "S_Airport_R",
+      "tick_fixture": "0xffffffff",
+      "native_rng_u32": "0xc22b42c3",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 93,
+      "expected_unique_id": 93
+    },
+    {
+      "selector": "parts_kind",
+      "category": "S_Airport_R",
+      "tick_fixture": "0x12345678",
+      "native_rng_u32": "0x4bb878ee",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 93,
+      "expected_unique_id": 93
+    },
+    {
+      "selector": "parts_kind",
+      "category": "S_Airport_R",
+      "tick_fixture": "0xdeadbeef",
+      "native_rng_u32": "0x2812bed2",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 93,
+      "expected_unique_id": 93
+    },
+    {
+      "selector": "parts_kind",
+      "category": "S_Airport_R",
+      "tick_fixture": "0x80000000",
+      "native_rng_u32": "0xfe96bf3d",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 93,
+      "expected_unique_id": 93
+    },
+    {
+      "selector": "parts_kind",
+      "category": "S_Airport_R",
+      "tick_fixture": "0xcafebabe",
+      "native_rng_u32": "0x36224a97",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 93,
+      "expected_unique_id": 93
+    },
+    {
+      "selector": "parts_kind",
+      "category": "S_Beach",
+      "tick_fixture": "0x0",
+      "native_rng_u32": "0x4807714d",
+      "candidate_count": 5,
+      "selected_rank": 1,
+      "native_unique_id": 97,
+      "expected_unique_id": 97
+    },
+    {
+      "selector": "parts_kind",
+      "category": "S_Beach",
+      "tick_fixture": "0x1",
+      "native_rng_u32": "0x53c36017",
+      "candidate_count": 5,
+      "selected_rank": 1,
+      "native_unique_id": 97,
+      "expected_unique_id": 97
+    },
+    {
+      "selector": "parts_kind",
+      "category": "S_Beach",
+      "tick_fixture": "0x2",
+      "native_rng_u32": "0xf674161f",
+      "candidate_count": 5,
+      "selected_rank": 4,
+      "native_unique_id": 105,
+      "expected_unique_id": 105
+    },
+    {
+      "selector": "parts_kind",
+      "category": "S_Beach",
+      "tick_fixture": "0xffffffff",
+      "native_rng_u32": "0xc22b42c3",
+      "candidate_count": 5,
+      "selected_rank": 3,
+      "native_unique_id": 103,
+      "expected_unique_id": 103
+    },
+    {
+      "selector": "parts_kind",
+      "category": "S_Beach",
+      "tick_fixture": "0x12345678",
+      "native_rng_u32": "0x4bb878ee",
+      "candidate_count": 5,
+      "selected_rank": 1,
+      "native_unique_id": 97,
+      "expected_unique_id": 97
+    },
+    {
+      "selector": "parts_kind",
+      "category": "S_Beach",
+      "tick_fixture": "0xdeadbeef",
+      "native_rng_u32": "0x2812bed2",
+      "candidate_count": 5,
+      "selected_rank": 0,
+      "native_unique_id": 39,
+      "expected_unique_id": 39
+    },
+    {
+      "selector": "parts_kind",
+      "category": "S_Beach",
+      "tick_fixture": "0x80000000",
+      "native_rng_u32": "0xfe96bf3d",
+      "candidate_count": 5,
+      "selected_rank": 4,
+      "native_unique_id": 105,
+      "expected_unique_id": 105
+    },
+    {
+      "selector": "parts_kind",
+      "category": "S_Beach",
+      "tick_fixture": "0xcafebabe",
+      "native_rng_u32": "0x36224a97",
+      "candidate_count": 5,
+      "selected_rank": 1,
+      "native_unique_id": 97,
+      "expected_unique_id": 97
+    },
+    {
+      "selector": "parts_kind",
+      "category": "SE_Jetty",
+      "tick_fixture": "0x0",
+      "native_rng_u32": "0x4807714d",
+      "candidate_count": 2,
+      "selected_rank": 0,
+      "native_unique_id": 138,
+      "expected_unique_id": 138
+    },
+    {
+      "selector": "parts_kind",
+      "category": "SE_Jetty",
+      "tick_fixture": "0x1",
+      "native_rng_u32": "0x53c36017",
+      "candidate_count": 2,
+      "selected_rank": 0,
+      "native_unique_id": 138,
+      "expected_unique_id": 138
+    },
+    {
+      "selector": "parts_kind",
+      "category": "SE_Jetty",
+      "tick_fixture": "0x2",
+      "native_rng_u32": "0xf674161f",
+      "candidate_count": 2,
+      "selected_rank": 1,
+      "native_unique_id": 137,
+      "expected_unique_id": 137
+    },
+    {
+      "selector": "parts_kind",
+      "category": "SE_Jetty",
+      "tick_fixture": "0xffffffff",
+      "native_rng_u32": "0xc22b42c3",
+      "candidate_count": 2,
+      "selected_rank": 1,
+      "native_unique_id": 137,
+      "expected_unique_id": 137
+    },
+    {
+      "selector": "parts_kind",
+      "category": "SE_Jetty",
+      "tick_fixture": "0x12345678",
+      "native_rng_u32": "0x4bb878ee",
+      "candidate_count": 2,
+      "selected_rank": 0,
+      "native_unique_id": 138,
+      "expected_unique_id": 138
+    },
+    {
+      "selector": "parts_kind",
+      "category": "SE_Jetty",
+      "tick_fixture": "0xdeadbeef",
+      "native_rng_u32": "0x2812bed2",
+      "candidate_count": 2,
+      "selected_rank": 0,
+      "native_unique_id": 138,
+      "expected_unique_id": 138
+    },
+    {
+      "selector": "parts_kind",
+      "category": "SE_Jetty",
+      "tick_fixture": "0x80000000",
+      "native_rng_u32": "0xfe96bf3d",
+      "candidate_count": 2,
+      "selected_rank": 1,
+      "native_unique_id": 137,
+      "expected_unique_id": 137
+    },
+    {
+      "selector": "parts_kind",
+      "category": "SE_Jetty",
+      "tick_fixture": "0xcafebabe",
+      "native_rng_u32": "0x36224a97",
+      "candidate_count": 2,
+      "selected_rank": 0,
+      "native_unique_id": 138,
+      "expected_unique_id": 138
+    },
+    {
+      "selector": "parts_kind",
+      "category": "W_Promontory",
+      "tick_fixture": "0x0",
+      "native_rng_u32": "0x4807714d",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 126,
+      "expected_unique_id": 126
+    },
+    {
+      "selector": "parts_kind",
+      "category": "W_Promontory",
+      "tick_fixture": "0x1",
+      "native_rng_u32": "0x53c36017",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 126,
+      "expected_unique_id": 126
+    },
+    {
+      "selector": "parts_kind",
+      "category": "W_Promontory",
+      "tick_fixture": "0x2",
+      "native_rng_u32": "0xf674161f",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 228,
+      "expected_unique_id": 228
+    },
+    {
+      "selector": "parts_kind",
+      "category": "W_Promontory",
+      "tick_fixture": "0xffffffff",
+      "native_rng_u32": "0xc22b42c3",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 228,
+      "expected_unique_id": 228
+    },
+    {
+      "selector": "parts_kind",
+      "category": "W_Promontory",
+      "tick_fixture": "0x12345678",
+      "native_rng_u32": "0x4bb878ee",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 126,
+      "expected_unique_id": 126
+    },
+    {
+      "selector": "parts_kind",
+      "category": "W_Promontory",
+      "tick_fixture": "0xdeadbeef",
+      "native_rng_u32": "0x2812bed2",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 126,
+      "expected_unique_id": 126
+    },
+    {
+      "selector": "parts_kind",
+      "category": "W_Promontory",
+      "tick_fixture": "0x80000000",
+      "native_rng_u32": "0xfe96bf3d",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 228,
+      "expected_unique_id": 228
+    },
+    {
+      "selector": "parts_kind",
+      "category": "W_Promontory",
+      "tick_fixture": "0xcafebabe",
+      "native_rng_u32": "0x36224a97",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 126,
+      "expected_unique_id": 126
+    },
+    {
+      "selector": "parts_kind",
+      "category": "E_UpEnd_Entry",
+      "tick_fixture": "0x0",
+      "native_rng_u32": "0x4807714d",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 117,
+      "expected_unique_id": 117
+    },
+    {
+      "selector": "parts_kind",
+      "category": "E_UpEnd_Entry",
+      "tick_fixture": "0x1",
+      "native_rng_u32": "0x53c36017",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 117,
+      "expected_unique_id": 117
+    },
+    {
+      "selector": "parts_kind",
+      "category": "E_UpEnd_Entry",
+      "tick_fixture": "0x2",
+      "native_rng_u32": "0xf674161f",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 226,
+      "expected_unique_id": 226
+    },
+    {
+      "selector": "parts_kind",
+      "category": "E_UpEnd_Entry",
+      "tick_fixture": "0xffffffff",
+      "native_rng_u32": "0xc22b42c3",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 226,
+      "expected_unique_id": 226
+    },
+    {
+      "selector": "parts_kind",
+      "category": "E_UpEnd_Entry",
+      "tick_fixture": "0x12345678",
+      "native_rng_u32": "0x4bb878ee",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 117,
+      "expected_unique_id": 117
+    },
+    {
+      "selector": "parts_kind",
+      "category": "E_UpEnd_Entry",
+      "tick_fixture": "0xdeadbeef",
+      "native_rng_u32": "0x2812bed2",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 117,
+      "expected_unique_id": 117
+    },
+    {
+      "selector": "parts_kind",
+      "category": "E_UpEnd_Entry",
+      "tick_fixture": "0x80000000",
+      "native_rng_u32": "0xfe96bf3d",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 226,
+      "expected_unique_id": 226
+    },
+    {
+      "selector": "parts_kind",
+      "category": "E_UpEnd_Entry",
+      "tick_fixture": "0xcafebabe",
+      "native_rng_u32": "0x36224a97",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 117,
+      "expected_unique_id": 117
+    },
+    {
+      "selector": "parts_kind",
+      "category": "E_DownEnd",
+      "tick_fixture": "0x0",
+      "native_rng_u32": "0x4807714d",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 116,
+      "expected_unique_id": 116
+    },
+    {
+      "selector": "parts_kind",
+      "category": "E_DownEnd",
+      "tick_fixture": "0x1",
+      "native_rng_u32": "0x53c36017",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 116,
+      "expected_unique_id": 116
+    },
+    {
+      "selector": "parts_kind",
+      "category": "E_DownEnd",
+      "tick_fixture": "0x2",
+      "native_rng_u32": "0xf674161f",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 225,
+      "expected_unique_id": 225
+    },
+    {
+      "selector": "parts_kind",
+      "category": "E_DownEnd",
+      "tick_fixture": "0xffffffff",
+      "native_rng_u32": "0xc22b42c3",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 225,
+      "expected_unique_id": 225
+    },
+    {
+      "selector": "parts_kind",
+      "category": "E_DownEnd",
+      "tick_fixture": "0x12345678",
+      "native_rng_u32": "0x4bb878ee",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 116,
+      "expected_unique_id": 116
+    },
+    {
+      "selector": "parts_kind",
+      "category": "E_DownEnd",
+      "tick_fixture": "0xdeadbeef",
+      "native_rng_u32": "0x2812bed2",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 116,
+      "expected_unique_id": 116
+    },
+    {
+      "selector": "parts_kind",
+      "category": "E_DownEnd",
+      "tick_fixture": "0x80000000",
+      "native_rng_u32": "0xfe96bf3d",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 225,
+      "expected_unique_id": 225
+    },
+    {
+      "selector": "parts_kind",
+      "category": "E_DownEnd",
+      "tick_fixture": "0xcafebabe",
+      "native_rng_u32": "0x36224a97",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 116,
+      "expected_unique_id": 116
+    },
+    {
+      "selector": "parts_kind",
+      "category": "SW_Jetty",
+      "tick_fixture": "0x0",
+      "native_rng_u32": "0x4807714d",
+      "candidate_count": 2,
+      "selected_rank": 0,
+      "native_unique_id": 136,
+      "expected_unique_id": 136
+    },
+    {
+      "selector": "parts_kind",
+      "category": "SW_Jetty",
+      "tick_fixture": "0x1",
+      "native_rng_u32": "0x53c36017",
+      "candidate_count": 2,
+      "selected_rank": 0,
+      "native_unique_id": 136,
+      "expected_unique_id": 136
+    },
+    {
+      "selector": "parts_kind",
+      "category": "SW_Jetty",
+      "tick_fixture": "0x2",
+      "native_rng_u32": "0xf674161f",
+      "candidate_count": 2,
+      "selected_rank": 1,
+      "native_unique_id": 135,
+      "expected_unique_id": 135
+    },
+    {
+      "selector": "parts_kind",
+      "category": "SW_Jetty",
+      "tick_fixture": "0xffffffff",
+      "native_rng_u32": "0xc22b42c3",
+      "candidate_count": 2,
+      "selected_rank": 1,
+      "native_unique_id": 135,
+      "expected_unique_id": 135
+    },
+    {
+      "selector": "parts_kind",
+      "category": "SW_Jetty",
+      "tick_fixture": "0x12345678",
+      "native_rng_u32": "0x4bb878ee",
+      "candidate_count": 2,
+      "selected_rank": 0,
+      "native_unique_id": 136,
+      "expected_unique_id": 136
+    },
+    {
+      "selector": "parts_kind",
+      "category": "SW_Jetty",
+      "tick_fixture": "0xdeadbeef",
+      "native_rng_u32": "0x2812bed2",
+      "candidate_count": 2,
+      "selected_rank": 0,
+      "native_unique_id": 136,
+      "expected_unique_id": 136
+    },
+    {
+      "selector": "parts_kind",
+      "category": "SW_Jetty",
+      "tick_fixture": "0x80000000",
+      "native_rng_u32": "0xfe96bf3d",
+      "candidate_count": 2,
+      "selected_rank": 1,
+      "native_unique_id": 135,
+      "expected_unique_id": 135
+    },
+    {
+      "selector": "parts_kind",
+      "category": "SW_Jetty",
+      "tick_fixture": "0xcafebabe",
+      "native_rng_u32": "0x36224a97",
+      "candidate_count": 2,
+      "selected_rank": 0,
+      "native_unique_id": 136,
+      "expected_unique_id": 136
+    },
+    {
+      "selector": "parts_kind",
+      "category": "SE_Beach",
+      "tick_fixture": "0x0",
+      "native_rng_u32": "0x4807714d",
+      "candidate_count": 4,
+      "selected_rank": 1,
+      "native_unique_id": 98,
+      "expected_unique_id": 98
+    },
+    {
+      "selector": "parts_kind",
+      "category": "SE_Beach",
+      "tick_fixture": "0x1",
+      "native_rng_u32": "0x53c36017",
+      "candidate_count": 4,
+      "selected_rank": 1,
+      "native_unique_id": 98,
+      "expected_unique_id": 98
+    },
+    {
+      "selector": "parts_kind",
+      "category": "SE_Beach",
+      "tick_fixture": "0x2",
+      "native_rng_u32": "0xf674161f",
+      "candidate_count": 4,
+      "selected_rank": 3,
+      "native_unique_id": 99,
+      "expected_unique_id": 99
+    },
+    {
+      "selector": "parts_kind",
+      "category": "SE_Beach",
+      "tick_fixture": "0xffffffff",
+      "native_rng_u32": "0xc22b42c3",
+      "candidate_count": 4,
+      "selected_rank": 3,
+      "native_unique_id": 99,
+      "expected_unique_id": 99
+    },
+    {
+      "selector": "parts_kind",
+      "category": "SE_Beach",
+      "tick_fixture": "0x12345678",
+      "native_rng_u32": "0x4bb878ee",
+      "candidate_count": 4,
+      "selected_rank": 1,
+      "native_unique_id": 98,
+      "expected_unique_id": 98
+    },
+    {
+      "selector": "parts_kind",
+      "category": "SE_Beach",
+      "tick_fixture": "0xdeadbeef",
+      "native_rng_u32": "0x2812bed2",
+      "candidate_count": 4,
+      "selected_rank": 0,
+      "native_unique_id": 42,
+      "expected_unique_id": 42
+    },
+    {
+      "selector": "parts_kind",
+      "category": "SE_Beach",
+      "tick_fixture": "0x80000000",
+      "native_rng_u32": "0xfe96bf3d",
+      "candidate_count": 4,
+      "selected_rank": 3,
+      "native_unique_id": 99,
+      "expected_unique_id": 99
+    },
+    {
+      "selector": "parts_kind",
+      "category": "SE_Beach",
+      "tick_fixture": "0xcafebabe",
+      "native_rng_u32": "0x36224a97",
+      "candidate_count": 4,
+      "selected_rank": 0,
+      "native_unique_id": 42,
+      "expected_unique_id": 42
+    },
+    {
+      "selector": "parts_kind",
+      "category": "W_River",
+      "tick_fixture": "0x0",
+      "native_rng_u32": "0x4807714d",
+      "candidate_count": 2,
+      "selected_rank": 0,
+      "native_unique_id": 27,
+      "expected_unique_id": 27
+    },
+    {
+      "selector": "parts_kind",
+      "category": "W_River",
+      "tick_fixture": "0x1",
+      "native_rng_u32": "0x53c36017",
+      "candidate_count": 2,
+      "selected_rank": 0,
+      "native_unique_id": 27,
+      "expected_unique_id": 27
+    },
+    {
+      "selector": "parts_kind",
+      "category": "W_River",
+      "tick_fixture": "0x2",
+      "native_rng_u32": "0xf674161f",
+      "candidate_count": 2,
+      "selected_rank": 1,
+      "native_unique_id": 133,
+      "expected_unique_id": 133
+    },
+    {
+      "selector": "parts_kind",
+      "category": "W_River",
+      "tick_fixture": "0xffffffff",
+      "native_rng_u32": "0xc22b42c3",
+      "candidate_count": 2,
+      "selected_rank": 1,
+      "native_unique_id": 133,
+      "expected_unique_id": 133
+    },
+    {
+      "selector": "parts_kind",
+      "category": "W_River",
+      "tick_fixture": "0x12345678",
+      "native_rng_u32": "0x4bb878ee",
+      "candidate_count": 2,
+      "selected_rank": 0,
+      "native_unique_id": 27,
+      "expected_unique_id": 27
+    },
+    {
+      "selector": "parts_kind",
+      "category": "W_River",
+      "tick_fixture": "0xdeadbeef",
+      "native_rng_u32": "0x2812bed2",
+      "candidate_count": 2,
+      "selected_rank": 0,
+      "native_unique_id": 27,
+      "expected_unique_id": 27
+    },
+    {
+      "selector": "parts_kind",
+      "category": "W_River",
+      "tick_fixture": "0x80000000",
+      "native_rng_u32": "0xfe96bf3d",
+      "candidate_count": 2,
+      "selected_rank": 1,
+      "native_unique_id": 133,
+      "expected_unique_id": 133
+    },
+    {
+      "selector": "parts_kind",
+      "category": "W_River",
+      "tick_fixture": "0xcafebabe",
+      "native_rng_u32": "0x36224a97",
+      "candidate_count": 2,
+      "selected_rank": 0,
+      "native_unique_id": 27,
+      "expected_unique_id": 27
+    },
+    {
+      "selector": "parts_kind",
+      "category": "E_River",
+      "tick_fixture": "0x0",
+      "native_rng_u32": "0x4807714d",
+      "candidate_count": 2,
+      "selected_rank": 0,
+      "native_unique_id": 91,
+      "expected_unique_id": 91
+    },
+    {
+      "selector": "parts_kind",
+      "category": "E_River",
+      "tick_fixture": "0x1",
+      "native_rng_u32": "0x53c36017",
+      "candidate_count": 2,
+      "selected_rank": 0,
+      "native_unique_id": 91,
+      "expected_unique_id": 91
+    },
+    {
+      "selector": "parts_kind",
+      "category": "E_River",
+      "tick_fixture": "0x2",
+      "native_rng_u32": "0xf674161f",
+      "candidate_count": 2,
+      "selected_rank": 1,
+      "native_unique_id": 134,
+      "expected_unique_id": 134
+    },
+    {
+      "selector": "parts_kind",
+      "category": "E_River",
+      "tick_fixture": "0xffffffff",
+      "native_rng_u32": "0xc22b42c3",
+      "candidate_count": 2,
+      "selected_rank": 1,
+      "native_unique_id": 134,
+      "expected_unique_id": 134
+    },
+    {
+      "selector": "parts_kind",
+      "category": "E_River",
+      "tick_fixture": "0x12345678",
+      "native_rng_u32": "0x4bb878ee",
+      "candidate_count": 2,
+      "selected_rank": 0,
+      "native_unique_id": 91,
+      "expected_unique_id": 91
+    },
+    {
+      "selector": "parts_kind",
+      "category": "E_River",
+      "tick_fixture": "0xdeadbeef",
+      "native_rng_u32": "0x2812bed2",
+      "candidate_count": 2,
+      "selected_rank": 0,
+      "native_unique_id": 91,
+      "expected_unique_id": 91
+    },
+    {
+      "selector": "parts_kind",
+      "category": "E_River",
+      "tick_fixture": "0x80000000",
+      "native_rng_u32": "0xfe96bf3d",
+      "candidate_count": 2,
+      "selected_rank": 1,
+      "native_unique_id": 134,
+      "expected_unique_id": 134
+    },
+    {
+      "selector": "parts_kind",
+      "category": "E_River",
+      "tick_fixture": "0xcafebabe",
+      "native_rng_u32": "0x36224a97",
+      "candidate_count": 2,
+      "selected_rank": 0,
+      "native_unique_id": 91,
+      "expected_unique_id": 91
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "N_convexity",
+      "tick_fixture": "0x0",
+      "native_rng_u32": "0x4807714d",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 163,
+      "expected_unique_id": 163
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "N_convexity",
+      "tick_fixture": "0x1",
+      "native_rng_u32": "0x53c36017",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 163,
+      "expected_unique_id": 163
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "N_convexity",
+      "tick_fixture": "0x2",
+      "native_rng_u32": "0xf674161f",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 161,
+      "expected_unique_id": 161
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "N_convexity",
+      "tick_fixture": "0xffffffff",
+      "native_rng_u32": "0xc22b42c3",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 161,
+      "expected_unique_id": 161
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "N_convexity",
+      "tick_fixture": "0x12345678",
+      "native_rng_u32": "0x4bb878ee",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 163,
+      "expected_unique_id": 163
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "N_convexity",
+      "tick_fixture": "0xdeadbeef",
+      "native_rng_u32": "0x2812bed2",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 163,
+      "expected_unique_id": 163
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "N_convexity",
+      "tick_fixture": "0x80000000",
+      "native_rng_u32": "0xfe96bf3d",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 161,
+      "expected_unique_id": 161
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "N_convexity",
+      "tick_fixture": "0xcafebabe",
+      "native_rng_u32": "0x36224a97",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 163,
+      "expected_unique_id": 163
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "N_flat",
+      "tick_fixture": "0x0",
+      "native_rng_u32": "0x4807714d",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 43,
+      "expected_unique_id": 43
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "N_flat",
+      "tick_fixture": "0x1",
+      "native_rng_u32": "0x53c36017",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 43,
+      "expected_unique_id": 43
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "N_flat",
+      "tick_fixture": "0x2",
+      "native_rng_u32": "0xf674161f",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 147,
+      "expected_unique_id": 147
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "N_flat",
+      "tick_fixture": "0xffffffff",
+      "native_rng_u32": "0xc22b42c3",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 147,
+      "expected_unique_id": 147
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "N_flat",
+      "tick_fixture": "0x12345678",
+      "native_rng_u32": "0x4bb878ee",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 43,
+      "expected_unique_id": 43
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "N_flat",
+      "tick_fixture": "0xdeadbeef",
+      "native_rng_u32": "0x2812bed2",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 43,
+      "expected_unique_id": 43
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "N_flat",
+      "tick_fixture": "0x80000000",
+      "native_rng_u32": "0xfe96bf3d",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 147,
+      "expected_unique_id": 147
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "N_flat",
+      "tick_fixture": "0xcafebabe",
+      "native_rng_u32": "0x36224a97",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 43,
+      "expected_unique_id": 43
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "N_concavity",
+      "tick_fixture": "0x0",
+      "native_rng_u32": "0x4807714d",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 166,
+      "expected_unique_id": 166
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "N_concavity",
+      "tick_fixture": "0x1",
+      "native_rng_u32": "0x53c36017",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 166,
+      "expected_unique_id": 166
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "N_concavity",
+      "tick_fixture": "0x2",
+      "native_rng_u32": "0xf674161f",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 164,
+      "expected_unique_id": 164
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "N_concavity",
+      "tick_fixture": "0xffffffff",
+      "native_rng_u32": "0xc22b42c3",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 164,
+      "expected_unique_id": 164
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "N_concavity",
+      "tick_fixture": "0x12345678",
+      "native_rng_u32": "0x4bb878ee",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 166,
+      "expected_unique_id": 166
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "N_concavity",
+      "tick_fixture": "0xdeadbeef",
+      "native_rng_u32": "0x2812bed2",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 166,
+      "expected_unique_id": 166
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "N_concavity",
+      "tick_fixture": "0x80000000",
+      "native_rng_u32": "0xfe96bf3d",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 164,
+      "expected_unique_id": 164
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "N_concavity",
+      "tick_fixture": "0xcafebabe",
+      "native_rng_u32": "0x36224a97",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 166,
+      "expected_unique_id": 166
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "NE_convexity",
+      "tick_fixture": "0x0",
+      "native_rng_u32": "0x4807714d",
+      "candidate_count": 2,
+      "selected_rank": 0,
+      "native_unique_id": 219,
+      "expected_unique_id": 219
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "NE_convexity",
+      "tick_fixture": "0x1",
+      "native_rng_u32": "0x53c36017",
+      "candidate_count": 2,
+      "selected_rank": 0,
+      "native_unique_id": 219,
+      "expected_unique_id": 219
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "NE_convexity",
+      "tick_fixture": "0x2",
+      "native_rng_u32": "0xf674161f",
+      "candidate_count": 2,
+      "selected_rank": 1,
+      "native_unique_id": 216,
+      "expected_unique_id": 216
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "NE_convexity",
+      "tick_fixture": "0xffffffff",
+      "native_rng_u32": "0xc22b42c3",
+      "candidate_count": 2,
+      "selected_rank": 1,
+      "native_unique_id": 216,
+      "expected_unique_id": 216
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "NE_convexity",
+      "tick_fixture": "0x12345678",
+      "native_rng_u32": "0x4bb878ee",
+      "candidate_count": 2,
+      "selected_rank": 0,
+      "native_unique_id": 219,
+      "expected_unique_id": 219
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "NE_convexity",
+      "tick_fixture": "0xdeadbeef",
+      "native_rng_u32": "0x2812bed2",
+      "candidate_count": 2,
+      "selected_rank": 0,
+      "native_unique_id": 219,
+      "expected_unique_id": 219
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "NE_convexity",
+      "tick_fixture": "0x80000000",
+      "native_rng_u32": "0xfe96bf3d",
+      "candidate_count": 2,
+      "selected_rank": 1,
+      "native_unique_id": 216,
+      "expected_unique_id": 216
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "NE_convexity",
+      "tick_fixture": "0xcafebabe",
+      "native_rng_u32": "0x36224a97",
+      "candidate_count": 2,
+      "selected_rank": 0,
+      "native_unique_id": 219,
+      "expected_unique_id": 219
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "NE_flat",
+      "tick_fixture": "0x0",
+      "native_rng_u32": "0x4807714d",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 45,
+      "expected_unique_id": 45
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "NE_flat",
+      "tick_fixture": "0x1",
+      "native_rng_u32": "0x53c36017",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 45,
+      "expected_unique_id": 45
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "NE_flat",
+      "tick_fixture": "0x2",
+      "native_rng_u32": "0xf674161f",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 45,
+      "expected_unique_id": 45
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "NE_flat",
+      "tick_fixture": "0xffffffff",
+      "native_rng_u32": "0xc22b42c3",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 45,
+      "expected_unique_id": 45
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "NE_flat",
+      "tick_fixture": "0x12345678",
+      "native_rng_u32": "0x4bb878ee",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 45,
+      "expected_unique_id": 45
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "NE_flat",
+      "tick_fixture": "0xdeadbeef",
+      "native_rng_u32": "0x2812bed2",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 45,
+      "expected_unique_id": 45
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "NE_flat",
+      "tick_fixture": "0x80000000",
+      "native_rng_u32": "0xfe96bf3d",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 45,
+      "expected_unique_id": 45
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "NE_flat",
+      "tick_fixture": "0xcafebabe",
+      "native_rng_u32": "0x36224a97",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 45,
+      "expected_unique_id": 45
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "E_convexity",
+      "tick_fixture": "0x0",
+      "native_rng_u32": "0x4807714d",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 207,
+      "expected_unique_id": 207
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "E_convexity",
+      "tick_fixture": "0x1",
+      "native_rng_u32": "0x53c36017",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 207,
+      "expected_unique_id": 207
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "E_convexity",
+      "tick_fixture": "0x2",
+      "native_rng_u32": "0xf674161f",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 205,
+      "expected_unique_id": 205
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "E_convexity",
+      "tick_fixture": "0xffffffff",
+      "native_rng_u32": "0xc22b42c3",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 205,
+      "expected_unique_id": 205
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "E_convexity",
+      "tick_fixture": "0x12345678",
+      "native_rng_u32": "0x4bb878ee",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 207,
+      "expected_unique_id": 207
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "E_convexity",
+      "tick_fixture": "0xdeadbeef",
+      "native_rng_u32": "0x2812bed2",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 207,
+      "expected_unique_id": 207
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "E_convexity",
+      "tick_fixture": "0x80000000",
+      "native_rng_u32": "0xfe96bf3d",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 205,
+      "expected_unique_id": 205
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "E_convexity",
+      "tick_fixture": "0xcafebabe",
+      "native_rng_u32": "0x36224a97",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 207,
+      "expected_unique_id": 207
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "E_flat",
+      "tick_fixture": "0x0",
+      "native_rng_u32": "0x4807714d",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 48,
+      "expected_unique_id": 48
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "E_flat",
+      "tick_fixture": "0x1",
+      "native_rng_u32": "0x53c36017",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 48,
+      "expected_unique_id": 48
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "E_flat",
+      "tick_fixture": "0x2",
+      "native_rng_u32": "0xf674161f",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 209,
+      "expected_unique_id": 209
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "E_flat",
+      "tick_fixture": "0xffffffff",
+      "native_rng_u32": "0xc22b42c3",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 209,
+      "expected_unique_id": 209
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "E_flat",
+      "tick_fixture": "0x12345678",
+      "native_rng_u32": "0x4bb878ee",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 48,
+      "expected_unique_id": 48
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "E_flat",
+      "tick_fixture": "0xdeadbeef",
+      "native_rng_u32": "0x2812bed2",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 48,
+      "expected_unique_id": 48
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "E_flat",
+      "tick_fixture": "0x80000000",
+      "native_rng_u32": "0xfe96bf3d",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 209,
+      "expected_unique_id": 209
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "E_flat",
+      "tick_fixture": "0xcafebabe",
+      "native_rng_u32": "0x36224a97",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 48,
+      "expected_unique_id": 48
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "E_concavity",
+      "tick_fixture": "0x0",
+      "native_rng_u32": "0x4807714d",
+      "candidate_count": 4,
+      "selected_rank": 1,
+      "native_unique_id": 211,
+      "expected_unique_id": 211
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "E_concavity",
+      "tick_fixture": "0x1",
+      "native_rng_u32": "0x53c36017",
+      "candidate_count": 4,
+      "selected_rank": 1,
+      "native_unique_id": 211,
+      "expected_unique_id": 211
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "E_concavity",
+      "tick_fixture": "0x2",
+      "native_rng_u32": "0xf674161f",
+      "candidate_count": 4,
+      "selected_rank": 3,
+      "native_unique_id": 210,
+      "expected_unique_id": 210
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "E_concavity",
+      "tick_fixture": "0xffffffff",
+      "native_rng_u32": "0xc22b42c3",
+      "candidate_count": 4,
+      "selected_rank": 3,
+      "native_unique_id": 210,
+      "expected_unique_id": 210
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "E_concavity",
+      "tick_fixture": "0x12345678",
+      "native_rng_u32": "0x4bb878ee",
+      "candidate_count": 4,
+      "selected_rank": 1,
+      "native_unique_id": 211,
+      "expected_unique_id": 211
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "E_concavity",
+      "tick_fixture": "0xdeadbeef",
+      "native_rng_u32": "0x2812bed2",
+      "candidate_count": 4,
+      "selected_rank": 0,
+      "native_unique_id": 220,
+      "expected_unique_id": 220
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "E_concavity",
+      "tick_fixture": "0x80000000",
+      "native_rng_u32": "0xfe96bf3d",
+      "candidate_count": 4,
+      "selected_rank": 3,
+      "native_unique_id": 210,
+      "expected_unique_id": 210
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "E_concavity",
+      "tick_fixture": "0xcafebabe",
+      "native_rng_u32": "0x36224a97",
+      "candidate_count": 4,
+      "selected_rank": 0,
+      "native_unique_id": 220,
+      "expected_unique_id": 220
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "SE_convexity",
+      "tick_fixture": "0x0",
+      "native_rng_u32": "0x4807714d",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 198,
+      "expected_unique_id": 198
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "SE_convexity",
+      "tick_fixture": "0x1",
+      "native_rng_u32": "0x53c36017",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 198,
+      "expected_unique_id": 198
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "SE_convexity",
+      "tick_fixture": "0x2",
+      "native_rng_u32": "0xf674161f",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 198,
+      "expected_unique_id": 198
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "SE_convexity",
+      "tick_fixture": "0xffffffff",
+      "native_rng_u32": "0xc22b42c3",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 198,
+      "expected_unique_id": 198
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "SE_convexity",
+      "tick_fixture": "0x12345678",
+      "native_rng_u32": "0x4bb878ee",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 198,
+      "expected_unique_id": 198
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "SE_convexity",
+      "tick_fixture": "0xdeadbeef",
+      "native_rng_u32": "0x2812bed2",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 198,
+      "expected_unique_id": 198
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "SE_convexity",
+      "tick_fixture": "0x80000000",
+      "native_rng_u32": "0xfe96bf3d",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 198,
+      "expected_unique_id": 198
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "SE_convexity",
+      "tick_fixture": "0xcafebabe",
+      "native_rng_u32": "0x36224a97",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 198,
+      "expected_unique_id": 198
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "SE_flat",
+      "tick_fixture": "0x0",
+      "native_rng_u32": "0x4807714d",
+      "candidate_count": 2,
+      "selected_rank": 0,
+      "native_unique_id": 52,
+      "expected_unique_id": 52
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "SE_flat",
+      "tick_fixture": "0x1",
+      "native_rng_u32": "0x53c36017",
+      "candidate_count": 2,
+      "selected_rank": 0,
+      "native_unique_id": 52,
+      "expected_unique_id": 52
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "SE_flat",
+      "tick_fixture": "0x2",
+      "native_rng_u32": "0xf674161f",
+      "candidate_count": 2,
+      "selected_rank": 1,
+      "native_unique_id": 200,
+      "expected_unique_id": 200
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "SE_flat",
+      "tick_fixture": "0xffffffff",
+      "native_rng_u32": "0xc22b42c3",
+      "candidate_count": 2,
+      "selected_rank": 1,
+      "native_unique_id": 200,
+      "expected_unique_id": 200
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "SE_flat",
+      "tick_fixture": "0x12345678",
+      "native_rng_u32": "0x4bb878ee",
+      "candidate_count": 2,
+      "selected_rank": 0,
+      "native_unique_id": 52,
+      "expected_unique_id": 52
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "SE_flat",
+      "tick_fixture": "0xdeadbeef",
+      "native_rng_u32": "0x2812bed2",
+      "candidate_count": 2,
+      "selected_rank": 0,
+      "native_unique_id": 52,
+      "expected_unique_id": 52
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "SE_flat",
+      "tick_fixture": "0x80000000",
+      "native_rng_u32": "0xfe96bf3d",
+      "candidate_count": 2,
+      "selected_rank": 1,
+      "native_unique_id": 200,
+      "expected_unique_id": 200
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "SE_flat",
+      "tick_fixture": "0xcafebabe",
+      "native_rng_u32": "0x36224a97",
+      "candidate_count": 2,
+      "selected_rank": 0,
+      "native_unique_id": 52,
+      "expected_unique_id": 52
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "SE_concavity",
+      "tick_fixture": "0x0",
+      "native_rng_u32": "0x4807714d",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 197,
+      "expected_unique_id": 197
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "SE_concavity",
+      "tick_fixture": "0x1",
+      "native_rng_u32": "0x53c36017",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 197,
+      "expected_unique_id": 197
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "SE_concavity",
+      "tick_fixture": "0x2",
+      "native_rng_u32": "0xf674161f",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 197,
+      "expected_unique_id": 197
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "SE_concavity",
+      "tick_fixture": "0xffffffff",
+      "native_rng_u32": "0xc22b42c3",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 197,
+      "expected_unique_id": 197
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "SE_concavity",
+      "tick_fixture": "0x12345678",
+      "native_rng_u32": "0x4bb878ee",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 197,
+      "expected_unique_id": 197
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "SE_concavity",
+      "tick_fixture": "0xdeadbeef",
+      "native_rng_u32": "0x2812bed2",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 197,
+      "expected_unique_id": 197
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "SE_concavity",
+      "tick_fixture": "0x80000000",
+      "native_rng_u32": "0xfe96bf3d",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 197,
+      "expected_unique_id": 197
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "SE_concavity",
+      "tick_fixture": "0xcafebabe",
+      "native_rng_u32": "0x36224a97",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 197,
+      "expected_unique_id": 197
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "S_convexity",
+      "tick_fixture": "0x0",
+      "native_rng_u32": "0x4807714d",
+      "candidate_count": 6,
+      "selected_rank": 1,
+      "native_unique_id": 192,
+      "expected_unique_id": 192
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "S_convexity",
+      "tick_fixture": "0x1",
+      "native_rng_u32": "0x53c36017",
+      "candidate_count": 6,
+      "selected_rank": 1,
+      "native_unique_id": 192,
+      "expected_unique_id": 192
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "S_convexity",
+      "tick_fixture": "0x2",
+      "native_rng_u32": "0xf674161f",
+      "candidate_count": 6,
+      "selected_rank": 5,
+      "native_unique_id": 194,
+      "expected_unique_id": 194
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "S_convexity",
+      "tick_fixture": "0xffffffff",
+      "native_rng_u32": "0xc22b42c3",
+      "candidate_count": 6,
+      "selected_rank": 4,
+      "native_unique_id": 195,
+      "expected_unique_id": 195
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "S_convexity",
+      "tick_fixture": "0x12345678",
+      "native_rng_u32": "0x4bb878ee",
+      "candidate_count": 6,
+      "selected_rank": 1,
+      "native_unique_id": 192,
+      "expected_unique_id": 192
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "S_convexity",
+      "tick_fixture": "0xdeadbeef",
+      "native_rng_u32": "0x2812bed2",
+      "candidate_count": 6,
+      "selected_rank": 0,
+      "native_unique_id": 193,
+      "expected_unique_id": 193
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "S_convexity",
+      "tick_fixture": "0x80000000",
+      "native_rng_u32": "0xfe96bf3d",
+      "candidate_count": 6,
+      "selected_rank": 5,
+      "native_unique_id": 194,
+      "expected_unique_id": 194
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "S_convexity",
+      "tick_fixture": "0xcafebabe",
+      "native_rng_u32": "0x36224a97",
+      "candidate_count": 6,
+      "selected_rank": 1,
+      "native_unique_id": 192,
+      "expected_unique_id": 192
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "S_flat",
+      "tick_fixture": "0x0",
+      "native_rng_u32": "0x4807714d",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 51,
+      "expected_unique_id": 51
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "S_flat",
+      "tick_fixture": "0x1",
+      "native_rng_u32": "0x53c36017",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 51,
+      "expected_unique_id": 51
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "S_flat",
+      "tick_fixture": "0x2",
+      "native_rng_u32": "0xf674161f",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 155,
+      "expected_unique_id": 155
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "S_flat",
+      "tick_fixture": "0xffffffff",
+      "native_rng_u32": "0xc22b42c3",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 155,
+      "expected_unique_id": 155
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "S_flat",
+      "tick_fixture": "0x12345678",
+      "native_rng_u32": "0x4bb878ee",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 51,
+      "expected_unique_id": 51
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "S_flat",
+      "tick_fixture": "0xdeadbeef",
+      "native_rng_u32": "0x2812bed2",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 51,
+      "expected_unique_id": 51
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "S_flat",
+      "tick_fixture": "0x80000000",
+      "native_rng_u32": "0xfe96bf3d",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 155,
+      "expected_unique_id": 155
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "S_flat",
+      "tick_fixture": "0xcafebabe",
+      "native_rng_u32": "0x36224a97",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 51,
+      "expected_unique_id": 51
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "SW_convexity",
+      "tick_fixture": "0x0",
+      "native_rng_u32": "0x4807714d",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 158,
+      "expected_unique_id": 158
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "SW_convexity",
+      "tick_fixture": "0x1",
+      "native_rng_u32": "0x53c36017",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 158,
+      "expected_unique_id": 158
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "SW_convexity",
+      "tick_fixture": "0x2",
+      "native_rng_u32": "0xf674161f",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 158,
+      "expected_unique_id": 158
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "SW_convexity",
+      "tick_fixture": "0xffffffff",
+      "native_rng_u32": "0xc22b42c3",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 158,
+      "expected_unique_id": 158
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "SW_convexity",
+      "tick_fixture": "0x12345678",
+      "native_rng_u32": "0x4bb878ee",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 158,
+      "expected_unique_id": 158
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "SW_convexity",
+      "tick_fixture": "0xdeadbeef",
+      "native_rng_u32": "0x2812bed2",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 158,
+      "expected_unique_id": 158
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "SW_convexity",
+      "tick_fixture": "0x80000000",
+      "native_rng_u32": "0xfe96bf3d",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 158,
+      "expected_unique_id": 158
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "SW_convexity",
+      "tick_fixture": "0xcafebabe",
+      "native_rng_u32": "0x36224a97",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 158,
+      "expected_unique_id": 158
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "SW_flat",
+      "tick_fixture": "0x0",
+      "native_rng_u32": "0x4807714d",
+      "candidate_count": 2,
+      "selected_rank": 0,
+      "native_unique_id": 50,
+      "expected_unique_id": 50
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "SW_flat",
+      "tick_fixture": "0x1",
+      "native_rng_u32": "0x53c36017",
+      "candidate_count": 2,
+      "selected_rank": 0,
+      "native_unique_id": 50,
+      "expected_unique_id": 50
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "SW_flat",
+      "tick_fixture": "0x2",
+      "native_rng_u32": "0xf674161f",
+      "candidate_count": 2,
+      "selected_rank": 1,
+      "native_unique_id": 184,
+      "expected_unique_id": 184
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "SW_flat",
+      "tick_fixture": "0xffffffff",
+      "native_rng_u32": "0xc22b42c3",
+      "candidate_count": 2,
+      "selected_rank": 1,
+      "native_unique_id": 184,
+      "expected_unique_id": 184
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "SW_flat",
+      "tick_fixture": "0x12345678",
+      "native_rng_u32": "0x4bb878ee",
+      "candidate_count": 2,
+      "selected_rank": 0,
+      "native_unique_id": 50,
+      "expected_unique_id": 50
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "SW_flat",
+      "tick_fixture": "0xdeadbeef",
+      "native_rng_u32": "0x2812bed2",
+      "candidate_count": 2,
+      "selected_rank": 0,
+      "native_unique_id": 50,
+      "expected_unique_id": 50
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "SW_flat",
+      "tick_fixture": "0x80000000",
+      "native_rng_u32": "0xfe96bf3d",
+      "candidate_count": 2,
+      "selected_rank": 1,
+      "native_unique_id": 184,
+      "expected_unique_id": 184
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "SW_flat",
+      "tick_fixture": "0xcafebabe",
+      "native_rng_u32": "0x36224a97",
+      "candidate_count": 2,
+      "selected_rank": 0,
+      "native_unique_id": 50,
+      "expected_unique_id": 50
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "SW_concavity",
+      "tick_fixture": "0x0",
+      "native_rng_u32": "0x4807714d",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 157,
+      "expected_unique_id": 157
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "SW_concavity",
+      "tick_fixture": "0x1",
+      "native_rng_u32": "0x53c36017",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 157,
+      "expected_unique_id": 157
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "SW_concavity",
+      "tick_fixture": "0x2",
+      "native_rng_u32": "0xf674161f",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 157,
+      "expected_unique_id": 157
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "SW_concavity",
+      "tick_fixture": "0xffffffff",
+      "native_rng_u32": "0xc22b42c3",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 157,
+      "expected_unique_id": 157
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "SW_concavity",
+      "tick_fixture": "0x12345678",
+      "native_rng_u32": "0x4bb878ee",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 157,
+      "expected_unique_id": 157
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "SW_concavity",
+      "tick_fixture": "0xdeadbeef",
+      "native_rng_u32": "0x2812bed2",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 157,
+      "expected_unique_id": 157
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "SW_concavity",
+      "tick_fixture": "0x80000000",
+      "native_rng_u32": "0xfe96bf3d",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 157,
+      "expected_unique_id": 157
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "SW_concavity",
+      "tick_fixture": "0xcafebabe",
+      "native_rng_u32": "0x36224a97",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 157,
+      "expected_unique_id": 157
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "W_convexity",
+      "tick_fixture": "0x0",
+      "native_rng_u32": "0x4807714d",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 178,
+      "expected_unique_id": 178
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "W_convexity",
+      "tick_fixture": "0x1",
+      "native_rng_u32": "0x53c36017",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 178,
+      "expected_unique_id": 178
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "W_convexity",
+      "tick_fixture": "0x2",
+      "native_rng_u32": "0xf674161f",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 177,
+      "expected_unique_id": 177
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "W_convexity",
+      "tick_fixture": "0xffffffff",
+      "native_rng_u32": "0xc22b42c3",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 177,
+      "expected_unique_id": 177
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "W_convexity",
+      "tick_fixture": "0x12345678",
+      "native_rng_u32": "0x4bb878ee",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 178,
+      "expected_unique_id": 178
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "W_convexity",
+      "tick_fixture": "0xdeadbeef",
+      "native_rng_u32": "0x2812bed2",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 178,
+      "expected_unique_id": 178
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "W_convexity",
+      "tick_fixture": "0x80000000",
+      "native_rng_u32": "0xfe96bf3d",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 177,
+      "expected_unique_id": 177
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "W_convexity",
+      "tick_fixture": "0xcafebabe",
+      "native_rng_u32": "0x36224a97",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 178,
+      "expected_unique_id": 178
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "W_flat",
+      "tick_fixture": "0x0",
+      "native_rng_u32": "0x4807714d",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 46,
+      "expected_unique_id": 46
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "W_flat",
+      "tick_fixture": "0x1",
+      "native_rng_u32": "0x53c36017",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 46,
+      "expected_unique_id": 46
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "W_flat",
+      "tick_fixture": "0x2",
+      "native_rng_u32": "0xf674161f",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 151,
+      "expected_unique_id": 151
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "W_flat",
+      "tick_fixture": "0xffffffff",
+      "native_rng_u32": "0xc22b42c3",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 151,
+      "expected_unique_id": 151
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "W_flat",
+      "tick_fixture": "0x12345678",
+      "native_rng_u32": "0x4bb878ee",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 46,
+      "expected_unique_id": 46
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "W_flat",
+      "tick_fixture": "0xdeadbeef",
+      "native_rng_u32": "0x2812bed2",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 46,
+      "expected_unique_id": 46
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "W_flat",
+      "tick_fixture": "0x80000000",
+      "native_rng_u32": "0xfe96bf3d",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 151,
+      "expected_unique_id": 151
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "W_flat",
+      "tick_fixture": "0xcafebabe",
+      "native_rng_u32": "0x36224a97",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 46,
+      "expected_unique_id": 46
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "W_concavity",
+      "tick_fixture": "0x0",
+      "native_rng_u32": "0x4807714d",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 175,
+      "expected_unique_id": 175
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "W_concavity",
+      "tick_fixture": "0x1",
+      "native_rng_u32": "0x53c36017",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 175,
+      "expected_unique_id": 175
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "W_concavity",
+      "tick_fixture": "0x2",
+      "native_rng_u32": "0xf674161f",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 173,
+      "expected_unique_id": 173
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "W_concavity",
+      "tick_fixture": "0xffffffff",
+      "native_rng_u32": "0xc22b42c3",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 173,
+      "expected_unique_id": 173
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "W_concavity",
+      "tick_fixture": "0x12345678",
+      "native_rng_u32": "0x4bb878ee",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 175,
+      "expected_unique_id": 175
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "W_concavity",
+      "tick_fixture": "0xdeadbeef",
+      "native_rng_u32": "0x2812bed2",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 175,
+      "expected_unique_id": 175
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "W_concavity",
+      "tick_fixture": "0x80000000",
+      "native_rng_u32": "0xfe96bf3d",
+      "candidate_count": 3,
+      "selected_rank": 2,
+      "native_unique_id": 173,
+      "expected_unique_id": 173
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "W_concavity",
+      "tick_fixture": "0xcafebabe",
+      "native_rng_u32": "0x36224a97",
+      "candidate_count": 3,
+      "selected_rank": 0,
+      "native_unique_id": 175,
+      "expected_unique_id": 175
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "NW_convexity",
+      "tick_fixture": "0x0",
+      "native_rng_u32": "0x4807714d",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 160,
+      "expected_unique_id": 160
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "NW_convexity",
+      "tick_fixture": "0x1",
+      "native_rng_u32": "0x53c36017",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 160,
+      "expected_unique_id": 160
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "NW_convexity",
+      "tick_fixture": "0x2",
+      "native_rng_u32": "0xf674161f",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 160,
+      "expected_unique_id": 160
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "NW_convexity",
+      "tick_fixture": "0xffffffff",
+      "native_rng_u32": "0xc22b42c3",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 160,
+      "expected_unique_id": 160
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "NW_convexity",
+      "tick_fixture": "0x12345678",
+      "native_rng_u32": "0x4bb878ee",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 160,
+      "expected_unique_id": 160
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "NW_convexity",
+      "tick_fixture": "0xdeadbeef",
+      "native_rng_u32": "0x2812bed2",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 160,
+      "expected_unique_id": 160
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "NW_convexity",
+      "tick_fixture": "0x80000000",
+      "native_rng_u32": "0xfe96bf3d",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 160,
+      "expected_unique_id": 160
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "NW_convexity",
+      "tick_fixture": "0xcafebabe",
+      "native_rng_u32": "0x36224a97",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 160,
+      "expected_unique_id": 160
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "NW_flat",
+      "tick_fixture": "0x0",
+      "native_rng_u32": "0x4807714d",
+      "candidate_count": 2,
+      "selected_rank": 0,
+      "native_unique_id": 44,
+      "expected_unique_id": 44
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "NW_flat",
+      "tick_fixture": "0x1",
+      "native_rng_u32": "0x53c36017",
+      "candidate_count": 2,
+      "selected_rank": 0,
+      "native_unique_id": 44,
+      "expected_unique_id": 44
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "NW_flat",
+      "tick_fixture": "0x2",
+      "native_rng_u32": "0xf674161f",
+      "candidate_count": 2,
+      "selected_rank": 1,
+      "native_unique_id": 172,
+      "expected_unique_id": 172
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "NW_flat",
+      "tick_fixture": "0xffffffff",
+      "native_rng_u32": "0xc22b42c3",
+      "candidate_count": 2,
+      "selected_rank": 1,
+      "native_unique_id": 172,
+      "expected_unique_id": 172
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "NW_flat",
+      "tick_fixture": "0x12345678",
+      "native_rng_u32": "0x4bb878ee",
+      "candidate_count": 2,
+      "selected_rank": 0,
+      "native_unique_id": 44,
+      "expected_unique_id": 44
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "NW_flat",
+      "tick_fixture": "0xdeadbeef",
+      "native_rng_u32": "0x2812bed2",
+      "candidate_count": 2,
+      "selected_rank": 0,
+      "native_unique_id": 44,
+      "expected_unique_id": 44
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "NW_flat",
+      "tick_fixture": "0x80000000",
+      "native_rng_u32": "0xfe96bf3d",
+      "candidate_count": 2,
+      "selected_rank": 1,
+      "native_unique_id": 172,
+      "expected_unique_id": 172
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "NW_flat",
+      "tick_fixture": "0xcafebabe",
+      "native_rng_u32": "0x36224a97",
+      "candidate_count": 2,
+      "selected_rank": 0,
+      "native_unique_id": 44,
+      "expected_unique_id": 44
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "NW_concavity",
+      "tick_fixture": "0x0",
+      "native_rng_u32": "0x4807714d",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 159,
+      "expected_unique_id": 159
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "NW_concavity",
+      "tick_fixture": "0x1",
+      "native_rng_u32": "0x53c36017",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 159,
+      "expected_unique_id": 159
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "NW_concavity",
+      "tick_fixture": "0x2",
+      "native_rng_u32": "0xf674161f",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 159,
+      "expected_unique_id": 159
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "NW_concavity",
+      "tick_fixture": "0xffffffff",
+      "native_rng_u32": "0xc22b42c3",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 159,
+      "expected_unique_id": 159
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "NW_concavity",
+      "tick_fixture": "0x12345678",
+      "native_rng_u32": "0x4bb878ee",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 159,
+      "expected_unique_id": 159
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "NW_concavity",
+      "tick_fixture": "0xdeadbeef",
+      "native_rng_u32": "0x2812bed2",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 159,
+      "expected_unique_id": 159
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "NW_concavity",
+      "tick_fixture": "0x80000000",
+      "native_rng_u32": "0xfe96bf3d",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 159,
+      "expected_unique_id": 159
+    },
+    {
+      "selector": "outside_sea_reef",
+      "category": "NW_concavity",
+      "tick_fixture": "0xcafebabe",
+      "native_rng_u32": "0x36224a97",
+      "candidate_count": 1,
+      "selected_rank": 0,
+      "native_unique_id": 159,
+      "expected_unique_id": 159
+    }
+  ],
+  "totals": {
+    "used_parts_kinds": 24,
+    "candidate_ids_compared": 78,
+    "outside_sea_reef_types": 22,
+    "outside_sea_candidate_ids_compared": 52,
+    "full_selection_cases": 368,
+    "tick_fixtures_per_pool": 8,
+    "system_tick_calls": 368,
+    "mismatches": 0
+  },
+  "limits": [
+    "The original BCSV/resource loader and live table cache initialization did not run; row wrappers and warmed cache values were reconstructed from exact decoded source rows.",
+    "The platform system-tick source is unavailable in the isolated harness; full-selection tests substitute eight explicit tick values at the import PLT. Actual gameplay timing and parent call ordering are not inferred.",
+    "The complete 0x4dea40/0x4deeb0 grid assembly wrapper was not executed; selection predicates and candidate pools are tested separately."
+  ]
+}

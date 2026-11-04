@@ -1,0 +1,3869 @@
+{
+  "scope": "Original native height writer 0x180d20 consumed the 12-float height prefix from 208 reconstructed 52-byte records drawn from the 13 terrain PBC models used in the 96 presets, across four candidate rotations and four PBC cells. Each PBC JSON cell was serialized as 12 float32 heights plus four material bytes. A reconstructed 8x8 world repeats the 2x2 PBC pattern to supply bounded neighbor records; this is a consumer test, not proof of original loader, transform, or full-island layout.",
+  "archive": {
+    "filename": "acnh_manifests_drive_new.zip",
+    "sha256": "8995d65b09a5cb84b181907c78991806f6da325bc82d35ea24ae6ecf1e263f3a"
+  },
+  "source_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+  "source_grid": {
+    "decoded_preset_count": 96,
+    "dimensions": [
+      112,
+      96
+    ],
+    "used_unit_ids": [
+      0,
+      11,
+      12,
+      17,
+      20,
+      21,
+      31,
+      32,
+      37,
+      40,
+      60,
+      63,
+      66
+    ]
+  },
+  "pbc_record_serialization": {
+    "header_bytes": 0,
+    "record_stride_bytes": 52,
+    "height_float32_byte_range_exclusive": [
+      0,
+      48
+    ],
+    "material_byte_range_exclusive": [
+      48,
+      52
+    ]
+  },
+  "native_consumer": {
+    "height_writer": "0x180d20",
+    "runtime_neighbor_lookup": "0x174070",
+    "cases": 208,
+    "world_grid": [
+      8,
+      8
+    ],
+    "neighbor_context": "periodic repetition of each individual PBC asset's 2x2 record pattern",
+    "consumed_record_bytes": [
+      0,
+      48
+    ],
+    "material_attribute_bytes_separately_verified_by_this_writer": false,
+    "source_records_unchanged": true,
+    "dependencies_stubbed": []
+  },
+  "per_model_native_output_words": {
+    "Base": {
+      "0x80009f80": 16
+    },
+    "Cliff3B": {
+      "0x80009380": 2,
+      "0x80009680": 2,
+      "0x80009980": 2,
+      "0x80009c80": 2,
+      "0x8000a380": 2,
+      "0x8000ac80": 2,
+      "0x8000c680": 2,
+      "0x8000c980": 2
+    },
+    "Cliff3C": {
+      "0x80009f80": 16
+    },
+    "Cliff5B": {
+      "0x80009f80": 16
+    },
+    "Cliff7A": {
+      "0x80009f80": 16
+    },
+    "Fall200": {
+      "0x80009580": 8,
+      "0x80009a80": 8
+    },
+    "Fall300": {
+      "0x80009580": 8,
+      "0x80009a80": 8
+    },
+    "Fall400": {
+      "0x80009580": 8,
+      "0x80009a80": 8
+    },
+    "River3B": {
+      "0x80009380": 2,
+      "0x80009680": 2,
+      "0x80009980": 2,
+      "0x80009c80": 2,
+      "0x8000a380": 2,
+      "0x8000ac80": 2,
+      "0x8000c680": 2,
+      "0x8000c980": 2
+    },
+    "River3C": {
+      "0x80009f80": 16
+    },
+    "River5B": {
+      "0x80009f80": 16
+    },
+    "River7A": {
+      "0x80009f80": 16
+    },
+    "River8A": {
+      "0x80009f80": 16
+    }
+  },
+  "cases": [
+    {
+      "unit_id": 0,
+      "model_name": "Base",
+      "candidate_ccw_rotation": 0,
+      "pbc_cell_index": 0,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 0,
+      "model_name": "Base",
+      "candidate_ccw_rotation": 0,
+      "pbc_cell_index": 1,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 0,
+      "model_name": "Base",
+      "candidate_ccw_rotation": 0,
+      "pbc_cell_index": 2,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 0,
+      "model_name": "Base",
+      "candidate_ccw_rotation": 0,
+      "pbc_cell_index": 3,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 0,
+      "model_name": "Base",
+      "candidate_ccw_rotation": 1,
+      "pbc_cell_index": 0,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 0,
+      "model_name": "Base",
+      "candidate_ccw_rotation": 1,
+      "pbc_cell_index": 1,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 0,
+      "model_name": "Base",
+      "candidate_ccw_rotation": 1,
+      "pbc_cell_index": 2,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 0,
+      "model_name": "Base",
+      "candidate_ccw_rotation": 1,
+      "pbc_cell_index": 3,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 0,
+      "model_name": "Base",
+      "candidate_ccw_rotation": 2,
+      "pbc_cell_index": 0,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 0,
+      "model_name": "Base",
+      "candidate_ccw_rotation": 2,
+      "pbc_cell_index": 1,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 0,
+      "model_name": "Base",
+      "candidate_ccw_rotation": 2,
+      "pbc_cell_index": 2,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 0,
+      "model_name": "Base",
+      "candidate_ccw_rotation": 2,
+      "pbc_cell_index": 3,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 0,
+      "model_name": "Base",
+      "candidate_ccw_rotation": 3,
+      "pbc_cell_index": 0,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 0,
+      "model_name": "Base",
+      "candidate_ccw_rotation": 3,
+      "pbc_cell_index": 1,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 0,
+      "model_name": "Base",
+      "candidate_ccw_rotation": 3,
+      "pbc_cell_index": 2,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 0,
+      "model_name": "Base",
+      "candidate_ccw_rotation": 3,
+      "pbc_cell_index": 3,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 11,
+      "model_name": "River3B",
+      "candidate_ccw_rotation": 0,
+      "pbc_cell_index": 0,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009380"
+    },
+    {
+      "unit_id": 11,
+      "model_name": "River3B",
+      "candidate_ccw_rotation": 0,
+      "pbc_cell_index": 1,
+      "height_min_max": [
+        -12.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x8000c980"
+    },
+    {
+      "unit_id": 11,
+      "model_name": "River3B",
+      "candidate_ccw_rotation": 0,
+      "pbc_cell_index": 2,
+      "height_min_max": [
+        -12.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x8000c680"
+    },
+    {
+      "unit_id": 11,
+      "model_name": "River3B",
+      "candidate_ccw_rotation": 0,
+      "pbc_cell_index": 3,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009c80"
+    },
+    {
+      "unit_id": 11,
+      "model_name": "River3B",
+      "candidate_ccw_rotation": 1,
+      "pbc_cell_index": 0,
+      "height_min_max": [
+        -12.0,
+        0.0
+      ],
+      "material_row_indices": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x8000a380"
+    },
+    {
+      "unit_id": 11,
+      "model_name": "River3B",
+      "candidate_ccw_rotation": 1,
+      "pbc_cell_index": 1,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009980"
+    },
+    {
+      "unit_id": 11,
+      "model_name": "River3B",
+      "candidate_ccw_rotation": 1,
+      "pbc_cell_index": 2,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009680"
+    },
+    {
+      "unit_id": 11,
+      "model_name": "River3B",
+      "candidate_ccw_rotation": 1,
+      "pbc_cell_index": 3,
+      "height_min_max": [
+        -12.0,
+        0.0
+      ],
+      "material_row_indices": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x8000ac80"
+    },
+    {
+      "unit_id": 11,
+      "model_name": "River3B",
+      "candidate_ccw_rotation": 2,
+      "pbc_cell_index": 0,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009380"
+    },
+    {
+      "unit_id": 11,
+      "model_name": "River3B",
+      "candidate_ccw_rotation": 2,
+      "pbc_cell_index": 1,
+      "height_min_max": [
+        -12.0,
+        0.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x8000c980"
+    },
+    {
+      "unit_id": 11,
+      "model_name": "River3B",
+      "candidate_ccw_rotation": 2,
+      "pbc_cell_index": 2,
+      "height_min_max": [
+        -12.0,
+        0.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x8000c680"
+    },
+    {
+      "unit_id": 11,
+      "model_name": "River3B",
+      "candidate_ccw_rotation": 2,
+      "pbc_cell_index": 3,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009c80"
+    },
+    {
+      "unit_id": 11,
+      "model_name": "River3B",
+      "candidate_ccw_rotation": 3,
+      "pbc_cell_index": 0,
+      "height_min_max": [
+        -12.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        1,
+        1,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x8000a380"
+    },
+    {
+      "unit_id": 11,
+      "model_name": "River3B",
+      "candidate_ccw_rotation": 3,
+      "pbc_cell_index": 1,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009980"
+    },
+    {
+      "unit_id": 11,
+      "model_name": "River3B",
+      "candidate_ccw_rotation": 3,
+      "pbc_cell_index": 2,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009680"
+    },
+    {
+      "unit_id": 11,
+      "model_name": "River3B",
+      "candidate_ccw_rotation": 3,
+      "pbc_cell_index": 3,
+      "height_min_max": [
+        -12.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        1,
+        1,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x8000ac80"
+    },
+    {
+      "unit_id": 12,
+      "model_name": "River3C",
+      "candidate_ccw_rotation": 0,
+      "pbc_cell_index": 0,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 12,
+      "model_name": "River3C",
+      "candidate_ccw_rotation": 0,
+      "pbc_cell_index": 1,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 12,
+      "model_name": "River3C",
+      "candidate_ccw_rotation": 0,
+      "pbc_cell_index": 2,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 12,
+      "model_name": "River3C",
+      "candidate_ccw_rotation": 0,
+      "pbc_cell_index": 3,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 12,
+      "model_name": "River3C",
+      "candidate_ccw_rotation": 1,
+      "pbc_cell_index": 0,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 12,
+      "model_name": "River3C",
+      "candidate_ccw_rotation": 1,
+      "pbc_cell_index": 1,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 12,
+      "model_name": "River3C",
+      "candidate_ccw_rotation": 1,
+      "pbc_cell_index": 2,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 12,
+      "model_name": "River3C",
+      "candidate_ccw_rotation": 1,
+      "pbc_cell_index": 3,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 12,
+      "model_name": "River3C",
+      "candidate_ccw_rotation": 2,
+      "pbc_cell_index": 0,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 12,
+      "model_name": "River3C",
+      "candidate_ccw_rotation": 2,
+      "pbc_cell_index": 1,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 12,
+      "model_name": "River3C",
+      "candidate_ccw_rotation": 2,
+      "pbc_cell_index": 2,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 12,
+      "model_name": "River3C",
+      "candidate_ccw_rotation": 2,
+      "pbc_cell_index": 3,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 12,
+      "model_name": "River3C",
+      "candidate_ccw_rotation": 3,
+      "pbc_cell_index": 0,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 12,
+      "model_name": "River3C",
+      "candidate_ccw_rotation": 3,
+      "pbc_cell_index": 1,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 12,
+      "model_name": "River3C",
+      "candidate_ccw_rotation": 3,
+      "pbc_cell_index": 2,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 12,
+      "model_name": "River3C",
+      "candidate_ccw_rotation": 3,
+      "pbc_cell_index": 3,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 17,
+      "model_name": "River5B",
+      "candidate_ccw_rotation": 0,
+      "pbc_cell_index": 0,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 17,
+      "model_name": "River5B",
+      "candidate_ccw_rotation": 0,
+      "pbc_cell_index": 1,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 17,
+      "model_name": "River5B",
+      "candidate_ccw_rotation": 0,
+      "pbc_cell_index": 2,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 17,
+      "model_name": "River5B",
+      "candidate_ccw_rotation": 0,
+      "pbc_cell_index": 3,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 17,
+      "model_name": "River5B",
+      "candidate_ccw_rotation": 1,
+      "pbc_cell_index": 0,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 17,
+      "model_name": "River5B",
+      "candidate_ccw_rotation": 1,
+      "pbc_cell_index": 1,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 17,
+      "model_name": "River5B",
+      "candidate_ccw_rotation": 1,
+      "pbc_cell_index": 2,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 17,
+      "model_name": "River5B",
+      "candidate_ccw_rotation": 1,
+      "pbc_cell_index": 3,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 17,
+      "model_name": "River5B",
+      "candidate_ccw_rotation": 2,
+      "pbc_cell_index": 0,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 17,
+      "model_name": "River5B",
+      "candidate_ccw_rotation": 2,
+      "pbc_cell_index": 1,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 17,
+      "model_name": "River5B",
+      "candidate_ccw_rotation": 2,
+      "pbc_cell_index": 2,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 17,
+      "model_name": "River5B",
+      "candidate_ccw_rotation": 2,
+      "pbc_cell_index": 3,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 17,
+      "model_name": "River5B",
+      "candidate_ccw_rotation": 3,
+      "pbc_cell_index": 0,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 17,
+      "model_name": "River5B",
+      "candidate_ccw_rotation": 3,
+      "pbc_cell_index": 1,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 17,
+      "model_name": "River5B",
+      "candidate_ccw_rotation": 3,
+      "pbc_cell_index": 2,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 17,
+      "model_name": "River5B",
+      "candidate_ccw_rotation": 3,
+      "pbc_cell_index": 3,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 20,
+      "model_name": "River7A",
+      "candidate_ccw_rotation": 0,
+      "pbc_cell_index": 0,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 20,
+      "model_name": "River7A",
+      "candidate_ccw_rotation": 0,
+      "pbc_cell_index": 1,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 20,
+      "model_name": "River7A",
+      "candidate_ccw_rotation": 0,
+      "pbc_cell_index": 2,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 20,
+      "model_name": "River7A",
+      "candidate_ccw_rotation": 0,
+      "pbc_cell_index": 3,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 20,
+      "model_name": "River7A",
+      "candidate_ccw_rotation": 1,
+      "pbc_cell_index": 0,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 20,
+      "model_name": "River7A",
+      "candidate_ccw_rotation": 1,
+      "pbc_cell_index": 1,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 20,
+      "model_name": "River7A",
+      "candidate_ccw_rotation": 1,
+      "pbc_cell_index": 2,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 20,
+      "model_name": "River7A",
+      "candidate_ccw_rotation": 1,
+      "pbc_cell_index": 3,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 20,
+      "model_name": "River7A",
+      "candidate_ccw_rotation": 2,
+      "pbc_cell_index": 0,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 20,
+      "model_name": "River7A",
+      "candidate_ccw_rotation": 2,
+      "pbc_cell_index": 1,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 20,
+      "model_name": "River7A",
+      "candidate_ccw_rotation": 2,
+      "pbc_cell_index": 2,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 20,
+      "model_name": "River7A",
+      "candidate_ccw_rotation": 2,
+      "pbc_cell_index": 3,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 20,
+      "model_name": "River7A",
+      "candidate_ccw_rotation": 3,
+      "pbc_cell_index": 0,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 20,
+      "model_name": "River7A",
+      "candidate_ccw_rotation": 3,
+      "pbc_cell_index": 1,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 20,
+      "model_name": "River7A",
+      "candidate_ccw_rotation": 3,
+      "pbc_cell_index": 2,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 20,
+      "model_name": "River7A",
+      "candidate_ccw_rotation": 3,
+      "pbc_cell_index": 3,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 21,
+      "model_name": "River8A",
+      "candidate_ccw_rotation": 0,
+      "pbc_cell_index": 0,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 21,
+      "model_name": "River8A",
+      "candidate_ccw_rotation": 0,
+      "pbc_cell_index": 1,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 21,
+      "model_name": "River8A",
+      "candidate_ccw_rotation": 0,
+      "pbc_cell_index": 2,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 21,
+      "model_name": "River8A",
+      "candidate_ccw_rotation": 0,
+      "pbc_cell_index": 3,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 21,
+      "model_name": "River8A",
+      "candidate_ccw_rotation": 1,
+      "pbc_cell_index": 0,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 21,
+      "model_name": "River8A",
+      "candidate_ccw_rotation": 1,
+      "pbc_cell_index": 1,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 21,
+      "model_name": "River8A",
+      "candidate_ccw_rotation": 1,
+      "pbc_cell_index": 2,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 21,
+      "model_name": "River8A",
+      "candidate_ccw_rotation": 1,
+      "pbc_cell_index": 3,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 21,
+      "model_name": "River8A",
+      "candidate_ccw_rotation": 2,
+      "pbc_cell_index": 0,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 21,
+      "model_name": "River8A",
+      "candidate_ccw_rotation": 2,
+      "pbc_cell_index": 1,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 21,
+      "model_name": "River8A",
+      "candidate_ccw_rotation": 2,
+      "pbc_cell_index": 2,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 21,
+      "model_name": "River8A",
+      "candidate_ccw_rotation": 2,
+      "pbc_cell_index": 3,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 21,
+      "model_name": "River8A",
+      "candidate_ccw_rotation": 3,
+      "pbc_cell_index": 0,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 21,
+      "model_name": "River8A",
+      "candidate_ccw_rotation": 3,
+      "pbc_cell_index": 1,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 21,
+      "model_name": "River8A",
+      "candidate_ccw_rotation": 3,
+      "pbc_cell_index": 2,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 21,
+      "model_name": "River8A",
+      "candidate_ccw_rotation": 3,
+      "pbc_cell_index": 3,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 31,
+      "model_name": "Cliff3B",
+      "candidate_ccw_rotation": 0,
+      "pbc_cell_index": 0,
+      "height_min_max": [
+        -15.0,
+        -15.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009380"
+    },
+    {
+      "unit_id": 31,
+      "model_name": "Cliff3B",
+      "candidate_ccw_rotation": 0,
+      "pbc_cell_index": 1,
+      "height_min_max": [
+        -15.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x8000c980"
+    },
+    {
+      "unit_id": 31,
+      "model_name": "Cliff3B",
+      "candidate_ccw_rotation": 0,
+      "pbc_cell_index": 2,
+      "height_min_max": [
+        -15.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x8000c680"
+    },
+    {
+      "unit_id": 31,
+      "model_name": "Cliff3B",
+      "candidate_ccw_rotation": 0,
+      "pbc_cell_index": 3,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009c80"
+    },
+    {
+      "unit_id": 31,
+      "model_name": "Cliff3B",
+      "candidate_ccw_rotation": 1,
+      "pbc_cell_index": 0,
+      "height_min_max": [
+        -15.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x8000a380"
+    },
+    {
+      "unit_id": 31,
+      "model_name": "Cliff3B",
+      "candidate_ccw_rotation": 1,
+      "pbc_cell_index": 1,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009980"
+    },
+    {
+      "unit_id": 31,
+      "model_name": "Cliff3B",
+      "candidate_ccw_rotation": 1,
+      "pbc_cell_index": 2,
+      "height_min_max": [
+        -15.0,
+        -15.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009680"
+    },
+    {
+      "unit_id": 31,
+      "model_name": "Cliff3B",
+      "candidate_ccw_rotation": 1,
+      "pbc_cell_index": 3,
+      "height_min_max": [
+        -15.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x8000ac80"
+    },
+    {
+      "unit_id": 31,
+      "model_name": "Cliff3B",
+      "candidate_ccw_rotation": 2,
+      "pbc_cell_index": 0,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009380"
+    },
+    {
+      "unit_id": 31,
+      "model_name": "Cliff3B",
+      "candidate_ccw_rotation": 2,
+      "pbc_cell_index": 1,
+      "height_min_max": [
+        -15.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x8000c980"
+    },
+    {
+      "unit_id": 31,
+      "model_name": "Cliff3B",
+      "candidate_ccw_rotation": 2,
+      "pbc_cell_index": 2,
+      "height_min_max": [
+        -15.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x8000c680"
+    },
+    {
+      "unit_id": 31,
+      "model_name": "Cliff3B",
+      "candidate_ccw_rotation": 2,
+      "pbc_cell_index": 3,
+      "height_min_max": [
+        -15.0,
+        -15.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009c80"
+    },
+    {
+      "unit_id": 31,
+      "model_name": "Cliff3B",
+      "candidate_ccw_rotation": 3,
+      "pbc_cell_index": 0,
+      "height_min_max": [
+        -15.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x8000a380"
+    },
+    {
+      "unit_id": 31,
+      "model_name": "Cliff3B",
+      "candidate_ccw_rotation": 3,
+      "pbc_cell_index": 1,
+      "height_min_max": [
+        -15.0,
+        -15.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009980"
+    },
+    {
+      "unit_id": 31,
+      "model_name": "Cliff3B",
+      "candidate_ccw_rotation": 3,
+      "pbc_cell_index": 2,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009680"
+    },
+    {
+      "unit_id": 31,
+      "model_name": "Cliff3B",
+      "candidate_ccw_rotation": 3,
+      "pbc_cell_index": 3,
+      "height_min_max": [
+        -15.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x8000ac80"
+    },
+    {
+      "unit_id": 32,
+      "model_name": "Cliff3C",
+      "candidate_ccw_rotation": 0,
+      "pbc_cell_index": 0,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 32,
+      "model_name": "Cliff3C",
+      "candidate_ccw_rotation": 0,
+      "pbc_cell_index": 1,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 32,
+      "model_name": "Cliff3C",
+      "candidate_ccw_rotation": 0,
+      "pbc_cell_index": 2,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 32,
+      "model_name": "Cliff3C",
+      "candidate_ccw_rotation": 0,
+      "pbc_cell_index": 3,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 32,
+      "model_name": "Cliff3C",
+      "candidate_ccw_rotation": 1,
+      "pbc_cell_index": 0,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 32,
+      "model_name": "Cliff3C",
+      "candidate_ccw_rotation": 1,
+      "pbc_cell_index": 1,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 32,
+      "model_name": "Cliff3C",
+      "candidate_ccw_rotation": 1,
+      "pbc_cell_index": 2,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 32,
+      "model_name": "Cliff3C",
+      "candidate_ccw_rotation": 1,
+      "pbc_cell_index": 3,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 32,
+      "model_name": "Cliff3C",
+      "candidate_ccw_rotation": 2,
+      "pbc_cell_index": 0,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 32,
+      "model_name": "Cliff3C",
+      "candidate_ccw_rotation": 2,
+      "pbc_cell_index": 1,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 32,
+      "model_name": "Cliff3C",
+      "candidate_ccw_rotation": 2,
+      "pbc_cell_index": 2,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 32,
+      "model_name": "Cliff3C",
+      "candidate_ccw_rotation": 2,
+      "pbc_cell_index": 3,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 32,
+      "model_name": "Cliff3C",
+      "candidate_ccw_rotation": 3,
+      "pbc_cell_index": 0,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 32,
+      "model_name": "Cliff3C",
+      "candidate_ccw_rotation": 3,
+      "pbc_cell_index": 1,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 32,
+      "model_name": "Cliff3C",
+      "candidate_ccw_rotation": 3,
+      "pbc_cell_index": 2,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 32,
+      "model_name": "Cliff3C",
+      "candidate_ccw_rotation": 3,
+      "pbc_cell_index": 3,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 37,
+      "model_name": "Cliff5B",
+      "candidate_ccw_rotation": 0,
+      "pbc_cell_index": 0,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 37,
+      "model_name": "Cliff5B",
+      "candidate_ccw_rotation": 0,
+      "pbc_cell_index": 1,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 37,
+      "model_name": "Cliff5B",
+      "candidate_ccw_rotation": 0,
+      "pbc_cell_index": 2,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 37,
+      "model_name": "Cliff5B",
+      "candidate_ccw_rotation": 0,
+      "pbc_cell_index": 3,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 37,
+      "model_name": "Cliff5B",
+      "candidate_ccw_rotation": 1,
+      "pbc_cell_index": 0,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 37,
+      "model_name": "Cliff5B",
+      "candidate_ccw_rotation": 1,
+      "pbc_cell_index": 1,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 37,
+      "model_name": "Cliff5B",
+      "candidate_ccw_rotation": 1,
+      "pbc_cell_index": 2,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 37,
+      "model_name": "Cliff5B",
+      "candidate_ccw_rotation": 1,
+      "pbc_cell_index": 3,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 37,
+      "model_name": "Cliff5B",
+      "candidate_ccw_rotation": 2,
+      "pbc_cell_index": 0,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 37,
+      "model_name": "Cliff5B",
+      "candidate_ccw_rotation": 2,
+      "pbc_cell_index": 1,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 37,
+      "model_name": "Cliff5B",
+      "candidate_ccw_rotation": 2,
+      "pbc_cell_index": 2,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 37,
+      "model_name": "Cliff5B",
+      "candidate_ccw_rotation": 2,
+      "pbc_cell_index": 3,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 37,
+      "model_name": "Cliff5B",
+      "candidate_ccw_rotation": 3,
+      "pbc_cell_index": 0,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 37,
+      "model_name": "Cliff5B",
+      "candidate_ccw_rotation": 3,
+      "pbc_cell_index": 1,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 37,
+      "model_name": "Cliff5B",
+      "candidate_ccw_rotation": 3,
+      "pbc_cell_index": 2,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 37,
+      "model_name": "Cliff5B",
+      "candidate_ccw_rotation": 3,
+      "pbc_cell_index": 3,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 40,
+      "model_name": "Cliff7A",
+      "candidate_ccw_rotation": 0,
+      "pbc_cell_index": 0,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 40,
+      "model_name": "Cliff7A",
+      "candidate_ccw_rotation": 0,
+      "pbc_cell_index": 1,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 40,
+      "model_name": "Cliff7A",
+      "candidate_ccw_rotation": 0,
+      "pbc_cell_index": 2,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 40,
+      "model_name": "Cliff7A",
+      "candidate_ccw_rotation": 0,
+      "pbc_cell_index": 3,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 40,
+      "model_name": "Cliff7A",
+      "candidate_ccw_rotation": 1,
+      "pbc_cell_index": 0,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 40,
+      "model_name": "Cliff7A",
+      "candidate_ccw_rotation": 1,
+      "pbc_cell_index": 1,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 40,
+      "model_name": "Cliff7A",
+      "candidate_ccw_rotation": 1,
+      "pbc_cell_index": 2,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 40,
+      "model_name": "Cliff7A",
+      "candidate_ccw_rotation": 1,
+      "pbc_cell_index": 3,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 40,
+      "model_name": "Cliff7A",
+      "candidate_ccw_rotation": 2,
+      "pbc_cell_index": 0,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 40,
+      "model_name": "Cliff7A",
+      "candidate_ccw_rotation": 2,
+      "pbc_cell_index": 1,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 40,
+      "model_name": "Cliff7A",
+      "candidate_ccw_rotation": 2,
+      "pbc_cell_index": 2,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 40,
+      "model_name": "Cliff7A",
+      "candidate_ccw_rotation": 2,
+      "pbc_cell_index": 3,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 40,
+      "model_name": "Cliff7A",
+      "candidate_ccw_rotation": 3,
+      "pbc_cell_index": 0,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 40,
+      "model_name": "Cliff7A",
+      "candidate_ccw_rotation": 3,
+      "pbc_cell_index": 1,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 40,
+      "model_name": "Cliff7A",
+      "candidate_ccw_rotation": 3,
+      "pbc_cell_index": 2,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 40,
+      "model_name": "Cliff7A",
+      "candidate_ccw_rotation": 3,
+      "pbc_cell_index": 3,
+      "height_min_max": [
+        0.0,
+        0.0
+      ],
+      "material_row_indices": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009f80"
+    },
+    {
+      "unit_id": 60,
+      "model_name": "Fall300",
+      "candidate_ccw_rotation": 0,
+      "pbc_cell_index": 0,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009a80"
+    },
+    {
+      "unit_id": 60,
+      "model_name": "Fall300",
+      "candidate_ccw_rotation": 0,
+      "pbc_cell_index": 1,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009a80"
+    },
+    {
+      "unit_id": 60,
+      "model_name": "Fall300",
+      "candidate_ccw_rotation": 0,
+      "pbc_cell_index": 2,
+      "height_min_max": [
+        -27.0,
+        -27.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009a80"
+    },
+    {
+      "unit_id": 60,
+      "model_name": "Fall300",
+      "candidate_ccw_rotation": 0,
+      "pbc_cell_index": 3,
+      "height_min_max": [
+        -27.0,
+        -27.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009a80"
+    },
+    {
+      "unit_id": 60,
+      "model_name": "Fall300",
+      "candidate_ccw_rotation": 1,
+      "pbc_cell_index": 0,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009580"
+    },
+    {
+      "unit_id": 60,
+      "model_name": "Fall300",
+      "candidate_ccw_rotation": 1,
+      "pbc_cell_index": 1,
+      "height_min_max": [
+        -27.0,
+        -27.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009580"
+    },
+    {
+      "unit_id": 60,
+      "model_name": "Fall300",
+      "candidate_ccw_rotation": 1,
+      "pbc_cell_index": 2,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009580"
+    },
+    {
+      "unit_id": 60,
+      "model_name": "Fall300",
+      "candidate_ccw_rotation": 1,
+      "pbc_cell_index": 3,
+      "height_min_max": [
+        -27.0,
+        -27.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009580"
+    },
+    {
+      "unit_id": 60,
+      "model_name": "Fall300",
+      "candidate_ccw_rotation": 2,
+      "pbc_cell_index": 0,
+      "height_min_max": [
+        -27.0,
+        -27.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009a80"
+    },
+    {
+      "unit_id": 60,
+      "model_name": "Fall300",
+      "candidate_ccw_rotation": 2,
+      "pbc_cell_index": 1,
+      "height_min_max": [
+        -27.0,
+        -27.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009a80"
+    },
+    {
+      "unit_id": 60,
+      "model_name": "Fall300",
+      "candidate_ccw_rotation": 2,
+      "pbc_cell_index": 2,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009a80"
+    },
+    {
+      "unit_id": 60,
+      "model_name": "Fall300",
+      "candidate_ccw_rotation": 2,
+      "pbc_cell_index": 3,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009a80"
+    },
+    {
+      "unit_id": 60,
+      "model_name": "Fall300",
+      "candidate_ccw_rotation": 3,
+      "pbc_cell_index": 0,
+      "height_min_max": [
+        -27.0,
+        -27.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009580"
+    },
+    {
+      "unit_id": 60,
+      "model_name": "Fall300",
+      "candidate_ccw_rotation": 3,
+      "pbc_cell_index": 1,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009580"
+    },
+    {
+      "unit_id": 60,
+      "model_name": "Fall300",
+      "candidate_ccw_rotation": 3,
+      "pbc_cell_index": 2,
+      "height_min_max": [
+        -27.0,
+        -27.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009580"
+    },
+    {
+      "unit_id": 60,
+      "model_name": "Fall300",
+      "candidate_ccw_rotation": 3,
+      "pbc_cell_index": 3,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009580"
+    },
+    {
+      "unit_id": 63,
+      "model_name": "Fall200",
+      "candidate_ccw_rotation": 0,
+      "pbc_cell_index": 0,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009a80"
+    },
+    {
+      "unit_id": 63,
+      "model_name": "Fall200",
+      "candidate_ccw_rotation": 0,
+      "pbc_cell_index": 1,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009a80"
+    },
+    {
+      "unit_id": 63,
+      "model_name": "Fall200",
+      "candidate_ccw_rotation": 0,
+      "pbc_cell_index": 2,
+      "height_min_max": [
+        -27.0,
+        -27.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009a80"
+    },
+    {
+      "unit_id": 63,
+      "model_name": "Fall200",
+      "candidate_ccw_rotation": 0,
+      "pbc_cell_index": 3,
+      "height_min_max": [
+        -27.0,
+        -27.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009a80"
+    },
+    {
+      "unit_id": 63,
+      "model_name": "Fall200",
+      "candidate_ccw_rotation": 1,
+      "pbc_cell_index": 0,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009580"
+    },
+    {
+      "unit_id": 63,
+      "model_name": "Fall200",
+      "candidate_ccw_rotation": 1,
+      "pbc_cell_index": 1,
+      "height_min_max": [
+        -27.0,
+        -27.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009580"
+    },
+    {
+      "unit_id": 63,
+      "model_name": "Fall200",
+      "candidate_ccw_rotation": 1,
+      "pbc_cell_index": 2,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009580"
+    },
+    {
+      "unit_id": 63,
+      "model_name": "Fall200",
+      "candidate_ccw_rotation": 1,
+      "pbc_cell_index": 3,
+      "height_min_max": [
+        -27.0,
+        -27.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009580"
+    },
+    {
+      "unit_id": 63,
+      "model_name": "Fall200",
+      "candidate_ccw_rotation": 2,
+      "pbc_cell_index": 0,
+      "height_min_max": [
+        -27.0,
+        -27.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009a80"
+    },
+    {
+      "unit_id": 63,
+      "model_name": "Fall200",
+      "candidate_ccw_rotation": 2,
+      "pbc_cell_index": 1,
+      "height_min_max": [
+        -27.0,
+        -27.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009a80"
+    },
+    {
+      "unit_id": 63,
+      "model_name": "Fall200",
+      "candidate_ccw_rotation": 2,
+      "pbc_cell_index": 2,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009a80"
+    },
+    {
+      "unit_id": 63,
+      "model_name": "Fall200",
+      "candidate_ccw_rotation": 2,
+      "pbc_cell_index": 3,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009a80"
+    },
+    {
+      "unit_id": 63,
+      "model_name": "Fall200",
+      "candidate_ccw_rotation": 3,
+      "pbc_cell_index": 0,
+      "height_min_max": [
+        -27.0,
+        -27.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009580"
+    },
+    {
+      "unit_id": 63,
+      "model_name": "Fall200",
+      "candidate_ccw_rotation": 3,
+      "pbc_cell_index": 1,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009580"
+    },
+    {
+      "unit_id": 63,
+      "model_name": "Fall200",
+      "candidate_ccw_rotation": 3,
+      "pbc_cell_index": 2,
+      "height_min_max": [
+        -27.0,
+        -27.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009580"
+    },
+    {
+      "unit_id": 63,
+      "model_name": "Fall200",
+      "candidate_ccw_rotation": 3,
+      "pbc_cell_index": 3,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009580"
+    },
+    {
+      "unit_id": 66,
+      "model_name": "Fall400",
+      "candidate_ccw_rotation": 0,
+      "pbc_cell_index": 0,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009a80"
+    },
+    {
+      "unit_id": 66,
+      "model_name": "Fall400",
+      "candidate_ccw_rotation": 0,
+      "pbc_cell_index": 1,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009a80"
+    },
+    {
+      "unit_id": 66,
+      "model_name": "Fall400",
+      "candidate_ccw_rotation": 0,
+      "pbc_cell_index": 2,
+      "height_min_max": [
+        -27.0,
+        -27.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009a80"
+    },
+    {
+      "unit_id": 66,
+      "model_name": "Fall400",
+      "candidate_ccw_rotation": 0,
+      "pbc_cell_index": 3,
+      "height_min_max": [
+        -27.0,
+        -27.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009a80"
+    },
+    {
+      "unit_id": 66,
+      "model_name": "Fall400",
+      "candidate_ccw_rotation": 1,
+      "pbc_cell_index": 0,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009580"
+    },
+    {
+      "unit_id": 66,
+      "model_name": "Fall400",
+      "candidate_ccw_rotation": 1,
+      "pbc_cell_index": 1,
+      "height_min_max": [
+        -27.0,
+        -27.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009580"
+    },
+    {
+      "unit_id": 66,
+      "model_name": "Fall400",
+      "candidate_ccw_rotation": 1,
+      "pbc_cell_index": 2,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009580"
+    },
+    {
+      "unit_id": 66,
+      "model_name": "Fall400",
+      "candidate_ccw_rotation": 1,
+      "pbc_cell_index": 3,
+      "height_min_max": [
+        -27.0,
+        -27.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009580"
+    },
+    {
+      "unit_id": 66,
+      "model_name": "Fall400",
+      "candidate_ccw_rotation": 2,
+      "pbc_cell_index": 0,
+      "height_min_max": [
+        -27.0,
+        -27.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009a80"
+    },
+    {
+      "unit_id": 66,
+      "model_name": "Fall400",
+      "candidate_ccw_rotation": 2,
+      "pbc_cell_index": 1,
+      "height_min_max": [
+        -27.0,
+        -27.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009a80"
+    },
+    {
+      "unit_id": 66,
+      "model_name": "Fall400",
+      "candidate_ccw_rotation": 2,
+      "pbc_cell_index": 2,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009a80"
+    },
+    {
+      "unit_id": 66,
+      "model_name": "Fall400",
+      "candidate_ccw_rotation": 2,
+      "pbc_cell_index": 3,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009a80"
+    },
+    {
+      "unit_id": 66,
+      "model_name": "Fall400",
+      "candidate_ccw_rotation": 3,
+      "pbc_cell_index": 0,
+      "height_min_max": [
+        -27.0,
+        -27.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009580"
+    },
+    {
+      "unit_id": 66,
+      "model_name": "Fall400",
+      "candidate_ccw_rotation": 3,
+      "pbc_cell_index": 1,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009580"
+    },
+    {
+      "unit_id": 66,
+      "model_name": "Fall400",
+      "candidate_ccw_rotation": 3,
+      "pbc_cell_index": 2,
+      "height_min_max": [
+        -27.0,
+        -27.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009580"
+    },
+    {
+      "unit_id": 66,
+      "model_name": "Fall400",
+      "candidate_ccw_rotation": 3,
+      "pbc_cell_index": 3,
+      "height_min_max": [
+        -12.0,
+        -12.0
+      ],
+      "material_row_indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "incoming_word": "0x80008080",
+      "native_output_word": "0x80009580"
+    }
+  ],
+  "limits": [
+    "PBC payload values were reserialized from JSON; original PBC container bytes and resource loading were not executed.",
+    "The repeating neighbor context is synthetic and cannot establish island-scale seams or the elevation-byte transform.",
+    "This writer's output is a terrain/navigation flag word, not a rendered mesh, collision response, water-flow, or actor-movement proof.",
+    "The four material bytes are serialized into each record but this specific height-writer test does not claim their reader behavior."
+  ]
+}

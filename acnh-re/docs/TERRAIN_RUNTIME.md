@@ -78,6 +78,18 @@ adalah uji profil lokal, bukan pengukuran transformasi vertikal native; detail
 per rotasi dan pasangan unit ada di
 [`manifests_pbc_audit.json`](../output/ui_island/manifests_pbc_audit.json).
 
+Awalan tinggi PBC juga telah diberikan kepada penulis native `0x180d20` sebagai
+12 float32 pertama dalam record 52-byte (diikuti empat material byte).
+Sebanyak 208 kasus mencakup ke-13 model terrain yang dipakai, empat orientasi
+kandidat, dan empat sel PBC per model. `River3B` dan `Cliff3B` menghasilkan
+delapan pola word saat orientasi/sel berubah; aset Fall menghasilkan dua pola,
+dan unit datar tetap datar. Neighbor di grid 8×8 direkonstruksi dengan mengulang
+pola PBC 2×2 yang sama. Jadi ini membuktikan konsumen tinggi native membaca
+float tinggi dari payload PBC terurai. Uji ini tidak membuktikan pembacaan empat
+material byte, loader asli, transformasi pulau, seam antar-model, atau kolisi
+mesh. Hasil per kasus ada di
+[`terrain_pbc_native_consumers.json`](../output/mechanics/terrain_pbc_native_consumers.json).
+
 ## Empat titik dan rangkaian fungsi lengkap
 
 Sampler `0x162dc0` menjalankan helper grid dan converter. Trace panggilan native

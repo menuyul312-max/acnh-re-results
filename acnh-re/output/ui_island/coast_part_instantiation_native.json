@@ -120,9 +120,21 @@
     "function": "0x4dd4d0",
     "iteration": "8 rows x 9 columns; skip cells whose UniqueID is zero",
     "source_count": {
-      "coast_parts": 22,
-      "outside_sea_parts": 30,
-      "expected_nonzero_cells": 52
+      "coast_slots": 22,
+      "possible_outside_sea_perimeter_cells": 30,
+      "native_observed_filled_outside_sea_cells_per_template": [
+        28,
+        30
+      ],
+      "native_observed_nonzero_cells_per_template": [
+        50,
+        52
+      ],
+      "full_native_grid_evidence": "output/ui_island/coast_template_grid_native.json",
+      "native_observed_nonzero_cells_range": [
+        50,
+        52
+      ]
     },
     "lookup": {
       "function": "0x551bf0",
@@ -220,7 +232,7 @@
   "limits": [
     "The position constants are resolved to 160.0 units per coast cell and a zero base XYZ vector. The object's parent/world transform composition remains unresolved.",
     "No coast-part rotation, terrain-height snapping, seam construction, or collision generation is proven by this path.",
-    "The 52 nonzero records imply 52 guarded factory dispatches when this update branch runs, not 52 confirmed loaded/rendered objects.",
+    "Native template generation produced 50-52 nonzero grid records depending on the deterministic tick fixture and empty S_concavity side candidates; the guarded loop skips zero UIDs. This implies 50-52 factory dispatches in those tested templates, not confirmed loaded/rendered objects.",
     "The setup flag copied from object +0xe controls whether the wrapper copies a populated grid; the source field's higher-level meaning is unresolved."
   ]
 }

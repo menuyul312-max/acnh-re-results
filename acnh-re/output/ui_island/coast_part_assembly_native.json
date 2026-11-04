@@ -234,7 +234,7 @@
     },
     {
       "function": "0x4deeb0",
-      "operation": "fill perimeter cells with OutsideSea parts chosen by ReefType compatibility, including four corner transitions",
+      "operation": "fill perimeter cells with OutsideSea parts chosen by ReefType compatibility, including four corner transitions; an empty reef pool returns UID 0 and leaves that target empty",
       "direct_edge_rules": 27,
       "corner_groups": 4,
       "sea_unique_ids_by_reef_type_max_candidates": 6
@@ -58395,7 +58395,7 @@
           ]
         },
         "diagonal_rule": "OutsideSea with ReefType equal to coast_source ReefType",
-        "side_rule": "OutsideSea with orientation-specific ReefType; map the coast source's convexity/flat/concavity class onto that side"
+        "side_rule": "OutsideSea with orientation-specific ReefType; map the coast source's convexity/flat/concavity class onto that side; if the derived orientation-specific ReefType has no OutsideSea row, the native selector returns 0 and the side cell remains empty"
       },
       {
         "name": "NW",
@@ -58418,7 +58418,7 @@
           ]
         },
         "diagonal_rule": "OutsideSea with ReefType equal to coast_source ReefType",
-        "side_rule": "OutsideSea with orientation-specific ReefType; map the coast source's convexity/flat/concavity class onto that side"
+        "side_rule": "OutsideSea with orientation-specific ReefType; map the coast source's convexity/flat/concavity class onto that side; if the derived orientation-specific ReefType has no OutsideSea row, the native selector returns 0 and the side cell remains empty"
       },
       {
         "name": "SE",
@@ -58441,7 +58441,7 @@
           ]
         },
         "diagonal_rule": "OutsideSea with ReefType equal to coast_source ReefType",
-        "side_rule": "OutsideSea with orientation-specific ReefType; map the coast source's convexity/flat/concavity class onto that side"
+        "side_rule": "OutsideSea with orientation-specific ReefType; map the coast source's convexity/flat/concavity class onto that side; if the derived orientation-specific ReefType has no OutsideSea row, the native selector returns 0 and the side cell remains empty"
       },
       {
         "name": "SW",
@@ -58464,7 +58464,7 @@
           ]
         },
         "diagonal_rule": "OutsideSea with ReefType equal to coast_source ReefType",
-        "side_rule": "OutsideSea with orientation-specific ReefType; map the coast source's convexity/flat/concavity class onto that side"
+        "side_rule": "OutsideSea with orientation-specific ReefType; map the coast source's convexity/flat/concavity class onto that side; if the derived orientation-specific ReefType has no OutsideSea row, the native selector returns 0 and the side cell remains empty"
       }
     ],
     "outside_sea_rows": 52,
@@ -58504,8 +58504,17 @@
       },
       "index_expression": "side_base + class_index"
     },
-    "final_nonzero_cell_count": 52,
-    "validation": "22 coast slots + 30 perimeter sea cells + 20 cleared interior cells cover all 72 cells"
+    "validation": "The 72 cells partition into 22 coast slots, 30 possible sea-perimeter slots and 20 cleared interior cells. Native execution on all 36 templates fills 28-30 sea slots; 44 targets remain zero because S_concavity has no OutsideSea candidate.",
+    "reef_types_without_any_part_or_sea_candidate": [
+      {
+        "enum_ordinal": 5,
+        "reef_type": "NE_concavity"
+      },
+      {
+        "enum_ordinal": 14,
+        "reef_type": "S_concavity"
+      }
+    ]
   },
   "instruction_evidence": {
     "coast_grid_zero_init": {
@@ -58574,5 +58583,71 @@
     "The 9x8 record coordinates are discrete grid x/z only. This function does not reveal placement; the downstream instance pass resolves 160-unit local spacing, while parent/world origin, rotation, and seam geometry remain unresolved.",
     "The follow-up user archive contains decoded PBC payloads for all 136 FieldOutsideParts model names; this assembly artifact does not itself prove which candidate loads or whether its collision resource succeeds at runtime. See manifests_pbc_audit.json.",
     "The output records contain a UniqueID and integer grid coordinates, but downstream model instantiation, PBC collision, water rendering, and runtime success are outside this proof."
-  ]
+  ],
+  "native_grid_consumer_test": {
+    "artifact": "output/ui_island/coast_grid_serializer_native.json",
+    "functions": [
+      "0x4de810",
+      "0x4e0c90"
+    ],
+    "template_fixtures": 36,
+    "serialized_records": 2592,
+    "mismatches": 0,
+    "limits": "Slot UIDs use first source-row candidates and one OutsideSea UID is repeated across perimeter; selector and reef-aware assembly are tested separately."
+  },
+  "native_candidate_selector_test": {
+    "artifact": "output/ui_island/coast_parts_selector_native.json",
+    "functions": [
+      "0x4dfeb0",
+      "0x4e01d0"
+    ],
+    "coast_slot_kinds": 24,
+    "outside_sea_reef_types": 22,
+    "candidate_ids_compared": 130,
+    "full_selection_cases": 368,
+    "mismatches": 0,
+    "limits": "Uses reconstructed table row wrappers and warmed caches from decoded FieldOutsideParts; deterministic GetSystemTick import shim; full 0x4dea40/0x4deeb0 grid wrapper remains unexecuted."
+  },
+  "native_template_grid_test": {
+    "artifact": "output/ui_island/coast_template_grid_native.json",
+    "functions": [
+      "0x4de810",
+      "0x4dea40",
+      "0x4dfeb0",
+      "0x4deeb0",
+      "0x4e01d0",
+      "0x4dfcb0",
+      "0x4e0c90"
+    ],
+    "templates": 36,
+    "coast_slot_ids_checked": 792,
+    "outside_sea_selector_calls": 1404,
+    "outside_sea_selector_empty_returns": 44,
+    "empty_target_reef_type": "S_concavity (enum ordinal 14; no OutsideSea source row)",
+    "filled_perimeter_cells": 1036,
+    "empty_perimeter_cells": 44,
+    "filled_sea_cells_per_template_range": [
+      28,
+      30
+    ],
+    "serialized_records_checked": 2592,
+    "native_mismatches": 0,
+    "limits": "Reconstructed table row wrappers/warmed caches and deterministic nn::os::GetSystemTick; original resource loading/cache bootstrap and world/model transforms remain outside this test.",
+    "empty_perimeter_positions": [
+      {
+        "xy": [
+          1,
+          7
+        ],
+        "templates": 18
+      },
+      {
+        "xy": [
+          7,
+          7
+        ],
+        "templates": 26
+      }
+    ]
+  }
 }
