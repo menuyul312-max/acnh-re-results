@@ -215,6 +215,14 @@ class VisitorScheduleNsoTests(unittest.TestCase):
                          [0xb9024268, 0xb9024668, 0xb9024a68, 0xb9024e68])  # str w8, [x19, #0x240/#0x244/#0x248/#0x24c]
         self.assertEqual([word(a) for a in (0x29d6464, 0x29d613c)], [0x43100000, 0x43000000])  # 144.0f, 128.0f
 
+    def test_kk_live_date_rules(self):
+        lst = lambda a: self.read(a, 256).split(b'\0', 1)[0].decode().split(',')  # noqa: E731
+        word = lambda a: int.from_bytes(self.read(a, 4), 'little')  # noqa: E731
+        self.assertEqual(lst(0x29b9f72)[:5], ['Global', 'Region', 'Other', 'Totakeke', 'None'])
+        self.assertEqual(lst(0x298d19c)[:3], ['Before', 'Skip', 'Same'])
+        self.assertEqual((word(0xf03b8), word(0xf03bc)), (0x321f07e9, 0x4b080121))  # mov w9, #6; sub w1, w9, w8 (Saturday)
+        self.assertEqual(word(0xf92198), 0x528002a1)  # mov w1, #0x15 (birthday scan starts 21 days ahead)
+
     def test_island_score_enum_lists(self):
         lst = lambda a: self.read(a, 4096).split(b'\0', 1)[0].decode().split(',')  # noqa: E731
         self.assertEqual(lst(0x2955748)[26:28], ['Bridge', 'Slope'])

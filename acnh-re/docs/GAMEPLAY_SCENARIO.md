@@ -201,7 +201,49 @@ Hari tambahan Wisp dan hari Celeste yang jatuh pada hari event atau konser K.K. 
 - Daisy Mae (`boc`, `0xfdafa0`): indeks hari 0 (Minggu) **dan** state toko ≥ 2 (member `+0x1f3e98`, prosesor `0xfc4560`).
 - Harvey: `SpnVisitMainField`, tetapi tidak pada hari K.K. atau event global.
 - **Jenis konser K.K. hari ini** (`0xfdb060`): 0 bila `TkkFirstLive` OFF; selain itu dicek lewat event kalender, `FirstLive` → 3, `BirthdayLive` → 2, `NormalLive` → 1. K.K. tampil bila nilainya bukan 0 dan `TkkReturn` OFF (`0xfdbae0`).
-- **[TBL]** Konser K.K. biasa (`NormalLive`, `EventBegin=16`) dan konser ulang tahun (`BirthdayLive`, `EventBegin=12`) tidak menyimpan hari dalam minggu di `CalendarEventParam`. Penentu tanggal event `NormalLive` ada di sistem kalender native (`0xf2a30`, dipanggil `0xfdb060`) dan belum dibaca.
+- **[TBL]** Konser K.K. biasa (`NormalLive`, `EventBegin=16`) dan konser ulang tahun (`BirthdayLive`, `EventBegin=12`) tidak menyimpan tanggal di `CalendarEventParam`. Tanggalnya dihitung native (lihat 3.6).
+
+### 3.6 Tanggal konser K.K.
+
+**[PSEUDO]** Pencarian event (`0xf2a30` → `0xf2aa0` → `0xf1e20` → `0xf1360`) membandingkan label event dengan lima string global (`0xfe390`), lalu memanggil fungsi tanggal khusus:
+
+| Label | Fungsi | Aturan |
+|---|---|---|
+| `PlayerBirthday` | `0xefe10` | ulang tahun salah satu pemain (member pemain `+0x16a08`) |
+| `NpcBirthday` | `0xf01e0` | ulang tahun villager |
+| `NormalLive` | `0xf0330` | lihat di bawah |
+| `BirthdayLive` | `0xf11b0` | lihat di bawah |
+| `FirstLive` | `0xffbc90` | dipesan lewat `TkkFirstLiveReserved` (GAMEPLAY_FLOW §10) |
+
+Enum `EventType` di rodata `0x29b9f72` = `Global, Region, Other, Totakeke, None`; baris `None` dilewati. Enum `TkkSkip*` di `0x298d19c` = `Before`(0), `Skip`(1), `Same`(2).
+
+**NormalLive** (`0xf0330`), hanya bila `TkkFirstLive` ON:
+
+1. Kandidat = hari Sabtu dari minggu Minggu–Sabtu tanggal itu (`tanggal + (6 − hari)`, hari dari `0x1fbd50`, 0 = Minggu).
+2. Bila kandidat tidak punya event kalender (`0xf0790`), konser jatuh di hari itu.
+3. Bila ada event, kolom `TkkSkipNormal` event itu menentukan:
+   - `Same` → konser tetap di hari itu;
+   - `Skip` → tidak ada konser minggu itu;
+   - `Before` → mundur satu hari dan ulangi, paling jauh sampai Senin. Bila Senin pun `Before`, tidak ada konser.
+4. Di tabel, `Before` dipakai turnamen memancing, turnamen serangga, dan Countdown. Event lain `Same`, dan tidak ada yang `Skip`.
+
+**BirthdayLive:**
+
+- **Penjadwal** (`0xf920f0`, per pemain dari `0xf6130` saat pergantian hari): mulai dari hari ini + 21 lalu mundur hari demi hari sampai hari ini. Hari pertama yang sama dengan ulang tahun pemain (member `+0x11478`, `0xefc70`) menjadi kandidat.
+- **Konflik event:** bila kandidat punya event kalender, `TkkSkipBirthday` (`0xf6090`) menentukan hasilnya:
+  - `Same` → tetap;
+  - `Skip` → tidak ada tanggal;
+  - `Before` → mundur ke hari sebelumnya.
+- **Simpanan:** tanggal disimpan di `+0x34942` (`0xf41fd0`). Pada hari itu villager mengirim pesan ulang tahun (`BDayMsgSenderNNpcUniqueID0/1`).
+- **Pemeriksa** (`0xf11b0`): konser terjadi bila `TkkFirstLive` ON dan ada pemain yang:
+  - punya `TotakekeLiveCount > 0` (pernah menonton K.K.);
+  - tanggal di member pemain `+0x17370` (deskriptor `0x33d5868`) sama persis (tahun, bulan, hari) dengan hari ini.
+
+  Apakah `+0x17370` adalah tanggal `+0x34942` yang sama dari basis lain belum dicek.
+
+**Jam** (`0xfdb150`): pada hari konser, fungsi ini mengembalikan 1 bila jam < `EventBegin` event itu (`NormalLive` 16, `BirthdayLive` 12) dan 2 bila sudah lewat. Nilai 3 dipakai untuk `FirstLive` dan satu cabang tanggal/jam < 5 yang argumennya hilang di pseudocode.
+
+Jadwal pengunjung (§3.3–3.4) menghindari hari-hari ini karena `0xfda940`, `0xfdad10`, `0xfdae20`, dan `0xfd9620` memanggil `0xf2a30` dengan label yang sama.
 - **[EF]** Hari jual lobak Daisy Mae tidak ada di EventFlow. Harga lobak juga belum di-RE.
 
 ## 4. Satu tahun
@@ -373,10 +415,9 @@ Yang masih terbuka dari jadwal ini:
 
 | # | Celah | Titik masuk |
 |---|---|---|
-| 1 | Hari konser K.K. biasa | penentu tanggal event `NormalLive` di kalender native `0xf2a30` (§3.5) |
-| 2 | Harga lobak dan stok toko | belum ada titik masuk string; mulai dari flag `FirstKabuPattern` |
-| 3 | Prosesor yang belum dibaca | `0xf8f190`, `0xf7d4c0`, `0xfc1b80`, `0xbdfd40`, `0xf8b460` (tujuan RNG) |
-| 4 | Menaikkan [PSEUDO] menjadi terbukti | emulasi fungsi fasilitas dan rumus skor pulau seperti tahap mekanik terdahulu |
-| 5 | Format save | konstruktor layout save `0xf32fa0` (pemanggil `0xf30220`, `0xf416c0`) |
+| 1 | Harga lobak dan stok toko | belum ada titik masuk string; mulai dari flag `FirstKabuPattern` |
+| 2 | Prosesor yang belum dibaca | `0xf8f190`, `0xf7d4c0`, `0xfc1b80`, `0xbdfd40`, `0xf8b460` (tujuan RNG) |
+| 3 | Menaikkan [PSEUDO] menjadi terbukti | emulasi fungsi fasilitas dan rumus skor pulau seperti tahap mekanik terdahulu |
+| 4 | Format save | konstruktor layout save `0xf32fa0` (pemanggil `0xf30220`, `0xf416c0`) |
 
 Antrian yang sama, dalam bentuk yang bisa dibaca mesin dan ditandai statusnya, ada di [re_queue.json](re_queue.json).

@@ -953,6 +953,33 @@
      "looks for state byte 3 in the 4 NPC structures at +0xcca68 (stride 0x12ab0); sets MoveInCompletion, builds the house on the given plot"
     ]
    },
+   "0xf1360": {
+    "role": "calendar event date match by label",
+    "reading": [
+     "compares the event label with globals set in 0xfe390: PlayerBirthday -> 0xefe10, NpcBirthday -> 0xf01e0, NormalLive -> 0xf0330, BirthdayLive -> 0xf11b0, FirstLive -> 0xffbc90 + TkkFirstLiveReserved",
+     "EventType enum (rodata 0x29b9f72) Global, Region, Other, Totakeke, None; None rows are skipped (0xf1e20, 0xf2c20)"
+    ]
+   },
+   "0xf0330": {
+    "role": "NormalLive date rule",
+    "reading": [
+     "needs TkkFirstLive; candidate = Saturday of the Sunday..Saturday week (date + 6 - weekday, 0x1fbd50)",
+     "no calendar event that day (0xf0790) -> live that day; else TkkSkipNormal (array 0x32d5848, enum 0x298d19c Before/Skip/Same): Same -> that day, Skip -> no live this week, Before -> one day earlier and retry, down to Monday"
+    ]
+   },
+   "0xf11b0": {
+    "role": "BirthdayLive date rule",
+    "reading": [
+     "needs TkkFirstLive; any of 8 players with TotakekeLiveCount > 0 whose date at player member +0x17370 (descriptor 0x33d5868) equals today (year, month, day; 0xf420c0)"
+    ]
+   },
+   "0xf920f0": {
+    "role": "per-player birthday event date at day change (from 0xf6130)",
+    "reading": [
+     "scans from today + 21 days back to today for the player birthday (member +0x11478, 0xefc70); a calendar event on that day uses TkkSkipBirthday (0xf6090): Same keeps, Skip clears, Before moves one day earlier",
+     "stores the date at +0x34942 (0xf41fd0); on that day villager birthday messages are set (BDayMsgSenderNNpcUniqueID0/1)"
+    ]
+   },
    "0xf32fa0": {
     "role": "save layout constructor",
     "reading": [
@@ -2889,6 +2916,19 @@
      "0xfd8920"
     ],
     "pseudocode_readings": {
+     "0xf0330": {
+      "role": "NormalLive date rule",
+      "reading": [
+       "needs TkkFirstLive; candidate = Saturday of the Sunday..Saturday week (date + 6 - weekday, 0x1fbd50)",
+       "no calendar event that day (0xf0790) -> live that day; else TkkSkipNormal (array 0x32d5848, enum 0x298d19c Before/Skip/Same): Same -> that day, Skip -> no live this week, Before -> one day earlier and retry, down to Monday"
+      ]
+     },
+     "0xf11b0": {
+      "role": "BirthdayLive date rule",
+      "reading": [
+       "needs TkkFirstLive; any of 8 players with TotakekeLiveCount > 0 whose date at player member +0x17370 (descriptor 0x33d5868) equals today (year, month, day; 0xf420c0)"
+      ]
+     },
      "0xfd8920": {
       "role": "K.K. unlock, weekly visitor schedule and daily resets at day change (dispatcher passes the schedule member)",
       "reading": [
@@ -6709,7 +6749,15 @@
     "day_change": [
      "0xf920f0"
     ],
-    "pseudocode_readings": {}
+    "pseudocode_readings": {
+     "0xf920f0": {
+      "role": "per-player birthday event date at day change (from 0xf6130)",
+      "reading": [
+       "scans from today + 21 days back to today for the player birthday (member +0x11478, 0xefc70); a calendar event on that day uses TkkSkipBirthday (0xf6090): Same keeps, Skip clears, Before moves one day earlier",
+       "stores the date at +0x34942 (0xf41fd0); on that day villager birthday messages are set (BDayMsgSenderNNpcUniqueID0/1)"
+      ]
+     }
+    }
    },
    "cPlayer:BDayMsgSenderNNpcUniqueID0": {
     "name_ja": "バースデーメッセージを送ったNNpcのユニークID",
@@ -6724,7 +6772,15 @@
     "day_change": [
      "0xf920f0"
     ],
-    "pseudocode_readings": {}
+    "pseudocode_readings": {
+     "0xf920f0": {
+      "role": "per-player birthday event date at day change (from 0xf6130)",
+      "reading": [
+       "scans from today + 21 days back to today for the player birthday (member +0x11478, 0xefc70); a calendar event on that day uses TkkSkipBirthday (0xf6090): Same keeps, Skip clears, Before moves one day earlier",
+       "stores the date at +0x34942 (0xf41fd0); on that day villager birthday messages are set (BDayMsgSenderNNpcUniqueID0/1)"
+      ]
+     }
+    }
    },
    "cPlayer:BDayMsgSenderNNpcUniqueID1": {
     "name_ja": "バースデーメッセージを送ったNNpcのユニークID",
@@ -6739,7 +6795,15 @@
     "day_change": [
      "0xf920f0"
     ],
-    "pseudocode_readings": {}
+    "pseudocode_readings": {
+     "0xf920f0": {
+      "role": "per-player birthday event date at day change (from 0xf6130)",
+      "reading": [
+       "scans from today + 21 days back to today for the player birthday (member +0x11478, 0xefc70); a calendar event on that day uses TkkSkipBirthday (0xf6090): Same keeps, Skip clears, Before moves one day earlier",
+       "stores the date at +0x34942 (0xf41fd0); on that day villager birthday messages are set (BDayMsgSenderNNpcUniqueID0/1)"
+      ]
+     }
+    }
    },
    "cPlayer:BDayMsgSenderSNpcUniqueID0": {
     "name_ja": "バースデーメッセージを送ったSNpcのユニークID",
@@ -6754,7 +6818,15 @@
     "day_change": [
      "0xf920f0"
     ],
-    "pseudocode_readings": {}
+    "pseudocode_readings": {
+     "0xf920f0": {
+      "role": "per-player birthday event date at day change (from 0xf6130)",
+      "reading": [
+       "scans from today + 21 days back to today for the player birthday (member +0x11478, 0xefc70); a calendar event on that day uses TkkSkipBirthday (0xf6090): Same keeps, Skip clears, Before moves one day earlier",
+       "stores the date at +0x34942 (0xf41fd0); on that day villager birthday messages are set (BDayMsgSenderNNpcUniqueID0/1)"
+      ]
+     }
+    }
    },
    "cPlayer:BDayMsgSenderSNpcUniqueID1": {
     "name_ja": "バースデーメッセージを送ったSNpcのユニークID",
@@ -6769,7 +6841,15 @@
     "day_change": [
      "0xf920f0"
     ],
-    "pseudocode_readings": {}
+    "pseudocode_readings": {
+     "0xf920f0": {
+      "role": "per-player birthday event date at day change (from 0xf6130)",
+      "reading": [
+       "scans from today + 21 days back to today for the player birthday (member +0x11478, 0xefc70); a calendar event on that day uses TkkSkipBirthday (0xf6090): Same keeps, Skip clears, Before moves one day earlier",
+       "stores the date at +0x34942 (0xf41fd0); on that day villager birthday messages are set (BDayMsgSenderNNpcUniqueID0/1)"
+      ]
+     }
+    }
    },
    "cPlayer:BalloonShootCountToday": {
     "name_ja": "今日風船をいくつ撃ったか？",
