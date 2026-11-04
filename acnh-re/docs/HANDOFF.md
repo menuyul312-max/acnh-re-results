@@ -92,3 +92,4 @@ Level bukti: **[EF]** EventFlow, **[TBL]** tabel, **[PSEUDO]** pseudocode/disass
 | 2026-11-04 | Sisa kecil: RNG thread, level rumah, posisi plaza, penulis `AbandonedHouse`, jalur pindah masuk, kategori 10, bungkus item, mode sesi, tanggal ulang tahun, stok toko, harga jual, `EarlyOrLate`, botol pesan, layout pemain | `a607f18` |
 | 2026-11-04 | Verifikasi native prosesor fasilitas (`0xfcc300`, `0xf77050` tenda, `0xf26330`) | `5a1d474` |
 | 2026-11-04 | Filter kelas turunan Nook dan selector state 2/3; query Daisy Mae `EventFlowQueryBoaCanSetKabu` terikat ke `SNPC_boc` dan 4 cabang native teruji; dampak flag skor dan syarat bit struktur diperjelas; caller `AbandonedHouse` dibatasi dengan call graph; build indeks dan suite 21/21 | `6b4a0e8` |
+| 2026-11-04 | Alur input lobak dan layout numerik dikaitkan lewat EventFlow; skema publik disejajarkan dengan layout save (85/88 member, 143/151 vtable paths); scan empat NSO dan caveat lintas versi dicatat | `4bf8556` |
