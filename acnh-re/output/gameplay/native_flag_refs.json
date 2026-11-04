@@ -1077,8 +1077,9 @@
    "0xfcdfe0": {
     "role": "additional Nook stock picks",
     "reading": [
-     "uses two ItemFrom values obtained from save node +0x20d0e0 and a third source value derived from the shop argument; for each, builds a filter and calls 0xce170 with the requested count (1 for state <2, 2 for state 2, -1 for state 3)",
-     "the three runtime source values are not yet mapped to ItemFrom labels"
+     "builds three filter values and calls 0xce170 once for each with the requested count (1 for state <2, 2 for state 2, -1 for state 3); the first two are mapped from bytes +0x925/+0x924 of save node +0x20d0e0, and the third is mapped from shop argument byte +10",
+     "mapping helper 0xf50ad0 uses eight fixed value pairs: {0x57,0x81f}, {0x55,0x0e}, {0x58,0x3c}, {0x56,0xe70}, {0x54,0x7c0}, {0x53,0x1e0}, {0x52,0xf81}, {0x59,0xc0f}",
+     "the filtered ItemParam field and semantic labels for these three values are not yet recovered"
     ]
    },
    "0xfc6300": {
