@@ -202,6 +202,7 @@ Hari tambahan Wisp dan hari Celeste yang jatuh pada hari event atau konser K.K. 
 - Harvey: `SpnVisitMainField`, tetapi tidak pada hari K.K. atau event global.
 - **Jenis konser K.K. hari ini** (`0xfdb060`): 0 bila `TkkFirstLive` OFF; selain itu dicek lewat event kalender, `FirstLive` → 3, `BirthdayLive` → 2, `NormalLive` → 1. K.K. tampil bila nilainya bukan 0 dan `TkkReturn` OFF (`0xfdbae0`).
 - **[TBL]** Konser K.K. biasa (`NormalLive`, `EventBegin=16`) dan konser ulang tahun (`BirthdayLive`, `EventBegin=12`) tidak menyimpan tanggal di `CalendarEventParam`. Tanggalnya dihitung native (lihat 3.6).
+- **[EF]** Hari jual lobak Daisy Mae tidak ada di EventFlow; aturan native-nya ada di `0xfdafa0` (atas). Harga lobak ada di 3.7.
 
 ### 3.6 Tanggal konser K.K.
 
@@ -244,7 +245,74 @@ Enum `EventType` di rodata `0x29b9f72` = `Global, Region, Other, Totakeke, None`
 **Jam** (`0xfdb150`): pada hari konser, fungsi ini mengembalikan 1 bila jam < `EventBegin` event itu (`NormalLive` 16, `BirthdayLive` 12) dan 2 bila sudah lewat. Nilai 3 dipakai untuk `FirstLive` dan satu cabang tanggal/jam < 5 yang argumennya hilang di pseudocode.
 
 Jadwal pengunjung (§3.3–3.4) menghindari hari-hari ini karena `0xfda940`, `0xfdad10`, `0xfdae20`, dan `0xfd9620` memanggil `0xf2a30` dengan label yang sama.
-- **[EF]** Hari jual lobak Daisy Mae tidak ada di EventFlow. Harga lobak juga belum di-RE.
+
+### 3.7 Harga lobak dan stok toko
+
+**[PSEUDO]** Harga lobak dibuat oleh `0xfc6d00`, dipanggil `0xfc7b40` dari prosesor toko `0xfc4560`.
+
+**Kapan dibuat ulang:** saat pertama kali jalan, atau saat hari Minggu minggu berjalan (tanggal − hari) berbeda dari minggu permainan sebelumnya. Saat pertama kali, pola awal diambil acak 0–3.
+
+**Struktur** (u32):
+
+| Offset | Isi |
+|---|---|
+| `+0x00` | harga dasar = acak(21) + 90, jadi 90–110 |
+| `+0x04`, `+0x08` | Minggu pagi/sore, diisi lalu dinolkan |
+| `+0x0c`…`+0x38` | Senin pagi s.d. Sabtu sore, 12 harga |
+| `+0x3c` | pola |
+| `+0x40` | awal puncak |
+
+Harga = `int(rate × dasar + 0.99999)`, dengan u = acak [0, 1).
+
+**Pola minggu depan** dari pola sekarang (r = acak 0–99):
+
+| Pola sekarang | → 0 | → 1 | → 2 | → 3 |
+|---|---|---|---|---|
+| 0 | r < 20 | 20–49 | 50–64 | ≥ 65 |
+| 1 | < 50 | 50–54 | 55–74 | ≥ 75 |
+| 2 | < 25 | 25–69 | 70–74 | ≥ 75 |
+| 3 | < 45 | 45–69 | 70–84 | ≥ 85 |
+
+Bila `FirstKabuBuy` ON dan `FirstKabuPattern` masih OFF, `FirstKabuPattern` dinyalakan dan pola dipaksa 3. Artinya minggu sesudah pembelian lobak pertama selalu memakai pola 3.
+
+**Bentuk tiap pola** (rate per setengah hari, Senin pagi = indeks 2):
+
+- **Pola 0:** naik dan turun bergantian, 12 slot total:
+  - fase tinggi 1: acak(7) slot, rate 0.9–1.4;
+  - fase turun 1: 2 atau 3 slot, mulai 0.6–0.8, tiap slot turun 0.04–0.10;
+  - fase tinggi 2;
+  - fase turun 2: 5 − panjang fase turun 1;
+  - fase tinggi 3. Panjang fase tinggi 2 + 3 = 7 − fase tinggi 1, dan fase tinggi 3 = acak(itu).
+- **Pola 1:** puncak dimulai di indeks acak(7)+3, yaitu Senin sore s.d. Kamis sore.
+  - Sebelum puncak: mulai 0.85–0.9, tiap slot turun 0.03–0.05.
+  - Lima slot puncak: 0.9–1.4, 1.4–2.0, **2.0–6.0**, 1.4–2.0, 0.9–1.4.
+  - Sesudahnya: 0.4–0.9.
+- **Pola 2:** turun terus dari 0.85–0.9, tiap slot turun 0.03–0.05.
+- **Pola 3:** puncak dimulai di indeks acak(8)+2.
+  - Sebelum puncak: mulai 0.4–0.9, tiap slot turun 0.03–0.05.
+  - Puncak: 0.9–1.4, 0.9–1.4, lalu r₁ − 1, r, r₁ − 1, dengan r = 1.4–2.0 dan r₁ = acak(1.4, r) × dasar.
+  - Sesudahnya: mulai 0.4–0.9, tiap slot turun 0.03–0.05.
+
+Konstanta float dibaca dari rodata (`0x29d5e8c` = 0.9, `0x29d5d94` = 1.4, `0x29d5e28` = 0.6, …). RNG yang dipakai adalah `0x19aa0e0` dengan state TLS (`0x33d2b68`), sama seperti pembuat jadwal pengunjung.
+
+**Stok harian.** Semua toko memakai pola yang sama:
+
+1. himpunan item yang sedang musim untuk tanggal itu (`0xab33e0`, dari `ItemSeasonalityParam` utara/selatan);
+2. ∩ `ItemKind` tertentu (`0xa0fd00`);
+3. ∩ `ItemFrom` tertentu (`0x276fb0`/`0xa0fd40`);
+4. ambil acak (`0xa120c0`, RNG `0x19aa040` di-seed dari RNG TLS).
+
+Enum `ItemFrom` ada di rodata `0x29b535d`.
+
+| Fungsi | Toko | Pool |
+|---|---|---|
+| `0xfd0630` → `0xfce9e0`, `0xfceb90`, `0xfcf660` | Nook's Cranny | `Ftr`/`DoorDeco`/`Tambourine` × `ShopDefault`, `ShopMiscGoods`, `ShopLv1`, `ShopLargeGoods`, `ShopHighClass`, `ShopSeasonSale`, `ShopUmbrellaLv1/2`, `ShopWrappingPaper`. Pool mengikuti state toko (`0xfc4e30`) |
+| `0xfc56c0` | Saharah (`LaurentWallFloor`) | 5 slot: `Rug` × `RugL`, `RugM`, `RugS`; `RoomWall` dan `RoomFloor` × `LaurentWallFloor` |
+| `0xfc8760` | Kicks | `ShoesBagShop` × `Shoes`/`Socks`/`Bag`; 32 slot (`+0x00`…`+0xf8`) dikosongkan dulu |
+| `0xfca870` | Able Sisters / Label | `Tailor`, `TailorMarketOnly`, `HgcQuestReward` × `Tops`, `Bottoms`, `OnePiece`, `Cap`, `Helmet`, `Accessory`, `Socks`, `Shoes` (flag `HgcVisitFlagForTailor`) |
+| `0xfc6300` → `0xfc5d60` | belum jelas | `Ftr`/`Helmet`, satu ambilan |
+
+Jumlah slot per toko dan bobot ambilan di Nook's Cranny belum dibaca rinci (sisa terbuka di `re_queue.json`).
 
 ## 4. Satu tahun
 
@@ -415,9 +483,8 @@ Yang masih terbuka dari jadwal ini:
 
 | # | Celah | Titik masuk |
 |---|---|---|
-| 1 | Harga lobak dan stok toko | belum ada titik masuk string; mulai dari flag `FirstKabuPattern` |
-| 2 | Prosesor yang belum dibaca | `0xf8f190`, `0xf7d4c0`, `0xfc1b80`, `0xbdfd40`, `0xf8b460` (tujuan RNG) |
-| 3 | Menaikkan [PSEUDO] menjadi terbukti | emulasi fungsi fasilitas dan rumus skor pulau seperti tahap mekanik terdahulu |
-| 4 | Format save | konstruktor layout save `0xf32fa0` (pemanggil `0xf30220`, `0xf416c0`) |
+| 1 | Prosesor yang belum dibaca | `0xf8f190`, `0xf7d4c0`, `0xfc1b80`, `0xbdfd40`, `0xf8b460` (tujuan RNG) |
+| 2 | Menaikkan [PSEUDO] menjadi terbukti | emulasi fungsi fasilitas dan rumus skor pulau seperti tahap mekanik terdahulu |
+| 3 | Format save | konstruktor layout save `0xf32fa0` (pemanggil `0xf30220`, `0xf416c0`) |
 
 Antrian yang sama, dalam bentuk yang bisa dibaca mesin dan ditandai statusnya, ada di [re_queue.json](re_queue.json).

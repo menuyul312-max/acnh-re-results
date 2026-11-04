@@ -223,6 +223,15 @@ class VisitorScheduleNsoTests(unittest.TestCase):
         self.assertEqual((word(0xf03b8), word(0xf03bc)), (0x321f07e9, 0x4b080121))  # mov w9, #6; sub w1, w9, w8 (Saturday)
         self.assertEqual(word(0xf92198), 0x528002a1)  # mov w1, #0x15 (birthday scan starts 21 days ahead)
 
+    def test_turnip_and_shop_stock(self):
+        import struct
+        f = lambda a: round(struct.unpack('<f', self.read(a, 4))[0], 5)  # noqa: E731
+        self.assertEqual([f(a) for a in (0x29d5e8c, 0x29d5d94, 0x29d5e28, 0x29d6248, 0x29d5dbc, 0x29d5f24, 0x29d5c84)],
+                         [0.9, 1.4, 0.6, -0.2, 0.8, -0.05, -0.03])
+        frm = self.read(0x29b535d, 4096).split(b'\0', 1)[0].decode().split(',')
+        self.assertEqual([frm[i] for i in (1, 2, 3, 4, 48, 49, 50, 51, 52)],
+                         ['ShopDefault', 'ShopMiscGoods', 'ShopLargeGoods', 'ShopHighClass', 'RugS', 'RugM', 'RugL', 'LaurentWallFloor', 'ShoesBagShop'])
+
     def test_island_score_enum_lists(self):
         lst = lambda a: self.read(a, 4096).split(b'\0', 1)[0].decode().split(',')  # noqa: E731
         self.assertEqual(lst(0x2955748)[26:28], ['Bridge', 'Slope'])
