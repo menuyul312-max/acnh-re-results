@@ -23,7 +23,7 @@ Koreksi alamat: nama Ghidra `FUN_00652bb0` berarti ELF **0x552bb0**, bukan 0x652
 
 | Poin | Bukti saat ini | Celah yang tetap terbuka |
 |---|---|---|
-| 1. Loader terrain | Jalur native 0x528bf0→0x558f40 memetakan transfer sel 14-byte dan semua 96 preset 112×96. Arsip manifest lanjutan menyediakan PBC untuk 13 dari 13 unit yang dipakai; aset unit berukuran 2×2 sel ×5 unit dan memiliki tinggi/material nyata. | Join waktu-muat dari record preset 14-byte ke PBC/runtime 52-byte belum dieksekusi bersama. Arti byte elevasi ke tinggi dunia, offset vertikal, alokasi/chunk, dan perubahan terrain live masih terbuka. Model Cliff8 tidak ada PBC, tetapi ID itu tak dipakai preset; ada satu PBC jalan tambahan di luar tabel. |
+| 1. Loader terrain | Jalur native 0x528bf0→0x558f40 memetakan transfer sel 14-byte dan semua 96 preset 112×96. Arsip manifest lanjutan menyediakan PBC untuk 13 dari 13 unit yang dipakai; footprint 2×2 sel ×5 unit cocok dengan satu sel LandMaking 10-unit yang dihitung dari kisi pantai. | Join waktu-muat dari record preset 14-byte ke PBC/runtime 52-byte belum dieksekusi bersama. Uji seam tidak mendukung satu offset elevasi seragam; transform vertikal, alokasi/chunk, dan perubahan terrain live masih terbuka. Model Cliff8 tidak ada PBC, tetapi ID itu tak dipakai preset; ada satu PBC jalan tambahan di luar tabel. |
 | 2. Pemilihan template luar | Selector 0x552bb0 teruji 528 kasus. Urutan enum memiliki dukungan literal/initializer. Fungsi generator 0x529910 secara statis memanggil pembaca kategori 0x54e330 dan selector empat kali, lalu mengirim hasil ke setup 0x528bf0. Semua 96 preset kini dipetakan ke pool 12 template sesuai enum kategori. | Bootstrap cache dan generator belum dijalankan native end-to-end; UID yang akhirnya terpilih bergantung pada RNG/runtime. |
 | 3. Perakitan part | Jalur native memetakan 22 slot pantai, cincin OutsideSea dan dispatch pusat sel `(160x+80,0,160z+80)`. Arsip baru memberi PBC untuk semua 136 nama `FieldOutsideParts`; ukurannya 32×32 ×5 unit =160×160 unit, cocok dengan jarak kisi native. | Parent/world transform, rotasi per bagian, keberhasilan render/load, weld seam dan respons collision saat runtime masih belum terbukti. |
 | 4. Sungai/air | Kelima tabel sumber yang dipakai cocok nilai-per-nilai dengan korpus lokal; semua 1.032.192 sel di 96 preset juga cocok. Seluruh 96 preset menempatkan mask River terdekat di segmen slot yang diharapkan. PBC River/Fall, pantai dan 50 varian RoomFloor memberi material/tinggi aktual; 4.088.832 sisi segitiga WaterCheck dapat dibandingkan. | Kandidat rotasi CCW memberi hasil terbaik tetapi menyisakan 1,271952% mismatch. Origin/transform fisik darat-pantai, seam runtime, water surface/flow/efek, serta semantik tinggi tetap belum terbukti. PBC memetakan atribut ground statis, bukan simulasi air. |
@@ -36,6 +36,15 @@ CRC ZIP. Ia memuat 783 PBC JSON terurai; manifest collision mencatat 783 PBC
 berhasil dan tidak ada kegagalan. Nilai kelima tabel lokal cocok seluruhnya:
 246 unit terrain, 136 part pantai, 36 template, 63 material ground, dan 173
 RoomFloorParam. Semua 1.032.192 sel grid 112×96 cocok tepat pada tujuh field.
+
+Konsistensi skala memberi batas yang lebih rapat: setiap PBC unit terrain adalah
+2×2 ×5 unit, sementara satu sel LandMaking berukuran 10 unit dari spacing pantai
+160 unit per segmen 16 sel. Grid ground 5-unit 224×192 menjadi ukuran kandidat
+bersyarat jika loader memperluas satu PBC ke tiap sel LandMaking. Uji tinggi
+statis pada orientasi CCW menunjukkan 107.364 endpoint cocok tanpa offset,
+62.936 cocok pada offset uji 15 unit per tingkat, dan 428 cocok pada keduanya;
+karena itu offset vertikal tunggal belum terbukti. Rincian tersimpan di
+`pbc_water_seam_comparisons.*.elevation_offset_diagnostic` pada audit manifest.
 
 Kecocokan aset pentingnya:
 

@@ -216,6 +216,20 @@ def pbc_seam_stats(archive: zipfile.ZipFile, pbc_by_model: dict, unit_rows: dict
         pair_mismatches = Counter()
         same_elevation_mismatch = same_elevation_comparisons = 0
         endpoint_mismatch = endpoint_comparisons = 0
+        elevation_offset = {
+            "different_elevation_endpoint_comparisons": 0,
+            "height_delta_histogram": Counter(),
+            "exact_matches_at_offset_0": 0,
+            "exact_matches_at_offset_15_per_height": 0,
+            "exact_matches_at_either_candidate": 0,
+            "matches_at_neither_candidate": 0,
+            "sum_raw_difference": 0.0,
+            "sum_raw_difference_squared": 0.0,
+            "sum_difference_times_height_delta": 0.0,
+            "sum_height_delta_squared": 0.0,
+            "candidate_error_sums": {"0": [0.0, 0.0], "15": [0.0, 0.0]},
+            "transition_counts": defaultdict(Counter),
+        }
         for path in sorted((source_root / "output/world").glob("FieldPreset*_LandMaking.json")):
             data = json.loads(path.read_text())
             cells = data["cells"]
@@ -248,6 +262,32 @@ def pbc_seam_stats(archive: zipfile.ZipFile, pbc_by_model: dict, unit_rows: dict
                             if cell[6] == neighbor_cell[6]:
                                 same_elevation_comparisons += 1
                                 same_elevation_mismatch += a != b
+                            else:
+                                height_delta = cell[6] - neighbor_cell[6]
+                                difference = a - b
+                                adjusted_15 = difference + 15 * height_delta
+                                elevation_offset["different_elevation_endpoint_comparisons"] += 1
+                                elevation_offset["height_delta_histogram"][str(height_delta)] += 1
+                                elevation_offset["sum_raw_difference"] += difference
+                                elevation_offset["sum_raw_difference_squared"] += difference * difference
+                                elevation_offset["sum_difference_times_height_delta"] += difference * height_delta
+                                elevation_offset["sum_height_delta_squared"] += height_delta * height_delta
+                                exact_0 = difference == 0.0
+                                exact_15 = adjusted_15 == 0.0
+                                elevation_offset["exact_matches_at_offset_0"] += exact_0
+                                elevation_offset["exact_matches_at_offset_15_per_height"] += exact_15
+                                elevation_offset["exact_matches_at_either_candidate"] += exact_0 or exact_15
+                                elevation_offset["matches_at_neither_candidate"] += not (exact_0 or exact_15)
+                                transition_key = (cell[0], neighbor_cell[0], height_delta)
+                                transition = elevation_offset["transition_counts"][transition_key]
+                                transition["comparisons"] += 1
+                                transition["offset_0"] += exact_0
+                                transition["offset_15"] += exact_15
+                                transition["neither"] += not (exact_0 or exact_15)
+                                for candidate, adjusted in (("0", difference), ("15", adjusted_15)):
+                                    sums = elevation_offset["candidate_error_sums"][candidate]
+                                    sums[0] += abs(adjusted)
+                                    sums[1] += adjusted * adjusted
                 if z + 1 < 96:
                     neighbor_cell = cells[index + 112]
                     neighbor = selected[index + 112]
@@ -266,6 +306,54 @@ def pbc_seam_stats(archive: zipfile.ZipFile, pbc_by_model: dict, unit_rows: dict
                             if cell[6] == neighbor_cell[6]:
                                 same_elevation_comparisons += 1
                                 same_elevation_mismatch += a != b
+                            else:
+                                height_delta = cell[6] - neighbor_cell[6]
+                                difference = a - b
+                                adjusted_15 = difference + 15 * height_delta
+                                elevation_offset["different_elevation_endpoint_comparisons"] += 1
+                                elevation_offset["height_delta_histogram"][str(height_delta)] += 1
+                                elevation_offset["sum_raw_difference"] += difference
+                                elevation_offset["sum_raw_difference_squared"] += difference * difference
+                                elevation_offset["sum_difference_times_height_delta"] += difference * height_delta
+                                elevation_offset["sum_height_delta_squared"] += height_delta * height_delta
+                                exact_0 = difference == 0.0
+                                exact_15 = adjusted_15 == 0.0
+                                elevation_offset["exact_matches_at_offset_0"] += exact_0
+                                elevation_offset["exact_matches_at_offset_15_per_height"] += exact_15
+                                elevation_offset["exact_matches_at_either_candidate"] += exact_0 or exact_15
+                                elevation_offset["matches_at_neither_candidate"] += not (exact_0 or exact_15)
+                                transition_key = (cell[0], neighbor_cell[0], height_delta)
+                                transition = elevation_offset["transition_counts"][transition_key]
+                                transition["comparisons"] += 1
+                                transition["offset_0"] += exact_0
+                                transition["offset_15"] += exact_15
+                                transition["neither"] += not (exact_0 or exact_15)
+                                for candidate, adjusted in (("0", difference), ("15", adjusted_15)):
+                                    sums = elevation_offset["candidate_error_sums"][candidate]
+                                    sums[0] += abs(adjusted)
+                                    sums[1] += adjusted * adjusted
+        differing_count = elevation_offset["different_elevation_endpoint_comparisons"]
+        optimal_scale = None
+        optimal_scale_rmse = None
+        if elevation_offset["sum_height_delta_squared"]:
+            cross = elevation_offset["sum_difference_times_height_delta"]
+            delta_sq = elevation_offset["sum_height_delta_squared"]
+            optimal_scale = -cross / delta_sq
+            min_sse = elevation_offset["sum_raw_difference_squared"] - cross * cross / delta_sq
+            optimal_scale_rmse = max(0.0, min_sse / differing_count) ** 0.5
+        transition_rows = []
+        for (source_id, neighbor_id, height_delta), counts in sorted(
+            elevation_offset["transition_counts"].items(),
+            key=lambda item: item[1]["comparisons"], reverse=True,
+        )[:24]:
+            transition_rows.append({
+                "source_unit_id": source_id,
+                "source_model_name": unit_rows[source_id]["ModelName"],
+                "neighbor_unit_id": neighbor_id,
+                "neighbor_model_name": unit_rows[neighbor_id]["ModelName"],
+                "source_minus_neighbor_elevation": height_delta,
+                **dict(counts),
+            })
         result[mode] = {
             "directional_triangle_comparisons": comparisons,
             "water_check_mismatches": mismatch,
@@ -281,6 +369,28 @@ def pbc_seam_stats(archive: zipfile.ZipFile, pbc_by_model: dict, unit_rows: dict
             "same_elevation_byte_endpoint_comparisons": same_elevation_comparisons,
             "same_elevation_byte_endpoint_mismatches": same_elevation_mismatch,
             "same_elevation_byte_mismatch_percent": round(100 * same_elevation_mismatch / same_elevation_comparisons, 6),
+            "elevation_offset_diagnostic": {
+                "scope": "Static PBC seam endpoint comparison under this candidate rotation; tests whether a single offset per LandMaking elevation byte explains local PBC endpoint heights. It is not a native world-transform observation.",
+                "different_elevation_endpoint_comparisons": differing_count,
+                "height_delta_histogram": dict(sorted(elevation_offset["height_delta_histogram"].items())),
+                "least_squares_offset_per_elevation_byte": round(optimal_scale, 6) if optimal_scale is not None else None,
+                "least_squares_root_mean_square_endpoint_error": round(optimal_scale_rmse, 6) if optimal_scale_rmse is not None else None,
+                "candidate_offsets": {
+                    candidate: {
+                        "offset_per_elevation_byte": int(candidate),
+                        "mean_absolute_endpoint_error": round(sums[0] / differing_count, 6) if differing_count else None,
+                        "root_mean_square_endpoint_error": round((sums[1] / differing_count) ** 0.5, 6) if differing_count else None,
+                    }
+                    for candidate, sums in elevation_offset["candidate_error_sums"].items()
+                },
+                "exact_endpoint_matches": {
+                    "offset_0": elevation_offset["exact_matches_at_offset_0"],
+                    "offset_15_per_height_byte": elevation_offset["exact_matches_at_offset_15_per_height"],
+                    "either_candidate": elevation_offset["exact_matches_at_either_candidate"],
+                    "neither_candidate": elevation_offset["matches_at_neither_candidate"],
+                },
+                "largest_unit_transitions": transition_rows,
+            },
         }
     return result
 
@@ -558,6 +668,47 @@ def main():
                               for info in pbc_info.values() if info["group"].startswith("FldUnit"))
         coast_shapes = Counter(tuple((info["data"]["w"], info["data"]["h"], info["data"]["cell_size"]))
                                for info in pbc_info.values() if info["model_name"].startswith("FldOut"))
+        coast_instantiation = json.loads(
+            (ROOT / "output/ui_island/coast_part_instantiation_native.json").read_text()
+        )
+        native_terrain = json.loads((ROOT / "output/mechanics/terrain_native.json").read_text())
+        coast_grid = coast_instantiation["terrain_grid_relation"]
+        terrain_unit_shapes = sorted({
+            (row["pbc_grid"][0], row["pbc_grid"][1], row["pbc_cell_size"])
+            for row in used_unit_details
+        })
+        terrain_resolution = {
+            "scope": "Cross-source scale check among the extracted per-unit PBCs, LandMaking grid, coast spacing, and native terrain coordinate converter. Matching resolution does not prove the runtime loader's global origin, rotation, allocation, or per-cell expansion.",
+            "landmaking_grid_dimensions": grid_comparison["grid_dimensions"],
+            "landmaking_cells_per_coast_segment": coast_grid["source_cells_per_coast_segment"],
+            "coast_segment_spacing_local_units": coast_grid["coast_segment_spacing_local_units"],
+            "implied_landmaking_cell_spacing_local_units": coast_grid["implied_cell_spacing"],
+            "used_terrain_unit_pbc_shapes": [
+                {"width": shape[0], "height": shape[1], "cell_size": shape[2]}
+                for shape in terrain_unit_shapes
+            ],
+            "native_ground_query_cell_spacing_local_units": 5.0,
+            "native_ground_query_coordinate_rule": native_terrain["coordinate_rule"],
+            "pbc_unit_footprint_local_units": [
+                terrain_unit_shapes[0][0] * terrain_unit_shapes[0][2],
+                terrain_unit_shapes[0][1] * terrain_unit_shapes[0][2],
+            ] if len(terrain_unit_shapes) == 1 else None,
+            "conditional_dense_query_grid_dimensions_if_one_unit_pbc_maps_to_each_landmaking_cell": [
+                grid_comparison["grid_dimensions"][0] * terrain_unit_shapes[0][0],
+                grid_comparison["grid_dimensions"][1] * terrain_unit_shapes[0][1],
+            ] if len(terrain_unit_shapes) == 1 else None,
+            "resolution_identity_holds": bool(
+                len(terrain_unit_shapes) == 1
+                and terrain_unit_shapes[0][2] == 5.0
+                and coast_grid["implied_cell_spacing"][0] == terrain_unit_shapes[0][0] * terrain_unit_shapes[0][2]
+                and coast_grid["implied_cell_spacing"][1] == terrain_unit_shapes[0][1] * terrain_unit_shapes[0][2]
+            ),
+            "native_evidence": {
+                "ground_coordinate_converter": "0x52b5a0",
+                "coast_spacing_and_zero_base": "coast_part_instantiation_native.json",
+                "unit_record_transfer": "island_terrain_loader_native.json",
+            },
+        }
         manifest_meta = json_member(archive, "manifests/extract.json")
         collision_meta = json_member(archive, "manifests/collision.json")
         result = {
@@ -597,6 +748,7 @@ def main():
                     {"width": key[0], "height": key[1], "cell_size": key[2], "count": value}
                     for key, value in sorted(unit_shapes.items())
                 ],
+                "terrain_resolution_crosscheck": terrain_resolution,
                 "coast_shape_counts": [
                     {"width": key[0], "height": key[1], "cell_size": key[2], "count": value}
                     for key, value in sorted(coast_shapes.items())

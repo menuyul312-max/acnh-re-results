@@ -53,6 +53,31 @@ rentang tinggi lokal, tetapi hubungan nilainya ke byte elevasi dan world-space,
 serta interpolasi height di native, belum diukur. Buffer base yang valid tetap
 diperlukan dalam konteks uji.
 
+## Skala LandMaking dan PBC
+
+Arsip PBC menutup satu bagian skala spasial. Peta LandMaking berukuran 112×96;
+grid pantai membagi peta itu menjadi 7×6 segmen, masing-masing 16×16 sel.
+Jarak native antarpusat segmen pantai adalah 160 unit, sehingga satu sel
+LandMaking berukuran 10 unit pada perbandingan lintas grid. Semua PBC untuk 13
+unit terrain yang dipakai memiliki grid 2×2 dengan cell size 5, yaitu footprint
+10×10 unit. Pembaca koordinat native juga menempatkan pusat sel pada
+`5*i + 2.5`. Jadi dimensi dan skala saling cocok: secara kondisional, satu sel
+LandMaking setara dengan 2×2 sampel ground 5-unit, dan grid rapat seluruh pulau
+akan berukuran 224×192.
+
+Ini membuktikan konsistensi skala antar sumber, bukan ekspansi aktual loader.
+Origin PBC, rotasi fisik, ukuran alokasi grid runtime, dan satu-ke-satu penempatan
+PBC ke setiap sel LandMaking belum terbaca di jalur native.
+
+Uji sambungan tinggi pada orientasi CCW kandidat membandingkan 170.728 endpoint
+PBC di batas sel yang byte elevasinya berbeda satu tingkat. Dari angka itu,
+107.364 cocok tanpa offset elevasi, 62.936 cocok setelah uji offset 15 unit per
+tingkat, dan 428 tidak cocok pada keduanya. Ini menunjukkan tidak ada satu
+offset elevasi seragam yang dapat disimpulkan dari PBC statis. Angka tersebut
+adalah uji profil lokal, bukan pengukuran transformasi vertikal native; detail
+per rotasi dan pasangan unit ada di
+[`manifests_pbc_audit.json`](../output/ui_island/manifests_pbc_audit.json).
+
 ## Empat titik dan rangkaian fungsi lengkap
 
 Sampler `0x162dc0` menjalankan helper grid dan converter. Trace panggilan native

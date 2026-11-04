@@ -1,7 +1,7 @@
 {
   "scope": "Read-only comparison of an extracted manifest ZIP to the local ACNH build corpus; raw archive members are not copied to this report.",
   "archive": {
-    "filename": "acnh_manifests.zip",
+    "filename": "acnh_manifests_drive.zip",
     "size_bytes": 134055965,
     "sha256": "8995d65b09a5cb84b181907c78991806f6da325bc82d35ea24ae6ecf1e263f3a",
     "zip_members": 6008,
@@ -549,6 +549,48 @@
         "count": 242
       }
     ],
+    "terrain_resolution_crosscheck": {
+      "scope": "Cross-source scale check among the extracted per-unit PBCs, LandMaking grid, coast spacing, and native terrain coordinate converter. Matching resolution does not prove the runtime loader's global origin, rotation, allocation, or per-cell expansion.",
+      "landmaking_grid_dimensions": [
+        112,
+        96
+      ],
+      "landmaking_cells_per_coast_segment": [
+        16,
+        16
+      ],
+      "coast_segment_spacing_local_units": [
+        160.0,
+        160.0
+      ],
+      "implied_landmaking_cell_spacing_local_units": [
+        10.0,
+        10.0
+      ],
+      "used_terrain_unit_pbc_shapes": [
+        {
+          "width": 2,
+          "height": 2,
+          "cell_size": 5.0
+        }
+      ],
+      "native_ground_query_cell_spacing_local_units": 5.0,
+      "native_ground_query_coordinate_rule": "XZ = f32(f32(f32(s32 index)*5.0)+2.5); Y and other bytes are preserved; null output is a no-op.",
+      "pbc_unit_footprint_local_units": [
+        10.0,
+        10.0
+      ],
+      "conditional_dense_query_grid_dimensions_if_one_unit_pbc_maps_to_each_landmaking_cell": [
+        224,
+        192
+      ],
+      "resolution_identity_holds": true,
+      "native_evidence": {
+        "ground_coordinate_converter": "0x52b5a0",
+        "coast_spacing_and_zero_base": "coast_part_instantiation_native.json",
+        "unit_record_transfer": "island_terrain_loader_native.json"
+      }
+    },
     "coast_shape_counts": [
       {
         "width": 32,
@@ -6086,7 +6128,301 @@
         "raw_height_endpoint_mismatch_percent": 3.243273,
         "same_elevation_byte_endpoint_comparisons": 8006936,
         "same_elevation_byte_endpoint_mismatches": 238760,
-        "same_elevation_byte_mismatch_percent": 2.981915
+        "same_elevation_byte_mismatch_percent": 2.981915,
+        "elevation_offset_diagnostic": {
+          "scope": "Static PBC seam endpoint comparison under this candidate rotation; tests whether a single offset per LandMaking elevation byte explains local PBC endpoint heights. It is not a native world-transform observation.",
+          "different_elevation_endpoint_comparisons": 170728,
+          "height_delta_histogram": {
+            "-1": 85364,
+            "1": 85364
+          },
+          "least_squares_offset_per_elevation_byte": 2.25854,
+          "least_squares_root_mean_square_endpoint_error": 5.432936,
+          "candidate_offsets": {
+            "0": {
+              "offset_per_elevation_byte": 0,
+              "mean_absolute_endpoint_error": 2.314207,
+              "root_mean_square_endpoint_error": 5.883689
+            },
+            "15": {
+              "offset_per_elevation_byte": 15,
+              "mean_absolute_endpoint_error": 12.74146,
+              "root_mean_square_endpoint_error": 13.851412
+            }
+          },
+          "exact_endpoint_matches": {
+            "offset_0": 144264,
+            "offset_15_per_height_byte": 26012,
+            "either_candidate": 170276,
+            "neither_candidate": 452
+          },
+          "largest_unit_transitions": [
+            {
+              "source_unit_id": 0,
+              "source_model_name": "Base",
+              "neighbor_unit_id": 37,
+              "neighbor_model_name": "Cliff5B",
+              "source_minus_neighbor_elevation": -1,
+              "comparisons": 44948,
+              "offset_0": 44948,
+              "offset_15": 0,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 37,
+              "source_model_name": "Cliff5B",
+              "neighbor_unit_id": 0,
+              "neighbor_model_name": "Base",
+              "source_minus_neighbor_elevation": 1,
+              "comparisons": 42708,
+              "offset_0": 42708,
+              "offset_15": 0,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 31,
+              "source_model_name": "Cliff3B",
+              "neighbor_unit_id": 0,
+              "neighbor_model_name": "Base",
+              "source_minus_neighbor_elevation": 1,
+              "comparisons": 34608,
+              "offset_0": 34608,
+              "offset_15": 0,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 0,
+              "source_model_name": "Base",
+              "neighbor_unit_id": 31,
+              "neighbor_model_name": "Cliff3B",
+              "source_minus_neighbor_elevation": -1,
+              "comparisons": 18592,
+              "offset_0": 0,
+              "offset_15": 18592,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 37,
+              "source_model_name": "Cliff5B",
+              "neighbor_unit_id": 37,
+              "neighbor_model_name": "Cliff5B",
+              "source_minus_neighbor_elevation": -1,
+              "comparisons": 17180,
+              "offset_0": 17180,
+              "offset_15": 0,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 37,
+              "source_model_name": "Cliff5B",
+              "neighbor_unit_id": 31,
+              "neighbor_model_name": "Cliff3B",
+              "source_minus_neighbor_elevation": -1,
+              "comparisons": 2228,
+              "offset_0": 0,
+              "offset_15": 2228,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 37,
+              "source_model_name": "Cliff5B",
+              "neighbor_unit_id": 37,
+              "neighbor_model_name": "Cliff5B",
+              "source_minus_neighbor_elevation": 1,
+              "comparisons": 2000,
+              "offset_0": 2000,
+              "offset_15": 0,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 66,
+              "source_model_name": "Fall400",
+              "neighbor_unit_id": 21,
+              "neighbor_model_name": "River8A",
+              "source_minus_neighbor_elevation": 1,
+              "comparisons": 1936,
+              "offset_0": 186,
+              "offset_15": 1750,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 40,
+              "source_model_name": "Cliff7A",
+              "neighbor_unit_id": 31,
+              "neighbor_model_name": "Cliff3B",
+              "source_minus_neighbor_elevation": -1,
+              "comparisons": 1260,
+              "offset_0": 0,
+              "offset_15": 1260,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 60,
+              "source_model_name": "Fall300",
+              "neighbor_unit_id": 17,
+              "neighbor_model_name": "River5B",
+              "source_minus_neighbor_elevation": 1,
+              "comparisons": 944,
+              "offset_0": 90,
+              "offset_15": 854,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 63,
+              "source_model_name": "Fall200",
+              "neighbor_unit_id": 17,
+              "neighbor_model_name": "River5B",
+              "source_minus_neighbor_elevation": 1,
+              "comparisons": 936,
+              "offset_0": 94,
+              "offset_15": 842,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 31,
+              "source_model_name": "Cliff3B",
+              "neighbor_unit_id": 37,
+              "neighbor_model_name": "Cliff5B",
+              "source_minus_neighbor_elevation": 1,
+              "comparisons": 772,
+              "offset_0": 772,
+              "offset_15": 0,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 31,
+              "source_model_name": "Cliff3B",
+              "neighbor_unit_id": 40,
+              "neighbor_model_name": "Cliff7A",
+              "source_minus_neighbor_elevation": 1,
+              "comparisons": 696,
+              "offset_0": 696,
+              "offset_15": 0,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 21,
+              "source_model_name": "River8A",
+              "neighbor_unit_id": 66,
+              "neighbor_model_name": "Fall400",
+              "source_minus_neighbor_elevation": -1,
+              "comparisons": 420,
+              "offset_0": 214,
+              "offset_15": 206,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 40,
+              "source_model_name": "Cliff7A",
+              "neighbor_unit_id": 37,
+              "neighbor_model_name": "Cliff5B",
+              "source_minus_neighbor_elevation": -1,
+              "comparisons": 220,
+              "offset_0": 220,
+              "offset_15": 0,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 17,
+              "source_model_name": "River5B",
+              "neighbor_unit_id": 60,
+              "neighbor_model_name": "Fall300",
+              "source_minus_neighbor_elevation": -1,
+              "comparisons": 200,
+              "offset_0": 102,
+              "offset_15": 98,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 17,
+              "source_model_name": "River5B",
+              "neighbor_unit_id": 63,
+              "neighbor_model_name": "Fall200",
+              "source_minus_neighbor_elevation": -1,
+              "comparisons": 200,
+              "offset_0": 102,
+              "offset_15": 98,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 37,
+              "source_model_name": "Cliff5B",
+              "neighbor_unit_id": 17,
+              "neighbor_model_name": "River5B",
+              "source_minus_neighbor_elevation": 1,
+              "comparisons": 192,
+              "offset_0": 0,
+              "offset_15": 0,
+              "neither": 192
+            },
+            {
+              "source_unit_id": 37,
+              "source_model_name": "Cliff5B",
+              "neighbor_unit_id": 40,
+              "neighbor_model_name": "Cliff7A",
+              "source_minus_neighbor_elevation": 1,
+              "comparisons": 164,
+              "offset_0": 164,
+              "offset_15": 0,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 31,
+              "source_model_name": "Cliff3B",
+              "neighbor_unit_id": 17,
+              "neighbor_model_name": "River5B",
+              "source_minus_neighbor_elevation": 1,
+              "comparisons": 156,
+              "offset_0": 0,
+              "offset_15": 0,
+              "neither": 156
+            },
+            {
+              "source_unit_id": 37,
+              "source_model_name": "Cliff5B",
+              "neighbor_unit_id": 11,
+              "neighbor_model_name": "River3B",
+              "source_minus_neighbor_elevation": 1,
+              "comparisons": 116,
+              "offset_0": 116,
+              "offset_15": 0,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 17,
+              "source_model_name": "River5B",
+              "neighbor_unit_id": 31,
+              "neighbor_model_name": "Cliff3B",
+              "source_minus_neighbor_elevation": -1,
+              "comparisons": 48,
+              "offset_0": 0,
+              "offset_15": 0,
+              "neither": 48
+            },
+            {
+              "source_unit_id": 63,
+              "source_model_name": "Fall200",
+              "neighbor_unit_id": 20,
+              "neighbor_model_name": "River7A",
+              "source_minus_neighbor_elevation": 1,
+              "comparisons": 44,
+              "offset_0": 0,
+              "offset_15": 44,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 31,
+              "source_model_name": "Cliff3B",
+              "neighbor_unit_id": 11,
+              "neighbor_model_name": "River3B",
+              "source_minus_neighbor_elevation": 1,
+              "comparisons": 40,
+              "offset_0": 40,
+              "offset_15": 0,
+              "neither": 0
+            }
+          ]
+        }
       },
       "clockwise": {
         "directional_triangle_comparisons": 4088832,
@@ -6160,7 +6496,301 @@
         "raw_height_endpoint_mismatch_percent": 3.228257,
         "same_elevation_byte_endpoint_comparisons": 8006936,
         "same_elevation_byte_endpoint_mismatches": 231228,
-        "same_elevation_byte_mismatch_percent": 2.887846
+        "same_elevation_byte_mismatch_percent": 2.887846,
+        "elevation_offset_diagnostic": {
+          "scope": "Static PBC seam endpoint comparison under this candidate rotation; tests whether a single offset per LandMaking elevation byte explains local PBC endpoint heights. It is not a native world-transform observation.",
+          "different_elevation_endpoint_comparisons": 170728,
+          "height_delta_histogram": {
+            "-1": 85364,
+            "1": 85364
+          },
+          "least_squares_offset_per_elevation_byte": 2.805656,
+          "least_squares_root_mean_square_endpoint_error": 5.91359,
+          "candidate_offsets": {
+            "0": {
+              "offset_per_elevation_byte": 0,
+              "mean_absolute_endpoint_error": 2.863572,
+              "root_mean_square_endpoint_error": 6.545399
+            },
+            "15": {
+              "offset_per_elevation_byte": 15,
+              "mean_absolute_endpoint_error": 12.194344,
+              "root_mean_square_endpoint_error": 13.552586
+            }
+          },
+          "exact_endpoint_matches": {
+            "offset_0": 137960,
+            "offset_15_per_height_byte": 32240,
+            "either_candidate": 170200,
+            "neither_candidate": 528
+          },
+          "largest_unit_transitions": [
+            {
+              "source_unit_id": 0,
+              "source_model_name": "Base",
+              "neighbor_unit_id": 37,
+              "neighbor_model_name": "Cliff5B",
+              "source_minus_neighbor_elevation": -1,
+              "comparisons": 44948,
+              "offset_0": 44948,
+              "offset_15": 0,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 37,
+              "source_model_name": "Cliff5B",
+              "neighbor_unit_id": 0,
+              "neighbor_model_name": "Base",
+              "source_minus_neighbor_elevation": 1,
+              "comparisons": 42708,
+              "offset_0": 42708,
+              "offset_15": 0,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 31,
+              "source_model_name": "Cliff3B",
+              "neighbor_unit_id": 0,
+              "neighbor_model_name": "Base",
+              "source_minus_neighbor_elevation": 1,
+              "comparisons": 34608,
+              "offset_0": 13668,
+              "offset_15": 20940,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 0,
+              "source_model_name": "Base",
+              "neighbor_unit_id": 31,
+              "neighbor_model_name": "Cliff3B",
+              "source_minus_neighbor_elevation": -1,
+              "comparisons": 18592,
+              "offset_0": 12908,
+              "offset_15": 5684,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 37,
+              "source_model_name": "Cliff5B",
+              "neighbor_unit_id": 37,
+              "neighbor_model_name": "Cliff5B",
+              "source_minus_neighbor_elevation": -1,
+              "comparisons": 17180,
+              "offset_0": 17180,
+              "offset_15": 0,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 37,
+              "source_model_name": "Cliff5B",
+              "neighbor_unit_id": 31,
+              "neighbor_model_name": "Cliff3B",
+              "source_minus_neighbor_elevation": -1,
+              "comparisons": 2228,
+              "offset_0": 1152,
+              "offset_15": 1076,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 37,
+              "source_model_name": "Cliff5B",
+              "neighbor_unit_id": 37,
+              "neighbor_model_name": "Cliff5B",
+              "source_minus_neighbor_elevation": 1,
+              "comparisons": 2000,
+              "offset_0": 2000,
+              "offset_15": 0,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 66,
+              "source_model_name": "Fall400",
+              "neighbor_unit_id": 21,
+              "neighbor_model_name": "River8A",
+              "source_minus_neighbor_elevation": 1,
+              "comparisons": 1936,
+              "offset_0": 372,
+              "offset_15": 1564,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 40,
+              "source_model_name": "Cliff7A",
+              "neighbor_unit_id": 31,
+              "neighbor_model_name": "Cliff3B",
+              "source_minus_neighbor_elevation": -1,
+              "comparisons": 1260,
+              "offset_0": 504,
+              "offset_15": 756,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 60,
+              "source_model_name": "Fall300",
+              "neighbor_unit_id": 17,
+              "neighbor_model_name": "River5B",
+              "source_minus_neighbor_elevation": 1,
+              "comparisons": 944,
+              "offset_0": 180,
+              "offset_15": 764,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 63,
+              "source_model_name": "Fall200",
+              "neighbor_unit_id": 17,
+              "neighbor_model_name": "River5B",
+              "source_minus_neighbor_elevation": 1,
+              "comparisons": 936,
+              "offset_0": 188,
+              "offset_15": 748,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 31,
+              "source_model_name": "Cliff3B",
+              "neighbor_unit_id": 37,
+              "neighbor_model_name": "Cliff5B",
+              "source_minus_neighbor_elevation": 1,
+              "comparisons": 772,
+              "offset_0": 364,
+              "offset_15": 408,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 31,
+              "source_model_name": "Cliff3B",
+              "neighbor_unit_id": 40,
+              "neighbor_model_name": "Cliff7A",
+              "source_minus_neighbor_elevation": 1,
+              "comparisons": 696,
+              "offset_0": 508,
+              "offset_15": 188,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 21,
+              "source_model_name": "River8A",
+              "neighbor_unit_id": 66,
+              "neighbor_model_name": "Fall400",
+              "source_minus_neighbor_elevation": -1,
+              "comparisons": 420,
+              "offset_0": 412,
+              "offset_15": 8,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 40,
+              "source_model_name": "Cliff7A",
+              "neighbor_unit_id": 37,
+              "neighbor_model_name": "Cliff5B",
+              "source_minus_neighbor_elevation": -1,
+              "comparisons": 220,
+              "offset_0": 220,
+              "offset_15": 0,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 17,
+              "source_model_name": "River5B",
+              "neighbor_unit_id": 60,
+              "neighbor_model_name": "Fall300",
+              "source_minus_neighbor_elevation": -1,
+              "comparisons": 200,
+              "offset_0": 196,
+              "offset_15": 4,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 17,
+              "source_model_name": "River5B",
+              "neighbor_unit_id": 63,
+              "neighbor_model_name": "Fall200",
+              "source_minus_neighbor_elevation": -1,
+              "comparisons": 200,
+              "offset_0": 196,
+              "offset_15": 4,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 37,
+              "source_model_name": "Cliff5B",
+              "neighbor_unit_id": 17,
+              "neighbor_model_name": "River5B",
+              "source_minus_neighbor_elevation": 1,
+              "comparisons": 192,
+              "offset_0": 0,
+              "offset_15": 0,
+              "neither": 192
+            },
+            {
+              "source_unit_id": 37,
+              "source_model_name": "Cliff5B",
+              "neighbor_unit_id": 40,
+              "neighbor_model_name": "Cliff7A",
+              "source_minus_neighbor_elevation": 1,
+              "comparisons": 164,
+              "offset_0": 164,
+              "offset_15": 0,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 31,
+              "source_model_name": "Cliff3B",
+              "neighbor_unit_id": 17,
+              "neighbor_model_name": "River5B",
+              "source_minus_neighbor_elevation": 1,
+              "comparisons": 156,
+              "offset_0": 0,
+              "offset_15": 0,
+              "neither": 156
+            },
+            {
+              "source_unit_id": 37,
+              "source_model_name": "Cliff5B",
+              "neighbor_unit_id": 11,
+              "neighbor_model_name": "River3B",
+              "source_minus_neighbor_elevation": 1,
+              "comparisons": 116,
+              "offset_0": 48,
+              "offset_15": 0,
+              "neither": 68
+            },
+            {
+              "source_unit_id": 17,
+              "source_model_name": "River5B",
+              "neighbor_unit_id": 31,
+              "neighbor_model_name": "Cliff3B",
+              "source_minus_neighbor_elevation": -1,
+              "comparisons": 48,
+              "offset_0": 0,
+              "offset_15": 0,
+              "neither": 48
+            },
+            {
+              "source_unit_id": 63,
+              "source_model_name": "Fall200",
+              "neighbor_unit_id": 20,
+              "neighbor_model_name": "River7A",
+              "source_minus_neighbor_elevation": 1,
+              "comparisons": 44,
+              "offset_0": 0,
+              "offset_15": 44,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 31,
+              "source_model_name": "Cliff3B",
+              "neighbor_unit_id": 11,
+              "neighbor_model_name": "River3B",
+              "source_minus_neighbor_elevation": 1,
+              "comparisons": 40,
+              "offset_0": 0,
+              "offset_15": 24,
+              "neither": 16
+            }
+          ]
+        }
       },
       "counterclockwise": {
         "directional_triangle_comparisons": 4088832,
@@ -6234,7 +6864,301 @@
         "raw_height_endpoint_mismatch_percent": 2.041561,
         "same_elevation_byte_endpoint_comparisons": 8006936,
         "same_elevation_byte_endpoint_mismatches": 103588,
-        "same_elevation_byte_mismatch_percent": 1.293728
+        "same_elevation_byte_mismatch_percent": 1.293728,
+        "elevation_offset_diagnostic": {
+          "scope": "Static PBC seam endpoint comparison under this candidate rotation; tests whether a single offset per LandMaking elevation byte explains local PBC endpoint heights. It is not a native world-transform observation.",
+          "different_elevation_endpoint_comparisons": 170728,
+          "height_delta_histogram": {
+            "-1": 85364,
+            "1": 85364
+          },
+          "least_squares_offset_per_elevation_byte": 5.517338,
+          "least_squares_root_mean_square_endpoint_error": 7.259554,
+          "candidate_offsets": {
+            "0": {
+              "offset_per_elevation_byte": 0,
+              "mean_absolute_endpoint_error": 5.548826,
+              "root_mean_square_endpoint_error": 9.118231
+            },
+            "15": {
+              "offset_per_elevation_byte": 15,
+              "mean_absolute_endpoint_error": 9.482662,
+              "root_mean_square_endpoint_error": 11.942446
+            }
+          },
+          "exact_endpoint_matches": {
+            "offset_0": 107364,
+            "offset_15_per_height_byte": 62936,
+            "either_candidate": 170300,
+            "neither_candidate": 428
+          },
+          "largest_unit_transitions": [
+            {
+              "source_unit_id": 0,
+              "source_model_name": "Base",
+              "neighbor_unit_id": 37,
+              "neighbor_model_name": "Cliff5B",
+              "source_minus_neighbor_elevation": -1,
+              "comparisons": 44948,
+              "offset_0": 44948,
+              "offset_15": 0,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 37,
+              "source_model_name": "Cliff5B",
+              "neighbor_unit_id": 0,
+              "neighbor_model_name": "Base",
+              "source_minus_neighbor_elevation": 1,
+              "comparisons": 42708,
+              "offset_0": 42708,
+              "offset_15": 0,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 31,
+              "source_model_name": "Cliff3B",
+              "neighbor_unit_id": 0,
+              "neighbor_model_name": "Base",
+              "source_minus_neighbor_elevation": 1,
+              "comparisons": 34608,
+              "offset_0": 0,
+              "offset_15": 34608,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 0,
+              "source_model_name": "Base",
+              "neighbor_unit_id": 31,
+              "neighbor_model_name": "Cliff3B",
+              "source_minus_neighbor_elevation": -1,
+              "comparisons": 18592,
+              "offset_0": 0,
+              "offset_15": 18592,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 37,
+              "source_model_name": "Cliff5B",
+              "neighbor_unit_id": 37,
+              "neighbor_model_name": "Cliff5B",
+              "source_minus_neighbor_elevation": -1,
+              "comparisons": 17180,
+              "offset_0": 17180,
+              "offset_15": 0,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 37,
+              "source_model_name": "Cliff5B",
+              "neighbor_unit_id": 31,
+              "neighbor_model_name": "Cliff3B",
+              "source_minus_neighbor_elevation": -1,
+              "comparisons": 2228,
+              "offset_0": 0,
+              "offset_15": 2228,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 37,
+              "source_model_name": "Cliff5B",
+              "neighbor_unit_id": 37,
+              "neighbor_model_name": "Cliff5B",
+              "source_minus_neighbor_elevation": 1,
+              "comparisons": 2000,
+              "offset_0": 2000,
+              "offset_15": 0,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 66,
+              "source_model_name": "Fall400",
+              "neighbor_unit_id": 21,
+              "neighbor_model_name": "River8A",
+              "source_minus_neighbor_elevation": 1,
+              "comparisons": 1936,
+              "offset_0": 0,
+              "offset_15": 1936,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 40,
+              "source_model_name": "Cliff7A",
+              "neighbor_unit_id": 31,
+              "neighbor_model_name": "Cliff3B",
+              "source_minus_neighbor_elevation": -1,
+              "comparisons": 1260,
+              "offset_0": 0,
+              "offset_15": 1260,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 60,
+              "source_model_name": "Fall300",
+              "neighbor_unit_id": 17,
+              "neighbor_model_name": "River5B",
+              "source_minus_neighbor_elevation": 1,
+              "comparisons": 944,
+              "offset_0": 0,
+              "offset_15": 944,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 63,
+              "source_model_name": "Fall200",
+              "neighbor_unit_id": 17,
+              "neighbor_model_name": "River5B",
+              "source_minus_neighbor_elevation": 1,
+              "comparisons": 936,
+              "offset_0": 0,
+              "offset_15": 936,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 31,
+              "source_model_name": "Cliff3B",
+              "neighbor_unit_id": 37,
+              "neighbor_model_name": "Cliff5B",
+              "source_minus_neighbor_elevation": 1,
+              "comparisons": 772,
+              "offset_0": 0,
+              "offset_15": 772,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 31,
+              "source_model_name": "Cliff3B",
+              "neighbor_unit_id": 40,
+              "neighbor_model_name": "Cliff7A",
+              "source_minus_neighbor_elevation": 1,
+              "comparisons": 696,
+              "offset_0": 0,
+              "offset_15": 696,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 21,
+              "source_model_name": "River8A",
+              "neighbor_unit_id": 66,
+              "neighbor_model_name": "Fall400",
+              "source_minus_neighbor_elevation": -1,
+              "comparisons": 420,
+              "offset_0": 0,
+              "offset_15": 420,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 40,
+              "source_model_name": "Cliff7A",
+              "neighbor_unit_id": 37,
+              "neighbor_model_name": "Cliff5B",
+              "source_minus_neighbor_elevation": -1,
+              "comparisons": 220,
+              "offset_0": 220,
+              "offset_15": 0,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 17,
+              "source_model_name": "River5B",
+              "neighbor_unit_id": 60,
+              "neighbor_model_name": "Fall300",
+              "source_minus_neighbor_elevation": -1,
+              "comparisons": 200,
+              "offset_0": 0,
+              "offset_15": 200,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 17,
+              "source_model_name": "River5B",
+              "neighbor_unit_id": 63,
+              "neighbor_model_name": "Fall200",
+              "source_minus_neighbor_elevation": -1,
+              "comparisons": 200,
+              "offset_0": 0,
+              "offset_15": 200,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 37,
+              "source_model_name": "Cliff5B",
+              "neighbor_unit_id": 17,
+              "neighbor_model_name": "River5B",
+              "source_minus_neighbor_elevation": 1,
+              "comparisons": 192,
+              "offset_0": 0,
+              "offset_15": 0,
+              "neither": 192
+            },
+            {
+              "source_unit_id": 37,
+              "source_model_name": "Cliff5B",
+              "neighbor_unit_id": 40,
+              "neighbor_model_name": "Cliff7A",
+              "source_minus_neighbor_elevation": 1,
+              "comparisons": 164,
+              "offset_0": 164,
+              "offset_15": 0,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 31,
+              "source_model_name": "Cliff3B",
+              "neighbor_unit_id": 17,
+              "neighbor_model_name": "River5B",
+              "source_minus_neighbor_elevation": 1,
+              "comparisons": 156,
+              "offset_0": 0,
+              "offset_15": 0,
+              "neither": 156
+            },
+            {
+              "source_unit_id": 37,
+              "source_model_name": "Cliff5B",
+              "neighbor_unit_id": 11,
+              "neighbor_model_name": "River3B",
+              "source_minus_neighbor_elevation": 1,
+              "comparisons": 116,
+              "offset_0": 116,
+              "offset_15": 0,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 17,
+              "source_model_name": "River5B",
+              "neighbor_unit_id": 31,
+              "neighbor_model_name": "Cliff3B",
+              "source_minus_neighbor_elevation": -1,
+              "comparisons": 48,
+              "offset_0": 0,
+              "offset_15": 0,
+              "neither": 48
+            },
+            {
+              "source_unit_id": 63,
+              "source_model_name": "Fall200",
+              "neighbor_unit_id": 20,
+              "neighbor_model_name": "River7A",
+              "source_minus_neighbor_elevation": 1,
+              "comparisons": 44,
+              "offset_0": 0,
+              "offset_15": 44,
+              "neither": 0
+            },
+            {
+              "source_unit_id": 31,
+              "source_model_name": "Cliff3B",
+              "neighbor_unit_id": 11,
+              "neighbor_model_name": "River3B",
+              "source_minus_neighbor_elevation": 1,
+              "comparisons": 40,
+              "offset_0": 0,
+              "offset_15": 40,
+              "neither": 0
+            }
+          ]
+        }
       }
     }
   },
