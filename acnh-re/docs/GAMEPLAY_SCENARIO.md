@@ -101,9 +101,9 @@ Kebijakan reset di tabel Land: `None` 200 flag, `Pre` 41 flag, `Plus` 2, `Start`
 | 1 | `0xf56c30`, `0xf56cb0` | set/get `SaveGrowUpRandomFactor` (faktor acak pertumbuhan). Driver lalu men-seed RNG global `0x35e9510` dengan `tahun×365 + bulan + hari + GrowUpRandomFactor + 0x1934` dan membuang 8 angka pertama |
 | 2 | `0xf545f0` | dispatcher fasilitas (§1) dan event global (`0xf6130`) |
 | 3 | `0x6608a0`, `0x660280` | `VillageExtensionLevel2`, `AllowNpcGroupActivity` |
-| 4 | `0x4ae640` | botol pesan, batu uang, doa bintang (`PrayStarToday` → `StarPieceGrowCount`), lalu reset doa harian |
+| 4 | `0x4ae640` | doa bintang (`PrayStarToday` → `StarPieceGrowCount`, lalu reset); batu uang (flag pemain `OccurrenceCoinStone`); botol pesan bila `MessageBottleAvailable`: per pemain tanpa `IsGetMessageBottle`, dan botol pertama (`PickedUpMessageBottle` = 0) berisi item DIY `0x227a` atau `0x1be1` (lempar koin RNG harian `0xf53500`) |
 | 5 | `0xd21110`, `0xf8ab90`, `0xfbd830` | rumah NPC: `0xd21110` memuat `Param/NpcHouse/<spesies><nn>.byml` untuk villager yang menetap (hanya membaca `AbandonedHouse`); jadwal DIY NPC; sapaan pertama |
-| 6 | `0xf8b460`, `0xf8bf40` | jenis hari. Pada hari biasa dengan `BuiltTownOffice`: dua undian `rand100 < min(10 × villager, 80)`, masing-masing memilih villager berbobot `ContinuousNormalDay` (≥2) lalu menulis `EarlyOrLate` |
+| 6 | `0xf8b460`, `0xf8bf40` | jenis hari. Pada hari biasa dengan `BuiltTownOffice`, `EarlyOrLate` semua villager direset: 2 → 3, selain itu → 0. Lalu dua undian `rand100 < min(10 × villager, 80)`, masing-masing memilih villager berbobot `ContinuousNormalDay` (≥2); pilihan pertama diberi 1, pilihan kedua 2 |
 | 7 | `0xd22440` | NPC untuk Countdown, Fishing Tourney, Bug-Off |
 | 8 | `0xd257d0` | obrolan sapaan villager (`AppFirstTalk`, `AppWelcomeMigrantsTalk`, …) |
 | 9 | `0xbdfd40` | aktivitas kelompok villager: per pemain, flag `ReservedNpcGroupActivity{Morning,Noon,Evening,Nignt}` diisi acak (25% per slot) dari `NpcLife`/`NpcInterest` sesuai level pulau; dilewati pada hari K.K. atau event |
@@ -192,7 +192,7 @@ Fungsi ini dipanggil `0xfd8920` dari dispatcher pergantian hari. Jadwal dibuat u
 **Penempatan hari kerja** (`0xfda940`):
 - Hanya Senin–Jumat (bit 1–5).
 - Hari dianggap kosong bila `codes[hari] == 0`, tidak ada event kalender (`0xf0790`), bukan hari `NormalLive`/`BirthdayLive`, dan bukan hari Celeste.
-- Hari dipilih seragam acak: popcount `0x198b590`, bit ke-n `0x198b630`, dan xorshift128 `0x19aa0e0` dengan state dari slot TLS. Kaitannya dengan seed harian `0xf53a70` belum dicek.
+- Hari dipilih seragam acak: popcount `0x198b590`, bit ke-n `0x198b630`, dan xorshift128 `0x19aa0e0` dengan state dari slot TLS. **[PSEUDO]** Slot TLS (`0x32d2b68`) berisi konteks thread `+0x60` → `+0xd4`, yaitu `sead::Random` milik thread. RNG ini di-seed sekali saat thread dibuat (`0x19a2d10` → `0x19a9fe0`) dari `nn::os::GetSystemTick`. Jadi jadwal **tidak** ditentukan oleh tanggal, berbeda dari RNG harian `0x35e9510`.
 
 Akibat langsung dari urutan di atas:
 - Sabtu dan Minggu hanya bisa berisi Mabel (sebelum penjahit) atau Wisp.
@@ -265,9 +265,9 @@ Enum `EventType` di rodata `0x29b9f72` = `Global, Region, Other, Totakeke, None`
   - punya `TotakekeLiveCount > 0` (pernah menonton K.K.);
   - tanggal di member pemain `+0x17370` (deskriptor `0x33d5868`) sama persis (tahun, bulan, hari) dengan hari ini.
 
-  Apakah `+0x17370` adalah tanggal `+0x34942` yang sama dari basis lain belum dicek.
+  **Terbukti native (layout):** emulasi konstruktor rekaman pemain `0xf8f580` menunjukkan node `0x17370` → data `+0x34942`, ukuran 4. Jadi BirthdayLive memeriksa tanggal yang dijadwalkan `0xf920f0`. Ulang tahun pemain (node `0x16a08`) berada di data `+0x11478`, ukuran 2.
 
-**Jam** (`0xfdb150`): pada hari konser, fungsi ini mengembalikan 1 bila jam < `EventBegin` event itu (`NormalLive` 16, `BirthdayLive` 12) dan 2 bila sudah lewat. Nilai 3 dipakai untuk `FirstLive` dan satu cabang tanggal/jam < 5 yang argumennya hilang di pseudocode.
+**Jam** (`0xfdb150`): pada hari konser, fungsi ini mengembalikan 1 bila jam < `EventBegin` event itu (`NormalLive` 16, `BirthdayLive` 12) dan 2 bila sudah lewat. Nilai 3 dipakai untuk `FirstLive`, atau bila jam sekarang < 5. `0x1fbf00` memindahkan waktu sebelum 05:00 ke hari permainan sebelumnya, jadi dini hari sesudah hari konser masih dihitung malam konser.
 
 Jadwal pengunjung (§3.3–3.4) menghindari hari-hari ini karena `0xfda940`, `0xfdad10`, `0xfdae20`, dan `0xfd9620` memanggil `0xf2a30` dengan label yang sama.
 
@@ -318,7 +318,7 @@ Bila `FirstKabuBuy` ON dan `FirstKabuPattern` masih OFF, `FirstKabuPattern` diny
   - Puncak: 0.9–1.4, 0.9–1.4, lalu r₁ − 1, r, r₁ − 1, dengan r = 1.4–2.0 dan r₁ = acak(1.4, r) × dasar.
   - Sesudahnya: mulai 0.4–0.9, tiap slot turun 0.03–0.05.
 
-Konstanta float dibaca dari rodata (`0x29d5e8c` = 0.9, `0x29d5d94` = 1.4, `0x29d5e28` = 0.6, …). RNG yang dipakai adalah `0x19aa0e0` dengan state TLS (`0x33d2b68`), sama seperti pembuat jadwal pengunjung.
+Konstanta float dibaca dari rodata (`0x29d5e8c` = 0.9, `0x29d5d94` = 1.4, `0x29d5e28` = 0.6, …). RNG yang dipakai adalah `0x19aa0e0` dengan state TLS (`0x33d2b68`), sama seperti pembuat jadwal pengunjung. Seed-nya berasal dari tick sistem, bukan tanggal (§3.3), jadi pola tidak bisa dihitung ulang hanya dari tanggal.
 
 **Stok harian.** Semua toko memakai pola yang sama:
 
@@ -337,7 +337,30 @@ Enum `ItemFrom` ada di rodata `0x29b535d`.
 | `0xfca870` | Able Sisters / Label | `Tailor`, `TailorMarketOnly`, `HgcQuestReward` × `Tops`, `Bottoms`, `OnePiece`, `Cap`, `Helmet`, `Accessory`, `Socks`, `Shoes` (flag `HgcVisitFlagForTailor`) |
 | `0xfc6300` → `0xfc5d60` | belum jelas | `Ftr`/`Helmet`, satu ambilan |
 
-Jumlah slot per toko dan bobot ambilan di Nook's Cranny belum dibaca rinci (sisa terbuka di `re_queue.json`).
+**Jumlah ambilan Nook's Cranny** (`0xfd0630`, argumen n dari `0xfce170(himpunan, n)`; array stok dikosongkan dulu oleh `0xfcdc10`):
+
+| State toko | Fungsi | Ambilan |
+|---|---|---|
+| < 2 | `0xfce9e0` | 2, plus 1 dari himpunan pulau (member `0x20d0e0`) |
+| 2 | `0xfceb90` | 4, 4, 1, 1, plus ambilan helper `0xfcf580`/`0xfce710` dan 2 dari member `0x20d0e0` |
+| 3 | `0xfcf660` | 8, 8, 2, 2, 1, 1, 1, 1, 1, plus helper |
+
+**Blok toko** (node `0x1f3e98`, lihat `save_layout.json`):
+
+| Offset | Isi |
+|---|---|
+| `+0x4` | Saharah (5 × 8 byte) |
+| `+0x2c` | Able Sisters |
+| `+0x1300` | Kicks (32 × 8) |
+| `+0x1400` | stok Nook's Cranny |
+| `+0x2ad0` | rekaman lobak (`0x44` byte) |
+| `+0x2b14` | daftar 64 item dari `0xfc6300` → `0xfc5d60`; pemiliknya belum bernama |
+
+**Harga jual** (`0xaab8c0`):
+- **Lobak:** `rekaman[1 + 2 × hari + (jam > 11)] × ItemParam.Price` (`0xfc7c70`). Karena slot Minggu bernilai 0, lobak tidak bisa dijual hari Minggu.
+- **Item lain:** `Price × tumpukan / 4`.
+
+Pembaca harga dasar `+0x00`, yang kemungkinan harga Daisy Mae, belum ditemukan.
 
 ## 4. Satu tahun
 
@@ -462,7 +485,16 @@ Keduanya mereset penghitung hari ke 0 dan menyalakan `NextMoveOutTalk` serta `Is
 | 5–7 | 1 | 0 / ≥1 | 0 / 1 |
 | 5–7 | ≥2 | 0 / 1 / ≥2 | 0 / 1 / 3 |
 
-Yang masih terbuka: penulis `AbandonedHouse` (perujuk `0xd36400`, dipanggil `0x10d39d0`, `0x1102dc0`, …) dan peran `0xf8c540`/`0xf8d210` secara rinci.
+**[PSEUDO] Rincian yang dulu terbuka:**
+
+- **`0xf8c540`** adalah jalur plot dan undangan (`FromSettlerQuest`, `InducementFlag`, `HasAcquaintanceship`). Selama quest 3 rumah, villager dipilih dengan filter pemukim `0xf8de30` dan dipindahkan masuk oleh `0xf8de90`. Fungsi ini juga mengisi `IsNpcIncreased`/`Is3rdNpc` dan membangun rumah (`0xf826c0`, `0xf814c0`).
+- **`0xf8d210`** memindahkan masuk slot dengan `MoveInOrder` terkecil di antara slot yang `MoveInCompletion`-nya masih OFF, lalu memajukan `MoveInOrder` slot lain.
+- **`AbandonedHouse`:** `0xd36400` hanya *membaca* flag ini (`0xf49540`). Penulisnya ada tiga:
+  - `0xcb7550`: nilai 1. Villager lalu dikeluarkan (`0xf8a410` jenis 1) dan `InducementAtMovingDay` dinyalakan.
+  - `0xcc5a40`: nilai 2.
+  - `0xf889e0`: reset ke 0.
+
+  Pemanggil yang ditemukan lewat dispatcher pesan `0xc7ea00` (← `0xbcef20` ← … ← `0xb65410` `NetConfig`). Itu tampaknya sinkronisasi multipemain; jalur lokalnya belum ditemukan.
 
 ## 6. Pengunjung khusus
 
@@ -480,10 +512,10 @@ Yang masih terbuka: penulis `AbandonedHouse` (perujuk `0xd36400`, dipanggil `0x1
 | Daisy Mae (`boc`) | Indeks hari 0 dan nilai save ≥2; `BocBuyCount`, `FirstKabuBuy`, `FirstKabuPattern` | [PSEUDO] / [EF]; harga [NATIVE] |
 | Celeste (`ows`) | Hari = `+0x74`, satu per minggu setelah gedung museum, dipilih dari hari cuaca `Fine00` (cadangan `Fine02/04/06`); malam saja; resep per zodiak (`OwsThisZodiac` 1–12); bintang jatuh (`0x4ae640`) | [PSEUDO] / [EF] |
 
-Yang masih terbuka dari jadwal ini:
-- apakah RNG TLS yang dipakai `0xfd8a80` adalah RNG yang di-seed harian oleh `0xf53a70`;
-- arti pasti nilai pemain 0–8 (syarat Saharah dan Harvey);
-- titik tetap yang menjadi acuan posisi Label, Mabel, dan Kicks (`0x469680`).
+Pertanyaan yang dulu terbuka di jadwal ini sudah terjawab **[PSEUDO]**:
+- **RNG TLS** `0xfd8a80` adalah RNG thread yang di-seed dari tick sistem, bukan RNG harian (§3.3).
+- **Nilai pemain 0–8** (`0xef8520`, deskriptor `0x33dc730`, node `0x17cd48 + i × 0xe3b8`) adalah level rumah: play report `0xec4060` melaporkannya sebagai `HouseLevel`. Saharah dan Harvey butuh level rumah ≥ 2.
+- **Titik tetap `0x469680`** = `(*0x33d6f98) + 0x40` adalah posisi plaza event. `0x135440` mengembalikannya untuk tempat bernama `EventPlaza`, jadi Label, Mabel, dan Kicks berdiri di plaza + (15, 0, 20).
 
 ## 7. Timeline progres dalam pergantian hari
 

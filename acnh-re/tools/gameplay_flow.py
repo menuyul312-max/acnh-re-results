@@ -538,7 +538,7 @@ PSEUDOCODE_READINGS = {
                              'museum state > 2: celeste_day = random day of this week (Mon..Sun) whose weather pattern name is Fine00; if none, one with Fine02/Fine04/Fine06; days with a calendar event, NormalLive or BirthdayLive are skipped',
                              'Wisp (4): up to 5 more random weekdays; if none fits, wisp_extra_day = a random Mon..Fri that already has a visitor; then Wisp also on Saturday and Sunday when free',
                              'copy[i] = codes[i] (clamped 0..9) at +0x44',
-                             'random picks: popcount 0x198b590, n-th set bit 0x198b630, xorshift128 0x19aa0e0 with state from a TLS slot (link to the day seed of 0xf53a70 not checked)']},
+                             'random picks: popcount 0x198b590, n-th set bit 0x198b630, xorshift128 0x19aa0e0 with state from the TLS slot 0x32d2b68 = per-thread sead::Random (thread context +0x60 -> +0xd4) seeded from nn::os::GetSystemTick at thread creation (0x19a2d10 -> 0x19a9fe0); not the date-seeded day RNG']},
     '0xfda940': {'role': 'place a visitor code on a random free weekday',
                  'reading': ['candidates Monday..Friday only (bits 1..5); a day is free when codes[day]==0, no calendar event (0xf0790), not a NormalLive or BirthdayLive day, and day != celeste_day',
                              'uniform pick among free days; writes codes[day]=code; returns 0 when no day is free']},

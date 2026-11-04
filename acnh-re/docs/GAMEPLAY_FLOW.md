@@ -238,7 +238,7 @@ Cara skor dihitung ada di §10.1.
 | 7 | Bunga | `Kind` `FlwCosmos`…`FlwSuzuran`, `Nature` bit 0 OFF |
 | 8 | Rumput liar | `Kind` `WeedSpr`…`WeedWin1` |
 | 9 | Barang tergeletak yang tampil sebagai ikon, bukan furnitur | `ItemUnitIcon` diisi. Tidak termasuk item `0x9c4` (`DIYBranch`), `0x9c6` (`DIYStone`), dan `ItemKind` `Mushroom`/`StarPiece`/`ShellDrift` |
-| 10 | Benda yang memenuhi sel | `Nature` bit 1 ON kecuali `Hole`/`Stone` (di tabel: pohon dan tunggul), ditambah furnitur yang lolos `0xaa8310` (belum dibaca rinci) |
+| 10 | Benda yang memenuhi sel | `Nature` bit 1 ON kecuali `Hole`/`Stone` (di tabel: pohon dan tunggul), ditambah furnitur dengan `ItemAct.Collision` ≠ 0 dan `ItemLayout` bukan `Rug` (`0xaa8310`, enum `0x294beef`) |
 
 **Nilai per kategori.** C*n* adalah jumlah hitungan kategori *n* di semua blok. Untuk kategori 0 dan 1, setiap blok dikurangi denda duplikat (`0x15c4db0`):
 
@@ -276,7 +276,14 @@ Life    = C0 + C1 + 4·C2 + 4·C3 + 0.2·C4
 2. menjumlah semua blok (`0x15c61f0`);
 3. menulis hasilnya ke save (`0x15c68c0`).
 
-Pergantian hari (`0xf545f0`) memaksa hitung ulang penuh. Selama masih ada blok yang belum dihitung, C5 dan C9 tercatat 0 (`0x15c59d0`).
+Pergantian hari (`0xf545f0`) memaksa hitung ulang penuh. Hal yang sama terjadi bila `0xbc82d0` ≥ 2. Fungsi itu membaca byte mode `+0x476` dari objek `0x32d0df0`; pemanggil lain, seperti Tommy dan Wisp, membedakan ≤ 1 dan ≥ 2, jadi kemungkinan besar ini mode sesi multipemain. Selama masih ada blok yang belum dihitung, C5 dan C9 tercatat 0 (`0x15c59d0`).
+
+**Item terbungkus.** Dua bit rendah byte `+3` item:
+- 1 = kertas kado, dengan warna di bit 2–5;
+- 2 = `DummyPresentbox` (`0x1180`);
+- 3 = `DummyCardboard` (`0x1225`).
+
+`0xf58d00`/`0xf59370` mencari ItemParam pembungkusnya, sehingga hadiah terbungkus dihitung sebagai bungkusnya. Arti bit 2 dan 5 byte `+2` item dan bit 0/1 flag struktur belum terbukti.
 
 Alur menuju konser:
 
