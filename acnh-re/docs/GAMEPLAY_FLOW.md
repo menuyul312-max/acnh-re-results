@@ -59,11 +59,11 @@ Villager biasa (`NNPC_*`) dibagi menurut 8 kode kepribadian: AN, BO, FU, GE, HA,
    |---|---|---|
    | 1 | `0xfc4560` | toko; juga memanggil `0xfcc300` (penjahit) |
    | 2 | `0xf77050` | museum |
-   | 3–4 | `0xf8f190`, `0xf7d4c0` | belum dibaca |
+   | 3–4 | `0xf8f190`, `0xf7d4c0` | kandidat `OfficeLevel`: save init 1 lalu hari berikutnya ditulis 2; peluang camper berdasarkan hari sejak camper terakhir |
    | 5 | `0xf26330` | campsite |
    | 6 | `0xf6a730` | merujuk `MarketBuilt` |
    | 7 | `0xfd8920` | pembuka konser K.K. |
-   | 8 | `0xfc1b80` | belum dibaca |
+   | 8 | `0xfc1b80` | `RumorPFavoriteProgressDays` bertambah sebanyak hari yang lewat untuk setiap pemain hadir |
    | 9 | `0x10c26e0` | struktur; memanggil `0x10c2ad0` (Resident Services) |
 
    Semua prosesor menerima jumlah hari yang lewat sejak pergantian hari terakhir. Sebelum itu, `0xf46200` (pembaca kebijakan reset flag) juga dipanggil.
@@ -324,7 +324,7 @@ Inilah ujung alur cerita utama di data. Sesudahnya tidak ada flag progres baru y
   - 318 punya rujukan string ke fungsi native;
   - 98 dirujuk dari prosesor pergantian hari;
   - penyelesaian bangunan (museum, toko, penjahit, campsite, Resident Services) dan pembuka konser K.K. sudah dibaca **[PSEUDO]** di atas;
-  - yang belum dibaca: `TkkFirstLive` (`0xf0330`, `0xf11b0`), `ImmQ_*_Complete` (`0xfd9d10`), `ImmQ_*_Invited` (tanpa rujukan string), `BridgeBuilt`/`SlopeBuilt` (hanya dibaca `0x10c26e0`), serta prosesor `0xf8f190`, `0xf7d4c0`, `0xfc1b80`.
+  - yang belum dibaca: `TkkFirstLive` (`0xf0330`, `0xf11b0`), `ImmQ_*_Complete` (`0xfd9d10`), `ImmQ_*_Invited` (tanpa rujukan string), `BridgeBuilt`/`SlopeBuilt` (hanya dibaca `0x10c26e0`), serta arti enum lokal `OfficeLevel` untuk field yang ditulis `0xf8f190`; prosesornya sendiri terbaca. Peran `0xf7d4c0` dan `0xfc1b80` sudah diringkas di §0.5.
 - **Bacaan [PSEUDO] perlu dieksekusi native.** Uji emulasi seperti tahap-tahap mekanik sebelumnya dibutuhkan untuk menaikkan statusnya menjadi terbukti. Arti "struktur jenis 0/1/2/5/6" diambil dari argumen `0x1071bd0`/`0x1106cb0` dan konteks flag; enum aslinya belum dipetakan.
 - **Query native yang angkanya dipakai tetapi caranya belum di-RE:** `NpcHouseNum`, `MuseumDonationNumCheck`, `IsSettlerQuestOutsideComplete`, `EventBranch`, `FacilityOpenPastDays`, serta aksi `DecideSettlerNpc` dan `CompleteSettlerQuestSubject`.
 - **Pemilih obrolan oleh AI NPC.** Flow `AI_NPC_*` memilih obrolan lewat `SetNpcSpeakFlow`, `NpcChangeConversationPretenseState`, dan state AI. Kapan state itu dievaluasi (jadwal, jarak, giliran bicara) ditentukan kode native.

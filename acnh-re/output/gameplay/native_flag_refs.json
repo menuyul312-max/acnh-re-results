@@ -413,9 +413,9 @@
     "callers": 1,
     "strings": [],
     "reading": {
-     "role": "day-change reset of save member +0x20d310",
+     "role": "day-change update of save member +0x20d310",
      "reading": [
-      "writes u32 2 to node +0x20d310 (data +0x4159f0, 4 bytes; descriptor GOT 0x32ff640) every day change; the child +0x20d348 crosswalks to SaveLand.Office.OfficeLevel in external save_schema_111_103 by offset, size, and tree depth; enum meaning and local-build reader remain unknown"
+      "writes u32 2 to node +0x20d310 (data +0x4159f0, 4 bytes; descriptor GOT 0x32ff640) through the 0xf545f0 dispatcher; save initializer 0xf5af30 sets the same field to 1 before day-change processing; child +0x20d348 crosswalks to SaveLand.Office.OfficeLevel in external save_schema_111_103 by offset, size, and tree depth; enum meanings and a local-build reader remain unknown"
      ]
     }
    },
@@ -1082,20 +1082,64 @@
     "role": "Nook's Cranny stock (calls 0xfce9e0, 0xfceb90, 0xfcf660)",
     "reading": [
      "shop state <2 -> 0xfce9e0, state 2 -> 0xfceb90, state 3 -> 0xfcf660",
-     "state <2 first pick: in-season mask AND ItemKind values {0,77,32} (Ftr, DoorDeco, Tambourine) AND ItemFrom value 1 (ShopDefault), then sample 2; 0xfcdfe0 performs the extra pick(s) from source values read from save node +0x20d0e0",
+     "state <2 first pick: in-season mask AND ItemKind values {0,77,32} (Ftr, DoorDeco, Tambourine) AND ItemFrom value 1 (ShopDefault), then sample 2; 0xfcdfe0 performs three separate ShopSeed ItemFrom passes, count 1 per pass, from two saved sources and one additional month-eligible source",
      "state 2 and 3 builders also construct the seasonal mask intersected with ItemKind {0,77,32}; this is one component of their filters, not a complete per-pick rule",
      "NSO VA 0xa0fd80 (Ghidra FUN_00b0fd80) constructs a distinct derived-class predicate: raw vtable 0x30c6348 (Ghidra 0x31c6348) slot 0 reaches raw 0xaa82d0 (Ghidra FUN_00ba82d0), which compares the selector with raw 0xaa8ce0 (Ghidra FUN_00ba8ce0); that helper uses ItemKind-indexed lookups and in one branch resolves ItemParam.DragSE (+0x9c)",
      "state 2 constructs selector sets {5,6} and {0..5}; state 3 constructs {5,6} and {3,4}. In the DragSE branch these values mean HeavyWheel/Floated, the 0..5 values include Light/Normal/Heavy/VeryHeavy/LightWheel/HeavyWheel; other branches can return a different derived class, so these names do not cover all candidates",
-     "candidate ItemFrom tags seen across all three states: ShopDefault, ShopMiscGoods, ShopLv1/2, ShopLargeGoods, ShopHighClass, ShopSeasonSale, ShopUmbrellaLv1/2, ShopWrappingPaper; builder sets are now identified, but exact assignment to each final output slot remains unresolved"
+     "candidate ItemFrom tags seen across all three states: ShopDefault, ShopMiscGoods, ShopLv1/2, ShopLargeGoods, ShopHighClass, ShopSeasonSale, ShopUmbrellaLv1/2, ShopWrappingPaper; selector membership and final random item ID per daily slot remain unresolved (see nook_shop_weekly_slot_map.json)",
+     "SaveShopZakka output maps to seven weekday buckets; selector calls and conditional first-empty slot ranges are documented in output/gameplay/nook_shop_weekly_slot_map.json"
     ]
    },
    "0xfcdfe0": {
     "role": "additional Nook stock picks",
     "reading": [
-     "builds three filter values and calls 0xce170 once for each with the requested count (1 for state <2, 2 for state 2, -1 for state 3); the first two are mapped from bytes +0x925/+0x924 of save node +0x20d0e0, and the third is mapped from shop argument byte +10",
+     "builds three separate ItemFrom filters and calls 0xfce170 once for each: two saved source indices at data +0x925/+0x924 and one new month-eligible source; requested count is 1 on state <2, 2 on state 2, and all eligible items on state 3",
      "bytes +0x925/+0x924 are indices into an eight-entry table; helper 0xf50ad0 selects another table index whose month mask includes the current month (shifted by six for the alternate hemisphere mode) and which is not among the saved choices",
      "table index -> ItemFrom numeric value / name / month mask: 0 -> 0x57 ShopSeed_Anemone / 0x81f; 1 -> 0x55 ShopSeed_Hyacinth / 0x00e; 2 -> 0x58 ShopSeed_Tulip / 0x03c; 3 -> 0x56 ShopSeed_Rose / 0xe70; 4 -> 0x54 ShopSeed_Cosmos / 0x7c0; 5 -> 0x53 ShopSeed_Lily / 0x1e0; 6 -> 0x52 ShopSeed_Chrysanthemum / 0xf81; 7 -> 0x59 ShopSeed_Pansy / 0xc0f",
      "0xf50f50/0xf51040 map saved indices to ItemFrom numeric values; 0xf50e40 maps the selected index to a value. Labels come from the native comma-separated ItemFrom enum at rodata 0x29b535d; ordinal anchors ShopDefault=1 and ShoesBagShop=0x34 match static Nook/Kicks filters; all three resulting filters use the same 0xb0fd40 ItemFrom predicate"
+    ]
+   },
+   "0xfce170": {
+    "role": "Nook stock selector applied to seven weekday buckets",
+    "reading": [
+     "uses the candidate bitset to select the requested count independently for weekday indices 0..6; negative count means all eligible candidates; accepted items go through 0xfce570",
+     "the candidate domain is IDs 0..14999: 0x1af3a0 and related predicates scan to 15000, while selector masks span 0x754 bytes (469 uint32 words, 24 valid bits in the final word)",
+     "when the selector is empty or yields too few candidates, parameter bit 0 controls whether 0xfce410 fills the missing entries with None"
+    ]
+   },
+   "0xfce710": {
+    "role": "Nook stock selector with per-weekday batch selection",
+    "reading": [
+     "calls 0xa122d0 once for count * 7 candidates, then distributes the selected sequence over weekday indices 0..6; accepted items route through 0xfce570",
+     "the candidate domain is IDs 0..14999; selector masks span 0x754 bytes (469 uint32 words, 24 valid bits in the final word)",
+     "parameter bit 0 controls fill-with-None behavior through 0xfce410; state 2/3 callers use this helper for early selector groups"
+    ]
+   },
+   "0xfce570": {
+    "role": "write one selected Nook item to the weekday stock buffer",
+    "reading": [
+     "weekday index selects a 0x200-byte bucket; scans 64 entries at stride 8 for item id -2 and writes the selected item to the first empty entry",
+     "writes Shop.Zakka.<weekday>.<item> metadata; weekday labels come from 0xfd2450"
+    ]
+   },
+   "0xfce410": {
+    "role": "fill a Nook weekday slot with None",
+    "reading": [
+     "finds the first empty entry in the weekday bucket, writes an empty item record, and records Shop.Zakka.<weekday>.None"
+    ]
+   },
+   "0xfd2450": {
+    "role": "weekday label map for Nook stock slots",
+    "reading": [
+     "enum string order is Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday; used by 0xfce570 and 0xfce410"
+    ]
+   },
+   "0xfcf580": {
+    "role": "apply a runtime predicate to a Nook candidate bitset",
+    "reading": [
+     "scans candidate item ids 0..14999; for each set bit, obtains the candidate record, calls 0xf58d00, then invokes the predicate object and clears the bit when the predicate rejects it",
+     "constructor 0xa0fce0 only stores its selector and vtable 0x31c6280; constructor name alone does not identify the filter semantics",
+     "state-2 callers construct selectors 0x41 and 0x02; state-3 callers construct selector 0x41 twice; code_pointer_arrays maps slot 0 at 0x31c6280 to method 0x1c86550, whose accepted values and runtime dependencies are still unnamed"
     ]
    },
    "0xf50ad0": {
@@ -1141,10 +1185,16 @@
      "clears 32 slots; ItemFrom ShoesBagShop x ItemKind Shoes, Socks, Bag"
     ]
    },
-   "0xf8f190": {
-    "role": "day-change reset of save member +0x20d310",
+   "0xf5af30": {
+    "role": "root save initializer",
     "reading": [
-     "writes u32 2 to node +0x20d310 (data +0x4159f0, 4 bytes; descriptor GOT 0x32ff640) every day change; the child +0x20d348 crosswalks to SaveLand.Office.OfficeLevel in external save_schema_111_103 by offset, size, and tree depth; enum meaning and local-build reader remain unknown"
+     "initializes the field at data +0x4159f0 (candidate local SaveLand.Office.OfficeLevel, node +0x20d348) to u32 1 before day-change processing; semantic name and enum meaning are cross-version only"
+    ]
+   },
+   "0xf8f190": {
+    "role": "day-change update of save member +0x20d310",
+    "reading": [
+     "writes u32 2 to node +0x20d310 (data +0x4159f0, 4 bytes; descriptor GOT 0x32ff640) through the 0xf545f0 dispatcher; save initializer 0xf5af30 sets the same field to 1 before day-change processing; child +0x20d348 crosswalks to SaveLand.Office.OfficeLevel in external save_schema_111_103 by offset, size, and tree depth; enum meanings and a local-build reader remain unknown"
     ]
    },
    "0xf7d4c0": {

@@ -1,0 +1,330 @@
+{
+  "schema": "acnh.nook-shop-weekly-slot-map.v1",
+  "build": "supplied ACNH 1.0.0 NSO",
+  "dispatcher": {
+    "va": "0xfd0630",
+    "state_reader": "0xfc4e30",
+    "builders": {
+      "0": "0xfce9e0",
+      "1": "0xfce9e0",
+      "2": "0xfceb90",
+      "3": "0xfcf660"
+    }
+  },
+  "output_region": {
+    "local_node": "0x1f67f0",
+    "local_type_name": null,
+    "external_struct_candidate": "::Game::SaveShopZakka",
+    "candidate_note": "Name comes from the cross-version public save schema; the 1.0.0 local layout has no RTTI name for this type.",
+    "data_offset": "0x4100e8",
+    "size": "0x16d0",
+    "layout_evidence": "The writer uses seven weekday buckets, each with 64 entries of 8 bytes; 7 * 0x200 = 0xe00 bytes, within this region."
+  },
+  "write_mechanics": {
+    "selection_helpers": [
+      "0xfce170",
+      "0xfce710"
+    ],
+    "writer": "0xfce570",
+    "weekday_names_va": "0xfd2450",
+    "weekday_order": [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday"
+    ],
+    "bucket_count": 7,
+    "bucket_stride": "0x200",
+    "entries_per_bucket": 64,
+    "entry_stride": 8,
+    "first_empty_test": "u16 item id == -2",
+    "write_order": "Each selection helper iterates weekday buckets 0..6. The writer scans that weekday's 64 slots and writes the item to the first slot whose id is -2.",
+    "empty_fill": "0xfce410 writes an empty item and records Shop.Zakka.<weekday>.None when the selection helper is configured to fill a shortfall."
+  },
+  "candidate_id_domain": {
+    "id_min_inclusive": 0,
+    "id_max_exclusive": 15000,
+    "valid_id_count": 15000,
+    "bitset_bytes": 1876,
+    "bitset_hex_bytes": "0x754",
+    "uint32_words": 469,
+    "valid_bits_in_last_word": 24,
+    "unused_padding_bits_in_last_word": 8,
+    "evidence": [
+      "0x1af3a0 initializes its item index to 0 and returns when it reaches 15000.",
+      "0x276fb0, 0x29c9d0, 0x29cb90, and 0xfcf580 use the same 0..14999 predicate scan bound.",
+      "0xfce170, 0xfce710, and 0xa122d0 iterate 0x754 bytes of 32-bit mask words."
+    ],
+    "caveat": "This is the selector's item-ID domain and mask capacity, not proof that every ID resolves to a valid ItemParam row."
+  },
+  "selection_scope": {
+    "0xfce170": "Runs a separate selector for each weekday bucket.",
+    "0xfce710": "Runs one selector for count_per_weekday * 7 candidates, then distributes the selected sequence across weekday buckets in order.",
+    "selection_evidence": "0xfce710 passes param_3 * 7 to 0xa122d0 before iterating weekday index 0..6; 0xfce170 invokes 0xa122d0 inside its weekday loop.",
+    "0xfcf580": {
+      "purpose": "Prunes a candidate bitset in place before state-2/state-3 stock selection.",
+      "scan_domain": "0..14999",
+      "per_candidate": [
+        "reads candidate record through selector vtable slot +0x10",
+        "obtains bitset through selector vtable slot +0x20",
+        "calls 0xf58d00 on the candidate record",
+        "when the candidate passes that check, invokes the 0xa0fce0 predicate object; a rejection clears the candidate bit"
+      ],
+      "constructor": "0xa0fce0 stores vtable 0x31c6280 and a 32-bit selector value.",
+      "vtable_slot0_target": "0x1c86550",
+      "caller_selector_values": {
+        "state_2": [
+          "0x41",
+          "0x02"
+        ],
+        "state_3": [
+          "0x41",
+          "0x41"
+        ]
+      }
+    }
+  },
+  "builder_call_order_per_weekday": {
+    "state_0_or_1": [
+      {
+        "step": 1,
+        "helper": "0xfce170",
+        "count_per_day": 2,
+        "full_success_slot_range": [
+          0,
+          2
+        ],
+        "filter": "seasonal item mask AND ItemKind {Ftr, DoorDeco, Tambourine} AND ItemFrom ShopDefault"
+      },
+      {
+        "step": 2,
+        "helper": "0xfcdfe0",
+        "count_per_source": 1,
+        "source_passes": 3,
+        "full_success_slot_ranges": [
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            4,
+            5
+          ]
+        ],
+        "filter": "two saved ShopSeed sources and one additional month-eligible source; each pass delegates to 0xfce170"
+      }
+    ],
+    "state_2": [
+      {
+        "step": 1,
+        "helper": "0xfce710",
+        "count_per_day": 2,
+        "full_success_slot_range": [
+          0,
+          2
+        ],
+        "filter": "first merged candidate set in state-2 builder"
+      },
+      {
+        "step": 2,
+        "helper": "0xfce710",
+        "count_per_day": 2,
+        "full_success_slot_range": [
+          2,
+          4
+        ],
+        "filter": "second merged candidate set in state-2 builder"
+      },
+      {
+        "step": 3,
+        "helper": "0xfcdfe0",
+        "count_per_source": 2,
+        "source_passes": 3,
+        "full_success_slot_ranges": [
+          [
+            4,
+            6
+          ],
+          [
+            6,
+            8
+          ],
+          [
+            8,
+            10
+          ]
+        ],
+        "filter": "two saved ShopSeed sources and one additional month-eligible source; each pass delegates to 0xfce170"
+      },
+      {
+        "step": 4,
+        "helper": "0xfce170",
+        "count_per_day": 4,
+        "full_success_slot_range": [
+          10,
+          14
+        ]
+      },
+      {
+        "step": 5,
+        "helper": "0xfce170",
+        "count_per_day": 4,
+        "full_success_slot_range": [
+          14,
+          18
+        ]
+      },
+      {
+        "step": 6,
+        "helper": "0xfce170",
+        "count_per_day": 1,
+        "full_success_slot_range": [
+          18,
+          19
+        ]
+      },
+      {
+        "step": 7,
+        "helper": "0xfce170",
+        "count_per_day": 1,
+        "full_success_slot_range": [
+          19,
+          20
+        ]
+      }
+    ],
+    "state_3": [
+      {
+        "step": 1,
+        "helper": "0xfce710",
+        "count_per_day": 2,
+        "full_success_slot_range": [
+          0,
+          2
+        ]
+      },
+      {
+        "step": 2,
+        "helper": "0xfce170",
+        "count_per_day": 1,
+        "full_success_slot_range": [
+          2,
+          3
+        ],
+        "fills_empty_on_shortfall": true
+      },
+      {
+        "step": 3,
+        "helper": "0xfce710",
+        "count_per_day": 2,
+        "full_success_slot_range": [
+          3,
+          5
+        ]
+      },
+      {
+        "step": 4,
+        "helper": "0xfce710",
+        "count_per_day": 1,
+        "full_success_slot_range": [
+          5,
+          6
+        ]
+      },
+      {
+        "step": 5,
+        "helper": "0xfcdfe0",
+        "count_per_source": "all eligible",
+        "source_passes": 3,
+        "full_success_slot_start": 6,
+        "full_success_slot_end": "depends on eligible candidates"
+      },
+      {
+        "step": 6,
+        "helper": "0xfce170",
+        "count_per_day": 8,
+        "full_success_slot_start": "after step 5",
+        "full_success_slot_end": "start + 8"
+      },
+      {
+        "step": 7,
+        "helper": "0xfce170",
+        "count_per_day": 8,
+        "full_success_slot_start": "after step 6",
+        "full_success_slot_end": "start + 8"
+      },
+      {
+        "step": 8,
+        "helper": "0xfce170",
+        "count_per_day": 2,
+        "full_success_slot_start": "after step 7",
+        "full_success_slot_end": "start + 2"
+      },
+      {
+        "step": 9,
+        "helper": "0xfce170",
+        "count_per_day": 2,
+        "full_success_slot_start": "after step 8",
+        "full_success_slot_end": "start + 2"
+      },
+      {
+        "step": 10,
+        "helper": "0xfce170",
+        "count_per_day": 1,
+        "repeat": 5,
+        "full_success_slot_start": "after step 9",
+        "full_success_slot_end": "start + 5",
+        "special_pick_mode": true
+      }
+    ]
+  },
+  "caveats": [
+    "Slot ranges assume every requested candidate passes runtime eligibility. If a selector yields fewer items, later calls start at the next first-empty slot; some state-3 calls explicitly fill missing entries with None.",
+    "The three ShopSeed passes are separate filters, but the final item ID selected within each pass depends on the native RNG and current source indices.",
+    "For state 2 and state 3, builders merge ItemKind, ItemFrom, season, and derived-class bitsets before selection. This artifact maps call order and slot placement, not the complete item membership of each merged set.",
+    "State-2/state-3 candidate membership remains incomplete: 0xfcf580 prunes each set bit through 0xf58d00 and a runtime predicate (constructor 0xa0fce0, vtable 0x31c6280, slot 0 target 0x1c86550). Its selector values are known (state 2: 0x41/0x02; state 3: 0x41/0x41), but the fields and accepted values have no recovered symbolic label. Month/hemisphere, saved ShopSeed indices, and RNG also affect concrete candidates and picks."
+  ],
+  "evidence": {
+    "native_decompilation": [
+      "0xfd0630",
+      "0xfce9e0",
+      "0xfceb90",
+      "0xfcf660",
+      "0xfce170",
+      "0xfce710",
+      "0xfcdfe0",
+      "0xfce570",
+      "0xfce410",
+      "0xfd2450"
+    ],
+    "local_save_layout": "output/gameplay/save_layout.json",
+    "external_save_schema_crosswalk": "output/gameplay/save_layout_external_crosswalk.json"
+  },
+  "unresolved_filter_predicates": [
+    {
+      "helper_va": "0xfcf580",
+      "predicate_constructor_va": "0xa0fce0",
+      "predicate_vtable": "0x31c6280",
+      "status": "Call structure and selector values are recovered; predicate fields, accepted-value semantics, and runtime dependencies are not symbolically identified.",
+      "vtable_slot0_target": "0x1c86550",
+      "known_selectors": {
+        "state_2": [
+          "0x41",
+          "0x02"
+        ],
+        "state_3": [
+          "0x41",
+          "0x41"
+        ]
+      },
+      "known_behavior": "0xfcf580 scans 0..14999, calls 0xf58d00 for each set candidate, invokes the predicate when that check passes, and clears rejected bits."
+    }
+  ]
+}

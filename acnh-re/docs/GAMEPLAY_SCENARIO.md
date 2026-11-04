@@ -122,7 +122,7 @@ Dispatcher `0xf545f0` sendiri memanggil, berurutan:
 4. `0xfc4560`, `0xf77050`, `0xf7d4c0` (tamu campsite: pasti bila `CampFirstCamperVisit`, selain itu 5/10/15/20% untuk 3/4/5/≥6 hari sejak tamu terakhir), `0xf26330`, `0xf6a730`, `0xfd8920` (K.K., pembuat jadwal pengunjung mingguan `0xfd8a80`, validasi `0xfd9620`; §3), `0xfc1b80` (rumor: `RumorPFavoriteProgressDays` += hari), `0xf8f190` (member `+0x20d310` = 2), `0x10c26e0` (struktur);
 5. `0xf91b90` (hari main, Wisp, `MarketBuiltMyVillage`), `0xf84320` (pindah keluar dan masuk villager, §5.1–5.2), `0xf40e0` (papan event dan ulang tahun).
 
-**Batas bukti member `+0x20d310`:** node lokal `0x20d310` disejajarkan dengan `SaveLand.Office`; anaknya `0x20d348` disejajarkan dengan `SaveLand.Office.OfficeLevel` pada data `+0x4159f0`, ukuran 4. Kecocokan memakai offset, ukuran, dan kedalaman pohon pada skema lintas versi; simbol enum lokal belum ada. `0xf8f190` menulis nilai `2` setiap pergantian hari, tetapi arti nilai `2` dan pembacanya belum diketahui. Member tetangga `+0x20d3b8` tetap merupakan payload papan pengumuman yang terpisah.
+**Batas bukti member `+0x20d310`:** node lokal `0x20d310` disejajarkan dengan `SaveLand.Office`; anaknya `0x20d348` disejajarkan dengan `SaveLand.Office.OfficeLevel` pada data `+0x4159f0`, ukuran 4. Kecocokan memakai offset, ukuran, dan kedalaman pohon pada skema lintas versi; simbol enum lokal belum ada. Inisialisasi root save `0xf5af30` memberi field data `+0x4159f0` nilai `1`; dispatcher `0xf545f0` kemudian memanggil `0xf8f190`, yang menulis `2` saat proses pergantian hari. Peralihan `1 → 2` terbukti lokal; arti enum kedua nilai dan pembaca lokal belum diketahui. Member tetangga `+0x20d3b8` tetap merupakan payload papan pengumuman yang terpisah.
 
 ### 2.2 Jadwal aktif NPC
 
@@ -335,7 +335,7 @@ Konstanta float dibaca dari rodata (`0x29d5e8c` = 0.9, `0x29d5d94` = 1.4, `0x29d
 
 Enum `ItemFrom` ada di rodata `0x29b535d`.
 
-Untuk Nook's Cranny, `0xfd0630` memilih pembuat stok dari state toko: state 0–1 → `0xfce9e0`, state 2 → `0xfceb90`, dan state 3 → `0xfcf660`. Ketiga pembuat menyusun komponen mask musim ∩ `ItemKind` `{Ftr, DoorDeco, Tambourine}`. State 2 dan 3 juga membangun filter kelas turunan melalui konstruktor `0xb0fd80`; filter itu berbeda dari predikat `ItemKind` dan `ItemFrom`. Builder sekarang dapat ditelusuri sampai himpunan selector dan pemanggil pengambilan stok, tetapi belum seluruh slot keluaran akhir dapat dipasangkan satu per satu karena bitset digabung sebelum pemilihan.
+Untuk Nook's Cranny, `0xfd0630` memilih pembuat stok dari state toko: state 0–1 → `0xfce9e0`, state 2 → `0xfceb90`, dan state 3 → `0xfcf660`. Ketiga pembuat menyusun komponen mask musim ∩ `ItemKind` `{Ftr, DoorDeco, Tambourine}`. State 2 dan 3 juga membangun filter kelas turunan melalui konstruktor `0xb0fd80`; filter itu berbeda dari predikat `ItemKind` dan `ItemFrom`. Urutan panggilan selektor dan penempatan ke bucket hari kini terbukti; yang belum terurai adalah keanggotaan item tiap bitset gabungan dan ID yang akhirnya terpilih.
 
 **Filter state awal dan sumber dinamis yang terbukti dari pseudocode, disassembly, dan tabel.** Pada `0xfce9e0`, dua pilihan pertama dibuat dari irisan mask item musim, `ItemKind` `{0, 77, 32}`, dan `ItemFrom` `{1}`. Daftar enum `ItemKind` memberi label `Ftr`, `DoorDeco`, dan `Tambourine`; baris `ItemFrom` bernilai 1 adalah `ShopDefault`. Dari 23 baris `ItemParam` dengan `ItemFrom=ShopDefault`, semuanya berjenis `Ftr` sebelum filter musim. Ketiga pembuat state toko juga menyusun komponen mask musim ∩ `ItemKind` `{0, 77, 32}`; state 2–3 menambahkan filter lain yang belum dapat dipasangkan dengan tiap ambilan.
 
@@ -354,7 +354,7 @@ Untuk Nook's Cranny, `0xfd0630` memilih pembuat stok dari state toko: state 0–
 | 6 | `ShopSeed_Chrysanthemum` (`0x52`) | `0xf81` |
 | 7 | `ShopSeed_Pansy` (`0x59`) | `0xc0f` |
 
-Nilai sumber ketiga bergantung pada bulan dan indeks yang sudah tersimpan; jumlah kandidat yang diambil dari tiap filter (`1` pada state <2, `2` pada state 2, semua pada state 3). Filter per ambilan lain pada state 2 dan 3 tetap belum dapat dipasangkan satu per satu.
+Nilai sumber ketiga bergantung pada bulan dan indeks yang sudah tersimpan. `0xfcdfe0` membuat tiga pass terpisah: dua `ItemFrom` dari indeks save `+0x925/+0x924` dan satu sumber baru yang cocok dengan bulan. Masing-masing pass mengambil 1 item per hari pada state <2, 2 pada state 2, dan semua kandidat yang lolos pada state 3.
 
 **Input harga lobak dan flow Daisy Mae.** Generator `0xfc6d00` menulis harga dasar pada kata pertama blok. Query NSO VA `0x3cca80` (Ghidra `FUN_004cca80`) mengambil node save `+0x208ed0`, membaca `u32` pada `data +0x00`, lalu membandingkannya dengan jumlah pembelian yang dikalikan kuantitas. Metadata registrasi mengidentifikasinya sebagai slot 6 `EventFlowQueryBoaCanSetKabu` (factory `0x45a7f0`, constructor `0x3cca20`, vtable `0x3053ac0`). Pada EventFlow lokal `SNPC_boc:boc_Buy`, event 29 menjalankan `EventFlowActionUITenKeyHandling` dengan `Type=cKabu`, event 30 membaca hasil menu, lalu cabang 0 menuju query `BoaCanSetKabu` pada event 36. Hasil query 0/1/2 menuju event 35/37/40. Query mengembalikan 1 bila nilai permintaan di bawah harga dasar × kuantitas; 0 bila setter menerima jumlah; 2 bila jumlah belum diisi atau setter menolak. Emulasi native dengan accessor save/input/setter terkontrol mengonfirmasi tiga kode hasil. Layout lokal `SwkbdTextAreaKaburiba` mempunyai pane input angka dan total. Tabel publik [NookKit 3.0.3](https://github.com/acnhmodding/nookkit/blob/16522dcb71f4b3c4f4d37d9cc6bf6676a5fca0b7/data/pages-3.0.3.tsv) memetakan `KabuBuyPage` ke layout itu, tetapi versinya berbeda dari dump lokal. Jadi urutan input-ke-query lokal terbukti; kaitan persis `Type=cKabu` ke kelas halaman pada build 1.0.0 belum dibuktikan. Rincian bukti ada di [`kabu_ui_binding.json`](../output/gameplay/kabu_ui_binding.json).
 
@@ -370,9 +370,13 @@ Nilai sumber ketiga bergantung pada bulan dan indeks yang sudah tersimpan; jumla
 
 | State toko | Fungsi | Ambilan |
 |---|---|---|
-| < 2 | `0xfce9e0` | 2, plus 1 dari himpunan pulau (member `0x20d0e0`) |
-| 2 | `0xfceb90` | 4, 4, 1, 1, plus ambilan helper `0xfcf580`/`0xfce710` dan 2 dari member `0x20d0e0` |
-| 3 | `0xfcf660` | 8, 8, 2, 2, 1, 1, 1, 1, 1, plus helper |
+| < 2 | `0xfce9e0` | 2 dari filter umum; 3 pass sumber `ShopSeed` ×1 (`0xfcdfe0`) |
+| 2 | `0xfceb90` | 2 helper ×2; 4, 4, 1, 1 dari filter lain; 3 pass sumber `ShopSeed` ×2 (`0xfcdfe0`) |
+| 3 | `0xfcf660` | `fce710` 2; `fce170` 1; `fce710` 2, 1; three `ShopSeed` passes all; `fce170` 8, 8, 2, 2, 1×5 |
+
+**Pemetaan keluaran per hari.** Save member `SaveShopZakka` (node `0x1f67f0`, data `+0x4100e8`) berisi tujuh bucket berjarak `0x200` byte. `0xfd2450` memberi urutan nama Minggu–Sabtu. `0xfce170` menjalankan selector terpisah untuk setiap hari; `0xfce710` memilih satu batch berukuran `jumlah-per-hari × 7`, lalu membagikannya berurutan ke tujuh bucket. Keduanya menulis melalui `0xfce570` ke slot kosong pertama dari 64 entri (stride 8 byte, ID kosong `-2`) dan membentuk label `Shop.Zakka.<hari>.<item>`. Loop selector mencakup ID `0–14999`; mask kandidat berukuran `0x754` byte (469 kata 32-bit, 24 bit valid pada kata terakhir). Ini menetapkan domain seleksi, bukan berarti setiap ID mempunyai baris `ItemParam`. Dengan semua kandidat lolos, state <2 menempati slot 0–1 untuk filter umum dan 2–4 untuk tiga pass `ShopSeed`; state 2 menempati 0–1 dan 2–3 untuk helper awal, 4–9 untuk tiga pass seed, lalu 10–13, 14–17, 18, dan 19 untuk filter berikutnya. Kekurangan kandidat dapat menggeser slot berikutnya; state 3 juga memanggil tiga pass seed dengan jumlah semua kandidat, jadi batas akhir setelah slot 5 bergantung pada isi pool. [Peta call order, domain, dan offset](../output/gameplay/nook_shop_weekly_slot_map.json). ID item per slot tetap ditentukan seleksi acak dan filter gabungan.
+
+**Predicate runtime yang masih tanpa label.** `0xfcf580` memindai ID `0–14999`; untuk bit yang aktif, ia membentuk/membaca record kandidat, memanggil `0xf58d00`, lalu memanggil filter objek dan menghapus bit jika kandidat ditolak. Konstruktor `0xa0fce0` hanya mengisi vtable `0x31c6280` dan nilai selektor. Pemanggil state 2 memberi selektor `0x41` dan `0x02`; state 3 memberi `0x41` pada kedua pemanggilan. Tabel pointer lokal menghubungkan slot 0 vtable itu ke metode `0x1c86550`, tetapi field yang diuji, arti nilai selektor, serta ketergantungan metode pada state runtime belum diberi nama. Karena itu keanggotaan bitset gabungan state 2/3 belum dapat dihitung hanya dari mask musim, `ItemKind`, dan `ItemFrom`.
 
 **Blok toko** (node `0x1f3e98`, lihat `save_layout.json`):
 
