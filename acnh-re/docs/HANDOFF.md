@@ -89,4 +89,4 @@ Level bukti: **[EF]** EventFlow, **[TBL]** tabel, **[PSEUDO]** pseudocode/disass
 | 2026-11-04 | Prosesor pergantian hari tersisa (`0xf7d4c0`, `0xf8b460`, `0xbdfd40`, `0xf6130`, `0x4ae640`, `0xd21110`, `0xfc1b80`, `0xf8f190`) | `5589793` |
 | 2026-11-04 | Layout save lewat emulasi `0xf32fa0`; `nso_sandbox.py`, `save_layout_native.py` | `28efa7d` |
 | 2026-11-04 | Verifikasi native 8 bacaan lewat emulasi (`gameplay_native.py`) | `a48fa4d` |
-| 2026-11-04 | Sisa kecil: RNG thread, level rumah, posisi plaza, penulis `AbandonedHouse`, jalur pindah masuk, kategori 10, bungkus item, mode sesi, tanggal ulang tahun, stok toko, harga jual, `EarlyOrLate`, botol pesan, layout pemain | (commit ini) |
+| 2026-11-04 | Sisa kecil: RNG thread, level rumah, posisi plaza, penulis `AbandonedHouse`, jalur pindah masuk, kategori 10, bungkus item, mode sesi, tanggal ulang tahun, stok toko, harga jual, `EarlyOrLate`, botol pesan, layout pemain | `a607f18` |
