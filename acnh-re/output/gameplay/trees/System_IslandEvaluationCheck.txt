@@ -1,0 +1,217 @@
+# System_IslandEvaluationCheck (source: decoded EventFlow; bool flag case 0 = ON, case 1 = OFF; #N = event index)
+== ENTRY ChkNaturalRank
+  #0 IF VillageScoreCheckNatural {"BorderValue": 200.0}
+    case 0:
+      #10 SetSubflowResult {"SetIndex": 2, "ResultValue": 0}
+    case 1:
+      #7 IF VillageScoreCheckNatural {"BorderValue": 270.0}
+        case 0:
+          #16 SetSubflowResult {"SetIndex": 2, "ResultValue": 1}
+        case 1:
+          #8 IF VillageScoreCheckNatural {"BorderValue": 350.0}
+            case 0:
+              #17 SetSubflowResult {"SetIndex": 2, "ResultValue": 2}
+            case 1:
+              #9 IF VillageScoreCheckNatural {"BorderValue": 450.0}
+                case 0:
+                  #18 SetSubflowResult {"SetIndex": 2, "ResultValue": 3}
+                case 1:
+                  #19 SetSubflowResult {"SetIndex": 2, "ResultValue": 4}
+== ENTRY ChkLifeRank
+  #1 IF VillageScoreCheckLife {"BorderValue": 80.0}
+    case 0:
+      #11 SetSubflowResult {"ResultValue": 0, "SetIndex": 3}
+    case 1:
+      #4 IF VillageScoreCheckLife {"BorderValue": 160.0}
+        case 0:
+          #12 SetSubflowResult {"SetIndex": 3, "ResultValue": 1}
+        case 1:
+          #5 IF VillageScoreCheckLife {"BorderValue": 400.0}
+            case 0:
+              #13 SetSubflowResult {"SetIndex": 3, "ResultValue": 2}
+            case 1:
+              #6 IF VillageScoreCheckLife {"BorderValue": 650.0}
+                case 0:
+                  #14 SetSubflowResult {"SetIndex": 3, "ResultValue": 3}
+                case 1:
+                  #15 SetSubflowResult {"SetIndex": 3, "ResultValue": 4}
+== ENTRY ChkMinusPoint
+  #2 IF VillageScoreVeryMessy {"BorderHalfUnit": 180, "BorderBlockNum": 1}
+    case 0:
+      #20 IF VillageScoreCheckTreeNum {"BorderNum": 220}
+        case 0:
+          #3 IF VillageScorePutUnitIconNum {"BorderValue": 15}
+            case 0:
+              #24 SetSubflowResult {"SetIndex": 4, "ResultValue": 0}
+            case 1:
+              #22 SetSubflowResult {"SetIndex": 4, "ResultValue": 3}
+        case 1:
+          #23 SetSubflowResult {"SetIndex": 4, "ResultValue": 2}
+    case 1:
+      #21 SetSubflowResult {"SetIndex": 4, "ResultValue": 1}
+== ENTRY IslandEvaluationChk
+  #57 CALL System_IslandEvaluationCheck:ChkNaturalRank
+  #58 CALL System_IslandEvaluationCheck:ChkLifeRank
+  #59 CALL System_IslandEvaluationCheck:ChkMinusPoint
+  #25 IF NpcHouseNum {"NpcHouseType": "cConstructed", "Num": 8}
+    case 0:
+      #45 SetSubflowResult {"SetIndex": 1, "ResultValue": 1}
+      #62 SetSubflowResult {"SetIndex": 5, "ResultValue": 0}
+      #36 IF SubflowResultChoice5 {"SetIndex": 3}
+        case 0:
+          #46 SetSubflowResult {"ResultValue": 1, "SetIndex": 0}
+        case 1:
+          #26 SetSubflowResult {"ResultValue": 1, "SetIndex": 0}
+          #38 IF SubflowResultChoice5 {"SetIndex": 2}
+            case 0:
+              #53 SetSubflowResult {"SetIndex": 1, "ResultValue": 2}
+              #66 SetSubflowResult {"SetIndex": 5, "ResultValue": 1}
+        case 2:
+          #27 SetSubflowResult {"ResultValue": 2, "SetIndex": 0}
+          #39 IF SubflowResultChoice5 {"SetIndex": 2}
+            case 0:
+              #42 SetSubflowResult {"ResultValue": 1, "SetIndex": 0}
+              #52 SetSubflowResult {"SetIndex": 1, "ResultValue": 2}
+              #65 SetSubflowResult {"SetIndex": 5, "ResultValue": 1}
+            case 1:
+              -> (#42)
+        case 3:
+          #28 SetSubflowResult {"ResultValue": 3, "SetIndex": 0}
+          #40 IF SubflowResultChoice5 {"SetIndex": 2}
+            case 0:
+              #47 SetSubflowResult {"ResultValue": 1, "SetIndex": 0}
+              #51 SetSubflowResult {"SetIndex": 1, "ResultValue": 2}
+              #64 SetSubflowResult {"SetIndex": 5, "ResultValue": 1}
+            case 1:
+              -> (#47)
+            case 2:
+              #43 SetSubflowResult {"ResultValue": 2, "SetIndex": 0}
+              -> (#51)
+        case 4:
+          #29 SetSubflowResult {"ResultValue": 4, "SetIndex": 0}
+          #41 IF SubflowResultChoice5 {"SetIndex": 2}
+            case 0:
+              #49 SetSubflowResult {"ResultValue": 1, "SetIndex": 0}
+              #50 SetSubflowResult {"SetIndex": 1, "ResultValue": 2}
+              #63 SetSubflowResult {"SetIndex": 5, "ResultValue": 1}
+            case 1:
+              -> (#49)
+            case 2:
+              #48 SetSubflowResult {"ResultValue": 2, "SetIndex": 0}
+              -> (#50)
+            case 3:
+              #44 SetSubflowResult {"ResultValue": 3, "SetIndex": 0}
+              -> (#50)
+            case 4:
+              #54 SetSubflowResult {"SetIndex": 1, "ResultValue": 3}
+              #55 IF SubflowResultChoice4 {"SetIndex": 4}
+                case 1:
+                  #56 SetSubflowResult {"SetIndex": 0, "ResultValue": 3}
+                case 2:
+                  -> (#56)
+                case 3:
+                  -> (#56)
+    case 1:
+      #37 CALL System_IslandEvaluationCheck:NotEnoughNNpc
+== ENTRY NotEnoughNNpc
+  #31 SetSubflowResult {"SetIndex": 1, "ResultValue": 0}
+  #30 SetSubflowResult {"SetIndex": 0, "ResultValue": 0}
+  #32 IF NpcHouseNum {"NpcHouseType": "cConstructed", "Num": 7}
+    case 0:
+      #33 IF SubflowResultChoice5 {"SetIndex": 2}
+        case 2:
+          #34 IF SubflowResultChoice5 {"SetIndex": 3}
+            case 2:
+              #35 SetSubflowResult {"SetIndex": 0, "ResultValue": 1}
+            case 3:
+              -> (#35)
+            case 4:
+              -> (#35)
+        case 3:
+          -> (#34)
+        case 4:
+          -> (#34)
+== ENTRY ChkNaturalImprovement
+  #73 IF VillageScoreCheckNaturalDeltaBeforeDay {"DeltaPoint": 5}
+    case 0:
+      #74 VillageScoreNaturalReflectLandSave {}
+    case 1:
+      #76 EventFlagSystemOn {"AccessKey": "cLand:SzaIslandEvaluationImprovementNaturalToday"}
+      -> (#74)
+== ENTRY ChkLifeImprovement
+  #71 IF VillageScoreCheckLifeDeltaBeforeDay {"DeltaPoint": 10}
+    case 0:
+      #75 VillageScoreLifeReflectLandSave {}
+    case 1:
+      #72 EventFlagSystemOn {"AccessKey": "cLand:SzaIslandEvaluationImprovementLifeToday"}
+      -> (#75)
+== ENTRY ChkEvaluationImprovement
+  #60 CALL System_IslandEvaluationCheck:ChkLifeImprovement
+  #61 CALL System_IslandEvaluationCheck:ChkNaturalImprovement
+== ENTRY ChkEvaluationImprovement_First
+  #67 CALL System_IslandEvaluationCheck:ChkLifeImprovement
+  #68 CALL System_IslandEvaluationCheck:ChkNaturalImprovement
+  #69 EventFlagSystemOff {"AccessKey": "cLand:SzaIslandEvaluationImprovementLifeToday"}
+  #70 EventFlagSystemOff {"AccessKey": "cLand:SzaIslandEvaluationImprovementNaturalToday"}
+== ENTRY Compare_BeforeEvaluation
+  #78 IF SubflowResultChoice5 {"SetIndex": 0}
+    case 0:
+      #90 IF EventFlagSystemInt {"AccessKey": "cPlayer:SzaBeforeIslandEvaluation", "Border": 1, "FlagCheckType": 2}
+        case 0:
+          #94 SetSubflowResult {"SetIndex": 6, "ResultValue": 2}
+          #79 IF EventFlagSystemInt {"AccessKey": "cPlayer:SzaBeforeIslandEvaluation", "Border": 1, "FlagCheckType": 0}
+            case 0:
+              #77 SetSubflowResult {"SetIndex": 6, "ResultValue": 1}
+              #80 EventFlagSystemSet {"AccessKey": "cPlayer:SzaBeforeIslandEvaluation", "SetNum": 1}
+            case 1:
+              -> (#80)
+        case 1:
+          #98 SetSubflowResult {"SetIndex": 6, "ResultValue": 0}
+          -> (#79)
+    case 1:
+      #91 IF EventFlagSystemInt {"AccessKey": "cPlayer:SzaBeforeIslandEvaluation", "Border": 2, "FlagCheckType": 2}
+        case 0:
+          #95 SetSubflowResult {"SetIndex": 6, "ResultValue": 2}
+          #82 IF EventFlagSystemInt {"AccessKey": "cPlayer:SzaBeforeIslandEvaluation", "FlagCheckType": 0, "Border": 2}
+            case 0:
+              #86 SetSubflowResult {"SetIndex": 6, "ResultValue": 1}
+              #81 EventFlagSystemSet {"AccessKey": "cPlayer:SzaBeforeIslandEvaluation", "SetNum": 2}
+            case 1:
+              -> (#81)
+        case 1:
+          #99 SetSubflowResult {"SetIndex": 6, "ResultValue": 0}
+          -> (#82)
+    case 2:
+      #92 IF EventFlagSystemInt {"AccessKey": "cPlayer:SzaBeforeIslandEvaluation", "Border": 3, "FlagCheckType": 2}
+        case 0:
+          #96 SetSubflowResult {"SetIndex": 6, "ResultValue": 2}
+          #83 IF EventFlagSystemInt {"AccessKey": "cPlayer:SzaBeforeIslandEvaluation", "FlagCheckType": 0, "Border": 3}
+            case 0:
+              #87 SetSubflowResult {"SetIndex": 6, "ResultValue": 1}
+              #103 EventFlagSystemSet {"AccessKey": "cPlayer:SzaBeforeIslandEvaluation", "SetNum": 3}
+            case 1:
+              -> (#103)
+        case 1:
+          #100 SetSubflowResult {"SetIndex": 6, "ResultValue": 0}
+          -> (#83)
+    case 3:
+      #93 IF EventFlagSystemInt {"AccessKey": "cPlayer:SzaBeforeIslandEvaluation", "Border": 4, "FlagCheckType": 2}
+        case 0:
+          #97 SetSubflowResult {"SetIndex": 6, "ResultValue": 2}
+          #84 IF EventFlagSystemInt {"AccessKey": "cPlayer:SzaBeforeIslandEvaluation", "FlagCheckType": 0, "Border": 4}
+            case 0:
+              #88 SetSubflowResult {"SetIndex": 6, "ResultValue": 1}
+              #104 EventFlagSystemSet {"AccessKey": "cPlayer:SzaBeforeIslandEvaluation", "SetNum": 4}
+            case 1:
+              -> (#104)
+        case 1:
+          #101 SetSubflowResult {"SetIndex": 6, "ResultValue": 0}
+          -> (#84)
+    case 4:
+      #102 SetSubflowResult {"SetIndex": 6, "ResultValue": 0}
+      #85 IF EventFlagSystemInt {"AccessKey": "cPlayer:SzaBeforeIslandEvaluation", "FlagCheckType": 0, "Border": 5}
+        case 0:
+          #89 SetSubflowResult {"SetIndex": 6, "ResultValue": 1}
+          #105 EventFlagSystemSet {"AccessKey": "cPlayer:SzaBeforeIslandEvaluation", "SetNum": 5}
+        case 1:
+          -> (#105)

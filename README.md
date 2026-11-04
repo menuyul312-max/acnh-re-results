@@ -1,88 +1,98 @@
 # Hasil RE ACNH 1.0.0
 
-Paket hasil reverse engineering untuk menjadi referensi konversi ke Godot. Proyek Godot dan sumber pengguna tidak diubah. Status semantik masih parsial.
+Paket hasil reverse engineering Animal Crossing: New Horizons versi 1.0.0 (build ID `7FC1BAFF976AECA414520CB89F4616CB`), sebagai referensi konversi ke engine lain (Godot). Proyek Godot dan sumber asli pengguna tidak diubah.
 
-## Fokus terbaru: UI dan penataan pulau
+**Status:** pemetaan struktural seluruh data yang tersedia sudah lengkap. Semantik (perilaku) game masih parsial; setiap batas dicatat eksplisit. Jumlah kasus uji native bukan persentase penyelesaian game.
 
-Lanjutan native: [selector template pulau](acnh-re/docs/ISLAND_TEMPLATE_SELECTOR_NATIVE.md), **528 kasus**, instruksi asli tanpa stub pada registry/cache rekonstruksi. Filter kategori, bitset ID dan pemilihan RNG teruji; loader lengkap, perakitan pantai dan air tetap parsial.
+## Mulai dari sini
 
+| Dokumen | Isi |
+|---|---|
+| [Workflow penggunaan data RE](acnh-re/docs/WORKFLOW.md) | Persiapan, ekstrak ZIP, file mana untuk apa, siklus satu tahap RE, verifikasi, kerja multi-agen |
+| [Alur gameplay dari data](acnh-re/docs/GAMEPLAY_FLOW.md) | Alur prolog sampai konser K.K. dan loop setelahnya, dari 456 EventFlow dan 1.555 flag, dengan label bukti per langkah |
+| [Kontrak data](acnh-re/docs/DATA_CONTRACT.md) | Format JSON hasil: manifest, BCSV, BYML, item, AAMP, EventFlow |
+| [Laporan lengkap baseline](acnh-re/LAPORAN_AKHIR.md) | Sumber input, pemetaan data, temuan native, lampiran 164 tabel |
+| [Frontier mekanik (JSON)](acnh-re/output/mechanics/continuation_frontier.json) | Yang sudah terbukti, yang masih terbuka, target fungsi berikutnya, total kasus terbaru |
+| [Cakupan komponen UI/pulau (JSON)](acnh-re/output/ui_island/component_coverage.json) | Level S/L/C/U per komponen |
+| [Cakupan dan yang belum diketahui (JSON)](acnh-re/output/coverage.json) | Ringkasan baseline yang dapat dibaca mesin |
 
-[Laporan UI/pulau](acnh-re/docs/UI_ISLAND_MAPPING.md) · [Ringkasan JSON](acnh-re/output/ui_island/summary.json) · [Cakupan per komponen](acnh-re/output/ui_island/component_coverage.json).
+## Status per area
 
-523 layout dan 10.882 pane, 2.095 animasi UI dengan 16.162 track/92.038 keyframe, 36 template pantai/792 slot/136 part, serta 96 bundel preset terrain–plaza–struktur–item kini tersedia sebagai JSON. Semua keyframe diverifikasi kembali terhadap byte sumber. Pemetaan ini struktural: handler UI, controller, perakitan pantai, penempatan dan perilaku air belum terbukti lengkap. Tahap ini menambah 0 kasus native; Godot tidak diubah. File rinci tersedia langsung di repo, tanpa ZIP baru.
+| Area | Status | Rujukan |
+|---|---|---|
+| Format data (BCSV, BYML, AAMP, SARC, EventFlow) | Lengkap secara struktural: 1.171 berkas, 2.986 entri; nama kolom 1.957/2.048, key BYML 2.979/3.410 | [LAPORAN_AKHIR](acnh-re/LAPORAN_AKHIR.md) |
+| Teks, UI, animasi (RomFS tambahan) | 965.426 pesan dalam 14 bahasa, 523 layout, 2.095 animasi UI, 83 state machine | [ADDITIONAL_ROMFS](acnh-re/docs/ADDITIONAL_ROMFS.md) |
+| Alur cerita/progres | Rantai utama terpetakan dari EventFlow; 693 flag tanpa penulis EventFlow (pemicu native) | [GAMEPLAY_FLOW](acnh-re/docs/GAMEPLAY_FLOW.md) |
+| Rumus yang terbukti native | RNG, cuaca hari biasa, kalender dan batas hari 05:00, genetika bunga, pembaca BYML, item 8 byte, resep, flag reset | [CALENDAR_FLOWERS](acnh-re/docs/CALENDAR_FLOWERS.md), [NATIVE_STAGE_WEATHER](acnh-re/docs/NATIVE_STAGE_WEATHER.md) |
+| Tujuh mekanik (collision, gerak, terrain, ground, posisi, NPC/navigasi, item/crafting) | Parsial; helper inti teruji di context rekonstruksi | [FOCUS7_MECHANICS](acnh-re/docs/FOCUS7_MECHANICS.md), frontier JSON |
+| Pembentukan pulau (template, pantai, terrain, PBC) | Parsial; selector, perakitan pantai dan konsumen tinggi PBC teruji | [ISLAND_TEMPLATE_SELECTOR_NATIVE](acnh-re/docs/ISLAND_TEMPLATE_SELECTOR_NATIVE.md) |
+| Save, ekonomi (lobak, toko), multiplayer, spawn ikan/serangga, scheduler villager | Belum di-RE secara native; data tabel tersedia | [GAMEPLAY_FLOW §12](acnh-re/docs/GAMEPLAY_FLOW.md), [coverage.json](acnh-re/output/coverage.json) |
+| Model 3D, audio, Havok | Sumber tidak ada di dump; hanya katalog referensi | [ADDITIONAL_ROMFS](acnh-re/docs/ADDITIONAL_ROMFS.md) |
 
-## Fokus sebelumnya: tujuh sistem mekanik
+Total kasus helper/blok native terbaru dicatat di satu tempat saja: `latest_phase.native_helper_cases_total` dalam [continuation_frontier.json](acnh-re/output/mechanics/continuation_frontier.json). Uji pulau dilaporkan terpisah di dokumen pulau.
 
-Lanjutan terbaru: [pelepasan entry registry wilayah](acnh-re/docs/WORLD_REGISTRY_RELEASE.md), **126 kasus tambahan**, total **1.136.083** helper/blok. Unlink, counter, pemilihan tiga world dan wrapper lifecycle teruji pada context rekonstruksi. Registry/placement lengkap tetap terbuka.
+## Unduh dan ekstrak
 
-Tahap sebelumnya: [mutasi flag wilayah dan wrapper world](acnh-re/docs/TERRAIN_REGION_MUTATION.md), **164 kasus tambahan**, total **1.135.957** helper/blok. Set/clear flag wilayah dan pengaruh bit6 terhadap decoder navigasi teruji pada grid rekonstruksi. Placement lengkap tetap terbuka.
+Hasil rinci baseline ada di lima ZIP [downloads/](downloads/), dan hasil RomFS tambahan di tiga ZIP [downloads/additional_romfs/](downloads/additional_romfs/). Masing-masing ZIP mandiri. Cara termudah adalah mengunduh repo lengkap ([ZIP repo](https://github.com/menuyul312-max/acnh-re-results/archive/refs/heads/main.zip)) atau melakukan clone.
 
-Tahap sebelumnya: [pemeriksaan wilayah terrain](acnh-re/docs/TERRAIN_REGION_CHECK.md),216 kasus tambahan; total **1.135.793** helper/blok. Mode base/overlay, flag dan batas rentang tinggi sekitar0,11 teruji pada context rekonstruksi. Sistem game lengkap tetap parsial.
+Ekstrak kedelapan ZIP ke root repo **tanpa menimpa** file yang sudah ada. ZIP baseline berisi versi lama `acnh-re/README.md`, `acnh-re/LAPORAN_AKHIR.md`, dan `acnh-re/output/coverage.json`.
 
-[Laporan fokus](acnh-re/docs/FOCUS7_MECHANICS.md) · [Peta JSON tujuh area](acnh-re/output/mechanics/focus7/summary.json)
-
-Fokus: fisika/collision, pergerakan pemain, terrain, ground dinamis, pemeriksaan posisi, NPC/navigasi, serta item/alat/crafting. Peta mencakup 69 tabel, 55 graf AI dan binding statis 292 parameter. [Tahap sebelumnya](acnh-re/docs/WORLD_NAV_BRIDGE.md) menambah **1.568 kasus**: 12 sampel tinggi runtime, word/flag/node navigasi, biaya default, flood-fill/bitset dan beberapa jalur evaluator NPC hingga return. Total setelah tahap itu **1.135.577**. Context tetap rekonstruksi; loader preset/PBC, world lengkap, worker async, steering dan physics belum terbukti penuh. Model/sound memakai katalog. Seluruh mekanik belum selesai; [frontier JSON](acnh-re/output/mechanics/continuation_frontier.json) mencatat yang terbukti dan yang masih terbuka. Pembaruan tersedia langsung di repo; ZIP lama tetap snapshot historis.
-
-Pembaruan mekanik: [collision, terrain dan ledger seluruh sistem](acnh-re/docs/MECHANICS_RE.md). Data baru tersedia langsung dalam [output/mechanics](acnh-re/output/mechanics), terpisah dari ZIP snapshot sebelumnya. Tahap ini menambah 262.164 perbandingan blok native dan memetakan konfigurasi 235 state pemain. Model dan sound memakai katalog sebagai referensi.
-
-## Pembaruan RomFS tambahan — 2 November 2026
-
-[Laporan tambahan](acnh-re/docs/ADDITIONAL_ROMFS.md) · [Unduh tiga ZIP tambahan](downloads/additional_romfs/) · [Ringkasan JSON](acnh-re/output/additional_romfs/summary.json)
-
-Tambahan ini memetakan 965.426 pesan dalam 14 varian bahasa, 888.034 label BDLI, 83 state machine animasi, 523 layout UI dan metadata 3.336 record tekstur. Sebanyak 8.030/8.093 rujukan pesan EventFlow serta nama tampilan 8.074/8.208 baris item terhubung ke teks yang tersedia. Katalog model/audio tetap referensi; folder Model dan Sound/Resource tidak ikut arsip tambahan.
-
-Unduh dan ekstrak **ketiga ZIP tambahan** ke folder yang sama dengan hasil baseline. Kelima ZIP baseline di bawah tetap tersedia dan isinya tidak berubah. Jika menggunakan Code → Download ZIP, ekstrak seluruh ZIP baseline dan tambahan dari folder downloads ke folder repo yang sama. Arsip sumber RomFS dan executable asli tidak disertakan.
-
-## Unduh hasil baseline
-
-**[Unduh repo beserta lima ZIP hasil](https://github.com/menuyul312-max/acnh-re-results/archive/refs/heads/main.zip)**
-
-[Halaman Release](https://github.com/menuyul312-max/acnh-re-results/releases/tag/hasil-re-2026-11-02) · [Checksum lima ZIP](downloads/SHA256SUMS.txt)
-
-Repo ini publik; hasil tersedia dalam lima ZIP mandiri di direktori downloads. Unduh kelimanya, atau gunakan tautan unduh repo di atas. Ekstrak kelima ZIP ke folder tujuan yang sama.
-
-Gabungan lima ZIP berisi 86.653 entry: hasil JSON, blob yang dirujuk, pseudocode/disassembly, indeks SQLite, tool, tes, dan laporan. Isinya telah diperiksa setara dengan paket ZIP lengkap lokal. Repo Git juga menyimpan tool, laporan, serta ringkasan JSON yang dapat dibaca langsung.
-
-### Cara mengekstrak hasil
-
-Unduh semua lima ZIP pada [downloads/](downloads/). Masing-masing adalah ZIP mandiri. Ekstrak kelimanya ke **folder tujuan yang sama**; tidak perlu perintah penggabungan. Gabungan isinya telah diperiksa setara dengan ZIP lengkap.
-
-Jika memilih **Code → Download ZIP**, ekstrak arsip repo, lalu ekstrak kelima ZIP dalam folder downloads ke folder repo tersebut. Ini melengkapi direktori acnh-re/output dan berkas hasil lainnya.
-
-## Laporan dan hasil yang dapat dibaca
-
-- [Laporan lengkap](acnh-re/LAPORAN_AKHIR.md)
-- [Kontrak data](acnh-re/docs/DATA_CONTRACT.md)
-- [SDK/ExeFS tambahan](acnh-re/docs/ADDITIONAL_EXEFS.md)
-- [Kalender, cuaca dan genetika bunga](acnh-re/docs/CALENDAR_FLOWERS.md)
-- [Cakupan dan bagian yang belum diketahui](acnh-re/output/coverage.json)
-- [Perbandingan tahap terakhir](acnh-re/output/progress_calendar_flowers.json)
-- [Log 34 uji integrasi](acnh-re/output/verification.log)
-
-Tautan laporan ke data terinci yang belum berada di tree Git dapat dibuka setelah kelima ZIP diekstrak.
-
-## Cakupan terkini
-
-- Seluruh subset B_data yang tersedia dipetakan secara struktural: 1.171 berkas, 2.986 entri kontainer/data.
-- Nama pulih: 1.957/2.048 kolom BCSV; 2.979/3.410 jenis key BYML. Cakupan kemunculan key BYML 99,452% bukan persentase RE seluruh game.
-- 1.136.083 kasus helper/blok native dan 2.546.185 pemeriksaan BYML; 34 uji integrasi baseline sebelumnya lulus. Jumlah kasus bukan persentase penyelesaian game.
-- Pemetaan Stage, item, terrain, EventFlow, SDK, cuaca, kalender, suara NPC, gen bunga dan item anakan.
-- Perilaku lengkap game belum selesai; batas dan kasus yang belum diketahui dicatat eksplisit.
-
-## Sumber dan reproduksi
-
-Executable unggahan asli (main.elf/NPDM, main, rtld, subsdk0, sdk), instalasi tool besar, dan direktori kerja tidak dimasukkan. Simpan sumber tersebut secara terpisah sesuai kontrak input. Baca [petunjuk ExeFS](acnh-re/docs/ADDITIONAL_EXEFS.md) sebelum menjalankan pemeriksaan native.
-
-Lisensi setiap rujukan tetap berlaku; lihat [NOTICE rujukan](acnh-re/tools/external/NOTICE.md). Tidak ada lisensi umum baru yang diberikan untuk konten game.
-
-SHA-256 ZIP lengkap lokal sebelum pembagian (verifikasi lima berkas unduhan memakai downloads/SHA256SUMS.txt):
-
-```text
-52ad5f6ecf1a185b3ca40de5391822ee8109323378eec52cbdb651e003229af1
+```bash
+for z in downloads/*.zip downloads/additional_romfs/*.zip; do unzip -n -q "$z" -d .; done
 ```
 
-Konsumen collision: [override mode, mask dan perubahan scalar](acnh-re/docs/COLLISION_RESPONSE.md), dengan 62.702 kasus validasi tambahan. JSON dan tool tersedia langsung dalam repo; ZIP snapshot lama tidak diperbarui.
+Rincian, cara verifikasi, dan file yang wajib ada: [WORKFLOW §3](acnh-re/docs/WORKFLOW.md#3-persiapan).
 
-Kedekatan dan terrain: [uji XZ, batas tinggi dan pembaca izin ground](acnh-re/docs/PROXIMITY_GROUND.md), dengan 3.235 kasus tambahan. JSON/tool tersedia langsung di repo, terpisah dari ZIP snapshot sebelumnya.
+- [Checksum lima ZIP baseline](downloads/SHA256SUMS.txt) · [Halaman release](https://github.com/menuyul312-max/acnh-re-results/releases/tag/hasil-re-2026-11-02)
+- SHA-256 ZIP lengkap lokal sebelum dibagi: `52ad5f6ecf1a185b3ca40de5391822ee8109323378eec52cbdb651e003229af1`
+- ZIP adalah snapshot 2 November 2026. Hasil sesudahnya tersimpan langsung di tree Git (`acnh-re/output/mechanics`, `ui_island`, `gameplay`).
 
-Runtime terrain: [koordinat, overlay dan tiga pemanggil ground utuh](acnh-re/docs/TERRAIN_RUNTIME.md), 1.791 kasus tambahan pada konteks terkontrol. [Resident RoomFloor terbaru](acnh-re/docs/RESIDENT_MAP_NPC_FOLLOWUP.md) mencakup pemilihan `.pbc`, transform dan consumer pada map rekonstruksi; PBC asli serta loader/async tetap terbuka.
+## Fokus terbaru (terbaru di atas)
+
+- **Alur gameplay dari data** — [GAMEPLAY_FLOW](acnh-re/docs/GAMEPLAY_FLOW.md) dan [tool](acnh-re/tools/gameplay_flow.py):
+  - indeks penulis/pembaca 1.555 flag pada 456 EventFlow, pohon flow progres di [output/gameplay](acnh-re/output/gameplay/);
+  - rumus bintang pulau (ambang Nature/Life, syarat ≥8 rumah NPC);
+  - syarat konser K.K. (≥3★);
+  - rantai toko → quest 3 rumah → Resident Services;
+  - aturan case Bool (98,3% konsisten), dengan 6 uji di `tests/test_gameplay_flow.py`.
+- **Konsumen pantai dan terrain pulau** — [ISLAND_TEMPLATE_SELECTOR_NATIVE](acnh-re/docs/ISLAND_TEMPLATE_SELECTOR_NATIVE.md), [TERRAIN_RUNTIME](acnh-re/docs/TERRAIN_RUNTIME.md):
+  - rangkaian `0x4de810→…→0x4e0c90` pada 36 template, 2.592 record tanpa mismatch;
+  - selector kandidat bagian pantai;
+  - 208 awalan tinggi PBC ke penulis `0x180d20`;
+  - skala LandMaking 10 unit = 2×2 sampel PBC.
+- **Audit PBC pulau dan ground** — [manifests_pbc_audit.json](acnh-re/output/ui_island/manifests_pbc_audit.json): indeks ground PBC, semantik material air, batas resolusi grid.
+- **Selector template pulau** — [ISLAND_TEMPLATE_SELECTOR_NATIVE](acnh-re/docs/ISLAND_TEMPLATE_SELECTOR_NATIVE.md): 528 kasus, instruksi asli tanpa stub. Loader lengkap, perakitan pantai, dan air tetap parsial.
+- **UI dan penataan pulau** — [UI_ISLAND_MAPPING](acnh-re/docs/UI_ISLAND_MAPPING.md), [ringkasan](acnh-re/output/ui_island/summary.json): 523 layout, 10.882 pane, 2.095 animasi UI dengan 16.162 track dan 92.038 keyframe, 36 template pantai, 96 bundel preset.
+- **Registry wilayah** — [WORLD_REGISTRY_RELEASE](acnh-re/docs/WORLD_REGISTRY_RELEASE.md) (126 kasus), [TERRAIN_REGION_MUTATION](acnh-re/docs/TERRAIN_REGION_MUTATION.md) (164 kasus), [TERRAIN_REGION_CHECK](acnh-re/docs/TERRAIN_REGION_CHECK.md) (216 kasus).
+- **Tujuh mekanik** — [FOCUS7_MECHANICS](acnh-re/docs/FOCUS7_MECHANICS.md), [peta JSON](acnh-re/output/mechanics/focus7/summary.json): 69 tabel, 55 graf AI, 292 parameter.
+  - Lanjutan: [WORLD_NAV_BRIDGE](acnh-re/docs/WORLD_NAV_BRIDGE.md) (1.568 kasus), [NPC_NAVIGATION_KERNEL](acnh-re/docs/NPC_NAVIGATION_KERNEL.md), [RESIDENT_MAP_NPC_FOLLOWUP](acnh-re/docs/RESIDENT_MAP_NPC_FOLLOWUP.md), [ACTIVE_CONTEXT_FOLLOWUP](acnh-re/docs/ACTIVE_CONTEXT_FOLLOWUP.md), [MECHANICS_CONTINUATION](acnh-re/docs/MECHANICS_CONTINUATION.md).
+- **Collision, kedekatan, terrain runtime** — [MECHANICS_RE](acnh-re/docs/MECHANICS_RE.md) (262.164 perbandingan blok, 235 state pemain), [COLLISION_RESPONSE](acnh-re/docs/COLLISION_RESPONSE.md) (62.702 kasus), [PROXIMITY_GROUND](acnh-re/docs/PROXIMITY_GROUND.md) (3.235 kasus), [TERRAIN_RUNTIME](acnh-re/docs/TERRAIN_RUNTIME.md) (1.791 kasus).
+- **RomFS tambahan (2 Nov 2026)** — [ADDITIONAL_ROMFS](acnh-re/docs/ADDITIONAL_ROMFS.md), [ringkasan](acnh-re/output/additional_romfs/summary.json): 8.030/8.093 rujukan pesan EventFlow dan 8.074/8.208 nama item terhubung ke teks.
+- **Baseline** — [LAPORAN_AKHIR](acnh-re/LAPORAN_AKHIR.md), [SDK/ExeFS tambahan](acnh-re/docs/ADDITIONAL_EXEFS.md), [kalender, cuaca dan bunga](acnh-re/docs/CALENDAR_FLOWERS.md), [log 34 uji integrasi](acnh-re/output/verification.log).
+
+## Indeks dokumen
+
+| Dokumen | Topik |
+|---|---|
+| [WORKFLOW](acnh-re/docs/WORKFLOW.md) | Cara memakai dan melanjutkan RE |
+| [GAMEPLAY_FLOW](acnh-re/docs/GAMEPLAY_FLOW.md) | Alur gameplay awal–akhir dari EventFlow |
+| [DATA_CONTRACT](acnh-re/docs/DATA_CONTRACT.md) | Format output |
+| [GITHUB_REFERENCES](acnh-re/docs/GITHUB_REFERENCES.md) | Rujukan publik dan batas versi |
+| [ADDITIONAL_EXEFS](acnh-re/docs/ADDITIONAL_EXEFS.md) | Modul main/sdk/subsdk0/rtld dan kontrak input |
+| [ADDITIONAL_ROMFS](acnh-re/docs/ADDITIONAL_ROMFS.md) | Pesan, BDLI, ASB, UI, shader |
+| [NATIVE_STAGE_WEATHER](acnh-re/docs/NATIVE_STAGE_WEATHER.md) | Stage, pembaca BYML, flag, RNG, cuaca |
+| [CALENDAR_FLOWERS](acnh-re/docs/CALENDAR_FLOWERS.md) | Kalender SDK, batas hari, genetika bunga |
+| [C1_CONDITIONS](acnh-re/docs/C1_CONDITIONS.md) | Bytecode kondisi BGM |
+| [MECHANICS_RE](acnh-re/docs/MECHANICS_RE.md) | Collision dan ledger seluruh sistem |
+| [FOCUS7_MECHANICS](acnh-re/docs/FOCUS7_MECHANICS.md) | Peta tujuh sistem mekanik |
+| [COLLISION_RESPONSE](acnh-re/docs/COLLISION_RESPONSE.md), [PROXIMITY_GROUND](acnh-re/docs/PROXIMITY_GROUND.md) | Collision, kedekatan, izin ground |
+| [TERRAIN_RUNTIME](acnh-re/docs/TERRAIN_RUNTIME.md), [TERRAIN_REGION_CHECK](acnh-re/docs/TERRAIN_REGION_CHECK.md), [TERRAIN_REGION_MUTATION](acnh-re/docs/TERRAIN_REGION_MUTATION.md), [WORLD_REGISTRY_RELEASE](acnh-re/docs/WORLD_REGISTRY_RELEASE.md) | Terrain dan wilayah |
+| [MECHANICS_CONTINUATION](acnh-re/docs/MECHANICS_CONTINUATION.md), [ACTIVE_CONTEXT_FOLLOWUP](acnh-re/docs/ACTIVE_CONTEXT_FOLLOWUP.md) | Bahan, posisi pemain, gerbang ground |
+| [NPC_NAVIGATION_KERNEL](acnh-re/docs/NPC_NAVIGATION_KERNEL.md), [WORLD_NAV_BRIDGE](acnh-re/docs/WORLD_NAV_BRIDGE.md), [RESIDENT_MAP_NPC_FOLLOWUP](acnh-re/docs/RESIDENT_MAP_NPC_FOLLOWUP.md) | Navigasi NPC dan peta resident |
+| [UI_ISLAND_MAPPING](acnh-re/docs/UI_ISLAND_MAPPING.md), [ISLAND_COAST_SLOTS](acnh-re/docs/ISLAND_COAST_SLOTS.md), [ISLAND_TEMPLATE_SELECTOR_NATIVE](acnh-re/docs/ISLAND_TEMPLATE_SELECTOR_NATIVE.md) | UI dan pembentukan pulau |
+
+## Sumber dan lisensi
+
+Executable asli (main.elf/NPDM, main, rtld, subsdk0, sdk), RomFS mentah, instalasi tool besar, dan direktori kerja tidak dimasukkan. Simpan sumber tersebut secara terpisah sesuai kontrak input; baca [petunjuk ExeFS](acnh-re/docs/ADDITIONAL_EXEFS.md) sebelum menjalankan pemeriksaan native.
+
+Lisensi setiap rujukan tetap berlaku; lihat [NOTICE rujukan](acnh-re/tools/external/NOTICE.md). Tidak ada lisensi umum baru yang diberikan untuk konten game.

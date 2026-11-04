@@ -1,0 +1,38 @@
+# System_BootSequence (source: decoded EventFlow; bool flag case 0 = ON, case 1 = OFF; #N = event index)
+== ENTRY Root
+  #1 IF ControllerIsConnected {}
+    case 0:
+      #17 IF IsGamePlayTime {}
+        case 0:
+          #0 SaveSimpleLoad {"Process": "cAll"}
+          #3 IF SaveProcIsSuccess {}
+            case 0:
+              #19 SaveCopyToEnv {}
+              #24 CreateStaticField {}
+              #4 CALL System_BootSequence_LangChk:Root
+              #23 CALL System_BootSequence_PcSaveChk:Root
+            case 1:
+              #5 IF SaveIsNotFound {}
+                case 0:
+                  #6 IF SaveIsBroken {}
+                    case 0:
+                      #20 UIBootBGChangeDialog {}
+                      #9 MSG Dialog/DIALOG_Msg:1311
+                    case 1:
+                      #21 UIBootBGChangeDialog {}
+                      #7 MSG Dialog/DIALOG_Msg:1310
+                      #8 IF GeneralTalkChoice2 {}
+                        case 0:
+                          #13 MessageLockNext {"WaitIconType": 1}
+                          #16 MSG Dialog/DIALOG_Msg:1300
+                          #15 SaveRemove {"Process": "cAll"}
+                          #12 MessageSuspend {}
+                          #11 MSG Dialog/DIALOG_Msg:1312
+                        case 1:
+                          -> (#9)
+        case 1:
+          #22 UIBootBGChangeDialog {}
+          #18 CALL System_DateTimeNg:NoSave
+    case 1:
+      #2 RequetCtrlConnectSupport {"RequestCount": 1}
+      -> (#17)

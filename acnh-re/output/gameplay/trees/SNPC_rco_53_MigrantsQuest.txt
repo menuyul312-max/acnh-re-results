@@ -1,0 +1,526 @@
+# SNPC_rco_53_MigrantsQuest (source: decoded EventFlow; bool flag case 0 = ON, case 1 = OFF; #N = event index)
+== ENTRY Root
+  #0 IF EventFlagSystemBool {"AccessKey": "cPlayer:ImmQFirstExplain"}
+    case ON:
+      #4 IF EventFlagSystemBool {"AccessKey": "cLand:ImmQ_SetBridge"}
+        case ON:
+          #6 IF EventFlagSystemBool {"AccessKey": "cLand:ImmQ_A_GetHousing"}
+            case ON:
+              #115 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:041
+              #114 IF NpcHouseNum {"NpcHouseType": "cExist", "Num": 3}
+                case 0:
+                  #117 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:042_02
+                case 1:
+                  #116 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:042_01
+            case OFF:
+              #7 CALL SNPC_rco_53_MigrantsQuest:GetHousingKit
+        case OFF:
+          #75 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:014
+          #12 IF HasTargetItem {"NeedNum": 1, "ItemUniqueId": 7211}
+            case 0:
+              #77 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:015_02
+              #78 IF GeneralTalkChoice2 {}
+                case 0:
+                  #80 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:015_04_01
+                  #81 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:015_04_02
+                  #82 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:015_04_03
+                case 1:
+                  #79 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:015_03
+            case 1:
+              #76 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:015_01
+    case OFF:
+      #1 CALL SNPC_rco_53_MigrantsQuest:FirstIntroduction
+== ENTRY FirstIntroduction
+  #203 IF EventFlagSystemBool {"AccessKey": "cPlayer:NotStartImmQByDIYDisable"}
+    case ON:
+      #206 IF EventFlagSystemBool {"AccessKey": "cPlayer:MainmenuRecipe"}
+        case ON:
+          #202 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:903
+          #11 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:012_01
+          #71 CALL Demo_Common_PhoneCall:SendingDataOneWay
+          #73 PlayerSetCraftRecipe {"UnlockType": "", "ItemUniqueId": 7211}
+          #63 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:012_02
+          #72 SmartPhone {"ActionType": 1}
+          #74 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:012_03
+          #5 EventFlagSystemOn {"AccessKey": "cPlayer:ImmQFirstExplain"}
+          #187 EventFlagSystemOn {"AccessKey": "cLand:QuestReserveStart"}
+        case OFF:
+          #201 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:902
+    case OFF:
+      #8 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcoImmQClear1QuestToday"}
+        case ON:
+          #10 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:011_01
+          #204 IF EventFlagSystemBool {"AccessKey": "cPlayer:MainmenuRecipe"}
+            case ON:
+              -> (#11)
+            case OFF:
+              #200 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:901
+              #205 EventFlagSystemOn {"AccessKey": "cPlayer:NotStartImmQByDIYDisable"}
+        case OFF:
+          #9 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:011_02
+          -> (#204)
+== ENTRY GetHousingKit
+  #92 IF EventFlagSystemBool {"AccessKey": "cPlayer:ImmQGetHousingFullItem"}
+    case ON:
+      #93 IF SystemHasBaggageSpace {"CheckTargrt": "cPocketOnly", "CheckNum": 3}
+        case 0:
+          #95 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:032_03
+          #96 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:033
+          #2 SetDeliveryItemAtRandom {"ApplyToSave": false, "ItemUniqueID": 5827, "ItemRemakeDecideType": "cVillageRemakePattern", "RemakePatternIndex": 0}
+          #3 NpcDelivery {"Command": 1, "Option": "Default"}
+          #103 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:034
+          #88 CALL Demo_Common_PhoneCall:SendingDataOneWay
+          #109 SmartPhone {"ActionType": 1}
+          #104 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:035
+          #99 SetItemToPocket {"ItemUniqueId": 5827, "SetNum": 1}
+          #98 SetItemToPocket {"ItemUniqueId": 5828, "SetNum": 1}
+          #100 SetItemToPocket {"ItemUniqueId": 5829, "SetNum": 1}
+          #101 EventFlagSystemOn {"AccessKey": "cLand:ImmQ_A_GetHousing"}
+          #97 EventFlagSystemOn {"AccessKey": "cLand:ImmQ_B_GetHousing"}
+          #102 EventFlagSystemOn {"AccessKey": "cLand:ImmQ_C_GetHousing"}
+          #105 PlayerSetCraftRecipe {"UnlockType": "None", "ItemUniqueId": 2615}
+          #188 EventFlagSystemOn {"AccessKey": "cLand:VillageExtensionLevel3"}
+          #111 CALL Player_Demo_HousingFinish:RecipeGetA
+          #112 CALL Player_Demo_HousingFinish:RecipeGetB
+          #113 CALL Player_Demo_HousingFinish:RecipeGetC
+        case 1:
+          #94 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:032_02
+    case OFF:
+      #19 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcoImmQClear1QuestToday"}
+        case ON:
+          #17 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:031_01
+          #89 IF SystemHasBaggageSpace {"CheckTargrt": "cPocketOnly", "CheckNum": 3}
+            case 0:
+              -> (#96)
+            case 1:
+              #90 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:032_01
+              #91 EventFlagSystemOn {"AccessKey": "cPlayer:ImmQGetHousingFullItem"}
+        case OFF:
+          #18 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:031_02
+          -> (#89)
+== ENTRY Rco_ImmQ_ForceTalkEntry
+  #193 CALL SNPC_rco_01_Tent_1_Entries:RcoTent_Force_PlayerPos
+  #194 EventFlagSystemOn {"AccessKey": "cPlayerTemp:RcoTalkSceneFlag"}
+  #35 IF EventFlagSystemBool {"AccessKey": "cLand:RcmImmQuestOpen"}
+    case ON:
+      #37 IF EventFlagSystemBool {"AccessKey": "cLand:RcmImmQuestComplete"}
+        case OFF:
+          #36 IF EventFlagSystemBool {"AccessKey": "cLand:RcmImmQuestRunning"}
+            case ON:
+              #39 IF EventFlagSystemBool {"AccessKey": "cPlayer:ImmQRunningForPlayer"}
+                case ON:
+                  #41 IF EventFlagSystemBool {"AccessKey": "cPlayer:ImmQTalkRcoBridgeKitSet"}
+                    case ON:
+                      #42 CALL SNPC_rco_53_MigrantsQuest:FinishBridge
+                      #209 ExitFlowchart {}
+                    case OFF:
+                      #44 IF EventFlagSystemBool {"AccessKey": "cLand:ImmQ_SetBridge"}
+                        case ON:
+                          #43 IF EventFlagSystemBool {"AccessKey": "cPlayer:ImmQSetBridgeKitMySelf"}
+                            case ON:
+                              #45 IF EventFlagSystemBool {"AccessKey": "cLand:ImmQ_A_GetHousing"}
+                                case ON:
+                                  #60 IF EventFlagSystemBool {"AccessKey": "cPlayer:ImmQHeardNoticeRemoveFtr"}
+                                    case ON:
+                                      #14 CALL SNPC_rco_53_MigrantsQuest:Rco_ImmQ_ClearTalk_NotForce
+                                      #210 ExitFlowchart {}
+                case OFF:
+                  #40 CALL SNPC_rco_01_Tent_1_Entries:RcoTentImmQuestIntroNotForce
+                  #208 ExitFlowchart {}
+            case OFF:
+              #38 CALL SNPC_rco_01_Tent_1_Entries:RcoTentImmQuestIntroNotForce
+              #207 ExitFlowchart {}
+== ENTRY Rco_ImmQ_ClearTalk_NotForce
+  #32 CALL SNPC_rco_53_MigrantsQuest:ChkClearNum
+  #133 EventFlagSystemOff {"AccessKey": "cPlayer:ImmQHeardNoticeRemoveFtr"}
+  #118 MSG TalkSNpc/rco/SP_rco_00_Common:000
+  #31 IF SubflowResultChoice4 {"SetIndex": 0}
+    case 1:
+      #119 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:101
+      #30 IF GeneralTalkChoice2 {}
+        case 0:
+          #121 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:103_01
+          #124 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcoMigrantProgressTalk1st"}
+            case ON:
+              #148 IF NpcHouseNum {"NpcHouseType": "cConstructed", "Num": 3}
+                case 0:
+                  #149 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:111_01
+                  #151 CALL SNPC_rco_53_MigrantsQuest:Rco_FinishMigrantEvent_Reward
+                case 1:
+                  #150 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:111_02
+                  -> (#151)
+            case OFF:
+              #125 EventFlagSystemOff {"AccessKey": "cPlayer:RcoMigrantProgressTalk1st"}
+              #123 IF NpcHouseNum {"NpcHouseType": "cConstructed", "Num": 3}
+                case 0:
+                  #129 IF SubflowResultChoice4 {"SetIndex": 0}
+                    case 2:
+                      #144 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:104_03
+                      #147 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:110
+                    case 3:
+                      #145 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:104_04
+                      #146 CALL SNPC_rco_53_MigrantsQuest:Rco_FinishMigrantEvent_Reward
+                case 1:
+                  #128 IF SubflowResultChoice4 {"SetIndex": 0}
+                    case 1:
+                      #126 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:104_01
+                      #34 IF IsFirstNpcLiveInTent {}
+                        case 0:
+                          #130 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:105_01
+                          #132 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:106
+                          #134 IF SubflowResultChoice4 {"SetIndex": 0}
+                            case 1:
+                              -> (#147)
+                            case 2:
+                              -> (#147)
+                            case 3:
+                              #135 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:107
+                              #136 IF SystemHasBaggageSpace {"CheckNum": 1, "CheckTargrt": "cPocketBag"}
+                                case 0:
+                                  #142 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:108_02
+                                  #61 IF EventFlagSystemBool {"AccessKey": "cPlayerTemp:RcoForceTalk"}
+                                    case ON:
+                                      #199 NpcMoveToPlayer {}
+                                      #143 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:108_04
+                                      #160 CALL SNPC_rco_53_MigrantsQuest:Ending2
+                                      #62 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:109
+                                      #70 IF EventFlagSystemBool {"AccessKey": "cPlayerTemp:RcoForceTalk"}
+                                        case ON:
+                                          #67 FadeOut {"FadeOutKindString": "cCircle", "FadeInKindString": "cCircle", "FadeColorString": "cBlack", "FadeOutSpeed": 1.0, "FadeInSpeed": 1.0, "IsUseDucking": true}
+                                          #66 NpcRailMove {"IsReverse": false, "IsWarp": true, "RailID": 1, "PointA": -1, "PointB": -1, "MoveType": 0}
+                                          #69 FadeIn {"IsWait": true}
+                                          #140 EventFlagSystemOn {"AccessKey": "cPlayer:ImmQTalkAboutPrize"}
+                                          #139 EventFlagSystemOn {"AccessKey": "cLand:RcmImmQuestComplete"}
+                                          #141 EventFlagSystemOff {"AccessKey": "cLand:RcmImmQuestRunning"}
+                                        case OFF:
+                                          -> (#140)
+                                    case OFF:
+                                      -> (#143)
+                                case 1:
+                                  #137 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:108_01
+                                  #138 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:109
+                                  #185 SelectRewardItemDirect {"SetNum": 50, "ItemUniqueId": 11711, "ItemRemakeDecideType": "cVillageRemakePattern", "RemakePatternIndex": 0}
+                                  #184 SystemMailSend {"TagType": "cNone", "ToSharePlayer": false, "Route": "cFastTomorrow", "Present": "cReward", "FromType": "cRco", "FileIndex": "MAIL_SNpc_rco", "LabelIndex": 2}
+                                  -> (#140)
+                        case 1:
+                          #131 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:105_02
+                          -> (#132)
+                    case 2:
+                      -> (#126)
+                    case 3:
+                      #127 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:104_02
+                      -> (#34)
+        case 1:
+          -> (#121)
+    case 2:
+      -> (#119)
+    case 3:
+      #120 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:102
+      #33 IF GeneralTalkChoice2 {}
+        case 0:
+          #122 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:103_02
+          -> (#124)
+        case 1:
+          -> (#122)
+== ENTRY Ending
+  #186 EventFlagSystemOn {"AccessKey": "cPlayerTemp:RcoTalkSceneFlag"}
+  #20 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:201
+  #178 IF EnvTimeZone {}
+    case 0:
+      #174 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:201_01
+      #65 IF NpcHouseNum {"NpcHouseType": "cConstructed", "Num": 5}
+        case 0:
+          #155 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:202_03
+          #156 IF SystemHasBaggageSpace {"CheckNum": 1, "CheckTargrt": "cPocketBag"}
+            case 0:
+              #158 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:203_02
+              #21 CALL SNPC_rco_53_MigrantsQuest:Ending2
+              #173 IF EventFlagSystemBool {"AccessKey": "cPlayer:PAnnouceHeardRemakeWsNewsToday"}
+                case ON:
+                  #179 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:206
+                  #180 EventFlagSystemOff {"AccessKey": "cPlayer:RcoTalkAboutRemakeTrial"}
+                  #159 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:109
+                  #163 EventFlagSystemOn {"AccessKey": "cPlayer:ImmQTalkAboutPrize"}
+                  #170 EventFlagSystemOff {"AccessKey": "cPlayer:RcoStayMyHouseImmQClear"}
+                  #182 IF EventBranch {"CheckNowTime": false, "AddDay": 0}
+                    case 0:
+                      #164 FadeOut {"FadeOutKindString": "cCircle", "FadeInKindString": "cCircle", "FadeColorString": "cBlack", "FadeOutSpeed": 1.0, "FadeInSpeed": 1.0, "IsUseDucking": true}
+                      #168 CameraSetDemoParam {"CameraTargetKey": "Player", "CameraParamKey": "cNormal", "CameraInterpolateKey": "", "AdjustAngleYOnLeave": false, "Arg": 0, "UseNearCulling": false, "AdjustAngleYOnEnter": false}
+                      #166 NpcAISetting {"SettingType": 12, "Flag": false}
+                      #169 SetHideObjectVisible {}
+                      #167 FadeIn {"IsWait": true}
+                    case 1:
+                      -> (#164)
+                    case 2:
+                      -> (#164)
+                    case 3:
+                      #183 SystemReenterStage {"Type": 0, "FadeOutKindString": "cCircle", "FadeInKindString": "cCircle", "FadeColorString": "cBlack", "FadeOutSpeed": 1.0, "FadeInSpeed": 1.0}
+                case OFF:
+                  -> (#159)
+            case 1:
+              #157 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:203_01
+              #181 SelectRewardItemDirect {"SetNum": 50, "ItemUniqueId": 11711, "ItemRemakeDecideType": "cVillageRemakePattern", "RemakePatternIndex": 0}
+              #26 SystemMailSend {"TagType": "cNone", "ToSharePlayer": false, "Route": "cFastTomorrow", "Present": "cReward", "FromType": "cRco", "FileIndex": "MAIL_SNpc_rco", "LabelIndex": 2}
+              -> (#173)
+        case 1:
+          #152 IF NpcHouseNum {"NpcHouseType": "cConstructed", "Num": 3}
+            case 0:
+              #154 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:202_02
+              -> (#156)
+            case 1:
+              #153 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:202_01
+              -> (#156)
+    case 1:
+      #175 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:201_02
+      -> (#65)
+    case 2:
+      -> (#175)
+    case 3:
+      -> (#175)
+    case 4:
+      #176 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:201_03
+      -> (#65)
+    case 5:
+      #177 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:201_04
+      -> (#65)
+== ENTRY Ending2
+  #22 NpcEventItemSet {"InsertTarget": "cTalk", "TagID": 0, "EntryVariableKeyInt_ItemPrice": "ItemPrice", "ItemUniqueId": 11711}
+  #24 SetDeliveryItemAtRandom {"ApplyToSave": false, "ItemRemakeDecideType": "cVillageRemakePattern", "RemakePatternIndex": 0, "ItemUniqueID": 11711}
+  #23 NpcDelivery {"Command": 1, "Option": "Keep"}
+  #171 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:204
+  #172 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:205
+  #25 EventFlagSystemOn {"AccessKey": "cPlayer:ImmQGetQuestPrize"}
+  #161 NpcDelivery {"Command": 2, "Option": "Default"}
+  #162 SetItemToPocket {"SetNum": 50, "ItemUniqueId": 11711}
+== ENTRY OnlyReservePlace
+  #106 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:041
+  #27 IF NpcHouseNum {"NpcHouseType": "cExist", "Num": 3}
+    case 0:
+      #108 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:042_02
+    case 1:
+      #107 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:042_01
+== ENTRY ChkClearNum
+  #46 IF EventFlagSystemBool {"AccessKey": "cLand:ImmQ_A_Complete"}
+    case ON:
+      #47 EntryVariableAdd {"Key": "ClearNum", "AddValue": 1}
+      #49 EventFlagSystemOn {"AccessKey": "cPlayer:ImmQHeardClearInfoA"}
+      #48 IF EventFlagSystemBool {"AccessKey": "cLand:ImmQ_B_Complete"}
+        case ON:
+          #50 EntryVariableAdd {"Key": "ClearNum", "AddValue": 1}
+          #51 EventFlagSystemOn {"AccessKey": "cPlayer:ImmQHeardClearInfoB"}
+          #52 IF EventFlagSystemBool {"AccessKey": "cLand:ImmQ_C_Complete"}
+            case ON:
+              #53 EntryVariableAdd {"Key": "ClearNum", "AddValue": 1}
+              #54 EventFlagSystemOn {"AccessKey": "cPlayer:ImmQHeardClearInfoC"}
+              #55 IF CheckEntryVariableInt {"CheckType": 0, "CheckValue": 1, "Value": {"$arg": "ClearNum"}}
+                case 0:
+                  #56 SetSubflowResult {"SetIndex": 0, "ResultValue": 1}
+                case 1:
+                  #59 IF CheckEntryVariableInt {"CheckType": 0, "Value": {"$arg": "ClearNum"}, "CheckValue": 2}
+                    case 0:
+                      #57 SetSubflowResult {"SetIndex": 0, "ResultValue": 2}
+                    case 1:
+                      #64 IF CheckEntryVariableInt {"CheckType": 0, "Value": {"$arg": "ClearNum"}, "CheckValue": 3}
+                        case 0:
+                          #58 SetSubflowResult {"SetIndex": 0, "ResultValue": 3}
+            case OFF:
+              -> (#55)
+        case OFF:
+          -> (#52)
+    case OFF:
+      -> (#48)
+== ENTRY FinishBridge
+  #86 EventFlagSystemOff {"AccessKey": "cPlayer:ImmQTalkRcoBridgeKitSet"}
+  #83 MSG TalkSNpc/rco/SP_rco_00_Common:000
+  #13 IF BridgeNum {"BridgeJudgeType": "cNoReserve", "Num": 1}
+    case 0:
+      #84 CALL SNPC_rco_05_ChkCeremony:ChkCeremonyBridge
+      #16 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:018
+      #85 IF SubflowResultChoice2 {"SetIndex": 9}
+        case 1:
+          #87 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:018_01
+    case 1:
+      #15 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:017
+      #28 IF GeneralTalkChoice2 {}
+        case 0:
+          #29 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:017_01
+        case 1:
+          -> (#29)
+== ENTRY Rco_FinishMigrantEvent_Reward
+  #135 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:107
+  #136 IF SystemHasBaggageSpace {"CheckNum": 1, "CheckTargrt": "cPocketBag"}
+    case 0:
+      #142 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:108_02
+      #61 IF EventFlagSystemBool {"AccessKey": "cPlayerTemp:RcoForceTalk"}
+        case ON:
+          #199 NpcMoveToPlayer {}
+          #143 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:108_04
+          #160 CALL SNPC_rco_53_MigrantsQuest:Ending2
+          #62 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:109
+          #70 IF EventFlagSystemBool {"AccessKey": "cPlayerTemp:RcoForceTalk"}
+            case ON:
+              #67 FadeOut {"FadeOutKindString": "cCircle", "FadeInKindString": "cCircle", "FadeColorString": "cBlack", "FadeOutSpeed": 1.0, "FadeInSpeed": 1.0, "IsUseDucking": true}
+              #66 NpcRailMove {"IsReverse": false, "IsWarp": true, "RailID": 1, "PointA": -1, "PointB": -1, "MoveType": 0}
+              #69 FadeIn {"IsWait": true}
+              #140 EventFlagSystemOn {"AccessKey": "cPlayer:ImmQTalkAboutPrize"}
+              #139 EventFlagSystemOn {"AccessKey": "cLand:RcmImmQuestComplete"}
+              #141 EventFlagSystemOff {"AccessKey": "cLand:RcmImmQuestRunning"}
+            case OFF:
+              -> (#140)
+        case OFF:
+          -> (#143)
+    case 1:
+      #137 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:108_01
+      #138 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:109
+      #185 SelectRewardItemDirect {"SetNum": 50, "ItemUniqueId": 11711, "ItemRemakeDecideType": "cVillageRemakePattern", "RemakePatternIndex": 0}
+      #184 SystemMailSend {"TagType": "cNone", "ToSharePlayer": false, "Route": "cFastTomorrow", "Present": "cReward", "FromType": "cRco", "FileIndex": "MAIL_SNpc_rco", "LabelIndex": 2}
+      -> (#140)
+== ENTRY FinishBridge_Force
+  #196 CALL SNPC_rco_01_Tent_1_Entries:RcoTent_Force_PlayerPos
+  #189 EventFlagSystemOn {"AccessKey": "cPlayerTemp:RcoTalkSceneFlag"}
+  #86 EventFlagSystemOff {"AccessKey": "cPlayer:ImmQTalkRcoBridgeKitSet"}
+  #83 MSG TalkSNpc/rco/SP_rco_00_Common:000
+  #13 IF BridgeNum {"BridgeJudgeType": "cNoReserve", "Num": 1}
+    case 0:
+      #84 CALL SNPC_rco_05_ChkCeremony:ChkCeremonyBridge
+      #16 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:018
+      #85 IF SubflowResultChoice2 {"SetIndex": 9}
+        case 1:
+          #87 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:018_01
+    case 1:
+      #15 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:017
+      #28 IF GeneralTalkChoice2 {}
+        case 0:
+          #29 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:017_01
+        case 1:
+          -> (#29)
+== ENTRY Rco_ImmQ_ClearTalk_Force
+  #198 CALL SNPC_rco_01_Tent_1_Entries:RcoTent_Force_PlayerPos
+  #190 EventFlagSystemOn {"AccessKey": "cPlayerTemp:RcoTalkSceneFlag"}
+  #32 CALL SNPC_rco_53_MigrantsQuest:ChkClearNum
+  #133 EventFlagSystemOff {"AccessKey": "cPlayer:ImmQHeardNoticeRemoveFtr"}
+  #118 MSG TalkSNpc/rco/SP_rco_00_Common:000
+  #31 IF SubflowResultChoice4 {"SetIndex": 0}
+    case 1:
+      #119 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:101
+      #30 IF GeneralTalkChoice2 {}
+        case 0:
+          #121 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:103_01
+          #124 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcoMigrantProgressTalk1st"}
+            case ON:
+              #148 IF NpcHouseNum {"NpcHouseType": "cConstructed", "Num": 3}
+                case 0:
+                  #149 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:111_01
+                  #151 CALL SNPC_rco_53_MigrantsQuest:Rco_FinishMigrantEvent_Reward
+                case 1:
+                  #150 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:111_02
+                  -> (#151)
+            case OFF:
+              #125 EventFlagSystemOff {"AccessKey": "cPlayer:RcoMigrantProgressTalk1st"}
+              #123 IF NpcHouseNum {"NpcHouseType": "cConstructed", "Num": 3}
+                case 0:
+                  #129 IF SubflowResultChoice4 {"SetIndex": 0}
+                    case 2:
+                      #144 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:104_03
+                      #147 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:110
+                    case 3:
+                      #145 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:104_04
+                      #146 CALL SNPC_rco_53_MigrantsQuest:Rco_FinishMigrantEvent_Reward
+                case 1:
+                  #128 IF SubflowResultChoice4 {"SetIndex": 0}
+                    case 1:
+                      #126 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:104_01
+                      #34 IF IsFirstNpcLiveInTent {}
+                        case 0:
+                          #130 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:105_01
+                          #132 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:106
+                          #134 IF SubflowResultChoice4 {"SetIndex": 0}
+                            case 1:
+                              -> (#147)
+                            case 2:
+                              -> (#147)
+                            case 3:
+                              #135 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:107
+                              #136 IF SystemHasBaggageSpace {"CheckNum": 1, "CheckTargrt": "cPocketBag"}
+                                case 0:
+                                  #142 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:108_02
+                                  #61 IF EventFlagSystemBool {"AccessKey": "cPlayerTemp:RcoForceTalk"}
+                                    case ON:
+                                      #199 NpcMoveToPlayer {}
+                                      #143 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:108_04
+                                      #160 CALL SNPC_rco_53_MigrantsQuest:Ending2
+                                      #62 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:109
+                                      #70 IF EventFlagSystemBool {"AccessKey": "cPlayerTemp:RcoForceTalk"}
+                                        case ON:
+                                          #67 FadeOut {"FadeOutKindString": "cCircle", "FadeInKindString": "cCircle", "FadeColorString": "cBlack", "FadeOutSpeed": 1.0, "FadeInSpeed": 1.0, "IsUseDucking": true}
+                                          #66 NpcRailMove {"IsReverse": false, "IsWarp": true, "RailID": 1, "PointA": -1, "PointB": -1, "MoveType": 0}
+                                          #69 FadeIn {"IsWait": true}
+                                          #140 EventFlagSystemOn {"AccessKey": "cPlayer:ImmQTalkAboutPrize"}
+                                          #139 EventFlagSystemOn {"AccessKey": "cLand:RcmImmQuestComplete"}
+                                          #141 EventFlagSystemOff {"AccessKey": "cLand:RcmImmQuestRunning"}
+                                        case OFF:
+                                          -> (#140)
+                                    case OFF:
+                                      -> (#143)
+                                case 1:
+                                  #137 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:108_01
+                                  #138 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:109
+                                  #185 SelectRewardItemDirect {"SetNum": 50, "ItemUniqueId": 11711, "ItemRemakeDecideType": "cVillageRemakePattern", "RemakePatternIndex": 0}
+                                  #184 SystemMailSend {"TagType": "cNone", "ToSharePlayer": false, "Route": "cFastTomorrow", "Present": "cReward", "FromType": "cRco", "FileIndex": "MAIL_SNpc_rco", "LabelIndex": 2}
+                                  -> (#140)
+                        case 1:
+                          #131 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:105_02
+                          -> (#132)
+                    case 2:
+                      -> (#126)
+                    case 3:
+                      #127 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:104_02
+                      -> (#34)
+        case 1:
+          -> (#121)
+    case 2:
+      -> (#119)
+    case 3:
+      #120 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:102
+      #33 IF GeneralTalkChoice2 {}
+        case 0:
+          #122 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:103_02
+          -> (#124)
+        case 1:
+          -> (#122)
+== ENTRY Rco_ImmQ_ForceTalkEntry_Init
+  #192 CALL SNPC_rco_01_Tent_1_Entries:RcoTent_Force_DisableTalkCamera
+== ENTRY Rco_ImmQ_ReactTalkEntry
+  #35 IF EventFlagSystemBool {"AccessKey": "cLand:RcmImmQuestOpen"}
+    case ON:
+      #37 IF EventFlagSystemBool {"AccessKey": "cLand:RcmImmQuestComplete"}
+        case OFF:
+          #36 IF EventFlagSystemBool {"AccessKey": "cLand:RcmImmQuestRunning"}
+            case ON:
+              #39 IF EventFlagSystemBool {"AccessKey": "cPlayer:ImmQRunningForPlayer"}
+                case ON:
+                  #41 IF EventFlagSystemBool {"AccessKey": "cPlayer:ImmQTalkRcoBridgeKitSet"}
+                    case ON:
+                      #42 CALL SNPC_rco_53_MigrantsQuest:FinishBridge
+                      #209 ExitFlowchart {}
+                    case OFF:
+                      #44 IF EventFlagSystemBool {"AccessKey": "cLand:ImmQ_SetBridge"}
+                        case ON:
+                          #43 IF EventFlagSystemBool {"AccessKey": "cPlayer:ImmQSetBridgeKitMySelf"}
+                            case ON:
+                              #45 IF EventFlagSystemBool {"AccessKey": "cLand:ImmQ_A_GetHousing"}
+                                case ON:
+                                  #60 IF EventFlagSystemBool {"AccessKey": "cPlayer:ImmQHeardNoticeRemoveFtr"}
+                                    case ON:
+                                      #14 CALL SNPC_rco_53_MigrantsQuest:Rco_ImmQ_ClearTalk_NotForce
+                                      #210 ExitFlowchart {}
+                case OFF:
+                  #40 CALL SNPC_rco_01_Tent_1_Entries:RcoTentImmQuestIntroNotForce
+                  #208 ExitFlowchart {}
+            case OFF:
+              #38 CALL SNPC_rco_01_Tent_1_Entries:RcoTentImmQuestIntroNotForce
+              #207 ExitFlowchart {}
+== ENTRY FinishBridge_Force_Init
+  #195 CALL SNPC_rco_01_Tent_1_Entries:RcoTent_Force_DisableTalkCamera
+== ENTRY Rco_ImmQ_ClearTalk_Force_Init
+  #197 CALL SNPC_rco_01_Tent_1_Entries:RcoTent_Force_DisableTalkCamera

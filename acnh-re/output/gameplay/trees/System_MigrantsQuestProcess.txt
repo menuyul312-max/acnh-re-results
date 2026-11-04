@@ -1,0 +1,126 @@
+# System_MigrantsQuestProcess (source: decoded EventFlow; bool flag case 0 = ON, case 1 = OFF; #N = event index)
+== ENTRY ChkRcoImmQClearChkA
+  #19 IF EventFlagSystemBool {"AccessKey": "cLand:ImmQ_A_Complete"}
+    case ON:
+      #25 CALL System_MigrantsQuestProcess:ChkRcoImmQClearChkASub
+    case OFF:
+      #0 IF EventFlagSystemBool {"AccessKey": "cLand:ImmQ_A_Interior1Donate"}
+        case ON:
+          #1 IF EventFlagSystemBool {"AccessKey": "cLand:ImmQ_A_Interior2Donate"}
+            case ON:
+              #2 IF EventFlagSystemBool {"AccessKey": "cLand:ImmQ_A_Interior3Donate"}
+                case ON:
+                  #3 IF IsSettlerQuestOutsideComplete {"SettlerType": 0, "OutsideCheckType": 3}
+                    case 0:
+                      #4 CompleteSettlerQuestSubject {"SettlerType": 0}
+                      #56 DecideSettlerNpc {"SettlerType": 0}
+                      #16 IF EventFlagSystemBool {"AccessKey": "cPlayer:ImmQHeardClearInfoA"}
+                        case OFF:
+                          #15 EventFlagSystemOn {"AccessKey": "cPlayer:ImmQHeardNoticeRemoveFtr"}
+== ENTRY ChkRcoImmQClearChkB
+  #20 IF EventFlagSystemBool {"AccessKey": "cLand:ImmQ_B_Complete"}
+    case ON:
+      #26 CALL System_MigrantsQuestProcess:ChkRcoImmQClearChkBSub
+    case OFF:
+      #5 IF EventFlagSystemBool {"AccessKey": "cLand:ImmQ_B_Interior1Donate"}
+        case ON:
+          #6 IF EventFlagSystemBool {"AccessKey": "cLand:ImmQ_B_Interior2Donate"}
+            case ON:
+              #7 IF EventFlagSystemBool {"AccessKey": "cLand:ImmQ_B_Interior3Donate"}
+                case ON:
+                  #8 IF IsSettlerQuestOutsideComplete {"OutsideCheckType": 3, "SettlerType": 1}
+                    case 0:
+                      #13 CompleteSettlerQuestSubject {"SettlerType": 1}
+                      #55 DecideSettlerNpc {"SettlerType": 1}
+                      #17 IF EventFlagSystemBool {"AccessKey": "cPlayer:ImmQHeardClearInfoB"}
+                        case OFF:
+                          #15 EventFlagSystemOn {"AccessKey": "cPlayer:ImmQHeardNoticeRemoveFtr"}
+== ENTRY ChkRcoImmQClearChkC
+  #21 IF EventFlagSystemBool {"AccessKey": "cLand:ImmQ_C_Complete"}
+    case ON:
+      #27 CALL System_MigrantsQuestProcess:ChkRcoImmQClearChkCSub
+    case OFF:
+      #9 IF EventFlagSystemBool {"AccessKey": "cLand:ImmQ_C_Interior1Donate"}
+        case ON:
+          #10 IF EventFlagSystemBool {"AccessKey": "cLand:ImmQ_C_Interior2Donate"}
+            case ON:
+              #11 IF EventFlagSystemBool {"AccessKey": "cLand:ImmQ_C_Interior3Donate"}
+                case ON:
+                  #12 IF IsSettlerQuestOutsideComplete {"OutsideCheckType": 3, "SettlerType": 2}
+                    case 0:
+                      #14 CompleteSettlerQuestSubject {"SettlerType": 2}
+                      #54 DecideSettlerNpc {"SettlerType": 2}
+                      #18 IF EventFlagSystemBool {"AccessKey": "cPlayer:ImmQHeardClearInfoC"}
+                        case OFF:
+                          #15 EventFlagSystemOn {"AccessKey": "cPlayer:ImmQHeardNoticeRemoveFtr"}
+== ENTRY ChkRcoImmQClearChkASub
+  #16 IF EventFlagSystemBool {"AccessKey": "cPlayer:ImmQHeardClearInfoA"}
+    case OFF:
+      #15 EventFlagSystemOn {"AccessKey": "cPlayer:ImmQHeardNoticeRemoveFtr"}
+== ENTRY ChkRcoImmQClearChkBSub
+  #17 IF EventFlagSystemBool {"AccessKey": "cPlayer:ImmQHeardClearInfoB"}
+    case OFF:
+      #15 EventFlagSystemOn {"AccessKey": "cPlayer:ImmQHeardNoticeRemoveFtr"}
+== ENTRY ChkRcoImmQClearChkCSub
+  #18 IF EventFlagSystemBool {"AccessKey": "cPlayer:ImmQHeardClearInfoC"}
+    case OFF:
+      #15 EventFlagSystemOn {"AccessKey": "cPlayer:ImmQHeardNoticeRemoveFtr"}
+== ENTRY ImmQClearChk
+  #28 IF IsMyVillage {}
+    case 0:
+      #29 IF EventFlagSystemBool {"AccessKey": "cPlayer:ImmQRunningForPlayer"}
+        case ON:
+          #22 CALL System_MigrantsQuestProcess:ChkRcoImmQClearChkA
+          #23 CALL System_MigrantsQuestProcess:ChkRcoImmQClearChkB
+          #24 CALL System_MigrantsQuestProcess:ChkRcoImmQClearChkC
+          #30 CALL System_MigrantsQuestProcess:RcoChkClearReportSkip
+== ENTRY RcoChkClearReportSkip
+  #32 CALL System_MigrantsQuestProcess:CountClearNum
+  #31 IF SubflowResultChoice2 {"SetIndex": 0}
+    case 1:
+      #33 CALL System_MigrantsQuestProcess:CountReportNum
+      #43 IF SubflowResultChoice2 {"SetIndex": 1}
+        case 1:
+          #53 EventFlagSystemOff {"AccessKey": "cPlayer:ImmQHeardNoticeRemoveFtr"}
+== ENTRY CountClearNum
+  #34 IF EventFlagSystemBool {"AccessKey": "cLand:ImmQ_A_Complete"}
+    case ON:
+      #37 EntryVariableAdd {"Key": "ClearCount", "AddValue": 1}
+      #35 IF EventFlagSystemBool {"AccessKey": "cLand:ImmQ_B_Complete"}
+        case ON:
+          #38 EntryVariableAdd {"Key": "ClearCount", "AddValue": 1}
+          #36 IF EventFlagSystemBool {"AccessKey": "cLand:ImmQ_C_Complete"}
+            case ON:
+              #39 EntryVariableAdd {"Key": "ClearCount", "AddValue": 1}
+              #40 IF CheckEntryVariableInt {"Value": {"$arg": "ClearCount"}, "CheckValue": 2, "CheckType": 0}
+                case 0:
+                  #41 SetSubflowResult {"ResultValue": 1, "SetIndex": 0}
+                case 1:
+                  #42 SetSubflowResult {"ResultValue": 0, "SetIndex": 0}
+            case OFF:
+              -> (#40)
+        case OFF:
+          -> (#36)
+    case OFF:
+      -> (#35)
+== ENTRY CountReportNum
+  #44 IF EventFlagSystemBool {"AccessKey": "cPlayer:ImmQHeardClearInfoA"}
+    case ON:
+      #45 EntryVariableAdd {"AddValue": 1, "Key": "ReportCount"}
+      #49 IF EventFlagSystemBool {"AccessKey": "cPlayer:ImmQHeardClearInfoB"}
+        case ON:
+          #47 EntryVariableAdd {"AddValue": 1, "Key": "ReportCount"}
+          #50 IF EventFlagSystemBool {"AccessKey": "cPlayer:ImmQHeardClearInfoC"}
+            case ON:
+              #48 EntryVariableAdd {"AddValue": 1, "Key": "ReportCount"}
+              #46 IF CheckEntryVariableInt {"CheckType": 0, "CheckValue": 1, "Value": {"$arg": "ReportCount"}}
+                case 0:
+                  #51 SetSubflowResult {"ResultValue": 1, "SetIndex": 1}
+                case 1:
+                  #52 SetSubflowResult {"ResultValue": 0, "SetIndex": 1}
+            case OFF:
+              -> (#46)
+        case OFF:
+          -> (#50)
+    case OFF:
+      -> (#49)

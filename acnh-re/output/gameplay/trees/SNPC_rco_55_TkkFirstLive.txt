@@ -1,0 +1,45 @@
+# SNPC_rco_55_TkkFirstLive (source: decoded EventFlow; bool flag case 0 = ON, case 1 = OFF; #N = event index)
+== ENTRY InvitePlayerHouse
+  #31 EventFlagSystemOff {"AccessKey": "cPlayer:StandByRcoVisitMyHomeAfterTkkFirstLive"}
+  #29 EventFlagSystemOn {"AccessKey": "cPlayerTemp:RcoTalkSceneFlag"}
+  #4 MSG TalkSNpc/rco/SP_rco_11_TkkFirstLive:001
+  #5 MSG TalkSNpc/rco/SP_rco_11_TkkFirstLive:002
+  #9 IF SystemHasBaggageSpace {"CheckNum": 1, "CheckTargrt": "cPocketBag"}
+    case 0:
+      #32 IF EventFlagSystemBool {"AccessKey": "cLand:TkkFirstLiveReserved"}
+        case ON:
+          #28 MSG TalkSNpc/rco/SP_rco_11_TkkFirstLive:003
+          #10 SetDeliveryItemAtRandom {"ItemUniqueID": 4318, "ApplyToSave": true, "ItemRemakeDecideType": "cVillageRemakePattern", "RemakePatternIndex": 0}
+          #11 NpcDelivery {"Command": 1, "Option": "Default"}
+          #7 MSG TalkSNpc/rco/SP_rco_11_TkkFirstLive:003_01
+          #13 MSG TalkSNpc/rco/SP_rco_11_TkkFirstLive:004
+          #14 MSG TalkSNpc/rco/SP_rco_11_TkkFirstLive:005
+          #15 MSG TalkSNpc/rco/SP_rco_11_TkkFirstLive:006
+          #18 SmartPhone {"ActionType": 0}
+          #19 CALL Demo_Common_PhoneCall:SendingDataWithP
+          #16 EventFlagSystemOn {"AccessKey": "cPlayer:MainmenuConstructLicense"}
+          #17 UIMenuDeviceAppear {"EventType": "cInstall", "Application": "cConstructLicense"}
+          #20 CALL Demo_Common_PhoneCall:PuttingMobileAwayWithP
+          #22 MSG TalkSNpc/rco/SP_rco_11_TkkFirstLive:007
+          #23 MSG TalkSNpc/rco/SP_rco_11_TkkFirstLive:008
+          #24 MSG TalkSNpc/rco/SP_rco_11_TkkFirstLive:009
+          #25 FadeOut {"FadeOutKindString": "cCircle", "FadeInKindString": "cCircle", "FadeColorString": "cBlack", "FadeOutSpeed": 1.0, "FadeInSpeed": 1.0, "IsUseDucking": true}
+          #1 CameraSetDemoParam {"CameraTargetKey": "Player", "CameraParamKey": "cNormal", "CameraInterpolateKey": "", "AdjustAngleYOnLeave": false, "Arg": 0, "UseNearCulling": false, "AdjustAngleYOnEnter": false}
+          #0 NpcAISetting {"SettingType": 12, "Flag": false}
+          #2 SetHideObjectVisible {}
+          #27 FadeIn {"IsWait": true}
+          #3 ReservePlayerMutterDemo {"EventFileName": "Player_GetDemo_Once", "MutterStartTiming": "cNowDemoEnd", "IsResistNpcCast": false, "EntryPointName": "Finish_1stKkLive"}
+        case OFF:
+          #35 MSG TalkSNpc/rco/SP_rco_11_TkkFirstLive:003_00
+          -> (#10)
+    case 1:
+      #33 IF EventFlagSystemBool {"AccessKey": "cLand:TkkFirstLiveReserved"}
+        case ON:
+          #6 MSG TalkSNpc/rco/SP_rco_11_TkkFirstLive:003
+          #8 MSG TalkSNpc/rco/SP_rco_11_TkkFirstLive:003_02
+          #30 SelectRewardItemDirect {"ItemUniqueId": 4318, "SetNum": 1, "ItemRemakeDecideType": "cVillageRemakePattern", "RemakePatternIndex": 0}
+          #12 SystemMailSend {"Route": "cFastTomorrow", "TagType": "cNone", "ToSharePlayer": false, "LabelIndex": 4, "FileIndex": "MAIL_SNpc_rco", "FromType": "cRco", "Present": "cReward"}
+          -> (#13)
+        case OFF:
+          #34 MSG TalkSNpc/rco/SP_rco_11_TkkFirstLive:003_00
+          -> (#8)

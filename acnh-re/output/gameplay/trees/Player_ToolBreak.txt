@@ -1,0 +1,28 @@
+# Player_ToolBreak (source: decoded EventFlow; bool flag case 0 = ON, case 1 = OFF; #N = event index)
+== ENTRY ToolBreak_Axe
+  #2 SetTagFromSystem {"TagType": "cPlayerGetItemName", "SetTagType": "cDegit", "TagID": 0, "Value": 0, "AccessKey": ""}
+  #3 MSG TalkSys/SYS_Player:290
+  #4 IF PlayerHasCraftRecipe {"ItemUniqueId": 9617, "UnlockType": ""}
+    case 1:
+      #6 IF EventFlagSystemInt {"AccessKey": "cPlayer:GoldenAxeLearningCount", "FlagCheckType": 3, "Border": 99}
+        case 0:
+          #5 IF EventFlagSystemBool {"AccessKey": "cPlayer:MainmenuRecipe"}
+            case ON:
+              #8 ReservePlayerMutterDemo {"IsResistNpcCast": false, "MutterStartTiming": "cNextDemoEnd_Simple", "EventFileName": "Player_GetDemo_Recipe_DIY", "EntryPointName": "GetRecipe_GoldenAxe"}
+        case 1:
+          #7 EventFlagSystemAdd {"AccessKey": "cPlayer:GoldenAxeLearningCount", "AddNum": 1}
+== ENTRY ToolBreak_Scoop
+  #0 SetTagFromSystem {"TagType": "cPlayerGetItemName", "SetTagType": "cDegit", "TagID": 0, "Value": 0, "AccessKey": ""}
+  #1 MSG TalkSys/SYS_Player:290
+== ENTRY ToolBreak_Watering
+  #0 SetTagFromSystem {"TagType": "cPlayerGetItemName", "SetTagType": "cDegit", "TagID": 0, "Value": 0, "AccessKey": ""}
+  #1 MSG TalkSys/SYS_Player:290
+== ENTRY ToolBreak_Net
+  #0 SetTagFromSystem {"TagType": "cPlayerGetItemName", "SetTagType": "cDegit", "TagID": 0, "Value": 0, "AccessKey": ""}
+  #1 MSG TalkSys/SYS_Player:290
+== ENTRY ToolBreak_Slingshot
+  #0 SetTagFromSystem {"TagType": "cPlayerGetItemName", "SetTagType": "cDegit", "TagID": 0, "Value": 0, "AccessKey": ""}
+  #1 MSG TalkSys/SYS_Player:290
+== ENTRY ToolBreak_FishingRod
+  #0 SetTagFromSystem {"TagType": "cPlayerGetItemName", "SetTagType": "cDegit", "TagID": 0, "Value": 0, "AccessKey": ""}
+  #1 MSG TalkSys/SYS_Player:290

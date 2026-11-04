@@ -1,0 +1,185 @@
+# SNPC_rco (source: decoded EventFlow; bool flag case 0 = ON, case 1 = OFF; #N = event index)
+== ENTRY Root
+  #30 IF IsMyVillage {}
+    case 0:
+      #12 IF EventFlagSystemBool {"AccessKey": "cLand:FinishiPC1Prologue"}
+        case ON:
+          #51 CALL SNPC_rco:RcoEntrieChk
+          #50 EventFlagSystemOn {"AccessKey": "cPlayerTemp:RcoTalkSceneFlag"}
+        case OFF:
+          #13 CALL SNPC_rco_00_StartMainGame:Root
+    case 1:
+      #31 MSG TalkSNpc/rco/SP_rco_10_ForVisitor:001
+== ENTRY Root_Init
+  #5 IF NetHasVisitor {}
+    case 1:
+      #6 IF IsSharePlay {"TargetMode": 0}
+        case 1:
+          #7 IF OfficeLevel {}
+            case 0:
+              #14 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcoTalked1stAfterPrologue"}
+                case OFF:
+                  #15 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcoDIYtrialOngoing"}
+                    case OFF:
+                      #16 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcoTalkAfterMuseumTent"}
+                        case OFF:
+                          #17 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcoPaid1stCharge"}
+                            case OFF:
+                              #18 IF EventFlagSystemBool {"AccessKey": "cLand:RcmImmQuestOpen"}
+                                case ON:
+                                  #19 IF EventFlagSystemBool {"AccessKey": "cLand:RcmImmQuestRunning"}
+                                    case OFF:
+                                      #21 SmartPhone {"ActionType": 0}
+                                      #20 SmartPhone {"ActionType": 2}
+            case 1:
+              -> (#14)
+== ENTRY ChkFirstCamperRequest
+  #23 IF EventFlagSystemBool {"AccessKey": "cLand:CampSiteBuilt"}
+    case ON:
+      #27 IF NpcHouseNum {"NpcHouseType": "cExist", "Num": 6}
+        case 1:
+          #24 IF EventFlagSystemBool {"AccessKey": "cLand:RcoMeetFirstVisitorComplete"}
+            case ON:
+              #26 IF EventFlagSystemBool {"AccessKey": "cLand:RcoBuildFirstVisitorsHousingKitOngoing"}
+                case OFF:
+                  #25 IF EventFlagSystemBool {"AccessKey": "cPlayer:IslandDevQuestOrderFirstCamperMyself"}
+                    case ON:
+                      #28 CALL SNPC_rco_54_IslandDevelopment:SetFirstCamperHouseRequest
+                      #52 MSG TalkSNpc/rco/SP_rco_00_Common:000_03
+                      #53 CALL SNPC_rco_00_Common:Root
+                      #29 ExitFlowchart {}
+== ENTRY RcoFirstVisit
+  #35 EventFlagSystemOn {"AccessKey": "cPlayer:RcoTalked1stAfterPrologue"}
+  #39 EventFlagSystemOn {"AccessKey": "cPlayer:RcoTentEnableDIYtrial"}
+  #40 IF OfficeLevel {}
+    case 0:
+      #36 MSG TalkSNpc/rco/SP_rco_03_PcHouseTent:001
+      #65 IF ShopLevel {}
+        case 0:
+          #37 MSG TalkSNpc/rco/SP_rco_03_PcHouseTent:001_01
+          #38 MSG TalkSNpc/rco/SP_rco_03_PcHouseTent:001_02
+        case 1:
+          -> (#38)
+        case 2:
+          -> (#38)
+    case 1:
+      -> (#36)
+    case 2:
+      #41 MSG TalkSNpc/rco/SP_rco_03_PcHouseTent:002
+      #45 EventFlagSystemOn {"AccessKey": "cPlayer:RcoFirstTalkNewOffice"}
+      -> (#38)
+== ENTRY RcoEntrieChk
+  #32 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcoTalked1stAfterPrologue"}
+    case ON:
+      #49 CALL SNPC_rco_05_ChkCeremony:Root
+      #2 IF OfficeLevel {}
+        case 0:
+          #0 CALL SNPC_rco_03_ChkAfterRemodel:Root
+          #1 CALL SNPC_rco_04_ChkFinishLoan:Root
+          #54 IF NetHasVisitor {}
+            case 0:
+              #57 IF EventFlagSystemBool {"AccessKey": "cPlayerTemp:RcoTalkSceneFlag"}
+                case ON:
+                  #59 MSG TalkSNpc/rco/SP_rco_00_Common:801
+                  #62 IF RandomChoiceExcludePrevious2 {"ChoiceNumber": 2, "IsSetSpeakerChoiceResult": true}
+                    case 0:
+                      #60 MSG TalkSNpc/rco/SP_rco_00_Common:802_01
+                    case 1:
+                      #61 MSG TalkSNpc/rco/SP_rco_00_Common:802_02
+                case OFF:
+                  #58 MSG TalkSNpc/rco/SP_rco_00_Common:000
+                  -> (#59)
+            case 1:
+              #22 CALL SNPC_rco:ChkFirstCamperRequest
+              #8 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcoDIYtrialOngoing"}
+                case ON:
+                  #9 CALL SNPC_rco_01_Tent_1_Entries:RcoDIYongoing
+                case OFF:
+                  #10 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcoTalkAfterMuseumTent"}
+                    case ON:
+                      #11 CALL SNPC_rco_01_Tent_1_Entries:RcoTentAboutBuildMuseumTent
+                    case OFF:
+                      #64 IF EventFlagSystemBool {"AccessKey": "cPlayer:MakeVillagePlayerFlag"}
+                        case ON:
+                          #44 CALL SNPC_rco_53_MigrantsQuest:Rco_ImmQ_ReactTalkEntry
+                          #48 IF OfficeLevel {}
+                            case 0:
+                              #42 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcoTalkAboutRemakeTrial"}
+                                case ON:
+                                  #43 CALL SNPC_rco_01_Tent_1_Entries:RcoRemakeTrialIntro
+                                case OFF:
+                                  #55 IF EventFlagSystemBool {"AccessKey": "cPlayerTemp:RcoTalkSceneFlag"}
+                                    case ON:
+                                      #34 CALL SNPC_rco_00_Common:Root
+                                    case OFF:
+                                      #56 MSG TalkSNpc/rco/SP_rco_00_Common:000
+                                      -> (#34)
+                            case 1:
+                              -> (#42)
+                            case 2:
+                              #46 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcoTalkAboutOfficeWork"}
+                                case ON:
+                                  #66 CALL SNPC_rco:CheckInfoMoveMyhome
+                                  -> (#42)
+                                case OFF:
+                                  #47 CALL SNPC_rco_01_Office_1_Entries:IslandDevelopmentIntro
+                        case OFF:
+                          -> (#48)
+        case 1:
+          -> (#0)
+        case 2:
+          #3 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcoFirstTalkNewOffice"}
+            case ON:
+              -> (#0)
+            case OFF:
+              #4 CALL SNPC_rco_01_Office_1_Entries:OfficeOpening_NormalTalk
+    case OFF:
+      #33 CALL SNPC_rco:RcoFirstVisit
+== ENTRY RcoFirstVisit_Force
+  #63 EventFlagSystemOn {"AccessKey": "cPlayerTemp:RcoTalkSceneFlag"}
+  #75 CALL SNPC_rco_01_Tent_1_Entries:RcoTent_Force_PlayerPos
+  #35 EventFlagSystemOn {"AccessKey": "cPlayer:RcoTalked1stAfterPrologue"}
+  #39 EventFlagSystemOn {"AccessKey": "cPlayer:RcoTentEnableDIYtrial"}
+  #40 IF OfficeLevel {}
+    case 0:
+      #36 MSG TalkSNpc/rco/SP_rco_03_PcHouseTent:001
+      #65 IF ShopLevel {}
+        case 0:
+          #37 MSG TalkSNpc/rco/SP_rco_03_PcHouseTent:001_01
+          #38 MSG TalkSNpc/rco/SP_rco_03_PcHouseTent:001_02
+        case 1:
+          -> (#38)
+        case 2:
+          -> (#38)
+    case 1:
+      -> (#36)
+    case 2:
+      #41 MSG TalkSNpc/rco/SP_rco_03_PcHouseTent:002
+      #45 EventFlagSystemOn {"AccessKey": "cPlayer:RcoFirstTalkNewOffice"}
+      -> (#38)
+== ENTRY CheckInfoMoveMyhome
+  #67 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcoTalkAboutMoveMyHome"}
+    case OFF:
+      #73 IF EventFlagSystemBool {"AccessKey": "cPlayer:MakeVillagePlayerFlag"}
+        case OFF:
+          #68 IF PlayerHouseLevel {}
+            case 2:
+              #69 MSG TalkSNpc/rco/SP_rco_00_Common:031
+              #70 EventFlagSystemOn {"AccessKey": "cPlayer:RcoTalkAboutMoveMyHome"}
+              #72 MSG TalkSNpc/rco/SP_rco_00_Common:000_03
+              #71 CALL SNPC_rco_00_Common:Root
+              #76 ExitFlowchart {}
+            case 3:
+              -> (#69)
+            case 4:
+              -> (#69)
+            case 5:
+              -> (#69)
+            case 6:
+              -> (#69)
+            case 7:
+              -> (#69)
+            case 8:
+              -> (#69)
+== ENTRY RcoFirstVisit_Force_Init
+  #74 CALL SNPC_rco_01_Tent_1_Entries:RcoTent_Force_DisableTalkCamera

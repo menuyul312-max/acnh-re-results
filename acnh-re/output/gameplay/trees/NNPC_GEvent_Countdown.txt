@@ -1,0 +1,336 @@
+# NNPC_GEvent_Countdown (source: decoded EventFlow; bool flag case 0 = ON, case 1 = OFF; #N = event index)
+== ENTRY Root
+  #90 IF EventCheck {"EventLabelString": "Countdown"}
+    case 1:
+      #92 IF EnvSameDate {"CheckDateType": "cNewYear", "TimeType": "cNowTime"}
+        case 0:
+          #106 CALL NNPC_GEvent_Countdown:Chat_After
+        case 1:
+          #145 CALL NNPC_GEvent_Countdown:Chk_Hat
+          #107 CALL NNPC_GEvent_Countdown:Chat_Before
+    case 2:
+      -> (#92)
+== ENTRY Chat_After
+  #6 IF SystemCheckNowStage {"CheckStage": "cField"}
+    case 0:
+      #8 IF EnvHourCompare {"IsOverGrowUpTime": true, "IsMidNight": true, "Hour": 2, "Minute": -1}
+        case 0:
+          #24 IF RandomChoiceExcludePrevious4 {"ChoiceNumber": 4, "IsSetSpeakerChoiceResult": true}
+            case 0:
+              #20 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:060
+              #70 ExitFlowchart {}
+            case 1:
+              #21 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:061
+              -> (#70)
+            case 2:
+              #22 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:062
+              -> (#70)
+            case 3:
+              #23 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:063
+              -> (#70)
+        case 1:
+          #19 IF RandomChoiceExcludePrevious4 {"ChoiceNumber": 4, "IsSetSpeakerChoiceResult": true}
+            case 0:
+              #15 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:065
+              #69 ExitFlowchart {}
+            case 1:
+              #16 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:066
+              -> (#69)
+            case 2:
+              #17 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:067
+              -> (#69)
+            case 3:
+              #18 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:068
+              -> (#69)
+        case 2:
+          -> (#19)
+    case 1:
+      #93 IF EnvHourCompare {"IsMidNight": true, "IsOverGrowUpTime": true, "Minute": -1, "Hour": 2}
+        case 0:
+          #14 IF RandomChoiceExcludePrevious4 {"ChoiceNumber": 4, "IsSetSpeakerChoiceResult": true}
+            case 0:
+              #10 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:070
+              #68 ExitFlowchart {}
+            case 1:
+              #11 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:071
+              -> (#68)
+            case 2:
+              #12 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:072
+              -> (#68)
+            case 3:
+              #13 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:073
+              -> (#68)
+        case 1:
+          #9 IF RandomChoiceExcludePrevious4 {"ChoiceNumber": 4, "IsSetSpeakerChoiceResult": true}
+            case 0:
+              #1 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:075
+              #67 ExitFlowchart {}
+            case 1:
+              #2 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:076
+              -> (#67)
+            case 2:
+              #3 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:077
+              -> (#67)
+            case 3:
+              #4 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:078
+              -> (#67)
+        case 2:
+          -> (#9)
+== ENTRY Chat_Before
+  #108 IF EnvHourCompare {"IsOverGrowUpTime": true, "IsMidNight": true, "Hour": 23, "Minute": 59}
+    case 0:
+      #0 IF EventFlagNpcBool {"AccessKey": "cNpcMemory:GEventTalkProgressFlag"}
+        case ON:
+          #7 IF SystemCheckNowStage {"CheckStage": "cField"}
+            case 0:
+              #94 IF EnvHourCompare {"IsOverGrowUpTime": true, "IsMidNight": true, "Hour": 23, "Minute": 30}
+                case 0:
+                  #101 IF NpcIsEquipItem {"EquipRequireType": "cAny", "ItemUniqueID1": 4799, "ItemUniqueID2": 5186, "ItemUniqueID3": 5187, "ItemUniqueID4": 5192, "ItemUniqueID5": 5188, "ItemUniqueID6": 5190, "ItemUniqueID7": 5189, "ItemUniqueID8": 5191}
+                    case 0:
+                      #45 IF RandomChoiceExcludePrevious5 {"ChoiceNumber": 5, "IsSetSpeakerChoiceResult": true}
+                        case 0:
+                          #79 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:004
+                          #82 ExitFlowchart {}
+                        case 1:
+                          #80 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:005
+                          -> (#82)
+                        case 2:
+                          #81 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:006
+                          -> (#82)
+                        case 3:
+                          #127 CALL NNPC_GEvent_Countdown:Chat_WithHat_1hour_Before
+                        case 4:
+                          -> (#127)
+                    case 1:
+                      #103 IF NpcIsEquipItem {"EquipRequireType": "cAny", "ItemUniqueID1": 5946, "ItemUniqueID2": 5947, "ItemUniqueID3": 5948, "ItemUniqueID4": 5953, "ItemUniqueID5": 5949, "ItemUniqueID6": 5951, "ItemUniqueID7": 5950, "ItemUniqueID8": 5952}
+                        case 0:
+                          -> (#45)
+                        case 1:
+                          #124 CALL NNPC_GEvent_Countdown:WearHat_1hour_Before
+                case 1:
+                  #95 IF EnvHourCompare {"IsOverGrowUpTime": true, "IsMidNight": true, "Hour": 23, "Minute": 55}
+                    case 0:
+                      #100 IF NpcIsEquipItem {"EquipRequireType": "cAny", "ItemUniqueID1": 4799, "ItemUniqueID2": 5186, "ItemUniqueID3": 5187, "ItemUniqueID4": 5192, "ItemUniqueID5": 5188, "ItemUniqueID6": 5190, "ItemUniqueID7": 5189, "ItemUniqueID8": 5191}
+                        case 0:
+                          #43 IF RandomChoiceExcludePrevious5 {"ChoiceNumber": 5, "IsSetSpeakerChoiceResult": true}
+                            case 0:
+                              #63 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:018
+                              #76 ExitFlowchart {}
+                            case 1:
+                              #64 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:019
+                              -> (#76)
+                            case 2:
+                              #65 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:020
+                              -> (#76)
+                            case 3:
+                              #118 CALL NNPC_GEvent_Countdown:Chat_WithHat_30min_Before
+                            case 4:
+                              -> (#118)
+                        case 1:
+                          #102 IF NpcIsEquipItem {"EquipRequireType": "cAny", "ItemUniqueID1": 5946, "ItemUniqueID2": 5947, "ItemUniqueID3": 5948, "ItemUniqueID4": 5953, "ItemUniqueID5": 5949, "ItemUniqueID6": 5951, "ItemUniqueID7": 5950, "ItemUniqueID8": 5952}
+                            case 0:
+                              -> (#43)
+                            case 1:
+                              #122 CALL NNPC_GEvent_Countdown:WearHat_30min_Before
+                    case 1:
+                      #38 IF RandomChoiceExcludePrevious3 {"ChoiceNumber": 3, "IsSetSpeakerChoiceResult": true}
+                        case 0:
+                          #39 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:032
+                          #74 ExitFlowchart {}
+                        case 1:
+                          #40 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:033
+                          -> (#74)
+                        case 2:
+                          #37 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:034
+                          -> (#74)
+                    case 2:
+                      -> (#38)
+                case 2:
+                  -> (#95)
+            case 1:
+              #96 IF EnvHourCompare {"IsOverGrowUpTime": true, "IsMidNight": true, "Hour": 23, "Minute": 30}
+                case 0:
+                  #98 IF NpcIsEquipItem {"EquipRequireType": "cAny", "ItemUniqueID1": 4799, "ItemUniqueID2": 5186, "ItemUniqueID3": 5187, "ItemUniqueID4": 5192, "ItemUniqueID5": 5188, "ItemUniqueID6": 5190, "ItemUniqueID7": 5189, "ItemUniqueID8": 5191}
+                    case 0:
+                      #36 IF RandomChoiceExcludePrevious5 {"ChoiceNumber": 5, "IsSetSpeakerChoiceResult": true}
+                        case 0:
+                          #33 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:038
+                          #73 ExitFlowchart {}
+                        case 1:
+                          #34 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:039
+                          -> (#73)
+                        case 2:
+                          #35 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:040
+                          -> (#73)
+                        case 3:
+                          #129 CALL NNPC_GEvent_Countdown:Chat_WithHat_1hour_Before
+                        case 4:
+                          -> (#129)
+                    case 1:
+                      #104 IF NpcIsEquipItem {"EquipRequireType": "cAny", "ItemUniqueID1": 5946, "ItemUniqueID2": 5947, "ItemUniqueID3": 5948, "ItemUniqueID4": 5953, "ItemUniqueID5": 5949, "ItemUniqueID6": 5951, "ItemUniqueID7": 5950, "ItemUniqueID8": 5952}
+                        case 0:
+                          -> (#36)
+                        case 1:
+                          #126 CALL NNPC_GEvent_Countdown:WearHat_1hour_Before
+                case 1:
+                  #97 IF EnvHourCompare {"IsOverGrowUpTime": true, "IsMidNight": true, "Hour": 23, "Minute": 55}
+                    case 0:
+                      #99 IF NpcIsEquipItem {"EquipRequireType": "cAny", "ItemUniqueID1": 4799, "ItemUniqueID2": 5186, "ItemUniqueID3": 5187, "ItemUniqueID4": 5192, "ItemUniqueID5": 5188, "ItemUniqueID6": 5190, "ItemUniqueID7": 5189, "ItemUniqueID8": 5191}
+                        case 0:
+                          #32 IF RandomChoiceExcludePrevious5 {"ChoiceNumber": 5, "IsSetSpeakerChoiceResult": true}
+                            case 0:
+                              #29 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:046
+                              #72 ExitFlowchart {}
+                            case 1:
+                              #30 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:047
+                              -> (#72)
+                            case 2:
+                              #31 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:048
+                              -> (#72)
+                            case 3:
+                              #119 CALL NNPC_GEvent_Countdown:Chat_WithHat_30min_Before
+                            case 4:
+                              -> (#119)
+                        case 1:
+                          #105 IF NpcIsEquipItem {"EquipRequireType": "cAny", "ItemUniqueID1": 5946, "ItemUniqueID2": 5947, "ItemUniqueID3": 5948, "ItemUniqueID4": 5953, "ItemUniqueID5": 5949, "ItemUniqueID6": 5951, "ItemUniqueID7": 5950, "ItemUniqueID8": 5952}
+                            case 0:
+                              -> (#32)
+                            case 1:
+                              #123 CALL NNPC_GEvent_Countdown:WearHat_30min_Before
+                    case 1:
+                      #26 IF RandomChoiceExcludePrevious3 {"ChoiceNumber": 3, "IsSetSpeakerChoiceResult": true}
+                        case 0:
+                          #27 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:054
+                          #71 ExitFlowchart {}
+                        case 1:
+                          #28 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:055
+                          -> (#71)
+                        case 2:
+                          #25 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:056
+                          -> (#71)
+                    case 2:
+                      -> (#26)
+                case 2:
+                  -> (#97)
+        case OFF:
+          #91 EventFlagNpcOn {"AccessKey": "cNpcMemory:GEventTalkProgressFlag"}
+          #5 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:001
+          #66 ExitFlowchart {}
+    case 1:
+      #112 IF SystemCheckNowStage {"CheckStage": "cField"}
+        case 0:
+          #109 IF RandomChoiceExcludePrevious2 {"ChoiceNumber": 2, "IsSetSpeakerChoiceResult": true}
+            case 0:
+              #110 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:035
+              #116 ExitFlowchart {}
+            case 1:
+              #111 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:036
+              -> (#116)
+        case 1:
+          #115 IF RandomChoiceExcludePrevious2 {"ChoiceNumber": 2, "IsSetSpeakerChoiceResult": true}
+            case 0:
+              #113 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:057
+              #117 ExitFlowchart {}
+            case 1:
+              #114 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:058
+              -> (#117)
+    case 2:
+      -> (#112)
+== ENTRY Chat_WithHat_30min_Before
+  #142 IF SubflowResultChoice2 {"SetIndex": 0}
+    case 0:
+      #86 IF RandomChoiceExcludePrevious2 {"ChoiceNumber": 2, "IsSetSpeakerChoiceResult": true}
+        case 0:
+          #41 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:021
+          #120 ExitFlowchart {}
+        case 1:
+          #42 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:022
+          -> (#120)
+    case 1:
+      #89 IF RandomChoiceExcludePrevious2 {"ChoiceNumber": 2, "IsSetSpeakerChoiceResult": true}
+        case 0:
+          #87 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:023
+          -> (#120)
+        case 1:
+          #88 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:024
+          -> (#120)
+== ENTRY WearHat_30min_Before
+  #141 IF SubflowResultChoice2 {"SetIndex": 0}
+    case 0:
+      #53 IF RandomChoiceExcludePrevious2 {"ChoiceNumber": 2, "IsSetSpeakerChoiceResult": true}
+        case 0:
+          #51 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:025
+          #131 NpcWearNewYearHat {}
+          #54 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:027
+          #121 ExitFlowchart {}
+        case 1:
+          #52 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:026
+          -> (#131)
+    case 1:
+      #49 IF RandomChoiceExcludePrevious2 {"ChoiceNumber": 2, "IsSetSpeakerChoiceResult": true}
+        case 0:
+          #47 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:028
+          #130 NpcWearNewYearHat {}
+          #50 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:030
+          #75 ExitFlowchart {}
+        case 1:
+          #48 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:029
+          -> (#130)
+== ENTRY WearHat_1hour_Before
+  #143 IF SubflowResultChoice2 {"SetIndex": 0}
+    case 0:
+      #61 IF RandomChoiceExcludePrevious2 {"ChoiceNumber": 2, "IsSetSpeakerChoiceResult": true}
+        case 0:
+          #59 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:011
+          #133 NpcWearNewYearHat {}
+          #62 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:013
+          #77 ExitFlowchart {}
+        case 1:
+          #60 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:012
+          -> (#133)
+    case 1:
+      #57 IF RandomChoiceExcludePrevious2 {"ChoiceNumber": 2, "IsSetSpeakerChoiceResult": true}
+        case 0:
+          #55 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:014
+          #132 NpcWearNewYearHat {}
+          #58 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:016
+          #125 ExitFlowchart {}
+        case 1:
+          #56 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:015
+          -> (#132)
+== ENTRY Chat_WithHat_1hour_Before
+  #144 IF SubflowResultChoice2 {"SetIndex": 0}
+    case 0:
+      #78 IF RandomChoiceExcludePrevious2 {"ChoiceNumber": 2, "IsSetSpeakerChoiceResult": true}
+        case 0:
+          #44 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:007
+          #128 ExitFlowchart {}
+        case 1:
+          #46 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:008
+          -> (#128)
+    case 1:
+      #85 IF RandomChoiceExcludePrevious2 {"ChoiceNumber": 2, "IsSetSpeakerChoiceResult": true}
+        case 0:
+          #83 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:009
+          -> (#128)
+        case 1:
+          #84 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_Countdown:010
+          -> (#128)
+== ENTRY Chk_Hat
+  #134 IF PlayerIsUseCoordinate {}
+    case 0:
+      #139 SetSubflowResult {"SetIndex": 0, "ResultValue": 1}
+    case 1:
+      #135 IF EventFlagSystemBool {"AccessKey": "cPlayer:EquipLicenseHelmet"}
+        case ON:
+          -> (#139)
+        case OFF:
+          #137 IF PlayerIsEquipItem {"ItemUniqueID1": 4799, "ItemUniqueID2": 5186, "ItemUniqueID3": 5187, "ItemUniqueID4": 5192, "ItemUniqueID5": 5188, "ItemUniqueID6": 5190, "ItemUniqueID7": 5189, "ItemUniqueID8": 5191, "EquipRequireType": "cAny", "PutawayType": false}
+            case 0:
+              #136 SetSubflowResult {"SetIndex": 0, "ResultValue": 0}
+            case 1:
+              #138 IF PlayerIsEquipItem {"EquipRequireType": "cAny", "ItemUniqueID1": 5946, "ItemUniqueID2": 5947, "ItemUniqueID3": 5948, "ItemUniqueID4": 5953, "ItemUniqueID5": 5949, "ItemUniqueID6": 5951, "ItemUniqueID7": 5950, "ItemUniqueID8": 5952, "PutawayType": false}
+                case 0:
+                  -> (#136)
+                case 1:
+                  #140 SetSubflowResult {"SetIndex": 0, "ResultValue": 1}

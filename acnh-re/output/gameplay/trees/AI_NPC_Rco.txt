@@ -1,0 +1,408 @@
+# AI_NPC_Rco (source: decoded EventFlow; bool flag case 0 = ON, case 1 = OFF; #N = event index)
+== ENTRY Root
+  #20 IF SystemCheckNowStage {"CheckStage": "cField"}
+    case 0:
+      #90 IF EventBranch {"CheckNowTime": false, "AddDay": 0}
+        case 0:
+          #8 IF NpcCheckStateSelectTiming {"AISelectorTiming": "cInit"}
+            case 0:
+              #194 IF NetIsConnected {}
+                case 0:
+                  #196 CALL AI_NPC_Rco:AI_Rco_NormalTalk
+                case 1:
+                  #193 IF OfficeLevel {}
+                    case 0:
+                      #192 IF EventFlagSystemBool {"AccessKey": "cPlayer:MakeVillagePlayerFlag"}
+                        case ON:
+                          #191 CALL System_MigrantsQuestProcess:ImmQClearChk
+                          #195 IF IsSharePlay {"TargetMode": 0}
+                            case 0:
+                              #198 CALL AI_NPC_Rco:AI_Rco_NormalTalk
+                            case 1:
+                              #186 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcoTalked1stAfterPrologue"}
+                                case ON:
+                                  #188 IF OfficeLevel {}
+                                    case 0:
+                                      #25 IF EventFlagSystemBool {"AccessKey": "cPlayer:PlayerLoanFinish1st"}
+                                        case ON:
+                                          #113 CALL AI_NPC_Rco:Rco_Force_FinishLoan
+                                        case OFF:
+                                          #10 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcoAfterHouseRemodel"}
+                                            case ON:
+                                              #24 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcoGetTvForCongratsHouse"}
+                                                case ON:
+                                                  #114 CALL AI_NPC_Rco:Rco_Force_AfterRemodel
+                                                case OFF:
+                                                  #115 IF EventFlagSystemBool {"AccessKey": "cLand:RcoRcmTalkingAboutStoreMaterial"}
+                                                    case ON:
+                                                      -> (#114)
+                                                    case OFF:
+                                                      #164 IF EventFlagSystemBool {"AccessKey": "cPlayer:MakeVillagePlayerFlag"}
+                                                        case ON:
+                                                          #168 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcmTookQuestReq"}
+                                                            case ON:
+                                                              -> (#114)
+                                                            case OFF:
+                                                              #116 CALL AI_NPC_Rco:Rco_Force_BuiltHouse_ShopMaterial
+                                                        case OFF:
+                                                          #165 CALL AI_NPC_Rco:Rco_Force_AfterRemodel
+                                            case OFF:
+                                              #11 IF OfficeLevel {}
+                                                case 0:
+                                                  #16 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcoTalkAfterMuseumTent"}
+                                                    case ON:
+                                                      #117 CALL AI_NPC_Rco:Rco_Force_OwlTentSet
+                                                    case OFF:
+                                                      #17 CALL AI_NPC_Rco:AI_Rco_ChkForceImmQ
+                                                      #74 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcoTalkAboutRemakeTrial"}
+                                                        case ON:
+                                                          #133 CALL AI_NPC_Rco:Rco_Force_InviteRemakeWorkshop
+                                                        case OFF:
+                                                          #9 CALL AI_NPC_Rco:AI_Rco_NormalTalk
+                                                case 1:
+                                                  -> (#16)
+                                                case 2:
+                                                  #35 CALL AI_NPC_Rco:AI_Rco_ChkForceIslandDevelopment
+                                                  -> (#74)
+                                    case 1:
+                                      -> (#25)
+                                    case 2:
+                                      #189 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcoFirstTalkNewOffice"}
+                                        case ON:
+                                          -> (#25)
+                                        case OFF:
+                                          #190 CALL AI_NPC_Rco:Rco_Force_OfficeFirstTalk
+                                case OFF:
+                                  #187 CALL AI_NPC_Rco:Rco_Force_FirstVisit
+                        case OFF:
+                          -> (#195)
+                    case 1:
+                      -> (#192)
+                    case 2:
+                      -> (#195)
+            case 1:
+              #71 IF SystemCheckNowStage {"CheckStage": "cIdrOffice"}
+                case 0:
+                  #72 NpcChangeAIState {"StateName": "cOfficeWait", "TalkEventFlowName": "SNPC_rco", "TalkEntryPointName": "Root", "IsChangeSameState": true, "SubEntryName": "", "IsChangePreState": true}
+                  #169 IF NpcCheckStateSelectTiming {"AISelectorTiming": "cTalkEnd"}
+                    case 0:
+                      #92 NpcAISetExitStrc {"Reaction": "Greeting", "TriggerType": "cTriggerType_ExitStrc", "Frame": 0}
+                case 1:
+                  #2 NpcChangeSpNpcTurnState {"IsChangeSameState": true, "SubEntryName": "", "TalkEventFlowName": "SNPC_rco", "TalkEntryPointName": "Root", "IsChangePreState": true, "StateName": "cSpNpcTurn", "ArgInt0": 30, "ArgInt1": 2, "ArgInt2": 0, "ArgInt3": 0, "ArgFlag0": true, "ArgFlag1": false, "ArgStr0": "", "ArgStr1": ""}
+        case 1:
+          -> (#8)
+        case 2:
+          -> (#8)
+        case 3:
+          #18 NpcChangeSpNpcTurnState {"SubEntryName": "", "TalkEntryPointName": "Root", "IsChangePreState": true, "TalkEventFlowName": "SNPC_rco_GEvent_Countdown", "IsChangeSameState": true, "StateName": "cSpNpcTurn", "ArgInt0": 30, "ArgInt1": 2, "ArgInt2": 0, "ArgInt3": 0, "ArgFlag0": true, "ArgFlag1": false, "ArgStr0": "", "ArgStr1": ""}
+          #19 NpcAISetting {"SettingType": 8, "Flag": true}
+    case 1:
+      -> (#8)
+== ENTRY Init
+  #6 NpcRegistAIBlackBoard {"Value": 0, "Key": "CheckRobResult"}
+  #5 IF SystemCheckNowStage {"CheckStage": "cIdrTanukichi"}
+    case 0:
+      #155 NpcAISetCheckRobFunc {"IsUnregist": false, "TalkEventFlowName": "SNPC_rco_91_BreakInSpeak", "RobContinue": true, "CheckRobType": "cTanukichiLostItemBox", "AIEntryPointName": "CheckRob_LostPropertyBox", "TalkEntryPointName": "ObjRcoRecycleBox1st"}
+      #12 NpcAISetCheckRobFunc {"IsUnregist": false, "TalkEventFlowName": "SNPC_rco_91_BreakInSpeak", "AIEntryPointName": "CheckRob_ATM", "TalkEntryPointName": "ObjRcoMachineCheck1st", "CheckRobType": "cTanukichiATM", "RobContinue": true}
+      #3 NpcAISetCheckRobFunc {"TalkEventFlowName": "Ftr_Working", "TalkEntryPointName": "Root_Tutorial", "CheckRobType": "cTanukichiTent", "IsUnregist": false, "AIEntryPointName": "CheckRob_WorkBench", "RobContinue": false}
+      #30 NpcAISetExitStrc {"TriggerType": "cTriggerType_ExitStrc", "Reaction": "Greeting", "Frame": 0}
+      #32 NpcAISetExitStrc {"Reaction": "Smiling", "TriggerType": "cTriggerType_EnterStrc", "Frame": 30}
+      #31 SetSightRange {"Distance": 32, "Angle": 0}
+      #180 IF NetIsConnected {}
+        case 0:
+          #181 NpcDisableServiceMotion {}
+          #0 NpcAISetting {"SettingType": 0, "Flag": true}
+          #1 NpcAISetting {"SettingType": 1, "Flag": true}
+          #7 NpcAISetting {"SettingType": 8, "Flag": true}
+        case 1:
+          -> (#0)
+    case 1:
+      #28 IF SystemCheckNowStage {"CheckStage": "cIdrOffice"}
+        case 0:
+          #163 NpcAISetCheckRobFunc {"IsUnregist": false, "TalkEventFlowName": "SNPC_rco_91_BreakInSpeak", "RobContinue": true, "CheckRobType": "cTanukichiLostItemBox", "AIEntryPointName": "CheckRob_LostPropertyBox", "TalkEntryPointName": "ObjRcoRecycleBox1st"}
+          #97 NpcAISetCheckRobFunc {"TalkEventFlowName": "Ftr_Working", "TalkEntryPointName": "Root_Tutorial", "CheckRobType": "cTanukichiTent", "IsUnregist": false, "AIEntryPointName": "CheckRob_WorkBench", "RobContinue": false}
+          #98 NpcAISetCheckRobFunc {"IsUnregist": false, "TalkEventFlowName": "SNPC_rco_91_BreakInSpeak", "AIEntryPointName": "CheckRob_ATM", "TalkEntryPointName": "ObjRcoMachineCheck1st", "CheckRobType": "cTanukichiATM", "RobContinue": true}
+          #27 NpcSetTalkDistance {"Distance": 25.0}
+          -> (#0)
+        case 1:
+          -> (#0)
+== ENTRY CheckRob_WorkBench
+  #93 IF IsMyVillage {}
+    case 0:
+      #94 IF NetHasVisitor {}
+        case 0:
+          #95 NpcSetAIBlackBoard {"Key": "CheckRobResult", "Value": 0}
+        case 1:
+          #88 IF EventFlagSystemBool {"AccessKey": "cPlayer:MainmenuRecipe"}
+            case ON:
+              -> (#95)
+            case OFF:
+              #89 NpcSetAIBlackBoard {"Key": "CheckRobResult", "Value": 1}
+    case 1:
+      #96 NpcSetAIBlackBoard {"Key": "CheckRobResult", "Value": 0}
+== ENTRY AI_Rco_NormalTalk
+  #67 IF SystemCheckNowStage {"CheckStage": "cIdrOffice"}
+    case 0:
+      #68 NpcChangeAIState {"StateName": "cOfficeWait", "TalkEventFlowName": "SNPC_rco", "TalkEntryPointName": "Root", "IsChangeSameState": true, "SubEntryName": "", "IsChangePreState": true}
+      #73 NpcAISetRequestSpeakFunc {"IsPlayingWithOther": true, "SpeakType": "cSitDownOffice"}
+      #69 IF NetIsConnected {}
+        case 0:
+          #70 NpcDisableServiceMotion {}
+          #179 NpcAISetExitStrc {"Reaction": "Greeting", "TriggerType": "cTriggerType_ExitStrc", "Frame": 0}
+        case 1:
+          #182 IF EventFlagSystemBool {"AccessKey": "cPlayer:EnableDiyRemake"}
+            case OFF:
+              #183 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcoEnableRemakeTrial"}
+                case ON:
+                  #184 NpcDisableServiceMotion {}
+                  #185 NpcAISetExitStrc {"Reaction": "Greeting", "TriggerType": "cTriggerType_ExitStrc", "Frame": 0}
+    case 1:
+      #4 NpcChangeSpNpcTurnState {"TalkEntryPointName": "Root", "SubEntryName": "", "TalkEventFlowName": "SNPC_rco", "IsChangePreState": true, "IsChangeSameState": true, "StateName": "cSpNpcTurn", "ArgInt0": 30, "ArgInt1": 2, "ArgInt2": 0, "ArgInt3": 0, "ArgFlag0": true, "ArgFlag1": false, "ArgStr0": "", "ArgStr1": ""}
+== ENTRY AI_Rco_ChkSpTalk
+  #25 IF EventFlagSystemBool {"AccessKey": "cPlayer:PlayerLoanFinish1st"}
+    case ON:
+      #113 CALL AI_NPC_Rco:Rco_Force_FinishLoan
+    case OFF:
+      #10 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcoAfterHouseRemodel"}
+        case ON:
+          #24 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcoGetTvForCongratsHouse"}
+            case ON:
+              #114 CALL AI_NPC_Rco:Rco_Force_AfterRemodel
+            case OFF:
+              #115 IF EventFlagSystemBool {"AccessKey": "cLand:RcoRcmTalkingAboutStoreMaterial"}
+                case ON:
+                  -> (#114)
+                case OFF:
+                  #164 IF EventFlagSystemBool {"AccessKey": "cPlayer:MakeVillagePlayerFlag"}
+                    case ON:
+                      #168 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcmTookQuestReq"}
+                        case ON:
+                          -> (#114)
+                        case OFF:
+                          #116 CALL AI_NPC_Rco:Rco_Force_BuiltHouse_ShopMaterial
+                    case OFF:
+                      #165 CALL AI_NPC_Rco:Rco_Force_AfterRemodel
+        case OFF:
+          #11 IF OfficeLevel {}
+            case 0:
+              #16 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcoTalkAfterMuseumTent"}
+                case ON:
+                  #117 CALL AI_NPC_Rco:Rco_Force_OwlTentSet
+                case OFF:
+                  #17 CALL AI_NPC_Rco:AI_Rco_ChkForceImmQ
+                  #74 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcoTalkAboutRemakeTrial"}
+                    case ON:
+                      #133 CALL AI_NPC_Rco:Rco_Force_InviteRemakeWorkshop
+                    case OFF:
+                      #9 CALL AI_NPC_Rco:AI_Rco_NormalTalk
+            case 1:
+              -> (#16)
+            case 2:
+              #35 CALL AI_NPC_Rco:AI_Rco_ChkForceIslandDevelopment
+              -> (#74)
+== ENTRY CheckRob_ATM
+  #175 IF IsMyVillage {}
+    case 0:
+      #176 IF NetHasVisitor {}
+        case 0:
+          #177 NpcSetAIBlackBoard {"Key": "CheckRobResult", "Value": 0}
+        case 1:
+          #65 IF EventFlagSystemBool {"AccessKey": "cPlayerTemp:RcoMachineTalkCntl"}
+            case ON:
+              #15 NpcSetAIBlackBoard {"Key": "CheckRobResult", "Value": 0}
+            case OFF:
+              #13 IF EventFlagSystemBool {"AccessKey": "cPlayer:ObjRcoMachineHeardExplanation"}
+                case ON:
+                  #171 IF EventFlagSystemBool {"AccessKey": "cLand:TanuportAmiiboCampUnlock"}
+                    case ON:
+                      #170 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcoMachineAmiiboCamperUnlock"}
+                        case ON:
+                          #174 NpcSetAIBlackBoard {"Key": "CheckRobResult", "Value": 0}
+                        case OFF:
+                          #172 NpcSetAIBlackBoard {"Key": "CheckRobResult", "Value": 1}
+                    case OFF:
+                      #173 NpcSetAIBlackBoard {"Key": "CheckRobResult", "Value": 0}
+                case OFF:
+                  #14 NpcSetAIBlackBoard {"Key": "CheckRobResult", "Value": 1}
+    case 1:
+      #178 NpcSetAIBlackBoard {"Key": "CheckRobResult", "Value": 0}
+== ENTRY AI_Rco_ChkForceImmQ
+  #166 IF EventFlagSystemBool {"AccessKey": "cPlayer:MakeVillagePlayerFlag"}
+    case ON:
+      #22 IF EventFlagSystemBool {"AccessKey": "cLand:RcmImmQuestOpen"}
+        case ON:
+          #34 IF EventFlagSystemBool {"AccessKey": "cLand:RcmImmQuestComplete"}
+            case OFF:
+              #23 IF EventFlagSystemBool {"AccessKey": "cLand:RcmImmQuestRunning"}
+                case ON:
+                  #26 IF EventFlagSystemBool {"AccessKey": "cPlayer:ImmQRunningForPlayer"}
+                    case ON:
+                      #75 IF EventFlagSystemBool {"AccessKey": "cPlayer:ImmQTalkRcoBridgeKitSet"}
+                        case ON:
+                          #76 CALL AI_NPC_Rco:Rco_Force_ImmQ_BridgeSet
+                        case OFF:
+                          #78 IF EventFlagSystemBool {"AccessKey": "cLand:ImmQ_SetBridge"}
+                            case ON:
+                              #77 IF EventFlagSystemBool {"AccessKey": "cPlayer:ImmQSetBridgeKitMySelf"}
+                                case ON:
+                                  #79 IF EventFlagSystemBool {"AccessKey": "cLand:ImmQ_A_GetHousing"}
+                                    case ON:
+                                      #80 IF EventFlagSystemBool {"AccessKey": "cPlayer:ImmQHeardNoticeRemoveFtr"}
+                                        case ON:
+                                          #81 EventFlagSystemOn {"AccessKey": "cPlayerTemp:RcoForceTalk"}
+                                          #125 CALL AI_NPC_Rco:Rco_Force_ImmQ_ClearTalk
+                case OFF:
+                  #21 CALL AI_NPC_Rco:Rco_Force_ImmQ_Intro
+== ENTRY Rco_Force_BuiltHouse_ShopMaterial
+  #83 SetNpcSpeakFlow {"FlowName": "SNPC_rco_03_ChkAfterRemodel", "EntryName": "RcoRcmTalkAboutStoreMaterial_Force"}
+  #82 NpcChangeConversationPretenseState {"IsChangeSameState": false, "IsChangePreState": true, "SubEntryName": "", "ArgInt0": 1, "ArgStr0": "rcm", "TalkEventFlowName": "SNPC_rco_03_ChkAfterRemodel", "StateName": "cConversationPretense", "TalkEntryPointName": "Root"}
+  #84 ExitFlowchart {}
+== ENTRY AI_Rco_ChkForceIslandDevelopment
+  #167 IF EventFlagSystemBool {"AccessKey": "cPlayer:MakeVillagePlayerFlag"}
+    case ON:
+      #36 IF EventFlagSystemBool {"AccessKey": "cLand:RcoBuildCampsiteOngoing"}
+        case ON:
+          #37 IF EventFlagSystemBool {"AccessKey": "cLand:RcoBuildCampsiteComplete"}
+            case ON:
+              #42 IF EventFlagSystemBool {"AccessKey": "cLand:CampSiteBuilt"}
+                case ON:
+                  #43 IF EventFlagSystemBool {"AccessKey": "cLand:RcoMeetFirstVisitorRequest"}
+                    case ON:
+                      #40 CALL AI_NPC_Rco:Root2CampSiteVisitor
+                    case OFF:
+                      #44 IF EventFlagSystemBool {"AccessKey": "cPlayer:IslandDevQuestCampSetMySelf"}
+                        case ON:
+                          #60 IF EventFlagSystemBool {"AccessKey": "cPlayer:IslandDevQuestTalkAfterBuildCamp"}
+                            case OFF:
+                              #55 CALL AI_NPC_Rco:Rco_Force_IslandDev_BuildCampSite
+                case OFF:
+                  #38 IF EventFlagSystemBool {"AccessKey": "cPlayer:IslandDevQuestCampSetMySelf"}
+                    case ON:
+                      #59 IF EventFlagSystemBool {"AccessKey": "cPlayer:IslandDevQuestTalkAfterCampSet"}
+                        case OFF:
+                          #54 CALL AI_NPC_Rco:Rco_Force_IslandDev_SetCampSite
+            case OFF:
+              #56 IF EventFlagSystemBool {"AccessKey": "cPlayer:IslandDevQuestGetRecipeCampKit"}
+== ENTRY Root2CampSiteVisitor
+  #46 IF EventFlagSystemBool {"AccessKey": "cLand:RcoMeetFirstVisitorComplete"}
+    case ON:
+      #49 IF EventFlagSystemBool {"AccessKey": "cLand:RcoBuildFirstVisitorsHousingKitOngoing"}
+        case ON:
+          #50 IF EventFlagSystemBool {"AccessKey": "cLand:RcoBuildFirstVisitorsHousingKitComplete"}
+            case ON:
+              #52 IF NpcHouseNum {"NpcHouseType": "cConstructed", "Num": 6}
+                case 0:
+                  #41 CALL AI_NPC_Rco:Root3IslandEvaluation
+                case 1:
+                  #199 IF EventFlagSystemBool {"AccessKey": "cLand:TanuportAmiiboCampUnlock"}
+                    case ON:
+                      -> (#41)
+                    case OFF:
+                      #48 IF EventFlagSystemBool {"AccessKey": "cPlayer:SetHousingKitForFirstCamper"}
+                        case ON:
+                          #62 IF EventFlagSystemBool {"AccessKey": "cPlayer:SzaHeardAboutHousingKit"}
+                            case OFF:
+                              #58 CALL AI_NPC_Rco:Rco_Force_IslandDev_AfterSetCamperHouse
+            case OFF:
+              #51 IF EventFlagSystemBool {"AccessKey": "cPlayer:GetHousingKitForFirstCamper"}
+        case OFF:
+          #47 IF EventFlagSystemBool {"AccessKey": "cPlayer:IslandDevQuestOrderFirstCamperMyself"}
+    case OFF:
+      #39 IF EventFlagSystemBool {"AccessKey": "cLand:RcoMeetFirstVisitorOngoing"}
+        case ON:
+          #45 IF EventFlagSystemBool {"AccessKey": "cPlayer:IslandDevQuestTalkAboutFirstCamper"}
+        case OFF:
+          #57 CALL AI_NPC_Rco:Rco_Force_IslandDev_RequestMeetCamper
+== ENTRY Root3IslandEvaluation
+  #53 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcoHeardAboutEvaluationStart"}
+    case OFF:
+      #61 CALL AI_NPC_Rco:Rco_Force_IslandDev_EnvUnlockWithsza
+== ENTRY Rco_Force_ImmQ_Intro
+  #99 CALL AI_NPC_Rco:AI_Rco_Force_EntryProcess
+  #66 NpcAISetting {"SettingType": 15, "Flag": true}
+  #121 CALL AI_NPC_Common:ContinueSpeak {"FlowName": "SNPC_rco_01_Tent_1_Entries", "EntryName": "RcoTentImmQuestIntro_Force"}
+  #63 ExitFlowchart {}
+== ENTRY Rco_Force_IslandDev_EnvUnlockWithsza
+  #100 CALL AI_NPC_Rco:AI_Rco_Force_EntryProcess
+  #154 CALL AI_NPC_Common:ContinueSpeak {"FlowName": "SNPC_rco_54_IslandDevelopment", "EntryName": "IslandEvaluationStartForce"}
+  #87 CALL AI_NPC_Rco:SetOfficeForceTalk
+  #64 ExitFlowchart {}
+== ENTRY SetOfficeForceTalk
+  #85 IF SystemCheckNowStage {"CheckStage": "cIdrOffice"}
+    case 0:
+      #86 NpcAISetRequestSpeakFunc {"IsPlayingWithOther": true, "SpeakType": "cSitDownOffice"}
+      #91 NpcAISetExitStrc {"Reaction": "Greeting", "TriggerType": "cTriggerType_ExitStrc", "Frame": 0}
+== ENTRY AI_Rco_Force_EntryProcess
+  #29 NpcAISetting {"SettingType": 13, "Flag": true}
+  #197 NpcAISetting {"SettingType": 18, "Flag": true}
+== ENTRY Rco_Force_FirstVisit
+  #102 CALL AI_NPC_Rco:AI_Rco_Force_EntryProcess
+  #101 CALL AI_NPC_Common:ContinueSpeak {"EntryName": "RcoFirstVisit_Force", "FlowName": "SNPC_rco"}
+  #104 CALL AI_NPC_Rco:SetOfficeForceTalk
+  #103 ExitFlowchart {}
+== ENTRY Rco_Force_FinishLoan
+  #106 CALL AI_NPC_Rco:AI_Rco_Force_EntryProcess
+  #105 CALL AI_NPC_Common:ContinueSpeak {"FlowName": "SNPC_rco_04_ChkFinishLoan", "EntryName": "FinishLoan_Force"}
+  #108 CALL AI_NPC_Rco:SetOfficeForceTalk
+  #107 ExitFlowchart {}
+== ENTRY Rco_Force_AfterRemodel
+  #110 CALL AI_NPC_Rco:AI_Rco_Force_EntryProcess
+  #109 CALL AI_NPC_Common:ContinueSpeak {"EntryName": "AfterRemodel_Force", "FlowName": "SNPC_rco_03_ChkAfterRemodel"}
+  #112 CALL AI_NPC_Rco:SetOfficeForceTalk
+  #111 ExitFlowchart {}
+== ENTRY Rco_Force_OwlTentSet
+  #119 CALL AI_NPC_Rco:AI_Rco_Force_EntryProcess
+  #118 CALL AI_NPC_Common:ContinueSpeak {"EntryName": "AboutBuildMuseumTent_Force", "FlowName": "SNPC_rco_01_Tent_1_Entries"}
+  #120 ExitFlowchart {}
+== ENTRY Rco_Force_ImmQ_BridgeSet
+  #123 CALL AI_NPC_Rco:AI_Rco_Force_EntryProcess
+  #122 CALL AI_NPC_Common:ContinueSpeak {"FlowName": "SNPC_rco_53_MigrantsQuest", "EntryName": "FinishBridge_Force"}
+  #124 ExitFlowchart {}
+== ENTRY Rco_Force_ImmQ_ClearTalk
+  #127 CALL AI_NPC_Rco:AI_Rco_Force_EntryProcess
+  #126 CALL AI_NPC_Common:ContinueSpeak {"FlowName": "SNPC_rco_53_MigrantsQuest", "EntryName": "Rco_ImmQ_ClearTalk_Force"}
+  #128 ExitFlowchart {}
+== ENTRY Rco_Force_IslandDev_SetCampSite
+  #130 CALL AI_NPC_Rco:AI_Rco_Force_EntryProcess
+  #129 CALL AI_NPC_Common:ContinueSpeak {"EntryName": "CampSiteRequestComplete_Force", "FlowName": "SNPC_rco_54_IslandDevelopment"}
+  #132 CALL AI_NPC_Rco:SetOfficeForceTalk
+  #131 ExitFlowchart {}
+== ENTRY Rco_Force_InviteRemakeWorkshop
+  #139 CALL AI_NPC_Rco:AI_Rco_Force_EntryProcess
+  #138 CALL AI_NPC_Common:ContinueSpeak {"EntryName": "RcoRemakeTrialIntro_Force", "FlowName": "SNPC_rco_01_Tent_1_Entries"}
+  #141 CALL AI_NPC_Rco:SetOfficeForceTalk
+  #140 ExitFlowchart {}
+== ENTRY Rco_Force_OfficeFirstTalk
+  #135 CALL AI_NPC_Rco:AI_Rco_Force_EntryProcess
+  #134 CALL AI_NPC_Common:ContinueSpeak {"FlowName": "SNPC_rco_01_Office_1_Entries", "EntryName": "OfficeOpening_Force"}
+  #137 CALL AI_NPC_Rco:SetOfficeForceTalk
+  #136 ExitFlowchart {}
+== ENTRY Rco_Force_IslandDev_BuildCampSite
+  #142 CALL AI_NPC_Rco:AI_Rco_Force_EntryProcess
+  #143 CALL AI_NPC_Common:ContinueSpeak {"FlowName": "SNPC_rco_54_IslandDevelopment", "EntryName": "CampSiteBuild_Force"}
+  #145 CALL AI_NPC_Rco:SetOfficeForceTalk
+  #144 ExitFlowchart {}
+== ENTRY Rco_Force_IslandDev_RequestMeetCamper
+  #146 CALL AI_NPC_Rco:AI_Rco_Force_EntryProcess
+  #147 CALL AI_NPC_Common:ContinueSpeak {"FlowName": "SNPC_rco_54_IslandDevelopment", "EntryName": "MeetFirstCamperRequest_Force"}
+  #149 CALL AI_NPC_Rco:SetOfficeForceTalk
+  #148 ExitFlowchart {}
+== ENTRY Rco_Force_IslandDev_AfterSetCamperHouse
+  #150 CALL AI_NPC_Rco:AI_Rco_Force_EntryProcess
+  #151 CALL AI_NPC_Common:ContinueSpeak {"FlowName": "SNPC_rco_54_IslandDevelopment", "EntryName": "FirstCamperHouseComplete_Force"}
+  #153 CALL AI_NPC_Rco:SetOfficeForceTalk
+  #152 ExitFlowchart {}
+== ENTRY CheckRob_LostPropertyBox
+  #157 IF IsMyVillage {}
+    case 0:
+      #158 IF NetHasVisitor {}
+        case 0:
+          #159 NpcSetAIBlackBoard {"Key": "CheckRobResult", "Value": 0}
+        case 1:
+          #156 IF EventFlagSystemBool {"AccessKey": "cPlayer:AccessLostPropertyBox1st"}
+            case ON:
+              #161 NpcSetAIBlackBoard {"Key": "CheckRobResult", "Value": 0}
+            case OFF:
+              #162 NpcSetAIBlackBoard {"Key": "CheckRobResult", "Value": 1}
+    case 1:
+      #160 NpcSetAIBlackBoard {"Key": "CheckRobResult", "Value": 0}

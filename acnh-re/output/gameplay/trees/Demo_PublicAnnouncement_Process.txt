@@ -1,0 +1,481 @@
+# Demo_PublicAnnouncement_Process (source: decoded EventFlow; bool flag case 0 = ON, case 1 = OFF; #N = event index)
+== ENTRY Root
+  #205 CALL Demo_PublicAnnouncement_Process:Process_Anytime
+  #206 IF EventFlagSystemBool {"AccessKey": "cPlayer:PAnnouceProcessDoneToday"}
+    case ON:
+      #224 IF EventFlagSystemBool {"AccessKey": "cLand:PAnnounceToday"}
+        case ON:
+          #202 IF IsSharePlay {"TargetMode": 0}
+            case 1:
+              #203 CALL Demo_PublicAnnouncement_Process:Process_Only_PAnnounce
+        case OFF:
+          -> (#203)
+    case OFF:
+      #207 CALL Demo_PublicAnnouncement_Process:Process_Daily
+      #208 EventFlagSystemOn {"AccessKey": "cPlayer:PAnnouceProcessDoneToday"}
+      -> (#224)
+== ENTRY EnableTailorBuild
+  #0 IF EventFlagSystemInt {"AccessKey": "cLand:CountTailorBuild", "FlagCheckType": 3, "Border": 3}
+    case 0:
+      #112 IF EventFlagSystemBool {"AccessKey": "cPlayer:MakeVillagePlayerFlag"}
+        case ON:
+          #113 IF EventFlagSystemBool {"AccessKey": "cPlayer:KinuyoTalkBoforeFlag"}
+            case ON:
+              #1 EventFlagSystemOn {"AccessKey": "cLand:EnableTailorBuild"}
+== ENTRY HgsFriendship
+  #2 IF EventFlagSystemBool {"AccessKey": "cPlayer:HgsAllowAddFriendship"}
+    case ON:
+      #3 EventFlagSystemAdd {"AccessKey": "cPlayer:HgsCloseness", "AddNum": 1}
+      #4 EventFlagSystemOff {"AccessKey": "cPlayer:HgsAllowAddFriendship"}
+== ENTRY Enable_BuildOfficeIntroduction
+  #9 IF EventFlagSystemBool {"AccessKey": "cLand:RcmImmQuestComplete"}
+    case ON:
+      #10 IF NpcHouseNum {"NpcHouseType": "cConstructed", "Num": 5}
+        case 0:
+          #76 IF MuseumLevel {}
+            case 0:
+              #11 EventFlagSystemOn {"AccessKey": "cLand:RcoNoticeBuildInfomationOffice"}
+            case 1:
+              -> (#11)
+            case 2:
+              -> (#11)
+== ENTRY RcoMachineDailyLoginChk
+  #155 IF PlayerPastDaysFromLastPlay {"Border": 2}
+    case 0:
+      #156 EventFlagSystemSet {"AccessKey": "cPlayer:RcoMachineDailyLoginDays", "SetNum": 0}
+      #7 EventFlagSystemOff {"AccessKey": "cPlayer:RcoMachineDailyLoginCheck"}
+    case 1:
+      #5 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcoMachineDailyLoginCheck"}
+        case ON:
+          #6 EventFlagSystemAdd {"AddNum": 1, "AccessKey": "cPlayer:RcoMachineDailyLoginDays"}
+          -> (#7)
+        case OFF:
+          #8 EventFlagSystemSet {"AccessKey": "cPlayer:RcoMachineDailyLoginDays", "SetNum": 0}
+== ENTRY OwsChkMonthlyFlag
+  #12 IF EnvConstellation {"ConstellationCheckType": "cGrowUpTime"}
+    case 0:
+      #13 IF EventFlagSystemInt {"AccessKey": "cPlayer:OwsThisZodiac", "Border": 1, "FlagCheckType": 1}
+        case 0:
+          #14 EventFlagSystemOff {"AccessKey": "cPlayer:OwsPresentThisZodiacRecipe"}
+          #15 EventFlagSystemSet {"AccessKey": "cPlayer:OwsThisZodiac", "SetNum": 1}
+    case 1:
+      #16 IF EventFlagSystemInt {"AccessKey": "cPlayer:OwsThisZodiac", "FlagCheckType": 1, "Border": 2}
+        case 0:
+          #17 EventFlagSystemOff {"AccessKey": "cPlayer:OwsPresentThisZodiacRecipe"}
+          #18 EventFlagSystemSet {"AccessKey": "cPlayer:OwsThisZodiac", "SetNum": 2}
+    case 2:
+      #19 IF EventFlagSystemInt {"AccessKey": "cPlayer:OwsThisZodiac", "FlagCheckType": 1, "Border": 3}
+        case 0:
+          #20 EventFlagSystemOff {"AccessKey": "cPlayer:OwsPresentThisZodiacRecipe"}
+          #21 EventFlagSystemSet {"AccessKey": "cPlayer:OwsThisZodiac", "SetNum": 3}
+    case 3:
+      #22 IF EventFlagSystemInt {"AccessKey": "cPlayer:OwsThisZodiac", "FlagCheckType": 1, "Border": 4}
+        case 0:
+          #23 EventFlagSystemOff {"AccessKey": "cPlayer:OwsPresentThisZodiacRecipe"}
+          #24 EventFlagSystemSet {"AccessKey": "cPlayer:OwsThisZodiac", "SetNum": 4}
+    case 4:
+      #25 IF EventFlagSystemInt {"AccessKey": "cPlayer:OwsThisZodiac", "FlagCheckType": 1, "Border": 5}
+        case 0:
+          #26 EventFlagSystemOff {"AccessKey": "cPlayer:OwsPresentThisZodiacRecipe"}
+          #27 EventFlagSystemSet {"AccessKey": "cPlayer:OwsThisZodiac", "SetNum": 5}
+    case 5:
+      #28 IF EventFlagSystemInt {"AccessKey": "cPlayer:OwsThisZodiac", "FlagCheckType": 1, "Border": 6}
+        case 0:
+          #29 EventFlagSystemOff {"AccessKey": "cPlayer:OwsPresentThisZodiacRecipe"}
+          #30 EventFlagSystemSet {"AccessKey": "cPlayer:OwsThisZodiac", "SetNum": 6}
+    case 6:
+      #31 IF EventFlagSystemInt {"AccessKey": "cPlayer:OwsThisZodiac", "FlagCheckType": 1, "Border": 7}
+        case 0:
+          #32 EventFlagSystemOff {"AccessKey": "cPlayer:OwsPresentThisZodiacRecipe"}
+          #33 EventFlagSystemSet {"AccessKey": "cPlayer:OwsThisZodiac", "SetNum": 7}
+    case 7:
+      #34 IF EventFlagSystemInt {"AccessKey": "cPlayer:OwsThisZodiac", "FlagCheckType": 1, "Border": 8}
+        case 0:
+          #35 EventFlagSystemOff {"AccessKey": "cPlayer:OwsPresentThisZodiacRecipe"}
+          #36 EventFlagSystemSet {"AccessKey": "cPlayer:OwsThisZodiac", "SetNum": 8}
+    case 8:
+      #37 IF EventFlagSystemInt {"AccessKey": "cPlayer:OwsThisZodiac", "FlagCheckType": 1, "Border": 9}
+        case 0:
+          #38 EventFlagSystemOff {"AccessKey": "cPlayer:OwsPresentThisZodiacRecipe"}
+          #39 EventFlagSystemSet {"AccessKey": "cPlayer:OwsThisZodiac", "SetNum": 9}
+    case 9:
+      #40 IF EventFlagSystemInt {"AccessKey": "cPlayer:OwsThisZodiac", "FlagCheckType": 1, "Border": 10}
+        case 0:
+          #41 EventFlagSystemOff {"AccessKey": "cPlayer:OwsPresentThisZodiacRecipe"}
+          #42 EventFlagSystemSet {"AccessKey": "cPlayer:OwsThisZodiac", "SetNum": 10}
+    case 10:
+      #43 IF EventFlagSystemInt {"AccessKey": "cPlayer:OwsThisZodiac", "FlagCheckType": 1, "Border": 11}
+        case 0:
+          #44 EventFlagSystemOff {"AccessKey": "cPlayer:OwsPresentThisZodiacRecipe"}
+          #45 EventFlagSystemSet {"AccessKey": "cPlayer:OwsThisZodiac", "SetNum": 11}
+    case 11:
+      #46 IF EventFlagSystemInt {"AccessKey": "cPlayer:OwsThisZodiac", "FlagCheckType": 1, "Border": 12}
+        case 0:
+          #47 EventFlagSystemOff {"AccessKey": "cPlayer:OwsPresentThisZodiacRecipe"}
+          #48 EventFlagSystemSet {"AccessKey": "cPlayer:OwsThisZodiac", "SetNum": 12}
+== ENTRY ImmQFtrChk
+  #137 IF EventFlagSystemBool {"AccessKey": "cLand:RcmImmQuestRunning"}
+    case ON:
+      #64 CALL Demo_PublicAnnouncement_Process:ImmQFtrChkA
+      #65 CALL Demo_PublicAnnouncement_Process:ImmQFtrChkB
+      #66 CALL Demo_PublicAnnouncement_Process:ImmQFtrChkC
+      #67 CALL Demo_PublicAnnouncement_Process:ImmQEndChk
+    case OFF:
+      -> (#67)
+== ENTRY ImmQFtrChkA
+  #129 IF EventFlagSystemBool {"AccessKey": "cLand:ImmQ_A_Complete"}
+    case OFF:
+      #52 IF IsSettlerQuestOutsideComplete {"SettlerType": 0, "OutsideCheckType": 3}
+        case 0:
+          #49 IF EventFlagSystemBool {"AccessKey": "cLand:ImmQ_A_Interior1Donate"}
+            case ON:
+              #50 IF EventFlagSystemBool {"AccessKey": "cLand:ImmQ_A_Interior2Donate"}
+                case ON:
+                  #51 IF EventFlagSystemBool {"AccessKey": "cLand:ImmQ_A_Interior3Donate"}
+                    case ON:
+                      #149 IF EventFlagSystemBool {"AccessKey": "cLand:TodayImmQNotClear"}
+                        case OFF:
+                          #61 CompleteSettlerQuestSubject {"SettlerType": 0}
+                          #114 DecideSettlerNpc {"SettlerType": 0}
+== ENTRY ImmQFtrChkB
+  #130 IF EventFlagSystemBool {"AccessKey": "cLand:ImmQ_B_Complete"}
+    case OFF:
+      #56 IF IsSettlerQuestOutsideComplete {"OutsideCheckType": 3, "SettlerType": 1}
+        case 0:
+          #53 IF EventFlagSystemBool {"AccessKey": "cLand:ImmQ_B_Interior1Donate"}
+            case ON:
+              #54 IF EventFlagSystemBool {"AccessKey": "cLand:ImmQ_B_Interior2Donate"}
+                case ON:
+                  #55 IF EventFlagSystemBool {"AccessKey": "cLand:ImmQ_B_Interior3Donate"}
+                    case ON:
+                      #148 IF EventFlagSystemBool {"AccessKey": "cLand:TodayImmQNotClear"}
+                        case OFF:
+                          #62 CompleteSettlerQuestSubject {"SettlerType": 1}
+                          #115 DecideSettlerNpc {"SettlerType": 1}
+== ENTRY ImmQFtrChkC
+  #131 IF EventFlagSystemBool {"AccessKey": "cLand:ImmQ_C_Complete"}
+    case OFF:
+      #60 IF IsSettlerQuestOutsideComplete {"OutsideCheckType": 3, "SettlerType": 2}
+        case 0:
+          #57 IF EventFlagSystemBool {"AccessKey": "cLand:ImmQ_C_Interior1Donate"}
+            case ON:
+              #58 IF EventFlagSystemBool {"AccessKey": "cLand:ImmQ_C_Interior2Donate"}
+                case ON:
+                  #59 IF EventFlagSystemBool {"AccessKey": "cLand:ImmQ_C_Interior3Donate"}
+                    case ON:
+                      #147 IF EventFlagSystemBool {"AccessKey": "cLand:TodayImmQNotClear"}
+                        case OFF:
+                          #63 CompleteSettlerQuestSubject {"SettlerType": 2}
+                          #116 DecideSettlerNpc {"SettlerType": 2}
+== ENTRY ImmQEndChk
+  #68 IF EventFlagSystemBool {"AccessKey": "cLand:ImmQ_A_Complete"}
+    case ON:
+      #69 IF EventFlagSystemBool {"AccessKey": "cLand:ImmQ_B_Complete"}
+        case ON:
+          #70 IF EventFlagSystemBool {"AccessKey": "cLand:ImmQ_C_Complete"}
+            case ON:
+              #71 EventFlagSystemOn {"AccessKey": "cLand:RcmImmQuestComplete"}
+              #72 EventFlagSystemOff {"AccessKey": "cLand:RcmImmQuestRunning"}
+              #145 IF EventFlagSystemBool {"AccessKey": "cLand:TodayImmQNotClear"}
+                case OFF:
+                  #146 EventFlagSystemOn {"AccessKey": "cLand:ImmQClearNextDay"}
+                  #92 IF EventFlagSystemBool {"AccessKey": "cPlayer:ImmQRunningForPlayer"}
+                    case ON:
+                      #73 IF EventFlagSystemBool {"AccessKey": "cPlayer:ImmQTalkAboutPrize"}
+                        case OFF:
+                          #74 EventFlagSystemOn {"AccessKey": "cPlayer:RcoStayMyHouseImmQClear"}
+            case OFF:
+              #144 EventFlagSystemOn {"AccessKey": "cLand:TodayImmQNotClear"}
+        case OFF:
+          -> (#144)
+    case OFF:
+      -> (#144)
+== ENTRY BGMChangeCheck
+  #90 IF EventFlagSystemBool {"AccessKey": "cLand:BuiltTownOffice"}
+    case ON:
+      #89 EventFlagSystemOn {"AccessKey": "cLand:SzaTaled1stTimeAnyPlayer"}
+      #91 EventFlagSystemSet {"AccessKey": "cLand:OpeningSeqBGMChangeCounter", "SetNum": 99}
+    case OFF:
+      #78 IF EventFlagSystemInt {"AccessKey": "cLand:OpeningSeqBGMChangeCounter", "Border": 8, "FlagCheckType": 5}
+        case 0:
+          #77 IF PlayerHouseLevel {}
+            case 2:
+              #79 EventFlagSystemSet {"AccessKey": "cLand:OpeningSeqBGMChangeCounter", "SetNum": 9}
+            case 3:
+              -> (#79)
+            case 4:
+              -> (#79)
+            case 5:
+              -> (#79)
+            case 6:
+              -> (#79)
+            case 7:
+              -> (#79)
+            case 8:
+              -> (#79)
+        case 1:
+          #82 IF NpcHouseNum {"NpcHouseType": "cConstructed", "Num": 3}
+            case 0:
+              #83 IF NpcHouseNum {"NpcHouseType": "cConstructed", "Num": 4}
+                case 0:
+                  #84 IF NpcHouseNum {"NpcHouseType": "cConstructed", "Num": 5}
+                    case 0:
+                      #88 IF EventFlagSystemInt {"AccessKey": "cLand:OpeningSeqBGMChangeCounter", "FlagCheckType": 5, "Border": 14}
+                        case 0:
+                          #87 EventFlagSystemSet {"AccessKey": "cLand:OpeningSeqBGMChangeCounter", "SetNum": 14}
+                    case 1:
+                      #86 EventFlagSystemSet {"AccessKey": "cLand:OpeningSeqBGMChangeCounter", "SetNum": 13}
+                case 1:
+                  #85 EventFlagSystemSet {"AccessKey": "cLand:OpeningSeqBGMChangeCounter", "SetNum": 12}
+            case 1:
+              #80 IF ShopLevel {}
+                case 1:
+                  #81 EventFlagSystemSet {"AccessKey": "cLand:OpeningSeqBGMChangeCounter", "SetNum": 11}
+                case 2:
+                  -> (#81)
+== ENTRY MyHomeChk
+  #93 IF PlayerHouseLevel {}
+    case 2:
+      #94 EventFlagSystemOn {"AccessKey": "cPlayer:BuiltMyHome"}
+    case 3:
+      -> (#94)
+    case 4:
+      -> (#94)
+    case 5:
+      -> (#94)
+    case 6:
+      -> (#94)
+    case 7:
+      -> (#94)
+    case 8:
+      -> (#94)
+== ENTRY HouseFacilityMoveReset
+  #96 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcoMoveHousingSetSomeBuild"}
+    case ON:
+      #117 EventFlagSystemOff {"AccessKey": "cPlayer:RcoMoveHouseReserved"}
+      #95 EventFlagSystemOff {"AccessKey": "cPlayer:RcoMoveSomeBuiding"}
+      #97 EventFlagSystemOff {"AccessKey": "cPlayer:RcoMoveHousingSetSomeBuild"}
+== ENTRY CheckPhoneCallSharePlay
+  #98 IF PlayerVillagerCount {"Count": 2}
+    case 0:
+      #99 IF EventFlagSystemBool {"AccessKey": "cPlayer:MainmenuCall"}
+        case OFF:
+          #102 EventFlagSystemOn {"AccessKey": "cPlayer:StandByPhoneCallSharePlay"}
+          #103 EventFlagSystemOn {"AccessKey": "cPlayer:StandByGameStartPhoneCall"}
+== ENTRY CheckPhoneCallPrintService
+  #100 IF EventFlagSystemBool {"AccessKey": "cPlayer:StandByPhoneCallPrintService"}
+    case ON:
+      #101 EventFlagSystemOn {"AccessKey": "cPlayer:StandByGameStartPhoneCall"}
+== ENTRY ChkStartGamePhoneCall
+  #158 CALL Demo_PublicAnnouncement_Process:CheckPhoneCallIslandCreater
+  #104 CALL Demo_PublicAnnouncement_Process:CheckPhoneCallSharePlay
+  #105 CALL Demo_PublicAnnouncement_Process:CheckPhoneCallPrintService
+  #106 CALL Demo_PublicAnnouncement_Process:CheckPhoneCallPurchaseBox
+== ENTRY CheckPhoneCallPurchaseBox
+  #107 IF EventFlagSystemBool {"AccessKey": "cPlayer:StandByPhoneCallPurchaseBox"}
+    case ON:
+      #108 EventFlagSystemOn {"AccessKey": "cPlayer:StandByGameStartPhoneCall"}
+== ENTRY BocKabuBuyCount
+  #109 IF EventFlagSystemBool {"AccessKey": "cPlayer:BocAllowAddBuyCount"}
+    case ON:
+      #110 EventFlagSystemAdd {"AddNum": 1, "AccessKey": "cPlayer:BocBuyCount"}
+      #111 EventFlagSystemOff {"AccessKey": "cPlayer:BocAllowAddBuyCount"}
+== ENTRY IslandEvaluationUpdateChk
+  #122 IF EventFlagSystemBool {"AccessKey": "cLand:IslandEvaluationUnlock"}
+    case ON:
+      #119 IF EventFlagSystemBool {"AccessKey": "cLand:SzaIslandEvaluationTodayRankUpdate"}
+        case OFF:
+          #121 CALL System_IslandEvaluationCheck:ChkEvaluationImprovement
+          #120 EventFlagSystemOn {"AccessKey": "cLand:SzaIslandEvaluationTodayRankUpdate"}
+== ENTRY ShopGrowUpCheck
+  #123 IF ShopLevel {}
+    case 2:
+      #124 EventFlagSystemOn {"AccessKey": "cLand:Market2Built"}
+== ENTRY MuseumGrouUpChk
+  #125 IF EventFlagSystemBool {"AccessKey": "cLand:MuseumConstructionToday"}
+    case ON:
+      #128 EventFlagSystemOn {"AccessKey": "cLand:MarketSellRecipeScoopStick"}
+    case OFF:
+      #127 IF MuseumLevel {}
+        case 1:
+          -> (#128)
+        case 2:
+          -> (#128)
+== ENTRY ChkGoldenToolRecipe_GoldenNet
+  #132 IF EventFlagSystemBool {"AccessKey": "cPlayer:GoldenNetRecipeSent"}
+    case OFF:
+      #136 IF EventFlagSystemBool {"AccessKey": "cPlayer:CompleteInsects"}
+        case ON:
+          #135 NpcSetRewardRecipe {"ItemUniqueId": 8179, "DIYNpcItem": false}
+          #133 SystemMailSend {"TagType": "cNone", "ToSharePlayer": false, "FromType": "cFarwayMuseum", "FileIndex": "MAIL_SP_FarawayMuseum", "LabelIndex": 1, "Route": "cFastToday", "Present": "cReward"}
+          #134 EventFlagSystemOn {"AccessKey": "cPlayer:GoldenNetRecipeSent"}
+== ENTRY SeasonMaterialHintReset
+  #178 IF EnvWeatherArea {}
+    case 0:
+      #177 IF EnvMonth {}
+        case 0:
+          #195 CALL Demo_PublicAnnouncement_Process:ResetFlag_Winter
+        case 1:
+          #236 CALL Demo_PublicAnnouncement_Process:Flag_Ornaments
+          -> (#195)
+        case 2:
+          #192 CALL Demo_PublicAnnouncement_Process:ResetFlag_Spring
+          #237 CALL Demo_PublicAnnouncement_Process:Flag_Ornaments
+        case 3:
+          -> (#192)
+        case 4:
+          -> (#192)
+        case 5:
+          #193 CALL Demo_PublicAnnouncement_Process:ResetFlag_Summer
+          -> (#237)
+        case 6:
+          -> (#193)
+        case 7:
+          -> (#193)
+        case 8:
+          #194 CALL Demo_PublicAnnouncement_Process:ResetFlag_Autumn
+          -> (#237)
+        case 9:
+          -> (#194)
+        case 10:
+          -> (#194)
+        case 11:
+          #196 CALL Demo_PublicAnnouncement_Process:ResetFlag_Winter
+    case 1:
+      #179 IF EnvMonth {}
+        case 0:
+          #199 CALL Demo_PublicAnnouncement_Process:ResetFlag_Summer
+        case 1:
+          #239 CALL Demo_PublicAnnouncement_Process:Flag_Ornaments
+          -> (#199)
+        case 2:
+          #200 CALL Demo_PublicAnnouncement_Process:ResetFlag_Autumn
+          #238 CALL Demo_PublicAnnouncement_Process:Flag_Ornaments
+        case 3:
+          -> (#200)
+        case 4:
+          -> (#200)
+        case 5:
+          #201 CALL Demo_PublicAnnouncement_Process:ResetFlag_Winter
+          -> (#238)
+        case 6:
+          -> (#201)
+        case 7:
+          -> (#201)
+        case 8:
+          #197 CALL Demo_PublicAnnouncement_Process:ResetFlag_Spring
+          -> (#238)
+        case 9:
+          -> (#197)
+        case 10:
+          -> (#197)
+        case 11:
+          #198 CALL Demo_PublicAnnouncement_Process:ResetFlag_Summer
+== ENTRY Flag_Spring
+  #142 EventFlagSystemOff {"AccessKey": "cPlayer:PAnnounce_SpringSakura"}
+== ENTRY Flag_Summer
+  #138 EventFlagSystemOff {"AccessKey": "cPlayer:PAnnounce_SummerShell"}
+== ENTRY Flag_Autumn
+  #143 EventFlagSystemOff {"AccessKey": "cPlayer:PAnnounce_AutumnMushroom"}
+  #141 EventFlagSystemOff {"AccessKey": "cPlayer:PAnnounce_AutumnRedLeaf"}
+== ENTRY Flag_Winter
+  #139 EventFlagSystemOff {"AccessKey": "cPlayer:PAnnounce_WinterSnowFlake"}
+  #140 EventFlagSystemOff {"AccessKey": "cPlayer:PAnnounce_WinterSnowball"}
+== ENTRY RemakeUnlock
+  #151 IF EventFlagSystemBool {"AccessKey": "cLand:ImmQClearNextDay"}
+    case ON:
+      #154 IF EventFlagSystemBool {"AccessKey": "cPlayer:MainmenuRecipe"}
+        case ON:
+          #152 IF EventFlagSystemBool {"AccessKey": "cPlayer:EnableDiyRemake"}
+            case OFF:
+              #153 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcoHeardInviteRemakeWS"}
+                case OFF:
+                  #150 EventFlagSystemOn {"AccessKey": "cPlayer:RcoTalkAboutRemakeTrial"}
+== ENTRY CheckPhoneCallIslandCreater
+  #159 IF EventFlagSystemBool {"AccessKey": "cLand:TkkFirstLive"}
+    case ON:
+      #157 IF EventFlagSystemBool {"AccessKey": "cPlayer:MainmenuConstructLicense"}
+        case OFF:
+          #169 IF EventBranch {"CheckNowTime": false, "AddDay": 0}
+            case 0:
+              #160 IF EventFlagSystemBool {"AccessKey": "cPlayer:StandByRcoVisitMyHomeAfterTkkFirstLive"}
+                case ON:
+                  #161 IF PlayerHouseLevel {}
+                    case 0:
+                      #162 EventFlagSystemOff {"AccessKey": "cPlayer:StandByRcoVisitMyHomeAfterTkkFirstLive"}
+                      #163 EventFlagSystemOn {"AccessKey": "cPlayer:StandByPhoneCallIslandCreater"}
+                      #164 EventFlagSystemOn {"AccessKey": "cPlayer:StandByGameStartPhoneCall"}
+                      #168 SelectRewardItemDirect {"ItemUniqueId": 4318, "SetNum": 1, "ItemRemakeDecideType": "cVillageRemakePattern", "RemakePatternIndex": 0}
+                      #167 SystemMailSend {"TagType": "cNone", "ToSharePlayer": false, "LabelIndex": 4, "FileIndex": "MAIL_SNpc_rco", "FromType": "cRco", "Present": "cReward", "Route": "cFastToday"}
+                case OFF:
+                  #165 EventFlagSystemOn {"AccessKey": "cPlayer:StandByPhoneCallIslandCreater"}
+                  #166 EventFlagSystemOn {"AccessKey": "cPlayer:StandByGameStartPhoneCall"}
+            case 1:
+              -> (#160)
+            case 2:
+              -> (#160)
+            case 3:
+              #170 EventFlagSystemOff {"AccessKey": "cPlayer:StandByPhoneCallIslandCreater"}
+              #171 EventFlagSystemOff {"AccessKey": "cPlayer:StandByGameStartPhoneCall"}
+== ENTRY ChkGoldenToolRecipe_GoldenRod
+  #172 IF EventFlagSystemBool {"AccessKey": "cPlayer:GoldenRodRecipeSent"}
+    case OFF:
+      #176 IF EventFlagSystemBool {"AccessKey": "cPlayer:CompleteFish"}
+        case ON:
+          #175 NpcSetRewardRecipe {"ItemUniqueId": 8660, "DIYNpcItem": false}
+          #173 SystemMailSend {"TagType": "cNone", "ToSharePlayer": false, "FromType": "cFarwayMuseum", "FileIndex": "MAIL_SP_FarawayMuseum", "Route": "cFastToday", "Present": "cReward", "LabelIndex": 2}
+          #174 EventFlagSystemOn {"AccessKey": "cPlayer:GoldenRodRecipeSent"}
+== ENTRY ResetFlag_Spring
+  #183 CALL Demo_PublicAnnouncement_Process:Flag_Summer
+  #186 CALL Demo_PublicAnnouncement_Process:Flag_Autumn
+  #189 CALL Demo_PublicAnnouncement_Process:Flag_Winter
+  #229 CALL Demo_PublicAnnouncement_Process:Flag_Nuts
+== ENTRY ResetFlag_Summer
+  #180 CALL Demo_PublicAnnouncement_Process:Flag_Spring
+  #187 CALL Demo_PublicAnnouncement_Process:Flag_Autumn
+  #190 CALL Demo_PublicAnnouncement_Process:Flag_Winter
+  #228 CALL Demo_PublicAnnouncement_Process:Flag_Nuts
+  #232 CALL Demo_PublicAnnouncement_Process:Flag_SpringBamboo
+== ENTRY ResetFlag_Autumn
+  #181 CALL Demo_PublicAnnouncement_Process:Flag_Spring
+  #184 CALL Demo_PublicAnnouncement_Process:Flag_Summer
+  #191 CALL Demo_PublicAnnouncement_Process:Flag_Winter
+  #233 CALL Demo_PublicAnnouncement_Process:Flag_SpringBamboo
+== ENTRY ResetFlag_Winter
+  #182 CALL Demo_PublicAnnouncement_Process:Flag_Spring
+  #185 CALL Demo_PublicAnnouncement_Process:Flag_Summer
+  #188 CALL Demo_PublicAnnouncement_Process:Flag_Autumn
+  #227 CALL Demo_PublicAnnouncement_Process:Flag_Nuts
+  #234 CALL Demo_PublicAnnouncement_Process:Flag_SpringBamboo
+== ENTRY Process_Only_PAnnounce
+  #204 CALL Demo_PublicAnnouncement_Process:SeasonMaterialHintReset
+  #209 CALL Demo_PublicAnnouncement_Process:ChkStartGamePhoneCall
+  #210 CALL Demo_PublicAnnouncement_Process:BGMChangeCheck
+  #75 CALL Demo_PublicAnnouncement_Process:ImmQFtrChk
+  #213 CALL Demo_PublicAnnouncement_Process:Enable_BuildOfficeIntroduction
+  #219 CALL Demo_PublicAnnouncement_Process:ShopGrowUpCheck
+  #118 CALL Demo_PublicAnnouncement_Process:IslandEvaluationUpdateChk
+  #126 CALL Demo_PublicAnnouncement_Process:MuseumGrouUpChk
+== ENTRY Process_Anytime
+  #216 CALL Demo_PublicAnnouncement_Process:MyHomeChk
+  #217 CALL Demo_PublicAnnouncement_Process:ChkGoldenToolRecipe_GoldenNet
+  #218 CALL Demo_PublicAnnouncement_Process:ChkGoldenToolRecipe_GoldenRod
+  #222 CALL Demo_PublicAnnouncement_Process:RemakeUnlock
+  #223 CALL Demo_PublicAnnouncement_Process:EnableTailorBuild
+== ENTRY Process_Daily
+  #212 CALL Demo_PublicAnnouncement_Process:HgsFriendship
+  #211 CALL Demo_PublicAnnouncement_Process:BocKabuBuyCount
+  #214 CALL Demo_PublicAnnouncement_Process:RcoMachineDailyLoginChk
+  #215 CALL Demo_PublicAnnouncement_Process:OwsChkMonthlyFlag
+  #220 CALL Demo_PublicAnnouncement_Process:HouseFacilityMoveReset
+  #221 CALL System_AirlineNoveltySendCheck:Root
+== ENTRY Flag_Nuts
+  #225 IF EnvPublicAnnouncement {"EnvAnnounceQueryType": "cEnvAnnounceQueryType_Acorn"}
+    case 1:
+      #226 EventFlagSystemOff {"AccessKey": "cPlayer:PAnnounce_AutumnNuts"}
+== ENTRY Flag_SpringBamboo
+  #230 IF EnvPublicAnnouncement {"EnvAnnounceQueryType": "cEnvAnnounceQueryType_BambooSpring"}
+    case 1:
+      #231 EventFlagSystemOff {"AccessKey": "cPlayer:PAnnounce_SpringBamboo"}
+== ENTRY Flag_Ornaments
+  #235 EventFlagSystemOff {"AccessKey": "cPlayer:PAnnounce_WinterOrnament"}

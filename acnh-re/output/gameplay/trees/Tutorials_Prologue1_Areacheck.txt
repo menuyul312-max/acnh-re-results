@@ -1,0 +1,497 @@
+# Tutorials_Prologue1_Areacheck (source: decoded EventFlow; bool flag case 0 = ON, case 1 = OFF; #N = event index)
+== ENTRY Root
+  #46 MSG Tutorials/Tutorials_Prologue1_Airport:007
+  #125 IF NxRegionCode {}
+    case 0:
+      #0 IF CurrentRegionLanguage {"SettingType": "cCurrentMachine"}
+        case 0:
+          #25 CALL Tutorials_Prologue1_Areacheck:Area_Japan
+        case 1:
+          #26 CALL Tutorials_Prologue1_Areacheck:Area_NorthAmerica
+        case 2:
+          #27 CALL Tutorials_Prologue1_Areacheck:Area_EUen
+        case 3:
+          -> (#27)
+        case 4:
+          -> (#27)
+        case 5:
+          -> (#26)
+        case 6:
+          -> (#27)
+        case 7:
+          -> (#26)
+        case 8:
+          -> (#27)
+        case 9:
+          -> (#27)
+        case 10:
+          -> (#27)
+        case 11:
+          #39 CALL Tutorials_Prologue1_Areacheck:Area_Japan
+        case 12:
+          -> (#39)
+        case 13:
+          -> (#39)
+    case 1:
+      -> (#0)
+    case 2:
+      -> (#0)
+    case 3:
+      #126 CALL Tutorials_Prologue1_Areacheck:Area_Oceania
+    case 4:
+      -> (#0)
+    case 5:
+      -> (#0)
+== ENTRY Prologue1_SelSouth
+  #4 MSG Tutorials/Tutorials_Prologue1_AreaSelect:003
+  #5 IF GeneralTalkChoice4 {}
+    case 0:
+      #84 MSG Tutorials/Tutorials_Prologue1_AreaSelect:101_05
+      #83 MSG Tutorials/Tutorials_Prologue1_AreaSelect:115
+      #87 IF GeneralTalkChoice3 {}
+        case 0:
+          #89 EnvWeatherArea {"WeatherAreaLand": "cWeatherArea_South"}
+          #90 MSG Tutorials/Tutorials_Prologue1_AreaSelect:202
+        case 1:
+          #88 EnvWeatherArea {"WeatherAreaLand": "cWeatherArea_North"}
+          #91 MSG Tutorials/Tutorials_Prologue1_AreaSelect:203
+        case 2:
+          #92 MSG Tutorials/Tutorials_Prologue1_AreaSelect:301
+          #93 CALL Tutorials_Prologue1_Areacheck:AreaSel_ExplanationSouth
+    case 1:
+      #85 MSG Tutorials/Tutorials_Prologue1_AreaSelect:101_06
+      #94 MSG Tutorials/Tutorials_Prologue1_AreaSelect:116
+      #108 CALL Tutorials_Prologue1_Areacheck:AreaSel_ChoiseSouth1st
+    case 2:
+      #86 MSG Tutorials/Tutorials_Prologue1_AreaSelect:101_07
+      #95 MSG Tutorials/Tutorials_Prologue1_AreaSelect:117
+      #107 CALL Tutorials_Prologue1_Areacheck:AreaSel_ChoiseNorth
+    case 3:
+      #6 MSG Tutorials/Tutorials_Prologue1_AreaSelect:004
+      #7 IF GeneralTalkChoice4 {}
+        case 0:
+          #76 MSG Tutorials/Tutorials_Prologue1_AreaSelect:101_02
+          #77 MSG Tutorials/Tutorials_Prologue1_AreaSelect:112
+          #106 CALL Tutorials_Prologue1_Areacheck:AreaSel_ChoiseNorth1st
+        case 1:
+          #78 MSG Tutorials/Tutorials_Prologue1_AreaSelect:101_03
+          #79 MSG Tutorials/Tutorials_Prologue1_AreaSelect:113
+          -> (#106)
+        case 2:
+          #81 MSG Tutorials/Tutorials_Prologue1_AreaSelect:101_04
+          #80 MSG Tutorials/Tutorials_Prologue1_AreaSelect:114
+          -> (#106)
+        case 3:
+          #8 CALL Tutorials_Prologue1_Areacheck:Prologue1_SelSouth
+== ENTRY Prologue1_AreaAsia
+  #76 MSG Tutorials/Tutorials_Prologue1_AreaSelect:101_02
+  #77 MSG Tutorials/Tutorials_Prologue1_AreaSelect:112
+  #106 CALL Tutorials_Prologue1_Areacheck:AreaSel_ChoiseNorth1st
+== ENTRY Prologue1_AreaNorthAmerica
+  #78 MSG Tutorials/Tutorials_Prologue1_AreaSelect:101_03
+  #79 MSG Tutorials/Tutorials_Prologue1_AreaSelect:113
+  #106 CALL Tutorials_Prologue1_Areacheck:AreaSel_ChoiseNorth1st
+== ENTRY Prologue1_AreaEurope
+  #81 MSG Tutorials/Tutorials_Prologue1_AreaSelect:101_04
+  #80 MSG Tutorials/Tutorials_Prologue1_AreaSelect:114
+  #106 CALL Tutorials_Prologue1_Areacheck:AreaSel_ChoiseNorth1st
+== ENTRY Prologue1_SelSouth0
+  #18 MSG Tutorials/Tutorials_Prologue1_AreaSelect:013
+  #19 IF GeneralTalkChoice4 {}
+    case 0:
+      #96 CALL Tutorials_Prologue1_Areacheck:Prologue1_AreaSouthAmerica
+    case 1:
+      #97 CALL Tutorials_Prologue1_Areacheck:Prologue1_AreaOceania
+    case 2:
+      #98 CALL Tutorials_Prologue1_Areacheck:Prologue1_AreaAfrica
+    case 3:
+      #20 MSG Tutorials/Tutorials_Prologue1_AreaSelect:014
+      #21 IF GeneralTalkChoice4 {}
+        case 0:
+          #45 CALL Tutorials_Prologue1_Areacheck:Prologue1_AreaNorthAmerica
+        case 1:
+          #44 CALL Tutorials_Prologue1_Areacheck:Prologue1_AreaAsia
+        case 2:
+          #43 CALL Tutorials_Prologue1_Areacheck:Prologue1_AreaEurope
+        case 3:
+          #22 CALL Tutorials_Prologue1_Areacheck:Prologue1_SelSouth
+== ENTRY Area_Japan
+  #12 MSG Tutorials/Tutorials_Prologue1_AreaSelect:001
+  #1 IF GeneralTalkChoice2 {}
+    case 0:
+      #47 MSG Tutorials/Tutorials_Prologue1_AreaSelect:101_01
+      #48 MSG Tutorials/Tutorials_Prologue1_AreaSelect:111
+      #49 IF GeneralTalkChoice3 {}
+        case 0:
+          #13 EnvWeatherArea {"WeatherAreaLand": "cWeatherArea_North"}
+          #51 MSG Tutorials/Tutorials_Prologue1_AreaSelect:201
+        case 1:
+          #50 EnvWeatherArea {"WeatherAreaLand": "cWeatherArea_South"}
+          #52 MSG Tutorials/Tutorials_Prologue1_AreaSelect:204
+        case 2:
+          #53 MSG Tutorials/Tutorials_Prologue1_AreaSelect:301
+          #60 CALL Tutorials_Prologue1_Areacheck:AreaSel_ExplanationNorth
+    case 1:
+      #2 MSG Tutorials/Tutorials_Prologue1_AreaSelect:002
+      #3 IF GeneralTalkChoice4 {}
+        case 0:
+          #9 CALL Tutorials_Prologue1_Areacheck:Prologue1_AreaAsia
+        case 1:
+          #10 CALL Tutorials_Prologue1_Areacheck:Prologue1_AreaNorthAmerica
+        case 2:
+          #11 CALL Tutorials_Prologue1_Areacheck:Prologue1_AreaEurope
+        case 3:
+          #4 MSG Tutorials/Tutorials_Prologue1_AreaSelect:003
+          #5 IF GeneralTalkChoice4 {}
+            case 0:
+              #84 MSG Tutorials/Tutorials_Prologue1_AreaSelect:101_05
+              #83 MSG Tutorials/Tutorials_Prologue1_AreaSelect:115
+              #87 IF GeneralTalkChoice3 {}
+                case 0:
+                  #89 EnvWeatherArea {"WeatherAreaLand": "cWeatherArea_South"}
+                  #90 MSG Tutorials/Tutorials_Prologue1_AreaSelect:202
+                case 1:
+                  #88 EnvWeatherArea {"WeatherAreaLand": "cWeatherArea_North"}
+                  #91 MSG Tutorials/Tutorials_Prologue1_AreaSelect:203
+                case 2:
+                  #92 MSG Tutorials/Tutorials_Prologue1_AreaSelect:301
+                  #93 CALL Tutorials_Prologue1_Areacheck:AreaSel_ExplanationSouth
+            case 1:
+              #85 MSG Tutorials/Tutorials_Prologue1_AreaSelect:101_06
+              #94 MSG Tutorials/Tutorials_Prologue1_AreaSelect:116
+              #108 CALL Tutorials_Prologue1_Areacheck:AreaSel_ChoiseSouth1st
+            case 2:
+              #86 MSG Tutorials/Tutorials_Prologue1_AreaSelect:101_07
+              #95 MSG Tutorials/Tutorials_Prologue1_AreaSelect:117
+              #107 CALL Tutorials_Prologue1_Areacheck:AreaSel_ChoiseNorth
+            case 3:
+              #6 MSG Tutorials/Tutorials_Prologue1_AreaSelect:004
+              #7 IF GeneralTalkChoice4 {}
+                case 0:
+                  #76 MSG Tutorials/Tutorials_Prologue1_AreaSelect:101_02
+                  #77 MSG Tutorials/Tutorials_Prologue1_AreaSelect:112
+                  #106 CALL Tutorials_Prologue1_Areacheck:AreaSel_ChoiseNorth1st
+                case 1:
+                  #78 MSG Tutorials/Tutorials_Prologue1_AreaSelect:101_03
+                  #79 MSG Tutorials/Tutorials_Prologue1_AreaSelect:113
+                  -> (#106)
+                case 2:
+                  #81 MSG Tutorials/Tutorials_Prologue1_AreaSelect:101_04
+                  #80 MSG Tutorials/Tutorials_Prologue1_AreaSelect:114
+                  -> (#106)
+                case 3:
+                  #8 CALL Tutorials_Prologue1_Areacheck:Prologue1_SelSouth
+== ENTRY Area_NorthAmerica
+  #14 MSG Tutorials/Tutorials_Prologue1_AreaSelect:011
+  #15 IF GeneralTalkChoice2 {}
+    case 0:
+      #121 CALL Tutorials_Prologue1_Areacheck:Prologue1_AreaNorthAmerica
+    case 1:
+      #16 MSG Tutorials/Tutorials_Prologue1_AreaSelect:012
+      #17 IF GeneralTalkChoice3 {}
+        case 0:
+          #23 CALL Tutorials_Prologue1_Areacheck:Prologue1_AreaAsia
+        case 1:
+          #24 CALL Tutorials_Prologue1_Areacheck:Prologue1_AreaEurope
+        case 2:
+          #18 MSG Tutorials/Tutorials_Prologue1_AreaSelect:013
+          #19 IF GeneralTalkChoice4 {}
+            case 0:
+              #96 CALL Tutorials_Prologue1_Areacheck:Prologue1_AreaSouthAmerica
+            case 1:
+              #97 CALL Tutorials_Prologue1_Areacheck:Prologue1_AreaOceania
+            case 2:
+              #98 CALL Tutorials_Prologue1_Areacheck:Prologue1_AreaAfrica
+            case 3:
+              #20 MSG Tutorials/Tutorials_Prologue1_AreaSelect:014
+              #21 IF GeneralTalkChoice4 {}
+                case 0:
+                  #45 CALL Tutorials_Prologue1_Areacheck:Prologue1_AreaNorthAmerica
+                case 1:
+                  #44 CALL Tutorials_Prologue1_Areacheck:Prologue1_AreaAsia
+                case 2:
+                  #43 CALL Tutorials_Prologue1_Areacheck:Prologue1_AreaEurope
+                case 3:
+                  #22 CALL Tutorials_Prologue1_Areacheck:Prologue1_SelSouth
+== ENTRY Prologue1_SelSouth1
+  #32 MSG Tutorials/Tutorials_Prologue1_AreaSelect:023
+  #33 IF GeneralTalkChoice4 {}
+    case 0:
+      #122 CALL Tutorials_Prologue1_Areacheck:Prologue1_AreaSouthAmerica
+    case 1:
+      #123 CALL Tutorials_Prologue1_Areacheck:Prologue1_AreaOceania
+    case 2:
+      #124 CALL Tutorials_Prologue1_Areacheck:Prologue1_AreaAfrica
+    case 3:
+      #34 MSG Tutorials/Tutorials_Prologue1_AreaSelect:024
+      #35 IF GeneralTalkChoice4 {}
+        case 0:
+          #40 CALL Tutorials_Prologue1_Areacheck:Prologue1_AreaEurope
+        case 1:
+          #41 CALL Tutorials_Prologue1_Areacheck:Prologue1_AreaAsia
+        case 2:
+          #42 CALL Tutorials_Prologue1_Areacheck:Prologue1_AreaNorthAmerica
+        case 3:
+          #36 CALL Tutorials_Prologue1_Areacheck:Prologue1_SelSouth1
+== ENTRY Area_EUen
+  #28 MSG Tutorials/Tutorials_Prologue1_AreaSelect:021
+  #29 IF GeneralTalkChoice2 {}
+    case 0:
+      #82 CALL Tutorials_Prologue1_Areacheck:Prologue1_AreaEurope
+    case 1:
+      #30 MSG Tutorials/Tutorials_Prologue1_AreaSelect:022
+      #31 IF GeneralTalkChoice3 {}
+        case 0:
+          #37 CALL Tutorials_Prologue1_Areacheck:Prologue1_AreaAsia
+        case 1:
+          #38 CALL Tutorials_Prologue1_Areacheck:Prologue1_AreaNorthAmerica
+        case 2:
+          #32 MSG Tutorials/Tutorials_Prologue1_AreaSelect:023
+          #33 IF GeneralTalkChoice4 {}
+            case 0:
+              #122 CALL Tutorials_Prologue1_Areacheck:Prologue1_AreaSouthAmerica
+            case 1:
+              #123 CALL Tutorials_Prologue1_Areacheck:Prologue1_AreaOceania
+            case 2:
+              #124 CALL Tutorials_Prologue1_Areacheck:Prologue1_AreaAfrica
+            case 3:
+              #34 MSG Tutorials/Tutorials_Prologue1_AreaSelect:024
+              #35 IF GeneralTalkChoice4 {}
+                case 0:
+                  #40 CALL Tutorials_Prologue1_Areacheck:Prologue1_AreaEurope
+                case 1:
+                  #41 CALL Tutorials_Prologue1_Areacheck:Prologue1_AreaAsia
+                case 2:
+                  #42 CALL Tutorials_Prologue1_Areacheck:Prologue1_AreaNorthAmerica
+                case 3:
+                  #36 CALL Tutorials_Prologue1_Areacheck:Prologue1_SelSouth1
+== ENTRY Prologue1_AreaSouthAmerica
+  #84 MSG Tutorials/Tutorials_Prologue1_AreaSelect:101_05
+  #83 MSG Tutorials/Tutorials_Prologue1_AreaSelect:115
+  #87 IF GeneralTalkChoice3 {}
+    case 0:
+      #89 EnvWeatherArea {"WeatherAreaLand": "cWeatherArea_South"}
+      #90 MSG Tutorials/Tutorials_Prologue1_AreaSelect:202
+    case 1:
+      #88 EnvWeatherArea {"WeatherAreaLand": "cWeatherArea_North"}
+      #91 MSG Tutorials/Tutorials_Prologue1_AreaSelect:203
+    case 2:
+      #92 MSG Tutorials/Tutorials_Prologue1_AreaSelect:301
+      #93 CALL Tutorials_Prologue1_Areacheck:AreaSel_ExplanationSouth
+== ENTRY AreaSel_ExplanationNorth
+  #54 MSG Tutorials/Tutorials_Prologue1_AreaSelect:302
+  #55 IF EnvMonth {}
+    case 0:
+      #59 MSG Tutorials/Tutorials_Prologue1_AreaSelect:304_04
+      #67 MSG Tutorials/Tutorials_Prologue1_AreaSelect:305
+      #75 MSG Tutorials/Tutorials_Prologue1_AreaSelect:314
+      #99 IF GeneralTalkChoice3 {}
+        case 0:
+          #100 EnvWeatherArea {"WeatherAreaLand": "cWeatherArea_North"}
+          #102 MSG Tutorials/Tutorials_Prologue1_AreaSelect:201
+        case 1:
+          #101 EnvWeatherArea {"WeatherAreaLand": "cWeatherArea_South"}
+          #103 MSG Tutorials/Tutorials_Prologue1_AreaSelect:202
+        case 2:
+          #104 MSG Tutorials/Tutorials_Prologue1_AreaSelect:301
+          #105 CALL Tutorials_Prologue1_Areacheck:AreaSel_ExplanationNorth
+    case 1:
+      -> (#59)
+    case 2:
+      #56 MSG Tutorials/Tutorials_Prologue1_AreaSelect:304_01
+      #69 MSG Tutorials/Tutorials_Prologue1_AreaSelect:305
+      #72 MSG Tutorials/Tutorials_Prologue1_AreaSelect:311
+      -> (#99)
+    case 3:
+      -> (#56)
+    case 4:
+      -> (#56)
+    case 5:
+      #57 MSG Tutorials/Tutorials_Prologue1_AreaSelect:304_02
+      #70 MSG Tutorials/Tutorials_Prologue1_AreaSelect:305
+      #73 MSG Tutorials/Tutorials_Prologue1_AreaSelect:312
+      -> (#99)
+    case 6:
+      -> (#57)
+    case 7:
+      -> (#57)
+    case 8:
+      #58 MSG Tutorials/Tutorials_Prologue1_AreaSelect:304_03
+      #71 MSG Tutorials/Tutorials_Prologue1_AreaSelect:305
+      #74 MSG Tutorials/Tutorials_Prologue1_AreaSelect:313
+      -> (#99)
+    case 9:
+      -> (#58)
+    case 10:
+      -> (#58)
+    case 11:
+      #68 CALL Tutorials_Prologue1_Areacheck:AreaSel_ExpN_Winter
+== ENTRY AreaSel_ExplanationSouth
+  #61 MSG Tutorials/Tutorials_Prologue1_AreaSelect:303
+  #62 IF EnvMonth {}
+    case 0:
+      #66 MSG Tutorials/Tutorials_Prologue1_AreaSelect:304_06
+      #119 MSG Tutorials/Tutorials_Prologue1_AreaSelect:316
+      #109 IF GeneralTalkChoice3 {}
+        case 0:
+          #111 EnvWeatherArea {"WeatherAreaLand": "cWeatherArea_South"}
+          #112 MSG Tutorials/Tutorials_Prologue1_AreaSelect:202
+        case 1:
+          #110 EnvWeatherArea {"WeatherAreaLand": "cWeatherArea_North"}
+          #113 MSG Tutorials/Tutorials_Prologue1_AreaSelect:201
+        case 2:
+          #114 MSG Tutorials/Tutorials_Prologue1_AreaSelect:301
+          #115 CALL Tutorials_Prologue1_Areacheck:AreaSel_ExplanationSouth
+    case 1:
+      -> (#66)
+    case 2:
+      #63 MSG Tutorials/Tutorials_Prologue1_AreaSelect:304_07
+      #116 MSG Tutorials/Tutorials_Prologue1_AreaSelect:317
+      -> (#109)
+    case 3:
+      -> (#63)
+    case 4:
+      -> (#63)
+    case 5:
+      #64 MSG Tutorials/Tutorials_Prologue1_AreaSelect:304_08
+      #117 MSG Tutorials/Tutorials_Prologue1_AreaSelect:318
+      -> (#109)
+    case 6:
+      -> (#64)
+    case 7:
+      -> (#64)
+    case 8:
+      #65 MSG Tutorials/Tutorials_Prologue1_AreaSelect:304_05
+      #118 MSG Tutorials/Tutorials_Prologue1_AreaSelect:315
+      -> (#109)
+    case 9:
+      -> (#65)
+    case 10:
+      -> (#65)
+    case 11:
+      #120 CALL Tutorials_Prologue1_Areacheck:AreaSel_ExpS_Winter
+== ENTRY AreaSel_ExpN_Winter
+  #59 MSG Tutorials/Tutorials_Prologue1_AreaSelect:304_04
+  #67 MSG Tutorials/Tutorials_Prologue1_AreaSelect:305
+  #75 MSG Tutorials/Tutorials_Prologue1_AreaSelect:314
+  #99 IF GeneralTalkChoice3 {}
+    case 0:
+      #100 EnvWeatherArea {"WeatherAreaLand": "cWeatherArea_North"}
+      #102 MSG Tutorials/Tutorials_Prologue1_AreaSelect:201
+    case 1:
+      #101 EnvWeatherArea {"WeatherAreaLand": "cWeatherArea_South"}
+      #103 MSG Tutorials/Tutorials_Prologue1_AreaSelect:202
+    case 2:
+      #104 MSG Tutorials/Tutorials_Prologue1_AreaSelect:301
+      #105 CALL Tutorials_Prologue1_Areacheck:AreaSel_ExplanationNorth
+== ENTRY AreaSel_ChoiseSouth1st
+  #87 IF GeneralTalkChoice3 {}
+    case 0:
+      #89 EnvWeatherArea {"WeatherAreaLand": "cWeatherArea_South"}
+      #90 MSG Tutorials/Tutorials_Prologue1_AreaSelect:202
+    case 1:
+      #88 EnvWeatherArea {"WeatherAreaLand": "cWeatherArea_North"}
+      #91 MSG Tutorials/Tutorials_Prologue1_AreaSelect:203
+    case 2:
+      #92 MSG Tutorials/Tutorials_Prologue1_AreaSelect:301
+      #93 CALL Tutorials_Prologue1_Areacheck:AreaSel_ExplanationSouth
+== ENTRY Prologue1_AreaOceania
+  #85 MSG Tutorials/Tutorials_Prologue1_AreaSelect:101_06
+  #94 MSG Tutorials/Tutorials_Prologue1_AreaSelect:116
+  #108 CALL Tutorials_Prologue1_Areacheck:AreaSel_ChoiseSouth1st
+== ENTRY Prologue1_AreaAfrica
+  #86 MSG Tutorials/Tutorials_Prologue1_AreaSelect:101_07
+  #95 MSG Tutorials/Tutorials_Prologue1_AreaSelect:117
+  #107 CALL Tutorials_Prologue1_Areacheck:AreaSel_ChoiseNorth
+== ENTRY AreaSel_ChoiseNorth
+  #99 IF GeneralTalkChoice3 {}
+    case 0:
+      #100 EnvWeatherArea {"WeatherAreaLand": "cWeatherArea_North"}
+      #102 MSG Tutorials/Tutorials_Prologue1_AreaSelect:201
+    case 1:
+      #101 EnvWeatherArea {"WeatherAreaLand": "cWeatherArea_South"}
+      #103 MSG Tutorials/Tutorials_Prologue1_AreaSelect:202
+    case 2:
+      #104 MSG Tutorials/Tutorials_Prologue1_AreaSelect:301
+      #105 CALL Tutorials_Prologue1_Areacheck:AreaSel_ExplanationNorth
+== ENTRY AreaSel_ChoiseNorth1st
+  #49 IF GeneralTalkChoice3 {}
+    case 0:
+      #13 EnvWeatherArea {"WeatherAreaLand": "cWeatherArea_North"}
+      #51 MSG Tutorials/Tutorials_Prologue1_AreaSelect:201
+    case 1:
+      #50 EnvWeatherArea {"WeatherAreaLand": "cWeatherArea_South"}
+      #52 MSG Tutorials/Tutorials_Prologue1_AreaSelect:204
+    case 2:
+      #53 MSG Tutorials/Tutorials_Prologue1_AreaSelect:301
+      #60 CALL Tutorials_Prologue1_Areacheck:AreaSel_ExplanationNorth
+== ENTRY AreaSel_ExpS_Winter
+  #66 MSG Tutorials/Tutorials_Prologue1_AreaSelect:304_06
+  #119 MSG Tutorials/Tutorials_Prologue1_AreaSelect:316
+  #109 IF GeneralTalkChoice3 {}
+    case 0:
+      #111 EnvWeatherArea {"WeatherAreaLand": "cWeatherArea_South"}
+      #112 MSG Tutorials/Tutorials_Prologue1_AreaSelect:202
+    case 1:
+      #110 EnvWeatherArea {"WeatherAreaLand": "cWeatherArea_North"}
+      #113 MSG Tutorials/Tutorials_Prologue1_AreaSelect:201
+    case 2:
+      #114 MSG Tutorials/Tutorials_Prologue1_AreaSelect:301
+      #115 CALL Tutorials_Prologue1_Areacheck:AreaSel_ExplanationSouth
+== ENTRY Area_Oceania
+  #127 MSG Tutorials/Tutorials_Prologue1_AreaSelect:031
+  #128 IF GeneralTalkChoice2 {}
+    case 0:
+      #130 CALL Tutorials_Prologue1_Areacheck:Prologue1_AreaOceania
+    case 1:
+      #129 CALL Tutorials_Prologue1_Areacheck:Areasel_Oceania_Oversea
+== ENTRY Areasel_Oceania_Oversea
+  #2 MSG Tutorials/Tutorials_Prologue1_AreaSelect:002
+  #3 IF GeneralTalkChoice4 {}
+    case 0:
+      #9 CALL Tutorials_Prologue1_Areacheck:Prologue1_AreaAsia
+    case 1:
+      #10 CALL Tutorials_Prologue1_Areacheck:Prologue1_AreaNorthAmerica
+    case 2:
+      #11 CALL Tutorials_Prologue1_Areacheck:Prologue1_AreaEurope
+    case 3:
+      #4 MSG Tutorials/Tutorials_Prologue1_AreaSelect:003
+      #5 IF GeneralTalkChoice4 {}
+        case 0:
+          #84 MSG Tutorials/Tutorials_Prologue1_AreaSelect:101_05
+          #83 MSG Tutorials/Tutorials_Prologue1_AreaSelect:115
+          #87 IF GeneralTalkChoice3 {}
+            case 0:
+              #89 EnvWeatherArea {"WeatherAreaLand": "cWeatherArea_South"}
+              #90 MSG Tutorials/Tutorials_Prologue1_AreaSelect:202
+            case 1:
+              #88 EnvWeatherArea {"WeatherAreaLand": "cWeatherArea_North"}
+              #91 MSG Tutorials/Tutorials_Prologue1_AreaSelect:203
+            case 2:
+              #92 MSG Tutorials/Tutorials_Prologue1_AreaSelect:301
+              #93 CALL Tutorials_Prologue1_Areacheck:AreaSel_ExplanationSouth
+        case 1:
+          #85 MSG Tutorials/Tutorials_Prologue1_AreaSelect:101_06
+          #94 MSG Tutorials/Tutorials_Prologue1_AreaSelect:116
+          #108 CALL Tutorials_Prologue1_Areacheck:AreaSel_ChoiseSouth1st
+        case 2:
+          #86 MSG Tutorials/Tutorials_Prologue1_AreaSelect:101_07
+          #95 MSG Tutorials/Tutorials_Prologue1_AreaSelect:117
+          #107 CALL Tutorials_Prologue1_Areacheck:AreaSel_ChoiseNorth
+        case 3:
+          #6 MSG Tutorials/Tutorials_Prologue1_AreaSelect:004
+          #7 IF GeneralTalkChoice4 {}
+            case 0:
+              #76 MSG Tutorials/Tutorials_Prologue1_AreaSelect:101_02
+              #77 MSG Tutorials/Tutorials_Prologue1_AreaSelect:112
+              #106 CALL Tutorials_Prologue1_Areacheck:AreaSel_ChoiseNorth1st
+            case 1:
+              #78 MSG Tutorials/Tutorials_Prologue1_AreaSelect:101_03
+              #79 MSG Tutorials/Tutorials_Prologue1_AreaSelect:113
+              -> (#106)
+            case 2:
+              #81 MSG Tutorials/Tutorials_Prologue1_AreaSelect:101_04
+              #80 MSG Tutorials/Tutorials_Prologue1_AreaSelect:114
+              -> (#106)
+            case 3:
+              #8 CALL Tutorials_Prologue1_Areacheck:Prologue1_SelSouth

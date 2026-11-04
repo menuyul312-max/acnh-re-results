@@ -1,0 +1,94 @@
+# SNPC_rco_10_Common_UpgradeMyhome (source: decoded EventFlow; bool flag case 0 = ON, case 1 = OFF; #N = event index)
+== ENTRY Root
+  #1 IF PlayerHouseLevel {}
+    case 1:
+      #2 MSG TalkSNpc/rco/SP_rco_00_Common:201
+      #18 CALL SNPC_rco_10_Common_UpgradeMyhome:Rco_Cmn_UpgradeHouseSel
+    case 2:
+      #20 MSG TalkSNpc/rco/SP_rco_00_Common:211
+      -> (#18)
+    case 3:
+      #24 MSG TalkSNpc/rco/SP_rco_00_Common:212
+      -> (#18)
+    case 4:
+      #25 MSG TalkSNpc/rco/SP_rco_00_Common:213
+      -> (#18)
+    case 5:
+      #26 MSG TalkSNpc/rco/SP_rco_00_Common:214
+      -> (#18)
+    case 6:
+      #27 MSG TalkSNpc/rco/SP_rco_00_Common:215
+      -> (#18)
+    case 7:
+      #0 MSG TalkSNpc/rco/SP_rco_00_Common:216
+      -> (#18)
+== ENTRY Rco_Cmn_UpgradeHouseSel
+  #3 IF GeneralTalkChoice2 {}
+    case 0:
+      #19 IF PlayerHouseLevel {}
+        case 1:
+          #5 MSG TalkSNpc/rco/SP_rco_00_Common:202
+          #7 CALL SNPC_rco_02_SelRoofColor:Root
+          #6 MSG TalkSNpc/rco/SP_rco_00_Common:209
+          #31 MSG TalkSNpc/rco/SP_rco_00_Common:209_01
+          #32 MSG TalkSNpc/rco/SP_rco_00_Common:209_02
+          #47 CALL Demo_Common_PhoneCall:SendingDataOneWay
+          #33 MSG TalkSNpc/rco/SP_rco_00_Common:209_03
+          #39 SmartPhone {"ActionType": 1}
+          #34 MSG TalkSNpc/rco/SP_rco_00_Common:209_04
+          #35 EventFlagSystemOn {"AccessKey": "cPlayer:MainmenuRndDailyQuest"}
+          #36 EventFlagSystemOn {"AccessKey": "cPlayer:PlayerSonkatsuQuestEnable"}
+          #38 EventFlagSystemOn {"AccessKey": "cPlayer:Mobile1stBoot_MilageProgram"}
+          #37 CALL SNPC_rco_10_Common_UpgradeMyhome:RcoCmnProcessUpgradeMyhome
+        case 2:
+          #21 MSG TalkSNpc/rco/SP_rco_00_Common:251
+          #22 CALL SNPC_rco_02_SelRoofColor:Root
+          #23 MSG TalkSNpc/rco/SP_rco_00_Common:252
+          #30 CALL SNPC_rco_10_Common_UpgradeMyhome:RcoCmnProcessUpgradeMyhome
+        case 3:
+          #17 MSG TalkSNpc/rco/SP_rco_00_Common:103
+          #29 CALL SNPC_rco_10_Common_UpgradeMyhome:RcoCmnProcessUpgradeMyhome
+        case 4:
+          -> (#21)
+        case 5:
+          -> (#17)
+        case 6:
+          -> (#17)
+        case 7:
+          -> (#17)
+    case 1:
+      #4 MSG TalkSNpc/rco/SP_rco_00_Common:102
+      #49 IF OfficeLevel {}
+        case 2:
+          #48 CALL SNPC_rco_00_Common:Rco_Office_CmnSelAgain
+== ENTRY RcoCmnProcessUpgradeMyhome
+  #8 EventFlagSystemOn {"AccessKey": "cPlayer:RcoOrderedHouseBuilt"}
+  #28 EventFlagSystemOff {"AccessKey": "cPlayer:RcoHeardRemodel1"}
+  #9 IF PlayerHouseLevel {}
+    case 1:
+      #10 EventFlagSystemOn {"AccessKey": "cHouse:HouseOrder1"}
+      #40 EventFlagSystemOn {"AccessKey": "cPlayer:NnpcFinishHintTalk"}
+      #46 CALL SNPC_rco_10_Common_UpgradeMyhome:HHA_1st_BuildCelebration
+    case 2:
+      #11 EventFlagSystemOn {"AccessKey": "cHouse:HouseOrder2"}
+    case 3:
+      #13 EventFlagSystemOn {"AccessKey": "cHouse:HouseOrder3"}
+    case 4:
+      #12 EventFlagSystemOn {"AccessKey": "cHouse:HouseOrder4"}
+    case 5:
+      #14 EventFlagSystemOn {"AccessKey": "cHouse:HouseOrder5"}
+    case 6:
+      #16 EventFlagSystemOn {"AccessKey": "cHouse:HouseOrder6"}
+    case 7:
+      #15 EventFlagSystemOn {"AccessKey": "cHouse:HouseOrder7"}
+== ENTRY HHA_1st_BuildCelebration
+  #44 IF RandomChoice3 {"ChoiceNumber": 3}
+    case 0:
+      #43 NpcSetRewardRecipe {"DIYNpcItem": false, "ItemUniqueId": 7134}
+      #45 SystemMailSend {"FromType": "cHHA", "FileIndex": "MAIL_SP_HHA_BuildCelebration", "Present": "cReward", "Route": "cFastTomorrow", "LabelIndex": 1, "TagType": "cNone", "ToSharePlayer": false}
+    case 1:
+      #41 NpcSetRewardRecipe {"DIYNpcItem": false, "ItemUniqueId": 7133}
+      -> (#45)
+    case 2:
+      #42 NpcSetRewardRecipe {"DIYNpcItem": false, "ItemUniqueId": 3438}
+      -> (#45)

@@ -1,0 +1,58 @@
+# Tutorials_Prologue4_Orientation2_RcmRct (source: decoded EventFlow; bool flag case 0 = ON, case 1 = OFF; #N = event index)
+== ENTRY Root
+  #23 IF EventFlagSystemBool {"AccessKey": "cPlayer:AllowPcTentEntering"}
+    case ON:
+      #26 IF RandomChoiceExcludePrevious2 {"ChoiceNumber": 2, "IsSetSpeakerChoiceResult": true}
+        case 0:
+          #25 MSG Tutorials/Tutorials_Prologue3_Orientation2_Rcm:131
+        case 1:
+          #21 MSG Tutorials/Tutorials_Prologue3_Orientation2_Rcm:121
+    case OFF:
+      #15 IF EventFlagSystemBool {"AccessKey": "cPlayer:PrologueStartedCampfire"}
+        case ON:
+          #22 IF RandomChoice4 {"ChoiceNumber": 4}
+            case 0:
+              -> (#21)
+            case 1:
+              -> (#21)
+            case 2:
+              -> (#21)
+            case 3:
+              #24 MSG Tutorials/Tutorials_Prologue3_Orientation2_Rcm:122
+        case OFF:
+          #18 IF EventFlagSystemBool {"AccessKey": "cPlayer:PrologueForCampfire2"}
+            case ON:
+              #20 MSG Tutorials/Tutorials_Prologue3_Orientation2_Rcm:111
+            case OFF:
+              #28 IF EventFlagSystemBool {"AccessKey": "cPlayer:PrologueForCampfire1"}
+                case ON:
+                  #19 MSG Tutorials/Tutorials_Prologue3_Orientation2_Rcm:101
+                case OFF:
+                  #16 IF EventFlagSystemBool {"AccessKey": "cPlayer:PrologueAfterBuiltTentTalk"}
+                    case ON:
+                      #29 MSG Tutorials/Tutorials_Prologue3_Orientation2_Rcm:100
+                    case OFF:
+                      #1 IF EventFlagSystemBool {"AccessKey": "cPlayer:PlayerPocketUIEnable"}
+                        case ON:
+                          #0 IF EventFlagSystemBool {"AccessKey": "cLand:Prologue4BuiltPlayer"}
+                            case ON:
+                              #8 CALL Tutorials_Prologue_Rco:Prologue4_AfterBuiltTent
+                            case OFF:
+                              #7 MSG Tutorials/Tutorials_Prologue3_Orientation2_Rcm:002
+                        case OFF:
+                          #17 IF EventFlagSystemBool {"AccessKey": "cPlayer:PrologueDone1stTalkAtPlaza"}
+                            case ON:
+                              #5 MSG Tutorials/Tutorials_Prologue3_Orientation2_Rcm:001_01
+                              #4 SetDeliveryItemAtRandom {"ItemUniqueID": 2750, "ApplyToSave": true, "ItemRemakeDecideType": "cVillageRemakePattern", "RemakePatternIndex": 0}
+                              #2 NpcDelivery {"Command": 1, "Option": "Keep"}
+                              #6 MSG Tutorials/Tutorials_Prologue3_Orientation2_Rcm:001_02
+                              #11 NpcDelivery {"Command": 2, "Option": "\"Default\""}
+                              #13 SetDeliveryItemAtRandom {"ApplyToSave": false, "ItemUniqueID": 6058, "ItemRemakeDecideType": "cVillageRemakePattern", "RemakePatternIndex": 0}
+                              #12 NpcDelivery {"Command": 1, "Option": "Keep"}
+                              #10 MSG Tutorials/Tutorials_Prologue3_Orientation2_Rcm:001_03
+                              #14 NpcDelivery {"Command": 2, "Option": "\"Default\""}
+                              #3 EventFlagSystemOn {"AccessKey": "cPlayer:PlayerPocketUIEnable"}
+                              #9 EventFlagSystemOn {"AccessKey": "cPlayer:MainmenuMap"}
+                              #30 EventFlagSystemSet {"AccessKey": "cLand:OpeningSeqBGMChangeCounter", "SetNum": 2}
+                            case OFF:
+                              #27 CALL Tutorials_Prologue3_Orientation1:Root

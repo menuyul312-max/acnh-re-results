@@ -1,0 +1,231 @@
+# SNPC_tkk_Live (source: decoded EventFlow; bool flag case 0 = ON, case 1 = OFF; #N = event index)
+== ENTRY Root
+  #25 CameraSetDemoParam {"Arg": 0, "CameraTargetKey": "Npc:tkk", "AdjustAngleYOnLeave": false, "UseNearCulling": false, "AdjustAngleYOnEnter": false, "CameraParamKey": "PreTkkLive", "CameraInterpolateKey": "PreTkkLive"}
+  #97 SetSubflowResult {"SetIndex": 1, "ResultValue": 0}
+  #17 TkkRequestSongSet {"SelectSongMethod": "cTkkSelectSongMethod_ToContext", "SelectFeelType": "cTkkSelectFeelType_None"}
+  #18 SetTagFromSystem {"TagType": "cTkkLiveRequest", "SetTagType": "cDegit", "TagID": 0, "Value": 0, "AccessKey": ""}
+  #51 CALL SNPC_tkk_Live:Tkk_Live_JudgeMiss
+  #42 CALL SNPC_tkk_Live:Tkk_LiveBefore_Msg
+  #47 CALL SNPC_tkk_Live:Tkk_LiveDemo
+  #48 IF SubflowResultChoice2 {"SetIndex": 0}
+    case 0:
+      #46 MSG TalkSNpc/tkk/SP_tkk_Live:003
+      #22 TkkFreeAction {"TkkActionType": "cTkkActionType_ToIdle"}
+      #41 CALL SNPC_tkk_Live:Tkk_LiveAfter_Flag
+      #72 CALL SNPC_tkk_Live:Tkk_LiveAfter_JudgeGet
+      #77 CALL SNPC_tkk_Live:Tkk_LiveAfter_LastWord
+      #86 CALL SNPC_tkk_Live:Tkk_Live_FlowEnd
+    case 1:
+      -> (#22)
+== ENTRY Tkk_LiveDemo
+  #20 MessageSuspend {}
+  #29 CALL SNPC_tkk_Live:Tkk_LiveDemoEnter
+  #24 TkkLive {}
+  #30 CALL SNPC_tkk_Live:Tkk_LiveDemoExit
+== ENTRY Root_Init
+  #26 NpcAISetting {"SettingType": 3, "Flag": false}
+  #27 NpcAISetting {"SettingType": 4, "Flag": false}
+== ENTRY Tkk_LiveDemoEnter
+  #95 IF SubflowResultChoice2 {"SetIndex": 1}
+    case 0:
+      #108 TkkLiveSyncPlayerAction {}
+      #98 FORK
+        || #39 PlayerChairStandup {}
+        || #126 PlayerToolPutaway {}
+        || #38 PlayerTotakekeTurnToStarter {}
+        || #73 TkkLiveNpcStandUp {}
+      #31 FadeOut {"FadeColorString": "cBlack", "FadeOutKindString": "cNormalFader", "FadeInKindString": "cNormalFader", "FadeOutSpeed": 0.10000000149011612, "FadeInSpeed": 0.10000000149011612, "IsUseDucking": false}
+      #35 TkkLiveEnter {}
+      #152 BGMPropertyControl {"BGMProperty": 77}
+      #32 FadeIn {"IsWait": true}
+      #37 PlayerTotakekeLiveGetRhythm {}
+      #74 TotakekeLiveNpcRhythm {}
+    case 1:
+      #130 PlayerToolPutaway {}
+      -> (#147)
+== ENTRY Tkk_LiveDemoExit
+  #33 FadeOut {"FadeColorString": "cBlack", "FadeInKindString": "cNormalFader", "FadeOutKindString": "cNormalFader", "FadeOutSpeed": 0.10000000149011612, "FadeInSpeed": 0.10000000149011612, "IsUseDucking": true}
+  #36 TkkLiveExit {}
+  #154 IF TkkLiveType {}
+    case 0:
+      #153 BGMPropertyControl {"BGMProperty": 88}
+      #34 FadeIn {"IsWait": true}
+    case 1:
+      -> (#153)
+    case 2:
+      -> (#34)
+== ENTRY Tkk_LiveAfter_Flag
+  #100 IF SubflowResultChoice2 {"SetIndex": 1}
+    case 0:
+      #12 IF IsMyVillage {}
+        case 0:
+          #15 IF EventFlagSystemBool {"AccessKey": "cPlayer:TkkLiveToday"}
+            case OFF:
+              #14 EventFlagSystemOn {"AccessKey": "cPlayer:TkkLiveToday"}
+              #16 EventFlagSystemAdd {"AccessKey": "cPlayer:TotakekeLiveCount", "AddNum": 1}
+              #23 EventFlagSystemAdd {"AddNum": 1, "AccessKey": "cLifeSupportAchievement:GotoTotakekeShow"}
+        case 1:
+          #13 EventFlagSystemOn {"AccessKey": "cPlayerVisit:TkkVisitorLive"}
+    case 1:
+      #142 EventFlagSystemOn {"AccessKey": "cPlayer:TkkFirstLiveJoined"}
+      #146 EventFlagSystemOn {"AccessKey": "cPlayer:TkkTalkToday"}
+      #143 EventFlagSystemOn {"AccessKey": "cPlayer:TkkLiveToday"}
+      #156 ReserveTownNews {}
+      #144 EventFlagSystemAdd {"AccessKey": "cPlayer:TotakekeLiveCount", "AddNum": 1}
+      #145 EventFlagSystemAdd {"AddNum": 1, "AccessKey": "cLifeSupportAchievement:GotoTotakekeShow"}
+      #141 EventFlagSystemOn {"AccessKey": "cPlayer:StandByRcoVisitMyHomeAfterTkkFirstLive"}
+== ENTRY Tkk_LiveBefore_Msg
+  #107 SetTkkLiveRequestPlayerName {}
+  #1 IF TkkLiveType {}
+    case 0:
+      #2 IF TkkQeruestMethodType {}
+        case 0:
+          #52 IF SubflowResultChoice2 {"SetIndex": 0}
+            case 0:
+              #9 MSG TalkSNpc/tkk/SP_tkk_Live:002
+            case 1:
+              #10 MSG TalkSNpc/tkk/SP_tkk_Live:001
+        case 1:
+          #3 IF TkkRequestFeeling {}
+            case 0:
+              #0 MSG TalkSNpc/tkk/SP_tkk_Live:004
+            case 1:
+              #7 MSG TalkSNpc/tkk/SP_tkk_Live:005
+            case 2:
+              #4 MSG TalkSNpc/tkk/SP_tkk_Live:006
+            case 3:
+              #5 MSG TalkSNpc/tkk/SP_tkk_Live:007
+            case 4:
+              #6 MSG TalkSNpc/tkk/SP_tkk_Live:008
+        case 2:
+          #8 MSG TalkSNpc/tkk/SP_tkk_Live:001
+    case 1:
+      #11 MSG TalkSNpc/tkk/SP_tkk_Live:009
+    case 2:
+      #122 MSG TalkSNpc/tkk/SP_tkk_Live:011
+== ENTRY Tkk_Live_JudgeMiss
+  #43 IF TkkLiveType {}
+    case 0:
+      #44 IF TkkQeruestMethodType {}
+        case 0:
+          #45 IF MultiFromItemSelectInclude {"ItemFromType1": "TkkMiss", "ItemFromType2": "", "ItemFromType3": "", "ItemFromType4": "", "ItemFromType5": "", "ItemFromType6": "", "ItemFromType7": "", "ItemFromType8": "", "JudgeTarget": "cPresetItem"}
+            case 0:
+              #49 SetSubflowResult {"ResultValue": 0, "SetIndex": 0}
+            case 1:
+              #50 SetSubflowResult {"ResultValue": 1, "SetIndex": 0}
+        case 1:
+          -> (#50)
+        case 2:
+          -> (#50)
+    case 1:
+      -> (#50)
+    case 2:
+      -> (#50)
+== ENTRY Tkk_LiveAfter_JudgeGet
+  #78 IF EventFlagSystemBool {"AccessKey": "cPlayer:TkkGetMusicToday"}
+    case OFF:
+      #53 IF IsMyVillage {}
+        case 0:
+          #55 IF SubflowResultChoice2 {"SetIndex": 0}
+            case 1:
+              #140 DecideEventReward {"RewardType": "cTotakeke"}
+              #103 IF IsSharePlay {"TargetMode": 0}
+                case 0:
+                  #102 IF EventFlagSystemBool {"AccessKey": "cLandTemp:Tkk_MusicFlag"}
+                    case OFF:
+                      #79 CALL SNPC_tkk_Live:Tkk_LiveAfter_MusicGet_Multi
+                      #81 EventFlagSystemOn {"AccessKey": "cPlayer:TkkGetMusicToday"}
+                case 1:
+                  #82 IF TkkFreeQuery2 {"TkkQueryType": "cTkkQueryType_AudienceMulti"}
+                    case 0:
+                      -> (#79)
+                    case 1:
+                      #80 CALL SNPC_tkk_Live:Tkk_LiveAfter_MusicGet_Single
+                      -> (#81)
+== ENTRY Tkk_LiveAfter_MusicGet_Single
+  #65 SetDeliveryItem {"SetItemTarget": 1, "ApplyToSave": false}
+  #56 IF ShoppingCapacity {"CapacityCheckType": "cReward", "ItemUniqueId": 65534}
+    case 0:
+      #60 IF TkkLiveType {}
+        case 0:
+          #58 MSG TalkSNpc/tkk/SP_tkk_Live:017
+          #59 SetEventRewardToPlayerBaggage {"SetType": "cFree"}
+        case 1:
+          #63 MSG TalkSNpc/tkk/SP_tkk_Live:021
+          -> (#59)
+        case 2:
+          #123 MSG TalkSNpc/tkk/SP_tkk_Live:026
+          -> (#59)
+    case 1:
+      #61 IF TkkLiveType {}
+        case 0:
+          #57 MSG TalkSNpc/tkk/SP_tkk_Live:018
+          #87 CALL SNPC_tkk_Live:Tkk_Live_FlowEnd
+        case 1:
+          #62 MSG TalkSNpc/tkk/SP_tkk_Live:022
+          #64 SystemMailSend {"FromType": "cTkk", "FileIndex": "MAIL_SNpc_tkk", "Route": "cFastTomorrow", "Present": "cReward", "LabelIndex": 3, "TagType": "cNone", "ToSharePlayer": false}
+        case 2:
+          #125 MSG TalkSNpc/tkk/SP_tkk_Live:025
+          #124 SystemMailSend {"FromType": "cTkk", "FileIndex": "MAIL_SNpc_tkk", "Route": "cFastTomorrow", "Present": "cReward", "TagType": "cNone", "ToSharePlayer": false, "LabelIndex": 2}
+== ENTRY Tkk_LiveAfter_LastWord
+  #76 IF TkkLiveType {}
+    case 0:
+      #67 IF TkkFreeQuery2 {"TkkQueryType": "cTkkQueryType_AudienceMulti"}
+        case 0:
+          #69 IF IsSharePlay {"TargetMode": 0}
+            case 1:
+              #68 MSG TalkSNpc/tkk/SP_tkk_Live:015
+        case 1:
+          #54 MSG TalkSNpc/tkk/SP_tkk_Live:016
+    case 1:
+      #128 IF DisplayedNewBirthDayMessage {}
+        case 0:
+          #109 MSG TalkSNpc/tkk/SP_tkk_Live:024
+          #129 SendBirthDayMessage {}
+          #119 CALL SNPC_tkk_Live:Tkk_BdayLive_EndMC
+        case 1:
+          #75 MSG TalkSNpc/tkk/SP_tkk_Live:023
+    case 2:
+      #121 MSG TalkSNpc/tkk/SP_tkk_Live:029
+== ENTRY Tkk_LiveAfter_MusicGet_Multi
+  #19 IF TkkLiveType {}
+    case 0:
+      #104 IF IsSharePlay {"TargetMode": 0}
+        case 0:
+          #105 SystemMailSend {"FromType": "cTkk", "FileIndex": "MAIL_SNpc_tkk", "Route": "cFastTomorrow", "Present": "cReward", "TagType": "cNone", "ToSharePlayer": true, "LabelIndex": 4}
+          #101 MSG TalkSNpc/tkk/SP_tkk_Live:019
+          #155 EventFlagSystemOn {"AccessKey": "cLandTemp:Tkk_MusicFlag"}
+        case 1:
+          #70 SystemMailSend {"FromType": "cTkk", "FileIndex": "MAIL_SNpc_tkk", "Route": "cFastTomorrow", "Present": "cReward", "TagType": "cNone", "LabelIndex": 2, "ToSharePlayer": false}
+          #71 MSG TalkSNpc/tkk/SP_tkk_Live:027
+    case 1:
+      #106 SystemMailSend {"FromType": "cTkk", "FileIndex": "MAIL_SNpc_tkk", "Route": "cFastTomorrow", "Present": "cReward", "LabelIndex": 3, "TagType": "cNone", "ToSharePlayer": false}
+      #66 MSG TalkSNpc/tkk/SP_tkk_Live:020
+    case 2:
+      #83 SystemMailSend {"FromType": "cTkk", "FileIndex": "MAIL_SNpc_tkk", "Route": "cFastTomorrow", "Present": "cReward", "TagType": "cNone", "LabelIndex": 2, "ToSharePlayer": false}
+      #28 MSG TalkSNpc/tkk/SP_tkk_Live:025
+== ENTRY Tkk_Live_FlowEnd
+  #88 MessageSuspend {}
+  #85 TkkLiveNpcSitDown {}
+  #84 ExitFlowchart {}
+== ENTRY Tkk_LandFirstLive
+  #91 CameraSetDemoParam {"Arg": 0, "CameraTargetKey": "Npc:tkk", "AdjustAngleYOnLeave": false, "UseNearCulling": false, "AdjustAngleYOnEnter": false, "CameraParamKey": "PreTkkLive", "CameraInterpolateKey": "PreTkkLive"}
+  #96 SetSubflowResult {"ResultValue": 1, "SetIndex": 1}
+  #89 TkkRequestSongSet {"SelectSongMethod": "cTkkSelectSongMethod_Feeling", "SelectFeelType": "cTkkSelectFeelType_First"}
+  #118 CALL SNPC_tkk_Live:Tkk_1stLIveMC
+  #92 CALL SNPC_tkk_Live:Tkk_LiveDemo
+  #90 TkkFreeAction {"TkkActionType": "cTkkActionType_ToIdle"}
+  #93 CALL SNPC_tkk_Live:Tkk_LiveAfter_Flag
+  #132 FORK
+    || #116 MSG TalkSNpc/tkk/SP_tkk_1stLive:011
+    || #134 FadeOut {"FadeColorString": "cBlack", "FadeOutKindString": "cNormalFader", "FadeInKindString": "cNormalFader", "IsUseDucking": false, "FadeOutSpeed": 0.10000000149011612, "FadeInSpeed": 0.10000000149011612}
+    || #135 TkkFirstLiveEmoticcon {"Reaction": "Clapping", "Frame": 120}
+  #94 SystemRequestChangeStage {"TargetStage": "cMainFieldPlayerHouse", "FadeOutKindString": "cCircle", "FadeInKindString": "cCircle", "FadeColorString": "cBlack", "FadeOutSpeed": 1.0, "FadeInSpeed": 1.0}
+== ENTRY Tkk_1stLIveMC
+  #111 MSG TalkSNpc/tkk/SP_tkk_1stLive:001
+  #112 MSG TalkSNpc/tkk/SP_tkk_1stLive:002
+  #113 MSG TalkSNpc/tkk/SP_tkk_1stLive:003
+  #114 MSG TalkSNpc/tkk/SP_tkk_1stLive:004
+  #115 MSG TalkSNpc/tkk/SP_tkk_1stLive:005
+== ENTRY Tkk_BdayLive_EndMC
+  #75 MSG TalkSNpc/tkk/SP_tkk_Live:023

@@ -1,0 +1,173 @@
+# System_GrowUp (source: decoded EventFlow; bool flag case 0 = ON, case 1 = OFF; #N = event index)
+== ENTRY Title
+  #12 CALL System_GrowUp:DateCheck
+  #59 TimeLock {"TimeLockType": "cUpdateAndLock"}
+  #73 IF PassDaysSincePreviousGrowUp {}
+    case 0:
+      #72 CALL System_GrowUp_GameProcess:Root
+      #71 CALL System_GrowUp_WeatherControl:Root
+      #0 SaveGrowUp {"GrowUpSituation": "cTitle"}
+      #65 TimeLock {"TimeLockType": "cUnlock"}
+      #95 IF PlayAccountIsPlayerVillager {}
+        case 0:
+          #1 SystemRequestChangeStage {"TargetStage": "cTitle", "FadeOutKindString": "cCircle", "FadeInKindString": "cCircle", "FadeColorString": "cBlack", "FadeOutSpeed": 1.0, "FadeInSpeed": 1.0}
+        case 1:
+          #108 SystemRequestChangeStage {"FadeOutKindString": "cCircle", "FadeInKindString": "cCircle", "FadeColorString": "cBlack", "FadeOutSpeed": 1.0, "FadeInSpeed": 1.0, "TargetStage": "cDateCheck"}
+    case 1:
+      -> (#0)
+== ENTRY NewGame
+  #20 CALL System_GrowUp:DateCheck
+  #76 IF PassDaysSincePreviousGrowUp {}
+    case 0:
+      #75 CALL System_GrowUp_GameProcess:Root
+      #89 CALL System_GrowUp_GameProcess:FirstDay
+      #74 CALL System_GrowUp_WeatherControl:FirstDay
+      #2 SaveGrowUp {"GrowUpSituation": "cStart"}
+      #33 TimeLock {"TimeLockType": "cUnlock"}
+      #3 SystemRequestChangeStage {"TargetStage": "cMainFieldDemoLanding", "FadeOutKindString": "cCircle", "FadeInKindString": "cCircle", "FadeColorString": "cBlack", "FadeOutSpeed": 1.0, "FadeInSpeed": 1.0}
+    case 1:
+      -> (#89)
+== ENTRY Continue
+  #21 CALL System_GrowUp:DateCheck
+  #60 TimeLock {"TimeLockType": "cLock"}
+  #79 IF PassDaysSincePreviousGrowUp {}
+    case 0:
+      #78 CALL System_GrowUp_GameProcess:Root
+      #77 CALL System_GrowUp_WeatherControl:Root
+      #5 CALL System_GrowUp:ContinueCommon
+    case 1:
+      -> (#5)
+== ENTRY ContinueCommon
+  #4 SaveGrowUp {"GrowUpSituation": "cStart"}
+  #66 TimeLock {"TimeLockType": "cUnlock"}
+  #44 NetUpdateFriendList {"Type": "cBestFriend"}
+  #13 NetReceiveMail {}
+  #38 NetReceiveBcat {}
+  #103 NetUpdateFriendLandWithInterval {"Interval": 1}
+  #17 CALL System_GrowUp:Save
+  #51 IF EventFlagSystemBool {"AccessKey": "cPlayer:TownNewsReserve"}
+    case ON:
+      #53 IF EventFlagSystemBool {"AccessKey": "cLand:BuiltTownOffice"}
+        case ON:
+          #56 IF EventFlagSystemBool {"AccessKey": "cLand:BuiltTownOfficeToday"}
+            case ON:
+              #54 SystemRequestChangeStage {"TargetStage": "cGrowUpTalkEventPlaza", "FadeOutKindString": "cCircle", "FadeInKindString": "cCircle", "FadeColorString": "cBlack", "FadeOutSpeed": 1.0, "FadeInSpeed": 1.0}
+            case OFF:
+              #52 SystemRequestChangeStage {"TargetStage": "cGrowUpTalk", "FadeOutKindString": "cCircle", "FadeInKindString": "cCircle", "FadeColorString": "cBlack", "FadeOutSpeed": 1.0, "FadeInSpeed": 1.0}
+        case OFF:
+          -> (#54)
+    case OFF:
+      #55 SystemRequestChangeStage {"TargetStage": "cMainFieldPlayerHouse", "FadeOutKindString": "cCircle", "FadeInKindString": "cCircle", "FadeColorString": "cBlack", "FadeOutSpeed": 1.0, "FadeInSpeed": 1.0}
+== ENTRY InGame
+  #22 CALL System_GrowUp:DateCheckWithSave
+  #61 TimeLock {"TimeLockType": "cLock"}
+  #82 IF PassDaysSincePreviousGrowUp {}
+    case 0:
+      #81 CALL System_GrowUp_GameProcess:Root
+      #80 CALL System_GrowUp_WeatherControl:Root
+      #6 SaveGrowUp {"GrowUpSituation": "cInGame"}
+      #67 TimeLock {"TimeLockType": "cUnlock"}
+      #45 NetUpdateFriendList {"Type": "cBestFriend"}
+      #26 NetReceiveMail {}
+      #37 NetReceiveBcat {}
+      #104 NetUpdateFriendLandWithInterval {"Interval": 1}
+      #18 CALL System_GrowUp:Save
+      #91 IF EventFlagSystemBool {"AccessKey": "cLand:BuiltTownOffice"}
+        case ON:
+          #92 IF EventFlagSystemBool {"AccessKey": "cLand:BuiltTownOfficeToday"}
+            case ON:
+              #90 OverWriteFadeSetting {"FadeOutKindString": "cNormalFader", "FadeInKindString": "cCircle", "FadeColorString": "cBlack", "FadeOutSpeed": 1.0, "FadeInSpeed": 1.0}
+              #7 SaveAfterGrowUp {}
+            case OFF:
+              -> (#7)
+        case OFF:
+          -> (#90)
+    case 1:
+      -> (#6)
+== ENTRY AfterNet
+  #23 CALL System_GrowUp:DateCheckWithSave
+  #62 TimeLock {"TimeLockType": "cLock"}
+  #85 IF PassDaysSincePreviousGrowUp {}
+    case 0:
+      #84 CALL System_GrowUp_GameProcess:Root
+      #83 CALL System_GrowUp_WeatherControl:Root
+      #8 SaveGrowUp {"GrowUpSituation": "cAfterNet"}
+      #68 TimeLock {"TimeLockType": "cUnlock"}
+      #27 NetReceiveMail {}
+      #19 CALL System_GrowUp:Save
+      #94 SpecialDemoStart {"Kind": "cReturnMulti"}
+      #93 ReserveSystemFlowDemo {"FlowFile": "System_Network", "EntryName": "VisitEndMileGet"}
+      #9 SystemRequestChangeStage {"TargetStage": "cFrontOfAirPort", "FadeOutKindString": "cCircle", "FadeInKindString": "cCircle", "FadeColorString": "cBlack", "FadeOutSpeed": 1.0, "FadeInSpeed": 1.0}
+    case 1:
+      -> (#8)
+== ENTRY DateCheck
+  #10 IF IsGamePlayTime {}
+    case 1:
+      #11 CALL System_DateTimeNg:NoSave
+== ENTRY Save
+  #14 UISaveIconAppear {}
+  #15 SaveSimpleSave {"Process": "cAll"}
+  #16 UISaveIconDisappear {}
+== ENTRY DateCheckWithSave
+  #24 IF IsGamePlayTime {}
+    case 1:
+      #25 CALL System_DateTimeNg:Root
+== ENTRY PlayerSwitch
+  #50 ReserveSystemFlowDemo {"FlowFile": "System_GrowUp", "EntryName": "PostPlayerSwitch"}
+  #32 CALL System_GrowUp:DateCheckWithSave
+  #63 TimeLock {"TimeLockType": "cLock"}
+  #88 IF PassDaysSincePreviousGrowUp {}
+    case 0:
+      #87 CALL System_GrowUp_GameProcess:Root
+      #86 CALL System_GrowUp_WeatherControl:Root
+      #39 SetupSharePlay {"IsAfterRollback": false}
+    case 1:
+      -> (#39)
+== ENTRY SharePlayForceBreakup
+  #36 SaveSimpleLoad {"Process": "cAll"}
+  #109 EventFlagSystemOff {"AccessKey": "cPlayer:EquipLicenseHelmet"}
+  #98 ReserveSystemFlowDemo {"FlowFile": "System_GrowUp", "EntryName": "PostPlayerSwitch"}
+  #96 CALL System_GrowUp:DateCheckWithSave
+  #99 TimeLock {"TimeLockType": "cLock"}
+  #102 IF PassDaysSincePreviousGrowUp {}
+    case 0:
+      #101 CALL System_GrowUp_GameProcess:Root
+      #100 CALL System_GrowUp_WeatherControl:Root
+      #97 SetupSharePlay {"IsAfterRollback": true}
+    case 1:
+      -> (#97)
+== ENTRY TitleAfterSharePlay
+  #42 CALL System_GrowUp:DateCheck
+  #58 TimeLock {"TimeLockType": "cUpdateAndLock"}
+  #70 IF PassDaysSincePreviousGrowUp {}
+    case 0:
+      #57 CALL System_GrowUp_GameProcess:Root
+      #43 CALL System_GrowUp_WeatherControl:Root
+      #40 SaveGrowUp {"GrowUpSituation": "cTitle"}
+      #64 TimeLock {"TimeLockType": "cUnlock"}
+      #41 SystemRequestChangeStage {"TargetStage": "cTitle", "FadeOutKindString": "cCircle", "FadeInKindString": "cCircle", "FadeColorString": "cBlack", "FadeOutSpeed": 1.0, "FadeInSpeed": 1.0}
+    case 1:
+      -> (#40)
+== ENTRY PostPlayerSwitch
+  #48 IF IsSharePlay {"TargetMode": 0}
+    case 0:
+      #28 SaveGrowUp {"GrowUpSituation": "cInGame"}
+      #69 TimeLock {"TimeLockType": "cUnlock"}
+      #46 IF IsSharePlay {"TargetMode": 0}
+        case 0:
+          #31 CALL System_GrowUp:Save
+          #35 DemoSetShareStartFlag {}
+          #30 ReserveSystemFlowDemo {"EntryName": "Root", "FlowFile": "System_SharePlay_Controller"}
+          #105 IF IsSharePlay {"TargetMode": 0}
+            case 0:
+              #29 SystemRequestChangeStage {"TargetStage": "cEventPlaza", "FadeOutKindString": "cCircle", "FadeInKindString": "cCircle", "FadeColorString": "cBlack", "FadeOutSpeed": 1.0, "FadeInSpeed": 1.0}
+            case 1:
+              #106 SystemRequestChangeStage {"FadeOutKindString": "cCircle", "FadeInKindString": "cCircle", "FadeColorString": "cBlack", "FadeOutSpeed": 1.0, "FadeInSpeed": 1.0, "TargetStage": "cMainFieldPlayerHouse"}
+        case 1:
+          #47 NetUpdateFriendList {"Type": "cBestFriend"}
+          #34 NetReceiveMail {}
+          -> (#31)
+    case 1:
+      #107 CALL System_GrowUp:Save
+      #49 SaveSimpleLoad {"Process": "cAll"}
+      -> (#28)

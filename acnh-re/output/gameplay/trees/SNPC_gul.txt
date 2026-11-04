@@ -1,0 +1,491 @@
+# SNPC_gul (source: decoded EventFlow; bool flag case 0 = ON, case 1 = OFF; #N = event index)
+== ENTRY Root
+  #161 SetTagFromSystem {"TagType": "cEventFlag", "SetTagType": "cDegit", "AccessKey": "cLand:JohnnyRequirePartsNum", "TagID": 0, "Value": 0}
+  #27 CALL SNPC_gul:GulTalkChk
+  #84 IF IsSharePlay {"TargetMode": 0}
+    case 0:
+      #85 CALL SNPC_gul:Gul_Share
+    case 1:
+      #232 IF IsMyVillage {}
+        case 0:
+          #34 IF EventFlagSystemBool {"AccessKey": "cLand:JohnnySitUpFlag"}
+            case ON:
+              #89 IF EventFlagSystemBool {"AccessKey": "cPlayer:JohnnyQuestFinishFlag"}
+                case ON:
+                  #107 CALL SNPC_gul:GulAfterQuest
+                case OFF:
+                  #41 IF EventFlagSystemBool {"AccessKey": "cPlayer:JohnnyQuestStartFlag"}
+                    case ON:
+                      #83 IF GulFreeQuery2 {"GulQueryType": "cGulQueryType_IsQuestClear"}
+                        case 0:
+                          #0 MSG TalkSNpc/gul/SP_gul:030
+                          #14 IF GeneralTalkChoice2 {}
+                            case 0:
+                              #12 SetDeliveryItemAtRandom {"ItemUniqueID": 2381, "ApplyToSave": false, "ItemRemakeDecideType": "cVillageRemakePattern", "RemakePatternIndex": 0}
+                              #3 NpcDelivery {"Command": 0, "Option": "Keep"}
+                              #43 GulFreeAction {"GulActionType": "cGulActionType_PresentParts"}
+                              #45 MSG TalkSNpc/gul/SP_gul:032
+                              #10 NpcDelivery {"Command": 3, "Option": "\"Default\""}
+                              #44 MSG TalkSNpc/gul/SP_gul:033
+                              #216 SmartPhone {"ActionType": 0}
+                              #201 SmartPhone {"ActionType": 4}
+                              #202 MSG TalkSNpc/gul/SP_gul:036
+                              #203 SmartPhone {"ActionType": 1}
+                              #6 DecideEventReward {"RewardType": "cJohnny"}
+                              #13 SetDeliveryItem {"SetItemTarget": 1, "ApplyToSave": true}
+                              #9 MSG TalkSNpc/gul/SP_gul:034
+                              #7 MSG TalkSNpc/gul/SP_gul:035
+                              #35 CALL SNPC_gul:GulClear
+                              #244 IF EventFlagSystemInt {"AccessKey": "cPlayer:JohnnyHelpCount", "Border": 30, "FlagCheckType": 0}
+                                case 0:
+                                  #237 NpcSetRewardRecipe {"DIYNpcItem": false, "ItemUniqueId": 8574}
+                                  #236 SystemMailSend {"FromType": "cGul", "FileIndex": "MAIL_SNpc_gul", "Route": "cFastTomorrow", "TagType": "cNone", "Present": "cReward", "ToSharePlayer": false, "LabelIndex": 6}
+                                case 1:
+                                  #243 IF RandomChoice5 {"ChoiceNumber": 5}
+                                    case 0:
+                                      #238 SystemMailSend {"FromType": "cGul", "FileIndex": "MAIL_SNpc_gul", "LabelIndex": 1, "Route": "cFastTomorrow", "Present": "cReward", "TagType": "cNone", "ToSharePlayer": false}
+                                    case 1:
+                                      #239 SystemMailSend {"FromType": "cGul", "FileIndex": "MAIL_SNpc_gul", "Route": "cFastTomorrow", "Present": "cReward", "LabelIndex": 2, "TagType": "cNone", "ToSharePlayer": false}
+                                    case 2:
+                                      #240 SystemMailSend {"FromType": "cGul", "FileIndex": "MAIL_SNpc_gul", "Route": "cFastTomorrow", "Present": "cReward", "LabelIndex": 3, "TagType": "cNone", "ToSharePlayer": false}
+                                    case 3:
+                                      #241 SystemMailSend {"FromType": "cGul", "FileIndex": "MAIL_SNpc_gul", "Route": "cFastTomorrow", "Present": "cReward", "LabelIndex": 4, "TagType": "cNone", "ToSharePlayer": false}
+                                    case 4:
+                                      #242 SystemMailSend {"FromType": "cGul", "FileIndex": "MAIL_SNpc_gul", "Route": "cFastTomorrow", "Present": "cReward", "LabelIndex": 5, "TagType": "cNone", "ToSharePlayer": false}
+                            case 1:
+                              #178 IF RandomChoiceExcludePrevious5 {"ChoiceNumber": 5, "IsSetSpeakerChoiceResult": true}
+                                case 0:
+                                  #184 MSG TalkSNpc/gul/SP_gul:031_01
+                                case 1:
+                                  #185 MSG TalkSNpc/gul/SP_gul:031_02
+                                case 2:
+                                  #186 MSG TalkSNpc/gul/SP_gul:031_03
+                                case 3:
+                                  #187 MSG TalkSNpc/gul/SP_gul:031_04
+                                case 4:
+                                  #188 MSG TalkSNpc/gul/SP_gul:031_05
+                        case 1:
+                          -> (#178)
+                    case OFF:
+                      #42 CALL SNPC_gul:GulAfterQuest
+            case OFF:
+              #18 IF EventFlagSystemBool {"AccessKey": "cPlayer:JohnnyQuestFinishFlag"}
+                case ON:
+                  #64 IF HasKindItem {"CheckItemKindType": "cKind", "ItemKindType": "JohnnyQuest", "ItemFilterType": ""}
+                    case 0:
+                      #65 CALL SNPC_gul:GulSitUp
+                      #66 MSG TalkSNpc/gul/SP_gul:080
+                      #113 IF GulFreeQuery2 {"GulQueryType": "cGulQueryType_OtherPlayerQuestNow"}
+                        case 0:
+                          #213 IF HasTargetItem {"ItemUniqueId": 2381, "NeedNum": 2}
+                            case 0:
+                              #214 MSG TalkSNpc/gul/SP_gul:084_pl
+                              #124 CALL SNPC_gul:GulGivePartsForced
+                              #122 MSG TalkSNpc/gul/SP_gul:085
+                              #67 CALL SNPC_gul:GulClear
+                            case 1:
+                              #121 MSG TalkSNpc/gul/SP_gul:084
+                              -> (#124)
+                        case 1:
+                          #114 MSG TalkSNpc/gul/SP_gul:081
+                          #211 IF HasTargetItem {"ItemUniqueId": 2381, "NeedNum": 2}
+                            case 0:
+                              #212 MSG TalkSNpc/gul/SP_gul:082_pl
+                              #123 CALL SNPC_gul:GulGivePartsForced
+                              #116 MSG TalkSNpc/gul/SP_gul:083
+                              -> (#67)
+                            case 1:
+                              #115 MSG TalkSNpc/gul/SP_gul:082
+                              -> (#123)
+                    case 1:
+                      #19 CALL SNPC_gul:GulKeepSleep
+                case OFF:
+                  #32 IF EventFlagSystemBool {"AccessKey": "cPlayer:JohnnyQuestStartFlag"}
+                    case ON:
+                      #91 CALL SNPC_gul:Gul_GetUp_Start
+                    case OFF:
+                      #5 EventFlagSystemAdd {"AccessKey": "cPlayer:JonnyTalkCount", "AddNum": 1}
+                      #33 IF EventFlagSystemInt {"AccessKey": "cPlayer:JonnyTalkCount", "FlagCheckType": 0, "Border": 1}
+                        case 0:
+                          #63 CALL SNPC_gul:GulTalkSleep
+                        case 1:
+                          #1 IF PercentChoice {"Percent": 10}
+                            case 0:
+                              #93 CALL SNPC_gul:Gul_GetUp_NotStart
+                            case 1:
+                              #4 IF EventFlagSystemInt {"AccessKey": "cPlayer:JonnyTalkCount", "FlagCheckType": 3, "Border": 6}
+                                case 0:
+                                  #92 CALL SNPC_gul:Gul_GetUp_NotStart
+                                case 1:
+                                  #62 CALL SNPC_gul:GulTalkSleep
+        case 1:
+          #233 CALL SNPC_gul:Gul_DC
+== ENTRY GulKeepSleep
+  #17 MSG TalkSNpc/gul/SP_gul:060
+  #20 ExitFlowchart {}
+== ENTRY GulAfterQuest
+  #137 IF EventFlagSystemBool {"AccessKey": "cLandTemp:JohnnyTalkShareplay"}
+    case ON:
+      #139 MSG TalkSNpc/gul/SP_gul:120
+      #138 ExitFlowchart {}
+    case OFF:
+      #68 IF HasKindItem {"CheckItemKindType": "cKind", "ItemKindType": "JohnnyQuest", "ItemFilterType": ""}
+        case 0:
+          #209 IF HasTargetItem {"ItemUniqueId": 2381, "NeedNum": 2}
+            case 0:
+              #210 MSG TalkSNpc/gul/SP_gul:082_pl
+              #72 SetDeliveryItemAtRandom {"ItemUniqueID": 2381, "ApplyToSave": false, "ItemRemakeDecideType": "cVillageRemakePattern", "RemakePatternIndex": 0}
+              #70 NpcDelivery {"Command": 0, "Option": "Keep"}
+              #73 GulFreeAction {"GulActionType": "cGulActionType_PresentParts"}
+              #71 NpcDelivery {"Command": 3, "Option": "\"Default\""}
+              #74 MSG TalkSNpc/gul/SP_gul:083
+              #75 CALL SNPC_gul:GulClear
+              #76 ExitFlowchart {}
+            case 1:
+              #69 MSG TalkSNpc/gul/SP_gul:082
+              -> (#72)
+        case 1:
+          #189 CALL SNPC_gul:GulAfterQuestChat
+== ENTRY GulSitUp
+  #60 MSG TalkSNpc/gul/SP_gul:065
+  #21 RequestSimple {"AsCommand": "GulGetUp", "WaitFinish": true}
+  #23 EventFlagSystemOn {"AccessKey": "cLand:JohnnySitUpFlag"}
+== ENTRY GulQuestClear
+  #44 MSG TalkSNpc/gul/SP_gul:033
+  #216 SmartPhone {"ActionType": 0}
+  #201 SmartPhone {"ActionType": 4}
+  #202 MSG TalkSNpc/gul/SP_gul:036
+  #203 SmartPhone {"ActionType": 1}
+  #6 DecideEventReward {"RewardType": "cJohnny"}
+  #13 SetDeliveryItem {"SetItemTarget": 1, "ApplyToSave": true}
+  #9 MSG TalkSNpc/gul/SP_gul:034
+  #7 MSG TalkSNpc/gul/SP_gul:035
+  #35 CALL SNPC_gul:GulClear
+  #244 IF EventFlagSystemInt {"AccessKey": "cPlayer:JohnnyHelpCount", "Border": 30, "FlagCheckType": 0}
+    case 0:
+      #237 NpcSetRewardRecipe {"DIYNpcItem": false, "ItemUniqueId": 8574}
+      #236 SystemMailSend {"FromType": "cGul", "FileIndex": "MAIL_SNpc_gul", "Route": "cFastTomorrow", "TagType": "cNone", "Present": "cReward", "ToSharePlayer": false, "LabelIndex": 6}
+    case 1:
+      #243 IF RandomChoice5 {"ChoiceNumber": 5}
+        case 0:
+          #238 SystemMailSend {"FromType": "cGul", "FileIndex": "MAIL_SNpc_gul", "LabelIndex": 1, "Route": "cFastTomorrow", "Present": "cReward", "TagType": "cNone", "ToSharePlayer": false}
+        case 1:
+          #239 SystemMailSend {"FromType": "cGul", "FileIndex": "MAIL_SNpc_gul", "Route": "cFastTomorrow", "Present": "cReward", "LabelIndex": 2, "TagType": "cNone", "ToSharePlayer": false}
+        case 2:
+          #240 SystemMailSend {"FromType": "cGul", "FileIndex": "MAIL_SNpc_gul", "Route": "cFastTomorrow", "Present": "cReward", "LabelIndex": 3, "TagType": "cNone", "ToSharePlayer": false}
+        case 3:
+          #241 SystemMailSend {"FromType": "cGul", "FileIndex": "MAIL_SNpc_gul", "Route": "cFastTomorrow", "Present": "cReward", "LabelIndex": 4, "TagType": "cNone", "ToSharePlayer": false}
+        case 4:
+          #242 SystemMailSend {"FromType": "cGul", "FileIndex": "MAIL_SNpc_gul", "Route": "cFastTomorrow", "Present": "cReward", "LabelIndex": 5, "TagType": "cNone", "ToSharePlayer": false}
+== ENTRY GulTalkChk
+  #26 IF IsMyVillage {}
+    case 0:
+      #25 EventFlagSystemOn {"AccessKey": "cPlayer:JohnnyTalkBeforeFlag"}
+      #30 EventFlagSystemOn {"AccessKey": "cLand:JohnnyTalkAnyPlayerFlag"}
+== ENTRY GulClear
+  #38 IF EventFlagSystemBool {"AccessKey": "cPlayer:JohnnyQuestFinishFlag"}
+    case ON:
+      #40 EventFlagSystemOff {"AccessKey": "cPlayer:JohnnyQuestStartFlag"}
+      #39 GulFreeAction {"GulActionType": "cGulActionType_SetAnotherPlayerClearFlag"}
+      #102 EventFlagSystemOff {"AccessKey": "cLandTemp:JohnnyTalkShareplay"}
+      #103 EventFlagSystemOn {"AccessKey": "cLandTemp:JohnnyClearShareplay"}
+    case OFF:
+      #37 EventFlagSystemAdd {"AccessKey": "cLifeSupportAchievement:HelpGul", "AddNum": 1}
+      #234 EventFlagSystemAdd {"AccessKey": "cPlayer:JohnnyHelpCount", "AddNum": 1}
+      #36 EventFlagSystemOn {"AccessKey": "cPlayer:JohnnyQuestFinishFlag"}
+      -> (#40)
+== ENTRY GulQuestNow
+  #83 IF GulFreeQuery2 {"GulQueryType": "cGulQueryType_IsQuestClear"}
+    case 0:
+      #0 MSG TalkSNpc/gul/SP_gul:030
+      #14 IF GeneralTalkChoice2 {}
+        case 0:
+          #12 SetDeliveryItemAtRandom {"ItemUniqueID": 2381, "ApplyToSave": false, "ItemRemakeDecideType": "cVillageRemakePattern", "RemakePatternIndex": 0}
+          #3 NpcDelivery {"Command": 0, "Option": "Keep"}
+          #43 GulFreeAction {"GulActionType": "cGulActionType_PresentParts"}
+          #45 MSG TalkSNpc/gul/SP_gul:032
+          #10 NpcDelivery {"Command": 3, "Option": "\"Default\""}
+          #44 MSG TalkSNpc/gul/SP_gul:033
+          #216 SmartPhone {"ActionType": 0}
+          #201 SmartPhone {"ActionType": 4}
+          #202 MSG TalkSNpc/gul/SP_gul:036
+          #203 SmartPhone {"ActionType": 1}
+          #6 DecideEventReward {"RewardType": "cJohnny"}
+          #13 SetDeliveryItem {"SetItemTarget": 1, "ApplyToSave": true}
+          #9 MSG TalkSNpc/gul/SP_gul:034
+          #7 MSG TalkSNpc/gul/SP_gul:035
+          #35 CALL SNPC_gul:GulClear
+          #244 IF EventFlagSystemInt {"AccessKey": "cPlayer:JohnnyHelpCount", "Border": 30, "FlagCheckType": 0}
+            case 0:
+              #237 NpcSetRewardRecipe {"DIYNpcItem": false, "ItemUniqueId": 8574}
+              #236 SystemMailSend {"FromType": "cGul", "FileIndex": "MAIL_SNpc_gul", "Route": "cFastTomorrow", "TagType": "cNone", "Present": "cReward", "ToSharePlayer": false, "LabelIndex": 6}
+            case 1:
+              #243 IF RandomChoice5 {"ChoiceNumber": 5}
+                case 0:
+                  #238 SystemMailSend {"FromType": "cGul", "FileIndex": "MAIL_SNpc_gul", "LabelIndex": 1, "Route": "cFastTomorrow", "Present": "cReward", "TagType": "cNone", "ToSharePlayer": false}
+                case 1:
+                  #239 SystemMailSend {"FromType": "cGul", "FileIndex": "MAIL_SNpc_gul", "Route": "cFastTomorrow", "Present": "cReward", "LabelIndex": 2, "TagType": "cNone", "ToSharePlayer": false}
+                case 2:
+                  #240 SystemMailSend {"FromType": "cGul", "FileIndex": "MAIL_SNpc_gul", "Route": "cFastTomorrow", "Present": "cReward", "LabelIndex": 3, "TagType": "cNone", "ToSharePlayer": false}
+                case 3:
+                  #241 SystemMailSend {"FromType": "cGul", "FileIndex": "MAIL_SNpc_gul", "Route": "cFastTomorrow", "Present": "cReward", "LabelIndex": 4, "TagType": "cNone", "ToSharePlayer": false}
+                case 4:
+                  #242 SystemMailSend {"FromType": "cGul", "FileIndex": "MAIL_SNpc_gul", "Route": "cFastTomorrow", "Present": "cReward", "LabelIndex": 5, "TagType": "cNone", "ToSharePlayer": false}
+        case 1:
+          #178 IF RandomChoiceExcludePrevious5 {"ChoiceNumber": 5, "IsSetSpeakerChoiceResult": true}
+            case 0:
+              #184 MSG TalkSNpc/gul/SP_gul:031_01
+            case 1:
+              #185 MSG TalkSNpc/gul/SP_gul:031_02
+            case 2:
+              #186 MSG TalkSNpc/gul/SP_gul:031_03
+            case 3:
+              #187 MSG TalkSNpc/gul/SP_gul:031_04
+            case 4:
+              #188 MSG TalkSNpc/gul/SP_gul:031_05
+    case 1:
+      -> (#178)
+== ENTRY GulTalkSleep
+  #177 IF RandomChoiceExcludePrevious10 {"ChoiceNumber": 10, "IsSetSpeakerChoiceResult": true}
+    case 0:
+      #167 MSG TalkSNpc/gul/SP_gul:001_01
+      #61 ExitFlowchart {}
+    case 1:
+      #168 MSG TalkSNpc/gul/SP_gul:001_02
+      -> (#61)
+    case 2:
+      #169 MSG TalkSNpc/gul/SP_gul:001_03
+      -> (#61)
+    case 3:
+      #170 MSG TalkSNpc/gul/SP_gul:001_04
+      -> (#61)
+    case 4:
+      #171 MSG TalkSNpc/gul/SP_gul:001_05
+      -> (#61)
+    case 5:
+      #172 MSG TalkSNpc/gul/SP_gul:001_06
+      -> (#61)
+    case 6:
+      #173 MSG TalkSNpc/gul/SP_gul:001_07
+      -> (#61)
+    case 7:
+      #174 MSG TalkSNpc/gul/SP_gul:001_08
+      -> (#61)
+    case 8:
+      #175 MSG TalkSNpc/gul/SP_gul:001_09
+      -> (#61)
+    case 9:
+      #176 MSG TalkSNpc/gul/SP_gul:001_10
+      -> (#61)
+== ENTRY Gul_Share
+  #77 IF EventFlagSystemBool {"AccessKey": "cLand:JohnnySitUpFlag"}
+    case ON:
+      #100 IF EventFlagSystemBool {"AccessKey": "cLandTemp:JohnnyClearShareplay"}
+        case ON:
+          #99 IF EventFlagSystemBool {"AccessKey": "cLandTemp:JohnnyTalkShareplay"}
+            case ON:
+              #88 IF EventFlagSystemBool {"AccessKey": "cPlayer:JohnnyQuestFinishFlag"}
+                case ON:
+                  #140 CALL SNPC_gul:GulAfterQuest
+                case OFF:
+                  #97 IF EventFlagSystemBool {"AccessKey": "cPlayer:JohnnyQuestStartFlag"}
+                    case ON:
+                      #157 IF EventFlagSystemBool {"AccessKey": "cPlayer:JohnnyAnotherPlayerClearFlag"}
+                        case ON:
+                          #158 CALL SNPC_gul:GulQuestNow_OtherClear
+                        case OFF:
+                          #96 CALL SNPC_gul:GulQuestNow
+                    case OFF:
+                      #143 MSG TalkSNpc/gul/SP_gul:121
+                      #144 MSG TalkSNpc/gul/SP_gul:122
+                      #145 MSG TalkSNpc/gul/SP_gul:123
+                      #141 CALL SNPC_gul:GulStart
+                      #104 ExitFlowchart {}
+            case OFF:
+              #87 IF EventFlagSystemBool {"AccessKey": "cPlayer:JohnnyQuestFinishFlag"}
+                case ON:
+                  #98 CALL SNPC_gul:GulAfterQuestChat
+                case OFF:
+                  #86 IF EventFlagSystemBool {"AccessKey": "cPlayer:JohnnyQuestStartFlag"}
+                    case ON:
+                      #148 MSG TalkSNpc/gul/SP_gul:126
+                      #151 MSG TalkSNpc/gul/SP_gul:112
+                      #149 MSG TalkSNpc/gul/SP_gul:127
+                      #105 SmartPhone {"ActionType": 6}
+                      #150 MSG TalkSNpc/gul/SP_gul:127_01
+                      #204 SmartPhone {"ActionType": 4}
+                      #205 MSG TalkSNpc/gul/SP_gul:128
+                      #206 SmartPhone {"ActionType": 5}
+                      #207 MSG TalkSNpc/gul/SP_gul:128_01
+                      #142 CALL SNPC_gul:GulStart
+                      #152 SmartPhone {"ActionType": 1}
+                      #106 ExitFlowchart {}
+                    case OFF:
+                      #146 MSG TalkSNpc/gul/SP_gul:121
+                      #147 MSG TalkSNpc/gul/SP_gul:125
+                      -> (#151)
+        case OFF:
+          #101 EventFlagSystemOn {"AccessKey": "cLandTemp:JohnnyTalkShareplay"}
+          -> (#88)
+    case OFF:
+      #79 IF EventFlagSystemBool {"AccessKey": "cPlayer:JohnnyQuestFinishFlag"}
+        case ON:
+          #80 CALL SNPC_gul:GulKeepSleep
+        case OFF:
+          #78 IF EventFlagSystemBool {"AccessKey": "cPlayer:JohnnyQuestStartFlag"}
+            case ON:
+              #94 CALL SNPC_gul:Gul_GetUp_Start
+            case OFF:
+              #95 CALL SNPC_gul:Gul_GetUp_NotStart
+== ENTRY Gul_GetUp_Start
+  #46 CALL SNPC_gul:GulSitUp
+  #155 MSG TalkSNpc/gul/SP_gul:080
+  #28 IF EventFlagSystemBool {"AccessKey": "cPlayer:JohnnyAnotherPlayerClearFlag"}
+    case ON:
+      #134 MSG TalkSNpc/gul/SP_gul:112
+      #135 MSG TalkSNpc/gul/SP_gul:113
+      #156 MSG TalkSNpc/gul/SP_gul:107
+      #136 MSG TalkSNpc/gul/SP_gul:114
+      #112 CALL SNPC_gul:GulStart
+      #90 ExitFlowchart {}
+    case OFF:
+      #133 MSG TalkSNpc/gul/SP_gul:110
+      -> (#112)
+== ENTRY Gul_GetUp_NotStart
+  #24 CALL SNPC_gul:GulSitUp
+  #11 IF GulFreeQuery2 {"GulQueryType": "cGulQueryType_OtherPlayerQuestNow"}
+    case 0:
+      #125 MSG TalkSNpc/gul/SP_gul:100
+      #126 MSG TalkSNpc/gul/SP_gul:101
+      #131 MSG TalkSNpc/gul/SP_gul:102
+      #132 MSG TalkSNpc/gul/SP_gul:103
+      #2 IF GeneralTalkChoice2 {}
+        case 0:
+          #16 MSG TalkSNpc/gul/SP_gul:020
+          #109 CALL SNPC_gul:GulStart
+          #82 SmartPhone {"ActionType": 1}
+          #29 ExitFlowchart {}
+        case 1:
+          #8 MSG TalkSNpc/gul/SP_gul:021
+          -> (#109)
+    case 1:
+      #31 IF GulFreeQuery2 {"GulQueryType": "cGulQueryType_OtherPlayerClear"}
+        case 0:
+          #127 MSG TalkSNpc/gul/SP_gul:100
+          #153 MSG TalkSNpc/gul/SP_gul:101
+          #208 MSG TalkSNpc/gul/SP_gul:105
+          #128 MSG TalkSNpc/gul/SP_gul:106
+          #235 SmartPhone {"ActionType": 6}
+          #129 MSG TalkSNpc/gul/SP_gul:106_01
+          #198 SmartPhone {"ActionType": 4}
+          #199 MSG TalkSNpc/gul/SP_gul:107
+          #200 SmartPhone {"ActionType": 5}
+          #130 MSG TalkSNpc/gul/SP_gul:108
+          -> (#2)
+        case 1:
+          #219 IF EventFlagSystemBool {"AccessKey": "cPlayer:JohnnySitUpBeforeFlag"}
+            case ON:
+              #47 IF RandomChoice4 {"ChoiceNumber": 4}
+                case 0:
+                  #51 MSG TalkSNpc/gul/SP_gul:005
+                  #52 MSG TalkSNpc/gul/SP_gul:006
+                  #81 SmartPhone {"ActionType": 6}
+                  #15 MSG TalkSNpc/gul/SP_gul:018
+                  #163 SmartPhone {"ActionType": 4}
+                  #164 MSG TalkSNpc/gul/SP_gul:018_01
+                  #165 SmartPhone {"ActionType": 5}
+                  #166 MSG TalkSNpc/gul/SP_gul:018_02
+                  #59 MSG TalkSNpc/gul/SP_gul:019
+                  -> (#2)
+                case 1:
+                  #53 MSG TalkSNpc/gul/SP_gul:008
+                  #54 MSG TalkSNpc/gul/SP_gul:009
+                  -> (#81)
+                case 2:
+                  #55 MSG TalkSNpc/gul/SP_gul:011
+                  #56 MSG TalkSNpc/gul/SP_gul:012
+                  -> (#81)
+                case 3:
+                  #57 MSG TalkSNpc/gul/SP_gul:014
+                  #58 MSG TalkSNpc/gul/SP_gul:015
+                  -> (#81)
+            case OFF:
+              #220 EventFlagSystemOn {"AccessKey": "cPlayer:JohnnySitUpBeforeFlag"}
+              #48 MSG TalkSNpc/gul/SP_gul:002
+              #49 MSG TalkSNpc/gul/SP_gul:003
+              #50 MSG TalkSNpc/gul/SP_gul:004
+              -> (#81)
+== ENTRY GulStart
+  #159 IF EventFlagSystemBool {"AccessKey": "cPlayer:JohnnyQuestStartFlag"}
+    case ON:
+      #160 MSG TalkSNpc/gul/SP_gul:023
+      #110 EventFlagSystemOn {"AccessKey": "cPlayer:JohnnyQuestStartFlag"}
+      #111 EventFlagSystemOn {"AccessKey": "cLandTemp:JohnnyTalkShareplay"}
+      #154 EventFlagSystemOff {"AccessKey": "cPlayer:JohnnyAnotherPlayerClearFlag"}
+    case OFF:
+      #108 MSG TalkSNpc/gul/SP_gul:022
+      -> (#110)
+== ENTRY GulGivePartsForced
+  #119 SetDeliveryItemAtRandom {"ItemUniqueID": 2381, "ApplyToSave": false, "ItemRemakeDecideType": "cVillageRemakePattern", "RemakePatternIndex": 0}
+  #117 NpcDelivery {"Command": 0, "Option": "Keep"}
+  #120 GulFreeAction {"GulActionType": "cGulActionType_PresentParts"}
+  #118 NpcDelivery {"Command": 3, "Option": "\"Default\""}
+== ENTRY GulQuestNow_OtherClear
+  #148 MSG TalkSNpc/gul/SP_gul:126
+  #151 MSG TalkSNpc/gul/SP_gul:112
+  #149 MSG TalkSNpc/gul/SP_gul:127
+  #105 SmartPhone {"ActionType": 6}
+  #150 MSG TalkSNpc/gul/SP_gul:127_01
+  #204 SmartPhone {"ActionType": 4}
+  #205 MSG TalkSNpc/gul/SP_gul:128
+  #206 SmartPhone {"ActionType": 5}
+  #207 MSG TalkSNpc/gul/SP_gul:128_01
+  #142 CALL SNPC_gul:GulStart
+  #152 SmartPhone {"ActionType": 1}
+  #106 ExitFlowchart {}
+== ENTRY GulAfterQuestChat
+  #195 IF RandomChoiceExcludePrevious3 {"IsSetSpeakerChoiceResult": true, "ChoiceNumber": 3}
+    case 0:
+      #190 MSG TalkSNpc/gul/SP_gul:040_01
+      #191 SmartPhone {"ActionType": 0}
+      #192 SmartPhone {"ActionType": 4}
+      #193 MSG TalkSNpc/gul/SP_gul:041
+      #194 SmartPhone {"ActionType": 1}
+      #183 IF RandomChoiceExcludePrevious3 {"IsSetSpeakerChoiceResult": true, "ChoiceNumber": 3}
+        case 0:
+          #179 MSG TalkSNpc/gul/SP_gul:042
+          #182 ExitFlowchart {}
+        case 1:
+          #180 MSG TalkSNpc/gul/SP_gul:043
+          -> (#182)
+        case 2:
+          #181 MSG TalkSNpc/gul/SP_gul:044
+          -> (#182)
+    case 1:
+      #196 MSG TalkSNpc/gul/SP_gul:040_02
+      -> (#191)
+    case 2:
+      #197 MSG TalkSNpc/gul/SP_gul:040_03
+      -> (#191)
+== ENTRY Gul_DC
+  #221 IF EventFlagSystemBool {"AccessKey": "cLand:JohnnySitUpFlag"}
+    case ON:
+      #223 IF EventFlagSystemBool {"AccessKey": "cLandTemp:JohnnyTalkShareplay"}
+        case ON:
+          #231 IF RandomChoiceExcludePrevious3 {"ChoiceNumber": 3, "IsSetSpeakerChoiceResult": true}
+            case 0:
+              #230 MSG TalkSNpc/gul/SP_gul:062_01
+            case 1:
+              #228 MSG TalkSNpc/gul/SP_gul:062_02
+            case 2:
+              #229 MSG TalkSNpc/gul/SP_gul:062_03
+        case OFF:
+          #227 IF RandomChoiceExcludePrevious3 {"ChoiceNumber": 3, "IsSetSpeakerChoiceResult": true}
+            case 0:
+              #226 MSG TalkSNpc/gul/SP_gul:061_01
+            case 1:
+              #224 MSG TalkSNpc/gul/SP_gul:061_02
+            case 2:
+              #225 MSG TalkSNpc/gul/SP_gul:061_03
+    case OFF:
+      #222 CALL SNPC_gul:GulKeepSleep

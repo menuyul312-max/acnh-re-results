@@ -1,0 +1,116 @@
+# SNPC_rcm_01_Tent_1_Entries (source: decoded EventFlow; bool flag case 0 = ON, case 1 = OFF; #N = event index)
+== ENTRY Request
+  #5 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcmDeclinedQuestReq"}
+    case ON:
+      #15 IF EventFlagSystemBool {"AccessKey": "cPlayerTemp:RcmTalkSceneFlag"}
+        case ON:
+          #25 UIMoneyAppear {}
+          #26 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:011
+          #27 CALL SNPC_rcm_01_Tent_1_Entries:RcmSelectWithConsultation
+        case OFF:
+          #16 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:010
+          #22 EventFlagSystemOn {"AccessKey": "cPlayerTemp:RcmTalkSceneFlag"}
+          #1 IF GeneralTalkChoice2 {}
+            case 0:
+              #2 EventFlagSystemOn {"AccessKey": "cPlayer:RcmTookQuestReq"}
+              #6 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:012_01
+              #30 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:012_02
+              #31 IF GeneralTalkChoice2 {}
+                case 0:
+                  #32 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:012_03
+                  #33 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:012_04
+                case 1:
+                  -> (#32)
+            case 1:
+              #28 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcmDeclinedQuestReq"}
+                case ON:
+                  #29 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:002_02
+                  #24 UIMoneyAppear {}
+                  #21 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:002_01
+                  #17 IF GeneralTalkChoice4 {}
+                    case 0:
+                      #19 CALL SNPC_rcm_00_Common_Sell:Root
+                    case 1:
+                      #18 CALL SNPC_rcm_00_Common:Rcm_Common_Buy
+                    case 2:
+                      #23 CALL SNPC_rcm_01_Tent_1_Entries:RcmConfirmConsultation
+                    case 3:
+                      #20 CALL SNPC_rcm_00_Common:rcm_Common_End
+                case OFF:
+                  #4 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:002
+                  #3 EventFlagSystemOn {"AccessKey": "cPlayer:RcmDeclinedQuestReq"}
+                  -> (#24)
+    case OFF:
+      #47 IF EventFlagSystemBool {"AccessKey": "cPlayerTemp:RcmTalkSceneFlag"}
+        case ON:
+          #48 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:001_00
+          #34 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:001_01
+          #35 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:001_10
+          -> (#22)
+        case OFF:
+          #0 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:001
+          -> (#34)
+== ENTRY Root
+  #46 CALL SNPC_rcm_01_Tent_1_Entries:RcmCmnGreeting
+  #36 IF GeneralTalkChoice4 {}
+    case 0:
+      #40 CALL SNPC_rcm_21_MaterialCollecting:Root
+    case 1:
+      #38 CALL SNPC_rcm_00_Common_Sell:Root
+    case 2:
+      #37 CALL SNPC_rcm_00_Common:Rcm_Common_Buy
+    case 3:
+      #39 CALL SNPC_rcm_00_Common:rcm_Common_End
+== ENTRY ReportTent
+  #12 IF EventFlagSystemBool {"AccessKey": "cLand:Prologue4BuiltShop"}
+    case ON:
+      #13 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:024
+      #14 EventFlagSystemOn {"AccessKey": "cPlayer:Prologue4RcmBuiltShop"}
+    case OFF:
+      #45 CALL SNPC_rcm_01_Tent_1_Entries:RcmCmnGreeting
+      #8 IF GeneralTalkChoice4 {}
+        case 0:
+          #7 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:023
+        case 1:
+          #10 CALL SNPC_rcm_00_Common_Sell:Root
+        case 2:
+          #9 CALL SNPC_rcm_00_Common:Rcm_Common_Buy
+        case 3:
+          #11 CALL SNPC_rcm_00_Common:rcm_Common_End
+== ENTRY RcmTentRequestSel4B
+  #36 IF GeneralTalkChoice4 {}
+    case 0:
+      #40 CALL SNPC_rcm_21_MaterialCollecting:Root
+    case 1:
+      #38 CALL SNPC_rcm_00_Common_Sell:Root
+    case 2:
+      #37 CALL SNPC_rcm_00_Common:Rcm_Common_Buy
+    case 3:
+      #39 CALL SNPC_rcm_00_Common:rcm_Common_End
+== ENTRY RcmConfirmConsultation
+  #2 EventFlagSystemOn {"AccessKey": "cPlayer:RcmTookQuestReq"}
+  #6 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:012_01
+  #30 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:012_02
+  #31 IF GeneralTalkChoice2 {}
+    case 0:
+      #32 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:012_03
+      #33 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:012_04
+    case 1:
+      -> (#32)
+== ENTRY RcmSelectWithConsultation
+  #17 IF GeneralTalkChoice4 {}
+    case 0:
+      #19 CALL SNPC_rcm_00_Common_Sell:Root
+    case 1:
+      #18 CALL SNPC_rcm_00_Common:Rcm_Common_Buy
+    case 2:
+      #23 CALL SNPC_rcm_01_Tent_1_Entries:RcmConfirmConsultation
+    case 3:
+      #20 CALL SNPC_rcm_00_Common:rcm_Common_End
+== ENTRY RcmCmnGreeting
+  #44 UIMoneyAppear {}
+  #42 IF EventFlagSystemBool {"AccessKey": "cPlayerTemp:RcmTalkSceneFlag"}
+    case ON:
+      #41 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:014
+    case OFF:
+      #43 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:013

@@ -1,0 +1,371 @@
+# SNPC_rco_01_Tent_1_Entries (source: decoded EventFlow; bool flag case 0 = ON, case 1 = OFF; #N = event index)
+== ENTRY RcoTentAboutMyhome
+  #17 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcoPaid1stCharge"}
+    case ON:
+      #89 CALL SNPC_rco_10_Common_AboutMyHome:Root
+    case OFF:
+      #115 IF PlayerHouseLevel {}
+        case 0:
+          #116 MSG TalkSNpc/rco/SP_rco_03_PcHouseTent:400
+        case 1:
+          #53 UISonkatsuPointAppear {}
+          #63 SetTagFromSystem {"Value": 5000, "TagType": "cFlow", "SetTagType": "cDegit", "TagID": 0, "AccessKey": ""}
+          #54 IF HasLifeSupportPoint {"LifeSupportPointCheckType": "Now", "Point": 5000}
+            case 0:
+              #56 MSG TalkSNpc/rco/SP_rco_03_PcHouseTent:402
+              #58 IF GeneralTalkChoice2 {}
+                case 0:
+                  #73 MSG TalkSNpc/rco/SP_rco_03_PcHouseTent:404
+                  #60 LifeSupportPointCountDown {"Point": -5000, "Reverse": false}
+                  #113 EventFlagSystemOn {"AccessKey": "cPlayer:RcoPaid1stCharge"}
+                  #114 EventFlagSystemAdd {"AccessKey": "cLifeSupportAchievement:PayImmigrationCost", "AddNum": 1}
+                  #61 MSG TalkSNpc/rco/SP_rco_03_PcHouseTent:405
+                  #62 UISonkatsuPointDisappear {}
+                  #0 MSG TalkSNpc/rco/SP_rco_03_PcHouseTent:406
+                  #1 IF GeneralTalkChoice3 {}
+                    case 0:
+                      #2 MSG TalkSNpc/rco/SP_rco_03_PcHouseTent:407_01
+                      #157 MSG TalkSNpc/rco/SP_rco_03_PcHouseTent:407_05
+                      #127 IF EventFlagSystemInt {"AccessKey": "cLand:OpeningSeqBGMChangeCounter", "Border": 8, "FlagCheckType": 5}
+                        case 0:
+                          #126 EventFlagSystemSet {"AccessKey": "cLand:OpeningSeqBGMChangeCounter", "SetNum": 8}
+                    case 1:
+                      #3 MSG TalkSNpc/rco/SP_rco_03_PcHouseTent:407_02
+                      -> (#157)
+                    case 2:
+                      #4 MSG TalkSNpc/rco/SP_rco_03_PcHouseTent:407_03
+                      -> (#157)
+                case 1:
+                  #59 MSG TalkSNpc/rco/SP_rco_03_PcHouseTent:403
+                  #55 UISonkatsuPointDisappear {}
+            case 1:
+              #57 MSG TalkSNpc/rco/SP_rco_03_PcHouseTent:401
+              -> (#55)
+        case 2:
+          -> (#53)
+        case 3:
+          -> (#53)
+        case 4:
+          -> (#53)
+        case 5:
+          -> (#53)
+        case 6:
+          -> (#53)
+        case 7:
+          -> (#53)
+        case 8:
+          -> (#53)
+== ENTRY RcoTentWhatShoudIdo
+  #121 CALL SNPC_rco_10_Common_WhatShouldIDo:Root
+== ENTRY RcoTentAskDIYtrial
+  #5 MSG TalkSNpc/rco/SP_rco_03_PcHouseTent:201
+  #6 IF GeneralTalkChoice3 {}
+    case 0:
+      #9 MSG TalkSNpc/rco/SP_rco_03_PcHouseTent:204
+      #12 FadeOut {"FadeOutKindString": "cCircle", "FadeInKindString": "cCircle", "FadeColorString": "cBlack", "FadeOutSpeed": 1.0, "FadeInSpeed": 1.0, "IsUseDucking": true}
+      #14 FadeIn {"IsWait": true}
+      #10 MSG TalkSNpc/rco/SP_rco_03_PcHouseTent:205
+      #11 MSG TalkSNpc/rco/SP_rco_03_PcHouseTent:206
+      #15 EventFlagSystemOn {"AccessKey": "cPlayer:RcoHeardDetailDIYtrial"}
+      #16 EventFlagSystemOn {"AccessKey": "cPlayer:RcoDIYtrialOngoing"}
+    case 1:
+      #7 MSG TalkSNpc/rco/SP_rco_03_PcHouseTent:202
+    case 2:
+      #8 MSG TalkSNpc/rco/SP_rco_03_PcHouseTent:203
+== ENTRY RcoTentFishInsect
+  #21 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcoTentDonation"}
+    case ON:
+      #51 IF EventFlagSystemBool {"AccessKey": "cPlayerTemp:RcoDonationNow"}
+        case ON:
+          #52 MSG TalkSNpc/rco/SP_rco_04_DonationReward:001_03
+          #19 UIItemSelectWindowHandling {"ItemUniqueID": 65534, "ItemKindType": "", "Mode": "cItemSelect", "FilterType": "cItemFilter", "ItemFilterType": "RcoDonationForMuseum"}
+          #20 IF UIResultMenuDecide {}
+            case 0:
+              #26 SetDeliveryItem {"SetItemTarget": 4, "ApplyToSave": false}
+              #25 SetTagFromUIResult {"TagType": "cItemName", "TagID": 0}
+              #27 NpcDelivery {"Command": 0, "Option": "Keep"}
+              #24 IF OwlIsDonation {"DonationCheckItemType": "cUISelect"}
+                case 0:
+                  #29 MSG TalkSNpc/rco/SP_rco_04_DonationReward:003_01
+                  #28 NpcDelivery {"Command": 10, "Option": "Default"}
+                case 1:
+                  #32 MSG TalkSNpc/rco/SP_rco_04_DonationReward:004
+                  #36 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcoTentDonation"}
+                    case ON:
+                      #40 MSG TalkSNpc/rco/SP_rco_04_DonationReward:005_03
+                      #31 IF GeneralTalkChoice2 {}
+                        case 0:
+                          #49 OwlDonationDone {"EntryVariableKeyBool_MultiComplete": "MultiComplete", "EntryVariableKeyInt_CompleteRoomType": "CompleteRoomType"}
+                          #85 IF MuseumDonationNumCheck {"Border": 5}
+                            case 0:
+                              #86 MSG TalkSNpc/rco/SP_rco_04_DonationReward:006_01
+                              #35 NpcDelivery {"Option": "Default", "Command": 3}
+                              #48 EventFlagSystemOn {"AccessKey": "cPlayer:RcoTentDonation"}
+                              #50 EventFlagSystemOn {"AccessKey": "cPlayerTemp:RcoDonationNow"}
+                              #47 CALL SNPC_rco_51_DonationReward:Root
+                            case 1:
+                              #34 MSG TalkSNpc/rco/SP_rco_04_DonationReward:006_01
+                              -> (#35)
+                        case 1:
+                          #88 MSG TalkSNpc/rco/SP_rco_04_DonationReward:010
+                          #33 NpcDelivery {"Command": 10, "Option": "Default"}
+                          #38 EventFlagSystemOn {"AccessKey": "cPlayer:RcoTentDonatinDeclined"}
+                    case OFF:
+                      #37 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcoTentDonatinDeclined"}
+                        case ON:
+                          #39 MSG TalkSNpc/rco/SP_rco_04_DonationReward:005_02
+                          -> (#31)
+                        case OFF:
+                          #30 MSG TalkSNpc/rco/SP_rco_04_DonationReward:005_01
+                          -> (#31)
+            case 1:
+              #23 MSG TalkSNpc/rco/SP_rco_04_DonationReward:002
+        case OFF:
+          #22 MSG TalkSNpc/rco/SP_rco_04_DonationReward:001_02
+          -> (#19)
+    case OFF:
+      #18 MSG TalkSNpc/rco/SP_rco_04_DonationReward:001_01
+      -> (#19)
+== ENTRY RcoDIYongoing
+  #41 IF HasTargetItem {"ItemUniqueId": 2500, "NeedNum": 5}
+    case 0:
+      #44 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcoDIYtrialGetMaterial"}
+        case ON:
+          #46 MSG TalkSNpc/rco/SP_rco_03_PcHouseTent:207
+        case OFF:
+          #43 MSG TalkSNpc/rco/SP_rco_03_PcHouseTent:921
+          #45 EventFlagSystemOn {"AccessKey": "cPlayer:RcoDIYtrialGetMaterial"}
+    case 1:
+      #42 MSG TalkSNpc/rco/SP_rco_03_PcHouseTent:911
+== ENTRY RcoTentAboutBuildMuseumTent
+  #64 EventFlagSystemOff {"AccessKey": "cPlayer:RcoTalkAfterMuseumTent"}
+  #65 MSG TalkSNpc/rco/SP_rco_04_DonationReward:016
+  #66 IF GeneralTalkChoice2 {}
+    case 0:
+      #67 MSG TalkSNpc/rco/SP_rco_04_DonationReward:017
+      #69 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcoPaid1stCharge"}
+        case OFF:
+          #68 IF EventFlagSystemBool {"AccessKey": "cLand:TodayStartTown1P"}
+            case ON:
+              #70 MSG TalkSNpc/rco/SP_rco_04_DonationReward:018_01
+              #72 MSG TalkSNpc/rco/SP_rco_04_DonationReward:019
+            case OFF:
+              #71 MSG TalkSNpc/rco/SP_rco_04_DonationReward:018_02
+              -> (#72)
+    case 1:
+      -> (#67)
+== ENTRY RcoTentImmQuestIntro_Force
+  #168 CALL SNPC_rco_01_Tent_1_Entries:RcoTent_Force_PlayerPos
+  #169 EventFlagSystemOn {"AccessKey": "cPlayerTemp:RcoTalkSceneFlag"}
+  #74 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:001
+  #102 CALL Demo_Common_PhoneCall:FinishCall
+  #75 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:002
+  #76 IF GeneralTalkChoice2 {}
+    case 0:
+      #77 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:003
+      #78 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:004
+      #79 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:005
+      #80 IF GeneralTalkChoice3 {}
+        case 0:
+          #81 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:006
+          #82 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:007
+          #83 EventFlagSystemOn {"AccessKey": "cPlayer:ImmQRunningForPlayer"}
+          #84 EventFlagSystemOn {"AccessKey": "cLand:RcmImmQuestRunning"}
+          #87 EventFlagSystemOn {"AccessKey": "cPlayer:RcoImmQClear1QuestToday"}
+        case 1:
+          -> (#81)
+        case 2:
+          -> (#81)
+    case 1:
+      -> (#77)
+== ENTRY RcoTentImmQuestIntroNotForce
+  #103 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:000_01
+  #104 CALL Demo_Common_PhoneCall:CallIn
+  #105 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:000_02
+  #74 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:001
+  #102 CALL Demo_Common_PhoneCall:FinishCall
+  #75 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:002
+  #76 IF GeneralTalkChoice2 {}
+    case 0:
+      #77 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:003
+      #78 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:004
+      #79 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:005
+      #80 IF GeneralTalkChoice3 {}
+        case 0:
+          #81 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:006
+          #82 MSG TalkSNpc/rco/SP_rco_05_MigrantsQuest:007
+          #83 EventFlagSystemOn {"AccessKey": "cPlayer:ImmQRunningForPlayer"}
+          #84 EventFlagSystemOn {"AccessKey": "cLand:RcmImmQuestRunning"}
+          #87 EventFlagSystemOn {"AccessKey": "cPlayer:RcoImmQClear1QuestToday"}
+        case 1:
+          -> (#81)
+        case 2:
+          -> (#81)
+    case 1:
+      -> (#77)
+== ENTRY RcoAskRemakeTrial
+  #142 NpcEventItemSet {"InsertTarget": "cTalk", "TagID": 0, "EntryVariableKeyInt_ItemPrice": "ItemPrice", "ItemUniqueId": 3436}
+  #178 RcoStandUpChair {}
+  #123 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcoRemakeTrialOngoing"}
+    case ON:
+      #124 IF HasTargetItem {"NeedNum": 1, "ItemUniqueId": 3436}
+        case 0:
+          #125 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcoRemakeTrialGetFurniture"}
+            case ON:
+              #147 MSG TalkSNpc/rco/SP_rco_09_RemakeWorkShop:111
+              #151 MSG TalkSNpc/rco/SP_rco_09_RemakeWorkShop:115
+              #148 IF SystemHasBaggageSpace {"CheckNum": 1, "CheckTargrt": "cPocketBag"}
+                case 0:
+                  #152 MSG TalkSNpc/rco/SP_rco_09_RemakeWorkShop:116
+                case 1:
+                  #150 MSG TalkSNpc/rco/SP_rco_09_RemakeWorkShop:114_02
+                  #153 EventFlagSystemOn {"AccessKey": "cPlayer:RemakeWs_TalkWhenItemFull"}
+            case OFF:
+              #146 EventFlagSystemOn {"AccessKey": "cPlayer:RcoRemakeTrialGetFurniture"}
+              #145 MSG TalkSNpc/rco/SP_rco_09_RemakeWorkShop:113
+              #149 MSG TalkSNpc/rco/SP_rco_09_RemakeWorkShop:114_01
+              -> (#148)
+        case 1:
+          #181 NpcWaitTalkPrepare {}
+          #180 NpcWaitTurn {}
+          #184 FORK
+            || #189 IF EventFlagSystemBool {"AccessKey": "cPlayerTemp:RcoAccessWorkingTable"}
+            ||   case ON:
+            ||     #182 PlayerChangeStateDemoTalk {}
+            || #143 MSG TalkSNpc/rco/SP_rco_09_RemakeWorkShop:111
+          #144 MSG TalkSNpc/rco/SP_rco_09_RemakeWorkShop:112
+          #190 EventFlagSystemOff {"AccessKey": "cPlayerTemp:RcoAccessWorkingTable"}
+    case OFF:
+      #177 NpcWaitTalkPrepare {}
+      #176 NpcWaitTurn {}
+      #191 EventFlagSystemOff {"AccessKey": "cPlayer:RcoTalkAboutRemakeTrial"}
+      #192 EventFlagSystemOn {"AccessKey": "cPlayer:RcoHeardInviteRemakeWS"}
+      #173 FORK
+        || #188 IF EventFlagSystemBool {"AccessKey": "cPlayerTemp:RcoAccessWorkingTable"}
+        ||   case ON:
+        ||     #171 PlayerChangeStateDemoTalk {}
+        || #128 MSG TalkSNpc/rco/SP_rco_09_RemakeWorkShop:101
+      #90 IF GeneralTalkChoice3 {}
+        case 0:
+          #129 MSG TalkSNpc/rco/SP_rco_09_RemakeWorkShop:103
+          #91 FadeOut {"FadeOutKindString": "cCircle", "FadeInKindString": "cCircle", "FadeColorString": "cBlack", "FadeOutSpeed": 1.0, "FadeInSpeed": 1.0, "IsUseDucking": true}
+          #93 FadeIn {"IsWait": true}
+          #132 MSG TalkSNpc/rco/SP_rco_09_RemakeWorkShop:201
+          #133 MSG TalkSNpc/rco/SP_rco_09_RemakeWorkShop:202
+          #134 IF EventFlagSystemBool {"AccessKey": "cPlayer:UseCloset"}
+            case ON:
+              #135 MSG TalkSNpc/rco/SP_rco_09_RemakeWorkShop:203_01
+              #137 MSG TalkSNpc/rco/SP_rco_09_RemakeWorkShop:204
+              #99 IF PlayerHasCraftRecipe {"UnlockType": "", "ItemUniqueId": 3436}
+                case 0:
+                  #141 MSG TalkSNpc/rco/SP_rco_09_RemakeWorkShop:206
+                  #94 EventFlagSystemOn {"AccessKey": "cPlayer:RcoRemakeTrialOngoing"}
+                  #186 EventFlagSystemOff {"AccessKey": "cPlayerTemp:RcoAccessWorkingTable"}
+                  #122 ExitFlowchart {}
+                case 1:
+                  #138 MSG TalkSNpc/rco/SP_rco_09_RemakeWorkShop:205_01
+                  #139 CALL Demo_Common_PhoneCall:SendingDataOneWay_DynamicJoin
+                  #140 MSG TalkSNpc/rco/SP_rco_09_RemakeWorkShop:205_02
+                  #100 PlayerSetCraftRecipe {"UnlockType": "", "ItemUniqueId": 3436}
+                  #156 SmartPhone {"ActionType": 1}
+                  -> (#141)
+            case OFF:
+              #136 MSG TalkSNpc/rco/SP_rco_09_RemakeWorkShop:203_02
+              -> (#137)
+        case 1:
+          #130 MSG TalkSNpc/rco/SP_rco_09_RemakeWorkShop:104
+          #96 IF GeneralTalkChoice2 {}
+            case 0:
+              #97 CALL SNPC_rco_01_Tent_1_Entries:DoRemakeTrial
+            case 1:
+              #98 CALL SNPC_rco_01_Tent_1_Entries:CancelRemakeTrial
+        case 2:
+          #131 MSG TalkSNpc/rco/SP_rco_09_RemakeWorkShop:102
+          #187 EventFlagSystemOff {"AccessKey": "cPlayerTemp:RcoAccessWorkingTable"}
+== ENTRY RcoRemakeTrialIntro
+  #118 MSG TalkSNpc/rco/SP_rco_00_Common:000
+  #117 IF EventFlagSystemBool {"AccessKey": "cPlayer:PAnnouceHeardRemakeWsNewsToday"}
+    case ON:
+      #119 MSG TalkSNpc/rco/SP_rco_09_RemakeWorkShop:001_01
+      #95 EventFlagSystemOn {"AccessKey": "cPlayer:RcoEnableRemakeTrial"}
+      #101 EventFlagSystemOff {"AccessKey": "cPlayer:RcoTalkAboutRemakeTrial"}
+      #170 EventFlagSystemOn {"AccessKey": "cPlayer:RcoHeardInviteRemakeWS"}
+    case OFF:
+      #120 MSG TalkSNpc/rco/SP_rco_09_RemakeWorkShop:001_02
+      -> (#95)
+== ENTRY DoRemakeTrial
+  #129 MSG TalkSNpc/rco/SP_rco_09_RemakeWorkShop:103
+  #91 FadeOut {"FadeOutKindString": "cCircle", "FadeInKindString": "cCircle", "FadeColorString": "cBlack", "FadeOutSpeed": 1.0, "FadeInSpeed": 1.0, "IsUseDucking": true}
+  #93 FadeIn {"IsWait": true}
+  #132 MSG TalkSNpc/rco/SP_rco_09_RemakeWorkShop:201
+  #133 MSG TalkSNpc/rco/SP_rco_09_RemakeWorkShop:202
+  #134 IF EventFlagSystemBool {"AccessKey": "cPlayer:UseCloset"}
+    case ON:
+      #135 MSG TalkSNpc/rco/SP_rco_09_RemakeWorkShop:203_01
+      #137 MSG TalkSNpc/rco/SP_rco_09_RemakeWorkShop:204
+      #99 IF PlayerHasCraftRecipe {"UnlockType": "", "ItemUniqueId": 3436}
+        case 0:
+          #141 MSG TalkSNpc/rco/SP_rco_09_RemakeWorkShop:206
+          #94 EventFlagSystemOn {"AccessKey": "cPlayer:RcoRemakeTrialOngoing"}
+          #186 EventFlagSystemOff {"AccessKey": "cPlayerTemp:RcoAccessWorkingTable"}
+          #122 ExitFlowchart {}
+        case 1:
+          #138 MSG TalkSNpc/rco/SP_rco_09_RemakeWorkShop:205_01
+          #139 CALL Demo_Common_PhoneCall:SendingDataOneWay_DynamicJoin
+          #140 MSG TalkSNpc/rco/SP_rco_09_RemakeWorkShop:205_02
+          #100 PlayerSetCraftRecipe {"UnlockType": "", "ItemUniqueId": 3436}
+          #156 SmartPhone {"ActionType": 1}
+          -> (#141)
+    case OFF:
+      #136 MSG TalkSNpc/rco/SP_rco_09_RemakeWorkShop:203_02
+      -> (#137)
+== ENTRY CancelRemakeTrial
+  #131 MSG TalkSNpc/rco/SP_rco_09_RemakeWorkShop:102
+  #187 EventFlagSystemOff {"AccessKey": "cPlayerTemp:RcoAccessWorkingTable"}
+== ENTRY AboutBuildMuseumTent_Force
+  #164 CALL SNPC_rco_01_Tent_1_Entries:RcoTent_Force_PlayerPos
+  #154 EventFlagSystemOn {"AccessKey": "cPlayerTemp:RcoTalkSceneFlag"}
+  #64 EventFlagSystemOff {"AccessKey": "cPlayer:RcoTalkAfterMuseumTent"}
+  #65 MSG TalkSNpc/rco/SP_rco_04_DonationReward:016
+  #66 IF GeneralTalkChoice2 {}
+    case 0:
+      #67 MSG TalkSNpc/rco/SP_rco_04_DonationReward:017
+      #69 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcoPaid1stCharge"}
+        case OFF:
+          #68 IF EventFlagSystemBool {"AccessKey": "cLand:TodayStartTown1P"}
+            case ON:
+              #70 MSG TalkSNpc/rco/SP_rco_04_DonationReward:018_01
+              #72 MSG TalkSNpc/rco/SP_rco_04_DonationReward:019
+            case OFF:
+              #71 MSG TalkSNpc/rco/SP_rco_04_DonationReward:018_02
+              -> (#72)
+    case 1:
+      -> (#67)
+== ENTRY RcoRemakeTrialIntro_Force
+  #166 CALL SNPC_rco_01_Tent_1_Entries:RcoTent_Force_PlayerPos
+  #155 EventFlagSystemOn {"AccessKey": "cPlayerTemp:RcoTalkSceneFlag"}
+  #118 MSG TalkSNpc/rco/SP_rco_00_Common:000
+  #117 IF EventFlagSystemBool {"AccessKey": "cPlayer:PAnnouceHeardRemakeWsNewsToday"}
+    case ON:
+      #119 MSG TalkSNpc/rco/SP_rco_09_RemakeWorkShop:001_01
+      #95 EventFlagSystemOn {"AccessKey": "cPlayer:RcoEnableRemakeTrial"}
+      #101 EventFlagSystemOff {"AccessKey": "cPlayer:RcoTalkAboutRemakeTrial"}
+      #170 EventFlagSystemOn {"AccessKey": "cPlayer:RcoHeardInviteRemakeWS"}
+    case OFF:
+      #120 MSG TalkSNpc/rco/SP_rco_09_RemakeWorkShop:001_02
+      -> (#95)
+== ENTRY RcoTent_Force_PlayerPos
+  #158 IF SystemCheckNowStage {"CheckStage": "cIdrTanukichi"}
+    case 0:
+      #159 PlayerMoveToTarget {"PosIsOffset": false, "MiddleTargetX": 0.0, "MiddleTargetZ": 0.0, "UseStateAfterWait": false, "StateAfterWait": "", "TargetZ": 170.0, "TargetX": 157.0}
+      #162 TalkCamera {"IsInterpolate": true, "Option": 0}
+== ENTRY RcoTent_Force_DisableTalkCamera
+  #161 IF SystemCheckNowStage {"CheckStage": "cIdrTanukichi"}
+    case 0:
+      #160 NpcAISetting {"SettingType": 4, "Flag": false}
+== ENTRY AboutBuildMuseumTent_Force_Init
+  #163 CALL SNPC_rco_01_Tent_1_Entries:RcoTent_Force_DisableTalkCamera
+== ENTRY RcoRemakeTrialIntro_Force_Init
+  #165 CALL SNPC_rco_01_Tent_1_Entries:RcoTent_Force_DisableTalkCamera
+== ENTRY RcoTentImmQuestIntro_Force_Init
+  #167 CALL SNPC_rco_01_Tent_1_Entries:RcoTent_Force_DisableTalkCamera

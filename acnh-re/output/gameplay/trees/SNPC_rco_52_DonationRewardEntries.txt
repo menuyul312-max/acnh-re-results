@@ -1,0 +1,106 @@
+# SNPC_rco_52_DonationRewardEntries (source: decoded EventFlow; bool flag case 0 = ON, case 1 = OFF; #N = event index)
+== ENTRY RcoDonationReward1
+  #1 MSG TalkSNpc/rco/SP_rco_04_DonationReward:011_01
+  #48 SmartPhone {"ActionType": 0}
+  #51 MSG TalkSNpc/rco/SP_rco_04_DonationReward:011_01_01
+  #56 CALL Demo_Common_PhoneCall:SendingDataWithP
+  #0 EventFlagSystemOn {"AccessKey": "cPlayer:MainmenuEncyclopedia"}
+  #53 UIMenuDeviceAppear {"EventType": "cInstall", "Application": "cEncyclopedia"}
+  #2 MSG TalkSNpc/rco/SP_rco_04_DonationReward:011_02
+  #57 CALL Demo_Common_PhoneCall:PuttingMobileAwayWithP
+  #50 MSG TalkSNpc/rco/SP_rco_04_DonationReward:011_03
+== ENTRY RcoDonationReward2
+  #3 MSG TalkSNpc/rco/SP_rco_04_DonationReward:012_01
+  #4 IF GeneralTalkChoice2 {}
+    case 0:
+      #9 IF EventFlagSystemBool {"AccessKey": "cPlayerTemp:RcoDoneDIYmeselfNow"}
+        case ON:
+          #7 MSG TalkSNpc/rco/SP_rco_04_DonationReward:012_03
+          #10 MSG TalkSNpc/rco/SP_rco_04_DonationReward:012_05
+          #63 SmartPhone {"ActionType": 0}
+          #58 CALL Demo_Common_PhoneCall:SendingDataWithP
+          #59 CALL Demo_Common_PhoneCall:PuttingMobileAwayWithP
+          #12 PlayerSetCraftRecipe {"UnlockType": "RcoDonationRewardA", "ItemUniqueId": 65534}
+          #64 EventFlagSystemOn {"AccessKey": "cLand:ShopUnlockAxe"}
+          #13 MSG TalkSNpc/rco/SP_rco_04_DonationReward:012_07
+        case OFF:
+          #5 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcoDoneDIYmyself"}
+            case ON:
+              #6 MSG TalkSNpc/rco/SP_rco_04_DonationReward:012_02
+              -> (#10)
+            case OFF:
+              #8 MSG TalkSNpc/rco/SP_rco_04_DonationReward:012_04
+              -> (#10)
+    case 1:
+      #11 MSG TalkSNpc/rco/SP_rco_04_DonationReward:012_06
+      -> (#63)
+== ENTRY RcoDonationReward3
+  #14 MSG TalkSNpc/rco/SP_rco_04_DonationReward:013_01
+  #65 CALL SNPC_rco_52_DonationRewardEntries:RcoTent_GiveSeeds
+  #68 SetItemName {"ItemTarget": 14, "TagType": 0, "ID": 0}
+  #18 NpcDelivery {"Command": 1, "Option": "Keep"}
+  #15 IF ShopLevel {}
+    case 0:
+      #16 MSG TalkSNpc/rco/SP_rco_04_DonationReward:013_02
+      #19 NpcDelivery {"Command": 2, "Option": "Default"}
+      #21 EventFlagSystemOn {"AccessKey": "cPlayer:RcoGotDonationRewardFlower"}
+    case 1:
+      #17 MSG TalkSNpc/rco/SP_rco_04_DonationReward:013_03
+      -> (#19)
+    case 2:
+      -> (#17)
+== ENTRY RcoTent_GiveSeeds
+  #40 IF VillageFlower {"VillageFlowerType": "cVillageCreate"}
+    case 0:
+      #45 SetItemToPocket {"SetNum": 5, "ItemUniqueId": 3769}
+      #66 SetDeliveryItemAtRandom {"ApplyToSave": false, "ItemRemakeDecideType": "cVillageRemakePattern", "RemakePatternIndex": 0, "ItemUniqueID": 3769}
+    case 1:
+      #46 SetItemToPocket {"SetNum": 5, "ItemUniqueId": 2984}
+      #67 SetDeliveryItemAtRandom {"ApplyToSave": false, "ItemRemakeDecideType": "cVillageRemakePattern", "RemakePatternIndex": 0, "ItemUniqueID": 2984}
+    case 2:
+      #43 SetItemToPocket {"SetNum": 5, "ItemUniqueId": 2626}
+      #69 SetDeliveryItemAtRandom {"ApplyToSave": false, "ItemRemakeDecideType": "cVillageRemakePattern", "RemakePatternIndex": 0, "ItemUniqueID": 2626}
+    case 3:
+      #44 SetItemToPocket {"SetNum": 5, "ItemUniqueId": 3745}
+      #70 SetDeliveryItemAtRandom {"ApplyToSave": false, "ItemRemakeDecideType": "cVillageRemakePattern", "RemakePatternIndex": 0, "ItemUniqueID": 3745}
+    case 4:
+      #42 SetItemToPocket {"ItemUniqueId": 2936, "SetNum": 5}
+      #71 SetDeliveryItemAtRandom {"ApplyToSave": false, "ItemRemakeDecideType": "cVillageRemakePattern", "RemakePatternIndex": 0, "ItemUniqueID": 2936}
+    case 5:
+      #47 SetItemToPocket {"SetNum": 5, "ItemUniqueId": 3724}
+      #72 SetDeliveryItemAtRandom {"ApplyToSave": false, "ItemRemakeDecideType": "cVillageRemakePattern", "RemakePatternIndex": 0, "ItemUniqueID": 3724}
+    case 6:
+      #41 SetItemToPocket {"ItemUniqueId": 2884, "SetNum": 5}
+      #73 SetDeliveryItemAtRandom {"ApplyToSave": false, "ItemRemakeDecideType": "cVillageRemakePattern", "RemakePatternIndex": 0, "ItemUniqueID": 2884}
+    case 7:
+      #39 SetItemToPocket {"ItemUniqueId": 2912, "SetNum": 5}
+      #74 SetDeliveryItemAtRandom {"ApplyToSave": false, "ItemRemakeDecideType": "cVillageRemakePattern", "RemakePatternIndex": 0, "ItemUniqueID": 2912}
+== ENTRY RcoDonationReward4
+  #20 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcoGotDonationRewardFlower"}
+    case ON:
+      #22 MSG TalkSNpc/rco/SP_rco_04_DonationReward:014_01
+      #24 MSG TalkSNpc/rco/SP_rco_04_DonationReward:014_03
+      #62 CALL Demo_Common_PhoneCall:SendingDataOneWay
+      #61 PlayerSetCraftRecipe {"UnlockType": "None", "ItemUniqueId": 3083}
+      #25 MSG TalkSNpc/rco/SP_rco_04_DonationReward:014_04
+      #49 SmartPhone {"ActionType": 1}
+      #52 MSG TalkSNpc/rco/SP_rco_04_DonationReward:014_05
+    case OFF:
+      #23 MSG TalkSNpc/rco/SP_rco_04_DonationReward:014_02
+      -> (#24)
+== ENTRY RcoDonationReward5
+  #54 CALL Demo_Common_PhoneCall:CallIn
+  #26 MSG TalkSNpc/rco/SP_rco_04_DonationReward:015_02
+  #27 MSG TalkSNpc/rco/SP_rco_04_DonationReward:015_03
+  #28 MSG TalkSNpc/rco/SP_rco_04_DonationReward:015_04
+  #55 CALL Demo_Common_PhoneCall:FinishCall
+  #29 MSG TalkSNpc/rco/SP_rco_04_DonationReward:015_05
+  #30 MSG TalkSNpc/rco/SP_rco_04_DonationReward:015_06
+  #31 MSG TalkSNpc/rco/SP_rco_04_DonationReward:015_07
+  #35 SetDeliveryItemAtRandom {"ItemUniqueID": 2755, "ApplyToSave": true, "ItemRemakeDecideType": "cVillageRemakePattern", "RemakePatternIndex": 0}
+  #36 NpcDelivery {"Command": 1, "Option": "Keep"}
+  #37 EventFlagSystemOn {"AccessKey": "cPlayer:Prologue4OwlGetTent"}
+  #32 MSG TalkSNpc/rco/SP_rco_04_DonationReward:015_08
+  #33 MSG TalkSNpc/rco/SP_rco_04_DonationReward:015_09
+  #34 MSG TalkSNpc/rco/SP_rco_04_DonationReward:015_10
+  #38 NpcDelivery {"Option": "Default", "Command": 2}

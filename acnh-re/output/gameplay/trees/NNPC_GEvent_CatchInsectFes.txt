@@ -1,0 +1,70 @@
+# NNPC_GEvent_CatchInsectFes (source: decoded EventFlow; bool flag case 0 = ON, case 1 = OFF; #N = event index)
+== ENTRY Root
+  #22 IF SystemCheckNowStage {"CheckStage": "cField"}
+    case 0:
+      #13 IF EventCheck {"EventLabelString": "InsectConvention"}
+        case 0:
+          #23 CALL NNPC_GEvent_CatchInsectFes:NNPC_BeforeEV
+        case 1:
+          #24 CALL NNPC_GEvent_CatchInsectFes:NNPC_OpenEV
+        case 2:
+          #31 IF EnvHourCompare {"Hour": 19, "Minute": -1, "IsMidNight": true, "IsOverGrowUpTime": true}
+            case 0:
+              #25 CALL NNPC_GEvent_CatchInsectFes:NNPC_AfterEV
+            case 1:
+              -> (#25)
+== ENTRY NNPC_BeforeEV
+  #0 IF RandomChoice3 {"ChoiceNumber": 3}
+    case 0:
+      #2 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_CatchInsectFes:001
+      #26 ExitFlowchart {}
+    case 1:
+      #1 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_CatchInsectFes:002
+      -> (#26)
+    case 2:
+      #3 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_CatchInsectFes:003
+      -> (#26)
+== ENTRY NNPC_OpenEV
+  #30 IF IsMyVillage {}
+    case 0:
+      #14 IF EventFlagNpcBool {"AccessKey": "cNpcMemory:GEventTalkProgressFlag"}
+        case ON:
+          #15 IF RandomChoiceExcludePrevious4 {"ChoiceNumber": 4, "IsSetSpeakerChoiceResult": true}
+            case 0:
+              #17 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_CatchInsectFes:010
+              #27 ExitFlowchart {}
+            case 1:
+              #18 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_CatchInsectFes:011
+              -> (#27)
+            case 2:
+              #19 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_CatchInsectFes:012
+              -> (#27)
+            case 3:
+              #20 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_CatchInsectFes:013
+              -> (#27)
+        case OFF:
+          #16 EventFlagNpcOn {"AccessKey": "cNpcMemory:GEventTalkProgressFlag"}
+          #11 IF RandomChoice3 {"ChoiceNumber": 3}
+            case 0:
+              #8 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_CatchInsectFes:004
+              #28 ExitFlowchart {}
+            case 1:
+              #9 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_CatchInsectFes:005
+              -> (#28)
+            case 2:
+              #10 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_CatchInsectFes:006
+              -> (#28)
+== ENTRY NNPC_AfterEV
+  #21 IF EventFlagNpcBool {"AccessKey": "cNpcMemory:GEventTalkAfterFlag"}
+    case OFF:
+      #12 EventFlagNpcOn {"AccessKey": "cNpcMemory:GEventTalkAfterFlag"}
+      #7 IF RandomChoice3 {"ChoiceNumber": 3}
+        case 0:
+          #4 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_CatchInsectFes:008
+          #29 ExitFlowchart {}
+        case 1:
+          #5 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_CatchInsectFes:009
+          -> (#29)
+        case 2:
+          #6 MSG TalkNNpc/B1_Bo/GEvent/BO_GEvent_CatchInsectFes:007
+          -> (#29)

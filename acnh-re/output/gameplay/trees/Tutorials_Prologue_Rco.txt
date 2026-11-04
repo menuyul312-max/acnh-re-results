@@ -1,0 +1,259 @@
+# Tutorials_Prologue_Rco (source: decoded EventFlow; bool flag case 0 = ON, case 1 = OFF; #N = event index)
+== ENTRY Root
+  #51 SetNpcName {"NpcNameType": 14, "ID": 0}
+  #52 SetNpcName {"NpcNameType": 13, "ID": 1}
+  #4 IF EventFlagSystemBool {"AccessKey": "cPlayer:PrologueAfterBuiltTentTalk"}
+    case ON:
+      #9 IF EventFlagSystemBool {"AccessKey": "cPlayer:PrologueForCampfire1"}
+        case ON:
+          #29 IF EventFlagSystemBool {"AccessKey": "cPlayer:PrologueForCampfire2"}
+            case ON:
+              #46 IF EventFlagSystemBool {"AccessKey": "cPlayer:PrologueStartedCampfire"}
+                case ON:
+                  #57 IF EventFlagSystemBool {"AccessKey": "cPlayer:AllowPcTentEntering"}
+                    case ON:
+                      #58 MSG Tutorials/Tutorials_Prologue4_Orientation3:061
+                    case OFF:
+                      #73 IF ShoppingCapacity {"ItemUniqueId": 4081, "CapacityCheckType": "cItemName"}
+                        case 0:
+                          #74 IF EnvTimeZone {}
+                            case 0:
+                              #75 MSG Tutorials/Tutorials_Prologue4_Orientation3:051_01
+                              #48 IF GeneralTalkChoice2 {}
+                                case 0:
+                                  #49 MSG Tutorials/Tutorials_Prologue4_Orientation3:052
+                                  #55 SetDeliveryItemAtRandom {"ApplyToSave": true, "ItemUniqueID": 4081, "ItemRemakeDecideType": "cVillageRemakePattern", "RemakePatternIndex": 0}
+                                  #56 NpcDelivery {"Command": 1, "Option": "Default"}
+                                  #53 MSG Tutorials/Tutorials_Prologue4_Orientation3:053
+                                  #54 MSG Tutorials/Tutorials_Prologue4_Orientation3:054
+                                  #50 EventFlagSystemOn {"AccessKey": "cPlayer:AllowPcTentEntering"}
+                                case 1:
+                                  #80 MSG Tutorials/Tutorials_Prologue4_Orientation3:057
+                                  #81 MSG Tutorials/Tutorials_Prologue4_Orientation3:058
+                            case 1:
+                              -> (#75)
+                            case 2:
+                              -> (#75)
+                            case 3:
+                              -> (#75)
+                            case 4:
+                              #47 MSG Tutorials/Tutorials_Prologue4_Orientation3:051
+                              -> (#48)
+                            case 5:
+                              -> (#47)
+                        case 1:
+                          #79 IF EnvTimeZone {}
+                            case 0:
+                              #77 MSG Tutorials/Tutorials_Prologue4_Orientation3:055_02
+                              #78 MSG Tutorials/Tutorials_Prologue4_Orientation3:056
+                            case 1:
+                              -> (#77)
+                            case 2:
+                              -> (#77)
+                            case 3:
+                              -> (#77)
+                            case 4:
+                              #76 MSG Tutorials/Tutorials_Prologue4_Orientation3:055_01
+                              -> (#78)
+                            case 5:
+                              -> (#76)
+                case OFF:
+                  #33 CALL Tutorials_Prologue_Rco:TownFruitTypeChk
+                  #32 IF EventFlagSystemBool {"AccessKey": "cPlayer:HaveTownFruit4CampFire"}
+                    case ON:
+                      #34 MSG Tutorials/Tutorials_Prologue4_Orientation3:031
+                      #45 NpcDelivery {"Command": 0, "Option": "Keep"}
+                      #82 FadeOut {"FadeColorString": "cBlack", "FadeOutKindString": "cCircle", "FadeInKindString": "cCircle", "FadeOutSpeed": 0.699999988079071, "FadeInSpeed": 0.699999988079071, "IsUseDucking": true}
+                      #89 BGMPropertyControl {"BGMProperty": 78}
+                      #91 EnvSetDemoTime {"Minute": 0, "Second": 0, "Hour": 20}
+                      #83 EventFlagSystemOn {"AccessKey": "cLand:SetPrologueBonfire"}
+                      #92 EventFlagSystemOn {"AccessKey": "cPlayer:PrologueStartedCampfire"}
+                      #90 SystemReenterStage {"Type": 3, "FadeOutKindString": "cCircle", "FadeInKindString": "cCircle", "FadeColorString": "cBlack", "FadeOutSpeed": 1.0, "FadeInSpeed": 1.0}
+                    case OFF:
+                      #31 MSG Tutorials/Tutorials_Prologue4_Orientation3:021
+            case OFF:
+              #84 IF HasTargetItem {"ItemUniqueId": 2500, "NeedNum": 11}
+                case 0:
+                  #85 MSG Tutorials/Tutorials_Prologue4_Orientation3:013_01
+                  #13 SetDeliveryItemAtRandom {"ItemUniqueID": 2500, "ApplyToSave": false, "ItemRemakeDecideType": "cVillageRemakePattern", "RemakePatternIndex": 0}
+                  #12 NpcDelivery {"Command": 0, "Option": "Keep"}
+                  #15 MSG Tutorials/Tutorials_Prologue4_Orientation3:014
+                  #14 DeleteTargetItem {"ItemUniqueId": 2500, "DeleteNum": 10}
+                  #30 NpcDelivery {"Command": 3, "Option": "Default"}
+                  #16 MSG Tutorials/Tutorials_Prologue4_Orientation3:015
+                  #28 EventFlagSystemOn {"AccessKey": "cPlayer:PrologueForCampfire2"}
+                  #61 EventFlagSystemOn {"AccessKey": "cLand:ConfirmedFruit"}
+                  #26 CALL Tutorials_Prologue_Rco:TownFruitTypeChk
+                  #25 IF EventFlagSystemBool {"AccessKey": "cPlayer:HaveTownFruit4CampFire"}
+                    case ON:
+                      #23 MSG Tutorials/Tutorials_Prologue4_Orientation3:017
+                      -> (#45)
+                    case OFF:
+                      #27 MSG Tutorials/Tutorials_Prologue4_Orientation3:016
+                case 1:
+                  #8 IF HasTargetItem {"ItemUniqueId": 2500, "NeedNum": 10}
+                    case 0:
+                      #11 MSG Tutorials/Tutorials_Prologue4_Orientation3:013
+                      -> (#13)
+                    case 1:
+                      #10 MSG Tutorials/Tutorials_Prologue4_Orientation3:012
+        case OFF:
+          #5 MSG Tutorials/Tutorials_Prologue4_Orientation3:011
+          #88 BGMPropertyControl {"BGMProperty": 79}
+          #6 EventFlagSystemOn {"AccessKey": "cPlayer:PrologueForCampfire1"}
+          #7 EventFlagSystemOn {"AccessKey": "cPlayer:PlayerPickupEnable"}
+          #86 EventFlagSystemSet {"AccessKey": "cLand:OpeningSeqBGMChangeCounter", "SetNum": 4}
+    case OFF:
+      #2 IF EventFlagSystemBool {"AccessKey": "cPlayer:PlayerPocketUIEnable"}
+        case ON:
+          #0 IF EventFlagSystemBool {"AccessKey": "cLand:Prologue4BuiltPlayer"}
+            case ON:
+              #111 CALL Tutorials_Prologue_Rco:ChkNpcTentStatus
+              #66 IF EventFlagSystemBool {"AccessKey": "cPlayer:Prologue4AfterBuiltPcTent"}
+                case ON:
+                  #108 IF SubflowResultChoice8 {"SetIndex": 0}
+                    case 0:
+                      #109 MSG Tutorials/Tutorials_Prologue4_Orientation2_Rco:012
+                    case 1:
+                      #114 MSG Tutorials/Tutorials_Prologue4_Orientation2_Rco:019
+                    case 2:
+                      -> (#114)
+                    case 3:
+                      #110 MSG Tutorials/Tutorials_Prologue4_Orientation2_Rco:016
+                    case 4:
+                      #67 MSG Tutorials/Tutorials_Prologue4_Orientation2_Rco:013
+                    case 5:
+                      #69 MSG Tutorials/Tutorials_Prologue4_Orientation2_Rco:018
+                    case 6:
+                      #68 MSG Tutorials/Tutorials_Prologue4_Orientation2_Rco:014
+                    case 7:
+                      #70 MSG Tutorials/Tutorials_Prologue4_Orientation2_Rco:017
+                case OFF:
+                  #60 EventFlagSystemOn {"AccessKey": "cPlayer:Prologue4AfterBuiltPcTent"}
+                  #59 MSG Tutorials/Tutorials_Prologue4_Orientation2_Rco:011
+                  #112 IF SubflowResultChoice8 {"SetIndex": 0}
+                    case 0:
+                      #64 MSG Tutorials/Tutorials_Prologue4_Orientation2_Rco:012
+                    case 1:
+                      #65 MSG Tutorials/Tutorials_Prologue4_Orientation2_Rco:015
+                    case 2:
+                      -> (#65)
+                    case 3:
+                      -> (#65)
+                    case 4:
+                      #62 MSG Tutorials/Tutorials_Prologue4_Orientation2_Rco:013
+                    case 5:
+                      #113 MSG Tutorials/Tutorials_Prologue4_Orientation2_Rco:015
+                    case 6:
+                      #63 MSG Tutorials/Tutorials_Prologue4_Orientation2_Rco:014
+                    case 7:
+                      -> (#113)
+            case OFF:
+              #3 MSG Tutorials/Tutorials_Prologue4_Orientation2_Rco:002
+        case OFF:
+          #1 MSG Tutorials/Tutorials_Prologue4_Orientation2_Rco:001
+== ENTRY Prologue4_AfterBuiltTent
+  #71 SetNpcName {"NpcNameType": 14, "ID": 0}
+  #72 SetNpcName {"NpcNameType": 13, "ID": 1}
+  #111 CALL Tutorials_Prologue_Rco:ChkNpcTentStatus
+  #66 IF EventFlagSystemBool {"AccessKey": "cPlayer:Prologue4AfterBuiltPcTent"}
+    case ON:
+      #108 IF SubflowResultChoice8 {"SetIndex": 0}
+        case 0:
+          #109 MSG Tutorials/Tutorials_Prologue4_Orientation2_Rco:012
+        case 1:
+          #114 MSG Tutorials/Tutorials_Prologue4_Orientation2_Rco:019
+        case 2:
+          -> (#114)
+        case 3:
+          #110 MSG Tutorials/Tutorials_Prologue4_Orientation2_Rco:016
+        case 4:
+          #67 MSG Tutorials/Tutorials_Prologue4_Orientation2_Rco:013
+        case 5:
+          #69 MSG Tutorials/Tutorials_Prologue4_Orientation2_Rco:018
+        case 6:
+          #68 MSG Tutorials/Tutorials_Prologue4_Orientation2_Rco:014
+        case 7:
+          #70 MSG Tutorials/Tutorials_Prologue4_Orientation2_Rco:017
+    case OFF:
+      #60 EventFlagSystemOn {"AccessKey": "cPlayer:Prologue4AfterBuiltPcTent"}
+      #59 MSG Tutorials/Tutorials_Prologue4_Orientation2_Rco:011
+      #112 IF SubflowResultChoice8 {"SetIndex": 0}
+        case 0:
+          #64 MSG Tutorials/Tutorials_Prologue4_Orientation2_Rco:012
+        case 1:
+          #65 MSG Tutorials/Tutorials_Prologue4_Orientation2_Rco:015
+        case 2:
+          -> (#65)
+        case 3:
+          -> (#65)
+        case 4:
+          #62 MSG Tutorials/Tutorials_Prologue4_Orientation2_Rco:013
+        case 5:
+          #113 MSG Tutorials/Tutorials_Prologue4_Orientation2_Rco:015
+        case 6:
+          #63 MSG Tutorials/Tutorials_Prologue4_Orientation2_Rco:014
+        case 7:
+          -> (#113)
+== ENTRY TownFruitTypeChk
+  #17 IF LandFruit {}
+    case 0:
+      #18 IF HasTargetItem {"ItemUniqueId": 2287, "NeedNum": 6}
+        case 0:
+          #35 DeleteTargetItem {"ItemUniqueId": 2287, "DeleteNum": 6}
+          #40 SetDeliveryItemAtRandom {"ApplyToSave": false, "ItemUniqueID": 2287, "ItemRemakeDecideType": "cVillageRemakePattern", "RemakePatternIndex": 0}
+          #24 EventFlagSystemOn {"AccessKey": "cPlayer:HaveTownFruit4CampFire"}
+    case 1:
+      #19 IF HasTargetItem {"NeedNum": 6, "ItemUniqueId": 2214}
+        case 0:
+          #36 DeleteTargetItem {"DeleteNum": 6, "ItemUniqueId": 2214}
+          #41 SetDeliveryItemAtRandom {"ApplyToSave": false, "ItemUniqueID": 2214, "ItemRemakeDecideType": "cVillageRemakePattern", "RemakePatternIndex": 0}
+          -> (#24)
+    case 2:
+      #20 IF HasTargetItem {"NeedNum": 6, "ItemUniqueId": 2285}
+        case 0:
+          #37 DeleteTargetItem {"DeleteNum": 6, "ItemUniqueId": 2285}
+          #42 SetDeliveryItemAtRandom {"ApplyToSave": false, "ItemUniqueID": 2285, "ItemRemakeDecideType": "cVillageRemakePattern", "RemakePatternIndex": 0}
+          -> (#24)
+    case 3:
+      #21 IF HasTargetItem {"NeedNum": 6, "ItemUniqueId": 2286}
+        case 0:
+          #38 DeleteTargetItem {"DeleteNum": 6, "ItemUniqueId": 2286}
+          #43 SetDeliveryItemAtRandom {"ApplyToSave": false, "ItemUniqueID": 2286, "ItemRemakeDecideType": "cVillageRemakePattern", "RemakePatternIndex": 0}
+          -> (#24)
+    case 4:
+      #22 IF HasTargetItem {"NeedNum": 6, "ItemUniqueId": 2213}
+        case 0:
+          #39 DeleteTargetItem {"DeleteNum": 6, "ItemUniqueId": 2213}
+          #44 SetDeliveryItemAtRandom {"ApplyToSave": false, "ItemUniqueID": 2213, "ItemRemakeDecideType": "cVillageRemakePattern", "RemakePatternIndex": 0}
+          -> (#24)
+== ENTRY ChkNpcTentStatus
+  #98 IF EventFlagSystemBool {"AccessKey": "cLand:Prologue4BuiltNpcAN"}
+    case ON:
+      #99 IF EventFlagSystemBool {"AccessKey": "cPlayer:Prologue4HaGetTent"}
+        case ON:
+          #107 SetSubflowResult {"ResultValue": 7, "SetIndex": 0}
+        case OFF:
+          #106 SetSubflowResult {"ResultValue": 6, "SetIndex": 0}
+    case OFF:
+      #93 IF EventFlagSystemBool {"AccessKey": "cLand:Prologue4BuiltNpcHA"}
+        case ON:
+          #96 IF EventFlagSystemBool {"AccessKey": "cPlayer:Prologue4AnGetTent"}
+            case ON:
+              #105 SetSubflowResult {"ResultValue": 5, "SetIndex": 0}
+            case OFF:
+              #104 SetSubflowResult {"ResultValue": 4, "SetIndex": 0}
+        case OFF:
+          #94 IF EventFlagSystemBool {"AccessKey": "cPlayer:Prologue4AnGetTent"}
+            case ON:
+              #97 IF EventFlagSystemBool {"AccessKey": "cPlayer:Prologue4HaGetTent"}
+                case ON:
+                  #103 SetSubflowResult {"ResultValue": 3, "SetIndex": 0}
+                case OFF:
+                  #102 SetSubflowResult {"ResultValue": 2, "SetIndex": 0}
+            case OFF:
+              #95 IF EventFlagSystemBool {"AccessKey": "cPlayer:Prologue4HaGetTent"}
+                case ON:
+                  #101 SetSubflowResult {"ResultValue": 1, "SetIndex": 0}
+                case OFF:
+                  #100 SetSubflowResult {"ResultValue": 0, "SetIndex": 0}

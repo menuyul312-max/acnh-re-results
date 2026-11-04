@@ -3,7 +3,10 @@
 Seluruh B_data yang tersedia sudah dibaca secara struktural. Semantik seluruh game belum terpetakan 100%; batas dan field yang belum diketahui dicatat, tanpa mengubah proyek Godot asal.
 
 - [Laporan temuan, keberhasilan, validasi, dan batas cakupan](LAPORAN_AKHIR.md).
-- [Lanjutan terbaru: terrain runtime, bitset dan evaluator NPC](docs/WORLD_NAV_BRIDGE.md): 1.568 kasus tambahan; total 1.135.577 helper/blok. Ketujuh sistem tetap parsial.
+- [Workflow penggunaan data RE](docs/WORKFLOW.md): persiapan, ekstrak ZIP tanpa menimpa (`unzip -n`), file mana untuk apa, siklus satu tahap RE.
+- [Alur gameplay dari data](docs/GAMEPLAY_FLOW.md): prolog sampai konser K.K. dan loop sesudahnya, dari 456 EventFlow dan 1.555 flag; indeks di [output/gameplay](output/gameplay/).
+- Status tahap terbaru dan total kasus native: [continuation_frontier.json](output/mechanics/continuation_frontier.json) (`latest_phase`). Daftar "Fokus terbaru" ada di [README root](../README.md).
+- [Lanjutan terrain runtime, bitset dan evaluator NPC](docs/WORLD_NAV_BRIDGE.md): 1.568 kasus tambahan. Ketujuh sistem tetap parsial.
 - [Manifest sumber](output/manifest.json), [inventaris seluruh paket](output/source_inventory.json), [cakupan yang dapat dibaca mesin](output/coverage.json).
 - [Perubahan dari laporan sebelumnya](output/progress_since_previous.json).
 - [Katalog tabel JSON terbaru](output/schemas/catalogue.json), [katalog aset JSON](output/assets/catalogue.json), [kontrak data](docs/DATA_CONTRACT.md).

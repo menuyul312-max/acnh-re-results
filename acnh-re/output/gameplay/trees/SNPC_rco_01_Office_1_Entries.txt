@@ -1,0 +1,203 @@
+# SNPC_rco_01_Office_1_Entries (source: decoded EventFlow; bool flag case 0 = ON, case 1 = OFF; #N = event index)
+== ENTRY OfficeOpening_Force
+  #73 EventFlagSystemOn {"AccessKey": "cPlayer:OfficeSzaIntroduction"}
+  #5 MSG TalkSNpc/rco/SP_rco_00_Common:000
+  #7 MSG TalkSNpc/rco/SP_rco_06_Office:001
+  #8 MSG TalkSNpc/rco/SP_rco_06_Office:002
+  #9 MSG TalkSNpc/rco/SP_rco_06_Office:003
+  #10 MSG TalkSNpc/rco/SP_rco_06_Office:004
+  #6 IF EventFlagSystemBool {"AccessKey": "cLand:BuiltTownOfficeToday"}
+    case ON:
+      #11 MSG TalkSNpc/rco/SP_rco_06_Office:005_01
+      #14 MSG TalkSNpc/rco/SP_rco_06_Office:006
+      #15 MSG TalkSNpc/rco/SP_rco_06_Office:007
+      #91 IF EventFlagSystemBool {"AccessKey": "cPlayer:MakeVillagePlayerFlag"}
+        case ON:
+          #26 MSG TalkSNpc/rco/SP_rco_06_Office:008_01
+          #16 MSG TalkSNpc/rco/SP_rco_06_Office:009
+          #1 EventFlagSystemOn {"AccessKey": "cPlayerTemp:RcoOfficeFirstTalkNow"}
+          #3 EventFlagSystemOn {"AccessKey": "cPlayer:RcoFirstTalkNewOffice"}
+          #35 EventFlagSystemOn {"AccessKey": "cLand:IslandDevQuestRunning"}
+        case OFF:
+          -> (#16)
+    case OFF:
+      #2 IF FacilityOpenPastDays {"CountFacilityType": "cOffice", "Days": 7}
+        case 0:
+          #12 MSG TalkSNpc/rco/SP_rco_06_Office:005_02
+          -> (#14)
+        case 1:
+          #13 MSG TalkSNpc/rco/SP_rco_06_Office:005_03
+          -> (#14)
+== ENTRY IslandDevelopmentIntro
+  #4 EventFlagSystemOn {"AccessKey": "cPlayer:RcoTalkAboutOfficeWork"}
+  #0 IF EventFlagSystemBool {"AccessKey": "cPlayerTemp:RcoOfficeFirstTalkNow"}
+    case ON:
+      #24 MSG TalkSNpc/rco/SP_rco_06_Office:011_02
+      #93 IF EventFlagSystemBool {"AccessKey": "cPlayer:MakeVillagePlayerFlag"}
+        case ON:
+          #25 MSG TalkSNpc/rco/SP_rco_06_Office:012_01
+          #29 MSG TalkSNpc/rco/SP_rco_06_Office:013_01
+          #27 IF GeneralTalkChoice3 {}
+            case 0:
+              #31 MSG TalkSNpc/rco/SP_rco_06_Office:014_01
+              #34 CALL SNPC_rco_00_Common:Root
+            case 1:
+              #33 CALL SNPC_rco_54_IslandDevelopment:Root
+            case 2:
+              #72 CALL SNPC_rco_00_Common_Entries:Rco_CmnSel_Cancel
+        case OFF:
+          #101 IF EventFlagSystemBool {"AccessKey": "cPlayer:ThisPCcreatedbeforeOfficeUpgrading"}
+            case ON:
+              #102 IF PlayerHouseLevel {}
+                case 0:
+                  #103 MSG TalkSNpc/rco/SP_rco_06_Office:012_02_01
+                  #28 MSG TalkSNpc/rco/SP_rco_06_Office:013_02
+                  #30 IF GeneralTalkChoice2 {}
+                    case 0:
+                      #32 MSG TalkSNpc/rco/SP_rco_06_Office:014_02
+                      -> (#34)
+                    case 1:
+                      #71 CALL SNPC_rco_00_Common_Entries:Rco_CmnSel_Cancel
+                case 1:
+                  -> (#103)
+                case 2:
+                  #94 MSG TalkSNpc/rco/SP_rco_06_Office:012_02
+                  #104 EventFlagSystemOn {"AccessKey": "cPlayer:RcoTalkAboutMoveMyHome"}
+                  -> (#28)
+                case 3:
+                  -> (#94)
+                case 4:
+                  -> (#94)
+                case 5:
+                  -> (#94)
+                case 6:
+                  -> (#94)
+                case 7:
+                  -> (#94)
+                case 8:
+                  -> (#94)
+            case OFF:
+              #95 MSG TalkSNpc/rco/SP_rco_06_Office:012_03
+              -> (#28)
+    case OFF:
+      #23 MSG TalkSNpc/rco/SP_rco_06_Office:011_01
+      -> (#93)
+== ENTRY OfficeOpening_NormalTalk
+  #18 MSG TalkSNpc/rco/SP_rco_00_Common:000
+  #19 MSG TalkSNpc/rco/SP_rco_06_Office:001
+  #20 MSG TalkSNpc/rco/SP_rco_06_Office:006_01
+  #22 MSG TalkSNpc/rco/SP_rco_06_Office:007
+  #92 IF EventFlagSystemBool {"AccessKey": "cPlayer:MakeVillagePlayerFlag"}
+    case ON:
+      #21 MSG TalkSNpc/rco/SP_rco_06_Office:008_02
+      #16 MSG TalkSNpc/rco/SP_rco_06_Office:009
+      #1 EventFlagSystemOn {"AccessKey": "cPlayerTemp:RcoOfficeFirstTalkNow"}
+      #3 EventFlagSystemOn {"AccessKey": "cPlayer:RcoFirstTalkNewOffice"}
+      #35 EventFlagSystemOn {"AccessKey": "cLand:IslandDevQuestRunning"}
+    case OFF:
+      -> (#16)
+== ENTRY OfficeOpening_Force_Init
+  #17 NpcAITalkSubCastEntry {"FindLabel": "sza", "CastID": 1}
+== ENTRY Rco_Office_Infra
+  #74 UIMoneyAppear {}
+  #64 IF EventFlagSystemBool {"AccessKey": "cLand:RcoEnableBuyHousingKit"}
+    case ON:
+      #66 CALL SNPC_rco_01_Office_1_Entries:ChkGetHousing
+      #65 IF SubflowResultChoice2 {"SetIndex": 0}
+        case 0:
+          #62 MSG TalkSNpc/rco/SP_rco_00_Common:075_01
+          #68 IF GeneralTalkChoice4 {}
+            case 0:
+              #70 CALL SNPC_rco_01_Office_1_Entries:Rco_CmnSel_GetHousing
+              #75 UIMoneyDisappear {}
+              #76 CALL SNPC_rco_00_Common:Rco_Office_CmnSelAgain
+            case 1:
+              #67 CALL SNPC_rco_10_Common_BuildBridgeSlope:Root
+              -> (#75)
+            case 2:
+              #69 CALL SNPC_rco_10_Common_MoveNpcFacility:Root
+              -> (#75)
+            case 3:
+              #80 CALL SNPC_rco_01_Office_1_Entries:Rco_SelInfra_Cancel
+              -> (#75)
+        case 1:
+          #63 MSG TalkSNpc/rco/SP_rco_00_Common:075_02
+          #37 IF GeneralTalkChoice3 {}
+            case 0:
+              #36 CALL SNPC_rco_10_Common_BuildBridgeSlope:Root
+              #77 UIMoneyDisappear {}
+              #78 CALL SNPC_rco_00_Common:Rco_Office_CmnSelAgain
+            case 1:
+              #38 CALL SNPC_rco_10_Common_MoveNpcFacility:Root
+              -> (#77)
+            case 2:
+              #81 CALL SNPC_rco_01_Office_1_Entries:Rco_SelInfra_Cancel
+              -> (#77)
+    case OFF:
+      -> (#63)
+== ENTRY Rco_CmnSel_GetHousing
+  #86 SetTagFromSystem {"TagType": "cFlow", "Value": 10000, "SetTagType": "cMoney", "TagID": 0, "AccessKey": ""}
+  #58 IF HasTargetItem {"ItemUniqueId": 3349, "NeedNum": 1}
+    case 0:
+      #96 MSG TalkSNpc/rco/SP_rco_06_Office:208
+    case 1:
+      #83 MSG TalkSNpc/rco/SP_rco_06_Office:201
+      #56 IF GeneralTalkChoice2 {}
+        case 0:
+          #82 IF HasBellCount {"Money": 10000}
+            case 0:
+              #57 IF ShoppingCapacity {"CapacityCheckType": "cItemName", "ItemUniqueId": 3349}
+                case 0:
+                  #87 MSG TalkSNpc/rco/SP_rco_06_Office:205_01
+                  #85 BellCountDown {"Money": -10000, "Reverse": false}
+                  #88 MSG TalkSNpc/rco/SP_rco_06_Office:205_02
+                  #90 SetItemToPocket {"ItemUniqueId": 3349, "SetNum": 1}
+                  #59 EventFlagSystemAdd {"AccessKey": "cLand:HaveHousingKitCount", "AddNum": 1}
+                  #61 CALL SNPC_rco_01_Office_1_Entries:ChkGetHousing
+                  #60 IF SubflowResultChoice2 {"SetIndex": 0}
+                    case 0:
+                      #99 MSG TalkSNpc/rco/SP_rco_06_Office:206
+                    case 1:
+                      #100 MSG TalkSNpc/rco/SP_rco_06_Office:207
+                case 1:
+                  #98 MSG TalkSNpc/rco/SP_rco_06_Office:204
+            case 1:
+              #84 MSG TalkSNpc/rco/SP_rco_06_Office:203
+        case 1:
+          #97 MSG TalkSNpc/rco/SP_rco_06_Office:202
+== ENTRY ChkGetHousing
+  #40 IF NpcHouseNum {"NpcHouseType": "cExist", "Num": 7}
+    case 0:
+      #41 IF NpcHouseNum {"NpcHouseType": "cExist", "Num": 8}
+        case 0:
+          #42 IF NpcHouseNum {"NpcHouseType": "cExist", "Num": 9}
+            case 0:
+              #43 IF NpcHouseNum {"NpcHouseType": "cExist", "Num": 10}
+                case 0:
+                  #55 SetSubflowResult {"SetIndex": 0, "ResultValue": 1}
+                case 1:
+                  #47 IF EventFlagSystemInt {"AccessKey": "cLand:HaveHousingKitCount", "Border": 1, "FlagCheckType": 3}
+                    case 0:
+                      #54 SetSubflowResult {"SetIndex": 0, "ResultValue": 1}
+                    case 1:
+                      #53 SetSubflowResult {"ResultValue": 0, "SetIndex": 0}
+            case 1:
+              #46 IF EventFlagSystemInt {"AccessKey": "cLand:HaveHousingKitCount", "Border": 2, "FlagCheckType": 3}
+                case 0:
+                  #52 SetSubflowResult {"SetIndex": 0, "ResultValue": 1}
+                case 1:
+                  #51 SetSubflowResult {"ResultValue": 0, "SetIndex": 0}
+        case 1:
+          #45 IF EventFlagSystemInt {"AccessKey": "cLand:HaveHousingKitCount", "Border": 3, "FlagCheckType": 3}
+            case 0:
+              #50 SetSubflowResult {"SetIndex": 0, "ResultValue": 1}
+            case 1:
+              #49 SetSubflowResult {"ResultValue": 0, "SetIndex": 0}
+    case 1:
+      #44 IF EventFlagSystemInt {"AccessKey": "cLand:HaveHousingKitCount", "Border": 4, "FlagCheckType": 3}
+        case 0:
+          #48 SetSubflowResult {"SetIndex": 0, "ResultValue": 1}
+        case 1:
+          #39 SetSubflowResult {"ResultValue": 0, "SetIndex": 0}
+== ENTRY Rco_SelInfra_Cancel
+  #79 MSG TalkSNpc/rco/SP_rco_06_Office:100

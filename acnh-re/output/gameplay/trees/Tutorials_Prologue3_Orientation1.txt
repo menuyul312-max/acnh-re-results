@@ -1,0 +1,99 @@
+# Tutorials_Prologue3_Orientation1 (source: decoded EventFlow; bool flag case 0 = ON, case 1 = OFF; #N = event index)
+== ENTRY Root
+  #28 IF EventFlagSystemBool {"AccessKey": "cLand:ValidateVillageSave"}
+    case ON:
+      #96 CameraSetDemoParam {"CameraInterpolateKey": "", "Arg": 0, "AdjustAngleYOnLeave": false, "AdjustAngleYOnEnter": false, "CameraTargetKey": "Place:EventPlaza", "CameraParamKey": "EventPlazaPrologue2", "UseNearCulling": true}
+      #68 EventFlagSystemOn {"AccessKey": "cPlayer:MainmenuCall"}
+      #70 EventFlagSystemOn {"AccessKey": "cPlayer:MainmenuMap"}
+      #69 EventFlagSystemOn {"AccessKey": "cPlayer:MainmenuEncyclopedia"}
+      #97 IF EventFlagSystemBool {"AccessKey": "cLand:TkkFirstLive"}
+        case ON:
+          #98 EventFlagSystemOn {"AccessKey": "cPlayer:MainmenuConstructLicense"}
+          #45 FadeIn {"IsWait": true}
+          #29 MSG Tutorials/Tutorials_Prologue3_Orientation1:101
+          #30 MSG Tutorials/Tutorials_Prologue3_Orientation1:007
+          #94 NpcWaitTurn {}
+          #31 MSG Tutorials/Tutorials_Prologue3_Orientation1:103
+          #32 MSG Tutorials/Tutorials_Prologue3_Orientation1:104
+          #33 MSG Tutorials/Tutorials_Prologue3_Orientation1:105
+          #35 SetDeliveryItemAtRandom {"ItemUniqueID": 2750, "ApplyToSave": true, "ItemRemakeDecideType": "cVillageRemakePattern", "RemakePatternIndex": 0}
+          #34 NpcDelivery {"Command": 1, "Option": "Keep"}
+          #59 MSG Tutorials/Tutorials_Prologue3_Orientation1:106
+          #60 MSG Tutorials/Tutorials_Prologue3_Orientation1:107
+          #80 NpcDelivery {"Command": 2, "Option": "Default"}
+          #36 MSG Tutorials/Tutorials_Prologue3_Orientation1:108
+          #37 CALL SNPC_rco_00_StartMainGame:Rco_GetSmartPhone
+          #72 MSG Tutorials/Tutorials_Prologue3_Orientation1:109
+          #71 CALL SNPC_rco_00_StartMainGame:Rco_TutorialGetBill
+          #92 CALL Tutorials_Prologue3_Orientation1:Rco_Orientation2P_Office
+          #95 MSG TalkSNpc/rco/SP_rco_01_StartingMaingame:013_01
+          #93 CALL SNPC_rco_00_StartMainGame:Rco_OrientationEnd
+        case OFF:
+          -> (#45)
+    case OFF:
+      #38 EventFlagSystemOn {"AccessKey": "cPlayer:PrologueDone1stTalkAtPlaza"}
+      #2 CALL Tutorials_Prologue3_Orientation1:GoEventPlaza
+      #16 CALL Tutorials_Prologue3_Orientation1:Greeting
+      #24 MSG Tutorials/Tutorials_Prologue3_Orientation1:007
+      #73 MSG Tutorials/Tutorials_Prologue3_Orientation1:008_01
+      #74 MSG Tutorials/Tutorials_Prologue3_Orientation1:008_02
+      #25 MSG Tutorials/Tutorials_Prologue3_Orientation1:009
+      #26 MSG Tutorials/Tutorials_Prologue3_Orientation1:010
+      #27 MSG Tutorials/Tutorials_Prologue3_Orientation1:011
+      #14 FadeOut {"FadeOutKindString": "cNormalFader", "FadeInKindString": "cNormalFader", "FadeColorString": "cBlack", "FadeOutSpeed": 0.5, "FadeInSpeed": 0.5, "IsUseDucking": true}
+      #13 SetupActorPosition {"Type": 0}
+      #15 NpcAddBlackBoard {"Key": "TalkCount", "AddValue": 1}
+      #12 FadeIn {"IsWait": true}
+      #39 EventFlagSystemOn {"AccessKey": "cPlayer:PrologueDone1stTalkAtPlaza"}
+== ENTRY GoEventPlaza
+  #1 FadeOut {"FadeOutKindString": "cCircle", "FadeInKindString": "cCircle", "FadeColorString": "cBlack", "FadeOutSpeed": 1.0, "FadeInSpeed": 1.0, "IsUseDucking": true}
+  #0 SetupActorPosition {"Type": 1}
+  #65 CALL Tutorials_Prologue3_Orientation1:GoEventPlazaSetting
+  #66 CameraSetDemoParam {"CameraInterpolateKey": "", "CameraTargetKey": "Npc:rco", "Arg": 0, "AdjustAngleYOnLeave": false, "UseNearCulling": false, "CameraParamKey": "EventPlazaPrologue", "AdjustAngleYOnEnter": false}
+  #3 FadeIn {"IsWait": true}
+== ENTRY Greeting
+  #17 MSG Tutorials/Tutorials_Prologue3_Orientation1:001
+  #18 MSG Tutorials/Tutorials_Prologue3_Orientation1:002
+  #19 MSG Tutorials/Tutorials_Prologue3_Orientation1:003
+  #20 MSG Tutorials/Tutorials_Prologue3_Orientation1:004
+  #21 MSG Tutorials/Tutorials_Prologue3_Orientation1:005
+  #22 MSG Tutorials/Tutorials_Prologue3_Orientation1:006
+== ENTRY Root_Init
+  #41 NpcAISetting {"SettingType": 4, "Flag": false}
+  #42 NpcAISetting {"Flag": false, "SettingType": 2}
+  #44 NpcAISetting {"SettingType": 7, "Flag": false}
+  #43 NpcAISetting {"Flag": false, "SettingType": 3}
+  #40 NpcAITalkCastSetting {"SetupKey": "Prologue_Rco"}
+== ENTRY GoEventPlazaSetting
+  #61 SetNpcName {"ID": 0, "NpcNameType": 14}
+  #62 SetNpcName {"ID": 1, "NpcNameType": 13}
+== ENTRY Rco_Orientation2P_Office
+  #81 IF OfficeLevel {}
+    case 0:
+      #82 IF ShopLevel {}
+        case 0:
+          #83 MSG Tutorials/Tutorials_Prologue3_Orientation1:112_01
+        case 1:
+          #90 IF EventFlagSystemBool {"AccessKey": "cLand:EnableBuildTownOffice"}
+            case ON:
+              #89 IF EventFlagSystemBool {"AccessKey": "cLand:OfficeConstruction1"}
+                case ON:
+                  #86 MSG Tutorials/Tutorials_Prologue3_Orientation1:112_04
+                case OFF:
+                  #101 MSG Tutorials/Tutorials_Prologue3_Orientation1:112_02
+                  #85 MSG Tutorials/Tutorials_Prologue3_Orientation1:112_03
+            case OFF:
+              #84 MSG Tutorials/Tutorials_Prologue3_Orientation1:112_02
+        case 2:
+          -> (#90)
+    case 1:
+      -> (#82)
+    case 2:
+      #91 IF EnvSameDate {"CheckDateType": "cEndOfTheYear", "TimeType": "cGrowUpTime"}
+        case 0:
+          #88 MSG Tutorials/Tutorials_Prologue3_Orientation1:112_07
+        case 1:
+          #100 MSG Tutorials/Tutorials_Prologue3_Orientation1:112_05
+          #99 IF EnvSameDate {"TimeType": "cGrowUpTime", "CheckDateType": "cPreEndOfTheYear"}
+            case 0:
+              #87 MSG Tutorials/Tutorials_Prologue3_Orientation1:112_06

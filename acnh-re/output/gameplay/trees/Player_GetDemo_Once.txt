@@ -1,0 +1,121 @@
+# Player_GetDemo_Once (source: decoded EventFlow; bool flag case 0 = ON, case 1 = OFF; #N = event index)
+== ENTRY Get_MainGame
+  #0 MSG TalkSys/SYS_Player:200
+  #43 IF EventFlagSystemBool {"AccessKey": "cPlayer:MakeVillagePlayerFlag"}
+    case ON:
+      #21 ReservePlayerMutterDemo {"EntryPointName": "Get_MainGame_Continue", "MutterStartTiming": "cNextDemoEnd_Simple", "EventFileName": "Player_GetDemo_Once", "IsResistNpcCast": false}
+    case OFF:
+      #46 CALL Demo_PublicAnnouncement_Process:Root
+      #44 ReservePlayerMutterDemo {"MutterStartTiming": "cNextDemoEnd_Simple", "EventFileName": "Player_GetDemo_Once", "IsResistNpcCast": false, "EntryPointName": "Get_MainGame_Continue2P"}
+== ENTRY Get_FinishLoan
+  #3 EventFlagSystemOff {"AccessKey": "cPlayer:PlayerLoanRepaying"}
+  #1 EventFlagSystemOn {"AccessKey": "cPlayer:PlayerLoanFinish1st"}
+  #2 IF PlayerHouseLevel {}
+    case 1:
+      #4 MSG TalkSys/SYS_Player:204_02
+      #19 EventFlagSystemAdd {"AccessKey": "cLifeSupportAchievement:RepayLoan", "AddNum": 1}
+      #20 NpcPlayerActivity {"ActivityType": "cActivityType_ReturnLoan"}
+    case 2:
+      -> (#4)
+    case 3:
+      -> (#4)
+    case 4:
+      -> (#4)
+    case 5:
+      -> (#4)
+    case 6:
+      -> (#4)
+    case 7:
+      -> (#4)
+    case 8:
+      #5 MSG TalkSys/SYS_Player:204_03
+      -> (#19)
+== ENTRY StartMainGameBitSet
+  #9 EventFlagSystemAdd {"AccessKey": "cLifeSupportAchievement:ImmigratetoIsland", "AddNum": 1}
+  #10 EventFlagSystemOn {"AccessKey": "cPlayer:EnablePcTownDecoration"}
+  #11 EventFlagSystemOn {"AccessKey": "cPlayer:ValidatePlayerSaveFlag"}
+  #12 EventFlagSystemOn {"AccessKey": "cPlayer:PcMaingameStart"}
+== ENTRY Get_MainGame_Continue
+  #39 MSG TalkSys/SYS_Guide:001_01
+  #42 MSG TalkSys/SYS_Guide:002
+  #6 EventFlagSystemOn {"AccessKey": "cLand:ValidateVillageSave"}
+  #31 EventFlagSystemSet {"AccessKey": "cLand:OpeningSeqBGMChangeCounter", "SetNum": 7}
+  #23 CALL Player_GetDemo_Once:SetLocalFruitFlag
+  #17 CALL Player_GetDemo_Once:StartMainGameBitSet
+== ENTRY SetLocalFruitFlag
+  #24 IF LandFruit {}
+    case 0:
+      #25 EventFlagSystemOn {"AccessKey": "cLand:IslandLocalFruitCherry"}
+    case 1:
+      #26 EventFlagSystemOn {"AccessKey": "cLand:IslandLocalFruitOrange"}
+    case 2:
+      #27 EventFlagSystemOn {"AccessKey": "cLand:IslandLocalFruitPear"}
+    case 3:
+      #28 EventFlagSystemOn {"AccessKey": "cLand:IslandLocalFruitPeach"}
+    case 4:
+      #29 EventFlagSystemOn {"AccessKey": "cLand:IslandLocalFruitApple"}
+== ENTRY Finish_1stKkLive
+  #30 MSG TalkSys/SYS_Player:212
+  #52 IF MainPlayerIsBirthday {"IsCheckNpcReservePlayerBirthday": true}
+    case 0:
+      #53 SystemRequestChangeStage {"TargetStage": "cMainFieldPlayerHouse", "FadeOutKindString": "cCircle", "FadeInKindString": "cCircle", "FadeColorString": "cBlack", "FadeOutSpeed": 1.0, "FadeInSpeed": 1.0}
+    case 1:
+      #55 IF EventBranch {"CheckNowTime": false, "AddDay": 0}
+        case 3:
+          #54 SystemReenterStage {"Type": 0, "FadeOutKindString": "cCircle", "FadeInKindString": "cCircle", "FadeColorString": "cBlack", "FadeOutSpeed": 1.0, "FadeInSpeed": 1.0}
+== ENTRY ImmQComplete_PutIn
+  #32 MSG TalkSys/SYS_Player:213
+  #34 EventFlagSystemOn {"AccessKey": "cPlayer:ImmQCompleteDemo"}
+== ENTRY ImmQComplete_Notice
+  #33 MSG TalkSys/SYS_Player:214_01
+  #35 EventFlagSystemOn {"AccessKey": "cPlayer:ImmQCompleteDemo"}
+== ENTRY FinishDonationBuildBridgeSlope
+  #36 MSG TalkSys/SYS_Player:215
+== ENTRY Get_ShoppingAppli
+  #37 MSG TalkSys/SYS_Player:216
+== ENTRY Get_MainGame_Continue2P
+  #40 MSG TalkSys/SYS_Guide:001_02
+  #41 MSG TalkSys/SYS_Guide:002
+  #7 EventFlagSystemOn {"AccessKey": "cPlayer:PlayerEnableEating"}
+  #13 EventFlagSystemOn {"AccessKey": "cPlayer:PlayerPocketUIEnable"}
+  #14 EventFlagSystemOn {"AccessKey": "cPlayer:PlayerPickupEnable"}
+  #15 EventFlagSystemOn {"AccessKey": "cPlayer:NnpcFinishHintTalk"}
+  #38 EventFlagSystemOff {"AccessKey": "cLandTemp:CalendarEventStop"}
+  #18 EventFlagSystemOn {"AccessKey": "cPlayer:AllowPcTentEntering"}
+  #47 IF ShopLevel {}
+    case 0:
+      #50 IF OfficeLevel {}
+        case 0:
+          #59 IF EventFlagSystemBool {"AccessKey": "cLand:TailorBuilt"}
+            case ON:
+              #60 EventFlagSystemOn {"AccessKey": "cPlayer:PAnnounceTailorBuilt"}
+              #61 IF EventFlagSystemBool {"AccessKey": "cLand:CampSiteBuilt"}
+                case ON:
+                  #62 EventFlagSystemOn {"AccessKey": "cPlayer:PAnnounceCampsite"}
+                  #58 IF MuseumLevel {}
+                    case 3:
+                      #16 CALL Player_GetDemo_Once:StartMainGameBitSet
+                      #8 SystemReenterStage {"Type": 2, "FadeOutKindString": "cCircle", "FadeInKindString": "cCircle", "FadeColorString": "cBlack", "FadeOutSpeed": 0.800000011920929, "FadeInSpeed": 0.800000011920929}
+                    case 0:
+                      #56 EventFlagSystemOn {"AccessKey": "cPlayer:AnnouncementOwlMovedIn"}
+                      -> (#16)
+                    case 1:
+                      #57 EventFlagSystemOn {"AccessKey": "cPlayer:TownNewsHeardMuseumOpenFlag"}
+                      -> (#16)
+                    case 2:
+                      -> (#57)
+                case OFF:
+                  -> (#58)
+            case OFF:
+              -> (#61)
+        case 1:
+          -> (#59)
+        case 2:
+          #51 EventFlagSystemOn {"AccessKey": "cPlayer:RcoFirstTalkNewOffice"}
+          -> (#59)
+    case 1:
+      #48 EventFlagSystemOn {"AccessKey": "cPlayer:RcmHeardAboutNewOpen1"}
+      -> (#50)
+    case 2:
+      #49 EventFlagSystemOn {"AccessKey": "cPlayer:RcmHeardAboutNewOpen2"}
+      -> (#50)

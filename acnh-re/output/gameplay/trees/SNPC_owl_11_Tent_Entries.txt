@@ -1,0 +1,114 @@
+# SNPC_owl_11_Tent_Entries (source: decoded EventFlow; bool flag case 0 = ON, case 1 = OFF; #N = event index)
+== ENTRY owl_Tent_AfterDonation
+  #1 EventFlagSystemOn {"AccessKey": "cPlayer:OwlDonationDone"}
+  #0 IF MuseumDonationNumCheck {"Border": 20}
+    case 0:
+      #35 EventFlagSystemOn {"AccessKey": "cPlayer:FutaReadyForMuseum"}
+      #36 EventFlagSystemOn {"AccessKey": "cPlayer:FutaReadyForMuseumToday"}
+      #37 EventFlagSystemOn {"AccessKey": "cLand:MuseumGrowupEnable1"}
+      #40 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:191
+      #34 IF EventFlagSystemBool {"AccessKey": "cLand:MuseumTentBuiltToday"}
+        case ON:
+          #38 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:191_01
+          #41 EventFlagSystemOn {"AccessKey": "cLand:MuseumGrowupEnable1"}
+        case OFF:
+          #39 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:191_02
+    case 1:
+      #22 EventFlagSystemAdd {"AccessKey": "cLand:DonationAmountForMuseum", "AddNum": -1}
+      #21 SetTagFromSystem {"SetTagType": "cDegit", "TagID": 0, "Value": 0, "TagType": "cEventFlag", "AccessKey": "cLand:DonationAmountForMuseum"}
+      #23 IF EventFlagSystemBool {"AccessKey": "cLand:OwlFoundFossil"}
+        case ON:
+          #25 IF HasKindItem {"ItemKindType": "", "CheckItemKindType": "cFilter", "ItemFilterType": "OwlTentDonation1"}
+            case 0:
+              #26 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:161
+              #28 IF GeneralTalkChoice2 {}
+                case 0:
+                  #30 CALL SNPC_owl_01_Museum_Donation:OwlTentDonationAgain
+                case 1:
+                  #29 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:162
+                  #2 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:111
+            case 1:
+              -> (#2)
+        case OFF:
+          #24 IF HasKindItem {"ItemKindType": "", "CheckItemKindType": "cFilter", "ItemFilterType": "OwlTentDonation0"}
+            case 0:
+              #27 CALL SNPC_owl_11_Tent_Entries:Owl_TentDonationAgainAsk
+            case 1:
+              -> (#2)
+== ENTRY owl_DonatedFossil1st_Unknown
+  #4 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:151_01
+  #3 CALL SNPC_owl_02_Museum_Judgment:Fossil_Check
+  #42 IF MuseumLevel {}
+    case 3:
+      #9 IF MuseumDonationNumCheck {"Border": 20}
+        case 0:
+          #18 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:152
+          #19 NpcDelivery {"Command": 10, "Option": "\"Default\""}
+          #17 IF EventFlagSystemBool {"AccessKey": "cLand:OwlFoundFossil"}
+            case ON:
+              #10 CALL SNPC_owl_00_Common:Again
+            case OFF:
+              #20 CALL SNPC_owl_01_Museum_Donation:Eplanation_ExpertOpinion
+        case 1:
+          #5 IF MuseumDonationNumCheck {"Border": 19}
+            case 0:
+              #13 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:154
+              #6 IF GeneralTalkChoice2 {}
+                case 0:
+                  #8 CALL SNPC_owl_02_Museum_Judgment:Donation_Accept
+                  #16 CALL SNPC_owl_11_Tent_Entries:owl_Tent_AfterDonation
+                case 1:
+                  #7 CALL SNPC_owl_02_Museum_Judgment:Donation_Decline
+            case 1:
+              #12 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:153
+              -> (#6)
+    case 0:
+      -> (#9)
+    case 1:
+      #43 CALL SNPC_owl_01_Museum_Donation:Fossil_DonationTypeChk
+    case 2:
+      -> (#43)
+== ENTRY owl_DonatedFossil1st_Known
+  #14 EventFlagSystemOn {"AccessKey": "cPlayerTemp:OwlKnownFossil"}
+  #11 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:151_02
+  #31 IF MuseumLevel {}
+    case 3:
+      #15 CALL SNPC_owl_11_Tent_Entries:FromDonatedFossil1st_Known
+    case 0:
+      -> (#15)
+    case 1:
+      #32 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:151_03
+      #33 CALL SNPC_owl_01_Museum_Donation:Fossil_DonationTypeChk
+    case 2:
+      -> (#32)
+== ENTRY FromDonatedFossil1st_Known
+  #9 IF MuseumDonationNumCheck {"Border": 20}
+    case 0:
+      #18 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:152
+      #19 NpcDelivery {"Command": 10, "Option": "\"Default\""}
+      #17 IF EventFlagSystemBool {"AccessKey": "cLand:OwlFoundFossil"}
+        case ON:
+          #10 CALL SNPC_owl_00_Common:Again
+        case OFF:
+          #20 CALL SNPC_owl_01_Museum_Donation:Eplanation_ExpertOpinion
+    case 1:
+      #5 IF MuseumDonationNumCheck {"Border": 19}
+        case 0:
+          #13 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:154
+          #6 IF GeneralTalkChoice2 {}
+            case 0:
+              #8 CALL SNPC_owl_02_Museum_Judgment:Donation_Accept
+              #16 CALL SNPC_owl_11_Tent_Entries:owl_Tent_AfterDonation
+            case 1:
+              #7 CALL SNPC_owl_02_Museum_Judgment:Donation_Decline
+        case 1:
+          #12 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:153
+          -> (#6)
+== ENTRY Owl_TentDonationAgainAsk
+  #26 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:161
+  #28 IF GeneralTalkChoice2 {}
+    case 0:
+      #30 CALL SNPC_owl_01_Museum_Donation:OwlTentDonationAgain
+    case 1:
+      #29 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:162
+      #2 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:111

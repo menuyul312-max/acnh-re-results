@@ -1,0 +1,174 @@
+# Demo_PublicAnnouncement (source: decoded EventFlow; bool flag case 0 = ON, case 1 = OFF; #N = event index)
+== ENTRY Root
+  #4 EventFlagSystemAdd {"AccessKey": "cPlayer:AmountHeardPublicAnnouncement", "AddNum": 1}
+  #5 EventFlagSystemOff {"AccessKey": "cPlayer:TownNewsReserve"}
+  #6 EventFlagSystemOn {"AccessKey": "cLandTemp:ReserveAfterHookPublicAnouncement"}
+  #3 CALL Demo_PublicAnnouncement_Process:Root
+  #0 IF EventFlagSystemBool {"AccessKey": "cLand:BuiltTownOffice"}
+    case ON:
+      #7 IF EventFlagSystemBool {"AccessKey": "cLand:BuiltTownOfficeToday"}
+        case ON:
+          #18 CALL Demo_PublicAnnouncement:PAnnounceRco
+        case OFF:
+          #20 CALL Demo_PublicAnnouncement:PAnnounceSza
+    case OFF:
+      #19 CALL Demo_PublicAnnouncement:PAnnounceRco
+== ENTRY Root_Init
+  #9 IF EventFlagSystemBool {"AccessKey": "cLand:BuiltTownOffice"}
+    case ON:
+      #10 IF EventFlagSystemBool {"AccessKey": "cLand:BuiltTownOfficeToday"}
+        case ON:
+          #8 NpcAITalkSubCastEntry {"CastID": 1, "FindLabel": "sza"}
+          #84 IF EventFlagSystemBool {"AccessKey": "cPlayer:MakeVillagePlayerFlag"}
+            case ON:
+              #82 IF EventFlagSystemBool {"AccessKey": "cLand:TkkFirstLiveEnable"}
+                case ON:
+                  #85 IF EventBranch {"CheckNowTime": false, "AddDay": 0}
+                    case 0:
+                      #83 EventFlagSystemOn {"AccessKey": "cLand:TkkFirstLiveReserved"}
+                      #91 EventFlagSystemOn {"AccessKey": "cLand:TkkFirstLiveSubPlayer"}
+                      #92 CancelTodayVisitorNpc {}
+        case OFF:
+          -> (#84)
+    case OFF:
+      -> (#84)
+== ENTRY PAnnounceSza
+  #97 EventFlagSystemOn {"AccessKey": "cLand:PAnnounceCeremony1st"}
+  #22 SetSubflowResult {"ResultValue": 1, "SetIndex": 0}
+  #98 CALL Demo_PublicAnnouncement_21_CmnEvChk:Root
+  #2 CameraSetDemoParam {"CameraInterpolateKey": "", "CameraParamKey": "CutSza", "CameraTargetKey": "Npc:sza", "Arg": 0, "AdjustAngleYOnLeave": false, "AdjustAngleYOnEnter": false, "UseNearCulling": false}
+  #25 CALL Demo_PublicAnnouncement:SzaPrepareAction
+  #69 IF EventFlagSystemBool {"AccessKey": "cLandTemp:ReserveMemErrorReenter"}
+    case ON:
+      #70 CALL Demo_PublicAnnouncement:MemoryShortageSza
+      #76 MessageSuspend {}
+      #93 EventFlagSystemOn {"AccessKey": "cLand:PAnnounceToday"}
+      #40 IF EventFlagSystemBool {"AccessKey": "cLand:TkkFirstLiveReserved"}
+        case ON:
+          #43 BGMPropertyControl {"BGMProperty": 51}
+          #41 SystemRequestChangeStage {"FadeColorString": "cBlack", "FadeOutKindString": "cNormalFader", "FadeInKindString": "cNormalFader", "FadeOutSpeed": 0.5, "FadeInSpeed": 0.5, "TargetStage": "cMainFieldFirstLive"}
+        case OFF:
+          #23 CALL Demo_PublicAnnouncement:SzaPostAction
+          #24 BGMPropertyControl {"BGMProperty": 51}
+          #1 SystemRequestChangeStage {"TargetStage": "cMainFieldPlayerHouse", "FadeOutKindString": "cCircle", "FadeInKindString": "cCircle", "FadeColorString": "cBlack", "FadeOutSpeed": 0.800000011920929, "FadeInSpeed": 0.800000011920929}
+    case OFF:
+      #89 IF EventCheck {"EventLabelString": "Countdown"}
+        case 0:
+          #38 IF EventFlagSystemBool {"AccessKey": "cPlayer:TownNewsHeard1st"}
+            case ON:
+              #39 CALL Demo_PublicAnnouncement_00_Cmn:Root
+              -> (#76)
+            case OFF:
+              #37 CALL Demo_PublicAnnouncement_13_Sza_Once:TownNews_Heard1stTime
+              #100 EventFlagSystemOn {"AccessKey": "cPlayer:TownNewsHeard1st"}
+              -> (#76)
+        case 1:
+          #88 IF EnvHourCompare {"Hour": 23, "Minute": 55, "IsMidNight": false, "IsOverGrowUpTime": false}
+            case 0:
+              -> (#38)
+            case 1:
+              #90 CALL Demo_PublicAnnouncement_30_CmnNewsGreet:NewYearEveHurry
+              -> (#76)
+            case 2:
+              -> (#90)
+        case 2:
+          -> (#38)
+        case 3:
+          -> (#38)
+== ENTRY PAnnounceRco
+  #99 CALL Demo_PublicAnnouncement_21_CmnEvChk:Root
+  #45 BGMPropertyControl {"BGMProperty": 77}
+  #49 CALL Demo_PublicAnnouncement:OutdoorDemoStart
+  #71 IF EventFlagSystemBool {"AccessKey": "cLandTemp:ReserveMemErrorReenter"}
+    case ON:
+      #72 CALL Demo_PublicAnnouncement:MemoryShortageRco
+      #77 MessageSuspend {}
+      #94 EventFlagSystemOn {"AccessKey": "cLand:PAnnounceToday"}
+      #21 BGMPropertyControl {"BGMProperty": 51}
+      #12 IF SystemCheckNowStage {"CheckStage": "cTitle"}
+        case 0:
+          #13 SystemRequestChangeStage {"TargetStage": "cGrowUp", "FadeOutKindString": "cCircle", "FadeInKindString": "cCircle", "FadeColorString": "cBlack", "FadeOutSpeed": 0.800000011920929, "FadeInSpeed": 0.800000011920929}
+        case 1:
+          #11 SystemRequestChangeStage {"TargetStage": "cMainFieldPlayerHouse", "FadeOutKindString": "cCircle", "FadeInKindString": "cCircle", "FadeColorString": "cBlack", "FadeOutSpeed": 0.800000011920929, "FadeInSpeed": 0.800000011920929}
+    case OFF:
+      #33 IF EventFlagSystemBool {"AccessKey": "cPlayer:TownNewsHeard1st"}
+        case ON:
+          #36 CALL Demo_PublicAnnouncement_00_Cmn:Root
+          -> (#77)
+        case OFF:
+          #34 EventFlagSystemOn {"AccessKey": "cPlayer:TownNewsHeard1st"}
+          #31 IF EventFlagSystemInt {"AccessKey": "cLand:VillageDaysCount", "Border": 1, "FlagCheckType": 0}
+            case 0:
+              #35 CALL Demo_PublicAnnouncement_03_Rco_Once:TownNews_OnThe2ndDay
+              -> (#77)
+            case 1:
+              #32 CALL Demo_PublicAnnouncement_03_Rco_Once:TownNews_Heard1stTime
+              -> (#77)
+== ENTRY SzaPrepareAction
+  #86 IF EventCheck {"EventLabelString": "Countdown"}
+    case 0:
+      #87 CALL Demo_PublicAnnouncement:Sza_NormalPreAction
+    case 1:
+      -> (#87)
+    case 2:
+      -> (#87)
+    case 3:
+      #62 IF EventFlagSystemInt {"AccessKey": "cPlayer:SzaPAAccidentCounter", "Border": 7, "FlagCheckType": 3}
+        case 0:
+          #26 RequestSimple {"AsCommand": "SzaNewsPrepare", "WaitFinish": false}
+          #58 WaitFaderSleep {}
+          #57 UIDemoClock {"DisplayFrame": 60}
+          #79 BGMPropertyControl {"BGMProperty": 53}
+          #29 RequestSimple {"WaitFinish": true, "AsCommand": "SzaNewsNotice"}
+          #64 EventFlagSystemSet {"AccessKey": "cPlayer:SzaPAAccidentCounter", "SetNum": 0}
+        case 1:
+          #59 IF RandomChoice7 {"ChoiceNumber": 7}
+            case 0:
+              -> (#26)
+            case 1:
+              #60 UIDemoClock {"DisplayFrame": 60}
+              #80 BGMPropertyControl {"BGMProperty": 53}
+              #63 EventFlagSystemAdd {"AccessKey": "cPlayer:SzaPAAccidentCounter", "AddNum": 1}
+              -> (#28)
+            case 2:
+              -> (#60)
+            case 3:
+              -> (#60)
+            case 4:
+              -> (#60)
+            case 5:
+              -> (#60)
+            case 6:
+              -> (#60)
+== ENTRY SzaPostAction
+  #101 IF RandomChoiceExcludePrevious3 {"ChoiceNumber": 3, "IsSetSpeakerChoiceResult": true}
+    case 0:
+      #44 RequestSimple {"WaitFinish": false, "AsCommand": "SzaNewsSmile"}
+    case 1:
+      -> (#27)
+    case 2:
+      -> (#27)
+== ENTRY OutdoorDemoStart
+  #55 SetupActorPosition {"Type": 10}
+  #47 IF SystemCheckNowStage {"CheckStage": "cTitle"}
+    case 0:
+      #50 CameraSetDemoParam {"Arg": 0, "AdjustAngleYOnLeave": false, "UseNearCulling": true, "AdjustAngleYOnEnter": false, "CameraParamKey": "GrowupDemoTalkBefore", "CameraInterpolateKey": "", "CameraTargetKey": "CameraTag:PublicAnnouncement"}
+      #51 FadeIn {"IsWait": false}
+      #56 UIDemoClock {"DisplayFrame": 60}
+      #78 BGMPropertyControl {"BGMProperty": 52}
+      #48 CameraSetDemoParam {"Arg": 0, "CameraParamKey": "GrowupDemoTalk", "CameraInterpolateKey": "GrowupDemoTalk", "AdjustAngleYOnLeave": false, "UseNearCulling": true, "AdjustAngleYOnEnter": false, "CameraTargetKey": "CameraTag:PublicAnnouncement"}
+    case 1:
+      #52 CameraSetDemoParam {"Arg": 0, "AdjustAngleYOnLeave": false, "UseNearCulling": true, "AdjustAngleYOnEnter": false, "CameraParamKey": "GrowupDemoTalkBefore", "CameraInterpolateKey": "", "CameraTargetKey": "CameraTag:PublicAnnouncement"}
+      -> (#56)
+== ENTRY MemoryShortageRco
+  #65 MSG TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_00_Rco:000_01
+  #67 MSG TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_00_Rco:000_02
+  #73 EventFlagSystemOff {"AccessKey": "cLandTemp:ReserveMemErrorReenter"}
+== ENTRY MemoryShortageSza
+  #66 MSG TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_01_Sza:000_01
+  #68 MSG TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_01_Sza:000_02
+  #74 EventFlagSystemOff {"AccessKey": "cLandTemp:ReserveMemErrorReenter"}
+== ENTRY Sza_NormalPreAction
+  #60 UIDemoClock {"DisplayFrame": 60}
+  #80 BGMPropertyControl {"BGMProperty": 53}
+  #63 EventFlagSystemAdd {"AccessKey": "cPlayer:SzaPAAccidentCounter", "AddNum": 1}

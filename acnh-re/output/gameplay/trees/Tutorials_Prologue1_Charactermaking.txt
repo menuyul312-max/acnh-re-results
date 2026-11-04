@@ -1,0 +1,170 @@
+# Tutorials_Prologue1_Charactermaking (source: decoded EventFlow; bool flag case 0 = ON, case 1 = OFF; #N = event index)
+== ENTRY Root
+  #82 CALL Tutorials_Prologue1_Charactermaking:0_FlagSettings
+  #60 BGMPropertyControl {"BGMProperty": 55}
+  #39 CALL Tutorials_Prologue1_Charactermaking:Cut0
+  #12 IF EnvTimeZone {}
+    case 0:
+      #13 MSG Tutorials/Tutorials_Prologue1_Airport:001_01
+      #17 IF EventFlagSystemBool {"AccessKey": "cLand:ValidateVillageSave"}
+        case ON:
+          #34 MSG Tutorials/Tutorials_Prologue1_Airport:101
+          #35 MSG Tutorials/Tutorials_Prologue1_Airport:002_02
+          #18 MSG Tutorials/Tutorials_Prologue1_Airport:102
+          #30 MSG Tutorials/Tutorials_Prologue1_Airport:102_02
+          #124 CALL Tutorials_Prologue1_Charactermaking:Apply
+        case OFF:
+          #32 MSG Tutorials/Tutorials_Prologue1_Airport:002_01
+          #33 MSG Tutorials/Tutorials_Prologue1_Airport:002_02
+          #16 MSG Tutorials/Tutorials_Prologue1_Airport:003_01
+          -> (#124)
+    case 1:
+      -> (#13)
+    case 2:
+      #14 MSG Tutorials/Tutorials_Prologue1_Airport:001_02
+      -> (#17)
+    case 3:
+      -> (#14)
+    case 4:
+      #15 MSG Tutorials/Tutorials_Prologue1_Airport:001_03
+      -> (#17)
+    case 5:
+      -> (#15)
+== ENTRY EnteringNameAndBday
+  #19 UISoftwareKeyboardHandling {"FormType": "cName", "IsClearString": true}
+  #20 SaveSetFromUIResult {"SaveType": "cPlayerName"}
+  #28 SetTagFromUIResult {"TagType": "cPlayerNameNoGender", "TagID": 0}
+  #21 UIDateHandling {"DateInputType": "cOpeningBirthday"}
+  #22 SaveSetFromUIResult {"SaveType": "cBirthDay"}
+  #72 LookAtPos {"PosZ": 0.0, "LookAtType": 1, "PosX": 0.0, "PosY": 1.0}
+  #66 LookAtPos {"PosZ": 0.0, "LookAtType": 1, "PosY": 4.0, "PosX": 5.0}
+  #74 RequestSimple {"AsCommand": "NpcSpTyping", "WaitFinish": false}
+  #23 MSG Tutorials/Tutorials_Prologue1_Airport:003_03
+  #73 LookAtPos {"PosY": 0.0, "PosZ": 0.0, "PosX": 0.0, "LookAtType": 2}
+  #67 LookAtPos {"PosY": 0.0, "PosZ": 0.0, "PosX": 0.0, "LookAtType": 2}
+  #31 MSG Tutorials/Tutorials_Prologue1_Airport:003_05
+== ENTRY Charactermaking
+  #71 UICharactermakingCreate {}
+  #26 MSG Tutorials/Tutorials_Prologue1_Airport:005_01
+  #24 UICharactermakingHandling {"CharctermakingFilterType": "cFirstTime"}
+  #25 SaveSetFromUIResult {"SaveType": "cCharaMakeResult"}
+  #27 MSG Tutorials/Tutorials_Prologue1_Airport:005_02
+== ENTRY TerrainSelect
+  #3 MSG Tutorials/Tutorials_Prologue1_Airport:021
+  #0 UIMapSelectHandling {}
+  #1 SaveSetFromUIResult {"SaveType": "cVillage"}
+  #4 MSG Tutorials/Tutorials_Prologue1_Airport:022
+  #5 MSG Tutorials/Tutorials_Prologue1_Airport:023
+  #6 IF GeneralTalkChoice4 {}
+    case 0:
+      #7 MSG Tutorials/Tutorials_Prologue1_Airport:024
+    case 1:
+      -> (#7)
+    case 2:
+      -> (#7)
+    case 3:
+      -> (#7)
+== ENTRY EndCharacterMaking
+  #50 CALL Tutorials_Prologue1_Charactermaking:ToCut1
+  #59 MSG Tutorials/Tutorials_Prologue1_Airport:025
+  #55 LookAtPos {"LookAtType": 1, "PosZ": 10.0, "PosY": 11.0, "PosX": 0.0}
+  #56 LookAtPos {"LookAtType": 1, "PosZ": 10.0, "PosY": 11.0, "PosX": 0.0}
+  #91 IF EventFlagSystemBool {"AccessKey": "cLand:ValidateVillageSave"}
+    case ON:
+      #90 MSG Tutorials/Tutorials_Prologue1_Airport:025_02
+      #51 CALL Tutorials_Prologue1_Charactermaking:BackCut0
+      #11 MSG Tutorials/Tutorials_Prologue1_Airport:026
+      #62 BGMPropertyControl {"BGMProperty": 54}
+      #29 EventFlagSystemOn {"AccessKey": "cPlayer:DoneCharacterCreation"}
+      #112 EventFlagSystemOn {"AccessKey": "cLandTemp:EntryGame"}
+      #81 FadeOut {"FadeColorString": "cBlack", "FadeOutKindString": "cCircle", "FadeInKindString": "cCircle", "FadeInSpeed": 1.0, "FadeOutSpeed": 1.0, "IsUseDucking": true}
+      #92 CALL Tutorials_Prologue1_Charactermaking:PV
+    case OFF:
+      #10 MSG Tutorials/Tutorials_Prologue1_Airport:025_01
+      -> (#80)
+== ENTRY Cut0
+  #68 UIPrologueBGAppear {}
+  #37 CameraSetDemoParam {"CameraInterpolateKey": "", "CameraTargetKey": "CameraTag:Root", "Arg": 0, "AdjustAngleYOnLeave": false, "CameraParamKey": "Cut0Start", "UseNearCulling": false, "AdjustAngleYOnEnter": false}
+  #69 UIPrologueBGDisappear {}
+  #36 CameraSetDemoParam {"CameraParamKey": "Cut0End", "AdjustAngleYOnLeave": false, "Arg": 0, "CameraTargetKey": "CameraTag:Root", "CameraInterpolateKey": "Cut0", "UseNearCulling": false, "AdjustAngleYOnEnter": false}
+  #41 FORK
+    || #42 NpcRailMove {"RailID": 0, "IsWarp": true, "IsReverse": false, "PointA": -1, "PointB": -1, "MoveType": 1}
+    || #43 NpcRailMove {"IsWarp": true, "IsReverse": false, "RailID": 1, "PointA": -1, "PointB": -1, "MoveType": 1}
+== ENTRY ToCut1
+  #49 CameraSetDemoParam {"CameraTargetKey": "CameraTag:Root", "Arg": 0, "AdjustAngleYOnLeave": false, "CameraParamKey": "Cut1", "CameraInterpolateKey": "cDefault", "UseNearCulling": false, "AdjustAngleYOnEnter": false}
+== ENTRY BackCut0
+  #52 CameraSetDemoParam {"CameraTargetKey": "CameraTag:Root", "Arg": 0, "AdjustAngleYOnLeave": false, "CameraInterpolateKey": "cDefault", "CameraParamKey": "Cut0End", "UseNearCulling": false, "AdjustAngleYOnEnter": false}
+  #57 LookAtPos {"LookAtType": 2, "PosY": 0.0, "PosZ": 0.0, "PosX": 0.0}
+  #58 LookAtPos {"LookAtType": 2, "PosY": 0.0, "PosZ": 0.0, "PosX": 0.0}
+== ENTRY 0_FlagSettings
+  #83 IF EventFlagSystemBool {"AccessKey": "cLand:ValidateVillageSave"}
+    case ON:
+      #84 EventFlagSystemOn {"AccessKey": "cLandTemp:CalendarEventStop"}
+      #85 IF OfficeLevel {}
+        case 0:
+          #87 EventFlagSystemOn {"AccessKey": "cPlayer:ThisPCcreatedbeforeOfficeUpgrading"}
+          #110 IF MuseumLevel {}
+            case 3:
+              #88 IF ShopLevel {}
+                case 0:
+                  #89 EventFlagSystemOff {"AccessKey": "cPlayer:KaburibaConditionFlag"}
+            case 0:
+              #111 EventFlagSystemOn {"AccessKey": "cPlayer:2P_CreatedAfterOwlMoving"}
+              -> (#88)
+            case 1:
+              -> (#111)
+            case 2:
+              -> (#111)
+        case 1:
+          -> (#87)
+        case 2:
+          -> (#110)
+    case OFF:
+      #86 EventFlagSystemOn {"AccessKey": "cPlayer:ThisPCcreatedbeforeOfficeUpgrading"}
+      -> (#88)
+== ENTRY PV
+  #96 IF EnvTimeZone {}
+    case 0:
+      #98 MSG Tutorials/Tutorials_Prologue1_Airport:027_01
+      #103 IF EventFlagSystemBool {"AccessKey": "cLand:ValidateVillageSave"}
+        case ON:
+          #109 MSG Tutorials/Tutorials_Prologue1_Airport:028_01
+          #104 ReserveNpcCommand {"Command": "PrologueTanukichiNewVillager"}
+          #128 SoundFade {"FadeHandleId": 1}
+          #93 SystemRequestChangeStage {"FadeInKindString": "cCircle", "FadeColorString": "cBlack", "TargetStage": "cOpeningMovie", "FadeOutKindString": "cNormalFader", "FadeOutSpeed": 1.0, "FadeInSpeed": 1.0}
+        case OFF:
+          #97 MSG Tutorials/Tutorials_Prologue1_Airport:028
+          #101 EnvSetDemoTime {"Hour": 14, "Minute": 0, "Second": 0}
+          #102 TimeLock {"TimeLockType": "cLockDemo"}
+          #106 EventFlagSystemOn {"AccessKey": "cPlayer:MakeVillagePlayerFlag"}
+          #107 EventFlagSystemOn {"AccessKey": "cLandTemp:IsFirstPrologue"}
+          #108 EventFlagSystemSet {"AccessKey": "cLand:OpeningSeqBGMChangeCounter", "SetNum": 1}
+          #105 ReserveNpcCommand {"Command": "PrologueTanukichi"}
+          -> (#128)
+    case 1:
+      -> (#98)
+    case 2:
+      #99 MSG Tutorials/Tutorials_Prologue1_Airport:027_02
+      -> (#103)
+    case 3:
+      -> (#99)
+    case 4:
+      #100 MSG Tutorials/Tutorials_Prologue1_Airport:027_03
+      -> (#103)
+    case 5:
+      -> (#100)
+== ENTRY Apply
+  #123 EntryPlayerVillager {}
+  #120 MSG Tutorials/Tutorials_Prologue1_Airport:003_02
+  #115 CALL Tutorials_Prologue1_Charactermaking:EnteringNameAndBday
+  #116 CALL Tutorials_Prologue1_Charactermaking:Charactermaking
+  #122 IF EventFlagSystemBool {"AccessKey": "cLand:ValidateVillageSave"}
+    case ON:
+      #119 MSG Tutorials/Tutorials_Prologue1_Airport:103
+      #121 ClearAllNpcOtherPlayerMoveInFlag {}
+      #118 CALL Tutorials_Prologue1_Charactermaking:EndCharacterMaking
+    case OFF:
+      #113 MSG Tutorials/Tutorials_Prologue1_Airport:006
+      #114 CALL Tutorials_Prologue1_Areacheck:Root
+      #117 CALL Tutorials_Prologue1_Charactermaking:TerrainSelect
+      -> (#118)

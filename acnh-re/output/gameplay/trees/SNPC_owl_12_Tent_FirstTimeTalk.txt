@@ -1,0 +1,135 @@
+# SNPC_owl_12_Tent_FirstTimeTalk (source: decoded EventFlow; bool flag case 0 = ON, case 1 = OFF; #N = event index)
+== ENTRY Root
+  #20 SetTagFromSystem {"SetTagType": "cDegit", "TagID": 0, "Value": 0, "TagType": "cEventFlag", "AccessKey": "cLand:DonationAmountForMuseum"}
+  #0 EventFlagSystemOn {"AccessKey": "cPlayer:OwlFinished1stTalk"}
+  #1 EventFlagSystemOn {"AccessKey": "cPlayer:FutaTalkedInMuseumToday"}
+  #4 IF EventFlagSystemBool {"AccessKey": "cPlayer:MakeVillagePlayerFlag"}
+    case ON:
+      #2 IF EventFlagSystemBool {"AccessKey": "cLand:MuseumGrowupEnable1"}
+        case ON:
+          #3 EventFlagSystemOn {"AccessKey": "cPlayer:FutaReadyForMuseum"}
+          #7 CALL SNPC_owl_12_Tent_FirstTimeTalk:Root2
+        case OFF:
+          #84 IF EventFlagSystemBool {"AccessKey": "cLand:OwlTentExplainFor1P"}
+            case ON:
+              #6 CALL SNPC_owl_12_Tent_FirstTimeTalk:Root1
+            case OFF:
+              #8 EventFlagSystemOn {"AccessKey": "cLand:OwlTentExplainFor1P"}
+              #5 CALL SNPC_owl_12_Tent_FirstTimeTalk:Root0
+    case OFF:
+      #36 IF EventFlagSystemBool {"AccessKey": "cLand:MuseumGrowupEnable1"}
+        case ON:
+          #37 EventFlagSystemOn {"AccessKey": "cPlayer:FutaReadyForMuseum"}
+          #69 CALL SNPC_owl_12_Tent_FirstTimeTalk:Root2_2P
+        case OFF:
+          #85 IF EventFlagSystemBool {"AccessKey": "cLand:OwlTentExplainFor1P"}
+            case ON:
+              #35 CALL SNPC_owl_12_Tent_FirstTimeTalk:Root1_2P
+            case OFF:
+              #86 CALL SNPC_owl_12_Tent_FirstTimeTalk:Root0_2P
+== ENTRY Root2
+  #15 CALL SNPC_owl_12_Tent_FirstTimeTalk:1P_Cmn1_Root_ABC
+  #60 CALL SNPC_owl_12_Tent_FirstTimeTalk:ALL_Cmn5_RootC
+  #65 CALL SNPC_owl_12_Tent_FirstTimeTalk:ALL_Cmn6_RootC
+== ENTRY Root0
+  #13 CALL SNPC_owl_12_Tent_FirstTimeTalk:1P_Cmn1_Root_ABC
+  #18 CALL SNPC_owl_12_Tent_FirstTimeTalk:ALL_Cmn1_Root_AB
+  #28 CALL SNPC_owl_12_Tent_FirstTimeTalk:ALL_Cmn2_Root_A
+== ENTRY Root1
+  #14 CALL SNPC_owl_12_Tent_FirstTimeTalk:1P_Cmn1_Root_ABC
+  #19 CALL SNPC_owl_12_Tent_FirstTimeTalk:ALL_Cmn1_Root_AB
+  #47 CALL SNPC_owl_12_Tent_FirstTimeTalk:ALL_Cmn3_RootAB
+  #48 CALL SNPC_owl_12_Tent_FirstTimeTalk:ALL_Cmn4_RootAB
+== ENTRY 1P_Cmn1_Root_ABC
+  #9 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:001
+  #12 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:002
+  #10 IF GeneralTalkChoice2 {}
+    case 0:
+      #11 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:003
+    case 1:
+      -> (#11)
+== ENTRY ALL_Cmn1_Root_AB
+  #75 IF EventFlagSystemBool {"AccessKey": "cPlayer:MakeVillagePlayerFlag"}
+    case ON:
+      #16 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:004
+      #17 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:005
+    case OFF:
+      #76 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:022
+      -> (#17)
+== ENTRY Root0_2P
+  #38 CALL SNPC_owl_12_Tent_FirstTimeTalk:2P_Com1_Root_ABC
+  #21 CALL SNPC_owl_12_Tent_FirstTimeTalk:ALL_Cmn1_Root_AB
+  #77 IF EventFlagSystemBool {"AccessKey": "cPlayer:MainmenuRecipe"}
+    case ON:
+      #29 CALL SNPC_owl_12_Tent_FirstTimeTalk:ALL_Cmn2_Root_A
+    case OFF:
+      #81 CALL SNPC_owl_12_Tent_FirstTimeTalk:2P_Cmn2_Root_A
+== ENTRY ALL_Cmn2_Root_A
+  #22 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:006
+  #23 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:007
+  #24 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:008
+  #27 CALL SNPC_owl_12_Tent_FirstTimeTalk:ALL_Cmn_SendRecipe
+  #25 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:009
+  #26 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:010
+  #83 EventFlagSystemOn {"AccessKey": "cLand:OwlTentExplainFor1P"}
+== ENTRY ALL_Cmn_SendRecipe
+  #31 CALL Demo_Common_PhoneCall:SendingDataWithP_Owl
+  #32 CALL Demo_Common_PhoneCall:PuttingMobileAwayWithP
+  #30 PlayerSetCraftRecipe {"ItemUniqueId": 65534, "UnlockType": "Owl001"}
+  #33 EventFlagSystemOn {"AccessKey": "cPlayer:OwlGotDiyRecipe"}
+  #34 EventFlagSystemOn {"AccessKey": "cLand:VillageExtensionLevel2"}
+== ENTRY Root1_2P
+  #39 CALL SNPC_owl_12_Tent_FirstTimeTalk:2P_Com1_Root_ABC
+  #40 CALL SNPC_owl_12_Tent_FirstTimeTalk:ALL_Cmn1_Root_AB
+  #54 CALL SNPC_owl_12_Tent_FirstTimeTalk:ALL_Cmn3_RootAB
+  #41 IF EventFlagSystemBool {"AccessKey": "cPlayer:MainmenuRecipe"}
+    case ON:
+      #53 CALL SNPC_owl_12_Tent_FirstTimeTalk:ALL_Cmn4_RootAB
+    case OFF:
+      #42 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:026
+== ENTRY 2P_Com1_Root_ABC
+  #74 IF EventFlagSystemBool {"AccessKey": "cPlayer:2P_CreatedAfterOwlMoving"}
+    case ON:
+      #70 IF EventFlagSystemBool {"AccessKey": "cLand:MuseumTentBuiltToday"}
+        case ON:
+          #72 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:001
+          #73 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:021
+        case OFF:
+          #71 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:015
+    case OFF:
+      -> (#72)
+== ENTRY ALL_Cmn3_RootAB
+  #45 IF EventFlagSystemBool {"AccessKey": "cLand:OwlFoundFossil"}
+    case ON:
+      #46 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:023
+    case OFF:
+      #43 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:006
+      #44 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:007
+== ENTRY ALL_Cmn4_RootAB
+  #49 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:024
+  #52 CALL SNPC_owl_12_Tent_FirstTimeTalk:ALL_Cmn_SendRecipe
+  #50 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:025
+  #51 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:010
+== ENTRY Root2_2P
+  #55 CALL SNPC_owl_12_Tent_FirstTimeTalk:2P_Com1_Root_ABC
+  #66 CALL SNPC_owl_12_Tent_FirstTimeTalk:ALL_Cmn5_RootC
+  #67 IF EventFlagSystemBool {"AccessKey": "cPlayer:MainmenuRecipe"}
+    case ON:
+      #68 CALL SNPC_owl_12_Tent_FirstTimeTalk:ALL_Cmn6_RootC
+== ENTRY ALL_Cmn5_RootC
+  #59 IF EventFlagSystemBool {"AccessKey": "cLand:MuseumTentBuiltToday"}
+    case ON:
+      #57 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:011_02
+      #58 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:012
+    case OFF:
+      #56 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:011_01
+      -> (#58)
+== ENTRY ALL_Cmn6_RootC
+  #61 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:013
+  #63 CALL SNPC_owl_12_Tent_FirstTimeTalk:ALL_Cmn_SendRecipe
+  #64 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:014
+== ENTRY 2P_Cmn2_Root_A
+  #78 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:006
+  #79 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:007
+  #80 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:007_01
+  #82 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:010

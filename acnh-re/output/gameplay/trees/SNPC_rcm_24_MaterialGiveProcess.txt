@@ -1,0 +1,137 @@
+# SNPC_rcm_24_MaterialGiveProcess (source: decoded EventFlow; bool flag case 0 = ON, case 1 = OFF; #N = event index)
+== ENTRY Root
+  #1 IF GeneralTalkChoice2 {}
+    case 0:
+      #3 NpcDelivery {"Option": "Default", "Command": 0}
+      #7 IF SubflowResultChoice4 {"SetIndex": 6}
+        case 0:
+          #2 IF SubflowResultChoice4 {"SetIndex": 7}
+            case 0:
+              #23 CALL SNPC_rcm_24_MaterialGiveProcess:DeleteWood
+              #56 CALL SNPC_rcm_22_MaterialProgressChk:Root
+              #57 IF SubflowResultChoice5 {"SetIndex": 0}
+                case 1:
+                  #13 CALL SNPC_rcm_24_MaterialGiveProcess:RewardProcess
+                case 2:
+                  -> (#13)
+                case 3:
+                  -> (#13)
+            case 1:
+              #24 CALL SNPC_rcm_24_MaterialGiveProcess:DeleteHardWood
+              -> (#56)
+            case 2:
+              #25 CALL SNPC_rcm_24_MaterialGiveProcess:DeleteSoftWood
+              -> (#56)
+            case 3:
+              #26 CALL SNPC_rcm_24_MaterialGiveProcess:DeleteIron
+              -> (#56)
+        case 1:
+          #12 IF SubflowResultChoice6 {"SetIndex": 12}
+            case 0:
+              #53 CALL SNPC_rcm_24_MaterialGiveProcess:DeleteWood
+              #54 CALL SNPC_rcm_24_MaterialGiveProcess:DeleteHardWood
+              #61 CALL SNPC_rcm_22_MaterialProgressChk:Root
+              #59 IF SubflowResultChoice5 {"SetIndex": 0}
+                case 2:
+                  #60 CALL SNPC_rcm_24_MaterialGiveProcess:RewardProcess2
+                case 3:
+                  -> (#60)
+                case 4:
+                  #58 CALL SNPC_rcm_24_MaterialGiveProcess:RewardProcess
+            case 1:
+              #31 CALL SNPC_rcm_24_MaterialGiveProcess:DeleteWood
+              #32 CALL SNPC_rcm_24_MaterialGiveProcess:DeleteSoftWood
+              -> (#61)
+            case 2:
+              #33 CALL SNPC_rcm_24_MaterialGiveProcess:DeleteWood
+              #34 CALL SNPC_rcm_24_MaterialGiveProcess:DeleteIron
+              -> (#61)
+            case 3:
+              #35 CALL SNPC_rcm_24_MaterialGiveProcess:DeleteHardWood
+              #36 CALL SNPC_rcm_24_MaterialGiveProcess:DeleteSoftWood
+              -> (#61)
+            case 4:
+              #37 CALL SNPC_rcm_24_MaterialGiveProcess:DeleteHardWood
+              #38 CALL SNPC_rcm_24_MaterialGiveProcess:DeleteIron
+              -> (#61)
+            case 5:
+              #39 CALL SNPC_rcm_24_MaterialGiveProcess:DeleteSoftWood
+              #40 CALL SNPC_rcm_24_MaterialGiveProcess:DeleteIron
+              -> (#61)
+        case 2:
+          #14 IF SubflowResultChoice4 {"SetIndex": 13}
+            case 0:
+              #41 CALL SNPC_rcm_24_MaterialGiveProcess:DeleteHardWood
+              #42 CALL SNPC_rcm_24_MaterialGiveProcess:DeleteSoftWood
+              #43 CALL SNPC_rcm_24_MaterialGiveProcess:DeleteIron
+              #62 CALL SNPC_rcm_22_MaterialProgressChk:Root
+              #63 IF SubflowResultChoice5 {"SetIndex": 0}
+                case 3:
+                  #55 CALL SNPC_rcm_24_MaterialGiveProcess:RewardProcess3
+                case 4:
+                  #64 CALL SNPC_rcm_24_MaterialGiveProcess:RewardProcess2
+            case 1:
+              #44 CALL SNPC_rcm_24_MaterialGiveProcess:DeleteWood
+              #45 CALL SNPC_rcm_24_MaterialGiveProcess:DeleteSoftWood
+              #46 CALL SNPC_rcm_24_MaterialGiveProcess:DeleteIron
+              -> (#62)
+            case 2:
+              #47 CALL SNPC_rcm_24_MaterialGiveProcess:DeleteWood
+              #48 CALL SNPC_rcm_24_MaterialGiveProcess:DeleteHardWood
+              #49 CALL SNPC_rcm_24_MaterialGiveProcess:DeleteIron
+              -> (#62)
+            case 3:
+              #50 CALL SNPC_rcm_24_MaterialGiveProcess:DeleteWood
+              #51 CALL SNPC_rcm_24_MaterialGiveProcess:DeleteHardWood
+              #52 CALL SNPC_rcm_24_MaterialGiveProcess:DeleteSoftWood
+              -> (#62)
+        case 3:
+          #27 CALL SNPC_rcm_24_MaterialGiveProcess:DeleteWood
+          #28 CALL SNPC_rcm_24_MaterialGiveProcess:DeleteHardWood
+          #29 CALL SNPC_rcm_24_MaterialGiveProcess:DeleteSoftWood
+          #30 CALL SNPC_rcm_24_MaterialGiveProcess:DeleteIron
+          #66 NpcDecideRewardByCondition {"ItemGroup": 5, "Price": 3000, "GreatorEqual": false, "NotCollect": true}
+          #10 SetItemName {"ItemTarget": 1, "TagType": 0, "ID": 2}
+          #8 SetEventRewardToPlayerBaggage {"SetType": "cFree"}
+          #67 NpcDecideRewardByCondition {"ItemGroup": 5, "Price": 3000, "GreatorEqual": false, "NotCollect": true}
+          #11 SetItemName {"ItemTarget": 1, "TagType": 0, "ID": 1}
+          #9 SetEventRewardToPlayerBaggage {"SetType": "cFree"}
+          #65 NpcDecideRewardByCondition {"ItemGroup": 5, "Price": 3000, "GreatorEqual": false, "NotCollect": true}
+          #5 SetItemName {"ItemTarget": 1, "TagType": 0, "ID": 0}
+          #6 SetDeliveryItem {"SetItemTarget": 1, "ApplyToSave": true}
+    case 1:
+      #0 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:054
+      #4 ExitFlowchart {}
+== ENTRY RewardProcess
+  #65 NpcDecideRewardByCondition {"ItemGroup": 5, "Price": 3000, "GreatorEqual": false, "NotCollect": true}
+  #5 SetItemName {"ItemTarget": 1, "TagType": 0, "ID": 0}
+  #6 SetDeliveryItem {"SetItemTarget": 1, "ApplyToSave": true}
+== ENTRY RewardProcess2
+  #67 NpcDecideRewardByCondition {"ItemGroup": 5, "Price": 3000, "GreatorEqual": false, "NotCollect": true}
+  #11 SetItemName {"ItemTarget": 1, "TagType": 0, "ID": 1}
+  #9 SetEventRewardToPlayerBaggage {"SetType": "cFree"}
+  #65 NpcDecideRewardByCondition {"ItemGroup": 5, "Price": 3000, "GreatorEqual": false, "NotCollect": true}
+  #5 SetItemName {"ItemTarget": 1, "TagType": 0, "ID": 0}
+  #6 SetDeliveryItem {"SetItemTarget": 1, "ApplyToSave": true}
+== ENTRY DeleteWood
+  #16 DeleteTargetItem {"DeleteNum": 30, "ItemUniqueId": 2768}
+  #17 EventFlagSystemOn {"AccessKey": "cLand:RcmShopMaterial_Wood"}
+== ENTRY DeleteSoftWood
+  #19 DeleteTargetItem {"DeleteNum": 30, "ItemUniqueId": 2767}
+  #18 EventFlagSystemOn {"AccessKey": "cLand:RcmShopMaterial_SoftWood"}
+== ENTRY DeleteHardWood
+  #20 DeleteTargetItem {"DeleteNum": 30, "ItemUniqueId": 2769}
+  #21 EventFlagSystemOn {"AccessKey": "cLand:RcmShopMaterial_HardWood"}
+== ENTRY DeleteIron
+  #15 DeleteTargetItem {"ItemUniqueId": 2511, "DeleteNum": 30}
+  #22 EventFlagSystemOn {"AccessKey": "cLand:RcmShopMaterial_Iron"}
+== ENTRY RewardProcess3
+  #66 NpcDecideRewardByCondition {"ItemGroup": 5, "Price": 3000, "GreatorEqual": false, "NotCollect": true}
+  #10 SetItemName {"ItemTarget": 1, "TagType": 0, "ID": 2}
+  #8 SetEventRewardToPlayerBaggage {"SetType": "cFree"}
+  #67 NpcDecideRewardByCondition {"ItemGroup": 5, "Price": 3000, "GreatorEqual": false, "NotCollect": true}
+  #11 SetItemName {"ItemTarget": 1, "TagType": 0, "ID": 1}
+  #9 SetEventRewardToPlayerBaggage {"SetType": "cFree"}
+  #65 NpcDecideRewardByCondition {"ItemGroup": 5, "Price": 3000, "GreatorEqual": false, "NotCollect": true}
+  #5 SetItemName {"ItemTarget": 1, "TagType": 0, "ID": 0}
+  #6 SetDeliveryItem {"SetItemTarget": 1, "ApplyToSave": true}

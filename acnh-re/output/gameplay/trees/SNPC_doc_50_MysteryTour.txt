@@ -1,0 +1,78 @@
+# SNPC_doc_50_MysteryTour (source: decoded EventFlow; bool flag case 0 = ON, case 1 = OFF; #N = event index)
+== ENTRY Root
+  #43 EventFlagSystemOn {"AccessKey": "cPlayer:RcoMachineExplainAboutPlaneTicket"}
+  #0 IF EventFlagSystemBool {"AccessKey": "cPlayerTemp:DodTalkSceneFlag"}
+    case ON:
+      #3 MSG TalkSNpc/doc/SP_doc_51_MysteryTour:002
+      #2 IF GeneralTalkChoice3 {}
+        case 0:
+          #6 MSG TalkSNpc/doc/SP_doc_51_MysteryTour:003
+          #4 IF GeneralTalkChoice2 {}
+            case 0:
+              #7 MSG TalkSNpc/doc/SP_doc_51_MysteryTour:004
+              #38 BGMPropertyControl {"BGMProperty": 76}
+              #40 EventFlagSystemOn {"AccessKey": "cLandTemp:DocReturnFromIsland"}
+              #5 SystemRequestChangeStage {"FadeColorString": "cBlack", "FadeOutSpeed": 1.0, "FadeInSpeed": 1.0, "FadeInKindString": "cCircle", "TargetStage": "cFromOutlierToHomeland", "FadeOutKindString": "cDALWithLoadWait"}
+            case 1:
+              #9 CALL SNPC_doc_50_MysteryTour:DocCmnCancel
+        case 1:
+          #22 IF SystemHasBaggageSpace {"CheckNum": 1, "CheckTargrt": "cPocketBag"}
+            case 0:
+              #17 UISonkatsuPointAppear {}
+              #15 MSG TalkSNpc/doc/SP_doc_51_MysteryTour:011
+              #16 UIShopBuyAppear {"ItemBitType": "cRodly"}
+              #20 IF UIResultMenuDecide {}
+                case 0:
+                  #18 SetTagFromUIResult {"TagType": "cItemName", "TagID": 0}
+                  #36 SetTagFromSystem {"TagID": 0, "Value": 100, "TagType": "cFlow", "SetTagType": "cDegit", "AccessKey": ""}
+                  #26 IF HasLifeSupportPoint {"Point": 100, "LifeSupportPointCheckType": "Now"}
+                    case 0:
+                      #27 MSG TalkSNpc/doc/SP_doc_51_MysteryTour:015
+                      #19 IF GeneralTalkChoice2 {}
+                        case 0:
+                          #45 LifeSupportPointCountDown {"Point": -100, "Reverse": false}
+                          #49 UIShopBuyDisappear {}
+                          #29 SetDeliveryItem {"SetItemTarget": 4, "ApplyToSave": false}
+                          #31 MSG TalkSNpc/doc/SP_doc_51_MysteryTour:016
+                          #30 NpcDelivery {"Command": 1, "Option": "Default"}
+                          #35 SetTagFromUIResult {"TagType": "cItemName", "TagID": 0}
+                          #37 ShopBuyDone {"UseTailorTicket": false, "Set5": false}
+                          #32 MSG TalkSNpc/doc/SP_doc_51_MysteryTour:017
+                          #51 FORK
+                            || #50 UISonkatsuPointDisappear {}
+                            || #53 MessageSuspend {}
+                        case 1:
+                          #24 CALL SNPC_doc_50_MysteryTour:ExchangeCancel
+                    case 1:
+                      #25 MSG TalkSNpc/doc/SP_doc_51_MysteryTour:014
+                      #33 CALL SNPC_doc_50_MysteryTour:CloseUI
+                case 1:
+                  #21 MSG TalkSNpc/doc/SP_doc_51_MysteryTour:013
+                  #34 CALL SNPC_doc_50_MysteryTour:CloseUI
+            case 1:
+              #23 MSG TalkSNpc/doc/SP_doc_51_MysteryTour:012
+        case 2:
+          #8 MSG TalkSNpc/doc/SP_doc_51_MysteryTour:008
+    case OFF:
+      #1 EventFlagSystemOn {"AccessKey": "cPlayerTemp:DodTalkSceneFlag"}
+      #12 MSG TalkSNpc/doc/SP_doc_51_MysteryTour:001_01
+      #10 IF EventFlagSystemBool {"AccessKey": "cPlayer:DocMysterytourExplain1st"}
+        case ON:
+          #14 MSG TalkSNpc/doc/SP_doc_51_MysteryTour:001_03
+        case OFF:
+          #13 MSG TalkSNpc/doc/SP_doc_51_MysteryTour:001_02
+          #11 EventFlagSystemOn {"AccessKey": "cPlayer:DocMysterytourExplain1st"}
+          -> (#14)
+== ENTRY DocCmnCancel
+  #8 MSG TalkSNpc/doc/SP_doc_51_MysteryTour:008
+== ENTRY ExchangeCancel
+  #21 MSG TalkSNpc/doc/SP_doc_51_MysteryTour:013
+  #34 CALL SNPC_doc_50_MysteryTour:CloseUI
+== ENTRY CloseUI
+  #47 FORK
+    || #28 UISonkatsuPointDisappear {}
+    || #44 UIShopBuyDisappear {}
+    || #46 MessageSuspend {}
+== ENTRY FaintEntry
+  #41 MSG TalkSNpc/doc/SP_doc_51_MysteryTour:021
+  #42 EventFlagSystemOn {"AccessKey": "cPlayerTemp:DodTalkSceneFlag"}

@@ -1,0 +1,61 @@
+# SNPC_rco_04_ChkFinishLoan (source: decoded EventFlow; bool flag case 0 = ON, case 1 = OFF; #N = event index)
+== ENTRY Root
+  #0 IF EventFlagSystemBool {"AccessKey": "cPlayer:PlayerLoanFinish1st"}
+    case ON:
+      #12 MSG TalkSNpc/rco/SP_rco_02_Loan:001
+      #1 IF PlayerHouseLevel {}
+        case 2:
+          #13 MSG TalkSNpc/rco/SP_rco_02_Loan:003
+          #10 EventFlagSystemOn {"AccessKey": "cPlayer:RcoHeardRemodel1"}
+          #11 EventFlagSystemOff {"AccessKey": "cPlayer:PlayerLoanFinish1st"}
+          #9 ExitFlowchart {}
+        case 3:
+          #2 MSG TalkSNpc/rco/SP_rco_02_Loan:004
+          -> (#10)
+        case 4:
+          #3 MSG TalkSNpc/rco/SP_rco_02_Loan:005
+          -> (#10)
+        case 5:
+          #4 MSG TalkSNpc/rco/SP_rco_02_Loan:006
+          -> (#10)
+        case 6:
+          #5 MSG TalkSNpc/rco/SP_rco_02_Loan:007
+          -> (#10)
+        case 7:
+          #6 MSG TalkSNpc/rco/SP_rco_02_Loan:008
+          -> (#10)
+        case 8:
+          #7 MSG TalkSNpc/rco/SP_rco_02_Loan:009
+          #8 EventFlagSystemOn {"AccessKey": "cPlayer:PcHousingLoanFinish"}
+          -> (#10)
+== ENTRY FinishLoan_Force
+  #16 CALL SNPC_rco_01_Tent_1_Entries:RcoTent_Force_PlayerPos
+  #14 EventFlagSystemOn {"AccessKey": "cPlayerTemp:RcoTalkSceneFlag"}
+  #12 MSG TalkSNpc/rco/SP_rco_02_Loan:001
+  #1 IF PlayerHouseLevel {}
+    case 2:
+      #13 MSG TalkSNpc/rco/SP_rco_02_Loan:003
+      #10 EventFlagSystemOn {"AccessKey": "cPlayer:RcoHeardRemodel1"}
+      #11 EventFlagSystemOff {"AccessKey": "cPlayer:PlayerLoanFinish1st"}
+      #9 ExitFlowchart {}
+    case 3:
+      #2 MSG TalkSNpc/rco/SP_rco_02_Loan:004
+      -> (#10)
+    case 4:
+      #3 MSG TalkSNpc/rco/SP_rco_02_Loan:005
+      -> (#10)
+    case 5:
+      #4 MSG TalkSNpc/rco/SP_rco_02_Loan:006
+      -> (#10)
+    case 6:
+      #5 MSG TalkSNpc/rco/SP_rco_02_Loan:007
+      -> (#10)
+    case 7:
+      #6 MSG TalkSNpc/rco/SP_rco_02_Loan:008
+      -> (#10)
+    case 8:
+      #7 MSG TalkSNpc/rco/SP_rco_02_Loan:009
+      #8 EventFlagSystemOn {"AccessKey": "cPlayer:PcHousingLoanFinish"}
+      -> (#10)
+== ENTRY FinishLoan_Force_Init
+  #15 CALL SNPC_rco_01_Tent_1_Entries:RcoTent_Force_DisableTalkCamera

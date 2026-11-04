@@ -1,0 +1,166 @@
+# SNPC_rcm_03_RenualOpen (source: decoded EventFlow; bool flag case 0 = ON, case 1 = OFF; #N = event index)
+== ENTRY Rcm_RenualOpen1
+  #71 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcmHeardAboutNewOpen1"}
+    case ON:
+      #72 EventFlagSystemOn {"AccessKey": "cPlayer:TwinTurnipExplanation"}
+      #77 MSG TalkSNpc/rcm/SP_rcm_10_Renual:061_01
+      #78 MSG TalkSNpc/rcm/SP_rcm_10_Renual:061_02
+      #79 MSG TalkSNpc/rcm/SP_rcm_10_Renual:061_03
+      #80 MSG TalkSNpc/rcm/SP_rcm_10_Renual:061_04
+      #81 MSG TalkSNpc/rcm/SP_rcm_10_Renual:061_05
+      #82 CALL SNPC_rcm_00_Common:AfterNewServiceExlpain
+    case OFF:
+      #3 EventFlagSystemOn {"AccessKey": "cPlayer:RcmHeardAboutNewOpen1"}
+      #0 IF EventFlagSystemBool {"AccessKey": "cLand:MarketOpen1stDay1"}
+        case ON:
+          #61 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcmTookQuestReq"}
+            case ON:
+              #68 MSG TalkSNpc/rcm/SP_rcm_10_Renual:051
+              #76 IF EventFlagSystemBool {"AccessKey": "cPlayerTemp:RcmShopshelfCheck"}
+                case ON:
+                  #62 MSG TalkSNpc/rcm/SP_rcm_10_Renual:053_02
+                case OFF:
+                  #73 MSG TalkSNpc/rcm/SP_rcm_10_Renual:053_01_01
+                  #2 IF EventFlagSystemBool {"AccessKey": "cPlayerTemp:RcmViaItemCheck"}
+                    case ON:
+                      #75 MSG TalkSNpc/rcm/SP_rcm_10_Renual:053_01_03
+                    case OFF:
+                      #74 MSG TalkSNpc/rcm/SP_rcm_10_Renual:053_01_02
+            case OFF:
+              #69 MSG TalkSNpc/rcm/SP_rcm_10_Renual:051_01
+              -> (#76)
+        case OFF:
+          #63 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcmTookQuestReq"}
+            case ON:
+              #64 MSG TalkSNpc/rcm/SP_rcm_10_Renual:052
+              -> (#76)
+            case OFF:
+              #65 MSG TalkSNpc/rcm/SP_rcm_10_Renual:052_01
+              -> (#76)
+== ENTRY Rcm_RenualOpen2
+  #4 EventFlagSystemOn {"AccessKey": "cPlayer:RcmHeardAboutNewOpen2"}
+  #1 IF EventFlagSystemBool {"AccessKey": "cLand:MarketOpen1stDay2"}
+    case ON:
+      #5 MSG TalkSNpc/rcm/SP_rcm_10_Renual:151
+      #45 IF EventFlagSystemBool {"AccessKey": "cPlayerTemp:RcmViaItemCheck"}
+        case ON:
+          #48 MSG TalkSNpc/rcm/SP_rcm_10_Renual:002_03
+        case OFF:
+          #66 IF EventFlagSystemBool {"AccessKey": "cPlayerTemp:RcmShopshelfCheck"}
+            case ON:
+              #67 MSG TalkSNpc/rcm/SP_rcm_10_Renual:152_02
+            case OFF:
+              #47 MSG TalkSNpc/rcm/SP_rcm_10_Renual:002_02
+    case OFF:
+      #46 MSG TalkSNpc/rcm/SP_rcm_10_Renual:151_01
+      -> (#45)
+== ENTRY Rcm_RenualOpen1_ConvHgh
+  #94 CameraSetDemoParam {"CameraInterpolateKey": "cTalk", "CameraParamKey": "RenualOpen1_ConvHgh", "CameraTargetKey": "Npc:rcm", "UseNearCulling": true, "AdjustAngleYOnEnter": false, "AdjustAngleYOnLeave": false, "Arg": 0}
+  #49 EventFlagSystemOn {"AccessKey": "cPlayer:RcmForcedTalkTodayFlag"}
+  #83 EventFlagSystemOn {"AccessKey": "cLandTemp:RcmEnterBalloon"}
+  #84 EventFlagSystemOn {"AccessKey": "cLandTemp:RctEnterBalloon"}
+  #36 NpcChangeNameStatus {"NameStatus": 1}
+  #6 MSG TalkSNpc/rcm/SP_rcm_20_Market:201
+  #24 IF EventFlagSystemInt {"AccessKey": "cLand:VillageDaysCount", "Border": 7, "FlagCheckType": 2}
+    case 0:
+      #25 IF EventFlagSystemInt {"AccessKey": "cLand:VillageDaysCount", "Border": 30, "FlagCheckType": 2}
+        case 0:
+          #29 MSG TalkSNpc/rcm/SP_rcm_20_Market:202_02
+          #9 MSG TalkSNpc/rcm/SP_rcm_20_Market:204
+          #10 MSG TalkSNpc/rcm/SP_rcm_20_Market:205
+          #37 NpcChangeNameStatus {"NameStatus": 0}
+          #11 MSG TalkSNpc/rcm/SP_rcm_20_Market:206
+          #12 MSG TalkSNpc/rcm/SP_rcm_20_Market:207
+          #13 MSG TalkSNpc/rcm/SP_rcm_20_Market:208
+          #14 MSG TalkSNpc/rcm/SP_rcm_20_Market:209
+          #15 MSG TalkSNpc/rcm/SP_rcm_20_Market:210
+          #16 MSG TalkSNpc/rcm/SP_rcm_20_Market:211
+          #30 NpcRailMove {"PointA": 0, "PointB": 1, "IsReverse": false, "RailID": 3, "IsWarp": false, "MoveType": 1}
+          #34 NpcRailMove {"PointA": 1, "PointB": 2, "IsReverse": false, "RailID": 3, "IsWarp": false, "MoveType": 1}
+          #95 FORK
+            || #106 NpcWaitTurn {}
+            || #109 NpcRailMove {"PointA": 1, "PointB": 2, "IsWarp": false, "MoveType": 1, "RailID": 5, "IsReverse": false}
+            || #105 NpcWaitTurn {}
+          #35 NpcSetVisibleAction {"Visible": false}
+          #22 FORK
+          #51 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcmHeardAboutNewOpen1"}
+            case ON:
+              #52 MSG TalkSNpc/rcm/SP_rcm_20_Market:212_01
+              #20 EventFlagSystemOn {"AccessKey": "cPlayer:KinuyoMetShopFlag"}
+              #21 EventFlagSystemAdd {"AccessKey": "cLand:CountTailorBuild", "AddNum": 1}
+              #43 EventFlagSystemOff {"AccessKey": "cLand:HghStayMarket"}
+              #70 EventFlagSystemOn {"AccessKey": "cPlayerTemp:RcmTalkSceneFlag"}
+              #122 EventFlagSystemOff {"AccessKey": "cLandTemp:HghStayMarketNow"}
+              #123 EventFlagSystemOn {"AccessKey": "cLand:EnableHghStayField"}
+              #98 IF NetIsConnected {}
+                case 0:
+                  #101 FadeOut {"FadeColorString": "cBlack", "FadeOutKindString": "cCircle", "FadeInKindString": "cCircle", "FadeOutSpeed": 1.0, "FadeInSpeed": 1.0, "IsUseDucking": true}
+                  #102 NpcAISetPosByRail {"RailID": 6, "PointIdx": 0, "IsSetAngle": true, "SetAngle": -80.0}
+                  #103 NpcAISetPosByRail {"RailID": 6, "PointIdx": 1, "IsSetAngle": true, "SetAngle": 0.0}
+                  #104 CameraSetDemoParam {"UseNearCulling": true, "AdjustAngleYOnEnter": false, "Arg": 0, "CameraInterpolateKey": "cDefault", "CameraParamKey": "cStrcCommon", "CameraTargetKey": "", "AdjustAngleYOnLeave": true}
+                  #99 FadeIn {"IsWait": true}
+            case OFF:
+              #17 MSG TalkSNpc/rcm/SP_rcm_20_Market:212
+              #53 IF EventFlagSystemBool {"AccessKey": "cPlayer:MakeVillagePlayerFlag"}
+                case ON:
+                  #18 MSG TalkSNpc/rcm/SP_rcm_20_Market:213
+                  #19 MSG TalkSNpc/rcm/SP_rcm_20_Market:214
+                  #91 MSG TalkSNpc/rcm/SP_rcm_20_Market:214_01
+                  #59 MSG TalkSNpc/rcm/SP_rcm_20_Market:215
+                  #50 EventFlagSystemOn {"AccessKey": "cPlayer:RcmHeardAboutNewOpen1"}
+                  -> (#20)
+                case OFF:
+                  #54 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcmTalked1stAfterPrologue"}
+                    case ON:
+                      #55 MSG TalkSNpc/rcm/SP_rcm_20_Market:213_01
+                      -> (#19)
+                    case OFF:
+                      #56 MSG TalkSNpc/rcm/SP_rcm_20_Market:213_02
+                      #58 MSG TalkSNpc/rcm/SP_rcm_20_Market:214
+                      #92 MSG TalkSNpc/rcm/SP_rcm_20_Market:214_01
+                      #60 MSG TalkSNpc/rcm/SP_rcm_20_Market:215_01
+                      #57 EventFlagSystemOn {"AccessKey": "cPlayer:RcmTalked1stAfterPrologue"}
+                      -> (#50)
+        case 1:
+          #28 MSG TalkSNpc/rcm/SP_rcm_20_Market:202_01
+          -> (#9)
+    case 1:
+      #7 MSG TalkSNpc/rcm/SP_rcm_20_Market:202
+      #26 IF MuseumLevel {}
+        case 3:
+          #27 MSG TalkSNpc/rcm/SP_rcm_20_Market:203_01
+          -> (#9)
+        case 0:
+          #8 MSG TalkSNpc/rcm/SP_rcm_20_Market:203
+          -> (#9)
+        case 1:
+          -> (#8)
+        case 2:
+          -> (#8)
+== ENTRY Rcm_RenualOpen1_ConvHgh_Prepare
+  #39 PlayerMoveToTarget {"PosIsOffset": false, "MiddleTargetX": 0.0, "MiddleTargetZ": 0.0, "UseStateAfterWait": false, "StateAfterWait": "", "TargetX": 161.0, "TargetZ": 180.0}
+  #40 SetNpcAIBlackBoardByLabel {"NpcLabel": "rcm", "Option": 1, "Value": 1, "Key": "DemoSpeak"}
+== ENTRY Chk_RenualOpen_Talk
+  #111 IF ShopLevel {}
+    case 1:
+      #118 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcmTalked1stAfterPrologue"}
+        case ON:
+          #112 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcmHeardAboutNewOpen1"}
+            case ON:
+              #124 IF EventFlagSystemBool {"AccessKey": "cLand:MarketRemodelingFlag2"}
+                case ON:
+                  #125 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcmHeardAboutRenual"}
+            case OFF:
+              #114 SetSubflowResult {"SetIndex": 1, "ResultValue": 1}
+        case OFF:
+          #119 EventFlagSystemOn {"AccessKey": "cPlayer:RcmTalked1stAfterPrologue"}
+          #115 SetSubflowResult {"SetIndex": 1, "ResultValue": 2}
+    case 2:
+      #120 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcmTalked1stAfterPrologue"}
+        case ON:
+          #113 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcmHeardAboutNewOpen2"}
+            case OFF:
+              #116 SetSubflowResult {"SetIndex": 1, "ResultValue": 3}
+        case OFF:
+          #121 EventFlagSystemOn {"AccessKey": "cPlayer:RcmTalked1stAfterPrologue"}
+          #117 SetSubflowResult {"SetIndex": 1, "ResultValue": 4}

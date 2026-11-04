@@ -1,0 +1,151 @@
+# Tutorials_Prologue5_Campfire (source: decoded EventFlow; bool flag case 0 = ON, case 1 = OFF; #N = event index)
+== ENTRY Root
+  #184 SleepInsect {"SleepInsectType": "cSleep"}
+  #0 CALL Tutorials_Prologue3_Orientation1:GoEventPlazaSetting
+  #151 CALL Tutorials_Prologue5_Campfire:CampFire_Start
+  #2 MSG Tutorials/Tutorials_Prologue4_Orientation3:041_01
+  #3 MSG Tutorials/Tutorials_Prologue4_Orientation3:041_02
+  #4 MSG Tutorials/Tutorials_Prologue4_Orientation3:041_03
+  #5 MSG Tutorials/Tutorials_Prologue4_Orientation3:041_04
+  #7 UISoftwareKeyboardHandling {"FormType": "cVillage", "IsClearString": true}
+  #12 SaveSetFromUIResult {"SaveType": "cTownName"}
+  #8 MSG Tutorials/Tutorials_Prologue4_Orientation3:042_01
+  #9 MSG Tutorials/Tutorials_Prologue4_Orientation3:042_02
+  #10 MSG Tutorials/Tutorials_Prologue4_Orientation3:042_03
+  #11 NpcBalloonTalkAll {"Type": 0}
+  #13 MSG Tutorials/Tutorials_Prologue4_Orientation3:043_01
+  #14 MSG Tutorials/Tutorials_Prologue4_Orientation3:043_02
+  #15 MSG Tutorials/Tutorials_Prologue4_Orientation3:043_03
+  #16 MSG Tutorials/Tutorials_Prologue4_Orientation3:043_04
+  #17 MSG Tutorials/Tutorials_Prologue4_Orientation3:043_05
+  #85 BGMPropertyControl {"BGMProperty": 79}
+  #86 BGMPropertyControl {"BGMProperty": 81}
+  #107 CALL Tutorials_Prologue5_Campfire:Cmn_ApplauseAll_Keep
+  #18 MSG Tutorials/Tutorials_Prologue4_Orientation3:043_06
+  #19 MSG Tutorials/Tutorials_Prologue4_Orientation3:043_07
+  #41 FORK
+  #20 MSG Tutorials/Tutorials_Prologue4_Orientation3:045
+  #35 IF CurrentRegionLanguage {"SettingType": "cCurrentMachine"}
+    case 0:
+      #25 MSG Tutorials/Tutorials_Prologue4_Orientation3:046
+      #26 IF GeneralTalkChoice3 {}
+        case 0:
+          #31 SetIslandRubyType {"IslandRubyType": "ShimaSeom"}
+          #27 MSG Tutorials/Tutorials_Prologue4_Orientation3:045_01
+          #21 MSG Tutorials/Tutorials_Prologue4_Orientation3:045_01_02
+          #108 CALL Tutorials_Prologue5_Campfire:Cmn_ApplauseAll_Stop
+          #109 MSG Tutorials/Tutorials_Prologue4_Orientation3:045_02
+          #110 IF GeneralTalkChoice3 {}
+            case 0:
+              #111 CALL Tutorials_Prologue5_Campfire:Cmn_ApplauseAll_Stop
+              #134 FORK
+                || #100 MSG Tutorials/Tutorials_Prologue4_Orientation3:045_04_01
+              #56 NpcChangeHandTool {"IsImmediately": false, "SpecificToolKindString": "cSmoothie", "HandToolItemID": 65534}
+              #60 FORK
+                || #69 NpcChangeHandTool {"IsImmediately": false, "SpecificToolKindString": "cSmoothie", "HandToolItemID": 65534}
+                || #70 NpcChangeHandTool {"IsImmediately": false, "SpecificToolKindString": "cSmoothie", "HandToolItemID": 65534}
+                || #57 NpcChangeHandTool {"IsImmediately": false, "SpecificToolKindString": "cSmoothie", "HandToolItemID": 65534}
+                || #58 NpcChangeHandTool {"IsImmediately": false, "SpecificToolKindString": "cSmoothie", "HandToolItemID": 65534}
+                || #75 PlayerPulloutSmoothie {}
+              #22 MSG Tutorials/Tutorials_Prologue4_Orientation3:045_04_02
+              #23 MSG Tutorials/Tutorials_Prologue4_Orientation3:045_04_03
+              #24 MSG Tutorials/Tutorials_Prologue4_Orientation3:045_05
+              #62 FORK
+                || #61 RequestSimple {"AsCommand": "NpcCheers", "WaitFinish": true}
+                || #63 RequestSimple {"AsCommand": "NpcCheers", "WaitFinish": true}
+                || #65 RequestSimple {"AsCommand": "NpcCheers", "WaitFinish": true}
+                || #64 RequestSimple {"AsCommand": "NpcCheers", "WaitFinish": true}
+                || #66 RequestSimple {"AsCommand": "NpcCheers", "WaitFinish": true}
+                || #74 PlayerRequestSimple {"AsCommand": "NpcCheers", "WaitFinish": true}
+              #89 FORK
+              #48 SaveSetFromUIResult {"SaveType": "cTownName2"}
+              #87 BGMPropertyControl {"BGMProperty": 80}
+              #88 BGMPropertyControl {"BGMProperty": 78}
+              #28 FadeOut {"FadeOutKindString": "cCircle", "FadeInKindString": "cCircle", "FadeColorString": "cBlack", "IsUseDucking": true, "FadeOutSpeed": 0.699999988079071, "FadeInSpeed": 0.699999988079071}
+              #67 FORK
+                || #72 NpcChangeHandTool {"SpecificToolKindString": "cPutAway", "HandToolItemID": 65534, "IsImmediately": true}
+                || #73 NpcChangeHandTool {"IsImmediately": true, "SpecificToolKindString": "cNone", "HandToolItemID": 6886}
+                || #71 NpcChangeHandTool {"HandToolItemID": 5430, "IsImmediately": true, "SpecificToolKindString": "cNone"}
+                || #76 PlayerPutawaySmoothie {}
+              #78 FORK
+                || #83 RequestSimple {"WaitFinish": false, "AsCommand": "NpcSpDrinking"}
+                || #81 RequestSimple {"WaitFinish": false, "AsCommand": "NpcSpRhythm"}
+                || #96 NpcRequestAction {"ActionIdx": 2}
+                || #82 RequestSimple {"WaitFinish": false, "AsCommand": "NpcSpRhythm"}
+                || #97 NpcRequestAction {"ActionIdx": 2}
+                || #80 RequestSimple {"WaitFinish": false, "AsCommand": "NpcSpTambourineSound"}
+                || #98 NpcRequestAction {"ActionIdx": 2}
+              #51 SetupActorPosition {"Type": 5}
+              #99 StoreNormalCamera {"IsImmediately": true}
+              #29 FadeIn {"IsWait": true}
+              #34 EventFlagSystemOn {"AccessKey": "cPlayer:PlayerEnableEating"}
+              #50 EventFlagSystemOn {"AccessKey": "cLandTemp:PrologueStartedCampfire"}
+              #54 EventFlagSystemSet {"AccessKey": "cLand:OpeningSeqBGMChangeCounter", "SetNum": 5}
+              #55 BGMPropertyControl {"BGMProperty": 79}
+              #142 TurnOnForceMaxVolumeForAudioMusic {}
+              #140 TurnOnTempAudioMusic {"MusicName": 4318}
+              #141 TurnOnEventPlazaDuckingJudge {}
+              #52 SetNpcAIBlackBoardByLabel {"Key": "IsForceLife", "Value": 1, "Option": 0, "NpcLabel": "-Looks:AN"}
+              #53 SetNpcAIBlackBoardByLabel {"Key": "IsForceLife", "Value": 1, "Option": 0, "NpcLabel": "-Looks:HA"}
+              #185 SleepInsect {"SleepInsectType": "cAwake"}
+            case 1:
+              -> (#122)
+            case 2:
+              -> (#122)
+        case 1:
+          #32 SetIslandRubyType {"IslandRubyType": "JimaSeom"}
+          -> (#27)
+        case 2:
+          #33 SetIslandRubyType {"IslandRubyType": "TouSeom"}
+          -> (#27)
+    case 1:
+      -> (#21)
+    case 2:
+      -> (#21)
+    case 3:
+      -> (#21)
+    case 4:
+      -> (#21)
+    case 5:
+      -> (#21)
+    case 6:
+      -> (#21)
+    case 7:
+      -> (#21)
+    case 8:
+      -> (#21)
+    case 9:
+      -> (#21)
+    case 10:
+      -> (#21)
+    case 11:
+      #42 MSG Tutorials/Tutorials_Prologue4_Orientation3:047
+      #43 IF GeneralTalkChoice2 {}
+        case 0:
+          #44 SetIslandRubyType {"IslandRubyType": "TouSeom"}
+          #46 MSG Tutorials/Tutorials_Prologue4_Orientation3:045_01
+          -> (#21)
+        case 1:
+          #45 SetIslandRubyType {"IslandRubyType": "TouDo"}
+          -> (#46)
+    case 12:
+      -> (#21)
+    case 13:
+      -> (#21)
+== ENTRY Root_Init
+  #47 NpcAITalkCastSetting {"SetupKey": "Prologue_Rco"}
+== ENTRY Cmn_ApplauseAll_Keep
+  #106 FORK
+== ENTRY Cmn_ApplauseAll_Stop
+  #117 FORK
+  #129 FORK
+== ENTRY CampFire_Start
+  #144 BGMPropertyControl {"BGMProperty": 78}
+  #143 CameraSetDemoParam {"CameraInterpolateKey": "", "CameraTargetKey": "Npc:rco", "Arg": 0, "AdjustAngleYOnLeave": false, "UseNearCulling": true, "CameraParamKey": "EventPlazaCampFire", "AdjustAngleYOnEnter": false}
+  #145 MSG Tutorials/Tutorials_Prologue4_Orientation3:032
+  #150 NpcWaitTurn {}
+  #149 RequestSimple {"AsCommand": "NpcSpArrangeShort", "WaitFinish": false}
+  #173 EventCstmAction {"Type": 0}
+  #157 FORK
+    || #167 NpcWaitTurn {}
+  #164 FORK

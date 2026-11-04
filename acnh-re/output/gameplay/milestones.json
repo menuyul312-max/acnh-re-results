@@ -1,0 +1,5093 @@
+{
+ "meta": {
+  "schema": "acnh-re/gameplay/1",
+  "game_version": "1.0.0",
+  "bool_case_rule": "case 0 = on, case 1 = off",
+  "bool_case_evidence": "Tutorials_Prologue_Rco event 9: case 1 explains the 10 branches and then turns PrologueForCampfire1 on, case 0 moves on to PrologueForCampfire2; SNPC_rco_01_Tent_1_Entries event 17: case 0 (fee paid) calls SNPC_rco_10_Common_AboutMyHome. bool_case_self_check in summary.json repeats the test for every writer.",
+  "inputs": [
+   "manifest.json",
+   "decoded/ (BFEVFL)",
+   "tables_resolved/EventFlags*",
+   "additional_romfs/messages/USen"
+  ],
+  "condition_policy": "switch branches on game state only; dialogue choice/random/subflow-result branches dropped; subflows not inlined",
+  "truncated_entry_walks": [
+   "System_MuseumNameBoard:Root"
+  ],
+  "message_text_included": false
+ },
+ "data": [
+  {
+   "phase": "prolog",
+   "flags": [
+    {
+     "flag": "cPlayer:DoneCharacterCreation",
+     "name_ja": "キャラメイク完了（アカウント引っ越し判定用）",
+     "flow_access": 2,
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "Tutorials_Prologue1_Charactermaking",
+       "entry": "EndCharacterMaking",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "flag": "cLand:ValidateVillageSave",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         }
+        ],
+        [
+         {
+          "flag": "cLand:ValidateVillageSave",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         }
+        ]
+       ],
+       "preceding_message": "",
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 1,
+     "readers": [],
+     "reader_count": 0
+    },
+    {
+     "flag": "cLand:Prologue4BuiltPlayer",
+     "name_ja": "序盤プレイヤーテント設置したか？",
+     "flow_access": "EnableReadWrite",
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "Player_Demo_HousingFinish",
+       "entry": "HousingFinish_PcTent_Built",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        []
+       ],
+       "preceding_message": null,
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 1,
+     "readers": [
+      "AI_NPC_Prologue_Rco:CheckRobTalk2",
+      "Tutorials_Prologue4_Orientation2_AN:Root",
+      "Tutorials_Prologue4_Orientation2_HA:Root",
+      "Tutorials_Prologue4_Orientation2_RcmRct:Root",
+      "Tutorials_Prologue_Rco:Root"
+     ],
+     "reader_count": 5
+    },
+    {
+     "flag": "cLand:Prologue4BuiltNpcAN",
+     "name_ja": "序盤ANテント設置したか？",
+     "flow_access": "EnableReadWrite",
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "Player_Demo_HousingFinish",
+       "entry": "HousingFinish_ANTent_Built",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        []
+       ],
+       "preceding_message": "TalkSys/SYS_Player:954",
+       "preceding_text_USen": null
+      },
+      {
+       "flow": "Tutorials_Prologue4_Orientation2_AN",
+       "entry": "Root",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "flag": "cNpcMemory:FirstMeetGreetAtThisVillage",
+          "query": "EventFlagNpcBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cLand:Prologue4BuiltNpcAN",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cLand:Prologue4BuiltPlayer",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "flag": "cPlayer:PlayerPocketUIEnable",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "flag": "cPlayer:Prologue4AnGetTent",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cPlayer:Prologue4AnNoTent",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cPlayer:PrologueAfterBuiltTentTalk",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cPlayer:PrologueDone1stTalkAtPlaza",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "flag": "cPlayer:PrologueStartedCampfire",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         }
+        ],
+        [
+         {
+          "flag": "cNpcMemory:FirstMeetGreetAtThisVillage",
+          "query": "EventFlagNpcBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cLand:Prologue4BuiltNpcAN",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cLand:Prologue4BuiltPlayer",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "flag": "cPlayer:PlayerPocketUIEnable",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "flag": "cPlayer:Prologue4AnGetTent",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cPlayer:Prologue4AnNoTent",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "flag": "cPlayer:PrologueAfterBuiltTentTalk",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cPlayer:PrologueDone1stTalkAtPlaza",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "flag": "cPlayer:PrologueStartedCampfire",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         }
+        ]
+       ],
+       "preceding_message": "Tutorials/Tutorials_Prologue4_Orientation2_AN:008_01",
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 2,
+     "readers": [
+      "Player_Demo_HousingFinish:HousingFinish_HATent_Built",
+      "Tutorials_Prologue4_Orientation2_AN:Root",
+      "Tutorials_Prologue4_Orientation2_HA:Prologue_NnpcTentChk",
+      "Tutorials_Prologue4_Orientation2_HA:Root",
+      "Tutorials_Prologue_Rco:ChkNpcTentStatus"
+     ],
+     "reader_count": 5
+    },
+    {
+     "flag": "cLand:Prologue4BuiltNpcHA",
+     "name_ja": "序盤HAテント設置したか？",
+     "flow_access": "EnableReadWrite",
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "Player_Demo_HousingFinish",
+       "entry": "HousingFinish_HATent_Built",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        []
+       ],
+       "preceding_message": "TalkSys/SYS_Player:954",
+       "preceding_text_USen": null
+      },
+      {
+       "flow": "Tutorials_Prologue4_Orientation2_HA",
+       "entry": "Root",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "flag": "cNpcMemory:FirstMeetGreetAtThisVillage",
+          "query": "EventFlagNpcBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cLand:Prologue4BuiltNpcHA",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cLand:Prologue4BuiltPlayer",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "flag": "cPlayer:PlayerPocketUIEnable",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "flag": "cPlayer:Prologue4HaGetTent",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cPlayer:Prologue4HaNoTent",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cPlayer:PrologueAfterBuiltTentTalk",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cPlayer:PrologueDone1stTalkAtPlaza",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "flag": "cPlayer:PrologueStartedCampfire",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         }
+        ],
+        [
+         {
+          "flag": "cNpcMemory:FirstMeetGreetAtThisVillage",
+          "query": "EventFlagNpcBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cLand:Prologue4BuiltNpcHA",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cLand:Prologue4BuiltPlayer",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "flag": "cPlayer:PlayerPocketUIEnable",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "flag": "cPlayer:Prologue4HaGetTent",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cPlayer:Prologue4HaNoTent",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "flag": "cPlayer:PrologueAfterBuiltTentTalk",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cPlayer:PrologueDone1stTalkAtPlaza",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "flag": "cPlayer:PrologueStartedCampfire",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         }
+        ]
+       ],
+       "preceding_message": "Tutorials/Tutorials_Prologue4_Orientation2_HA:008_01",
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 2,
+     "readers": [
+      "Player_Demo_HousingFinish:HousingFinish_ANTent_Built",
+      "Tutorials_Prologue4_Orientation2_AN:Prologue_NnpcTentChk",
+      "Tutorials_Prologue4_Orientation2_AN:Root",
+      "Tutorials_Prologue4_Orientation2_HA:Root",
+      "Tutorials_Prologue_Rco:ChkNpcTentStatus"
+     ],
+     "reader_count": 5
+    },
+    {
+     "flag": "cPlayer:PrologueForCampfire1",
+     "name_ja": "序盤|キャンプ材料集めの話聞いた(1)",
+     "flow_access": 2,
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "Tutorials_Prologue_Rco",
+       "entry": "Root",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "flag": "cPlayer:PrologueAfterBuiltTentTalk",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "flag": "cPlayer:PrologueForCampfire1",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         }
+        ]
+       ],
+       "preceding_message": "Tutorials/Tutorials_Prologue4_Orientation3:011",
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 1,
+     "readers": [
+      "Tutorials_Prologue4_Orientation2_RcmRct:Root",
+      "Tutorials_Prologue_Rco:Root"
+     ],
+     "reader_count": 2
+    },
+    {
+     "flag": "cPlayer:PrologueForCampfire2",
+     "name_ja": "序盤|キャンプ材料集めの話聞いた(2)",
+     "flow_access": 2,
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "Tutorials_Prologue_Rco",
+       "entry": "Root",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "flag": "cPlayer:PrologueAfterBuiltTentTalk",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "flag": "cPlayer:PrologueForCampfire1",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "flag": "cPlayer:PrologueForCampfire2",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "query": "HasTargetItem",
+          "params": {
+           "ItemUniqueId": 2500,
+           "NeedNum": 11
+          },
+          "value": 0
+         }
+        ],
+        [
+         {
+          "flag": "cPlayer:PrologueAfterBuiltTentTalk",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "flag": "cPlayer:PrologueForCampfire1",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "flag": "cPlayer:PrologueForCampfire2",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "query": "HasTargetItem",
+          "params": {
+           "ItemUniqueId": 2500,
+           "NeedNum": 10
+          },
+          "value": 0
+         },
+         {
+          "query": "HasTargetItem",
+          "params": {
+           "ItemUniqueId": 2500,
+           "NeedNum": 11
+          },
+          "value": 1
+         }
+        ]
+       ],
+       "preceding_message": "Tutorials/Tutorials_Prologue4_Orientation3:015",
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 1,
+     "readers": [
+      "Tutorials_Prologue4_Orientation2_RcmRct:Root",
+      "Tutorials_Prologue_Rco:Root"
+     ],
+     "reader_count": 2
+    },
+    {
+     "flag": "cPlayer:HaveTownFruit4CampFire",
+     "name_ja": "序盤|特産果物揃った状態でたぬきちに話しかけた",
+     "flow_access": 2,
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "Tutorials_Prologue_Rco",
+       "entry": "TownFruitTypeChk",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "query": "HasTargetItem",
+          "params": {
+           "ItemUniqueId": 2213,
+           "NeedNum": 6
+          },
+          "value": 0
+         },
+         {
+          "query": "LandFruit",
+          "params": {},
+          "value": 4
+         }
+        ],
+        [
+         {
+          "query": "HasTargetItem",
+          "params": {
+           "ItemUniqueId": 2286,
+           "NeedNum": 6
+          },
+          "value": 0
+         },
+         {
+          "query": "LandFruit",
+          "params": {},
+          "value": 3
+         }
+        ]
+       ],
+       "preceding_message": null,
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 1,
+     "readers": [
+      "AI_NPC_Prologue_Rco:Root",
+      "Tutorials_Prologue_Rco:Root"
+     ],
+     "reader_count": 2
+    },
+    {
+     "flag": "cPlayer:PrologueStartedCampfire",
+     "name_ja": "プロローグ|キャンプファイヤー開始",
+     "flow_access": 2,
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "Tutorials_Prologue_Rco",
+       "entry": "Root",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "flag": "cPlayer:HaveTownFruit4CampFire",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "flag": "cPlayer:PrologueAfterBuiltTentTalk",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "flag": "cPlayer:PrologueForCampfire1",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "flag": "cPlayer:PrologueForCampfire2",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "query": "HasTargetItem",
+          "params": {
+           "ItemUniqueId": 2500,
+           "NeedNum": 11
+          },
+          "value": 0
+         }
+        ],
+        [
+         {
+          "flag": "cPlayer:HaveTownFruit4CampFire",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "flag": "cPlayer:PrologueAfterBuiltTentTalk",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "flag": "cPlayer:PrologueForCampfire1",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "flag": "cPlayer:PrologueForCampfire2",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "flag": "cPlayer:PrologueStartedCampfire",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         }
+        ]
+       ],
+       "preceding_message": "Tutorials/Tutorials_Prologue4_Orientation3:017",
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 1,
+     "readers": [
+      "Tutorials_Prologue4_Orientation2_AN:Root",
+      "Tutorials_Prologue4_Orientation2_HA:Root",
+      "Tutorials_Prologue4_Orientation2_RcmRct:Root",
+      "Tutorials_Prologue_Rco:Root"
+     ],
+     "reader_count": 4
+    },
+    {
+     "flag": "cLandTemp:PrologueStartedCampfire",
+     "name_ja": "プロローグ|キャンプファイヤー開始",
+     "flow_access": 2,
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "Tutorials_Prologue5_Campfire",
+       "entry": "Root",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "query": "CurrentRegionLanguage",
+          "params": {
+           "SettingType": "cCurrentMachine"
+          },
+          "value": 13
+         }
+        ],
+        [
+         {
+          "query": "CurrentRegionLanguage",
+          "params": {
+           "SettingType": "cCurrentMachine"
+          },
+          "value": 12
+         }
+        ]
+       ],
+       "preceding_message": "Tutorials/Tutorials_Prologue4_Orientation3:045_05",
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 1,
+     "readers": [
+      "AI_NPC_Prologue_AN:Init",
+      "AI_NPC_Prologue_Common:PrologueStep2",
+      "AI_NPC_Prologue_Common:Root_Common",
+      "AI_NPC_Prologue_HA:Init",
+      "AI_NPC_Prologue_Rco:Init",
+      "AI_NPC_Prologue_Rco:Root",
+      "AI_NPC_Prologue_Rct:Root_2ndStep",
+      "AI_NPC_Prologue_Rct:Root_Common"
+     ],
+     "reader_count": 8
+    },
+    {
+     "flag": "cPlayer:PrologueFinishTkkDream",
+     "name_ja": "序盤|とたけけの夢終了",
+     "flow_access": 2,
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "Tutorials_Prologue_Tkk",
+       "entry": "Tkk_Dream_AfterTalk",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        []
+       ],
+       "preceding_message": null,
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 1,
+     "readers": [],
+     "reader_count": 0
+    },
+    {
+     "flag": "cLand:FinishiPC1Prologue",
+     "name_ja": "PC1の序盤プロローグ完了時にON",
+     "flow_access": "EnableReadWrite",
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "SNPC_rco_00_StartMainGame",
+       "entry": "Rco_OrientationEnd",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "flag": "cPlayer:MakeVillagePlayerFlag",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         }
+        ]
+       ],
+       "preceding_message": null,
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 1,
+     "readers": [
+      "SNPC_rco:Root"
+     ],
+     "reader_count": 1
+    },
+    {
+     "flag": "cPlayer:PcMaingameStart",
+     "name_ja": "プロローグ終了～本番ゲーム開始～",
+     "flow_access": 2,
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "Player_GetDemo_Once",
+       "entry": "StartMainGameBitSet",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        []
+       ],
+       "preceding_message": null,
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 1,
+     "readers": [],
+     "reader_count": 0
+    }
+   ]
+  },
+  {
+   "phase": "awal_game",
+   "flags": [
+    {
+     "flag": "cPlayer:RcoTentEnableDIYtrial",
+     "name_ja": "たぬきち|DIY体験選択肢解禁",
+     "flow_access": 2,
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "SNPC_rco",
+       "entry": "RcoFirstVisit",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        []
+       ],
+       "preceding_message": null,
+       "preceding_text_USen": null
+      },
+      {
+       "flow": "SNPC_rco",
+       "entry": "RcoFirstVisit_Force",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        []
+       ],
+       "preceding_message": null,
+       "preceding_text_USen": null
+      },
+      {
+       "flow": "SNPC_rco_10_Common_WhatShouldIDo",
+       "entry": "Root",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "flag": "cLand:IslandDevQuestRunning",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cLand:RcmImmQuestComplete",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cLand:RcmImmQuestRunning",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cPlayer:EnableDiyRemake",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cPlayer:MainmenuRecipe",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cPlayer:MakeVillagePlayerFlag",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "flag": "cPlayer:RcoEnableRemakeTrial",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         }
+        ]
+       ],
+       "preceding_message": "TalkSNpc/rco/SP_rco_03_PcHouseTent:102",
+       "preceding_text_USen": null
+      },
+      {
+       "flow": "SNPC_rco_10_Common_WhatShouldIDo",
+       "entry": "Rco_Hint_AboutDIYWS",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        []
+       ],
+       "preceding_message": "TalkSNpc/rco/SP_rco_03_PcHouseTent:102",
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 4,
+     "readers": [],
+     "reader_count": 0
+    },
+    {
+     "flag": "cPlayer:RcoFinishMakingAxe",
+     "name_ja": "たぬきち|チュートリアル斧作り終えた？",
+     "flow_access": 2,
+     "max": 1,
+     "writer_status": "no_eventflow_writer; written by native code or never written in 1.0.0 (unproven)",
+     "writers": [],
+     "writer_count": 0,
+     "readers": [
+      "AI_NPC_TentTanukichi:CheckRob"
+     ],
+     "reader_count": 1
+    },
+    {
+     "flag": "cPlayer:RcoPaid1stCharge",
+     "name_ja": "たぬきち|移住費用支払い完了",
+     "flow_access": 2,
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "SNPC_rco_01_Tent_1_Entries",
+       "entry": "RcoTentAboutMyhome",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "flag": "cPlayer:RcoPaid1stCharge",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "query": "HasLifeSupportPoint",
+          "params": {
+           "LifeSupportPointCheckType": "Now",
+           "Point": 5000
+          },
+          "value": 0
+         },
+         {
+          "query": "PlayerHouseLevel",
+          "params": {},
+          "value": 8
+         }
+        ],
+        [
+         {
+          "flag": "cPlayer:RcoPaid1stCharge",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "query": "HasLifeSupportPoint",
+          "params": {
+           "LifeSupportPointCheckType": "Now",
+           "Point": 5000
+          },
+          "value": 0
+         },
+         {
+          "query": "PlayerHouseLevel",
+          "params": {},
+          "value": 7
+         }
+        ]
+       ],
+       "preceding_message": "TalkSNpc/rco/SP_rco_03_PcHouseTent:404",
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 1,
+     "readers": [
+      "Obj_RcoMachine:ChkRcoMachineSel",
+      "Obj_RcoMachine:Root",
+      "SNPC_rco:Root_Init",
+      "SNPC_rco_00_Common:Root",
+      "SNPC_rco_01_Tent_1_Entries:AboutBuildMuseumTent_Force",
+      "SNPC_rco_01_Tent_1_Entries:RcoTentAboutBuildMuseumTent",
+      "SNPC_rco_01_Tent_1_Entries:RcoTentAboutMyhome",
+      "SNPC_rco_10_Common_WhatShouldIDo:Rco_Hint_AboutLoan",
+      "SNPC_rco_10_Common_WhatShouldIDo:Rco_Hint_AboutSetMuseumTent",
+      "SNPC_rco_10_Common_WhatShouldIDo:Root",
+      "SNPC_rco_91_BreakInSpeak:ObjRcoMachineCheck1st"
+     ],
+     "reader_count": 11
+    },
+    {
+     "flag": "cPlayer:RcoTentDonation",
+     "name_ja": "たぬきち|たぬきちに虫魚預けたことある",
+     "flow_access": 2,
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "SNPC_rco_01_Tent_1_Entries",
+       "entry": "RcoTentFishInsect",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "flag": "cPlayer:RcoTentDonatinDeclined",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cPlayer:RcoTentDonation",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "query": "MuseumDonationNumCheck",
+          "params": {
+           "Border": 5
+          },
+          "value": 1
+         },
+         {
+          "query": "OwlIsDonation",
+          "params": {
+           "DonationCheckItemType": "cUISelect"
+          },
+          "value": 1
+         }
+        ],
+        [
+         {
+          "flag": "cPlayer:RcoTentDonatinDeclined",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cPlayer:RcoTentDonation",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "query": "MuseumDonationNumCheck",
+          "params": {
+           "Border": 5
+          },
+          "value": 0
+         },
+         {
+          "query": "OwlIsDonation",
+          "params": {
+           "DonationCheckItemType": "cUISelect"
+          },
+          "value": 1
+         }
+        ]
+       ],
+       "preceding_message": "TalkSNpc/rco/SP_rco_04_DonationReward:006_01",
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 1,
+     "readers": [
+      "SNPC_rco_01_Tent_1_Entries:RcoTentFishInsect"
+     ],
+     "reader_count": 1
+    },
+    {
+     "flag": "cPlayer:EnableBuildMuseumTent",
+     "name_ja": "博物館テント設置条件満たした",
+     "flow_access": 2,
+     "max": 1,
+     "writer_status": "no_eventflow_writer; written by native code or never written in 1.0.0 (unproven)",
+     "writers": [],
+     "writer_count": 0,
+     "readers": [],
+     "reader_count": 0
+    },
+    {
+     "flag": "cPlayer:RcoTookRequestMuseum",
+     "name_ja": "たぬきち|博物館テント設置場所決め依頼された",
+     "flow_access": 2,
+     "max": 1,
+     "writer_status": "no_eventflow_writer; written by native code or never written in 1.0.0 (unproven)",
+     "writers": [],
+     "writer_count": 0,
+     "readers": [],
+     "reader_count": 0
+    },
+    {
+     "flag": "cPlayer:DecidedMuseumTentPlace",
+     "name_ja": "博物館テント設営場所確定した",
+     "flow_access": 2,
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "Player_Demo_HousingFinish",
+       "entry": "HousingFinish_OwlTent_Built",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        []
+       ],
+       "preceding_message": "TalkSys/SYS_Player:952",
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 1,
+     "readers": [],
+     "reader_count": 0
+    },
+    {
+     "flag": "cLand:MuseumBuilt",
+     "name_ja": "博物館テントが建った",
+     "flow_access": "EnableReadOnly",
+     "max": 1,
+     "writer_status": "no_eventflow_writer; written by native code or never written in 1.0.0 (unproven)",
+     "writers": [],
+     "writer_count": 0,
+     "readers": [
+      "NNPC_Select_Creature:Fish",
+      "NNPC_Select_Creature:Insect",
+      "NNPC_Select_Furniture:Fossil",
+      "SNPC_rcm_00_Common_Sell:Cmn_After_Sell_Confirm",
+      "SNPC_rcm_00_Common_Sell:rcm_Sell_Confirm",
+      "SNPC_rct:RctHintCmn",
+      "SNPC_rct:Root"
+     ],
+     "reader_count": 7
+    },
+    {
+     "flag": "cLand:OwlTentExplainFor1P",
+     "name_ja": "フータ|誰かに棒高跳び＆スコップレシピ提供済",
+     "flow_access": "EnableReadWrite",
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "SNPC_owl_12_Tent_FirstTimeTalk",
+       "entry": "Root",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "flag": "cLand:MuseumGrowupEnable1",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cLand:OwlTentExplainFor1P",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cPlayer:MakeVillagePlayerFlag",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         }
+        ]
+       ],
+       "preceding_message": null,
+       "preceding_text_USen": null
+      },
+      {
+       "flow": "SNPC_owl_12_Tent_FirstTimeTalk",
+       "entry": "ALL_Cmn2_Root_A",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        []
+       ],
+       "preceding_message": "TalkSNpc/owl/SP_owl_01_MuseumTent:010",
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 2,
+     "readers": [
+      "SNPC_owl_12_Tent_FirstTimeTalk:Root"
+     ],
+     "reader_count": 1
+    },
+    {
+     "flag": "cPlayer:MainmenuRecipe",
+     "name_ja": "スマホUI|レシピ解禁",
+     "flow_access": 2,
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "Ftr_Working",
+       "entry": "RcoDIYtrialOngoing",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "flag": "cPlayer:RcoDIYtrialGetMaterial",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "query": "HasTargetItem",
+          "params": {
+           "ItemUniqueId": 2500,
+           "NeedNum": 5
+          },
+          "value": 0
+         },
+         {
+          "query": "ShoppingCapacity",
+          "params": {
+           "CapacityCheckType": "cItemName",
+           "ItemUniqueId": 3084
+          },
+          "value": 0
+         }
+        ],
+        [
+         {
+          "flag": "cPlayer:RcoDIYtrialGetMaterial",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "query": "HasTargetItem",
+          "params": {
+           "ItemUniqueId": 2500,
+           "NeedNum": 5
+          },
+          "value": 0
+         },
+         {
+          "query": "ShoppingCapacity",
+          "params": {
+           "CapacityCheckType": "cItemName",
+           "ItemUniqueId": 3084
+          },
+          "value": 0
+         }
+        ]
+       ],
+       "preceding_message": "TalkSNpc/rco/SP_rco_03_PcHouseTent:922_01",
+       "preceding_text_USen": null
+      },
+      {
+       "flow": "Ftr_Working",
+       "entry": "DIY_DisableCancel",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        []
+       ],
+       "preceding_message": "TalkSNpc/rco/SP_rco_03_PcHouseTent:922_01",
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 2,
+     "readers": [
+      "AI_NPC_Rco:CheckRob_WorkBench",
+      "Demo_PublicAnnouncement_03_Rco_Once:TownNews_Rco_RemakeWorkshop",
+      "Demo_PublicAnnouncement_21_CmnEvChk:ChkOfficeNews",
+      "Demo_PublicAnnouncement_41_CmnNoNews_Hint:Hint_Nuts_Rco_Cmn",
+      "Demo_PublicAnnouncement_41_CmnNoNews_Hint:Hint_Nuts_Sza_Cmn",
+      "Demo_PublicAnnouncement_41_CmnNoNews_Hint:Root",
+      "Demo_PublicAnnouncement_41_CmnNoNews_Hint:SeasonNews_Rco",
+      "Demo_PublicAnnouncement_41_CmnNoNews_Hint:SeasonNews_Sza",
+      "Demo_PublicAnnouncement_Process:RemakeUnlock",
+      "Ftr_Working:Root",
+      "Ftr_Working:Root_Tutorial",
+      "NNPC_FreeH:LifeStartHint"
+     ],
+     "reader_count": 42
+    },
+    {
+     "flag": "cPlayer:MainmenuEncyclopedia",
+     "name_ja": "スマホUI|図鑑解禁",
+     "flow_access": 2,
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "SNPC_rco_52_DonationRewardEntries",
+       "entry": "RcoDonationReward1",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        []
+       ],
+       "preceding_message": "TalkSNpc/rco/SP_rco_04_DonationReward:011_01_01",
+       "preceding_text_USen": null
+      },
+      {
+       "flow": "Tutorials_Prologue3_Orientation1",
+       "entry": "Root",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "flag": "cLand:ValidateVillageSave",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         }
+        ]
+       ],
+       "preceding_message": null,
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 2,
+     "readers": [],
+     "reader_count": 0
+    },
+    {
+     "flag": "cPlayer:MainmenuMap",
+     "name_ja": "スマホUI|マップ解禁",
+     "flow_access": 2,
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "Tutorials_Prologue3_Orientation1",
+       "entry": "Root",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "flag": "cLand:ValidateVillageSave",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         }
+        ]
+       ],
+       "preceding_message": null,
+       "preceding_text_USen": null
+      },
+      {
+       "flow": "Tutorials_Prologue4_Orientation2_RcmRct",
+       "entry": "Root",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "flag": "cPlayer:AllowPcTentEntering",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cPlayer:PlayerPocketUIEnable",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cPlayer:PrologueAfterBuiltTentTalk",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cPlayer:PrologueDone1stTalkAtPlaza",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "flag": "cPlayer:PrologueForCampfire1",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cPlayer:PrologueForCampfire2",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cPlayer:PrologueStartedCampfire",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         }
+        ]
+       ],
+       "preceding_message": "Tutorials/Tutorials_Prologue3_Orientation2_Rcm:001_03",
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 2,
+     "readers": [],
+     "reader_count": 0
+    }
+   ]
+  },
+  {
+   "phase": "rumah",
+   "flags": [
+    {
+     "flag": "cPlayer:RcoOrderedHouseBuilt",
+     "name_ja": "たぬきち|家建築申し込み当日？",
+     "flow_access": 2,
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "SNPC_rco_10_Common_UpgradeMyhome",
+       "entry": "RcoCmnProcessUpgradeMyhome",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        []
+       ],
+       "preceding_message": null,
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 1,
+     "readers": [
+      "SNPC_rco_10_Common_AboutMyHome:Root"
+     ],
+     "reader_count": 1
+    },
+    {
+     "flag": "cPlayer:PlayerLoanRepaying",
+     "name_ja": "ローン返済中？",
+     "flow_access": 2,
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "Player_GetDemo_Once",
+       "entry": "Get_FinishLoan",
+       "op": "off",
+       "value": 0,
+       "conditions": [
+        []
+       ],
+       "preceding_message": null,
+       "preceding_text_USen": null
+      },
+      {
+       "flow": "SNPC_rco_03_ChkAfterRemodel",
+       "entry": "Root",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "flag": "cPlayer:RcoAfterHouseRemodel",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "query": "PlayerHouseLevel",
+          "params": {},
+          "value": 8
+         }
+        ],
+        [
+         {
+          "flag": "cPlayer:RcoAfterHouseRemodel",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "query": "PlayerHouseLevel",
+          "params": {},
+          "value": 7
+         }
+        ]
+       ],
+       "preceding_message": "TalkSNpc/rco/SP_rco_02_Loan:071_04",
+       "preceding_text_USen": null
+      },
+      {
+       "flow": "SNPC_rco_03_ChkAfterRemodel",
+       "entry": "RcoAfterBuiltHouseEvent",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "query": "PlayerHouseLevel",
+          "params": {},
+          "value": 8
+         }
+        ],
+        [
+         {
+          "query": "PlayerHouseLevel",
+          "params": {},
+          "value": 7
+         }
+        ]
+       ],
+       "preceding_message": "TalkSNpc/rco/SP_rco_02_Loan:071_04",
+       "preceding_text_USen": null
+      },
+      {
+       "flow": "SNPC_rco_03_ChkAfterRemodel",
+       "entry": "AfterRemodel_Force",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "query": "PlayerHouseLevel",
+          "params": {},
+          "value": 8
+         }
+        ],
+        [
+         {
+          "query": "PlayerHouseLevel",
+          "params": {},
+          "value": 7
+         }
+        ]
+       ],
+       "preceding_message": "TalkSNpc/rco/SP_rco_02_Loan:071_04",
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 4,
+     "readers": [
+      "Obj_RcoMachine:RcoMachineATM",
+      "SNPC_rco_10_Common_AboutMyHome:RcoCheckUpgradeMyHome"
+     ],
+     "reader_count": 2
+    },
+    {
+     "flag": "cPlayer:PlayerLoanFinish1st",
+     "name_ja": "ローン完済した？",
+     "flow_access": 2,
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "Player_GetDemo_Once",
+       "entry": "Get_FinishLoan",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        []
+       ],
+       "preceding_message": null,
+       "preceding_text_USen": null
+      },
+      {
+       "flow": "SNPC_rco_04_ChkFinishLoan",
+       "entry": "Root",
+       "op": "off",
+       "value": 0,
+       "conditions": [
+        [
+         {
+          "flag": "cPlayer:PlayerLoanFinish1st",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "query": "PlayerHouseLevel",
+          "params": {},
+          "value": 8
+         }
+        ],
+        [
+         {
+          "flag": "cPlayer:PlayerLoanFinish1st",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "query": "PlayerHouseLevel",
+          "params": {},
+          "value": 7
+         }
+        ]
+       ],
+       "preceding_message": "TalkSNpc/rco/SP_rco_02_Loan:009",
+       "preceding_text_USen": null
+      },
+      {
+       "flow": "SNPC_rco_04_ChkFinishLoan",
+       "entry": "FinishLoan_Force",
+       "op": "off",
+       "value": 0,
+       "conditions": [
+        [
+         {
+          "query": "PlayerHouseLevel",
+          "params": {},
+          "value": 8
+         }
+        ],
+        [
+         {
+          "query": "PlayerHouseLevel",
+          "params": {},
+          "value": 7
+         }
+        ]
+       ],
+       "preceding_message": "TalkSNpc/rco/SP_rco_02_Loan:009",
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 3,
+     "readers": [
+      "AI_NPC_Rcm:ChkTalkRcoAboutShopMaterial",
+      "AI_NPC_Rco:AI_Rco_ChkSpTalk",
+      "AI_NPC_Rco:Root",
+      "SNPC_rco_04_ChkFinishLoan:Root"
+     ],
+     "reader_count": 4
+    },
+    {
+     "flag": "cPlayer:RcoHeardRemodel1",
+     "name_ja": "増築提案受けた？",
+     "flow_access": 2,
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "SNPC_rco_04_ChkFinishLoan",
+       "entry": "Root",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "flag": "cPlayer:PlayerLoanFinish1st",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "query": "PlayerHouseLevel",
+          "params": {},
+          "value": 8
+         }
+        ],
+        [
+         {
+          "flag": "cPlayer:PlayerLoanFinish1st",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "query": "PlayerHouseLevel",
+          "params": {},
+          "value": 7
+         }
+        ]
+       ],
+       "preceding_message": "TalkSNpc/rco/SP_rco_02_Loan:009",
+       "preceding_text_USen": null
+      },
+      {
+       "flow": "SNPC_rco_04_ChkFinishLoan",
+       "entry": "FinishLoan_Force",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "query": "PlayerHouseLevel",
+          "params": {},
+          "value": 8
+         }
+        ],
+        [
+         {
+          "query": "PlayerHouseLevel",
+          "params": {},
+          "value": 7
+         }
+        ]
+       ],
+       "preceding_message": "TalkSNpc/rco/SP_rco_02_Loan:009",
+       "preceding_text_USen": null
+      },
+      {
+       "flow": "SNPC_rco_10_Common_UpgradeMyhome",
+       "entry": "RcoCmnProcessUpgradeMyhome",
+       "op": "off",
+       "value": 0,
+       "conditions": [
+        []
+       ],
+       "preceding_message": null,
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 3,
+     "readers": [],
+     "reader_count": 0
+    },
+    {
+     "flag": "cPlayer:PcHousingLoanFinish",
+     "name_ja": "住宅ローン完全終了",
+     "flow_access": 2,
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "SNPC_rco_04_ChkFinishLoan",
+       "entry": "Root",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "flag": "cPlayer:PlayerLoanFinish1st",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "query": "PlayerHouseLevel",
+          "params": {},
+          "value": 8
+         }
+        ]
+       ],
+       "preceding_message": "TalkSNpc/rco/SP_rco_02_Loan:009",
+       "preceding_text_USen": null
+      },
+      {
+       "flow": "SNPC_rco_04_ChkFinishLoan",
+       "entry": "FinishLoan_Force",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "query": "PlayerHouseLevel",
+          "params": {},
+          "value": 8
+         }
+        ]
+       ],
+       "preceding_message": "TalkSNpc/rco/SP_rco_02_Loan:009",
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 2,
+     "readers": [
+      "SNPC_rco_10_Common_ChangeHouseDesign:Root"
+     ],
+     "reader_count": 1
+    }
+   ]
+  },
+  {
+   "phase": "toko",
+   "flags": [
+    {
+     "flag": "cPlayer:RcmTookQuestReq",
+     "name_ja": "まめきち|商店建築の材料集め依頼された",
+     "flow_access": 2,
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "SNPC_rcm_01_Tent_1_Entries",
+       "entry": "Request",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "flag": "cPlayer:RcmDeclinedQuestReq",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cPlayerTemp:RcmTalkSceneFlag",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         }
+        ],
+        [
+         {
+          "flag": "cPlayer:RcmDeclinedQuestReq",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cPlayerTemp:RcmTalkSceneFlag",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         }
+        ]
+       ],
+       "preceding_message": "TalkSNpc/rcm/SP_rcm_02_TentRequest:001_10",
+       "preceding_text_USen": null
+      },
+      {
+       "flow": "SNPC_rcm_01_Tent_1_Entries",
+       "entry": "RcmConfirmConsultation",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        []
+       ],
+       "preceding_message": null,
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 2,
+     "readers": [
+      "AI_NPC_Rcm:ChkTalkRcoAboutShopMaterial",
+      "AI_NPC_Rco:AI_Rco_ChkSpTalk",
+      "AI_NPC_Rco:Root",
+      "SNPC_rcm:Root",
+      "SNPC_rcm_03_RenualOpen:Rcm_RenualOpen1",
+      "SNPC_rco_10_Common_WhatShouldIDo:Rco_Hint_AfterBuildHouse",
+      "SNPC_rco_10_Common_WhatShouldIDo:Root",
+      "SNPC_rct:Root"
+     ],
+     "reader_count": 8
+    },
+    {
+     "flag": "cLand:RcmShopMaterial_Wood",
+     "name_ja": "まめきち|木材提供済？",
+     "flow_access": "EnableReadWrite",
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "SNPC_rcm_24_MaterialGiveProcess",
+       "entry": "DeleteWood",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        []
+       ],
+       "preceding_message": null,
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 1,
+     "readers": [
+      "SNPC_rcm_22_MaterialProgressChk:Chk_HowManyType",
+      "SNPC_rcm_22_MaterialProgressChk:Chk_Materials",
+      "SNPC_rcm_22_MaterialProgressChk:Chk_Materials2",
+      "SNPC_rcm_22_MaterialProgressChk:Chk_Materials3",
+      "SNPC_rcm_23_MaterialBelongingChk:SetWood"
+     ],
+     "reader_count": 5
+    },
+    {
+     "flag": "cLand:RcmShopMaterial_HardWood",
+     "name_ja": "まめきち|かたい木材提供済？",
+     "flow_access": "EnableReadWrite",
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "SNPC_rcm_24_MaterialGiveProcess",
+       "entry": "DeleteHardWood",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        []
+       ],
+       "preceding_message": null,
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 1,
+     "readers": [
+      "SNPC_rcm_22_MaterialProgressChk:Chk_HowManyType",
+      "SNPC_rcm_22_MaterialProgressChk:Chk_Materials",
+      "SNPC_rcm_22_MaterialProgressChk:Chk_Materials2",
+      "SNPC_rcm_22_MaterialProgressChk:Chk_Materials3",
+      "SNPC_rcm_23_MaterialBelongingChk:SetHardWood"
+     ],
+     "reader_count": 5
+    },
+    {
+     "flag": "cLand:RcmShopMaterial_SoftWood",
+     "name_ja": "まめきち|やわらかい木材提供済？",
+     "flow_access": "EnableReadWrite",
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "SNPC_rcm_24_MaterialGiveProcess",
+       "entry": "DeleteSoftWood",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        []
+       ],
+       "preceding_message": null,
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 1,
+     "readers": [
+      "SNPC_rcm_22_MaterialProgressChk:Chk_HowManyType",
+      "SNPC_rcm_22_MaterialProgressChk:Chk_Materials",
+      "SNPC_rcm_22_MaterialProgressChk:Chk_Materials2",
+      "SNPC_rcm_22_MaterialProgressChk:Chk_Materials3",
+      "SNPC_rcm_23_MaterialBelongingChk:SetSoftWood"
+     ],
+     "reader_count": 5
+    },
+    {
+     "flag": "cLand:RcmShopMaterial_Iron",
+     "name_ja": "まめきち|鉄鉱石提供済？",
+     "flow_access": "EnableReadWrite",
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "SNPC_rcm_24_MaterialGiveProcess",
+       "entry": "DeleteIron",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        []
+       ],
+       "preceding_message": null,
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 1,
+     "readers": [
+      "SNPC_rcm_22_MaterialProgressChk:Chk_HowManyType",
+      "SNPC_rcm_23_MaterialBelongingChk:SetIron"
+     ],
+     "reader_count": 2
+    },
+    {
+     "flag": "cLand:RcmShopMaterialComplete",
+     "name_ja": "まめきち|すべての資材が揃った",
+     "flow_access": "EnableReadWrite",
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "SNPC_rcm_21_MaterialCollecting",
+       "entry": "GotReward",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        []
+       ],
+       "preceding_message": "TalkSNpc/rcm/SP_rcm_02_TentRequest:058_02",
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 1,
+     "readers": [
+      "NNPC_ApproachE:ForMarketBuilding_AN",
+      "NNPC_ApproachE:ForMarketBuilding_HA",
+      "NNPC_FreeH:ForMarketBuilding_Chk",
+      "SNPC_rcm:Root",
+      "SNPC_rct:RctCongratMyhome",
+      "SNPC_rct:Root"
+     ],
+     "reader_count": 6
+    },
+    {
+     "flag": "cLand:EnableMarketBuild",
+     "name_ja": "まめつぶ商店建築条件満たした",
+     "flow_access": "EnableReadWrite",
+     "max": 1,
+     "writer_status": "no_eventflow_writer; written by native code or never written in 1.0.0 (unproven)",
+     "writers": [],
+     "writer_count": 0,
+     "readers": [],
+     "reader_count": 0
+    },
+    {
+     "flag": "cPlayer:RcmTookReqMarket",
+     "name_ja": "まめきち|商店設置場所決め依頼された",
+     "flow_access": 2,
+     "max": 1,
+     "writer_status": "no_eventflow_writer; written by native code or never written in 1.0.0 (unproven)",
+     "writers": [],
+     "writer_count": 0,
+     "readers": [],
+     "reader_count": 0
+    },
+    {
+     "flag": "cLand:MarketConstruction1",
+     "name_ja": "まめきちの店|テント→商店（小）工事中",
+     "flow_access": "EnableReadOnly",
+     "max": 1,
+     "writer_status": "no_eventflow_writer; written by native code or never written in 1.0.0 (unproven)",
+     "writers": [],
+     "writer_count": 0,
+     "readers": [],
+     "reader_count": 0
+    },
+    {
+     "flag": "cLand:MarketBuilt",
+     "name_ja": "まめつぶ商店が建った",
+     "flow_access": "DisableAccess",
+     "max": 1,
+     "writer_status": "no_eventflow_writer; written by native code or never written in 1.0.0 (unproven)",
+     "writers": [],
+     "writer_count": 0,
+     "readers": [],
+     "reader_count": 0
+    },
+    {
+     "flag": "cLand:MarketRemodelingFlag1",
+     "name_ja": "まめきちの店|テント→商店（小）改装決定",
+     "flow_access": "EnableReadOnly",
+     "max": 1,
+     "writer_status": "no_eventflow_writer; written by native code or never written in 1.0.0 (unproven)",
+     "writers": [],
+     "writer_count": 0,
+     "readers": [],
+     "reader_count": 0
+    },
+    {
+     "flag": "cLand:MarketOpen1stDay1",
+     "name_ja": "まめきちの店|新装開店当日(商店)",
+     "flow_access": "EnableReadOnly",
+     "max": 1,
+     "writer_status": "no_eventflow_writer; written by native code or never written in 1.0.0 (unproven)",
+     "writers": [],
+     "writer_count": 0,
+     "readers": [
+      "Demo_PublicAnnouncement_21_CmnEvChk:ChkMarket",
+      "SNPC_rcm_03_RenualOpen:Rcm_RenualOpen1"
+     ],
+     "reader_count": 2
+    },
+    {
+     "flag": "cLand:MarketRemodelingFlag2",
+     "name_ja": "まめきちの店|商店（小）→倉庫　改装決定",
+     "flow_access": "EnableReadOnly",
+     "max": 1,
+     "writer_status": "no_eventflow_writer; written by native code or never written in 1.0.0 (unproven)",
+     "writers": [],
+     "writer_count": 0,
+     "readers": [
+      "Demo_PublicAnnouncement_21_CmnEvChk:ChkMarket",
+      "SNPC_rcm_03_RenualOpen:Chk_RenualOpen_Talk",
+      "SNPC_rco_10_Common_MoveNpcFacility:MoveShop"
+     ],
+     "reader_count": 3
+    },
+    {
+     "flag": "cLand:MarketConstruction2",
+     "name_ja": "まめきちの店||商店（小）→倉庫　工事中",
+     "flow_access": "EnableReadOnly",
+     "max": 1,
+     "writer_status": "no_eventflow_writer; written by native code or never written in 1.0.0 (unproven)",
+     "writers": [],
+     "writer_count": 0,
+     "readers": [
+      "Demo_PublicAnnouncement_21_CmnEvChk:ChkMarket",
+      "Player_SmaphoNavigation:ChkEscapeTo",
+      "Player_SmaphoNavigation:SequenceStart",
+      "SNPC_rco_10_Common_MoveNpcFacility:MoveShop"
+     ],
+     "reader_count": 4
+    },
+    {
+     "flag": "cLand:Market2Built",
+     "name_ja": "まめつぶ商店が倉庫になった",
+     "flow_access": "EnableReadWrite",
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "Demo_PublicAnnouncement_Process",
+       "entry": "ShopGrowUpCheck",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "query": "ShopLevel",
+          "params": {},
+          "value": 2
+         }
+        ]
+       ],
+       "preceding_message": null,
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 1,
+     "readers": [],
+     "reader_count": 0
+    }
+   ]
+  },
+  {
+   "phase": "museum",
+   "flags": [
+    {
+     "flag": "cLand:DonationAmountForMuseum",
+     "name_ja": "博物館建設のために必要な寄贈の残り数",
+     "flow_access": "EnableReadWrite",
+     "max": 15,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "SNPC_owl_11_Tent_Entries",
+       "entry": "owl_Tent_AfterDonation",
+       "op": "add",
+       "value": -1,
+       "conditions": [
+        [
+         {
+          "query": "MuseumDonationNumCheck",
+          "params": {
+           "Border": 20
+          },
+          "value": 1
+         }
+        ]
+       ],
+       "preceding_message": null,
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 1,
+     "readers": [],
+     "reader_count": 0
+    },
+    {
+     "flag": "cLand:MuseumGrowupEnable1",
+     "name_ja": "博物館成長条件1達成",
+     "flow_access": "EnableReadWrite",
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "SNPC_owl_11_Tent_Entries",
+       "entry": "owl_Tent_AfterDonation",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "query": "MuseumDonationNumCheck",
+          "params": {
+           "Border": 20
+          },
+          "value": 0
+         }
+        ]
+       ],
+       "preceding_message": null,
+       "preceding_text_USen": null
+      },
+      {
+       "flow": "SNPC_owl_11_Tent_Entries",
+       "entry": "owl_Tent_AfterDonation",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "flag": "cLand:MuseumTentBuiltToday",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "query": "MuseumDonationNumCheck",
+          "params": {
+           "Border": 20
+          },
+          "value": 0
+         }
+        ]
+       ],
+       "preceding_message": "TalkSNpc/owl/SP_owl_01_MuseumTent:191_01",
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 2,
+     "readers": [
+      "Demo_PublicAnnouncement_33_CmnNewsFacilities:MuseumTentToday",
+      "Demo_PublicAnnouncement_33_CmnNewsFacilities:NewsMuseum",
+      "SNPC_owl_12_Tent_FirstTimeTalk:Root"
+     ],
+     "reader_count": 3
+    },
+    {
+     "flag": "cLand:MuseumConstruction1",
+     "name_ja": "博物館テント→工事中",
+     "flow_access": "EnableReadWrite",
+     "max": 5,
+     "writer_status": "no_eventflow_writer; written by native code or never written in 1.0.0 (unproven)",
+     "writers": [],
+     "writer_count": 0,
+     "readers": [],
+     "reader_count": 0
+    },
+    {
+     "flag": "cLand:Museum2Built",
+     "name_ja": "博物館①完成",
+     "flow_access": "EnableReadOnly",
+     "max": 1,
+     "writer_status": "no_eventflow_writer; written by native code or never written in 1.0.0 (unproven)",
+     "writers": [],
+     "writer_count": 0,
+     "readers": [
+      "SNPC_rco_05_ChkCeremony:ChkCeremonyMuseum"
+     ],
+     "reader_count": 1
+    },
+    {
+     "flag": "cLand:DoneMuseumConstruction",
+     "name_ja": "博物館建築工事完了",
+     "flow_access": "EnableReadWrite",
+     "max": 1,
+     "writer_status": "no_eventflow_writer; written by native code or never written in 1.0.0 (unproven)",
+     "writers": [],
+     "writer_count": 0,
+     "readers": [],
+     "reader_count": 0
+    },
+    {
+     "flag": "cLand:MuseumFossilComplete",
+     "name_ja": "博物館_化石部屋コンプ済",
+     "flow_access": "EnableReadWrite",
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "SNPC_owl_01_Museum_Donation",
+       "entry": "Root",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "flag": "cLand:OwlFoundFossil",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "flag": "cPlayer:OwlEverDonatedInsect",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cPlayer:OwlHeardInsectExplanation",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "query": "HasKindItem",
+          "params": {
+           "CheckItemKindType": "cFilter",
+           "ItemFilterType": "OwlDonation",
+           "ItemKindType": ""
+          },
+          "value": 0
+         },
+         {
+          "query": "MuseumComplete",
+          "params": {},
+          "value": 1
+         },
+         {
+          "query": "MuseumLevel",
+          "params": {},
+          "value": 2
+         },
+         {
+          "query": "NetHasVisitor",
+          "params": {},
+          "value": 1
+         },
+         {
+          "query": "OwlDonationItemType",
+          "params": {},
+          "value": 0
+         },
+         {
+          "query": "OwlMuseumCompleteRoomType",
+          "params": {},
+          "value": 2
+         },
+         {
+          "query": "OwlMuseumMultiComplete",
+          "params": {},
+          "value": 1
+         }
+        ],
+        [
+         {
+          "flag": "cLand:OwlFoundFossil",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "flag": "cPlayer:OwlEverDonatedInsect",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cPlayer:OwlHeardInsectExplanation",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "query": "HasKindItem",
+          "params": {
+           "CheckItemKindType": "cFilter",
+           "ItemFilterType": "OwlDonation",
+           "ItemKindType": ""
+          },
+          "value": 0
+         },
+         {
+          "query": "MuseumComplete",
+          "params": {},
+          "value": 1
+         },
+         {
+          "query": "MuseumLevel",
+          "params": {},
+          "value": 2
+         },
+         {
+          "query": "NetHasVisitor",
+          "params": {},
+          "value": 1
+         },
+         {
+          "query": "OwlDonationItemType",
+          "params": {},
+          "value": 0
+         },
+         {
+          "query": "OwlMuseumCompleteRoomType",
+          "params": {},
+          "value": 2
+         },
+         {
+          "query": "OwlMuseumMultiComplete",
+          "params": {},
+          "value": 1
+         }
+        ]
+       ],
+       "preceding_message": "TalkSNpc/owl/SP_owl_00_Common:405",
+       "preceding_text_USen": null
+      },
+      {
+       "flow": "SNPC_owl_01_Museum_Donation",
+       "entry": "Comp_Check",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "query": "MuseumComplete",
+          "params": {},
+          "value": 1
+         },
+         {
+          "query": "MuseumLevel",
+          "params": {},
+          "value": 2
+         },
+         {
+          "query": "OwlMuseumCompleteRoomType",
+          "params": {},
+          "value": 2
+         },
+         {
+          "query": "OwlMuseumMultiComplete",
+          "params": {},
+          "value": 1
+         }
+        ],
+        [
+         {
+          "query": "MuseumComplete",
+          "params": {},
+          "value": 1
+         },
+         {
+          "query": "MuseumLevel",
+          "params": {},
+          "value": 1
+         },
+         {
+          "query": "OwlMuseumCompleteRoomType",
+          "params": {},
+          "value": 2
+         },
+         {
+          "query": "OwlMuseumMultiComplete",
+          "params": {},
+          "value": 1
+         }
+        ]
+       ],
+       "preceding_message": "TalkSNpc/owl/SP_owl_00_Common:405",
+       "preceding_text_USen": null
+      },
+      {
+       "flow": "SNPC_owl_01_Museum_Donation",
+       "entry": "owl_Donation_AfterItemSel",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "flag": "cPlayer:OwlEverDonatedInsect",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cPlayer:OwlHeardInsectExplanation",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "query": "MuseumComplete",
+          "params": {},
+          "value": 1
+         },
+         {
+          "query": "MuseumLevel",
+          "params": {},
+          "value": 2
+         },
+         {
+          "query": "OwlDonationItemType",
+          "params": {},
+          "value": 0
+         },
+         {
+          "query": "OwlMuseumCompleteRoomType",
+          "params": {},
+          "value": 2
+         },
+         {
+          "query": "OwlMuseumMultiComplete",
+          "params": {},
+          "value": 1
+         }
+        ],
+        [
+         {
+          "flag": "cPlayer:OwlEverDonatedInsect",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cPlayer:OwlHeardInsectExplanation",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "query": "MuseumComplete",
+          "params": {},
+          "value": 1
+         },
+         {
+          "query": "MuseumLevel",
+          "params": {},
+          "value": 1
+         },
+         {
+          "query": "OwlDonationItemType",
+          "params": {},
+          "value": 0
+         },
+         {
+          "query": "OwlMuseumCompleteRoomType",
+          "params": {},
+          "value": 2
+         },
+         {
+          "query": "OwlMuseumMultiComplete",
+          "params": {},
+          "value": 1
+         }
+        ]
+       ],
+       "preceding_message": "TalkSNpc/owl/SP_owl_00_Common:405",
+       "preceding_text_USen": null
+      },
+      {
+       "flow": "SNPC_owl_01_Museum_Donation",
+       "entry": "OwlTentDonationAgain",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "flag": "cLand:OwlFoundFossil",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "flag": "cPlayer:OwlEverDonatedInsect",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cPlayer:OwlHeardInsectExplanation",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "query": "HasKindItem",
+          "params": {
+           "CheckItemKindType": "cFilter",
+           "ItemFilterType": "OwlDonation",
+           "ItemKindType": ""
+          },
+          "value": 0
+         },
+         {
+          "query": "MuseumComplete",
+          "params": {},
+          "value": 1
+         },
+         {
+          "query": "MuseumLevel",
+          "params": {},
+          "value": 2
+         },
+         {
+          "query": "OwlDonationItemType",
+          "params": {},
+          "value": 0
+         },
+         {
+          "query": "OwlMuseumCompleteRoomType",
+          "params": {},
+          "value": 2
+         },
+         {
+          "query": "OwlMuseumMultiComplete",
+          "params": {},
+          "value": 1
+         }
+        ],
+        [
+         {
+          "flag": "cLand:OwlFoundFossil",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "flag": "cPlayer:OwlEverDonatedInsect",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cPlayer:OwlHeardInsectExplanation",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "query": "HasKindItem",
+          "params": {
+           "CheckItemKindType": "cFilter",
+           "ItemFilterType": "OwlDonation",
+           "ItemKindType": ""
+          },
+          "value": 0
+         },
+         {
+          "query": "MuseumComplete",
+          "params": {},
+          "value": 1
+         },
+         {
+          "query": "MuseumLevel",
+          "params": {},
+          "value": 2
+         },
+         {
+          "query": "OwlDonationItemType",
+          "params": {},
+          "value": 0
+         },
+         {
+          "query": "OwlMuseumCompleteRoomType",
+          "params": {},
+          "value": 2
+         },
+         {
+          "query": "OwlMuseumMultiComplete",
+          "params": {},
+          "value": 1
+         }
+        ]
+       ],
+       "preceding_message": "TalkSNpc/owl/SP_owl_00_Common:405",
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 4,
+     "readers": [],
+     "reader_count": 0
+    }
+   ]
+  },
+  {
+   "phase": "penjahit",
+   "flags": [
+    {
+     "flag": "cLand:EnableHghStayField",
+     "name_ja": "きぬよ|来訪NPCに選んでよいか？",
+     "flow_access": "EnableReadWrite",
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "Player_Demo_HousingFinish",
+       "entry": "HousingFinish_Tailor_Built",
+       "op": "off",
+       "value": 0,
+       "conditions": [
+        []
+       ],
+       "preceding_message": "TalkSys/SYS_Player:953_01",
+       "preceding_text_USen": null
+      },
+      {
+       "flow": "SNPC_rcm_03_RenualOpen",
+       "entry": "Rcm_RenualOpen1_ConvHgh",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "flag": "cPlayer:RcmHeardAboutNewOpen1",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "flag": "cLand:VillageDaysCount",
+          "query": "EventFlagSystemInt",
+          "case": 1,
+          "value": 1
+         },
+         {
+          "query": "MuseumLevel",
+          "params": {},
+          "value": 2
+         }
+        ],
+        [
+         {
+          "flag": "cPlayer:MakeVillagePlayerFlag",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "flag": "cPlayer:RcmHeardAboutNewOpen1",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cLand:VillageDaysCount",
+          "query": "EventFlagSystemInt",
+          "case": 1,
+          "value": 1
+         },
+         {
+          "query": "MuseumLevel",
+          "params": {},
+          "value": 2
+         }
+        ]
+       ],
+       "preceding_message": "TalkSNpc/rcm/SP_rcm_20_Market:215_01",
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 2,
+     "readers": [],
+     "reader_count": 0
+    },
+    {
+     "flag": "cLand:CountTailorBuild",
+     "name_ja": "仕立て屋|建築条件に関わるカウンタ",
+     "flow_access": "EnableReadWrite",
+     "max": 99,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "SNPC_hgh_00_Peddler",
+       "entry": "Hgh_Visit_OpenUI",
+       "op": "add",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "flag": "cLand:HghPeddlerPurchaceToday",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "query": "IsMyVillage",
+          "params": {},
+          "value": 0
+         },
+         {
+          "query": "ShopHasBellCount",
+          "params": {
+           "Rate": 1.0
+          },
+          "value": 0
+         },
+         {
+          "query": "ShoppingCapacity",
+          "params": {
+           "CapacityCheckType": "cShopping",
+           "ItemUniqueId": 65534
+          },
+          "value": 0
+         }
+        ]
+       ],
+       "preceding_message": "TalkSNpc/hgh/SP_hgh_00_Peddler:114_02",
+       "preceding_text_USen": null
+      },
+      {
+       "flow": "SNPC_hgh_00_Peddler",
+       "entry": "Hgh_AfterCancel",
+       "op": "add",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "flag": "cLand:HghPeddlerPurchaceToday",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "query": "IsMyVillage",
+          "params": {},
+          "value": 0
+         },
+         {
+          "query": "ShopHasBellCount",
+          "params": {
+           "Rate": 1.0
+          },
+          "value": 0
+         },
+         {
+          "query": "ShoppingCapacity",
+          "params": {
+           "CapacityCheckType": "cShopping",
+           "ItemUniqueId": 65534
+          },
+          "value": 0
+         }
+        ]
+       ],
+       "preceding_message": "TalkSNpc/hgh/SP_hgh_00_Peddler:114_02",
+       "preceding_text_USen": null
+      },
+      {
+       "flow": "SNPC_hgh_00_Peddler",
+       "entry": "Hgh_AfterNoMoney",
+       "op": "add",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "flag": "cLand:HghPeddlerPurchaceToday",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "query": "IsMyVillage",
+          "params": {},
+          "value": 0
+         },
+         {
+          "query": "ShopHasBellCount",
+          "params": {
+           "Rate": 1.0
+          },
+          "value": 0
+         },
+         {
+          "query": "ShoppingCapacity",
+          "params": {
+           "CapacityCheckType": "cShopping",
+           "ItemUniqueId": 65534
+          },
+          "value": 0
+         }
+        ]
+       ],
+       "preceding_message": "TalkSNpc/hgh/SP_hgh_00_Peddler:114_02",
+       "preceding_text_USen": null
+      },
+      {
+       "flow": "SNPC_hgh_00_Peddler",
+       "entry": "Hgh_AfterPurchase",
+       "op": "add",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "flag": "cLand:HghPeddlerPurchaceToday",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "query": "IsMyVillage",
+          "params": {},
+          "value": 0
+         },
+         {
+          "query": "ShopHasBellCount",
+          "params": {
+           "Rate": 1.0
+          },
+          "value": 0
+         },
+         {
+          "query": "ShoppingCapacity",
+          "params": {
+           "CapacityCheckType": "cShopping",
+           "ItemUniqueId": 65534
+          },
+          "value": 0
+         }
+        ]
+       ],
+       "preceding_message": "TalkSNpc/hgh/SP_hgh_00_Peddler:114_02",
+       "preceding_text_USen": null
+      },
+      {
+       "flow": "SNPC_rcm_03_RenualOpen",
+       "entry": "Rcm_RenualOpen1_ConvHgh",
+       "op": "add",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "flag": "cPlayer:RcmHeardAboutNewOpen1",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "flag": "cLand:VillageDaysCount",
+          "query": "EventFlagSystemInt",
+          "case": 1,
+          "value": 1
+         },
+         {
+          "query": "MuseumLevel",
+          "params": {},
+          "value": 2
+         }
+        ],
+        [
+         {
+          "flag": "cPlayer:MakeVillagePlayerFlag",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "flag": "cPlayer:RcmHeardAboutNewOpen1",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cLand:VillageDaysCount",
+          "query": "EventFlagSystemInt",
+          "case": 1,
+          "value": 1
+         },
+         {
+          "query": "MuseumLevel",
+          "params": {},
+          "value": 2
+         }
+        ]
+       ],
+       "preceding_message": "TalkSNpc/rcm/SP_rcm_20_Market:215_01",
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 5,
+     "readers": [
+      "Demo_PublicAnnouncement_Process:EnableTailorBuild"
+     ],
+     "reader_count": 1
+    },
+    {
+     "flag": "cLand:EnableTailorBuild",
+     "name_ja": "仕立て屋|建築条件を満たした",
+     "flow_access": "EnableReadWrite",
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "Demo_PublicAnnouncement_Process",
+       "entry": "EnableTailorBuild",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "flag": "cPlayer:KinuyoTalkBoforeFlag",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "flag": "cPlayer:MakeVillagePlayerFlag",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "flag": "cLand:CountTailorBuild",
+          "query": "EventFlagSystemInt",
+          "case": 0,
+          "value": 0
+         }
+        ]
+       ],
+       "preceding_message": null,
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 1,
+     "readers": [
+      "SNPC_hgh_00_Peddler:Root"
+     ],
+     "reader_count": 1
+    },
+    {
+     "flag": "cLand:TailorGetHousingkit",
+     "name_ja": "仕立て屋|工事看板を受け取った",
+     "flow_access": "EnableReadWrite",
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "SNPC_hgh_00_Peddler",
+       "entry": "Retry_Request",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "query": "SystemHasBaggageSpace",
+          "params": {
+           "CheckNum": 1,
+           "CheckTargrt": "cPocketOnly"
+          },
+          "value": 0
+         }
+        ]
+       ],
+       "preceding_message": "TalkSNpc/hgh/SP_hgh_00_Peddler:209",
+       "preceding_text_USen": null
+      },
+      {
+       "flow": "SNPC_hgh_00_Peddler",
+       "entry": "Hgh_TailorBuildEvent",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "flag": "cLand:TailorGetHousingkit",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cPlayer:HghHeardRequestHousingKit",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "query": "SystemHasBaggageSpace",
+          "params": {
+           "CheckNum": 1,
+           "CheckTargrt": "cPocketOnly"
+          },
+          "value": 0
+         }
+        ]
+       ],
+       "preceding_message": "TalkSNpc/hgh/SP_hgh_00_Peddler:209",
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 2,
+     "readers": [
+      "SNPC_hgh_00_Peddler:Hgh_TailorBuildEvent"
+     ],
+     "reader_count": 1
+    },
+    {
+     "flag": "cLand:TailorReserved",
+     "name_ja": "仕立て屋|工事看板(予定地)が建った",
+     "flow_access": "EnableReadWrite",
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "Player_Demo_HousingFinish",
+       "entry": "HousingFinish_Tailor_Built",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        []
+       ],
+       "preceding_message": "TalkSys/SYS_Player:953_01",
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 1,
+     "readers": [
+      "SNPC_hgh_00_Peddler:Root"
+     ],
+     "reader_count": 1
+    },
+    {
+     "flag": "cLand:TailorConstruction1",
+     "name_ja": "仕立て屋|予定地→工事中",
+     "flow_access": "EnableReadOnly",
+     "max": 1,
+     "writer_status": "no_eventflow_writer; written by native code or never written in 1.0.0 (unproven)",
+     "writers": [],
+     "writer_count": 0,
+     "readers": [],
+     "reader_count": 0
+    },
+    {
+     "flag": "cLand:TailorBuilt",
+     "name_ja": "仕立て屋|仕立て屋が建った",
+     "flow_access": "EnableReadOnly",
+     "max": 1,
+     "writer_status": "no_eventflow_writer; written by native code or never written in 1.0.0 (unproven)",
+     "writers": [],
+     "writer_count": 0,
+     "readers": [
+      "Demo_PublicAnnouncement_21_CmnEvChk:ChkTailor",
+      "Player_GetDemo_Once:Get_MainGame_Continue2P",
+      "SNPC_rco_05_ChkCeremony:ChkCeremonyTailor",
+      "SNPC_rco_10_Common_MoveNpcFacility:MoveFacilityChk",
+      "SNPC_sza_50_IslandEvaluation:AdviceForLife"
+     ],
+     "reader_count": 5
+    }
+   ]
+  },
+  {
+   "phase": "rumah_villager_baru",
+   "flags": [
+    {
+     "flag": "cLand:RcmImmQuestOpen",
+     "name_ja": "たぬきち|移住Quest開始できる",
+     "flow_access": "EnableReadWrite",
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "Demo_PublicAnnouncement_03_Rco_Once",
+       "entry": "TownNews_Rco_HouseBuild",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        []
+       ],
+       "preceding_message": "TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_10_Rco_Once:204_01",
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 1,
+     "readers": [
+      "AI_NPC_Rco:AI_Rco_ChkForceImmQ",
+      "NNPC_Spot_MysteryTour:Root",
+      "SNPC_rco:Root_Init",
+      "SNPC_rco_53_MigrantsQuest:Rco_ImmQ_ForceTalkEntry",
+      "SNPC_rco_53_MigrantsQuest:Rco_ImmQ_ReactTalkEntry"
+     ],
+     "reader_count": 5
+    },
+    {
+     "flag": "cLand:RcmImmQuestRunning",
+     "name_ja": "たぬきち|移住Quest実施中",
+     "flow_access": "EnableReadWrite",
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "Demo_PublicAnnouncement_Process",
+       "entry": "ImmQEndChk",
+       "op": "off",
+       "value": 0,
+       "conditions": [
+        [
+         {
+          "flag": "cLand:ImmQ_A_Complete",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "flag": "cLand:ImmQ_B_Complete",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "flag": "cLand:ImmQ_C_Complete",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         }
+        ]
+       ],
+       "preceding_message": null,
+       "preceding_text_USen": null
+      },
+      {
+       "flow": "SNPC_rco_01_Tent_1_Entries",
+       "entry": "RcoTentImmQuestIntro_Force",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        []
+       ],
+       "preceding_message": "TalkSNpc/rco/SP_rco_05_MigrantsQuest:007",
+       "preceding_text_USen": null
+      },
+      {
+       "flow": "SNPC_rco_01_Tent_1_Entries",
+       "entry": "RcoTentImmQuestIntroNotForce",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        []
+       ],
+       "preceding_message": "TalkSNpc/rco/SP_rco_05_MigrantsQuest:007",
+       "preceding_text_USen": null
+      },
+      {
+       "flow": "SNPC_rco_53_MigrantsQuest",
+       "entry": "Rco_ImmQ_ClearTalk_NotForce",
+       "op": "off",
+       "value": 0,
+       "conditions": [
+        [
+         {
+          "flag": "cPlayer:RcoMigrantProgressTalk1st",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "query": "IsFirstNpcLiveInTent",
+          "params": {},
+          "value": 1
+         },
+         {
+          "query": "NpcHouseNum",
+          "params": {
+           "NpcHouseType": "cConstructed",
+           "Num": 3
+          },
+          "value": 1
+         },
+         {
+          "query": "SystemHasBaggageSpace",
+          "params": {
+           "CheckNum": 1,
+           "CheckTargrt": "cPocketBag"
+          },
+          "value": 1
+         }
+        ],
+        [
+         {
+          "flag": "cPlayer:RcoMigrantProgressTalk1st",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cPlayerTemp:RcoForceTalk",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "query": "IsFirstNpcLiveInTent",
+          "params": {},
+          "value": 1
+         },
+         {
+          "query": "NpcHouseNum",
+          "params": {
+           "NpcHouseType": "cConstructed",
+           "Num": 3
+          },
+          "value": 1
+         },
+         {
+          "query": "SystemHasBaggageSpace",
+          "params": {
+           "CheckNum": 1,
+           "CheckTargrt": "cPocketBag"
+          },
+          "value": 0
+         }
+        ]
+       ],
+       "preceding_message": "TalkSNpc/rco/SP_rco_05_MigrantsQuest:109",
+       "preceding_text_USen": null
+      },
+      {
+       "flow": "SNPC_rco_53_MigrantsQuest",
+       "entry": "Rco_FinishMigrantEvent_Reward",
+       "op": "off",
+       "value": 0,
+       "conditions": [
+        [
+         {
+          "query": "SystemHasBaggageSpace",
+          "params": {
+           "CheckNum": 1,
+           "CheckTargrt": "cPocketBag"
+          },
+          "value": 1
+         }
+        ],
+        [
+         {
+          "flag": "cPlayerTemp:RcoForceTalk",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "query": "SystemHasBaggageSpace",
+          "params": {
+           "CheckNum": 1,
+           "CheckTargrt": "cPocketBag"
+          },
+          "value": 0
+         }
+        ]
+       ],
+       "preceding_message": "TalkSNpc/rco/SP_rco_05_MigrantsQuest:109",
+       "preceding_text_USen": null
+      },
+      {
+       "flow": "SNPC_rco_53_MigrantsQuest",
+       "entry": "Rco_ImmQ_ClearTalk_Force",
+       "op": "off",
+       "value": 0,
+       "conditions": [
+        [
+         {
+          "flag": "cPlayer:RcoMigrantProgressTalk1st",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "query": "IsFirstNpcLiveInTent",
+          "params": {},
+          "value": 1
+         },
+         {
+          "query": "NpcHouseNum",
+          "params": {
+           "NpcHouseType": "cConstructed",
+           "Num": 3
+          },
+          "value": 1
+         },
+         {
+          "query": "SystemHasBaggageSpace",
+          "params": {
+           "CheckNum": 1,
+           "CheckTargrt": "cPocketBag"
+          },
+          "value": 1
+         }
+        ],
+        [
+         {
+          "flag": "cPlayer:RcoMigrantProgressTalk1st",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cPlayerTemp:RcoForceTalk",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "query": "IsFirstNpcLiveInTent",
+          "params": {},
+          "value": 1
+         },
+         {
+          "query": "NpcHouseNum",
+          "params": {
+           "NpcHouseType": "cConstructed",
+           "Num": 3
+          },
+          "value": 1
+         },
+         {
+          "query": "SystemHasBaggageSpace",
+          "params": {
+           "CheckNum": 1,
+           "CheckTargrt": "cPocketBag"
+          },
+          "value": 0
+         }
+        ]
+       ],
+       "preceding_message": "TalkSNpc/rco/SP_rco_05_MigrantsQuest:109",
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 6,
+     "readers": [
+      "AI_NPC_Rco:AI_Rco_ChkForceImmQ",
+      "Demo_PublicAnnouncement_Process:ImmQFtrChk",
+      "NNPC_FreeH_Progress:Progress_MigrantsQuest",
+      "SNPC_rco:Root_Init",
+      "SNPC_rco_10_Common_WhatShouldIDo:Connect_DayOnce",
+      "SNPC_rco_10_Common_WhatShouldIDo:Root",
+      "SNPC_rco_10_Common_WhatShouldIDo:Root_SubPlayer",
+      "SNPC_rco_53_MigrantsQuest:Rco_ImmQ_ForceTalkEntry",
+      "SNPC_rco_53_MigrantsQuest:Rco_ImmQ_ReactTalkEntry"
+     ],
+     "reader_count": 9
+    },
+    {
+     "flag": "cLand:ImmQ_SetBridge",
+     "name_ja": "移住Quest|橋の予定地が配置された",
+     "flow_access": "EnableReadWrite",
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "Player_Demo_HousingFinish",
+       "entry": "HousingFinish_Bridge",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        []
+       ],
+       "preceding_message": "TalkSys/SYS_Player:958",
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 1,
+     "readers": [
+      "AI_NPC_Rco:AI_Rco_ChkForceImmQ",
+      "SNPC_rco_53_MigrantsQuest:Rco_ImmQ_ForceTalkEntry",
+      "SNPC_rco_53_MigrantsQuest:Rco_ImmQ_ReactTalkEntry",
+      "SNPC_rco_53_MigrantsQuest:Root"
+     ],
+     "reader_count": 4
+    },
+    {
+     "flag": "cLand:ImmQ_A_GetHousing",
+     "name_ja": "移住Quest|住宅A|ハウジングキットもらった",
+     "flow_access": "EnableReadWrite",
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "SNPC_rco_53_MigrantsQuest",
+       "entry": "GetHousingKit",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "flag": "cPlayer:ImmQGetHousingFullItem",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "query": "SystemHasBaggageSpace",
+          "params": {
+           "CheckNum": 3,
+           "CheckTargrt": "cPocketOnly"
+          },
+          "value": 0
+         }
+        ],
+        [
+         {
+          "flag": "cPlayer:ImmQGetHousingFullItem",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cPlayer:RcoImmQClear1QuestToday",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "query": "SystemHasBaggageSpace",
+          "params": {
+           "CheckNum": 3,
+           "CheckTargrt": "cPocketOnly"
+          },
+          "value": 0
+         }
+        ]
+       ],
+       "preceding_message": "TalkSNpc/rco/SP_rco_05_MigrantsQuest:035",
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 1,
+     "readers": [
+      "AI_NPC_Rco:AI_Rco_ChkForceImmQ",
+      "SNPC_rco_53_MigrantsQuest:Rco_ImmQ_ForceTalkEntry",
+      "SNPC_rco_53_MigrantsQuest:Rco_ImmQ_ReactTalkEntry",
+      "SNPC_rco_53_MigrantsQuest:Root"
+     ],
+     "reader_count": 4
+    },
+    {
+     "flag": "cLand:ImmQ_A_SetHousing",
+     "name_ja": "移住Quest|住宅A|ハウジングキット設置した",
+     "flow_access": "EnableReadWrite",
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "Player_Demo_HousingFinish",
+       "entry": "HousingFinish_NnpcImmigrateQuestA",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        []
+       ],
+       "preceding_message": "TalkSys/SYS_Player:956",
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 1,
+     "readers": [],
+     "reader_count": 0
+    },
+    {
+     "flag": "cLand:ImmQ_A_Interior1Donate",
+     "name_ja": "移住Quest|住宅A|屋内家具１寄贈",
+     "flow_access": "EnableReadWrite",
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "Obj_ReservedPlaceBox",
+       "entry": "DelFtrA1",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "query": "IsSettlerQuestInsideMaterialSelect",
+          "params": {
+           "InsideMaterialType": 0,
+           "SettlerType": 0
+          },
+          "value": 0
+         }
+        ]
+       ],
+       "preceding_message": null,
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 1,
+     "readers": [
+      "Demo_PublicAnnouncement_Process:ImmQFtrChkA",
+      "Obj_ReservedPlaceBox:2ndChkOutdoorFtrA",
+      "Obj_ReservedPlaceBox:ChkCompleteDemoSeq",
+      "Obj_ReservedPlaceBox:ChkIndoorFtrA",
+      "Obj_ReservedPlaceBox:HaveFtrATrue",
+      "Obj_ReservedPlaceBox:IndoorClearCntA",
+      "System_MigrantsQuestProcess:ChkRcoImmQClearChkA"
+     ],
+     "reader_count": 7
+    },
+    {
+     "flag": "cLand:ImmQ_A_Outdoor1Set",
+     "name_ja": "移住Quest|住宅A|外置き家具１配置",
+     "flow_access": "EnableReadWrite",
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "Obj_ReservedPlaceBox",
+       "entry": "ChkOutdoorFtrA",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "query": "IsSettlerQuestOutsideComplete",
+          "params": {
+           "OutsideCheckType": 0,
+           "SettlerType": 0
+          },
+          "value": 0
+         }
+        ]
+       ],
+       "preceding_message": null,
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 1,
+     "readers": [],
+     "reader_count": 0
+    },
+    {
+     "flag": "cLand:ImmQ_A_Complete",
+     "name_ja": "移住Quest|住宅A|全工程完了",
+     "flow_access": "EnableReadOnly",
+     "max": 1,
+     "writer_status": "no_eventflow_writer; written by native code or never written in 1.0.0 (unproven)",
+     "writers": [],
+     "writer_count": 0,
+     "readers": [
+      "Demo_PublicAnnouncement_Process:ImmQEndChk",
+      "Demo_PublicAnnouncement_Process:ImmQFtrChkA",
+      "Obj_ReservedPlaceBox:ChkCompleteDemoSeq",
+      "Obj_ReservedPlaceBox:ImmQBox",
+      "Obj_Sign:ImmQBoard",
+      "SNPC_rco_53_MigrantsQuest:ChkClearNum",
+      "System_MigrantsQuestProcess:ChkRcoImmQClearChkA",
+      "System_MigrantsQuestProcess:CountClearNum"
+     ],
+     "reader_count": 8
+    },
+    {
+     "flag": "cLand:ImmQ_A_Invited",
+     "name_ja": "移住Quest|移住者A|勧誘した",
+     "flow_access": "EnableReadWrite",
+     "max": 1,
+     "writer_status": "no_eventflow_writer; written by native code or never written in 1.0.0 (unproven)",
+     "writers": [],
+     "writer_count": 0,
+     "readers": [],
+     "reader_count": 0
+    },
+    {
+     "flag": "cLand:RcmImmQuestComplete",
+     "name_ja": "たぬきち|移住Quest完了",
+     "flow_access": "EnableReadWrite",
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "Demo_PublicAnnouncement_Process",
+       "entry": "ImmQEndChk",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "flag": "cLand:ImmQ_A_Complete",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "flag": "cLand:ImmQ_B_Complete",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "flag": "cLand:ImmQ_C_Complete",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         }
+        ]
+       ],
+       "preceding_message": null,
+       "preceding_text_USen": null
+      },
+      {
+       "flow": "SNPC_rco_53_MigrantsQuest",
+       "entry": "Rco_ImmQ_ClearTalk_NotForce",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "flag": "cPlayer:RcoMigrantProgressTalk1st",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "query": "IsFirstNpcLiveInTent",
+          "params": {},
+          "value": 1
+         },
+         {
+          "query": "NpcHouseNum",
+          "params": {
+           "NpcHouseType": "cConstructed",
+           "Num": 3
+          },
+          "value": 1
+         },
+         {
+          "query": "SystemHasBaggageSpace",
+          "params": {
+           "CheckNum": 1,
+           "CheckTargrt": "cPocketBag"
+          },
+          "value": 1
+         }
+        ],
+        [
+         {
+          "flag": "cPlayer:RcoMigrantProgressTalk1st",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cPlayerTemp:RcoForceTalk",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "query": "IsFirstNpcLiveInTent",
+          "params": {},
+          "value": 1
+         },
+         {
+          "query": "NpcHouseNum",
+          "params": {
+           "NpcHouseType": "cConstructed",
+           "Num": 3
+          },
+          "value": 1
+         },
+         {
+          "query": "SystemHasBaggageSpace",
+          "params": {
+           "CheckNum": 1,
+           "CheckTargrt": "cPocketBag"
+          },
+          "value": 0
+         }
+        ]
+       ],
+       "preceding_message": "TalkSNpc/rco/SP_rco_05_MigrantsQuest:109",
+       "preceding_text_USen": null
+      },
+      {
+       "flow": "SNPC_rco_53_MigrantsQuest",
+       "entry": "Rco_FinishMigrantEvent_Reward",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "query": "SystemHasBaggageSpace",
+          "params": {
+           "CheckNum": 1,
+           "CheckTargrt": "cPocketBag"
+          },
+          "value": 1
+         }
+        ],
+        [
+         {
+          "flag": "cPlayerTemp:RcoForceTalk",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "query": "SystemHasBaggageSpace",
+          "params": {
+           "CheckNum": 1,
+           "CheckTargrt": "cPocketBag"
+          },
+          "value": 0
+         }
+        ]
+       ],
+       "preceding_message": "TalkSNpc/rco/SP_rco_05_MigrantsQuest:109",
+       "preceding_text_USen": null
+      },
+      {
+       "flow": "SNPC_rco_53_MigrantsQuest",
+       "entry": "Rco_ImmQ_ClearTalk_Force",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "flag": "cPlayer:RcoMigrantProgressTalk1st",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "query": "IsFirstNpcLiveInTent",
+          "params": {},
+          "value": 1
+         },
+         {
+          "query": "NpcHouseNum",
+          "params": {
+           "NpcHouseType": "cConstructed",
+           "Num": 3
+          },
+          "value": 1
+         },
+         {
+          "query": "SystemHasBaggageSpace",
+          "params": {
+           "CheckNum": 1,
+           "CheckTargrt": "cPocketBag"
+          },
+          "value": 1
+         }
+        ],
+        [
+         {
+          "flag": "cPlayer:RcoMigrantProgressTalk1st",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cPlayerTemp:RcoForceTalk",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "query": "IsFirstNpcLiveInTent",
+          "params": {},
+          "value": 1
+         },
+         {
+          "query": "NpcHouseNum",
+          "params": {
+           "NpcHouseType": "cConstructed",
+           "Num": 3
+          },
+          "value": 1
+         },
+         {
+          "query": "SystemHasBaggageSpace",
+          "params": {
+           "CheckNum": 1,
+           "CheckTargrt": "cPocketBag"
+          },
+          "value": 0
+         }
+        ]
+       ],
+       "preceding_message": "TalkSNpc/rco/SP_rco_05_MigrantsQuest:109",
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 4,
+     "readers": [
+      "AI_NPC_Rco:AI_Rco_ChkForceImmQ",
+      "Demo_PublicAnnouncement_Process:Enable_BuildOfficeIntroduction",
+      "NNPC_Spot_MysteryTour:Root",
+      "Obj_ReservedPlaceBox:ChkCompleteDemoSeq",
+      "SNPC_rco_10_Common_WhatShouldIDo:Root",
+      "SNPC_rco_10_Common_WhatShouldIDo:Root_SubPlayer",
+      "SNPC_rco_53_MigrantsQuest:Rco_ImmQ_ForceTalkEntry",
+      "SNPC_rco_53_MigrantsQuest:Rco_ImmQ_ReactTalkEntry"
+     ],
+     "reader_count": 8
+    },
+    {
+     "flag": "cPlayer:ImmQGetQuestPrize",
+     "name_ja": "たぬきち|移住クエストの報酬もらった",
+     "flow_access": 2,
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "SNPC_rco_53_MigrantsQuest",
+       "entry": "Ending2",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        []
+       ],
+       "preceding_message": "TalkSNpc/rco/SP_rco_05_MigrantsQuest:205",
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 1,
+     "readers": [
+      "SNPC_rco_10_Common_WhatShouldIDo:Root"
+     ],
+     "reader_count": 1
+    }
+   ]
+  },
+  {
+   "phase": "resident_services",
+   "flags": [
+    {
+     "flag": "cLand:EnableBuildTownOffice",
+     "name_ja": "役場建設条件が揃った",
+     "flow_access": "EnableReadWrite",
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "Demo_PublicAnnouncement_03_Rco_Once",
+       "entry": "TownNews_Rco_OfficeRenual",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        []
+       ],
+       "preceding_message": "TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_10_Rco_Once:162",
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 1,
+     "readers": [
+      "Tutorials_Prologue3_Orientation1:Rco_Orientation2P_Office"
+     ],
+     "reader_count": 1
+    },
+    {
+     "flag": "cLand:StartBuildingTownOffice",
+     "name_ja": "役場建設＆村長誘致開始可能",
+     "flow_access": "EnableReadWrite",
+     "max": 1,
+     "writer_status": "no_eventflow_writer; written by native code or never written in 1.0.0 (unproven)",
+     "writers": [],
+     "writer_count": 0,
+     "readers": [],
+     "reader_count": 0
+    },
+    {
+     "flag": "cLand:RcoNoticeBuildInfomationOffice",
+     "name_ja": "たぬきち|案内所建物建築のお知らせ可能",
+     "flow_access": "EnableReadWrite",
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "Demo_PublicAnnouncement_Process",
+       "entry": "Enable_BuildOfficeIntroduction",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "flag": "cLand:RcmImmQuestComplete",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "query": "MuseumLevel",
+          "params": {},
+          "value": 2
+         },
+         {
+          "query": "NpcHouseNum",
+          "params": {
+           "NpcHouseType": "cConstructed",
+           "Num": 5
+          },
+          "value": 0
+         }
+        ],
+        [
+         {
+          "flag": "cLand:RcmImmQuestComplete",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "query": "MuseumLevel",
+          "params": {},
+          "value": 1
+         },
+         {
+          "query": "NpcHouseNum",
+          "params": {
+           "NpcHouseType": "cConstructed",
+           "Num": 5
+          },
+          "value": 0
+         }
+        ]
+       ],
+       "preceding_message": null,
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 1,
+     "readers": [
+      "Demo_PublicAnnouncement_21_CmnEvChk:ChkOfficeNews"
+     ],
+     "reader_count": 1
+    },
+    {
+     "flag": "cLand:OfficeConstruction1",
+     "name_ja": "役場|工事中→役場",
+     "flow_access": "EnableReadOnly",
+     "max": 1,
+     "writer_status": "no_eventflow_writer; written by native code or never written in 1.0.0 (unproven)",
+     "writers": [],
+     "writer_count": 0,
+     "readers": [
+      "Demo_PublicAnnouncement_03_Rco_Once:TownNews_Heard1stTime",
+      "Demo_PublicAnnouncement_21_CmnEvChk:ChkOfficeNews",
+      "Demo_PublicAnnouncement_30_CmnNewsGreet:Rco_Greet_Snow",
+      "Demo_PublicAnnouncement_30_CmnNewsGreet:Root",
+      "Demo_PublicAnnouncement_33_CmnNewsFacilities:Root",
+      "Tutorials_Prologue3_Orientation1:Rco_Orientation2P_Office"
+     ],
+     "reader_count": 6
+    },
+    {
+     "flag": "cLand:BuiltTownOffice",
+     "name_ja": "案内所完成",
+     "flow_access": "EnableReadOnly",
+     "max": 1,
+     "writer_status": "no_eventflow_writer; written by native code or never written in 1.0.0 (unproven)",
+     "writers": [],
+     "writer_count": 0,
+     "readers": [
+      "Demo_PublicAnnouncement:Root",
+      "Demo_PublicAnnouncement:Root_Init",
+      "Demo_PublicAnnouncement_Process:BGMChangeCheck",
+      "SNPC_rco_05_ChkCeremony:ChkCeremonyOffice",
+      "System_GrowUp:ContinueCommon",
+      "System_GrowUp:InGame",
+      "System_Title:Root"
+     ],
+     "reader_count": 7
+    },
+    {
+     "flag": "cPlayer:SzaTaled1stTime",
+     "name_ja": "しずえ|役場内で会話したことがあるか？",
+     "flow_access": 2,
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "SNPC_sza_01_Office_1_Entries",
+       "entry": "TalkFirst",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        []
+       ],
+       "preceding_message": null,
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 1,
+     "readers": [
+      "SNPC_sza:Root"
+     ],
+     "reader_count": 1
+    }
+   ]
+  },
+  {
+   "phase": "pengembangan_pulau",
+   "flags": [
+    {
+     "flag": "cLand:IslandDevQuestRunning",
+     "name_ja": "たぬきち|島の発展Quest実施中",
+     "flow_access": "EnableReadWrite",
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "SNPC_rco_01_Office_1_Entries",
+       "entry": "OfficeOpening_Force",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "flag": "cLand:BuiltTownOfficeToday",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cPlayer:MakeVillagePlayerFlag",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "query": "FacilityOpenPastDays",
+          "params": {
+           "CountFacilityType": "cOffice",
+           "Days": 7
+          },
+          "value": 1
+         }
+        ],
+        [
+         {
+          "flag": "cLand:BuiltTownOfficeToday",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cPlayer:MakeVillagePlayerFlag",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "query": "FacilityOpenPastDays",
+          "params": {
+           "CountFacilityType": "cOffice",
+           "Days": 7
+          },
+          "value": 1
+         }
+        ]
+       ],
+       "preceding_message": "TalkSNpc/rco/SP_rco_06_Office:009",
+       "preceding_text_USen": null
+      },
+      {
+       "flow": "SNPC_rco_01_Office_1_Entries",
+       "entry": "OfficeOpening_NormalTalk",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "flag": "cPlayer:MakeVillagePlayerFlag",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         }
+        ],
+        [
+         {
+          "flag": "cPlayer:MakeVillagePlayerFlag",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         }
+        ]
+       ],
+       "preceding_message": "TalkSNpc/rco/SP_rco_06_Office:009",
+       "preceding_text_USen": null
+      },
+      {
+       "flow": "SNPC_sza_50_IslandEvaluation",
+       "entry": "ClearTkkFirstLiveScore",
+       "op": "off",
+       "value": 0,
+       "conditions": [
+        [
+         {
+          "query": "EventBranch",
+          "params": {
+           "AddDay": 1,
+           "CheckNowTime": false
+          },
+          "value": 3
+         }
+        ],
+        [
+         {
+          "query": "EventBranch",
+          "params": {
+           "AddDay": 1,
+           "CheckNowTime": false
+          },
+          "value": 2
+         }
+        ]
+       ],
+       "preceding_message": "TalkSNpc/sza/SP_sza_50_IslandEvaluation:513_01",
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 3,
+     "readers": [
+      "SNPC_rco_10_Common_WhatShouldIDo:Root"
+     ],
+     "reader_count": 1
+    },
+    {
+     "flag": "cLand:RcoBuildCampsiteOngoing",
+     "name_ja": "たぬきち|キャンプ場設置の依頼を島の誰かが引き受けた",
+     "flow_access": "EnableReadWrite",
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "SNPC_rco_54_IslandDevelopment",
+       "entry": "CampSiteRequest",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        []
+       ],
+       "preceding_message": "TalkSNpc/rco/SP_rco_07_IslandDevelopment:104",
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 1,
+     "readers": [
+      "AI_NPC_Rco:AI_Rco_ChkForceIslandDevelopment",
+      "SNPC_rco_54_IslandDevelopment:Root"
+     ],
+     "reader_count": 2
+    },
+    {
+     "flag": "cLand:RcoBuildCampsiteComplete",
+     "name_ja": "たぬきち|キャンプ場設置の依頼で、誰かが予定地を建てた",
+     "flow_access": "EnableReadWrite",
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "Player_Demo_HousingFinish",
+       "entry": "HousingFinish_CampSite_Built",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        []
+       ],
+       "preceding_message": "TalkSys/SYS_Player:957",
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 1,
+     "readers": [
+      "AI_NPC_Rco:AI_Rco_ChkForceIslandDevelopment",
+      "SNPC_rco_54_IslandDevelopment:Root"
+     ],
+     "reader_count": 2
+    },
+    {
+     "flag": "cLand:CampSiteBuilt",
+     "name_ja": "キャンプ場が建った",
+     "flow_access": "EnableReadOnly",
+     "max": 1,
+     "writer_status": "no_eventflow_writer; written by native code or never written in 1.0.0 (unproven)",
+     "writers": [],
+     "writer_count": 0,
+     "readers": [
+      "AI_NPC_Rco:AI_Rco_ChkForceIslandDevelopment",
+      "Demo_PublicAnnouncement_21_CmnEvChk:ChkCampsite",
+      "Player_GetDemo_Once:Get_MainGame_Continue2P",
+      "SNPC_rco:ChkFirstCamperRequest",
+      "SNPC_rco_05_ChkCeremony:ChkCeremonyCampsite",
+      "SNPC_rco_10_Common_MoveNpcFacility:MoveFacilityChk",
+      "SNPC_rco_54_IslandDevelopment:Root",
+      "System_GrowUp_GameProcess:FirstCamperCheck"
+     ],
+     "reader_count": 8
+    },
+    {
+     "flag": "cLand:RcoMeetFirstVisitorRequest",
+     "name_ja": "たぬきち|1人目の客に会う依頼をしてくるようになる",
+     "flow_access": "EnableReadWrite",
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "System_GrowUp_GameProcess",
+       "entry": "FirstCamperCheck",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "flag": "cLand:CampSiteBuilt",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "flag": "cLand:RcoBuildFirstVisitorsHousingKitComplete",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         }
+        ]
+       ],
+       "preceding_message": null,
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 1,
+     "readers": [
+      "AI_NPC_Rco:AI_Rco_ChkForceIslandDevelopment",
+      "SNPC_rco_54_IslandDevelopment:Root"
+     ],
+     "reader_count": 2
+    },
+    {
+     "flag": "cLand:RcoMeetFirstVisitorComplete",
+     "name_ja": "たぬきち|1人目のキャンプ客の移住希望の話を、島の誰かが聞いた",
+     "flow_access": "EnableReadWrite",
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "NNPC_Spot_Camp",
+       "entry": "Flow_FirstCamperZK",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "flag": "cPlayer:CampFirstTalk_FirstVisitor",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cPlayer:MakeVillagePlayerFlag",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         }
+        ]
+       ],
+       "preceding_message": "TalkNNpc/B4_Zk/Spot/ZK_Spot_Camp_First:003_01",
+       "preceding_text_USen": null
+      },
+      {
+       "flow": "Player_HousingKit",
+       "entry": "NNPCReserveKit",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "query": "CanBuildHere",
+          "params": {
+           "StructureBuildPosType": "cPlayer",
+           "StructureBuildTiming": {
+            "$arg": "BuildTiming"
+           },
+           "StructureType": "cReserveNpcHouse"
+          },
+          "value": 0
+         },
+         {
+          "flag": "cLand:RcoMeetFirstVisitorOngoing",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         }
+        ]
+       ],
+       "preceding_message": "TalkSys/SYS_Player:905",
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 2,
+     "readers": [
+      "AI_NPC_Camp:Root",
+      "AI_NPC_Rco:Root2CampSiteVisitor",
+      "NNPC_Spot_Camp:Flow_FirstCamperZK_2P",
+      "SNPC_rco:ChkFirstCamperRequest",
+      "SNPC_rco_54_IslandDevelopment:Root2CampSiteVisitor"
+     ],
+     "reader_count": 5
+    },
+    {
+     "flag": "cLand:RcoBuildFirstVisitorsHousingKitComplete",
+     "name_ja": "たぬきち|1人目の客のハウジングキットを、島の誰かが設置した",
+     "flow_access": "EnableReadWrite",
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "Player_Demo_HousingFinish",
+       "entry": "HousingFinish_NnpcNewProperty",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "query": "NpcHouseNum",
+          "params": {
+           "NpcHouseType": "cExist",
+           "Num": 7
+          },
+          "value": 1
+         }
+        ]
+       ],
+       "preceding_message": "TalkSys/SYS_Player:955_01",
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 1,
+     "readers": [
+      "AI_NPC_Rco:Root2CampSiteVisitor",
+      "NNPC_Spot_Camp:Flow_FirstCamperZK",
+      "SNPC_rco_54_IslandDevelopment:Root2CampSiteVisitor",
+      "System_GrowUp_GameProcess:FirstCamperCheck"
+     ],
+     "reader_count": 4
+    },
+    {
+     "flag": "cLand:IslandDevQuestComplete",
+     "name_ja": "たぬきち|島の発展Quest完了",
+     "flow_access": "EnableReadWrite",
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "SNPC_sza_50_IslandEvaluation",
+       "entry": "ClearTkkFirstLiveScore",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "query": "EventBranch",
+          "params": {
+           "AddDay": 1,
+           "CheckNowTime": false
+          },
+          "value": 3
+         }
+        ],
+        [
+         {
+          "query": "EventBranch",
+          "params": {
+           "AddDay": 1,
+           "CheckNowTime": false
+          },
+          "value": 2
+         }
+        ]
+       ],
+       "preceding_message": "TalkSNpc/sza/SP_sza_50_IslandEvaluation:513_01",
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 1,
+     "readers": [
+      "SNPC_sza_50_IslandEvaluation:Sza_Evaluation_CmnImpression"
+     ],
+     "reader_count": 1
+    },
+    {
+     "flag": "cLand:CeremonyBuildBridge",
+     "name_ja": "セレモニ|セレモニ開催できる：橋",
+     "flow_access": "EnableReadWrite",
+     "max": 1,
+     "writer_status": "no_eventflow_writer; written by native code or never written in 1.0.0 (unproven)",
+     "writers": [],
+     "writer_count": 0,
+     "readers": [
+      "SNPC_rco_05_ChkCeremony:ChkCeremonyBridge"
+     ],
+     "reader_count": 1
+    },
+    {
+     "flag": "cLand:CeremonyBuildSlope",
+     "name_ja": "セレモニ|セレモニ開催できる：坂",
+     "flow_access": "EnableReadWrite",
+     "max": 1,
+     "writer_status": "no_eventflow_writer; written by native code or never written in 1.0.0 (unproven)",
+     "writers": [],
+     "writer_count": 0,
+     "readers": [
+      "SNPC_rco_05_ChkCeremony:ChkCeremonySlope"
+     ],
+     "reader_count": 1
+    },
+    {
+     "flag": "cLand:BridgeBuilt",
+     "name_ja": "橋を作ったことがある",
+     "flow_access": "EnableReadWrite",
+     "max": 1,
+     "writer_status": "no_eventflow_writer; written by native code or never written in 1.0.0 (unproven)",
+     "writers": [],
+     "writer_count": 0,
+     "readers": [],
+     "reader_count": 0
+    },
+    {
+     "flag": "cLand:SlopeBuilt",
+     "name_ja": "坂を作ったことがある",
+     "flow_access": "EnableReadWrite",
+     "max": 1,
+     "writer_status": "no_eventflow_writer; written by native code or never written in 1.0.0 (unproven)",
+     "writers": [],
+     "writer_count": 0,
+     "readers": [],
+     "reader_count": 0
+    }
+   ]
+  },
+  {
+   "phase": "penilaian_dan_kk",
+   "flags": [
+    {
+     "flag": "cLand:IslandEvaluationUnlock",
+     "name_ja": "しずえ|島の評価島全体で解禁",
+     "flow_access": "EnableReadWrite",
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "SNPC_rco_54_IslandDevelopment",
+       "entry": "IslandEvaluationRunning",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "flag": "cPlayer:RcoHeardAboutEvalutationDetail",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cPlayer:SzaHeardAboutHousingKit",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         }
+        ],
+        [
+         {
+          "flag": "cPlayer:RcoHeardAboutEvalutationDetail",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cPlayer:SzaHeardAboutHousingKit",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         }
+        ]
+       ],
+       "preceding_message": "TalkSNpc/rco/SP_rco_07_IslandDevelopment:000_11",
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 1,
+     "readers": [
+      "Demo_PublicAnnouncement_Process:IslandEvaluationUpdateChk",
+      "SNPC_sza_00_Common:Root",
+      "SNPC_sza_00_Common:Sza_CmnSel_Again",
+      "SNPC_sza_00_Common:Sza_Common_Select",
+      "SNPC_sza_00_Common:szaNormalSeq"
+     ],
+     "reader_count": 5
+    },
+    {
+     "flag": "cPlayer:IslandEvaluationUnlockMyself",
+     "name_ja": "しずえ|自分自身が島の評価を解禁した",
+     "flow_access": 2,
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "SNPC_rco_54_IslandDevelopment",
+       "entry": "IslandEvaluationRunning",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "flag": "cPlayer:RcoHeardAboutEvalutationDetail",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cPlayer:SzaHeardAboutHousingKit",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         }
+        ],
+        [
+         {
+          "flag": "cPlayer:RcoHeardAboutEvalutationDetail",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cPlayer:SzaHeardAboutHousingKit",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         }
+        ]
+       ],
+       "preceding_message": "TalkSNpc/rco/SP_rco_07_IslandDevelopment:000_11",
+       "preceding_text_USen": null
+      },
+      {
+       "flow": "SNPC_sza_00_Common",
+       "entry": "Root",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "flag": "cLand:IslandEvaluationUnlock",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "flag": "cPlayer:SzaHeardAboutIslandEvaluation",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "flag": "cPlayer:SzaTalkAtOfficeToday",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "query": "NetHasVisitor",
+          "params": {},
+          "value": 1
+         }
+        ]
+       ],
+       "preceding_message": "TalkSNpc/sza/SP_sza_0_common:002",
+       "preceding_text_USen": null
+      },
+      {
+       "flow": "SNPC_sza_00_Common",
+       "entry": "szaNormalSeq",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "flag": "cLand:IslandEvaluationUnlock",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         }
+        ]
+       ],
+       "preceding_message": null,
+       "preceding_text_USen": null
+      },
+      {
+       "flow": "SNPC_sza_00_Common",
+       "entry": "Sza_Common_Select",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "flag": "cLand:IslandEvaluationUnlock",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "flag": "cPlayer:SzaTalkAtOfficeToday",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         }
+        ]
+       ],
+       "preceding_message": "TalkSNpc/sza/SP_sza_0_common:002",
+       "preceding_text_USen": null
+      },
+      {
+       "flow": "SNPC_sza_01_Office_1_Entries",
+       "entry": "Sza_EvaluationExplanation",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "flag": "cPlayer:MakeVillagePlayerFlag",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cPlayer:SzaTalkAtOfficeToday",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         }
+        ],
+        [
+         {
+          "flag": "cPlayer:MakeVillagePlayerFlag",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cPlayer:SzaTalkAtOfficeToday",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         }
+        ]
+       ],
+       "preceding_message": "TalkSNpc/sza/SP_sza_50_IslandEvaluation:000_02_01",
+       "preceding_text_USen": null
+      },
+      {
+       "flow": "SNPC_sza_50_IslandEvaluation",
+       "entry": "Root",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        []
+       ],
+       "preceding_message": null,
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 6,
+     "readers": [],
+     "reader_count": 0
+    },
+    {
+     "flag": "cLand:IslandEvaluationClearTkkLive",
+     "name_ja": "しずえ|島の評価がとたけけライブ発生基準をクリアした",
+     "flow_access": "EnableReadWrite",
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "SNPC_sza_50_IslandEvaluation",
+       "entry": "ClearTkkFirstLiveScore",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "query": "EventBranch",
+          "params": {
+           "AddDay": 1,
+           "CheckNowTime": false
+          },
+          "value": 3
+         }
+        ],
+        [
+         {
+          "query": "EventBranch",
+          "params": {
+           "AddDay": 1,
+           "CheckNowTime": false
+          },
+          "value": 2
+         }
+        ]
+       ],
+       "preceding_message": "TalkSNpc/sza/SP_sza_50_IslandEvaluation:513_01",
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 1,
+     "readers": [
+      "System_GrowUp_WeatherControl:Root"
+     ],
+     "reader_count": 1
+    },
+    {
+     "flag": "cLand:TkkFirstLiveEnable",
+     "name_ja": "とたけけ|初ライブ解禁か？",
+     "flow_access": "EnableReadOnly",
+     "max": 1,
+     "writer_status": "no_eventflow_writer; written by native code or never written in 1.0.0 (unproven)",
+     "writers": [],
+     "writer_count": 0,
+     "readers": [
+      "Demo_PublicAnnouncement:Root_Init"
+     ],
+     "reader_count": 1
+    },
+    {
+     "flag": "cLand:TkkFirstLiveReserved",
+     "name_ja": "とたけけ|初ライブ当日か？",
+     "flow_access": "EnableReadWrite",
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "Demo_PublicAnnouncement",
+       "entry": "Root_Init",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "query": "EventBranch",
+          "params": {
+           "AddDay": 0,
+           "CheckNowTime": false
+          },
+          "value": 0
+         },
+         {
+          "flag": "cLand:BuiltTownOffice",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cLand:TkkFirstLiveEnable",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "flag": "cPlayer:MakeVillagePlayerFlag",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         }
+        ],
+        [
+         {
+          "query": "EventBranch",
+          "params": {
+           "AddDay": 0,
+           "CheckNowTime": false
+          },
+          "value": 0
+         },
+         {
+          "flag": "cLand:BuiltTownOffice",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "flag": "cLand:BuiltTownOfficeToday",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cLand:TkkFirstLiveEnable",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "flag": "cPlayer:MakeVillagePlayerFlag",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         }
+        ]
+       ],
+       "preceding_message": null,
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 1,
+     "readers": [
+      "Demo_PublicAnnouncement:PAnnounceSza",
+      "Demo_PublicAnnouncement_00_Cmn:Connect1stAnnounce",
+      "Demo_PublicAnnouncement_00_Cmn:Root",
+      "SNPC_rco_55_TkkFirstLive:InvitePlayerHouse"
+     ],
+     "reader_count": 4
+    },
+    {
+     "flag": "cLand:TkkFirstLive",
+     "name_ja": "とたけけ|初ライブを行ったか",
+     "flow_access": "EnableReadOnly",
+     "max": 1,
+     "writer_status": "no_eventflow_writer; written by native code or never written in 1.0.0 (unproven)",
+     "writers": [],
+     "writer_count": 0,
+     "readers": [
+      "Demo_PublicAnnouncement_Process:CheckPhoneCallIslandCreater",
+      "System_GrowUp_GameProcess:ChkLilyCounter",
+      "System_GrowUp_WeatherControl:Root",
+      "Tutorials_Prologue3_Orientation1:Root"
+     ],
+     "reader_count": 4
+    },
+    {
+     "flag": "cLand:TkkFirstLiveSubPlayer",
+     "name_ja": "とたけけ|2人目以降のプレイヤーが初ライブを見られる？",
+     "flow_access": "EnableReadWrite",
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "Demo_PublicAnnouncement",
+       "entry": "Root_Init",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "query": "EventBranch",
+          "params": {
+           "AddDay": 0,
+           "CheckNowTime": false
+          },
+          "value": 0
+         },
+         {
+          "flag": "cLand:BuiltTownOffice",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cLand:TkkFirstLiveEnable",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "flag": "cPlayer:MakeVillagePlayerFlag",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         }
+        ],
+        [
+         {
+          "query": "EventBranch",
+          "params": {
+           "AddDay": 0,
+           "CheckNowTime": false
+          },
+          "value": 0
+         },
+         {
+          "flag": "cLand:BuiltTownOffice",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "flag": "cLand:BuiltTownOfficeToday",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "flag": "cLand:TkkFirstLiveEnable",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "flag": "cPlayer:MakeVillagePlayerFlag",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         }
+        ]
+       ],
+       "preceding_message": null,
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 1,
+     "readers": [],
+     "reader_count": 0
+    },
+    {
+     "flag": "cPlayer:MainmenuConstructLicense",
+     "name_ja": "スマホUI|造成ライセンスアプリ解禁",
+     "flow_access": 2,
+     "max": 1,
+     "writer_status": "eventflow",
+     "writers": [
+      {
+       "flow": "Player_StartGamePhoneCall",
+       "entry": "IslandCreaterTell",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        []
+       ],
+       "preceding_message": "TalkSNpc/rco/SP_rco_20_PhoneCall:304",
+       "preceding_text_USen": null
+      },
+      {
+       "flow": "Player_StartGamePhoneCall",
+       "entry": "IslandCreaterTell_Continued",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        []
+       ],
+       "preceding_message": "TalkSNpc/rco/SP_rco_20_PhoneCall:304",
+       "preceding_text_USen": null
+      },
+      {
+       "flow": "SNPC_rco_55_TkkFirstLive",
+       "entry": "InvitePlayerHouse",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "flag": "cLand:TkkFirstLiveReserved",
+          "query": "EventFlagSystemBool",
+          "case": 1,
+          "state": "off"
+         },
+         {
+          "query": "SystemHasBaggageSpace",
+          "params": {
+           "CheckNum": 1,
+           "CheckTargrt": "cPocketBag"
+          },
+          "value": 1
+         }
+        ],
+        [
+         {
+          "flag": "cLand:TkkFirstLiveReserved",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "query": "SystemHasBaggageSpace",
+          "params": {
+           "CheckNum": 1,
+           "CheckTargrt": "cPocketBag"
+          },
+          "value": 1
+         }
+        ]
+       ],
+       "preceding_message": "TalkSNpc/rco/SP_rco_11_TkkFirstLive:006",
+       "preceding_text_USen": null
+      },
+      {
+       "flow": "Tutorials_Prologue3_Orientation1",
+       "entry": "Root",
+       "op": "on",
+       "value": 1,
+       "conditions": [
+        [
+         {
+          "flag": "cLand:TkkFirstLive",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         },
+         {
+          "flag": "cLand:ValidateVillageSave",
+          "query": "EventFlagSystemBool",
+          "case": 0,
+          "state": "on"
+         }
+        ]
+       ],
+       "preceding_message": null,
+       "preceding_text_USen": null
+      }
+     ],
+     "writer_count": 4,
+     "readers": [
+      "Demo_PublicAnnouncement_Process:CheckPhoneCallIslandCreater"
+     ],
+     "reader_count": 1
+    },
+    {
+     "flag": "cPlayer:PcTownmakeLv",
+     "name_ja": "プレイヤーの村づくりライセンスレベル",
+     "flow_access": 2,
+     "max": 5,
+     "writer_status": "no_eventflow_writer; written by native code or never written in 1.0.0 (unproven)",
+     "writers": [],
+     "writer_count": 0,
+     "readers": [],
+     "reader_count": 0
+    }
+   ]
+  }
+ ]
+}

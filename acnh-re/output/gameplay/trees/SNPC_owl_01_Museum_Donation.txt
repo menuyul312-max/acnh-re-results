@@ -1,0 +1,598 @@
+# SNPC_owl_01_Museum_Donation (source: decoded EventFlow; bool flag case 0 = ON, case 1 = OFF; #N = event index)
+== ENTRY Root
+  #0 IF NetHasVisitor {}
+    case 0:
+      #23 MSG TalkSNpc/owl/SP_owl_00_Common:101
+    case 1:
+      #66 IF EventFlagSystemBool {"AccessKey": "cLand:OwlFoundFossil"}
+        case ON:
+          #91 IF MuseumLevel {}
+            case 0:
+              #3 IF HasKindItem {"ItemKindType": "", "CheckItemKindType": "cFilter", "ItemFilterType": "OwlTentDonation1"}
+                case 0:
+                  #2 MSG TalkSNpc/owl/SP_owl_00_Common:104
+                  #45 UIItemSelectWindowHandling {"ItemUniqueID": 65534, "ItemKindType": "", "Mode": "cItemSelect", "FilterType": "cItemFilter", "ItemFilterType": "OwlTentDonation1"}
+                  #4 IF UIResultMenuDecide {}
+                    case 0:
+                      #5 IF UIResultItemWindowNumCheck {"Num": 2, "JudgeTarget": "cItemSelect"}
+                        case 0:
+                          #25 MSG TalkSNpc/owl/SP_owl_00_Common:106
+                          #105 CALL SNPC_owl_01_Museum_Donation:owl_DonateMulti_v100
+                        case 1:
+                          #64 SetDeliveryItem {"SetItemTarget": 4, "ApplyToSave": false}
+                          #49 SetTagFromUIResult {"TagType": "cItemName", "TagID": 0}
+                          #6 NpcDelivery {"Command": 0, "Option": "Keep"}
+                          #7 IF OwlDonationItemType {}
+                            case 0:
+                              #97 IF EventFlagSystemBool {"AccessKey": "cPlayer:OwlEverDonatedInsect"}
+                                case ON:
+                                  #102 MSG TalkSNpc/owl/SP_owl_00_Common:114_02
+                                  #100 IF EventFlagSystemBool {"AccessKey": "cPlayer:OwlHeardInsectExplanation"}
+                                    case ON:
+                                      #98 MSG TalkSNpc/owl/SP_owl_00_Common:116
+                                      #29 IF GeneralTalkChoice2 {}
+                                        case 0:
+                                          #104 EventFlagSystemOn {"AccessKey": "cPlayer:OwlHeardInsectExplanation"}
+                                          #30 MSG TalkSNpc/owl/SP_owl_00_Common:117
+                                          #22 OwlOpenItemMessage {}
+                                          #32 MSG TalkSNpc/owl/SP_owl_00_Common:119
+                                          #13 NpcDelivery {"Command": 3, "Option": "\"Default\""}
+                                          #63 OwlDonationDone {"EntryVariableKeyBool_MultiComplete": "MultiComplete", "EntryVariableKeyInt_CompleteRoomType": "CompleteRoomType"}
+                                          #43 IF MuseumLevel {}
+                                            case 0:
+                                              #65 CALL SNPC_owl_11_Tent_Entries:owl_Tent_AfterDonation
+                                            case 1:
+                                              #14 IF MuseumComplete {}
+                                                case 0:
+                                                  #106 MessageSuspend {}
+                                                  #18 MSG TalkSNpc/owl/SP_owl_00_Common:401
+                                                  #20 EventFlagSystemOn {"AccessKey": "cPlayer:FutaExplanationDonationComp"}
+                                                case 1:
+                                                  #19 IF OwlMuseumMultiComplete {}
+                                                    case 0:
+                                                      #107 MessageSuspend {}
+                                                      #17 MSG TalkSNpc/owl/SP_owl_00_Common:402
+                                                    case 1:
+                                                      #21 IF OwlMuseumCompleteRoomType {}
+                                                        case 0:
+                                                          #108 MessageSuspend {}
+                                                          #16 MSG TalkSNpc/owl/SP_owl_00_Common:403
+                                                        case 1:
+                                                          #109 MessageSuspend {}
+                                                          #15 MSG TalkSNpc/owl/SP_owl_00_Common:404
+                                                        case 2:
+                                                          #110 MessageSuspend {}
+                                                          #44 MSG TalkSNpc/owl/SP_owl_00_Common:405
+                                                          #111 EventFlagSystemOn {"AccessKey": "cLand:MuseumFossilComplete"}
+                                                        case 3:
+                                                          #57 CALL SNPC_owl_00_Common:Again
+                                                        case 4:
+                                                          -> (#57)
+                                                        case 5:
+                                                          -> (#57)
+                                            case 2:
+                                              -> (#14)
+                                        case 1:
+                                          #31 MSG TalkSNpc/owl/SP_owl_00_Common:118
+                                          -> (#32)
+                                    case OFF:
+                                      #103 MSG TalkSNpc/owl/SP_owl_00_Common:115
+                                      -> (#29)
+                                case OFF:
+                                  #99 EventFlagSystemOn {"AccessKey": "cPlayer:OwlEverDonatedInsect"}
+                                  #101 MSG TalkSNpc/owl/SP_owl_00_Common:114_01
+                                  -> (#100)
+                            case 2:
+                              #70 CALL SNPC_owl_11_Tent_Entries:owl_DonatedFossil1st_Unknown
+                            case 3:
+                              #71 IF EventFlagSystemBool {"AccessKey": "cLand:OwlFoundFossil"}
+                                case ON:
+                                  #33 MSG TalkSNpc/owl/SP_owl_00_Common:125
+                                  #8 IF OwlDonationFossilIsParts {}
+                                    case 0:
+                                      #39 MSG TalkSNpc/owl/SP_owl_00_Common:130
+                                      #35 IF GeneralTalkChoice2 {}
+                                        case 0:
+                                          #36 MSG TalkSNpc/owl/SP_owl_00_Common:127
+                                          #62 CALL SNPC_owl_01_Museum_Donation:MuseumAfterDonationCommon
+                                          #38 NpcDelivery {"Command": 3, "Option": "\"Default\""}
+                                          #73 IF EventFlagSystemBool {"AccessKey": "cLand:OwlFoundFossil"}
+                                            case ON:
+                                              #74 CALL SNPC_owl_01_Museum_Donation:Comp_Check
+                                            case OFF:
+                                              #86 OwlDonationDone {"EntryVariableKeyBool_MultiComplete": "MultiComplete", "EntryVariableKeyInt_CompleteRoomType": "CompleteRoomType"}
+                                              #81 IF EventFlagSystemBool {"AccessKey": "cPlayerTemp:OwlKnownFossil"}
+                                                case ON:
+                                                  #83 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:155_02
+                                                  #84 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:156
+                                                  #95 EventFlagSystemOn {"AccessKey": "cPlayer:OwlShowFossilMyself"}
+                                                  #96 EventFlagSystemOn {"AccessKey": "cLand:OwlFoundFossil"}
+                                                case OFF:
+                                                  #82 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:155_01
+                                                  -> (#84)
+                                        case 1:
+                                          #37 MSG TalkSNpc/owl/SP_owl_00_Common:128
+                                          -> (#38)
+                                    case 1:
+                                      #9 IF OwlDonationFossilComplete {}
+                                        case 0:
+                                          #48 OwlDinosaurTagSet {}
+                                          #34 MSG TalkSNpc/owl/SP_owl_00_Common:126
+                                          -> (#35)
+                                        case 1:
+                                          #51 MSG TalkSNpc/owl/SP_owl_00_Common:130
+                                          #50 IF GeneralTalkChoice2 {}
+                                            case 0:
+                                              #55 MSG TalkSNpc/owl/SP_owl_00_Common:127
+                                              #54 OwlOpenItemMessage {}
+                                              #56 MSG TalkSNpc/owl/SP_owl_00_Common:129_01
+                                              -> (#38)
+                                            case 1:
+                                              #53 MSG TalkSNpc/owl/SP_owl_00_Common:128_01
+                                              -> (#38)
+                                case OFF:
+                                  #72 CALL SNPC_owl_11_Tent_Entries:owl_DonatedFossil1st_Known
+                            case 4:
+                              #52 MSG TalkSNpc/owl/SP_owl_00_Common:120
+                              #40 MSG TalkSNpc/owl/SP_owl_00_Common:131
+                              #10 IF GeneralTalkChoice2 {}
+                                case 0:
+                                  #42 MSG TalkSNpc/owl/SP_owl_00_Common:132
+                                  #80 CALL SNPC_owl_01_Museum_Donation:MuseumAfterDonationCommon
+                                  #12 NpcDelivery {"Command": 3, "Option": "\"Default\""}
+                                  #11 CALL SNPC_owl_01_Museum_Donation:Comp_Check
+                                case 1:
+                                  #41 MSG TalkSNpc/owl/SP_owl_00_Common:134
+                                  -> (#12)
+                    case 1:
+                      #1 MSG TalkSNpc/owl/SP_owl_00_Common:105
+                case 1:
+                  #94 CALL SNPC_owl_01_Museum_Donation:OwlNoDonationItems
+            case 1:
+              #93 IF HasKindItem {"ItemKindType": "", "CheckItemKindType": "cFilter", "ItemFilterType": "OwlDonation"}
+                case 0:
+                  #92 MSG TalkSNpc/owl/SP_owl_00_Common:104
+                  #85 UIItemSelectWindowHandling {"ItemUniqueID": 65534, "ItemKindType": "", "Mode": "cItemSelect", "ItemFilterType": "OwlDonation", "FilterType": "cItemFilter"}
+                  -> (#4)
+                case 1:
+                  #58 MSG TalkSNpc/owl/SP_owl_00_Common:141
+                  #59 MSG TalkSNpc/owl/SP_owl_00_Common:142
+                  #24 IF HasKindItem {"ItemFilterType": "", "CheckItemKindType": "cKind", "ItemKindType": "FossilUnknown"}
+                    case 0:
+                      #60 MSG TalkSNpc/owl/SP_owl_00_Common:144
+                    case 1:
+                      #61 MSG TalkSNpc/owl/SP_owl_00_Common:145
+            case 2:
+              -> (#93)
+        case OFF:
+          #87 IF HasKindItem {"ItemKindType": "", "CheckItemKindType": "cFilter", "ItemFilterType": "OwlTentDonation0"}
+            case 0:
+              #67 MSG TalkSNpc/owl/SP_owl_00_Common:104
+              #68 UIItemSelectWindowHandling {"ItemUniqueID": 65534, "ItemKindType": "", "Mode": "cItemSelect", "FilterType": "cItemFilter", "ItemFilterType": "OwlTentDonation0"}
+              #69 CALL SNPC_owl_01_Museum_Donation:owl_Donation_AfterItemSel
+            case 1:
+              #88 MSG TalkSNpc/owl/SP_owl_00_Common:141
+              #89 MSG TalkSNpc/owl/SP_owl_00_Common:142
+              #90 MSG TalkSNpc/owl/SP_owl_00_Common:145
+== ENTRY Comp_Check
+  #63 OwlDonationDone {"EntryVariableKeyBool_MultiComplete": "MultiComplete", "EntryVariableKeyInt_CompleteRoomType": "CompleteRoomType"}
+  #43 IF MuseumLevel {}
+    case 0:
+      #65 CALL SNPC_owl_11_Tent_Entries:owl_Tent_AfterDonation
+    case 1:
+      #14 IF MuseumComplete {}
+        case 0:
+          #106 MessageSuspend {}
+          #18 MSG TalkSNpc/owl/SP_owl_00_Common:401
+          #20 EventFlagSystemOn {"AccessKey": "cPlayer:FutaExplanationDonationComp"}
+        case 1:
+          #19 IF OwlMuseumMultiComplete {}
+            case 0:
+              #107 MessageSuspend {}
+              #17 MSG TalkSNpc/owl/SP_owl_00_Common:402
+            case 1:
+              #21 IF OwlMuseumCompleteRoomType {}
+                case 0:
+                  #108 MessageSuspend {}
+                  #16 MSG TalkSNpc/owl/SP_owl_00_Common:403
+                case 1:
+                  #109 MessageSuspend {}
+                  #15 MSG TalkSNpc/owl/SP_owl_00_Common:404
+                case 2:
+                  #110 MessageSuspend {}
+                  #44 MSG TalkSNpc/owl/SP_owl_00_Common:405
+                  #111 EventFlagSystemOn {"AccessKey": "cLand:MuseumFossilComplete"}
+                case 3:
+                  #57 CALL SNPC_owl_00_Common:Again
+                case 4:
+                  -> (#57)
+                case 5:
+                  -> (#57)
+    case 2:
+      -> (#14)
+== ENTRY Fossil_DonationTypeChk
+  #8 IF OwlDonationFossilIsParts {}
+    case 0:
+      #39 MSG TalkSNpc/owl/SP_owl_00_Common:130
+      #35 IF GeneralTalkChoice2 {}
+        case 0:
+          #36 MSG TalkSNpc/owl/SP_owl_00_Common:127
+          #62 CALL SNPC_owl_01_Museum_Donation:MuseumAfterDonationCommon
+          #38 NpcDelivery {"Command": 3, "Option": "\"Default\""}
+          #73 IF EventFlagSystemBool {"AccessKey": "cLand:OwlFoundFossil"}
+            case ON:
+              #74 CALL SNPC_owl_01_Museum_Donation:Comp_Check
+            case OFF:
+              #86 OwlDonationDone {"EntryVariableKeyBool_MultiComplete": "MultiComplete", "EntryVariableKeyInt_CompleteRoomType": "CompleteRoomType"}
+              #81 IF EventFlagSystemBool {"AccessKey": "cPlayerTemp:OwlKnownFossil"}
+                case ON:
+                  #83 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:155_02
+                  #84 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:156
+                  #95 EventFlagSystemOn {"AccessKey": "cPlayer:OwlShowFossilMyself"}
+                  #96 EventFlagSystemOn {"AccessKey": "cLand:OwlFoundFossil"}
+                case OFF:
+                  #82 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:155_01
+                  -> (#84)
+        case 1:
+          #37 MSG TalkSNpc/owl/SP_owl_00_Common:128
+          -> (#38)
+    case 1:
+      #9 IF OwlDonationFossilComplete {}
+        case 0:
+          #48 OwlDinosaurTagSet {}
+          #34 MSG TalkSNpc/owl/SP_owl_00_Common:126
+          -> (#35)
+        case 1:
+          #51 MSG TalkSNpc/owl/SP_owl_00_Common:130
+          #50 IF GeneralTalkChoice2 {}
+            case 0:
+              #55 MSG TalkSNpc/owl/SP_owl_00_Common:127
+              #54 OwlOpenItemMessage {}
+              #56 MSG TalkSNpc/owl/SP_owl_00_Common:129_01
+              -> (#38)
+            case 1:
+              #53 MSG TalkSNpc/owl/SP_owl_00_Common:128_01
+              -> (#38)
+== ENTRY owl_Donation_AfterItemSel
+  #4 IF UIResultMenuDecide {}
+    case 0:
+      #5 IF UIResultItemWindowNumCheck {"Num": 2, "JudgeTarget": "cItemSelect"}
+        case 0:
+          #25 MSG TalkSNpc/owl/SP_owl_00_Common:106
+          #105 CALL SNPC_owl_01_Museum_Donation:owl_DonateMulti_v100
+        case 1:
+          #64 SetDeliveryItem {"SetItemTarget": 4, "ApplyToSave": false}
+          #49 SetTagFromUIResult {"TagType": "cItemName", "TagID": 0}
+          #6 NpcDelivery {"Command": 0, "Option": "Keep"}
+          #7 IF OwlDonationItemType {}
+            case 0:
+              #97 IF EventFlagSystemBool {"AccessKey": "cPlayer:OwlEverDonatedInsect"}
+                case ON:
+                  #102 MSG TalkSNpc/owl/SP_owl_00_Common:114_02
+                  #100 IF EventFlagSystemBool {"AccessKey": "cPlayer:OwlHeardInsectExplanation"}
+                    case ON:
+                      #98 MSG TalkSNpc/owl/SP_owl_00_Common:116
+                      #29 IF GeneralTalkChoice2 {}
+                        case 0:
+                          #104 EventFlagSystemOn {"AccessKey": "cPlayer:OwlHeardInsectExplanation"}
+                          #30 MSG TalkSNpc/owl/SP_owl_00_Common:117
+                          #22 OwlOpenItemMessage {}
+                          #32 MSG TalkSNpc/owl/SP_owl_00_Common:119
+                          #13 NpcDelivery {"Command": 3, "Option": "\"Default\""}
+                          #63 OwlDonationDone {"EntryVariableKeyBool_MultiComplete": "MultiComplete", "EntryVariableKeyInt_CompleteRoomType": "CompleteRoomType"}
+                          #43 IF MuseumLevel {}
+                            case 0:
+                              #65 CALL SNPC_owl_11_Tent_Entries:owl_Tent_AfterDonation
+                            case 1:
+                              #14 IF MuseumComplete {}
+                                case 0:
+                                  #106 MessageSuspend {}
+                                  #18 MSG TalkSNpc/owl/SP_owl_00_Common:401
+                                  #20 EventFlagSystemOn {"AccessKey": "cPlayer:FutaExplanationDonationComp"}
+                                case 1:
+                                  #19 IF OwlMuseumMultiComplete {}
+                                    case 0:
+                                      #107 MessageSuspend {}
+                                      #17 MSG TalkSNpc/owl/SP_owl_00_Common:402
+                                    case 1:
+                                      #21 IF OwlMuseumCompleteRoomType {}
+                                        case 0:
+                                          #108 MessageSuspend {}
+                                          #16 MSG TalkSNpc/owl/SP_owl_00_Common:403
+                                        case 1:
+                                          #109 MessageSuspend {}
+                                          #15 MSG TalkSNpc/owl/SP_owl_00_Common:404
+                                        case 2:
+                                          #110 MessageSuspend {}
+                                          #44 MSG TalkSNpc/owl/SP_owl_00_Common:405
+                                          #111 EventFlagSystemOn {"AccessKey": "cLand:MuseumFossilComplete"}
+                                        case 3:
+                                          #57 CALL SNPC_owl_00_Common:Again
+                                        case 4:
+                                          -> (#57)
+                                        case 5:
+                                          -> (#57)
+                            case 2:
+                              -> (#14)
+                        case 1:
+                          #31 MSG TalkSNpc/owl/SP_owl_00_Common:118
+                          -> (#32)
+                    case OFF:
+                      #103 MSG TalkSNpc/owl/SP_owl_00_Common:115
+                      -> (#29)
+                case OFF:
+                  #99 EventFlagSystemOn {"AccessKey": "cPlayer:OwlEverDonatedInsect"}
+                  #101 MSG TalkSNpc/owl/SP_owl_00_Common:114_01
+                  -> (#100)
+            case 2:
+              #70 CALL SNPC_owl_11_Tent_Entries:owl_DonatedFossil1st_Unknown
+            case 3:
+              #71 IF EventFlagSystemBool {"AccessKey": "cLand:OwlFoundFossil"}
+                case ON:
+                  #33 MSG TalkSNpc/owl/SP_owl_00_Common:125
+                  #8 IF OwlDonationFossilIsParts {}
+                    case 0:
+                      #39 MSG TalkSNpc/owl/SP_owl_00_Common:130
+                      #35 IF GeneralTalkChoice2 {}
+                        case 0:
+                          #36 MSG TalkSNpc/owl/SP_owl_00_Common:127
+                          #62 CALL SNPC_owl_01_Museum_Donation:MuseumAfterDonationCommon
+                          #38 NpcDelivery {"Command": 3, "Option": "\"Default\""}
+                          #73 IF EventFlagSystemBool {"AccessKey": "cLand:OwlFoundFossil"}
+                            case ON:
+                              #74 CALL SNPC_owl_01_Museum_Donation:Comp_Check
+                            case OFF:
+                              #86 OwlDonationDone {"EntryVariableKeyBool_MultiComplete": "MultiComplete", "EntryVariableKeyInt_CompleteRoomType": "CompleteRoomType"}
+                              #81 IF EventFlagSystemBool {"AccessKey": "cPlayerTemp:OwlKnownFossil"}
+                                case ON:
+                                  #83 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:155_02
+                                  #84 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:156
+                                  #95 EventFlagSystemOn {"AccessKey": "cPlayer:OwlShowFossilMyself"}
+                                  #96 EventFlagSystemOn {"AccessKey": "cLand:OwlFoundFossil"}
+                                case OFF:
+                                  #82 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:155_01
+                                  -> (#84)
+                        case 1:
+                          #37 MSG TalkSNpc/owl/SP_owl_00_Common:128
+                          -> (#38)
+                    case 1:
+                      #9 IF OwlDonationFossilComplete {}
+                        case 0:
+                          #48 OwlDinosaurTagSet {}
+                          #34 MSG TalkSNpc/owl/SP_owl_00_Common:126
+                          -> (#35)
+                        case 1:
+                          #51 MSG TalkSNpc/owl/SP_owl_00_Common:130
+                          #50 IF GeneralTalkChoice2 {}
+                            case 0:
+                              #55 MSG TalkSNpc/owl/SP_owl_00_Common:127
+                              #54 OwlOpenItemMessage {}
+                              #56 MSG TalkSNpc/owl/SP_owl_00_Common:129_01
+                              -> (#38)
+                            case 1:
+                              #53 MSG TalkSNpc/owl/SP_owl_00_Common:128_01
+                              -> (#38)
+                case OFF:
+                  #72 CALL SNPC_owl_11_Tent_Entries:owl_DonatedFossil1st_Known
+            case 4:
+              #52 MSG TalkSNpc/owl/SP_owl_00_Common:120
+              #40 MSG TalkSNpc/owl/SP_owl_00_Common:131
+              #10 IF GeneralTalkChoice2 {}
+                case 0:
+                  #42 MSG TalkSNpc/owl/SP_owl_00_Common:132
+                  #80 CALL SNPC_owl_01_Museum_Donation:MuseumAfterDonationCommon
+                  #12 NpcDelivery {"Command": 3, "Option": "\"Default\""}
+                  #11 CALL SNPC_owl_01_Museum_Donation:Comp_Check
+                case 1:
+                  #41 MSG TalkSNpc/owl/SP_owl_00_Common:134
+                  -> (#12)
+    case 1:
+      #1 MSG TalkSNpc/owl/SP_owl_00_Common:105
+== ENTRY MuseumAfterDonationCommon
+  #76 OwlOpenItemMessage {}
+  #75 MSG TalkSNpc/owl/SP_owl_00_Common:133
+  #77 IF MuseumLevel {}
+    case 0:
+      #78 MSG TalkSNpc/owl/SP_owl_00_Common:112
+    case 1:
+      #79 MSG TalkSNpc/owl/SP_owl_00_Common:113
+    case 2:
+      -> (#79)
+== ENTRY Eplanation_ExpertOpinion
+  #81 IF EventFlagSystemBool {"AccessKey": "cPlayerTemp:OwlKnownFossil"}
+    case ON:
+      #83 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:155_02
+      #84 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:156
+      #95 EventFlagSystemOn {"AccessKey": "cPlayer:OwlShowFossilMyself"}
+      #96 EventFlagSystemOn {"AccessKey": "cLand:OwlFoundFossil"}
+    case OFF:
+      #82 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:155_01
+      -> (#84)
+== ENTRY OwlNoDonationItems
+  #58 MSG TalkSNpc/owl/SP_owl_00_Common:141
+  #59 MSG TalkSNpc/owl/SP_owl_00_Common:142
+  #24 IF HasKindItem {"ItemFilterType": "", "CheckItemKindType": "cKind", "ItemKindType": "FossilUnknown"}
+    case 0:
+      #60 MSG TalkSNpc/owl/SP_owl_00_Common:144
+    case 1:
+      #61 MSG TalkSNpc/owl/SP_owl_00_Common:145
+== ENTRY OwlTentDonationAgain
+  #66 IF EventFlagSystemBool {"AccessKey": "cLand:OwlFoundFossil"}
+    case ON:
+      #91 IF MuseumLevel {}
+        case 0:
+          #3 IF HasKindItem {"ItemKindType": "", "CheckItemKindType": "cFilter", "ItemFilterType": "OwlTentDonation1"}
+            case 0:
+              #2 MSG TalkSNpc/owl/SP_owl_00_Common:104
+              #45 UIItemSelectWindowHandling {"ItemUniqueID": 65534, "ItemKindType": "", "Mode": "cItemSelect", "FilterType": "cItemFilter", "ItemFilterType": "OwlTentDonation1"}
+              #4 IF UIResultMenuDecide {}
+                case 0:
+                  #5 IF UIResultItemWindowNumCheck {"Num": 2, "JudgeTarget": "cItemSelect"}
+                    case 0:
+                      #25 MSG TalkSNpc/owl/SP_owl_00_Common:106
+                      #105 CALL SNPC_owl_01_Museum_Donation:owl_DonateMulti_v100
+                    case 1:
+                      #64 SetDeliveryItem {"SetItemTarget": 4, "ApplyToSave": false}
+                      #49 SetTagFromUIResult {"TagType": "cItemName", "TagID": 0}
+                      #6 NpcDelivery {"Command": 0, "Option": "Keep"}
+                      #7 IF OwlDonationItemType {}
+                        case 0:
+                          #97 IF EventFlagSystemBool {"AccessKey": "cPlayer:OwlEverDonatedInsect"}
+                            case ON:
+                              #102 MSG TalkSNpc/owl/SP_owl_00_Common:114_02
+                              #100 IF EventFlagSystemBool {"AccessKey": "cPlayer:OwlHeardInsectExplanation"}
+                                case ON:
+                                  #98 MSG TalkSNpc/owl/SP_owl_00_Common:116
+                                  #29 IF GeneralTalkChoice2 {}
+                                    case 0:
+                                      #104 EventFlagSystemOn {"AccessKey": "cPlayer:OwlHeardInsectExplanation"}
+                                      #30 MSG TalkSNpc/owl/SP_owl_00_Common:117
+                                      #22 OwlOpenItemMessage {}
+                                      #32 MSG TalkSNpc/owl/SP_owl_00_Common:119
+                                      #13 NpcDelivery {"Command": 3, "Option": "\"Default\""}
+                                      #63 OwlDonationDone {"EntryVariableKeyBool_MultiComplete": "MultiComplete", "EntryVariableKeyInt_CompleteRoomType": "CompleteRoomType"}
+                                      #43 IF MuseumLevel {}
+                                        case 0:
+                                          #65 CALL SNPC_owl_11_Tent_Entries:owl_Tent_AfterDonation
+                                        case 1:
+                                          #14 IF MuseumComplete {}
+                                            case 0:
+                                              #106 MessageSuspend {}
+                                              #18 MSG TalkSNpc/owl/SP_owl_00_Common:401
+                                              #20 EventFlagSystemOn {"AccessKey": "cPlayer:FutaExplanationDonationComp"}
+                                            case 1:
+                                              #19 IF OwlMuseumMultiComplete {}
+                                                case 0:
+                                                  #107 MessageSuspend {}
+                                                  #17 MSG TalkSNpc/owl/SP_owl_00_Common:402
+                                                case 1:
+                                                  #21 IF OwlMuseumCompleteRoomType {}
+                                                    case 0:
+                                                      #108 MessageSuspend {}
+                                                      #16 MSG TalkSNpc/owl/SP_owl_00_Common:403
+                                                    case 1:
+                                                      #109 MessageSuspend {}
+                                                      #15 MSG TalkSNpc/owl/SP_owl_00_Common:404
+                                                    case 2:
+                                                      #110 MessageSuspend {}
+                                                      #44 MSG TalkSNpc/owl/SP_owl_00_Common:405
+                                                      #111 EventFlagSystemOn {"AccessKey": "cLand:MuseumFossilComplete"}
+                                                    case 3:
+                                                      #57 CALL SNPC_owl_00_Common:Again
+                                                    case 4:
+                                                      -> (#57)
+                                                    case 5:
+                                                      -> (#57)
+                                        case 2:
+                                          -> (#14)
+                                    case 1:
+                                      #31 MSG TalkSNpc/owl/SP_owl_00_Common:118
+                                      -> (#32)
+                                case OFF:
+                                  #103 MSG TalkSNpc/owl/SP_owl_00_Common:115
+                                  -> (#29)
+                            case OFF:
+                              #99 EventFlagSystemOn {"AccessKey": "cPlayer:OwlEverDonatedInsect"}
+                              #101 MSG TalkSNpc/owl/SP_owl_00_Common:114_01
+                              -> (#100)
+                        case 2:
+                          #70 CALL SNPC_owl_11_Tent_Entries:owl_DonatedFossil1st_Unknown
+                        case 3:
+                          #71 IF EventFlagSystemBool {"AccessKey": "cLand:OwlFoundFossil"}
+                            case ON:
+                              #33 MSG TalkSNpc/owl/SP_owl_00_Common:125
+                              #8 IF OwlDonationFossilIsParts {}
+                                case 0:
+                                  #39 MSG TalkSNpc/owl/SP_owl_00_Common:130
+                                  #35 IF GeneralTalkChoice2 {}
+                                    case 0:
+                                      #36 MSG TalkSNpc/owl/SP_owl_00_Common:127
+                                      #62 CALL SNPC_owl_01_Museum_Donation:MuseumAfterDonationCommon
+                                      #38 NpcDelivery {"Command": 3, "Option": "\"Default\""}
+                                      #73 IF EventFlagSystemBool {"AccessKey": "cLand:OwlFoundFossil"}
+                                        case ON:
+                                          #74 CALL SNPC_owl_01_Museum_Donation:Comp_Check
+                                        case OFF:
+                                          #86 OwlDonationDone {"EntryVariableKeyBool_MultiComplete": "MultiComplete", "EntryVariableKeyInt_CompleteRoomType": "CompleteRoomType"}
+                                          #81 IF EventFlagSystemBool {"AccessKey": "cPlayerTemp:OwlKnownFossil"}
+                                            case ON:
+                                              #83 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:155_02
+                                              #84 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:156
+                                              #95 EventFlagSystemOn {"AccessKey": "cPlayer:OwlShowFossilMyself"}
+                                              #96 EventFlagSystemOn {"AccessKey": "cLand:OwlFoundFossil"}
+                                            case OFF:
+                                              #82 MSG TalkSNpc/owl/SP_owl_01_MuseumTent:155_01
+                                              -> (#84)
+                                    case 1:
+                                      #37 MSG TalkSNpc/owl/SP_owl_00_Common:128
+                                      -> (#38)
+                                case 1:
+                                  #9 IF OwlDonationFossilComplete {}
+                                    case 0:
+                                      #48 OwlDinosaurTagSet {}
+                                      #34 MSG TalkSNpc/owl/SP_owl_00_Common:126
+                                      -> (#35)
+                                    case 1:
+                                      #51 MSG TalkSNpc/owl/SP_owl_00_Common:130
+                                      #50 IF GeneralTalkChoice2 {}
+                                        case 0:
+                                          #55 MSG TalkSNpc/owl/SP_owl_00_Common:127
+                                          #54 OwlOpenItemMessage {}
+                                          #56 MSG TalkSNpc/owl/SP_owl_00_Common:129_01
+                                          -> (#38)
+                                        case 1:
+                                          #53 MSG TalkSNpc/owl/SP_owl_00_Common:128_01
+                                          -> (#38)
+                            case OFF:
+                              #72 CALL SNPC_owl_11_Tent_Entries:owl_DonatedFossil1st_Known
+                        case 4:
+                          #52 MSG TalkSNpc/owl/SP_owl_00_Common:120
+                          #40 MSG TalkSNpc/owl/SP_owl_00_Common:131
+                          #10 IF GeneralTalkChoice2 {}
+                            case 0:
+                              #42 MSG TalkSNpc/owl/SP_owl_00_Common:132
+                              #80 CALL SNPC_owl_01_Museum_Donation:MuseumAfterDonationCommon
+                              #12 NpcDelivery {"Command": 3, "Option": "\"Default\""}
+                              #11 CALL SNPC_owl_01_Museum_Donation:Comp_Check
+                            case 1:
+                              #41 MSG TalkSNpc/owl/SP_owl_00_Common:134
+                              -> (#12)
+                case 1:
+                  #1 MSG TalkSNpc/owl/SP_owl_00_Common:105
+            case 1:
+              #94 CALL SNPC_owl_01_Museum_Donation:OwlNoDonationItems
+        case 1:
+          #93 IF HasKindItem {"ItemKindType": "", "CheckItemKindType": "cFilter", "ItemFilterType": "OwlDonation"}
+            case 0:
+              #92 MSG TalkSNpc/owl/SP_owl_00_Common:104
+              #85 UIItemSelectWindowHandling {"ItemUniqueID": 65534, "ItemKindType": "", "Mode": "cItemSelect", "ItemFilterType": "OwlDonation", "FilterType": "cItemFilter"}
+              -> (#4)
+            case 1:
+              #58 MSG TalkSNpc/owl/SP_owl_00_Common:141
+              #59 MSG TalkSNpc/owl/SP_owl_00_Common:142
+              #24 IF HasKindItem {"ItemFilterType": "", "CheckItemKindType": "cKind", "ItemKindType": "FossilUnknown"}
+                case 0:
+                  #60 MSG TalkSNpc/owl/SP_owl_00_Common:144
+                case 1:
+                  #61 MSG TalkSNpc/owl/SP_owl_00_Common:145
+        case 2:
+          -> (#93)
+    case OFF:
+      #87 IF HasKindItem {"ItemKindType": "", "CheckItemKindType": "cFilter", "ItemFilterType": "OwlTentDonation0"}
+        case 0:
+          #67 MSG TalkSNpc/owl/SP_owl_00_Common:104
+          #68 UIItemSelectWindowHandling {"ItemUniqueID": 65534, "ItemKindType": "", "Mode": "cItemSelect", "FilterType": "cItemFilter", "ItemFilterType": "OwlTentDonation0"}
+          #69 CALL SNPC_owl_01_Museum_Donation:owl_Donation_AfterItemSel
+        case 1:
+          #88 MSG TalkSNpc/owl/SP_owl_00_Common:141
+          #89 MSG TalkSNpc/owl/SP_owl_00_Common:142
+          #90 MSG TalkSNpc/owl/SP_owl_00_Common:145
+== ENTRY owl_DonateMulti_v100
+  #28 MSG TalkSNpc/owl/SP_owl_00_Common:109
+  #46 MSG TalkSNpc/owl/SP_owl_00_Common:110
+  #26 IF OwlDonationSameItem {}
+    case 0:
+      #47 MSG TalkSNpc/owl/SP_owl_00_Common:111
+      #27 CALL SNPC_owl_01_Museum_Donation:Comp_Check
+    case 1:
+      -> (#27)

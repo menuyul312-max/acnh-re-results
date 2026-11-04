@@ -1,0 +1,373 @@
+# SNPC_rco_54_IslandDevelopment (source: decoded EventFlow; bool flag case 0 = ON, case 1 = OFF; #N = event index)
+== ENTRY Root
+  #56 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcoHeardAboutKkProject1st"}
+    case ON:
+      #6 IF EventFlagSystemBool {"AccessKey": "cLand:RcoBuildCampsiteOngoing"}
+        case ON:
+          #11 IF EventFlagSystemBool {"AccessKey": "cLand:RcoBuildCampsiteComplete"}
+            case ON:
+              #23 IF EventFlagSystemBool {"AccessKey": "cLand:CampSiteBuilt"}
+                case ON:
+                  #24 IF EventFlagSystemBool {"AccessKey": "cLand:RcoMeetFirstVisitorRequest"}
+                    case ON:
+                      #21 CALL SNPC_rco_54_IslandDevelopment:Root2CampSiteVisitor
+                    case OFF:
+                      #28 IF EventFlagSystemBool {"AccessKey": "cPlayer:IslandDevQuestCampSetMySelf"}
+                        case ON:
+                          #25 CALL SNPC_rco_54_IslandDevelopment:CampSiteBuild
+                        case OFF:
+                          #29 CALL SNPC_rco_54_IslandDevelopment:CampSiteBuild_Others
+                case OFF:
+                  #13 IF EventFlagSystemBool {"AccessKey": "cPlayer:IslandDevQuestCampSetMySelf"}
+                    case ON:
+                      #17 CALL SNPC_rco_54_IslandDevelopment:CampSiteRequestComplete
+                    case OFF:
+                      #19 CALL SNPC_rco_54_IslandDevelopment:CampSiteComplete_Others
+            case OFF:
+              #7 IF EventFlagSystemBool {"AccessKey": "cPlayer:IslandDevQuestGetRecipeCampKit"}
+                case ON:
+                  #9 CALL SNPC_rco_54_IslandDevelopment:CampSiteRequestRunning
+                case OFF:
+                  #14 CALL SNPC_rco_54_IslandDevelopment:CampSiteRequest_Others
+        case OFF:
+          #8 CALL SNPC_rco_54_IslandDevelopment:CampSiteRequest
+    case OFF:
+      #69 CALL SNPC_rco_54_IslandDevelopment:KkProject_Intro
+== ENTRY CampSiteRequest
+  #74 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:000_01
+  #70 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:101
+  #71 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:102
+  #72 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:103
+  #75 SmartPhone {"ActionType": 0}
+  #67 CALL Demo_Common_PhoneCall:SendingDataWithP
+  #76 SmartPhone {"ActionType": 1}
+  #3 SmartPhone {"ActionType": 1}
+  #2 PlayerSetCraftRecipe {"UnlockType": "CampSite", "ItemUniqueId": 65534}
+  #73 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:104
+  #4 EventFlagSystemOn {"AccessKey": "cLand:RcoBuildCampsiteOngoing"}
+  #5 EventFlagSystemOn {"AccessKey": "cPlayer:IslandDevQuestGetRecipeCampKit"}
+  #168 EventFlagSystemOff {"AccessKey": "cPlayer:RcoAwaitingExplanation"}
+== ENTRY CampSiteRequestRunning
+  #77 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:111
+  #10 IF HasTargetItem {"NeedNum": 1, "ItemUniqueId": 5166}
+    case 0:
+      #78 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:111_02
+    case 1:
+      #12 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:111_01
+== ENTRY CampSiteRequest_Others
+== ENTRY CampSiteRequestComplete
+  #18 IF EventFlagSystemBool {"AccessKey": "cPlayer:IslandDevQuestTalkAfterCampSet"}
+    case ON:
+      #82 CALL SNPC_rco_10_Common_WhatShouldIDo:Rco_Hint_WaitingOpenCampSite
+    case OFF:
+      #79 MSG TalkSNpc/rco/SP_rco_00_Common:000
+      #80 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:151
+      #15 IF GeneralTalkChoice2 {}
+        case 0:
+          #81 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:152
+          #16 EventFlagSystemOn {"AccessKey": "cPlayer:IslandDevQuestTalkAfterCampSet"}
+        case 1:
+          -> (#81)
+== ENTRY CampSiteComplete_Others
+== ENTRY Root2CampSiteVisitor
+  #30 IF EventFlagSystemBool {"AccessKey": "cLand:RcoMeetFirstVisitorComplete"}
+    case ON:
+      #38 IF EventFlagSystemBool {"AccessKey": "cLand:RcoBuildFirstVisitorsHousingKitOngoing"}
+        case ON:
+          #40 IF EventFlagSystemBool {"AccessKey": "cLand:RcoBuildFirstVisitorsHousingKitComplete"}
+            case ON:
+              #45 IF NpcHouseNum {"NpcHouseType": "cConstructed", "Num": 6}
+                case 0:
+                  #22 CALL SNPC_rco_54_IslandDevelopment:Root3IslandEvaluation
+                case 1:
+                  #177 IF EventFlagSystemBool {"AccessKey": "cLand:TanuportAmiiboCampUnlock"}
+                    case ON:
+                      -> (#22)
+                    case OFF:
+                      #37 IF EventFlagSystemBool {"AccessKey": "cPlayer:SetHousingKitForFirstCamper"}
+                        case ON:
+                          #46 CALL SNPC_rco_54_IslandDevelopment:FirstCamperHouseComplete
+                        case OFF:
+                          #47 CALL SNPC_rco_54_IslandDevelopment:FirstCamperHouseComplete_Others
+            case OFF:
+              #41 IF EventFlagSystemBool {"AccessKey": "cPlayer:GetHousingKitForFirstCamper"}
+                case ON:
+                  #42 CALL SNPC_rco_54_IslandDevelopment:SetFirstCamperHouseRunning
+                case OFF:
+                  #43 CALL SNPC_rco_54_IslandDevelopment:SetFirstCamperHouseRunning_Others
+        case OFF:
+          #31 IF EventFlagSystemBool {"AccessKey": "cPlayer:IslandDevQuestOrderFirstCamperMyself"}
+            case ON:
+              #39 CALL SNPC_rco_54_IslandDevelopment:SetFirstCamperHouseRequest
+            case OFF:
+              #44 CALL SNPC_rco_54_IslandDevelopment:SetFirstCamperHouseRequest_Others
+    case OFF:
+      #20 IF EventFlagSystemBool {"AccessKey": "cLand:RcoMeetFirstVisitorOngoing"}
+        case ON:
+          #94 CALL SNPC_rco_10_Common_WhatShouldIDo:Rco_Hint_WaitingInvite1stCamper
+        case OFF:
+          #32 CALL SNPC_rco_54_IslandDevelopment:MeetFirstCamperRequest
+== ENTRY Root3IslandEvaluation
+  #51 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcoHeardAboutEvaluationStart"}
+    case ON:
+      #54 CALL SNPC_rco_54_IslandDevelopment:IslandEvaluationRunning
+    case OFF:
+      #52 CALL SNPC_rco_54_IslandDevelopment:IslandEvaluationStartNosza
+== ENTRY CampSiteBuild
+  #26 IF EventFlagSystemBool {"AccessKey": "cPlayer:IslandDevQuestTalkAfterBuildCamp"}
+    case ON:
+      #87 CALL SNPC_rco_10_Common_WhatShouldIDo:Rco_Hint_WaitingOpenCampSite
+    case OFF:
+      #83 MSG TalkSNpc/rco/SP_rco_00_Common:000
+      #84 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:201_01
+      #85 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:202
+      #86 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:163_02
+      #27 EventFlagSystemOn {"AccessKey": "cPlayer:IslandDevQuestTalkAfterBuildCamp"}
+== ENTRY CampSiteBuild_Others
+== ENTRY MeetFirstCamperRequest
+  #88 MSG TalkSNpc/rco/SP_rco_00_Common:000
+  #33 IF EventFlagSystemBool {"AccessKey": "cPlayer:IslandDevQuestTalkAfterBuildCamp"}
+    case ON:
+      #90 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:301_01
+      #92 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:302_01
+      #93 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:302_02
+      #34 EventFlagSystemOn {"AccessKey": "cPlayer:IslandDevQuestTalkAboutFirstCamper"}
+      #35 EventFlagSystemOn {"AccessKey": "cLand:RcoMeetFirstVisitorOngoing"}
+      #128 EventFlagSystemOn {"AccessKey": "cPlayer:RcoHeardAbout1stCamperToday"}
+    case OFF:
+      #89 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:201_01
+      #91 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:301_02
+      -> (#92)
+== ENTRY SetFirstCamperHouseRequest
+  #55 IF EventFlagSystemBool {"AccessKey": "cPlayer:IslandDevQuestTalkAboutFirstCamper"}
+    case ON:
+      #36 IF EventFlagSystemBool {"AccessKey": "cPlayer:ItemFullHousingKitForFirstCamper"}
+        case ON:
+          #122 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:410
+          #123 CALL SNPC_rco_54_IslandDevelopment:Rco_Sel_GetHousingKit4Camper
+        case OFF:
+          #126 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcoHeardAbout1stCamperToday"}
+            case ON:
+              #96 MSG TalkSNpc/rco/SP_rco_00_Common:000_02
+              #97 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:401
+              #103 IF GeneralTalkChoice2 {}
+                case 0:
+                  #104 IF EventFlagSystemBool {"AccessKey": "cPlayer:IslandDevQuestTalkAfterBuildCamp"}
+                    case ON:
+                      #105 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:403_01
+                      #107 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:404
+                      #108 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:405
+                      #109 IF GeneralTalkChoice2 {}
+                        case 0:
+                          #110 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:406
+                          #112 IF ShoppingCapacity {"CapacityCheckType": "cItemName", "ItemUniqueId": 3349}
+                            case 0:
+                              #114 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:407_02
+                              #151 FadeOut {"FadeOutKindString": "cNormalFader", "FadeInKindString": "cNormalFader", "FadeOutSpeed": 0.5, "FadeInSpeed": 0.5, "FadeColorString": "cBlack", "IsUseDucking": true}
+                              #117 FadeIn {"IsWait": true}
+                              #116 SetItemToPocket {"ItemUniqueId": 3349, "SetNum": 1}
+                              #115 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:408
+                              #119 EventFlagSystemOn {"AccessKey": "cPlayer:GetHousingKitForFirstCamper"}
+                              #120 EventFlagSystemOn {"AccessKey": "cLand:RcoBuildFirstVisitorsHousingKitOngoing"}
+                              #124 ExitFlowchart {}
+                            case 1:
+                              #111 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:407_01
+                              #113 EventFlagSystemOn {"AccessKey": "cPlayer:ItemFullHousingKitForFirstCamper"}
+                        case 1:
+                          #121 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:409
+                          -> (#113)
+                    case OFF:
+                      #106 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:403_02
+                      -> (#107)
+                case 1:
+                  -> (#104)
+            case OFF:
+              #127 MSG TalkSNpc/rco/SP_rco_00_Common:000
+              -> (#97)
+    case OFF:
+      #95 MSG TalkSNpc/rco/SP_rco_00_Common:000
+      #98 IF EventFlagSystemBool {"AccessKey": "cPlayer:IslandDevQuestTalkAfterBuildCamp"}
+        case ON:
+          #100 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:301_01
+          #102 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:402
+          -> (#103)
+        case OFF:
+          #99 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:201_01
+          #101 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:301_02
+          -> (#102)
+== ENTRY SetFirstCamperHouseRunning
+  #125 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:451
+== ENTRY FirstCamperHouseComplete_Others
+== ENTRY SetFirstCamperHouseRunning_Others
+== ENTRY SetFirstCamperHouseRequest_Others
+== ENTRY FirstCamperHouseComplete
+  #49 IF EventFlagSystemBool {"AccessKey": "cPlayer:SzaHeardAboutHousingKit"}
+    case ON:
+      #169 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:551
+    case OFF:
+      #130 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcoHeardAbout1stCamperToday"}
+        case ON:
+          #129 MSG TalkSNpc/rco/SP_rco_00_Common:000_02
+          #132 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:501
+          #48 IF GeneralTalkChoice2 {}
+            case 0:
+              #133 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:502
+              #134 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:503
+              #50 EventFlagSystemOn {"AccessKey": "cPlayer:SzaHeardAboutHousingKit"}
+              #170 EventFlagSystemOn {"AccessKey": "cLand:RcoEnableBuyHousingKit"}
+            case 1:
+              -> (#133)
+        case OFF:
+          #131 MSG TalkSNpc/rco/SP_rco_00_Common:000
+          -> (#132)
+== ENTRY IslandEvaluationStartForce
+  #139 CALL SNPC_rco_54_IslandDevelopment:Rco_StartEvaluationCmn
+  #144 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:604
+  #145 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:605
+  #147 IF GeneralTalkChoice2 {}
+    case 0:
+      #148 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:606
+      #149 EventFlagSystemOn {"AccessKey": "cPlayer:RcoHeardAboutEvaluationStart"}
+      #166 EventFlagSystemOn {"AccessKey": "cPlayer:RcoAwaitingExplanation"}
+    case 1:
+      -> (#148)
+== ENTRY IslandEvaluationRunning
+  #155 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcoHeardAboutEvalutationDetail"}
+    case ON:
+      #163 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:751
+    case OFF:
+      #156 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:000_02
+      #159 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:701
+      #157 IF EventFlagSystemBool {"AccessKey": "cPlayer:SzaHeardAboutHousingKit"}
+        case ON:
+          #160 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:702_01
+          #158 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:000_11
+          #152 EventFlagSystemOn {"AccessKey": "cPlayer:IslandEvaluationUnlockMyself"}
+          #153 EventFlagSystemOn {"AccessKey": "cLand:IslandEvaluationUnlock"}
+          #154 EventFlagSystemOn {"AccessKey": "cPlayerTemp:SzaIslandEvaluationUnlockNow"}
+          #164 EventFlagSystemOn {"AccessKey": "cPlayer:RcoHeardAboutEvalutationDetail"}
+          #167 EventFlagSystemOff {"AccessKey": "cPlayer:RcoAwaitingExplanation"}
+          #176 CALL System_IslandEvaluationCheck:ChkEvaluationImprovement_First
+        case OFF:
+          #161 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:702_02
+          #162 EventFlagSystemOn {"AccessKey": "cPlayer:SzaHeardAboutHousingKit"}
+          #171 EventFlagSystemOn {"AccessKey": "cLand:RcoEnableBuyHousingKit"}
+          -> (#158)
+== ENTRY IslandEvaluationStartNosza
+  #141 CALL SNPC_rco_54_IslandDevelopment:Rco_StartEvaluationCmn
+  #150 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:607
+  #149 EventFlagSystemOn {"AccessKey": "cPlayer:RcoHeardAboutEvaluationStart"}
+  #166 EventFlagSystemOn {"AccessKey": "cPlayer:RcoAwaitingExplanation"}
+== ENTRY KkProject_Intro
+  #1 IF EventFlagSystemBool {"AccessKey": "cPlayerTemp:RcoOfficeFirstTalkNow"}
+    case ON:
+      #57 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:001_01
+      #59 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:002
+      #0 IF GeneralTalkChoice2 {}
+        case 0:
+          #60 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:003_01
+          #62 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:004
+          #65 IF GeneralTalkChoice2 {}
+            case 0:
+              #63 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:005_01
+              #66 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:006
+              #68 EventFlagSystemOn {"AccessKey": "cPlayer:RcoHeardAboutKkProject1st"}
+              #165 EventFlagSystemOn {"AccessKey": "cPlayer:RcoAwaitingExplanation"}
+            case 1:
+              #64 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:005_02
+              -> (#66)
+        case 1:
+          #61 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:003_02
+          -> (#62)
+    case OFF:
+      #58 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:001_02
+      -> (#59)
+== ENTRY Rco_Sel_GetHousingKit4Camper
+  #109 IF GeneralTalkChoice2 {}
+    case 0:
+      #110 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:406
+      #112 IF ShoppingCapacity {"CapacityCheckType": "cItemName", "ItemUniqueId": 3349}
+        case 0:
+          #114 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:407_02
+          #151 FadeOut {"FadeOutKindString": "cNormalFader", "FadeInKindString": "cNormalFader", "FadeOutSpeed": 0.5, "FadeInSpeed": 0.5, "FadeColorString": "cBlack", "IsUseDucking": true}
+          #117 FadeIn {"IsWait": true}
+          #116 SetItemToPocket {"ItemUniqueId": 3349, "SetNum": 1}
+          #115 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:408
+          #119 EventFlagSystemOn {"AccessKey": "cPlayer:GetHousingKitForFirstCamper"}
+          #120 EventFlagSystemOn {"AccessKey": "cLand:RcoBuildFirstVisitorsHousingKitOngoing"}
+          #124 ExitFlowchart {}
+        case 1:
+          #111 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:407_01
+          #113 EventFlagSystemOn {"AccessKey": "cPlayer:ItemFullHousingKitForFirstCamper"}
+    case 1:
+      #121 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:409
+      -> (#113)
+== ENTRY Rco_StartEvaluationCmn
+  #140 MSG TalkSNpc/rco/SP_rco_00_Common:000
+  #53 IF EventFlagSystemBool {"AccessKey": "cPlayer:IslandDevQuestCampSetMySelf"}
+    case ON:
+      #135 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:601_01
+      #138 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:602
+      #137 IF EventFlagSystemBool {"AccessKey": "cPlayer:SzaHeardAboutHousingKit"}
+        case ON:
+          #142 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:603_01
+        case OFF:
+          #143 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:603_02
+    case OFF:
+      #136 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:601_02
+      -> (#138)
+== ENTRY IslandEvaluationStartForce_Init
+  #146 NpcAITalkSubCastEntry {"FindLabel": "sza", "CastID": 1}
+== ENTRY CampSiteRequestComplete_Force
+  #172 EventFlagSystemOn {"AccessKey": "cPlayerTemp:RcoTalkSceneFlag"}
+  #79 MSG TalkSNpc/rco/SP_rco_00_Common:000
+  #80 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:151
+  #15 IF GeneralTalkChoice2 {}
+    case 0:
+      #81 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:152
+      #16 EventFlagSystemOn {"AccessKey": "cPlayer:IslandDevQuestTalkAfterCampSet"}
+    case 1:
+      -> (#81)
+== ENTRY CampSiteBuild_Force
+  #173 EventFlagSystemOn {"AccessKey": "cPlayerTemp:RcoTalkSceneFlag"}
+  #83 MSG TalkSNpc/rco/SP_rco_00_Common:000
+  #84 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:201_01
+  #85 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:202
+  #86 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:163_02
+  #27 EventFlagSystemOn {"AccessKey": "cPlayer:IslandDevQuestTalkAfterBuildCamp"}
+== ENTRY MeetFirstCamperRequest_Force
+  #174 EventFlagSystemOn {"AccessKey": "cPlayerTemp:RcoTalkSceneFlag"}
+  #88 MSG TalkSNpc/rco/SP_rco_00_Common:000
+  #33 IF EventFlagSystemBool {"AccessKey": "cPlayer:IslandDevQuestTalkAfterBuildCamp"}
+    case ON:
+      #90 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:301_01
+      #92 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:302_01
+      #93 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:302_02
+      #34 EventFlagSystemOn {"AccessKey": "cPlayer:IslandDevQuestTalkAboutFirstCamper"}
+      #35 EventFlagSystemOn {"AccessKey": "cLand:RcoMeetFirstVisitorOngoing"}
+      #128 EventFlagSystemOn {"AccessKey": "cPlayer:RcoHeardAbout1stCamperToday"}
+    case OFF:
+      #89 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:201_01
+      #91 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:301_02
+      -> (#92)
+== ENTRY FirstCamperHouseComplete_Force
+  #175 EventFlagSystemOn {"AccessKey": "cPlayerTemp:RcoTalkSceneFlag"}
+  #49 IF EventFlagSystemBool {"AccessKey": "cPlayer:SzaHeardAboutHousingKit"}
+    case ON:
+      #169 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:551
+    case OFF:
+      #130 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcoHeardAbout1stCamperToday"}
+        case ON:
+          #129 MSG TalkSNpc/rco/SP_rco_00_Common:000_02
+          #132 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:501
+          #48 IF GeneralTalkChoice2 {}
+            case 0:
+              #133 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:502
+              #134 MSG TalkSNpc/rco/SP_rco_07_IslandDevelopment:503
+              #50 EventFlagSystemOn {"AccessKey": "cPlayer:SzaHeardAboutHousingKit"}
+              #170 EventFlagSystemOn {"AccessKey": "cLand:RcoEnableBuyHousingKit"}
+            case 1:
+              -> (#133)
+        case OFF:
+          #131 MSG TalkSNpc/rco/SP_rco_00_Common:000
+          -> (#132)

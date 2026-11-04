@@ -1,0 +1,43 @@
+# System_Title (source: decoded EventFlow; bool flag case 0 = ON, case 1 = OFF; #N = event index)
+== ENTRY Root
+  #18 UIVersionGuideAppear {"InType": "cBackOfFader", "Mount": "cOff"}
+  #24 RequestRecreateFtr {}
+  #23 SystemFaderRelease {}
+  #11 WaitFaderSleep {}
+  #6 IF PlayAccountIsPlayerVillager {}
+    case 0:
+      #0 CALL System_Controller:SetupSoloController
+      #1 UITitleHandling {}
+      #19 UIVersionGuideDisappear {"OutType": "cBackOfFader"}
+      #20 IF UITitleResult {}
+        case 0:
+          #22 EventFlagSystemOn {"AccessKey": "cLandTemp:EntryGame"}
+          #12 IF PlayAccountIsPlayerVillager {}
+            case 0:
+              #10 NoticeGameStartForPlayReport {}
+              #4 IF PlayAccountIsPlayerVillager {}
+                case 0:
+                  #2 IF EventFlagSystemBool {"AccessKey": "cPlayer:TownNewsReserve"}
+                    case ON:
+                      #8 IF EventFlagSystemBool {"AccessKey": "cLand:BuiltTownOffice"}
+                        case ON:
+                          #13 IF EventFlagSystemBool {"AccessKey": "cLand:BuiltTownOfficeToday"}
+                            case ON:
+                              #14 FadeOut {"FadeColorString": "cBlack", "IsUseDucking": true, "FadeOutKindString": "cNormalFader", "FadeInKindString": "cCircle", "FadeOutSpeed": 0.800000011920929, "FadeInSpeed": 0.800000011920929}
+                              #7 SetNpcAIBlackBoardByLabel {"NpcLabel": "rco", "Key": "Speak", "Value": 1, "Option": 1}
+                            case OFF:
+                              #9 SystemRequestChangeStage {"TargetStage": "cGrowUp", "FadeInKindString": "cCircle", "FadeColorString": "cBlack", "FadeOutKindString": "cNormalFader", "FadeOutSpeed": 0.800000011920929, "FadeInSpeed": 0.800000011920929}
+                        case OFF:
+                          -> (#17)
+                    case OFF:
+                      #3 SystemRequestChangeStage {"TargetStage": "cGrowUp", "FadeOutKindString": "cCircle", "FadeInKindString": "cCircle", "FadeColorString": "cBlack", "FadeOutSpeed": 0.800000011920929, "FadeInSpeed": 0.800000011920929}
+                case 1:
+                  #5 SystemRequestChangeStage {"TargetStage": "cDateCheck", "FadeOutKindString": "cNormalFader", "FadeInKindString": "cNormalFader", "FadeColorString": "cBlack", "FadeOutSpeed": 0.800000011920929, "FadeInSpeed": 0.800000011920929}
+            case 1:
+              -> (#4)
+        case 1:
+          #21 SystemRequestChangeStage {"FadeColorString": "cBlack", "TargetStage": "cCharacterOrder", "FadeOutKindString": "cNormalFader", "FadeInKindString": "cNormalFader", "FadeOutSpeed": 0.800000011920929, "FadeInSpeed": 0.800000011920929}
+        case 2:
+          #15 SystemRequestChangeStage {"FadeOutKindString": "cCircle", "FadeInKindString": "cCircle", "FadeColorString": "cBlack", "TargetStage": "cGrowUp", "FadeOutSpeed": 0.800000011920929, "FadeInSpeed": 0.800000011920929}
+    case 1:
+      -> (#1)

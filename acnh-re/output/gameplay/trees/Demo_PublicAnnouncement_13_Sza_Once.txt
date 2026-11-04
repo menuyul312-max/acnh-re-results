@@ -1,0 +1,15 @@
+# Demo_PublicAnnouncement_13_Sza_Once (source: decoded EventFlow; bool flag case 0 = ON, case 1 = OFF; #N = event index)
+== ENTRY TownNews_Heard1stTime
+  #0 MSG TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_11_Sza_Once:001_01
+  #1 MSG TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_11_Sza_Once:001_02
+  #2 MSG TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_11_Sza_Once:001_03
+  #3 MSG TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_11_Sza_Once:001_04
+  #7 IF EventFlagSystemBool {"AccessKey": "cPlayer:ThisPCcreatedbeforeOfficeUpgrading"}
+    case ON:
+      #8 CALL Demo_PublicAnnouncement_03_Rco_Once:CmnSendOfficeUpgradeNotice
+      #4 CALL Demo_PublicAnnouncement_00_Cmn:Connect1stAnnounce
+    case OFF:
+      -> (#4)
+== ENTRY TownNews_KK1stLive
+  #5 MSG TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_11_Sza_Once:302
+  #6 MSG TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_11_Sza_Once:303

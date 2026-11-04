@@ -1,0 +1,174 @@
+# Demo_PublicAnnouncement_21_CmnEvChk (source: decoded EventFlow; bool flag case 0 = ON, case 1 = OFF; #N = event index)
+== ENTRY Root
+  #0 CALL Demo_PublicAnnouncement_21_CmnEvChk:CmnMoveInChk
+  #16 CALL Demo_PublicAnnouncement_21_CmnEvChk:CmnFacilitiesChk
+  #17 CALL Demo_PublicAnnouncement_21_CmnEvChk:CmnMoveOutChk
+  #74 IF SubflowResultChoice2 {"SetIndex": 0}
+    case 0:
+      #82 CALL Demo_PublicAnnouncement_21_CmnEvChk:ChkOfficeNews
+== ENTRY CmnMoveInChk
+  #1 IF IsExistMoveNpc {"MoveOut": false}
+    case 0:
+      #61 SetSubflowResult {"ResultValue": 1, "SetIndex": 5}
+      #62 SetSubflowResult {"ResultValue": 1, "SetIndex": 4}
+== ENTRY CmnFacilitiesChk
+  #19 CALL Demo_PublicAnnouncement_21_CmnEvChk:ChkMuseum
+  #20 CALL Demo_PublicAnnouncement_21_CmnEvChk:ChkMarket
+  #21 CALL Demo_PublicAnnouncement_21_CmnEvChk:ChkTailor
+  #63 CALL Demo_PublicAnnouncement_21_CmnEvChk:ChkCampsite
+== ENTRY CmnMoveOutChk
+  #2 IF IsExistMoveNpc {"MoveOut": true}
+    case 0:
+      #40 SetSubflowResult {"ResultValue": 1, "SetIndex": 10}
+      #39 IF SubflowResultChoice2 {"SetIndex": 4}
+        case 0:
+          #41 SetSubflowResult {"SetIndex": 4, "ResultValue": 2}
+        case 1:
+          #42 SetSubflowResult {"SetIndex": 4, "ResultValue": 3}
+== ENTRY ChkMuseum
+  #64 IF EventFlagSystemBool {"AccessKey": "cLand:MuseumConstructionToday"}
+    case ON:
+      #65 SetSubflowResult {"SetIndex": 6, "ResultValue": 3}
+      #66 SetSubflowResult {"ResultValue": 1, "SetIndex": 4}
+    case OFF:
+      #3 IF MuseumLevel {}
+        case 0:
+          #14 IF EventFlagSystemBool {"AccessKey": "cPlayer:AnnouncementOwlMovedIn"}
+            case OFF:
+              #6 IF EventFlagSystemBool {"AccessKey": "cLand:MuseumTentBuiltToday"}
+                case ON:
+                  #22 SetSubflowResult {"ResultValue": 1, "SetIndex": 6}
+                  #15 EventFlagSystemOn {"AccessKey": "cPlayer:AnnouncementOwlMovedIn"}
+                  #18 SetSubflowResult {"ResultValue": 1, "SetIndex": 4}
+                case OFF:
+                  #23 SetSubflowResult {"SetIndex": 6, "ResultValue": 2}
+                  -> (#15)
+        case 1:
+          #43 IF FacilityOpenPastDays {"CountFacilityType": "cMuseum", "Days": 7}
+            case 0:
+              #7 IF EventFlagSystemBool {"AccessKey": "cPlayer:TownNewsHeardMuseumOpenFlag"}
+                case OFF:
+                  #4 IF EventFlagSystemBool {"AccessKey": "cLand:Museum2BuiltToday"}
+                    case ON:
+                      #24 SetSubflowResult {"SetIndex": 6, "ResultValue": 4}
+                      #45 SetSubflowResult {"ResultValue": 1, "SetIndex": 4}
+                      #5 EventFlagSystemOn {"AccessKey": "cPlayer:TownNewsHeardMuseumOpenFlag"}
+                    case OFF:
+                      #25 SetSubflowResult {"SetIndex": 6, "ResultValue": 5}
+                      -> (#45)
+            case 1:
+              -> (#5)
+== ENTRY ChkMarket
+  #8 IF ShopLevel {}
+    case 1:
+      #9 IF EventFlagSystemBool {"AccessKey": "cLand:MarketConstruction2"}
+        case ON:
+          #69 SetSubflowResult {"SetIndex": 7, "ResultValue": 4}
+          #85 SetSubflowResult {"ResultValue": 1, "SetIndex": 4}
+        case OFF:
+          #67 IF EventFlagSystemBool {"AccessKey": "cLand:MarketRemodelingFlag2"}
+            case ON:
+              #68 SetSubflowResult {"SetIndex": 7, "ResultValue": 3}
+              -> (#85)
+            case OFF:
+              #86 IF SubflowResultChoice2 {"SetIndex": 0}
+                case 0:
+                  #12 IF EventFlagSystemBool {"AccessKey": "cPlayer:TownNewsHeardShopOpen1Flag"}
+                    case OFF:
+                      #10 IF EventFlagSystemBool {"AccessKey": "cLand:MarketOpen1stDay1"}
+                        case ON:
+                          #27 SetSubflowResult {"ResultValue": 1, "SetIndex": 7}
+                          #26 EventFlagSystemOn {"AccessKey": "cPlayer:TownNewsHeardShopOpen1Flag"}
+                          #76 IF EventFlagSystemBool {"AccessKey": "cPlayer:MakeVillagePlayerFlag"}
+                            case ON:
+                              #75 SetSubflowResult {"ResultValue": 1, "SetIndex": 13}
+                              #32 SetSubflowResult {"ResultValue": 1, "SetIndex": 4}
+                            case OFF:
+                              -> (#32)
+                        case OFF:
+                          #28 SetSubflowResult {"SetIndex": 7, "ResultValue": 2}
+                          -> (#26)
+    case 2:
+      #44 IF FacilityOpenPastDays {"Days": 7, "CountFacilityType": "cMarket2"}
+        case 0:
+          #13 IF EventFlagSystemBool {"AccessKey": "cPlayer:TownNewsHeardShopOpen2Flag"}
+            case OFF:
+              #11 IF EventFlagSystemBool {"AccessKey": "cLand:MarketOpen1stDay2"}
+                case ON:
+                  #30 SetSubflowResult {"SetIndex": 7, "ResultValue": 5}
+                  #46 SetSubflowResult {"ResultValue": 1, "SetIndex": 4}
+                  #29 EventFlagSystemOn {"AccessKey": "cPlayer:TownNewsHeardShopOpen2Flag"}
+                case OFF:
+                  #31 SetSubflowResult {"SetIndex": 7, "ResultValue": 6}
+                  -> (#46)
+        case 1:
+          -> (#29)
+== ENTRY ChkTailor
+  #47 IF FacilityOpenPastDays {"Days": 7, "CountFacilityType": "cTailor"}
+    case 0:
+      #35 IF EventFlagSystemBool {"AccessKey": "cPlayer:PAnnounceTailorBuilt"}
+        case OFF:
+          #33 IF EventFlagSystemBool {"AccessKey": "cLand:TailorBuilt"}
+            case ON:
+              #34 IF EventFlagSystemBool {"AccessKey": "cLand:TailorBuiltToday"}
+                case ON:
+                  #37 SetSubflowResult {"ResultValue": 1, "SetIndex": 8}
+                  #48 SetSubflowResult {"ResultValue": 1, "SetIndex": 4}
+                  #36 EventFlagSystemOn {"AccessKey": "cPlayer:PAnnounceTailorBuilt"}
+                case OFF:
+                  #38 SetSubflowResult {"ResultValue": 2, "SetIndex": 8}
+                  -> (#48)
+    case 1:
+      -> (#36)
+== ENTRY ChkOfficeNews
+  #77 IF EventFlagSystemBool {"AccessKey": "cLand:BuiltTownOfficeToday"}
+    case ON:
+      #81 SetSubflowResult {"SetIndex": 13, "ResultValue": 4}
+    case OFF:
+      #78 IF EventFlagSystemBool {"AccessKey": "cLand:RcoNoticeBuildInfomationOffice"}
+        case ON:
+          #79 IF EventFlagSystemBool {"AccessKey": "cLand:OfficeConstruction1"}
+            case ON:
+              #83 SetSubflowResult {"SetIndex": 13, "ResultValue": 5}
+              #84 IF SubflowResultChoice2 {"SetIndex": 4}
+                case 1:
+                  #49 IF EventFlagSystemBool {"AccessKey": "cLand:ImmQClearNextDay"}
+                    case ON:
+                      #73 IF EventFlagSystemBool {"AccessKey": "cPlayer:MainmenuRecipe"}
+                        case ON:
+                          #50 IF EventFlagSystemBool {"AccessKey": "cPlayer:TownNewsHeardRemakeTrialFlag"}
+                            case OFF:
+                              #51 SetSubflowResult {"SetIndex": 13, "ResultValue": 2}
+                              #53 EventFlagSystemOn {"AccessKey": "cPlayer:TownNewsHeardRemakeTrialFlag"}
+                              #52 EventFlagSystemOn {"AccessKey": "cPlayer:RcoTalkAboutRemakeTrial"}
+            case OFF:
+              #80 SetSubflowResult {"SetIndex": 13, "ResultValue": 3}
+        case OFF:
+          -> (#49)
+== ENTRY ChkCampsite
+  #71 IF EventFlagSystemBool {"AccessKey": "cPlayer:PAnnounceCampsite"}
+    case ON:
+      #70 IF IsCampSiteOccupied {}
+        case 0:
+          #72 SetSubflowResult {"SetIndex": 9, "ResultValue": 3}
+          #60 SetSubflowResult {"ResultValue": 1, "SetIndex": 4}
+          #56 EventFlagSystemOn {"AccessKey": "cPlayer:PAnnounceCampsite"}
+    case OFF:
+      #59 IF FacilityOpenPastDays {"Days": 7, "CountFacilityType": "cCampSite"}
+        case 0:
+          #54 IF EventFlagSystemBool {"AccessKey": "cLand:CampSiteBuilt"}
+            case ON:
+              #55 IF EventFlagSystemBool {"AccessKey": "cLand:CampSiteBuiltToday"}
+                case ON:
+                  #57 SetSubflowResult {"ResultValue": 1, "SetIndex": 9}
+                  -> (#60)
+                case OFF:
+                  #58 SetSubflowResult {"ResultValue": 2, "SetIndex": 9}
+                  -> (#60)
+        case 1:
+          #87 IF IsCampSiteOccupied {}
+            case 0:
+              #88 SetSubflowResult {"SetIndex": 9, "ResultValue": 3}
+              -> (#60)
+            case 1:
+              -> (#56)

@@ -1,0 +1,521 @@
+# SNPC_sza_50_IslandEvaluation (source: decoded EventFlow; bool flag case 0 = ON, case 1 = OFF; #N = event index)
+== ENTRY Root
+  #35 CALL System_IslandEvaluationCheck:IslandEvaluationChk
+  #199 CALL System_IslandEvaluationCheck:Compare_BeforeEvaluation
+  #198 EventFlagSystemOn {"AccessKey": "cPlayer:IslandEvaluationUnlockMyself"}
+  #197 EventFlagSystemOn {"AccessKey": "cPlayer:SzaHeardAboutIslandEvaluation"}
+  #0 IF EventFlagSystemBool {"AccessKey": "cPlayer:SzaHeardAboutEvaluationDetail"}
+    case ON:
+      #2 CALL SNPC_sza_50_IslandEvaluation:NormalSeq
+      #33 CALL SNPC_sza_50_IslandEvaluation:Sza_Evaluation_CmnImpression
+      #45 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:000_05
+      #14 CALL SNPC_sza_00_Common:Sza_CmnSel_Again
+    case OFF:
+      #3 CALL SNPC_sza_50_IslandEvaluation:FirstSeq
+      #32 EventFlagSystemOn {"AccessKey": "cPlayer:SzaHeardAboutEvaluationDetail"}
+      #34 CALL SNPC_sza_50_IslandEvaluation:Sza_Evaluation_CmnImpression
+      -> (#45)
+== ENTRY FirstSeq
+  #1 IF EventFlagSystemBool {"AccessKey": "cPlayerTemp:SzaIslandEvaluationUnlockNow"}
+    case ON:
+      #9 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:101_02
+      #10 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:102
+      #18 IF SubflowResultChoice5 {"SetIndex": 0}
+        case 0:
+          #11 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:002_01
+        case 1:
+          #12 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:002_02
+        case 2:
+          #13 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:002_03
+        case 3:
+          #15 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:002_04
+        case 4:
+          #16 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:002_05
+    case OFF:
+      #8 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:101_01
+      -> (#10)
+== ENTRY NormalSeq
+  #17 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:000_04
+  #19 IF SubflowResultChoice5 {"SetIndex": 0}
+    case 0:
+      #20 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:003_01
+    case 1:
+      #21 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:003_02
+    case 2:
+      #22 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:003_03
+    case 3:
+      #23 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:003_04
+    case 4:
+      #24 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:003_05
+== ENTRY ClearTkkFirstLiveScore
+  #4 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:501
+  #5 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:502
+  #6 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:503
+  #7 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:504
+  #50 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:505
+  #51 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:506
+  #56 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:507
+  #169 RcoStandUpChair {}
+  #170 NpcWaitTurn {}
+  #57 CALL Demo_Common_PhoneCall:MakingPhoneCall
+  #58 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:508_01
+  #59 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:508_02
+  #60 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:508_03
+  #61 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:508_04
+  #62 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:508_05
+  #64 CALL Demo_Common_PhoneCall:FinishingPhoneCall
+  #74 SmartPhone {"ActionType": 5}
+  #63 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:509
+  #66 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:510
+  #67 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:511
+  #65 IF EventBranch {"AddDay": 1, "CheckNowTime": false}
+    case 0:
+      #68 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:512_01
+      #72 SmartPhone {"ActionType": 1}
+      #73 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:513_01
+      #52 EventFlagSystemOn {"AccessKey": "cLand:IslandEvaluationClearTkkLive"}
+      #55 EventFlagSystemOff {"AccessKey": "cLand:IslandDevQuestRunning"}
+      #54 EventFlagSystemOn {"AccessKey": "cLand:IslandDevQuestComplete"}
+      #53 ExitFlowchart {}
+    case 1:
+      #69 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:512_02
+      -> (#72)
+    case 2:
+      #70 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:512_03
+      -> (#72)
+    case 3:
+      #71 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:512_04
+      -> (#72)
+== ENTRY Sza_Evaluation_CmnImpression
+  #200 IF SubflowResultChoice3 {"SetIndex": 6}
+    case 0:
+      #41 IF SubflowResultChoice5 {"SetIndex": 0}
+        case 0:
+          #36 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:001_01
+          #202 IF SubflowResultChoice5 {"SetIndex": 0}
+            case 0:
+              #203 EventFlagSystemOn {"AccessKey": "cPlayer:Experienced3starEvaluation"}
+              #26 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:900_01
+              #46 IF EventFlagSystemBool {"AccessKey": "cLand:IslandDevQuestComplete"}
+                case ON:
+                  #25 IF SubflowResultChoice5 {"SetIndex": 0}
+                    case 0:
+                      #27 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:901
+                      #43 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:900_02
+                      #44 IF SubflowResultChoice4 {"SetIndex": 1}
+                        case 0:
+                          #124 IF EventFlagSystemBool {"AccessKey": "cPlayer:SzaIslandEvaluationTalkAbout1Star"}
+                            case ON:
+                              #185 CALL SNPC_sza_50_IslandEvaluation:ChkSellLand
+                            case OFF:
+                              #42 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:801
+                              #151 EventFlagSystemOn {"AccessKey": "cPlayer:SzaIslandEvaluationTalkAbout1Star"}
+                              #187 CALL SNPC_sza_50_IslandEvaluation:ChkTalkAboutSearchLand
+                        case 1:
+                          #83 CALL SNPC_sza_50_IslandEvaluation:AdviceForLife
+                          #115 IF SubflowResultChoice4 {"SetIndex": 4}
+                            case 1:
+                              #108 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:031
+                              #116 CALL SNPC_sza_50_IslandEvaluation:AdviceForMinusPoint
+                            case 2:
+                              -> (#108)
+                            case 3:
+                              -> (#108)
+                        case 2:
+                          #82 CALL SNPC_sza_50_IslandEvaluation:AdviceForNatural
+                          -> (#115)
+                        case 3:
+                          #107 IF SubflowResultChoice5 {"SetIndex": 0}
+                            case 3:
+                              #109 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:031_01
+                              #117 CALL SNPC_sza_50_IslandEvaluation:AdviceForMinusPoint
+                            case 4:
+                              #120 IF EventFlagSystemBool {"AccessKey": "cPlayer:SzaIslandEvaluation5star1st"}
+                                case ON:
+                                  #113 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:011
+                                  #159 IF EventFlagSystemBool {"AccessKey": "cPlayer:MainmenuRecipe"}
+                                    case ON:
+                                      #160 IF PlayerHasCraftRecipe {"ItemUniqueId": 8533, "UnlockType": ""}
+                                        case 1:
+                                          #161 CALL SNPC_sza_50_IslandEvaluation:Get_GoldenWateringRecipe
+                                case OFF:
+                                  #119 EventFlagSystemOn {"AccessKey": "cPlayer:SzaIslandEvaluation5star1st"}
+                                  #157 IF EventFlagSystemBool {"AccessKey": "cPlayer:Experienced3starEvaluation"}
+                                    case ON:
+                                      #114 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:012
+                                      -> (#159)
+                                    case OFF:
+                                      #158 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:011
+                                      -> (#159)
+                    case 1:
+                      #123 IF SubflowResultChoice4 {"SetIndex": 1}
+                        case 0:
+                          -> (#27)
+                        case 1:
+                          #28 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:902
+                          -> (#155)
+                        case 2:
+                          -> (#28)
+                        case 3:
+                          -> (#28)
+                    case 2:
+                      #29 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:903
+                      -> (#155)
+                    case 3:
+                      #30 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:904
+                      -> (#155)
+                    case 4:
+                      #177 IF PercentChoice {"Percent": 80}
+                        case 0:
+                          #31 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:905
+                          -> (#155)
+                        case 1:
+                          #178 IF EnvSeason {}
+                            case 0:
+                              #180 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:906_02
+                              -> (#155)
+                            case 1:
+                              -> (#180)
+                            case 2:
+                              -> (#180)
+                            case 3:
+                              #179 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:906_01
+                              -> (#155)
+                case OFF:
+                  #47 IF SubflowResultChoice5 {"SetIndex": 0}
+                    case 0:
+                      #48 CALL SNPC_sza_50_IslandEvaluation:Sza_Evaluation_NmlSeq
+                    case 1:
+                      -> (#48)
+                    case 2:
+                      #121 IF EventFlagSystemBool {"AccessKey": "cPlayer:MakeVillagePlayerFlag"}
+                        case ON:
+                          #175 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:909
+                          #176 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:900_02
+                          #49 CALL SNPC_sza_50_IslandEvaluation:ClearTkkFirstLiveScore
+                        case OFF:
+                          #122 CALL SNPC_sza_50_IslandEvaluation:Sza_Evaluation_NmlSeq
+                    case 3:
+                      -> (#121)
+                    case 4:
+                      -> (#121)
+            case 1:
+              -> (#203)
+            case 2:
+              -> (#203)
+            case 3:
+              -> (#26)
+            case 4:
+              -> (#26)
+        case 1:
+          #37 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:001_02
+          -> (#202)
+        case 2:
+          #38 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:001_03
+          -> (#202)
+        case 3:
+          #39 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:001_04
+          -> (#202)
+        case 4:
+          #40 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:001_05
+          -> (#202)
+    case 1:
+      -> (#41)
+    case 2:
+      #201 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:001_06
+      -> (#202)
+== ENTRY Sza_Evaluation_NmlSeq
+  #25 IF SubflowResultChoice5 {"SetIndex": 0}
+    case 0:
+      #27 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:901
+      #43 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:900_02
+      #44 IF SubflowResultChoice4 {"SetIndex": 1}
+        case 0:
+          #124 IF EventFlagSystemBool {"AccessKey": "cPlayer:SzaIslandEvaluationTalkAbout1Star"}
+            case ON:
+              #185 CALL SNPC_sza_50_IslandEvaluation:ChkSellLand
+            case OFF:
+              #42 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:801
+              #151 EventFlagSystemOn {"AccessKey": "cPlayer:SzaIslandEvaluationTalkAbout1Star"}
+              #187 CALL SNPC_sza_50_IslandEvaluation:ChkTalkAboutSearchLand
+        case 1:
+          #83 CALL SNPC_sza_50_IslandEvaluation:AdviceForLife
+          #115 IF SubflowResultChoice4 {"SetIndex": 4}
+            case 1:
+              #108 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:031
+              #116 CALL SNPC_sza_50_IslandEvaluation:AdviceForMinusPoint
+            case 2:
+              -> (#108)
+            case 3:
+              -> (#108)
+        case 2:
+          #82 CALL SNPC_sza_50_IslandEvaluation:AdviceForNatural
+          -> (#115)
+        case 3:
+          #107 IF SubflowResultChoice5 {"SetIndex": 0}
+            case 3:
+              #109 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:031_01
+              #117 CALL SNPC_sza_50_IslandEvaluation:AdviceForMinusPoint
+            case 4:
+              #120 IF EventFlagSystemBool {"AccessKey": "cPlayer:SzaIslandEvaluation5star1st"}
+                case ON:
+                  #113 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:011
+                  #159 IF EventFlagSystemBool {"AccessKey": "cPlayer:MainmenuRecipe"}
+                    case ON:
+                      #160 IF PlayerHasCraftRecipe {"ItemUniqueId": 8533, "UnlockType": ""}
+                        case 1:
+                          #161 CALL SNPC_sza_50_IslandEvaluation:Get_GoldenWateringRecipe
+                case OFF:
+                  #119 EventFlagSystemOn {"AccessKey": "cPlayer:SzaIslandEvaluation5star1st"}
+                  #157 IF EventFlagSystemBool {"AccessKey": "cPlayer:Experienced3starEvaluation"}
+                    case ON:
+                      #114 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:012
+                      -> (#159)
+                    case OFF:
+                      #158 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:011
+                      -> (#159)
+    case 1:
+      #123 IF SubflowResultChoice4 {"SetIndex": 1}
+        case 0:
+          -> (#27)
+        case 1:
+          #28 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:902
+          -> (#155)
+        case 2:
+          -> (#28)
+        case 3:
+          -> (#28)
+    case 2:
+      #29 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:903
+      -> (#155)
+    case 3:
+      #30 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:904
+      -> (#155)
+    case 4:
+      #177 IF PercentChoice {"Percent": 80}
+        case 0:
+          #31 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:905
+          -> (#155)
+        case 1:
+          #178 IF EnvSeason {}
+            case 0:
+              #180 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:906_02
+              -> (#155)
+            case 1:
+              -> (#180)
+            case 2:
+              -> (#180)
+            case 3:
+              #179 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:906_01
+              -> (#155)
+== ENTRY AdviceForNatural
+  #145 IF EventFlagSystemBool {"AccessKey": "cPlayer:SzaIslandEvaluationHeardToday"}
+    case ON:
+      #75 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:022
+      #77 IF VillageScoreCheckTreeNum {"BorderNum": 180}
+        case 0:
+          #76 IF RandomChoice3 {"ChoiceNumber": 3}
+            case 0:
+              #79 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:025
+            case 1:
+              #80 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:025_01
+            case 2:
+              #81 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:025_02
+        case 1:
+          #78 IF RandomChoice2 {"ChoiceNumber": 2}
+            case 0:
+              -> (#79)
+            case 1:
+              -> (#80)
+    case OFF:
+      #144 EventFlagSystemOn {"AccessKey": "cPlayer:SzaIslandEvaluationHeardToday"}
+      #147 IF EventFlagSystemBool {"AccessKey": "cLand:SzaIslandEvaluationImprovementNaturalToday"}
+        case ON:
+          #149 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:022_01
+          #150 CALL SNPC_sza_50_IslandEvaluation:AdviceAboutNatural_AfterHalf
+        case OFF:
+          #148 CALL SNPC_sza_50_IslandEvaluation:AdviceForNatural
+== ENTRY AdviceForLife
+  #140 IF EventFlagSystemBool {"AccessKey": "cPlayer:SzaIslandEvaluationHeardToday"}
+    case ON:
+      #86 IF PercentChoice {"Percent": 60}
+        case 0:
+          #84 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:021
+          #93 IF RandomChoice4 {"ChoiceNumber": 4}
+            case 0:
+              #88 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:024
+            case 1:
+              #89 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:024_01
+            case 2:
+              #90 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:024_02
+            case 3:
+              #91 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:024_03
+        case 1:
+          #87 IF RandomChoice4 {"ChoiceNumber": 4}
+            case 0:
+              #92 IF MuseumLevel {}
+                case 3:
+                  #85 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:023
+                  #101 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:026
+                case 0:
+                  -> (#85)
+                case 1:
+                  #94 CALL SNPC_sza_50_IslandEvaluation:AdviceAboutFtr
+                case 2:
+                  -> (#94)
+            case 1:
+              #96 IF BridgeNum {"BridgeJudgeType": "cNoReserve", "Num": 3}
+                case 0:
+                  #97 IF BridgeNum {"BridgeJudgeType": "cNoReserve", "Num": 2}
+                    case 0:
+                      #98 CALL SNPC_sza_50_IslandEvaluation:AdviceAboutFtr
+                    case 1:
+                      #100 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:023
+                      #95 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:026_01
+                case 1:
+                  -> (#100)
+            case 2:
+              #99 IF EventFlagSystemBool {"AccessKey": "cLand:TailorBuilt"}
+                case ON:
+                  #102 CALL SNPC_sza_50_IslandEvaluation:AdviceAboutFtr
+                case OFF:
+                  #103 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:023
+                  #104 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:026_02
+            case 3:
+              #105 IF ShopLevel {}
+                case 0:
+                  -> (#103)
+                case 1:
+                  -> (#103)
+                case 2:
+                  #106 CALL SNPC_sza_50_IslandEvaluation:AdviceAboutFtr
+    case OFF:
+      #139 EventFlagSystemOn {"AccessKey": "cPlayer:SzaIslandEvaluationHeardToday"}
+      #141 IF EventFlagSystemBool {"AccessKey": "cLand:SzaIslandEvaluationImprovementLifeToday"}
+        case ON:
+          #142 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:021_01
+          #143 CALL SNPC_sza_50_IslandEvaluation:AdviceAboutFtr_AfterHalf
+        case OFF:
+          #146 CALL SNPC_sza_50_IslandEvaluation:AdviceForLife
+== ENTRY AdviceAboutFtr
+  #84 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:021
+  #93 IF RandomChoice4 {"ChoiceNumber": 4}
+    case 0:
+      #88 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:024
+    case 1:
+      #89 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:024_01
+    case 2:
+      #90 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:024_02
+    case 3:
+      #91 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:024_03
+== ENTRY AdviceForMinusPoint
+  #118 IF SubflowResultChoice4 {"SetIndex": 4}
+    case 1:
+      #110 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:032
+    case 2:
+      #111 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:033
+    case 3:
+      #112 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:034
+== ENTRY NoImprovement
+  #134 IF SubflowResultChoice2 {"SetIndex": 5}
+    case 0:
+      #128 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:803
+      #136 CALL SNPC_sza_50_IslandEvaluation:AdviceAboutFtr_AfterHalf
+    case 1:
+      #135 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:803_01
+      #137 CALL SNPC_sza_50_IslandEvaluation:AdviceAboutNatural_AfterHalf
+== ENTRY AdviceAboutFtr_AfterHalf
+  #93 IF RandomChoice4 {"ChoiceNumber": 4}
+    case 0:
+      #88 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:024
+    case 1:
+      #89 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:024_01
+    case 2:
+      #90 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:024_02
+    case 3:
+      #91 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:024_03
+== ENTRY AdviceAboutNatural_AfterHalf
+  #77 IF VillageScoreCheckTreeNum {"BorderNum": 180}
+    case 0:
+      #76 IF RandomChoice3 {"ChoiceNumber": 3}
+        case 0:
+          #79 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:025
+        case 1:
+          #80 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:025_01
+        case 2:
+          #81 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:025_02
+    case 1:
+      #78 IF RandomChoice2 {"ChoiceNumber": 2}
+        case 0:
+          -> (#79)
+        case 1:
+          -> (#80)
+== ENTRY Get_GoldenWateringRecipe
+  #162 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:201
+  #164 CALL Demo_Common_PhoneCall:SendingDataWithP_Owl
+  #166 PlayerSetCraftRecipe {"ItemUniqueId": 8533, "UnlockType": ""}
+  #163 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:202
+  #165 CALL Demo_Common_PhoneCall:PuttingMobileAwayWithP
+  #167 CALL SNPC_sza_00_Common:Sza_CmnSel_Again
+  #168 ExitFlowchart {}
+== ENTRY ChkSellLand
+  #192 IF EventFlagSystemBool {"AccessKey": "cPlayer:MakeVillagePlayerFlag"}
+    case ON:
+      #182 IF NpcHouseNum {"NpcHouseType": "cConstructed", "Num": 7}
+        case 0:
+          #184 IF NpcHouseNum {"NpcHouseType": "cExist", "Num": 8}
+            case 0:
+              #195 CALL SNPC_sza_50_IslandEvaluation:Evaluation2ndTime
+            case 1:
+              #186 CALL SNPC_sza_50_IslandEvaluation:RecommendSearchLand
+        case 1:
+          #183 IF NpcHouseNum {"Num": 7, "NpcHouseType": "cExist"}
+            case 0:
+              #193 CALL SNPC_sza_50_IslandEvaluation:Evaluation2ndTime
+            case 1:
+              #194 CALL SNPC_sza_50_IslandEvaluation:RecommendSearchLand
+    case OFF:
+      #196 CALL SNPC_sza_50_IslandEvaluation:Evaluation2ndTime
+== ENTRY RecommendSearchLand
+  #42 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:801
+  #151 EventFlagSystemOn {"AccessKey": "cPlayer:SzaIslandEvaluationTalkAbout1Star"}
+  #187 CALL SNPC_sza_50_IslandEvaluation:ChkTalkAboutSearchLand
+== ENTRY ChkTalkAboutSearchLand
+  #181 IF EventFlagSystemBool {"AccessKey": "cPlayer:MakeVillagePlayerFlag"}
+    case ON:
+      #188 IF NpcHouseNum {"NpcHouseType": "cConstructed", "Num": 7}
+        case 0:
+          #190 IF NpcHouseNum {"NpcHouseType": "cExist", "Num": 8}
+            case 1:
+              #191 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:801_01
+        case 1:
+          #189 IF NpcHouseNum {"Num": 7, "NpcHouseType": "cExist"}
+            case 1:
+              -> (#191)
+== ENTRY Evaluation2ndTime
+  #127 IF EventFlagSystemBool {"AccessKey": "cPlayer:SzaIslandEvaluationHeardToday"}
+    case ON:
+      #125 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:802
+      #134 IF SubflowResultChoice2 {"SetIndex": 5}
+        case 0:
+          #128 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:803
+          #136 CALL SNPC_sza_50_IslandEvaluation:AdviceAboutFtr_AfterHalf
+        case 1:
+          #135 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:803_01
+          #137 CALL SNPC_sza_50_IslandEvaluation:AdviceAboutNatural_AfterHalf
+    case OFF:
+      #138 EventFlagSystemOn {"AccessKey": "cPlayer:SzaIslandEvaluationHeardToday"}
+      #129 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:804
+      #130 IF SubflowResultChoice2 {"SetIndex": 5}
+        case 0:
+          #126 IF EventFlagSystemBool {"AccessKey": "cLand:SzaIslandEvaluationImprovementLifeToday"}
+            case ON:
+              #152 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:805_01
+            case OFF:
+              #132 CALL SNPC_sza_50_IslandEvaluation:NoImprovement
+        case 1:
+          #131 IF EventFlagSystemBool {"AccessKey": "cLand:SzaIslandEvaluationImprovementNaturalToday"}
+            case ON:
+              #153 MSG TalkSNpc/sza/SP_sza_50_IslandEvaluation:805_02
+            case OFF:
+              #133 CALL SNPC_sza_50_IslandEvaluation:NoImprovement

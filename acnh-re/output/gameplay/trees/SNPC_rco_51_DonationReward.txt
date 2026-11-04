@@ -1,0 +1,22 @@
+# SNPC_rco_51_DonationReward (source: decoded EventFlow; bool flag case 0 = ON, case 1 = OFF; #N = event index)
+== ENTRY Root
+  #0 IF MuseumDonationNumCheck {"Border": 5}
+    case 0:
+      #9 CALL SNPC_rco_52_DonationRewardEntries:RcoDonationReward5
+    case 1:
+      #1 IF MuseumDonationNumCheck {"Border": 4}
+        case 0:
+          #8 CALL SNPC_rco_52_DonationRewardEntries:RcoDonationReward4
+          #6 MSG TalkSNpc/rco/SP_rco_04_DonationReward:007_01
+        case 1:
+          #2 IF MuseumDonationNumCheck {"Border": 3}
+            case 0:
+              #7 CALL SNPC_rco_52_DonationRewardEntries:RcoDonationReward3
+              -> (#6)
+            case 1:
+              #3 IF MuseumDonationNumCheck {"Border": 2}
+                case 0:
+                  #5 CALL SNPC_rco_52_DonationRewardEntries:RcoDonationReward2
+                  -> (#6)
+                case 1:
+                  #4 CALL SNPC_rco_52_DonationRewardEntries:RcoDonationReward1

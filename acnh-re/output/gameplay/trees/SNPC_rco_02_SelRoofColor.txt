@@ -1,0 +1,73 @@
+# SNPC_rco_02_SelRoofColor (source: decoded EventFlow; bool flag case 0 = ON, case 1 = OFF; #N = event index)
+== ENTRY Root
+  #0 MSG TalkSNpc/rco/SP_rco_00_Common:203
+  #1 IF GeneralTalkChoice5 {}
+    case 0:
+      #10 CALL SNPC_rco_02_SelRoofColor:RoofCol_A
+    case 1:
+      #11 CALL SNPC_rco_02_SelRoofColor:RoofCol_B
+    case 2:
+      #12 CALL SNPC_rco_02_SelRoofColor:RoofCol_C
+    case 3:
+      #13 CALL SNPC_rco_02_SelRoofColor:RoofCol_D
+    case 4:
+      #14 MSG TalkSNpc/rco/SP_rco_00_Common:204
+      #15 IF GeneralTalkChoice5 {}
+        case 0:
+          #16 CALL SNPC_rco_02_SelRoofColor:RoofCol_E
+        case 1:
+          #17 CALL SNPC_rco_02_SelRoofColor:RoofCol_F
+        case 2:
+          #18 CALL SNPC_rco_02_SelRoofColor:RoofCol_G
+        case 3:
+          #19 CALL SNPC_rco_02_SelRoofColor:RoofCol_H
+        case 4:
+          #32 CALL SNPC_rco_02_SelRoofColor:SelRoofColor_Loop
+== ENTRY RoofCol_A
+  #2 MSG TalkSNpc/rco/SP_rco_00_Common:208_01
+  #34 PlayerHouseSetRoofColor {"RoofColor": "Red"}
+== ENTRY RoofCol_B
+  #3 MSG TalkSNpc/rco/SP_rco_00_Common:208_02
+  #35 PlayerHouseSetRoofColor {"RoofColor": "Pink"}
+== ENTRY RoofCol_C
+  #4 MSG TalkSNpc/rco/SP_rco_00_Common:208_03
+  #40 PlayerHouseSetRoofColor {"RoofColor": "Yellow"}
+== ENTRY RoofCol_D
+  #5 MSG TalkSNpc/rco/SP_rco_00_Common:208_04
+  #41 PlayerHouseSetRoofColor {"RoofColor": "Black"}
+== ENTRY RoofCol_E
+  #6 MSG TalkSNpc/rco/SP_rco_00_Common:208_05
+  #38 PlayerHouseSetRoofColor {"RoofColor": "Blue"}
+== ENTRY RoofCol_F
+  #7 MSG TalkSNpc/rco/SP_rco_00_Common:208_06
+  #36 PlayerHouseSetRoofColor {"RoofColor": "LightBlue"}
+== ENTRY RoofCol_G
+  #8 MSG TalkSNpc/rco/SP_rco_00_Common:208_07
+  #37 PlayerHouseSetRoofColor {"RoofColor": "Green"}
+== ENTRY RoofCol_H
+  #9 MSG TalkSNpc/rco/SP_rco_00_Common:208_08
+  #39 PlayerHouseSetRoofColor {"RoofColor": "Purple"}
+== ENTRY SelRoofColor_Loop
+  #20 MSG TalkSNpc/rco/SP_rco_00_Common:205
+  #21 IF GeneralTalkChoice5 {}
+    case 0:
+      #22 CALL SNPC_rco_02_SelRoofColor:RoofCol_A
+    case 1:
+      #23 CALL SNPC_rco_02_SelRoofColor:RoofCol_B
+    case 2:
+      #24 CALL SNPC_rco_02_SelRoofColor:RoofCol_C
+    case 3:
+      #25 CALL SNPC_rco_02_SelRoofColor:RoofCol_D
+    case 4:
+      #26 MSG TalkSNpc/rco/SP_rco_00_Common:206
+      #27 IF GeneralTalkChoice5 {}
+        case 0:
+          #28 CALL SNPC_rco_02_SelRoofColor:RoofCol_E
+        case 1:
+          #29 CALL SNPC_rco_02_SelRoofColor:RoofCol_F
+        case 2:
+          #30 CALL SNPC_rco_02_SelRoofColor:RoofCol_G
+        case 3:
+          #31 CALL SNPC_rco_02_SelRoofColor:RoofCol_H
+        case 4:
+          #33 CALL SNPC_rco_02_SelRoofColor:SelRoofColor_Loop

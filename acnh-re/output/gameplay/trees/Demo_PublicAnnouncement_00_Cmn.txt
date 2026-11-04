@@ -1,0 +1,189 @@
+# Demo_PublicAnnouncement_00_Cmn (source: decoded EventFlow; bool flag case 0 = ON, case 1 = OFF; #N = event index)
+== ENTRY Root
+  #0 CALL Demo_PublicAnnouncement_20_CmnGreetChk:Root
+  #3 CALL Demo_PublicAnnouncement_20_CmnGreetChk:CmnBdayChk
+  #1 CALL Demo_PublicAnnouncement_30_CmnNewsGreet:Root
+  #2 CALL Demo_PublicAnnouncement_31_CmnNewsBday:Root
+  #5 IF SubflowResultChoice4 {"SetIndex": 4}
+    case 0:
+      #38 IF SubflowResultChoice2 {"SetIndex": 0}
+        case 0:
+          #33 IF SubflowResultChoice6 {"SetIndex": 13}
+            case 0:
+              #4 CALL Demo_PublicAnnouncement_40_CmnNoNews:Root
+            case 2:
+              #43 MSG TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_10_Rco_Once:210_01
+              #44 CALL Demo_PublicAnnouncement_03_Rco_Once:TownNews_Rco_RemakeWorkshop
+            case 3:
+              #40 MSG TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_10_Rco_Once:161_02
+              #41 CALL Demo_PublicAnnouncement_03_Rco_Once:TownNews_Rco_OfficeRenual
+            case 4:
+              #46 MSG TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_10_Rco_Once:163_00_01
+              #34 CALL Demo_PublicAnnouncement_03_Rco_Once:TownNews_Rco_OfficeOpen
+            case 5:
+              #42 MSG TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_10_Rco_Once:003_03
+        case 1:
+          #36 IF EventFlagSystemBool {"AccessKey": "cLand:TkkFirstLiveReserved"}
+            case ON:
+              #35 MSG TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_11_Sza_Once:301_02
+              #37 CALL Demo_PublicAnnouncement_13_Sza_Once:TownNews_KK1stLive
+            case OFF:
+              #39 CALL Demo_PublicAnnouncement_40_CmnNoNews:Root
+    case 1:
+      #22 IF SubflowResultChoice2 {"SetIndex": 15}
+        case 0:
+          #7 IF SubflowResultChoice2 {"SetIndex": 0}
+            case 0:
+              #6 MSG TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_00_Rco:021
+              #10 CALL Demo_PublicAnnouncement_32_CmnNewsMoveIn:Root
+              #11 CALL Demo_PublicAnnouncement_33_CmnNewsFacilities:Root
+              #13 CALL Demo_PublicAnnouncement_34_CmnNewsMoveOut:Root
+              #12 IF SubflowResultChoice2 {"SetIndex": 0}
+                case 0:
+                  #9 IF SubflowResultChoice5 {"SetIndex": 13}
+                    case 0:
+                      #19 IF SubflowResultChoice4 {"SetIndex": 4}
+                        case 1:
+                          #17 MSG TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_00_Rco:901
+                        case 2:
+                          -> (#17)
+                        case 3:
+                          -> (#17)
+                    case 1:
+                      #14 CALL Demo_PublicAnnouncement_03_Rco_Once:TownNews_Rco_HouseBuild
+                    case 2:
+                      #29 MSG TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_10_Rco_Once:210
+                      #15 CALL Demo_PublicAnnouncement_03_Rco_Once:TownNews_Rco_RemakeWorkshop
+                      #32 CALL Demo_PublicAnnouncement_00_Cmn:Rco_EndMess
+                    case 3:
+                      #31 MSG TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_10_Rco_Once:161_01
+                      #30 CALL Demo_PublicAnnouncement_03_Rco_Once:TownNews_Rco_OfficeRenual
+                      -> (#32)
+                    case 4:
+                      #21 MSG TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_10_Rco_Once:161_01
+                      #20 CALL Demo_PublicAnnouncement_03_Rco_Once:TownNews_Rco_OfficeOpen
+                case 1:
+                  #26 IF EventFlagSystemBool {"AccessKey": "cLand:TkkFirstLiveReserved"}
+                    case ON:
+                      #27 MSG TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_11_Sza_Once:301_01
+                      #28 CALL Demo_PublicAnnouncement_13_Sza_Once:TownNews_KK1stLive
+                    case OFF:
+                      #18 IF SubflowResultChoice4 {"SetIndex": 4}
+                        case 1:
+                          #16 MSG TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_01_Sza:901
+                        case 2:
+                          -> (#16)
+                        case 3:
+                          -> (#16)
+            case 1:
+              #8 MSG TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_01_Sza:021
+              -> (#10)
+        case 1:
+          #23 IF SubflowResultChoice2 {"SetIndex": 0}
+            case 0:
+              #24 MSG TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_00_Rco:022
+              -> (#10)
+            case 1:
+              #25 MSG TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_01_Sza:022
+              -> (#10)
+    case 2:
+      -> (#22)
+    case 3:
+      -> (#22)
+== ENTRY Connect1stAnnounce
+  #5 IF SubflowResultChoice4 {"SetIndex": 4}
+    case 0:
+      #38 IF SubflowResultChoice2 {"SetIndex": 0}
+        case 0:
+          #33 IF SubflowResultChoice6 {"SetIndex": 13}
+            case 0:
+              #4 CALL Demo_PublicAnnouncement_40_CmnNoNews:Root
+            case 2:
+              #43 MSG TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_10_Rco_Once:210_01
+              #44 CALL Demo_PublicAnnouncement_03_Rco_Once:TownNews_Rco_RemakeWorkshop
+            case 3:
+              #40 MSG TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_10_Rco_Once:161_02
+              #41 CALL Demo_PublicAnnouncement_03_Rco_Once:TownNews_Rco_OfficeRenual
+            case 4:
+              #46 MSG TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_10_Rco_Once:163_00_01
+              #34 CALL Demo_PublicAnnouncement_03_Rco_Once:TownNews_Rco_OfficeOpen
+            case 5:
+              #42 MSG TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_10_Rco_Once:003_03
+        case 1:
+          #36 IF EventFlagSystemBool {"AccessKey": "cLand:TkkFirstLiveReserved"}
+            case ON:
+              #35 MSG TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_11_Sza_Once:301_02
+              #37 CALL Demo_PublicAnnouncement_13_Sza_Once:TownNews_KK1stLive
+            case OFF:
+              #39 CALL Demo_PublicAnnouncement_40_CmnNoNews:Root
+    case 1:
+      #22 IF SubflowResultChoice2 {"SetIndex": 15}
+        case 0:
+          #7 IF SubflowResultChoice2 {"SetIndex": 0}
+            case 0:
+              #6 MSG TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_00_Rco:021
+              #10 CALL Demo_PublicAnnouncement_32_CmnNewsMoveIn:Root
+              #11 CALL Demo_PublicAnnouncement_33_CmnNewsFacilities:Root
+              #13 CALL Demo_PublicAnnouncement_34_CmnNewsMoveOut:Root
+              #12 IF SubflowResultChoice2 {"SetIndex": 0}
+                case 0:
+                  #9 IF SubflowResultChoice5 {"SetIndex": 13}
+                    case 0:
+                      #19 IF SubflowResultChoice4 {"SetIndex": 4}
+                        case 1:
+                          #17 MSG TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_00_Rco:901
+                        case 2:
+                          -> (#17)
+                        case 3:
+                          -> (#17)
+                    case 1:
+                      #14 CALL Demo_PublicAnnouncement_03_Rco_Once:TownNews_Rco_HouseBuild
+                    case 2:
+                      #29 MSG TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_10_Rco_Once:210
+                      #15 CALL Demo_PublicAnnouncement_03_Rco_Once:TownNews_Rco_RemakeWorkshop
+                      #32 CALL Demo_PublicAnnouncement_00_Cmn:Rco_EndMess
+                    case 3:
+                      #31 MSG TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_10_Rco_Once:161_01
+                      #30 CALL Demo_PublicAnnouncement_03_Rco_Once:TownNews_Rco_OfficeRenual
+                      -> (#32)
+                    case 4:
+                      #21 MSG TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_10_Rco_Once:161_01
+                      #20 CALL Demo_PublicAnnouncement_03_Rco_Once:TownNews_Rco_OfficeOpen
+                case 1:
+                  #26 IF EventFlagSystemBool {"AccessKey": "cLand:TkkFirstLiveReserved"}
+                    case ON:
+                      #27 MSG TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_11_Sza_Once:301_01
+                      #28 CALL Demo_PublicAnnouncement_13_Sza_Once:TownNews_KK1stLive
+                    case OFF:
+                      #18 IF SubflowResultChoice4 {"SetIndex": 4}
+                        case 1:
+                          #16 MSG TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_01_Sza:901
+                        case 2:
+                          -> (#16)
+                        case 3:
+                          -> (#16)
+            case 1:
+              #8 MSG TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_01_Sza:021
+              -> (#10)
+        case 1:
+          #23 IF SubflowResultChoice2 {"SetIndex": 0}
+            case 0:
+              #24 MSG TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_00_Rco:022
+              -> (#10)
+            case 1:
+              #25 MSG TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_01_Sza:022
+              -> (#10)
+    case 2:
+      -> (#22)
+    case 3:
+      -> (#22)
+== ENTRY Rco_EndMess
+  #19 IF SubflowResultChoice4 {"SetIndex": 4}
+    case 1:
+      #17 MSG TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_00_Rco:901
+    case 2:
+      -> (#17)
+    case 3:
+      -> (#17)
+== ENTRY NewYearEveHurry
+  #45 MSG TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_01_Sza:007_02

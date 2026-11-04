@@ -1,0 +1,722 @@
+# SNPC_rcm_21_MaterialCollecting (source: decoded EventFlow; bool flag case 0 = ON, case 1 = OFF; #N = event index)
+== ENTRY Root
+  #38 UIMoneyDisappear {}
+  #9 CALL SNPC_rcm_22_MaterialProgressChk:Root
+  #73 CALL SNPC_rcm_23_MaterialBelongingChk:Root
+  #0 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:015
+  #1 IF GeneralTalkChoice3 {}
+    case 0:
+      #27 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:051
+      #39 IF SubflowResultChoice4 {"SetIndex": 0}
+        case 0:
+          #40 CALL SNPC_rcm_21_MaterialCollecting:DonateMaterials_Remain4
+        case 1:
+          #41 CALL SNPC_rcm_21_MaterialCollecting:DonateMaterials_Remain3
+        case 2:
+          #42 CALL SNPC_rcm_21_MaterialCollecting:DonateMaterials_Remain2
+        case 3:
+          #43 CALL SNPC_rcm_21_MaterialCollecting:DonateMaterials_Remain1
+    case 1:
+      #8 CALL SNPC_rcm_21_MaterialCollecting:TalkCollectingProgress
+    case 2:
+      -> (#8)
+== ENTRY TalkCollectingProgress
+  #2 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:101
+  #5 IF SubflowResultChoice4 {"SetIndex": 0}
+    case 0:
+      #3 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:102
+    case 1:
+      #4 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:103_01
+      #57 IF SubflowResultChoice4 {"SetIndex": 3}
+        case 0:
+          #58 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:103_02_01
+        case 1:
+          #59 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:103_02_02
+        case 2:
+          #60 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:103_02_03
+        case 3:
+          #61 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:103_02_04
+    case 2:
+      #7 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:103_01
+      #15 IF SubflowResultChoice6 {"SetIndex": 2}
+        case 0:
+          #16 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:103_03_01
+        case 1:
+          #17 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:103_03_02
+        case 2:
+          #18 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:103_03_03
+        case 3:
+          #19 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:103_03_04
+        case 4:
+          #20 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:103_03_05
+        case 5:
+          #21 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:103_03_06
+    case 3:
+      #6 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:103_01
+      #10 IF SubflowResultChoice4 {"SetIndex": 1}
+        case 0:
+          #11 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:103_04_01
+        case 1:
+          #12 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:103_04_02
+        case 2:
+          #13 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:103_04_03
+        case 3:
+          #14 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:103_04_04
+== ENTRY DonateMaterials_Remain4
+  #44 IF SubflowResultChoice5 {"SetIndex": 10}
+    case 0:
+      #118 CALL SNPC_rcm_21_MaterialCollecting:CantGive
+    case 1:
+      #45 IF SubflowResultChoice4 {"SetIndex": 11}
+        case 0:
+          #46 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:081_01
+          #53 CALL SNPC_rcm_24_MaterialGiveProcess:Root
+          #97 CALL SNPC_rcm_21_MaterialCollecting:GotReward
+        case 1:
+          #47 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:081_02
+          -> (#53)
+        case 2:
+          #48 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:081_03
+          -> (#53)
+        case 3:
+          #49 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:081_04
+          -> (#53)
+    case 2:
+      #82 SetSubflowResult {"SetIndex": 6, "ResultValue": 1}
+      #74 IF SubflowResultChoice6 {"SetIndex": 12}
+        case 0:
+          #76 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:082_01
+          #81 CALL SNPC_rcm_24_MaterialGiveProcess:Root
+          #102 CALL SNPC_rcm_22_MaterialProgressChk:Root
+          #98 CALL SNPC_rcm_21_MaterialCollecting:GotReward
+        case 1:
+          #77 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:082_02
+          -> (#81)
+        case 2:
+          #75 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:082_03
+          -> (#81)
+        case 3:
+          #78 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:082_04
+          -> (#81)
+        case 4:
+          #79 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:082_05
+          -> (#81)
+        case 5:
+          #80 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:082_06
+          -> (#81)
+    case 3:
+      #85 SetSubflowResult {"SetIndex": 6, "ResultValue": 2}
+      #83 IF SubflowResultChoice4 {"SetIndex": 13}
+        case 0:
+          #86 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:083_01
+          #84 CALL SNPC_rcm_24_MaterialGiveProcess:Root
+          #103 CALL SNPC_rcm_22_MaterialProgressChk:Root
+          #99 CALL SNPC_rcm_21_MaterialCollecting:GotReward
+        case 1:
+          #87 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:083_02
+          -> (#84)
+        case 2:
+          #88 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:083_03
+          -> (#84)
+        case 3:
+          #89 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:083_04
+          -> (#84)
+    case 4:
+      #56 SetSubflowResult {"SetIndex": 6, "ResultValue": 3}
+      #54 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:061
+      #55 CALL SNPC_rcm_24_MaterialGiveProcess:Root
+      #104 CALL SNPC_rcm_22_MaterialProgressChk:Root
+      #110 CALL SNPC_rcm_21_MaterialCollecting:GotReward
+== ENTRY DonateMaterials_Remain3
+  #62 IF SubflowResultChoice4 {"SetIndex": 3}
+    case 0:
+      #63 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:071_01
+      #67 IF SubflowResultChoice5 {"SetIndex": 10}
+        case 0:
+          #115 CALL SNPC_rcm_21_MaterialCollecting:CantGive
+        case 1:
+          #68 IF SubflowResultChoice4 {"SetIndex": 3}
+            case 0:
+              #69 IF HasTargetItem {"ItemUniqueId": 2768, "NeedNum": 30}
+                case 0:
+                  #116 CALL SNPC_rcm_21_MaterialCollecting:CantGive
+                case 1:
+                  #111 CALL SNPC_rcm_21_MaterialCollecting:Choice_Give1Material
+            case 1:
+              #70 IF HasTargetItem {"NeedNum": 30, "ItemUniqueId": 2769}
+                case 0:
+                  -> (#116)
+                case 1:
+                  -> (#111)
+            case 2:
+              #72 IF HasTargetItem {"NeedNum": 30, "ItemUniqueId": 2767}
+                case 0:
+                  -> (#116)
+                case 1:
+                  -> (#111)
+            case 3:
+              #71 IF HasTargetItem {"ItemUniqueId": 2511, "NeedNum": 30}
+                case 0:
+                  -> (#116)
+                case 1:
+                  -> (#111)
+        case 2:
+          #112 IF SubflowResultChoice4 {"SetIndex": 3}
+            case 0:
+              #113 IF SubflowResultChoice6 {"SetIndex": 12}
+                case 0:
+                  #123 SetSubflowResult {"SetIndex": 11, "ResultValue": 1}
+                  #124 CALL SNPC_rcm_21_MaterialCollecting:Choice_Give1Material
+                case 1:
+                  #126 SetSubflowResult {"SetIndex": 11, "ResultValue": 2}
+                  -> (#124)
+                case 2:
+                  #127 SetSubflowResult {"SetIndex": 11, "ResultValue": 3}
+                  -> (#124)
+                case 3:
+                  #114 CALL SNPC_rcm_21_MaterialCollecting:Choice_Give2Materials
+                case 4:
+                  -> (#114)
+                case 5:
+                  -> (#114)
+            case 1:
+              #119 IF SubflowResultChoice6 {"SetIndex": 12}
+                case 0:
+                  #137 SetSubflowResult {"SetIndex": 11, "ResultValue": 0}
+                  #138 CALL SNPC_rcm_21_MaterialCollecting:Choice_Give1Material
+                case 1:
+                  #134 CALL SNPC_rcm_21_MaterialCollecting:Choice_Give2Materials
+                case 2:
+                  #125 SetSubflowResult {"SetIndex": 11, "ResultValue": 2}
+                  -> (#138)
+                case 3:
+                  -> (#134)
+                case 4:
+                  #139 SetSubflowResult {"SetIndex": 11, "ResultValue": 3}
+                  -> (#138)
+                case 5:
+                  -> (#134)
+            case 2:
+              #120 IF SubflowResultChoice6 {"SetIndex": 12}
+                case 0:
+                  -> (#134)
+                case 1:
+                  #128 SetSubflowResult {"SetIndex": 11, "ResultValue": 0}
+                  #129 CALL SNPC_rcm_21_MaterialCollecting:Choice_Give1Material
+                case 2:
+                  -> (#134)
+                case 3:
+                  #135 SetSubflowResult {"SetIndex": 11, "ResultValue": 1}
+                  -> (#129)
+                case 4:
+                  -> (#134)
+                case 5:
+                  #136 SetSubflowResult {"SetIndex": 11, "ResultValue": 2}
+                  -> (#129)
+            case 3:
+              #121 IF SubflowResultChoice6 {"SetIndex": 12}
+                case 0:
+                  #122 CALL SNPC_rcm_21_MaterialCollecting:Choice_Give2Materials
+                case 1:
+                  -> (#122)
+                case 2:
+                  #130 SetSubflowResult {"SetIndex": 11, "ResultValue": 0}
+                  #131 CALL SNPC_rcm_21_MaterialCollecting:Choice_Give1Material
+                case 3:
+                  -> (#122)
+                case 4:
+                  #132 SetSubflowResult {"SetIndex": 11, "ResultValue": 1}
+                  -> (#131)
+                case 5:
+                  #133 SetSubflowResult {"SetIndex": 11, "ResultValue": 2}
+                  -> (#131)
+        case 3:
+          #140 IF SubflowResultChoice4 {"SetIndex": 3}
+            case 0:
+              #141 IF SubflowResultChoice4 {"SetIndex": 13}
+                case 0:
+                  #145 SetSubflowResult {"SetIndex": 6, "ResultValue": 2}
+                  #142 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:062
+                  #143 CALL SNPC_rcm_24_MaterialGiveProcess:Root
+                  #144 CALL SNPC_rcm_21_MaterialCollecting:GotReward
+                case 1:
+                  #146 SetSubflowResult {"SetIndex": 12, "ResultValue": 5}
+                  #147 CALL SNPC_rcm_21_MaterialCollecting:Choice_Give2Materials
+                case 2:
+                  #148 SetSubflowResult {"SetIndex": 12, "ResultValue": 4}
+                  -> (#147)
+                case 3:
+                  #149 SetSubflowResult {"SetIndex": 12, "ResultValue": 3}
+                  -> (#147)
+            case 1:
+              #150 IF SubflowResultChoice4 {"SetIndex": 13}
+                case 0:
+                  #151 SetSubflowResult {"SetIndex": 12, "ResultValue": 5}
+                  #153 CALL SNPC_rcm_21_MaterialCollecting:Choice_Give2Materials
+                case 1:
+                  #152 CALL SNPC_rcm_21_MaterialCollecting:Remain3Give3
+                case 2:
+                  #154 SetSubflowResult {"SetIndex": 12, "ResultValue": 2}
+                  -> (#153)
+                case 3:
+                  #155 SetSubflowResult {"SetIndex": 12, "ResultValue": 1}
+                  -> (#153)
+            case 2:
+              #156 IF SubflowResultChoice4 {"SetIndex": 13}
+                case 0:
+                  #158 SetSubflowResult {"SetIndex": 12, "ResultValue": 4}
+                  #159 CALL SNPC_rcm_21_MaterialCollecting:Choice_Give2Materials
+                case 1:
+                  #160 SetSubflowResult {"SetIndex": 12, "ResultValue": 2}
+                  -> (#159)
+                case 2:
+                  #161 CALL SNPC_rcm_21_MaterialCollecting:Remain3Give3
+                case 3:
+                  #163 SetSubflowResult {"SetIndex": 12, "ResultValue": 0}
+                  -> (#159)
+            case 3:
+              #157 IF SubflowResultChoice4 {"SetIndex": 13}
+                case 0:
+                  #164 SetSubflowResult {"SetIndex": 12, "ResultValue": 3}
+                  #165 CALL SNPC_rcm_21_MaterialCollecting:Choice_Give2Materials
+                case 1:
+                  #166 SetSubflowResult {"SetIndex": 12, "ResultValue": 1}
+                  -> (#165)
+                case 2:
+                  #167 SetSubflowResult {"SetIndex": 12, "ResultValue": 0}
+                  -> (#165)
+                case 3:
+                  #162 CALL SNPC_rcm_21_MaterialCollecting:Remain3Give3
+        case 4:
+          #282 CALL SNPC_rcm_21_MaterialCollecting:Remain3Give3HaveAll
+    case 1:
+      #64 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:071_02
+      -> (#67)
+    case 2:
+      #65 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:071_03
+      -> (#67)
+    case 3:
+      #66 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:071_04
+      -> (#67)
+== ENTRY DonateMaterials_Remain2
+  #168 IF SubflowResultChoice6 {"SetIndex": 2}
+    case 0:
+      #169 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:072_01
+      #175 IF SubflowResultChoice5 {"SetIndex": 10}
+        case 0:
+          #176 CALL SNPC_rcm_21_MaterialCollecting:CantGive
+        case 1:
+          #177 IF SubflowResultChoice6 {"SetIndex": 2}
+            case 0:
+              #178 IF SubflowResultChoice4 {"SetIndex": 11}
+                case 0:
+                  #180 CALL SNPC_rcm_21_MaterialCollecting:Choice_Give1Material
+                case 1:
+                  -> (#180)
+                case 2:
+                  #179 CALL SNPC_rcm_21_MaterialCollecting:CantGive
+                case 3:
+                  -> (#179)
+            case 1:
+              #181 IF SubflowResultChoice4 {"SetIndex": 11}
+                case 0:
+                  #183 CALL SNPC_rcm_21_MaterialCollecting:Choice_Give1Material
+                case 1:
+                  #182 CALL SNPC_rcm_21_MaterialCollecting:CantGive
+                case 2:
+                  -> (#183)
+                case 3:
+                  -> (#182)
+            case 2:
+              #184 IF SubflowResultChoice4 {"SetIndex": 11}
+                case 0:
+                  #185 CALL SNPC_rcm_21_MaterialCollecting:Choice_Give1Material
+                case 1:
+                  #186 CALL SNPC_rcm_21_MaterialCollecting:CantGive
+                case 2:
+                  -> (#186)
+                case 3:
+                  -> (#185)
+            case 3:
+              #187 IF SubflowResultChoice4 {"SetIndex": 11}
+                case 0:
+                  #190 CALL SNPC_rcm_21_MaterialCollecting:CantGive
+                case 1:
+                  #191 CALL SNPC_rcm_21_MaterialCollecting:Choice_Give1Material
+                case 2:
+                  -> (#191)
+                case 3:
+                  -> (#190)
+            case 4:
+              #188 IF SubflowResultChoice4 {"SetIndex": 11}
+                case 0:
+                  #193 CALL SNPC_rcm_21_MaterialCollecting:CantGive
+                case 1:
+                  #192 CALL SNPC_rcm_21_MaterialCollecting:Choice_Give1Material
+                case 2:
+                  -> (#193)
+                case 3:
+                  -> (#192)
+            case 5:
+              #189 IF SubflowResultChoice4 {"SetIndex": 11}
+                case 0:
+                  #195 CALL SNPC_rcm_21_MaterialCollecting:CantGive
+                case 1:
+                  -> (#195)
+                case 2:
+                  #194 CALL SNPC_rcm_21_MaterialCollecting:Choice_Give1Material
+                case 3:
+                  -> (#194)
+        case 2:
+          #196 IF SubflowResultChoice6 {"SetIndex": 2}
+            case 0:
+              #197 IF SubflowResultChoice6 {"SetIndex": 12}
+                case 0:
+                  #202 SetSubflowResult {"SetIndex": 6, "ResultValue": 1}
+                  #198 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:062
+                  #199 CALL SNPC_rcm_24_MaterialGiveProcess:Root
+                  #200 CALL SNPC_rcm_22_MaterialProgressChk:Root
+                  #201 CALL SNPC_rcm_21_MaterialCollecting:GotReward
+                case 1:
+                  #203 SetSubflowResult {"SetIndex": 11, "ResultValue": 0}
+                  #204 CALL SNPC_rcm_21_MaterialCollecting:Choice_Give1Material
+                case 2:
+                  -> (#203)
+                case 3:
+                  #205 SetSubflowResult {"SetIndex": 11, "ResultValue": 1}
+                  -> (#204)
+                case 4:
+                  -> (#205)
+                case 5:
+                  #206 CALL SNPC_rcm_21_MaterialCollecting:CantGive
+            case 1:
+              #207 IF SubflowResultChoice6 {"SetIndex": 12}
+                case 0:
+                  #208 SetSubflowResult {"SetIndex": 11, "ResultValue": 0}
+                  #209 CALL SNPC_rcm_21_MaterialCollecting:Choice_Give1Material
+                case 1:
+                  #214 CALL SNPC_rcm_21_MaterialCollecting:Remain2Give2
+                case 2:
+                  -> (#208)
+                case 3:
+                  #210 SetSubflowResult {"SetIndex": 11, "ResultValue": 2}
+                  -> (#209)
+                case 4:
+                  -> (#206)
+                case 5:
+                  -> (#210)
+            case 2:
+              #211 IF SubflowResultChoice6 {"SetIndex": 12}
+                case 0:
+                  #212 SetSubflowResult {"SetIndex": 11, "ResultValue": 0}
+                  #213 CALL SNPC_rcm_21_MaterialCollecting:Choice_Give1Material
+                case 1:
+                  -> (#212)
+                case 2:
+                  -> (#214)
+                case 3:
+                  #215 CALL SNPC_rcm_21_MaterialCollecting:CantGive
+                case 4:
+                  #216 SetSubflowResult {"SetIndex": 11, "ResultValue": 3}
+                  -> (#213)
+                case 5:
+                  -> (#216)
+            case 3:
+              #217 IF SubflowResultChoice6 {"SetIndex": 12}
+                case 0:
+                  #218 SetSubflowResult {"SetIndex": 11, "ResultValue": 1}
+                  #219 CALL SNPC_rcm_21_MaterialCollecting:Choice_Give1Material
+                case 1:
+                  #220 SetSubflowResult {"SetIndex": 11, "ResultValue": 2}
+                  -> (#219)
+                case 2:
+                  -> (#215)
+                case 3:
+                  #221 CALL SNPC_rcm_21_MaterialCollecting:Remain2Give2
+                case 4:
+                  -> (#218)
+                case 5:
+                  -> (#218)
+            case 4:
+              #222 IF SubflowResultChoice6 {"SetIndex": 12}
+                case 0:
+                  #223 SetSubflowResult {"SetIndex": 11, "ResultValue": 1}
+                  #224 CALL SNPC_rcm_21_MaterialCollecting:Choice_Give1Material
+                case 1:
+                  #225 CALL SNPC_rcm_21_MaterialCollecting:CantGive
+                case 2:
+                  #226 SetSubflowResult {"SetIndex": 11, "ResultValue": 3}
+                  -> (#224)
+                case 3:
+                  -> (#223)
+                case 4:
+                  -> (#221)
+                case 5:
+                  -> (#226)
+            case 5:
+              #227 IF SubflowResultChoice6 {"SetIndex": 12}
+                case 0:
+                  -> (#225)
+                case 1:
+                  #229 SetSubflowResult {"SetIndex": 11, "ResultValue": 2}
+                  #230 CALL SNPC_rcm_21_MaterialCollecting:Choice_Give1Material
+                case 2:
+                  #231 SetSubflowResult {"SetIndex": 11, "ResultValue": 3}
+                  -> (#230)
+                case 3:
+                  -> (#229)
+                case 4:
+                  -> (#231)
+                case 5:
+                  #228 CALL SNPC_rcm_21_MaterialCollecting:Remain2Give2
+        case 3:
+          #233 IF SubflowResultChoice6 {"SetIndex": 2}
+            case 0:
+              #232 IF SubflowResultChoice4 {"SetIndex": 13}
+                case 0:
+                  #235 SetSubflowResult {"SetIndex": 11, "ResultValue": 1}
+                  #234 CALL SNPC_rcm_21_MaterialCollecting:Choice_Give1Material
+                case 1:
+                  #236 SetSubflowResult {"SetIndex": 11, "ResultValue": 0}
+                  -> (#234)
+                case 2:
+                  #237 CALL SNPC_rcm_21_MaterialCollecting:Remain2Give2
+                case 3:
+                  -> (#237)
+            case 1:
+              #238 IF SubflowResultChoice4 {"SetIndex": 13}
+                case 0:
+                  #239 SetSubflowResult {"SetIndex": 11, "ResultValue": 2}
+                  #240 CALL SNPC_rcm_21_MaterialCollecting:Choice_Give1Material
+                case 1:
+                  -> (#237)
+                case 2:
+                  #242 SetSubflowResult {"SetIndex": 11, "ResultValue": 0}
+                  -> (#240)
+                case 3:
+                  -> (#237)
+            case 2:
+              #243 IF SubflowResultChoice4 {"SetIndex": 13}
+                case 0:
+                  #244 SetSubflowResult {"SetIndex": 11, "ResultValue": 3}
+                  #245 CALL SNPC_rcm_21_MaterialCollecting:Choice_Give1Material
+                case 1:
+                  #241 CALL SNPC_rcm_21_MaterialCollecting:Remain2Give2
+                case 2:
+                  #246 SetSubflowResult {"SetIndex": 11, "ResultValue": 0}
+                  -> (#245)
+                case 3:
+                  -> (#241)
+            case 3:
+              #247 IF SubflowResultChoice4 {"SetIndex": 13}
+                case 0:
+                  -> (#241)
+                case 1:
+                  #248 SetSubflowResult {"SetIndex": 11, "ResultValue": 2}
+                  #249 CALL SNPC_rcm_21_MaterialCollecting:Choice_Give1Material
+                case 2:
+                  #250 SetSubflowResult {"SetIndex": 11, "ResultValue": 1}
+                  -> (#249)
+                case 3:
+                  -> (#241)
+            case 4:
+              #251 IF SubflowResultChoice4 {"SetIndex": 13}
+                case 0:
+                  #253 CALL SNPC_rcm_21_MaterialCollecting:Remain2Give2
+                case 1:
+                  #254 SetSubflowResult {"SetIndex": 11, "ResultValue": 3}
+                  #255 CALL SNPC_rcm_21_MaterialCollecting:Choice_Give1Material
+                case 2:
+                  -> (#253)
+                case 3:
+                  #256 SetSubflowResult {"SetIndex": 11, "ResultValue": 1}
+                  -> (#255)
+            case 5:
+              #252 IF SubflowResultChoice4 {"SetIndex": 13}
+                case 0:
+                  -> (#253)
+                case 1:
+                  -> (#253)
+                case 2:
+                  #257 SetSubflowResult {"SetIndex": 11, "ResultValue": 3}
+                  #259 CALL SNPC_rcm_21_MaterialCollecting:Choice_Give1Material
+                case 3:
+                  #258 SetSubflowResult {"SetIndex": 11, "ResultValue": 2}
+                  -> (#259)
+        case 4:
+          #276 CALL SNPC_rcm_21_MaterialCollecting:Remain2Give2
+    case 1:
+      #170 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:072_02
+      -> (#175)
+    case 2:
+      #171 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:072_03
+      -> (#175)
+    case 3:
+      #172 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:072_04
+      -> (#175)
+    case 4:
+      #173 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:072_05
+      -> (#175)
+    case 5:
+      #174 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:072_06
+      -> (#175)
+== ENTRY DonateMaterials_Remain1
+  #22 IF SubflowResultChoice4 {"SetIndex": 1}
+    case 0:
+      #23 IF HasTargetItem {"ItemUniqueId": 2768, "NeedNum": 30}
+        case 0:
+          #277 CALL SNPC_rcm_23_MaterialBelongingChk:SetWood
+          #28 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:052_01
+          #50 CALL SNPC_rcm_24_MaterialGiveProcess:Root
+          #260 CALL SNPC_rcm_21_MaterialCollecting:GotReward
+        case 1:
+          #30 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:053_01
+          #34 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:053_05
+    case 1:
+      #24 IF HasTargetItem {"NeedNum": 30, "ItemUniqueId": 2769}
+        case 0:
+          #278 CALL SNPC_rcm_23_MaterialBelongingChk:SetHardWood
+          #51 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:052_02
+          -> (#50)
+        case 1:
+          #31 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:053_02
+          #35 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:053_05
+    case 2:
+      #26 IF HasTargetItem {"NeedNum": 30, "ItemUniqueId": 2767}
+        case 0:
+          #279 CALL SNPC_rcm_23_MaterialBelongingChk:SetSoftWood
+          #52 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:052_03
+          -> (#50)
+        case 1:
+          #32 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:053_03
+          #36 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:053_05
+    case 3:
+      #25 IF HasTargetItem {"ItemUniqueId": 2511, "NeedNum": 30}
+        case 0:
+          #280 CALL SNPC_rcm_23_MaterialBelongingChk:SetIron
+          #29 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:052_04
+          -> (#50)
+        case 1:
+          #33 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:053_04
+          #37 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:053_05
+== ENTRY GotReward
+  #261 CALL SNPC_rcm_22_MaterialProgressChk:Root
+  #105 IF SubflowResultChoice5 {"SetIndex": 0}
+    case 1:
+      #106 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:092_01
+      #93 IF SubflowResultChoice3 {"SetIndex": 6}
+        case 0:
+          #94 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:093_01
+          #90 NpcDelivery {"Command": 1, "Option": "Default"}
+          #91 CALL SNPC_rcm_22_MaterialProgressChk:Root
+          #92 IF SubflowResultChoice4 {"SetIndex": 0}
+            case 1:
+              #100 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:094_01
+            case 2:
+              -> (#100)
+            case 3:
+              #101 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:094_02
+        case 1:
+          #95 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:093_02
+          -> (#90)
+        case 2:
+          #96 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:093_03
+          -> (#90)
+    case 2:
+      #107 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:092_02
+      -> (#93)
+    case 3:
+      #108 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:092_03
+      -> (#93)
+    case 4:
+      #109 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:055
+      #262 IF SubflowResultChoice4 {"SetIndex": 6}
+        case 0:
+          #267 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:056_04
+          #269 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:058_01
+          #271 SetDeliveryItemAtRandom {"ItemUniqueID": 2756, "ApplyToSave": true, "ItemRemakeDecideType": "cVillageRemakePattern", "RemakePatternIndex": 0}
+          #272 NpcDelivery {"Command": 1, "Option": "Keep"}
+          #270 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:058_02
+          #273 NpcDelivery {"Command": 2, "Option": "Default"}
+          #274 EventFlagSystemOn {"AccessKey": "cPlayer:Prologue4RcmGetTent"}
+          #275 EventFlagSystemOn {"AccessKey": "cLand:RcmShopMaterialComplete"}
+          #281 EventFlagSystemSet {"AccessKey": "cLand:OpeningSeqBGMChangeCounter", "SetNum": 10}
+        case 1:
+          #266 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:056_03
+          #263 NpcDelivery {"Command": 1, "Option": "Default"}
+          #268 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:057
+          -> (#269)
+        case 2:
+          #265 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:056_02
+          -> (#263)
+        case 3:
+          #264 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:056_01
+          -> (#263)
+== ENTRY Choice_Give1Material
+  #45 IF SubflowResultChoice4 {"SetIndex": 11}
+    case 0:
+      #46 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:081_01
+      #53 CALL SNPC_rcm_24_MaterialGiveProcess:Root
+      #97 CALL SNPC_rcm_21_MaterialCollecting:GotReward
+    case 1:
+      #47 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:081_02
+      -> (#53)
+    case 2:
+      #48 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:081_03
+      -> (#53)
+    case 3:
+      #49 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:081_04
+      -> (#53)
+== ENTRY Choice_Give2Materials
+  #82 SetSubflowResult {"SetIndex": 6, "ResultValue": 1}
+  #74 IF SubflowResultChoice6 {"SetIndex": 12}
+    case 0:
+      #76 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:082_01
+      #81 CALL SNPC_rcm_24_MaterialGiveProcess:Root
+      #102 CALL SNPC_rcm_22_MaterialProgressChk:Root
+      #98 CALL SNPC_rcm_21_MaterialCollecting:GotReward
+    case 1:
+      #77 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:082_02
+      -> (#81)
+    case 2:
+      #75 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:082_03
+      -> (#81)
+    case 3:
+      #78 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:082_04
+      -> (#81)
+    case 4:
+      #79 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:082_05
+      -> (#81)
+    case 5:
+      #80 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:082_06
+      -> (#81)
+== ENTRY CantGive
+  #117 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:091
+== ENTRY Remain3Give3
+  #145 SetSubflowResult {"SetIndex": 6, "ResultValue": 2}
+  #142 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:062
+  #143 CALL SNPC_rcm_24_MaterialGiveProcess:Root
+  #144 CALL SNPC_rcm_21_MaterialCollecting:GotReward
+== ENTRY Remain2Give2
+  #202 SetSubflowResult {"SetIndex": 6, "ResultValue": 1}
+  #198 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:062
+  #199 CALL SNPC_rcm_24_MaterialGiveProcess:Root
+  #200 CALL SNPC_rcm_22_MaterialProgressChk:Root
+  #201 CALL SNPC_rcm_21_MaterialCollecting:GotReward
+== ENTRY Remain3Give3HaveAll
+  #286 SetSubflowResult {"SetIndex": 6, "ResultValue": 2}
+  #283 MSG TalkSNpc/rcm/SP_rcm_02_TentRequest:062
+  #287 IF SubflowResultChoice4 {"SetIndex": 3}
+    case 0:
+      #288 SetSubflowResult {"ResultValue": 0, "SetIndex": 13}
+      #284 CALL SNPC_rcm_24_MaterialGiveProcess:Root
+      #285 CALL SNPC_rcm_21_MaterialCollecting:GotReward
+    case 1:
+      #289 SetSubflowResult {"SetIndex": 13, "ResultValue": 1}
+      -> (#284)
+    case 2:
+      #290 SetSubflowResult {"SetIndex": 13, "ResultValue": 2}
+      -> (#284)
+    case 3:
+      #291 SetSubflowResult {"SetIndex": 13, "ResultValue": 3}
+      -> (#284)

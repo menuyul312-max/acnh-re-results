@@ -1,0 +1,309 @@
+# SNPC_rco_05_ChkCeremony (source: decoded EventFlow; bool flag case 0 = ON, case 1 = OFF; #N = event index)
+== ENTRY Root
+  #60 EventFlagSystemSet {"AccessKey": "cLandTemp:CountEnableCeremony", "SetNum": 0}
+  #6 CALL SNPC_rco_05_ChkCeremony:ChkCeremonyOffice
+  #16 CALL SNPC_rco_05_ChkCeremony:ChkCeremonyMarket
+  #21 CALL SNPC_rco_05_ChkCeremony:ChkCeremonyMuseum
+  #29 CALL SNPC_rco_05_ChkCeremony:ChkCeremonyTailor
+  #30 CALL SNPC_rco_05_ChkCeremony:ChkCeremonyCampsite
+  #43 CALL SNPC_rco_05_ChkCeremony:ChkCeremonyBridge
+  #44 CALL SNPC_rco_05_ChkCeremony:ChkCeremonySlope
+== ENTRY Office
+  #80 SetSubflowResult {"SetIndex": 7, "ResultValue": 0}
+  #70 MSG TalkSNpc/rco/SP_rco_08_Ceremony:102_01
+  #88 CALL SNPC_rco_05_ChkCeremony:Rco_Ceremony_CmnSel
+== ENTRY Market1
+  #81 SetSubflowResult {"SetIndex": 7, "ResultValue": 1}
+  #72 MSG TalkSNpc/rco/SP_rco_08_Ceremony:102_02
+  #88 CALL SNPC_rco_05_ChkCeremony:Rco_Ceremony_CmnSel
+== ENTRY Market2
+  #82 SetSubflowResult {"SetIndex": 7, "ResultValue": 2}
+  #73 MSG TalkSNpc/rco/SP_rco_08_Ceremony:102_03
+  #88 CALL SNPC_rco_05_ChkCeremony:Rco_Ceremony_CmnSel
+== ENTRY Museum
+  #83 SetSubflowResult {"SetIndex": 7, "ResultValue": 3}
+  #74 MSG TalkSNpc/rco/SP_rco_08_Ceremony:102_04
+  #88 CALL SNPC_rco_05_ChkCeremony:Rco_Ceremony_CmnSel
+== ENTRY Tailor
+  #84 SetSubflowResult {"SetIndex": 7, "ResultValue": 4}
+  #75 MSG TalkSNpc/rco/SP_rco_08_Ceremony:102_05
+  #88 CALL SNPC_rco_05_ChkCeremony:Rco_Ceremony_CmnSel
+== ENTRY CampSite
+  #85 SetSubflowResult {"SetIndex": 7, "ResultValue": 5}
+  #77 MSG TalkSNpc/rco/SP_rco_08_Ceremony:102_06
+  #88 CALL SNPC_rco_05_ChkCeremony:Rco_Ceremony_CmnSel
+== ENTRY Bridge
+  #86 SetSubflowResult {"SetIndex": 7, "ResultValue": 6}
+  #78 MSG TalkSNpc/rco/SP_rco_08_Ceremony:102_07
+  #88 CALL SNPC_rco_05_ChkCeremony:Rco_Ceremony_CmnSel
+== ENTRY Slope
+  #87 SetSubflowResult {"SetIndex": 7, "ResultValue": 7}
+  #79 MSG TalkSNpc/rco/SP_rco_08_Ceremony:102_08
+  #88 CALL SNPC_rco_05_ChkCeremony:Rco_Ceremony_CmnSel
+== ENTRY ChkCeremonyOffice
+  #5 IF EventFlagSystemBool {"AccessKey": "cPlayer:HerdCeremonyOffice"}
+    case OFF:
+      #4 IF EventFlagSystemBool {"AccessKey": "cLand:BuiltTownOffice"}
+        case ON:
+          #3 IF FacilityOpenPastDays {"Days": 8, "CountFacilityType": "cOffice"}
+            case 0:
+              #7 SetSubflowResult {"ResultValue": 1, "SetIndex": 14}
+              #26 SetSubflowResult {"ResultValue": 1, "SetIndex": 15}
+              #61 EventFlagSystemAdd {"AccessKey": "cLandTemp:CountEnableCeremony", "AddNum": 1}
+== ENTRY ChkCeremonyMarket
+  #10 IF ShopLevel {}
+    case 1:
+      #11 IF EventFlagSystemBool {"AccessKey": "cPlayer:HeldCeremonyMarket1"}
+        case OFF:
+          #8 IF FacilityOpenPastDays {"CountFacilityType": "cMarket1", "Days": 8}
+            case 0:
+              #13 SetSubflowResult {"ResultValue": 1, "SetIndex": 13}
+              #15 SetSubflowResult {"ResultValue": 1, "SetIndex": 15}
+              #62 EventFlagSystemAdd {"AccessKey": "cLandTemp:CountEnableCeremony", "AddNum": 1}
+    case 2:
+      #12 IF EventFlagSystemBool {"AccessKey": "cPlayer:HeldCeremonyMarket2"}
+        case OFF:
+          #9 IF FacilityOpenPastDays {"CountFacilityType": "cMarket2", "Days": 8}
+            case 0:
+              #14 SetSubflowResult {"SetIndex": 13, "ResultValue": 2}
+              -> (#15)
+== ENTRY ChkCeremonyMuseum
+  #18 IF EventFlagSystemBool {"AccessKey": "cPlayer:HeldCeremonyMuseum"}
+    case OFF:
+      #19 IF EventFlagSystemBool {"AccessKey": "cLand:Museum2Built"}
+        case ON:
+          #17 IF FacilityOpenPastDays {"Days": 8, "CountFacilityType": "cMuseum"}
+            case 0:
+              #20 SetSubflowResult {"ResultValue": 1, "SetIndex": 12}
+              #27 SetSubflowResult {"ResultValue": 1, "SetIndex": 15}
+              #63 EventFlagSystemAdd {"AccessKey": "cLandTemp:CountEnableCeremony", "AddNum": 1}
+== ENTRY ChkCeremonyTailor
+  #22 IF EventFlagSystemBool {"AccessKey": "cPlayer:HeldCeremonyTailor"}
+    case OFF:
+      #23 IF EventFlagSystemBool {"AccessKey": "cLand:TailorBuilt"}
+        case ON:
+          #24 IF FacilityOpenPastDays {"Days": 8, "CountFacilityType": "cTailor"}
+            case 0:
+              #25 SetSubflowResult {"ResultValue": 1, "SetIndex": 11}
+              #28 SetSubflowResult {"ResultValue": 1, "SetIndex": 15}
+              #64 EventFlagSystemAdd {"AccessKey": "cLandTemp:CountEnableCeremony", "AddNum": 1}
+== ENTRY ChkCeremonyCampsite
+  #32 IF EventFlagSystemBool {"AccessKey": "cPlayer:HeldCeremonyCampSite"}
+    case OFF:
+      #31 IF EventFlagSystemBool {"AccessKey": "cLand:CampSiteBuilt"}
+        case ON:
+          #55 IF FacilityOpenPastDays {"Days": 8, "CountFacilityType": "cCampSite"}
+            case 0:
+              #33 SetSubflowResult {"ResultValue": 1, "SetIndex": 10}
+              #34 SetSubflowResult {"ResultValue": 1, "SetIndex": 15}
+              #65 EventFlagSystemAdd {"AccessKey": "cLandTemp:CountEnableCeremony", "AddNum": 1}
+== ENTRY ChkCeremonyBridge
+  #36 IF EventFlagSystemBool {"AccessKey": "cPlayer:HeldCeremonyBridge"}
+    case OFF:
+      #35 IF EventFlagSystemBool {"AccessKey": "cLand:CeremonyBuildBridge"}
+        case ON:
+          #37 SetSubflowResult {"ResultValue": 1, "SetIndex": 9}
+          #38 SetSubflowResult {"ResultValue": 1, "SetIndex": 15}
+          #66 EventFlagSystemAdd {"AccessKey": "cLandTemp:CountEnableCeremony", "AddNum": 1}
+== ENTRY ChkCeremonySlope
+  #42 IF EventFlagSystemBool {"AccessKey": "cPlayer:HeldCeremonySlope"}
+    case OFF:
+      #41 IF EventFlagSystemBool {"AccessKey": "cLand:CeremonyBuildSlope"}
+        case ON:
+          #39 SetSubflowResult {"ResultValue": 1, "SetIndex": 8}
+          #40 SetSubflowResult {"ResultValue": 1, "SetIndex": 15}
+          #67 EventFlagSystemAdd {"AccessKey": "cLandTemp:CountEnableCeremony", "AddNum": 1}
+== ENTRY RcoAttendCeremony
+  #69 MSG TalkSNpc/rco/SP_rco_08_Ceremony:101
+  #105 IF EventFlagSystemInt {"AccessKey": "cLandTemp:CountEnableCeremony", "FlagCheckType": 3, "Border": 6}
+    case 0:
+      #106 MSG TalkSNpc/rco/SP_rco_08_Ceremony:112
+      #107 IF GeneralTalkChoice3 {}
+        case 0:
+          #109 SetSubflowResult {"SetIndex": 7, "ResultValue": 0}
+          #110 CALL SNPC_rco_05_ChkCeremony:Rco_Ceremony_Attend
+        case 1:
+          #111 IF SubflowResultChoice2 {"SetIndex": 9}
+            case 0:
+              #113 MSG TalkSNpc/rco/SP_rco_08_Ceremony:114
+              #115 IF GeneralTalkChoice6 {}
+                case 0:
+                  #122 IF SubflowResultChoice3 {"SetIndex": 13}
+                    case 1:
+                      #123 SetSubflowResult {"SetIndex": 7, "ResultValue": 1}
+                      #117 CALL SNPC_rco_05_ChkCeremony:Rco_Ceremony_Attend
+                    case 2:
+                      #118 SetSubflowResult {"SetIndex": 7, "ResultValue": 2}
+                      -> (#117)
+                case 1:
+                  #119 SetSubflowResult {"SetIndex": 7, "ResultValue": 3}
+                  -> (#117)
+                case 2:
+                  #120 SetSubflowResult {"SetIndex": 7, "ResultValue": 4}
+                  -> (#117)
+                case 3:
+                  #121 SetSubflowResult {"SetIndex": 7, "ResultValue": 5}
+                  -> (#117)
+                case 4:
+                  #124 IF SubflowResultChoice2 {"SetIndex": 9}
+                    case 0:
+                      #114 SetSubflowResult {"SetIndex": 7, "ResultValue": 7}
+                      -> (#117)
+                    case 1:
+                      #125 SetSubflowResult {"SetIndex": 7, "ResultValue": 6}
+                      -> (#117)
+                case 5:
+                  #116 CALL SNPC_rco_05_ChkCeremony:Rco_Ceremony_Multi_Cancel
+            case 1:
+              #112 MSG TalkSNpc/rco/SP_rco_08_Ceremony:113
+              -> (#115)
+        case 2:
+          #108 MSG TalkSNpc/rco/SP_rco_08_Ceremony:203_03
+          #141 IF OfficeLevel {}
+            case 2:
+              #140 CALL SNPC_rco_00_Common:Rco_Office_CmnSelAgain
+    case 1:
+      #68 IF EventFlagSystemInt {"AccessKey": "cLandTemp:CountEnableCeremony", "Border": 2, "FlagCheckType": 3}
+        case 0:
+          #139 SetCeremonyChoice {}
+          #126 MSG TalkSNpc/rco/SP_rco_08_Ceremony:111
+          #138 IF SelectCeremony {}
+            case 0:
+              #137 SetSubflowResult {"SetIndex": 7, "ResultValue": 0}
+              #136 CALL SNPC_rco_05_ChkCeremony:Rco_Ceremony_Attend
+            case 1:
+              #133 IF SubflowResultChoice3 {"SetIndex": 13}
+                case 1:
+                  #134 SetSubflowResult {"SetIndex": 7, "ResultValue": 1}
+                  -> (#136)
+                case 2:
+                  #129 SetSubflowResult {"SetIndex": 7, "ResultValue": 2}
+                  -> (#136)
+            case 2:
+              #130 SetSubflowResult {"SetIndex": 7, "ResultValue": 3}
+              -> (#136)
+            case 3:
+              #131 SetSubflowResult {"SetIndex": 7, "ResultValue": 4}
+              -> (#136)
+            case 4:
+              #132 SetSubflowResult {"SetIndex": 7, "ResultValue": 5}
+              -> (#136)
+            case 5:
+              #135 SetSubflowResult {"SetIndex": 7, "ResultValue": 6}
+              -> (#136)
+            case 6:
+              #127 SetSubflowResult {"SetIndex": 7, "ResultValue": 7}
+              -> (#136)
+            case 7:
+              #128 CALL SNPC_rco_05_ChkCeremony:Rco_Ceremony_Multi_Cancel
+        case 1:
+          #45 IF SubflowResultChoice2 {"SetIndex": 14}
+            case 0:
+              #47 IF SubflowResultChoice3 {"SetIndex": 13}
+                case 0:
+                  #50 IF SubflowResultChoice2 {"SetIndex": 12}
+                    case 0:
+                      #52 IF SubflowResultChoice2 {"SetIndex": 11}
+                        case 0:
+                          #53 IF SubflowResultChoice2 {"SetIndex": 10}
+                            case 0:
+                              #54 IF SubflowResultChoice2 {"SetIndex": 9}
+                                case 0:
+                                  #59 CALL SNPC_rco_05_ChkCeremony:Slope
+                                case 1:
+                                  #58 CALL SNPC_rco_05_ChkCeremony:Bridge
+                            case 1:
+                              #57 CALL SNPC_rco_05_ChkCeremony:CampSite
+                        case 1:
+                          #56 CALL SNPC_rco_05_ChkCeremony:Tailor
+                    case 1:
+                      #51 CALL SNPC_rco_05_ChkCeremony:Museum
+                case 1:
+                  #48 CALL SNPC_rco_05_ChkCeremony:Market1
+                case 2:
+                  #49 CALL SNPC_rco_05_ChkCeremony:Market2
+            case 1:
+              #46 CALL SNPC_rco_05_ChkCeremony:Office
+== ENTRY Rco_Ceremony_CmnSel
+  #2 IF GeneralTalkChoice2 {}
+    case 0:
+      #90 MSG TalkSNpc/rco/SP_rco_08_Ceremony:202
+      #89 IF SubflowResultChoice8 {"SetIndex": 7}
+        case 0:
+          #71 EventFlagSystemOn {"AccessKey": "cPlayer:HerdCeremonyOffice"}
+          #0 SystemRequestChangeStage {"TargetStage": "cMainFieldCeremonyOffice", "FadeOutKindString": "cCircle", "FadeInKindString": "cCircle", "FadeColorString": "cBlack", "FadeOutSpeed": 1.0, "FadeInSpeed": 1.0}
+        case 1:
+          #92 EventFlagSystemOn {"AccessKey": "cPlayer:HeldCeremonyMarket1"}
+          #91 SystemRequestChangeStage {"TargetStage": "cMainFieldCeremonyMarket", "FadeOutKindString": "cCircle", "FadeInKindString": "cCircle", "FadeColorString": "cBlack", "FadeOutSpeed": 1.0, "FadeInSpeed": 1.0}
+        case 2:
+          #93 EventFlagSystemOn {"AccessKey": "cPlayer:HeldCeremonyMarket2"}
+          -> (#91)
+        case 3:
+          #95 EventFlagSystemOn {"AccessKey": "cPlayer:HeldCeremonyMuseum"}
+          #94 SystemRequestChangeStage {"TargetStage": "cMainFieldCeremonyMuseum", "FadeOutKindString": "cCircle", "FadeInKindString": "cCircle", "FadeColorString": "cBlack", "FadeOutSpeed": 1.0, "FadeInSpeed": 1.0}
+        case 4:
+          #97 EventFlagSystemOn {"AccessKey": "cPlayer:HeldCeremonyTailor"}
+          #96 SystemRequestChangeStage {"TargetStage": "cMainFieldCeremonyTailor", "FadeOutKindString": "cCircle", "FadeInKindString": "cCircle", "FadeColorString": "cBlack", "FadeOutSpeed": 1.0, "FadeInSpeed": 1.0}
+        case 5:
+          #76 EventFlagSystemOn {"AccessKey": "cPlayer:HeldCeremonyCampSite"}
+          #1 SystemRequestChangeStage {"TargetStage": "cMainFieldCeremonyCampSite", "FadeOutKindString": "cCircle", "FadeInKindString": "cCircle", "FadeColorString": "cBlack", "FadeOutSpeed": 1.0, "FadeInSpeed": 1.0}
+        case 6:
+          #99 EventFlagSystemOn {"AccessKey": "cPlayer:HeldCeremonyBridge"}
+          #98 SystemRequestChangeStage {"TargetStage": "cMainFieldCeremonyBridge", "FadeOutKindString": "cCircle", "FadeInKindString": "cCircle", "FadeColorString": "cBlack", "FadeOutSpeed": 1.0, "FadeInSpeed": 1.0}
+        case 7:
+          #101 EventFlagSystemOn {"AccessKey": "cPlayer:HeldCeremonySlope"}
+          #100 SystemRequestChangeStage {"TargetStage": "cMainFieldCeremonySlope", "FadeOutKindString": "cCircle", "FadeInKindString": "cCircle", "FadeColorString": "cBlack", "FadeOutSpeed": 1.0, "FadeInSpeed": 1.0}
+    case 1:
+      #102 IF SubflowResultChoice8 {"SetIndex": 7}
+        case 0:
+          #103 MSG TalkSNpc/rco/SP_rco_08_Ceremony:203_01
+          #143 IF OfficeLevel {}
+            case 2:
+              #142 CALL SNPC_rco_00_Common:Rco_Office_CmnSelAgain
+        case 1:
+          -> (#103)
+        case 2:
+          -> (#103)
+        case 3:
+          -> (#103)
+        case 4:
+          -> (#103)
+        case 5:
+          -> (#103)
+        case 6:
+          #104 MSG TalkSNpc/rco/SP_rco_08_Ceremony:203_02
+          -> (#143)
+        case 7:
+          -> (#104)
+== ENTRY Rco_Ceremony_Attend
+  #90 MSG TalkSNpc/rco/SP_rco_08_Ceremony:202
+  #89 IF SubflowResultChoice8 {"SetIndex": 7}
+    case 0:
+      #71 EventFlagSystemOn {"AccessKey": "cPlayer:HerdCeremonyOffice"}
+      #0 SystemRequestChangeStage {"TargetStage": "cMainFieldCeremonyOffice", "FadeOutKindString": "cCircle", "FadeInKindString": "cCircle", "FadeColorString": "cBlack", "FadeOutSpeed": 1.0, "FadeInSpeed": 1.0}
+    case 1:
+      #92 EventFlagSystemOn {"AccessKey": "cPlayer:HeldCeremonyMarket1"}
+      #91 SystemRequestChangeStage {"TargetStage": "cMainFieldCeremonyMarket", "FadeOutKindString": "cCircle", "FadeInKindString": "cCircle", "FadeColorString": "cBlack", "FadeOutSpeed": 1.0, "FadeInSpeed": 1.0}
+    case 2:
+      #93 EventFlagSystemOn {"AccessKey": "cPlayer:HeldCeremonyMarket2"}
+      -> (#91)
+    case 3:
+      #95 EventFlagSystemOn {"AccessKey": "cPlayer:HeldCeremonyMuseum"}
+      #94 SystemRequestChangeStage {"TargetStage": "cMainFieldCeremonyMuseum", "FadeOutKindString": "cCircle", "FadeInKindString": "cCircle", "FadeColorString": "cBlack", "FadeOutSpeed": 1.0, "FadeInSpeed": 1.0}
+    case 4:
+      #97 EventFlagSystemOn {"AccessKey": "cPlayer:HeldCeremonyTailor"}
+      #96 SystemRequestChangeStage {"TargetStage": "cMainFieldCeremonyTailor", "FadeOutKindString": "cCircle", "FadeInKindString": "cCircle", "FadeColorString": "cBlack", "FadeOutSpeed": 1.0, "FadeInSpeed": 1.0}
+    case 5:
+      #76 EventFlagSystemOn {"AccessKey": "cPlayer:HeldCeremonyCampSite"}
+      #1 SystemRequestChangeStage {"TargetStage": "cMainFieldCeremonyCampSite", "FadeOutKindString": "cCircle", "FadeInKindString": "cCircle", "FadeColorString": "cBlack", "FadeOutSpeed": 1.0, "FadeInSpeed": 1.0}
+    case 6:
+      #99 EventFlagSystemOn {"AccessKey": "cPlayer:HeldCeremonyBridge"}
+      #98 SystemRequestChangeStage {"TargetStage": "cMainFieldCeremonyBridge", "FadeOutKindString": "cCircle", "FadeInKindString": "cCircle", "FadeColorString": "cBlack", "FadeOutSpeed": 1.0, "FadeInSpeed": 1.0}
+    case 7:
+      #101 EventFlagSystemOn {"AccessKey": "cPlayer:HeldCeremonySlope"}
+      #100 SystemRequestChangeStage {"TargetStage": "cMainFieldCeremonySlope", "FadeOutKindString": "cCircle", "FadeInKindString": "cCircle", "FadeColorString": "cBlack", "FadeOutSpeed": 1.0, "FadeInSpeed": 1.0}
+== ENTRY Rco_Ceremony_Multi_Cancel
+  #108 MSG TalkSNpc/rco/SP_rco_08_Ceremony:203_03
+  #141 IF OfficeLevel {}
+    case 2:
+      #140 CALL SNPC_rco_00_Common:Rco_Office_CmnSelAgain

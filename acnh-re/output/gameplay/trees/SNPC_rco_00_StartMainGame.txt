@@ -1,0 +1,123 @@
+# SNPC_rco_00_StartMainGame (source: decoded EventFlow; bool flag case 0 = ON, case 1 = OFF; #N = event index)
+== ENTRY Root
+  #1 MSG TalkSNpc/rco/SP_rco_01_StartingMaingame:002
+  #0 IF GeneralTalkChoice2 {}
+    case 0:
+      #2 MSG TalkSNpc/rco/SP_rco_01_StartingMaingame:003
+      #3 MSG TalkSNpc/rco/SP_rco_01_StartingMaingame:004_01
+      #24 CALL SNPC_rco_00_StartMainGame:Rco_GetSmartPhone
+      #42 MSG TalkSNpc/rco/SP_rco_01_StartingMaingame:007
+      #41 CALL SNPC_rco_00_StartMainGame:Rco_TutorialGetBill
+      #69 MSG TalkSNpc/rco/SP_rco_01_StartingMaingame:013
+      #67 CALL SNPC_rco_00_StartMainGame:Rco_OrientationEnd
+    case 1:
+      -> (#2)
+== ENTRY RcoTentCall
+  #11 MSG TalkSNpc/rco/SP_rco_01_StartingMaingame:001
+  #36 EventFlagSystemOn {"AccessKey": "cLand:ChangePlazaFtrToNormal"}
+  #44 EventFlagSystemSet {"AccessKey": "cLand:OpeningSeqBGMChangeCounter", "SetNum": 6}
+  #43 ResetNpcSchedule {}
+  #78 NpcInitializeActivity {"VillagerIndex": -1}
+  #12 ReserveNpcCommand {"Command": "PrologueNextDayFrontOfTent"}
+== ENTRY Rco_GetSmartPhone
+  #22 SetDeliveryItemAtRandom {"ItemUniqueID": 3076, "ApplyToSave": false, "ItemRemakeDecideType": "cVillageRemakePattern", "RemakePatternIndex": 0}
+  #23 NpcDelivery {"Command": 1, "Option": "Keep"}
+  #21 MSG TalkSNpc/rco/SP_rco_01_StartingMaingame:004_02
+  #45 NpcDelivery {"Command": 2, "Option": "Default"}
+  #46 MSG TalkSNpc/rco/SP_rco_01_StartingMaingame:004_03
+  #47 SmartPhone {"ActionType": 0}
+  #48 SmartPhone {"ActionType": 4}
+  #39 EventFlagSystemOn {"AccessKey": "cPlayer:MainmenuAchievement"}
+  #40 EventFlagSystemOn {"AccessKey": "cPlayer:MainmenuMydesign"}
+  #14 EventFlagSystemOn {"AccessKey": "cPlayer:PlayerMainUImenuEnable"}
+  #79 PlayReport {"PlayReportKind": "cSeqEndTutorial", "Num0": 0}
+  #13 EventFlagSystemOn {"AccessKey": "cPlayer:MainUiClockEnable"}
+  #34 UIMenuDeviceAppear {"EventType": "cBoot", "Application": "cNone"}
+  #50 SmartPhone {"ActionType": 5}
+  #52 MSG TalkSNpc/rco/SP_rco_01_StartingMaingame:004_04
+  #53 SmartPhone {"ActionType": 1}
+  #17 MSG TalkSNpc/rco/SP_rco_01_StartingMaingame:005
+  #16 IF GeneralTalkChoice3 {}
+    case 0:
+      #18 MSG TalkSNpc/rco/SP_rco_01_StartingMaingame:006_01
+    case 1:
+      #19 MSG TalkSNpc/rco/SP_rco_01_StartingMaingame:006_02
+    case 2:
+      #37 IF PlayerHouseLevel {}
+        case 0:
+          #38 MSG TalkSNpc/rco/SP_rco_01_StartingMaingame:006_04
+        case 1:
+          #20 MSG TalkSNpc/rco/SP_rco_01_StartingMaingame:006_03
+        case 2:
+          -> (#20)
+        case 3:
+          -> (#20)
+        case 4:
+          -> (#20)
+        case 5:
+          -> (#20)
+        case 6:
+          -> (#20)
+        case 7:
+          -> (#20)
+        case 8:
+          -> (#20)
+== ENTRY Rco_TutorialGetBill
+  #5 SetDeliveryItemAtRandom {"ItemUniqueID": 3077, "ApplyToSave": false, "ItemRemakeDecideType": "cVillageRemakePattern", "RemakePatternIndex": 0}
+  #6 NpcDelivery {"Command": 1, "Option": "Keep"}
+  #25 MSG TalkSNpc/rco/SP_rco_01_StartingMaingame:007_01
+  #32 UIMoneyAppear {}
+  #4 MSG TalkSNpc/rco/SP_rco_01_StartingMaingame:008
+  #55 IF EventFlagSystemBool {"AccessKey": "cPlayer:MakeVillagePlayerFlag"}
+    case ON:
+      #8 IF GeneralTalkChoice3 {}
+        case 0:
+          #7 MSG TalkSNpc/rco/SP_rco_01_StartingMaingame:008_01
+          #33 NpcDelivery {"Command": 2, "Option": "Default"}
+          #31 UIMoneyDisappear {}
+          #9 MSG TalkSNpc/rco/SP_rco_01_StartingMaingame:009
+          #26 IF GeneralTalkChoice3 {}
+            case 0:
+              #10 MSG TalkSNpc/rco/SP_rco_01_StartingMaingame:010
+              #29 SetTagFromSystem {"Value": 5000, "TagType": "cFlow", "SetTagType": "cDegit", "TagID": 0, "AccessKey": ""}
+              #27 MSG TalkSNpc/rco/SP_rco_01_StartingMaingame:011
+              #28 MSG TalkSNpc/rco/SP_rco_01_StartingMaingame:012
+            case 1:
+              -> (#10)
+            case 2:
+              -> (#10)
+        case 1:
+          #30 MSG TalkSNpc/rco/SP_rco_01_StartingMaingame:008_02
+          -> (#33)
+        case 2:
+          -> (#30)
+    case OFF:
+      #56 IF GeneralTalkChoice3 {}
+        case 0:
+          #57 MSG Tutorials/Tutorials_Prologue3_Orientation1:110_01
+          #59 MSG Tutorials/Tutorials_Prologue3_Orientation1:111
+          -> (#33)
+        case 1:
+          #58 MSG Tutorials/Tutorials_Prologue3_Orientation1:110_02
+          -> (#59)
+        case 2:
+          -> (#58)
+== ENTRY Rco_OrientationEnd
+  #60 FadeOut {"FadeOutKindString": "cCircle", "FadeInKindString": "cCircle", "FadeColorString": "cBlack", "FadeOutSpeed": 0.800000011920929, "FadeInSpeed": 0.800000011920929, "IsUseDucking": true}
+  #65 NpcAISetting {"SettingType": 12, "Flag": false}
+  #68 IF EventFlagSystemBool {"AccessKey": "cPlayer:MakeVillagePlayerFlag"}
+    case ON:
+      #62 EventFlagSystemOn {"AccessKey": "cLand:FinishiPC1Prologue"}
+      #63 EventFlagSystemOn {"AccessKey": "cLand:TodayStartTown1P"}
+      #74 FadeIn {"IsWait": true}
+      #64 ReservePlayerMutterDemo {"EventFileName": "Player_GetDemo_Once", "MutterStartTiming": "cNowDemoEnd", "EntryPointName": "Get_MainGame", "IsResistNpcCast": false}
+    case OFF:
+      #70 CALL SNPC_rco_00_StartMainGame:InvisibleNpc
+      -> (#74)
+== ENTRY InvisibleNpc
+  #77 NpcRequestAction {"ActionIdx": 3}
+  #75 NpcRequestAction {"ActionIdx": 3}
+  #76 NpcRequestAction {"ActionIdx": 3}
+  #71 SetNpcAIBlackBoardByLabel {"Key": "Visible", "Value": 0, "NpcLabel": "rco", "Option": 0}
+  #72 SetNpcAIBlackBoardByLabel {"Key": "Visible", "Value": 0, "NpcLabel": "rct", "Option": 0}
+  #73 SetNpcAIBlackBoardByLabel {"Key": "Visible", "Value": 0, "NpcLabel": "rcm", "Option": 0}

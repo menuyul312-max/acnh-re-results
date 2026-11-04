@@ -1,0 +1,38 @@
+# Tutorials_Prologue4_Orientation3 (source: decoded EventFlow; bool flag case 0 = ON, case 1 = OFF; #N = event index)
+== ENTRY Root
+  #20 SetNpcName {"NpcNameType": 14, "ID": 0}
+  #21 SetNpcName {"NpcNameType": 13, "ID": 1}
+  #5 CALL Tutorials_Prologue4_Orientation3:GoEventPlaza
+  #12 MSG Tutorials/Tutorials_Prologue4_Orientation3:001
+  #13 MSG Tutorials/Tutorials_Prologue4_Orientation3:002
+  #14 MSG Tutorials/Tutorials_Prologue4_Orientation3:003
+  #15 MSG Tutorials/Tutorials_Prologue4_Orientation3:004
+  #16 MSG Tutorials/Tutorials_Prologue4_Orientation3:005
+  #17 MSG Tutorials/Tutorials_Prologue4_Orientation3:006
+  #18 MSG Tutorials/Tutorials_Prologue4_Orientation3:007
+  #19 EventFlagSystemOn {"AccessKey": "cPlayer:PrologueAfterBuiltTentTalk"}
+  #23 FadeOut {"FadeOutKindString": "cCircle", "FadeInKindString": "cCircle", "FadeColorString": "cBlack", "IsUseDucking": true, "FadeOutSpeed": 0.800000011920929, "FadeInSpeed": 0.800000011920929}
+  #27 SetupActorPosition {"Type": 4}
+  #28 SetNpcAIBlackBoardByLabel {"NpcLabel": "rct", "Key": "PreCampfire", "Value": 1, "Option": 0}
+  #29 SetNpcAIBlackBoardByLabel {"Key": "PreCampfire", "Value": 1, "NpcLabel": "rcm", "Option": 0}
+  #22 SetNpcAIBlackBoardByLabel {"Value": 1, "NpcLabel": "-Looks:HA", "Key": "IsForceLife", "Option": 0}
+  #30 SetNpcAIBlackBoardByLabel {"NpcLabel": "-Looks:AN", "Value": 1, "Key": "IsForceLife", "Option": 0}
+  #24 FadeIn {"IsWait": true}
+== ENTRY GoEventPlaza
+  #32 BGMPropertyControl {"BGMProperty": 78}
+  #2 FadeOut {"FadeOutKindString": "cCircle", "FadeInKindString": "cCircle", "FadeColorString": "cBlack", "IsUseDucking": true, "FadeOutSpeed": 0.699999988079071, "FadeInSpeed": 0.699999988079071}
+  #11 SetupActorPosition {"Type": 2}
+  #35 RequestRecreateFtr {}
+  #31 EnvSetDemoTime {"Second": 0, "Hour": 17, "Minute": 30}
+  #4 CameraSetDemoParam {"CameraInterpolateKey": "", "CameraTargetKey": "Npc:rco", "Arg": 0, "AdjustAngleYOnLeave": false, "CameraParamKey": "EventPlazaPrologue", "AdjustAngleYOnEnter": false, "UseNearCulling": false}
+  #3 FadeIn {"IsWait": true}
+== ENTRY Root2
+  #0 EventFlagSystemOn {"AccessKey": "cPlayer:PlayerMainUImenuEnable"}
+  #10 EventFlagSystemOn {"AccessKey": "cLand:ValidateVillageSave"}
+  #9 EventFlagSystemOn {"AccessKey": "cLand:TodayStartTown1P"}
+  #1 ReservePlayerMutterDemo {"EventFileName": "Player_GetDemo_Once", "EntryPointName": "Get_MainUI", "MutterStartTiming": "cNowDemoEnd", "IsResistNpcCast": false}
+  #7 ChangeNpcPlace {"NpcPlace": "cTalkNpcHouse"}
+  #8 ChangeNpcPlace {"NpcPlace": "cTalkNpcHouse"}
+  #6 SystemReenterStage {"Type": 1, "FadeOutKindString": "cCircle", "FadeInKindString": "cCircle", "FadeColorString": "cBlack", "FadeOutSpeed": 1.0, "FadeInSpeed": 1.0}
+== ENTRY Root_Init
+  #26 NpcAITalkCastSetting {"SetupKey": "Prologue_Rco"}

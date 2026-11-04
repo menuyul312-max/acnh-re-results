@@ -1,0 +1,513 @@
+# SNPC_hgh_00_Peddler (source: decoded EventFlow; bool flag case 0 = ON, case 1 = OFF; #N = event index)
+== ENTRY Root
+  #10 IF IsMyVillage {}
+    case 0:
+      #36 IF EventFlagSystemBool {"AccessKey": "cPlayer:KinuyoTalkBoforeFlag"}
+        case ON:
+          #0 IF EventFlagSystemBool {"AccessKey": "cLand:EnableTailorBuild"}
+            case ON:
+              #89 IF EventFlagSystemBool {"AccessKey": "cPlayer:MakeVillagePlayerFlag"}
+                case ON:
+                  #117 IF EventFlagSystemBool {"AccessKey": "cPlayer:HghHeardRequestHousingKit"}
+                    case ON:
+                      #104 IF EventFlagSystemBool {"AccessKey": "cLand:TailorReserved"}
+                        case ON:
+                          #105 IF EventFlagSystemBool {"AccessKey": "cPlayer:HghEndRequestHousingKit"}
+                            case ON:
+                              #119 CALL SNPC_hgh_00_Peddler:HghPeddler_NormalSeq
+                            case OFF:
+                              #132 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:222
+                              #106 EventFlagSystemOn {"AccessKey": "cPlayer:HghEndRequestHousingKit"}
+                              #107 EventFlagSystemOn {"AccessKey": "cPlayer:KinuyoTalkTodayFlag"}
+                        case OFF:
+                          #118 CALL SNPC_hgh_00_Peddler:HghPeddler_NormalSeq
+                    case OFF:
+                      #9 CALL SNPC_hgh_00_Peddler:Hgh_TailorBuildEvent
+                case OFF:
+                  #116 CALL SNPC_hgh_00_Peddler:CheckHghSel
+                  #35 IF EnvHourCompare {"Hour": 22, "Minute": -1, "IsMidNight": true, "IsOverGrowUpTime": true}
+                    case 0:
+                      #45 IF EventFlagSystemBool {"AccessKey": "cPlayer:KinuyoTalkTodayFlag"}
+                        case ON:
+                          #30 IF EventFlagSystemBool {"AccessKey": "cPlayer:HghPeddlerPurchaceToday"}
+                            case ON:
+                              #115 IF SubflowResultChoice2 {"SetIndex": 0}
+                                case 0:
+                                  #91 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:107
+                                  #93 CALL SNPC_hgh_00_Peddler:hgh_Peddler_Sel_3B_Housing
+                                case 1:
+                                  #51 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:105_01
+                                  #48 IF GeneralTalkChoice2 {}
+                                    case 0:
+                                      #50 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:104
+                                      #47 CALL SNPC_hgh_00_Peddler:Hgh_Visit_OpenUI
+                                    case 1:
+                                      #49 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:103
+                            case OFF:
+                              #114 IF SubflowResultChoice2 {"SetIndex": 0}
+                                case 0:
+                                  #92 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:108
+                                  #94 CALL SNPC_hgh_00_Peddler:hgh_Peddler_Sel_3B_Housing
+                                case 1:
+                                  #52 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:105_02
+                                  -> (#48)
+                        case OFF:
+                          #2 EventFlagSystemOn {"AccessKey": "cPlayer:KinuyoTalkTodayFlag"}
+                          #31 IF EnvTimeZone {}
+                            case 0:
+                              #32 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:101_01
+                              #113 IF SubflowResultChoice2 {"SetIndex": 0}
+                                case 0:
+                                  #90 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:106
+                                  #95 CALL SNPC_hgh_00_Peddler:hgh_Peddler_Sel_3B_Housing
+                                case 1:
+                                  #46 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:102
+                                  -> (#48)
+                            case 1:
+                              -> (#32)
+                            case 2:
+                              #33 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:101_02
+                              -> (#113)
+                            case 3:
+                              -> (#33)
+                            case 4:
+                              #34 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:101_03
+                              -> (#113)
+                            case 5:
+                              -> (#34)
+                    case 1:
+                      #44 CALL SNPC_hgh_00_Peddler:HghPeddlerClosed
+                    case 2:
+                      -> (#44)
+            case OFF:
+              -> (#116)
+        case OFF:
+          #29 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:001
+          #1 IF EventFlagSystemBool {"AccessKey": "cPlayer:KinuyoMetShopFlag"}
+            case ON:
+              #11 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:002_01
+              #13 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:003
+              #14 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:004
+              #15 IF GeneralTalkChoice2 {}
+                case 0:
+                  #18 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:006
+                  #23 CALL SNPC_hgh_00_Peddler:Hgh_Visit_OpenUI
+                  #25 EventFlagSystemOn {"AccessKey": "cPlayer:KinuyoTalkBoforeFlag"}
+                  #41 EventFlagSystemOn {"AccessKey": "cPlayer:KinuyoTalkTodayFlag"}
+                case 1:
+                  #16 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:005_01
+                  #17 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:005_02
+                  -> (#25)
+            case OFF:
+              #12 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:002_02
+              -> (#13)
+    case 1:
+      #74 IF EnvHourCompare {"Hour": 22, "Minute": -1, "IsMidNight": true, "IsOverGrowUpTime": true}
+        case 0:
+          #68 IF EventFlagSystemBool {"AccessKey": "cPlayerVisit:HghPeddlerVisitorTalk1st"}
+            case ON:
+              #76 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:153
+              #71 IF GeneralTalkChoice2 {}
+                case 0:
+                  #73 CALL SNPC_hgh_00_Peddler:Hgh_PeddlerShopping_Visitor
+                case 1:
+                  #75 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:152
+            case OFF:
+              #69 EventFlagSystemOn {"AccessKey": "cPlayerVisit:HghPeddlerVisitorTalk1st"}
+              #70 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:151
+              -> (#71)
+        case 1:
+          #134 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:902
+        case 2:
+          -> (#134)
+== ENTRY Retry_Request
+  #127 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:211
+  #3 IF GeneralTalkChoice2 {}
+    case 0:
+      #8 IF SystemHasBaggageSpace {"CheckNum": 1, "CheckTargrt": "cPocketOnly"}
+        case 0:
+          #129 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:208
+          #5 SetDeliveryItemAtRandom {"ItemUniqueID": 4411, "ApplyToSave": true, "ItemRemakeDecideType": "cVillageRemakePattern", "RemakePatternIndex": 0}
+          #4 NpcDelivery {"Command": 1, "Option": "Default"}
+          #131 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:209
+          #7 EventFlagSystemOn {"AccessKey": "cLand:TailorGetHousingkit"}
+          #84 EventFlagSystemOn {"AccessKey": "cPlayer:HghGetTailorHousingKit"}
+        case 1:
+          #130 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:212
+          #101 CALL SNPC_hgh_00_Peddler:Request_Failed
+    case 1:
+      #128 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:210
+      #102 CALL SNPC_hgh_00_Peddler:Request_Failed
+== ENTRY Hgh_TailorBuildEvent
+  #81 IF EventFlagSystemBool {"AccessKey": "cLand:TailorGetHousingkit"}
+    case ON:
+      #133 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:221
+    case OFF:
+      #82 IF EventFlagSystemBool {"AccessKey": "cPlayer:HghHeardRequestHousingKit"}
+        case ON:
+          #83 CALL SNPC_hgh_00_Peddler:Retry_Request
+        case OFF:
+          #85 EventFlagSystemOn {"AccessKey": "cPlayer:HghHeardRequestHousingKit"}
+          #6 EventFlagSystemOn {"AccessKey": "cPlayer:KinuyoTalkTodayFlag"}
+          #120 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:201
+          #100 IF GeneralTalkChoice2 {}
+            case 0:
+              #121 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:202
+              #122 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:203
+              #123 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:204
+              #124 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:205
+              #125 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:206
+              #126 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:207
+              #3 IF GeneralTalkChoice2 {}
+                case 0:
+                  #8 IF SystemHasBaggageSpace {"CheckNum": 1, "CheckTargrt": "cPocketOnly"}
+                    case 0:
+                      #129 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:208
+                      #5 SetDeliveryItemAtRandom {"ItemUniqueID": 4411, "ApplyToSave": true, "ItemRemakeDecideType": "cVillageRemakePattern", "RemakePatternIndex": 0}
+                      #4 NpcDelivery {"Command": 1, "Option": "Default"}
+                      #131 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:209
+                      #7 EventFlagSystemOn {"AccessKey": "cLand:TailorGetHousingkit"}
+                      #84 EventFlagSystemOn {"AccessKey": "cPlayer:HghGetTailorHousingKit"}
+                    case 1:
+                      #130 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:212
+                      #101 CALL SNPC_hgh_00_Peddler:Request_Failed
+                case 1:
+                  #128 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:210
+                  #102 CALL SNPC_hgh_00_Peddler:Request_Failed
+            case 1:
+              -> (#121)
+== ENTRY Hgh_Visit_OpenUI
+  #28 UIMoneyAppear {}
+  #21 UIShopBuyAppear {"ItemBitType": "cKinuyo"}
+  #19 IF UIResultMenuDecide {}
+    case 0:
+      #22 CALL SNPC_hgh:Hgh_Common_TagSet
+      #53 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:111
+      #20 IF GeneralTalkChoice2 {}
+        case 0:
+          #57 IF ShoppingCapacity {"CapacityCheckType": "cShopping", "ItemUniqueId": 65534}
+            case 0:
+              #56 IF ShopHasBellCount {"Rate": 1.0}
+                case 0:
+                  #87 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:114_01
+                  #86 CALL Demo_Common:Demo_Cmn_Shopping
+                  #88 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:114_02
+                  #79 EventFlagSystemOn {"AccessKey": "cPlayer:HghPeddlerPurchaceToday"}
+                  #78 IF IsMyVillage {}
+                    case 0:
+                      #40 IF EventFlagSystemBool {"AccessKey": "cLand:HghPeddlerPurchaceToday"}
+                        case ON:
+                          #63 CALL SNPC_hgh_00_Peddler:Hgh_AfterPurchase
+                        case OFF:
+                          #39 EventFlagSystemAdd {"AccessKey": "cLand:CountTailorBuild", "AddNum": 1}
+                          #77 EventFlagSystemOn {"AccessKey": "cLand:HghPeddlerPurchaceToday"}
+                          -> (#63)
+                    case 1:
+                      #80 CALL SNPC_hgh_00_Peddler:Hgh_AfterPurchase
+                case 1:
+                  #59 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:113_01
+                  #60 CALL SNPC_hgh_00_Peddler:Hgh_AfterNoMoney
+            case 1:
+              #58 CALL SNPC_hgh:Hgh_Common_ItemFull
+              #138 FORK
+                || #136 UIMoneyDisappear {}
+                || #137 MessageSuspend {}
+                || #135 UIShopBuyDisappear {}
+        case 1:
+          #55 CALL SNPC_hgh_00_Peddler:Hgh_AfterCancel
+    case 1:
+      #142 FORK
+        || #141 UIMoneyDisappear {}
+        || #140 UIShopBuyDisappear {}
+      #72 IF IsMyVillage {}
+        case 0:
+          #26 IF EventFlagSystemBool {"AccessKey": "cPlayer:KinuyoTalkBoforeFlag"}
+            case ON:
+              #64 IF EventFlagSystemBool {"AccessKey": "cPlayer:HghPeddlerPurchaceToday"}
+                case ON:
+                  #65 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:116_01
+                case OFF:
+                  #66 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:116_02
+            case OFF:
+              #27 CALL SNPC_hgh_00_Peddler:HghShoppingCancelUI_1st
+        case 1:
+          -> (#64)
+== ENTRY HghShoppingCancelUI_1st
+  #24 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:007
+  #17 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:005_02
+  #25 EventFlagSystemOn {"AccessKey": "cPlayer:KinuyoTalkBoforeFlag"}
+  #41 EventFlagSystemOn {"AccessKey": "cPlayer:KinuyoTalkTodayFlag"}
+== ENTRY HghPeddlerClosed
+  #37 IF EventFlagSystemBool {"AccessKey": "cPlayer:KinuyoTalkTodayFlag"}
+    case ON:
+      #43 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:902
+    case OFF:
+      #38 EventFlagSystemOn {"AccessKey": "cPlayer:KinuyoTalkTodayFlag"}
+      #42 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:901
+== ENTRY Hgh_AfterCancel
+  #54 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:112
+  #67 UIShopBuyReselectionAppear {}
+  #19 IF UIResultMenuDecide {}
+    case 0:
+      #22 CALL SNPC_hgh:Hgh_Common_TagSet
+      #53 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:111
+      #20 IF GeneralTalkChoice2 {}
+        case 0:
+          #57 IF ShoppingCapacity {"CapacityCheckType": "cShopping", "ItemUniqueId": 65534}
+            case 0:
+              #56 IF ShopHasBellCount {"Rate": 1.0}
+                case 0:
+                  #87 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:114_01
+                  #86 CALL Demo_Common:Demo_Cmn_Shopping
+                  #88 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:114_02
+                  #79 EventFlagSystemOn {"AccessKey": "cPlayer:HghPeddlerPurchaceToday"}
+                  #78 IF IsMyVillage {}
+                    case 0:
+                      #40 IF EventFlagSystemBool {"AccessKey": "cLand:HghPeddlerPurchaceToday"}
+                        case ON:
+                          #63 CALL SNPC_hgh_00_Peddler:Hgh_AfterPurchase
+                        case OFF:
+                          #39 EventFlagSystemAdd {"AccessKey": "cLand:CountTailorBuild", "AddNum": 1}
+                          #77 EventFlagSystemOn {"AccessKey": "cLand:HghPeddlerPurchaceToday"}
+                          -> (#63)
+                    case 1:
+                      #80 CALL SNPC_hgh_00_Peddler:Hgh_AfterPurchase
+                case 1:
+                  #59 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:113_01
+                  #60 CALL SNPC_hgh_00_Peddler:Hgh_AfterNoMoney
+            case 1:
+              #58 CALL SNPC_hgh:Hgh_Common_ItemFull
+              #138 FORK
+                || #136 UIMoneyDisappear {}
+                || #137 MessageSuspend {}
+                || #135 UIShopBuyDisappear {}
+        case 1:
+          #55 CALL SNPC_hgh_00_Peddler:Hgh_AfterCancel
+    case 1:
+      #142 FORK
+        || #141 UIMoneyDisappear {}
+        || #140 UIShopBuyDisappear {}
+      #72 IF IsMyVillage {}
+        case 0:
+          #26 IF EventFlagSystemBool {"AccessKey": "cPlayer:KinuyoTalkBoforeFlag"}
+            case ON:
+              #64 IF EventFlagSystemBool {"AccessKey": "cPlayer:HghPeddlerPurchaceToday"}
+                case ON:
+                  #65 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:116_01
+                case OFF:
+                  #66 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:116_02
+            case OFF:
+              #27 CALL SNPC_hgh_00_Peddler:HghShoppingCancelUI_1st
+        case 1:
+          -> (#64)
+== ENTRY Hgh_AfterNoMoney
+  #61 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:113_02
+  #67 UIShopBuyReselectionAppear {}
+  #19 IF UIResultMenuDecide {}
+    case 0:
+      #22 CALL SNPC_hgh:Hgh_Common_TagSet
+      #53 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:111
+      #20 IF GeneralTalkChoice2 {}
+        case 0:
+          #57 IF ShoppingCapacity {"CapacityCheckType": "cShopping", "ItemUniqueId": 65534}
+            case 0:
+              #56 IF ShopHasBellCount {"Rate": 1.0}
+                case 0:
+                  #87 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:114_01
+                  #86 CALL Demo_Common:Demo_Cmn_Shopping
+                  #88 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:114_02
+                  #79 EventFlagSystemOn {"AccessKey": "cPlayer:HghPeddlerPurchaceToday"}
+                  #78 IF IsMyVillage {}
+                    case 0:
+                      #40 IF EventFlagSystemBool {"AccessKey": "cLand:HghPeddlerPurchaceToday"}
+                        case ON:
+                          #63 CALL SNPC_hgh_00_Peddler:Hgh_AfterPurchase
+                        case OFF:
+                          #39 EventFlagSystemAdd {"AccessKey": "cLand:CountTailorBuild", "AddNum": 1}
+                          #77 EventFlagSystemOn {"AccessKey": "cLand:HghPeddlerPurchaceToday"}
+                          -> (#63)
+                    case 1:
+                      #80 CALL SNPC_hgh_00_Peddler:Hgh_AfterPurchase
+                case 1:
+                  #59 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:113_01
+                  #60 CALL SNPC_hgh_00_Peddler:Hgh_AfterNoMoney
+            case 1:
+              #58 CALL SNPC_hgh:Hgh_Common_ItemFull
+              #138 FORK
+                || #136 UIMoneyDisappear {}
+                || #137 MessageSuspend {}
+                || #135 UIShopBuyDisappear {}
+        case 1:
+          #55 CALL SNPC_hgh_00_Peddler:Hgh_AfterCancel
+    case 1:
+      #142 FORK
+        || #141 UIMoneyDisappear {}
+        || #140 UIShopBuyDisappear {}
+      #72 IF IsMyVillage {}
+        case 0:
+          #26 IF EventFlagSystemBool {"AccessKey": "cPlayer:KinuyoTalkBoforeFlag"}
+            case ON:
+              #64 IF EventFlagSystemBool {"AccessKey": "cPlayer:HghPeddlerPurchaceToday"}
+                case ON:
+                  #65 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:116_01
+                case OFF:
+                  #66 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:116_02
+            case OFF:
+              #27 CALL SNPC_hgh_00_Peddler:HghShoppingCancelUI_1st
+        case 1:
+          -> (#64)
+== ENTRY Hgh_AfterPurchase
+  #62 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:115
+  #67 UIShopBuyReselectionAppear {}
+  #19 IF UIResultMenuDecide {}
+    case 0:
+      #22 CALL SNPC_hgh:Hgh_Common_TagSet
+      #53 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:111
+      #20 IF GeneralTalkChoice2 {}
+        case 0:
+          #57 IF ShoppingCapacity {"CapacityCheckType": "cShopping", "ItemUniqueId": 65534}
+            case 0:
+              #56 IF ShopHasBellCount {"Rate": 1.0}
+                case 0:
+                  #87 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:114_01
+                  #86 CALL Demo_Common:Demo_Cmn_Shopping
+                  #88 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:114_02
+                  #79 EventFlagSystemOn {"AccessKey": "cPlayer:HghPeddlerPurchaceToday"}
+                  #78 IF IsMyVillage {}
+                    case 0:
+                      #40 IF EventFlagSystemBool {"AccessKey": "cLand:HghPeddlerPurchaceToday"}
+                        case ON:
+                          #63 CALL SNPC_hgh_00_Peddler:Hgh_AfterPurchase
+                        case OFF:
+                          #39 EventFlagSystemAdd {"AccessKey": "cLand:CountTailorBuild", "AddNum": 1}
+                          #77 EventFlagSystemOn {"AccessKey": "cLand:HghPeddlerPurchaceToday"}
+                          -> (#63)
+                    case 1:
+                      #80 CALL SNPC_hgh_00_Peddler:Hgh_AfterPurchase
+                case 1:
+                  #59 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:113_01
+                  #60 CALL SNPC_hgh_00_Peddler:Hgh_AfterNoMoney
+            case 1:
+              #58 CALL SNPC_hgh:Hgh_Common_ItemFull
+              #138 FORK
+                || #136 UIMoneyDisappear {}
+                || #137 MessageSuspend {}
+                || #135 UIShopBuyDisappear {}
+        case 1:
+          #55 CALL SNPC_hgh_00_Peddler:Hgh_AfterCancel
+    case 1:
+      #142 FORK
+        || #141 UIMoneyDisappear {}
+        || #140 UIShopBuyDisappear {}
+      #72 IF IsMyVillage {}
+        case 0:
+          #26 IF EventFlagSystemBool {"AccessKey": "cPlayer:KinuyoTalkBoforeFlag"}
+            case ON:
+              #64 IF EventFlagSystemBool {"AccessKey": "cPlayer:HghPeddlerPurchaceToday"}
+                case ON:
+                  #65 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:116_01
+                case OFF:
+                  #66 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:116_02
+            case OFF:
+              #27 CALL SNPC_hgh_00_Peddler:HghShoppingCancelUI_1st
+        case 1:
+          -> (#64)
+== ENTRY Hgh_PeddlerShopping_Visitor
+  #18 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:006
+  #23 CALL SNPC_hgh_00_Peddler:Hgh_Visit_OpenUI
+  #25 EventFlagSystemOn {"AccessKey": "cPlayer:KinuyoTalkBoforeFlag"}
+  #41 EventFlagSystemOn {"AccessKey": "cPlayer:KinuyoTalkTodayFlag"}
+== ENTRY NormalEnd
+  #64 IF EventFlagSystemBool {"AccessKey": "cPlayer:HghPeddlerPurchaceToday"}
+    case ON:
+      #65 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:116_01
+    case OFF:
+      #66 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:116_02
+== ENTRY hgh_Peddler_Sel_3B_Housing
+  #96 IF GeneralTalkChoice3 {}
+    case 0:
+      #97 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:104
+      #98 CALL SNPC_hgh_00_Peddler:Hgh_Visit_OpenUI
+    case 1:
+      #103 CALL SNPC_hgh_00_Peddler:Hgh_TailorBuildEvent
+    case 2:
+      #99 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:103
+== ENTRY Request_Failed
+  #113 IF SubflowResultChoice2 {"SetIndex": 0}
+    case 0:
+      #90 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:106
+      #95 CALL SNPC_hgh_00_Peddler:hgh_Peddler_Sel_3B_Housing
+    case 1:
+      #46 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:102
+      #48 IF GeneralTalkChoice2 {}
+        case 0:
+          #50 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:104
+          #47 CALL SNPC_hgh_00_Peddler:Hgh_Visit_OpenUI
+        case 1:
+          #49 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:103
+== ENTRY CheckHghSel
+  #108 IF EventFlagSystemBool {"AccessKey": "cPlayer:HghEndRequestHousingKit"}
+    case ON:
+      #112 SetSubflowResult {"SetIndex": 0, "ResultValue": 1}
+    case OFF:
+      #109 IF EventFlagSystemBool {"AccessKey": "cPlayer:HghHeardRequestHousingKit"}
+        case ON:
+          #111 SetSubflowResult {"SetIndex": 0, "ResultValue": 0}
+        case OFF:
+          #110 SetSubflowResult {"SetIndex": 0, "ResultValue": 1}
+== ENTRY HghPeddler_NormalSeq
+  #116 CALL SNPC_hgh_00_Peddler:CheckHghSel
+  #35 IF EnvHourCompare {"Hour": 22, "Minute": -1, "IsMidNight": true, "IsOverGrowUpTime": true}
+    case 0:
+      #45 IF EventFlagSystemBool {"AccessKey": "cPlayer:KinuyoTalkTodayFlag"}
+        case ON:
+          #30 IF EventFlagSystemBool {"AccessKey": "cPlayer:HghPeddlerPurchaceToday"}
+            case ON:
+              #115 IF SubflowResultChoice2 {"SetIndex": 0}
+                case 0:
+                  #91 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:107
+                  #93 CALL SNPC_hgh_00_Peddler:hgh_Peddler_Sel_3B_Housing
+                case 1:
+                  #51 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:105_01
+                  #48 IF GeneralTalkChoice2 {}
+                    case 0:
+                      #50 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:104
+                      #47 CALL SNPC_hgh_00_Peddler:Hgh_Visit_OpenUI
+                    case 1:
+                      #49 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:103
+            case OFF:
+              #114 IF SubflowResultChoice2 {"SetIndex": 0}
+                case 0:
+                  #92 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:108
+                  #94 CALL SNPC_hgh_00_Peddler:hgh_Peddler_Sel_3B_Housing
+                case 1:
+                  #52 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:105_02
+                  -> (#48)
+        case OFF:
+          #2 EventFlagSystemOn {"AccessKey": "cPlayer:KinuyoTalkTodayFlag"}
+          #31 IF EnvTimeZone {}
+            case 0:
+              #32 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:101_01
+              #113 IF SubflowResultChoice2 {"SetIndex": 0}
+                case 0:
+                  #90 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:106
+                  #95 CALL SNPC_hgh_00_Peddler:hgh_Peddler_Sel_3B_Housing
+                case 1:
+                  #46 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:102
+                  -> (#48)
+            case 1:
+              -> (#32)
+            case 2:
+              #33 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:101_02
+              -> (#113)
+            case 3:
+              -> (#33)
+            case 4:
+              #34 MSG TalkSNpc/hgh/SP_hgh_00_Peddler:101_03
+              -> (#113)
+            case 5:
+              -> (#34)
+    case 1:
+      #44 CALL SNPC_hgh_00_Peddler:HghPeddlerClosed
+    case 2:
+      -> (#44)

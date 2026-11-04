@@ -1,0 +1,98 @@
+# System_GrowUp_GameProcess (source: decoded EventFlow; bool flag case 0 = ON, case 1 = OFF; #N = event index)
+== ENTRY Root
+  #2 CALL System_GrowUp_GameProcess:FirstCamperCheck
+  #24 CALL System_GrowUp_GameProcess:ChkwithIslandEvaluation
+  #19 CALL System_GrowUp_GameProcess:BuildMoveEndChk
+== ENTRY FirstCamperCheck
+  #0 IF EventFlagSystemBool {"AccessKey": "cLand:CampSiteBuilt"}
+    case ON:
+      #11 IF EventFlagSystemBool {"AccessKey": "cLand:RcoBuildFirstVisitorsHousingKitComplete"}
+        case ON:
+          #12 EventFlagSystemOff {"AccessKey": "cLand:CampFirstCamperVisit"}
+          #14 EventFlagSystemOn {"AccessKey": "cLand:TanuportAmiiboCampUnlock"}
+        case OFF:
+          #1 EventFlagSystemOn {"AccessKey": "cLand:RcoMeetFirstVisitorRequest"}
+          #10 EventFlagSystemOn {"AccessKey": "cLand:CampFirstCamperVisit"}
+== ENTRY FirstDay
+  #13 IF EventFlagSystemBool {"AccessKey": "cLand:ValidateVillageSave"}
+    case OFF:
+      #9 CALL System_GrowUp_GameProcess:ImmQOutdoorPattern
+== ENTRY ImmQOutdoorPattern
+  #3 IF RandomChoice2 {"ChoiceNumber": 2}
+    case 0:
+      #4 IF RandomChoice2 {"ChoiceNumber": 2}
+        case 0:
+          #5 IF RandomChoice2 {"ChoiceNumber": 2}
+            case 1:
+              #8 EventFlagSystemOn {"AccessKey": "cLand:ImmQ_C_OutdoorPattern"}
+        case 1:
+          #7 EventFlagSystemOn {"AccessKey": "cLand:ImmQ_B_OutdoorPattern"}
+          -> (#5)
+    case 1:
+      #6 EventFlagSystemOn {"AccessKey": "cLand:ImmQ_A_OutdoorPattern"}
+      -> (#4)
+== ENTRY ChkLilyCounter
+  #15 IF SubflowResultChoice5 {"SetIndex": 0}
+    case 0:
+      #16 EventFlagSystemSet {"AccessKey": "cLand:FlwLilyGrowCounter", "SetNum": 0}
+    case 1:
+      -> (#16)
+    case 2:
+      -> (#16)
+    case 3:
+      -> (#16)
+    case 4:
+      #18 IF EventFlagSystemBool {"AccessKey": "cLand:TkkFirstLive"}
+        case ON:
+          #17 EventFlagSystemAdd {"AccessKey": "cLand:FlwLilyGrowCounter", "AddNum": 1}
+== ENTRY BuildMoveEndChk
+  #20 IF EventFlagSystemInt {"Border": 2, "FlagCheckType": 0, "AccessKey": "cLand:RcoMoveReservedAnyone"}
+    case 0:
+      #21 EventFlagSystemSet {"AccessKey": "cLand:RcoMoveReservedKind", "SetNum": 0}
+      #22 EventFlagSystemSet {"SetNum": 0, "AccessKey": "cLand:RcoMoveReservedAnyone"}
+      #23 StructureMoveSaveIndex {"IndexType": 2}
+== ENTRY MushroomProbabilityCounter
+  #31 IF SubflowResultChoice5 {"SetIndex": 0}
+    case 0:
+      #34 EventFlagSystemSet {"SetNum": 0, "AccessKey": "cLand:MushroomProbability"}
+    case 1:
+      -> (#34)
+    case 2:
+      -> (#34)
+    case 3:
+      #35 EventFlagSystemSet {"AccessKey": "cLand:MushroomProbability", "SetNum": 1}
+    case 4:
+      #36 EventFlagSystemSet {"AccessKey": "cLand:MushroomProbability", "SetNum": 2}
+== ENTRY ChkwithIslandEvaluation
+  #26 CALL System_IslandEvaluationCheck:IslandEvaluationChk
+  #25 CALL System_GrowUp_GameProcess:ChkLilyCounter
+  #27 CALL System_GrowUp_GameProcess:MushroomProbabilityCounter
+  #30 CALL System_GrowUp_GameProcess:NNpcContractCounter
+== ENTRY NNpcContractCounter
+  #33 IF NpcHouseNum {"NpcHouseType": "cConstructed", "Num": 8}
+    case 0:
+      #37 EventFlagSystemSet {"SetNum": 0, "AccessKey": "cLand:NNpcContractProbablityAddPoint"}
+    case 1:
+      #32 IF NpcHouseNum {"NpcHouseType": "cConstructed", "Num": 5}
+        case 0:
+          #28 IF SubflowResultChoice5 {"SetIndex": 3}
+            case 0:
+              #43 EventFlagSystemSet {"SetNum": 0, "AccessKey": "cLand:NNpcContractProbablityAddPoint"}
+            case 1:
+              #42 EventFlagSystemSet {"SetNum": 1, "AccessKey": "cLand:NNpcContractProbablityAddPoint"}
+              #44 IF SubflowResultChoice5 {"SetIndex": 2}
+                case 0:
+                  #39 EventFlagSystemSet {"SetNum": 0, "AccessKey": "cLand:NNpcContractProbablityAddPoint"}
+            case 2:
+              #41 EventFlagSystemSet {"SetNum": 3, "AccessKey": "cLand:NNpcContractProbablityAddPoint"}
+              #29 IF SubflowResultChoice5 {"SetIndex": 2}
+                case 0:
+                  -> (#39)
+                case 1:
+                  #40 EventFlagSystemSet {"SetNum": 1, "AccessKey": "cLand:NNpcContractProbablityAddPoint"}
+            case 3:
+              -> (#41)
+            case 4:
+              -> (#41)
+        case 1:
+          #38 EventFlagSystemSet {"SetNum": 0, "AccessKey": "cLand:NNpcContractProbablityAddPoint"}

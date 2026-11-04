@@ -1,0 +1,274 @@
+# Player_Demo_HousingFinish (source: decoded EventFlow; bool flag case 0 = ON, case 1 = OFF; #N = event index)
+== ENTRY HousingFinish_PcTent_Built
+  #197 EventFlagSystemOn {"AccessKey": "cLand:Prologue4BuiltPlayer"}
+  #196 IF EventFlagSystemBool {"AccessKey": "cPlayer:MakeVillagePlayerFlag"}
+    case ON:
+      #0 MSG TalkSys/SYS_Player:951
+      #137 IF EventFlagSystemInt {"AccessKey": "cLand:OpeningSeqBGMChangeCounter", "Border": 2, "FlagCheckType": 5}
+        case 0:
+          #138 EventFlagSystemSet {"AccessKey": "cLand:OpeningSeqBGMChangeCounter", "SetNum": 3}
+    case OFF:
+      #198 MSG TalkSys/SYS_Player:951_01
+      -> (#137)
+== ENTRY HousingFinish_HATent_Built
+  #5 SetTagFromUIResult {"TagType": "cTentNpcName", "TagID": 0}
+  #1 MSG TalkSys/SYS_Player:954
+  #2 EventFlagSystemOn {"AccessKey": "cLand:Prologue4BuiltNpcHA"}
+  #12 IF EventFlagSystemBool {"AccessKey": "cLand:Prologue4BuiltNpcAN"}
+    case ON:
+      #14 MSG TalkSys/SYS_Player:954_01
+      #11 SetNpcAIBlackBoardByLabel {"Key": "isSpeak", "Value": 1, "Option": 1, "NpcLabel": "rco"}
+== ENTRY HousingFinish_ANTent_Built
+  #6 SetTagFromUIResult {"TagType": "cTentNpcName", "TagID": 0}
+  #3 MSG TalkSys/SYS_Player:954
+  #4 EventFlagSystemOn {"AccessKey": "cLand:Prologue4BuiltNpcAN"}
+  #13 IF EventFlagSystemBool {"AccessKey": "cLand:Prologue4BuiltNpcHA"}
+    case ON:
+      #14 MSG TalkSys/SYS_Player:954_01
+      #11 SetNpcAIBlackBoardByLabel {"Key": "isSpeak", "Value": 1, "Option": 1, "NpcLabel": "rco"}
+== ENTRY HousingFinish_NnpcNewProperty
+  #97 IF NpcHouseNum {"NpcHouseType": "cExist", "Num": 7}
+    case 0:
+      #7 MSG TalkSys/SYS_Player:955
+      #8 EventFlagSystemAdd {"AccessKey": "cLand:CountNnpcHouseSpaceSet", "AddNum": 1}
+      #103 EventFlagSystemAdd {"AccessKey": "cLand:HaveHousingKitCount", "AddNum": -1}
+    case 1:
+      #99 MSG TalkSys/SYS_Player:955_01
+      #100 EventFlagSystemAdd {"AccessKey": "cLand:CountNnpcHouseSpaceSet", "AddNum": 1}
+      #101 EventFlagSystemOn {"AccessKey": "cLand:RcoBuildFirstVisitorsHousingKitComplete"}
+      #102 EventFlagSystemOn {"AccessKey": "cPlayer:SetHousingKitForFirstCamper"}
+      #136 Set6thVillager {"Step": 1}
+== ENTRY HousingFinish_OwlTent_Built
+  #9 MSG TalkSys/SYS_Player:952
+  #105 EventFlagSystemOn {"AccessKey": "cLand:Plorogue4BuiltMuseum"}
+  #10 EventFlagSystemOn {"AccessKey": "cPlayer:DecidedMuseumTentPlace"}
+  #16 EventFlagSystemOn {"AccessKey": "cPlayer:RcoTalkAfterMuseumTent"}
+== ENTRY HousingFinish_Shop_Built
+  #15 MSG TalkSys/SYS_Player:953
+  #17 EventFlagSystemOn {"AccessKey": "cLand:Prologue4BuiltShop"}
+  #18 EventFlagSystemOn {"AccessKey": "cLand:HghStayMarket"}
+  #104 EventFlagSystemOn {"AccessKey": "cPlayer:DecideShopArea"}
+== ENTRY HousingFinish_CampSite_Built
+  #19 MSG TalkSys/SYS_Player:957
+  #95 EventFlagSystemOn {"AccessKey": "cLand:RcoBuildCampsiteComplete"}
+  #96 EventFlagSystemOn {"AccessKey": "cPlayer:IslandDevQuestCampSetMySelf"}
+== ENTRY HousingFinish_Tailor_Built
+  #20 MSG TalkSys/SYS_Player:953_01
+  #21 EventFlagSystemOn {"AccessKey": "cLand:TailorReserved"}
+  #22 EventFlagSystemOn {"AccessKey": "cPlayer:KinuyoTailorBuildFlag"}
+  #195 EventFlagSystemOff {"AccessKey": "cLand:EnableHghStayField"}
+== ENTRY HousingFinish_NnpcImmigrateQuestA
+  #23 MSG TalkSys/SYS_Player:956
+  #78 EventFlagSystemOn {"AccessKey": "cLand:ImmQ_A_SetHousing"}
+  #81 EventFlagSystemOn {"AccessKey": "cPlayer:ImmQSetHousingAbyMySelf"}
+  #98 EventFlagSystemAdd {"AccessKey": "cLand:CountNnpcHouseSpaceSet", "AddNum": 1}
+  #29 CALL Player_Demo_HousingFinish:HF_ImmQ_Check
+== ENTRY HF_ImmQ_Calling
+  #119 MSG TalkSNpc/rco/SP_rco_20_PhoneCall:000
+  #30 SmartPhone {"ActionType": 0}
+  #90 SmartPhone {"ActionType": 4}
+  #92 SmartPhone {"ActionType": 2}
+  #132 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcoReciveMigrantEvPhone1st"}
+    case ON:
+      #134 MSG TalkSNpc/rco/SP_rco_20_PhoneCall:003_01
+      #135 MSG TalkSNpc/rco/SP_rco_20_PhoneCall:003_02
+      #24 SmartPhone {"ActionType": 3}
+      #94 SmartPhone {"ActionType": 4}
+      #127 SmartPhone {"ActionType": 1}
+      #133 EventFlagSystemOn {"AccessKey": "cPlayer:RcoReciveMigrantEvPhone1st"}
+    case OFF:
+      #120 MSG TalkSNpc/rco/SP_rco_20_PhoneCall:001
+      #77 IF GeneralTalkChoice2 {}
+        case 0:
+          #121 MSG TalkSNpc/rco/SP_rco_20_PhoneCall:002_01
+          #125 IF SubflowResultChoice2 {"SetIndex": 0}
+            case 0:
+              #123 MSG TalkSNpc/rco/SP_rco_20_PhoneCall:002_03
+              -> (#24)
+            case 1:
+              #122 MSG TalkSNpc/rco/SP_rco_20_PhoneCall:002_02
+              #126 EventFlagSystemOn {"AccessKey": "cPlayer:RcoHeardLadderExplain"}
+              -> (#123)
+        case 1:
+          -> (#121)
+== ENTRY HF_ImmQ_Check
+  #128 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcoReciveMigrantEvPhone1st"}
+    case ON:
+      #131 IF SubflowResultChoice2 {"SetIndex": 0}
+        case 1:
+          #129 CALL Player_Demo_HousingFinish:HF_ImmQ_Calling
+    case OFF:
+      -> (#129)
+== ENTRY HF_ImmQ_Calling_Init
+  #26 NpcAITalkCastSetting {"SetupKey": "Prologue_Rco"}
+== ENTRY HousingFinish_NnpcImmigrateQuestB
+  #124 SetSubflowResult {"ResultValue": 1, "SetIndex": 0}
+  #27 MSG TalkSys/SYS_Player:956_01
+  #79 EventFlagSystemOn {"AccessKey": "cLand:ImmQ_B_SetHousing"}
+  #82 EventFlagSystemOn {"AccessKey": "cPlayer:ImmQSetHousingBbyMySelf"}
+  #98 EventFlagSystemAdd {"AccessKey": "cLand:CountNnpcHouseSpaceSet", "AddNum": 1}
+  #29 CALL Player_Demo_HousingFinish:HF_ImmQ_Check
+== ENTRY HousingFinish_NnpcImmigrateQuestC
+  #28 MSG TalkSys/SYS_Player:956_02
+  #80 EventFlagSystemOn {"AccessKey": "cLand:ImmQ_C_SetHousing"}
+  #83 EventFlagSystemOn {"AccessKey": "cPlayer:ImmQSetHousingCbyMySelf"}
+  #98 EventFlagSystemAdd {"AccessKey": "cLand:CountNnpcHouseSpaceSet", "AddNum": 1}
+  #29 CALL Player_Demo_HousingFinish:HF_ImmQ_Check
+== ENTRY RecipeGetA
+  #107 IF EventFlagSystemBool {"AccessKey": "cLand:ImmQ_A_OutdoorPattern"}
+    case ON:
+      #110 PlayerSetCraftRecipe {"UnlockType": "", "ItemUniqueId": 3675}
+      #111 PlayerSetCraftRecipe {"UnlockType": "", "ItemUniqueId": 1170}
+      #112 PlayerSetCraftRecipe {"UnlockType": "", "ItemUniqueId": 1266}
+      #42 CALL Player_Demo_HousingFinish:RecipeGet_Fruit
+      #40 PlayerSetCraftRecipe {"ItemUniqueId": 2559, "UnlockType": ""}
+    case OFF:
+      #38 PlayerSetCraftRecipe {"ItemUniqueId": 3398, "UnlockType": ""}
+      #39 PlayerSetCraftRecipe {"ItemUniqueId": 3397, "UnlockType": ""}
+      #41 PlayerSetCraftRecipe {"UnlockType": "", "ItemUniqueId": 3229}
+      -> (#42)
+== ENTRY RecipeGetB
+  #108 IF EventFlagSystemBool {"AccessKey": "cLand:ImmQ_B_OutdoorPattern"}
+    case ON:
+      #113 PlayerSetCraftRecipe {"UnlockType": "", "ItemUniqueId": 2586}
+      #114 PlayerSetCraftRecipe {"UnlockType": "", "ItemUniqueId": 3396}
+      #115 PlayerSetCraftRecipe {"UnlockType": "", "ItemUniqueId": 331}
+      #47 PlayerSetCraftRecipe {"ItemUniqueId": 3205, "UnlockType": ""}
+      #46 PlayerSetCraftRecipe {"ItemUniqueId": 1565, "UnlockType": ""}
+      #55 PlayerSetCraftRecipe {"UnlockType": "", "ItemUniqueId": 3206}
+      #48 CALL Player_Demo_HousingFinish:RecipeGet_Flower
+      #56 PlayerSetCraftRecipe {"ItemUniqueId": 2615, "UnlockType": ""}
+    case OFF:
+      #43 PlayerSetCraftRecipe {"ItemUniqueId": 1626, "UnlockType": ""}
+      #44 PlayerSetCraftRecipe {"ItemUniqueId": 1627, "UnlockType": ""}
+      #45 PlayerSetCraftRecipe {"ItemUniqueId": 333, "UnlockType": ""}
+      -> (#47)
+== ENTRY RecipeGetC
+  #109 IF EventFlagSystemBool {"AccessKey": "cLand:ImmQ_C_OutdoorPattern"}
+    case ON:
+      #116 PlayerSetCraftRecipe {"UnlockType": "", "ItemUniqueId": 4035}
+      #117 PlayerSetCraftRecipe {"UnlockType": "", "ItemUniqueId": 4038}
+      #118 PlayerSetCraftRecipe {"UnlockType": "", "ItemUniqueId": 2326}
+      #52 PlayerSetCraftRecipe {"ItemUniqueId": 2605, "UnlockType": ""}
+      #53 PlayerSetCraftRecipe {"UnlockType": "", "ItemUniqueId": 1913}
+      #54 PlayerSetCraftRecipe {"UnlockType": "", "ItemUniqueId": 4073}
+    case OFF:
+      #49 PlayerSetCraftRecipe {"UnlockType": "", "ItemUniqueId": 4040}
+      #50 PlayerSetCraftRecipe {"UnlockType": "", "ItemUniqueId": 4042}
+      #51 PlayerSetCraftRecipe {"UnlockType": "", "ItemUniqueId": 880}
+      -> (#52)
+== ENTRY RecipeGet_Fruit
+  #57 IF LandFruit {}
+    case 0:
+      #59 PlayerSetCraftRecipe {"ItemUniqueId": 4011, "UnlockType": "SeqRcoAlbeit"}
+      #58 PlayerSetCraftRecipe {"ItemUniqueId": 4012, "UnlockType": "SeqRcoAlbeit"}
+    case 1:
+      #61 PlayerSetCraftRecipe {"ItemUniqueId": 3976, "UnlockType": "SeqRcoAlbeit"}
+      #60 PlayerSetCraftRecipe {"ItemUniqueId": 3975, "UnlockType": "SeqRcoAlbeit"}
+    case 2:
+      #67 PlayerSetCraftRecipe {"ItemUniqueId": 1263, "UnlockType": "SeqRcoAlbeit"}
+      #66 PlayerSetCraftRecipe {"ItemUniqueId": 4546, "UnlockType": "SeqRcoAlbeit"}
+    case 3:
+      #63 PlayerSetCraftRecipe {"ItemUniqueId": 4128, "UnlockType": "SeqRcoAlbeit"}
+      #62 PlayerSetCraftRecipe {"ItemUniqueId": 4127, "UnlockType": "SeqRcoAlbeit"}
+    case 4:
+      #65 PlayerSetCraftRecipe {"ItemUniqueId": 4134, "UnlockType": "SeqRcoAlbeit"}
+      #64 PlayerSetCraftRecipe {"ItemUniqueId": 2596, "UnlockType": "SeqRcoAlbeit"}
+== ENTRY RecipeGet_Flower
+  #68 IF VillageFlower {"VillageFlowerType": "cBirthday"}
+    case 0:
+      #69 PlayerSetCraftRecipe {"UnlockType": "None", "ItemUniqueId": 5467}
+    case 1:
+      #70 PlayerSetCraftRecipe {"UnlockType": "None", "ItemUniqueId": 5641}
+    case 2:
+      #71 PlayerSetCraftRecipe {"UnlockType": "None", "ItemUniqueId": 4293}
+    case 3:
+      #72 PlayerSetCraftRecipe {"UnlockType": "None", "ItemUniqueId": 5468}
+    case 4:
+      #73 PlayerSetCraftRecipe {"UnlockType": "None", "ItemUniqueId": 5437}
+    case 5:
+      #74 PlayerSetCraftRecipe {"UnlockType": "None", "ItemUniqueId": 5436}
+    case 6:
+      #75 PlayerSetCraftRecipe {"UnlockType": "None", "ItemUniqueId": 5670}
+    case 7:
+      #76 PlayerSetCraftRecipe {"UnlockType": "None", "ItemUniqueId": 5466}
+== ENTRY HousingFinish_Bridge
+  #84 MSG TalkSys/SYS_Player:958
+  #86 IF UIPocketMenuItemSelected {"ItemUniqueID": 7211}
+    case 0:
+      #87 EventFlagSystemOn {"AccessKey": "cLand:ImmQ_SetBridge"}
+      #88 EventFlagSystemOn {"AccessKey": "cPlayer:ImmQSetBridgeKitMySelf"}
+      #106 EventFlagSystemOn {"AccessKey": "cPlayer:ImmQTalkRcoBridgeKitSet"}
+      #89 EventFlagSystemOn {"AccessKey": "cPlayer:RcoImmQClear1QuestToday"}
+    case 1:
+      #169 EventFlagSystemSet {"AccessKey": "cLand:RcoBuildBridgeSlopeStatusCounter", "SetNum": 2}
+      #168 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcoTalkAboutHaniwa"}
+        case OFF:
+          #192 IF EventBranch {"CheckNowTime": false, "AddDay": 0}
+            case 0:
+              #164 CALL Player_Demo_HousingFinish:PhoneCallAboutGyroid
+            case 1:
+              -> (#164)
+            case 2:
+              -> (#164)
+            case 3:
+              #191 EventFlagSystemOn {"AccessKey": "cPlayer:RcoTalkAboutHaniwa"}
+== ENTRY HousingFinish_Slope
+  #85 MSG TalkSys/SYS_Player:959
+  #170 EventFlagSystemSet {"AccessKey": "cLand:RcoBuildBridgeSlopeStatusCounter", "SetNum": 2}
+  #167 IF EventFlagSystemBool {"AccessKey": "cPlayer:RcoTalkAboutHaniwa"}
+    case OFF:
+      #193 IF EventBranch {"CheckNowTime": false, "AddDay": 0}
+        case 0:
+          #165 CALL Player_Demo_HousingFinish:PhoneCallAboutGyroid
+        case 1:
+          -> (#165)
+        case 2:
+          -> (#165)
+        case 3:
+          #194 EventFlagSystemOn {"AccessKey": "cPlayer:RcoTalkAboutHaniwa"}
+== ENTRY PhoneCallAboutGyroid
+  #155 MSG TalkSNpc/rco/SP_rco_20_PhoneCall:201
+  #145 SmartPhone {"ActionType": 0}
+  #151 SmartPhone {"ActionType": 4}
+  #153 SmartPhone {"ActionType": 2}
+  #139 MSG TalkSNpc/rco/SP_rco_20_PhoneCall:202
+  #171 SetTagFromUIResult {"TagType": "cBridgeSlopeKitName", "TagID": 0}
+  #140 MSG TalkSNpc/rco/SP_rco_20_PhoneCall:203
+  #156 IF GeneralTalkChoice2 {}
+    case 0:
+      #141 MSG TalkSNpc/rco/SP_rco_20_PhoneCall:204
+      #142 MSG TalkSNpc/rco/SP_rco_20_PhoneCall:205
+      #143 MSG TalkSNpc/rco/SP_rco_20_PhoneCall:206
+      #144 MSG TalkSNpc/rco/SP_rco_20_PhoneCall:207
+      #158 SmartPhone {"ActionType": 3}
+      #162 SmartPhone {"ActionType": 4}
+      #163 SmartPhone {"ActionType": 1}
+      #166 EventFlagSystemOn {"AccessKey": "cPlayer:RcoTalkAboutHaniwa"}
+    case 1:
+      -> (#141)
+== ENTRY HousingFinish_PcHouseMove
+  #173 MSG TalkSys/SYS_Player:960
+  #172 EventFlagSystemSet {"AccessKey": "cLand:RcoMoveReservedAnyone", "SetNum": 2}
+  #185 EventFlagSystemOn {"AccessKey": "cPlayer:RcoMoveHousingSetSomeBuild"}
+== ENTRY HousingFinish_NPCHouseMove
+  #175 SetTagFromUIResult {"TagID": 0, "TagType": "cTentNpcName"}
+  #174 MSG TalkSys/SYS_Player:960_01
+  #176 EventFlagSystemSet {"AccessKey": "cLand:RcoMoveReservedAnyone", "SetNum": 2}
+  #186 EventFlagSystemOn {"AccessKey": "cPlayer:RcoMoveHousingSetSomeBuild"}
+== ENTRY HousingFinish_MuseumMove
+  #177 MSG TalkSys/SYS_Player:960_02
+  #181 EventFlagSystemSet {"AccessKey": "cLand:RcoMoveReservedAnyone", "SetNum": 2}
+  #187 EventFlagSystemOn {"AccessKey": "cPlayer:RcoMoveHousingSetSomeBuild"}
+== ENTRY HousingFinish_ShopMove
+  #178 MSG TalkSys/SYS_Player:960_03
+  #182 EventFlagSystemSet {"AccessKey": "cLand:RcoMoveReservedAnyone", "SetNum": 2}
+  #188 EventFlagSystemOn {"AccessKey": "cPlayer:RcoMoveHousingSetSomeBuild"}
+== ENTRY HousingFinish_TailorMove
+  #179 MSG TalkSys/SYS_Player:960_04
+  #183 EventFlagSystemSet {"AccessKey": "cLand:RcoMoveReservedAnyone", "SetNum": 2}
+  #189 EventFlagSystemOn {"AccessKey": "cPlayer:RcoMoveHousingSetSomeBuild"}
+== ENTRY HousingFinish_CampSiteMove
+  #180 MSG TalkSys/SYS_Player:960_05
+  #184 EventFlagSystemSet {"AccessKey": "cLand:RcoMoveReservedAnyone", "SetNum": 2}
+  #190 EventFlagSystemOn {"AccessKey": "cPlayer:RcoMoveHousingSetSomeBuild"}
