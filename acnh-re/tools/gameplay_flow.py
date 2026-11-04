@@ -12,6 +12,9 @@ Outputs (output/gameplay/):
   flow_index.json      every flowchart/entry point: subflow calls, flag reads/writes, notable actions
   milestones.json      the progression flags listed in MILESTONES with resolved evidence
   trees/*.txt          readable trees of the progression flows in KEY_FLOWS
+  native_flag_refs.json  flags without an EventFlow writer -> native functions that reference the
+                       flag name string (output/index.sqlite string_refs), membership in the
+                       day-change dispatcher 0xf545f0, and manual pseudocode readings
   summary.json         counts and the bool-case self check
 
 Usage:
@@ -29,6 +32,7 @@ import argparse
 import collections
 import json
 import re
+import sqlite3
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -433,6 +437,71 @@ def render_tree(out, flow, entries=None, msgs=None, max_lines=20000, with_text=F
     return '\n'.join(lines) + '\n'
 
 
+# Native day-change dispatcher (ELF VA). Its callee order comes from index.sqlite direct_calls.
+DAY_CHANGE_DISPATCHER = 0xf545f0
+# Readings of automated pseudocode (binary/analysis_decomp/<va>.c, Ghidra base ELF+0x100000) with
+# string operands resolved. Not executed; flag accessors 0xf44d90 (get bool), 0xf44ad0 (get int),
+# 0xf44e70 (set), 0xf45380 (increment) are inferred from their use with flag-name strings.
+PSEUDOCODE_READINGS = {
+    '0xf77050': {'role': 'museum facility state at day change (states 0-4, param_2 = elapsed days)',
+                 'reading': ['state 1 + structure kind 2 present -> state 2; MuseumBuilt=1; MuseumTentBuiltToday=1 if exactly 1 day',
+                             'state 2: MuseumGrowupEnable1 on -> cleared and construction starts; otherwise needs MuseumConstruction1>=1',
+                             'MuseumConstruction1 + elapsed days < 2 -> increment (value 1 sets MuseumConstructionToday)',
+                             'otherwise state 3; MuseumConstruction1=0; Museum2Built=1; Museum2BuiltToday=1 if exactly 1 day']},
+    '0xfcc300': {'role': 'tailor facility state at day change',
+                 'reading': ['state 1: TailorConstruction1 off -> needs structure kind 5 present; else needs TailorConstruction1>=1',
+                             'TailorConstruction1 + elapsed days < 2 -> increment',
+                             'otherwise state 2; TailorConstruction1=0; TailorBuilt=1; TailorBuiltToday=1 if exactly 1 day']},
+    '0xfc4560': {'role': 'shop facility state at day change (calls 0xfcc300)',
+                 'reading': ['state 1 + structure kind 0 present -> state 2; MarketBuilt=1; MarketOpen1stDay1=1 if exactly 1 day',
+                             'state 2: second remodel path uses MarketRemodelingFlag2/MarketConstruction2, CountMarket1AfterBuild>30 and an unidentified value >=200000 ((x>>6)>0xc34)',
+                             'MarketConstruction2 + elapsed days >= 2 -> state 3; MarketOpen1stDay2=1 if exactly 1 day']},
+    '0xf26330': {'role': 'campsite facility state at day change',
+                 'reading': ['state 1 + structure kind 6 present -> state 2; CampSiteBuilt=1; CeremonyBuildCampSite=1; CampSiteBuiltToday=1 if exactly 1 day']},
+    '0x10c2ad0': {'role': 'Resident Services at day change (called from 0x10c26e0)',
+                  'reading': ['OfficeConstruction1 accumulates elapsed days while BuiltTownOffice is off (reset to 0 above 1)',
+                              'structure kind 1 present and BuiltTownOffice off -> BuiltTownOffice=1, GlobalEventReady=1, EventPlazaBuilt=1; BuiltTownOfficeToday=1 if exactly 1 day']},
+    '0xfd8920': {'role': 'K.K. unlock and daily resets at day change',
+                 'reading': ['elapsed days >=1 and IslandEvaluationClearTkkLive on (and a second flag off) -> TkkFirstLiveEnable=1',
+                             'RctInTent set from the current hour (5..19 -> off)', 'JohnnyRequirePartsNum=5 on day change']},
+    '0x10c26e0': {'role': 'structure counters at day change',
+                  'reading': ['reads BridgeBuilt/SlopeBuilt and Count*AfterBuild counters for tailor, museum, shop, office, campsite']},
+}
+
+
+def native_refs(out, flag_index):
+    db_path = out/'index.sqlite'
+    if not db_path.exists():
+        return None
+    db = sqlite3.connect(db_path)
+    callees = [t for (t,) in db.execute('SELECT target_va FROM direct_calls WHERE owner_va=? ORDER BY pc', (DAY_CHANGE_DISPATCHER,))]
+    order = list(dict.fromkeys(callees))
+    second = {t for c in order for (t,) in db.execute('SELECT target_va FROM direct_calls WHERE owner_va=?', (c,))}
+    rows = {}
+    for key, f in flag_index.items():
+        if f['eventflow_writers'] or not f['definition']:
+            continue
+        name = key.split(':', 1)[1]
+        refs = db.execute('SELECT string_va, function_va FROM string_refs WHERE text=?', (name,)).fetchall()
+        funcs = sorted({fn for _, fn in refs if fn})
+        rows[key] = {
+            'name_ja': f['definition']['name_ja'], 'flow_access': f['definition']['flow_access'],
+            'string_va': sorted({hex(s) for s, _ in refs}),
+            'referencing_functions': [hex(fn) for fn in funcs],
+            'day_change': [hex(fn) for fn in funcs if fn in order or fn in second or fn == DAY_CHANGE_DISPATCHER],
+            'pseudocode_readings': {hex(fn): PSEUDOCODE_READINGS[hex(fn)] for fn in funcs if hex(fn) in PSEUDOCODE_READINGS},
+        }
+    return {
+        'status': 'string cross-references are static evidence; readings are from automated pseudocode, not native execution',
+        'day_change_dispatcher': hex(DAY_CHANGE_DISPATCHER),
+        'day_change_callees_in_order': [hex(t) for t in order],
+        'flags': rows,
+        'counts': {'flags_without_eventflow_writer': len(rows),
+                   'with_string_reference': sum(1 for r in rows.values() if r['referencing_functions']),
+                   'referenced_from_day_change': sum(1 for r in rows.values() if r['day_change'])},
+    }
+
+
 def cmd_build(out, with_text=False):
     flows, flag_index, defs, truncated = build(out, with_text)
     dest = out/'gameplay'
@@ -456,7 +525,11 @@ def cmd_build(out, with_text=False):
     for flow in KEY_FLOWS:
         if flow in paths:
             (trees/f'{flow}.txt').write_text(render_tree(out, flow, msgs=msgs))
+    nref = native_refs(out, flag_index)
+    if nref is not None:
+        (dest/'native_flag_refs.json').write_text(json.dumps({'meta': meta, 'data': nref}, ensure_ascii=False, indent=1) + '\n')
     summary = {
+        'native_flag_refs': nref['counts'] if nref else 'output/index.sqlite not extracted',
         'flowcharts': len(flows),
         'entry_points': sum(len(f['entries']) for f in flows.values()),
         'flag_definitions': len(defs),

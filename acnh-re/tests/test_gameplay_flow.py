@@ -95,6 +95,20 @@ class GameplayFlowTests(unittest.TestCase):
         stages = {(e.get('params') or {}).get('TargetStage') for e in flowchart('Demo_PublicAnnouncement')['events']}
         self.assertIn('cMainFieldFirstLive', stages)
 
+    @unittest.skipUnless((OUT/'index.sqlite').exists() and (OUT/'index.sqlite').stat().st_size > 0, 'index.sqlite not extracted')
+    def test_native_flag_strings_lead_to_day_change_processors(self):
+        refs = gf.native_refs(OUT, self.flags)
+        self.assertEqual(refs['counts']['flags_without_eventflow_writer'], 693)
+        order = refs['day_change_callees_in_order']
+        for fn in ('0xfc4560', '0xf77050', '0xf26330', '0xfd8920', '0x10c26e0'):
+            self.assertIn(fn, order)
+        self.assertLess(order.index('0xfc4560'), order.index('0xf77050'))
+        expect = {'cLand:MuseumBuilt': '0xf77050', 'cLand:Museum2Built': '0xf77050', 'cLand:TailorBuilt': '0xfcc300',
+                  'cLand:CampSiteBuilt': '0xf26330', 'cLand:TkkFirstLiveEnable': '0xfd8920', 'cLand:BuiltTownOffice': '0x10c2ad0',
+                  'cLand:MarketOpen1stDay1': '0xfc4560'}
+        for key, fn in expect.items():
+            self.assertIn(fn, refs['flags'][key]['referencing_functions'], key)
+
     def test_native_only_progress_flags_have_no_eventflow_writer(self):
         for key in ('cLand:MuseumBuilt', 'cLand:MarketBuilt', 'cLand:Museum2Built', 'cLand:BuiltTownOffice',
                     'cLand:CampSiteBuilt', 'cLand:TkkFirstLive', 'cLand:TkkFirstLiveEnable', 'cLand:ImmQ_A_Complete'):

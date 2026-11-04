@@ -1,0 +1,8067 @@
+{
+ "meta": {
+  "schema": "acnh-re/gameplay/1",
+  "game_version": "1.0.0",
+  "bool_case_rule": "case 0 = on, case 1 = off",
+  "bool_case_evidence": "Tutorials_Prologue_Rco event 9: case 1 explains the 10 branches and then turns PrologueForCampfire1 on, case 0 moves on to PrologueForCampfire2; SNPC_rco_01_Tent_1_Entries event 17: case 0 (fee paid) calls SNPC_rco_10_Common_AboutMyHome. bool_case_self_check in summary.json repeats the test for every writer.",
+  "inputs": [
+   "manifest.json",
+   "decoded/ (BFEVFL)",
+   "tables_resolved/EventFlags*",
+   "additional_romfs/messages/USen"
+  ],
+  "condition_policy": "switch branches on game state only; dialogue choice/random/subflow-result branches dropped; subflows not inlined",
+  "truncated_entry_walks": [
+   "System_MuseumNameBoard:Root"
+  ],
+  "message_text_included": false
+ },
+ "data": {
+  "status": "string cross-references are static evidence; readings are from automated pseudocode, not native execution",
+  "day_change_dispatcher": "0xf545f0",
+  "day_change_callees_in_order": [
+   "0xeecf20",
+   "0xeecf60",
+   "0xc5dc0",
+   "0xabf910",
+   "0xf44e70",
+   "0xee9350",
+   "0xee9490",
+   "0xee94f0",
+   "0xf234f0",
+   "0xee93d0",
+   "0x4adbc0",
+   "0x7b1d00",
+   "0xd04600",
+   "0xd133c0",
+   "0xeecf00",
+   "0xfa3ba0",
+   "0xf2d310",
+   "0xf4aff0",
+   "0xf4b0b0",
+   "0xf4b0d0",
+   "0xf44880",
+   "0xf968b0",
+   "0xf46200",
+   "0xf91b80",
+   "0xef0f20",
+   "0xf84180",
+   "0x6601a0",
+   "0xf6130",
+   "0xfe32f0",
+   "0xfddd20",
+   "0x200f00",
+   "0xfc4560",
+   "0xf77050",
+   "0xf8f190",
+   "0xf7d4c0",
+   "0xf26330",
+   "0xf6a730",
+   "0xfd8920",
+   "0xfc1b80",
+   "0x10c26e0",
+   "0x47b860",
+   "0xe773d0",
+   "0xef7530",
+   "0xf91b90",
+   "0xf8f400",
+   "0xfa2670",
+   "0xf46d40",
+   "0xd37200",
+   "0xd2c730",
+   "0xd2c830",
+   "0xf84320",
+   "0xf5f080",
+   "0xfef330",
+   "0xff2070",
+   "0xe66b40",
+   "0xe66b60",
+   "0xe66950",
+   "0x220e3e0",
+   "0x1990780",
+   "0x220e430",
+   "0x220e3f0",
+   "0xda3fc0",
+   "0xef61b0",
+   "0xf5ee50",
+   "0xf92df0",
+   "0xe6ed90",
+   "0xe66810",
+   "0xf96960",
+   "0xf82f50",
+   "0xf40e0",
+   "0x164b10",
+   "0x4adc50",
+   "0x4ae260",
+   "0xf4a8f0",
+   "0xf46c70",
+   "0xe712f0",
+   "0xda4020",
+   "0xf4a8d0",
+   "0xf46be0",
+   "0xd46150",
+   "0xf32790",
+   "0xf328f0",
+   "0xf32910",
+   "0xf32840",
+   "0xf44d90",
+   "0xfb4e60"
+  ],
+  "flags": {
+   "cHouse:CountHouseBuild": {
+    "name_ja": "テントから家になって何日目か",
+    "flow_access": 1,
+    "string_va": [
+     "0x2933c74"
+    ],
+    "referencing_functions": [
+     "0xf95f60"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cHouse:CountHouseExtension": {
+    "name_ja": "最後に増築してからの日数",
+    "flow_access": 0,
+    "string_va": [
+     "0x29ccf9e"
+    ],
+    "referencing_functions": [
+     "0xebbd50",
+     "0xebc840",
+     "0xec4060",
+     "0xf95f60"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cHouse:CountUnderGroundBuild": {
+    "name_ja": "地下室ができて何日目か",
+    "flow_access": 1,
+    "string_va": [
+     "0x298d505"
+    ],
+    "referencing_functions": [
+     "0xf95f60"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLand:AirportOpen": {
+    "name_ja": "飛行場|オープンしたか？",
+    "flow_access": "EnableReadWrite",
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLand:AllowNpcGroupActivity": {
+    "name_ja": "NPCの広場行動（集団）が許可されたか",
+    "flow_access": "DisableAccess",
+    "string_va": [
+     "0x2991e15"
+    ],
+    "referencing_functions": [
+     "0x660280"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLand:AllowNpcInterestActivity": {
+    "name_ja": "NPCの認識行動が許可されたか",
+    "flow_access": "DisableAccess",
+    "string_va": [
+     "0x29cb10b"
+    ],
+    "referencing_functions": [
+     "0x65fe90",
+     "0xd37680"
+    ],
+    "day_change": [
+     "0x65fe90"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cLand:AnyGlobalEventFinished": {
+    "name_ja": "いずれかのグローバルイベント日をまたいだ？",
+    "flow_access": "EnableReadOnly",
+    "string_va": [
+     "0x29a0694"
+    ],
+    "referencing_functions": [
+     "0xf6130"
+    ],
+    "day_change": [
+     "0xf6130"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cLand:BeyRequireFishSize": {
+    "name_ja": "来訪新うおまさ|クエスト対象のサカナサイズ",
+    "flow_access": "EnableReadOnly",
+    "string_va": [
+     "0x2946a7d"
+    ],
+    "referencing_functions": [
+     "0xd13140",
+     "0xd134a0",
+     "0xd135b0",
+     "0xfa60c0"
+    ],
+    "day_change": [
+     "0xfa60c0"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cLand:BirthdayBbsVariation1": {
+    "name_ja": "誕生日の告知を掲示板に前回書き込んだときのバリエーション1人用",
+    "flow_access": "DisableAccess",
+    "string_va": [
+     "0x294ff79"
+    ],
+    "referencing_functions": [
+     "0xf40e0"
+    ],
+    "day_change": [
+     "0xf40e0"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cLand:BirthdayBbsVariation2": {
+    "name_ja": "誕生日の告知を掲示板に前回書き込んだときのバリエーション2人用",
+    "flow_access": "DisableAccess",
+    "string_va": [
+     "0x292e08e"
+    ],
+    "referencing_functions": [
+     "0xf40e0"
+    ],
+    "day_change": [
+     "0xf40e0"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cLand:BridgeBuilt": {
+    "name_ja": "橋を作ったことがある",
+    "flow_access": "EnableReadWrite",
+    "string_va": [
+     "0x29a626a"
+    ],
+    "referencing_functions": [
+     "0x10c26e0"
+    ],
+    "day_change": [
+     "0x10c26e0"
+    ],
+    "pseudocode_readings": {
+     "0x10c26e0": {
+      "role": "structure counters at day change",
+      "reading": [
+       "reads BridgeBuilt/SlopeBuilt and Count*AfterBuild counters for tailor, museum, shop, office, campsite"
+      ]
+     }
+    }
+   },
+   "cLand:BuiltTownOffice": {
+    "name_ja": "案内所完成",
+    "flow_access": "EnableReadOnly",
+    "string_va": [
+     "0x299b906"
+    ],
+    "referencing_functions": [
+     "0x3eff0",
+     "0x99360",
+     "0x2365e0",
+     "0x4adf10",
+     "0x84f7a0",
+     "0x850090",
+     "0x850e00",
+     "0xc71bf0",
+     "0xd37680",
+     "0xd38790",
+     "0xee2180",
+     "0xeffa50",
+     "0xf8b460",
+     "0xf8f1a0",
+     "0xfd8a80",
+     "0xffde40",
+     "0x10c26e0",
+     "0x10c2ad0",
+     "0x1103f90",
+     "0x1103fd0",
+     "0x1104030"
+    ],
+    "day_change": [
+     "0xfd8a80",
+     "0x10c26e0",
+     "0x10c2ad0"
+    ],
+    "pseudocode_readings": {
+     "0x10c26e0": {
+      "role": "structure counters at day change",
+      "reading": [
+       "reads BridgeBuilt/SlopeBuilt and Count*AfterBuild counters for tailor, museum, shop, office, campsite"
+      ]
+     },
+     "0x10c2ad0": {
+      "role": "Resident Services at day change (called from 0x10c26e0)",
+      "reading": [
+       "OfficeConstruction1 accumulates elapsed days while BuiltTownOffice is off (reset to 0 above 1)",
+       "structure kind 1 present and BuiltTownOffice off -> BuiltTownOffice=1, GlobalEventReady=1, EventPlazaBuilt=1; BuiltTownOfficeToday=1 if exactly 1 day"
+      ]
+     }
+    }
+   },
+   "cLand:BuiltTownOfficeToday": {
+    "name_ja": "案内所完成当日",
+    "flow_access": "EnableReadOnly",
+    "string_va": [
+     "0x296edaf"
+    ],
+    "referencing_functions": [
+     "0x3eff0",
+     "0xc71bf0",
+     "0xeffa50",
+     "0xffde40",
+     "0x10c2ad0"
+    ],
+    "day_change": [
+     "0x10c2ad0"
+    ],
+    "pseudocode_readings": {
+     "0x10c2ad0": {
+      "role": "Resident Services at day change (called from 0x10c26e0)",
+      "reading": [
+       "OfficeConstruction1 accumulates elapsed days while BuiltTownOffice is off (reset to 0 above 1)",
+       "structure kind 1 present and BuiltTownOffice off -> BuiltTownOffice=1, GlobalEventReady=1, EventPlazaBuilt=1; BuiltTownOfficeToday=1 if exactly 1 day"
+      ]
+     }
+    }
+   },
+   "cLand:CampSiteBuilt": {
+    "name_ja": "キャンプ場が建った",
+    "flow_access": "EnableReadOnly",
+    "string_va": [
+     "0x29c786e"
+    ],
+    "referencing_functions": [
+     "0xf26330",
+     "0x10c26e0"
+    ],
+    "day_change": [
+     "0xf26330",
+     "0x10c26e0"
+    ],
+    "pseudocode_readings": {
+     "0xf26330": {
+      "role": "campsite facility state at day change",
+      "reading": [
+       "state 1 + structure kind 6 present -> state 2; CampSiteBuilt=1; CeremonyBuildCampSite=1; CampSiteBuiltToday=1 if exactly 1 day"
+      ]
+     },
+     "0x10c26e0": {
+      "role": "structure counters at day change",
+      "reading": [
+       "reads BridgeBuilt/SlopeBuilt and Count*AfterBuild counters for tailor, museum, shop, office, campsite"
+      ]
+     }
+    }
+   },
+   "cLand:CampSiteBuiltToday": {
+    "name_ja": "キャンプ場が建った当日",
+    "flow_access": "EnableReadWrite",
+    "string_va": [
+     "0x29abc4a"
+    ],
+    "referencing_functions": [
+     "0xf26330"
+    ],
+    "day_change": [
+     "0xf26330"
+    ],
+    "pseudocode_readings": {
+     "0xf26330": {
+      "role": "campsite facility state at day change",
+      "reading": [
+       "state 1 + structure kind 6 present -> state 2; CampSiteBuilt=1; CeremonyBuildCampSite=1; CampSiteBuiltToday=1 if exactly 1 day"
+      ]
+     }
+    }
+   },
+   "cLand:CeremonyBridgeUnitX": {
+    "name_ja": "セレモニ|橋建設位置Ｘ",
+    "flow_access": "DisableAccess",
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLand:CeremonyBridgeUnitZ": {
+    "name_ja": "セレモニ|橋建設位置Ｚ",
+    "flow_access": "DisableAccess",
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLand:CeremonyBuildBridge": {
+    "name_ja": "セレモニ|セレモニ開催できる：橋",
+    "flow_access": "EnableReadWrite",
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLand:CeremonyBuildCampSite": {
+    "name_ja": "セレモニ|セレモニ開催できる：キャンプ場",
+    "flow_access": "EnableReadWrite",
+    "string_va": [
+     "0x29a205b"
+    ],
+    "referencing_functions": [
+     "0xf26330"
+    ],
+    "day_change": [
+     "0xf26330"
+    ],
+    "pseudocode_readings": {
+     "0xf26330": {
+      "role": "campsite facility state at day change",
+      "reading": [
+       "state 1 + structure kind 6 present -> state 2; CampSiteBuilt=1; CeremonyBuildCampSite=1; CampSiteBuiltToday=1 if exactly 1 day"
+      ]
+     }
+    }
+   },
+   "cLand:CeremonyBuildSlope": {
+    "name_ja": "セレモニ|セレモニ開催できる：坂",
+    "flow_access": "EnableReadWrite",
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLand:CeremonyBuildTailor": {
+    "name_ja": "セレモニ|廃止予定：置き換え可",
+    "flow_access": "EnableReadWrite",
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLand:CeremonySlopeUnitX": {
+    "name_ja": "セレモニ|坂建設位置Ｘ",
+    "flow_access": "DisableAccess",
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLand:CeremonySlopeUnitZ": {
+    "name_ja": "セレモニ|坂建設位置Z",
+    "flow_access": "DisableAccess",
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLand:CountCampSiteAfterBuild": {
+    "name_ja": "キャンプ場|オープンして何日目か",
+    "flow_access": "EnableReadOnly",
+    "string_va": [
+     "0x29aac7e"
+    ],
+    "referencing_functions": [
+     "0x10c26e0"
+    ],
+    "day_change": [
+     "0x10c26e0"
+    ],
+    "pseudocode_readings": {
+     "0x10c26e0": {
+      "role": "structure counters at day change",
+      "reading": [
+       "reads BridgeBuilt/SlopeBuilt and Count*AfterBuild counters for tailor, museum, shop, office, campsite"
+      ]
+     }
+    }
+   },
+   "cLand:CountFirstBridgeAfterBuild": {
+    "name_ja": "初めての橋に言及する会話を表示できる残り日数",
+    "flow_access": "EnableReadOnly",
+    "string_va": [
+     "0x29afe69"
+    ],
+    "referencing_functions": [
+     "0x10c26e0"
+    ],
+    "day_change": [
+     "0x10c26e0"
+    ],
+    "pseudocode_readings": {
+     "0x10c26e0": {
+      "role": "structure counters at day change",
+      "reading": [
+       "reads BridgeBuilt/SlopeBuilt and Count*AfterBuild counters for tailor, museum, shop, office, campsite"
+      ]
+     }
+    }
+   },
+   "cLand:CountFirstSlopeAfterBuild": {
+    "name_ja": "初めての坂に言及する会話を表示できる残り日数",
+    "flow_access": "EnableReadOnly",
+    "string_va": [
+     "0x291faef"
+    ],
+    "referencing_functions": [
+     "0x10c26e0"
+    ],
+    "day_change": [
+     "0x10c26e0"
+    ],
+    "pseudocode_readings": {
+     "0x10c26e0": {
+      "role": "structure counters at day change",
+      "reading": [
+       "reads BridgeBuilt/SlopeBuilt and Count*AfterBuild counters for tailor, museum, shop, office, campsite"
+      ]
+     }
+    }
+   },
+   "cLand:CountMarket1AfterBuild": {
+    "name_ja": "まめきちの店|小がオープンして何日目か",
+    "flow_access": "EnableReadOnly",
+    "string_va": [
+     "0x294b39d"
+    ],
+    "referencing_functions": [
+     "0xfc4560",
+     "0x10c26e0"
+    ],
+    "day_change": [
+     "0xfc4560",
+     "0x10c26e0"
+    ],
+    "pseudocode_readings": {
+     "0xfc4560": {
+      "role": "shop facility state at day change (calls 0xfcc300)",
+      "reading": [
+       "state 1 + structure kind 0 present -> state 2; MarketBuilt=1; MarketOpen1stDay1=1 if exactly 1 day",
+       "state 2: second remodel path uses MarketRemodelingFlag2/MarketConstruction2, CountMarket1AfterBuild>30 and an unidentified value >=200000 ((x>>6)>0xc34)",
+       "MarketConstruction2 + elapsed days >= 2 -> state 3; MarketOpen1stDay2=1 if exactly 1 day"
+      ]
+     },
+     "0x10c26e0": {
+      "role": "structure counters at day change",
+      "reading": [
+       "reads BridgeBuilt/SlopeBuilt and Count*AfterBuild counters for tailor, museum, shop, office, campsite"
+      ]
+     }
+    }
+   },
+   "cLand:CountMarket2AfterBuild": {
+    "name_ja": "まめきちの店|大がオープンして何日目か",
+    "flow_access": "EnableReadOnly",
+    "string_va": [
+     "0x2950502"
+    ],
+    "referencing_functions": [
+     "0x10c26e0"
+    ],
+    "day_change": [
+     "0x10c26e0"
+    ],
+    "pseudocode_readings": {
+     "0x10c26e0": {
+      "role": "structure counters at day change",
+      "reading": [
+       "reads BridgeBuilt/SlopeBuilt and Count*AfterBuild counters for tailor, museum, shop, office, campsite"
+      ]
+     }
+    }
+   },
+   "cLand:CountMuseumAfterBuild": {
+    "name_ja": "博物館|オープンして何日目か",
+    "flow_access": "EnableReadOnly",
+    "string_va": [
+     "0x29975bc"
+    ],
+    "referencing_functions": [
+     "0x10c26e0"
+    ],
+    "day_change": [
+     "0x10c26e0"
+    ],
+    "pseudocode_readings": {
+     "0x10c26e0": {
+      "role": "structure counters at day change",
+      "reading": [
+       "reads BridgeBuilt/SlopeBuilt and Count*AfterBuild counters for tailor, museum, shop, office, campsite"
+      ]
+     }
+    }
+   },
+   "cLand:CountOfficeAfterBuild": {
+    "name_ja": "案内所|オープンして何日目か",
+    "flow_access": "EnableReadOnly",
+    "string_va": [
+     "0x29d07a9"
+    ],
+    "referencing_functions": [
+     "0x10c26e0"
+    ],
+    "day_change": [
+     "0x10c26e0"
+    ],
+    "pseudocode_readings": {
+     "0x10c26e0": {
+      "role": "structure counters at day change",
+      "reading": [
+       "reads BridgeBuilt/SlopeBuilt and Count*AfterBuild counters for tailor, museum, shop, office, campsite"
+      ]
+     }
+    }
+   },
+   "cLand:CountTailorAfterBuild": {
+    "name_ja": "仕立て屋|オープンして何日目か",
+    "flow_access": "EnableReadOnly",
+    "string_va": [
+     "0x2946aea"
+    ],
+    "referencing_functions": [
+     "0x10c26e0"
+    ],
+    "day_change": [
+     "0x10c26e0"
+    ],
+    "pseudocode_readings": {
+     "0x10c26e0": {
+      "role": "structure counters at day change",
+      "reading": [
+       "reads BridgeBuilt/SlopeBuilt and Count*AfterBuild counters for tailor, museum, shop, office, campsite"
+      ]
+     }
+    }
+   },
+   "cLand:DailyQuestFivePointDay": {
+    "name_ja": "日課の5倍ポイントデーか？",
+    "flow_access": "DisableAccess",
+    "string_va": [
+     "0x29520f9"
+    ],
+    "referencing_functions": [
+     "0xf60690",
+     "0xf61960"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLand:DoneMuseumConstruction": {
+    "name_ja": "博物館建築工事完了",
+    "flow_access": "EnableReadWrite",
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLand:EnableMarketBuild": {
+    "name_ja": "まめつぶ商店建築条件満たした",
+    "flow_access": "EnableReadWrite",
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLand:EventPlazaBuilt": {
+    "name_ja": "イベント広場完成",
+    "flow_access": "EnableReadOnly",
+    "string_va": [
+     "0x294aebf"
+    ],
+    "referencing_functions": [
+     "0xf6130",
+     "0x48c720",
+     "0x65fd80",
+     "0x10c2ad0"
+    ],
+    "day_change": [
+     "0xf6130",
+     "0x65fd80",
+     "0x10c2ad0"
+    ],
+    "pseudocode_readings": {
+     "0x10c2ad0": {
+      "role": "Resident Services at day change (called from 0x10c26e0)",
+      "reading": [
+       "OfficeConstruction1 accumulates elapsed days while BuiltTownOffice is off (reset to 0 above 1)",
+       "structure kind 1 present and BuiltTownOffice off -> BuiltTownOffice=1, GlobalEventReady=1, EventPlazaBuilt=1; BuiltTownOfficeToday=1 if exactly 1 day"
+      ]
+     }
+    }
+   },
+   "cLand:EventPlazaBuiltToday": {
+    "name_ja": "イベント広場完成当日",
+    "flow_access": "EnableReadOnly",
+    "string_va": [
+     "0x2933fa5"
+    ],
+    "referencing_functions": [
+     "0x65fd80"
+    ],
+    "day_change": [
+     "0x65fd80"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cLand:FinishMuseumPreparation1stDay": {
+    "name_ja": "フータ移住初日に博物館建築条件を達成した",
+    "flow_access": "EnableReadWrite",
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLand:FirstKabuPattern": {
+    "name_ja": "初回カブ価パターン適用済みフラグ",
+    "flow_access": "DisableAccess",
+    "string_va": [
+     "0x29b6a7d"
+    ],
+    "referencing_functions": [
+     "0xfc6d00",
+     "0xfc7b40"
+    ],
+    "day_change": [
+     "0xfc7b40"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cLand:FishFesFinished": {
+    "name_ja": "島で2回目以降のつり大会？（つり大会の日をまたいだ？）",
+    "flow_access": "EnableReadOnly",
+    "string_va": [
+     "0x295592b"
+    ],
+    "referencing_functions": [
+     "0xf6130"
+    ],
+    "day_change": [
+     "0xf6130"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cLand:FishNetHostCatchNumResult": {
+    "name_ja": "通信開始時にネットホストのプレイヤーが今まで捕まえたサカナの数",
+    "flow_access": "DisableAccess",
+    "string_va": [
+     "0x2991d2d"
+    ],
+    "referencing_functions": [
+     "0x5b8e30",
+     "0x5e3980"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLand:FlwLilyFirstGrow": {
+    "name_ja": "スズラン|島に発生したことがある？",
+    "flow_access": "EnableReadOnly",
+    "string_va": [
+     "0x2955e09"
+    ],
+    "referencing_functions": [
+     "0x4b6e70"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLand:FreeEChatTimes": {
+    "name_ja": "村で告知会話を聞いた回数",
+    "flow_access": "EnableReadWrite",
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLand:FreeFChatTimes": {
+    "name_ja": "村でイベント会話を聞いた回数",
+    "flow_access": "EnableReadWrite",
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLand:GlobalEventAvailable": {
+    "name_ja": "グローバルイベント解禁",
+    "flow_access": "EnableReadOnly",
+    "string_va": [
+     "0x29461ed"
+    ],
+    "referencing_functions": [
+     "0xf0790",
+     "0xf29b0",
+     "0xf2aa0",
+     "0xf3310",
+     "0xf3530",
+     "0xf39d0",
+     "0xf53e0",
+     "0xf5920",
+     "0xf6130"
+    ],
+    "day_change": [
+     "0xf0790",
+     "0xf2aa0",
+     "0xf39d0",
+     "0xf6130"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cLand:GlobalEventReady": {
+    "name_ja": "グローバルイベント準備中",
+    "flow_access": "EnableReadWrite",
+    "string_va": [
+     "0x29a5c5b"
+    ],
+    "referencing_functions": [
+     "0xf6130",
+     "0x10c2ad0"
+    ],
+    "day_change": [
+     "0xf6130",
+     "0x10c2ad0"
+    ],
+    "pseudocode_readings": {
+     "0x10c2ad0": {
+      "role": "Resident Services at day change (called from 0x10c26e0)",
+      "reading": [
+       "OfficeConstruction1 accumulates elapsed days while BuiltTownOffice is off (reset to 0 above 1)",
+       "structure kind 1 present and BuiltTownOffice off -> BuiltTownOffice=1, GlobalEventReady=1, EventPlazaBuilt=1; BuiltTownOfficeToday=1 if exactly 1 day"
+      ]
+     }
+    }
+   },
+   "cLand:GstAppearField": {
+    "name_ja": "ゆうたろう|村に出現する",
+    "flow_access": "DisableAccess",
+    "string_va": [
+     "0x296573b"
+    ],
+    "referencing_functions": [
+     "0xc70060"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLand:HgcVisitFlagForTailor": {
+    "name_ja": "仕立て屋商品けってい用ことの来訪フラグ",
+    "flow_access": "DisableAccess",
+    "string_va": [
+     "0x2989b1d"
+    ],
+    "referencing_functions": [
+     "0xfca870",
+     "0xfd9d10"
+    ],
+    "day_change": [
+     "0xfca870"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cLand:ImmQ_A_Complete": {
+    "name_ja": "移住Quest|住宅A|全工程完了",
+    "flow_access": "EnableReadOnly",
+    "string_va": [
+     "0x291fa0f"
+    ],
+    "referencing_functions": [
+     "0xfd9d10"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLand:ImmQ_A_InteriorDonateNow": {
+    "name_ja": "移住Quest|住宅A|屋内家具を今寄贈した",
+    "flow_access": "EnableReadWrite",
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLand:ImmQ_A_Invited": {
+    "name_ja": "移住Quest|移住者A|勧誘した",
+    "flow_access": "EnableReadWrite",
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLand:ImmQ_B_Complete": {
+    "name_ja": "移住Quest|住宅B|全工程完了",
+    "flow_access": "EnableReadOnly",
+    "string_va": [
+     "0x29ba302"
+    ],
+    "referencing_functions": [
+     "0xfd9d10"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLand:ImmQ_B_InteriorDonateNow": {
+    "name_ja": "移住Quest|住宅B|屋内家具の今寄贈した",
+    "flow_access": "EnableReadWrite",
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLand:ImmQ_B_Invited": {
+    "name_ja": "移住Quest|移住者B|勧誘した",
+    "flow_access": "EnableReadWrite",
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLand:ImmQ_C_Complete": {
+    "name_ja": "移住Quest|住宅C|全工程完了",
+    "flow_access": "EnableReadOnly",
+    "string_va": [
+     "0x2980344"
+    ],
+    "referencing_functions": [
+     "0xfd9d10"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLand:ImmQ_C_InteriorDonateNow": {
+    "name_ja": "移住Quest|住宅C|屋内家具の今寄贈した",
+    "flow_access": "EnableReadWrite",
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLand:ImmQ_C_Invited": {
+    "name_ja": "移住Quest|移住者C|勧誘した",
+    "flow_access": "EnableReadWrite",
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLand:InsectFesFinished": {
+    "name_ja": "島で2回目以降のムシとり大会？（ムシとり大会の日をまたいだ？）",
+    "flow_access": "EnableReadOnly",
+    "string_va": [
+     "0x295a5a5"
+    ],
+    "referencing_functions": [
+     "0xf6130"
+    ],
+    "day_change": [
+     "0xf6130"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cLand:InsectNetHostCatchNumResult": {
+    "name_ja": "通信開始時にネットホストのプレイヤーが今まで捕まえたムシの数",
+    "flow_access": "DisableAccess",
+    "string_va": [
+     "0x2950ec2"
+    ],
+    "referencing_functions": [
+     "0x9b5d30",
+     "0x9f0410"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLand:InstalledMarketTentSign": {
+    "name_ja": "まめきちテントの看板が設置された",
+    "flow_access": "EnableReadOnly",
+    "string_va": [
+     "0x29cb0f3"
+    ],
+    "referencing_functions": [
+     "0x6601a0"
+    ],
+    "day_change": [
+     "0x6601a0"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cLand:IsNpcIncreased": {
+    "name_ja": "NPCが1人でも引越してきたか？",
+    "flow_access": "EnableReadOnly",
+    "string_va": [
+     "0x292f7bd"
+    ],
+    "referencing_functions": [
+     "0xf84f10",
+     "0xf86a40",
+     "0xf87090",
+     "0xf8c540",
+     "0xf8cea0"
+    ],
+    "day_change": [
+     "0xf84f10"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cLand:IslandKanaType": {
+    "name_ja": "『島』のルビ",
+    "flow_access": "EnableReadWrite",
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLand:JohnnyRequirePartsNum": {
+    "name_ja": "ジョニー|必要なパーツの個数",
+    "flow_access": "EnableReadWrite",
+    "string_va": [
+     "0x295046e"
+    ],
+    "referencing_functions": [
+     "0xd9e800",
+     "0xfd8920"
+    ],
+    "day_change": [
+     "0xfd8920"
+    ],
+    "pseudocode_readings": {
+     "0xfd8920": {
+      "role": "K.K. unlock and daily resets at day change",
+      "reading": [
+       "elapsed days >=1 and IslandEvaluationClearTkkLive on (and a second flag off) -> TkkFirstLiveEnable=1",
+       "RctInTent set from the current hour (5..19 -> off)",
+       "JohnnyRequirePartsNum=5 on day change"
+      ]
+     }
+    }
+   },
+   "cLand:MarketBuilt": {
+    "name_ja": "まめつぶ商店が建った",
+    "flow_access": "DisableAccess",
+    "string_va": [
+     "0x295a834"
+    ],
+    "referencing_functions": [
+     "0xc6f990",
+     "0xd1e610",
+     "0xd78bf0",
+     "0xd78c90",
+     "0xf6a730",
+     "0xf91b90",
+     "0xfc4560",
+     "0x1183220"
+    ],
+    "day_change": [
+     "0xf6a730",
+     "0xf91b90",
+     "0xfc4560"
+    ],
+    "pseudocode_readings": {
+     "0xfc4560": {
+      "role": "shop facility state at day change (calls 0xfcc300)",
+      "reading": [
+       "state 1 + structure kind 0 present -> state 2; MarketBuilt=1; MarketOpen1stDay1=1 if exactly 1 day",
+       "state 2: second remodel path uses MarketRemodelingFlag2/MarketConstruction2, CountMarket1AfterBuild>30 and an unidentified value >=200000 ((x>>6)>0xc34)",
+       "MarketConstruction2 + elapsed days >= 2 -> state 3; MarketOpen1stDay2=1 if exactly 1 day"
+      ]
+     }
+    }
+   },
+   "cLand:MarketConstruction1": {
+    "name_ja": "まめきちの店|テント→商店（小）工事中",
+    "flow_access": "EnableReadOnly",
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLand:MarketConstruction2": {
+    "name_ja": "まめきちの店||商店（小）→倉庫　工事中",
+    "flow_access": "EnableReadOnly",
+    "string_va": [
+     "0x291f8f3"
+    ],
+    "referencing_functions": [
+     "0xfc4560",
+     "0x11023c0",
+     "0x1102500"
+    ],
+    "day_change": [
+     "0xfc4560"
+    ],
+    "pseudocode_readings": {
+     "0xfc4560": {
+      "role": "shop facility state at day change (calls 0xfcc300)",
+      "reading": [
+       "state 1 + structure kind 0 present -> state 2; MarketBuilt=1; MarketOpen1stDay1=1 if exactly 1 day",
+       "state 2: second remodel path uses MarketRemodelingFlag2/MarketConstruction2, CountMarket1AfterBuild>30 and an unidentified value >=200000 ((x>>6)>0xc34)",
+       "MarketConstruction2 + elapsed days >= 2 -> state 3; MarketOpen1stDay2=1 if exactly 1 day"
+      ]
+     }
+    }
+   },
+   "cLand:MarketOpen1stDay1": {
+    "name_ja": "まめきちの店|新装開店当日(商店)",
+    "flow_access": "EnableReadOnly",
+    "string_va": [
+     "0x2951ad9"
+    ],
+    "referencing_functions": [
+     "0xabd290",
+     "0xfc4560"
+    ],
+    "day_change": [
+     "0xfc4560"
+    ],
+    "pseudocode_readings": {
+     "0xfc4560": {
+      "role": "shop facility state at day change (calls 0xfcc300)",
+      "reading": [
+       "state 1 + structure kind 0 present -> state 2; MarketBuilt=1; MarketOpen1stDay1=1 if exactly 1 day",
+       "state 2: second remodel path uses MarketRemodelingFlag2/MarketConstruction2, CountMarket1AfterBuild>30 and an unidentified value >=200000 ((x>>6)>0xc34)",
+       "MarketConstruction2 + elapsed days >= 2 -> state 3; MarketOpen1stDay2=1 if exactly 1 day"
+      ]
+     }
+    }
+   },
+   "cLand:MarketOpen1stDay2": {
+    "name_ja": "まめきちの店|新装開店当日(倉庫)",
+    "flow_access": "EnableReadOnly",
+    "string_va": [
+     "0x2947a7e"
+    ],
+    "referencing_functions": [
+     "0xfc4560"
+    ],
+    "day_change": [
+     "0xfc4560"
+    ],
+    "pseudocode_readings": {
+     "0xfc4560": {
+      "role": "shop facility state at day change (calls 0xfcc300)",
+      "reading": [
+       "state 1 + structure kind 0 present -> state 2; MarketBuilt=1; MarketOpen1stDay1=1 if exactly 1 day",
+       "state 2: second remodel path uses MarketRemodelingFlag2/MarketConstruction2, CountMarket1AfterBuild>30 and an unidentified value >=200000 ((x>>6)>0xc34)",
+       "MarketConstruction2 + elapsed days >= 2 -> state 3; MarketOpen1stDay2=1 if exactly 1 day"
+      ]
+     }
+    }
+   },
+   "cLand:MarketRemodelingFlag1": {
+    "name_ja": "まめきちの店|テント→商店（小）改装決定",
+    "flow_access": "EnableReadOnly",
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLand:MarketRemodelingFlag2": {
+    "name_ja": "まめきちの店|商店（小）→倉庫　改装決定",
+    "flow_access": "EnableReadOnly",
+    "string_va": [
+     "0x2970e11"
+    ],
+    "referencing_functions": [
+     "0xfc4560"
+    ],
+    "day_change": [
+     "0xfc4560"
+    ],
+    "pseudocode_readings": {
+     "0xfc4560": {
+      "role": "shop facility state at day change (calls 0xfcc300)",
+      "reading": [
+       "state 1 + structure kind 0 present -> state 2; MarketBuilt=1; MarketOpen1stDay1=1 if exactly 1 day",
+       "state 2: second remodel path uses MarketRemodelingFlag2/MarketConstruction2, CountMarket1AfterBuild>30 and an unidentified value >=200000 ((x>>6)>0xc34)",
+       "MarketConstruction2 + elapsed days >= 2 -> state 3; MarketOpen1stDay2=1 if exactly 1 day"
+      ]
+     }
+    }
+   },
+   "cLand:Museum2Built": {
+    "name_ja": "博物館①完成",
+    "flow_access": "EnableReadOnly",
+    "string_va": [
+     "0x2956c9e"
+    ],
+    "referencing_functions": [
+     "0xd257d0",
+     "0xf77050",
+     "0x124a590",
+     "0x1254dd0"
+    ],
+    "day_change": [
+     "0xf77050"
+    ],
+    "pseudocode_readings": {
+     "0xf77050": {
+      "role": "museum facility state at day change (states 0-4, param_2 = elapsed days)",
+      "reading": [
+       "state 1 + structure kind 2 present -> state 2; MuseumBuilt=1; MuseumTentBuiltToday=1 if exactly 1 day",
+       "state 2: MuseumGrowupEnable1 on -> cleared and construction starts; otherwise needs MuseumConstruction1>=1",
+       "MuseumConstruction1 + elapsed days < 2 -> increment (value 1 sets MuseumConstructionToday)",
+       "otherwise state 3; MuseumConstruction1=0; Museum2Built=1; Museum2BuiltToday=1 if exactly 1 day"
+      ]
+     }
+    }
+   },
+   "cLand:Museum2BuiltToday": {
+    "name_ja": "博物館（建物）①完成当日か？",
+    "flow_access": "EnableReadOnly",
+    "string_va": [
+     "0x29c3037"
+    ],
+    "referencing_functions": [
+     "0xf77050"
+    ],
+    "day_change": [
+     "0xf77050"
+    ],
+    "pseudocode_readings": {
+     "0xf77050": {
+      "role": "museum facility state at day change (states 0-4, param_2 = elapsed days)",
+      "reading": [
+       "state 1 + structure kind 2 present -> state 2; MuseumBuilt=1; MuseumTentBuiltToday=1 if exactly 1 day",
+       "state 2: MuseumGrowupEnable1 on -> cleared and construction starts; otherwise needs MuseumConstruction1>=1",
+       "MuseumConstruction1 + elapsed days < 2 -> increment (value 1 sets MuseumConstructionToday)",
+       "otherwise state 3; MuseumConstruction1=0; Museum2Built=1; Museum2BuiltToday=1 if exactly 1 day"
+      ]
+     }
+    }
+   },
+   "cLand:MuseumBuilt": {
+    "name_ja": "博物館テントが建った",
+    "flow_access": "EnableReadOnly",
+    "string_va": [
+     "0x29c78a9"
+    ],
+    "referencing_functions": [
+     "0xf77050"
+    ],
+    "day_change": [
+     "0xf77050"
+    ],
+    "pseudocode_readings": {
+     "0xf77050": {
+      "role": "museum facility state at day change (states 0-4, param_2 = elapsed days)",
+      "reading": [
+       "state 1 + structure kind 2 present -> state 2; MuseumBuilt=1; MuseumTentBuiltToday=1 if exactly 1 day",
+       "state 2: MuseumGrowupEnable1 on -> cleared and construction starts; otherwise needs MuseumConstruction1>=1",
+       "MuseumConstruction1 + elapsed days < 2 -> increment (value 1 sets MuseumConstructionToday)",
+       "otherwise state 3; MuseumConstruction1=0; Museum2Built=1; Museum2BuiltToday=1 if exactly 1 day"
+      ]
+     }
+    }
+   },
+   "cLand:MuseumConstruction1": {
+    "name_ja": "博物館テント→工事中",
+    "flow_access": "EnableReadWrite",
+    "string_va": [
+     "0x299bcb7"
+    ],
+    "referencing_functions": [
+     "0xf77050",
+     "0x11031c0"
+    ],
+    "day_change": [
+     "0xf77050"
+    ],
+    "pseudocode_readings": {
+     "0xf77050": {
+      "role": "museum facility state at day change (states 0-4, param_2 = elapsed days)",
+      "reading": [
+       "state 1 + structure kind 2 present -> state 2; MuseumBuilt=1; MuseumTentBuiltToday=1 if exactly 1 day",
+       "state 2: MuseumGrowupEnable1 on -> cleared and construction starts; otherwise needs MuseumConstruction1>=1",
+       "MuseumConstruction1 + elapsed days < 2 -> increment (value 1 sets MuseumConstructionToday)",
+       "otherwise state 3; MuseumConstruction1=0; Museum2Built=1; Museum2BuiltToday=1 if exactly 1 day"
+      ]
+     }
+    }
+   },
+   "cLand:MuseumConstructionToday": {
+    "name_ja": "今日、博物館工事当日であるか？",
+    "flow_access": "EnableReadOnly",
+    "string_va": [
+     "0x2956f8a"
+    ],
+    "referencing_functions": [
+     "0xf77050"
+    ],
+    "day_change": [
+     "0xf77050"
+    ],
+    "pseudocode_readings": {
+     "0xf77050": {
+      "role": "museum facility state at day change (states 0-4, param_2 = elapsed days)",
+      "reading": [
+       "state 1 + structure kind 2 present -> state 2; MuseumBuilt=1; MuseumTentBuiltToday=1 if exactly 1 day",
+       "state 2: MuseumGrowupEnable1 on -> cleared and construction starts; otherwise needs MuseumConstruction1>=1",
+       "MuseumConstruction1 + elapsed days < 2 -> increment (value 1 sets MuseumConstructionToday)",
+       "otherwise state 3; MuseumConstruction1=0; Museum2Built=1; Museum2BuiltToday=1 if exactly 1 day"
+      ]
+     }
+    }
+   },
+   "cLand:MuseumTentBuiltToday": {
+    "name_ja": "博物館テントオープン当日か？",
+    "flow_access": "EnableReadOnly",
+    "string_va": [
+     "0x299cea4"
+    ],
+    "referencing_functions": [
+     "0xf77050"
+    ],
+    "day_change": [
+     "0xf77050"
+    ],
+    "pseudocode_readings": {
+     "0xf77050": {
+      "role": "museum facility state at day change (states 0-4, param_2 = elapsed days)",
+      "reading": [
+       "state 1 + structure kind 2 present -> state 2; MuseumBuilt=1; MuseumTentBuiltToday=1 if exactly 1 day",
+       "state 2: MuseumGrowupEnable1 on -> cleared and construction starts; otherwise needs MuseumConstruction1>=1",
+       "MuseumConstruction1 + elapsed days < 2 -> increment (value 1 sets MuseumConstructionToday)",
+       "otherwise state 3; MuseumConstruction1=0; Museum2Built=1; Museum2BuiltToday=1 if exactly 1 day"
+      ]
+     }
+    }
+   },
+   "cLand:NoncompliantRegionCode": {
+    "name_ja": "非対応の地域設定でセーブしたか？",
+    "flow_access": "EnableReadOnly",
+    "string_va": [
+     "0x29a20ff"
+    ],
+    "referencing_functions": [
+     "0xfc3600"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLand:NpcDIYScheduleSet": {
+    "name_ja": "NPCのDIYスケジュールを決定したか",
+    "flow_access": "DisableAccess",
+    "string_va": [
+     "0x294c81d"
+    ],
+    "referencing_functions": [
+     "0xf8ab90"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLand:OfficeConstruction1": {
+    "name_ja": "役場|工事中→役場",
+    "flow_access": "EnableReadOnly",
+    "string_va": [
+     "0x2947c18"
+    ],
+    "referencing_functions": [
+     "0x10c2ad0"
+    ],
+    "day_change": [
+     "0x10c2ad0"
+    ],
+    "pseudocode_readings": {
+     "0x10c2ad0": {
+      "role": "Resident Services at day change (called from 0x10c26e0)",
+      "reading": [
+       "OfficeConstruction1 accumulates elapsed days while BuiltTownOffice is off (reset to 0 above 1)",
+       "structure kind 1 present and BuiltTownOffice off -> BuiltTownOffice=1, GlobalEventReady=1, EventPlazaBuilt=1; BuiltTownOfficeToday=1 if exactly 1 day"
+      ]
+     }
+    }
+   },
+   "cLand:PAnnounceKkProject": {
+    "name_ja": "島内放送|とたけけプロジェクトの予告発生した？",
+    "flow_access": "EnableReadWrite",
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLand:PeddingAvailableBoa": {
+    "name_ja": "カブ解禁済｜カブリバ",
+    "flow_access": "EnableReadWrite",
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLand:PickedUpMessageBottle": {
+    "name_ja": "最初のメッセージボトルが拾われた",
+    "flow_access": "EnableReadWrite",
+    "string_va": [
+     "0x29aadac"
+    ],
+    "referencing_functions": [
+     "0x4ae640"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLand:PlazaDonationFinish": {
+    "name_ja": "イベント広場募金集まったか？",
+    "flow_access": "EnableReadWrite",
+    "string_va": [
+     "0x29d0ac2"
+    ],
+    "referencing_functions": [
+     "0x65fd80"
+    ],
+    "day_change": [
+     "0x65fd80"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cLand:PlazaDonationMaterial": {
+    "name_ja": "イベント広場寄付素材数(ねんど)",
+    "flow_access": "EnableReadOnly",
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLand:PlazaDonationMoney": {
+    "name_ja": "イベント広場寄付金額",
+    "flow_access": "EnableReadWrite",
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLand:PlazaGyroidBuilt": {
+    "name_ja": "イベント広場募金ハニワくん設置",
+    "flow_access": "EnableReadOnly",
+    "string_va": [
+     "0x294b65d"
+    ],
+    "referencing_functions": [
+     "0x6601a0"
+    ],
+    "day_change": [
+     "0x6601a0"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cLand:RcmGotSignboard": {
+    "name_ja": "まめきちが看板を手に入れた",
+    "flow_access": "EnableReadWrite",
+    "string_va": [
+     "0x29b5b75"
+    ],
+    "referencing_functions": [
+     "0x6601a0"
+    ],
+    "day_change": [
+     "0x6601a0"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cLand:RcoDeleteBridgeSlopeBuildPlayer": {
+    "name_ja": "たぬきち|橋/坂予定地を建てたプレイヤーが削除された",
+    "flow_access": "EnableReadWrite",
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLand:RcoIslandRevitilizationRefuse": {
+    "name_ja": "たぬきち|島おこし系クエスト断った",
+    "flow_access": "EnableReadWrite",
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLand:RctInTent": {
+    "name_ja": "つぶきち|たぬきちテントに帰る",
+    "flow_access": "DisableAccess",
+    "string_va": [
+     "0x29b128a"
+    ],
+    "referencing_functions": [
+     "0xc6f990",
+     "0xfd8920"
+    ],
+    "day_change": [
+     "0xfd8920"
+    ],
+    "pseudocode_readings": {
+     "0xfd8920": {
+      "role": "K.K. unlock and daily resets at day change",
+      "reading": [
+       "elapsed days >=1 and IslandEvaluationClearTkkLive on (and a second flag off) -> TkkFirstLiveEnable=1",
+       "RctInTent set from the current hour (5..19 -> off)",
+       "JohnnyRequirePartsNum=5 on day change"
+      ]
+     }
+    }
+   },
+   "cLand:ReportedTaiorReserve": {
+    "name_ja": "仕立て屋|工事看板(予定地)建てたこと報告済み",
+    "flow_access": "EnableReadWrite",
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLand:ShopItemSet": {
+    "name_ja": "商店に商品を置いてよいか？",
+    "flow_access": "DisableAccess",
+    "string_va": [
+     "0x2933e24"
+    ],
+    "referencing_functions": [
+     "0x5604f0",
+     "0xfc4560"
+    ],
+    "day_change": [
+     "0xfc4560"
+    ],
+    "pseudocode_readings": {
+     "0xfc4560": {
+      "role": "shop facility state at day change (calls 0xfcc300)",
+      "reading": [
+       "state 1 + structure kind 0 present -> state 2; MarketBuilt=1; MarketOpen1stDay1=1 if exactly 1 day",
+       "state 2: second remodel path uses MarketRemodelingFlag2/MarketConstruction2, CountMarket1AfterBuild>30 and an unidentified value >=200000 ((x>>6)>0xc34)",
+       "MarketConstruction2 + elapsed days >= 2 -> state 3; MarketOpen1stDay2=1 if exactly 1 day"
+      ]
+     }
+    }
+   },
+   "cLand:SlopeBuilt": {
+    "name_ja": "坂を作ったことがある",
+    "flow_access": "EnableReadWrite",
+    "string_va": [
+     "0x29d07bf"
+    ],
+    "referencing_functions": [
+     "0x10c26e0"
+    ],
+    "day_change": [
+     "0x10c26e0"
+    ],
+    "pseudocode_readings": {
+     "0x10c26e0": {
+      "role": "structure counters at day change",
+      "reading": [
+       "reads BridgeBuilt/SlopeBuilt and Count*AfterBuild counters for tailor, museum, shop, office, campsite"
+      ]
+     }
+    }
+   },
+   "cLand:SpnVisitMainField": {
+    "name_ja": "パニエル|メインフィールドに出現",
+    "flow_access": "DisableAccess",
+    "string_va": [
+     "0x29b166f"
+    ],
+    "referencing_functions": [
+     "0xfd9d10",
+     "0xfdb6e0",
+     "0xfdbb30",
+     "0xfdc080"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLand:StartBuildingTownOffice": {
+    "name_ja": "役場建設＆村長誘致開始可能",
+    "flow_access": "EnableReadWrite",
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLand:SzaDonatedItemCount": {
+    "name_ja": "役場建設用のアイテム寄贈状況(個数判別用)",
+    "flow_access": "EnableReadWrite",
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLand:SzaDonatedItemType": {
+    "name_ja": "役場建設用のアイテム寄贈状況(種類判別用)",
+    "flow_access": "EnableReadWrite",
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLand:SzaGotGyroid": {
+    "name_ja": "しずえがハニワくん入手した",
+    "flow_access": "EnableReadWrite",
+    "string_va": [
+     "0x296fc01"
+    ],
+    "referencing_functions": [
+     "0x6601a0"
+    ],
+    "day_change": [
+     "0x6601a0"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cLand:SzaIslandEvaluationBeforeDevelopment": {
+    "name_ja": "しずえ|島の環境：前回の「発展」要素",
+    "flow_access": "EnableReadWrite",
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLand:SzaIslandEvaluationBeforeLife": {
+    "name_ja": "しずえ|島の環境：前回の「生活」ポイント",
+    "flow_access": "EnableReadWrite",
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLand:SzaIslandEvaluationBeforeNatural": {
+    "name_ja": "しずえ|島の環境：前回の「自然」ポイント",
+    "flow_access": "EnableReadWrite",
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLand:SzaIslandEvaluationImprovementDevelopToday": {
+    "name_ja": "しずえ|島の環境：前回村内放送より発展要素が増えた",
+    "flow_access": "EnableReadWrite",
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLand:TailorBuilt": {
+    "name_ja": "仕立て屋|仕立て屋が建った",
+    "flow_access": "EnableReadOnly",
+    "string_va": [
+     "0x29b6a9f"
+    ],
+    "referencing_functions": [
+     "0xfcc300"
+    ],
+    "day_change": [
+     "0xfcc300"
+    ],
+    "pseudocode_readings": {
+     "0xfcc300": {
+      "role": "tailor facility state at day change",
+      "reading": [
+       "state 1: TailorConstruction1 off -> needs structure kind 5 present; else needs TailorConstruction1>=1",
+       "TailorConstruction1 + elapsed days < 2 -> increment",
+       "otherwise state 2; TailorConstruction1=0; TailorBuilt=1; TailorBuiltToday=1 if exactly 1 day"
+      ]
+     }
+    }
+   },
+   "cLand:TailorBuiltToday": {
+    "name_ja": "仕立て屋オープン当日か？",
+    "flow_access": "EnableReadOnly",
+    "string_va": [
+     "0x29b6a8e"
+    ],
+    "referencing_functions": [
+     "0xfcc300"
+    ],
+    "day_change": [
+     "0xfcc300"
+    ],
+    "pseudocode_readings": {
+     "0xfcc300": {
+      "role": "tailor facility state at day change",
+      "reading": [
+       "state 1: TailorConstruction1 off -> needs structure kind 5 present; else needs TailorConstruction1>=1",
+       "TailorConstruction1 + elapsed days < 2 -> increment",
+       "otherwise state 2; TailorConstruction1=0; TailorBuilt=1; TailorBuiltToday=1 if exactly 1 day"
+      ]
+     }
+    }
+   },
+   "cLand:TailorConstruction1": {
+    "name_ja": "仕立て屋|予定地→工事中",
+    "flow_access": "EnableReadOnly",
+    "string_va": [
+     "0x29429cc"
+    ],
+    "referencing_functions": [
+     "0xfcc300",
+     "0x1103330"
+    ],
+    "day_change": [
+     "0xfcc300"
+    ],
+    "pseudocode_readings": {
+     "0xfcc300": {
+      "role": "tailor facility state at day change",
+      "reading": [
+       "state 1: TailorConstruction1 off -> needs structure kind 5 present; else needs TailorConstruction1>=1",
+       "TailorConstruction1 + elapsed days < 2 -> increment",
+       "otherwise state 2; TailorConstruction1=0; TailorBuilt=1; TailorBuiltToday=1 if exactly 1 day"
+      ]
+     }
+    }
+   },
+   "cLand:TanuportAmiiboUnlock": {
+    "name_ja": "タヌポート|amiibo関連機能を解禁",
+    "flow_access": "EnableReadWrite",
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLand:TkkFirstLive": {
+    "name_ja": "とたけけ|初ライブを行ったか",
+    "flow_access": "EnableReadOnly",
+    "string_va": [
+     "0x29b4f73"
+    ],
+    "referencing_functions": [
+     "0xf0330",
+     "0xf11b0",
+     "0xf545f0",
+     "0xfd8920",
+     "0xfdb060"
+    ],
+    "day_change": [
+     "0xf545f0",
+     "0xfd8920"
+    ],
+    "pseudocode_readings": {
+     "0xfd8920": {
+      "role": "K.K. unlock and daily resets at day change",
+      "reading": [
+       "elapsed days >=1 and IslandEvaluationClearTkkLive on (and a second flag off) -> TkkFirstLiveEnable=1",
+       "RctInTent set from the current hour (5..19 -> off)",
+       "JohnnyRequirePartsNum=5 on day change"
+      ]
+     }
+    }
+   },
+   "cLand:TkkFirstLiveEnable": {
+    "name_ja": "とたけけ|初ライブ解禁か？",
+    "flow_access": "EnableReadOnly",
+    "string_va": [
+     "0x29984f3"
+    ],
+    "referencing_functions": [
+     "0xf545f0",
+     "0xfd8920"
+    ],
+    "day_change": [
+     "0xf545f0",
+     "0xfd8920"
+    ],
+    "pseudocode_readings": {
+     "0xfd8920": {
+      "role": "K.K. unlock and daily resets at day change",
+      "reading": [
+       "elapsed days >=1 and IslandEvaluationClearTkkLive on (and a second flag off) -> TkkFirstLiveEnable=1",
+       "RctInTent set from the current hour (5..19 -> off)",
+       "JohnnyRequirePartsNum=5 on day change"
+      ]
+     }
+    }
+   },
+   "cLand:TkkReturn": {
+    "name_ja": "とたけけ|帰ったか？",
+    "flow_access": "DisableAccess",
+    "string_va": [
+     "0x2965809"
+    ],
+    "referencing_functions": [
+     "0xd136f0",
+     "0xfdb6e0",
+     "0xfdbae0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLand:TodayCreateVillage": {
+    "name_ja": "今日村作成されたか",
+    "flow_access": "EnableReadOnly",
+    "string_va": [
+     "0x296b743"
+    ],
+    "referencing_functions": [
+     "0xc70060",
+     "0xf545f0"
+    ],
+    "day_change": [
+     "0xf545f0"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cLand:TodayGlobalEventId": {
+    "name_ja": "今日行われるグローバルイベントのID",
+    "flow_access": "DisableAccess",
+    "string_va": [
+     "0x291f85c"
+    ],
+    "referencing_functions": [
+     "0xf4c10",
+     "0xf4cb0",
+     "0xf4db0",
+     "0xf6130"
+    ],
+    "day_change": [
+     "0xf6130"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cLand:TodayPlayerEmigrate": {
+    "name_ja": "今日プレイヤが移住してきたか？",
+    "flow_access": "DisableAccess",
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLand:TodayRegionEventId": {
+    "name_ja": "今日行われるリージョンイベントのID",
+    "flow_access": "DisableAccess",
+    "string_va": [
+     "0x297fb4a"
+    ],
+    "referencing_functions": [
+     "0xf4d30",
+     "0xf4e00",
+     "0xf6130"
+    ],
+    "day_change": [
+     "0xf6130"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cLand:VillageDaysCount": {
+    "name_ja": "村の経過日数",
+    "flow_access": "EnableReadOnly",
+    "string_va": [
+     "0x29c6b90"
+    ],
+    "referencing_functions": [
+     "0x6601a0",
+     "0xed1d50",
+     "0xfb70f0",
+     "0xfb76f0"
+    ],
+    "day_change": [
+     "0x6601a0"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cLand:VisitorPrayStarToday": {
+    "name_ja": "今日村に来たビジタが祈った回数",
+    "flow_access": "DisableAccess",
+    "string_va": [
+     "0x2991c81"
+    ],
+    "referencing_functions": [
+     "0x4ae640",
+     "0x4ba330"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLandTemp:CatchFishFesEntryNum": {
+    "name_ja": "つり大会|クエスト参加人数",
+    "flow_access": 0,
+    "string_va": [
+     "0x29b4f5e"
+    ],
+    "referencing_functions": [
+     "0xe5390",
+     "0xe6cb0",
+     "0xe7f50",
+     "0x101940",
+     "0x2b3c90",
+     "0x329ba0",
+     "0x34a7c0",
+     "0x34ec10",
+     "0x3ce3d0",
+     "0xdb1e20",
+     "0xe46d00",
+     "0xe4ffb0",
+     "0xe5ae70"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLandTemp:CatchFishFesQuestEntry": {
+    "name_ja": "つり大会|クエスト参加中",
+    "flow_access": 0,
+    "string_va": [
+     "0x29915df"
+    ],
+    "referencing_functions": [
+     "0xe5390",
+     "0xe6cb0",
+     "0xe7f50",
+     "0x101940",
+     "0x2b3c90",
+     "0x329ba0",
+     "0x34a7c0",
+     "0x34ec10",
+     "0x3ce3d0",
+     "0xdb1e20",
+     "0xe46d00",
+     "0xe4ffb0",
+     "0xe5ae70"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLandTemp:CatchInsectFesEntryNum": {
+    "name_ja": "ムシ取り大会|クエスト参加人数",
+    "flow_access": 0,
+    "string_va": [
+     "0x29640dc"
+    ],
+    "referencing_functions": [
+     "0xe5390",
+     "0xe6cb0",
+     "0xe7f50",
+     "0x101940",
+     "0x2b3c90",
+     "0x329ba0",
+     "0x34a7c0",
+     "0x34ec10",
+     "0x3ce3d0",
+     "0xdb1e20",
+     "0xe46d00",
+     "0xe4ffb0",
+     "0xe5ae70"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLandTemp:CatchInsectFesQuestEntry": {
+    "name_ja": "ムシ取り大会|クエスト参加中",
+    "flow_access": 0,
+    "string_va": [
+     "0x296ef35"
+    ],
+    "referencing_functions": [
+     "0xe5390",
+     "0xe6cb0",
+     "0xe7f50",
+     "0x101940",
+     "0x2b3c90",
+     "0x329ba0",
+     "0x34a7c0",
+     "0x34ec10",
+     "0x3ce3d0",
+     "0xdb1e20",
+     "0xe46d00",
+     "0xe4ffb0",
+     "0xe5ae70"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLandTemp:DIYRecipeGetFlg_ForTHL": {
+    "name_ja": "THL用|ジェシカからDIYレシピGet済み？",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLandTemp:ExistBanboo": {
+    "name_ja": "成長処理時点で村に竹の成木が存在するか？",
+    "flow_access": 0,
+    "string_va": [
+     "0x2950459"
+    ],
+    "referencing_functions": [
+     "0x4b99a0",
+     "0x7a5c60"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLandTemp:ExistCedar": {
+    "name_ja": "成長処理時点で村に成木の針葉樹が存在するか？",
+    "flow_access": 0,
+    "string_va": [
+     "0x296a05e"
+    ],
+    "referencing_functions": [
+     "0x4b99a0",
+     "0x7a5c60"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLandTemp:ExistIllminations": {
+    "name_ja": "成長処理時点で電飾付の木が一本以上存在しているか？",
+    "flow_access": 0,
+    "string_va": [
+     "0x292e44c"
+    ],
+    "referencing_functions": [
+     "0x4adf10",
+     "0x7a5c60"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLandTemp:ExistOak": {
+    "name_ja": "成長処理時点で村に成木の広葉樹が存在するか？",
+    "flow_access": 0,
+    "string_va": [
+     "0x2950465"
+    ],
+    "referencing_functions": [
+     "0x4b99a0",
+     "0x7a5c60"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLandTemp:ExistSakura": {
+    "name_ja": "成長処理時点で村に桜の木が存在するか？",
+    "flow_access": 0,
+    "string_va": [
+     "0x29d0786"
+    ],
+    "referencing_functions": [
+     "0x7a5c60"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLandTemp:FesBoxNotEmpty": {
+    "name_ja": "つりムシ大会|ムシサカナBOXの中身あり",
+    "flow_access": 1,
+    "string_va": [
+     "0x29332e9"
+    ],
+    "referencing_functions": [
+     "0xe5390",
+     "0xe6cb0",
+     "0xe7f50",
+     "0x101940",
+     "0x2b3c90",
+     "0x329ba0",
+     "0x34a7c0",
+     "0x34ec10",
+     "0x3ce3d0",
+     "0xdb1e20",
+     "0xe46d00",
+     "0xe4ffb0",
+     "0xe5ae70",
+     "0xf46d40"
+    ],
+    "day_change": [
+     "0xf46d40"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cLandTemp:GstQuestClearFlag": {
+    "name_ja": "ゆうたろう|今日クエストクリアした？",
+    "flow_access": 2,
+    "string_va": [
+     "0x293361b"
+    ],
+    "referencing_functions": [
+     "0xfd9d10",
+     "0xfdcd40",
+     "0xfdce60"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLandTemp:GstSpiritBlockWanderSpecialPosX": {
+    "name_ja": "ゆうたろう|魂化した位置のX座標",
+    "flow_access": 0,
+    "string_va": [
+     "0x29917bd"
+    ],
+    "referencing_functions": [
+     "0xc70060"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLandTemp:GstSpiritBlockWanderSpecialPosZ": {
+    "name_ja": "ゆうたろう|魂化した位置のZ座標",
+    "flow_access": 0,
+    "string_va": [
+     "0x29917dd"
+    ],
+    "referencing_functions": [
+     "0xc70060"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLandTemp:HostPlayerOwsFirstTalk": {
+    "name_ja": "フーコ|ネットホストのプレイヤーと面識ある？",
+    "flow_access": 0,
+    "string_va": [
+     "0x29a2089"
+    ],
+    "referencing_functions": [
+     "0xf545f0",
+     "0xfdc150"
+    ],
+    "day_change": [
+     "0xf545f0"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cLandTemp:InPlayerBirthday": {
+    "name_ja": "プレイヤー誕生日開催中か",
+    "flow_access": 1,
+    "string_va": [
+     "0x2989156"
+    ],
+    "referencing_functions": [
+     "0xd25560",
+     "0xf1dbe0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLandTemp:SetCountdownEarlyAggregator": {
+    "name_ja": "カウントダウン|早めに集まるNPCを決定したか",
+    "flow_access": 1,
+    "string_va": [
+     "0x2965821"
+    ],
+    "referencing_functions": [
+     "0xd29710"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLandTemp:ShopMoveEnable": {
+    "name_ja": "お店NPC|お店追従可能",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLandTemp:TkkRequestedFrom": {
+    "name_ja": "とたけけ|リクエストされた気分（入手経路）",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLandTemp:TkkRequestedMusic": {
+    "name_ja": "とたけけ|リクエストされた曲",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLandTemp:TkkRequestedPlayer": {
+    "name_ja": "とたけけ|リクエストした人",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:AchieveAppQuest": {
+    "name_ja": "村活クエストを達成した",
+    "flow_access": null,
+    "string_va": [
+     "0x292622d"
+    ],
+    "referencing_functions": [
+     "0xf658d0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:AttendCountdownParty": {
+    "name_ja": "カウントダウンに参加した",
+    "flow_access": null,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:AttendFishingConvention": {
+    "name_ja": "釣り大会に春夏秋冬参加した",
+    "flow_access": null,
+    "string_va": [
+     "0x29c300c"
+    ],
+    "referencing_functions": [
+     "0xf64540",
+     "0x146c2e0",
+     "0x146ce40"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:AttendInsectConvention": {
+    "name_ja": "ムシとり大会に6～9月参加した",
+    "flow_access": null,
+    "string_va": [
+     "0x29931f7"
+    ],
+    "referencing_functions": [
+     "0xf64540",
+     "0x146c2e0",
+     "0x146cef0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:BeFriendwithVillager": {
+    "name_ja": "どうぶつとなかよしになった",
+    "flow_access": null,
+    "string_va": [
+     "0x2951def"
+    ],
+    "referencing_functions": [
+     "0xd34cb0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:BeStungbyPoisonousInsect": {
+    "name_ja": "こわいムシで気絶した",
+    "flow_access": null,
+    "string_va": [
+     "0x29b68cb"
+    ],
+    "referencing_functions": [
+     "0xe04860"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:BeStungbyWasp": {
+    "name_ja": "ハチに刺された",
+    "flow_access": null,
+    "string_va": [
+     "0x299cb07"
+    ],
+    "referencing_functions": [
+     "0xda5830"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:BootPhone": {
+    "name_ja": "スマホを起動した(上級)",
+    "flow_access": null,
+    "string_va": [
+     "0x2989ac5"
+    ],
+    "referencing_functions": [
+     "0xf66790",
+     "0x12217e0",
+     "0x146bfc0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:BootPhoneBeginner": {
+    "name_ja": "スマホを起動した(初級)",
+    "flow_access": null,
+    "string_va": [
+     "0x292621b"
+    ],
+    "referencing_functions": [
+     "0xf66790",
+     "0x12217e0",
+     "0x146bfc0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:BreakTool": {
+    "name_ja": "道具を壊した",
+    "flow_access": null,
+    "string_va": [
+     "0x298e0d5"
+    ],
+    "referencing_functions": [
+     "0xe37830"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:BuildFence": {
+    "name_ja": "柵を置く",
+    "flow_access": null,
+    "string_va": [
+     "0x29756b2"
+    ],
+    "referencing_functions": [
+     "0x146cb40",
+     "0x146cc60"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:BuyItemCatalog": {
+    "name_ja": "通販を利用した",
+    "flow_access": null,
+    "string_va": [
+     "0x299d167"
+    ],
+    "referencing_functions": [
+     "0x117dce0",
+     "0x118a8a0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:CatchBeeContinuously": {
+    "name_ja": "ハチを5連続捕まえた",
+    "flow_access": null,
+    "string_va": [
+     "0x298117a"
+    ],
+    "referencing_functions": [
+     "0x95a750"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:CatchFish": {
+    "name_ja": "サカナを釣った",
+    "flow_access": null,
+    "string_va": [
+     "0x2980696"
+    ],
+    "referencing_functions": [
+     "0x5b8e30",
+     "0x5e3980",
+     "0xda45b0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:CatchFishContinuously": {
+    "name_ja": "連続で釣りを成功させた回数の最高記録",
+    "flow_access": null,
+    "string_va": [
+     "0x29765dd"
+    ],
+    "referencing_functions": [
+     "0xe4e730"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:CatchInsect": {
+    "name_ja": "ムシを捕まえた",
+    "flow_access": null,
+    "string_va": [
+     "0x295b0f5"
+    ],
+    "referencing_functions": [
+     "0x9b5d30",
+     "0x9f0410",
+     "0xda49d0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:CatchNomi": {
+    "name_ja": "ノミを取ってあげた",
+    "flow_access": null,
+    "string_va": [
+     "0x29a1d61"
+    ],
+    "referencing_functions": [
+     "0xda49d0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:CatchSeminonukegara": {
+    "name_ja": "セミのぬけがらを取った",
+    "flow_access": null,
+    "string_va": [
+     "0x29a7139"
+    ],
+    "referencing_functions": [
+     "0xda49d0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:CatchTrash": {
+    "name_ja": "ゴミを釣った",
+    "flow_access": null,
+    "string_va": [
+     "0x2998119"
+    ],
+    "referencing_functions": [
+     "0xda45b0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:ChangeSymbol": {
+    "name_ja": "島の旗、島メロを変える",
+    "flow_access": null,
+    "string_va": [
+     "0x299320e"
+    ],
+    "referencing_functions": [
+     "0xf652c0",
+     "0x146c2e0",
+     "0x146d100"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:CollectGoldTool": {
+    "name_ja": "6種類の金の道具を集めた",
+    "flow_access": null,
+    "string_va": [
+     "0x2966ab1"
+    ],
+    "referencing_functions": [
+     "0xf64ff0",
+     "0xf65140",
+     "0x146c2e0",
+     "0x146d050"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:DIYFurniture": {
+    "name_ja": "家具をDIYした",
+    "flow_access": null,
+    "string_va": [
+     "0x299ce44"
+    ],
+    "referencing_functions": [
+     "0xee1420"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:DIYTool": {
+    "name_ja": "道具をDIYした",
+    "flow_access": null,
+    "string_va": [
+     "0x29b1625"
+    ],
+    "referencing_functions": [
+     "0xee1420"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:DayPlayed": {
+    "name_ja": "活動日数",
+    "flow_access": null,
+    "string_va": [
+     "0x293b330"
+    ],
+    "referencing_functions": [
+     "0xf91b90"
+    ],
+    "day_change": [
+     "0xf91b90"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:DigBell": {
+    "name_ja": "ベルを掘り出した",
+    "flow_access": null,
+    "string_va": [
+     "0x2992f3b"
+    ],
+    "referencing_functions": [
+     "0xd9d630"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:DigFossil": {
+    "name_ja": "化石を掘り出した",
+    "flow_access": null,
+    "string_va": [
+     "0x2956cb1"
+    ],
+    "referencing_functions": [
+     "0xd9d630"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:DropPresentinWater": {
+    "name_ja": "風船のプレゼントを撃ち水の中に落とした",
+    "flow_access": null,
+    "string_va": [
+     "0x2960a61"
+    ],
+    "referencing_functions": [
+     "0xe56ea0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:ExtendMyHome": {
+    "name_ja": "マイホームを増築した",
+    "flow_access": null,
+    "string_va": [
+     "0x293b33a"
+    ],
+    "referencing_functions": [
+     "0xf949c0"
+    ],
+    "day_change": [
+     "0xf949c0"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:FallFurnitureLeaf": {
+    "name_ja": "木を揺すって家具（葉っぱ）を落とした回数",
+    "flow_access": null,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:FallintoPitfall": {
+    "name_ja": "落とし穴に落ちた",
+    "flow_access": null,
+    "string_va": [
+     "0x298958d"
+    ],
+    "referencing_functions": [
+     "0xe23940"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:FillCatalog": {
+    "name_ja": "カタログの項目数",
+    "flow_access": null,
+    "string_va": [
+     "0x29984cc"
+    ],
+    "referencing_functions": [
+     "0xeec010",
+     "0xeec0b0",
+     "0xeec280"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:FillFishList": {
+    "name_ja": "サカナ図鑑を埋めた",
+    "flow_access": null,
+    "string_va": [
+     "0x2925f4f"
+    ],
+    "referencing_functions": [
+     "0xdb07c0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:FillInsectList": {
+    "name_ja": "ムシ図鑑を埋めた",
+    "flow_access": null,
+    "string_va": [
+     "0x29b6767"
+    ],
+    "referencing_functions": [
+     "0xdb07c0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:FillReactionList": {
+    "name_ja": "リアクションを覚えた",
+    "flow_access": null,
+    "string_va": [
+     "0x2960baf"
+    ],
+    "referencing_functions": [
+     "0xfa08b0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:FillRecipeList": {
+    "name_ja": "集めたレシピの数",
+    "flow_access": null,
+    "string_va": [
+     "0x299ce51"
+    ],
+    "referencing_functions": [
+     "0xedf0e0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:GetSRankonHHA": {
+    "name_ja": "HHAでSを取った",
+    "flow_access": null,
+    "string_va": [
+     "0x2956223"
+    ],
+    "referencing_functions": [
+     "0x7b4a20",
+     "0x7b4d00",
+     "0x7b4fc0",
+     "0x7b52d0",
+     "0x7b5740",
+     "0x7b5e60"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:GreetAllVillager": {
+    "name_ja": "村民全員とあいさつをした",
+    "flow_access": null,
+    "string_va": [
+     "0x298deab"
+    ],
+    "referencing_functions": [
+     "0xc84240",
+     "0xd2c830"
+    ],
+    "day_change": [
+     "0xd2c830"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:HouseStorageItem": {
+    "name_ja": "家の倉庫に収納したアイテムの数",
+    "flow_access": null,
+    "string_va": [
+     "0x29261d4"
+    ],
+    "referencing_functions": [
+     "0xefdc70"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:HowmuchBuyItem": {
+    "name_ja": "これまでの買い物総額",
+    "flow_access": null,
+    "string_va": [
+     "0x297fe6f"
+    ],
+    "referencing_functions": [
+     "0x118a8a0",
+     "0x133bc30",
+     "0x133cb90",
+     "0x14439c0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:HowmuchSellKabu": {
+    "name_ja": "カブで得た累計利益",
+    "flow_access": null,
+    "string_va": [
+     "0x297ff3a"
+    ],
+    "referencing_functions": [
+     "0x133bc30",
+     "0x133cb90"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:InviteFriend": {
+    "name_ja": "島にフレンドを招いた",
+    "flow_access": null,
+    "string_va": [
+     "0x294c1a4"
+    ],
+    "referencing_functions": [
+     "0xbbe180"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:JudgeFossil": {
+    "name_ja": "化石を鑑定した",
+    "flow_access": null,
+    "string_va": [
+     "0x29afaf9"
+    ],
+    "referencing_functions": [
+     "0xda4d80"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:MakePitfall": {
+    "name_ja": "落とし穴を作った",
+    "flow_access": null,
+    "string_va": [
+     "0x2933cba"
+    ],
+    "referencing_functions": [
+     "0x4c0e40"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:ModifyIsland": {
+    "name_ja": "各地形造成をやってみた",
+    "flow_access": null,
+    "string_va": [
+     "0x2956f74"
+    ],
+    "referencing_functions": [
+     "0xf65390",
+     "0x146c2e0",
+     "0x146d1b0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:PlaceFurnitureMyHouse": {
+    "name_ja": "家に飾っている家具の数",
+    "flow_access": null,
+    "string_va": [
+     "0x29976cd"
+    ],
+    "referencing_functions": [
+     "0x56dda0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:PlantFlowerSeed": {
+    "name_ja": "花の種を植えた",
+    "flow_access": null,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:PlantFruit": {
+    "name_ja": "6種類のフルーツを植えた",
+    "flow_access": null,
+    "string_va": [
+     "0x297bf70"
+    ],
+    "referencing_functions": [
+     "0xd876c0",
+     "0xf64ed0",
+     "0x146c2e0",
+     "0x146cfa0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:PlantTreeSeedling": {
+    "name_ja": "木の苗を植えた",
+    "flow_access": null,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:PostMessageBoard": {
+    "name_ja": "自分の島の掲示板に書き込む",
+    "flow_access": null,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:PrayShootingStar": {
+    "name_ja": "流れ星に祈る",
+    "flow_access": null,
+    "string_va": [
+     "0x29c2cc3"
+    ],
+    "referencing_functions": [
+     "0xda58d0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:PutFurnitureOutside": {
+    "name_ja": "外に家具を置いた",
+    "flow_access": null,
+    "string_va": [
+     "0x2929cc3"
+    ],
+    "referencing_functions": [
+     "0x146cb40",
+     "0x146cc60"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:ReachMyBirthday": {
+    "name_ja": "誕生日を迎えた",
+    "flow_access": null,
+    "string_va": [
+     "0x2989adb"
+    ],
+    "referencing_functions": [
+     "0xf91b90"
+    ],
+    "day_change": [
+     "0xf91b90"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:ReformMyHome": {
+    "name_ja": "マイホームをリフォームした",
+    "flow_access": null,
+    "string_va": [
+     "0x2993259"
+    ],
+    "referencing_functions": [
+     "0xf949c0"
+    ],
+    "day_change": [
+     "0xf949c0"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:RemakeFurniture": {
+    "name_ja": "リメイクをした",
+    "flow_access": null,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:SellFruit": {
+    "name_ja": "フルーツを売った",
+    "flow_access": null,
+    "string_va": [
+     "0x292e27d"
+    ],
+    "referencing_functions": [
+     "0xd876c0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:SellShell": {
+    "name_ja": "貝殻を売った",
+    "flow_access": null,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:SellWeed": {
+    "name_ja": "雑草を引き取ってもらった",
+    "flow_access": null,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:SendLetter": {
+    "name_ja": "手紙を送った",
+    "flow_access": null,
+    "string_va": [
+     "0x293ef99"
+    ],
+    "referencing_functions": [
+     "0x33d7a0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:ShootDownBalloon": {
+    "name_ja": "ふうせんを撃ち落とした",
+    "flow_access": null,
+    "string_va": [
+     "0x29763c2"
+    ],
+    "referencing_functions": [
+     "0xd35910",
+     "0xd514b0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:StrikeRock8Times": {
+    "name_ja": "コイン岩を8連打した",
+    "flow_access": null,
+    "string_va": [
+     "0x298d57a"
+    ],
+    "referencing_functions": [
+     "0x4c0040",
+     "0x4c0120"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:StrikeWood": {
+    "name_ja": "木からもくざいを出した",
+    "flow_access": null,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:TakePicture": {
+    "name_ja": "カメラで写真を撮った",
+    "flow_access": null,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:UpdatePassport": {
+    "name_ja": "パスポートを更新した",
+    "flow_access": null,
+    "string_va": [
+     "0x2998c59"
+    ],
+    "referencing_functions": [
+     "0x1267380",
+     "0x1267510"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:UseCloset": {
+    "name_ja": "クローゼットで着替える",
+    "flow_access": null,
+    "string_va": [
+     "0x296f553"
+    ],
+    "referencing_functions": [
+     "0x11b8ba0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:UseMydesign": {
+    "name_ja": "マイデザインを使った",
+    "flow_access": null,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:UseMydesignPRO": {
+    "name_ja": "マイデザインPROを使った",
+    "flow_access": null,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:VisitAnotherIsland": {
+    "name_ja": "よその島へのおでかけした",
+    "flow_access": null,
+    "string_va": [
+     "0x2970602"
+    ],
+    "referencing_functions": [
+     "0xbbe5a0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportAchievement:WaterPlant": {
+    "name_ja": "水やりをした",
+    "flow_access": null,
+    "string_va": [
+     "0x2946ba0"
+    ],
+    "referencing_functions": [
+     "0x48e040",
+     "0xd45830"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:BuildSnowman": {
+    "name_ja": "ゆきだるま作り活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:BuyItem": {
+    "name_ja": "お買い物促進活動",
+    "flow_access": 0,
+    "string_va": [
+     "0x291f987"
+    ],
+    "referencing_functions": [
+     "0x118a8a0",
+     "0x14439c0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchAburazemi": {
+    "name_ja": "アブラゼミゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchAgehacho": {
+    "name_ja": "アゲハチョウゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchAji": {
+    "name_ja": "アジゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchAkaeritoribaneageha": {
+    "name_ja": "アカエリトリバネアゲハゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchAkiakane": {
+    "name_ja": "アキアカネゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchAmenbo": {
+    "name_ja": "アメンボゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchAngelfish": {
+    "name_ja": "エンゼルフィッシュゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchAntyobi": {
+    "name_ja": "アンチョビゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchAosujiageha": {
+    "name_ja": "アオスジアゲハゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchArekisandoratoribaneageha": {
+    "name_ja": "アレキサンドラトリバネアゲハゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchAri": {
+    "name_ja": "アリゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchArowana": {
+    "name_ja": "アロワナゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchAyu": {
+    "name_ja": "アユゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchBaiorinmushi": {
+    "name_ja": "バイオリンムシゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchBeta": {
+    "name_ja": "ベタゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchBlackbass": {
+    "name_ja": "ブラックバスゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchBlueguill": {
+    "name_ja": "ブルーギルゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchChouchinankou": {
+    "name_ja": "チョウチンアンコウゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchChouchouuo": {
+    "name_ja": "チョウチョウウオゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchDangomushi": {
+    "name_ja": "ダンゴムシゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchDemekin": {
+    "name_ja": "デメキンゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchDemenigisu": {
+    "name_ja": "デメニギスゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchDojou": {
+    "name_ja": "ドジョウゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchDokutaafish": {
+    "name_ja": "ドクターフィッシュゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchDolado": {
+    "name_ja": "ドラドゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchDonko": {
+    "name_ja": "ドンコゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchEi": {
+    "name_ja": "エイゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchEndorikerii": {
+    "name_ja": "エンドリケリーゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchFish": {
+    "name_ja": "釣り促進活動",
+    "flow_access": 0,
+    "string_va": [
+     "0x2980696"
+    ],
+    "referencing_functions": [
+     "0x5b8e30",
+     "0x5e3980",
+     "0xda45b0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchFugu": {
+    "name_ja": "フグゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchFuna": {
+    "name_ja": "フナゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchFunamushi": {
+    "name_ja": "フナムシゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchFunkorogashi": {
+    "name_ja": "フンコロガシゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchGa": {
+    "name_ja": "ガゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchGar": {
+    "name_ja": "ガーゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchGengorou": {
+    "name_ja": "ゲンゴロウゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchGinyanma": {
+    "name_ja": "ギンヤンマゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchGirafanokogirikuwagata": {
+    "name_ja": "ギラファノコギリクワガタゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchGoldenTorauto": {
+    "name_ja": "ゴールデントラウトゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchGomadarakamikiri": {
+    "name_ja": "ゴマダラカミキリゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchGoraiasuohtsunohanamuguri": {
+    "name_ja": "ゴライアスオオツノハナムグリゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchGuppi": {
+    "name_ja": "グッピーゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchHachi": {
+    "name_ja": "ハチゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchHae": {
+    "name_ja": "ハエゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchHanahigeutubo": {
+    "name_ja": "ハナヒゲウツボゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchHanakamakiri": {
+    "name_ja": "ハナカマキリゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchHanmyou": {
+    "name_ja": "ハンミョウゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchHarisenbon": {
+    "name_ja": "ハリセンボンゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchHerakuresuohkabuto": {
+    "name_ja": "ヘラクレスオオカブトゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchHigurashi": {
+    "name_ja": "ヒグラシゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchHirame": {
+    "name_ja": "ヒラメゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchHosoakakuwagata": {
+    "name_ja": "ホソアカクワガタゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchHotaru": {
+    "name_ja": "ホタルゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchHousekizoumushi": {
+    "name_ja": "ホウセキゾウムシゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchIka": {
+    "name_ja": "イカゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchInago": {
+    "name_ja": "イナゴゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchInsect": {
+    "name_ja": "ムシとり促進活動",
+    "flow_access": 0,
+    "string_va": [
+     "0x295b0f5"
+    ],
+    "referencing_functions": [
+     "0x9b5d30",
+     "0x9f0410",
+     "0xda49d0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchIshidai": {
+    "name_ja": "イシダイゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchItotonbo": {
+    "name_ja": "イトトンボゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchItou": {
+    "name_ja": "イトウゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchJinbeezame": {
+    "name_ja": "ジンベエザメゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchJinmenkamemushi": {
+    "name_ja": "ジンメンカメムシゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchKa": {
+    "name_ja": "カゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchKabutomushi": {
+    "name_ja": "カブトムシゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchKaeru": {
+    "name_ja": "カエルゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchKajiki": {
+    "name_ja": "カジキゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchKamakiri": {
+    "name_ja": "カマキリゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchKamemushi": {
+    "name_ja": "カメムシゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchKamitsukigame": {
+    "name_ja": "カミツキガメゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchKanabun": {
+    "name_ja": "カナブンゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchKarasuageha": {
+    "name_ja": "カラスアゲハゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchKarei": {
+    "name_ja": "カレイゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchKatatsumuri": {
+    "name_ja": "カタツムリゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchKingsalmon": {
+    "name_ja": "キングサーモンゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchKingyo": {
+    "name_ja": "キンギョゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchKirigirisu": {
+    "name_ja": "キリギリスゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchKobanzame": {
+    "name_ja": "コバンザメゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchKohkasasuohkabuto": {
+    "name_ja": "コーカサスオオカブトゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchKohrogi": {
+    "name_ja": "コオロギゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchKoi": {
+    "name_ja": "コイゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchKonohamushi": {
+    "name_ja": "コノハムシゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchKumanomi": {
+    "name_ja": "クマノミゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchKumazemi": {
+    "name_ja": "クマゼミゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchKumo": {
+    "name_ja": "クモゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchKurione": {
+    "name_ja": "クリオネゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchMaguro": {
+    "name_ja": "マグロゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchManbou": {
+    "name_ja": "マンボウゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchMedaka": {
+    "name_ja": "メダカゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchMiirotateha": {
+    "name_ja": "ミイロタテハゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchMinminzemi": {
+    "name_ja": "ミンミンゼミゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchMinokasago": {
+    "name_ja": "ミノカサゴゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchMinomushi": {
+    "name_ja": "ミノムシゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchMitsubachi": {
+    "name_ja": "ミツバチゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchMiyamakuwagata": {
+    "name_ja": "ミヤマクワガタゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchMonkicho": {
+    "name_ja": "モンキチョウゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchMonshirocho": {
+    "name_ja": "モンシロチョウゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchMorufuocho": {
+    "name_ja": "モルフォチョウゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchMukade": {
+    "name_ja": "ムカデゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchNamazu": {
+    "name_ja": "ナマズゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchNanafushi": {
+    "name_ja": "ナナフシゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchNanyouhagi": {
+    "name_ja": "ナンヨウハギゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchNaporeonfish": {
+    "name_ja": "ナポレオンフィッシュゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchNeontetora": {
+    "name_ja": "ネオンテトラゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchNijiirokuwagata": {
+    "name_ja": "ニジイロクワガタゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchNishikigoi": {
+    "name_ja": "ニシキゴイゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchNishikiohtsubamega": {
+    "name_ja": "ニシキオオツバメガゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchNokogirikuwagata": {
+    "name_ja": "ノコギリクワガタゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchNokogirizame": {
+    "name_ja": "ノコギリザメゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchNomi": {
+    "name_ja": "ノミゲット活動",
+    "flow_access": 0,
+    "string_va": [
+     "0x29a1d61"
+    ],
+    "referencing_functions": [
+     "0xda49d0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchOhgomamadara": {
+    "name_ja": "オオゴママダラゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchOhkabamadara": {
+    "name_ja": "オオカバマダラゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchOhkuwagata": {
+    "name_ja": "オオクワガタゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchOhmurasaki": {
+    "name_ja": "オオムラサキゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchOhsenchikogane": {
+    "name_ja": "オオセンチコガネゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchOikawa": {
+    "name_ja": "オイカワゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchOkera": {
+    "name_ja": "オケラゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchOniyanma": {
+    "name_ja": "オニヤンマゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchOoiwana": {
+    "name_ja": "オオイワナゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchOtamajakusi": {
+    "name_ja": "オタマジャクシゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchOugononikuwagata": {
+    "name_ja": "オウゴンオニクワガタゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchPaiku": {
+    "name_ja": "パイクゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchPirania": {
+    "name_ja": "ピラニアゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchPiraruku": {
+    "name_ja": "ピラルクゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchPurachinakogane": {
+    "name_ja": "プラチナコガネゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchRaigyo": {
+    "name_ja": "ライギョゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchRainbowfish": {
+    "name_ja": "レインボーフィッシュゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchRanchu": {
+    "name_ja": "ランチュウゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchRouninaji": {
+    "name_ja": "ロウニンアジゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchRuriboshikamikiri": {
+    "name_ja": "ルリボシカミキリゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchRyuuguunotukai": {
+    "name_ja": "リュウグウノツカイゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchSake": {
+    "name_ja": "サケゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchSame": {
+    "name_ja": "サメゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchSasori": {
+    "name_ja": "サソリゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchSeminonukegara": {
+    "name_ja": "セミのぬけがらゲット活動",
+    "flow_access": 0,
+    "string_va": [
+     "0x29a7139"
+    ],
+    "referencing_functions": [
+     "0xda49d0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchShiira": {
+    "name_ja": "シイラゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchShoryobatta": {
+    "name_ja": "ショウリョウバッタゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchShumokuzame": {
+    "name_ja": "シュモクザメゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchSirakansu": {
+    "name_ja": "シーラカンスゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchSnowCrystal": {
+    "name_ja": "ゆきのけっしょうゲット活動",
+    "flow_access": 0,
+    "string_va": [
+     "0x29ab963"
+    ],
+    "referencing_functions": [
+     "0xda49d0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchSuppon": {
+    "name_ja": "スッポンゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchSuzuki": {
+    "name_ja": "スズキゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchSuzumushi": {
+    "name_ja": "スズムシゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchSyanhaigani": {
+    "name_ja": "シャンハイガニゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchTagame": {
+    "name_ja": "タガメゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchTai": {
+    "name_ja": "タイゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchTamamushi": {
+    "name_ja": "タマムシゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchTanago": {
+    "name_ja": "タナゴゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchTaranchura": {
+    "name_ja": "タランチュラゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchTatsunootoshigo": {
+    "name_ja": "タツノオトシゴゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchTentoumushi": {
+    "name_ja": "テントウムシゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchThirapia": {
+    "name_ja": "ティラピアゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchTonosamabatta": {
+    "name_ja": "トノサマバッタゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchTsukutsukuhousi": {
+    "name_ja": "ツクツクホウシゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchTyouzame": {
+    "name_ja": "チョウザメゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchUgui": {
+    "name_ja": "ウグイゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchUtsubo": {
+    "name_ja": "ウツボゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchWakasagi": {
+    "name_ja": "ワカサギゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchYadokari": {
+    "name_ja": "ヤドカリゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchYamame": {
+    "name_ja": "ヤマメゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchYellowparch": {
+    "name_ja": "イエローパーチゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchYonagunisan": {
+    "name_ja": "ヨナグニサンゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchZarigani": {
+    "name_ja": "ザリガニゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CatchZoukabuto": {
+    "name_ja": "ゾウカブトゲット活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:CutTree": {
+    "name_ja": "木材産出活動",
+    "flow_access": 0,
+    "string_va": [
+     "0x295f7c7"
+    ],
+    "referencing_functions": [
+     "0x48cda0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:DIYItem": {
+    "name_ja": "DIY活動",
+    "flow_access": 0,
+    "string_va": [
+     "0x29a7490"
+    ],
+    "referencing_functions": [
+     "0xee1420"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:GatherMushroom": {
+    "name_ja": "きのこ採集活動",
+    "flow_access": 0,
+    "string_va": [
+     "0x298938c"
+    ],
+    "referencing_functions": [
+     "0xda4d80"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:HewDownTree": {
+    "name_ja": "開拓活動",
+    "flow_access": 0,
+    "string_va": [
+     "0x294b529"
+    ],
+    "referencing_functions": [
+     "0x48cda0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:JudgeFossil": {
+    "name_ja": "化石発掘調査活動",
+    "flow_access": 0,
+    "string_va": [
+     "0x29afaf9"
+    ],
+    "referencing_functions": [
+     "0xda4d80"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:PayPoint": {
+    "name_ja": "村活ポイント還元活動",
+    "flow_access": 0,
+    "string_va": [
+     "0x2956f81"
+    ],
+    "referencing_functions": [
+     "0xf662f0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:PlantBambooShoot": {
+    "name_ja": "竹栽培活動",
+    "flow_access": 0,
+    "string_va": [
+     "0x292f3f3"
+    ],
+    "referencing_functions": [
+     "0xda4d80"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:PlantFlowerSeed": {
+    "name_ja": "花の種まき活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:PlantFruit": {
+    "name_ja": "フルーツ栽培活動",
+    "flow_access": 0,
+    "string_va": [
+     "0x297bf70"
+    ],
+    "referencing_functions": [
+     "0xd876c0",
+     "0xf64ed0",
+     "0x146c2e0",
+     "0x146cfa0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:PlantTreeSeedling": {
+    "name_ja": "植樹活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:RemakeFurniture": {
+    "name_ja": "リメイク活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:SellFruit": {
+    "name_ja": "フルーツ出荷活動",
+    "flow_access": 0,
+    "string_va": [
+     "0x292e27d"
+    ],
+    "referencing_functions": [
+     "0xd876c0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:SellItem": {
+    "name_ja": "リサイクル活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:SellShell": {
+    "name_ja": "潮干狩り活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:SellTodaysFurniture": {
+    "name_ja": "高額買取品を売る活動",
+    "flow_access": 0,
+    "string_va": [
+     "0x298d3e7"
+    ],
+    "referencing_functions": [
+     "0xf60690"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:SellWeed": {
+    "name_ja": "村清掃活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:ShootDownBalloon": {
+    "name_ja": "風船撃ち落し活動",
+    "flow_access": 0,
+    "string_va": [
+     "0x29763c2"
+    ],
+    "referencing_functions": [
+     "0xd35910",
+     "0xd514b0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:StrikeRock": {
+    "name_ja": "毎日コツコツ活動",
+    "flow_access": 0,
+    "string_va": [
+     "0x292e576"
+    ],
+    "referencing_functions": [
+     "0x48e110",
+     "0x48e1c0",
+     "0xd83420",
+     "0xd8b140"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:TakePicture": {
+    "name_ja": "カメラで写真を撮る活動",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:TalkVillager": {
+    "name_ja": "村のあいさつ活動",
+    "flow_access": 2,
+    "string_va": [
+     "0x293af0b"
+    ],
+    "referencing_functions": [
+     "0xc84240",
+     "0xf61960"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:UseCloset": {
+    "name_ja": "クローゼットでお着替え活動",
+    "flow_access": 0,
+    "string_va": [
+     "0x296f553"
+    ],
+    "referencing_functions": [
+     "0x11b8ba0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cLifeSupportDaily:WaterPlant": {
+    "name_ja": "水やり活動",
+    "flow_access": 0,
+    "string_va": [
+     "0x2946ba0"
+    ],
+    "referencing_functions": [
+     "0x48e040",
+     "0xd45830"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcMemory:BirthdayPAttendance": {
+    "name_ja": "プレイヤ誕生日|出席していた",
+    "flow_access": 1,
+    "string_va": [
+     "0x299c94e"
+    ],
+    "referencing_functions": [
+     "0xd24f10"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcMemory:ChokeOffMoveOut": {
+    "name_ja": "引越を引き止められた",
+    "flow_access": 1,
+    "string_va": [
+     "0x29aaa40"
+    ],
+    "referencing_functions": [
+     "0xf48c40"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcMemory:ContinuousTalkDays": {
+    "name_ja": "何日連続で話しかけられたか",
+    "flow_access": 1,
+    "string_va": [
+     "0x29709b9"
+    ],
+    "referencing_functions": [
+     "0xc84240",
+     "0xf48cf0",
+     "0xf696c0",
+     "0xf76010"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcMemory:FriendOfHostPC": {
+    "name_ja": "ホストPCのフレンドとして訪問した",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcMemory:Friendship": {
+    "name_ja": "親密度",
+    "flow_access": 1,
+    "string_va": [
+     "0x29a5d44"
+    ],
+    "referencing_functions": [
+     "0x39f070",
+     "0xabaa80",
+     "0xabbf00",
+     "0xac0200",
+     "0xca6c40",
+     "0xd1cfc0",
+     "0xd24d20",
+     "0xd34a70",
+     "0xd34c20",
+     "0xd34cb0",
+     "0xd34f80",
+     "0xed4460",
+     "0xf87670",
+     "0xfb60a0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcMemory:GEventTalkBeforeFlag": {
+    "name_ja": "イベント共通|イベント前に会話した？",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcMemory:HHABuildCelebraition": {
+    "name_ja": "増築祝いの手紙を出した",
+    "flow_access": 0,
+    "string_va": [
+     "0x293acdf"
+    ],
+    "referencing_functions": [
+     "0xabb3f0",
+     "0xabec30"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcMemory:InduceFailAlreadyInduced": {
+    "name_ja": "勧誘失敗理由|既に転入枠に勧誘されたNPCがいる",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcMemory:InducementFlag": {
+    "name_ja": "勧誘されて来たか",
+    "flow_access": 0,
+    "string_va": [
+     "0x2997480"
+    ],
+    "referencing_functions": [
+     "0x3a2c00",
+     "0xf135b0",
+     "0xf86ce0",
+     "0xf87320",
+     "0xf8c540"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcMemory:InputPhraseMemory": {
+    "name_ja": "口癖を設定した",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcMemory:NicknameOriginal": {
+    "name_ja": "ニックネーム設定本人",
+    "flow_access": 0,
+    "string_va": [
+     "0x2966aa0"
+    ],
+    "referencing_functions": [
+     "0xef35f0",
+     "0xef3770"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcMemory:SameLand": {
+    "name_ja": "同じ村に住んでいたことがあるか",
+    "flow_access": 2,
+    "string_va": [
+     "0x29520dc"
+    ],
+    "referencing_functions": [
+     "0xf12fe0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcMemory:SetGreeting": {
+    "name_ja": "挨拶を設定したことがある",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcMemory:TalkClothesNToday": {
+    "name_ja": "今日ClothesNを見たか？ ",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcMemory:TalkClothesPToday": {
+    "name_ja": "今日ClothesPを見たか？ ",
+    "flow_access": 2,
+    "string_va": [
+     "0x2947565"
+    ],
+    "referencing_functions": [
+     "0xc84240",
+     "0xcbb7c0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcMemory:TalkCountInNpcHouseToday": {
+    "name_ja": "今日NPCの家での会話回数",
+    "flow_access": 1,
+    "string_va": [
+     "0x299ca27"
+    ],
+    "referencing_functions": [
+     "0xc84240"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcMemory:TalkCountToday": {
+    "name_ja": "今日の会話回数（通算）",
+    "flow_access": 1,
+    "string_va": [
+     "0x295f723"
+    ],
+    "referencing_functions": [
+     "0xc84240",
+     "0xd2c830",
+     "0xf48cf0",
+     "0xf696c0",
+     "0xf76010"
+    ],
+    "day_change": [
+     "0xd2c830"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cNpcMemory:TalkProgressHelpBuildShop": {
+    "name_ja": "商店の木材集めに関するFreeH_Progressを聞いたか？",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcMemory:TalkSnpcNow": {
+    "name_ja": "今日Snpcを聞いたか？",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcMemory:TalkedAsSameVillageResident": {
+    "name_ja": "同じ村の住人として会話した",
+    "flow_access": 2,
+    "string_va": [
+     "0x29bd44d"
+    ],
+    "referencing_functions": [
+     "0xc84240"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcMemory:VisitedCount": {
+    "name_ja": "そのプレイヤーが家に来た回数",
+    "flow_access": 1,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcSave:AbandonedHouse": {
+    "name_ja": "自宅を空き家状態にするか",
+    "flow_access": 2,
+    "string_va": [
+     "0x29b59bb"
+    ],
+    "referencing_functions": [
+     "0xc687f0",
+     "0xc68f30",
+     "0xcb7550",
+     "0xcc5530",
+     "0xcc5a40",
+     "0xd21110",
+     "0xd24d20",
+     "0xd36400",
+     "0xf847f0",
+     "0xf855c0",
+     "0xf889e0",
+     "0xf8ab90"
+    ],
+    "day_change": [
+     "0xf847f0"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cNpcSave:ChangeFirstFloor": {
+    "name_ja": "初期住人用床板を変更したか",
+    "flow_access": 0,
+    "string_va": [
+     "0x2960b71"
+    ],
+    "referencing_functions": [
+     "0xf09900"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcSave:ChangeFirstWall": {
+    "name_ja": "初期住人用壁紙を変更したか",
+    "flow_access": 0,
+    "string_va": [
+     "0x29479f3"
+    ],
+    "referencing_functions": [
+     "0xf09900"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcSave:ContinuousNormalDay": {
+    "name_ja": "平常活動の連続日数",
+    "flow_access": 1,
+    "string_va": [
+     "0x2960b9b"
+    ],
+    "referencing_functions": [
+     "0xf8b460",
+     "0xf8bf40"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcSave:CoordinateUpdate": {
+    "name_ja": "家具配置更新済か",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcSave:EarlyOrLate": {
+    "name_ja": "早起き・夜更かしフラグ",
+    "flow_access": 1,
+    "string_va": [
+     "0x291fa47"
+    ],
+    "referencing_functions": [
+     "0x38ba70",
+     "0xcf71e0",
+     "0xf8b460",
+     "0xf8bf40"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcSave:ForceMoveOut": {
+    "name_ja": "強制的に転出させられるフラグ",
+    "flow_access": 0,
+    "string_va": [
+     "0x2947a1d"
+    ],
+    "referencing_functions": [
+     "0xf847f0",
+     "0xf86dd0"
+    ],
+    "day_change": [
+     "0xf847f0"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cNpcSave:FromSettlerQuest": {
+    "name_ja": "住人移住クエストで来たNPCか",
+    "flow_access": 2,
+    "string_va": [
+     "0x296bb4e"
+    ],
+    "referencing_functions": [
+     "0xf8c540"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcSave:GetFirstVillagerWallFtr1": {
+    "name_ja": "初期住人用壁掛け家具１を入手したか",
+    "flow_access": 0,
+    "string_va": [
+     "0x2976703"
+    ],
+    "referencing_functions": [
+     "0xf064c0",
+     "0xf113b0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcSave:GetFirstVillagerWallFtr2": {
+    "name_ja": "初期住人用壁掛け家具２を入手したか",
+    "flow_access": 0,
+    "string_va": [
+     "0x295bc1e"
+    ],
+    "referencing_functions": [
+     "0xf064c0",
+     "0xf113b0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcSave:Is3rdNpc": {
+    "name_ja": "3人目のNPCか？",
+    "flow_access": 1,
+    "string_va": [
+     "0x29b6a5a"
+    ],
+    "referencing_functions": [
+     "0xf84f10",
+     "0xf86a40",
+     "0xf87090",
+     "0xf8c540",
+     "0xf8cea0"
+    ],
+    "day_change": [
+     "0xf84f10"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cNpcSave:IsReFabricSmartPhone": {
+    "name_ja": "スマホ柄に汎用布地を使うか？",
+    "flow_access": 2,
+    "string_va": [
+     "0x29a1a64"
+    ],
+    "referencing_functions": [
+     "0xbe71d0",
+     "0xf12aa0"
+    ],
+    "day_change": [
+     "0xf12aa0"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cNpcSave:LastFtrNum": {
+    "name_ja": "最後に配置した家具の数",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcSave:MoveInCompletion": {
+    "name_ja": "引越し完了済みか",
+    "flow_access": 2,
+    "string_va": [
+     "0x297a1d5"
+    ],
+    "referencing_functions": [
+     "0x409170",
+     "0xc687f0",
+     "0xc68f30",
+     "0xc6d5d0",
+     "0xc6e360",
+     "0xc6e6d0",
+     "0xc6e940",
+     "0xc70da0",
+     "0xd21110",
+     "0xd24570",
+     "0xd24d20",
+     "0xd2a830",
+     "0xef1a90",
+     "0xf0c7f0",
+     "0xf13c10",
+     "0xf80760",
+     "0xf80860",
+     "0xf84320",
+     "0xf855c0",
+     "0xf85c40",
+     "0xf86490",
+     "0xf88540",
+     "0xf89550",
+     "0xf899b0",
+     "0xf8ab90",
+     "0xf8cea0",
+     "0xf8d210",
+     "0xf8de90",
+     "0xf8e540",
+     "0xfbd830",
+     "0x1575450"
+    ],
+    "day_change": [
+     "0xf84320"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cNpcSave:MoveInOrder": {
+    "name_ja": "土地売約済み状態のNPCの転入順",
+    "flow_access": 0,
+    "string_va": [
+     "0x2989acf"
+    ],
+    "referencing_functions": [
+     "0xf86490",
+     "0xf88540",
+     "0xf8d210",
+     "0xf8de90"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcSave:MoveRoomIndex": {
+    "name_ja": "ダンボール部屋表示に使用したテンプレート番号",
+    "flow_access": 0,
+    "string_va": [
+     "0x291fbd6"
+    ],
+    "referencing_functions": [
+     "0x5618e0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcSave:NnpcHouseBuildOk": {
+    "name_ja": "NPCテント建て替え許可",
+    "flow_access": 1,
+    "string_va": [
+     "0x29c2fd7"
+    ],
+    "referencing_functions": [
+     "0xf096d0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcSave:NnpcHouseBuilt": {
+    "name_ja": "NPCの家建て替え済み",
+    "flow_access": 1,
+    "string_va": [
+     "0x2960b62"
+    ],
+    "referencing_functions": [
+     "0xf096d0",
+     "0xf82760"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcSave:NnpcHouseLoan": {
+    "name_ja": "ローン返済カウント",
+    "flow_access": 0,
+    "string_va": [
+     "0x299ce70"
+    ],
+    "referencing_functions": [
+     "0xefb4f0",
+     "0xf096d0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcSave:OutdoorCatnap": {
+    "name_ja": "深夜屋外でのうたた寝判定状況",
+    "flow_access": 2,
+    "string_va": [
+     "0x29d06fd"
+    ],
+    "referencing_functions": [
+     "0x38ba70"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcSave:UseAudioType": {
+    "name_ja": "今日使用するオーディオ家具の種類",
+    "flow_access": 0,
+    "string_va": [
+     "0x297a2dc"
+    ],
+    "referencing_functions": [
+     "0x560610",
+     "0xf03360",
+     "0xf10310"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcTemp:AppFirstTalk": {
+    "name_ja": "引越し挨拶アプローチ会話が出せる状態か",
+    "flow_access": 2,
+    "string_va": [
+     "0x2992e57"
+    ],
+    "referencing_functions": [
+     "0xd1cdb0",
+     "0xd257d0",
+     "0xd26b70"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcTemp:AppWelcomeMigrantsTalk": {
+    "name_ja": "移住者おもてなしアプローチ会話が出せる状態か",
+    "flow_access": 2,
+    "string_va": [
+     "0x294c3a9"
+    ],
+    "referencing_functions": [
+     "0xd1cbc0",
+     "0xd257d0",
+     "0xd26b70"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcTemp:ApproachUpdateStop": {
+    "name_ja": "アプローチポイントの更新を止める",
+    "flow_access": 2,
+    "string_va": [
+     "0x297bcf7"
+    ],
+    "referencing_functions": [
+     "0xbfd590",
+     "0xc496e0",
+     "0xd1e740",
+     "0xd1e860"
+    ],
+    "day_change": [
+     "0xd1e740"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cNpcTemp:ContinuousReactionTalkCount": {
+    "name_ja": "連続リアクション会話回数",
+    "flow_access": 1,
+    "string_va": [
+     "0x29ccc01"
+    ],
+    "referencing_functions": [
+     "0xc84240",
+     "0xd1f470"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcTemp:CountdownFieldNpc": {
+    "name_ja": "カウントダウン時フィールドNPCに選ばれた",
+    "flow_access": 1,
+    "string_va": [
+     "0x292f1c2"
+    ],
+    "referencing_functions": [
+     "0xbcad10",
+     "0xbdc030",
+     "0xcf71e0",
+     "0xd22440"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcTemp:DoorInHoldOpen": {
+    "name_ja": "扉を開けたままにして入る",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcTemp:EmoticonGetTalk": {
+    "name_ja": "漫符入手会話が出せる状態か",
+    "flow_access": 2,
+    "string_va": [
+     "0x297bed2"
+    ],
+    "referencing_functions": [
+     "0xd1c770",
+     "0xd1e120",
+     "0xd1e740",
+     "0xd26b70",
+     "0xd2a210"
+    ],
+    "day_change": [
+     "0xd1e740"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cNpcTemp:EventAnnounceTalkCount": {
+    "name_ja": "イベント告知を聞いた回数",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcTemp:EventFreeTalkCount": {
+    "name_ja": "イベント雑談を聞いた回数",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcTemp:FallPit": {
+    "name_ja": "落とし穴に落ちる",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcTemp:HitMainPlayer": {
+    "name_ja": "メインプレイヤーが叩いた",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcTemp:IndoorTalkCount": {
+    "name_ja": "室内で会話した回数",
+    "flow_access": 2,
+    "string_va": [
+     "0x2960703"
+    ],
+    "referencing_functions": [
+     "0xc3b810",
+     "0xc84240",
+     "0xd2ca70",
+     "0xfb90b0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcTemp:IslandRepTalk": {
+    "name_ja": "島評判UPアプローチ会話が出せる状態か",
+    "flow_access": 2,
+    "string_va": [
+     "0x2965813"
+    ],
+    "referencing_functions": [
+     "0xd1c770",
+     "0xd1e4b0",
+     "0xd257d0",
+     "0xd26b70"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcTemp:MarketBuildingTalk": {
+    "name_ja": "お店建築会話が出せる状態か",
+    "flow_access": 2,
+    "string_va": [
+     "0x293b023"
+    ],
+    "referencing_functions": [
+     "0xd1c770",
+     "0xd1e2f0",
+     "0xd22240",
+     "0xd26b70",
+     "0xd27310"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcTemp:MuseumGreet": {
+    "name_ja": "博物館で挨拶したか",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcTemp:PlayerBirthdayEnter": {
+    "name_ja": "プレイヤ誕生日分岐：入場直後",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcTemp:PlayerBirthdayEnterFinish": {
+    "name_ja": "プレイヤ誕生日分岐：入場後カメラ操作",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcTemp:ReserveStandSleep": {
+    "name_ja": "立ち寝予約",
+    "flow_access": 0,
+    "string_va": [
+     "0x297a1c3"
+    ],
+    "referencing_functions": [
+     "0xc3adf0",
+     "0xc68f30"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcTemp:SNpcVisitTalkCount": {
+    "name_ja": "来訪NPC告知を聞いた回数",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcTemp:TalkWatchPoint": {
+    "name_ja": "観賞ポイントで会話したか",
+    "flow_access": 2,
+    "string_va": [
+     "0x2951c08"
+    ],
+    "referencing_functions": [
+     "0xc27dc0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcTemp:VisitPNPCGoHomeMyself": {
+    "name_ja": "P宅訪問中NPCが自分から帰宅する",
+    "flow_access": 1,
+    "string_va": [
+     "0x29b6371"
+    ],
+    "referencing_functions": [
+     "0xc3be70",
+     "0xc3bf80"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cNpcTemp:VisitQuestGoHome": {
+    "name_ja": "訪問クエストNPC帰宅フラグ",
+    "flow_access": 0,
+    "string_va": [
+     "0x2969ea8"
+    ],
+    "referencing_functions": [
+     "0xc1fde0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:AddHairStyle3": {
+    "name_ja": "寝ぐせ解禁",
+    "flow_access": 2,
+    "string_va": [
+     "0x29c2ecd"
+    ],
+    "referencing_functions": [
+     "0xe15370",
+     "0x118dac0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:BDayMsgRandomSead": {
+    "name_ja": "バースデーメッセージの内容を決定する乱数のシード値",
+    "flow_access": 0,
+    "string_va": [
+     "0x2976304"
+    ],
+    "referencing_functions": [
+     "0xca7090",
+     "0xf920f0"
+    ],
+    "day_change": [
+     "0xf920f0"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:BDayMsgSenderNNpcUniqueID0": {
+    "name_ja": "バースデーメッセージを送ったNNpcのユニークID",
+    "flow_access": 0,
+    "string_va": [
+     "0x2951c9c"
+    ],
+    "referencing_functions": [
+     "0xca7090",
+     "0xf920f0"
+    ],
+    "day_change": [
+     "0xf920f0"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:BDayMsgSenderNNpcUniqueID1": {
+    "name_ja": "バースデーメッセージを送ったNNpcのユニークID",
+    "flow_access": 0,
+    "string_va": [
+     "0x29b12c6"
+    ],
+    "referencing_functions": [
+     "0xca7090",
+     "0xf920f0"
+    ],
+    "day_change": [
+     "0xf920f0"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:BDayMsgSenderSNpcUniqueID0": {
+    "name_ja": "バースデーメッセージを送ったSNpcのユニークID",
+    "flow_access": 0,
+    "string_va": [
+     "0x295b4b2"
+    ],
+    "referencing_functions": [
+     "0xca7090",
+     "0xf920f0"
+    ],
+    "day_change": [
+     "0xf920f0"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:BDayMsgSenderSNpcUniqueID1": {
+    "name_ja": "バースデーメッセージを送ったSNpcのユニークID",
+    "flow_access": 0,
+    "string_va": [
+     "0x29709cc"
+    ],
+    "referencing_functions": [
+     "0xca7090",
+     "0xf920f0"
+    ],
+    "day_change": [
+     "0xf920f0"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:BalloonShootCountToday": {
+    "name_ja": "今日風船をいくつ撃ったか？",
+    "flow_access": 0,
+    "string_va": [
+     "0x2965861"
+    ],
+    "referencing_functions": [
+     "0xd50430"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:BeyDaily_QuestCount": {
+    "name_ja": "うおまさJr|指定サイズの魚を釣り上げた回数",
+    "flow_access": 2,
+    "string_va": [
+     "0x2920e81"
+    ],
+    "referencing_functions": [
+     "0xd13140",
+     "0xd134a0",
+     "0xd135b0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:BeyEvent_GetTrophyCopper": {
+    "name_ja": "[大会]|うおまさJr|トロフィ銅もらったか？",
+    "flow_access": 2,
+    "string_va": [
+     "0x29cd057"
+    ],
+    "referencing_functions": [
+     "0xfa7110"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:BeyEvent_GetTrophyGold": {
+    "name_ja": "[大会]|うおまさJr|トロフィ金もらったか？",
+    "flow_access": 2,
+    "string_va": [
+     "0x29d1b01"
+    ],
+    "referencing_functions": [
+     "0xfa7110"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:BeyEvent_GetTrophySilver": {
+    "name_ja": "[大会]|うおまさJr|トロフィ銀もらったか？",
+    "flow_access": 2,
+    "string_va": [
+     "0x294c843"
+    ],
+    "referencing_functions": [
+     "0xfa7110"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:BeyEvent_ResultGetFish": {
+    "name_ja": "[大会]つり大会|(結果発表用)捕まえたサカナ数",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:BeyEvent_ResultGetPoint": {
+    "name_ja": "[大会]つり大会|(結果発表用)獲得したポイント",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:BeyEvent_TotalPoint": {
+    "name_ja": "[大会]|うおまさJr|つり大会累計ポイント",
+    "flow_access": 2,
+    "string_va": [
+     "0x29c6306"
+    ],
+    "referencing_functions": [
+     "0xe4760",
+     "0xfa60c0"
+    ],
+    "day_change": [
+     "0xfa60c0"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:BocBuyNumCount": {
+    "name_ja": "カブリバ孫|カブ購入個数",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:CalendarEventAchievementFinish": {
+    "name_ja": "カレンダーイベントの実績を今日カウントした",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:CatchFishContinueCount": {
+    "name_ja": "つり|逃げられずに釣り上げた回数",
+    "flow_access": 2,
+    "string_va": [
+     "0x29ccdae"
+    ],
+    "referencing_functions": [
+     "0xda4950",
+     "0xe4e730"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:CatchFishFes_Bonus": {
+    "name_ja": "つり大会｜到達ボーナスある？",
+    "flow_access": 2,
+    "string_va": [
+     "0x29b9f5f"
+    ],
+    "referencing_functions": [
+     "0xe5390",
+     "0xe6cb0",
+     "0xe7f50",
+     "0x101940",
+     "0x2b3c90",
+     "0x329ba0",
+     "0x34a7c0",
+     "0x34ec10",
+     "0x3ce3d0",
+     "0xdb1e20",
+     "0xe46d00",
+     "0xe4ffb0",
+     "0xe5ae70"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:CatchFishFes_CooperativeBonus": {
+    "name_ja": "つり大会｜通信ボーナスある？",
+    "flow_access": 2,
+    "string_va": [
+     "0x29a0676"
+    ],
+    "referencing_functions": [
+     "0xe5390",
+     "0xe6cb0",
+     "0xe7f50",
+     "0x101940",
+     "0x2b3c90",
+     "0x329ba0",
+     "0x34a7c0",
+     "0x34ec10",
+     "0x3ce3d0",
+     "0xdb1e20",
+     "0xe46d00",
+     "0xe4ffb0",
+     "0xe5ae70"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:CatchInsectFes_Bonus": {
+    "name_ja": "ムシとり大会｜到達ボーナスある？",
+    "flow_access": 2,
+    "string_va": [
+     "0x29c62f1"
+    ],
+    "referencing_functions": [
+     "0xe5390",
+     "0xe6cb0",
+     "0xe7f50",
+     "0x101940",
+     "0x2b3c90",
+     "0x329ba0",
+     "0x34a7c0",
+     "0x34ec10",
+     "0x3ce3d0",
+     "0xdb1e20",
+     "0xe46d00",
+     "0xe4ffb0",
+     "0xe5ae70"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:CatchInsectFes_CooperativeBonus": {
+    "name_ja": "ムシとり大会｜通信ボーナスある？",
+    "flow_access": 2,
+    "string_va": [
+     "0x29332c9"
+    ],
+    "referencing_functions": [
+     "0xe5390",
+     "0xe6cb0",
+     "0xe7f50",
+     "0x101940",
+     "0x2b3c90",
+     "0x329ba0",
+     "0x34a7c0",
+     "0x34ec10",
+     "0x3ce3d0",
+     "0xdb1e20",
+     "0xe46d00",
+     "0xe4ffb0",
+     "0xe5ae70"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:CatchtFesBox_Valid": {
+    "name_ja": "ムシサカナBOXの中身をキープ",
+    "flow_access": 0,
+    "string_va": [
+     "0x299bc5a"
+    ],
+    "referencing_functions": [
+     "0xe4340",
+     "0xe44a0",
+     "0xf9d600"
+    ],
+    "day_change": [
+     "0xf9d600"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:ChyDaily_InsectSellNum": {
+    "name_ja": "カメヤマJr|今回の来訪中に買取した数",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:ChyDaily_SellCount": {
+    "name_ja": "カメヤマJr|買取総数（今回計算含む）/未使用",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:ChyDaily_SellFirst": {
+    "name_ja": "カメヤマJr|今日買取した？",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:ChyEvent_GetTrophyCopper": {
+    "name_ja": "[大会]カメヤマ|トロフィ銅もらったか？",
+    "flow_access": 2,
+    "string_va": [
+     "0x2947a52"
+    ],
+    "referencing_functions": [
+     "0xfa7340"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:ChyEvent_GetTrophyGold": {
+    "name_ja": "[大会]カメヤマ|トロフィ金もらったか？",
+    "flow_access": 2,
+    "string_va": [
+     "0x29a20d6"
+    ],
+    "referencing_functions": [
+     "0xfa7340"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:ChyEvent_GetTrophySilver": {
+    "name_ja": "[大会]カメヤマ|トロフィ銀もらったか？",
+    "flow_access": 2,
+    "string_va": [
+     "0x293b347"
+    ],
+    "referencing_functions": [
+     "0xfa7340"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:ChyEvent_ResultGetInsect": {
+    "name_ja": "[大会]ムシとり大会|(結果発表用)捕まえたムシ数",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:ChyEvent_ResultGetPoint": {
+    "name_ja": "[大会]ムシとり大会|(結果発表用)獲得したポイント",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:ChyEvent_TotalPoint": {
+    "name_ja": "[大会]カメヤマ|ムシとり大会累計ポイント",
+    "flow_access": 2,
+    "string_va": [
+     "0x291f830"
+    ],
+    "referencing_functions": [
+     "0xe4760",
+     "0xfa60c0"
+    ],
+    "day_change": [
+     "0xfa60c0"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:ContributedTodaysCeremonyBridgeorSlope": {
+    "name_ja": "セレモニ|今日の橋か坂のセレモニーに貢献した",
+    "flow_access": 2,
+    "string_va": [
+     "0x299343d"
+    ],
+    "referencing_functions": [
+     "0x10c2d70"
+    ],
+    "day_change": [
+     "0x10c2d70"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:DailyQuestFirstFivePoint": {
+    "name_ja": "日課の初回5倍ポイント使用済みか？",
+    "flow_access": 0,
+    "string_va": [
+     "0x292121e"
+    ],
+    "referencing_functions": [
+     "0xf60690"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:DailyQuestFirstFivePointToday": {
+    "name_ja": "今日日課の初回5倍ポイントが選ばれているか？",
+    "flow_access": 1,
+    "string_va": [
+     "0x29c2fee"
+    ],
+    "referencing_functions": [
+     "0xf60690",
+     "0xfd0700"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:DailyQuestFivePointDay": {
+    "name_ja": "日課の5倍ポイントデーか？",
+    "flow_access": 0,
+    "string_va": [
+     "0x29520f9"
+    ],
+    "referencing_functions": [
+     "0xf60690",
+     "0xf61960"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:DailyQuestFivePointMiss": {
+    "name_ja": "日課ポイント5倍デーはずれ回数",
+    "flow_access": 0,
+    "string_va": [
+     "0x299854b"
+    ],
+    "referencing_functions": [
+     "0xf60690"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:DailyQuestFivePointQuest": {
+    "name_ja": "日課ポイント5倍対象ユニークID",
+    "flow_access": 0,
+    "string_va": [
+     "0x292acd4"
+    ],
+    "referencing_functions": [
+     "0xf60690",
+     "0xf61960",
+     "0xf65600",
+     "0xf68560"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:DailyQuestFivePointSelect": {
+    "name_ja": "日課ポイント5倍デー抽選済みフラグ",
+    "flow_access": 0,
+    "string_va": [
+     "0x29d1acd"
+    ],
+    "referencing_functions": [
+     "0xf60690"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:DodExplainAboutMysteryTour": {
+    "name_ja": "飛行場職員|ミステリーツアーの説明聞いた？",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:DodFirstTalkAfterPlusEnable": {
+    "name_ja": "飛行場職員|初会話したのはマイレージ+解禁後？",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:EmoticonLastLearnVillagerIndex": {
+    "name_ja": "最後に漫符を教わったNPCの住人番号",
+    "flow_access": 0,
+    "string_va": [
+     "0x296f5e1"
+    ],
+    "referencing_functions": [
+     "0xd26b70"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:EnableBuildMuseumTent": {
+    "name_ja": "博物館テント設置条件満たした",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:EnableSmatDeviceNortification": {
+    "name_ja": "スマホUI|通知機能有効化",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:FirstPlayAfterMuseumBuiltFlag": {
+    "name_ja": "博物館が完成したあとのプレイ初日？",
+    "flow_access": 2,
+    "string_va": [
+     "0x29249d0"
+    ],
+    "referencing_functions": [
+     "0xf545f0",
+     "0xf77050"
+    ],
+    "day_change": [
+     "0xf545f0",
+     "0xf77050"
+    ],
+    "pseudocode_readings": {
+     "0xf77050": {
+      "role": "museum facility state at day change (states 0-4, param_2 = elapsed days)",
+      "reading": [
+       "state 1 + structure kind 2 present -> state 2; MuseumBuilt=1; MuseumTentBuiltToday=1 if exactly 1 day",
+       "state 2: MuseumGrowupEnable1 on -> cleared and construction starts; otherwise needs MuseumConstruction1>=1",
+       "MuseumConstruction1 + elapsed days < 2 -> increment (value 1 sets MuseumConstructionToday)",
+       "otherwise state 3; MuseumConstruction1=0; Museum2Built=1; Museum2BuiltToday=1 if exactly 1 day"
+      ]
+     }
+    }
+   },
+   "cPlayer:FirstPlayAfterMuseumTentFlag": {
+    "name_ja": "フータのテントが完成したあとのプレイ初日？",
+    "flow_access": 2,
+    "string_va": [
+     "0x29d070b"
+    ],
+    "referencing_functions": [
+     "0xf545f0",
+     "0xf77050"
+    ],
+    "day_change": [
+     "0xf545f0",
+     "0xf77050"
+    ],
+    "pseudocode_readings": {
+     "0xf77050": {
+      "role": "museum facility state at day change (states 0-4, param_2 = elapsed days)",
+      "reading": [
+       "state 1 + structure kind 2 present -> state 2; MuseumBuilt=1; MuseumTentBuiltToday=1 if exactly 1 day",
+       "state 2: MuseumGrowupEnable1 on -> cleared and construction starts; otherwise needs MuseumConstruction1>=1",
+       "MuseumConstruction1 + elapsed days < 2 -> increment (value 1 sets MuseumConstructionToday)",
+       "otherwise state 3; MuseumConstruction1=0; Museum2Built=1; Museum2BuiltToday=1 if exactly 1 day"
+      ]
+     }
+    }
+   },
+   "cPlayer:FirstPlayAfterOfficeBuiltFlag": {
+    "name_ja": "案内所の建物が完成したあとのプレイ初日？",
+    "flow_access": 2,
+    "string_va": [
+     "0x29249b2"
+    ],
+    "referencing_functions": [
+     "0xf545f0",
+     "0x10c2ad0"
+    ],
+    "day_change": [
+     "0xf545f0",
+     "0x10c2ad0"
+    ],
+    "pseudocode_readings": {
+     "0x10c2ad0": {
+      "role": "Resident Services at day change (called from 0x10c26e0)",
+      "reading": [
+       "OfficeConstruction1 accumulates elapsed days while BuiltTownOffice is off (reset to 0 above 1)",
+       "structure kind 1 present and BuiltTownOffice off -> BuiltTownOffice=1, GlobalEventReady=1, EventPlazaBuilt=1; BuiltTownOfficeToday=1 if exactly 1 day"
+      ]
+     }
+    }
+   },
+   "cPlayer:FirstPlayAfterShopBuilt2Flag": {
+    "name_ja": "商店を拡張したあとのプレイ初日？",
+    "flow_access": 2,
+    "string_va": [
+     "0x2933bd9"
+    ],
+    "referencing_functions": [
+     "0xf545f0",
+     "0xfc4560"
+    ],
+    "day_change": [
+     "0xf545f0",
+     "0xfc4560"
+    ],
+    "pseudocode_readings": {
+     "0xfc4560": {
+      "role": "shop facility state at day change (calls 0xfcc300)",
+      "reading": [
+       "state 1 + structure kind 0 present -> state 2; MarketBuilt=1; MarketOpen1stDay1=1 if exactly 1 day",
+       "state 2: second remodel path uses MarketRemodelingFlag2/MarketConstruction2, CountMarket1AfterBuild>30 and an unidentified value >=200000 ((x>>6)>0xc34)",
+       "MarketConstruction2 + elapsed days >= 2 -> state 3; MarketOpen1stDay2=1 if exactly 1 day"
+      ]
+     }
+    }
+   },
+   "cPlayer:FirstPlayAfterShopBuiltFlag": {
+    "name_ja": "商店が完成したあとのプレイ初日？",
+    "flow_access": 2,
+    "string_va": [
+     "0x296a02e"
+    ],
+    "referencing_functions": [
+     "0xf545f0",
+     "0xfc4560"
+    ],
+    "day_change": [
+     "0xf545f0",
+     "0xfc4560"
+    ],
+    "pseudocode_readings": {
+     "0xfc4560": {
+      "role": "shop facility state at day change (calls 0xfcc300)",
+      "reading": [
+       "state 1 + structure kind 0 present -> state 2; MarketBuilt=1; MarketOpen1stDay1=1 if exactly 1 day",
+       "state 2: second remodel path uses MarketRemodelingFlag2/MarketConstruction2, CountMarket1AfterBuild>30 and an unidentified value >=200000 ((x>>6)>0xc34)",
+       "MarketConstruction2 + elapsed days >= 2 -> state 3; MarketOpen1stDay2=1 if exactly 1 day"
+      ]
+     }
+    }
+   },
+   "cPlayer:FirstPlayAfterTailorBuiltFlag": {
+    "name_ja": "仕立て屋が完成したあとのプレイ初日？",
+    "flow_access": 2,
+    "string_va": [
+     "0x29b59ca"
+    ],
+    "referencing_functions": [
+     "0xf545f0",
+     "0xfcc300"
+    ],
+    "day_change": [
+     "0xf545f0",
+     "0xfcc300"
+    ],
+    "pseudocode_readings": {
+     "0xfcc300": {
+      "role": "tailor facility state at day change",
+      "reading": [
+       "state 1: TailorConstruction1 off -> needs structure kind 5 present; else needs TailorConstruction1>=1",
+       "TailorConstruction1 + elapsed days < 2 -> increment",
+       "otherwise state 2; TailorConstruction1=0; TailorBuilt=1; TailorBuiltToday=1 if exactly 1 day"
+      ]
+     }
+    }
+   },
+   "cPlayer:GetBirthdayBoard": {
+    "name_ja": "今年バースデーボードを貰った",
+    "flow_access": 2,
+    "string_va": [
+     "0x297a0eb"
+    ],
+    "referencing_functions": [
+     "0xd22ab0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:GetBirthdayCake": {
+    "name_ja": "今年バースデーケーキをもらった",
+    "flow_access": 2,
+    "string_va": [
+     "0x2964922"
+    ],
+    "referencing_functions": [
+     "0xd22ab0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:GetBirthdayCandle": {
+    "name_ja": "今年バースデーキャンドルを貰った",
+    "flow_access": 2,
+    "string_va": [
+     "0x296f628"
+    ],
+    "referencing_functions": [
+     "0xd22ab0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:GetBirthdayFloorParty": {
+    "name_ja": "今年パーティのゆかをもらった",
+    "flow_access": 2,
+    "string_va": [
+     "0x29ba287"
+    ],
+    "referencing_functions": [
+     "0xd22ab0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:GetBirthdayHat": {
+    "name_ja": "今年バースデーハットを貰った",
+    "flow_access": 2,
+    "string_va": [
+     "0x29b507e"
+    ],
+    "referencing_functions": [
+     "0xd22ab0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:GetBirthdaySunglasses": {
+    "name_ja": "今年バースデーサングラスを貰った",
+    "flow_access": 2,
+    "string_va": [
+     "0x29335fa"
+    ],
+    "referencing_functions": [
+     "0xd22ab0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:GetBirthdayTable": {
+    "name_ja": "今年バースデーテーブルを貰った",
+    "flow_access": 2,
+    "string_va": [
+     "0x292e23c"
+    ],
+    "referencing_functions": [
+     "0xd22ab0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:GetBirthdayWallParty": {
+    "name_ja": "今年パーティのかべがみをもらった",
+    "flow_access": 2,
+    "string_va": [
+     "0x298d3b5"
+    ],
+    "referencing_functions": [
+     "0xd22ab0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:GoldenBalloonCount": {
+    "name_ja": "金の風船発生条件カウンタ",
+    "flow_access": 0,
+    "string_va": [
+     "0x2947677"
+    ],
+    "referencing_functions": [
+     "0xd50430",
+     "0xd514b0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:GstQuestBreakFlag": {
+    "name_ja": "ゆうたろう|一度クエスト発生させてゲーム終了した？",
+    "flow_access": 1,
+    "string_va": [
+     "0x2966ac5"
+    ],
+    "referencing_functions": [
+     "0xf91b90"
+    ],
+    "day_change": [
+     "0xf91b90"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:GyroidPlazaTalk1st": {
+    "name_ja": "募金ハニワくん|広場募金ハニワくんと話した？",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:HHAGradeMailFlag": {
+    "name_ja": "HHA|評価の手紙送付ON?",
+    "flow_access": 2,
+    "string_va": [
+     "0x292e423"
+    ],
+    "referencing_functions": [
+     "0x7b1fe0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:HappyHomeMission1": {
+    "name_ja": "ハッピーホームでミッション１をクリヤーした",
+    "flow_access": 0,
+    "string_va": [
+     "0x29ba8cd"
+    ],
+    "referencing_functions": [
+     "0x7b4330",
+     "0x7b4fc0",
+     "0x7b5e60"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:HappyHomeMission2": {
+    "name_ja": "ハッピーホームでミッション２をクリヤーした",
+    "flow_access": 0,
+    "string_va": [
+     "0x29650d3"
+    ],
+    "referencing_functions": [
+     "0x7b4330",
+     "0x7b5e60"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:HappyHomeMission3": {
+    "name_ja": "ハッピーホームでミッション３をクリヤーした",
+    "flow_access": 0,
+    "string_va": [
+     "0x2946ffe"
+    ],
+    "referencing_functions": [
+     "0x7b4330",
+     "0x7b5e60"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:HappyHomeMission4": {
+    "name_ja": "ハッピーホームでミッション４をクリヤーした",
+    "flow_access": 0,
+    "string_va": [
+     "0x295fc82"
+    ],
+    "referencing_functions": [
+     "0x7b4330",
+     "0x7b5e60"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:HappyHomeMission5": {
+    "name_ja": "ハッピーホームでミッション５をクリヤーした",
+    "flow_access": 0,
+    "string_va": [
+     "0x29ba8df"
+    ],
+    "referencing_functions": [
+     "0x7b4330",
+     "0x7b5e60"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:HappyHomeMission6": {
+    "name_ja": "ハッピーホームでミッション６をクリヤーした",
+    "flow_access": 0,
+    "string_va": [
+     "0x29a1387"
+    ],
+    "referencing_functions": [
+     "0x7b4330"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:HasGottenToolChangeStick": {
+    "name_ja": "変身ステッキを入手したことがあるか？",
+    "flow_access": 2,
+    "string_va": [
+     "0x29520c3"
+    ],
+    "referencing_functions": [
+     "0xeebe80",
+     "0xeec0b0",
+     "0xeec280"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:HasLookMyHouseExplain": {
+    "name_ja": "家の機能説明ダイアログを見たことがある？",
+    "flow_access": 1,
+    "string_va": [
+     "0x29bd5e1"
+    ],
+    "referencing_functions": [
+     "0xdaecc0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:HasPlayedHideAndSeek": {
+    "name_ja": "かくれんぼクエストをした事がある",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:HasTalkedAllVillagerToday": {
+    "name_ja": "今日全ての住民NPCと話したか？",
+    "flow_access": 0,
+    "string_va": [
+     "0x29c73d9"
+    ],
+    "referencing_functions": [
+     "0xc84240",
+     "0xd2c830"
+    ],
+    "day_change": [
+     "0xd2c830"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:HeardAboutBuildingTownOffice": {
+    "name_ja": "しずえ|役場建設開始の説明聞いた？",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:HeardCurrentPlayerActivityInfo": {
+    "name_ja": "今回の行動に関する噂話を聞いたプレイヤーの情報",
+    "flow_access": 0,
+    "string_va": [
+     "0x29c0daa"
+    ],
+    "referencing_functions": [
+     "0xf545f0"
+    ],
+    "day_change": [
+     "0xf545f0"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:HeardPreviousPlayerActivityInfo": {
+    "name_ja": "前回の行動に関する噂話を聞いたプレイヤーの情報",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:HighAndLowPlayed": {
+    "name_ja": "ミニゲームのハイ＆ローをプレイした事がある",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:ImmQHousingKitGetFirst": {
+    "name_ja": "たぬきち|ハウジングキット初めてもらった",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:ImmQSetOutdoorAbyMySelf": {
+    "name_ja": "たぬきち|移住クエスト自分で外置き家具A置いた",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:ImmQSetOutdoorBbyMySelf": {
+    "name_ja": "たぬきち|移住クエスト自分で外置き家具B置いた",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:ImmQSetOutdoorCbyMySelf": {
+    "name_ja": "たぬきち|移住クエスト自分で外置き家具C置いた",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:ImmQTakeFruit": {
+    "name_ja": "たぬきち|移住クエストで今日果物もらった",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:ImmQTakeRemakeKit": {
+    "name_ja": "xたぬきち|移住クエストで今日リメイクキットもらった",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:ImmQTalkRcoBridgeComplete": {
+    "name_ja": "たぬきち|まるたのはしが完成してから会話した",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:ImmQTalkRcoHaveBridgeKit": {
+    "name_ja": "たぬきち|まるたのはしキット持った状態で会話した",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:IsGetMessageBottle": {
+    "name_ja": "プレイヤ｜今日メッセージボトルを拾った",
+    "flow_access": 0,
+    "string_va": [
+     "0x298d567"
+    ],
+    "referencing_functions": [
+     "0x4ae640"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:IsToolShortcutManualOpen": {
+    "name_ja": "道具ショートカット説明解禁済か？",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:IslandDevQuestShowCampKit": {
+    "name_ja": "たぬきち|キャンプ場よていちキットをたぬきちに見せた",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:JohnnyPartsCount": {
+    "name_ja": "ジョニー｜渡したパーツの個数",
+    "flow_access": 2,
+    "string_va": [
+     "0x29aaa99"
+    ],
+    "referencing_functions": [
+     "0xd9e800"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:LatestMysteryTourUniqueID": {
+    "name_ja": "最後に選出したミステリーツアーのユニークID",
+    "flow_access": 0,
+    "string_va": [
+     "0x2925ab8"
+    ],
+    "referencing_functions": [
+     "0xb5ad00"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:LookNpcHouseVisitNpc": {
+    "name_ja": "他のNPCの家に訪問中のNPCを見た",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:MainmenuBank": {
+    "name_ja": "スマホUI|モバイルバンク解禁",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:MainmenuLifeSupportRnd": {
+    "name_ja": "スマホUI|くらしホットライン機能追加(ランダム)",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:MainmenuLifeSupportTown": {
+    "name_ja": "スマホUI|くらしホットライン機能追加(村づくり)",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:MarketBuiltMyVillage": {
+    "name_ja": "自分の村のお店が開店した",
+    "flow_access": 0,
+    "string_va": [
+     "0x2966a8b"
+    ],
+    "referencing_functions": [
+     "0xeec010",
+     "0xeec0b0",
+     "0xeec280",
+     "0xf91b90"
+    ],
+    "day_change": [
+     "0xf91b90"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:MarvelAtCockroarchToday": {
+    "name_ja": "ゴキブリに驚いた",
+    "flow_access": 0,
+    "string_va": [
+     "0x29b6960"
+    ],
+    "referencing_functions": [
+     "0xe84d50"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:MessageCardPayment": {
+    "name_ja": "メッセージカードの代金を支払っているか",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:Mobile1stBootAfterUnlockPro_Mydesign": {
+    "name_ja": "プロ編集解禁後スマホアプリ初起動|マイデザイン",
+    "flow_access": 2,
+    "string_va": [
+     "0x293b8a5"
+    ],
+    "referencing_functions": [
+     "0x12f7d90"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:Mobile1stBootUnlockCantEditMydesign": {
+    "name_ja": "編集不可デザイン保存後スマホアプリ初起動|マイデザイン",
+    "flow_access": 2,
+    "string_va": [
+     "0x294810b"
+    ],
+    "referencing_functions": [
+     "0x12f7d90"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:Mobile1stBoot_BestFriend": {
+    "name_ja": "スマホアプリ初起動|ベストフレンド",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:Mobile1stBoot_Camera": {
+    "name_ja": "スマホアプリ初起動|カメラ",
+    "flow_access": 2,
+    "string_va": [
+     "0x2976ba8"
+    ],
+    "referencing_functions": [
+     "0x1259610"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:Mobile1stBoot_DIYrecipe": {
+    "name_ja": "スマホアプリ初起動|DIYレシピ",
+    "flow_access": 2,
+    "string_va": [
+     "0x298e5cd"
+    ],
+    "referencing_functions": [
+     "0x1259610"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:Mobile1stBoot_Encyclopedia": {
+    "name_ja": "スマホアプリ初起動|いきもの図鑑",
+    "flow_access": 2,
+    "string_va": [
+     "0x299d244"
+    ],
+    "referencing_functions": [
+     "0x1259610"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:Mobile1stBoot_Manual": {
+    "name_ja": "スマホアプリ初起動|生活のしおり",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:Mobile1stBoot_Map": {
+    "name_ja": "スマホアプリ初起動|マップ",
+    "flow_access": 2,
+    "string_va": [
+     "0x29a250f"
+    ],
+    "referencing_functions": [
+     "0x1259610"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:Mobile1stBoot_MilagePlus": {
+    "name_ja": "スマホアプリ初起動|マイレージプラス",
+    "flow_access": 2,
+    "string_va": [
+     "0x293b6c5"
+    ],
+    "referencing_functions": [
+     "0x1259610",
+     "0x146cdc0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:Mobile1stBoot_MobileBank": {
+    "name_ja": "スマホアプリ初起動|たぬきバンク",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:Mobile1stBoot_Mydesign": {
+    "name_ja": "スマホアプリ初起動|マイデザイン",
+    "flow_access": 2,
+    "string_va": [
+     "0x297c74c"
+    ],
+    "referencing_functions": [
+     "0x1259610",
+     "0x12f7d90"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:Mobile1stBoot_OnlineShopping": {
+    "name_ja": "スマホアプリ初起動|たぬきショッピング",
+    "flow_access": 2,
+    "string_va": [
+     "0x29bdab8"
+    ],
+    "referencing_functions": [
+     "0x1259610"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:Mobile1stBoot_Passport": {
+    "name_ja": "スマホアプリ初起動|パスポート",
+    "flow_access": 2,
+    "string_va": [
+     "0x295bff3"
+    ],
+    "referencing_functions": [
+     "0x1259610"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:MoveNpcTradeSkipCount": {
+    "name_ja": "引越交換処理スキップカウント",
+    "flow_access": 1,
+    "string_va": [
+     "0x293af65"
+    ],
+    "referencing_functions": [
+     "0xcb7320",
+     "0xcb73c0",
+     "0xcb7490",
+     "0xcb7ae0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:NewYearPlayReportSend": {
+    "name_ja": "カウントダウンのプレイレポートを送った",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:NoticeAboutMydesingOnWorkBench": {
+    "name_ja": "作業台|マイデザインリメイク選んで説明ダイアログ見た",
+    "flow_access": 2,
+    "string_va": [
+     "0x29770c3"
+    ],
+    "referencing_functions": [
+     "0x15a8ce0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:OccurrenceCoinStone": {
+    "name_ja": "コイン岩を発生させたか",
+    "flow_access": 0,
+    "string_va": [
+     "0x292e59d"
+    ],
+    "referencing_functions": [
+     "0x4ae640"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:OpenDIYRecipeEtcCategory": {
+    "name_ja": "DIYレシピ・作業台|タブカテゴリ【その他】解禁",
+    "flow_access": 0,
+    "string_va": [
+     "0x29a79bf"
+    ],
+    "referencing_functions": [
+     "0x127da70"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:OwlGotDiyRecipe001": {
+    "name_ja": "フータ|フータDIYレシピ1もらった？",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:OwlTalkDuringConst1": {
+    "name_ja": "フータ|テント→博物館工事中に会話したか？",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:PAnnouceHeardKkProject": {
+    "name_ja": "島内放送|とたけけプロジェクトの予告発生した？",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:PastDaysFromLastPlay": {
+    "name_ja": "最後にプレイした日から今日の成長処理までの経過日数",
+    "flow_access": 1,
+    "string_va": [
+     "0x2980578"
+    ],
+    "referencing_functions": [
+     "0xf91b90"
+    ],
+    "day_change": [
+     "0xf91b90"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:PcDidNotKnowKK": {
+    "name_ja": "プレイヤー|序盤にとたけけ知らないと答えた",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:PcTownmakeLv": {
+    "name_ja": "プレイヤーの村づくりライセンスレベル",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:PcUpgradeTownmakeToday": {
+    "name_ja": "今日上級村づくりライセンスを入手したか？",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:PickUpFirst": {
+    "name_ja": "Yボタン「ひろう」が可能な状態だが、ものを拾ったことがない",
+    "flow_access": 2,
+    "string_va": [
+     "0x29d183a"
+    ],
+    "referencing_functions": [
+     "0xda4370",
+     "0x1214110"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:PlayReportDaily": {
+    "name_ja": "デイリープレイレポート",
+    "flow_access": 2,
+    "string_va": [
+     "0x299ce94"
+    ],
+    "referencing_functions": [
+     "0xf535e0",
+     "0x19749b0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:PlayToday": {
+    "name_ja": "今日プレイした",
+    "flow_access": 0,
+    "string_va": [
+     "0x296bb31"
+    ],
+    "referencing_functions": [
+     "0xf545f0"
+    ],
+    "day_change": [
+     "0xf545f0"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:PlayerFirstShootDownBalloon": {
+    "name_ja": "風船を初めて撃ち落とした？",
+    "flow_access": 1,
+    "string_va": [
+     "0x29afa6f"
+    ],
+    "referencing_functions": [
+     "0xd52290"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:PlayerGotHardWood": {
+    "name_ja": "プレイヤー|かたいもくざいを拾ったことがある",
+    "flow_access": 1,
+    "string_va": [
+     "0x292ab6d"
+    ],
+    "referencing_functions": [
+     "0xe21270"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:PlayerHalfAsleepDemoFlag": {
+    "name_ja": "寝ぼけデモフラグ",
+    "flow_access": 2,
+    "string_va": [
+     "0x2976425"
+    ],
+    "referencing_functions": [
+     "0xe00630",
+     "0xe150f0",
+     "0xe7c5b0",
+     "0xf91b90"
+    ],
+    "day_change": [
+     "0xf91b90"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:PlayerStungByBee": {
+    "name_ja": "プレイヤー|ハチにさされたか？",
+    "flow_access": 2,
+    "string_va": [
+     "0x29893c4"
+    ],
+    "referencing_functions": [
+     "0xdb7ef0",
+     "0xdc06c0",
+     "0xdd4900",
+     "0xdd5200",
+     "0xdd52f0",
+     "0xdd55e0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:PopDiyGoldFromStoneToday": {
+    "name_ja": "今日、岩から金鉱石を出した？",
+    "flow_access": 2,
+    "string_va": [
+     "0x2997694"
+    ],
+    "referencing_functions": [
+     "0x4d75d0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:PostHasNewMessage": {
+    "name_ja": "ポスト|新着メッセージカードがある？",
+    "flow_access": 2,
+    "string_va": [
+     "0x294b62b"
+    ],
+    "referencing_functions": [
+     "0x5f1c40",
+     "0xeb6320",
+     "0xfa94d0",
+     "0xfa9600"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:PrayStarToday": {
+    "name_ja": "今日祈った回数",
+    "flow_access": 0,
+    "string_va": [
+     "0x293f0e8"
+    ],
+    "referencing_functions": [
+     "0x4ae640",
+     "0x4ba330",
+     "0x4bda70"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:Prologue4OwlBuiltMuseum": {
+    "name_ja": "フータ|のテント設営後に話した？",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:Prologue4OwlNoMuseum": {
+    "name_ja": "フータ|博物館設営前に話した？",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:Prologue4RcmNoShop": {
+    "name_ja": "まめきち|商店設営前に話した？",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:PrologueNpcHintCount": {
+    "name_ja": "NPCの序盤ヒントをいくつまで聞いたか",
+    "flow_access": 0,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:RcmDeclinedMarketReq": {
+    "name_ja": "まめきち|商店設置場所決め依頼を断ったことある",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:RcmDeliver_00": {
+    "name_ja": "まめきち|商店建設クエストでかたいもくざいを渡した数",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:RcmShowHardWood": {
+    "name_ja": "まめきち|かたいもくざいを見せた",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:RcmTalked1P1stday": {
+    "name_ja": "まめきち|1Pが初日にテントで会話した？",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:RcmTookReqMarket": {
+    "name_ja": "まめきち|商店設置場所決め依頼された",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:RcoBuildBridgeReserved": {
+    "name_ja": "xたぬきち|今日、橋建設を予約済み",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:RcoBuildSlopeReserved": {
+    "name_ja": "xたぬきち|今日、坂建設を予約済み",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:RcoDeclinedMuseumReq": {
+    "name_ja": "たぬきち|博物館設置場所決め依頼を断ったことある",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:RcoDeleteBridgeSlopeReserved": {
+    "name_ja": "xたぬきち|今日、橋撤去を予約済み",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:RcoDeleteSlopeReserved": {
+    "name_ja": "xたぬきち|今日、坂撤去を予約済み",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:RcoDonateStatus": {
+    "name_ja": "×たぬきち|テント内フロー分岐用 0:DIY～ 1:生き物～ 2:（なし）",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:RcoFenceShoppingExplain": {
+    "name_ja": "たぬきち|柵購入の説明を受けたことがある？",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:RcoFinishAdvice": {
+    "name_ja": "たぬきち|アドバイス終了？",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:RcoFinishMakingAxe": {
+    "name_ja": "たぬきち|チュートリアル斧作り終えた？",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:RcoGotWorkingwear": {
+    "name_ja": "たぬきち|アルバイトの服もらった？",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:RcoHeardAboutMyhome": {
+    "name_ja": "たぬきち|『お家のこと』初めて聞いた？",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:RcoHeardNoticeOfficeBuild": {
+    "name_ja": "たぬきち|案内所建物建築予告聞いた",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:RcoHeardWorkExplain1": {
+    "name_ja": "たぬきち|1つ目の仕事内容聞いた？",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:RcoHeardWorkExplain2": {
+    "name_ja": "たぬきち|2つ目の仕事内容聞いた？",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:RcoHearedWhatShouldIAsk": {
+    "name_ja": "たぬきち|『何聞けばいい？』を聞いた",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:RcoItemFullForTv": {
+    "name_ja": "たぬきち|新築祝いもらう時アイテムいっぱいだった",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:RcoMoveCampSiteReserved": {
+    "name_ja": "たぬきち|キャンプ場の移設を予約している",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:RcoMoveMuseumReserved": {
+    "name_ja": "たぬきち|博物館の移設を予約している",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:RcoMoveNpcHouseFacilityReserved": {
+    "name_ja": "たぬきち|NPC家か施設の移設を予約しているか",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:RcoMoveShopReserved": {
+    "name_ja": "たぬきち|お店の移設を予約している",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:RcoMoveTailorReserved": {
+    "name_ja": "たぬきち|仕立て屋の移設を予約している",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:RcoTalkAboutBuildBridge": {
+    "name_ja": "xたぬきち|橋建設について説明受けた",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:RcoTalkAboutBuildSlope": {
+    "name_ja": "xたぬきち|坂建設について説明受けた",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:RcoTookRequestMuseum": {
+    "name_ja": "たぬきち|博物館テント設置場所決め依頼された",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:ReservedNpcGroupActivityEvening": {
+    "name_ja": "夕方の時間帯にNPCの集団行動が予約されているか",
+    "flow_access": 0,
+    "string_va": [
+     "0x29b10de"
+    ],
+    "referencing_functions": [
+     "0xbe44f0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:ReservedNpcGroupActivityMorning": {
+    "name_ja": "朝の時間帯にNPCの集団行動が予約されているか",
+    "flow_access": 0,
+    "string_va": [
+     "0x29a1a44"
+    ],
+    "referencing_functions": [
+     "0xbe44f0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:ReservedNpcGroupActivityNignt": {
+    "name_ja": "夜の時間帯にNPCの集団行動が予約されているか",
+    "flow_access": 0,
+    "string_va": [
+     "0x2920bfd"
+    ],
+    "referencing_functions": [
+     "0xbe44f0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:ReservedNpcGroupActivityNoon": {
+    "name_ja": "昼の時間帯にNPCの集団行動が予約されているか",
+    "flow_access": 0,
+    "string_va": [
+     "0x294747b"
+    ],
+    "referencing_functions": [
+     "0xbe44f0"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:ScoopSkillupCountToday": {
+    "name_ja": "今日スコップで、スキル経験値を加算した回数",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:SendPuromaidoCount": {
+    "name_ja": "今日プリントしたブロマイドの数",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:StarPieceGrowCount": {
+    "name_ja": "星素材発生カウンタ",
+    "flow_access": 0,
+    "string_va": [
+     "0x2933ca7"
+    ],
+    "referencing_functions": [
+     "0x4ae640",
+     "0x4b25c0",
+     "0x4ba330"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:SysCountOpenedToolManual": {
+    "name_ja": "道具の説明の解禁数カウント",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:SzaFlowerQuestClear": {
+    "name_ja": "しずえ|花を渡すおつかいをクリアした？",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:SzaGotDiyRecipe001": {
+    "name_ja": "しずえ|しずえDIYレシピ1もらった？",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:SzaHeardMuraokoshiExplain": {
+    "name_ja": "しずえ|村おこしのことの説明聞いた？",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:SzaHeardSonkatsuExplain": {
+    "name_ja": "しずえ|村活のことの説明聞いた？",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:SzaHeardTodayIslandEvaluation": {
+    "name_ja": "しずえ|今日の島の評価を聞いた",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:SzaTalkAboutIncreseHousingKit": {
+    "name_ja": "しずえ|島の評判：ハウジングキット含め８軒突破報告を聞いた",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:SzaTalkAboutIncresePopulation": {
+    "name_ja": "しずえ|島の評判：人口8人突破報告を聞いた",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:SzaTalkAboutOfficeService": {
+    "name_ja": "しずえ|案内所で工事ライセンスの説明聞いた？",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:TkkBirthdayLiveFinish": {
+    "name_ja": "とたけけ|バースデーライブが終わって帰る予約",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:TkkBirthdayMessageFlag": {
+    "name_ja": "とたけけ|バースデーメッセージ送った？",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:TodayGrowUp": {
+    "name_ja": "今日成長処理済みか",
+    "flow_access": 0,
+    "string_va": [
+     "0x29211d1"
+    ],
+    "referencing_functions": [
+     "0xf545f0",
+     "0xf60530",
+     "0xfa00d0",
+     "0xfa60c0"
+    ],
+    "day_change": [
+     "0xf545f0",
+     "0xf60530",
+     "0xfa00d0",
+     "0xfa60c0"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:TodayMainGrowUp": {
+    "name_ja": "今日メインプレイヤーとして成長処理済みか",
+    "flow_access": 0,
+    "string_va": [
+     "0x29a74e1"
+    ],
+    "referencing_functions": [
+     "0xf545f0",
+     "0xf91b90"
+    ],
+    "day_change": [
+     "0xf545f0",
+     "0xf91b90"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:ToolAxeSkillExp": {
+    "name_ja": "オノ、スキル経験値",
+    "flow_access": 1,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:ToolAxeSkillLevel": {
+    "name_ja": "オノ、スキルLevel",
+    "flow_access": 1,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:ToolFishingRodSkillExp": {
+    "name_ja": "釣りざお、スキル経験値",
+    "flow_access": 1,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:ToolFishingRodSkillLevel": {
+    "name_ja": "釣りざお、スキルLevel",
+    "flow_access": 1,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:ToolNetSkillExp": {
+    "name_ja": "ムシあみ、スキル経験値",
+    "flow_access": 1,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:ToolNetSkillLevel": {
+    "name_ja": "ムシあみ、スキルLevel",
+    "flow_access": 1,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:ToolScoopSkillExp": {
+    "name_ja": "スコップ、スキル経験値",
+    "flow_access": 1,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:ToolScoopSkillLevel": {
+    "name_ja": "スコップ、スキルLevel",
+    "flow_access": 1,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:ToolSlingshotSkillExp": {
+    "name_ja": "パチンコ、スキル経験値",
+    "flow_access": 1,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:ToolSlingshotSkillLevel": {
+    "name_ja": "パチンコ、スキルLevel",
+    "flow_access": 1,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:ToolWateringSkillExp": {
+    "name_ja": "ジョウロ、スキル経験値",
+    "flow_access": 1,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:ToolWateringSkillLevel": {
+    "name_ja": "ジョウロ、スキルLevel",
+    "flow_access": 1,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:TownNewsHeardEventOpen": {
+    "name_ja": "村内放送|イベント開始時の村内放送を聞いたことがある？",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:TownNewsHeardEventSpaceOpenFlag": {
+    "name_ja": "村内放送|村内放送でイベント広場が完成した告知を聞いた？",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:Ttl1stmet": {
+    "name_ja": "コトブキ|初対面会話済か？",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:TutorialFinishAndPast1day": {
+    "name_ja": "序盤シーケンス終了後１日以上経過",
+    "flow_access": 1,
+    "string_va": [
+     "0x29bd53b"
+    ],
+    "referencing_functions": [
+     "0xd22440",
+     "0xf91b90"
+    ],
+    "day_change": [
+     "0xf91b90"
+    ],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:UncollectedTreasure": {
+    "name_ja": "宝未回収で終了",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:UnlockMyDesignProCategory": {
+    "name_ja": "スマホUI|PROデザインのタブカテゴリ解禁",
+    "flow_access": 2,
+    "string_va": [
+     "0x2921868"
+    ],
+    "referencing_functions": [
+     "0x158c240",
+     "0x158c280"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:UseMigrantHousingKit1st": {
+    "name_ja": "移住クエ用ハウジングキットを初めて使用しようとした",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:UsedCoinStone": {
+    "name_ja": "コイン岩を使ったか",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:VisitMysteryTourID11": {
+    "name_ja": "ID: 11のミステリーツアー島にその日行ったことがある",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:VisitMysteryTourID12": {
+    "name_ja": "ID: 12のミステリーツアー島にその日行ったことがある",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:VisitMysteryTourID13": {
+    "name_ja": "ID: 13のミステリーツアー島にその日行ったことがある",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:VisitMysteryTourID14": {
+    "name_ja": "ID: 14のミステリーツアー島にその日行ったことがある",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:VisitMysteryTourID16": {
+    "name_ja": "ID: 16のミステリーツアー島にその日行ったことがある",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:VisitMysteryTourID17": {
+    "name_ja": "ID: 17のミステリーツアー島にその日行ったことがある",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:VisitMysteryTourID19": {
+    "name_ja": "ID: 19のミステリーツアー島にその日行ったことがある",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:VisitMysteryTourID21": {
+    "name_ja": "ID: 21のミステリーツアー島にその日行ったことがある",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:VisitMysteryTourID24": {
+    "name_ja": "ID: 24のミステリーツアー島にその日行ったことがある",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayer:VisitedCommune": {
+    "name_ja": "コミューン島に上陸したことがある",
+    "flow_access": 2,
+    "string_va": [
+     "0x297c33f"
+    ],
+    "referencing_functions": [
+     "0xfd9d10"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayerTemp:CatchFesGetPoint": {
+    "name_ja": "ムシ取り、つり大会|獲得ポイント",
+    "flow_access": 1,
+    "string_va": [
+     "0x294ff68"
+    ],
+    "referencing_functions": [
+     "0xe5390",
+     "0xe6cb0",
+     "0xe7f50",
+     "0x101940",
+     "0x2b3c90",
+     "0x329ba0",
+     "0x34a7c0",
+     "0x34ec10",
+     "0x3ce3d0",
+     "0xdb1e20",
+     "0xe46d00",
+     "0xe4ffb0",
+     "0xe5ae70"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayerTemp:CatchFishFesGetNum": {
+    "name_ja": "つり大会|サカナ取得数",
+    "flow_access": 2,
+    "string_va": [
+     "0x295a580"
+    ],
+    "referencing_functions": [
+     "0xe5390",
+     "0xe6cb0",
+     "0xe7f50",
+     "0x101940",
+     "0x2b3c90",
+     "0x329ba0",
+     "0x34a7c0",
+     "0x34ec10",
+     "0x3ce3d0",
+     "0xdb1e20",
+     "0xe46d00",
+     "0xe4ffb0",
+     "0xe5ae70"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayerTemp:CatchInsectFesGetNum": {
+    "name_ja": "ムシ取り大会|ムシ取得数",
+    "flow_access": 2,
+    "string_va": [
+     "0x29640c7"
+    ],
+    "referencing_functions": [
+     "0xe5390",
+     "0xe6cb0",
+     "0xe7f50",
+     "0x101940",
+     "0x2b3c90",
+     "0x329ba0",
+     "0x34a7c0",
+     "0x34ec10",
+     "0x3ce3d0",
+     "0xdb1e20",
+     "0xe46d00",
+     "0xe4ffb0",
+     "0xe5ae70"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayerTemp:ForceToolBreakDemo": {
+    "name_ja": "道具|強制壊れデモ",
+    "flow_access": 1,
+    "string_va": [
+     "0x29ba3de"
+    ],
+    "referencing_functions": [
+     "0xdb01e0",
+     "0xe37ed0",
+     "0xe767b0",
+     "0xe89320"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayerTemp:HghEnterBalloon": {
+    "name_ja": "きぬよ|入店時バルーンを出した",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayerTemp:HghExitBalloon": {
+    "name_ja": "きぬよ|退店時バルーンを出した",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayerTemp:ImmQCompleteCountNow": {
+    "name_ja": "たぬきち|この会話中で何件目の完成通知か？",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayerTemp:OfficeTalkSitDown": {
+    "name_ja": "案内所|会話制御用：座り中？",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayerTemp:PcAvailableDonation4TownOffice": {
+    "name_ja": "役場建設用に寄贈できるものを持っているか？",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayerTemp:PcDonation4TownOfficeChk": {
+    "name_ja": "役場建設用寄贈品の所持状況チェック",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayerTemp:RcmEnterBalloon": {
+    "name_ja": "まめきち|入店時バルーンを出した",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayerTemp:RcmExitBalloon": {
+    "name_ja": "まめきち|退店時バルーンを出した",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayerTemp:RcoHeardKkProjectNow": {
+    "name_ja": "たぬきち|けけプロジェクトの存在をこのシーンで聞いた？",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayerTemp:RctEnterBalloon": {
+    "name_ja": "つぶきち|入店時バルーンを出した",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayerTemp:RctExitBalloon": {
+    "name_ja": "つぶきち|退店時バルーンを出した",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayerTemp:RctTalkSceneFlag": {
+    "name_ja": "つぶきち|このシーンで会話した？",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayerTemp:SkkTalkSceneFlag": {
+    "name_ja": "シャンク|このシーンで会話した？",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayerTemp:SzaCountDownHatColorMatch": {
+    "name_ja": "しずえ|カウントダウンで渡す帽子が服の色にあうか",
+    "flow_access": 1,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayerTemp:TownNewsConnectCount": {
+    "name_ja": "村内放送|村内放送の連結メッセージ表示回数",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayerTemp:TownNewsTopicCount": {
+    "name_ja": "村内放送|村内放送のトピック数",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayerTemp:TreasureQuestPlayerWin": {
+    "name_ja": "宝探しクエストプレイヤー勝利",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayerVisit:DC_BevTalkPoint_BeforeEv": {
+    "name_ja": "うおまさ(DC)|準備中、ポイント交換のお誘い聞いた?",
+    "flow_access": 2,
+    "string_va": [],
+    "referencing_functions": [],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayerVisit:DC_CatchFishFes_Bonus": {
+    "name_ja": "つり大会(DC)｜到達ボーナスある？",
+    "flow_access": 2,
+    "string_va": [
+     "0x29a5c0a"
+    ],
+    "referencing_functions": [
+     "0xe5390",
+     "0xe6cb0",
+     "0xe7f50",
+     "0x101940",
+     "0x2b3c90",
+     "0x329ba0",
+     "0x34a7c0",
+     "0x34ec10",
+     "0x3ce3d0",
+     "0xdb1e20",
+     "0xe46d00",
+     "0xe4ffb0",
+     "0xe5ae70"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayerVisit:DC_CatchFishFes_CooperativeBonus": {
+    "name_ja": "つり大会(DC)｜協力ボーナスある？",
+    "flow_access": 2,
+    "string_va": [
+     "0x295f4c2"
+    ],
+    "referencing_functions": [
+     "0xe5390",
+     "0xe6cb0",
+     "0xe7f50",
+     "0x101940",
+     "0x2b3c90",
+     "0x329ba0",
+     "0x34a7c0",
+     "0x34ec10",
+     "0x3ce3d0",
+     "0xdb1e20",
+     "0xe46d00",
+     "0xe4ffb0",
+     "0xe5ae70"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayerVisit:DC_CatchInsectFes_Bonus": {
+    "name_ja": "ムシとり大会(DC)｜到達ボーナスある？",
+    "flow_access": 2,
+    "string_va": [
+     "0x29915b0"
+    ],
+    "referencing_functions": [
+     "0xe5390",
+     "0xe6cb0",
+     "0xe7f50",
+     "0x101940",
+     "0x2b3c90",
+     "0x329ba0",
+     "0x34a7c0",
+     "0x34ec10",
+     "0x3ce3d0",
+     "0xdb1e20",
+     "0xe46d00",
+     "0xe4ffb0",
+     "0xe5ae70"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   },
+   "cPlayerVisit:DC_CatchInsectFes_CooperativeBonus": {
+    "name_ja": "ムシとり大会(DC)｜協力ボーナスある？",
+    "flow_access": 2,
+    "string_va": [
+     "0x29461ca"
+    ],
+    "referencing_functions": [
+     "0xe5390",
+     "0xe6cb0",
+     "0xe7f50",
+     "0x101940",
+     "0x2b3c90",
+     "0x329ba0",
+     "0x34a7c0",
+     "0x34ec10",
+     "0x3ce3d0",
+     "0xdb1e20",
+     "0xe46d00",
+     "0xe4ffb0",
+     "0xe5ae70"
+    ],
+    "day_change": [],
+    "pseudocode_readings": {}
+   }
+  },
+  "counts": {
+   "flags_without_eventflow_writer": 693,
+   "with_string_reference": 318,
+   "referenced_from_day_change": 98
+  }
+ }
+}

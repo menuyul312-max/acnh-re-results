@@ -22,7 +22,7 @@ Paket hasil reverse engineering Animal Crossing: New Horizons versi 1.0.0 (build
 |---|---|---|
 | Format data (BCSV, BYML, AAMP, SARC, EventFlow) | Lengkap secara struktural: 1.171 berkas, 2.986 entri; nama kolom 1.957/2.048, key BYML 2.979/3.410 | [LAPORAN_AKHIR](acnh-re/LAPORAN_AKHIR.md) |
 | Teks, UI, animasi (RomFS tambahan) | 965.426 pesan dalam 14 bahasa, 523 layout, 2.095 animasi UI, 83 state machine | [ADDITIONAL_ROMFS](acnh-re/docs/ADDITIONAL_ROMFS.md) |
-| Alur cerita/progres | Rantai utama terpetakan dari EventFlow; 693 flag tanpa penulis EventFlow (pemicu native) | [GAMEPLAY_FLOW](acnh-re/docs/GAMEPLAY_FLOW.md) |
+| Alur cerita/progres | Rantai utama terpetakan dari EventFlow; 693 flag tanpa penulis EventFlow, penyelesaian bangunan dan pembuka K.K. dibaca dari pseudocode native (belum dieksekusi) | [GAMEPLAY_FLOW](acnh-re/docs/GAMEPLAY_FLOW.md) |
 | Rumus yang terbukti native | RNG, cuaca hari biasa, kalender dan batas hari 05:00, genetika bunga, pembaca BYML, item 8 byte, resep, flag reset | [CALENDAR_FLOWERS](acnh-re/docs/CALENDAR_FLOWERS.md), [NATIVE_STAGE_WEATHER](acnh-re/docs/NATIVE_STAGE_WEATHER.md) |
 | Tujuh mekanik (collision, gerak, terrain, ground, posisi, NPC/navigasi, item/crafting) | Parsial; helper inti teruji di context rekonstruksi | [FOCUS7_MECHANICS](acnh-re/docs/FOCUS7_MECHANICS.md), frontier JSON |
 | Pembentukan pulau (template, pantai, terrain, PBC) | Parsial; selector, perakitan pantai dan konsumen tinggi PBC teruji | [ISLAND_TEMPLATE_SELECTOR_NATIVE](acnh-re/docs/ISLAND_TEMPLATE_SELECTOR_NATIVE.md) |
@@ -54,7 +54,9 @@ Rincian, cara verifikasi, dan file yang wajib ada: [WORKFLOW §3](acnh-re/docs/W
   - rumus bintang pulau (ambang Nature/Life, syarat ≥8 rumah NPC);
   - syarat konser K.K. (≥3★);
   - rantai toko → quest 3 rumah → Resident Services;
-  - aturan case Bool (98,3% konsisten), dengan 6 uji di `tests/test_gameplay_flow.py`.
+  - aturan case Bool (98,3% konsisten), dengan 7 uji di `tests/test_gameplay_flow.py`;
+  - sisi native pergantian hari (`0xf545f0`): penyelesaian museum, toko, penjahit, campsite, Resident Services, dan pembuka konser K.K. dibaca dari pseudocode lewat rujukan string flag ([native_flag_refs.json](acnh-re/output/gameplay/native_flag_refs.json); 318 dari 693 flag native punya rujukan).
+  - Tiga file Google Drive (4 Nov) sudah diverifikasi identik dengan input RomFS, ExeFS, dan `manifests` yang sudah diproses ([GAMEPLAY_FLOW §13](acnh-re/docs/GAMEPLAY_FLOW.md#13-pemeriksaan-tiga-file-google-drive-4-november-2026)).
 - **Konsumen pantai dan terrain pulau** — [ISLAND_TEMPLATE_SELECTOR_NATIVE](acnh-re/docs/ISLAND_TEMPLATE_SELECTOR_NATIVE.md), [TERRAIN_RUNTIME](acnh-re/docs/TERRAIN_RUNTIME.md):
   - rangkaian `0x4de810→…→0x4e0c90` pada 36 template, 2.592 record tanpa mismatch;
   - selector kandidat bagian pantai;

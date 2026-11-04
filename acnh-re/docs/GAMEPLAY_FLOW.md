@@ -11,6 +11,7 @@ Setiap langkah diberi label bukti:
 | **[EF]** | Terlihat langsung di graf EventFlow: aksi, query, cabang, atau subflow. |
 | **[NATIVE]** | Flag progres ini tidak punya penulis di 456 EventFlow, dan pada umumnya tabelnya menandai `FlagsFlowAccess=EnableReadOnly`. Pemicunya ada di kode native dan belum di-RE. |
 | **[TXT]** | Angka atau keterangan yang hanya ada di teks dialog. |
+| **[PSEUDO]** | Dibaca dari pseudocode otomatis fungsi native yang merujuk string nama flag (`output/gameplay/native_flag_refs.json`). Belum dieksekusi; arti accessor flag `0xf44d90`/`0xf44ad0`/`0xf44e70`/`0xf45380` (get bool/get int/set/increment) disimpulkan dari pemakaiannya. |
 
 Aturan cabang query flag Bool: **case 0 = ON, case 1 = OFF**. Buktinya ada dua contoh langsung (`Tutorials_Prologue_Rco` event 9 dan `SNPC_rco_01_Tent_1_Entries` event 17). Uji statistik di `output/gameplay/summary.json` juga mendukungnya: 466 dari 474 penulisan flag yang dijaga flag yang sama konsisten (98,3%).
 
@@ -50,7 +51,23 @@ Villager biasa (`NNPC_*`) dibagi menurut 8 kode kepribadian: AN, BO, FU, GE, HA,
    - `FirstCamperCheck`;
    - `ChkwithIslandEvaluation`: rating pulau, penghitung lily, peluang jamur, peluang kontrak rumah NPC;
    - `BuildMoveEndChk`.
-5. **[EF]** Pengumuman pagi `Demo_PublicAnnouncement:Root` menjalankan `Demo_PublicAnnouncement_Process`:
+5. **[PSEUDO]** Sisi native pergantian hari dipegang `0xf545f0` (dipanggil dari `0xf53a70`). Menurut `index.sqlite` `direct_calls`, prosesor fasilitasnya dipanggil berurutan:
+
+   | Urutan | Fungsi | Peran |
+   |---|---|---|
+   | 1 | `0xfc4560` | toko; juga memanggil `0xfcc300` (penjahit) |
+   | 2 | `0xf77050` | museum |
+   | 3–4 | `0xf8f190`, `0xf7d4c0` | belum dibaca |
+   | 5 | `0xf26330` | campsite |
+   | 6 | `0xf6a730` | merujuk `MarketBuilt` |
+   | 7 | `0xfd8920` | pembuka konser K.K. |
+   | 8 | `0xfc1b80` | belum dibaca |
+   | 9 | `0x10c26e0` | struktur; memanggil `0x10c2ad0` (Resident Services) |
+
+   Semua prosesor menerima jumlah hari yang lewat sejak pergantian hari terakhir. Sebelum itu, `0xf46200` (pembaca kebijakan reset flag) juga dipanggil.
+
+   Pola umumnya: bangunan naik satu state bila struktur kit-nya sudah terpasang. Flag `...Today` hanya menyala bila tepat satu hari berlalu.
+6. **[EF]** Pengumuman pagi `Demo_PublicAnnouncement:Root` menjalankan `Demo_PublicAnnouncement_Process`:
    - `Process_Daily`: sekali per hari per pemain, dijaga `PAnnouceProcessDoneToday`;
    - `Process_Anytime`;
    - `Process_Only_PAnnounce`.
@@ -101,9 +118,13 @@ Villager biasa (`NNPC_*`) dibagi menurut 8 kode kepribadian: AN, BO, FU, GE, HA,
 
 1. **[EF]** Biaya pindah: `RcoTentAboutMyhome` mensyaratkan `HasLifeSupportPoint Point=5000`, yaitu saldo Nook Miles 5.000. Setelah itu `RcoPaid1stCharge` ON dan pencapaian `PayImmigrationCost` +1.
 2. **[EF]** Donasi makhluk ke Tom Nook (`RcoTentFishInsect`): batasnya `MuseumDonationNumCheck Border=5`, lalu `RcoTentDonation` dan `SNPC_rco_51_DonationReward`. App ensiklopedia terbuka lewat `SNPC_rco_52_DonationRewardEntries` (`MainmenuEncyclopedia`).
-3. **[EF]** Pemain memasang kit tenda Blathers (`Player_Demo_HousingFinish:HousingFinish_OwlTent_Built` → `DecidedMuseumTentPlace`). **[NATIVE]** Tenda baru berdiri lewat `MuseumBuilt` dan `MuseumTentBuiltToday`.
+3. **[EF]** Pemain memasang kit tenda Blathers (`Player_Demo_HousingFinish:HousingFinish_OwlTent_Built` → `DecidedMuseumTentPlace`). **[PSEUDO]** Pada pergantian hari berikutnya, `0xf77050` state 1 memeriksa struktur jenis 2. Bila ada → state 2, `MuseumBuilt` ON, dan `MuseumTentBuiltToday` ON.
 4. **[EF]** Di tenda, Blathers menghitung donasi sampai `MuseumDonationNumCheck Border=20`. Penghitung sisa `DonationAmountForMuseum` (maks 15) berkurang 1 setiap donasi. Setelah tercapai, `MuseumGrowupEnable1` ON.
-5. **[NATIVE]** Pembangunan gedung museum: `MuseumConstruction1` → `Museum2Built`.
+5. **[PSEUDO]** Pembangunan gedung museum (`0xf77050` state 2):
+   - pada pergantian hari setelah `MuseumGrowupEnable1` ON, flag itu dimatikan dan `MuseumConstruction1` mulai dihitung (nilai 1 → `MuseumConstructionToday`);
+   - bila `MuseumConstruction1` + hari ≥2 → state 3, `Museum2Built` ON, `Museum2BuiltToday` ON.
+
+   Jadi gedung selesai dua pergantian hari setelah donasi ke-20, atau lebih cepat bila ada hari yang terlewat.
 6. **[EF]** `Demo_PublicAnnouncement_Process:MuseumGrouUpChk` membuka penjualan resep shovel dan vaulting pole di toko (`MarketSellRecipeScoopStick`).
 
 ## 4. Rumah dan pinjaman
@@ -124,15 +145,15 @@ Villager biasa (`NNPC_*`) dibagi menurut 8 kode kepribadian: AN, BO, FU, GE, HA,
 
    Dialognya diawali "Congratulations on your new home!", lalu `RcmTookQuestReq` ON.
 2. **[EF]** `SNPC_rcm_21`–`24` memeriksa 30 `wood` (2768), 30 `softwood` (2767), 30 `hardwood` (2769), dan 30 `iron nugget` (2511). Flag `RcmShopMaterial_*` menjadi ON satu per satu, lalu `RcmShopMaterialComplete` dan pemain menerima kit toko.
-3. **[EF]** Kit dipasang (`Prologue4BuiltShop`). Timmy berkata "open by tomorrow". **[NATIVE]** Toko berdiri lewat `MarketConstruction1` → `MarketBuilt` → `MarketOpen1stDay1`.
+3. **[EF]** Kit dipasang (`Prologue4BuiltShop`). Timmy berkata "open by tomorrow". **[PSEUDO]** Pada pergantian hari berikutnya, `0xfc4560` state 1 memeriksa struktur jenis 0. Bila ada → state 2, `MarketBuilt` ON, dan `MarketOpen1stDay1` ON.
 4. **[EF]** Pada pagi toko pertama kali buka, `Demo_PublicAnnouncement_21_CmnEvChk:ChkMarket` men-set result 13=1. Akibatnya `Demo_PublicAnnouncement_00_Cmn` memanggil `TownNews_Rco_HouseBuild`, yang menyalakan **`RcmImmQuestOpen`**: quest 3 rumah dibuka pada hari Nook's Cranny dibuka.
-5. **[EF]** Upgrade kedua toko: `ShopLevel=2` → `Market2Built`. **[NATIVE]** Syarat `MarketRemodelingFlag2` dan `MarketConstruction2`.
+5. **[EF]** Upgrade kedua toko: `ShopLevel=2` → `Market2Built`. **[PSEUDO]** Di `0xfc4560` state 2, `MarketRemodelingFlag2` diputuskan dengan syarat `CountMarket1AfterBuild > 30` dan sebuah nilai ≥200.000 (`(x>>6) > 0xc34`) yang belum teridentifikasi. Setelah itu `MarketConstruction2` + hari ≥2 → state 3 dan `MarketOpen1stDay2`.
 
 ## 6. Able Sisters
 
 1. **[EF]** Mabel datang sebagai pedagang keliling (`SNPC_hgh_00_Peddler`). `CountTailorBuild` bertambah 1 pada jalur kunjungan.
 2. **[EF]** `Demo_PublicAnnouncement_Process:EnableTailorBuild`: bila `CountTailorBuild` diuji terhadap batas 3, `MakeVillagePlayerFlag` ON, dan `KinuyoTalkBoforeFlag` ON, maka `EnableTailorBuild` ON.
-3. **[EF]** Mabel memberi kit (`TailorGetHousingkit`), lalu kit dipasang (`TailorReserved`). **[NATIVE]** Toko berdiri lewat `TailorConstruction1` → `TailorBuilt`.
+3. **[EF]** Mabel memberi kit (`TailorGetHousingkit`), lalu kit dipasang (`TailorReserved`). **[PSEUDO]** `0xfcc300` state 1: struktur jenis 5 ada → `TailorConstruction1` dihitung; bila penghitung + hari ≥2 → state 2, `TailorBuilt` ON, `TailorBuiltToday` ON. Jadi toko jadi dua pergantian hari setelah kit dipasang.
 
 ## 7. Quest 3 rumah villager baru
 
@@ -148,14 +169,14 @@ Villager biasa (`NNPC_*`) dibagi menurut 8 kode kepribadian: AN, BO, FU, GE, HA,
 
 1. **[EF]** `Enable_BuildOfficeIntroduction`: bila `RcmImmQuestComplete` ON dan `NpcHouseNum cConstructed ≥5`, maka `RcoNoticeBuildInfomationOffice` ON.
 2. **[EF]** `ChkOfficeNews` men-set result 13=3, lalu pengumuman `TownNews_Rco_OfficeRenual` menyalakan `EnableBuildTownOffice`.
-3. **[NATIVE]** Pembangunan: `OfficeConstruction1` → `BuiltTownOffice` dan `BuiltTownOfficeToday`.
+3. **[PSEUDO]** `0x10c2ad0` (dari `0x10c26e0`): selama `BuiltTownOffice` OFF, `OfficeConstruction1` menjumlahkan hari yang lewat. Bila struktur jenis 1 ada → `BuiltTownOffice` ON, `BuiltTownOfficeToday` ON, **`GlobalEventReady` ON**, dan **`EventPlazaBuilt` ON**. Jadi event kalender global dan plaza baru aktif sejak Resident Services selesai. Pergantian struktur tenda menjadi gedung terjadi di fungsi lain yang belum dibaca.
 4. **[EF]** Pada hari gedung selesai, `TownNews_Rco_OfficeOpen` memperkenalkan Isabelle; itu siaran terakhir Tom Nook. Sesudahnya `Demo_PublicAnnouncement:Root` memanggil `PAnnounceSza`, karena `BuiltTownOffice` ON dan bukan hari pertama. Musik 24 jam juga berganti (`BGMChangeCheck`).
 5. **[EF]** Upacara peresmian ada di `SNPC_rco_05_ChkCeremony`, dengan stage `cMainFieldCeremonyMarket/Museum/Office/Tailor/CampSite/Bridge/Slope`.
 
 ## 9. Pengembangan pulau
 
 1. **[EF]** `SNPC_rco_01_Office_1_Entries:OfficeOpening*` menyalakan `IslandDevQuestRunning`.
-2. **[EF]** Campsite (`SNPC_rco_54_IslandDevelopment:CampSiteRequest`): resep `campsite construction kit` (5166) diberikan, lalu kit dipasang (`RcoBuildCampsiteComplete`). **[NATIVE]** Campsite berdiri lewat `CampSiteBuilt`.
+2. **[EF]** Campsite (`SNPC_rco_54_IslandDevelopment:CampSiteRequest`): resep `campsite construction kit` (5166) diberikan, lalu kit dipasang (`RcoBuildCampsiteComplete`). **[PSEUDO]** Pada pergantian hari berikutnya, `0xf26330` state 1 memeriksa struktur jenis 6. Bila ada → `CampSiteBuilt` ON, `CampSiteBuiltToday` ON, dan `CeremonyBuildCampSite` ON (upacara).
 3. **[EF]** Saat pergantian hari, `FirstCamperCheck` menyalakan `RcoMeetFirstVisitorRequest` dan `CampFirstCamperVisit`. Pemain menemui pengunjung pertama (`NNPC_Spot_Camp:Flow_FirstCamper*`) dan menerima `housing kit` (3349) untuk rumahnya (`RcoBuildFirstVisitorsHousingKitComplete`). Sesudah itu panggilan amiibo ke campsite terbuka (`TanuportAmiiboCampUnlock`).
 4. **[EF]** Bila `NpcHouseNum cConstructed ≥6`, `Root3IslandEvaluation` → `IslandEvaluationStartForce/Running` menyalakan **`IslandEvaluationUnlock`**. Kit rumah tambahan bisa dibeli sejak `FirstCamperHouseComplete` menyalakan `RcoEnableBuyHousingKit`, sampai `NpcHouseNum cExist` 10 (`SNPC_rco_01_Office_1_Entries:ChkGetHousing` memeriksa 7, 8, 9, 10).
 5. **[EF]** Jembatan dan tanjakan dipesan lewat Tom Nook (`SNPC_rco_10_Common_BuildBridgeSlope`) dan diresmikan dengan upacara. Flag `BridgeBuilt` dan `SlopeBuilt` tidak punya penulis di EventFlow **[NATIVE]**.
@@ -188,10 +209,10 @@ Cara skor Nature dan Life dihitung ada di query native dan belum di-RE.
 Alur menuju konser:
 
 1. **[EF]** `SNPC_sza_50_IslandEvaluation:Sza_Evaluation_CmnImpression`: bila `IslandDevQuestComplete` OFF, result 0 bernilai 2, 3, atau 4 (≥3★), dan pemain adalah perwakilan pulau (`MakeVillagePlayerFlag` ON), Isabelle membacakan komentar dari "K.S.", lalu `ClearTkkFirstLiveScore` dijalankan. Akibatnya `IslandEvaluationClearTkkLive` ON, `IslandDevQuestRunning` OFF, dan `IslandDevQuestComplete` ON.
-2. **[NATIVE]** `TkkFirstLiveEnable` (EnableReadOnly).
+2. **[PSEUDO]** `TkkFirstLiveEnable` (EnableReadOnly) ditulis `0xfd8920`: pada pergantian hari, bila `IslandEvaluationClearTkkLive` ON, maka `TkkFirstLiveEnable` ON. Jadi konser terbuka pada pergantian hari setelah penilaian ≥3★ oleh Isabelle, lalu dijadwalkan lewat pengumuman pagi (langkah 3).
 3. **[EF]** Pada pengumuman pagi, bila `TkkFirstLiveEnable` ON, pemain adalah perwakilan pulau, dan `EventBranch AddDay=0` bernilai case 0, `Demo_PublicAnnouncement:Root_Init` menyalakan `TkkFirstLiveReserved` dan `TkkFirstLiveSubPlayer`, lalu membatalkan pengunjung hari itu (`CancelTodayVisitorNpc`). Isabelle mengumumkan konser (`Demo_PublicAnnouncement_13_Sza_Once:TownNews_KK1stLive`). Sesudah pengumuman, `PAnnounceSza` memindahkan stage ke **`cMainFieldFirstLive`** (stage `MainFieldDemoFirstLive`).
 
-   Catatan: `ClearTkkFirstLiveScore` sudah memeriksa `EventBranch AddDay=1` sebelum menyalakan flag. Kapan tepatnya `TkkFirstLiveEnable` menjadi ON ditentukan kode native.
+   Catatan: `ClearTkkFirstLiveScore` sudah memeriksa `EventBranch AddDay=1` (kemungkinan bentrok event besok) sebelum menyalakan flag.
 4. **[EF]** Konser `SNPC_tkk_Live` menyalakan `TkkFirstLiveJoined`, menambah `TotakekeLiveCount` dan pencapaian `GotoTotakekeShow`, lalu menyalakan `StandByRcoVisitMyHomeAfterTkkFirstLive`.
 5. **Staff roll:** layout `StaffCredit*` dan teks `STR_StaffList` ada di data. **[NATIVE]** Tidak ada aksi EventFlow yang memanggilnya, jadi pemicunya ada di stage atau kode native.
 6. **[EF]** Sesudah konser, Tom Nook datang ke rumah (`SNPC_rco_55_TkkFirstLive:InvitePlayerHouse`). Pemain menerima lagu `Welcome Horizons` (4318) dan app **Island Designer** (`MainmenuConstructLicense`, `UIMenuDeviceAppear cConstructLicense`).
@@ -220,12 +241,23 @@ Inilah ujung alur cerita utama di data. Sesudahnya tidak ada flag progres baru y
 
 ## 12. Yang belum bisa dibuktikan dari data
 
-- **693 flag tanpa penulis EventFlow.** Daftar lengkapnya dengan filter `writer_status` di `flag_index.json`. Flag progres penting di antaranya:
-  - selesainya pembangunan: `MuseumBuilt`, `Museum2Built`, `MarketBuilt`, `TailorBuilt`, `BuiltTownOffice`, `CampSiteBuilt`;
-  - `TkkFirstLive`, `TkkFirstLiveEnable`, `ImmQ_*_Complete`, `ImmQ_*_Invited`, `BridgeBuilt`, `SlopeBuilt`.
+- **693 flag tanpa penulis EventFlow.** Daftar lengkapnya ada di `native_flag_refs.json`:
+  - 318 punya rujukan string ke fungsi native;
+  - 98 dirujuk dari prosesor pergantian hari;
+  - penyelesaian bangunan (museum, toko, penjahit, campsite, Resident Services) dan pembuka konser K.K. sudah dibaca **[PSEUDO]** di atas;
+  - yang belum dibaca: `TkkFirstLive` (`0xf0330`, `0xf11b0`), `ImmQ_*_Complete` (`0xfd9d10`), `ImmQ_*_Invited` (tanpa rujukan string), `BridgeBuilt`/`SlopeBuilt` (hanya dibaca `0x10c26e0`), serta prosesor `0xf8f190`, `0xf7d4c0`, `0xfc1b80`.
+- **Bacaan [PSEUDO] perlu dieksekusi native.** Uji emulasi seperti tahap-tahap mekanik sebelumnya dibutuhkan untuk menaikkan statusnya menjadi terbukti. Arti "struktur jenis 0/1/2/5/6" diambil dari argumen `0x1071bd0`/`0x1106cb0` dan konteks flag; enum aslinya belum dipetakan.
 - **Query native yang angkanya dipakai tetapi caranya belum di-RE:** `VillageScoreCheckNatural/Life` (cara skor dihitung), `NpcHouseNum`, `MuseumDonationNumCheck`, `IsSettlerQuestOutsideComplete`, `EventBranch`, `FacilityOpenPastDays`, serta aksi `DecideSettlerNpc` dan `CompleteSettlerQuestSubject`.
 - **Pemilih obrolan oleh AI NPC.** Flow `AI_NPC_*` memilih obrolan lewat `SetNpcSpeakFlow`, `NpcChangeConversationPretenseState`, dan state AI. Kapan state itu dievaluasi (jadwal, jarak, giliran bicara) ditentukan kode native.
 - **Staff roll, perpindahan stage setelah demo, dan penyelesaian konstruksi di pagi hari** berjalan di luar EventFlow.
 - **Batas walker:** subflow tidak di-inline, dan cabang `SubflowResultChoice` tidak dihitung sebagai syarat. Rantai lewat result (contohnya result 13 pada pengumuman pagi) dibaca manual dari pohon flow di atas.
 
-Status dump dan katalog dari tiga link Google Drive: belum bisa diunduh di sesi ini (host `drive.google.com` diblokir kebijakan jaringan). Setelah tersedia, dump itu akan dipakai untuk menutup celah di bagian ini, misalnya dengan memeriksa data stage, AI, dan aset yang belum ada di paket sekarang.
+## 13. Pemeriksaan tiga file Google Drive (4 November 2026)
+
+| File | SHA-256 | Hasil |
+|---|---|---|
+| `EventFlow.zip` (222.595.626 byte) | `43a2fd43…0b38c68` | 25.597 path dan ukuran identik dengan RomFS tambahan yang sudah diproses (`additional_romfs/archive_inventory.json`); 1.171 berkas B_data cocok hash dengan manifest baseline |
+| `extracted_exefs.zip` (24.706.219 byte) | `e45f92d8…6866452` | `main`, `sdk`, `subsdk0`, `rtld` identik dengan ExeFS tambahan; `main.npdm` identik dengan NPDM `uploaded` di `native_modules/npdm_comparison.json` |
+| `manifests.zip` (134.055.965 byte) | `8995d65b…e263f3a` | Sama dengan `acnh_manifests_drive.zip` yang sudah diaudit untuk PBC (`ui_island/manifests_pbc_audit.json`). Berisi decode pihak ketiga (bcsv, byml, evfl, static_param, collision, phive, matanim), 66 `bfres`/15 `glb` model, katalog aset, dan `data/exefs/main.strings.txt`; dipakai di sini untuk silang string flag |
+
+Tidak ada EventFlow, tabel, atau pesan baru di ketiga file ini. Decode pihak ketiga di `manifests.zip` memuat jumlah yang sama: 456 EventFlow dan 164 BCSV. Sumber alur gameplay tetap sama, sehingga bagian 0–11 tidak berubah karena file tersebut. Model 3D di `manifests.zip` hanya sebagian (66 `bfres`), dan audio (`Sound/Resource`) tetap tidak ada.
