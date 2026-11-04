@@ -13,11 +13,11 @@ Baca file ini dulu; tidak perlu membaca seluruh repo. Antrian kerja yang bisa di
 | Jadwal pengunjung mingguan | Terbaca utuh: pembuat `0xfd8a80`, penempatan, validasi harian `0xfd9620`, layout member, kode 0–9 | GAMEPLAY_SCENARIO §3; `native_flag_refs.json` → `data.visitor_schedule` |
 | Pemilihan penghuni plot | Terbaca: filter kepribadian [0,5,4] dan pemilih acak dengan bitset eksklusi | GAMEPLAY_SCENARIO §5 |
 | Pindah keluar dan pengisian slot villager | Terbaca: undian harian, bobot keakraban, pengecualian, peluang pindah masuk, pilihan kepribadian | GAMEPLAY_SCENARIO §5.1–5.2; `native_flag_refs.json` → `data.villager_moves` |
-| Verifikasi native | 11 kasus lulus: keakraban, bobot/denda skor, harga lobak (3000 minggu), NormalLive, Daisy Mae, kode pengunjung, peluang tamu campsite, konstruksi Able Sisters, tenda museum, campsite | GAMEPLAY_SCENARIO §1 "Bacaan yang sudah terbukti native" |
-| Layout save | Terbukti native: 88 member teratas dengan offset node/data dan ukuran | GAMEPLAY_SCENARIO §1; `output/gameplay/save_layout.json` |
+| Verifikasi native | 11 kasus native lulus; suite gameplay berjalan 21/21 tanpa skip dengan Unicorn/Capstone lokal dan ExeFS `main` | GAMEPLAY_SCENARIO §1 "Bacaan yang sudah terbukti native"; `tests/test_gameplay_flow.py` |
+| Layout save | Terbukti native: 88 member terpilih; sensus 43.292 node, 151 vtable, 76 ukuran. Nama semantik kelas belum diketahui | GAMEPLAY_SCENARIO §1; `output/gameplay/save_layout.json` |
 | Rumus skor pulau | Terbaca: 11 kategori item, bobot Natural/Life, bonus harga/jembatan/fasilitas, poin minus | GAMEPLAY_FLOW §10.1; `native_flag_refs.json` → `data.island_score` |
 | Tanggal konser K.K. | Terbaca: NormalLive = Sabtu (geser sesuai `TkkSkipNormal`), BirthdayLive dari jadwal ulang tahun per pemain | GAMEPLAY_SCENARIO §3.6 |
-| Lobak dan stok toko | Terbaca: generator harga 4 pola, tabel transisi; pool stok per toko (`ItemKind` × `ItemFrom` × musim) | GAMEPLAY_SCENARIO §3.7 |
+| Lobak dan stok toko | Terbaca: generator harga 4 pola dan tabel transisi; dispatch stok Nook berdasarkan state serta 9 kategori dasar katalog. Filter sumber/eligibilitas per ambilan dan pembaca harga dasar masih terbuka | GAMEPLAY_SCENARIO §3.7; `re_queue.json` |
 | Mekanik (collision, terrain, NPC nav, …) dan pembentukan pulau | Dikerjakan agen lain; jangan disentuh tanpa koordinasi | README root "Fokus terbaru" |
 
 Level bukti: **[EF]** EventFlow, **[TBL]** tabel, **[PSEUDO]** pseudocode/disassembly yang belum dieksekusi, **[NATIVE]** belum dibaca, ditambah "terbukti native" untuk hasil emulasi. Jangan menaikkan status tanpa bukti.
@@ -33,7 +33,7 @@ Level bukti: **[EF]** EventFlow, **[TBL]** tabel, **[PSEUDO]** pseudocode/disass
    Alternatifnya, ekstrak ke folder lain dan pakai `--output-root <folder>/acnh-re/output` di setiap tool.
 2. Untuk `rodata` dan `disasm`, letakkan ExeFS `main` (NSO0) di `acnh-re/inputs/additional_exefs/main`. Folder ini di-ignore git. Sumbernya file `extracted_exefs.zip` milik pemilik repo, `main` SHA-256 `f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900`; minta ke pemilik repo, jangan di-commit.
 3. Pasang `capstone` lewat `pip install -r acnh-re/requirements-native.txt`, atau `pip install capstone` saja untuk `disasm`.
-4. Cek: `python3 -m unittest discover -s acnh-re/tests -p 'test_gameplay_flow.py'`. Dengan data terekstrak dan `main` di tempatnya, hasilnya 21 OK. Tanpa `main`, 10 tes di-skip; emulasi butuh `pip install unicorn numpy`.
+4. Cek: `python3 -m unittest discover -s acnh-re/tests -p 'test_gameplay_flow.py'`. Dengan data terekstrak, `main`, Unicorn, Capstone, dan NumPy tersedia, suite saat ini lulus 21/21 tanpa skip. Tanpa `main`, tes yang membaca instruksi native akan di-skip.
 
 ## Alat yang dipakai
 
@@ -91,3 +91,4 @@ Level bukti: **[EF]** EventFlow, **[TBL]** tabel, **[PSEUDO]** pseudocode/disass
 | 2026-11-04 | Verifikasi native 8 bacaan lewat emulasi (`gameplay_native.py`) | `a48fa4d` |
 | 2026-11-04 | Sisa kecil: RNG thread, level rumah, posisi plaza, penulis `AbandonedHouse`, jalur pindah masuk, kategori 10, bungkus item, mode sesi, tanggal ulang tahun, stok toko, harga jual, `EarlyOrLate`, botol pesan, layout pemain | `a607f18` |
 | 2026-11-04 | Verifikasi native prosesor fasilitas (`0xfcc300`, `0xf77050` tenda, `0xf26330`) | `5a1d474` |
+| 2026-11-04 | Pemetaan katalog Nook (state → filter, 64 slot, kategori dasar), sensus semua 151 vtable save, batas bukti sel pantai dan `+0x20d310`, pemeriksaan caller reset `AbandonedHouse`; suite 21/21 | lokal, belum dipush |

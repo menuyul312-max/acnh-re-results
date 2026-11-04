@@ -6,6 +6,7 @@ in the docs (`F_ee9350(&x, base + OFF)`) are node offsets in the layout object, 
 Usage: python3 tools/save_layout_native.py [--output-root DIR] [--max-depth 2]  (deeper levels: ~43k nodes)
 """
 import argparse
+from collections import defaultdict
 import json
 from pathlib import Path
 import sys
@@ -79,13 +80,25 @@ def main():
     ap.add_argument('--output-root', default=str(Path(__file__).resolve().parent.parent/'output'))
     ap.add_argument('--max-depth', type=int, default=2)
     a = ap.parse_args()
-    rows, unknown = build(a.max_depth)
+    full_rows, unknown = build(100)
+    rows = [r for r in full_rows if int(r['depth']) <= a.max_depth or 'name' in r]
+    by_type = defaultdict(list)
+    for row in full_rows:
+        by_type[row['type']].append(row)
+    type_census = []
+    for vt, instances in sorted(by_type.items(), key=lambda pair: int(pair[0], 16)):
+        first = instances[0]
+        type_census.append({'vtable': vt, 'size': first['size'], 'instances': len(instances),
+                            'sample_node': first['node'], 'sample_data': first['data'],
+                            'known_member_examples': sorted({r['name'] for r in instances if 'name' in r})})
     player, unknown_p = build(1, PLAYER_CONSTRUCTOR, PLAYER_KNOWN)
     unknown.update(unknown_p)
     doc = {'meta': {'source': f'emulated 0xf32fa0 from ExeFS main sha256 {NSO_SHA256}', 'evidence': 'terbukti native (emulation)',
                     'max_depth': a.max_depth, 'unhandled_imports': unknown,
-                    'fields': 'node = offset of the accessor node in the layout object (base + OFF in pseudocode); data = offset in save data; size from vtable slot 3; type = vtable VA'},
+                    'fields': 'node = offset of the accessor node in the layout object (base + OFF in pseudocode); data = offset in save data; size from vtable slot 3; type = vtable VA',
+                    'type_census': f'{len(type_census)} unique vtable VAs across the full tree; instances and size signatures are recorded below, but native class names were not recovered'},
            'members': rows,
+           'type_census': type_census,
            'player_record': {'constructor': hex(PLAYER_CONSTRUCTOR), 'note': 'node/data offsets inside one player record; depth <= 1 plus named nodes', 'members': player}}
     path = Path(a.output_root)/'gameplay'/'save_layout.json'
     path.parent.mkdir(parents=True, exist_ok=True)

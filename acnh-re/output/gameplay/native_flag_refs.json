@@ -93,7 +93,8 @@
      "role": "daily field items: star pieces, money rock, message bottle (from driver)",
      "reading": [
       "per player PrayStarToday -> StarPieceGrowCount; PrayStarToday and VisitorPrayStarToday reset",
-      "OccurrenceCoinStone (money rock) placement over the 0x8000-cell field item grid; MessageBottleAvailable / IsGetMessageBottle / PickedUpMessageBottle; PcMaingameStart gate"
+      "OccurrenceCoinStone (money rock) placement and MessageBottleAvailable / IsGetMessageBottle / PickedUpMessageBottle operate over a 0x8000-cell field item grid; selected cells use generic field query 0x4ad1f0",
+      "decomp does not establish a fixed beach coordinate or beach-specific cell mask; PcMaingameStart gate"
      ]
     }
    },
@@ -1055,7 +1056,15 @@
    "0xfd0630": {
     "role": "Nook's Cranny stock (calls 0xfce9e0, 0xfceb90, 0xfcf660)",
     "reading": [
-     "ItemKind Ftr/DoorDeco/Tambourine x ItemFrom ShopDefault, ShopMiscGoods, ShopLv1, ShopLargeGoods, ShopHighClass, ShopSeasonSale, ShopUmbrellaLv1/2, ShopWrappingPaper; pools depend on shop state (0xfc4e30)"
+     "shop state <2 -> 0xfce9e0, state 2 -> 0xfceb90, state 3 -> 0xfcf660",
+     "candidate ItemFrom tags seen across the three state filters: ShopDefault, ShopMiscGoods, ShopLv1/2, ShopLargeGoods, ShopHighClass, ShopSeasonSale, ShopUmbrellaLv1/2, ShopWrappingPaper; exact inclusion/exclusion per pick remains unresolved"
+    ]
+   },
+   "0xfc6300": {
+    "role": "Nook's Cranny 64-entry catalog buffer",
+    "reading": [
+     "clears 64 slots at shop block +0x2b14; samples ItemKind Ftr (0) x2, Tops (6) x2, Bottoms (9), Cap (12), Accessory (14), Shoes (11), Music (72) x1 each via 0xfc5d60",
+     "0xfc61e0 marks Shop.Catalog.%s for selected IDs; eligibility helper chain 0xfc5fd0/0xfc60b0 still needs full filter semantics"
     ]
    },
    "0xfca870": {
@@ -1110,7 +1119,15 @@
     "role": "daily field items: star pieces, money rock, message bottle (from driver)",
     "reading": [
      "per player PrayStarToday -> StarPieceGrowCount; PrayStarToday and VisitorPrayStarToday reset",
-     "OccurrenceCoinStone (money rock) placement over the 0x8000-cell field item grid; MessageBottleAvailable / IsGetMessageBottle / PickedUpMessageBottle; PcMaingameStart gate"
+     "OccurrenceCoinStone (money rock) placement and MessageBottleAvailable / IsGetMessageBottle / PickedUpMessageBottle operate over a 0x8000-cell field item grid; selected cells use generic field query 0x4ad1f0",
+     "decomp does not establish a fixed beach coordinate or beach-specific cell mask; PcMaingameStart gate"
+    ]
+   },
+   "0xf889e0": {
+    "role": "conditional AbandonedHouse reset (villager move-out state)",
+    "reading": [
+     "iterates 10 villager slots; resets AbandonedHouse and InducementAtMovingDay through shared flag helper when its state predicates match",
+     "direct callers 0xbc0190 and 0xbc0430 have no recovered direct callers; callback context and local-vs-network origin unresolved"
     ]
    },
    "0xd21110": {
@@ -2776,7 +2793,8 @@
       "role": "daily field items: star pieces, money rock, message bottle (from driver)",
       "reading": [
        "per player PrayStarToday -> StarPieceGrowCount; PrayStarToday and VisitorPrayStarToday reset",
-       "OccurrenceCoinStone (money rock) placement over the 0x8000-cell field item grid; MessageBottleAvailable / IsGetMessageBottle / PickedUpMessageBottle; PcMaingameStart gate"
+       "OccurrenceCoinStone (money rock) placement and MessageBottleAvailable / IsGetMessageBottle / PickedUpMessageBottle operate over a 0x8000-cell field item grid; selected cells use generic field query 0x4ad1f0",
+       "decomp does not establish a fixed beach coordinate or beach-specific cell mask; PcMaingameStart gate"
       ]
      }
     }
@@ -3331,7 +3349,8 @@
       "role": "daily field items: star pieces, money rock, message bottle (from driver)",
       "reading": [
        "per player PrayStarToday -> StarPieceGrowCount; PrayStarToday and VisitorPrayStarToday reset",
-       "OccurrenceCoinStone (money rock) placement over the 0x8000-cell field item grid; MessageBottleAvailable / IsGetMessageBottle / PickedUpMessageBottle; PcMaingameStart gate"
+       "OccurrenceCoinStone (money rock) placement and MessageBottleAvailable / IsGetMessageBottle / PickedUpMessageBottle operate over a 0x8000-cell field item grid; selected cells use generic field query 0x4ad1f0",
+       "decomp does not establish a fixed beach coordinate or beach-specific cell mask; PcMaingameStart gate"
       ]
      }
     }
@@ -6362,6 +6381,13 @@
       "reading": [
        "slots present with AbandonedHouse < 2 and MoveInCompletion on"
       ]
+     },
+     "0xf889e0": {
+      "role": "conditional AbandonedHouse reset (villager move-out state)",
+      "reading": [
+       "iterates 10 villager slots; resets AbandonedHouse and InducementAtMovingDay through shared flag helper when its state predicates match",
+       "direct callers 0xbc0190 and 0xbc0430 have no recovered direct callers; callback context and local-vs-network origin unresolved"
+      ]
      }
     }
    },
@@ -8113,7 +8139,8 @@
       "role": "daily field items: star pieces, money rock, message bottle (from driver)",
       "reading": [
        "per player PrayStarToday -> StarPieceGrowCount; PrayStarToday and VisitorPrayStarToday reset",
-       "OccurrenceCoinStone (money rock) placement over the 0x8000-cell field item grid; MessageBottleAvailable / IsGetMessageBottle / PickedUpMessageBottle; PcMaingameStart gate"
+       "OccurrenceCoinStone (money rock) placement and MessageBottleAvailable / IsGetMessageBottle / PickedUpMessageBottle operate over a 0x8000-cell field item grid; selected cells use generic field query 0x4ad1f0",
+       "decomp does not establish a fixed beach coordinate or beach-specific cell mask; PcMaingameStart gate"
       ]
      }
     }
@@ -8423,7 +8450,8 @@
       "role": "daily field items: star pieces, money rock, message bottle (from driver)",
       "reading": [
        "per player PrayStarToday -> StarPieceGrowCount; PrayStarToday and VisitorPrayStarToday reset",
-       "OccurrenceCoinStone (money rock) placement over the 0x8000-cell field item grid; MessageBottleAvailable / IsGetMessageBottle / PickedUpMessageBottle; PcMaingameStart gate"
+       "OccurrenceCoinStone (money rock) placement and MessageBottleAvailable / IsGetMessageBottle / PickedUpMessageBottle operate over a 0x8000-cell field item grid; selected cells use generic field query 0x4ad1f0",
+       "decomp does not establish a fixed beach coordinate or beach-specific cell mask; PcMaingameStart gate"
       ]
      }
     }
@@ -8644,7 +8672,8 @@
       "role": "daily field items: star pieces, money rock, message bottle (from driver)",
       "reading": [
        "per player PrayStarToday -> StarPieceGrowCount; PrayStarToday and VisitorPrayStarToday reset",
-       "OccurrenceCoinStone (money rock) placement over the 0x8000-cell field item grid; MessageBottleAvailable / IsGetMessageBottle / PickedUpMessageBottle; PcMaingameStart gate"
+       "OccurrenceCoinStone (money rock) placement and MessageBottleAvailable / IsGetMessageBottle / PickedUpMessageBottle operate over a 0x8000-cell field item grid; selected cells use generic field query 0x4ad1f0",
+       "decomp does not establish a fixed beach coordinate or beach-specific cell mask; PcMaingameStart gate"
       ]
      }
     }
@@ -8994,7 +9023,8 @@
       "role": "daily field items: star pieces, money rock, message bottle (from driver)",
       "reading": [
        "per player PrayStarToday -> StarPieceGrowCount; PrayStarToday and VisitorPrayStarToday reset",
-       "OccurrenceCoinStone (money rock) placement over the 0x8000-cell field item grid; MessageBottleAvailable / IsGetMessageBottle / PickedUpMessageBottle; PcMaingameStart gate"
+       "OccurrenceCoinStone (money rock) placement and MessageBottleAvailable / IsGetMessageBottle / PickedUpMessageBottle operate over a 0x8000-cell field item grid; selected cells use generic field query 0x4ad1f0",
+       "decomp does not establish a fixed beach coordinate or beach-specific cell mask; PcMaingameStart gate"
       ]
      }
     }

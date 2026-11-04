@@ -14,7 +14,7 @@ Data mesin untuk dokumen ini: [`output/gameplay/native_flag_refs.json`](../outpu
 
 ### Layout save
 
-**Terbukti native (emulasi).** `tools/save_layout_native.py` menjalankan konstruktor layout save `0xf32fa0` langsung dari NSO lewat `tools/nso_sandbox.py`, lalu menulis `output/gameplay/save_layout.json`. JSON itu memuat 88 member: semua member sampai kedalaman 2, plus member yang sudah bernama. Pohon lengkapnya berisi ±43 ribu node.
+**Terbukti native (emulasi).** `tools/save_layout_native.py` menjalankan konstruktor layout save `0xf32fa0` langsung dari NSO lewat `tools/nso_sandbox.py`, lalu menulis `output/gameplay/save_layout.json`. JSON itu memuat 88 member yang dipilih sampai kedalaman 2 atau bernama, serta sensus penuh 43.292 node: 151 alamat vtable unik dan 76 ukuran data. Ukuran setiap tipe terbukti lewat slot vtable 3; nama kelas C++-nya belum ditemukan.
 
 - **Struktur node** (0x38 byte): `+0x00` vtable (tipe), `+0x10` offset data, `+0x18` anak pertama, `+0x20` saudara. Ukuran data dikembalikan oleh slot vtable 3.
 - **Offset `base + OFF`** di pseudocode (`F_ee9350`) adalah offset node (`node`), bukan offset data.
@@ -104,7 +104,7 @@ Kebijakan reset di tabel Land: `None` 200 flag, `Pre` 41 flag, `Plus` 2, `Start`
 | 1 | `0xf56c30`, `0xf56cb0` | set/get `SaveGrowUpRandomFactor` (faktor acak pertumbuhan). Driver lalu men-seed RNG global `0x35e9510` dengan `tahun×365 + bulan + hari + GrowUpRandomFactor + 0x1934` dan membuang 8 angka pertama |
 | 2 | `0xf545f0` | dispatcher fasilitas (§1) dan event global (`0xf6130`) |
 | 3 | `0x6608a0`, `0x660280` | `VillageExtensionLevel2`, `AllowNpcGroupActivity` |
-| 4 | `0x4ae640` | doa bintang (`PrayStarToday` → `StarPieceGrowCount`, lalu reset); batu uang (flag pemain `OccurrenceCoinStone`); botol pesan bila `MessageBottleAvailable`: per pemain tanpa `IsGetMessageBottle`, dan botol pertama (`PickedUpMessageBottle` = 0) berisi item DIY `0x227a` atau `0x1be1` (lempar koin RNG harian `0xf53500`) |
+| 4 | `0x4ae640` | doa bintang (`PrayStarToday` → `StarPieceGrowCount`, lalu reset); batu uang (flag pemain `OccurrenceCoinStone`); botol pesan bila `MessageBottleAvailable`: per pemain tanpa `IsGetMessageBottle`, dan botol pertama (`PickedUpMessageBottle` = 0) berisi item DIY `0x227a` atau `0x1be1` (lempar koin RNG harian `0xf53500`). Pemilihan memakai bitset/kandidat sel bidang 0x8000 dan query penempatan umum `0x4ad1f0`; alamat sel pantai atau mask pantai khusus belum terbukti. |
 | 5 | `0xd21110`, `0xf8ab90`, `0xfbd830` | rumah NPC: `0xd21110` memuat `Param/NpcHouse/<spesies><nn>.byml` untuk villager yang menetap (hanya membaca `AbandonedHouse`); jadwal DIY NPC; sapaan pertama |
 | 6 | `0xf8b460`, `0xf8bf40` | jenis hari. Pada hari biasa dengan `BuiltTownOffice`, `EarlyOrLate` semua villager direset: 2 → 3, selain itu → 0. Lalu dua undian `rand100 < min(10 × villager, 80)`, masing-masing memilih villager berbobot `ContinuousNormalDay` (≥2); pilihan pertama diberi 1, pilihan kedua 2 |
 | 7 | `0xd22440` | NPC untuk Countdown, Fishing Tourney, Bug-Off |
@@ -120,6 +120,8 @@ Dispatcher `0xf545f0` sendiri memanggil, berurutan:
 3. `0xf6130` (event global: `GlobalEventReady` → `GlobalEventAvailable`, tanda turnamen terlewat `InsectFesFinished`/`FishFesFinished`, `TodayGlobalEventId`, jadwal ulang tahun per pemain `0xf920f0`);
 4. `0xfc4560`, `0xf77050`, `0xf7d4c0` (tamu campsite: pasti bila `CampFirstCamperVisit`, selain itu 5/10/15/20% untuk 3/4/5/≥6 hari sejak tamu terakhir), `0xf26330`, `0xf6a730`, `0xfd8920` (K.K., pembuat jadwal pengunjung mingguan `0xfd8a80`, validasi `0xfd9620`; §3), `0xfc1b80` (rumor: `RumorPFavoriteProgressDays` += hari), `0xf8f190` (member `+0x20d310` = 2), `0x10c26e0` (struktur);
 5. `0xf91b90` (hari main, Wisp, `MarketBuiltMyVillage`), `0xf84320` (pindah keluar dan masuk villager, §5.1–5.2), `0xf40e0` (papan event dan ulang tahun).
+
+**Batas bukti member `+0x20d310`:** `0xf8f190` menulis nilai `2` setiap pergantian hari. Pemindaian konstanta di indeks dan bacaan pseudocode saat ini tidak menemukan pembaca. Member tetangga `+0x20d3b8` adalah payload papan pengumuman, tetapi kedekatan offset tidak membuktikan hubungan makna; fungsi `+0x20d310` tetap belum diketahui.
 
 ### 2.2 Jadwal aktif NPC
 
@@ -332,13 +334,15 @@ Konstanta float dibaca dari rodata (`0x29d5e8c` = 0.9, `0x29d5d94` = 1.4, `0x29d
 
 Enum `ItemFrom` ada di rodata `0x29b535d`.
 
+Untuk Nook's Cranny, `0xfd0630` memilih pembuat stok dari state toko: state 0–1 → `0xfce9e0`, state 2 → `0xfceb90`, dan state 3 → `0xfcf660`. Nilai `ItemFrom` yang terlihat pada filter mencakup `ShopDefault`/`ShopMiscGoods` untuk state awal; `ShopLv1`/`ShopLv2` serta filter payung/kertas bungkus pada state 2; dan tambahan `ShopSeasonSale`, `ShopLargeGoods`, serta `ShopHighClass` pada state 3. Ini membuktikan pemisahan berdasarkan state dan tag sumber, tetapi belum mengungkap kelas filter mana yang menjadi syarat wajib atau pengecualian pada setiap ambilan.
+
 | Fungsi | Toko | Pool |
 |---|---|---|
-| `0xfd0630` → `0xfce9e0`, `0xfceb90`, `0xfcf660` | Nook's Cranny | `Ftr`/`DoorDeco`/`Tambourine` × `ShopDefault`, `ShopMiscGoods`, `ShopLv1`, `ShopLargeGoods`, `ShopHighClass`, `ShopSeasonSale`, `ShopUmbrellaLv1/2`, `ShopWrappingPaper`. Pool mengikuti state toko (`0xfc4e30`) |
+| `0xfd0630` → `0xfce9e0`, `0xfceb90`, `0xfcf660` | Nook's Cranny | Pool filter berubah menurut state toko; enum `ItemFrom` yang ditemukan: `ShopDefault`, `ShopMiscGoods`, `ShopLv1/2`, `ShopLargeGoods`, `ShopHighClass`, `ShopSeasonSale`, `ShopUmbrellaLv1/2`, `ShopWrappingPaper` |
 | `0xfc56c0` | Saharah (`LaurentWallFloor`) | 5 slot: `Rug` × `RugL`, `RugM`, `RugS`; `RoomWall` dan `RoomFloor` × `LaurentWallFloor` |
 | `0xfc8760` | Kicks | `ShoesBagShop` × `Shoes`/`Socks`/`Bag`; 32 slot (`+0x00`…`+0xf8`) dikosongkan dulu |
 | `0xfca870` | Able Sisters / Label | `Tailor`, `TailorMarketOnly`, `HgcQuestReward` × `Tops`, `Bottoms`, `OnePiece`, `Cap`, `Helmet`, `Accessory`, `Socks`, `Shoes` (flag `HgcVisitFlagForTailor`) |
-| `0xfc6300` → `0xfc5d60` | belum jelas | `Ftr`/`Helmet`, satu ambilan |
+| `0xfc6300` → `0xfc5d60` | pengisi katalog Nook's Cranny | Mengosongkan 64 slot di blok `+0x2b14`, lalu mengambil 2 `Ftr`, 2 `Tops`, dan masing-masing 1 `Bottoms`, `Cap`, `Accessory`, `Shoes`, `Music`; indeks `ItemKind` = 0, 6, 9, 12, 14, 11, 72. Tiap kandidat melewati filter musim/katalog; aturan tepat pemilihan sumber masih terbuka. |
 
 **Jumlah ambilan Nook's Cranny** (`0xfd0630`, argumen n dari `0xfce170(himpunan, n)`; array stok dikosongkan dulu oleh `0xfcdc10`):
 
@@ -357,13 +361,13 @@ Enum `ItemFrom` ada di rodata `0x29b535d`.
 | `+0x1300` | Kicks (32 × 8) |
 | `+0x1400` | stok Nook's Cranny |
 | `+0x2ad0` | rekaman lobak (`0x44` byte) |
-| `+0x2b14` | daftar 64 item dari `0xfc6300` → `0xfc5d60`; pemiliknya belum bernama |
+| `+0x2b14` | buffer 64 item untuk katalog Nook's Cranny (`0xfc6300` → `0xfc5d60`); helper menandai `Shop.Catalog.%s` setelah kandidat dipilih |
 
 **Harga jual** (`0xaab8c0`):
 - **Lobak:** `rekaman[1 + 2 × hari + (jam > 11)] × ItemParam.Price` (`0xfc7c70`). Karena slot Minggu bernilai 0, lobak tidak bisa dijual hari Minggu.
 - **Item lain:** `Price × tumpukan / 4`.
 
-Pembaca harga dasar `+0x00`, yang kemungkinan harga Daisy Mae, belum ditemukan.
+Pembaca harga dasar `+0x00`, yang diduga menjadi harga beli Daisy Mae, belum terisolasi. `0xfc6d00` menulisnya dan memakai nilai itu untuk membuat 12 harga; `0xfc7c70` memakai harga slot harian untuk harga jual lobak. Rujukan UI `KabuBuyPage` dan `HowmuchBuyItem`/`HowmuchSellKabu` ditemukan, tetapi aliran nilainya menuju harga dasar belum terbukti.
 
 ## 4. Satu tahun
 
@@ -497,7 +501,7 @@ Keduanya mereset penghitung hari ke 0 dan menyalakan `NextMoveOutTalk` serta `Is
   - `0xcc5a40`: nilai 2.
   - `0xf889e0`: reset ke 0.
 
-  Pemanggil yang ditemukan lewat dispatcher pesan `0xc7ea00` (← `0xbcef20` ← … ← `0xb65410` `NetConfig`). Itu tampaknya sinkronisasi multipemain; jalur lokalnya belum ditemukan.
+  `0xf889e0` juga dipanggil oleh `0xbc0190` dan `0xbc0430`; keduanya tidak memiliki caller langsung di indeks dan konteks callback-nya belum teridentifikasi, jadi jalur lokal non-jaringan belum terbukti. Jalur lain yang ditemukan adalah dispatcher `0xc7ea00` (← `0xbcef20` ← … ← `0xb65410` `NetConfig`), yang konsisten dengan sinkronisasi multipemain. Fungsi `0xf855c0` hanya menghitung villager yang menetap dengan membaca `AbandonedHouse` dan `MoveInCompletion`; ia bukan penulis flag.
 
 ## 6. Pengunjung khusus
 

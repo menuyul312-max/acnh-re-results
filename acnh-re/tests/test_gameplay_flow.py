@@ -176,6 +176,10 @@ class SaveLayoutTests(unittest.TestCase):
         self.assertEqual(by['0x0']['size'], '0x4fa0d8')
         self.assertEqual((by['0xa8']['size'], by['0x20a210']['size'], by['0x24fdb0']['size']), ('0x1d6d48', '0x78', '0x250'))
         self.assertEqual(doc['meta']['unhandled_imports'], {})
+        census = doc['type_census']
+        self.assertEqual(len(census), 151)
+        self.assertEqual(sum(t['instances'] for t in census), 43292)
+        self.assertEqual(len({t['size'] for t in census}), 76)
 
 
 class NativeVerificationTests(unittest.TestCase):
