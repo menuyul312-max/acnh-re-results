@@ -76,12 +76,12 @@ Kebijakan reset di tabel Land: `None` 200 flag, `Pre` 41 flag, `Plus` 2, `Start`
 | 1 | `0xf56c30`, `0xf56cb0` | set/get `SaveGrowUpRandomFactor` (faktor acak pertumbuhan). Driver lalu men-seed RNG global `0x35e9510` dengan `tahun×365 + bulan + hari + GrowUpRandomFactor + 0x1934` dan membuang 8 angka pertama |
 | 2 | `0xf545f0` | dispatcher fasilitas (§1) dan event global (`0xf6130`) |
 | 3 | `0x6608a0`, `0x660280` | `VillageExtensionLevel2`, `AllowNpcGroupActivity` |
-| 4 | `0x4ae640` | botol pesan, batu uang, doa bintang, bintang jatuh |
-| 5 | `0xd21110`, `0xf8ab90`, `0xfbd830` | rumah NPC: `MoveInCompletion`, `AbandonedHouse`, jadwal DIY NPC, sapaan pertama |
-| 6 | `0xf8b460`, `0xf8bf40` | jenis hari: event kalender, `ContinuousNormalDay`, `EarlyOrLate` |
+| 4 | `0x4ae640` | botol pesan, batu uang, doa bintang (`PrayStarToday` → `StarPieceGrowCount`), lalu reset doa harian |
+| 5 | `0xd21110`, `0xf8ab90`, `0xfbd830` | rumah NPC: `0xd21110` memuat `Param/NpcHouse/<spesies><nn>.byml` untuk villager yang menetap (hanya membaca `AbandonedHouse`); jadwal DIY NPC; sapaan pertama |
+| 6 | `0xf8b460`, `0xf8bf40` | jenis hari. Pada hari biasa dengan `BuiltTownOffice`: dua undian `rand100 < min(10 × villager, 80)`, masing-masing memilih villager berbobot `ContinuousNormalDay` (≥2) lalu menulis `EarlyOrLate` |
 | 7 | `0xd22440` | NPC untuk Countdown, Fishing Tourney, Bug-Off |
 | 8 | `0xd257d0` | obrolan sapaan villager (`AppFirstTalk`, `AppWelcomeMigrantsTalk`, …) |
-| 9 | `0xbdfd40` | jenis konser K.K. (`NormalLive`/`BirthdayLive`) |
+| 9 | `0xbdfd40` | aktivitas kelompok villager: per pemain, flag `ReservedNpcGroupActivity{Morning,Noon,Evening,Nignt}` diisi acak (25% per slot) dari `NpcLife`/`NpcInterest` sesuai level pulau; dilewati pada hari K.K. atau event |
 | 10 | `0xfd0700` | `DailyQuestFirstFivePointToday` (Nook Miles+ ×5) |
 | 11 | `0xfd9d10`, `0xfda740` | pengunjung khusus (§6) dan posisi spawn pengunjung hari ini (§3) |
 | 12 | `0xf535e0` | `PlayReportDaily` |
@@ -89,8 +89,8 @@ Kebijakan reset di tabel Land: `None` 200 flag, `Pre` 41 flag, `Plus` 2, `Start`
 Dispatcher `0xf545f0` sendiri memanggil, berurutan:
 1. `0xf234f0` (papan pengumuman);
 2. `0x6601a0` (papan toko, Gyroid plaza, `VillageDaysCount`);
-3. `0xf6130` (event global, `GlobalEventAvailable/Ready`);
-4. `0xfc4560`, `0xf77050`, `0xf7d4c0` (campsite pertama), `0xf26330`, `0xf6a730`, `0xfd8920` (K.K., pembuat jadwal pengunjung mingguan `0xfd8a80`, validasi `0xfd9620`; §3), `0xfc1b80` (rumor), `0x10c26e0` (struktur);
+3. `0xf6130` (event global: `GlobalEventReady` → `GlobalEventAvailable`, tanda turnamen terlewat `InsectFesFinished`/`FishFesFinished`, `TodayGlobalEventId`, jadwal ulang tahun per pemain `0xf920f0`);
+4. `0xfc4560`, `0xf77050`, `0xf7d4c0` (tamu campsite: pasti bila `CampFirstCamperVisit`, selain itu 5/10/15/20% untuk 3/4/5/≥6 hari sejak tamu terakhir), `0xf26330`, `0xf6a730`, `0xfd8920` (K.K., pembuat jadwal pengunjung mingguan `0xfd8a80`, validasi `0xfd9620`; §3), `0xfc1b80` (rumor: `RumorPFavoriteProgressDays` += hari), `0xf8f190` (member `+0x20d310` = 2), `0x10c26e0` (struktur);
 5. `0xf91b90` (hari main, Wisp, `MarketBuiltMyVillage`), `0xf84320` (pindah keluar dan masuk villager, §5.1–5.2), `0xf40e0` (papan event dan ulang tahun).
 
 ### 2.2 Jadwal aktif NPC
@@ -483,8 +483,7 @@ Yang masih terbuka dari jadwal ini:
 
 | # | Celah | Titik masuk |
 |---|---|---|
-| 1 | Prosesor yang belum dibaca | `0xf8f190`, `0xf7d4c0`, `0xfc1b80`, `0xbdfd40`, `0xf8b460` (tujuan RNG) |
-| 2 | Menaikkan [PSEUDO] menjadi terbukti | emulasi fungsi fasilitas dan rumus skor pulau seperti tahap mekanik terdahulu |
-| 3 | Format save | konstruktor layout save `0xf32fa0` (pemanggil `0xf30220`, `0xf416c0`) |
+| 1 | Menaikkan [PSEUDO] menjadi terbukti | emulasi fungsi fasilitas dan rumus skor pulau seperti tahap mekanik terdahulu |
+| 2 | Format save | konstruktor layout save `0xf32fa0` (pemanggil `0xf30220`, `0xf416c0`) |
 
 Antrian yang sama, dalam bentuk yang bisa dibaca mesin dan ditandai statusnya, ada di [re_queue.json](re_queue.json).

@@ -89,7 +89,13 @@
      "VisitorPrayStarToday",
      "mSpeedY"
     ],
-    "reading": null
+    "reading": {
+     "role": "daily field items: star pieces, money rock, message bottle (from driver)",
+     "reading": [
+      "per player PrayStarToday -> StarPieceGrowCount; PrayStarToday and VisitorPrayStarToday reset",
+      "OccurrenceCoinStone (money rock) placement over the 0x8000-cell field item grid; MessageBottleAvailable / IsGetMessageBottle / PickedUpMessageBottle; PcMaingameStart gate"
+     ]
+    }
    },
    {
     "function": "0x660280",
@@ -109,7 +115,12 @@
      "NpcHouse",
      "Param/NpcHouse/%s.byml"
     ],
-    "reading": null
+    "reading": {
+     "role": "villager house interiors (also called from 0xbbe5a0, 0xbbf3e0, 0xbc0430)",
+     "reading": [
+      "for each of 10 slots with AbandonedHouse < 2 and MoveInCompletion on: count it (+0x63b0) and load Param/NpcHouse/<species><nn>.byml; reads AbandonedHouse, does not write it"
+     ]
+    }
    },
    {
     "function": "0xf8b460",
@@ -126,10 +137,12 @@
      "PlayerBirthday"
     ],
     "reading": {
-     "role": "day type at day change",
+     "role": "day type and early/late villagers at day change",
      "reading": [
-      "checks calendar events by name in order FishingConvention, InsectConvention, PlayerBirthday, NpcBirthday, Countdown, NewYear",
-      "normal day with BuiltTownOffice on: per-player ContinuousNormalDay/EarlyOrLate counters and RNG rolls 0-99; purpose not yet identified"
+      "checks calendar events by name in order FishingConvention, InsectConvention, PlayerBirthday, NpcBirthday, Countdown, NewYear; any of them -> nothing else",
+      "normal day with BuiltTownOffice on: p = min(10 * villagers present, 80); two rolls r1, r2 = rand100 (day RNG when 0x35ee058 == 1, else TLS RNG)",
+      "each villager: NPC flag ContinuousNormalDay += 1 (0xf49b20); weight = ContinuousNormalDay when >= 2",
+      "r1 < p and r2 < p each pick one villager by cumulative weight; EarlyOrLate (NPC flag) is written for each slot (0xf497c0); exact values per pick not resolved"
      ]
     }
    },
@@ -194,7 +207,14 @@
      "NormalLive",
      "ValidatePlayerSaveFlag"
     ],
-    "reading": null
+    "reading": {
+     "role": "daily villager group activities (from driver 0xf53a70)",
+     "reading": [
+      "skipped on NormalLive/BirthdayLive days and calendar or global event days",
+      "per activity slot: 25 % roll; candidates from NpcLife/NpcInterest rows whose VillageDevelopmentLevel <= the island level (+0x208)",
+      "per player with ValidatePlayerSaveFlag: player flags ReservedNpcGroupActivityMorning/Noon/Evening/Nignt (+2 unused slots, table 0x3567c30) = random candidate or 0"
+     ]
+    }
    },
    {
     "function": "0xd29710",
@@ -329,7 +349,14 @@
      "TodayGlobalEventId",
      "TodayRegionEventId"
     ],
-    "reading": null
+    "reading": {
+     "role": "calendar day change",
+     "reading": [
+      "GlobalEventReady -> GlobalEventAvailable; EventPlazaBuilt -> GlobalEventReady",
+      "skipped days: InsectConvention1-4 date passed -> InsectFesFinished; FishingConventionSpring..Winter -> FishFesFinished; any calendar event -> AnyGlobalEventFinished",
+      "per player 0xf920f0 (birthday event date); TodayGlobalEventId / TodayRegionEventId = UniqueID of today event or 0xffff"
+     ]
+    }
    },
    {
     "function": "0xfc4560",
@@ -381,12 +408,30 @@
     }
    },
    {
+    "function": "0xf8f190",
+    "callers": 1,
+    "strings": [],
+    "reading": {
+     "role": "day-change reset of member +0x20d310",
+     "reading": [
+      "writes u32 2 to save member +0x20d310 (4 bytes, descriptor GOT 0x32ff640) every day change; no other reader found by constant scan"
+     ]
+    }
+   },
+   {
     "function": "0xf7d4c0",
     "callers": 1,
     "strings": [
      "CampFirstCamperVisit"
     ],
-    "reading": null
+    "reading": {
+     "role": "campsite visitor at day change (member +0x20d578, 0x114 bytes)",
+     "reading": [
+      "elapsed days > 0 and no Countdown-type event today (0xf7d5c0): clears an invalid camper id",
+      "new camper when 0xf7d7e0: campsite state (member +0x20d4d0) == 2; CampFirstCamperVisit on -> always; else days since the last camper (date at +0x10c) d: d <= 2 -> no, d = 3/4/5 -> 5/10/15 %, d >= 6 -> 20 % (table 0x29fa1d0, 0.2 at 0x29d6328, day RNG 0xf53490)",
+      "camper picked by 0xd418b0 (excludes villagers on the island), stored with 0xf7d990 (also mirrored into the NPC member via 0xf86300)"
+     ]
+    }
    },
    {
     "function": "0xf26330",
@@ -437,7 +482,12 @@
     "strings": [
      "RumorPFavoriteProgressDays"
     ],
-    "reading": null
+    "reading": {
+     "role": "per-player rumor counter",
+     "reading": [
+      "for players 0..7 present (0xef7530): flag RumorPFavoriteProgressDays += elapsed days (0xf4b680)"
+     ]
+    }
    },
    {
     "function": "0x10c26e0",
@@ -705,10 +755,12 @@
     ]
    },
    "0xf8b460": {
-    "role": "day type at day change",
+    "role": "day type and early/late villagers at day change",
     "reading": [
-     "checks calendar events by name in order FishingConvention, InsectConvention, PlayerBirthday, NpcBirthday, Countdown, NewYear",
-     "normal day with BuiltTownOffice on: per-player ContinuousNormalDay/EarlyOrLate counters and RNG rolls 0-99; purpose not yet identified"
+     "checks calendar events by name in order FishingConvention, InsectConvention, PlayerBirthday, NpcBirthday, Countdown, NewYear; any of them -> nothing else",
+     "normal day with BuiltTownOffice on: p = min(10 * villagers present, 80); two rolls r1, r2 = rand100 (day RNG when 0x35ee058 == 1, else TLS RNG)",
+     "each villager: NPC flag ContinuousNormalDay += 1 (0xf49b20); weight = ContinuousNormalDay when >= 2",
+     "r1 < p and r2 < p each pick one villager by cumulative weight; EarlyOrLate (NPC flag) is written for each slot (0xf497c0); exact values per pick not resolved"
     ]
    },
    "0xfd9d10": {
@@ -1018,6 +1070,55 @@
      "clears 32 slots; ItemFrom ShoesBagShop x ItemKind Shoes, Socks, Bag"
     ]
    },
+   "0xf8f190": {
+    "role": "day-change reset of member +0x20d310",
+    "reading": [
+     "writes u32 2 to save member +0x20d310 (4 bytes, descriptor GOT 0x32ff640) every day change; no other reader found by constant scan"
+    ]
+   },
+   "0xf7d4c0": {
+    "role": "campsite visitor at day change (member +0x20d578, 0x114 bytes)",
+    "reading": [
+     "elapsed days > 0 and no Countdown-type event today (0xf7d5c0): clears an invalid camper id",
+     "new camper when 0xf7d7e0: campsite state (member +0x20d4d0) == 2; CampFirstCamperVisit on -> always; else days since the last camper (date at +0x10c) d: d <= 2 -> no, d = 3/4/5 -> 5/10/15 %, d >= 6 -> 20 % (table 0x29fa1d0, 0.2 at 0x29d6328, day RNG 0xf53490)",
+     "camper picked by 0xd418b0 (excludes villagers on the island), stored with 0xf7d990 (also mirrored into the NPC member via 0xf86300)"
+    ]
+   },
+   "0xfc1b80": {
+    "role": "per-player rumor counter",
+    "reading": [
+     "for players 0..7 present (0xef7530): flag RumorPFavoriteProgressDays += elapsed days (0xf4b680)"
+    ]
+   },
+   "0xbdfd40": {
+    "role": "daily villager group activities (from driver 0xf53a70)",
+    "reading": [
+     "skipped on NormalLive/BirthdayLive days and calendar or global event days",
+     "per activity slot: 25 % roll; candidates from NpcLife/NpcInterest rows whose VillageDevelopmentLevel <= the island level (+0x208)",
+     "per player with ValidatePlayerSaveFlag: player flags ReservedNpcGroupActivityMorning/Noon/Evening/Nignt (+2 unused slots, table 0x3567c30) = random candidate or 0"
+    ]
+   },
+   "0xf6130": {
+    "role": "calendar day change",
+    "reading": [
+     "GlobalEventReady -> GlobalEventAvailable; EventPlazaBuilt -> GlobalEventReady",
+     "skipped days: InsectConvention1-4 date passed -> InsectFesFinished; FishingConventionSpring..Winter -> FishFesFinished; any calendar event -> AnyGlobalEventFinished",
+     "per player 0xf920f0 (birthday event date); TodayGlobalEventId / TodayRegionEventId = UniqueID of today event or 0xffff"
+    ]
+   },
+   "0x4ae640": {
+    "role": "daily field items: star pieces, money rock, message bottle (from driver)",
+    "reading": [
+     "per player PrayStarToday -> StarPieceGrowCount; PrayStarToday and VisitorPrayStarToday reset",
+     "OccurrenceCoinStone (money rock) placement over the 0x8000-cell field item grid; MessageBottleAvailable / IsGetMessageBottle / PickedUpMessageBottle; PcMaingameStart gate"
+    ]
+   },
+   "0xd21110": {
+    "role": "villager house interiors (also called from 0xbbe5a0, 0xbbf3e0, 0xbc0430)",
+    "reading": [
+     "for each of 10 slots with AbandonedHouse < 2 and MoveInCompletion on: count it (+0x63b0) and load Param/NpcHouse/<species><nn>.byml; reads AbandonedHouse, does not write it"
+    ]
+   },
    "0xf32fa0": {
     "role": "save layout constructor",
     "reading": [
@@ -1308,7 +1409,16 @@
     "day_change": [
      "0xf6130"
     ],
-    "pseudocode_readings": {}
+    "pseudocode_readings": {
+     "0xf6130": {
+      "role": "calendar day change",
+      "reading": [
+       "GlobalEventReady -> GlobalEventAvailable; EventPlazaBuilt -> GlobalEventReady",
+       "skipped days: InsectConvention1-4 date passed -> InsectFesFinished; FishingConventionSpring..Winter -> FishFesFinished; any calendar event -> AnyGlobalEventFinished",
+       "per player 0xf920f0 (birthday event date); TodayGlobalEventId / TodayRegionEventId = UniqueID of today event or 0xffff"
+      ]
+     }
+    }
    },
    "cLand:BeyRequireFishSize": {
     "name_ja": "来訪新うおまさ|クエスト対象のサカナサイズ",
@@ -1412,10 +1522,12 @@
     ],
     "pseudocode_readings": {
      "0xf8b460": {
-      "role": "day type at day change",
+      "role": "day type and early/late villagers at day change",
       "reading": [
-       "checks calendar events by name in order FishingConvention, InsectConvention, PlayerBirthday, NpcBirthday, Countdown, NewYear",
-       "normal day with BuiltTownOffice on: per-player ContinuousNormalDay/EarlyOrLate counters and RNG rolls 0-99; purpose not yet identified"
+       "checks calendar events by name in order FishingConvention, InsectConvention, PlayerBirthday, NpcBirthday, Countdown, NewYear; any of them -> nothing else",
+       "normal day with BuiltTownOffice on: p = min(10 * villagers present, 80); two rolls r1, r2 = rand100 (day RNG when 0x35ee058 == 1, else TLS RNG)",
+       "each villager: NPC flag ContinuousNormalDay += 1 (0xf49b20); weight = ContinuousNormalDay when >= 2",
+       "r1 < p and r2 < p each pick one villager by cumulative weight; EarlyOrLate (NPC flag) is written for each slot (0xf497c0); exact values per pick not resolved"
       ]
      },
      "0xfd8a80": {
@@ -1826,6 +1938,14 @@
      "0x10c2ad0"
     ],
     "pseudocode_readings": {
+     "0xf6130": {
+      "role": "calendar day change",
+      "reading": [
+       "GlobalEventReady -> GlobalEventAvailable; EventPlazaBuilt -> GlobalEventReady",
+       "skipped days: InsectConvention1-4 date passed -> InsectFesFinished; FishingConventionSpring..Winter -> FishFesFinished; any calendar event -> AnyGlobalEventFinished",
+       "per player 0xf920f0 (birthday event date); TodayGlobalEventId / TodayRegionEventId = UniqueID of today event or 0xffff"
+      ]
+     },
      "0x10c2ad0": {
       "role": "Resident Services at day change (called from 0x10c26e0)",
       "reading": [
@@ -1899,7 +2019,16 @@
     "day_change": [
      "0xf6130"
     ],
-    "pseudocode_readings": {}
+    "pseudocode_readings": {
+     "0xf6130": {
+      "role": "calendar day change",
+      "reading": [
+       "GlobalEventReady -> GlobalEventAvailable; EventPlazaBuilt -> GlobalEventReady",
+       "skipped days: InsectConvention1-4 date passed -> InsectFesFinished; FishingConventionSpring..Winter -> FishFesFinished; any calendar event -> AnyGlobalEventFinished",
+       "per player 0xf920f0 (birthday event date); TodayGlobalEventId / TodayRegionEventId = UniqueID of today event or 0xffff"
+      ]
+     }
+    }
    },
    "cLand:FishNetHostCatchNumResult": {
     "name_ja": "通信開始時にネットホストのプレイヤーが今まで捕まえたサカナの数",
@@ -1965,7 +2094,16 @@
      "0xf39d0",
      "0xf6130"
     ],
-    "pseudocode_readings": {}
+    "pseudocode_readings": {
+     "0xf6130": {
+      "role": "calendar day change",
+      "reading": [
+       "GlobalEventReady -> GlobalEventAvailable; EventPlazaBuilt -> GlobalEventReady",
+       "skipped days: InsectConvention1-4 date passed -> InsectFesFinished; FishingConventionSpring..Winter -> FishFesFinished; any calendar event -> AnyGlobalEventFinished",
+       "per player 0xf920f0 (birthday event date); TodayGlobalEventId / TodayRegionEventId = UniqueID of today event or 0xffff"
+      ]
+     }
+    }
    },
    "cLand:GlobalEventReady": {
     "name_ja": "グローバルイベント準備中",
@@ -1982,6 +2120,14 @@
      "0x10c2ad0"
     ],
     "pseudocode_readings": {
+     "0xf6130": {
+      "role": "calendar day change",
+      "reading": [
+       "GlobalEventReady -> GlobalEventAvailable; EventPlazaBuilt -> GlobalEventReady",
+       "skipped days: InsectConvention1-4 date passed -> InsectFesFinished; FishingConventionSpring..Winter -> FishFesFinished; any calendar event -> AnyGlobalEventFinished",
+       "per player 0xf920f0 (birthday event date); TodayGlobalEventId / TodayRegionEventId = UniqueID of today event or 0xffff"
+      ]
+     },
      "0x10c2ad0": {
       "role": "Resident Services at day change (called from 0x10c26e0)",
       "reading": [
@@ -2156,7 +2302,16 @@
     "day_change": [
      "0xf6130"
     ],
-    "pseudocode_readings": {}
+    "pseudocode_readings": {
+     "0xf6130": {
+      "role": "calendar day change",
+      "reading": [
+       "GlobalEventReady -> GlobalEventAvailable; EventPlazaBuilt -> GlobalEventReady",
+       "skipped days: InsectConvention1-4 date passed -> InsectFesFinished; FishingConventionSpring..Winter -> FishFesFinished; any calendar event -> AnyGlobalEventFinished",
+       "per player 0xf920f0 (birthday event date); TodayGlobalEventId / TodayRegionEventId = UniqueID of today event or 0xffff"
+      ]
+     }
+    }
    },
    "cLand:InsectNetHostCatchNumResult": {
     "name_ja": "通信開始時にネットホストのプレイヤーが今まで捕まえたムシの数",
@@ -2616,7 +2771,15 @@
      "0x4ae640"
     ],
     "day_change": [],
-    "pseudocode_readings": {}
+    "pseudocode_readings": {
+     "0x4ae640": {
+      "role": "daily field items: star pieces, money rock, message bottle (from driver)",
+      "reading": [
+       "per player PrayStarToday -> StarPieceGrowCount; PrayStarToday and VisitorPrayStarToday reset",
+       "OccurrenceCoinStone (money rock) placement over the 0x8000-cell field item grid; MessageBottleAvailable / IsGetMessageBottle / PickedUpMessageBottle; PcMaingameStart gate"
+      ]
+     }
+    }
    },
    "cLand:PlazaDonationFinish": {
     "name_ja": "イベント広場募金集まったか？",
@@ -3091,7 +3254,16 @@
     "day_change": [
      "0xf6130"
     ],
-    "pseudocode_readings": {}
+    "pseudocode_readings": {
+     "0xf6130": {
+      "role": "calendar day change",
+      "reading": [
+       "GlobalEventReady -> GlobalEventAvailable; EventPlazaBuilt -> GlobalEventReady",
+       "skipped days: InsectConvention1-4 date passed -> InsectFesFinished; FishingConventionSpring..Winter -> FishFesFinished; any calendar event -> AnyGlobalEventFinished",
+       "per player 0xf920f0 (birthday event date); TodayGlobalEventId / TodayRegionEventId = UniqueID of today event or 0xffff"
+      ]
+     }
+    }
    },
    "cLand:TodayPlayerEmigrate": {
     "name_ja": "今日プレイヤが移住してきたか？",
@@ -3115,7 +3287,16 @@
     "day_change": [
      "0xf6130"
     ],
-    "pseudocode_readings": {}
+    "pseudocode_readings": {
+     "0xf6130": {
+      "role": "calendar day change",
+      "reading": [
+       "GlobalEventReady -> GlobalEventAvailable; EventPlazaBuilt -> GlobalEventReady",
+       "skipped days: InsectConvention1-4 date passed -> InsectFesFinished; FishingConventionSpring..Winter -> FishFesFinished; any calendar event -> AnyGlobalEventFinished",
+       "per player 0xf920f0 (birthday event date); TodayGlobalEventId / TodayRegionEventId = UniqueID of today event or 0xffff"
+      ]
+     }
+    }
    },
    "cLand:VillageDaysCount": {
     "name_ja": "村の経過日数",
@@ -3145,7 +3326,15 @@
      "0x4ba330"
     ],
     "day_change": [],
-    "pseudocode_readings": {}
+    "pseudocode_readings": {
+     "0x4ae640": {
+      "role": "daily field items: star pieces, money rock, message bottle (from driver)",
+      "reading": [
+       "per player PrayStarToday -> StarPieceGrowCount; PrayStarToday and VisitorPrayStarToday reset",
+       "OccurrenceCoinStone (money rock) placement over the 0x8000-cell field item grid; MessageBottleAvailable / IsGetMessageBottle / PickedUpMessageBottle; PcMaingameStart gate"
+      ]
+     }
+    }
    },
    "cLandTemp:CatchFishFesEntryNum": {
     "name_ja": "つり大会|クエスト参加人数",
@@ -6152,6 +6341,12 @@
      "0xf847f0"
     ],
     "pseudocode_readings": {
+     "0xd21110": {
+      "role": "villager house interiors (also called from 0xbbe5a0, 0xbbf3e0, 0xbc0430)",
+      "reading": [
+       "for each of 10 slots with AbandonedHouse < 2 and MoveInCompletion on: count it (+0x63b0) and load Param/NpcHouse/<species><nn>.byml; reads AbandonedHouse, does not write it"
+      ]
+     },
      "0xf847f0": {
       "role": "move-out processor",
       "reading": [
@@ -6207,10 +6402,12 @@
     "day_change": [],
     "pseudocode_readings": {
      "0xf8b460": {
-      "role": "day type at day change",
+      "role": "day type and early/late villagers at day change",
       "reading": [
-       "checks calendar events by name in order FishingConvention, InsectConvention, PlayerBirthday, NpcBirthday, Countdown, NewYear",
-       "normal day with BuiltTownOffice on: per-player ContinuousNormalDay/EarlyOrLate counters and RNG rolls 0-99; purpose not yet identified"
+       "checks calendar events by name in order FishingConvention, InsectConvention, PlayerBirthday, NpcBirthday, Countdown, NewYear; any of them -> nothing else",
+       "normal day with BuiltTownOffice on: p = min(10 * villagers present, 80); two rolls r1, r2 = rand100 (day RNG when 0x35ee058 == 1, else TLS RNG)",
+       "each villager: NPC flag ContinuousNormalDay += 1 (0xf49b20); weight = ContinuousNormalDay when >= 2",
+       "r1 < p and r2 < p each pick one villager by cumulative weight; EarlyOrLate (NPC flag) is written for each slot (0xf497c0); exact values per pick not resolved"
       ]
      }
     }
@@ -6238,10 +6435,12 @@
     "day_change": [],
     "pseudocode_readings": {
      "0xf8b460": {
-      "role": "day type at day change",
+      "role": "day type and early/late villagers at day change",
       "reading": [
-       "checks calendar events by name in order FishingConvention, InsectConvention, PlayerBirthday, NpcBirthday, Countdown, NewYear",
-       "normal day with BuiltTownOffice on: per-player ContinuousNormalDay/EarlyOrLate counters and RNG rolls 0-99; purpose not yet identified"
+       "checks calendar events by name in order FishingConvention, InsectConvention, PlayerBirthday, NpcBirthday, Countdown, NewYear; any of them -> nothing else",
+       "normal day with BuiltTownOffice on: p = min(10 * villagers present, 80); two rolls r1, r2 = rand100 (day RNG when 0x35ee058 == 1, else TLS RNG)",
+       "each villager: NPC flag ContinuousNormalDay += 1 (0xf49b20); weight = ContinuousNormalDay when >= 2",
+       "r1 < p and r2 < p each pick one villager by cumulative weight; EarlyOrLate (NPC flag) is written for each slot (0xf497c0); exact values per pick not resolved"
       ]
      }
     }
@@ -6411,6 +6610,12 @@
      "0xf84320"
     ],
     "pseudocode_readings": {
+     "0xd21110": {
+      "role": "villager house interiors (also called from 0xbbe5a0, 0xbbf3e0, 0xbc0430)",
+      "reading": [
+       "for each of 10 slots with AbandonedHouse < 2 and MoveInCompletion on: count it (+0x63b0) and load Param/NpcHouse/<species><nn>.byml; reads AbandonedHouse, does not write it"
+      ]
+     },
      "0xf84320": {
       "role": "villager move-out and move-in at day change (dispatcher, NPC member 0x33d97d8 / 0x1d6d48 bytes)",
       "reading": [
@@ -7903,7 +8108,15 @@
      "0x4ae640"
     ],
     "day_change": [],
-    "pseudocode_readings": {}
+    "pseudocode_readings": {
+     "0x4ae640": {
+      "role": "daily field items: star pieces, money rock, message bottle (from driver)",
+      "reading": [
+       "per player PrayStarToday -> StarPieceGrowCount; PrayStarToday and VisitorPrayStarToday reset",
+       "OccurrenceCoinStone (money rock) placement over the 0x8000-cell field item grid; MessageBottleAvailable / IsGetMessageBottle / PickedUpMessageBottle; PcMaingameStart gate"
+      ]
+     }
+    }
    },
    "cPlayer:IsToolShortcutManualOpen": {
     "name_ja": "道具ショートカット説明解禁済か？",
@@ -8205,7 +8418,15 @@
      "0x4ae640"
     ],
     "day_change": [],
-    "pseudocode_readings": {}
+    "pseudocode_readings": {
+     "0x4ae640": {
+      "role": "daily field items: star pieces, money rock, message bottle (from driver)",
+      "reading": [
+       "per player PrayStarToday -> StarPieceGrowCount; PrayStarToday and VisitorPrayStarToday reset",
+       "OccurrenceCoinStone (money rock) placement over the 0x8000-cell field item grid; MessageBottleAvailable / IsGetMessageBottle / PickedUpMessageBottle; PcMaingameStart gate"
+      ]
+     }
+    }
    },
    "cPlayer:OpenDIYRecipeEtcCategory": {
     "name_ja": "DIYレシピ・作業台|タブカテゴリ【その他】解禁",
@@ -8418,7 +8639,15 @@
      "0x4bda70"
     ],
     "day_change": [],
-    "pseudocode_readings": {}
+    "pseudocode_readings": {
+     "0x4ae640": {
+      "role": "daily field items: star pieces, money rock, message bottle (from driver)",
+      "reading": [
+       "per player PrayStarToday -> StarPieceGrowCount; PrayStarToday and VisitorPrayStarToday reset",
+       "OccurrenceCoinStone (money rock) placement over the 0x8000-cell field item grid; MessageBottleAvailable / IsGetMessageBottle / PickedUpMessageBottle; PcMaingameStart gate"
+      ]
+     }
+    }
    },
    "cPlayer:Prologue4OwlBuiltMuseum": {
     "name_ja": "フータ|のテント設営後に話した？",
@@ -8760,7 +8989,15 @@
      "0x4ba330"
     ],
     "day_change": [],
-    "pseudocode_readings": {}
+    "pseudocode_readings": {
+     "0x4ae640": {
+      "role": "daily field items: star pieces, money rock, message bottle (from driver)",
+      "reading": [
+       "per player PrayStarToday -> StarPieceGrowCount; PrayStarToday and VisitorPrayStarToday reset",
+       "OccurrenceCoinStone (money rock) placement over the 0x8000-cell field item grid; MessageBottleAvailable / IsGetMessageBottle / PickedUpMessageBottle; PcMaingameStart gate"
+      ]
+     }
+    }
    },
    "cPlayer:SysCountOpenedToolManual": {
     "name_ja": "道具の説明の解禁数カウント",

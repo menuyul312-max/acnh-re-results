@@ -5,16 +5,8 @@
  "how_to_use": "Companion of docs/HANDOFF.md. Pick the first item with status 'open'. Read only its entry_points with tools/re_helpers.py. When done: set status, add findings to docs (GAMEPLAY_SCENARIO/GAMEPLAY_FLOW), add readings to PSEUDOCODE_READINGS in tools/gameplay_flow.py, rebuild output/gameplay, update docs/HANDOFF.md session log.",
  "items": [
   {
-   "id": "unread-day-change-processors",
-   "priority": 1,
-   "status": "open",
-   "goal": "Read the remaining day-change processors.",
-   "entry_points": ["0xf8f190", "0xf7d4c0", "0xfc1b80", "0xbdfd40", "0xf8b460 (RNG purpose)", "0xf6130", "0x4ae640", "0xd21110"],
-   "done_when": "Each has a reading in PSEUDOCODE_READINGS."
-  },
-  {
    "id": "pseudo-to-verified",
-   "priority": 2,
+   "priority": 1,
    "status": "open",
    "goal": "Raise [PSEUDO] readings to native-verified by emulation (as done for mechanics phases).",
    "entry_points": ["0xf77050", "0xfcc300", "0xfc4560", "0xf26330", "0xfd8920", "0xf8de30", "0xfdc020", "0x15c4590", "0x15c61f0"],
@@ -23,7 +15,7 @@
   },
   {
    "id": "save-layout",
-   "priority": 3,
+   "priority": 2,
    "status": "open",
    "goal": "Map save members (offsets, sizes, descriptors) from the save layout constructor.",
    "entry_points": ["0xf32fa0", "0xf30220", "0xf416c0"],
@@ -41,6 +33,7 @@
   {"id": "villager-move-out", "result": "0xf84320 -> 0xf847f0 (roll 5*settled + days_since_talk on the day RNG) -> 0xf87670 (friendship weights, birthday/recent exclusions); refill 0xf84f10 (move-in odds, least-present personality); GAMEPLAY_SCENARIO 5.1-5.2; native_flag_refs.json data.villager_moves", "left_open": ["writer of AbandonedHouse (0xd36400, callers 0x10d39d0, 0x1102dc0)", "details of 0xf8c540 and 0xf8d210"]},
   {"id": "island-score-formula", "result": "VillageScoreMgr 0x15c4590 (11 item categories) -> 0x15c61f0 (weights 0x3149d28, +15 bridges/slopes/facilities 0x15c5ef0) -> save member +0x24fdb0 via 0x15c68c0 (+0x240 Natural, +0x244 Life, +0x248 unit icons, +0x24c trees, +0x000 messy grid); GAMEPLAY_FLOW 10.1; native_flag_refs.json data.island_score", "left_open": ["furniture side of category 10 (0xaa8310)", "item flag byte bits 2 and 5, structure flag bits 0 and 1", "0xbc82d0 (forces a full recount when >= 2)"]},
   {"id": "kk-weekly-date", "result": "0xf1360 label dispatch; NormalLive 0xf0330 = Saturday of the Sun..Sat week, TkkSkipNormal Before/Skip/Same; BirthdayLive 0xf11b0 + scheduler 0xf920f0 (birthday within 21 days, TkkSkipBirthday); GAMEPLAY_SCENARIO 3.6", "left_open": ["is player member +0x17370 (0xf11b0) the same date as +0x34942 written by 0xf920f0", "0xfdb150 return value 3 branch"]},
-  {"id": "turnip-and-shop-stock", "result": "turnips 0xfc7b40 -> 0xfc6d00 (base 90-110, 4 patterns, transition table, FirstKabuPattern forces 3); stock = in-season set 0xab33e0 x ItemKind x ItemFrom, random pick: Nook's Cranny 0xfd0630, Saharah 0xfc56c0, Kicks 0xfc8760, Able Sisters/Label 0xfca870; GAMEPLAY_SCENARIO 3.7", "left_open": ["slot counts and pick weights of Nook's Cranny (0xfce9e0/0xfceb90/0xfcf660)", "0xfc6300/0xfc5d60 (Ftr/Helmet pick) and 0xfc9e70 owners", "Daisy Mae buy price vs base +0x00"]}
+  {"id": "turnip-and-shop-stock", "result": "turnips 0xfc7b40 -> 0xfc6d00 (base 90-110, 4 patterns, transition table, FirstKabuPattern forces 3); stock = in-season set 0xab33e0 x ItemKind x ItemFrom, random pick: Nook's Cranny 0xfd0630, Saharah 0xfc56c0, Kicks 0xfc8760, Able Sisters/Label 0xfca870; GAMEPLAY_SCENARIO 3.7", "left_open": ["slot counts and pick weights of Nook's Cranny (0xfce9e0/0xfceb90/0xfcf660)", "0xfc6300/0xfc5d60 (Ftr/Helmet pick) and 0xfc9e70 owners", "Daisy Mae buy price vs base +0x00"]},
+  {"id": "unread-day-change-processors", "result": "readings for 0xf8f190, 0xf7d4c0 (camper odds), 0xfc1b80, 0xbdfd40 (group activities), 0xf8b460 (EarlyOrLate rolls), 0xf6130, 0x4ae640, 0xd21110; GAMEPLAY_SCENARIO 2.1", "left_open": ["meaning of member +0x20d310", "EarlyOrLate values written per pick (0xf8b460)", "money rock and message bottle placement rules inside 0x4ae640"]}
  ]
 }

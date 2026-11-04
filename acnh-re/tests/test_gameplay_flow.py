@@ -158,7 +158,8 @@ class GameplayFlowTests(unittest.TestCase):
         calls = dict(db.execute('SELECT pc, target_va FROM direct_calls WHERE pc IN (?, ?)', (0xd4f34, 0xd50d4)).fetchall())
         self.assertEqual(calls, {0xd4f34: 0x15c68c0, 0xd50d4: 0x15c61f0})
         db.close()
-        for va in ('0x15c4590', '0x15c61f0', '0x15c68c0', '0x3e4510'):
+        for va in ('0x15c4590', '0x15c61f0', '0x15c68c0', '0x3e4510', '0xf8f190', '0xf7d4c0', '0xfc1b80', '0xbdfd40',
+                   '0xf8b460', '0xf6130', '0x4ae640', '0xd21110'):
             self.assertIn(va, gf.PSEUDOCODE_READINGS)
         self.assertEqual(set(gf.ISLAND_SCORE['categories']), {str(i) for i in range(11)})
 
