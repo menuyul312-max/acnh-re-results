@@ -4,7 +4,10 @@
   "analysis_basis": "Ghidra pseudocode and local SQLite call/string reference index for the supplied main executable; no runtime trace or game capture.",
   "resource_loading": {
     "page_archive_preload": {
-      "path": ["0x98b70", "0x1541580"],
+      "path": [
+        "0x98b70",
+        "0x1541580"
+      ],
       "observed": [
         "Startup calls the layout resource preloader.",
         "The preloader iterates a registered resource-name array and formats Layout/%s.Nin_NX_NVN.zs.",
@@ -14,24 +17,43 @@
       "limitation": "This preloader path does not explain the five Layout .szs archives in the RomFS inventory."
     },
     "layout_manager": {
-      "path": ["0x14c3cf0", "0x14c49e0", "0x14bfe60", "0x14bebd0"],
+      "path": [
+        "0x14c3cf0",
+        "0x14c49e0",
+        "0x14bfe60",
+        "0x14bebd0"
+      ],
       "observed": [
         "0x14c3cf0 initializes the layout manager and registers the LytAllocator resource allocator.",
         "0x14c49e0 iterates a configured list of resource names and calls 0x14bfe60 for each.",
         "0x14bebd0 formats Layout/%s.Nin_NX_NVN.zs, opens that archive, then requests a nested %s.arc member and registers an accessor for it."
       ],
-      "direct_callers_of_archive_open_helper": ["0x14bfe60", "0x14cb390"],
+      "direct_callers_of_archive_open_helper": [
+        "0x14bfe60",
+        "0x14cb390"
+      ],
       "limitation": "The observed path proves a .zs archive route for this manager. It does not expose a condition selecting between same-name .zs and .szs candidates for each PRT1 reference."
     },
     "layout_member_request": {
-      "path": ["0x14c77a0", "0x191c8d0"],
+      "path": [
+        "0x14c77a0",
+        "0x191c8d0"
+      ],
       "observed": [
         "0x14c77a0 looks up the named resource in the layout manager, obtains its accessor, and delegates loading through the layout resource interface.",
         "0x191c8d0 formats %s.bflyt and requests it from the accessor using resource type value 0x626c7974."
       ]
     },
     "embedded_prt1_layout": {
-      "path": ["0x1cf1230", "0x1cf0de0", "0x1ceb3e0", "0x1cf20a0", "0x1cf2330", "0x1cef850", "0x1cf43a0"],
+      "path": [
+        "0x1cf1230",
+        "0x1cf0de0",
+        "0x1ceb3e0",
+        "0x1cf20a0",
+        "0x1cf2330",
+        "0x1cef850",
+        "0x1cf43a0"
+      ],
       "observed": [
         "0x1cf1230 creates an embedded layout object when the child entry is not yet materialized.",
         "0x1ceb3e0 formats %s.bflyt from the requested child-layout name and initializes the resource accessor.",
@@ -99,7 +121,12 @@
       "observed": "Builds/caches the named action table; callers use its indexed names when dispatching UI control state changes."
     },
     "control_action_dispatch": {
-      "path": ["0x14845a0", "0x14855f0", "0x14bda00", "0x14bd770"],
+      "path": [
+        "0x14845a0",
+        "0x14855f0",
+        "0x14bda00",
+        "0x14bd770"
+      ],
       "observed": [
         "0x14845a0 translates an action index into a named control action and dispatches it through the control action tree.",
         "Dispatch updates per-action state flags and routes into animation/action objects through virtual calls.",
@@ -109,12 +136,23 @@
     },
     "cursor_binding": {
       "function_va": "0x14885b0",
-      "observed_pane_names": ["Cursor", "P_BtnFocusKey", "C_Cursor", "B_Hit"],
+      "observed_pane_names": [
+        "Cursor",
+        "P_BtnFocusKey",
+        "C_Cursor",
+        "B_Hit"
+      ],
       "observed": "Looks up Cursor-related panes and uses P_BtnFocusKey, then C_Cursor, as cursor candidates; B_Hit is used as a fallback hit-related pane for the second cursor component.",
       "limitation": "The wrapper proves resource binding/fallback names, not the complete geometry hit-test or focus-navigation algorithm."
     },
     "bounding_control": {
-      "path": ["0x1671db0", "0x16737c0", "0x1670400", "0x1da9030", "0x1da8f60"],
+      "path": [
+        "0x1671db0",
+        "0x16737c0",
+        "0x1670400",
+        "0x1da9030",
+        "0x1da8f60"
+      ],
       "observed": [
         "0x1671db0 creates a BoundingCtrl helper for a UI-system record.",
         "0x1670400 reads UISysBoundingUseCursor; when enabled, it resolves a cursor-related resource, creates the cursor binding, and configures four cursor channels.",
@@ -128,8 +166,17 @@
       "limitation": "The external caller and all guard meanings are not resolved."
     },
     "common_dialog_controller": {
-      "construction_path": ["0x11e6d70", "0x11e6e70", "0x11e6fc0"],
-      "update_path": ["0x11e8960", "0x11e9210", "0x11e95c0", "0x11e96a0"],
+      "construction_path": [
+        "0x11e6d70",
+        "0x11e6e70",
+        "0x11e6fc0"
+      ],
+      "update_path": [
+        "0x11e8960",
+        "0x11e9210",
+        "0x11e95c0",
+        "0x11e96a0"
+      ],
       "observed": [
         "0x11e6d70 selects CmnDialogSmartPhone when its mode field equals 1; otherwise it selects CmnDialog.",
         "The constructor creates and attaches CommonDialogPage and CommonDialogBGPage objects.",
@@ -137,6 +184,648 @@
         "0x11e96a0 iterates child/page slots 0 through 7 and applies state/animation operations to those slots."
       ],
       "limitation": "This traces a dialog component, not the global modal stack. Open/close/back sequencing, focus return, and teardown are still unproven."
+    },
+    "selectable_widget_state_machine": {
+      "initialization_path": [
+        "0x1dd0b40",
+        "0x1dd0c20"
+      ],
+      "shared_widget_callers": [
+        "0x130ca20",
+        "0x13399b0",
+        "0x1db3020"
+      ],
+      "state_enum_function_va": "0x1dd37a0",
+      "states": [
+        {
+          "id": 0,
+          "name": "cUnselected"
+        },
+        {
+          "id": 1,
+          "name": "cSelected"
+        },
+        {
+          "id": 2,
+          "name": "cDecided"
+        },
+        {
+          "id": 3,
+          "name": "cContinueDecided"
+        },
+        {
+          "id": 4,
+          "name": "cInvUnselected"
+        },
+        {
+          "id": 5,
+          "name": "cInvSelected"
+        },
+        {
+          "id": 6,
+          "name": "cInvDecided"
+        },
+        {
+          "id": 7,
+          "name": "cInvContinueDecided"
+        },
+        {
+          "id": 8,
+          "name": "cTouchSelected"
+        },
+        {
+          "id": 9,
+          "name": "cTouchDecided"
+        },
+        {
+          "id": 10,
+          "name": "cTouchContinueDecided"
+        },
+        {
+          "id": 11,
+          "name": "cInvTouchSelected"
+        },
+        {
+          "id": 12,
+          "name": "cInvTouchDecided"
+        },
+        {
+          "id": 13,
+          "name": "cInvTouchContinueDecided"
+        },
+        {
+          "id": 14,
+          "name": "cValid"
+        },
+        {
+          "id": 15,
+          "name": "cInvalid"
+        },
+        {
+          "id": 16,
+          "name": "cInvalidFromSelect"
+        },
+        {
+          "id": 17,
+          "name": "cValidFromInvSelect"
+        }
+      ],
+      "transitions": [
+        {
+          "from": 0,
+          "to": 1,
+          "trigger": "*Select"
+        },
+        {
+          "from": 1,
+          "to": 0,
+          "trigger": "*UnSelect;<*Select"
+        },
+        {
+          "from": 1,
+          "to": 2,
+          "trigger": "*Decide"
+        },
+        {
+          "from": 1,
+          "to": 3,
+          "trigger": "*Decide"
+        },
+        {
+          "from": 2,
+          "to": 0,
+          "trigger": "*Cancel;<*Decide"
+        },
+        {
+          "from": 4,
+          "to": 5,
+          "trigger": "*InvSelect"
+        },
+        {
+          "from": 5,
+          "to": 4,
+          "trigger": "*InvUnSelect;<*InvSelect"
+        },
+        {
+          "from": 5,
+          "to": 6,
+          "trigger": "*InvDecide"
+        },
+        {
+          "from": 5,
+          "to": 7,
+          "trigger": "*InvDecide"
+        },
+        {
+          "from": 1,
+          "to": 7,
+          "trigger": "*InvDecide"
+        },
+        {
+          "from": 6,
+          "to": 4,
+          "trigger": "*InvCancel;<*InvDecide"
+        },
+        {
+          "from": 0,
+          "to": 8,
+          "trigger": "*TouchSelect;*Select"
+        },
+        {
+          "from": 8,
+          "to": 0,
+          "trigger": "*TouchUnSelect;<*TouchSelect;*UnSelect;<*Select"
+        },
+        {
+          "from": 8,
+          "to": 9,
+          "trigger": "*TouchDecide;*Decide"
+        },
+        {
+          "from": 8,
+          "to": 10,
+          "trigger": "*TouchDecide;*Decide"
+        },
+        {
+          "from": 8,
+          "to": 2,
+          "trigger": "*Decide"
+        },
+        {
+          "from": 8,
+          "to": 3,
+          "trigger": "*Decide"
+        },
+        {
+          "from": 9,
+          "to": 0,
+          "trigger": "*TouchCancel;*Cancel;<*TouchDecide;<*Decide"
+        },
+        {
+          "from": 4,
+          "to": 11,
+          "trigger": "*InvTouchSelect;*InvSelect"
+        },
+        {
+          "from": 11,
+          "to": 4,
+          "trigger": "*InvTouchUnSelect;<*InvTouchSelect;*InvUnSelect;<*InvSelect"
+        },
+        {
+          "from": 11,
+          "to": 12,
+          "trigger": "*InvTouchDecide;*InvDecide"
+        },
+        {
+          "from": 11,
+          "to": 13,
+          "trigger": "*InvTouchDecide;*InvDecide"
+        },
+        {
+          "from": 11,
+          "to": 6,
+          "trigger": "*InvDecide"
+        },
+        {
+          "from": 11,
+          "to": 7,
+          "trigger": "*InvDecide"
+        },
+        {
+          "from": 12,
+          "to": 4,
+          "trigger": "*InvTouchCancel;*InvCancel;<*InvTouchDecide;<*InvDecide"
+        },
+        {
+          "from": 4,
+          "to": 14,
+          "trigger": "*Valid;<*Invalid"
+        },
+        {
+          "from": 0,
+          "to": 15,
+          "trigger": "*Invalid"
+        },
+        {
+          "from": 1,
+          "to": 16,
+          "trigger": "*Invalid"
+        },
+        {
+          "from": 5,
+          "to": 17,
+          "trigger": "*Valid;<*Invalid"
+        }
+      ],
+      "observed_additional_transition_links": [
+        {
+          "helper": "0x1caf8d0",
+          "args": [
+            1,
+            3,
+            1,
+            0
+          ]
+        },
+        {
+          "helper": "0x1caf820",
+          "args": [
+            0,
+            2,
+            1
+          ]
+        },
+        {
+          "helper": "0x1caf820",
+          "args": [
+            0,
+            3,
+            1
+          ]
+        },
+        {
+          "helper": "0x1caf8d0",
+          "args": [
+            5,
+            7,
+            5,
+            0
+          ]
+        },
+        {
+          "helper": "0x1caf8d0",
+          "args": [
+            1,
+            7,
+            5,
+            0
+          ]
+        },
+        {
+          "helper": "0x1caf820",
+          "args": [
+            4,
+            6,
+            5
+          ]
+        },
+        {
+          "helper": "0x1caf820",
+          "args": [
+            4,
+            7,
+            5
+          ]
+        },
+        {
+          "helper": "0x1caf8d0",
+          "args": [
+            8,
+            10,
+            0,
+            0
+          ]
+        },
+        {
+          "helper": "0x1caf8d0",
+          "args": [
+            8,
+            3,
+            0,
+            0
+          ]
+        },
+        {
+          "helper": "0x1caf820",
+          "args": [
+            0,
+            9,
+            8
+          ]
+        },
+        {
+          "helper": "0x1caf820",
+          "args": [
+            0,
+            10,
+            8
+          ]
+        },
+        {
+          "helper": "0x1caf8d0",
+          "args": [
+            11,
+            13,
+            4,
+            0
+          ]
+        },
+        {
+          "helper": "0x1caf8d0",
+          "args": [
+            11,
+            7,
+            4,
+            0
+          ]
+        },
+        {
+          "helper": "0x1caf820",
+          "args": [
+            4,
+            12,
+            11
+          ]
+        },
+        {
+          "helper": "0x1caf820",
+          "args": [
+            4,
+            13,
+            11
+          ]
+        },
+        {
+          "helper": "0x1caf990",
+          "args": [
+            14,
+            0,
+            1
+          ]
+        },
+        {
+          "helper": "0x1caf990",
+          "args": [
+            15,
+            4,
+            1
+          ]
+        },
+        {
+          "helper": "0x1caf990",
+          "args": [
+            16,
+            5,
+            1
+          ]
+        },
+        {
+          "helper": "0x1caf990",
+          "args": [
+            17,
+            1,
+            1
+          ]
+        }
+      ],
+      "observed": [
+        "0x1dd0c20 configures state transitions in a reusable selectable-widget controller; the state IDs correspond by order to the 18-name enum string initialized by 0x1dd37a0.",
+        "The transition table includes key selection/decision/cancel, inverse-direction selection, touch selection/decision/cancel, inverse-touch variants, and valid/invalid state changes.",
+        "0x1dd0b40 also initializes cursor-related behavior using the *Cursor tag and enables an auxiliary Draggable path when that userData value is present."
+      ],
+      "limits": [
+        "Transition trigger strings and state IDs are statically mapped, but the physical button/touch event producer and callback order are not identified.",
+        "The helper calls 0x1caf820/0x1caf8d0/0x1caf990 add state-transition metadata; their opaque flag arguments are preserved raw and not assigned undocumented meanings.",
+        "The common widget family includes a slider/button caller but this does not establish that every UI control uses the same state machine."
+      ],
+      "cnt1_asset_correlations": {
+        "evidence_source": "output/ui_hud/section_semantics.json / decoded CNT1 records",
+        "control_profiles": [
+          {
+            "type": "LpUniteButton",
+            "record_count": 91,
+            "all_records_have_animation_names": [
+              "Select",
+              "UnSelect",
+              "Decide",
+              "Cancel",
+              "TouchSelect",
+              "TouchUnSelect",
+              "TouchDecide",
+              "TouchCancel",
+              "InvSelect",
+              "InvUnSelect",
+              "InvDecide",
+              "InvCancel",
+              "InvTouchSelect",
+              "InvTouchUnSelect",
+              "InvTouchDecide",
+              "InvTouchCancel",
+              "Invalid",
+              "Valid"
+            ],
+            "common_pane_actions": "B_Btn_00:Hit and B_Btn_00:Cursor are the dominant bindings; some layouts use B_Hit/N_Cursor_00 variants."
+          },
+          {
+            "type": "ButtonNormal",
+            "record_count": 12,
+            "all_records_have_animation_names": [
+              "FocusKey",
+              "UnFocusKey",
+              "DecideKey",
+              "FocusTouch",
+              "UnFocusTouch",
+              "DecideTouch",
+              "Invalid"
+            ],
+            "common_pane_actions": "B_Hit:Hit and N_BtnFocusKey:Cursor (with B_Btn_00 variants in a small subset)."
+          },
+          {
+            "type": "ButtonCheck",
+            "record_count": 3,
+            "all_records_have_animation_names": [
+              "FocusKey",
+              "UnFocusKey",
+              "DecideKey",
+              "FocusTouch",
+              "UnFocusTouch",
+              "DecideTouch",
+              "Invalid",
+              "Check",
+              "Uncheck"
+            ],
+            "common_pane_actions": "B_Hit:Hit and N_BtnFocusKey:Cursor (with B_Hit:Cursor variants)."
+          },
+          {
+            "type": "ButtonRepeat",
+            "record_count": 4,
+            "all_records_have_animation_names": [
+              "FocusKey",
+              "UnFocusKey",
+              "DecideKey",
+              "FocusTouch",
+              "UnFocusTouch",
+              "DecideTouch",
+              "Invalid",
+              "RepeatKey",
+              "RepeatTouch"
+            ],
+            "common_pane_actions": "B_Hit:Hit and N_BtnFocusKey:Cursor (one record has an empty cursor pane name)."
+          },
+          {
+            "type": "ButtonFocusActive",
+            "record_count": 0,
+            "all_records_have_animation_names": []
+          },
+          {
+            "type": "ButtonSelBox",
+            "record_count": 0,
+            "all_records_have_animation_names": []
+          }
+        ],
+        "observed": "The 18 action names present on every LpUniteButton CNT1 entry match the native selectable-state transition vocabulary; ButtonNormal/Check/Repeat CNT1 profiles likewise match the native named action table and their type-specific Check/Repeat emitters.",
+        "limit": "This is a static format/native name correlation. It does not prove which runtime controller instance binds a given CNT1 record, the physical event source, or animation invocation timing."
+      }
+    },
+    "user_button_animation_bindings": {
+      "function_va": "0x1dd1570",
+      "caller_va": "0x130cdc0",
+      "bindings": [
+        {
+          "tag": "UB_Select",
+          "lookup_helper": "0x1dbc020",
+          "attachment_helper": "0x1ef0b30"
+        },
+        {
+          "tag": "UB_Unselect",
+          "lookup_helper": "0x1dbc020",
+          "attachment_helper": "0x1ef0b30"
+        },
+        {
+          "tag": "UB_Decide",
+          "lookup_helper": "0x1dbc020",
+          "attachment_helper": "0x1ef0b30"
+        },
+        {
+          "tag": "UB_DispValid",
+          "lookup_helper": "0x1dbc180",
+          "attachment_helper": "0x1ef0d20"
+        }
+      ],
+      "fallback_tag": "UB_Unselect",
+      "observed": "The initializer resolves the four named animation/user-data tags and attaches them to the UserButton controller; missing entries use the UB_Unselect path as fallback.",
+      "limits": [
+        "The tag bindings do not prove which input callback invokes each tag or what frames/timing are used."
+      ]
+    },
+    "shared_button_widget": {
+      "function_va": "0x130ca20",
+      "caller_count": 5,
+      "observed_tags": [
+        "*SelectLoop",
+        "*EfInvalid",
+        "*EquipIn",
+        "*EquipOut;<*EquipIn"
+      ],
+      "observed": "The shared button setup configures selection-loop/effect-invalid tags and equip-in/equip-out transitions, then delegates common cursor/focus setup to 0x1dd0b40.",
+      "limits": [
+        "These tags prove available state/action names for this widget family; they do not identify the global event source or screen lifecycle."
+      ]
+    },
+    "known_action_emitters": [
+      {
+        "action_id": 4,
+        "action": "DecideKey",
+        "function_va": "0x1483aa0",
+        "observed": "For an allowed nonzero event, runs a mode-dependent state helper, emits DecideKey, stores the parameter as state, and notifies the registered callback/listener when enabled.",
+        "limit": "The external event source and full guard-bit meanings are unresolved."
+      },
+      {
+        "action_id": 6,
+        "action": "Invalid",
+        "function_va": "0x1483d80",
+        "observed": "Emits Invalid and updates a 0x200 control flag according to its boolean argument and existing mode bits.",
+        "limit": "Does not identify which platform or game event caused the invalidation."
+      },
+      {
+        "action_id": 7,
+        "action": "Check",
+        "function_va": "0x1483e40",
+        "observed": "For ButtonCheck (mode 2), emits Check when its boolean argument is true; it updates the stored bit and notifies a callback first.",
+        "limit": "Control mode and boolean producer are not named."
+      },
+      {
+        "action_id": 8,
+        "action": "Uncheck",
+        "function_va": "0x1483e40",
+        "observed": "For ButtonCheck (mode 2), emits Uncheck when its boolean argument is false; it updates the stored bit and notifies a callback first.",
+        "limit": "Control mode and boolean producer are not named."
+      },
+      {
+        "action_id": 7,
+        "action": "Check",
+        "function_va": "0x1485220",
+        "observed": "A second mode-2 path emits Check/Uncheck based on a stored state comparison or forced-update flag, and notifies the registered callback.",
+        "limit": "Its callers are several UI component functions; it does not establish global input mapping."
+      },
+      {
+        "action_id": 8,
+        "action": "Uncheck",
+        "function_va": "0x1485220",
+        "observed": "A second mode-2 path emits Check/Uncheck based on a stored state comparison or forced-update flag, and notifies the registered callback.",
+        "limit": "Its callers are several UI component functions; it does not establish global input mapping."
+      },
+      {
+        "action_id": 9,
+        "action": "RepeatKey",
+        "function_va": "0x1483c40",
+        "observed": "For ButtonRepeat (mode 3) and nonzero repeat value, emits RepeatKey, stores the repeat value, then notifies its callback or dispatches a ButtonEx event.",
+        "limit": "The key repeat source/rate is not present in this method."
+      },
+      {
+        "action_id": 10,
+        "action": "RepeatTouch",
+        "function_va": "0x1485520",
+        "observed": "For ButtonRepeat (mode 3), emits RepeatTouch, stores zero in the repeat state field, then notifies its callback or dispatches a ButtonEx event.",
+        "limit": "The touch repeat producer/rate is not present in this method."
+      },
+      {
+        "action_id": 11,
+        "action": "Active",
+        "function_va": "0x1483f80",
+        "observed": "For ButtonFocusActive (mode 4), emits Active or Inactive based on its boolean argument, with callback notification and stored-state updates.",
+        "limit": "Mode 4 and its state owner are not identified."
+      },
+      {
+        "action_id": 12,
+        "action": "Inactive",
+        "function_va": "0x1483f80",
+        "observed": "For ButtonFocusActive (mode 4), emits Active or Inactive based on its boolean argument, with callback notification and stored-state updates.",
+        "limit": "Mode 4 and its state owner are not identified."
+      }
+    ],
+    "known_action_emitters_summary": "Static callsites now connect action IDs 4, 6, 7, 8, 9, 10, 11, and 12 to concrete control methods. ButtonCheck, ButtonRepeat, and ButtonFocusActive are independently identified by the native type resolver. The remaining action names are present in the lookup table but their full producers are not identified in this path.",
+    "button_control_type_resolver": {
+      "type_name_function_va": "0x14817e0",
+      "inherit_resolution_function_va": "0x1481a40",
+      "control_construction_function_va": "0x14821d0",
+      "types": [
+        {
+          "mode_id": 1,
+          "name": "ButtonNormal"
+        },
+        {
+          "mode_id": 2,
+          "name": "ButtonCheck"
+        },
+        {
+          "mode_id": 3,
+          "name": "ButtonRepeat"
+        },
+        {
+          "mode_id": 4,
+          "name": "ButtonFocusActive"
+        },
+        {
+          "mode_id": 5,
+          "name": "ButtonSelBox"
+        }
+      ],
+      "inheritance": "The literal type Inherit is recursively resolved against the related parent/control record rather than mapped to one fixed mode.",
+      "observed": "The resolver returns a valid marker and mode ID; the caller constructs mode-specific control state and callbacks.",
+      "limits": [
+        "The type IDs identify controller families, but do not by themselves identify concrete physical input bindings."
+      ]
     }
   },
   "special_user_data_consumers": {
@@ -147,43 +836,96 @@
     "procedural_shape_parameters": [
       {
         "function_va": "0x14ca030",
-        "fields": ["S_BorderDrawMode", "S_BorderVolume", "S_BorderSize", "S_BorderColorSelect0", "S_BorderColor0"],
+        "fields": [
+          "S_BorderDrawMode",
+          "S_BorderVolume",
+          "S_BorderSize",
+          "S_BorderColorSelect0",
+          "S_BorderColor0"
+        ],
         "observed": "Reads the border userData values into a renderer-side shape parameter block; color selection resolves through an indexed color table when present."
       },
       {
         "function_va": "0x14c9990",
-        "fields": ["S_ColorOverlay0DrawMode", "S_ColorOverlay0Volume", "S_ColorOverlay0ColorSelect", "S_ColorOverlay0Color"],
+        "fields": [
+          "S_ColorOverlay0DrawMode",
+          "S_ColorOverlay0Volume",
+          "S_ColorOverlay0ColorSelect",
+          "S_ColorOverlay0Color"
+        ],
         "observed": "Reads overlay draw mode, volume, and color into renderer-side parameters."
       },
       {
         "function_va": "0x14c9ac0",
-        "fields": ["S_GradationDrawMode", "S_GradationVolume", "S_GradationColorNum", "S_GradationAngle", "S_GradationColorSelect0..3", "S_GradationColor0..3", "S_GradationColorStop0..3"],
+        "fields": [
+          "S_GradationDrawMode",
+          "S_GradationVolume",
+          "S_GradationColorNum",
+          "S_GradationAngle",
+          "S_GradationColorSelect0..3",
+          "S_GradationColor0..3",
+          "S_GradationColorStop0..3"
+        ],
         "observed": "Reads up to four gradation colors/stops, angle, mode, volume, and optional indexed palette colors."
       },
       {
         "function_va": "0x14c9830",
-        "fields": ["S_DropShadowDrawMode", "S_DropShadowVolume", "S_DropShadowColorSelect", "S_DropShadowColor", "S_DropShadowSize", "S_DropShadowFunction"],
+        "fields": [
+          "S_DropShadowDrawMode",
+          "S_DropShadowVolume",
+          "S_DropShadowColorSelect",
+          "S_DropShadowColor",
+          "S_DropShadowSize",
+          "S_DropShadowFunction"
+        ],
         "observed": "Reads drop-shadow parameters into renderer-side shape data."
       },
       {
         "function_va": "0x14c9e90",
-        "fields": ["S_InnerShadowDrawMode", "S_InnerShadowVolume", "S_InnerShadowColorSelect", "S_InnerShadowColor", "S_InnerShadowAngle", "S_InnerShadowDistance", "S_InnerShadowSize", "S_InnerShadowFunction"],
+        "fields": [
+          "S_InnerShadowDrawMode",
+          "S_InnerShadowVolume",
+          "S_InnerShadowColorSelect",
+          "S_InnerShadowColor",
+          "S_InnerShadowAngle",
+          "S_InnerShadowDistance",
+          "S_InnerShadowSize",
+          "S_InnerShadowFunction"
+        ],
         "observed": "Reads inner-shadow parameters into renderer-side shape data."
       },
       {
         "function_va": "0x14ca1a0",
-        "fields": ["S_GradationMaskEnable", "S_GradationMaskVolume", "S_GradationMaskAngle", "S_GradationMaskAlpha0", "S_GradationMaskAlphaStop0", "S_GradationMaskAlpha1", "S_GradationMaskAlphaStop1"],
+        "fields": [
+          "S_GradationMaskEnable",
+          "S_GradationMaskVolume",
+          "S_GradationMaskAngle",
+          "S_GradationMaskAlpha0",
+          "S_GradationMaskAlphaStop0",
+          "S_GradationMaskAlpha1",
+          "S_GradationMaskAlphaStop1"
+        ],
         "observed": "Reads gradation-mask controls and alpha stops."
       }
     ],
     "layout_walk": {
       "function_va": "0x1cf0fa0",
-      "observed_user_data_keys": ["EffectLinkOn"],
-      "delegated_handlers": ["0x1b5ce10 (AdjustToTextOn)", "0x1b5d4d0 (CaptureUseName/CaptureUseIndex)", "0x1b5dad0 (DynamicCaptureUseName/DynamicCaptureUseIndex)"],
+      "observed_user_data_keys": [
+        "EffectLinkOn"
+      ],
+      "delegated_handlers": [
+        "0x1b5ce10 (AdjustToTextOn)",
+        "0x1b5d4d0 (CaptureUseName/CaptureUseIndex)",
+        "0x1b5dad0 (DynamicCaptureUseName/DynamicCaptureUseIndex)"
+      ],
       "observed": "Recursively walks layout panes during layout setup and invokes effect-link, text-adjustment, and capture handlers."
     },
     "scissor_pane": {
-      "path": ["0x14c89c0", "0x14c8a90", "0x14c8d00"],
+      "path": [
+        "0x14c89c0",
+        "0x14c8a90",
+        "0x14c8d00"
+      ],
       "observed": [
         "0x14c89c0 constructs an object whose registered pane type name is ScissorPane, then calls its initializer.",
         "0x14c8a90 initializes common pane state and associates the scissor object.",
@@ -194,20 +936,64 @@
     "ui2dsys_type_dispatch": {
       "function_va": "0x1672890",
       "observed_types": [
-        "LpLocator", "LpUniteButton", "LpDragButton", "LpKeyDecideIcon", "LpSelector", "LpScrollBar", "LpCharAnim", "LpTextAnim", "LpTraceGauge", "LpNumberAnim", "LpMultiNumberAnim", "LpTimer", "UISysBounding", "UISysScrollBtnList", "UISysScrollSign"
+        "LpLocator",
+        "LpUniteButton",
+        "LpDragButton",
+        "LpKeyDecideIcon",
+        "LpSelector",
+        "LpScrollBar",
+        "LpCharAnim",
+        "LpTextAnim",
+        "LpTraceGauge",
+        "LpNumberAnim",
+        "LpMultiNumberAnim",
+        "LpTimer",
+        "UISysBounding",
+        "UISysScrollBtnList",
+        "UISysScrollSign"
       ],
       "observed": "Dispatches parsed ui2dsys type names to distinct virtual handlers; 0x1671c00 handles the three UISys* types in the same family.",
       "limitation": "The mapping identifies component families but does not yet decode every handler's state transitions or bind all 803 asset-side records to their runtime instances."
     },
     "fleu_relation": {
-      "observed_overlap": ["S_BorderSize", "S_BorderVolume", "S_ColorOverlay0Volume"],
-      "unresolved": "The 15 FLEU records are structurally bound to USD1 keys, and the native renderer consumes several matching keys. The native update function that applies FLEU arrays to those userData values, key timing, and the meaning of all three arrays are not yet proven. C_Id has no exact native string consumer in the current index."
+      "observed_overlap": [
+        "S_BorderSize",
+        "S_BorderVolume",
+        "S_ColorOverlay0Volume"
+      ],
+      "unresolved": "The 15 FLEU records are structurally bound to USD1 keys; native renderer consumes several other matching keys. The native update function applying FLEU arrays and their timing are not proven. C_Id now has a static asset profile, but no exact native string consumer or runtime semantics are established.",
+      "c_id_static_profile": {
+        "record_count": 11,
+        "source_layouts": [
+          "CntrIndicatorS",
+          "FooterBtn",
+          "FooterCtrl",
+          "LineFooter"
+        ],
+        "animation_tags": [
+          "Color",
+          "TextColor",
+          "IconColor"
+        ],
+        "target_panes": [
+          "P_Valid_00..03",
+          "P_Invalid_00..03",
+          "P_Key",
+          "P_CtrlDummy",
+          "P_Line"
+        ],
+        "same_pane_usd1_value": [
+          0
+        ],
+        "observed": "All 11 C_Id FLEU records bind uniquely to a same-archive USD1 int32 value of 0. They occur on color-named tracks in common control/footer assets; the three arrays have lengths 3 or 5 according to the record base_count.",
+        "limit": "These patterns constrain the data context but do not identify the native custom-property consumer or array element meanings."
+      }
     }
   },
   "remaining_evidence_needed": [
     "A direct runtime/resource-manager trace or complete allocator lookup logic showing which archive supplies each duplicate PRT1 name, including .szs cases.",
     "Caller/vtable identification for MainScreenSmartPhone open/update/close and its relationship to MainScreen HUD state.",
-    "Input-device to FocusKey/FocusTouch/DecideKey/DecideTouch mapping, modal push/pop, focus restoration, and teardown paths.",
+    "Input-device event producer to all 13 mapped action names (including Focus/UnFocus/DecideTouch), callback/CNT1 order, modal push/pop, focus restoration, and teardown paths.",
     "A native FLEU application path mapping arrays to named userData values and animation frame timing.",
     "Synchronized game captures for renderer comparisons (origin/scale, hit bounds, clipping, BNTX channel behavior, sampler/blend/shader and font output)."
   ]
