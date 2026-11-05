@@ -16,6 +16,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from nso_sandbox import Sandbox, NSO_SHA256  # noqa: E402
 from villager_move_native import villager_cases  # noqa: E402
 from visitor_schedule_native import visitor_cases  # noqa: E402
+from creature_spawn_native import fish_cases  # noqa: E402
 
 F = np.float32
 RNG_FN = 0x19aa0e0          # xorshift128 draw; stubbed with a controlled stream
@@ -200,12 +201,16 @@ def verify(weeks=3000):
     vis = visitor_cases(weeks=weeks // 2, days=weeks)
     unhandled_vis = vis.pop('meta_unhandled')
     cases.update(vis)
+    fish = fish_cases()
+    unhandled_fish = fish.pop('meta_unhandled')
+    cases.update(fish)
     return {'meta': {'source': f'ExeFS main sha256 {NSO_SHA256}', 'harness': 'tools/gameplay_native.py (nso_sandbox, unicorn)',
                      'stubs': {'0x19aa0e0': 'RNG draw replaced by a seeded Python stream', '0xf44d90/0xf44e70': 'flag get/set -> 0',
                                '0x3cca80 case': 'save-node lookup, base-price member, quantity accessor, requested amount, and quantity setter are controlled; the query function itself is native',
                                'villager cases': 'see tools/villager_move_native.py: flag get/set by name, side-effect writers, friendship records and the date are controlled; roll, weights, pick, odds, personality mask and NPC tables are native (move-in uses the real NmlNpcParam)',
-                               'visitor schedule cases': 'see tools/visitor_schedule_native.py: flags by name, calendar event days, K.K. concert days, the weather-pattern index per date and the xorshift draw are controlled; save-layout lookups, facility/house accessors, week/date helpers, bit selection and both functions are native'},
-                     'unhandled_imports': {**sb.unknown_imports, **unhandled_fac, **unhandled_vil, **unhandled_vis}},
+                               'visitor schedule cases': 'see tools/visitor_schedule_native.py: flags by name, calendar event days, K.K. concert days, the weather-pattern index per date and the xorshift draw are controlled; save-layout lookups, facility/house accessors, week/date helpers, bit selection and both functions are native',
+                               'fish cases': 'see tools/creature_spawn_native.py: table row/column accessors over the real FishAppear*/FishStatusParam/ItemParam rows, the catch-count gate 0x5b8e30, clock, weather code, session mode and the RNG word are controlled; loops, mask tests, weight sums, draw transforms, cumulative picks, the 0x5b9270 gate and the hour-to-slot helpers are native'},
+                     'unhandled_imports': {**sb.unknown_imports, **unhandled_fac, **unhandled_vil, **unhandled_vis, **unhandled_fish}},
             'cases': cases, 'all_pass': all(c['pass'] for c in cases.values())}
 
 

@@ -1391,7 +1391,20 @@
      "0x5b8e30": "FishStatusParam.OpenDonatedNum <= counter CatchFish of the player (session mode >= 2: FishNetHostCatchNumResult); thresholds 0/20/50/100 [TBL]"
     },
     "catalog_list": "0x5bb150 -> 0x5bbd80: availability per item for a time range (critterpedia style): AppearType 0-3 read the river table, 4 and 6 the sea table, 5 Anywhere both; output bit mask of the three slots",
-    "evidence": "[PSEUDO] pseudocode + disassembly of 0x5b9ba0/0x59ca80, table sums [TBL]; not executed"
+    "evidence": "terbukti native: 0x5b9ba0 position pick, 0x5b98b0 percent pick, 0x5b9270 gate, 0x5e3570/0x5e36b0 slots (tools/creature_spawn_native.py over the real tables, output/gameplay/gameplay_native.json); [PSEUDO]: water-kind classification 0x59ca80 and fallback items, 0x5b95b0 variant, 0x5b8e30 catch gate (stubbed in the rig), snow conversion in 0x204480",
+    "candidate_table": "output/gameplay/creature_spawn.json (python3 tools/creature_spawn_native.py table): ItemID and Prob per water kind, hemisphere, month and slot"
+   },
+   "insect": {
+    "tables": "InsectAppearParam (166 rows): one row per insect and hemisphere (AppearArea 0/1); 72 Prob columns = 12 months x 6 slots; per slot the weights do not sum to 100 [TBL]",
+    "time_slot": "0x9f1870 (clock) / 0x9f1920 (given time): month - 1; hour 23-3 -> 0 Midnight, 4-7 -> 1 Morning, 8-15 -> 2 Daytime, 16 -> 3 Evening1, 17-18 -> 4 Evening2, 19-22 -> 5 Night",
+    "prob_reader": "0x9582d0(table, hemisphere, &month, &slot, item): getter entry month * 6 + slot of the array the table constructor 0x95ebe0 fills at +0x170 (entry k = column Prob<Month><Slot>, checked by column hash)",
+    "weather_mask": "0xb56850 builds a mask over AppearWeather (rodata 0x297aeb1: AlwaysAppear, AppearInRain, AppearInSnowGroundTerm, NotAppearInRain, NotAppearInRainAndSnow, AppearInCherryBlossomOpenUpTerm, AppearInAutumnLeavesTerm): bit 0 always; bit 2 when 0x203c90 (snow-ground term); weather code 4/5 (0x204690) -> bit 1, otherwise bit 3 and, outside the snow term, bit 4; bit 5 when 0x203710 (cherry blossom), bit 6 when 0x2039d0 (autumn leaves)",
+    "candidates": "0xb56850: rows whose AppearWeather bit is in the mask, except 0x279 Nomi, with Prob != 0 for the manager month/slot (+0x200/+0x204) form a bitset; then per spawn group (0xb56f00, count +0x1c0) the first (kind 9: second) member of the group bitset that is a candidate is added to the manager set +0x208; the spawn draw itself and the group list are not read yet",
+    "special": {
+     "0x959f70": "flea on a villager (0xd21890): rand32 * 1000 >> 32 < Prob(Nomi) * arg",
+     "0x8e0400": "tree-shake spiders 0x26b Kumo and 0x26e Minomushi are placed when their Prob for the current month/slot is non-zero"
+    },
+    "evidence": "terbukti native: slots 0x9f1870/0x9f1920 and getter order 0x95ebe0; [PSEUDO]: weather mask and candidate set 0xb56850, 0x959f70, 0x8e0400; open: the weighted insect draw and the spawn-group list"
    }
   },
   "day_change_callees_in_order": [

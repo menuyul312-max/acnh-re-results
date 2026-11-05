@@ -210,6 +210,28 @@ class NativeVerificationTests(unittest.TestCase):
         self.assertEqual(gen['all_unlocked_weeks_without_blocked_weekdays']['carried_over_count'], [1])
         self.assertEqual(val['flags_read'], ['EnableHghStayField', 'JohnnyTalkAnyPlayerFlag'])
 
+    def test_creature_spawn_cases_are_native(self):
+        cases = json.loads((ROOT/'output'/'gameplay'/'gameplay_native.json').read_text())['cases']
+        names = ('0x5b9ba0 fish position pick', '0x5b98b0 fish percent pick', '0x5b9270 fish gate', '0x5e3570 fish time slot',
+                 '0x5e36b0 fish slot mask over an hour range', '0x9f1870 / 0x9f1920 insect time slot',
+                 '0x95ebe0 insect Prob getter index = month * 6 + slot')
+        self.assertTrue(all(cases[n]['pass'] for n in names))
+        self.assertGreaterEqual((cases[names[0]]['samples'], cases[names[1]]['samples']), (3888, 1584))
+        self.assertEqual(cases['0x5e3570 fish time slot']['native'], [2] * 4 + [0] * 5 + [1] * 7 + [0] * 5 + [2] * 3)
+        self.assertEqual(cases['0x9f1870 / 0x9f1920 insect time slot']['native'],
+                         [0] * 4 + [1] * 4 + [2] * 8 + [3] + [4] * 2 + [5] * 4 + [0])
+
+    def test_creature_candidate_table(self):
+        doc = json.loads((ROOT/'output'/'gameplay'/'creature_spawn.json').read_text())['data']
+        fish = doc['fish_position_pick']
+        self.assertEqual(len(fish), 6 * 2 * 12 * 3)
+        self.assertEqual(len(doc['insect_prob']), 2 * 12 * 6)
+        trash = {0xd8a, 0xd8d, 0xd8e, 2502}
+        self.assertFalse(trash & {i for rows in fish.values() for i, _ in rows})
+        self.assertTrue(all(rows for rows in fish.values()))
+        self.assertEqual(doc['fish_fallback'], {'river': 0x148, 'pond': 0x8ae, 'sea': 0x8d8})
+        self.assertEqual(doc['fish_gates']['rain_only'], [0x8ec])
+
 
 NSO = Path(os.environ.get('ACNH_RE_NSO', ROOT/'inputs'/'additional_exefs'/'main'))
 
@@ -294,6 +316,17 @@ class VisitorScheduleNsoTests(unittest.TestCase):
         import gameplay_native
         res = gameplay_native.verify(weeks=200)
         self.assertTrue(res['all_pass'], {k: v['pass'] for k, v in res['cases'].items()})
+
+    def test_creature_enum_lists_and_draw(self):
+        lst = lambda a: self.read(a, 4096).split(b'\0', 1)[0].decode().split(',')  # noqa: E731
+        word = lambda a: int.from_bytes(self.read(a, 4), 'little')  # noqa: E731
+        self.assertEqual(lst(0x297aeb1)[:7], ['AlwaysAppear', 'AppearInRain', 'AppearInSnowGroundTerm', 'NotAppearInRain',
+                                              'NotAppearInRainAndSnow', 'AppearInCherryBlossomOpenUpTerm', 'AppearInAutumnLeavesTerm'])
+        kinds = lst(0x29336c2)
+        self.assertEqual([kinds[i] for i in (0x37, 0x3a, 0x41)], ['Ore', 'Trash', 'Fish'])
+        self.assertEqual(word(0x5b9e78), 0x33097c08)  # bfxil w8, w0, #9, #0x17  (float in [1, 2) from the draw)
+        self.assertEqual(word(0x5b98f4), 0x52800c88)  # mov w8, #0x64            (percent pick: u * 100 >> 32)
+        self.assertEqual(word(0x59cc0c), 0x528115c8)  # mov w8, #0x8ae           (pond fallback Medaka)
 
     def test_island_score_enum_lists(self):
         lst = lambda a: self.read(a, 4096).split(b'\0', 1)[0].decode().split(',')  # noqa: E731

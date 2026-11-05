@@ -23,7 +23,7 @@ Data mesin untuk dokumen ini: [`output/gameplay/native_flag_refs.json`](../outpu
 
 ### Bacaan yang sudah terbukti native
 
-`tools/gameplay_native.py` menjalankan fungsi asli dari NSO lewat `tools/nso_sandbox.py` (unicorn). Hasilnya ditulis ke `output/gameplay/gameplay_native.json`. Stub yang dipakai meliputi RNG, flag, pencarian baris kalender, serta accessor save/input untuk query lobak. Kasus jadwal pengunjung (`tools/visitor_schedule_native.py`) hanya mengontrol flag per nama, hari event kalender, hari konser K.K., indeks pola cuaca per tanggal, dan undian xorshift; lookup layout save, accessor fasilitas/rumah pemain, helper minggu/tanggal, dan pemilihan bit berjalan native. Kasus villager (`tools/villager_move_native.py`) hanya mengontrol flag per nama, penulis efek samping (rumah, memori, histori), rekaman keakraban per pemain, dan tanggal. Kasus pindah masuk memuat `NmlNpcParam.bcsv` asli dari ekstraksi lokal dan membangun tabel NPC dengan inisialisator game sendiri. `nn::time` dilayani dengan `datetime` Python.
+`tools/gameplay_native.py` menjalankan fungsi asli dari NSO lewat `tools/nso_sandbox.py` (unicorn). Hasilnya ditulis ke `output/gameplay/gameplay_native.json`. Stub yang dipakai meliputi RNG, flag, pencarian baris kalender, serta accessor save/input untuk query lobak. Kasus ikan (`tools/creature_spawn_native.py`) mengontrol accessor baris/kolom tabel (diisi dari tabel asli ekstraksi lokal), gerbang jumlah tangkapan `0x5b8e30`, jam, kode cuaca, mode sesi, dan undian; loop, uji mask, jumlah bobot, transformasi undian, dan pilihan kumulatif berjalan native. Kasus jadwal pengunjung (`tools/visitor_schedule_native.py`) hanya mengontrol flag per nama, hari event kalender, hari konser K.K., indeks pola cuaca per tanggal, dan undian xorshift; lookup layout save, accessor fasilitas/rumah pemain, helper minggu/tanggal, dan pemilihan bit berjalan native. Kasus villager (`tools/villager_move_native.py`) hanya mengontrol flag per nama, penulis efek samping (rumah, memori, histori), rekaman keakraban per pemain, dan tanggal. Kasus pindah masuk memuat `NmlNpcParam.bcsv` asli dari ekstraksi lokal dan membangun tabel NPC dengan inisialisator game sendiri. `nn::time` dilayani dengan `datetime` Python.
 
 | Fungsi | Yang dicek | Hasil |
 |---|---|---|
@@ -45,6 +45,11 @@ Data mesin untuk dokumen ini: [`output/gameplay/native_flag_refs.json`](../outpu
 | `0xfd9620` | 3000 hari acak: kode hari ini, hari tambahan Wisp, dan hari Celeste sama dengan model §3.4 | lulus |
 | `0xfd8920` | `TkkFirstLiveEnable` (hari berlalu, `IslandEvaluationClearTkkLive` ON, `TkkFirstLive` OFF), urutan pembuat → validasi, `RctInTent` per jam, `JohnnyRequirePartsNum` = 5 (576 sampel) | lulus |
 | `0xf84f10`, `0xf8d860` | peluang pindah masuk (n, P, `NNpcContractProbablityAddPoint`); mask kepribadian; pemilihan dua tahap spesies → villager; fallback eksklusi; slot yang dikosongkan hari ini; NPC menunggu (§5.2) | lulus |
+| `0x5b9ba0` | undian ikan per posisi: 3888 sampel atas tabel `FishAppear*`/`FishStatusParam`/`ItemParam` asli (2 belahan bumi × 12 bulan × 3 slot × 6 jenis air, cuaca, mode sesi, jumlah tangkapan, undian): hasil sama dengan model float32 §8.1 | lulus |
+| `0x5b98b0` | undian ikan persen: 1584 sampel; `r = u × 100 >> 32`, baris sampah ikut, gagal gerbang → `0xfffe` (§8.1) | lulus |
+| `0x5b9270` | gerbang ikan: Sirakansu hanya kode cuaca 4/5; mode sesi ≥ 2 membuang Can/Boot/Tire dan `Ore` (§8.1) | lulus |
+| `0x5e3570`, `0x5e36b0`, `0x9f1870`, `0x9f1920` | jam → slot ikan (3) dan serangga (6), mask slot untuk rentang jam (576 pasangan) (§8.1, §8.2) | lulus |
+| `0x95ebe0` | konstruktor `InsectAppearParam`: entri getter ke-k membaca kolom `Prob<Bulan><Slot>` dengan k = bulan × 6 + slot, dicek lewat hash kolom (§8.2) | lulus |
 
 Bacaan lain tetap [PSEUDO] sampai ada kasus emulasinya.
 
@@ -577,11 +582,62 @@ Pertanyaan yang dulu terbuka di jadwal ini sudah terjawab **[PSEUDO]**:
 | Island Designer | setelah konser | app diberikan Tom Nook |
 | Lily of the valley | 5★ dan konser pertama sudah terjadi | penghitung +1 per pergantian hari |
 
-## 8. Celah berikutnya (prioritas)
+## 8. Kemunculan ikan dan serangga
+
+Tabel kandidat per jenis air, belahan bumi, bulan, dan slot (hanya ItemID dan bobot) dibangun ulang dengan `python3 tools/creature_spawn_native.py table` ke [`output/gameplay/creature_spawn.json`](../output/gameplay/creature_spawn.json). Bacaan mesin ada di `native_flag_refs.json` → `data.creature_spawn`.
+
+### 8.1 Ikan
+
+**Tabel [TBL].** `FishAppearRiverParam` (100 baris) dan `FishAppearSeaParam` (76 baris) memuat satu baris per ikan per belahan bumi. Nilai `AppearArea` 0 = utara, 1 = selatan; baris selatan bergeser enam bulan. Untuk setiap bulan × slot × belahan bumi, jumlah kolom `Prob*` tepat 100. `FishStatusParam` memberi `AppearType` (enum rodata `River, RiverCliffTop, Pond, BrackishWater, Sea, Anywhere, SeaBeachBridge`), `ShadowType`, `IsCreateBait`, dan `OpenDonatedNum`. Ukuran bayangan adalah `ShadowType` ikan terpilih; nilainya tetap, tidak diundi.
+
+**Belahan bumi dan slot (terbukti native).** Mode belahan bumi dibaca dari root save `+0x651fc` (nilai > 1 dianggap 0) dan memilih tabel 0 atau 1. `0x5e3570`: indeks bulan = bulan − 1; jam 4–8 dan 16–20 → `MorningAndEvening`, 9–15 → `Daytime`, 21–3 → `Night`. `0x5e36b0` membentuk mask slot yang sama untuk rentang jam.
+
+**Undian per posisi (terbukti native).** Vtable lapangan `0x3068a68` slot 43 = `0x59ca80` [PSEUDO] mengklasifikasikan air di posisi:
+
+| Kode terrain `0x157270` | Tabel | Mask `AppearType` |
+|---|---|---|
+| 12 | sungai | `River` + `BrackishWater` (muara) |
+| 5 | laut | `Sea`, ditambah `SeaBeachBridge` bila `0x59cda0(pos, 9)` (dermaga) |
+| 1 | sungai | `Pond` bila lookup badan air `0x71cfa0`/`0x71dcd0` tetap vektor default; selain itu `River`, ditambah `RiverCliffTop` bila `0x59cc70(pos, 1)` |
+
+Lalu `0x5b9a00` → `0x5b9ba0` (sungai) atau `0x5ba610` → `0x5ba7b0` (laut) memilih:
+
+1. Kandidat = baris dengan `IsCreateBait` ≠ 0 (Can, Boot, Tire, dan Stone tidak pernah menjadi bayangan), `ItemKind` = `Fish`, bit `AppearType` di mask, lolos gerbang `0x5b9270`, dan `OpenDonatedNum` ≤ jumlah tangkapan.
+2. `W` = jumlah `Prob` kandidat (float32); `r = W × (float(0x3f800000 | u >> 9) − 1)`.
+3. Kandidat pertama yang jumlah berjalannya > `r` terpilih.
+4. Tanpa kandidat [PSEUDO]: sungai → `Funa` (0x148), atau `Medaka` (0x8ae) bila mask memuat `Pond`; laut → `Aji` (0x8d8).
+
+**Undian per jenis.** Vtable yang sama slot 35 = `0x59bc10(field, out, kind)`: kind 0 → `0x5b9380` (sungai), 1 → `0x5b9f80` (laut). Bit 0 byte lapangan `+0x13e1` memilih varian. Bit itu juga memindahkan undian per posisi ke bulan/slot yang tersimpan di objek `0x33d3f78` `+0x210/+0x214` dan ke gerbang `0xb54980`/`0xb548c0`; arti flag dan objeknya masih terbuka.
+- Bit 0 mati, `0x5b98b0` (terbukti native): `r = u × 100 >> 32`; baris pertama (termasuk sampah) dengan jumlah berjalan > `r`; baris itu harus lolos `0x5b9270` dan `0x5b8e30`, jika tidak hasilnya kosong (`0xfffe`) tanpa undian ulang.
+- Bit 0 hidup, `0x5b95b0` [PSEUDO]: baris yang lolos `0x5b9270` dan `0xb548c0` disaring dulu; `r = u × W >> 32`.
+
+**Gerbang.** `0x5b9270` (terbukti native): Sirakansu (0x8ec) hanya bila kode cuaca jam ini 4 atau 5 (hujan, hujan lebat). `0x204480` mengubah 4/5 menjadi 6/7 saat `0x202490` melaporkan salju [PSEUDO], dan kode 6/7 menolak Sirakansu. Mode sesi `0xbc82d0` ≥ 2 membuang Can (0xd8a), Boot (0xd8d), Tire (0xd8e), dan semua `ItemKind` `Ore`. `0x5b8e30` [PSEUDO, distub di rig]: `OpenDonatedNum` ≤ penghitung `CatchFish` pemain. Di mode sesi ≥ 2 ambangnya `FishNetHostCatchNumResult`. Nilai ambang di tabel: 0 (45 ikan), 20 (22), 50 (12), dan 100 (5).
+
+**Daftar ensiklopedia.** `0x5bb150` → `0x5bbd80` menghitung ketersediaan per item untuk rentang waktu. `AppearType` 0–3 membaca tabel sungai, 4 dan 6 tabel laut, dan 5 (`Anywhere`) keduanya. Hasilnya mask tiga slot.
+
+### 8.2 Serangga
+
+**Tabel [TBL].** `InsectAppearParam` (166 baris): satu baris per serangga per belahan bumi, 72 kolom `Prob` (12 bulan × 6 slot). Jumlah per slot tidak 100.
+
+**Slot (terbukti native).** `0x9f1870` (jam sekarang) dan `0x9f1920` (waktu diberikan): jam 23–3 → `Midnight`, 4–7 → `Morning`, 8–15 → `Daytime`, 16 → `Evening1`, 17–18 → `Evening2`, 19–22 → `Night`. `0x9582d0` membaca `Prob` lewat entri getter bulan × 6 + slot. Urutan entri dari konstruktor `0x95ebe0` terbukti native.
+
+**Mask cuaca [PSEUDO].** `0xb56850` membentuk mask atas enum `AppearWeather` (rodata `0x297aeb1`):
+- bit `AlwaysAppear` selalu aktif;
+- bit `AppearInSnowGroundTerm` aktif pada periode salju (`0x203c90`);
+- saat kode cuaca 4/5 aktif bit `AppearInRain`; selain itu aktif bit `NotAppearInRain`, ditambah bit `NotAppearInRainAndSnow` di luar periode salju;
+- bit `AppearInCherryBlossomOpenUpTerm` bila `0x203710`, bit `AppearInAutumnLeavesTerm` bila `0x2039d0` (peran kedua helper disimpulkan dari posisi bit).
+
+Baris dengan bit cuaca di mask dan `Prob` ≠ 0 untuk bulan/slot manajer menjadi kandidat. Nomi (0x279) dikecualikan. Kandidat lalu disebar ke grup spawn (`0xb56f00`).
+
+**Kasus khusus [PSEUDO].** Kutu pada villager (`0x959f70`, dari `0xd21890`): `u × 1000 >> 32 < Prob(Nomi) × arg`. Laba-laba Kumo (0x26b) dan Minomushi (0x26e) dari pohon (`0x8e0400`) hanya disiapkan bila `Prob` slot ini ≠ 0.
+
+**Masih terbuka.** Undian berbobot serangga dan daftar grup spawn (`0xb56f00`, `0xb58c10`, `AppearFg`).
+
+## 9. Celah berikutnya (prioritas)
 
 | # | Celah | Titik masuk |
 |---|---|---|
-| 1 | Kemunculan ikan, makhluk laut, dan serangga (belum dibaca) | akses kolom `Prob*` `0x5b3860` (sungai), `0x5b5ee0` (laut), selektor `AppearArea` `0x5bb150`; serangga `0x95ebe0`..`0x964870`, enum tempat `0x9b7ec0` |
+| 1 | Undian serangga dan grup spawn (ikan selesai, §8) | `0xb56850` → `0xb56f00`/`0xb58c10`, `InsectStatusParam.AppearFg` (`0x8e17f0`), enum `Kind` `0x9b7ec0` |
 | 2 | Regenerasi objek lapangan harian: fosil, batu, gulma, pohon/buah, kerang (belum dibaca) | `SaveGrowUpRandomFactor` `0xf56b70`, `TodayGrowUp` `0xf60530`/`0xfa00d0`, `DigFossil` `0xd9d630` |
 | 3 | Nook Miles+, pencapaian, skor turnamen | `0xf66020` → `0xf60690`, `0x309ff0`, `0x586bd0`, `0xfa60c0` |
 | 4 | Penambah poin keakraban | penulis field yang dibaca `0xd34a20` |
@@ -589,6 +645,6 @@ Pertanyaan yang dulu terbuka di jadwal ini sudah terjawab **[PSEUDO]**:
 | 6 | Prosesor toko native | `0xfc4560` |
 | 7 | Nama simbolik yang belum terbukti (bit flag, vtable save, enum OfficeLevel, binding `KabuBuyPage`, sel pantai) | `left_open` di item selesai `re_queue.json` |
 
-Titik masuk baris 1–3 diambil dari `index.sqlite` (`hash_refs`, `string_refs`, `direct_calls`), jadi masih berupa kandidat; perannya belum dibaca. Cuaca dan genetika bunga sudah ada di baseline (`output/weather`, `output/flowers`) dan tidak perlu diulang. `plants_and_breeding` juga tercatat sebagai target riset agen mechanics, jadi hasil baris 2 hanya ditulis ke `output/gameplay` dan dokumen `GAMEPLAY_*`.
+Titik masuk baris 2–3 diambil dari `index.sqlite` (`hash_refs`, `string_refs`, `direct_calls`), jadi masih berupa kandidat; perannya belum dibaca. Cuaca dan genetika bunga sudah ada di baseline (`output/weather`, `output/flowers`) dan tidak perlu diulang. `plants_and_breeding` juga tercatat sebagai target riset agen mechanics, jadi hasil baris 2 hanya ditulis ke `output/gameplay` dan dokumen `GAMEPLAY_*`.
 
 Antrian yang sama, dalam bentuk yang bisa dibaca mesin dan ditandai statusnya, ada di [re_queue.json](re_queue.json).
