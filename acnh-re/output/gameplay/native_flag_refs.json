@@ -1367,6 +1367,33 @@
    "eventflow": "System_IslandEvaluationCheck: Natural 200/270/350/450, Life 80/160/400/650, TreeNum > 220, PutUnitIconNum >= 15, VeryMessy >= 1 block with >= 180 half-units; DeltaBeforeDay compares int(score) with SzaIslandEvaluationBefore{Natural,Life} (5 / 10 points)",
    "evidence": "[PSEUDO] disassembly + table enums, not executed"
   },
+  "creature_spawn": {
+   "fish": {
+    "tables": "FishAppearRiverParam (100 rows) and FishAppearSeaParam (76 rows): one row per fish and hemisphere (AppearArea 0 = north, 1 = south, months shifted by six); per month and time slot the Prob* column sums to exactly 100 [TBL]",
+    "hemisphere": "save root +0x651fc (values > 1 read as 0) selects table 0 or 1 of the manager list at +0x20 (count +0x18)",
+    "time_slot": "0x5e3570: month index = month - 1; hour 4-8 and 16-20 -> 0 MorningAndEvening, 9-15 -> 1 Daytime, 21-3 -> 2 Night; 0x5e36b0 builds the same slots as a bit mask over an hour range",
+    "prob_column": "0x5b3860 (river) / 0x5b5ee0 (sea): u16 Prob<Month><Slot> of a row, column offsets cached by column hash",
+    "position_pick": {
+     "entry": "field vtable 0x3068a68 slot 43 = 0x59ca80(field, out_item, out_kind, pos)",
+     "water_kind": "terrain code from 0x157270: 12 -> river table, AppearType mask River|BrackishWater; 5 -> sea table, mask Sea, plus SeaBeachBridge when 0x59cda0(pos, 9) holds; 1 -> river table, mask Pond when the water-body lookup (0x71cfa0/0x71dcd0) leaves the default vector, else River plus RiverCliffTop when 0x59cc70(pos, 1) holds; other codes -> no fish",
+     "pick": "0x5b9a00 (river) -> 0x5b9ba0, 0x5ba610 (sea) -> 0x5ba7b0: candidates = rows with FishStatusParam.IsCreateBait != 0 (excludes Can, Boot, Tire, Stone), ItemKind Fish, AppearType bit in the mask, gate 0x5b9270 and catch gate 0x5b8e30; weight W = sum Prob (f32); r = W * (float(0x3f800000 | rand >> 9) - 1.0); first candidate with running sum > r",
+     "fallback": "no candidate: river -> 0x148 Funa, or 0x8ae Medaka when the mask has Pond; sea -> 0x8d8 Aji",
+     "shadow": "shadow size is the fixed FishStatusParam.ShadowType of the chosen fish [TBL], not rolled"
+    },
+    "type_pick": {
+     "entry": "field vtable 0x3068a68 slot 35 = 0x59bc10(field, out_item, kind): kind 0 -> 0x5b9380 (river), 1 -> 0x5b9f80 (sea)",
+     "flag": "field byte +0x13e1 bit 0 chooses the variant; it also switches the position pick to the month/slot stored in 0x33d3f78 +0x210/+0x214 and to the 0xb54980/0xb548c0 gates; meaning of the flag and of that object is open",
+     "bit0_clear": "0x5b98b0: current month/slot; r = rand32 * 100 >> 32; first row (trash rows included) with running sum of Prob > r; the picked row must pass 0x5b9270 and 0x5b8e30, otherwise no item (0xfffe)",
+     "bit0_set": "0x5b95b0: month/slot from 0x33d3f78; rows passing 0x5b9270 and 0xb548c0 are kept, r = rand32 * W >> 32, first kept row with r < Prob after subtracting earlier weights"
+    },
+    "gates": {
+     "0x5b9270": "item 0x8ec Sirakansu only while 0x204590 holds (weather code at the current hour is 4 or 5; 0x204480 maps 4/5 to 6/7 when 0x202490 reports snow, which then fails); session mode 0xbc82d0 >= 2 drops Can 0xd8a, Boot 0xd8d, Tire 0xd8e and ItemKind Ore",
+     "0x5b8e30": "FishStatusParam.OpenDonatedNum <= counter CatchFish of the player (session mode >= 2: FishNetHostCatchNumResult); thresholds 0/20/50/100 [TBL]"
+    },
+    "catalog_list": "0x5bb150 -> 0x5bbd80: availability per item for a time range (critterpedia style): AppearType 0-3 read the river table, 4 and 6 the sea table, 5 Anywhere both; output bit mask of the three slots",
+    "evidence": "[PSEUDO] pseudocode + disassembly of 0x5b9ba0/0x59ca80, table sums [TBL]; not executed"
+   }
+  },
   "day_change_callees_in_order": [
    "0xeecf20",
    "0xeecf60",
