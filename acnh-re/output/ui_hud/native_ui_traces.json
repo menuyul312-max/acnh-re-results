@@ -996,5 +996,24 @@
     "Input-device event producer to all 13 mapped action names (including Focus/UnFocus/DecideTouch), callback/CNT1 order, modal push/pop, focus restoration, and teardown paths.",
     "A native FLEU application path mapping arrays to named userData values and animation frame timing.",
     "Synchronized game captures for renderer comparisons (origin/scale, hit bounds, clipping, BNTX channel behavior, sampler/blend/shader and font output)."
-  ]
+  ],
+  "smartphone_native_neighbors": {
+    "candidate_page_factory": {
+      "function_va": "0x144f7a0",
+      "class_name": "SmartPhoneIconPage",
+      "base_initializer_va": "0x144ea70",
+      "generic_page_handoff": [
+        "0x1da8210",
+        "0x1144600",
+        "0x1da8220"
+      ],
+      "observed": "A native page factory embeds the exact class-name string SmartPhoneIconPage and initializes/attaches a page object through the generic page framework."
+    },
+    "relationship_to_layout": {
+      "layout": "MainScreenSmartPhone",
+      "status": "unproven",
+      "observed": "The existing exact string-reference scan found no MainScreenSmartPhone name in main. SmartPhoneIconPage is a separate string/class candidate; no direct call, asset key, or constructor edge currently connects it to the MainScreenSmartPhone BFLYT."
+    },
+    "limit": "Do not treat the SmartPhoneIconPage class name as proof that it owns, opens, or updates Layout/MainScreenSmartPhone.Nin_NX_NVN.zs."
+  }
 }
