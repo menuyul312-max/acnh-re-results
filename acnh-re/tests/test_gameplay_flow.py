@@ -189,6 +189,17 @@ class NativeVerificationTests(unittest.TestCase):
         self.assertEqual(doc['meta']['unhandled_imports'], {})
         self.assertGreaterEqual(doc['cases']['0xfc6d00 turnip prices']['weeks'], 3000)
 
+    def test_villager_move_cases_are_native(self):
+        cases = json.loads((ROOT/'output'/'gameplay'/'gameplay_native.json').read_text())['cases']
+        villager = {k: v for k, v in cases.items() if k.split()[0] in ('0xf847f0', '0xf855c0', '0xf87670', '0xcc8ad0', '0xf84f10')}
+        self.assertGreaterEqual(len(villager), 15)
+        self.assertTrue(all(v['pass'] for v in villager.values()))
+        pers = cases['0xcc8ad0 personality = NpcLooks enum index (397 real rows)']
+        self.assertEqual(pers['mapping']['Girl_active'], [5])
+        self.assertEqual(pers['move_in_pool'], 391)
+        pick = cases['0xf84f10 personality mask and two-stage pick (species, then villager)']['runs']
+        self.assertTrue(all(len(r['draw_bounds']) == 2 for r in pick))
+
 
 NSO = Path(os.environ.get('ACNH_RE_NSO', ROOT/'inputs'/'additional_exefs'/'main'))
 

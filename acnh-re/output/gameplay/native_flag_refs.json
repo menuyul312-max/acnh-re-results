@@ -933,14 +933,14 @@
     "role": "settler filter (from disassembly)",
     "reading": [
      "row = 0x1665ea0(npc); u16 cache[row] (<=7, else 0) == global 0x35ee080 (the plot value)",
-     "the only 8-value enum in NmlNpcParam is NpcLooks: 0 Boy_normal, 5 Girl_active, 4 Girl_normal (inference)"
+     "u16 cache = NpcLooks enum index, written per row by 0xcc8ad0 (native over the 397 real rows): 0 Boy_normal, 5 Girl_active, 4 Girl_normal"
     ]
    },
    "0xf8d860": {
     "role": "random villager pick (shared by 0xf8dd70, 0xf84f10, 0xf8c540)",
     "reading": [
      "removes villagers whose bit is set in the save bitset +0xbaae0 (35 words = 1120 bits)",
-     "popcount candidates (0x198b590), uniform pick with RNG 0x19aa0e0 (u32 * n >> 32), bit lookup 0x198b630"
+     "if no candidate remains the exclusion is ignored; two-stage pick (native): species uniform among species with candidates (popcount 0x198b590, nth bit 0x198b630), then villager uniform inside that species; id built by 0xcd3640"
     ]
    },
    "0xf84320": {
@@ -975,7 +975,7 @@
    "0xf87670": {
     "role": "pick the villager who wants to move out",
     "reading": [
-     "excluded: empty slots, the index saved by StructureMoveSaveIndex (member +0x4750, 0x33dceb0), the last villager that moved in (+0x1d6d41), the last one talked out of moving (+0x1d6d42), birthday (NmlNpcParam BirthMonth/BirthMDay) 0..7 days away",
+     "excluded: empty slots, the index saved by StructureMoveSaveIndex (member +0x4750, 0x33dceb0), the last villager that moved in (+0x1d6d41), the last one talked out of moving (+0x1d6d42), birthday (NmlNpcParam BirthMonth/BirthMDay): trunc((birthday 05:00 - now) / day) in 0..7, i.e. this game day through 8 game days ahead",
      "weight = int((300 - int(sum of Friendship over the 8 player memories / player count)) * 0.1) - players with level 0xd34a20 > 5",
      "r = 0xf53420(sum of weights); cumulative pick in slot order; candidate stored, +0x1d6d40 = 0, IsMovingConsultationToPlayer = 0; 0xf05b80 resets per-player memory (0xf48c40 refers to ChokeOffMoveOut)"
     ]
@@ -1001,7 +1001,7 @@
      "target: 0xf8c540 (plot/contract path) first; then 0xf8d210 (MoveInOrder), with 0xf8cea0 for a ForceMoveOut index",
      "needs a free house plot (0xef44c0 x10; 0xf8d640 counts them and picks one with the day RNG); 0xf8cea0 moves in a waiting NPC (state 3) if any",
      "else roll rand100: villagers < 5 always; 5..7: < (10 - n + NNpcContractProbablityAddPoint + free plots) * 10; >= 8: < (10 - n + free plots) * 10",
-     "pick: personality bitmask 0x35ee084 = least-present personalities (ties kept), filter 0xf8d7d0, uniform pick 0xf8d860, mark bitset +0xbaae0, house from Param/NpcHouse (0xf826c0, 0xf814c0); IsNpcIncreased/Is3rdNpc"
+     "pick: personality bitmask 0x35ee084 = least-present personalities (ties kept), filter 0xf8d7d0, two-stage species-then-villager pick 0xf8d860, mark bitset +0xbaae0, house from Param/NpcHouse (0xf826c0, 0xf814c0); IsNpcIncreased/Is3rdNpc"
     ]
    },
    "0xf8d7d0": {
@@ -1323,8 +1323,9 @@
    "move_out_roll": "cooldown <= 0, settled >= 6, days_since_talk >= 5, then rand100(day RNG) < 5*settled + days_since_talk",
    "move_out_weight": "floor((300 - floor(sum Friendship / players)) * 0.1) - players with friendship level 6",
    "move_in_roll": "villagers < 5: always; 5..7: (10 - n + NNpcContractProbablityAddPoint + free plots) * 10%; >= 8: (10 - n + free plots) * 10%",
-   "move_in_pick": "personality (id byte 2, 0..7) least present on the island, then uniform pick excluding the bitset",
-   "evidence": "[PSEUDO] pseudocode + disassembly, not executed"
+   "move_in_pick": "pool = NmlNpcParam rows with InitLive != 0 (391); personality (id byte 2 = NpcLooks enum index 0..7) least present on the island; drop villagers in the bitset +0xbaae0 (ignored if that empties the pool); pick a species uniformly among species with candidates, then a villager uniformly inside it",
+   "birthday_exclusion": "d = trunc((this year birthday 05:00 - now) / 1 day), next year if d < 0; excluded when d < 8",
+   "evidence": "terbukti native: 0xf847f0, 0xf87670, 0xf84f10 emulated (tools/villager_move_native.py, output/gameplay/gameplay_native.json)"
   },
   "island_score": {
    "save_member": {
@@ -2495,7 +2496,7 @@
        "target: 0xf8c540 (plot/contract path) first; then 0xf8d210 (MoveInOrder), with 0xf8cea0 for a ForceMoveOut index",
        "needs a free house plot (0xef44c0 x10; 0xf8d640 counts them and picks one with the day RNG); 0xf8cea0 moves in a waiting NPC (state 3) if any",
        "else roll rand100: villagers < 5 always; 5..7: < (10 - n + NNpcContractProbablityAddPoint + free plots) * 10; >= 8: < (10 - n + free plots) * 10",
-       "pick: personality bitmask 0x35ee084 = least-present personalities (ties kept), filter 0xf8d7d0, uniform pick 0xf8d860, mark bitset +0xbaae0, house from Param/NpcHouse (0xf826c0, 0xf814c0); IsNpcIncreased/Is3rdNpc"
+       "pick: personality bitmask 0x35ee084 = least-present personalities (ties kept), filter 0xf8d7d0, two-stage species-then-villager pick 0xf8d860, mark bitset +0xbaae0, house from Param/NpcHouse (0xf826c0, 0xf814c0); IsNpcIncreased/Is3rdNpc"
       ]
      },
      "0xf8cea0": {
@@ -6270,7 +6271,7 @@
      "0xf87670": {
       "role": "pick the villager who wants to move out",
       "reading": [
-       "excluded: empty slots, the index saved by StructureMoveSaveIndex (member +0x4750, 0x33dceb0), the last villager that moved in (+0x1d6d41), the last one talked out of moving (+0x1d6d42), birthday (NmlNpcParam BirthMonth/BirthMDay) 0..7 days away",
+       "excluded: empty slots, the index saved by StructureMoveSaveIndex (member +0x4750, 0x33dceb0), the last villager that moved in (+0x1d6d41), the last one talked out of moving (+0x1d6d42), birthday (NmlNpcParam BirthMonth/BirthMDay): trunc((birthday 05:00 - now) / day) in 0..7, i.e. this game day through 8 game days ahead",
        "weight = int((300 - int(sum of Friendship over the 8 player memories / player count)) * 0.1) - players with level 0xd34a20 > 5",
        "r = 0xf53420(sum of weights); cumulative pick in slot order; candidate stored, +0x1d6d40 = 0, IsMovingConsultationToPlayer = 0; 0xf05b80 resets per-player memory (0xf48c40 refers to ChokeOffMoveOut)"
       ]
@@ -6673,7 +6674,7 @@
        "target: 0xf8c540 (plot/contract path) first; then 0xf8d210 (MoveInOrder), with 0xf8cea0 for a ForceMoveOut index",
        "needs a free house plot (0xef44c0 x10; 0xf8d640 counts them and picks one with the day RNG); 0xf8cea0 moves in a waiting NPC (state 3) if any",
        "else roll rand100: villagers < 5 always; 5..7: < (10 - n + NNpcContractProbablityAddPoint + free plots) * 10; >= 8: < (10 - n + free plots) * 10",
-       "pick: personality bitmask 0x35ee084 = least-present personalities (ties kept), filter 0xf8d7d0, uniform pick 0xf8d860, mark bitset +0xbaae0, house from Param/NpcHouse (0xf826c0, 0xf814c0); IsNpcIncreased/Is3rdNpc"
+       "pick: personality bitmask 0x35ee084 = least-present personalities (ties kept), filter 0xf8d7d0, two-stage species-then-villager pick 0xf8d860, mark bitset +0xbaae0, house from Param/NpcHouse (0xf826c0, 0xf814c0); IsNpcIncreased/Is3rdNpc"
       ]
      },
      "0xf8cea0": {

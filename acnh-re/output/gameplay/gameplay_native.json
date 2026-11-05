@@ -5,7 +5,8 @@
   "stubs": {
    "0x19aa0e0": "RNG draw replaced by a seeded Python stream",
    "0xf44d90/0xf44e70": "flag get/set -> 0",
-   "0x3cca80 case": "save-node lookup, base-price member, quantity accessor, requested amount, and quantity setter are controlled; the query function itself is native"
+   "0x3cca80 case": "save-node lookup, base-price member, quantity accessor, requested amount, and quantity setter are controlled; the query function itself is native",
+   "villager cases": "see tools/villager_move_native.py: flag get/set by name, side-effect writers, friendship records and the date are controlled; roll, weights, pick, odds, personality mask and NPC tables are native (move-in uses the real NmlNpcParam)"
   },
   "unhandled_imports": {}
  },
@@ -290,6 +291,1115 @@
      ]
     ]
    },
+   "pass": true
+  },
+  "0xf847f0 move-out roll threshold (r < 5 x settled + counter)": {
+   "rows": {
+    "settled=5 counter=4": {
+     "threshold_model": null,
+     "runs": {
+      "0": {
+       "drew": false,
+       "bound": null,
+       "pick": false
+      }
+     },
+     "ok": true
+    },
+    "settled=5 counter=5": {
+     "threshold_model": null,
+     "runs": {
+      "0": {
+       "drew": false,
+       "bound": null,
+       "pick": false
+      }
+     },
+     "ok": true
+    },
+    "settled=5 counter=12": {
+     "threshold_model": null,
+     "runs": {
+      "0": {
+       "drew": false,
+       "bound": null,
+       "pick": false
+      }
+     },
+     "ok": true
+    },
+    "settled=5 counter=30": {
+     "threshold_model": null,
+     "runs": {
+      "0": {
+       "drew": false,
+       "bound": null,
+       "pick": false
+      }
+     },
+     "ok": true
+    },
+    "settled=6 counter=4": {
+     "threshold_model": null,
+     "runs": {
+      "0": {
+       "drew": false,
+       "bound": null,
+       "pick": false
+      }
+     },
+     "ok": true
+    },
+    "settled=6 counter=5": {
+     "threshold_model": 35,
+     "runs": {
+      "34": {
+       "drew": true,
+       "bound": 100,
+       "pick": true
+      },
+      "35": {
+       "drew": true,
+       "bound": 100,
+       "pick": false
+      }
+     },
+     "ok": true
+    },
+    "settled=6 counter=12": {
+     "threshold_model": 42,
+     "runs": {
+      "41": {
+       "drew": true,
+       "bound": 100,
+       "pick": true
+      },
+      "42": {
+       "drew": true,
+       "bound": 100,
+       "pick": false
+      }
+     },
+     "ok": true
+    },
+    "settled=6 counter=30": {
+     "threshold_model": 60,
+     "runs": {
+      "59": {
+       "drew": true,
+       "bound": 100,
+       "pick": true
+      },
+      "60": {
+       "drew": true,
+       "bound": 100,
+       "pick": false
+      }
+     },
+     "ok": true
+    },
+    "settled=8 counter=4": {
+     "threshold_model": null,
+     "runs": {
+      "0": {
+       "drew": false,
+       "bound": null,
+       "pick": false
+      }
+     },
+     "ok": true
+    },
+    "settled=8 counter=5": {
+     "threshold_model": 45,
+     "runs": {
+      "44": {
+       "drew": true,
+       "bound": 100,
+       "pick": true
+      },
+      "45": {
+       "drew": true,
+       "bound": 100,
+       "pick": false
+      }
+     },
+     "ok": true
+    },
+    "settled=8 counter=12": {
+     "threshold_model": 52,
+     "runs": {
+      "51": {
+       "drew": true,
+       "bound": 100,
+       "pick": true
+      },
+      "52": {
+       "drew": true,
+       "bound": 100,
+       "pick": false
+      }
+     },
+     "ok": true
+    },
+    "settled=8 counter=30": {
+     "threshold_model": 70,
+     "runs": {
+      "69": {
+       "drew": true,
+       "bound": 100,
+       "pick": true
+      },
+      "70": {
+       "drew": true,
+       "bound": 100,
+       "pick": false
+      }
+     },
+     "ok": true
+    },
+    "settled=10 counter=4": {
+     "threshold_model": null,
+     "runs": {
+      "0": {
+       "drew": false,
+       "bound": null,
+       "pick": false
+      }
+     },
+     "ok": true
+    },
+    "settled=10 counter=5": {
+     "threshold_model": 55,
+     "runs": {
+      "54": {
+       "drew": true,
+       "bound": 100,
+       "pick": true
+      },
+      "55": {
+       "drew": true,
+       "bound": 100,
+       "pick": false
+      }
+     },
+     "ok": true
+    },
+    "settled=10 counter=12": {
+     "threshold_model": 62,
+     "runs": {
+      "61": {
+       "drew": true,
+       "bound": 100,
+       "pick": true
+      },
+      "62": {
+       "drew": true,
+       "bound": 100,
+       "pick": false
+      }
+     },
+     "ok": true
+    },
+    "settled=10 counter=30": {
+     "threshold_model": 80,
+     "runs": {
+      "79": {
+       "drew": true,
+       "bound": 100,
+       "pick": true
+      },
+      "80": {
+       "drew": true,
+       "bound": 100,
+       "pick": false
+      }
+     },
+     "ok": true
+    }
+   },
+   "pass": true
+  },
+  "0xf847f0 gap and counter update": {
+   "state": {
+    "cand": -1,
+    "gap": 12,
+    "days": 30,
+    "conf": 0,
+    "lastin": -1,
+    "laststay": -1
+   },
+   "drew": false,
+   "pass": true
+  },
+  "0xf847f0 abandoned candidate leaves": {
+   "state": {
+    "cand": -1,
+    "gap": 14,
+    "days": 3,
+    "conf": 0,
+    "lastin": -1,
+    "laststay": -1
+   },
+   "calls": [
+    [
+     "history",
+     0
+    ],
+    [
+     "slot_init",
+     3
+    ]
+   ],
+   "vacated_bits": 8,
+   "pass": true
+  },
+  "0xf847f0 ForceMoveOut (first slot only)": {
+   "state": {
+    "cand": -1,
+    "gap": 0,
+    "days": 3,
+    "conf": 0,
+    "lastin": -1,
+    "laststay": -1
+   },
+   "calls": [
+    [
+     "history",
+     0
+    ],
+    [
+     "world",
+     0
+    ],
+    [
+     "flag_set",
+     4,
+     "ForceMoveOut",
+     0
+    ],
+    [
+     "house",
+     0
+    ],
+    [
+     "leave",
+     4,
+     2
+    ],
+    [
+     "slot_init",
+     4
+    ]
+   ],
+   "vacated_bits": 16,
+   "pass": true
+  },
+  "0xf847f0 confirmed move: status 2, then leave": {
+   "day1": {
+    "state": {
+     "cand": 2,
+     "gap": 0,
+     "days": 3,
+     "conf": 1,
+     "lastin": -1,
+     "laststay": -1
+    },
+    "calls": [
+     [
+      "status2",
+      2
+     ]
+    ],
+    "slot_status": 2
+   },
+   "day2": {
+    "state": {
+     "cand": -1,
+     "gap": 15,
+     "days": 3,
+     "conf": 0,
+     "lastin": -1,
+     "laststay": -1
+    },
+    "calls": [
+     [
+      "history",
+      0
+     ],
+     [
+      "house",
+      0
+     ],
+     [
+      "leave",
+      2,
+      1
+     ],
+     [
+      "slot_init",
+      2
+     ]
+    ],
+    "vacated_bits": 4
+   },
+   "pass": true
+  },
+  "0xf855c0 settled count (AbandonedHouse < 2 and MoveInCompletion)": {
+   "abandoned_2_drops_below_6": true,
+   "abandoned_1_still_counts": true,
+   "pass": true
+  },
+  "0xf87670 weighted pick (3 players, level-6 deduction)": {
+   "weights_model": {
+    "0": 21,
+    "1": 21,
+    "2": 22,
+    "3": 26,
+    "4": 29,
+    "5": 14,
+    "6": 26,
+    "7": 22,
+    "8": 26,
+    "9": 22
+   },
+   "total_native": 229,
+   "total_model": 229,
+   "all_draws_match": true,
+   "after_pick_calls": [],
+   "pass": true
+  },
+  "0xf87670 exclusions (last moved in, persuaded, StructureMoveSaveIndex, empty slot)": {
+   "eligible": [
+    0,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "total": 150,
+   "pass": true
+  },
+  "0xf87670 birthday window (trunc((birthday 05:00 - now) / day) in 0..7)": {
+   "runs": {
+    "09:00 on 04-10": {
+     "birthdays": {
+      "5": "04-12",
+      "6": "04-10",
+      "7": "04-17",
+      "8": "04-18",
+      "9": "04-09",
+      "0": "04-19"
+     },
+     "eligible": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      9
+     ],
+     "expected": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      9
+     ],
+     "ok": true
+    },
+    "04:00 on 04-10 (game day 04-09)": {
+     "birthdays": {
+      "6": "04-10",
+      "7": "04-17",
+      "8": "04-18",
+      "9": "04-09"
+     },
+     "eligible": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      8
+     ],
+     "expected": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      8
+     ],
+     "ok": true
+    },
+    "09:00 on 12-28 (year wrap)": {
+     "birthdays": {
+      "1": "01-03",
+      "2": "01-05",
+      "3": "01-06",
+      "4": "12-27"
+     },
+     "eligible": [
+      0,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+     ],
+     "expected": [
+      0,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+     ],
+     "ok": true
+    }
+   },
+   "pass": true
+  },
+  "0xcc8ad0 personality = NpcLooks enum index (397 real rows)": {
+   "mapping": {
+    "Boy_normal": [
+     0
+    ],
+    "Boy_active": [
+     1
+    ],
+    "Boy_pride": [
+     2
+    ],
+    "Boy_snobby": [
+     3
+    ],
+    "Girl_normal": [
+     4
+    ],
+    "Girl_active": [
+     5
+    ],
+    "Girl_pride": [
+     6
+    ],
+    "Girl_big_sis": [
+     7
+    ]
+   },
+   "rows": 397,
+   "move_in_candidates_per_personality": {
+    "0": 60,
+    "1": 55,
+    "2": 55,
+    "3": 34,
+    "4": 59,
+    "5": 49,
+    "6": 55,
+    "7": 24
+   },
+   "move_in_pool": 391,
+   "rows_with_InitLive": 391,
+   "pass": true
+  },
+  "0xf84f10 move-in odds": {
+   "rows": {
+    "villagers=3 free_plots=1 contract_points=0": {
+     "threshold_model": null,
+     "runs": {
+      "99": {
+       "moved_in": true,
+       "odds_bound": 100
+      }
+     },
+     "ok": true
+    },
+    "villagers=3 free_plots=3 contract_points=0": {
+     "threshold_model": null,
+     "runs": {
+      "99": {
+       "moved_in": true,
+       "odds_bound": 100
+      }
+     },
+     "ok": true
+    },
+    "villagers=4 free_plots=1 contract_points=0": {
+     "threshold_model": null,
+     "runs": {
+      "99": {
+       "moved_in": true,
+       "odds_bound": 100
+      }
+     },
+     "ok": true
+    },
+    "villagers=4 free_plots=3 contract_points=0": {
+     "threshold_model": null,
+     "runs": {
+      "99": {
+       "moved_in": true,
+       "odds_bound": 100
+      }
+     },
+     "ok": true
+    },
+    "villagers=5 free_plots=1 contract_points=0": {
+     "threshold_model": 60,
+     "runs": {
+      "59": {
+       "moved_in": true,
+       "odds_bound": 100
+      },
+      "60": {
+       "moved_in": false,
+       "odds_bound": 100
+      }
+     },
+     "ok": true
+    },
+    "villagers=5 free_plots=1 contract_points=3": {
+     "threshold_model": 90,
+     "runs": {
+      "89": {
+       "moved_in": true,
+       "odds_bound": 100
+      },
+      "90": {
+       "moved_in": false,
+       "odds_bound": 100
+      }
+     },
+     "ok": true
+    },
+    "villagers=5 free_plots=3 contract_points=0": {
+     "threshold_model": 80,
+     "runs": {
+      "79": {
+       "moved_in": true,
+       "odds_bound": 100
+      },
+      "80": {
+       "moved_in": false,
+       "odds_bound": 100
+      }
+     },
+     "ok": true
+    },
+    "villagers=5 free_plots=3 contract_points=3": {
+     "threshold_model": null,
+     "runs": {
+      "99": {
+       "moved_in": true,
+       "odds_bound": 100
+      }
+     },
+     "ok": true
+    },
+    "villagers=6 free_plots=1 contract_points=0": {
+     "threshold_model": 50,
+     "runs": {
+      "49": {
+       "moved_in": true,
+       "odds_bound": 100
+      },
+      "50": {
+       "moved_in": false,
+       "odds_bound": 100
+      }
+     },
+     "ok": true
+    },
+    "villagers=6 free_plots=1 contract_points=3": {
+     "threshold_model": 80,
+     "runs": {
+      "79": {
+       "moved_in": true,
+       "odds_bound": 100
+      },
+      "80": {
+       "moved_in": false,
+       "odds_bound": 100
+      }
+     },
+     "ok": true
+    },
+    "villagers=6 free_plots=3 contract_points=0": {
+     "threshold_model": 70,
+     "runs": {
+      "69": {
+       "moved_in": true,
+       "odds_bound": 100
+      },
+      "70": {
+       "moved_in": false,
+       "odds_bound": 100
+      }
+     },
+     "ok": true
+    },
+    "villagers=6 free_plots=3 contract_points=3": {
+     "threshold_model": null,
+     "runs": {
+      "99": {
+       "moved_in": true,
+       "odds_bound": 100
+      }
+     },
+     "ok": true
+    },
+    "villagers=7 free_plots=1 contract_points=0": {
+     "threshold_model": 40,
+     "runs": {
+      "39": {
+       "moved_in": true,
+       "odds_bound": 100
+      },
+      "40": {
+       "moved_in": false,
+       "odds_bound": 100
+      }
+     },
+     "ok": true
+    },
+    "villagers=7 free_plots=1 contract_points=3": {
+     "threshold_model": 70,
+     "runs": {
+      "69": {
+       "moved_in": true,
+       "odds_bound": 100
+      },
+      "70": {
+       "moved_in": false,
+       "odds_bound": 100
+      }
+     },
+     "ok": true
+    },
+    "villagers=7 free_plots=3 contract_points=0": {
+     "threshold_model": 60,
+     "runs": {
+      "59": {
+       "moved_in": true,
+       "odds_bound": 100
+      },
+      "60": {
+       "moved_in": false,
+       "odds_bound": 100
+      }
+     },
+     "ok": true
+    },
+    "villagers=7 free_plots=3 contract_points=3": {
+     "threshold_model": 90,
+     "runs": {
+      "89": {
+       "moved_in": true,
+       "odds_bound": 100
+      },
+      "90": {
+       "moved_in": false,
+       "odds_bound": 100
+      }
+     },
+     "ok": true
+    },
+    "villagers=8 free_plots=1 contract_points=0": {
+     "threshold_model": 30,
+     "runs": {
+      "29": {
+       "moved_in": true,
+       "odds_bound": 100
+      },
+      "30": {
+       "moved_in": false,
+       "odds_bound": 100
+      }
+     },
+     "ok": true
+    },
+    "villagers=8 free_plots=3 contract_points=0": {
+     "threshold_model": 50,
+     "runs": {
+      "49": {
+       "moved_in": true,
+       "odds_bound": 100
+      },
+      "50": {
+       "moved_in": false,
+       "odds_bound": 100
+      }
+     },
+     "ok": true
+    },
+    "villagers=9 free_plots=1 contract_points=0": {
+     "threshold_model": 20,
+     "runs": {
+      "19": {
+       "moved_in": true,
+       "odds_bound": 100
+      },
+      "20": {
+       "moved_in": false,
+       "odds_bound": 100
+      }
+     },
+     "ok": true
+    },
+    "villagers=9 free_plots=3 contract_points=0": {
+     "threshold_model": 40,
+     "runs": {
+      "39": {
+       "moved_in": true,
+       "odds_bound": 100
+      },
+      "40": {
+       "moved_in": false,
+       "odds_bound": 100
+      }
+     },
+     "ok": true
+    }
+   },
+   "pass": true
+  },
+  "0xf84f10 personality mask and two-stage pick (species, then villager)": {
+   "runs": [
+    {
+     "villagers": 7,
+     "mask": 96,
+     "mask_model": 96,
+     "draw_bounds": [
+      31,
+      8
+     ],
+     "draw_bounds_model": [
+      31,
+      8
+     ],
+     "id": [
+      11,
+      5,
+      5
+     ],
+     "id_model": [
+      11,
+      5,
+      5
+     ],
+     "ok": true
+    },
+    {
+     "villagers": 5,
+     "mask": 86,
+     "mask_model": 86,
+     "draw_bounds": [
+      35,
+      5
+     ],
+     "draw_bounds_model": [
+      35,
+      5
+     ],
+     "id": [
+      17,
+      3,
+      4
+     ],
+     "id_model": [
+      17,
+      3,
+      4
+     ],
+     "ok": true
+    },
+    {
+     "villagers": 1,
+     "mask": 127,
+     "mask_model": 127,
+     "draw_bounds": [
+      35,
+      9
+     ],
+     "draw_bounds_model": [
+      35,
+      9
+     ],
+     "id": [
+      25,
+      0,
+      6
+     ],
+     "id_model": [
+      25,
+      0,
+      6
+     ],
+     "ok": true
+    },
+    {
+     "villagers": 5,
+     "mask": 38,
+     "mask_model": 38,
+     "draw_bounds": [
+      35,
+      3
+     ],
+     "draw_bounds_model": [
+      35,
+      3
+     ],
+     "id": [
+      8,
+      2,
+      1
+     ],
+     "id_model": [
+      8,
+      2,
+      1
+     ],
+     "ok": true
+    },
+    {
+     "villagers": 2,
+     "mask": 252,
+     "mask_model": 252,
+     "draw_bounds": [
+      35,
+      10
+     ],
+     "draw_bounds_model": [
+      35,
+      10
+     ],
+     "id": [
+      5,
+      17,
+      7
+     ],
+     "id_model": [
+      5,
+      17,
+      7
+     ],
+     "ok": true
+    },
+    {
+     "villagers": 9,
+     "mask": 9,
+     "mask_model": 9,
+     "draw_bounds": [
+      32,
+      1
+     ],
+     "draw_bounds_model": [
+      32,
+      1
+     ],
+     "id": [
+      26,
+      8,
+      3
+     ],
+     "id_model": [
+      26,
+      8,
+      3
+     ],
+     "ok": true
+    },
+    {
+     "villagers": 3,
+     "mask": 94,
+     "mask_model": 94,
+     "draw_bounds": [
+      35,
+      2
+     ],
+     "draw_bounds_model": [
+      35,
+      2
+     ],
+     "id": [
+      24,
+      0,
+      2
+     ],
+     "id_model": [
+      24,
+      0,
+      2
+     ],
+     "ok": true
+    },
+    {
+     "villagers": 7,
+     "mask": 30,
+     "mask_model": 30,
+     "draw_bounds": [
+      35,
+      9
+     ],
+     "draw_bounds_model": [
+      35,
+      9
+     ],
+     "id": [
+      4,
+      18,
+      4
+     ],
+     "id_model": [
+      4,
+      18,
+      4
+     ],
+     "ok": true
+    },
+    {
+     "villagers": 4,
+     "mask": 154,
+     "mask_model": 154,
+     "draw_bounds": [
+      35,
+      1
+     ],
+     "draw_bounds_model": [
+      35,
+      1
+     ],
+     "id": [
+      7,
+      6,
+      4
+     ],
+     "id_model": [
+      7,
+      6,
+      4
+     ],
+     "ok": true
+    },
+    {
+     "villagers": 2,
+     "mask": 189,
+     "mask_model": 189,
+     "draw_bounds": [
+      35,
+      8
+     ],
+     "draw_bounds_model": [
+      35,
+      8
+     ],
+     "id": [
+      34,
+      1,
+      2
+     ],
+     "id_model": [
+      34,
+      1,
+      2
+     ],
+     "ok": true
+    },
+    {
+     "villagers": 1,
+     "mask": 127,
+     "mask_model": 127,
+     "draw_bounds": [
+      35,
+      8
+     ],
+     "draw_bounds_model": [
+      35,
+      8
+     ],
+     "id": [
+      15,
+      8,
+      0
+     ],
+     "id_model": [
+      15,
+      8,
+      0
+     ],
+     "ok": true
+    },
+    {
+     "villagers": 1,
+     "mask": 253,
+     "mask_model": 253,
+     "draw_bounds": [
+      35,
+      8
+     ],
+     "draw_bounds_model": [
+      35,
+      8
+     ],
+     "id": [
+      6,
+      12,
+      6
+     ],
+     "id_model": [
+      6,
+      12,
+      6
+     ],
+     "ok": true
+    }
+   ],
+   "pass": true
+  },
+  "0xf84f10 all candidates excluded -> exclusion ignored": {
+   "mask": 128,
+   "species_bound": 20,
+   "species_with_personality_7": 20,
+   "id": [
+    1,
+    8,
+    7
+   ],
+   "pass": true
+  },
+  "0xf84f10 slot vacated today is not refilled": {
+   "target_when_slot_6_vacated": 7,
+   "only_free_slot_vacated_calls": [
+    [
+     "move_in_order"
+    ]
+   ],
+   "pass": true
+  },
+  "0xf84f10 waiting NPC takes the plot before the draw": {
+   "calls": [
+    [
+     "plot_path"
+    ],
+    [
+     "move_in_order"
+    ],
+    [
+     "waiting_npc",
+     2
+    ]
+   ],
+   "draw_bounds": [
+    10
+   ],
    "pass": true
   }
  },

@@ -14,6 +14,7 @@ import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from nso_sandbox import Sandbox, NSO_SHA256  # noqa: E402
+from villager_move_native import villager_cases  # noqa: E402
 
 F = np.float32
 RNG_FN = 0x19aa0e0          # xorshift128 draw; stubbed with a controlled stream
@@ -192,10 +193,14 @@ def verify(weeks=3000):
     fac = facility_cases()
     unhandled_fac = fac.pop('meta_unhandled')
     cases.update(fac)
+    vil = villager_cases()
+    unhandled_vil = vil.pop('meta_unhandled')
+    cases.update(vil)
     return {'meta': {'source': f'ExeFS main sha256 {NSO_SHA256}', 'harness': 'tools/gameplay_native.py (nso_sandbox, unicorn)',
                      'stubs': {'0x19aa0e0': 'RNG draw replaced by a seeded Python stream', '0xf44d90/0xf44e70': 'flag get/set -> 0',
-                               '0x3cca80 case': 'save-node lookup, base-price member, quantity accessor, requested amount, and quantity setter are controlled; the query function itself is native'},
-                     'unhandled_imports': {**sb.unknown_imports, **unhandled_fac}},
+                               '0x3cca80 case': 'save-node lookup, base-price member, quantity accessor, requested amount, and quantity setter are controlled; the query function itself is native',
+                               'villager cases': 'see tools/villager_move_native.py: flag get/set by name, side-effect writers, friendship records and the date are controlled; roll, weights, pick, odds, personality mask and NPC tables are native (move-in uses the real NmlNpcParam)'},
+                     'unhandled_imports': {**sb.unknown_imports, **unhandled_fac, **unhandled_vil}},
             'cases': cases, 'all_pass': all(c['pass'] for c in cases.values())}
 
 

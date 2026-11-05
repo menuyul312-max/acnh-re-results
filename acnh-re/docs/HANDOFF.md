@@ -11,14 +11,14 @@ Baca file ini dulu; tidak perlu membaca seluruh repo. Antrian kerja yang bisa di
 | Skenario hari, minggu, tahun, villager, pengunjung | Terpetakan; beberapa algoritma masih terbuka | [GAMEPLAY_SCENARIO](GAMEPLAY_SCENARIO.md) |
 | Pipeline pergantian hari native | Urutan dan peran prosesor terpetakan; semua prosesor punya bacaan (`0xf53a70`, `0xf545f0`) | `output/gameplay/native_flag_refs.json` |
 | Jadwal pengunjung mingguan | Terbaca utuh: pembuat `0xfd8a80`, penempatan, validasi harian `0xfd9620`, layout member, kode 0–9 | GAMEPLAY_SCENARIO §3; `native_flag_refs.json` → `data.visitor_schedule` |
-| Pemilihan penghuni plot | Terbaca: filter kepribadian [0,5,4] dan pemilih acak dengan bitset eksklusi | GAMEPLAY_SCENARIO §5 |
-| Pindah keluar dan pengisian slot villager | Terbaca: undian harian, bobot keakraban, pengecualian, peluang pindah masuk, pilihan kepribadian | GAMEPLAY_SCENARIO §5.1–5.2; `native_flag_refs.json` → `data.villager_moves` |
-| Verifikasi native | 13 kasus lulus, termasuk empat cabang query Daisy Mae dengan accessor terkontrol; suite gameplay 21/21 tanpa skip dengan Unicorn/Capstone lokal dan ExeFS `main` | GAMEPLAY_SCENARIO §1 "Bacaan yang sudah terbukti native"; `tests/test_gameplay_flow.py` |
+| Pemilihan penghuni plot | Filter kepribadian [0,5,4] terbaca. Pemetaan kepribadian = indeks enum `NpcLooks` dan pemilih dua tahap (spesies → villager) terbukti native | GAMEPLAY_SCENARIO §5 |
+| Pindah keluar dan pengisian slot villager | Terbukti native (15 kasus): undian harian, bobot keakraban, pengecualian dan jendela ulang tahun, peluang pindah masuk, mask kepribadian, pool `InitLive`, pemilihan dua tahap | GAMEPLAY_SCENARIO §5.1–5.2; `native_flag_refs.json` → `data.villager_moves` |
+| Verifikasi native | 28 kasus lulus (15 di antaranya siklus villager, dengan `NmlNpcParam` asli), termasuk empat cabang query Daisy Mae dengan accessor terkontrol; suite gameplay 21/21 tanpa skip dengan Unicorn/Capstone lokal dan ExeFS `main` | GAMEPLAY_SCENARIO §1 "Bacaan yang sudah terbukti native"; `tests/test_gameplay_flow.py` |
 | Layout save | Terbukti native: 88 member terpilih; sensus 43.292 node, 151 vtable, 76 ukuran. Skema publik memberi kandidat lintas versi: 143/151 sampel vtable dan 85/88 member cocok pada offset, ukuran, dan kedalaman; nama lokal belum dibuktikan oleh RTTI | GAMEPLAY_SCENARIO §1; `output/gameplay/save_layout.json`; `output/gameplay/save_layout_external_crosswalk.json` |
 | Rumus skor pulau | Terbaca: 11 kategori item, bobot Natural/Life, bonus harga/jembatan/fasilitas, poin minus. Dampak bit item `+2` dan syarat struktur bit `+8` sudah dibuktikan; nama simbolik bit tetap tidak ada | GAMEPLAY_FLOW §10.1; `native_flag_refs.json` → `data.island_score` |
 | Tanggal konser K.K. | Terbaca: NormalLive = Sabtu (geser sesuai `TkkSkipNormal`), BirthdayLive dari jadwal ulang tahun per pemain | GAMEPLAY_SCENARIO §3.6 |
 | Lobak dan stok toko | Alur lokal input `cKabu` → query dan layout numerik terpetakan; output Nook, slot bersyarat, domain ID 0–14999, dan mekanisme batch tujuh hari terbukti. Keanggotaan bitset state 2/3, hasil RNG konkret, serta page binding build 1.0.0 tetap terbuka | GAMEPLAY_SCENARIO §3.7; `output/gameplay/kabu_ui_binding.json`; `output/gameplay/nook_shop_weekly_slot_map.json`; `re_queue.json` |
-| Berikutnya | 9 item open, berurutan prioritas: pindah villager native, jadwal pengunjung native, kemunculan ikan/serangga, regenerasi lapangan harian, Nook Miles/turnamen, keakraban, skor pulau native, toko native, nama simbolik | `re_queue.json` → `items`; GAMEPLAY_SCENARIO §8 |
+| Berikutnya | 8 item open, berurutan prioritas: jadwal pengunjung native, kemunculan ikan/serangga, regenerasi lapangan harian, Nook Miles/turnamen, keakraban, skor pulau native, toko native, nama simbolik | `re_queue.json` → `items`; GAMEPLAY_SCENARIO §8 |
 | Mekanik (collision, terrain, NPC nav, …) dan pembentukan pulau | Dikerjakan agen lain; jangan disentuh tanpa koordinasi | README root "Fokus terbaru" |
 
 Level bukti: **[EF]** EventFlow, **[TBL]** tabel, **[PSEUDO]** pseudocode/disassembly yang belum dieksekusi, **[NATIVE]** belum dibaca, ditambah "terbukti native" untuk hasil emulasi. Jangan menaikkan status tanpa bukti.
@@ -50,6 +50,7 @@ Level bukti: **[EF]** EventFlow, **[TBL]** tabel, **[PSEUDO]** pseudocode/disass
 | `re_helpers.py table <Tabel>` / `item <ID>` / `msg <regex>` | Tabel BCSV, nama item, pencarian pesan (lokal; teks jangan di-commit) |
 | `tools/nso_sandbox.py` (modul) | Emulasi fungsi native langsung dari NSO `main` (unicorn): relokasi MOD0, stub import libc, `Sandbox.call(va, args)`, `stub(va, fn)` |
 | `python3 acnh-re/tools/gameplay_native.py` | Verifikasi native (emulasi) bacaan gameplay → `output/gameplay/gameplay_native.json`; tambah kasus baru di sini untuk menaikkan [PSEUDO] |
+| `tools/villager_move_native.py` (modul, dipanggil `gameplay_native.py`) | Rig emulasi pindah keluar `0xf847f0`, pemilih `0xf87670`, pindah masuk `0xf84f10`; memuat `NmlNpcParam.bcsv` lokal sebagai objek tabel game dan menjalankan inisialisator `0xcc89e0`/`0xcd4050` |
 | `python3 acnh-re/tools/save_layout_native.py` | Bangun ulang `output/gameplay/save_layout.json` (layout member save, terbukti native) |
 
 ## Aturan penting
@@ -96,3 +97,4 @@ Level bukti: **[EF]** EventFlow, **[TBL]** tabel, **[PSEUDO]** pseudocode/disass
 | 2026-11-04 | Alur input lobak dan layout numerik dikaitkan lewat EventFlow; skema publik disejajarkan dengan layout save (85/88 member, 143/151 vtable paths); scan empat NSO dan caveat lintas versi dicatat | `4bf8556` |
 | 2026-11-04 | Peta stok mingguan Nook (ID 0–14999, bucket per hari, batch tujuh hari, pruning `0xfcf580`); transisi save OfficeLevel 1→2; suite 21/21 termasuk emulasi native | `2d090fa` |
 | 2026-11-05 | Rencana RE berikutnya: 9 item open di `re_queue.json` (pindah villager dan jadwal native, kemunculan makhluk, regenerasi lapangan, Nook Miles/turnamen, keakraban, skor dan toko native, sisa nama simbolik); GAMEPLAY_SCENARIO §8 | `a535f5e` |
+| 2026-11-05 | Pindah villager terbukti native: 15 kasus (`villager_move_native.py`); temuan baru: pemilihan villager baru dua tahap spesies → villager, pool `InitLive` ≠ 0 (391), kepribadian = indeks `NpcLooks`, jendela ulang tahun 9 hari game; sandbox menangani guard statik, `memcmp`, `VSNPrintf`, mutex | `-` |

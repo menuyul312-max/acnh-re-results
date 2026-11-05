@@ -23,7 +23,7 @@ Data mesin untuk dokumen ini: [`output/gameplay/native_flag_refs.json`](../outpu
 
 ### Bacaan yang sudah terbukti native
 
-`tools/gameplay_native.py` menjalankan fungsi asli dari NSO lewat `tools/nso_sandbox.py` (unicorn). Hasilnya ditulis ke `output/gameplay/gameplay_native.json`. Stub yang dipakai meliputi RNG, flag, pencarian baris kalender, serta accessor save/input untuk query lobak. `nn::time` dilayani dengan `datetime` Python.
+`tools/gameplay_native.py` menjalankan fungsi asli dari NSO lewat `tools/nso_sandbox.py` (unicorn). Hasilnya ditulis ke `output/gameplay/gameplay_native.json`. Stub yang dipakai meliputi RNG, flag, pencarian baris kalender, serta accessor save/input untuk query lobak. Kasus villager (`tools/villager_move_native.py`) hanya mengontrol flag per nama, penulis efek samping (rumah, memori, histori), rekaman keakraban per pemain, dan tanggal. Kasus pindah masuk memuat `NmlNpcParam.bcsv` asli dari ekstraksi lokal dan membangun tabel NPC dengan inisialisator game sendiri. `nn::time` dilayani dengan `datetime` Python.
 
 | Fungsi | Yang dicek | Hasil |
 |---|---|---|
@@ -38,6 +38,10 @@ Data mesin untuk dokumen ini: [`output/gameplay/native_flag_refs.json`](../outpu
 | `0xfcc300` | Able Sisters: kit ada → +1 hari `TailorConstruction1` = 1 → +2 hari state 2 (`TailorBuilt`, `TailorBuiltToday`); 2 hari terlewat sekaligus → langsung buka tanpa `Today`; tanpa kit tetap state 1 | lulus |
 | `0xf77050` | tenda museum dan upgrade: kit → state 2; `MuseumGrowupEnable1` + satu hari → hitungan 1; hari berikutnya → state 3 dan `Museum2Built`. Flag `*Today` hanya pada tepat satu hari berlalu | lulus |
 | `0xf26330` | campsite: kit → state 2, `CampSiteBuilt`, `CeremonyBuildCampSite`, `CampSiteBuiltToday`; tanpa kit tetap state 1 | lulus |
+| `0xf847f0`, `0xf855c0` | undian pindah keluar: `r < 5 × menetap + penghitung` (hanya bila jeda 0, menetap ≥ 6, penghitung ≥ 5); jeda/penghitung; calon `AbandonedHouse`; `ForceMoveOut` (slot pertama saja); konfirmasi → status 2 → pergi (§5.1) | lulus |
+| `0xf87670` | bobot pemilihan calon (float32, 3 pemain, pengurang level 6), seluruh 229 nilai undian; pengecualian slot; jendela ulang tahun pada tiga tanggal (§5.1) | lulus |
+| `0xcc8ad0`, `0xcd4050` | tabel runtime dari `NmlNpcParam` asli: kepribadian = indeks enum `NpcLooks` di 397 baris; pool pindah masuk = 391 baris dengan `InitLive` ≠ 0 (§5.2) | lulus |
+| `0xf84f10`, `0xf8d860` | peluang pindah masuk (n, P, `NNpcContractProbablityAddPoint`); mask kepribadian; pemilihan dua tahap spesies → villager; fallback eksklusi; slot yang dikosongkan hari ini; NPC menunggu (§5.2) | lulus |
 
 Bacaan lain tetap [PSEUDO] sampai ada kasus emulasinya.
 
@@ -421,7 +425,7 @@ Alur lokal dari input angka `cKabu` ke query Daisy Mae dan bidang UI yang dipaka
 | Tahap | Mekanisme | Bukti |
 |---|---|---|
 | Awal | 2 villager, kepribadian AN dan HA | [EF] |
-| Quest 3 rumah | `DecideSettlerNpc` (slot eksekusi `0x33c660`) → `0xf8dd70(SettlerType)`: filter `0xf8de30` memaksa nilai kepribadian per plot dari tabel rodata `0x29fa1dc` = [0, 5, 4]. Itu `NpcLooks` `Boy_normal` / `Girl_active` / `Girl_normal` bila nilainya indeks enum (inferensi). Pemilih `0xf8d860` mengeluarkan villager di bitset save `+0xbaae0` dan memilih acak seragam dengan RNG `0x19aa0e0` | [EF] aksi; [PSEUDO]/disassembly |
+| Quest 3 rumah | `DecideSettlerNpc` (slot eksekusi `0x33c660`) → `0xf8dd70(SettlerType)`: filter `0xf8de30` memaksa nilai kepribadian per plot dari tabel rodata `0x29fa1dc` = [0, 5, 4]. Nilai itu adalah indeks enum `NpcLooks`, jadi plotnya untuk `Boy_normal` / `Girl_active` / `Girl_normal` (pemetaan terbukti native, `0xcc8ad0`). Pemilih `0xf8d860` mengeluarkan villager di bitset save `+0xbaae0`, lalu memilih spesies secara acak seragam dan sesudah itu villager di dalam spesies itu (§5.2) | [EF] aksi; filter [PSEUDO]; pemetaan kepribadian dan pemilih terbukti native |
 | Pengunjung campsite pertama | Bila diajak, rumahnya dipasang dari `housing kit` 3349 | [EF] |
 | Rumah tambahan | Kit dibeli lewat Tom Nook sampai `NpcHouseNum cExist` 10 | [EF] |
 | Mengundang di campsite | `NNPC_Spot_Camp_Invite:CheckOffice` → `CheckCanInduceNpc`: 1 = nama sama sudah tinggal, 2 = nama sama sudah pasti pindah, 3 = penghuni maksimal, 4 = tidak ada lahan dijual | [EF] |
@@ -432,10 +436,10 @@ Alur lokal dari input angka `cKabu` ke query Daisy Mae dan bidang UI yang dipaka
 | Konsultasi pindah keluar | `NNPC_ApproachD:MoveConfirm`/`MoveCancel` menyalakan `IsMovingConsultationToPlayer` (§5.1) | [EF] |
 | Pengumuman pindah | `Demo_PublicAnnouncement_32_CmnNewsMoveIn`, `_34_CmnNewsMoveOut`, gate `IsExistMoveNpc` | [EF] |
 | Rumah kosong | `AbandonedHouse` (`0xd21110`, `0xf8ab90`, …) | [PSEUDO] string |
-| Pemilih villager acak yang sama | `0xf8d860` juga dipanggil `0xf84f10` (pengisian slot, §5.2) dan `0xf8c540` | [PSEUDO] |
-| Siapa yang ingin pindah, dan kapan | §5.1 | [PSEUDO] |
+| Pemilih villager acak yang sama | `0xf8d860` juga dipanggil `0xf84f10` (pengisian slot, §5.2) dan `0xf8c540` | terbukti native lewat `0xf84f10` |
+| Siapa yang ingin pindah, dan kapan | §5.1 | terbukti native |
 
-Isi §5.1 dan §5.2 adalah **[PSEUDO]** (pseudocode, rumus peluang dicocokkan dengan disassembly), kecuali yang diberi label lain. Ringkasan mesinnya ada di `native_flag_refs.json` → `data.villager_moves`.
+Aturan §5.1 dan §5.2 **terbukti native**: `0xf847f0`, `0xf87670`, dan `0xf84f10` dijalankan dari `main` lewat emulasi (`tools/villager_move_native.py`, 15 kasus di `gameplay_native.json`; daftar di §1). Pengecualiannya: baris berlabel [EF], dan fungsi yang di-stub dalam emulasi itu, yaitu `0xf8c540` (jalur plot), `0xf8d210` (`MoveInOrder`), `0xf8cea0` (NPC menunggu), serta penulis rumah dan memori. Fungsi-fungsi itu tetap [PSEUDO]. Ringkasan mesinnya ada di `native_flag_refs.json` → `data.villager_moves`.
 
 ### 5.1 Pindah keluar
 
@@ -451,11 +455,11 @@ Data villager ada di member NPC (descriptor `0x33d97d8`, `0x1d6d48` byte): 10 sl
 | `+0x1d6d42` | slot villager terakhir yang dibujuk tetap tinggal |
 
 **Setiap pergantian hari** (minimal satu hari berlalu), `0xf84320` → `0xf847f0` mengerjakan, berurutan:
-1. Calon dengan `AbandonedHouse` ≠ 0 → slot dikosongkan, jeda = 15.
-2. Villager pertama (urut slot) dengan `ForceMoveOut` ON → langsung pindah dan slotnya dikosongkan.
+1. Calon dengan `AbandonedHouse` ≠ 0 → slot dikosongkan, jeda = 15. Proses lalu berlanjut ke langkah 4 pada hari yang sama, sehingga jeda langsung berkurang (setelah satu hari: 14).
+2. Villager pertama (urut slot) dengan `ForceMoveOut` ON → langsung pindah (`0xf8a410` jenis 2), flag dimatikan, dan slotnya dikosongkan. Villager kedua yang juga ber-`ForceMoveOut` menunggu hari berikutnya. Jeda tidak diubah, kecuali villager itu juga calon.
 3. Calon yang sudah dikonfirmasi:
-   - pergantian hari pertama → status slot `+0x11efa` = 2 (`0xf05d00`);
-   - pergantian hari berikutnya → pindah, slot dikosongkan, jeda = 15.
+   - pergantian hari pertama → status slot `+0x11efa` = 2 (`0xf05d00`). Fungsi selesai di sini, jadi penghitung tidak bertambah hari itu;
+   - pergantian hari berikutnya → pindah (`0xf8a410` jenis 1), slot dikosongkan, jeda = 15.
 4. Selain itu jeda dikurangi dan penghitung hari ditambah sejumlah hari yang berlalu. Calon dihapus bila salah satu syarat ini terpenuhi:
    - jeda > 0;
    - villager menetap < 6 (`0xf855c0`: slot terisi, `MoveInCompletion` ON, `AbandonedHouse` < 2);
@@ -463,7 +467,7 @@ Data villager ada di member NPC (descriptor `0x33d97d8`, `0x1d6d48` byte): 10 sl
 
    Bila tidak, `r` = acak 0–99 dari RNG harian `0x35e9510` (`0xf53420`, di-seed `0xf53a70`). Bila `r < 5 × villager menetap + penghitung`, calon baru dipilih (`0xf87670`). Bila undian gagal, calon lama tetap.
 
-   Contoh: 10 villager dan penghitung 30 → 80% per hari; 6 villager dan penghitung 5 → 35%.
+   Contoh: 10 villager dan penghitung 30 → 80% per hari; 6 villager dan penghitung 5 → 35%. Penghitung dibatasi 30 (`+ hari berlalu`, lalu min 30). Batas `5n + penghitung` terbukti native untuk n = 6/8/10 dan penghitung 5/12/30; dengan n = 5 atau penghitung 4 tidak ada undian dan calon dihapus.
 
 **Pemilihan calon** (`0xf87670`):
 - **Dikecualikan:**
@@ -471,7 +475,7 @@ Data villager ada di member NPC (descriptor `0x33d97d8`, `0x1d6d48` byte): 10 sl
   - indeks yang disimpan aksi `StructureMoveSaveIndex` (member `+0x4750`; dipakai `SNPC_rco_10_Common_MoveHouse` dan `_MoveNpcFacility`, kemungkinan rumah yang sedang dipindah);
   - villager terakhir yang pindah masuk;
   - villager terakhir yang dibujuk tinggal;
-  - villager yang ulang tahunnya 0–7 hari lagi (`BirthMonth`/`BirthMDay` di `NmlNpcParam`).
+  - villager yang ulang tahunnya dekat (`BirthMonth`/`BirthMDay` di `NmlNpcParam`). Rumusnya: d = selisih (pukul 05:00 di hari ulang tahun tahun ini − sekarang) dalam hari, dipotong ke arah nol (`0x1fc070`); bila d < 0, dipakai ulang tahun tahun depan; villager dikecualikan bila d < 8. Secara efektif yang dikecualikan adalah ulang tahun dari hari game ini sampai 8 hari game ke depan, atau 9 hari game total. Contoh: pukul 09:00 pada 10 April, ulang tahun 10–18 April dikecualikan dan 19 April tidak; pukul 04:00 (hari game masih 9 April), 9–17 April dikecualikan. Pergantian tahun ikut teruji.
 - **Bobot** per villager = ⌊(300 − ⌊ΣFriendship ÷ jumlah pemain⌋) × 0.1⌋ − jumlah pemain berlevel keakraban 6.
   - Friendship diambil dari memori villager untuk tiap dari 8 pemain.
   - Level (`0xd34a20`): <30 → 1, <60 → 2, <100 → 3, <150 → 4, <200 → 5, ≥200 → 6.
@@ -491,13 +495,13 @@ Keduanya mereset penghitung hari ke 0 dan menyalakan `NextMoveOutTalk` serta `Is
 
 ### 5.2 Mengisi slot kosong
 
-`0xf84f10` jalan setiap pergantian hari sesudah §5.1. Sasarannya slot kosong pertama yang tidak dikosongkan hari itu.
+`0xf84f10` jalan setiap pergantian hari sesudah §5.1. Sasarannya slot kosong pertama (ID spesies `0x23`, ditulis `0xf01640`) yang tidak dikosongkan hari itu. Bila satu-satunya slot kosong baru dikosongkan hari ini, tidak ada pindah masuk; jalur plot pun tidak dicoba.
 
 1. **Jalur plot/kontrak** `0xf8c540` (string `FromSettlerQuest`, `InducementFlag`, `ImmQ_%s_*`). Bila berhasil, selesai.
 2. **`0xf8d210`** (`MoveInOrder`). Bila ada villager hasil `ForceMoveOut`, `0xf8cea0` juga dipanggil untuk slotnya; perannya di sini belum dibaca rinci.
-3. **Plot rumah kosong** wajib ada: `0xef44c0` untuk 10 plot; `0xf8d640` menghitungnya dan memilih satu dengan RNG harian.
+3. **Plot rumah kosong** wajib ada: `0xef44c0` untuk 10 plot; `0xf8d640` menghitung P = jumlah plot tersedia dan memilih plot ke-r (r acak 0…P−1, RNG harian).
    - Bila ada NPC menunggu (status 3) di salah satu dari 4 struktur NPC tambahan (`+0xcca68 + k×0x12ab0`; kemungkinan villager yang sudah diundang), `0xf8cea0` memindahkannya ke plot itu. Selesai.
-   - Selain itu ada undian harian. Misalkan n = jumlah villager dan P = jumlah plot kosong:
+   - Selain itu ada undian harian `r` = acak 0–99; pindah masuk terjadi bila `r` < batas. Misalkan n = jumlah slot dengan ID NPC valid dan P = jumlah plot tersedia:
 
      | n | Peluang pindah masuk |
      |---|---|
@@ -505,8 +509,9 @@ Keduanya mereset penghitung hari ke 0 dan menyalakan `NextMoveOutTalk` serta `Is
      | 5–7 | (10 − n + `NNpcContractProbablityAddPoint` + P) × 10% |
      | ≥ 8 | (10 − n + P) × 10% |
    - **Pemilihan villager baru:**
-     - Kepribadian yang dipilih adalah yang paling sedikit di pulau; bila seri, semuanya. Nilainya 0–7, dari byte ke-3 ID NPC (`0xcd3cb0`).
-     - Kandidat disaring `0xf8d7d0` (bitmask `0x35ee084`), lalu dipilih acak seragam oleh `0xf8d860` dengan bitset eksklusi `+0xbaae0`. Villager terpilih ikut ditandai di bitset itu.
+     - Kepribadian yang dipilih adalah yang paling sedikit di pulau; bila seri, semuanya. Nilainya 0–7, dari byte ke-3 ID NPC (`0xcd3cb0`). Byte itu diisi dari tabel runtime `0xcc8ad0` = indeks enum `NpcLooks`: 0 `Boy_normal`, 1 `Boy_active`, 2 `Boy_pride`, 3 `Boy_snobby`, 4 `Girl_normal`, 5 `Girl_active`, 6 `Girl_pride`, 7 `Girl_big_sis`.
+     - Pool kandidat (`0xcd2f40`) adalah baris `NmlNpcParam` dengan `InitLive` ≠ 0, yaitu 391 dari 397. Pool ini disaring `0xf8d7d0` dengan mask kepribadian `0x35ee084`.
+     - `0xf8d860` membuang kandidat yang ada di bitset eksklusi `+0xbaae0`; bila sisanya kosong, eksklusi diabaikan. Pemilihannya **dua tahap**: satu spesies diambil acak seragam di antara spesies yang masih punya kandidat, lalu satu villager diambil acak seragam di dalam spesies itu. Akibatnya peluang per villager = 1 / (jumlah spesies × kandidat di spesiesnya), jadi villager dari spesies dengan sedikit kandidat lebih mungkin terpilih. Villager terpilih ditandai di bitset eksklusi.
      - Rumah dibuat dari `Param/NpcHouse/%s.byml` (`0xf826c0`, `0xf814c0`).
 
 **[EF] `NNpcContractProbablityAddPoint`** (`System_GrowUp_GameProcess:NNpcContractCounter`, dipanggil dari `ChkwithIslandEvaluation`; peringkat dari `System_IslandEvaluationCheck`: SetIndex 2 = Nature, SetIndex 3 = Life):
@@ -573,16 +578,15 @@ Pertanyaan yang dulu terbuka di jadwal ini sudah terjawab **[PSEUDO]**:
 
 | # | Celah | Titik masuk |
 |---|---|---|
-| 1 | Pindah keluar/masuk villager terbukti native | `0xf847f0`, `0xf87670`, `0xf84f10` |
-| 2 | Jadwal pengunjung mingguan terbukti native | `0xfd8a80`, `0xfd9620` |
-| 3 | Kemunculan ikan, makhluk laut, dan serangga (belum dibaca) | akses kolom `Prob*` `0x5b3860` (sungai), `0x5b5ee0` (laut), selektor `AppearArea` `0x5bb150`; serangga `0x95ebe0`..`0x964870`, enum tempat `0x9b7ec0` |
-| 4 | Regenerasi objek lapangan harian: fosil, batu, gulma, pohon/buah, kerang (belum dibaca) | `SaveGrowUpRandomFactor` `0xf56b70`, `TodayGrowUp` `0xf60530`/`0xfa00d0`, `DigFossil` `0xd9d630` |
-| 5 | Nook Miles+, pencapaian, skor turnamen | `0xf66020` → `0xf60690`, `0x309ff0`, `0x586bd0`, `0xfa60c0` |
-| 6 | Penambah poin keakraban | penulis field yang dibaca `0xd34a20` |
-| 7 | Skor pulau end-to-end native | `0x15c68c0`, `0x15c61f0` |
-| 8 | Prosesor toko native | `0xfc4560` |
-| 9 | Nama simbolik yang belum terbukti (bit flag, vtable save, enum OfficeLevel, binding `KabuBuyPage`, sel pantai) | `left_open` di item selesai `re_queue.json` |
+| 1 | Jadwal pengunjung mingguan terbukti native | `0xfd8a80`, `0xfd9620` |
+| 2 | Kemunculan ikan, makhluk laut, dan serangga (belum dibaca) | akses kolom `Prob*` `0x5b3860` (sungai), `0x5b5ee0` (laut), selektor `AppearArea` `0x5bb150`; serangga `0x95ebe0`..`0x964870`, enum tempat `0x9b7ec0` |
+| 3 | Regenerasi objek lapangan harian: fosil, batu, gulma, pohon/buah, kerang (belum dibaca) | `SaveGrowUpRandomFactor` `0xf56b70`, `TodayGrowUp` `0xf60530`/`0xfa00d0`, `DigFossil` `0xd9d630` |
+| 4 | Nook Miles+, pencapaian, skor turnamen | `0xf66020` → `0xf60690`, `0x309ff0`, `0x586bd0`, `0xfa60c0` |
+| 5 | Penambah poin keakraban | penulis field yang dibaca `0xd34a20` |
+| 6 | Skor pulau end-to-end native | `0x15c68c0`, `0x15c61f0` |
+| 7 | Prosesor toko native | `0xfc4560` |
+| 8 | Nama simbolik yang belum terbukti (bit flag, vtable save, enum OfficeLevel, binding `KabuBuyPage`, sel pantai) | `left_open` di item selesai `re_queue.json` |
 
-Titik masuk baris 3–5 diambil dari `index.sqlite` (`hash_refs`, `string_refs`, `direct_calls`), jadi masih berupa kandidat; perannya belum dibaca. Cuaca dan genetika bunga sudah ada di baseline (`output/weather`, `output/flowers`) dan tidak perlu diulang. `plants_and_breeding` juga tercatat sebagai target riset agen mechanics, jadi hasil baris 4 hanya ditulis ke `output/gameplay` dan dokumen `GAMEPLAY_*`.
+Titik masuk baris 2–4 diambil dari `index.sqlite` (`hash_refs`, `string_refs`, `direct_calls`), jadi masih berupa kandidat; perannya belum dibaca. Cuaca dan genetika bunga sudah ada di baseline (`output/weather`, `output/flowers`) dan tidak perlu diulang. `plants_and_breeding` juga tercatat sebagai target riset agen mechanics, jadi hasil baris 3 hanya ditulis ke `output/gameplay` dan dokumen `GAMEPLAY_*`.
 
 Antrian yang sama, dalam bentuk yang bisa dibaca mesin dan ditandai statusnya, ada di [re_queue.json](re_queue.json).

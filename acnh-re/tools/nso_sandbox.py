@@ -63,6 +63,58 @@ TIME_IMPORTS = {
 }
 
 
+# mutex calls are no-ops: the sandbox runs one thread
+SINGLE_THREAD_NOOPS = {
+    '_ZN2nn2os15InitializeMutexEPNS0_9MutexTypeEbi',
+    '_ZN2nn2os13FinalizeMutexEPNS0_9MutexTypeE',
+    '_ZN2nn2os9LockMutexEPNS0_9MutexTypeE',
+    '_ZN2nn2os11UnlockMutexEPNS0_9MutexTypeE',
+}
+
+
+def _vsnprintf(sb, fmt, va):
+    """Integer/string subset of printf over an AAPCS64 va_list {stack, gr_top, vr_top, gr_offs, vr_offs}."""
+    import re
+    stack, gr_top, _vr_top, gr_offs = struct.unpack('<QQQi', sb.read(va, 28))
+
+    def arg():
+        nonlocal stack, gr_offs
+        if gr_offs < 0:
+            v = sb.u64(gr_top + gr_offs)
+            gr_offs += 8
+        else:
+            v = sb.u64(stack)
+            stack += 8
+        return v
+    out = []
+    for m in re.finditer(rb'%([-0 #+]*)(\d*)(?:\.(\d+))?(hh|h|ll|l|z)?([diuxXscp%])|[^%]+|%', fmt):
+        if not m.group(5):
+            out.append(m.group(0))
+            continue
+        flags, width, conv = m.group(1), int(m.group(2) or 0), m.group(5)
+        if conv == b'%':
+            out.append(b'%')
+            continue
+        v = arg()
+        if conv == b's':
+            s = sb.read(v, 256).split(b'\0')[0] if v else b'(null)'
+        elif conv == b'c':
+            s = bytes([v & 0xff])
+        else:
+            if conv in b'di':
+                v &= 0xffffffffffffffff if m.group(4) in (b'l', b'll', b'z') else 0xffffffff
+                bits = 64 if m.group(4) in (b'l', b'll', b'z') else 32
+                v = v - (1 << bits) if v >> (bits - 1) else v
+                s = str(v).encode()
+            else:
+                v &= 0xffffffffffffffff if m.group(4) in (b'l', b'll', b'z') or conv == b'p' else 0xffffffff
+                s = (b'%x' % v) if conv in b'xp' else (b'%X' % v) if conv == b'X' else str(v).encode()
+        pad = b'0' if b'0' in flags and conv not in b'sc' and b'-' not in flags else b' '
+        s = s.ljust(width) if b'-' in flags else s.rjust(width, pad)
+        out.append(s)
+    return b''.join(out)
+
+
 class Sandbox:
     STACK, HEAP, STOP, STUB = 0x70000000, 0x80000000, 0x6f000000, 0x6e000000
 
@@ -159,14 +211,30 @@ class Sandbox:
             uc.mem_write(x0, bytes(uc.mem_read(x1, x2)))
         elif base == 'strlen':
             self.reg('x0', self.read(x0, 4096).index(b'\0'))
+        elif base == 'memcmp':
+            a, b = self.read(x0, x2), self.read(x1, x2)
+            diff = next((i for i in range(x2) if a[i] != b[i]), None)
+            self.reg('x0', 0 if diff is None else (a[diff] - b[diff]) & 0xffffffffffffffff)
         elif base in ('strcmp', 'strncmp'):
             n = x2 if base == 'strncmp' else 4096
             a, b = self.read(x0, n).split(b'\0')[0], self.read(x1, n).split(b'\0')[0]
             self.reg('x0', (a > b) - (a < b))
+        elif base == 'cxa_guard_acquire':      # one-time init of function-local statics: 1 = caller constructs
+            self.reg('x0', 0 if self.read(x0, 1)[0] else 1)
+        elif base == 'cxa_guard_release':
+            uc.mem_write(x0, b'\x01')
+        elif base == 'cxa_guard_abort' or name in SINGLE_THREAD_NOOPS:
+            pass
         elif name == '_ZN2nn2os11GetTlsValueENS0_7TlsSlotE':
             if not hasattr(self, 'tls'):
                 self.tls = self.alloc(0x100)
             self.reg('x0', self.tls)
+        elif name == '_ZN2nn4util9VSNPrintfEPcmPKcSt9__va_list':
+            text = _vsnprintf(self, self.read(x2, 512).split(b'\0')[0], self.reg('x3'))
+            if x1:
+                out = text[:x1 - 1] + b'\0'
+                uc.mem_write(x0, out)
+            self.reg('x0', len(text))
         elif name in TIME_IMPORTS:
             self.reg('x0', TIME_IMPORTS[name](self, x0, x1, x2) & 0xffffffffffffffff)
         else:
