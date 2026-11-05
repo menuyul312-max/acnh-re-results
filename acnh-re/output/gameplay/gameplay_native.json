@@ -6,7 +6,8 @@
    "0x19aa0e0": "RNG draw replaced by a seeded Python stream",
    "0xf44d90/0xf44e70": "flag get/set -> 0",
    "0x3cca80 case": "save-node lookup, base-price member, quantity accessor, requested amount, and quantity setter are controlled; the query function itself is native",
-   "villager cases": "see tools/villager_move_native.py: flag get/set by name, side-effect writers, friendship records and the date are controlled; roll, weights, pick, odds, personality mask and NPC tables are native (move-in uses the real NmlNpcParam)"
+   "villager cases": "see tools/villager_move_native.py: flag get/set by name, side-effect writers, friendship records and the date are controlled; roll, weights, pick, odds, personality mask and NPC tables are native (move-in uses the real NmlNpcParam)",
+   "visitor schedule cases": "see tools/visitor_schedule_native.py: flags by name, calendar event days, K.K. concert days, the weather-pattern index per date and the xorshift draw are controlled; save-layout lookups, facility/house accessors, week/date helpers, bit selection and both functions are native"
   },
   "unhandled_imports": {}
  },
@@ -1400,6 +1401,79 @@
    "draw_bounds": [
     10
    ],
+   "pass": true
+  },
+  "0xfd8a80 weekly visitor generator": {
+   "weeks": 1500,
+   "carry_used": 1399,
+   "celeste_set": 555,
+   "wisp_extra": 1053,
+   "skipped_same_week": 111,
+   "pool_carried_over": 853,
+   "mabel_weeks": 741,
+   "kicks_weeks": 755,
+   "flags_read": [
+    "BuiltTownOffice"
+   ],
+   "invariants": {
+    "weekend_only_mabel_or_wisp": true,
+    "code_9_never_written": true,
+    "once_per_week_except_mabel_wisp": true,
+    "copy_equals_codes": true
+   },
+   "all_unlocked_weeks_without_blocked_weekdays": {
+    "weeks": 58,
+    "carried_over_count": [
+     1
+    ]
+   },
+   "mismatches": 0,
+   "first_mismatches": [],
+   "pass": true
+  },
+  "0xfd9620 daily visitor validator": {
+   "days": 3000,
+   "today_code_transitions": {
+    "0->0": 250,
+    "1->0": 28,
+    "1->1": 230,
+    "10->0": 75,
+    "10->10": 172,
+    "11->0": 91,
+    "11->11": 151,
+    "2->0": 90,
+    "2->2": 168,
+    "3->0": 30,
+    "3->1": 1,
+    "3->3": 199,
+    "3->4": 1,
+    "4->0": 21,
+    "4->4": 253,
+    "5->0": 107,
+    "5->1": 18,
+    "5->4": 38,
+    "5->5": 65,
+    "6->0": 76,
+    "6->6": 158,
+    "7->0": 97,
+    "7->7": 169,
+    "8->0": 86,
+    "8->8": 164,
+    "9->0": 75,
+    "9->9": 187
+   },
+   "flags_read": [
+    "EnableHghStayField",
+    "JohnnyTalkAnyPlayerFlag"
+   ],
+   "mismatches": 0,
+   "first_mismatches": [],
+   "pass": true
+  },
+  "0xfd8920 visitor/K.K. day-change wrapper": {
+   "samples": 576,
+   "mismatches": 0,
+   "first_mismatches": [],
    "pass": true
   }
  },

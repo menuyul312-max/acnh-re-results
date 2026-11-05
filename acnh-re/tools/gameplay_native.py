@@ -15,6 +15,7 @@ import numpy as np
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from nso_sandbox import Sandbox, NSO_SHA256  # noqa: E402
 from villager_move_native import villager_cases  # noqa: E402
+from visitor_schedule_native import visitor_cases  # noqa: E402
 
 F = np.float32
 RNG_FN = 0x19aa0e0          # xorshift128 draw; stubbed with a controlled stream
@@ -196,11 +197,15 @@ def verify(weeks=3000):
     vil = villager_cases()
     unhandled_vil = vil.pop('meta_unhandled')
     cases.update(vil)
+    vis = visitor_cases(weeks=weeks // 2, days=weeks)
+    unhandled_vis = vis.pop('meta_unhandled')
+    cases.update(vis)
     return {'meta': {'source': f'ExeFS main sha256 {NSO_SHA256}', 'harness': 'tools/gameplay_native.py (nso_sandbox, unicorn)',
                      'stubs': {'0x19aa0e0': 'RNG draw replaced by a seeded Python stream', '0xf44d90/0xf44e70': 'flag get/set -> 0',
                                '0x3cca80 case': 'save-node lookup, base-price member, quantity accessor, requested amount, and quantity setter are controlled; the query function itself is native',
-                               'villager cases': 'see tools/villager_move_native.py: flag get/set by name, side-effect writers, friendship records and the date are controlled; roll, weights, pick, odds, personality mask and NPC tables are native (move-in uses the real NmlNpcParam)'},
-                     'unhandled_imports': {**sb.unknown_imports, **unhandled_fac, **unhandled_vil}},
+                               'villager cases': 'see tools/villager_move_native.py: flag get/set by name, side-effect writers, friendship records and the date are controlled; roll, weights, pick, odds, personality mask and NPC tables are native (move-in uses the real NmlNpcParam)',
+                               'visitor schedule cases': 'see tools/visitor_schedule_native.py: flags by name, calendar event days, K.K. concert days, the weather-pattern index per date and the xorshift draw are controlled; save-layout lookups, facility/house accessors, week/date helpers, bit selection and both functions are native'},
+                     'unhandled_imports': {**sb.unknown_imports, **unhandled_fac, **unhandled_vil, **unhandled_vis}},
             'cases': cases, 'all_pass': all(c['pass'] for c in cases.values())}
 
 

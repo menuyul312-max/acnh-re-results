@@ -457,7 +457,7 @@ VISITOR_SCHEDULE = {
     'order': ['Mabel (tailor < 2): Sat, Sun, 1 weekday', 'Saharah: 1 weekday', 'Kicks (tailor >= 2): 1 weekday',
               'pool, carry-over first: Label (tailor >= 2), C.J./Flick (BuiltTownOffice), Gulliver (museum >= 2)',
               'Celeste day (museum > 2): Fine00 day, else Fine02/04/06', 'Wisp: remaining weekdays (max 5), else extra day; then Sat/Sun if free'],
-    'evidence': '[PSEUDO] pseudocode + disassembly, not executed',
+    'evidence': 'terbukti native: 0xfd8920, 0xfd8a80 (with 0xfda940/0xfdad10/0xfdae20) and 0xfd9620 emulated against a model of these rules (1500 weeks, 3000 days; tools/visitor_schedule_native.py, output/gameplay/gameplay_native.json). 0xfda740 spawn positions remain [PSEUDO]',
 }
 # Villager move-out / move-in state, from 0xf84320, 0xf847f0, 0xf87670, 0xf84f10 and the action handler 0x298c10.
 VILLAGER_MOVES = {
@@ -550,7 +550,8 @@ PSEUDOCODE_READINGS = {
                  'reading': ['valid: Gulliver and Wisp always; Saharah needs one of 8 players with value >= 2 (0xef8520, member +0x17cd48 + i*0xe3b8, 0x33dc730, 0..8; same value Harvey uses, likely house level); Mabel needs EnableHghStayField on, tailor state != 2 and no K.K. live; others need no K.K. live (NormalLive/BirthdayLive)',
                              'calendar event or K.K. live (FirstLive/NormalLive/BirthdayLive) today -> code 0',
                              'otherwise an invalid entry is replaced: JohnnyTalkAnyPlayerFlag on -> Wisp (4) for codes 2,3,5,6,7,8,9; flag off and not (shop state >= 2 on Sunday) and museum >= 2 and code != 4 -> Gulliver (1); else 0',
-                             'wisp_extra_day or celeste_day == today with a calendar event or K.K. live -> -1']},
+                             'wisp_extra_day or celeste_day == today with a calendar event or K.K. live -> -1',
+                             'today = day of week of info +8, which the driver 0xf53a70 normalises to 05:00 of the game day (0x1fbc00); empty days and codes >= 10 count as valid unless a K.K. live falls today (native)']},
     '0xfdbf60': {'role': 'Wisp present today', 'reading': ['no K.K. live today and (codes[today] == 4 or wisp_extra_day == today)']},
     '0xfda740': {'role': 'today visitor spawn position (driver)',
                  'reading': ['1 Gulliver: 0x7ad880; 2/5/8 Label/Mabel/Kicks: offset (+15, 0, +20) from a fixed point; 3/7 Saharah/Flick: random spot 0x7ad9e0; 6 C.J.: 0x7acda0, no spot -> codes[today]=0',

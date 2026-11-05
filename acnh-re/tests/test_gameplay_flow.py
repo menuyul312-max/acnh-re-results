@@ -200,6 +200,16 @@ class NativeVerificationTests(unittest.TestCase):
         pick = cases['0xf84f10 personality mask and two-stage pick (species, then villager)']['runs']
         self.assertTrue(all(len(r['draw_bounds']) == 2 for r in pick))
 
+    def test_visitor_schedule_cases_are_native(self):
+        cases = json.loads((ROOT/'output'/'gameplay'/'gameplay_native.json').read_text())['cases']
+        gen = cases['0xfd8a80 weekly visitor generator']
+        val = cases['0xfd9620 daily visitor validator']
+        self.assertTrue(gen['pass'] and val['pass'] and cases['0xfd8920 visitor/K.K. day-change wrapper']['pass'])
+        self.assertGreaterEqual((gen['weeks'], val['days']), (1500, 3000))
+        self.assertTrue(all(gen['invariants'].values()))
+        self.assertEqual(gen['all_unlocked_weeks_without_blocked_weekdays']['carried_over_count'], [1])
+        self.assertEqual(val['flags_read'], ['EnableHghStayField', 'JohnnyTalkAnyPlayerFlag'])
+
 
 NSO = Path(os.environ.get('ACNH_RE_NSO', ROOT/'inputs'/'additional_exefs'/'main'))
 

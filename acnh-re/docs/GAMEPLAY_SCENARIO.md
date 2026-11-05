@@ -23,7 +23,7 @@ Data mesin untuk dokumen ini: [`output/gameplay/native_flag_refs.json`](../outpu
 
 ### Bacaan yang sudah terbukti native
 
-`tools/gameplay_native.py` menjalankan fungsi asli dari NSO lewat `tools/nso_sandbox.py` (unicorn). Hasilnya ditulis ke `output/gameplay/gameplay_native.json`. Stub yang dipakai meliputi RNG, flag, pencarian baris kalender, serta accessor save/input untuk query lobak. Kasus villager (`tools/villager_move_native.py`) hanya mengontrol flag per nama, penulis efek samping (rumah, memori, histori), rekaman keakraban per pemain, dan tanggal. Kasus pindah masuk memuat `NmlNpcParam.bcsv` asli dari ekstraksi lokal dan membangun tabel NPC dengan inisialisator game sendiri. `nn::time` dilayani dengan `datetime` Python.
+`tools/gameplay_native.py` menjalankan fungsi asli dari NSO lewat `tools/nso_sandbox.py` (unicorn). Hasilnya ditulis ke `output/gameplay/gameplay_native.json`. Stub yang dipakai meliputi RNG, flag, pencarian baris kalender, serta accessor save/input untuk query lobak. Kasus jadwal pengunjung (`tools/visitor_schedule_native.py`) hanya mengontrol flag per nama, hari event kalender, hari konser K.K., indeks pola cuaca per tanggal, dan undian xorshift; lookup layout save, accessor fasilitas/rumah pemain, helper minggu/tanggal, dan pemilihan bit berjalan native. Kasus villager (`tools/villager_move_native.py`) hanya mengontrol flag per nama, penulis efek samping (rumah, memori, histori), rekaman keakraban per pemain, dan tanggal. Kasus pindah masuk memuat `NmlNpcParam.bcsv` asli dari ekstraksi lokal dan membangun tabel NPC dengan inisialisator game sendiri. `nn::time` dilayani dengan `datetime` Python.
 
 | Fungsi | Yang dicek | Hasil |
 |---|---|---|
@@ -41,6 +41,9 @@ Data mesin untuk dokumen ini: [`output/gameplay/native_flag_refs.json`](../outpu
 | `0xf847f0`, `0xf855c0` | undian pindah keluar: `r < 5 × menetap + penghitung` (hanya bila jeda 0, menetap ≥ 6, penghitung ≥ 5); jeda/penghitung; calon `AbandonedHouse`; `ForceMoveOut` (slot pertama saja); konfirmasi → status 2 → pergi (§5.1) | lulus |
 | `0xf87670` | bobot pemilihan calon (float32, 3 pemain, pengurang level 6), seluruh 229 nilai undian; pengecualian slot; jendela ulang tahun pada tiga tanggal (§5.1) | lulus |
 | `0xcc8ad0`, `0xcd4050` | tabel runtime dari `NmlNpcParam` asli: kepribadian = indeks enum `NpcLooks` di 397 baris; pool pindah masuk = 391 baris dengan `InitLive` ≠ 0 (§5.2) | lulus |
+| `0xfd8a80`, `0xfda940`, `0xfdad10`, `0xfdae20` | 1500 minggu acak (state penjahit/museum, `BuiltTownOffice`, `carry_over`, event, konser, cuaca, minggu sama/berbeda, main pertama): semua field member jadwal dan jumlah undian sama dengan model §3.3. Sabtu/Minggu hanya Mabel atau Wisp; kode 9 tidak pernah ditulis; saat semua syarat terbuka dan hari kerja bebas, tepat satu anggota kolam tertunda (58 minggu) | lulus |
+| `0xfd9620` | 3000 hari acak: kode hari ini, hari tambahan Wisp, dan hari Celeste sama dengan model §3.4 | lulus |
+| `0xfd8920` | `TkkFirstLiveEnable` (hari berlalu, `IslandEvaluationClearTkkLive` ON, `TkkFirstLive` OFF), urutan pembuat → validasi, `RctInTent` per jam, `JohnnyRequirePartsNum` = 5 (576 sampel) | lulus |
 | `0xf84f10`, `0xf8d860` | peluang pindah masuk (n, P, `NNpcContractProbablityAddPoint`); mask kepribadian; pemilihan dua tahap spesies → villager; fallback eksklusi; slot yang dikosongkan hari ini; NPC menunggu (§5.2) | lulus |
 
 Bacaan lain tetap [PSEUDO] sampai ada kasus emulasinya.
@@ -143,12 +146,12 @@ Kolom `NeglectSleep`, `UseRainGoods`, `ApplyNeedActivity`, dan `CanDoze` per bar
 
 ### 2.3 Detail harian lain
 
-- **[PSEUDO]** `0xfd8920`: `RctInTent` OFF pada jam 5–19, ON di luar jam itu. `JohnnyRequirePartsNum` di-set 5 di setiap pergantian hari.
+- **Terbukti native** `0xfd8920`: `RctInTent` OFF pada jam 5–19, ON di luar jam itu. `JohnnyRequirePartsNum` di-set 5 bila hari berlalu > 0 atau main pertama.
 - **[EF]** `Process_Daily`: keakraban Sable +1 bila diizinkan, hitungan beli lobak Daisy Mae, penghitung login Nook Stop (di-reset menurut `PlayerPastDaysFromLastPlay` dengan batas 2), resep zodiak Celeste, dan hadiah maskapai.
 
 ## 3. Satu minggu
 
-Semua isi bagian ini **[PSEUDO]** (pseudocode dan disassembly yang belum dieksekusi), kecuali yang diberi label lain. Ringkasan mesinnya ada di `output/gameplay/native_flag_refs.json` → `data.visitor_schedule`.
+Pembuatan jadwal (§3.3), validasi harian (§3.4), dan pembungkusnya `0xfd8920` **terbukti native** (emulasi, §1). Isi lain bagian ini **[PSEUDO]** kecuali diberi label lain, termasuk posisi spawn `0xfda740` dan spawner harian. Ringkasan mesinnya ada di `output/gameplay/native_flag_refs.json` → `data.visitor_schedule`.
 
 ### 3.1 Batas minggu dan member jadwal
 
@@ -181,7 +184,7 @@ Daftar label dibaca dari rodata `main` (`0xfdcf60`, string `non,gul,hgc,cml,gstA
 - Celeste di-spawn `0xc6fd70`. Ia hadir bila hari itu bukan hari K.K. dan `+0x74` = hari ini (`0xfdb6e0`).
 - Wisp dan Celeste hanya tampil 20:00–04:59 (`0xfdb300`: `jam−5 > 14`).
 
-### 3.3 Pembuatan jadwal (`0xfd8a80`)
+### 3.3 Pembuatan jadwal (`0xfd8a80`) — terbukti native
 
 Fungsi ini dipanggil `0xfd8920` dari dispatcher pergantian hari. Jadwal dibuat ulang bila Senin dari waktu main terakhir berbeda dengan Senin sekarang (`0x1fbfa0`), atau bila belum ada waktu main tersimpan (info pergantian hari `+0x18`, yakni main pertama). Langkahnya berurutan:
 
@@ -208,15 +211,15 @@ Akibat langsung dari urutan di atas:
 - Sabtu dan Minggu hanya bisa berisi Mabel (sebelum penjahit) atau Wisp.
 - Saat semua syarat terbuka, ada 6 pengunjung untuk 5 hari kerja (Saharah, Kicks, Label, C.J., Flick, Gulliver). Satu dari empat anggota kolam pasti tertunda ke minggu berikutnya, dan Wisp mendapat hari tambahan bersama pengunjung lain.
 
-### 3.4 Validasi harian (`0xfd9620`)
+### 3.4 Validasi harian (`0xfd9620`) — terbukti native
 
-Setiap pergantian hari, entri hari ini dicek.
+Setiap pergantian hari (hari berlalu > 0 atau main pertama), entri hari ini dicek. "Hari ini" = hari dalam minggu dari info pergantian hari `+8`; driver `0xf53a70` sudah menormalkan waktu itu ke 05:00 hari game (`0x1fbc00`), jadi jam 00:00–04:59 tetap memakai entri hari sebelumnya.
 
 **Syarat sah per kode:**
 - Gulliver dan Wisp selalu sah.
 - Saharah sah bila ada pemain dengan nilai ≥ 2. Nilainya dibaca `0xef8520` dari member pemain `+0x17cd48`, descriptor `0x33dc730`, rentang 0–8. Nilai yang sama dipakai syarat Harvey, kemungkinan level rumah.
 - Mabel sah bila `EnableHghStayField` ON, penjahit belum berdiri, dan bukan hari K.K. **[EF]** Flag itu ("Mabel boleh dipilih sebagai NPC pengunjung") dinyalakan `SNPC_rcm_03_RenualOpen:Rcm_RenualOpen1_ConvHgh` dan dimatikan `Player_Demo_HousingFinish:HousingFinish_Tailor_Built`.
-- Kode lain sah bila bukan hari `NormalLive` atau `BirthdayLive`.
+- Kode lain sah bila bukan hari `NormalLive` atau `BirthdayLive`. Ini juga berlaku untuk hari kosong (kode 0) dan kode ≥ 10: keduanya tidak diganti Gulliver/Wisp, hanya dikosongkan pada hari event atau konser. Kode ≥ 10 tetap tersimpan; pembacanya `0xfdc020` mengubahnya menjadi 0.
 
 **Bila tidak sah:**
 - Hari dengan event kalender atau konser K.K. (`FirstLive`, `NormalLive`, `BirthdayLive`) → kode 0.
@@ -540,8 +543,8 @@ Keduanya mereset penghitung hari ke 0 dan menyalakan `NextMoveOutTalk` serta `Is
 |---|---|---|
 | Harvey (`spn`) | `SpnVisitMainField`=1 bila sebuah nilai 0–8 ≥2 (kemungkinan level rumah pemain), quest A/B/C selesai, dan Photopia belum terbuka maupun dikunjungi | [PSEUDO] `0xfd9d10` |
 | Label (`hgc`) | Kode 2, kolam acak setelah penjahit berdiri (§3.3); `HgcVisitFlagForTailor`; quest dan keakraban di `KotonoQuest*` | [PSEUDO] / [EF] |
-| Saharah (`cml`) | Kode 3, satu hari kerja setiap minggu; sah bila ada pemain dengan nilai ≥2 (§3.4) | [PSEUDO] |
-| Kicks (`skk`) | Kode 8, satu hari kerja setiap minggu setelah penjahit berdiri | [PSEUDO] |
+| Saharah (`cml`) | Kode 3, satu hari kerja setiap minggu; sah bila ada pemain dengan nilai ≥2 (§3.4) | jadwal dan validasi terbukti native (§3.3–3.4); spawn [PSEUDO] |
+| Kicks (`skk`) | Kode 8, satu hari kerja setiap minggu setelah penjahit berdiri | jadwal dan validasi terbukti native (§3.3–3.4); spawn [PSEUDO] |
 | C.J. (`bey`), Flick (`chy`) | Kode 6 dan 7, kolam acak bila `BuiltTownOffice` (spawn dengan flag 1); C.J. batal bila tidak ada titik spawn; juga NPC event turnamen | [PSEUDO] / [EF] |
 | Mabel (`hgh`) | Kode 5. Sebelum penjahit: Sabtu, Minggu, dan satu hari kerja; sah hanya bila `EnableHghStayField` ON. Kunjungan pedagang menambah `CountTailorBuild` → toko penjahit; `HghStayMarket` di `0xfc4560` | [PSEUDO] / [EF] |
 | Sable (`hgs`) | `HgsCloseness` maks 11, +1 per hari bila diizinkan | [EF] |
@@ -578,15 +581,14 @@ Pertanyaan yang dulu terbuka di jadwal ini sudah terjawab **[PSEUDO]**:
 
 | # | Celah | Titik masuk |
 |---|---|---|
-| 1 | Jadwal pengunjung mingguan terbukti native | `0xfd8a80`, `0xfd9620` |
-| 2 | Kemunculan ikan, makhluk laut, dan serangga (belum dibaca) | akses kolom `Prob*` `0x5b3860` (sungai), `0x5b5ee0` (laut), selektor `AppearArea` `0x5bb150`; serangga `0x95ebe0`..`0x964870`, enum tempat `0x9b7ec0` |
-| 3 | Regenerasi objek lapangan harian: fosil, batu, gulma, pohon/buah, kerang (belum dibaca) | `SaveGrowUpRandomFactor` `0xf56b70`, `TodayGrowUp` `0xf60530`/`0xfa00d0`, `DigFossil` `0xd9d630` |
-| 4 | Nook Miles+, pencapaian, skor turnamen | `0xf66020` → `0xf60690`, `0x309ff0`, `0x586bd0`, `0xfa60c0` |
-| 5 | Penambah poin keakraban | penulis field yang dibaca `0xd34a20` |
-| 6 | Skor pulau end-to-end native | `0x15c68c0`, `0x15c61f0` |
-| 7 | Prosesor toko native | `0xfc4560` |
-| 8 | Nama simbolik yang belum terbukti (bit flag, vtable save, enum OfficeLevel, binding `KabuBuyPage`, sel pantai) | `left_open` di item selesai `re_queue.json` |
+| 1 | Kemunculan ikan, makhluk laut, dan serangga (belum dibaca) | akses kolom `Prob*` `0x5b3860` (sungai), `0x5b5ee0` (laut), selektor `AppearArea` `0x5bb150`; serangga `0x95ebe0`..`0x964870`, enum tempat `0x9b7ec0` |
+| 2 | Regenerasi objek lapangan harian: fosil, batu, gulma, pohon/buah, kerang (belum dibaca) | `SaveGrowUpRandomFactor` `0xf56b70`, `TodayGrowUp` `0xf60530`/`0xfa00d0`, `DigFossil` `0xd9d630` |
+| 3 | Nook Miles+, pencapaian, skor turnamen | `0xf66020` → `0xf60690`, `0x309ff0`, `0x586bd0`, `0xfa60c0` |
+| 4 | Penambah poin keakraban | penulis field yang dibaca `0xd34a20` |
+| 5 | Skor pulau end-to-end native | `0x15c68c0`, `0x15c61f0` |
+| 6 | Prosesor toko native | `0xfc4560` |
+| 7 | Nama simbolik yang belum terbukti (bit flag, vtable save, enum OfficeLevel, binding `KabuBuyPage`, sel pantai) | `left_open` di item selesai `re_queue.json` |
 
-Titik masuk baris 2–4 diambil dari `index.sqlite` (`hash_refs`, `string_refs`, `direct_calls`), jadi masih berupa kandidat; perannya belum dibaca. Cuaca dan genetika bunga sudah ada di baseline (`output/weather`, `output/flowers`) dan tidak perlu diulang. `plants_and_breeding` juga tercatat sebagai target riset agen mechanics, jadi hasil baris 3 hanya ditulis ke `output/gameplay` dan dokumen `GAMEPLAY_*`.
+Titik masuk baris 1–3 diambil dari `index.sqlite` (`hash_refs`, `string_refs`, `direct_calls`), jadi masih berupa kandidat; perannya belum dibaca. Cuaca dan genetika bunga sudah ada di baseline (`output/weather`, `output/flowers`) dan tidak perlu diulang. `plants_and_breeding` juga tercatat sebagai target riset agen mechanics, jadi hasil baris 2 hanya ditulis ke `output/gameplay` dan dokumen `GAMEPLAY_*`.
 
 Antrian yang sama, dalam bentuk yang bisa dibaca mesin dan ditandai statusnya, ada di [re_queue.json](re_queue.json).
