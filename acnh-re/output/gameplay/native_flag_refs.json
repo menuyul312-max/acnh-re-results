@@ -1456,7 +1456,7 @@
      "0": "layer-0 tiles without an item (item -2), plus removable items cleared by the census (0x4d7bf0)",
      "1": "tiles of a structure/terrain object (0x7a26e0 hit: 0x18cbc0 / 0x18cd40)",
      "2": "footprints of ground items (0xa142b0 extent) and placed rocks",
-     "3": "tiles of 0xf515c0 (from the save; all bits set when 0x7a5c60 arg 2 is on)",
+     "3": "watered units of SaveFg (0xf515c0; all bits set when save flag +0x230 bit 0 is on, 0x7a5c60); read by flower breeding and weeds on the first simulated day",
      "4": "written by the ground-item census 0x7a46f0"
     },
     "sets": {
@@ -1488,7 +1488,7 @@
      "25": "units holding an ItemKind 0x2f (Mushroom) item checked against 0xcd0 (0x7a46f0); exact condition not read"
     },
     "occupy": "0x7aa200(work, rect) after a placement: the rect leaves sets 0-4 and 24 (0x7b0320 / 0x7b0500) and 0x7af7a0 / set 23 are updated",
-    "counters_0x2e144": "bit 1 pitfall present; bits 2-4 buried fossils (stop at 6); bits 5-7 rocks (stop at 7); bits 8-18 weeds; bits 19-23 branches on ground (stop at 15); bits 24-28 beach shells; bits 29-31 trees with a wasp nest",
+    "counters_0x2e144": "bit 0 every tile watered (save flag +0x230 bit 0, 0xf51f40); bit 1 pitfall present; bits 2-4 buried fossils (stop at 6); bits 5-7 rocks (stop at 7); bits 8-18 weeds; bits 19-23 branches on ground (stop at 15); bits 24-28 beach shells; bits 29-31 trees with a wasp nest",
     "counters_0x2e148": "bits 0-3 trees with 100 bells; bits 4-5 trees with furniture; bit 6 loose DIYStone present; bit 7 = 0x7a5c60 arg 2; bit 8 message bottle on beach; bits 9-13 kind 0x2f items; bits 14-17 star fragments on beach",
     "tree_census": "0x7a3ef0 switch on FgMainParam.Kind - 1 (jump table 0x29f7a3c): oak/cedar/palm/bamboo/fruit/money tree each counted (+0x2e0f8..+0x2e10c) and added to their set; Grow 4 sets ExistOak/ExistCedar/ExistSakura/ExistBanboo; decorated cedars 0xec9a/0xec97 revert to 0xea69 when the season ends (0x4cbb70); stumps of fruit trees 0xecbc..0xecbf become oak stumps 0xec6d/0xec6c/0xec6b/0xea9f; rocks failing 0x7a2a30 are removed"
    },
@@ -1512,7 +1512,19 @@
     "branches": "when branches on ground < 15: around random trees of set 6, a 6x6 area from (-2,-2) through 0x7af510 on 0x10020 and 0x4b5cc0; DIYBranch 0x9c4 placed (0x4ad3b0) until 15",
     "tree_items": "0x4d6e10 content: 0 -> 100Bell 0x839, 1 -> 1000Bell 0x842, 2 -> Honeycomb 0xcbf (wasp nest), 3 -> random furniture of ItemFrom groups 1,2,3,5,6. Daily on random trees of set 6 and 20: wasp nests up to 5 - nests; furniture up to 2 - furniture (VillageExtensionLevel2 = 1; 3 furniture -> 0) or 1 if none before that; 100 bells up to 15 - (trees with bells), skipping decorated cedars",
     "flowers": "grown flowers of set 15 with watered state 0xc018 breed into empty set-2 neighbours (0x7a2da0, 0x4d5e50), gold rose 0xeb7d at rand100 < 50 from 0x4c0e30; genetics are in output/flowers (baseline)",
-    "weeds": "simulated days = min(days, 20); per day: season change (SeasonCalendar column 6 Weed via 0x203640) -> 0x4ba120 converts weeds; otherwise 0x4b6000 / 0x4b63e0 spread (cap 150); while weeds < 150, 2 new weeds if weeds <= 30 else 1, variant = one of three per season code (table 0x3060b80 for code 0, pointers 0x3060cb0 for codes 1-6), r = 0xf53420(3), placed by 0x7ad870",
+    "weeds": "simulated days = min(days, 20); per day: season change (SeasonCalendar column 6 Weed via 0x203640) -> 0x4ba120 converts weeds; otherwise 0x4b6000 grows and 0x4b63e0 spreads them (cap 150; first = first simulated day); while weeds < 150, 2 new weeds if weeds <= 30 else 1, variant = one of three per season code (table 0x3060b80 for code 0, pointers 0x3060cb0 for codes 1-6), r = 0xf53420(3), placed by 0x7ad870; when days > 20 the last date is first moved forward by days - 20 and a season change in that gap converts once",
+    "weed_rules": {
+     "stage": "weed = FgMainParam Kind WeedSpr..WeedWin1 (0x4d6620: kind index 10-16, via 0x4cbd20); stage = Grow 1-3 (0x4d6650); GrowupFg chain 1A/1B/1C -> 2A/2B/2C -> 3 [TBL]",
+     "season_tables": "7 IDs per season code in the order 1A, 1B, 1C, 2A, 2B, 2C, 3: code 0 at 0x3060b80 (Spr 60200, 60208, 60209, 60210-60213), codes 1-6 through pointers 0x3060cb0 (Smr, Aut1, Aut11, Aut21, Win1, Win11; relocated, contiguous after code 0)",
+     "watered": "work tile set 3 (+0xc018) = watered bitmap of SaveFg (0xf515c0, 144 x 128 units; all bits on when save flag +0x230 bit 0 is set, 0x7a5c60); used only on the first simulated day",
+     "grow_0x4b6000": "(work, first, count, cap, a, b, c, d): nothing when count >= cap; for every unit of set 17 in scan order (z outer, x inner, even tiles): stage 1 grows one GrowupFg step (0x4d5ca0) when rand100 <= a (b when first and watered), stage 2 when rand100 <= c (d); stage 3 draws nothing. rand100 = 0xf53420(100), day RNG",
+     "spread_0x4b63e0": "(work, season, first, &count, cap, a, b, c, d, mask): nothing when count >= cap; snapshot of set 17 (children of today do not spread); per weed: stage 1 spreads when rand100 <= a (b when first and watered), stage 2 when <= 10 (c), stage 3 when <= 80 (d); candidates = the 8 neighbour units inside the field rectangle, in set 2, in mask when given, with |height - parent height| <= 5 (0x7a2da0); one drawn uniformly in tile-bit order (0x7afca0: 0xf53450, day RNG); the child (0x4b6c10 slot, 0x4b6d90) is written only when that layer-0 tile is empty; then count + 1, weed counter +0x2e144 bits 8-18 + 1 (clamped at 150, 0x7aa360/0x4b2400), the unit leaves sets 0-4 and 24 and joins set 17; stop when count reaches cap",
+     "child_0x4b6d90": "child is stage 1 of the given season: parent slot 6 (stage 3) -> slot 0xf53420(3) (1A/1B/1C); slot A (0, 3) -> B or C; slot B (1, 4) -> A or C; slot C (2, 5) -> A or B, each by 0xf53420(2); a parent of another season is first mapped to its slot (0x4b6c10 -> 0x4b2f10)",
+     "convert_0x4ba120": "(season, work): every weed of set 17 is replaced by the ID with the same slot in the new season table (0x4b2f10 searches the seven tables in code order 0..6); IDs not in any table are rewritten unchanged",
+     "daily_args": "0x4b6e70: 0x4b6000(150, 20, 50, 5, 10), 0x4b63e0(150, 0, 5, 20, 100, no mask): per day stage 1 grows 21 % (51 % watered on the first day), stage 2 6 % (11 %); stage 1 spreads 1 % (6 %), stage 2 11 % (21 %), stage 3 81 % (100 %)",
+     "new_island_args": "0x4ae640 (first growth, VillageExtensionLevel2 != 1): mask = all units minus the left, right and south unit of up to 10 fruit trees (set 8 and zone 0, drawn by 0x7b0f00) and the 6 x 6 tile square from (-2, -2) of up to 2 rocks (set 18 and zone 0); rounds 1..20 of 0x4b6000(1300, 5, 5, 2, 2) and 0x4b63e0(1300, 20, 20, 10, 80, mask) while count < 1300: grow 6 % / 3 %, spread 21 % / 11 % / 81 %; no random new weeds",
+     "evidence": "terbukti native: 0x4b6000, 0x4b63e0, 0x4ba120 and the season tables over synthetic fields (tools/island_weed_native.py); [PSEUDO]: the caller loops in 0x4b6e70 and 0x4ae640 and the watered bitmap source"
+    },
     "bamboo": "a bamboo (set 11) that reaches Grow 4 today sets ExistBanboo and drops its FgMainParam.NutItem (0x4ca0d0) on a free neighbour from 0x4b5cc0",
     "tree_cross": "when 0x4bd2d0 holds: a 5-cell cross around every set-13 tree, minus sets 20 and 25; up to min(5, 30 - count) objects chosen by 0x4d7c30 go to set 2 or set 3; object kind and count meaning not read"
    },
@@ -1534,7 +1546,7 @@
      "tree items per zone 0x4b5540(zone, count, content): zone 0: 2 wasp, 5 bells, 1 furniture; zone 1: 1 wasp, 5 bells, 1 furniture; zone 2: 2 wasp, 5 bells",
      "fossils 0x4b5780: zone 1: 4, zone 2: 2; shells 0x4b5b20: zone 0: 3, zone 1: total cap - 3",
      "every preset rock re-rolled with 0x4d7110; 20 branches around trees; DIYStone next to rocks",
-     "weeds: no weeds within 2 cells of up to 10 fruit trees or in 6x6 around up to 2 rocks; then up to 20 rounds of 0x4b6000(1300, 5, 5, 2, 2) and 0x4b63e0(1300, 20, 20, 10, 80) while weeds < 1300"
+     "weeds: no spread onto the left, right and south unit of up to 10 fruit trees or into the 6x6 square around up to 2 rocks; then up to 20 rounds of 0x4b6000(1300, 5, 5, 2, 2) and 0x4b63e0(1300, 20, 20, 10, 80) while weeds < 1300 (plants_0x4b6e70.weed_rules)"
     ],
     "creation": {
      "function": "0x5662e0 (from 0xfc3b00, before 0x56d640(1)): picks MainFieldParamUniqueID (+0xcfa2a of SaveMainField) and DistantViewUniqueID (+0xda2a8), writes SaveMainField.OutsideField (FieldBlockData 9 x 8 u16 part IDs + TemplateUniqueId) from the chosen FieldOutsideTemplate (0xf8f2a0), then 0x565e30",
@@ -1563,12 +1575,11 @@
     "free_neighbour_0x4b5cc0": "(out, work, pos, use_set_3, use_set_20) candidate units = set 3 (or set 1), and set 20 when asked, among seven neighbours in the order (-2,-2), (+2,-2), (-2,0), (+2,0), (-2,+2), (0,+2), (+2,+2); the unit directly north (0,-2) is never a candidate; a neighbour outside the field rectangle is skipped; 0xf53420(n) picks one"
    },
    "mystery_tour": "0x4b3490 (from 0x5602a0 when stage attribute 0x11 is set) populates a Mystery Tour island (reaches InduceInMysteriTourIslandToday); it reuses 0x4d7110, 0x4b5900, 0x4ca460, 0x4ca690, 0xf50f50 and 0xf51040",
-   "evidence": "terbukti native: 0x4d7110 rock kind, 0x7abd00 shell kind and season tables, 0x7a7010 shell caps (tools/field_regrowth_native.py); 0xf50ad0 flower pick, 0xf50f50/0xf51040 flower groups, 0xf509e0 speciality and sister fruit (tools/island_content_native.py); 0x7ab350 tree spot, 0x7a2e10 slope check, 0x4b5cc0 free neighbour (tools/island_placement_native.py, terrain accessors controlled); constants of the rock/fossil/weed branches checked in the instructions (tests); everything else [PSEUDO]",
+   "evidence": "terbukti native: 0x4d7110 rock kind, 0x7abd00 shell kind and season tables, 0x7a7010 shell caps (tools/field_regrowth_native.py); 0xf50ad0 flower pick, 0xf50f50/0xf51040 flower groups, 0xf509e0 speciality and sister fruit (tools/island_content_native.py); 0x7ab350 tree spot, 0x7a2e10 slope check, 0x4b5cc0 free neighbour (tools/island_placement_native.py, terrain accessors controlled); 0x4b6000 weed growth, 0x4b63e0 weed spread, 0x4ba120 weed season conversion and the weed season tables (tools/island_weed_native.py, item layer and FgMainParam accessors controlled); constants of the rock/fossil/weed branches checked in the instructions (tests); everything else [PSEUDO]",
    "open": [
     "seed of the field RNG 0x344d100",
     "meaning of set 16, set 25 and of the per-player spot state 0xf51390",
-    "0x4b6000 / 0x4b63e0 weed spread internals",
-    "0x4ba120 seasonal weed conversion",
+    "source of the save flag +0x230 bit 0 that marks every tile watered (rain is likely, not read)",
     "region pass 0x7a55b0 (set 0 and the mask on sets 1-3)",
     "terrain internals behind 0x18ce50 / 0x18c990 (0x181fa0, 0x182c20, 0x56dc00) and 0x7a26e0 (0x164d70, 0x164c50)",
     "palm growth and coconut drop",
