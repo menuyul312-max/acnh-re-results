@@ -4,9 +4,9 @@ Pemetaan ini memakai dump RomFS dan ExeFS ACNH 1.0.0 yang tersedia di mesin loka
 
 ## Kesimpulan
 
-Struktur statis utama UI sekarang terhubung: 523 BFLYT, pane dan sublayout, group, data kontrol, userData, material, tekstur, font, target animasi, serta 15 animasi extended user data. Parser mengidentifikasi seluruh ID properti animasi yang teramati dan tidak menyisakan error pada section yang diaudit. Struktur `grs1/gre1` dan properti BND1/SCR1 juga sudah dipetakan.
+Struktur statis utama UI sekarang terhubung: 523 BFLYT, pane dan sublayout, group, data kontrol, userData, material, tekstur, font, target animasi, serta 15 animasi extended user data. Parser mengidentifikasi seluruh ID properti animasi yang teramati dan tidak menyisakan error pada section yang diaudit. Struktur `grs1/gre1` dan properti BND1/SCR1 juga sudah dipetakan. Analisis pseudocode native tambahan kini menegaskan jalur pemintaan resource `.bflyt`, tabel aksi fokus/key/touch, beberapa updater HUD, serta pembacaan userData efek oleh renderer.
 
-Ini memberi dasar yang cukup kuat untuk membuat importer dan scene UI Godot. Ini belum membuktikan kapan setiap layar tampil, bagaimana kontrol menerima input, resource mana yang dipilih pada 35 referensi part ganda, atau apakah hasil render sama dengan game. Belum ada konversi UI di proyek Godot maupun capture pembanding.
+Ini memberi dasar yang cukup kuat untuk membuat importer dan scene UI Godot. Ini belum membuktikan kapan setiap layar tampil, bagaimana input perangkat dipetakan ke kontrol, archive mana yang menang pada 35 referensi part ganda, atau apakah hasil render sama dengan game. Belum ada konversi UI di proyek Godot maupun capture pembanding.
 
 ## Pemetaan aset dan struktur
 
@@ -36,16 +36,27 @@ Ada 35 pemakaian dengan dua kandidat BFLYT bernama sama, mencakup tiga nama part
 
 ## Bukti native dan batas perilaku
 
-ExeFS `main` mencatat 31 pendaftaran halaman dan tiga helper registrasi. Korelasi native yang sudah ditelusuri mencakup kalender/MainScreen dan LClock (`0x1315ac0`), prompt pengambilan item/MainScreen (`0x1214110`), ConfirmedFruit (`0x132e050`), sebelas entri anak MenuMapFull (`0x12330c0`), MenuDevice dan update jam (`0x125e3e0`), keluarga dialog umum/telepon (`0x11e6d70`), serta area teks keyboard chat (`0x151ec70`). Ini memperkuat hubungan nama/fungsi tetapi belum memberi lifecycle lengkap.
+ExeFS `main` mencatat 31 pendaftaran halaman dan tiga helper registrasi. Korelasi yang sudah ada mencakup prompt item/MainScreen (`0x1214110`), ConfirmedFruit (`0x132e050`), entri anak MenuMapFull (`0x12330c0`), keluarga dialog umum/telepon (`0x11e6d70`), serta keyboard chat (`0x151ec70`).
+
+Rantai resource native yang kini dipetakan: startup `0x98b70` memanggil `0x1541580`, yang membaca daftar nama dan membentuk `Layout/%s.Nin_NX_NVN.zs`. Manager layout (`0x14c3cf0` → `0x14c49e0` → `0x14bfe60` → `0x14bebd0`) membuka arsip `.zs`, meminta member `%s.arc`, lalu mendaftarkan accessor. Loader layout meminta `%s.bflyt` melalui accessor (`0x14c77a0` → `0x191c8d0`). Jalur sublayout PRT1 (`0x1cf1230` → `0x1cf0de0` → `0x1ceb3e0`) membangun key `EuiAllocator:<locale><layout-name>` dan meminta child `.bflyt`. Ini membuktikan format permintaan dan sebuah jalur archive `.zs`, tetapi belum memperlihatkan aturan yang memilih di antara kandidat `.zs`/`.szs` untuk setiap part ganda.
+
+Untuk MainScreen, `0x1315ac0` membandingkan tanggal/waktu dan memperbarui sejumlah text resource yang mencakup `STR_Week`; `0x1315f90` menulis empat text resource indexed lain; `0x14797c0` menyegarkan sebelas entri `STR_KeyIcon`; dan `0x1347c50` mengikat child `/L_Clock_00`. `0x125e3e0` membaca `MainUiClockEnable` dan menjalankan helper update clock/state untuk `MenuDevice`. Nama pane pada sebagian data indexed belum berhasil diurai, dan ini belum menjelaskan controller `MainScreenSmartPhone`.
+
+Helper kontrol `0x1485c20` menyimpan 13 nama aksi berurutan: `FocusKey`, `FocusTouch`, `UnFocusKey`, `UnFocusTouch`, `DecideKey`, `DecideTouch`, `Invalid`, `Check`, `Uncheck`, `RepeatKey`, `RepeatTouch`, `Active`, dan `Inactive`. `0x14845a0` memilih aksi dari indeks dan meneruskannya ke pohon aksi/animasi (`0x14855f0` dan `0x14bd...`). `0x14885b0` mencari pane terkait cursor dengan fallback `P_BtnFocusKey`, `C_Cursor`, dan `B_Hit`. Ini menunjukkan sistem animasi/state untuk kontrol, tetapi belum menghubungkan indeks tersebut ke input pad/touch atau seluruh alur fokus kembali dan modal.
+
+Keluarga dialog umum juga memiliki controller nyata: `0x11e6d70` memilih layout `CmnDialogSmartPhone` atau `CmnDialog`, lalu membuat `CommonDialogPage` dan `CommonDialogBGPage`. `0x11e8960` memperbarui beberapa state dialog, sedangkan `0x11e9210` menyegarkan `STR_KeyIcon`/`KeyGuide`; `0x11e96a0` mengakses delapan slot anak dan state animasinya. Ini memetakan komponen dialog, tetapi belum membuktikan modal stack global, urutan open/close/back, kembalinya fokus, atau teardown.
+
+Consumer userData renderer juga lebih jelas. `0x1930000` mencari record berdasarkan nama. Rangkaian `0x14ca2b0` dan helper-nya membaca field border, color overlay, gradation empat warna, drop shadow, inner shadow, dan gradation mask menjadi parameter shape. Saat menyiapkan layout, `0x1cf0fa0` menelusuri pane dan memanggil handler untuk `EffectLinkOn`, `AdjustToTextOn`, `CaptureUseName/Index`, serta `DynamicCaptureUseName/Index`. Native juga membuat tipe `ScissorPane` (`0x14c89c0`) dan `0x14c8d00` menyimpan enable byte beserta empat nilai 32-bit pada objek itu; jalur ke perintah NVN final dan aturan koordinat/clip bersarang belum tertaut. Sistem `UISysBoundingUseCursor` membuat binding cursor, sementara dispatch `ui2dsys` membedakan 15 keluarga seperti `LpSelector`, `LpScrollBar`, `UISysBounding`, dan `UISysScrollSign`. `UISysBounding` bukan bukti langsung perilaku BND1. Beberapa key native tumpang tindih dengan FLEU, namun updater yang menerapkan tiga array FLEU pada userData dan timing keyframe belum tersambung.
 
 Belum ada xref native bernama persis untuk MainScreenSmartPhone pada kumpulan 62 kandidat nama layout yang diperiksa. Arti flag registrasi, open/close/back, routing key/touch, modal stack, fokus kembali, teardown, dan jadwal update HUD memerlukan trace call path yang lebih lengkap atau observasi runtime. Nama CNT1 maupun animasi tidak cukup untuk membuktikan aksi yang menjalankannya.
 
 ## Yang masih belum terbukti
 
-1. **Pemilihan part:** prioritas suffix adalah heuristik yang cocok pada 35/35 contoh, bukan bukti loader memilih `.zs`/`.szs` dengan cara itu.
-2. **Dispatch UI:** pemicu dan urutan animasi, consumer FLEU, pemetaan tombol/touch, kontrol CNT1, state layar, controller smartphone, dialog/modal, dan lifecycle belum ditelusuri sampai lengkap.
-3. **Renderer:** origin dan skala viewport, BND1/SCR1 runtime, ProceduralShape, BNSH/shader pass, sampler/blend, warna, fallback font/locale, clipping, serta hasil pixel belum dibandingkan dengan capture game.
-4. **Konversi dan paritas Godot:** scene/importer UI belum dibuat. Preview lokal hanya alat inspeksi; tekstur BNTX asli ditampilkan dengan shader dan glyph ZL sederhana, bukan render ACNH.
+1. **Pemilihan part:** korelasi suffix cocok pada 35/35 contoh dan call path meminta child lewat key resource plus nama `.bflyt`, tetapi belum ada bukti archive lookup memilih kandidat `.zs` atau `.szs` tertentu.
+2. **Dispatch UI:** tabel aksi fokus/key/touch dan jalur aksi kontrol ditemukan, tetapi pemetaan input perangkat, callback CNT1, state/lifecycle layar, controller smartphone, dialog/modal, close/back, restore focus, dan teardown belum ditelusuri sampai lengkap.
+3. **Animasi khusus:** native membaca banyak field userData efek, tetapi updater FLEU, semantik ketiga array, timing, dan consumer `C_Id` belum terbukti.
+4. **Renderer:** setter `ScissorPane` dan cursor-bound helper ditemukan, tetapi BND1 hit-test, jalur setter ke NVN scissor, origin/skala viewport, ProceduralShape parity, BNSH/shader pass, sampler/blend, warna, fallback font/locale, clipping bersarang, serta hasil pixel belum dibandingkan dengan capture game.
+5. **Konversi dan paritas Godot:** scene/importer UI belum dibuat. Preview lokal hanya alat inspeksi; tekstur BNTX asli ditampilkan dengan shader dan glyph ZL sederhana, bukan render ACNH.
 
 ## Catatan konversi ke Godot untuk hasil akurat
 
@@ -53,12 +64,12 @@ Belum ada implementasi konversi yang diklaim. Gunakan indeks dan dump statis ini
 
 1. Pertahankan pane tree, urutan gambar, nama, parent, transform, pivot/origin, visibility, alpha, skala, ukuran desain, material index, UV, warna vertex, teks, dan font. Jangan meratakan layout menjadi satu gambar.
 2. Jadikan setiap PRT1 instance sublayout tersendiri dan terapkan magnification, property override, embedded userData, `panelInfo`, dan grup pane pada instance yang tepat. Untuk 35 referensi ganda, simpan kandidat sampai bukti loader tersedia.
-3. Pertahankan `RootGroup` dan rentang grup yang dibatasi `grs1/gre1`; jangan melebur group pane karena nama mirip. Simpan CNT1 pane/action dan daftar animasi untuk nanti dihubungkan ke kontrol runtime.
+3. Pertahankan `RootGroup` dan rentang grup yang dibatasi `grs1/gre1`; jangan melebur group pane karena nama mirip. Simpan CNT1 pane/action dan daftar animasi untuk nanti dihubungkan ke kontrol runtime. Simpan pula nama tipe `ui2dsys` dan tabel aksi kontrol (`FocusKey`, `FocusTouch`, `UnFocusKey`, `UnFocusTouch`, `DecideKey`, `DecideTouch`, `Invalid`, `Check`, `Uncheck`, `RepeatKey`, `RepeatTouch`, `Active`, `Inactive`) sebagai data dispatch; jangan menganggapnya pemetaan tombol fisik sebelum input controller terbukti.
 4. Simpan koordinat sumber dan ukuran desain 1920×1080 tanpa transformasi lossy. Jika viewport Godot 1280×720 dipakai, skala seragam 2/3 adalah titik awal. Rumus `x = 960 + x_bflyt`, `y = 540 - y_bflyt` hanya hipotesis jika origin pusat dan sumbu Y sumber ke atas; pastikan dengan capture.
 5. Implementasikan PIC1 sebagai quad dengan seluruh UV layer dan warna vertex. Implementasikan WND1 sebagai nine-patch yang menghormati inflation, border, frame, UV, flip, material, dan warna. Decode channel/swizzle/alpha/mipmap BNTX dan samakan sampler/blend/shader; nama GLSL bukan bukti shader pass yang dipilih saat runtime.
 6. Untuk txt1, gunakan font BFFNT/FCPX yang terikat lewat FontInfo dan pertahankan metrik, alignment, spacing, wrapping, locale, glyph fallback, dan glyph private-use. Jangan mengubah teks dinamis menjadi string final sebelum substitusi dan localization diketahui.
 7. Konversi 16.147 kurva ke track Godot atau pemutar custom dengan Step/Hermite, nilai, slope, target, dan frame tetap. Simpan 15 FLEU sebagai track data kustom berisi tiga array float dan nama key; jangan anggap array-nya key/value biasa sebelum runtime consumer dipahami. Pemanggilan/timing harus datang dari state machine/controller yang dibuktikan.
-8. Tambahkan node khusus untuk `ProceduralShape`, BND1, dan SCR1 sambil mempertahankan field mentah serta transformnya. Bandingkan render pada resolusi sumber dan viewport target sebelum menandai hasil akurat.
+8. Tambahkan node khusus untuk `ProceduralShape`, BND1, dan SCR1 sambil mempertahankan field mentah serta transformnya. Native membaca userData `S_*` untuk border, overlay, gradation, shadow, dan gradation mask; pertahankan field-field tersebut dan indeks warna sampai shader/warna cocok. `ScissorPane` menyimpan enable byte dan empat nilai mentah, sementara hubungan ke clipping GPU belum terbukti. Implementasikan batas/cursor `UISysBounding` sebagai sistem terpisah dari section BND1. Bandingkan render pada resolusi sumber dan viewport target sebelum menandai hasil akurat.
 
 Pratinjau [HUD_layout_preview.png](../work/ui_hud_preview/HUD_layout_preview.png) memakai tekstur BNTX hasil decode dan anchor MainScreen, tetapi merangkum efek shader/font dan memakai teks “ZL” sebagai pengganti glyph. Gunakan hanya untuk inspeksi komposisi.
 
@@ -67,6 +78,7 @@ Pratinjau [HUD_layout_preview.png](../work/ui_hud_preview/HUD_layout_preview.png
 - [Katalog layout dan animasi](../output/ui_hud/screen_catalog.json)
 - [Pemetaan MainScreen dan smartphone](../output/ui_hud/hud_mapping.json)
 - [Pendaftaran dan korelasi native](../output/ui_hud/native_bindings.json)
+- [Rantai resource, HUD, fokus, dan consumer userData native](../output/ui_hud/native_ui_traces.json)
 - [Struktur section, userData, CNT1, WND1, BND1, dan SCR1](../output/ui_hud/section_semantics.json)
 - [Batas group `grs1/gre1` dan `grp1`](../output/ui_hud/group_structure.json)
 - [35 referensi part ganda dan kandidat hash](../output/ui_hud/part_reference_ambiguities.json)

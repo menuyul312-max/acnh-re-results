@@ -1,0 +1,214 @@
+{
+  "schema": "acnh.ui_native_traces.v1",
+  "source_build": "ACNH 1.0.0; ExeFS main hash f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+  "analysis_basis": "Ghidra pseudocode and local SQLite call/string reference index for the supplied main executable; no runtime trace or game capture.",
+  "resource_loading": {
+    "page_archive_preload": {
+      "path": ["0x98b70", "0x1541580"],
+      "observed": [
+        "Startup calls the layout resource preloader.",
+        "The preloader iterates a registered resource-name array and formats Layout/%s.Nin_NX_NVN.zs.",
+        "The opened resource is cached in an array indexed by the same loop index."
+      ],
+      "archive_suffix_observed": ".zs",
+      "limitation": "This preloader path does not explain the five Layout .szs archives in the RomFS inventory."
+    },
+    "layout_manager": {
+      "path": ["0x14c3cf0", "0x14c49e0", "0x14bfe60", "0x14bebd0"],
+      "observed": [
+        "0x14c3cf0 initializes the layout manager and registers the LytAllocator resource allocator.",
+        "0x14c49e0 iterates a configured list of resource names and calls 0x14bfe60 for each.",
+        "0x14bebd0 formats Layout/%s.Nin_NX_NVN.zs, opens that archive, then requests a nested %s.arc member and registers an accessor for it."
+      ],
+      "direct_callers_of_archive_open_helper": ["0x14bfe60", "0x14cb390"],
+      "limitation": "The observed path proves a .zs archive route for this manager. It does not expose a condition selecting between same-name .zs and .szs candidates for each PRT1 reference."
+    },
+    "layout_member_request": {
+      "path": ["0x14c77a0", "0x191c8d0"],
+      "observed": [
+        "0x14c77a0 looks up the named resource in the layout manager, obtains its accessor, and delegates loading through the layout resource interface.",
+        "0x191c8d0 formats %s.bflyt and requests it from the accessor using resource type value 0x626c7974."
+      ]
+    },
+    "embedded_prt1_layout": {
+      "path": ["0x1cf1230", "0x1cf0de0", "0x1ceb3e0", "0x1cf20a0", "0x1cf2330", "0x1cef850", "0x1cf43a0"],
+      "observed": [
+        "0x1cf1230 creates an embedded layout object when the child entry is not yet materialized.",
+        "0x1ceb3e0 formats %s.bflyt from the requested child-layout name and initializes the resource accessor.",
+        "0x1cf2330 constructs an EuiAllocator:<locale><layout-name> resource key before constructing/loading the accessor.",
+        "0x1cf43a0 appends a suffix to the resource key and requests a BFLYT resource through the accessor."
+      ],
+      "limitation": "The pseudocode does not reveal an explicit .zs/.szs precedence branch at the PRT1 child lookup. The EuiAllocator key is visible, but the archive searched for each duplicate candidate is not resolved by this static call path."
+    },
+    "part_ambiguities": {
+      "ambiguous_reference_count": 35,
+      "references_with_exactly_one_host_suffix_match": 35,
+      "runtime_selection_status": "unresolved",
+      "reason": "The loader chain proves name-based BFLYT resource requests and a .zs manager route, but does not prove which archive/accessor wins for the duplicate .zs/.szs BFLYT names."
+    }
+  },
+  "main_screen_and_hud": {
+    "native_updates": [
+      {
+        "function_va": "0x1315ac0",
+        "observed": "Compares current date/time fields with cached values, obtains the localized STR_Week resource, and updates multiple text entries on MainScreen when relevant date/time fields change.",
+        "limit": "Some pane/resource identifiers are passed through opaque data and remain unnamed."
+      },
+      {
+        "function_va": "0x1315f90",
+        "observed": "Writes four additional indexed text resources to MainScreen-bound controls.",
+        "limit": "The concrete pane names represented by the indexed resource keys are not decoded."
+      },
+      {
+        "function_va": "0x14797c0",
+        "observed": "Iterates 11 STR_KeyIcon entries and refreshes their icon/control text on MainScreen when the source values differ.",
+        "limit": "The exact controller-style and key-to-icon mapping is not fully decoded from the opaque table."
+      },
+      {
+        "function_va": "0x1347c50",
+        "observed": "Resolves the MainScreen child pane /L_Clock_00 and routes the clock update through its bound component helper.",
+        "limit": "The complete time formatting and visibility conditions are not established by this wrapper alone."
+      },
+      {
+        "function_va": "0x125e3e0",
+        "observed": "Checks the MainUiClockEnable setting, calls two MenuDevice update helpers, and updates MenuDevice clock-related text/state based on the current clock value.",
+        "limit": "This function is a MenuDevice component update; it does not prove the full MainScreenSmartPhone controller or screen-open lifecycle."
+      }
+    ],
+    "smartphone_controller_status": "unresolved",
+    "evidence_limit": "No exact native reference to MainScreenSmartPhone was found in the current 62-name layout-reference sample. The absence of that exact string does not rule out dynamically named construction or a controller that targets another layout."
+  },
+  "focus_and_action_dispatch": {
+    "action_name_table": {
+      "function_va": "0x1485c20",
+      "ordered_names": [
+        "FocusKey",
+        "FocusTouch",
+        "UnFocusKey",
+        "UnFocusTouch",
+        "DecideKey",
+        "DecideTouch",
+        "Invalid",
+        "Check",
+        "Uncheck",
+        "RepeatKey",
+        "RepeatTouch",
+        "Active",
+        "Inactive"
+      ],
+      "observed": "Builds/caches the named action table; callers use its indexed names when dispatching UI control state changes."
+    },
+    "control_action_dispatch": {
+      "path": ["0x14845a0", "0x14855f0", "0x14bda00", "0x14bd770"],
+      "observed": [
+        "0x14845a0 translates an action index into a named control action and dispatches it through the control action tree.",
+        "Dispatch updates per-action state flags and routes into animation/action objects through virtual calls.",
+        "The helper distinguishes action start/update paths and uses separate methods for the different action modes."
+      ],
+      "limitation": "The function chain does not map platform button/touch input to each action index, nor establish the complete focus restoration, modal stack, or screen lifecycle."
+    },
+    "cursor_binding": {
+      "function_va": "0x14885b0",
+      "observed_pane_names": ["Cursor", "P_BtnFocusKey", "C_Cursor", "B_Hit"],
+      "observed": "Looks up Cursor-related panes and uses P_BtnFocusKey, then C_Cursor, as cursor candidates; B_Hit is used as a fallback hit-related pane for the second cursor component.",
+      "limitation": "The wrapper proves resource binding/fallback names, not the complete geometry hit-test or focus-navigation algorithm."
+    },
+    "bounding_control": {
+      "path": ["0x1671db0", "0x16737c0", "0x1670400", "0x1da9030", "0x1da8f60"],
+      "observed": [
+        "0x1671db0 creates a BoundingCtrl helper for a UI-system record.",
+        "0x1670400 reads UISysBoundingUseCursor; when enabled, it resolves a cursor-related resource, creates the cursor binding, and configures four cursor channels.",
+        "0x1671c00 dispatches UISysBounding, UISysScrollBtnList, and UISysScrollSign records to separate virtual handlers."
+      ],
+      "limitation": "This UISysBounding controller is not proof of the BND1 BoundingPane hit-test implementation; coordinate conversion, hit precedence, and platform input routing remain unresolved."
+    },
+    "focus_callback": {
+      "function_va": "0x1483aa0",
+      "observed": "Updates control-state flags, emits the corresponding indexed action, and notifies its registered callback/listener when its state guards permit.",
+      "limitation": "The external caller and all guard meanings are not resolved."
+    },
+    "common_dialog_controller": {
+      "construction_path": ["0x11e6d70", "0x11e6e70", "0x11e6fc0"],
+      "update_path": ["0x11e8960", "0x11e9210", "0x11e95c0", "0x11e96a0"],
+      "observed": [
+        "0x11e6d70 selects CmnDialogSmartPhone when its mode field equals 1; otherwise it selects CmnDialog.",
+        "The constructor creates and attaches CommonDialogPage and CommonDialogBGPage objects.",
+        "0x11e8960 branches on a dialog state code and updates state-specific controls; 0x11e9210 refreshes STR_KeyIcon and KeyGuide entries for the selected dialog state.",
+        "0x11e96a0 iterates child/page slots 0 through 7 and applies state/animation operations to those slots."
+      ],
+      "limitation": "This traces a dialog component, not the global modal stack. Open/close/back sequencing, focus return, and teardown are still unproven."
+    }
+  },
+  "special_user_data_consumers": {
+    "lookup_helper": {
+      "function_va": "0x1930000",
+      "observed": "Searches the layout userData entries by exact string name and returns the matching record."
+    },
+    "procedural_shape_parameters": [
+      {
+        "function_va": "0x14ca030",
+        "fields": ["S_BorderDrawMode", "S_BorderVolume", "S_BorderSize", "S_BorderColorSelect0", "S_BorderColor0"],
+        "observed": "Reads the border userData values into a renderer-side shape parameter block; color selection resolves through an indexed color table when present."
+      },
+      {
+        "function_va": "0x14c9990",
+        "fields": ["S_ColorOverlay0DrawMode", "S_ColorOverlay0Volume", "S_ColorOverlay0ColorSelect", "S_ColorOverlay0Color"],
+        "observed": "Reads overlay draw mode, volume, and color into renderer-side parameters."
+      },
+      {
+        "function_va": "0x14c9ac0",
+        "fields": ["S_GradationDrawMode", "S_GradationVolume", "S_GradationColorNum", "S_GradationAngle", "S_GradationColorSelect0..3", "S_GradationColor0..3", "S_GradationColorStop0..3"],
+        "observed": "Reads up to four gradation colors/stops, angle, mode, volume, and optional indexed palette colors."
+      },
+      {
+        "function_va": "0x14c9830",
+        "fields": ["S_DropShadowDrawMode", "S_DropShadowVolume", "S_DropShadowColorSelect", "S_DropShadowColor", "S_DropShadowSize", "S_DropShadowFunction"],
+        "observed": "Reads drop-shadow parameters into renderer-side shape data."
+      },
+      {
+        "function_va": "0x14c9e90",
+        "fields": ["S_InnerShadowDrawMode", "S_InnerShadowVolume", "S_InnerShadowColorSelect", "S_InnerShadowColor", "S_InnerShadowAngle", "S_InnerShadowDistance", "S_InnerShadowSize", "S_InnerShadowFunction"],
+        "observed": "Reads inner-shadow parameters into renderer-side shape data."
+      },
+      {
+        "function_va": "0x14ca1a0",
+        "fields": ["S_GradationMaskEnable", "S_GradationMaskVolume", "S_GradationMaskAngle", "S_GradationMaskAlpha0", "S_GradationMaskAlphaStop0", "S_GradationMaskAlpha1", "S_GradationMaskAlphaStop1"],
+        "observed": "Reads gradation-mask controls and alpha stops."
+      }
+    ],
+    "layout_walk": {
+      "function_va": "0x1cf0fa0",
+      "observed_user_data_keys": ["EffectLinkOn"],
+      "delegated_handlers": ["0x1b5ce10 (AdjustToTextOn)", "0x1b5d4d0 (CaptureUseName/CaptureUseIndex)", "0x1b5dad0 (DynamicCaptureUseName/DynamicCaptureUseIndex)"],
+      "observed": "Recursively walks layout panes during layout setup and invokes effect-link, text-adjustment, and capture handlers."
+    },
+    "scissor_pane": {
+      "path": ["0x14c89c0", "0x14c8a90", "0x14c8d00"],
+      "observed": [
+        "0x14c89c0 constructs an object whose registered pane type name is ScissorPane, then calls its initializer.",
+        "0x14c8a90 initializes common pane state and associates the scissor object.",
+        "0x14c8d00 sets an enable byte and copies four 32-bit values into the scissor object."
+      ],
+      "limitation": "The available pseudocode does not connect these stored values to the final NVN scissor command or establish coordinate/clip nesting rules."
+    },
+    "ui2dsys_type_dispatch": {
+      "function_va": "0x1672890",
+      "observed_types": [
+        "LpLocator", "LpUniteButton", "LpDragButton", "LpKeyDecideIcon", "LpSelector", "LpScrollBar", "LpCharAnim", "LpTextAnim", "LpTraceGauge", "LpNumberAnim", "LpMultiNumberAnim", "LpTimer", "UISysBounding", "UISysScrollBtnList", "UISysScrollSign"
+      ],
+      "observed": "Dispatches parsed ui2dsys type names to distinct virtual handlers; 0x1671c00 handles the three UISys* types in the same family.",
+      "limitation": "The mapping identifies component families but does not yet decode every handler's state transitions or bind all 803 asset-side records to their runtime instances."
+    },
+    "fleu_relation": {
+      "observed_overlap": ["S_BorderSize", "S_BorderVolume", "S_ColorOverlay0Volume"],
+      "unresolved": "The 15 FLEU records are structurally bound to USD1 keys, and the native renderer consumes several matching keys. The native update function that applies FLEU arrays to those userData values, key timing, and the meaning of all three arrays are not yet proven. C_Id has no exact native string consumer in the current index."
+    }
+  },
+  "remaining_evidence_needed": [
+    "A direct runtime/resource-manager trace or complete allocator lookup logic showing which archive supplies each duplicate PRT1 name, including .szs cases.",
+    "Caller/vtable identification for MainScreenSmartPhone open/update/close and its relationship to MainScreen HUD state.",
+    "Input-device to FocusKey/FocusTouch/DecideKey/DecideTouch mapping, modal push/pop, focus restoration, and teardown paths.",
+    "A native FLEU application path mapping arrays to named userData values and animation frame timing.",
+    "Synchronized game captures for renderer comparisons (origin/scale, hit bounds, clipping, BNTX channel behavior, sampler/blend/shader and font output)."
+  ]
+}
