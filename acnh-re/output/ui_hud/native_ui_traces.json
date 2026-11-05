@@ -927,11 +927,29 @@
         "0x14c8d00"
       ],
       "observed": [
-        "0x14c89c0 constructs an object whose registered pane type name is ScissorPane, then calls its initializer.",
-        "0x14c8a90 initializes common pane state and associates the scissor object.",
-        "0x14c8d00 sets an enable byte and copies four 32-bit values into the scissor object."
+        "0x14c89c0 constructs the registered pane type ScissorPane, and 0x14c8d00 sets an enable byte and copies four 32-bit rectangle values.",
+        "The viewport_geometry_path shows where the values are computed and written; GPU render consumption remains unresolved."
       ],
-      "limitation": "The available pseudocode does not connect these stored values to the final NVN scissor command or establish coordinate/clip nesting rules."
+      "limitation": "The native path proves geometry and object update, but not the final NVN scissor command, clipping coordinate space, or nested-clip intersection rule.",
+      "viewport_geometry_path": {
+        "path": [
+          "0x14902f0",
+          "0x14906f0",
+          "0x148ff20",
+          "0x1496460",
+          "0x1496530",
+          "0x14c89c0",
+          "0x14c8d00"
+        ],
+        "cleanup_function_va": "0x1495d80",
+        "observed": [
+          "The viewport/layout adjustment path 0x148ff20 reaches 0x1496460 after computing a clipped content/visible extent.",
+          "0x1496460 lazily creates and stores a ScissorPane object when one is not already present, then invokes 0x14c8d00 with the computed four-value rectangle.",
+          "0x1496530 derives the four rectangle values from the resolved layout/ancestor properties and the caller-supplied viewport dimensions; 0x1496460 also returns the resulting width/height to the parent.",
+          "The cleanup path 0x1495d80 destroys the associated object through 0x14c8b70."
+        ],
+        "limit": "This proves rectangle calculation, ScissorPane object creation/update, and cleanup in the viewport-adjustment path. It does not expose the final NVN scissor command, clipping coordinate space, or nested-clip intersection rule."
+      }
     },
     "ui2dsys_type_dispatch": {
       "function_va": "0x1672890",
