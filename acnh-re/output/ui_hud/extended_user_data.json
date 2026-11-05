@@ -1,0 +1,1378 @@
+{
+  "schema": "acnh.ui_bflan_extended_user_data.v1",
+  "evidence": "FLEU uses its dedicated inline ExtendedUserDataAnim record, not the standard numeric target/curve block. Each record was parsed within its pai1 bounds and preserves its three float arrays, raw header fields, key string, and record hash. Its key name is cross-referenced to usd1 entries on the uniquely named same-archive pane candidate.",
+  "counts": {
+    "source_archives": 6,
+    "infos": 15,
+    "records": 15,
+    "base_count_total": 105,
+    "f32_array_value_count": 315,
+    "key_name_counts": {
+      "C_Id": 11,
+      "S_BorderSize": 2,
+      "S_BorderVolume": 1,
+      "S_ColorOverlay0Volume": 1
+    },
+    "pane_user_data_binding_status_counts": {
+      "unique_same_archive_pane_user_data_key": 15
+    },
+    "parse_errors": 0
+  },
+  "format_reference": "https://github.com/crackheadakira/nnbfl/blob/af30eaf9a92324bfe7ecc2af8df9c8dbf8848a79/nnbfl/src/bflan/anim_info.rs",
+  "value_array_semantics": "The format defines three f32 arrays per record; this report preserves them by array index and does not assign runtime meaning to each array.",
+  "infos": [
+    {
+      "source": "Layout/BtnOpt_Root.Nin_NX_NVN.zs",
+      "animation_member": "BtnOpt_Root.arc!anim/BtnOpt_Root_UnCheck.bflan",
+      "tag": "UnCheck",
+      "content_target_name": "P_CheckBaseOff",
+      "content_target_type_id": 2,
+      "info_offset": 420,
+      "reserved_bytes": [
+        0,
+        0,
+        0
+      ],
+      "record_count": 1,
+      "record_indices": [
+        0
+      ],
+      "end_offset": 473
+    },
+    {
+      "source": "Layout/BtnOpt_Root.Nin_NX_NVN.zs",
+      "animation_member": "BtnOpt_Root.arc!anim/BtnOpt_Root_Check.bflan",
+      "tag": "Check",
+      "content_target_name": "P_CheckBaseOff",
+      "content_target_type_id": 2,
+      "info_offset": 456,
+      "reserved_bytes": [
+        0,
+        0,
+        0
+      ],
+      "record_count": 1,
+      "record_indices": [
+        1
+      ],
+      "end_offset": 545
+    },
+    {
+      "source": "Layout/CntrIndicatorS.Nin_NX_NVN.zs",
+      "animation_member": "CntrIndicatorS.arc!anim/CntrIndicatorS_Color.bflan",
+      "tag": "Color",
+      "content_target_name": "P_Valid_00",
+      "content_target_type_id": 2,
+      "info_offset": 392,
+      "reserved_bytes": [
+        0,
+        0,
+        0
+      ],
+      "record_count": 1,
+      "record_indices": [
+        2
+      ],
+      "end_offset": 461
+    },
+    {
+      "source": "Layout/CntrIndicatorS.Nin_NX_NVN.zs",
+      "animation_member": "CntrIndicatorS.arc!anim/CntrIndicatorS_Color.bflan",
+      "tag": "Color",
+      "content_target_name": "P_Valid_01",
+      "content_target_type_id": 2,
+      "info_offset": 508,
+      "reserved_bytes": [
+        0,
+        0,
+        0
+      ],
+      "record_count": 1,
+      "record_indices": [
+        3
+      ],
+      "end_offset": 577
+    },
+    {
+      "source": "Layout/CntrIndicatorS.Nin_NX_NVN.zs",
+      "animation_member": "CntrIndicatorS.arc!anim/CntrIndicatorS_Color.bflan",
+      "tag": "Color",
+      "content_target_name": "P_Valid_02",
+      "content_target_type_id": 2,
+      "info_offset": 624,
+      "reserved_bytes": [
+        0,
+        0,
+        0
+      ],
+      "record_count": 1,
+      "record_indices": [
+        4
+      ],
+      "end_offset": 693
+    },
+    {
+      "source": "Layout/CntrIndicatorS.Nin_NX_NVN.zs",
+      "animation_member": "CntrIndicatorS.arc!anim/CntrIndicatorS_Color.bflan",
+      "tag": "Color",
+      "content_target_name": "P_Valid_03",
+      "content_target_type_id": 2,
+      "info_offset": 740,
+      "reserved_bytes": [
+        0,
+        0,
+        0
+      ],
+      "record_count": 1,
+      "record_indices": [
+        5
+      ],
+      "end_offset": 809
+    },
+    {
+      "source": "Layout/CntrIndicatorS.Nin_NX_NVN.zs",
+      "animation_member": "CntrIndicatorS.arc!anim/CntrIndicatorS_Color.bflan",
+      "tag": "Color",
+      "content_target_name": "P_Invalid_00",
+      "content_target_type_id": 2,
+      "info_offset": 856,
+      "reserved_bytes": [
+        0,
+        0,
+        0
+      ],
+      "record_count": 1,
+      "record_indices": [
+        6
+      ],
+      "end_offset": 949
+    },
+    {
+      "source": "Layout/CntrIndicatorS.Nin_NX_NVN.zs",
+      "animation_member": "CntrIndicatorS.arc!anim/CntrIndicatorS_Color.bflan",
+      "tag": "Color",
+      "content_target_name": "P_Invalid_01",
+      "content_target_type_id": 2,
+      "info_offset": 996,
+      "reserved_bytes": [
+        0,
+        0,
+        0
+      ],
+      "record_count": 1,
+      "record_indices": [
+        7
+      ],
+      "end_offset": 1089
+    },
+    {
+      "source": "Layout/CntrIndicatorS.Nin_NX_NVN.zs",
+      "animation_member": "CntrIndicatorS.arc!anim/CntrIndicatorS_Color.bflan",
+      "tag": "Color",
+      "content_target_name": "P_Invalid_02",
+      "content_target_type_id": 2,
+      "info_offset": 1136,
+      "reserved_bytes": [
+        0,
+        0,
+        0
+      ],
+      "record_count": 1,
+      "record_indices": [
+        8
+      ],
+      "end_offset": 1229
+    },
+    {
+      "source": "Layout/CntrIndicatorS.Nin_NX_NVN.zs",
+      "animation_member": "CntrIndicatorS.arc!anim/CntrIndicatorS_Color.bflan",
+      "tag": "Color",
+      "content_target_name": "P_Invalid_03",
+      "content_target_type_id": 2,
+      "info_offset": 1276,
+      "reserved_bytes": [
+        0,
+        0,
+        0
+      ],
+      "record_count": 1,
+      "record_indices": [
+        9
+      ],
+      "end_offset": 1369
+    },
+    {
+      "source": "Layout/Cursor3.Nin_NX_NVN.zs",
+      "animation_member": "Cursor3.arc!anim/Cursor3_Wait.bflan",
+      "tag": "Wait",
+      "content_target_name": "P_Grow",
+      "content_target_type_id": 2,
+      "info_offset": 1036,
+      "reserved_bytes": [
+        0,
+        0,
+        0
+      ],
+      "record_count": 1,
+      "record_indices": [
+        10
+      ],
+      "end_offset": 1679
+    },
+    {
+      "source": "Layout/FooterBtn.Nin_NX_NVN.zs",
+      "animation_member": "FooterBtn.arc!anim/FooterBtn_TextColor.bflan",
+      "tag": "TextColor",
+      "content_target_name": "P_Key",
+      "content_target_type_id": 2,
+      "info_offset": 168,
+      "reserved_bytes": [
+        0,
+        0,
+        0
+      ],
+      "record_count": 1,
+      "record_indices": [
+        11
+      ],
+      "end_offset": 261
+    },
+    {
+      "source": "Layout/FooterCtrl.Nin_NX_NVN.zs",
+      "animation_member": "FooterCtrl.arc!anim/FooterCtrl_IconColor.bflan",
+      "tag": "IconColor",
+      "content_target_name": "P_CtrlDummy",
+      "content_target_type_id": 2,
+      "info_offset": 168,
+      "reserved_bytes": [
+        0,
+        0,
+        0
+      ],
+      "record_count": 1,
+      "record_indices": [
+        12
+      ],
+      "end_offset": 261
+    },
+    {
+      "source": "Layout/LineFooter.Nin_NX_NVN.zs",
+      "animation_member": "LineFooter.arc!anim/LineFooter_Color.bflan",
+      "tag": "Color",
+      "content_target_name": "P_Line",
+      "content_target_type_id": 2,
+      "info_offset": 168,
+      "reserved_bytes": [
+        0,
+        0,
+        0
+      ],
+      "record_count": 1,
+      "record_indices": [
+        13
+      ],
+      "end_offset": 261
+    },
+    {
+      "source": "Layout/LineFooter.Nin_NX_NVN.zs",
+      "animation_member": "LineFooter.arc!anim/LineFooter_Color.bflan",
+      "tag": "Color",
+      "content_target_name": "P_Line",
+      "content_target_type_id": 2,
+      "info_offset": 308,
+      "reserved_bytes": [
+        0,
+        0,
+        0
+      ],
+      "record_count": 1,
+      "record_indices": [
+        14
+      ],
+      "end_offset": 394
+    }
+  ],
+  "records": [
+    {
+      "source": "Layout/BtnOpt_Root.Nin_NX_NVN.zs",
+      "animation_member": "BtnOpt_Root.arc!anim/BtnOpt_Root_UnCheck.bflan",
+      "animation_sha256": "e0a45324a0fbb72cc2abdd29bf9a0ca6a9c0c13595569f587dbce31569970dad",
+      "tag": "UnCheck",
+      "content_target_name": "P_CheckBaseOff",
+      "content_target_type_id": 2,
+      "info_offset": 420,
+      "record_index": 0,
+      "record_offset": 428,
+      "record_size": 45,
+      "header_size_raw": 12,
+      "unknown_u16": [
+        0,
+        2
+      ],
+      "base_count": 1,
+      "unknown_u32": 12,
+      "value_arrays_f32": [
+        [
+          0.0
+        ],
+        [
+          2.0
+        ],
+        [
+          0.0
+        ]
+      ],
+      "key_relative_offset": 4,
+      "key_name": "S_BorderSize",
+      "sha256": "4f5844ef5a5705993544aaa30b02cf06d9558c8d3f6f189f2c180309f0780e95",
+      "target_layout_candidates": [
+        {
+          "layout_member": "BtnOpt_Root.arc!blyt/BtnOpt_Root.bflyt",
+          "component_id": 15
+        }
+      ],
+      "pane_user_data_binding": {
+        "status": "unique_same_archive_pane_user_data_key",
+        "matches": [
+          {
+            "section_offset": 5000,
+            "entry_index": 2,
+            "name": "S_BorderSize",
+            "kind": "float32",
+            "item_count": 1,
+            "value": [
+              2.0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "source": "Layout/BtnOpt_Root.Nin_NX_NVN.zs",
+      "animation_member": "BtnOpt_Root.arc!anim/BtnOpt_Root_Check.bflan",
+      "animation_sha256": "017df2ab8c66a05bd42626a99047c2738d19d72676d2b63238bf475d0033c3b6",
+      "tag": "Check",
+      "content_target_name": "P_CheckBaseOff",
+      "content_target_type_id": 2,
+      "info_offset": 456,
+      "record_index": 0,
+      "record_offset": 464,
+      "record_size": 81,
+      "header_size_raw": 12,
+      "unknown_u16": [
+        0,
+        2
+      ],
+      "base_count": 4,
+      "unknown_u32": 12,
+      "value_arrays_f32": [
+        [
+          0.0,
+          2.0,
+          -1.0,
+          2.0
+        ],
+        [
+          0.0,
+          0.0,
+          50.0,
+          0.0
+        ],
+        [
+          0.0,
+          50.0,
+          2.0,
+          0.0
+        ]
+      ],
+      "key_relative_offset": 4,
+      "key_name": "S_BorderSize",
+      "sha256": "18db993bae4304e52fdc6ca9c95dcc108ca61a2430f0307b86c528b4bf16d4f6",
+      "target_layout_candidates": [
+        {
+          "layout_member": "BtnOpt_Root.arc!blyt/BtnOpt_Root.bflyt",
+          "component_id": 15
+        }
+      ],
+      "pane_user_data_binding": {
+        "status": "unique_same_archive_pane_user_data_key",
+        "matches": [
+          {
+            "section_offset": 5000,
+            "entry_index": 2,
+            "name": "S_BorderSize",
+            "kind": "float32",
+            "item_count": 1,
+            "value": [
+              2.0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "source": "Layout/CntrIndicatorS.Nin_NX_NVN.zs",
+      "animation_member": "CntrIndicatorS.arc!anim/CntrIndicatorS_Color.bflan",
+      "animation_sha256": "65228c76a335c6ebe48d0474be3efe5a97abf77d6ffe11b001bee37dcf8f8430",
+      "tag": "Color",
+      "content_target_name": "P_Valid_00",
+      "content_target_type_id": 2,
+      "info_offset": 392,
+      "record_index": 0,
+      "record_offset": 400,
+      "record_size": 61,
+      "header_size_raw": 12,
+      "unknown_u16": [
+        0,
+        2
+      ],
+      "base_count": 3,
+      "unknown_u32": 12,
+      "value_arrays_f32": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          1.0,
+          0.0
+        ]
+      ],
+      "key_relative_offset": 4,
+      "key_name": "C_Id",
+      "sha256": "ca0f266ad16d0aef0a3c45dcdb9d840f7cebd87c32c6406f7049f99182284f8d",
+      "target_layout_candidates": [
+        {
+          "layout_member": "CntrIndicatorS.arc!blyt/CntrIndicatorS.bflyt",
+          "component_id": 6
+        }
+      ],
+      "pane_user_data_binding": {
+        "status": "unique_same_archive_pane_user_data_key",
+        "matches": [
+          {
+            "section_offset": 2744,
+            "entry_index": 1,
+            "name": "C_Id",
+            "kind": "int32",
+            "item_count": 1,
+            "value": [
+              0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "source": "Layout/CntrIndicatorS.Nin_NX_NVN.zs",
+      "animation_member": "CntrIndicatorS.arc!anim/CntrIndicatorS_Color.bflan",
+      "animation_sha256": "65228c76a335c6ebe48d0474be3efe5a97abf77d6ffe11b001bee37dcf8f8430",
+      "tag": "Color",
+      "content_target_name": "P_Valid_01",
+      "content_target_type_id": 2,
+      "info_offset": 508,
+      "record_index": 0,
+      "record_offset": 516,
+      "record_size": 61,
+      "header_size_raw": 12,
+      "unknown_u16": [
+        0,
+        2
+      ],
+      "base_count": 3,
+      "unknown_u32": 12,
+      "value_arrays_f32": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          1.0,
+          0.0
+        ]
+      ],
+      "key_relative_offset": 4,
+      "key_name": "C_Id",
+      "sha256": "ca0f266ad16d0aef0a3c45dcdb9d840f7cebd87c32c6406f7049f99182284f8d",
+      "target_layout_candidates": [
+        {
+          "layout_member": "CntrIndicatorS.arc!blyt/CntrIndicatorS.bflyt",
+          "component_id": 7
+        }
+      ],
+      "pane_user_data_binding": {
+        "status": "unique_same_archive_pane_user_data_key",
+        "matches": [
+          {
+            "section_offset": 3000,
+            "entry_index": 1,
+            "name": "C_Id",
+            "kind": "int32",
+            "item_count": 1,
+            "value": [
+              0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "source": "Layout/CntrIndicatorS.Nin_NX_NVN.zs",
+      "animation_member": "CntrIndicatorS.arc!anim/CntrIndicatorS_Color.bflan",
+      "animation_sha256": "65228c76a335c6ebe48d0474be3efe5a97abf77d6ffe11b001bee37dcf8f8430",
+      "tag": "Color",
+      "content_target_name": "P_Valid_02",
+      "content_target_type_id": 2,
+      "info_offset": 624,
+      "record_index": 0,
+      "record_offset": 632,
+      "record_size": 61,
+      "header_size_raw": 12,
+      "unknown_u16": [
+        0,
+        2
+      ],
+      "base_count": 3,
+      "unknown_u32": 12,
+      "value_arrays_f32": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          1.0,
+          0.0
+        ]
+      ],
+      "key_relative_offset": 4,
+      "key_name": "C_Id",
+      "sha256": "ca0f266ad16d0aef0a3c45dcdb9d840f7cebd87c32c6406f7049f99182284f8d",
+      "target_layout_candidates": [
+        {
+          "layout_member": "CntrIndicatorS.arc!blyt/CntrIndicatorS.bflyt",
+          "component_id": 8
+        }
+      ],
+      "pane_user_data_binding": {
+        "status": "unique_same_archive_pane_user_data_key",
+        "matches": [
+          {
+            "section_offset": 3256,
+            "entry_index": 1,
+            "name": "C_Id",
+            "kind": "int32",
+            "item_count": 1,
+            "value": [
+              0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "source": "Layout/CntrIndicatorS.Nin_NX_NVN.zs",
+      "animation_member": "CntrIndicatorS.arc!anim/CntrIndicatorS_Color.bflan",
+      "animation_sha256": "65228c76a335c6ebe48d0474be3efe5a97abf77d6ffe11b001bee37dcf8f8430",
+      "tag": "Color",
+      "content_target_name": "P_Valid_03",
+      "content_target_type_id": 2,
+      "info_offset": 740,
+      "record_index": 0,
+      "record_offset": 748,
+      "record_size": 61,
+      "header_size_raw": 12,
+      "unknown_u16": [
+        0,
+        2
+      ],
+      "base_count": 3,
+      "unknown_u32": 12,
+      "value_arrays_f32": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          1.0,
+          0.0
+        ]
+      ],
+      "key_relative_offset": 4,
+      "key_name": "C_Id",
+      "sha256": "ca0f266ad16d0aef0a3c45dcdb9d840f7cebd87c32c6406f7049f99182284f8d",
+      "target_layout_candidates": [
+        {
+          "layout_member": "CntrIndicatorS.arc!blyt/CntrIndicatorS.bflyt",
+          "component_id": 9
+        }
+      ],
+      "pane_user_data_binding": {
+        "status": "unique_same_archive_pane_user_data_key",
+        "matches": [
+          {
+            "section_offset": 3512,
+            "entry_index": 1,
+            "name": "C_Id",
+            "kind": "int32",
+            "item_count": 1,
+            "value": [
+              0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "source": "Layout/CntrIndicatorS.Nin_NX_NVN.zs",
+      "animation_member": "CntrIndicatorS.arc!anim/CntrIndicatorS_Color.bflan",
+      "animation_sha256": "65228c76a335c6ebe48d0474be3efe5a97abf77d6ffe11b001bee37dcf8f8430",
+      "tag": "Color",
+      "content_target_name": "P_Invalid_00",
+      "content_target_type_id": 2,
+      "info_offset": 856,
+      "record_index": 0,
+      "record_offset": 864,
+      "record_size": 85,
+      "header_size_raw": 12,
+      "unknown_u16": [
+        0,
+        2
+      ],
+      "base_count": 5,
+      "unknown_u32": 12,
+      "value_arrays_f32": [
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          1.0,
+          0.0,
+          2.0
+        ],
+        [
+          1.0,
+          0.0,
+          2.0,
+          2.0,
+          0.0
+        ]
+      ],
+      "key_relative_offset": 4,
+      "key_name": "C_Id",
+      "sha256": "760363bc05e7d3b2caa3485c8431f7b7d5c9def721b7d082b761704dda997625",
+      "target_layout_candidates": [
+        {
+          "layout_member": "CntrIndicatorS.arc!blyt/CntrIndicatorS.bflyt",
+          "component_id": 1
+        }
+      ],
+      "pane_user_data_binding": {
+        "status": "unique_same_archive_pane_user_data_key",
+        "matches": [
+          {
+            "section_offset": 1628,
+            "entry_index": 1,
+            "name": "C_Id",
+            "kind": "int32",
+            "item_count": 1,
+            "value": [
+              0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "source": "Layout/CntrIndicatorS.Nin_NX_NVN.zs",
+      "animation_member": "CntrIndicatorS.arc!anim/CntrIndicatorS_Color.bflan",
+      "animation_sha256": "65228c76a335c6ebe48d0474be3efe5a97abf77d6ffe11b001bee37dcf8f8430",
+      "tag": "Color",
+      "content_target_name": "P_Invalid_01",
+      "content_target_type_id": 2,
+      "info_offset": 996,
+      "record_index": 0,
+      "record_offset": 1004,
+      "record_size": 85,
+      "header_size_raw": 12,
+      "unknown_u16": [
+        0,
+        2
+      ],
+      "base_count": 5,
+      "unknown_u32": 12,
+      "value_arrays_f32": [
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          1.0,
+          0.0,
+          2.0
+        ],
+        [
+          1.0,
+          0.0,
+          2.0,
+          2.0,
+          0.0
+        ]
+      ],
+      "key_relative_offset": 4,
+      "key_name": "C_Id",
+      "sha256": "760363bc05e7d3b2caa3485c8431f7b7d5c9def721b7d082b761704dda997625",
+      "target_layout_candidates": [
+        {
+          "layout_member": "CntrIndicatorS.arc!blyt/CntrIndicatorS.bflyt",
+          "component_id": 2
+        }
+      ],
+      "pane_user_data_binding": {
+        "status": "unique_same_archive_pane_user_data_key",
+        "matches": [
+          {
+            "section_offset": 1884,
+            "entry_index": 1,
+            "name": "C_Id",
+            "kind": "int32",
+            "item_count": 1,
+            "value": [
+              0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "source": "Layout/CntrIndicatorS.Nin_NX_NVN.zs",
+      "animation_member": "CntrIndicatorS.arc!anim/CntrIndicatorS_Color.bflan",
+      "animation_sha256": "65228c76a335c6ebe48d0474be3efe5a97abf77d6ffe11b001bee37dcf8f8430",
+      "tag": "Color",
+      "content_target_name": "P_Invalid_02",
+      "content_target_type_id": 2,
+      "info_offset": 1136,
+      "record_index": 0,
+      "record_offset": 1144,
+      "record_size": 85,
+      "header_size_raw": 12,
+      "unknown_u16": [
+        0,
+        2
+      ],
+      "base_count": 5,
+      "unknown_u32": 12,
+      "value_arrays_f32": [
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          1.0,
+          0.0,
+          2.0
+        ],
+        [
+          1.0,
+          0.0,
+          2.0,
+          2.0,
+          0.0
+        ]
+      ],
+      "key_relative_offset": 4,
+      "key_name": "C_Id",
+      "sha256": "760363bc05e7d3b2caa3485c8431f7b7d5c9def721b7d082b761704dda997625",
+      "target_layout_candidates": [
+        {
+          "layout_member": "CntrIndicatorS.arc!blyt/CntrIndicatorS.bflyt",
+          "component_id": 3
+        }
+      ],
+      "pane_user_data_binding": {
+        "status": "unique_same_archive_pane_user_data_key",
+        "matches": [
+          {
+            "section_offset": 2140,
+            "entry_index": 1,
+            "name": "C_Id",
+            "kind": "int32",
+            "item_count": 1,
+            "value": [
+              0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "source": "Layout/CntrIndicatorS.Nin_NX_NVN.zs",
+      "animation_member": "CntrIndicatorS.arc!anim/CntrIndicatorS_Color.bflan",
+      "animation_sha256": "65228c76a335c6ebe48d0474be3efe5a97abf77d6ffe11b001bee37dcf8f8430",
+      "tag": "Color",
+      "content_target_name": "P_Invalid_03",
+      "content_target_type_id": 2,
+      "info_offset": 1276,
+      "record_index": 0,
+      "record_offset": 1284,
+      "record_size": 85,
+      "header_size_raw": 12,
+      "unknown_u16": [
+        0,
+        2
+      ],
+      "base_count": 5,
+      "unknown_u32": 12,
+      "value_arrays_f32": [
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          1.0,
+          0.0,
+          2.0
+        ],
+        [
+          1.0,
+          0.0,
+          2.0,
+          2.0,
+          0.0
+        ]
+      ],
+      "key_relative_offset": 4,
+      "key_name": "C_Id",
+      "sha256": "760363bc05e7d3b2caa3485c8431f7b7d5c9def721b7d082b761704dda997625",
+      "target_layout_candidates": [
+        {
+          "layout_member": "CntrIndicatorS.arc!blyt/CntrIndicatorS.bflyt",
+          "component_id": 4
+        }
+      ],
+      "pane_user_data_binding": {
+        "status": "unique_same_archive_pane_user_data_key",
+        "matches": [
+          {
+            "section_offset": 2396,
+            "entry_index": 1,
+            "name": "C_Id",
+            "kind": "int32",
+            "item_count": 1,
+            "value": [
+              0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "source": "Layout/Cursor3.Nin_NX_NVN.zs",
+      "animation_member": "Cursor3.arc!anim/Cursor3_Wait.bflan",
+      "animation_sha256": "e37ec3fa916d926f6117833b5c4549da7956386cdd4f3101ba50e4f8d7c90a90",
+      "tag": "Wait",
+      "content_target_name": "P_Grow",
+      "content_target_type_id": 2,
+      "info_offset": 1036,
+      "record_index": 0,
+      "record_offset": 1044,
+      "record_size": 635,
+      "header_size_raw": 12,
+      "unknown_u16": [
+        0,
+        2
+      ],
+      "base_count": 50,
+      "unknown_u32": 12,
+      "value_arrays_f32": [
+        [
+          -10.0,
+          0.0,
+          0.0,
+          9.0,
+          0.800000011920929,
+          0.0,
+          10.0,
+          0.800000011920929,
+          0.0,
+          44.0,
+          0.0,
+          0.0,
+          50.0,
+          0.0,
+          0.0,
+          69.0,
+          0.800000011920929,
+          0.0,
+          70.0,
+          0.800000011920929,
+          0.0,
+          104.0,
+          0.0,
+          0.0,
+          110.0,
+          0.0,
+          0.0,
+          129.0,
+          0.800000011920929,
+          0.0,
+          130.0,
+          0.800000011920929,
+          0.0,
+          164.0,
+          0.0,
+          0.0,
+          170.0,
+          0.0,
+          0.0,
+          189.0,
+          0.800000011920929,
+          0.0,
+          190.0,
+          0.800000011920929,
+          0.0,
+          224.0,
+          0.0,
+          0.0,
+          230.0,
+          0.0
+        ],
+        [
+          0.0,
+          249.0,
+          0.800000011920929,
+          0.0,
+          250.0,
+          0.800000011920929,
+          0.0,
+          284.0,
+          0.0,
+          0.0,
+          290.0,
+          0.0,
+          0.0,
+          309.0,
+          0.800000011920929,
+          0.0,
+          310.0,
+          0.800000011920929,
+          0.0,
+          344.0,
+          0.0,
+          0.0,
+          350.0,
+          0.0,
+          0.0,
+          369.0,
+          0.800000011920929,
+          0.0,
+          370.0,
+          0.800000011920929,
+          0.0,
+          404.0,
+          0.0,
+          0.0,
+          410.0,
+          0.0,
+          0.0,
+          429.0,
+          0.800000011920929,
+          0.0,
+          430.0,
+          0.800000011920929,
+          0.0,
+          464.0,
+          0.0,
+          0.0,
+          470.0,
+          0.0,
+          0.0,
+          489.0
+        ],
+        [
+          0.800000011920929,
+          0.0,
+          490.0,
+          0.800000011920929,
+          0.0,
+          524.0,
+          0.0,
+          0.0,
+          530.0,
+          0.0,
+          0.0,
+          549.0,
+          0.800000011920929,
+          0.0,
+          550.0,
+          0.800000011920929,
+          0.0,
+          584.0,
+          0.0,
+          0.0,
+          590.0,
+          0.0,
+          0.0,
+          609.0,
+          0.800000011920929,
+          0.0,
+          610.0,
+          0.800000011920929,
+          0.0,
+          644.0,
+          0.0,
+          0.0,
+          650.0,
+          0.0,
+          0.0,
+          669.0,
+          0.800000011920929,
+          0.0,
+          670.0,
+          0.800000011920929,
+          0.0,
+          704.0,
+          0.0,
+          0.0,
+          710.0,
+          0.0,
+          0.0,
+          729.0,
+          0.800000011920929,
+          0.0
+        ]
+      ],
+      "key_relative_offset": 4,
+      "key_name": "S_BorderVolume",
+      "sha256": "062c0bc5a864276fa2a1e7dfca9e1d69b07fe12171b58f8acffc715f281eb252",
+      "target_layout_candidates": [
+        {
+          "layout_member": "Cursor3.arc!blyt/Cursor3.bflyt",
+          "component_id": 2
+        }
+      ],
+      "pane_user_data_binding": {
+        "status": "unique_same_archive_pane_user_data_key",
+        "matches": [
+          {
+            "section_offset": 1324,
+            "entry_index": 1,
+            "name": "S_BorderVolume",
+            "kind": "float32",
+            "item_count": 1,
+            "value": [
+              0.0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "source": "Layout/FooterBtn.Nin_NX_NVN.zs",
+      "animation_member": "FooterBtn.arc!anim/FooterBtn_TextColor.bflan",
+      "animation_sha256": "317b8fe91ea2967298ee282cf97a321fcd4950cd1f52a8b2a0f7e0b4f102f62a",
+      "tag": "TextColor",
+      "content_target_name": "P_Key",
+      "content_target_type_id": 2,
+      "info_offset": 168,
+      "record_index": 0,
+      "record_offset": 176,
+      "record_size": 85,
+      "header_size_raw": 12,
+      "unknown_u16": [
+        0,
+        2
+      ],
+      "base_count": 5,
+      "unknown_u32": 12,
+      "value_arrays_f32": [
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          1.0,
+          0.0,
+          2.0
+        ],
+        [
+          1.0,
+          0.0,
+          2.0,
+          2.0,
+          0.0
+        ]
+      ],
+      "key_relative_offset": 4,
+      "key_name": "C_Id",
+      "sha256": "760363bc05e7d3b2caa3485c8431f7b7d5c9def721b7d082b761704dda997625",
+      "target_layout_candidates": [
+        {
+          "layout_member": "FooterBtn.arc!blyt/FooterBtn.bflyt",
+          "component_id": 9
+        }
+      ],
+      "pane_user_data_binding": {
+        "status": "unique_same_archive_pane_user_data_key",
+        "matches": [
+          {
+            "section_offset": 1860,
+            "entry_index": 1,
+            "name": "C_Id",
+            "kind": "int32",
+            "item_count": 1,
+            "value": [
+              0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "source": "Layout/FooterCtrl.Nin_NX_NVN.zs",
+      "animation_member": "FooterCtrl.arc!anim/FooterCtrl_IconColor.bflan",
+      "animation_sha256": "b4f093de7f21ed16c67ba644155f62df5377c0e754372da5ba1b768884b0e6e8",
+      "tag": "IconColor",
+      "content_target_name": "P_CtrlDummy",
+      "content_target_type_id": 2,
+      "info_offset": 168,
+      "record_index": 0,
+      "record_offset": 176,
+      "record_size": 85,
+      "header_size_raw": 12,
+      "unknown_u16": [
+        0,
+        2
+      ],
+      "base_count": 5,
+      "unknown_u32": 12,
+      "value_arrays_f32": [
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          1.0,
+          0.0,
+          2.0
+        ],
+        [
+          1.0,
+          0.0,
+          2.0,
+          2.0,
+          0.0
+        ]
+      ],
+      "key_relative_offset": 4,
+      "key_name": "C_Id",
+      "sha256": "760363bc05e7d3b2caa3485c8431f7b7d5c9def721b7d082b761704dda997625",
+      "target_layout_candidates": [
+        {
+          "layout_member": "FooterCtrl.arc!blyt/FooterCtrl.bflyt",
+          "component_id": 2
+        }
+      ],
+      "pane_user_data_binding": {
+        "status": "unique_same_archive_pane_user_data_key",
+        "matches": [
+          {
+            "section_offset": 640,
+            "entry_index": 1,
+            "name": "C_Id",
+            "kind": "int32",
+            "item_count": 1,
+            "value": [
+              0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "source": "Layout/LineFooter.Nin_NX_NVN.zs",
+      "animation_member": "LineFooter.arc!anim/LineFooter_Color.bflan",
+      "animation_sha256": "2bd5e59cb82a2b7eafa708a1a7c5ca760aa58eb341e553fe6081aab86870bddb",
+      "tag": "Color",
+      "content_target_name": "P_Line",
+      "content_target_type_id": 2,
+      "info_offset": 168,
+      "record_index": 0,
+      "record_offset": 176,
+      "record_size": 85,
+      "header_size_raw": 12,
+      "unknown_u16": [
+        0,
+        2
+      ],
+      "base_count": 5,
+      "unknown_u32": 12,
+      "value_arrays_f32": [
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          1.0,
+          0.0,
+          2.0
+        ],
+        [
+          1.0,
+          0.0,
+          2.0,
+          2.0,
+          0.0
+        ]
+      ],
+      "key_relative_offset": 4,
+      "key_name": "C_Id",
+      "sha256": "760363bc05e7d3b2caa3485c8431f7b7d5c9def721b7d082b761704dda997625",
+      "target_layout_candidates": [
+        {
+          "layout_member": "LineFooter.arc!blyt/LineFooter.bflyt",
+          "component_id": 1
+        }
+      ],
+      "pane_user_data_binding": {
+        "status": "unique_same_archive_pane_user_data_key",
+        "matches": [
+          {
+            "section_offset": 540,
+            "entry_index": 0,
+            "name": "C_Id",
+            "kind": "int32",
+            "item_count": 1,
+            "value": [
+              0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "source": "Layout/LineFooter.Nin_NX_NVN.zs",
+      "animation_member": "LineFooter.arc!anim/LineFooter_Color.bflan",
+      "animation_sha256": "2bd5e59cb82a2b7eafa708a1a7c5ca760aa58eb341e553fe6081aab86870bddb",
+      "tag": "Color",
+      "content_target_name": "P_Line",
+      "content_target_type_id": 2,
+      "info_offset": 308,
+      "record_index": 0,
+      "record_offset": 316,
+      "record_size": 78,
+      "header_size_raw": 12,
+      "unknown_u16": [
+        0,
+        2
+      ],
+      "base_count": 3,
+      "unknown_u32": 12,
+      "value_arrays_f32": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0,
+          0.0
+        ],
+        [
+          2.0,
+          1.0,
+          0.0
+        ]
+      ],
+      "key_relative_offset": 4,
+      "key_name": "S_ColorOverlay0Volume",
+      "sha256": "52869de44b5e25f608a88a69f9c509db106fd41ad127fb3df28954040ffc700e",
+      "target_layout_candidates": [
+        {
+          "layout_member": "LineFooter.arc!blyt/LineFooter.bflyt",
+          "component_id": 1
+        }
+      ],
+      "pane_user_data_binding": {
+        "status": "unique_same_archive_pane_user_data_key",
+        "matches": [
+          {
+            "section_offset": 540,
+            "entry_index": 5,
+            "name": "S_ColorOverlay0Volume",
+            "kind": "float32",
+            "item_count": 1,
+            "value": [
+              0.0
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "parse_errors": []
+}
