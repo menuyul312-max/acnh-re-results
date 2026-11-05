@@ -104,6 +104,8 @@ Villager biasa (`NNPC_*`) dibagi menurut 8 kode kepribadian: AN, BO, FU, GE, HA,
    | 3 | peach | 2286 |
    | 4 | apple | 2213 |
 
+   **[PSEUDO]** Evaluasi query (`0x4145e0`) membaca `SaveFg.SpecialityFruit` (`+0x900` pada data node `+0x20d0e0`, `0xf50ab0`) lalu memetakan ID buah ke kode di atas. Pemilihan buahnya ada di GAMEPLAY_SCENARIO §10.4.
+
    Hasilnya `HaveTownFruit4CampFire`, lalu `PrologueStartedCampfire`.
 6. **[EF]** `Tutorials_Prologue5_Campfire`: pesta api unggun. Setelah itu tidur di tempat tidur kemah, `Ftr_Campbed` → stage `cDreamTkk`, dan mimpi K.K. (`Tutorials_Prologue_Tkk`, `PrologueFinishTkkDream`).
 

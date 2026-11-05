@@ -234,6 +234,29 @@ class NativeVerificationTests(unittest.TestCase):
         self.assertEqual((fixed['west z=80'], fixed['east z=180'], fixed['one side twice']), ([8, 9],) * 3)
         self.assertEqual((fixed['both sides'], fixed['x=98/x=100']), ([10, 16],) * 2)
 
+    def test_island_content_cases_are_native(self):
+        cases = json.loads((ROOT/'output'/'gameplay'/'gameplay_native.json').read_text())['cases']
+        pick = cases['0xf50ad0 island flower pick']
+        groups = cases['0xf50f50 / 0xf51040 flower index -> ItemFrom seed group']
+        fruit = cases['0xf509e0 speciality and sister fruit']
+        self.assertTrue(pick['pass'] and groups['pass'] and fruit['pass'])
+        self.assertGreaterEqual(pick['runs'], 5000)
+        self.assertEqual(pick['north_by_month']['N7'], [3, 4, 5])
+        self.assertEqual(groups['species'][4], 'Cosmos')
+        self.assertEqual(set(fruit['seen']['random']), {'0x8a5', '0x8a6', '0x8ed', '0x8ee', '0x8ef'})
+        self.assertTrue(all(f not in sisters for f, sisters in fruit['seen']['random'].items()))
+        self.assertEqual(set(fruit['seen']['forced']), {'0x8a5'})
+
+    def test_new_island_reading(self):
+        fr = json.loads((ROOT/'output'/'gameplay'/'native_flag_refs.json').read_text())['data']['field_regrowth']
+        ni = fr['new_island']
+        self.assertIn('0x1022', ni['zones']['plaza_mask'])
+        self.assertIn('CliffLevel 3 belongs to no zone', ni['zones']['zone_2'])
+        self.assertIn('0x4ca460', ' '.join(ni['steps']))
+        self.assertNotIn('LandFruit', ' '.join(ni['steps']))
+        self.assertIn('BlockItemPreset', ni['creation']['outside_blocks'])
+        self.assertIn('Cosmos stage-3', fr['preset_items'])
+
     def test_field_regrowth_reading(self):
         refs = json.loads((ROOT/'output'/'gameplay'/'native_flag_refs.json').read_text())['data']
         fr = refs['field_regrowth']
@@ -363,6 +386,19 @@ class VisitorScheduleNsoTests(unittest.TestCase):
         self.assertEqual(words(0x3060b80, 3), [0xeb28, 0xeb30, 0xeb31])
         kinds = self.read(0x293f104, 4096).split(b'\0', 1)[0].decode().split(',')
         self.assertEqual((kinds[3], kinds[9], kinds[29]), ('TreeCedar', 'TreeFruit', 'Stone'))
+
+    def test_island_content_constants(self):
+        word = lambda a: int.from_bytes(self.read(a, 4), 'little')  # noqa: E731
+        lst = lambda a: self.read(a, 4096).split(b'\0', 1)[0].decode().split(',')  # noqa: E731
+        self.assertEqual(word(0x7b8c18), 0x52820108)  # mov w8, #0x1008  (zone 1 bitset)
+        self.assertEqual(word(0x7b8c1c), 0x52840209)  # mov w9, #0x2010  (zone 2 bitset)
+        self.assertEqual(word(0x7b8ce0), 0x71000d1f)  # cmp w8, #3       (CliffLevel 3: no zone)
+        self.assertEqual(word(0xf50fac), 0x52800ae8)  # mov w8, #0x57    (index 0 -> ShopSeed_Anemone)
+        self.assertEqual(word(0xf50a6c), 0x528114a8)  # mov w8, #0x8a5   (forced Apple)
+        self.assertEqual(lst(0x29b535d)[0x52:0x5a], ['ShopSeed_Chrysanthemum', 'ShopSeed_Lily', 'ShopSeed_Cosmos',
+                                                    'ShopSeed_Hyacinth', 'ShopSeed_Rose', 'ShopSeed_Anemone',
+                                                    'ShopSeed_Tulip', 'ShopSeed_Pansy'])
+        self.assertEqual(self.read(0x297574e, 16), b'SandBankDisable\0')
 
     def test_island_score_enum_lists(self):
         lst = lambda a: self.read(a, 4096).split(b'\0', 1)[0].decode().split(',')  # noqa: E731

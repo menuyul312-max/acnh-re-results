@@ -92,7 +92,7 @@
     "reading": {
      "role": "daily field object processor and new-island population (from driver; see data.field_regrowth)",
      "reading": [
-      "first growth before VillageExtensionLevel2: populate the new island (tree items, fossils, shells, rock kinds, branches, 1300 weeds)",
+      "first growth before VillageExtensionLevel2: populate the new island (speciality fruit trees, island flower species, tree items, fossils, shells, rock kinds, branches, 1300 weeds) over the zones of 0x7b8b30",
       "otherwise days >= 1: plants 0x4b6e70, rocks min(days, 6 - rocks), loose DIYStone, fossils min(6 - fossils, 4 or 6), star fragments, money rock, shells 0x4addc0, per-player spots, message bottle",
       "per player PrayStarToday -> StarPieceGrowCount; PrayStarToday and VisitorPrayStarToday reset",
       "cells are bits of 0x8000-bit sets in the 0x2e150-byte work object (bit = (z >> 1) * 256 + (x >> 1)); the beach set is *0x32e2410 and set 4 (empty beach cells)"
@@ -1232,10 +1232,34 @@
    "0x4ae640": {
     "role": "daily field object processor and new-island population (from driver; see data.field_regrowth)",
     "reading": [
-     "first growth before VillageExtensionLevel2: populate the new island (tree items, fossils, shells, rock kinds, branches, 1300 weeds)",
+     "first growth before VillageExtensionLevel2: populate the new island (speciality fruit trees, island flower species, tree items, fossils, shells, rock kinds, branches, 1300 weeds) over the zones of 0x7b8b30",
      "otherwise days >= 1: plants 0x4b6e70, rocks min(days, 6 - rocks), loose DIYStone, fossils min(6 - fossils, 4 or 6), star fragments, money rock, shells 0x4addc0, per-player spots, message bottle",
      "per player PrayStarToday -> StarPieceGrowCount; PrayStarToday and VisitorPrayStarToday reset",
      "cells are bits of 0x8000-bit sets in the 0x2e150-byte work object (bit = (z >> 1) * 256 + (x >> 1)); the beach set is *0x32e2410 and set 4 (empty beach cells)"
+    ]
+   },
+   "0x7b8b30": {
+    "role": "new-island zones (see data.field_regrowth.new_island.zones)",
+    "reading": [
+     "zone 0 = plaza-connected mask +0x1608 (river, sea and brackish ground block the flood fill of 0x51cc30), zone 1 = CliffLevel 0, zone 2 = CliffLevel 1-2, CliffLevel 3 none"
+    ]
+   },
+   "0x5662e0": {
+    "role": "new island creation (from 0xfc3b00)",
+    "reading": [
+     "MainFieldParamUniqueID, DistantViewUniqueID and OutsideField written; 0x565e30 loads BlockItemPreset<part ID> per outer block (files absent in the supplied romfs)"
+    ]
+   },
+   "0xf51150": {
+    "role": "island flowers (from 0x4adbc0 at first growth)",
+    "reading": [
+     "SpecialityFlower = 0xf50ad0(birthday month of the first player or a random month); VillageFlower = 0xf50ad0(current month, excluding SpecialityFlower)"
+    ]
+   },
+   "0xf509e0": {
+    "role": "island fruits (from 0xfc3490)",
+    "reading": [
+     "SpecialityFruit = random of Apple/Orange/Pear/Peach/Cherry (Apple when (*0x32d0600)+0x52a is set); SisterFruit = random of the other four (terbukti native)"
     ]
    },
    "0xf889e0": {
@@ -1466,19 +1490,42 @@
    },
    "new_island": {
     "gate": "first growth (param_1 byte +0x18) and VillageExtensionLevel2 != 1 (0x6608a0)",
-    "zones": "3 zone bitsets (0x7b8b30; all cells once VillageExtensionLevel2 = 1)",
+    "zones": {
+     "function": "0x7b8b30 fills three cell bitsets of the work object (+0, +0x1008, +0x2010); when VillageExtensionLevel2 = 1 it only sets every bit of zone 0",
+     "zone_0": "cells set in the plaza-connected mask *(0x32d1ba8)+0x1608 (0x51cb60; false when cLand:SandBankDisable is on)",
+     "zone_1": "other cells whose CliffLevel (LandMakingMap byte +0xc via 0x54c970; values > 5 read as 4 by 0xf52860) is 0 or 4",
+     "zone_2": "other cells with CliffLevel 1, 2 or 5; CliffLevel 3 belongs to no zone",
+     "plaza_mask": "0x51cc30 (from 0x56d640): 8-neighbour flood fill over the 288 x 256 world grid from the event-plaza point 0x469680, blocked where 0x18c7e0 finds ground attribute 1 (river), 5 (sea) or 12 (brackish) of ColGroundAttributeParam (mask 0x1022); skipped when SandBankDisable is on (EventFlagsLandParam name_ja: nakasu check disabled; set by Get_App_Licence_River)",
+     "names": "CliffLevel is the field name of SaveFieldLandMakingMapData +0xc in the public save schema (CylindricalEarth save_schema_111_103) [cross-version]"
+    },
     "steps": [
      "cedars of zone 2 up to 10 removed; trees on the plaza rectangle 12x6 around 0x1071bd0(3) cleared",
      "invalid trees (set 5) and palms (set 10) removed through 0x7ab350",
-     "placeholder fruit trees replaced with the LandFruit variants (0xf50f50, 0x4ca690)",
+     "fruit: SaveFg.SpecialityFruit (+0x900, 0xf50ab0) -> fruit tree whose FgMainParam row of Kind TreeFruit carries that fruit (0x4ca460) -> written on every cell of set 8 (the preset apple placeholders 60001)",
+     "flowers: 0x4ca690(0x54 = ItemFrom ShopSeed_Cosmos) and 0x4ca690(ItemFrom group of SaveFg.SpecialityFlower via 0xf50f50) each draw three distinct seeds with 0xf53420 and map them to Fg plants; each cell of set 15 holding the k-th Cosmos plant gets the k-th plant of the island species",
      "tree items per zone 0x4b5540(zone, count, content): zone 0: 2 wasp, 5 bells, 1 furniture; zone 1: 1 wasp, 5 bells, 1 furniture; zone 2: 2 wasp, 5 bells",
      "fossils 0x4b5780: zone 1: 4, zone 2: 2; shells 0x4b5b20: zone 0: 3, zone 1: total cap - 3",
      "every preset rock re-rolled with 0x4d7110; 20 branches around trees; DIYStone next to rocks",
      "weeds: no weeds within 2 cells of up to 10 fruit trees or in 6x6 around up to 2 rocks; then up to 20 rounds of 0x4b6000(1300, 5, 5, 2, 2) and 0x4b63e0(1300, 20, 20, 10, 80) while weeds < 1300"
-    ]
+    ],
+    "creation": {
+     "function": "0x5662e0 (from 0xfc3b00, before 0x56d640(1)): picks MainFieldParamUniqueID (+0xcfa2a of SaveMainField) and DistantViewUniqueID (+0xda2a8), writes SaveMainField.OutsideField (FieldBlockData 9 x 8 u16 part IDs + TemplateUniqueId) from the chosen FieldOutsideTemplate (0xf8f2a0), then 0x565e30",
+     "outside_blocks": "0x565e30: for every block (x 0..8, z 0..7, 0x4de8c0) with a nonzero part ID, 0x55caa0 opens resource \"Field/BlockItemPreset\" member \"BlockItemPreset\" + part ID (\"%s%d\") and 0x55cc60 places its ItemList at block origin + offset",
+     "block_item_preset_files": "not present in the supplied 1.0.0 romfs manifest (B_data/Param/Field holds only Commune, MainField, MysteryTour and Stage presets) [NATIVE]",
+     "other_users": "0x565c90 (stage hash 0xef1f0458, CommuneIsland grid) and 0x5517e0 (MysteryTour) use the same loader"
+    },
+    "speciality": {
+     "fruit_writer": "0xf509e0 (from 0xfc3490): SpecialityFruit = 0xab4470(exclude=0), forced to Apple 0x8a5 when byte (*0x32d0600)+0x52a is set; SisterFruit (+0x902) = 0xab4470(exclude=1)",
+     "fruit_pick": "0xab4470: set {Apple 0x8a5, Orange 0x8a6, Pear 0x8ed, Peach 0x8ee, Cherry 0x8ef}, minus SpecialityFruit when asked; local xorshift seeded by one draw of the thread RNG (TLS); 0xa120c0 picks candidate floor(u32 * n / 2^32) in item-ID order",
+     "flower_writer": "0xf51150 (from 0x4adbc0 at first growth, VillageExtensionLevel2 != 1): month = birthday month of the player from 0xef6440 (member +0x11478) when it is a valid date, else 0xf53420(12) + 1; SpecialityFlower (+0x925) = 0xf50ad0(month, -1, -1, -1); VillageFlower (+0x924) = 0xf50ad0(current month from 0x1fb9c0, SpecialityFlower, -1, -1)",
+     "flower_pick": "0xf50ad0(fg, month, e1, e2, e3): month shifted by six when save root +0x651fc = 1 (south); candidates are indices 0..7 whose month mask has bit month-1 and that are not excluded; 0xf53420(count) picks one; with no candidate the last exclusion that is not -1 is dropped and the pick repeats; with none left the result is 3",
+     "flower_table": "0x35e9138 {ItemFrom group, month mask}: 0 Anemone 0x57 months 1-5,12; 1 Hyacinth 0x55 2-4; 2 Tulip 0x58 3-6; 3 Rose 0x56 5-7,10-12; 4 Cosmos 0x54 7-11; 5 Lily 0x53 6-9; 6 Chrysanthemum 0x52 1,8-12; 7 Pansy 0x59 1-4,11-12 (ItemFrom list 0x29b535d)",
+     "names": "SaveFg (SaveLand +0x4150b4, 0x928 bytes): SpecialityFruit +0x900, SisterFruit +0x902, TreeMoneyInfoList +0x904, VillageFlower +0x924, SpecialityFlower +0x925 (public save schema, cross-version); 0xf50950 resets them to Apple/Apple and 4/4"
+    }
    },
-   "preset_items": "ItemPreset key 5bc12308 is FgMainParam.UniqueID [TBL]: 96 presets hold 261-329 objects, only oak 60000, cedar 60009, apple-tree placeholder 60001, spring weeds 60200/60208/60209 and StoneA 60178; no palm, flower or shell",
-   "evidence": "terbukti native: 0x4d7110 rock kind, 0x7abd00 shell kind and season tables, 0x7a7010 shell caps (tools/field_regrowth_native.py); constants of the rock/fossil/weed branches checked in the instructions (tests); everything else [PSEUDO]",
+   "preset_items": "ItemPreset A/B/C (96 files) key 5bc12308 is a 64-bit field item word, low 16 bits = FgMainParam.UniqueID [TBL]: oak 60000, cedar 60009, apple-tree placeholder 60001, spring weeds 60200/60208/60209, StoneA 60178 and 53-63 Cosmos stage-3 flowers per preset (Red 60017, Yellow 60043, White 60020; upper 32 bits = default gene byte 3/0x1c/0x10, in some presets the same value shifted left by 5); coordinates cover only the inner area (x 28-196, z 28-162 item units); no palm and no shell",
+   "mystery_tour": "0x4b3490 (from 0x5602a0 when stage attribute 0x11 is set) populates a Mystery Tour island (reaches InduceInMysteriTourIslandToday); it reuses 0x4d7110, 0x4b5900, 0x4ca460, 0x4ca690, 0xf50f50 and 0xf51040",
+   "evidence": "terbukti native: 0x4d7110 rock kind, 0x7abd00 shell kind and season tables, 0x7a7010 shell caps (tools/field_regrowth_native.py); 0xf50ad0 flower pick, 0xf50f50/0xf51040 flower groups, 0xf509e0 speciality and sister fruit (tools/island_content_native.py); constants of the rock/fossil/weed branches checked in the instructions (tests); everything else [PSEUDO]",
    "open": [
     "seed of the field RNG 0x344d100",
     "meaning of set 1, 16, 20 and of the per-player spot state 0xf51390",
@@ -1486,7 +1533,10 @@
     "0x4ba120 seasonal weed conversion",
     "placement checks 0x7ab350, 0x7aa3c0, 0x7ad6e0, 0x7ad870",
     "palm growth and coconut drop",
-    "days < 0 branch"
+    "days < 0 branch",
+    "contents of Field/BlockItemPreset (palms and coconuts of the beach blocks expected there; files absent from the supplied romfs)",
+    "meaning of the force-apple byte (*0x32d0600)+0x52a",
+    "whether the replaced flowers keep the preset gene word"
    ]
   },
   "day_change_callees_in_order": [
@@ -3030,7 +3080,7 @@
      "0x4ae640": {
       "role": "daily field object processor and new-island population (from driver; see data.field_regrowth)",
       "reading": [
-       "first growth before VillageExtensionLevel2: populate the new island (tree items, fossils, shells, rock kinds, branches, 1300 weeds)",
+       "first growth before VillageExtensionLevel2: populate the new island (speciality fruit trees, island flower species, tree items, fossils, shells, rock kinds, branches, 1300 weeds) over the zones of 0x7b8b30",
        "otherwise days >= 1: plants 0x4b6e70, rocks min(days, 6 - rocks), loose DIYStone, fossils min(6 - fossils, 4 or 6), star fragments, money rock, shells 0x4addc0, per-player spots, message bottle",
        "per player PrayStarToday -> StarPieceGrowCount; PrayStarToday and VisitorPrayStarToday reset",
        "cells are bits of 0x8000-bit sets in the 0x2e150-byte work object (bit = (z >> 1) * 256 + (x >> 1)); the beach set is *0x32e2410 and set 4 (empty beach cells)"
@@ -3587,7 +3637,7 @@
      "0x4ae640": {
       "role": "daily field object processor and new-island population (from driver; see data.field_regrowth)",
       "reading": [
-       "first growth before VillageExtensionLevel2: populate the new island (tree items, fossils, shells, rock kinds, branches, 1300 weeds)",
+       "first growth before VillageExtensionLevel2: populate the new island (speciality fruit trees, island flower species, tree items, fossils, shells, rock kinds, branches, 1300 weeds) over the zones of 0x7b8b30",
        "otherwise days >= 1: plants 0x4b6e70, rocks min(days, 6 - rocks), loose DIYStone, fossils min(6 - fossils, 4 or 6), star fragments, money rock, shells 0x4addc0, per-player spots, message bottle",
        "per player PrayStarToday -> StarPieceGrowCount; PrayStarToday and VisitorPrayStarToday reset",
        "cells are bits of 0x8000-bit sets in the 0x2e150-byte work object (bit = (z >> 1) * 256 + (x >> 1)); the beach set is *0x32e2410 and set 4 (empty beach cells)"
@@ -8378,7 +8428,7 @@
      "0x4ae640": {
       "role": "daily field object processor and new-island population (from driver; see data.field_regrowth)",
       "reading": [
-       "first growth before VillageExtensionLevel2: populate the new island (tree items, fossils, shells, rock kinds, branches, 1300 weeds)",
+       "first growth before VillageExtensionLevel2: populate the new island (speciality fruit trees, island flower species, tree items, fossils, shells, rock kinds, branches, 1300 weeds) over the zones of 0x7b8b30",
        "otherwise days >= 1: plants 0x4b6e70, rocks min(days, 6 - rocks), loose DIYStone, fossils min(6 - fossils, 4 or 6), star fragments, money rock, shells 0x4addc0, per-player spots, message bottle",
        "per player PrayStarToday -> StarPieceGrowCount; PrayStarToday and VisitorPrayStarToday reset",
        "cells are bits of 0x8000-bit sets in the 0x2e150-byte work object (bit = (z >> 1) * 256 + (x >> 1)); the beach set is *0x32e2410 and set 4 (empty beach cells)"
@@ -8690,7 +8740,7 @@
      "0x4ae640": {
       "role": "daily field object processor and new-island population (from driver; see data.field_regrowth)",
       "reading": [
-       "first growth before VillageExtensionLevel2: populate the new island (tree items, fossils, shells, rock kinds, branches, 1300 weeds)",
+       "first growth before VillageExtensionLevel2: populate the new island (speciality fruit trees, island flower species, tree items, fossils, shells, rock kinds, branches, 1300 weeds) over the zones of 0x7b8b30",
        "otherwise days >= 1: plants 0x4b6e70, rocks min(days, 6 - rocks), loose DIYStone, fossils min(6 - fossils, 4 or 6), star fragments, money rock, shells 0x4addc0, per-player spots, message bottle",
        "per player PrayStarToday -> StarPieceGrowCount; PrayStarToday and VisitorPrayStarToday reset",
        "cells are bits of 0x8000-bit sets in the 0x2e150-byte work object (bit = (z >> 1) * 256 + (x >> 1)); the beach set is *0x32e2410 and set 4 (empty beach cells)"
@@ -8913,7 +8963,7 @@
      "0x4ae640": {
       "role": "daily field object processor and new-island population (from driver; see data.field_regrowth)",
       "reading": [
-       "first growth before VillageExtensionLevel2: populate the new island (tree items, fossils, shells, rock kinds, branches, 1300 weeds)",
+       "first growth before VillageExtensionLevel2: populate the new island (speciality fruit trees, island flower species, tree items, fossils, shells, rock kinds, branches, 1300 weeds) over the zones of 0x7b8b30",
        "otherwise days >= 1: plants 0x4b6e70, rocks min(days, 6 - rocks), loose DIYStone, fossils min(6 - fossils, 4 or 6), star fragments, money rock, shells 0x4addc0, per-player spots, message bottle",
        "per player PrayStarToday -> StarPieceGrowCount; PrayStarToday and VisitorPrayStarToday reset",
        "cells are bits of 0x8000-bit sets in the 0x2e150-byte work object (bit = (z >> 1) * 256 + (x >> 1)); the beach set is *0x32e2410 and set 4 (empty beach cells)"
@@ -9265,7 +9315,7 @@
      "0x4ae640": {
       "role": "daily field object processor and new-island population (from driver; see data.field_regrowth)",
       "reading": [
-       "first growth before VillageExtensionLevel2: populate the new island (tree items, fossils, shells, rock kinds, branches, 1300 weeds)",
+       "first growth before VillageExtensionLevel2: populate the new island (speciality fruit trees, island flower species, tree items, fossils, shells, rock kinds, branches, 1300 weeds) over the zones of 0x7b8b30",
        "otherwise days >= 1: plants 0x4b6e70, rocks min(days, 6 - rocks), loose DIYStone, fossils min(6 - fossils, 4 or 6), star fragments, money rock, shells 0x4addc0, per-player spots, message bottle",
        "per player PrayStarToday -> StarPieceGrowCount; PrayStarToday and VisitorPrayStarToday reset",
        "cells are bits of 0x8000-bit sets in the 0x2e150-byte work object (bit = (z >> 1) * 256 + (x >> 1)); the beach set is *0x32e2410 and set 4 (empty beach cells)"

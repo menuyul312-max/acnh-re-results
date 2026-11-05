@@ -9,7 +9,8 @@
    "villager cases": "see tools/villager_move_native.py: flag get/set by name, side-effect writers, friendship records and the date are controlled; roll, weights, pick, odds, personality mask and NPC tables are native (move-in uses the real NmlNpcParam)",
    "visitor schedule cases": "see tools/visitor_schedule_native.py: flags by name, calendar event days, K.K. concert days, the weather-pattern index per date and the xorshift draw are controlled; save-layout lookups, facility/house accessors, week/date helpers, bit selection and both functions are native",
    "fish cases": "see tools/creature_spawn_native.py: table row/column accessors over the real FishAppear*/FishStatusParam/ItemParam rows, the catch-count gate 0x5b8e30, clock, weather code, session mode and the RNG word are controlled; loops, mask tests, weight sums, draw transforms, cumulative picks, the 0x5b9270 gate and the hour-to-slot helpers are native",
-   "field regrowth cases": "see tools/field_regrowth_native.py: only the season lookup 0x2035f0 is controlled; the field RNG 0x344d100, the day RNG 0x35e9510 (0xf53420), xorshift 0x19aa0e0, thresholds, item tables, the item writer 0xf588a0 and the beach-bitset scan of 0x7a7010 are native"
+   "field regrowth cases": "see tools/field_regrowth_native.py: only the season lookup 0x2035f0 is controlled; the field RNG 0x344d100, the day RNG 0x35e9510 (0xf53420), xorshift 0x19aa0e0, thresholds, item tables, the item writer 0xf588a0 and the beach-bitset scan of 0x7a7010 are native",
+   "island content cases": "see tools/island_content_native.py: flower pick 0xf50ad0 with only 0xf53420 controlled (returns the requested position, records the count); flower groups 0xf50f50/0xf51040 fully native; fruit 0xf509e0 with save-node accessors, the item-existence check 0xa1e8c0 (real ItemParam UniqueIDs), 0xaabd20/0xaab800, the item-by-index table, the TLS RNG state and nn::os::GetSystemTick (seed of the unused own RNG of item sets) controlled; set code, both xorshift steps and the pick are native"
   },
   "unhandled_imports": {}
  },
@@ -1868,6 +1869,159 @@
     ]
    },
    "mismatches": [],
+   "pass": true
+  },
+  "0xf50ad0 island flower pick": {
+   "runs": 5000,
+   "mismatches": [],
+   "north_by_month": {
+    "N1": [
+     0,
+     6,
+     7
+    ],
+    "N2": [
+     0,
+     1,
+     7
+    ],
+    "N3": [
+     0,
+     1,
+     2,
+     7
+    ],
+    "N4": [
+     0,
+     1,
+     2,
+     7
+    ],
+    "N5": [
+     0,
+     2,
+     3
+    ],
+    "N6": [
+     2,
+     3,
+     5
+    ],
+    "N7": [
+     3,
+     4,
+     5
+    ],
+    "N8": [
+     4,
+     5,
+     6
+    ],
+    "N9": [
+     4,
+     5,
+     6
+    ],
+    "N10": [
+     3,
+     4,
+     6
+    ],
+    "N11": [
+     3,
+     4,
+     6,
+     7
+    ],
+    "N12": [
+     0,
+     3,
+     6,
+     7
+    ]
+   },
+   "pass": true
+  },
+  "0xf50f50 / 0xf51040 flower index -> ItemFrom seed group": {
+   "native": {
+    "SpecialityFlower +0x925 (0xf50f50)": [
+     "0x57",
+     "0x55",
+     "0x58",
+     "0x56",
+     "0x54",
+     "0x53",
+     "0x52",
+     "0x59"
+    ],
+    "VillageFlower +0x924 (0xf51040)": [
+     "0x57",
+     "0x55",
+     "0x58",
+     "0x56",
+     "0x54",
+     "0x53",
+     "0x52",
+     "0x59"
+    ]
+   },
+   "species": [
+    "Anemone",
+    "Hyacinth",
+    "Tulip",
+    "Rose",
+    "Cosmos",
+    "Lily",
+    "Chrysanthemum",
+    "Pansy"
+   ],
+   "pass": true
+  },
+  "0xf509e0 speciality and sister fruit": {
+   "samples": 3000,
+   "mismatches": [],
+   "seen": {
+    "forced": {
+     "0x8a5": [
+      "0x8a6",
+      "0x8ed",
+      "0x8ee",
+      "0x8ef"
+     ]
+    },
+    "random": {
+     "0x8a6": [
+      "0x8a5",
+      "0x8ed",
+      "0x8ee",
+      "0x8ef"
+     ],
+     "0x8ee": [
+      "0x8a5",
+      "0x8a6",
+      "0x8ed",
+      "0x8ef"
+     ],
+     "0x8a5": [
+      "0x8a6",
+      "0x8ed",
+      "0x8ee",
+      "0x8ef"
+     ],
+     "0x8ef": [
+      "0x8a5",
+      "0x8a6",
+      "0x8ed",
+      "0x8ee"
+     ],
+     "0x8ed": [
+      "0x8a5",
+      "0x8a6",
+      "0x8ee",
+      "0x8ef"
+     ]
+    }
+   },
    "pass": true
   }
  },

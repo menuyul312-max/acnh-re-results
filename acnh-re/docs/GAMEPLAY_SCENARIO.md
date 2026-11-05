@@ -53,6 +53,9 @@ Data mesin untuk dokumen ini: [`output/gameplay/native_flag_refs.json`](../outpu
 | `0x4d7110` | jenis batu baru: satu undian RNG lapangan `0x344d100`, indeks `u × 5 >> 32` ke tabel StoneA–E; 3000 state acak, state RNG sesudahnya ikut dicek, tanpa stub (§10) | lulus |
 | `0x7abd00` | jenis kerang: undian `0xf53420(100)` dari RNG harian asli dan dua tabel ambang musim (musim 0–3, 12.000 sampel); hanya lookup musim `0x2035f0` yang dikontrol (§10) | lulus |
 | `0x7a7010` | batas kerang harian/total dari bitset pantai: 3/9, 8/9 (satu sisi), 10/16 (dua sisi); 409 bitset termasuk batas x = 98/100 dan z = 78/80/180/182 (§10) | lulus |
+| `0xf50ad0` | pemilih spesies bunga pulau: bulan 0–13 × dua belahan bumi × 63 pola pengecualian × setiap posisi undian (5000 run); mask bulan, geser enam bulan di belahan selatan, pengecualian, dan fallback sama dengan model; hanya `0xf53420` yang dikontrol (§10.4) | lulus |
+| `0xf50f50`, `0xf51040` | indeks `SpecialityFlower`/`VillageFlower` 0–7 → grup `ItemFrom` 0x57, 0x55, 0x58, 0x56, 0x54, 0x53, 0x52, 0x59; tanpa stub (§10.4) | lulus |
+| `0xf509e0` | buah asli dan buah saudara pulau baru: 3000 state RNG thread; lima buah muncul, buah saudara tidak pernah sama dengan buah asli, byte paksa-apel memberi Apple. Akses save, cek keberadaan item (ID `ItemParam` asli), dua helper parameter item, dan tabel item-per-indeks dikontrol (§10.4) | lulus |
 
 Bacaan lain tetap [PSEUDO] sampai ada kasus emulasinya.
 
@@ -716,17 +719,74 @@ Saat sensus, cedar hias `0xec9a`/`0xec97` dikembalikan ke cedar biasa `0xea69` k
 
 ### 10.4 Isi awal pulau baru
 
-**[PSEUDO]** Jalur ini berjalan pada pertumbuhan pertama selama `VillageExtensionLevel2` ≠ 1. Pulau dibagi tiga zona (`0x7b8b30`). Langkah-langkahnya:
+**[PSEUDO]** Jalur ini berjalan pada pertumbuhan pertama selama `VillageExtensionLevel2` ≠ 1. Pulau dibagi tiga zona (`0x7b8b30`, lihat di bawah). Langkah-langkahnya:
 
 1. Cedar zona 2 dibuang sampai 10, dan pohon di persegi plaza 12×6 dibersihkan.
 2. Pohon dan kelapa yang ditolak `0x7ab350` dibuang.
-3. Pohon apel penanda diganti varian `LandFruit` (`0xf50f50`, `0x4ca690`).
-4. Isi pohon per zona (`0x4b5540`):
+3. **Buah.** `SpecialityFruit` dibaca (`0xf50ab0`), lalu `0x4ca460` mencari baris `FgMainParam` ber-Kind `TreeFruit` yang membawa buah itu. Pohon tersebut ditulis ke setiap sel set 8, yaitu penanda pohon apel `60001` dari preset.
+4. **Bunga.** `0x4ca690(0x54)` mengambil tiga benih grup `ItemFrom` `ShopSeed_Cosmos`. `0x4ca690(grup SpecialityFlower)` mengambil tiga benih spesies pulau; grupnya diambil dari `0xf50f50`. Keduanya diundi tanpa pengembalian dengan `0xf53420` dan dipetakan ke tanaman `Fg`. Sel set 15 yang berisi tanaman Cosmos ke-k diganti tanaman spesies pulau ke-k, jadi pasangan warna ikut teracak.
+5. Isi pohon per zona (`0x4b5540`):
    - zona 0: 2 sarang tawon, 5 × 100 Bell, 1 furnitur;
    - zona 1: 1 sarang tawon, 5 × 100 Bell, 1 furnitur;
    - zona 2: 2 sarang tawon, 5 × 100 Bell.
-5. Fosil: zona 1 empat, zona 2 dua. Kerang: zona 0 tiga, zona 1 sisanya sampai batas total.
-6. Jenis semua batu preset diundi ulang dengan `0x4d7110`. 20 ranting diletakkan di sekitar pohon, dan `DIYStone` di samping batu.
-7. Gulma tidak boleh dekat pohon buah dan batu. Gulma disebar sampai 1300, maksimal 20 putaran `0x4b6000`/`0x4b63e0`.
+6. Fosil: zona 1 empat, zona 2 dua. Kerang: zona 0 tiga, zona 1 sisanya sampai batas total.
+7. Jenis semua batu preset diundi ulang dengan `0x4d7110`. 20 ranting diletakkan di sekitar pohon, dan `DIYStone` di samping batu.
+8. Gulma tidak boleh dekat pohon buah dan batu. Gulma disebar sampai 1300, maksimal 20 putaran `0x4b6000`/`0x4b63e0`.
 
-ItemPreset hanya berisi ek, cedar, penanda pohon apel, gulma musim semi, dan StoneA [TBL]. Pohon kelapa, bunga, dan kerang tidak ada di preset maupun di jalur ini. Kelapa dan bunga awal masih harus dicari, kemungkinan di pembuat pulau atau di sensus (`left_open`).
+Catatan koreksi: bacaan sebelumnya menyebut langkah 3 memakai `0xf50f50`/`0x4ca690`. Itu salah. Kedua fungsi itu milik langkah bunga; fallback `0x4ca690` adalah `0xa42` `SeedCosmosRed`.
+
+**Zona `0x7b8b30`.** **[PSEUDO]** Ketiga zona adalah bitset sel di objek kerja: `+0`, `+0x1008`, dan `+0x2010`. Bila `VillageExtensionLevel2` = 1, hanya semua bit zona 0 yang dinyalakan.
+
+| Zona | Sel | Isi awal yang memakainya |
+|---|---|---|
+| 0 | Sel dalam mask "terhubung ke plaza" `*(0x32d1ba8)+0x1608` (`0x51cb60`). Mask kosong bila `cLand:SandBankDisable` ON | 3 kerang, 1 furnitur |
+| 1 | Sel lain dengan `CliffLevel` 0 (atau 4) | 4 fosil, sisa kerang, 1 furnitur |
+| 2 | Sel lain dengan `CliffLevel` 1, 2 (atau 5). `CliffLevel` 3 tidak masuk zona mana pun | 2 fosil, cedar dibatasi 10 |
+
+- `CliffLevel` adalah byte `+0xc` elemen `LandMakingMap` (112 × 96 × 14 byte), dibaca lewat grid unit `0x54c970`. `0xf52860` membaca nilai > 5 sebagai 4. Nama field berasal dari skema save publik CylindricalEarth `save_schema_111_103`, lintas versi.
+- Mask zona 0 dibangun oleh `0x51cc30` (dipanggil `0x56d640`). Fungsi ini melakukan flood fill 8 tetangga di grid dunia 288 × 256 unit item, mulai dari titik plaza event `0x469680`. Pengisian berhenti di sel dengan atribut tanah 1 (sungai), 5 (laut), atau 12 (muara) dari `ColGroundAttributeParam`. Mask atributnya `0x1022`, dicek oleh `0x18c7e0`. Jadi zona 0 adalah daratan yang bisa dicapai dari plaza tanpa menyeberang air.
+- `name_ja` flag `SandBankDisable` adalah "中州判定が無効になったか？". Flag ini dinyalakan EventFlow `Player_GetDemo_MileExchange` saat lisensi sungai didapat [EF].
+
+**Pembuatan pulau `0x5662e0`.** **[PSEUDO]** Fungsi ini dipanggil `0xfc3b00`, lalu `0x56d640(1)` berjalan. Langkahnya:
+
+1. Isi `MainFieldParamUniqueID` (`SaveMainField` `+0xcfa2a`) dan `DistantViewUniqueID` (`+0xda2a8`).
+2. Tulis `SaveMainField.OutsideField` dari `FieldOutsideTemplate` yang terpilih (`0xf8f2a0`). Isinya `FieldBlockData`, yaitu 9 × 8 ID bagian u16, dan `TemplateUniqueId`.
+3. Panggil `0x565e30`. Untuk setiap blok dengan ID bagian ≠ 0 (`0x4de8c0`), `0x55caa0` membuka resource `Field/BlockItemPreset` anggota `BlockItemPreset<ID>` (`"%s%d"`). `0x55cc60` lalu meletakkan `ItemList` di asal blok + offset.
+
+Loader yang sama dipakai pulau Commune (`0x565c90`) dan Mystery Tour (`0x5517e0`). Berkas `BlockItemPreset` tidak ada di manifest romfs 1.0.0 yang tersedia, jadi isinya **[NATIVE]**.
+
+**Sumber tiap jenis objek awal.**
+
+| Objek | Sumber | Bukti |
+|---|---|---|
+| Ek, cedar, gulma musim semi, StoneA | ItemPreset A/B/C (96 berkas). Word item 64-bit; 16 bit bawah = `FgMainParam.UniqueID` | [TBL] |
+| Bunga | ItemPreset: 53–63 Cosmos tahap 3 per preset, yaitu Red `60017`, Yellow `60043`, dan White `60020`. 32 bit atas = byte gen default 3/0x1c/0x10; di sebagian preset nilai yang sama digeser 5 bit. Spesiesnya diganti di langkah 4 | [TBL], penggantian [PSEUDO] |
+| Pohon buah | Penanda `60001` di ItemPreset, diganti pohon `SpecialityFruit` di langkah 3 | [TBL] + [PSEUDO] |
+| Pohon kelapa dan buah kelapa | Tidak ada di ItemPreset dan tidak ada konstanta ID kelapa (`0xea77`, `0xeabf`–`0xeac2`) di seluruh `.text`. ItemPreset hanya menutupi area dalam (x 28–196, z 28–162 unit item). Satu-satunya jalur item lain di pembuatan pulau adalah `BlockItemPreset` untuk blok luar/pantai. Kelapa adalah `NutItem` (`0x8f0`) pohon kelapa dewasa `0xea77`, bukan objek terpisah | jalur [PSEUDO], isi [NATIVE] |
+| Kerang, fosil, isi pohon, ranting, `DIYStone` | Langkah 5–7 | [PSEUDO]; jenis kerang terbukti native |
+
+**Buah dan bunga khas (`SaveFg`).** Blok save `SaveLand +0x4150b4` (0x928 byte) memuat `SpecialityFruit` (`+0x900`), `SisterFruit` (`+0x902`), `VillageFlower` (`+0x924`), dan `SpecialityFlower` (`+0x925`). Nama field berasal dari skema publik. `0xf50950` mereset nilainya ke Apple/Apple dan 4/4.
+
+- **Buah (terbukti native).** `0xf509e0` (dari `0xfc3490`) menulis `SpecialityFruit = 0xab4470(0)`. Nilainya dipaksa Apple `0x8a5` bila byte `(*0x32d0600)+0x52a` ≠ 0; arti byte ini belum dibaca. Lalu `SisterFruit = 0xab4470(1)`.
+  - `0xab4470` membentuk himpunan {Apple, Orange, Pear, Peach, Cherry} dan membuang `SpecialityFruit` bila argumennya 1.
+  - Satu undian RNG thread (TLS) menjadi seed xorshift lokal. `0xa120c0` memilih kandidat ke-`floor(u × n / 2³²)` dalam urutan ID item.
+- **Bunga.** `0xf51150` dipanggil `0x4adbc0` pada pertumbuhan pertama **[PSEUDO]**.
+  - Bulan = bulan ulang tahun pemain dari `0xef6440` (member `+0x11478`) bila tanggalnya valid. Bila tidak, bulan = `0xf53420(12) + 1`.
+  - `SpecialityFlower = 0xf50ad0(bulan, −1, −1, −1)`.
+  - `VillageFlower = 0xf50ad0(bulan sekarang dari 0x1fb9c0, SpecialityFlower, −1, −1)`.
+- **Pemilih `0xf50ad0` (terbukti native).** Bila root save `+0x651fc` = 1 (selatan), bulan digeser enam. Kandidat adalah indeks 0–7 yang mask bulannya memuat bit bulan − 1 dan tidak dikecualikan. `0xf53420(jumlah)` memilih satu. Tanpa kandidat, pengecualian terakhir yang bukan −1 dilepas lalu pemilihan diulang; bila semua sudah −1, hasilnya 3. Pemakaian di toko ada di §3.7.
+
+| Indeks | Grup `ItemFrom` | Spesies | Bulan (utara) |
+|---|---|---|---|
+| 0 | 0x57 | Anemone | 1–5, 12 |
+| 1 | 0x55 | Hyacinth | 2–4 |
+| 2 | 0x58 | Tulip | 3–6 |
+| 3 | 0x56 | Rose | 5–7, 10–12 |
+| 4 | 0x54 | Cosmos | 7–11 |
+| 5 | 0x53 | Lily | 6–9 |
+| 6 | 0x52 | Chrysanthemum | 1, 8–12 |
+| 7 | 0x59 | Pansy | 1–4, 11–12 |
+
+Tabel ada di `0x35e9138` (u32 grup, u16 mask). Nama grup berasal dari daftar enum `ItemFrom` di rodata `0x29b535d`.
+
+**Generator lain.** `0x4b3490` adalah pengisi pulau Mystery Tour, bukan pulau utama. Fungsi ini dipanggil `0x5602a0` saat atribut stage 0x11 aktif dan berujung ke `InduceInMysteriTourIslandToday`. Ia memakai ulang `0x4d7110`, `0x4b5900`, `0x4ca460`, `0x4ca690`, `0xf50f50`, dan `0xf51040`.
