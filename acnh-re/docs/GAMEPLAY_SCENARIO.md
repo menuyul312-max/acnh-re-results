@@ -50,6 +50,9 @@ Data mesin untuk dokumen ini: [`output/gameplay/native_flag_refs.json`](../outpu
 | `0x5b9270` | gerbang ikan: Sirakansu hanya kode cuaca 4/5; mode sesi ≥ 2 membuang Can/Boot/Tire dan `Ore` (§8.1) | lulus |
 | `0x5e3570`, `0x5e36b0`, `0x9f1870`, `0x9f1920` | jam → slot ikan (3) dan serangga (6), mask slot untuk rentang jam (576 pasangan) (§8.1, §8.2) | lulus |
 | `0x95ebe0` | konstruktor `InsectAppearParam`: entri getter ke-k membaca kolom `Prob<Bulan><Slot>` dengan k = bulan × 6 + slot, dicek lewat hash kolom (§8.2) | lulus |
+| `0x4d7110` | jenis batu baru: satu undian RNG lapangan `0x344d100`, indeks `u × 5 >> 32` ke tabel StoneA–E; 3000 state acak, state RNG sesudahnya ikut dicek, tanpa stub (§10) | lulus |
+| `0x7abd00` | jenis kerang: undian `0xf53420(100)` dari RNG harian asli dan dua tabel ambang musim (musim 0–3, 12.000 sampel); hanya lookup musim `0x2035f0` yang dikontrol (§10) | lulus |
+| `0x7a7010` | batas kerang harian/total dari bitset pantai: 3/9, 8/9 (satu sisi), 10/16 (dua sisi); 409 bitset termasuk batas x = 98/100 dan z = 78/80/180/182 (§10) | lulus |
 
 Bacaan lain tetap [PSEUDO] sampai ada kasus emulasinya.
 
@@ -638,7 +641,7 @@ Baris dengan bit cuaca di mask dan `Prob` ≠ 0 untuk bulan/slot manajer menjadi
 | # | Celah | Titik masuk |
 |---|---|---|
 | 1 | Undian serangga dan grup spawn (ikan selesai, §8) | `0xb56850` → `0xb56f00`/`0xb58c10`, `InsectStatusParam.AppearFg` (`0x8e17f0`), enum `Kind` `0x9b7ec0` |
-| 2 | Regenerasi objek lapangan harian: fosil, batu, gulma, pohon/buah, kerang (belum dibaca) | `SaveGrowUpRandomFactor` `0xf56b70`, `TodayGrowUp` `0xf60530`/`0xfa00d0`, `DigFossil` `0xd9d630` |
+| 2 | ~~Regenerasi objek lapangan harian~~ selesai, lihat §10; sisa di `re_queue.json` → `field-daily-regrowth.left_open` | `0x4ae640`, `0x4b6e70`, `0x7a3ef0` |
 | 3 | Nook Miles+, pencapaian, skor turnamen | `0xf66020` → `0xf60690`, `0x309ff0`, `0x586bd0`, `0xfa60c0` |
 | 4 | Penambah poin keakraban | penulis field yang dibaca `0xd34a20` |
 | 5 | Skor pulau end-to-end native | `0x15c68c0`, `0x15c61f0` |
@@ -648,3 +651,82 @@ Baris dengan bit cuaca di mask dan `Prob` ≠ 0 untuk bulan/slot manajer menjadi
 Titik masuk baris 2–3 diambil dari `index.sqlite` (`hash_refs`, `string_refs`, `direct_calls`), jadi masih berupa kandidat; perannya belum dibaca. Cuaca dan genetika bunga sudah ada di baseline (`output/weather`, `output/flowers`) dan tidak perlu diulang. `plants_and_breeding` juga tercatat sebagai target riset agen mechanics, jadi hasil baris 2 hanya ditulis ke `output/gameplay` dan dokumen `GAMEPLAY_*`.
 
 Antrian yang sama, dalam bentuk yang bisa dibaca mesin dan ditandai statusnya, ada di [re_queue.json](re_queue.json).
+
+## 10. Pulau: objek lapangan harian dan isi awal pulau baru
+
+Data mesin: `output/gameplay/native_flag_refs.json` → `data.field_regrowth`. Kasus native: `tools/field_regrowth_native.py`. Genetika bunga tidak diulang di sini (baseline `output/flowers`).
+
+### 10.1 Alur dan objek kerja
+
+**[PSEUDO]** Driver `0xf53a70` membuat objek kerja lapangan berukuran 0x2e150 byte (`0x7a3410`). Lalu `0x7a9760` → `0x7a5c60` mengisinya dari save, `0x4ae640(hari, kerja)` menjalankan semua prosesor, dan `0x7b1dd0` menulis hasilnya kembali. Argumen pertama berisi:
+
+- jumlah hari sejak pertumbuhan terakhir (s64);
+- waktu sekarang dan waktu terakhir;
+- byte "pertumbuhan pertama", yang menyala bila save belum punya tanggal.
+
+Hari = 0 hanya menjalankan bagian per pemain. Hari < 0 (jam dimundurkan) punya jalur sendiri.
+
+Objek kerja menyimpan 32 bitset sel. Bitset ke-N ada di `+0x14028 + N × 0x1008`, terdiri dari header 8 byte dan 32.768 bit. Indeks bit = `(z >> 1) × 256 + (x >> 1)`, dengan x dan z dalam setengah unit (`0x7b0020` membalikkannya). Sensus `0x7a3ef0` mengisi set per jenis `FgMainParam.Kind` (tabel lompat `0x29f7a3c`), misalnya 5 = pohon, 6 = pohon dewasa yang bisa membawa barang, 8 = pohon buah, 9 = pohon tumbuh, 10 = kelapa, 11 = bambu, 17 = gulma, 18 = batu, 19 = tunggul. Sensus `0x7a46f0` (barang di tanah) dan `0x7a97e0` (pantai) mengisi penghitung berikut:
+
+| Penghitung | Isi |
+|---|---|
+| `+0x2e144` bit 2–4 | fosil terkubur (berhenti di 6) |
+| `+0x2e144` bit 5–7 | batu |
+| `+0x2e144` bit 8–18 | gulma |
+| `+0x2e144` bit 19–23 | ranting di tanah (berhenti di 15) |
+| `+0x2e144` bit 24–28 | kerang di pantai |
+| `+0x2e144` bit 29–31 | pohon dengan sarang tawon |
+| `+0x2e148` bit 0–3 / 4–5 | pohon berisi 100 Bell / berisi furnitur |
+| `+0x2e148` bit 6 / 8 | `DIYStone` lepas ada / botol pesan di pantai |
+| `+0x2e148` bit 14–17 | pecahan bintang di pantai |
+
+Saat sensus, cedar hias `0xec9a`/`0xec97` dikembalikan ke cedar biasa `0xea69` ketika musimnya lewat. Tunggul pohon buah `0xecbc`–`0xecbf` diganti tunggul ek dengan tingkat yang sama.
+
+### 10.2 Aturan harian (hari ≥ 1)
+
+| Objek | Aturan | Bukti |
+|---|---|---|
+| Batu | Status semua batu di-reset. Batu baru = `min(hari, 6 − batu)`, tiap batu memakai jenis dari `0x4d7110`: StoneA–E seragam dari RNG lapangan `0x344d100` | jenis: terbukti native; jumlah: konstanta instruksi `0x4b0108`/`0x4b0118` [PSEUDO] |
+| Batu uang | Tiap pemain dengan `OccurrenceCoinStone` = 0: satu batu acak (set 18 ∩ 20) diberi flag uang; tanpa batu, batu baru berflag ditanam. Setelah itu `OccurrenceCoinStone` = 1 | [PSEUDO] |
+| `DIYStone` lepas | Bila belum ada, satu `0x9c6` di sel acak set 1 yang tidak bersebelahan dengan batu (`0x7aa9a0`) | [PSEUDO] |
+| Fosil | `min(6 − fosil terkubur, 4 bila hari = 1, selain itu 6)`. Tiap fosil adalah item `ItemKind` Fossil acak (RNG harian, `0x4b5900`), dikubur sebagai `0xa13`; berhenti bila penempatan gagal | [PSEUDO], konstanta `0x4b019c` |
+| Pecahan bintang | Hari = 1: `StarPieceGrowCount = PrayStarToday + VisitorPrayStarToday / 5`, lalu `PrayStarToday` = 0; selain itu keduanya 0. Pecahan diletakkan sampai `10 − pecahan di pantai` | [PSEUDO] |
+| Kerang | `0x4addc0`: bukan pertumbuhan pertama, flag `+0x1a`, dan sekarang ≥ waktu tersimpan + 30 menit (`0x4ade80`). Kerang ditambah sampai batas harian di sel pantai kosong (set 4) | [PSEUDO] |
+| Jenis kerang | `0x7abd00`, `r` = RNG harian 0–99, musim = kolom 5 (`Shop`) `SeasonCalendar`. Musim biasa: Hora 6%, Syako 11%, Sango 11%, Hone 11%, Ebisu 11%, Takara 20%, Sanddollar 30%. Musim 1 (panas): ShellDriftSummer 10%, Hora 6%, Syako 10%, Sango 10%, Hone 10%, Ebisu 10%, Takara 17%, Sanddollar 27% | terbukti native |
+| Batas kerang | `0x7a7010`: harian/total 3/9. Menjadi 8/9 bila ada sel pantai pada z 80–180 di satu sisi (x < 100 atau x > 99), dan 10/16 bila kedua sisi punya | terbukti native |
+| Botol pesan | Bila `MessageBottleAvailable` dan belum ada botol, pemain pertama tanpa `IsGetMessageBottle` mendapat satu `0x16a1` (aturan resep pertama di §2.1) | [PSEUDO] |
+| Titik per pemain | 8 pemain dengan `PcMaingameStart`: status `0xf51390` 0–5 dan sel bebas (set 2 ∩ 20, tidak di samping pohon/bambu/batu/tunggul). Arti status belum dibaca | [PSEUDO] |
+
+### 10.3 Tanaman (`0x4b6e70`)
+
+- **Pohon.** **[PSEUDO]** Semua pohon, kelapa, dan bambu diproses lewat `0x4b99a0`. Pohon dengan `Grow` < 4 tidak tumbuh bila ada ≥ 12 pohon lain di persegi 9×9 unit sekitarnya, atau bila `0x7ab350` menolak tempatnya. Selain itu `0x4d5ca0` mengikuti rantai `FgMainParam.GrowupFg` satu langkah per hari sampai `0xfffe` [TBL rantai]. Bambu yang hari ini mencapai `Grow` 4 menjatuhkan `NutItem`-nya ke sel bebas di sampingnya.
+- **Buah.** **[PSEUDO]** Pohon buah menyimpan penghitung tumbuh ulang 2 bit (bit 19–20 word item) yang dikurangi jumlah hari. Bit siram 17–18 dibersihkan.
+- **Ranting.** **[PSEUDO]** Bila ranting di tanah < 15, `DIYBranch` `0x9c4` diletakkan di area 6×6 sekitar pohon acak sampai 15.
+- **Isi pohon** (`0x4d6e10`). **[PSEUDO]** 0 = 100 Bell `0x839`, 1 = 1000 Bell `0x842`, 2 = sarang tawon `0xcbf`, 3 = furnitur acak. Isi baru tiap hari diberikan ke pohon acak di set 6 ∩ 20:
+  - sarang tawon sampai 5;
+  - furnitur sampai 2 setelah `VillageExtensionLevel2` = 1 (sebelumnya 1);
+  - 100 Bell sampai 15 pohon, cedar hias dilewati.
+- **Gulma.** **[PSEUDO]** Hari yang disimulasikan = `min(hari, 20)`. Tiap hari:
+  - saat kode musim `Weed` (kolom 6, `0x203640`) berganti, `0x4ba120` mengonversi gulma;
+  - di hari lain, `0x4b6000`/`0x4b63e0` menyebarkan gulma (batas 150);
+  - selama gulma < 150, gulma acak baru ditambah: 2 bila gulma ≤ 30, selain itu 1.
+
+  Varian dipilih `0xf53420(3)` dari tiga per kode musim: 0 Spr1A/B/C (`0x3060b80`), lalu 1 Smr, 2 Aut1, 3 Aut11, 4 Aut21, 5 Win1, 6 Win11 (pointer `0x3060cb0`). Batas `SeasonCalendar` belahan utara: 0 = 20 Mar–9 Jun, 1 = 10 Jun–15 Sep, 2 = 16–19 Sep, 3 = 20 Sep–31 Okt, 4 = Nov–15 Des, 5 = 16 Des–24 Feb, 6 = 25 Feb–19 Mar [TBL].
+- **Bunga.** **[PSEUDO]** Bunga dewasa yang disiram berkembang biak ke sel kosong di sampingnya. Mawar emas `0xeb7d` muncul pada `rand100` < 50 (`0x4c0e30`). Lily: `FlwLilyGrowCounter`/`FlwLilyFirstGrow`.
+
+### 10.4 Isi awal pulau baru
+
+**[PSEUDO]** Jalur ini berjalan pada pertumbuhan pertama selama `VillageExtensionLevel2` ≠ 1. Pulau dibagi tiga zona (`0x7b8b30`). Langkah-langkahnya:
+
+1. Cedar zona 2 dibuang sampai 10, dan pohon di persegi plaza 12×6 dibersihkan.
+2. Pohon dan kelapa yang ditolak `0x7ab350` dibuang.
+3. Pohon apel penanda diganti varian `LandFruit` (`0xf50f50`, `0x4ca690`).
+4. Isi pohon per zona (`0x4b5540`):
+   - zona 0: 2 sarang tawon, 5 × 100 Bell, 1 furnitur;
+   - zona 1: 1 sarang tawon, 5 × 100 Bell, 1 furnitur;
+   - zona 2: 2 sarang tawon, 5 × 100 Bell.
+5. Fosil: zona 1 empat, zona 2 dua. Kerang: zona 0 tiga, zona 1 sisanya sampai batas total.
+6. Jenis semua batu preset diundi ulang dengan `0x4d7110`. 20 ranting diletakkan di sekitar pohon, dan `DIYStone` di samping batu.
+7. Gulma tidak boleh dekat pohon buah dan batu. Gulma disebar sampai 1300, maksimal 20 putaran `0x4b6000`/`0x4b63e0`.
+
+ItemPreset hanya berisi ek, cedar, penanda pohon apel, gulma musim semi, dan StoneA [TBL]. Pohon kelapa, bunga, dan kerang tidak ada di preset maupun di jalur ini. Kelapa dan bunga awal masih harus dicari, kemungkinan di pembuat pulau atau di sensus (`left_open`).

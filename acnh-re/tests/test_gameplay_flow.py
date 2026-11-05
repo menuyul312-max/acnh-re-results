@@ -221,6 +221,27 @@ class NativeVerificationTests(unittest.TestCase):
         self.assertEqual(cases['0x9f1870 / 0x9f1920 insect time slot']['native'],
                          [0] * 4 + [1] * 4 + [2] * 8 + [3] + [4] * 2 + [5] * 4 + [0])
 
+    def test_field_regrowth_cases_are_native(self):
+        cases = json.loads((ROOT/'output'/'gameplay'/'gameplay_native.json').read_text())['cases']
+        stone, shell, caps = cases['0x4d7110 new rock kind'], cases['0x7abd00 shell kind'], cases['0x7a7010 shell caps']
+        self.assertTrue(stone['pass'] and shell['pass'] and caps['pass'])
+        self.assertEqual(sorted(stone['kinds_seen']), ['0xeb12', '0xeb13', '0xeb14', '0xeb15', '0xeb16'])
+        self.assertEqual(len(shell['items_seen']['1']), 8)
+        self.assertIn('0x175e', shell['items_seen']['1'])
+        self.assertNotIn('0x175e', shell['items_seen']['0'])
+        fixed = caps['fixed']
+        self.assertEqual((fixed['empty'], fixed['south only'], fixed['west z=78'], fixed['east z=182']), ([3, 9],) * 4)
+        self.assertEqual((fixed['west z=80'], fixed['east z=180'], fixed['one side twice']), ([8, 9],) * 3)
+        self.assertEqual((fixed['both sides'], fixed['x=98/x=100']), ([10, 16],) * 2)
+
+    def test_field_regrowth_reading(self):
+        refs = json.loads((ROOT/'output'/'gameplay'/'native_flag_refs.json').read_text())['data']
+        fr = refs['field_regrowth']
+        self.assertIn('0x4ae640', fr['entry'])
+        self.assertIn('min(days, 6 - rocks)', fr['daily']['rocks'])
+        self.assertIn('4 if days == 1 else 6', fr['daily']['fossils'])
+        self.assertIn('2 new weeds if weeds <= 30 else 1', fr['plants_0x4b6e70']['weeds'])
+
     def test_creature_candidate_table(self):
         doc = json.loads((ROOT/'output'/'gameplay'/'creature_spawn.json').read_text())['data']
         fish = doc['fish_position_pick']
@@ -327,6 +348,21 @@ class VisitorScheduleNsoTests(unittest.TestCase):
         self.assertEqual(word(0x5b9e78), 0x33097c08)  # bfxil w8, w0, #9, #0x17  (float in [1, 2) from the draw)
         self.assertEqual(word(0x5b98f4), 0x52800c88)  # mov w8, #0x64            (percent pick: u * 100 >> 32)
         self.assertEqual(word(0x59cc0c), 0x528115c8)  # mov w8, #0x8ae           (pond fallback Medaka)
+
+    def test_field_regrowth_constants(self):
+        word = lambda a: int.from_bytes(self.read(a, 4), 'little')  # noqa: E731
+        words = lambda a, n: [int.from_bytes(self.read(a + 4*i, 4), 'little') for i in range(n)]  # noqa: E731
+        self.assertEqual(word(0x4b0108), 0x321f07e9)  # mov w9, #6     (rocks: 6 - count)
+        self.assertEqual(word(0x4b019c), 0x321e03e8)  # mov w8, #4     (fossils: 4 when one day passed, else 6)
+        self.assertEqual(word(0x4b92b4), 0x7102575f)  # cmp w26, #0x95 (no new weeds from 150)
+        self.assertEqual(word(0x4b92c0), 0x71007b5f)  # cmp w26, #0x1e (2 weeds per day up to 30)
+        self.assertEqual(word(0x4b9308), 0x320007e0)  # mov w0, #3     (three variants per weed season)
+        self.assertEqual(words(0x29f5f90, 5), [0xeb12, 0xeb13, 0xeb16, 0xeb15, 0xeb14])
+        self.assertEqual(words(0x29f7a80, 7), [0x560, 0x565, 0x564, 0x55f, 0x55e, 0x566, 0x563])
+        self.assertEqual(words(0x29ef060, 1), [0x175e])
+        self.assertEqual(words(0x3060b80, 3), [0xeb28, 0xeb30, 0xeb31])
+        kinds = self.read(0x293f104, 4096).split(b'\0', 1)[0].decode().split(',')
+        self.assertEqual((kinds[3], kinds[9], kinds[29]), ('TreeCedar', 'TreeFruit', 'Stone'))
 
     def test_island_score_enum_lists(self):
         lst = lambda a: self.read(a, 4096).split(b'\0', 1)[0].decode().split(',')  # noqa: E731

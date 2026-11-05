@@ -90,11 +90,12 @@
      "mSpeedY"
     ],
     "reading": {
-     "role": "daily field items: star pieces, money rock, message bottle (from driver)",
+     "role": "daily field object processor and new-island population (from driver; see data.field_regrowth)",
      "reading": [
+      "first growth before VillageExtensionLevel2: populate the new island (tree items, fossils, shells, rock kinds, branches, 1300 weeds)",
+      "otherwise days >= 1: plants 0x4b6e70, rocks min(days, 6 - rocks), loose DIYStone, fossils min(6 - fossils, 4 or 6), star fragments, money rock, shells 0x4addc0, per-player spots, message bottle",
       "per player PrayStarToday -> StarPieceGrowCount; PrayStarToday and VisitorPrayStarToday reset",
-      "OccurrenceCoinStone (money rock) placement and MessageBottleAvailable / IsGetMessageBottle / PickedUpMessageBottle operate over a 0x8000-cell field item grid; selected cells use generic field query 0x4ad1f0",
-      "decomp does not establish a fixed beach coordinate or beach-specific cell mask; PcMaingameStart gate"
+      "cells are bits of 0x8000-bit sets in the 0x2e150-byte work object (bit = (z >> 1) * 256 + (x >> 1)); the beach set is *0x32e2410 and set 4 (empty beach cells)"
      ]
     }
    },
@@ -1229,11 +1230,12 @@
     ]
    },
    "0x4ae640": {
-    "role": "daily field items: star pieces, money rock, message bottle (from driver)",
+    "role": "daily field object processor and new-island population (from driver; see data.field_regrowth)",
     "reading": [
+     "first growth before VillageExtensionLevel2: populate the new island (tree items, fossils, shells, rock kinds, branches, 1300 weeds)",
+     "otherwise days >= 1: plants 0x4b6e70, rocks min(days, 6 - rocks), loose DIYStone, fossils min(6 - fossils, 4 or 6), star fragments, money rock, shells 0x4addc0, per-player spots, message bottle",
      "per player PrayStarToday -> StarPieceGrowCount; PrayStarToday and VisitorPrayStarToday reset",
-     "OccurrenceCoinStone (money rock) placement and MessageBottleAvailable / IsGetMessageBottle / PickedUpMessageBottle operate over a 0x8000-cell field item grid; selected cells use generic field query 0x4ad1f0",
-     "decomp does not establish a fixed beach coordinate or beach-specific cell mask; PcMaingameStart gate"
+     "cells are bits of 0x8000-bit sets in the 0x2e150-byte work object (bit = (z >> 1) * 256 + (x >> 1)); the beach set is *0x32e2410 and set 4 (empty beach cells)"
     ]
    },
    "0xf889e0": {
@@ -1406,6 +1408,86 @@
     },
     "evidence": "terbukti native: slots 0x9f1870/0x9f1920 and getter order 0x95ebe0; [PSEUDO]: weather mask and candidate set 0xb56850, 0x959f70, 0x8e0400; open: the weighted insect draw and the spawn-group list"
    }
+  },
+  "field_regrowth": {
+   "entry": "0xf53a70 day-change driver: 0x7a3410 builds a 0x2e150-byte field work object, 0x7a9760 -> 0x7a5c60 fills it from the save (census 0x7a3ef0 for trees/plants/rocks, 0x7a46f0 for ground items, 0x7a97e0 for the beach), 0x4ae640(days, work) runs the processors, 0x7b1dd0 writes back",
+   "args": "param_1 = {s64 days since last growth, now, last, byte first_growth (no stored date yet), flags +0x19..+0x1c}; days 0 -> only per-player items; days < 0 (clock set back) -> separate path",
+   "work_object": {
+    "bitsets": "32 bitsets of 0x1008 bytes (8-byte header + 32768 bits) at +0x14028 + N*0x1008; bit index = (z >> 1) * 256 + (x >> 1), and 0x7b0020 gives back x = 2*(i & 0xff), z = 2*(i >> 8) (half units)",
+    "sets": {
+     "1": "ground for the loose DIYStone (0x7aa9a0)",
+     "2": "empty ground",
+     "3": "diggable ground (fossils)",
+     "4": "empty beach cells (0x7a97e0)",
+     "5": "trees (oak, cedar, fruit, money tree)",
+     "6": "mature trees that can hold a shake item (0x4d6950)",
+     "7": "mature cedars",
+     "8": "fruit trees",
+     "9": "growing trees (Grow 0)",
+     "10": "palms",
+     "11": "bamboo",
+     "12": "flowers",
+     "13": "mature trees / stumps grow 3",
+     "14": "weeds and flowers (0x4d5b30)",
+     "15": "grown flowers (Grow > 1)",
+     "16": "kind group 0x4d5bd0",
+     "17": "weeds",
+     "18": "rocks",
+     "19": "stumps",
+     "20": "free of players/structures (0x280c8)"
+    },
+    "counters_0x2e144": "bit 1 pitfall present; bits 2-4 buried fossils (stop at 6); bits 5-7 rocks (stop at 7); bits 8-18 weeds; bits 19-23 branches on ground (stop at 15); bits 24-28 beach shells; bits 29-31 trees with a wasp nest",
+    "counters_0x2e148": "bits 0-3 trees with 100 bells; bits 4-5 trees with furniture; bit 6 loose DIYStone present; bit 7 = 0x7a5c60 arg 2; bit 8 message bottle on beach; bits 9-13 kind 0x2f items; bits 14-17 star fragments on beach",
+    "tree_census": "0x7a3ef0 switch on FgMainParam.Kind - 1 (jump table 0x29f7a3c): oak/cedar/palm/bamboo/fruit/money tree each counted (+0x2e0f8..+0x2e10c) and added to their set; Grow 4 sets ExistOak/ExistCedar/ExistSakura/ExistBanboo; decorated cedars 0xec9a/0xec97 revert to 0xea69 when the season ends (0x4cbb70); stumps of fruit trees 0xecbc..0xecbf become oak stumps 0xec6d/0xec6c/0xec6b/0xea9f; rocks failing 0x7a2a30 are removed"
+   },
+   "daily": {
+    "lily": "0x4b6e70 (all plant growth, below), then lily: FlwLilyGrowCounter != 0 and (first: rand100 >= 50, else rand100 <= c*c + 5) -> 0x7abff0; on success counter 0, FlwLilyFirstGrow on",
+    "rocks": "0x4ae640: rock states reset (0x4d7190) on every rock of set 18; n = min(days, 6 - rocks) new rocks, each 0x4d7110 kind (StoneA..E uniform from the field RNG 0x344d100) placed by 0x7aa3c0",
+    "loose_stone": "0x7aa9a0 when +0x2e148 bit 6 is clear: one DIYStone 0x9c6 at a random cell of set 1 not in the 3x3 ring around a rock",
+    "fossils": "n = min(6 - buried fossils, 4 if days == 1 else 6); each 0x4b5900 picks a random ItemKind Fossil (0x46) item with the day RNG and 0x7ad6e0 buries it as Fossil 0xa13; stops when a placement fails",
+    "star_fragments": "days == 1: per player StarPieceGrowCount = PrayStarToday + VisitorPrayStarToday / 5, PrayStarToday = 0; otherwise 0x4ba330 zeroes both. Then per player with StarPieceGrowCount, not in flag +0x1c, up to 10 - (beach star fragments) pieces 0x4ba660 + 0x7abf30, decrementing the counter",
+    "money_rock": "per player with OccurrenceCoinStone = 0: when rocks exist, one random rock of set 18 and 20 gets the money flag (0x4d7250, 0x4d72c0); otherwise a new rock with flag 0x4d7580(1) is placed; OccurrenceCoinStone = 1",
+    "shells": "0x4addc0: days >= 0, not the first growth, flag +0x1a and 0x4ade80 (now >= stored time + 30 min) -> while beach shells < daily cap, 0x7abe80 places one 0x7abd00 shell on set 4",
+    "shell_kind": "0x7abd00: season = SeasonCalendar column 5 (Shop) via 0x2035f0; r = 0xf53420(100) (day RNG); normal: <6 Hora, <17 Syako, <28 Sango, <39 Hone, <50 Ebisu, <70 Takara, else Sanddollar; season 1 (summer): <10 ShellDriftSummer, <16 Hora, <26 Syako, <36 Sango, <46 Hone, <56 Ebisu, <73 Takara, else Sanddollar",
+    "shell_caps": "0x7a7010: daily cap *0x32e24d0 / total cap *0x32e24e8 = 3/9; 8/9 when a beach cell lies at z 80..180 on one side (x < 100 or x > 99); 10/16 when both sides",
+    "player_spots": "per player (8) with PcMaingameStart: 0xf51390 state 0..5 and 0x4ba980 choose a spot in set 2 and 20 (not next to set 5/11/18/19 or the 0x802 object map); state 1/2 kept if still free, else 5; state 4/0 -> new random spot (state 4); meaning of the state not read",
+    "message_bottle": "MessageBottleAvailable and no bottle on the beach (+0x2e149 bit 0): first player without IsGetMessageBottle gets one 0x16a1 bottle 0x7ad900; first ever bottle holds recipe 0x227a or 0x1be1 (0xf53500)",
+    "end": "days != 0: 0xf50990 and 0xf51f20 save writers; 0x4b20a0(days, work, 1)"
+   },
+   "plants_0x4b6e70": {
+    "trees": "every tree of sets 5, 10, 11 except growing ones, then set 9: 0x4b99a0. A tree with Grow < 4 does not grow when 12 or more trees stand in the 9x9 unit square around it (centre excluded) or 0x7ab350 rejects the spot; otherwise 0x4d5ca0 follows FgMainParam.GrowupFg one step per elapsed day until 0xfffe",
+    "fruit": "0x4d5ca0 on fruit trees (0x4ca3a0): 2-bit regrow counter at bits 19-20 of the item word is lowered by the elapsed days; watered bits 17-18 cleared",
+    "branches": "when branches on ground < 15: around random trees of set 6, a 6x6 area from (-2,-2) through 0x7af510 on 0x10020 and 0x4b5cc0; DIYBranch 0x9c4 placed (0x4ad3b0) until 15",
+    "tree_items": "0x4d6e10 content: 0 -> 100Bell 0x839, 1 -> 1000Bell 0x842, 2 -> Honeycomb 0xcbf (wasp nest), 3 -> random furniture of ItemFrom groups 1,2,3,5,6. Daily on random trees of set 6 and 20: wasp nests up to 5 - nests; furniture up to 2 - furniture (VillageExtensionLevel2 = 1; 3 furniture -> 0) or 1 if none before that; 100 bells up to 15 - (trees with bells), skipping decorated cedars",
+    "flowers": "grown flowers of set 15 with watered state 0xc018 breed into empty set-2 neighbours (0x7a2da0, 0x4d5e50), gold rose 0xeb7d at rand100 < 50 from 0x4c0e30; genetics are in output/flowers (baseline)",
+    "weeds": "simulated days = min(days, 20); per day: season change (SeasonCalendar column 6 Weed via 0x203640) -> 0x4ba120 converts weeds; otherwise 0x4b6000 / 0x4b63e0 spread (cap 150); while weeds < 150, 2 new weeds if weeds <= 30 else 1, variant = one of three per season code (table 0x3060b80 for code 0, pointers 0x3060cb0 for codes 1-6), r = 0xf53420(3), placed by 0x7ad870",
+    "bamboo": "a bamboo (set 11) that reaches Grow 4 today sets ExistBanboo and drops its FgMainParam.NutItem (0x4ca0d0) on a free neighbour from 0x4b5cc0",
+    "tree_cross": "when 0x4bd2d0 holds: a 5-cell cross around every set-13 tree, minus sets 20 and 25; up to min(5, 30 - count) objects chosen by 0x4d7c30 go to set 2 or set 3; object kind and count meaning not read"
+   },
+   "new_island": {
+    "gate": "first growth (param_1 byte +0x18) and VillageExtensionLevel2 != 1 (0x6608a0)",
+    "zones": "3 zone bitsets (0x7b8b30; all cells once VillageExtensionLevel2 = 1)",
+    "steps": [
+     "cedars of zone 2 up to 10 removed; trees on the plaza rectangle 12x6 around 0x1071bd0(3) cleared",
+     "invalid trees (set 5) and palms (set 10) removed through 0x7ab350",
+     "placeholder fruit trees replaced with the LandFruit variants (0xf50f50, 0x4ca690)",
+     "tree items per zone 0x4b5540(zone, count, content): zone 0: 2 wasp, 5 bells, 1 furniture; zone 1: 1 wasp, 5 bells, 1 furniture; zone 2: 2 wasp, 5 bells",
+     "fossils 0x4b5780: zone 1: 4, zone 2: 2; shells 0x4b5b20: zone 0: 3, zone 1: total cap - 3",
+     "every preset rock re-rolled with 0x4d7110; 20 branches around trees; DIYStone next to rocks",
+     "weeds: no weeds within 2 cells of up to 10 fruit trees or in 6x6 around up to 2 rocks; then up to 20 rounds of 0x4b6000(1300, 5, 5, 2, 2) and 0x4b63e0(1300, 20, 20, 10, 80) while weeds < 1300"
+    ]
+   },
+   "preset_items": "ItemPreset key 5bc12308 is FgMainParam.UniqueID [TBL]: 96 presets hold 261-329 objects, only oak 60000, cedar 60009, apple-tree placeholder 60001, spring weeds 60200/60208/60209 and StoneA 60178; no palm, flower or shell",
+   "evidence": "terbukti native: 0x4d7110 rock kind, 0x7abd00 shell kind and season tables, 0x7a7010 shell caps (tools/field_regrowth_native.py); constants of the rock/fossil/weed branches checked in the instructions (tests); everything else [PSEUDO]",
+   "open": [
+    "seed of the field RNG 0x344d100",
+    "meaning of set 1, 16, 20 and of the per-player spot state 0xf51390",
+    "0x4b6000 / 0x4b63e0 weed spread internals",
+    "0x4ba120 seasonal weed conversion",
+    "placement checks 0x7ab350, 0x7aa3c0, 0x7ad6e0, 0x7ad870",
+    "palm growth and coconut drop",
+    "days < 0 branch"
+   ]
   },
   "day_change_callees_in_order": [
    "0xeecf20",
@@ -2946,11 +3028,12 @@
     "day_change": [],
     "pseudocode_readings": {
      "0x4ae640": {
-      "role": "daily field items: star pieces, money rock, message bottle (from driver)",
+      "role": "daily field object processor and new-island population (from driver; see data.field_regrowth)",
       "reading": [
+       "first growth before VillageExtensionLevel2: populate the new island (tree items, fossils, shells, rock kinds, branches, 1300 weeds)",
+       "otherwise days >= 1: plants 0x4b6e70, rocks min(days, 6 - rocks), loose DIYStone, fossils min(6 - fossils, 4 or 6), star fragments, money rock, shells 0x4addc0, per-player spots, message bottle",
        "per player PrayStarToday -> StarPieceGrowCount; PrayStarToday and VisitorPrayStarToday reset",
-       "OccurrenceCoinStone (money rock) placement and MessageBottleAvailable / IsGetMessageBottle / PickedUpMessageBottle operate over a 0x8000-cell field item grid; selected cells use generic field query 0x4ad1f0",
-       "decomp does not establish a fixed beach coordinate or beach-specific cell mask; PcMaingameStart gate"
+       "cells are bits of 0x8000-bit sets in the 0x2e150-byte work object (bit = (z >> 1) * 256 + (x >> 1)); the beach set is *0x32e2410 and set 4 (empty beach cells)"
       ]
      }
     }
@@ -3502,11 +3585,12 @@
     "day_change": [],
     "pseudocode_readings": {
      "0x4ae640": {
-      "role": "daily field items: star pieces, money rock, message bottle (from driver)",
+      "role": "daily field object processor and new-island population (from driver; see data.field_regrowth)",
       "reading": [
+       "first growth before VillageExtensionLevel2: populate the new island (tree items, fossils, shells, rock kinds, branches, 1300 weeds)",
+       "otherwise days >= 1: plants 0x4b6e70, rocks min(days, 6 - rocks), loose DIYStone, fossils min(6 - fossils, 4 or 6), star fragments, money rock, shells 0x4addc0, per-player spots, message bottle",
        "per player PrayStarToday -> StarPieceGrowCount; PrayStarToday and VisitorPrayStarToday reset",
-       "OccurrenceCoinStone (money rock) placement and MessageBottleAvailable / IsGetMessageBottle / PickedUpMessageBottle operate over a 0x8000-cell field item grid; selected cells use generic field query 0x4ad1f0",
-       "decomp does not establish a fixed beach coordinate or beach-specific cell mask; PcMaingameStart gate"
+       "cells are bits of 0x8000-bit sets in the 0x2e150-byte work object (bit = (z >> 1) * 256 + (x >> 1)); the beach set is *0x32e2410 and set 4 (empty beach cells)"
       ]
      }
     }
@@ -8292,11 +8376,12 @@
     "day_change": [],
     "pseudocode_readings": {
      "0x4ae640": {
-      "role": "daily field items: star pieces, money rock, message bottle (from driver)",
+      "role": "daily field object processor and new-island population (from driver; see data.field_regrowth)",
       "reading": [
+       "first growth before VillageExtensionLevel2: populate the new island (tree items, fossils, shells, rock kinds, branches, 1300 weeds)",
+       "otherwise days >= 1: plants 0x4b6e70, rocks min(days, 6 - rocks), loose DIYStone, fossils min(6 - fossils, 4 or 6), star fragments, money rock, shells 0x4addc0, per-player spots, message bottle",
        "per player PrayStarToday -> StarPieceGrowCount; PrayStarToday and VisitorPrayStarToday reset",
-       "OccurrenceCoinStone (money rock) placement and MessageBottleAvailable / IsGetMessageBottle / PickedUpMessageBottle operate over a 0x8000-cell field item grid; selected cells use generic field query 0x4ad1f0",
-       "decomp does not establish a fixed beach coordinate or beach-specific cell mask; PcMaingameStart gate"
+       "cells are bits of 0x8000-bit sets in the 0x2e150-byte work object (bit = (z >> 1) * 256 + (x >> 1)); the beach set is *0x32e2410 and set 4 (empty beach cells)"
       ]
      }
     }
@@ -8603,11 +8688,12 @@
     "day_change": [],
     "pseudocode_readings": {
      "0x4ae640": {
-      "role": "daily field items: star pieces, money rock, message bottle (from driver)",
+      "role": "daily field object processor and new-island population (from driver; see data.field_regrowth)",
       "reading": [
+       "first growth before VillageExtensionLevel2: populate the new island (tree items, fossils, shells, rock kinds, branches, 1300 weeds)",
+       "otherwise days >= 1: plants 0x4b6e70, rocks min(days, 6 - rocks), loose DIYStone, fossils min(6 - fossils, 4 or 6), star fragments, money rock, shells 0x4addc0, per-player spots, message bottle",
        "per player PrayStarToday -> StarPieceGrowCount; PrayStarToday and VisitorPrayStarToday reset",
-       "OccurrenceCoinStone (money rock) placement and MessageBottleAvailable / IsGetMessageBottle / PickedUpMessageBottle operate over a 0x8000-cell field item grid; selected cells use generic field query 0x4ad1f0",
-       "decomp does not establish a fixed beach coordinate or beach-specific cell mask; PcMaingameStart gate"
+       "cells are bits of 0x8000-bit sets in the 0x2e150-byte work object (bit = (z >> 1) * 256 + (x >> 1)); the beach set is *0x32e2410 and set 4 (empty beach cells)"
       ]
      }
     }
@@ -8825,11 +8911,12 @@
     "day_change": [],
     "pseudocode_readings": {
      "0x4ae640": {
-      "role": "daily field items: star pieces, money rock, message bottle (from driver)",
+      "role": "daily field object processor and new-island population (from driver; see data.field_regrowth)",
       "reading": [
+       "first growth before VillageExtensionLevel2: populate the new island (tree items, fossils, shells, rock kinds, branches, 1300 weeds)",
+       "otherwise days >= 1: plants 0x4b6e70, rocks min(days, 6 - rocks), loose DIYStone, fossils min(6 - fossils, 4 or 6), star fragments, money rock, shells 0x4addc0, per-player spots, message bottle",
        "per player PrayStarToday -> StarPieceGrowCount; PrayStarToday and VisitorPrayStarToday reset",
-       "OccurrenceCoinStone (money rock) placement and MessageBottleAvailable / IsGetMessageBottle / PickedUpMessageBottle operate over a 0x8000-cell field item grid; selected cells use generic field query 0x4ad1f0",
-       "decomp does not establish a fixed beach coordinate or beach-specific cell mask; PcMaingameStart gate"
+       "cells are bits of 0x8000-bit sets in the 0x2e150-byte work object (bit = (z >> 1) * 256 + (x >> 1)); the beach set is *0x32e2410 and set 4 (empty beach cells)"
       ]
      }
     }
@@ -9176,11 +9263,12 @@
     "day_change": [],
     "pseudocode_readings": {
      "0x4ae640": {
-      "role": "daily field items: star pieces, money rock, message bottle (from driver)",
+      "role": "daily field object processor and new-island population (from driver; see data.field_regrowth)",
       "reading": [
+       "first growth before VillageExtensionLevel2: populate the new island (tree items, fossils, shells, rock kinds, branches, 1300 weeds)",
+       "otherwise days >= 1: plants 0x4b6e70, rocks min(days, 6 - rocks), loose DIYStone, fossils min(6 - fossils, 4 or 6), star fragments, money rock, shells 0x4addc0, per-player spots, message bottle",
        "per player PrayStarToday -> StarPieceGrowCount; PrayStarToday and VisitorPrayStarToday reset",
-       "OccurrenceCoinStone (money rock) placement and MessageBottleAvailable / IsGetMessageBottle / PickedUpMessageBottle operate over a 0x8000-cell field item grid; selected cells use generic field query 0x4ad1f0",
-       "decomp does not establish a fixed beach coordinate or beach-specific cell mask; PcMaingameStart gate"
+       "cells are bits of 0x8000-bit sets in the 0x2e150-byte work object (bit = (z >> 1) * 256 + (x >> 1)); the beach set is *0x32e2410 and set 4 (empty beach cells)"
       ]
      }
     }
