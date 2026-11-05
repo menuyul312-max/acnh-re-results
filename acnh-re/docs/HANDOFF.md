@@ -2,7 +2,7 @@
 
 Baca file ini dulu; tidak perlu membaca seluruh repo. Antrian kerja yang bisa dibaca mesin ada di [`re_queue.json`](re_queue.json). Semua item besar sudah `done`; sisa kecil yang belum terjawab ada di `left_open` tiap entri `done`.
 
-## Status singkat (4 November 2026)
+## Status singkat (5 November 2026)
 
 | Area | Status | Baca bila perlu |
 |---|---|---|
@@ -18,6 +18,7 @@ Baca file ini dulu; tidak perlu membaca seluruh repo. Antrian kerja yang bisa di
 | Rumus skor pulau | Terbaca: 11 kategori item, bobot Natural/Life, bonus harga/jembatan/fasilitas, poin minus. Dampak bit item `+2` dan syarat struktur bit `+8` sudah dibuktikan; nama simbolik bit tetap tidak ada | GAMEPLAY_FLOW §10.1; `native_flag_refs.json` → `data.island_score` |
 | Tanggal konser K.K. | Terbaca: NormalLive = Sabtu (geser sesuai `TkkSkipNormal`), BirthdayLive dari jadwal ulang tahun per pemain | GAMEPLAY_SCENARIO §3.6 |
 | Lobak dan stok toko | Alur lokal input `cKabu` → query dan layout numerik terpetakan; output Nook, slot bersyarat, domain ID 0–14999, dan mekanisme batch tujuh hari terbukti. Keanggotaan bitset state 2/3, hasil RNG konkret, serta page binding build 1.0.0 tetap terbuka | GAMEPLAY_SCENARIO §3.7; `output/gameplay/kabu_ui_binding.json`; `output/gameplay/nook_shop_weekly_slot_map.json`; `re_queue.json` |
+| Berikutnya | 9 item open, berurutan prioritas: pindah villager native, jadwal pengunjung native, kemunculan ikan/serangga, regenerasi lapangan harian, Nook Miles/turnamen, keakraban, skor pulau native, toko native, nama simbolik | `re_queue.json` → `items`; GAMEPLAY_SCENARIO §8 |
 | Mekanik (collision, terrain, NPC nav, …) dan pembentukan pulau | Dikerjakan agen lain; jangan disentuh tanpa koordinasi | README root "Fokus terbaru" |
 
 Level bukti: **[EF]** EventFlow, **[TBL]** tabel, **[PSEUDO]** pseudocode/disassembly yang belum dieksekusi, **[NATIVE]** belum dibaca, ditambah "terbukti native" untuk hasil emulasi. Jangan menaikkan status tanpa bukti.
@@ -94,3 +95,4 @@ Level bukti: **[EF]** EventFlow, **[TBL]** tabel, **[PSEUDO]** pseudocode/disass
 | 2026-11-04 | Filter kelas turunan Nook dan selector state 2/3; query Daisy Mae `EventFlowQueryBoaCanSetKabu` terikat ke `SNPC_boc` dan 4 cabang native teruji; dampak flag skor dan syarat bit struktur diperjelas; caller `AbandonedHouse` dibatasi dengan call graph; build indeks dan suite 21/21 | `6b4a0e8` |
 | 2026-11-04 | Alur input lobak dan layout numerik dikaitkan lewat EventFlow; skema publik disejajarkan dengan layout save (85/88 member, 143/151 vtable paths); scan empat NSO dan caveat lintas versi dicatat | `4bf8556` |
 | 2026-11-04 | Peta stok mingguan Nook (ID 0–14999, bucket per hari, batch tujuh hari, pruning `0xfcf580`); transisi save OfficeLevel 1→2; suite 21/21 termasuk emulasi native | `2d090fa` |
+| 2026-11-05 | Rencana RE berikutnya: 9 item open di `re_queue.json` (pindah villager dan jadwal native, kemunculan makhluk, regenerasi lapangan, Nook Miles/turnamen, keakraban, skor dan toko native, sisa nama simbolik); GAMEPLAY_SCENARIO §8 | `-` |

@@ -573,6 +573,16 @@ Pertanyaan yang dulu terbuka di jadwal ini sudah terjawab **[PSEUDO]**:
 
 | # | Celah | Titik masuk |
 |---|---|---|
-| 1 | Menaikkan [PSEUDO] lain menjadi terbukti | tambah kasus di `tools/gameplay_native.py`: toko `0xfc4560`, gedung museum (tahap 2 `0xf77050`), undian pindah (`0xf847f0`), jadwal pengunjung (`0xfd8a80`), penjumlah skor (`0x15c61f0`) |
+| 1 | Pindah keluar/masuk villager terbukti native | `0xf847f0`, `0xf87670`, `0xf84f10` |
+| 2 | Jadwal pengunjung mingguan terbukti native | `0xfd8a80`, `0xfd9620` |
+| 3 | Kemunculan ikan, makhluk laut, dan serangga (belum dibaca) | akses kolom `Prob*` `0x5b3860` (sungai), `0x5b5ee0` (laut), selektor `AppearArea` `0x5bb150`; serangga `0x95ebe0`..`0x964870`, enum tempat `0x9b7ec0` |
+| 4 | Regenerasi objek lapangan harian: fosil, batu, gulma, pohon/buah, kerang (belum dibaca) | `SaveGrowUpRandomFactor` `0xf56b70`, `TodayGrowUp` `0xf60530`/`0xfa00d0`, `DigFossil` `0xd9d630` |
+| 5 | Nook Miles+, pencapaian, skor turnamen | `0xf66020` → `0xf60690`, `0x309ff0`, `0x586bd0`, `0xfa60c0` |
+| 6 | Penambah poin keakraban | penulis field yang dibaca `0xd34a20` |
+| 7 | Skor pulau end-to-end native | `0x15c68c0`, `0x15c61f0` |
+| 8 | Prosesor toko native | `0xfc4560` |
+| 9 | Nama simbolik yang belum terbukti (bit flag, vtable save, enum OfficeLevel, binding `KabuBuyPage`, sel pantai) | `left_open` di item selesai `re_queue.json` |
+
+Titik masuk baris 3–5 diambil dari `index.sqlite` (`hash_refs`, `string_refs`, `direct_calls`), jadi masih berupa kandidat; perannya belum dibaca. Cuaca dan genetika bunga sudah ada di baseline (`output/weather`, `output/flowers`) dan tidak perlu diulang. `plants_and_breeding` juga tercatat sebagai target riset agen mechanics, jadi hasil baris 4 hanya ditulis ke `output/gameplay` dan dokumen `GAMEPLAY_*`.
 
 Antrian yang sama, dalam bentuk yang bisa dibaca mesin dan ditandai statusnya, ada di [re_queue.json](re_queue.json).
