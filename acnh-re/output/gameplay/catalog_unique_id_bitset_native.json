@@ -1,0 +1,98 @@
+{
+  "native_elf_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+  "native_functions": {
+    "membership": "0xa0f440",
+    "set_bit": "0xa0f510"
+  },
+  "bitset_bytes": 1876,
+  "valid_unique_id_count": 15000,
+  "scope": "Original membership and set-bit functions run on a synthetic 0x754-byte bitset. The vtable data accessor, Item ID normalization, and cItem canonicalizer are stubbed; no live save or ItemParam row is loaded.",
+  "cases": 10,
+  "mismatches": 0,
+  "dependencies_stubbed": [
+    "bitset data accessor vtable slots",
+    "F58A90 item-ID mapping",
+    "F591A0 cItem normalizer"
+  ],
+  "results": [
+    {
+      "item_unique_id": 0,
+      "in_15000_id_range": true,
+      "membership_before": false,
+      "membership_after": true,
+      "expected_after": true,
+      "bitset_matches": true
+    },
+    {
+      "item_unique_id": 1,
+      "in_15000_id_range": true,
+      "membership_before": false,
+      "membership_after": true,
+      "expected_after": true,
+      "bitset_matches": true
+    },
+    {
+      "item_unique_id": 31,
+      "in_15000_id_range": true,
+      "membership_before": false,
+      "membership_after": true,
+      "expected_after": true,
+      "bitset_matches": true
+    },
+    {
+      "item_unique_id": 32,
+      "in_15000_id_range": true,
+      "membership_before": false,
+      "membership_after": true,
+      "expected_after": true,
+      "bitset_matches": true
+    },
+    {
+      "item_unique_id": 14992,
+      "in_15000_id_range": true,
+      "membership_before": false,
+      "membership_after": true,
+      "expected_after": true,
+      "bitset_matches": true
+    },
+    {
+      "item_unique_id": 14999,
+      "in_15000_id_range": true,
+      "membership_before": false,
+      "membership_after": true,
+      "expected_after": true,
+      "bitset_matches": true
+    },
+    {
+      "item_unique_id": 15000,
+      "in_15000_id_range": false,
+      "membership_before": false,
+      "membership_after": false,
+      "expected_after": false,
+      "bitset_matches": true
+    },
+    {
+      "item_unique_id": 15001,
+      "in_15000_id_range": false,
+      "membership_before": false,
+      "membership_after": false,
+      "expected_after": false,
+      "bitset_matches": true
+    },
+    {
+      "item_unique_id": 65535,
+      "in_15000_id_range": false,
+      "membership_before": false,
+      "membership_after": false,
+      "expected_after": false,
+      "bitset_matches": true
+    },
+    {
+      "item_unique_id": 15000,
+      "preseeded_padding_bit": true,
+      "membership_after_preseed": false,
+      "expected_membership": false,
+      "bitset_matches": true
+    }
+  ]
+}
