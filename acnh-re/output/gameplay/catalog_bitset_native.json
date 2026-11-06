@@ -6,8 +6,8 @@
   },
   "setter_contract": "After the mapper returns an index, EECAD0 accepts 0..15999, sets exactly that bit in a 2000-byte bitset, and returns 1. A mapper result of 0xffffffff returns 0. An index >=16000 returns 1 without setting a bit.",
   "mapper_formula_static": "AB2940 reads ItemParam.RemakeID (field hash 0xcb5eb33f, s16); a negative RemakeID is rejected. Otherwise F5AB10 returns RemakeID*8 + (byte returned by AB0F50 & 7), with zero variant bits when AB0F50 returns null.",
-  "input_item_id": 4318,
-  "mapper": "Stubbed to the listed controlled outputs for boundary testing. The formula is recovered statically from the native call chain; this runner does not execute ItemParam lookup or identify the meaning of the low three bits.",
+  "synthetic_input_item_id": 4318,
+  "mapper": "AB2940 and F5AB10 run as native instructions across every RemakeID 0..1999 and variant 0..7. Stubs supply controlled item validity, ItemParam.RemakeID field lookup, variant-byte pointer, and the save/context wrapper; real item rows and low-bit semantics are not exercised.",
   "static_call_paths": [
     {
       "entry": "0xeebe80",
@@ -39,63 +39,127 @@
       "evidence": "Ghidra pseudocode; order eligibility and delivery are open"
     }
   ],
-  "native_cases": 6,
+  "native_cases": 16011,
+  "exhaustive_valid_index_cases": 16000,
   "mismatches": 0,
   "dependencies_stubbed": [
-    "0xab2940 item-to-catalog mapper",
+    "0xf58d00 item validity",
+    "0xa9c290/0xaac250 ItemParam row selection",
+    "0xa1e920 RemakeID field lookup",
+    "0xab0f50 variant-byte source",
     "0xf8f400 world/context accessor",
     "0xee9350/0xee9490/0xee94f0/0xee93d0 bitset access wrapper"
   ],
   "results": [
     {
-      "stubbed_mapped_index": 0,
-      "return": 1,
-      "set_words": [
-        [
-          0,
-          "0x00000001"
-        ]
-      ]
-    },
-    {
-      "stubbed_mapped_index": 31,
-      "return": 1,
-      "set_words": [
-        [
-          0,
-          "0x80000000"
-        ]
-      ]
-    },
-    {
-      "stubbed_mapped_index": 32,
-      "return": 1,
-      "set_words": [
-        [
-          1,
-          "0x00000001"
-        ]
-      ]
-    },
-    {
-      "stubbed_mapped_index": 15999,
-      "return": 1,
-      "set_words": [
-        [
-          499,
-          "0x80000000"
-        ]
-      ]
-    },
-    {
-      "stubbed_mapped_index": 16000,
-      "return": 1,
-      "set_words": []
-    },
-    {
-      "stubbed_mapped_index": 4294967295,
+      "remake_id": -1,
+      "variant_input": 0,
+      "variant_masked": 0,
+      "variant_present": true,
+      "valid_item": true,
+      "mapped_index": null,
       "return": 0,
-      "set_words": []
+      "bitset_matches": true
+    },
+    {
+      "remake_id": 7,
+      "variant_input": 255,
+      "variant_masked": 0,
+      "variant_present": false,
+      "valid_item": true,
+      "mapped_index": 56,
+      "return": 1,
+      "bitset_matches": true
+    },
+    {
+      "remake_id": 2000,
+      "variant_input": 0,
+      "variant_masked": 0,
+      "variant_present": true,
+      "valid_item": true,
+      "mapped_index": 16000,
+      "return": 1,
+      "bitset_matches": true
+    },
+    {
+      "remake_id": 2000,
+      "variant_input": 7,
+      "variant_masked": 7,
+      "variant_present": true,
+      "valid_item": true,
+      "mapped_index": 16007,
+      "return": 1,
+      "bitset_matches": true
+    },
+    {
+      "remake_id": 0,
+      "variant_input": 0,
+      "variant_masked": 0,
+      "variant_present": true,
+      "valid_item": false,
+      "mapped_index": null,
+      "return": 0,
+      "bitset_matches": true
+    },
+    {
+      "remake_id": 0,
+      "variant_input": 0,
+      "variant_masked": 0,
+      "variant_present": true,
+      "valid_item": true,
+      "mapped_index": 0,
+      "return": 1,
+      "bitset_matches": true
+    },
+    {
+      "remake_id": 3,
+      "variant_input": 7,
+      "variant_masked": 7,
+      "variant_present": true,
+      "valid_item": true,
+      "mapped_index": 31,
+      "return": 1,
+      "bitset_matches": true
+    },
+    {
+      "remake_id": 31,
+      "variant_input": 0,
+      "variant_masked": 0,
+      "variant_present": true,
+      "valid_item": true,
+      "mapped_index": 248,
+      "return": 1,
+      "bitset_matches": true
+    },
+    {
+      "remake_id": 31,
+      "variant_input": 7,
+      "variant_masked": 7,
+      "variant_present": true,
+      "valid_item": true,
+      "mapped_index": 255,
+      "return": 1,
+      "bitset_matches": true
+    },
+    {
+      "remake_id": 1999,
+      "variant_input": 0,
+      "variant_masked": 0,
+      "variant_present": true,
+      "valid_item": true,
+      "mapped_index": 15992,
+      "return": 1,
+      "bitset_matches": true
+    },
+    {
+      "remake_id": 1999,
+      "variant_input": 7,
+      "variant_masked": 7,
+      "variant_present": true,
+      "valid_item": true,
+      "mapped_index": 15999,
+      "return": 1,
+      "bitset_matches": true
     }
   ],
   "open": [
