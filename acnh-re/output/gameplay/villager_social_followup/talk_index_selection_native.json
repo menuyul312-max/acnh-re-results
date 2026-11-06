@@ -1,0 +1,64 @@
+{
+  "cases": 2,
+  "mismatches": [],
+  "native_functions": {
+    "talk_counter_index_selector": "0xf4dbd0",
+    "counter_lookup_boundary": "0xf4d560",
+    "counter_query_context": "0xf4da70",
+    "native_key_formatter": "0x47360"
+  },
+  "cases_data": [
+    {
+      "argument": 4,
+      "selected_index": -1,
+      "controlled_counter_reads": [
+        [
+          "TalkNpc0Count",
+          3
+        ]
+      ],
+      "name": "initial_gate_mismatch"
+    },
+    {
+      "argument": 4,
+      "selected_index": 2,
+      "controlled_counter_reads": [
+        [
+          "TalkNpc0Count",
+          4
+        ],
+        [
+          "TalkNpc0Count",
+          3
+        ],
+        [
+          "TalkNpc1Count",
+          3
+        ],
+        [
+          "TalkNpc2Count",
+          4
+        ]
+      ],
+      "name": "first_match_at_index_2"
+    }
+  ],
+  "scope": "Original 0xf4dbd0 instructions and 0x47360 key formatting execute. The test stops each persisted counter lookup at 0xf4d560 and supplies controlled read results.",
+  "dependencies_stubbed": [
+    {
+      "va": "0xf4d560",
+      "purpose": "supplies a controlled sequence of per-key saved counter values"
+    },
+    {
+      "va": "0xf4da70",
+      "purpose": "skips unrelated query-context iteration setup"
+    }
+  ],
+  "limits": [
+    "No real save record or underlying f4d560/f4da70 lookup state was executed.",
+    "This proves the selector returns the first index whose controlled TalkNpc%dCount read equals its argument, after an initial TalkNpc0Count gate.",
+    "The callers 0x395bc0, 0x395e50, and 0x3960d0 are not executed; the result is not proven to be a conversation topic or message ID."
+  ],
+  "elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+  "nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900"
+}

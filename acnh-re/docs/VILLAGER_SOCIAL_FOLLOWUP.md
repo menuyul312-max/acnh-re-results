@@ -151,11 +151,22 @@ policy atau semantik game untuk nama `TalkNpc%dCount` dan `TalkAllNpcCount`.
 max 7; tabel berbahasa Jepang menamai keduanya sebagai hitungan hari ini dan
 hari berturut-turut.
 
-`0xf4dbd0` adalah helper seleksi statis yang membaca `TalkNpc0Count`, kemudian
-memeriksa key `TalkNpc%dCount` untuk indeks 0–9 dan mengembalikan indeks
-pertama yang nilainya berbeda dari argumennya. Caller-nya `0x395bc0`,
-`0x395e50`, dan `0x3960d0`. Saya belum membuktikan bahwa indeks ini memilih
-topic atau pesan; fungsi itu dan caller-nya belum dijalankan native.
+`0xf4dbd0` membaca `TalkNpc0Count` sebagai gate, lalu memeriksa key
+`TalkNpc%dCount` untuk indeks 0–9 dan mengembalikan indeks pertama yang nilainya
+sama dengan argumen. Dua kasus native menjalankan body selector dan formatter
+asli dengan hasil lookup sintetis: gate mismatch memberi -1, sementara nilai
+yang cocok pada indeks 2 menghasilkan 2. Reproduksi:
+
+```bash
+cd acnh-re
+PYTHONPATH=/workspace/acnh-re/.deps:tools python3 tools/npc_talk_index_selection_native.py
+```
+
+Detail ada di
+[`talk_index_selection_native.json`](../output/gameplay/villager_social_followup/talk_index_selection_native.json).
+Lookup `0xf4d560` dan setup context `0xf4da70` diganti pembacaan sintetis.
+Caller selector-nya `0x395bc0`, `0x395e50`, dan `0x3960d0`; belum terbukti
+bahwa indeks yang dikembalikan adalah topic atau message ID.
 
 ### Reset harian dan sumber friendship
 
