@@ -18,9 +18,10 @@ The generated record is `output/gameplay/catalog_bitset_native.json`.
 
 ## Static trigger evidence and open work
 
+- **[PSEUDO] Acquisition path:** `0xeebe80` validates/converts an item, conditionally calls `0xeecad0`, then passes through `0xf57920` and `0xf57880` for two additional `0x754`-byte bitset views. When the first helper reports no change and the second reports a change, it calls `0xeec010`. The call order is visible; the exact semantic meaning of each view and save-backed state is not established by this trace.
 - `0xeec010` references `MarketBuiltMyVillage` and `FillCatalog`, then invokes the catalog fill writer when those checks pass.
 - `0xeec0b0` and `0xeec280` call `0xeecad0` on conditional acquisition paths and update a second item bitset through `0xf57920`/`0xf57880`. Their exact conditions and bitset meaning still need a complete caller-level trace.
 - `0x118a8a0` writes `BuyItem`, `HowmuchBuyItem`, and `BuyItemCatalog` achievement counters from a purchase-page callback. This proves the page's achievement updates, not delivery or mailbox timing.
-- `0xa1bda0` references mailbox/critter-book catalog strings, but the mailbox catalog's save transitions and delivery behavior remain unresolved.
+- `0xa1bda0` is reached from the `0xa18db0` initialization chain and references the `MailboxCatalog` key, but the mailbox catalog's save transitions and delivery behavior remain unresolved.
 
 The larger catalog queue item remains open. Concrete item-to-RemakeID/variant values, the meaning of the low three bits, all acquisition triggers, save persistence, Nook Shopping order eligibility, and mailbox delivery require additional tracing and controlled native cases.

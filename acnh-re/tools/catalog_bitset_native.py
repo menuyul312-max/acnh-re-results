@@ -70,6 +70,11 @@ def run():
         "mapper_formula_static": "AB2940 reads ItemParam.RemakeID (field hash 0xcb5eb33f, s16); a negative RemakeID is rejected. Otherwise F5AB10 returns RemakeID*8 + (byte returned by AB0F50 & 7), with zero variant bits when AB0F50 returns null.",
         "input_item_id": 4318,
         "mapper": "Stubbed to the listed controlled outputs for boundary testing. The formula is recovered statically from the native call chain; this runner does not execute ItemParam lookup or identify the meaning of the low three bits.",
+        "static_call_paths": [
+            {"entry": "0xeebe80", "trace": ["item validation/conversion", "conditional 0xeecad0 catalog-bit set", "0xf57920 and 0xf57880 secondary bitset helpers", "conditional 0xeec010"], "evidence": "Ghidra pseudocode; predicate semantics and save-backed wrapper contents are not dynamically verified"},
+            {"entry": "0xeec010", "strings": ["MarketBuiltMyVillage", "FillCatalog"], "effect": "calls 0xf62b50 for the FillCatalog counter after the MarketBuiltMyVillage checks", "evidence": "Ghidra pseudocode"},
+            {"entry": "0x118a8a0", "strings": ["BuyItem", "HowmuchBuyItem", "BuyItemCatalog"], "effect": "purchase-page callback updates these achievement fields", "evidence": "Ghidra pseudocode; order eligibility and delivery are open"}
+        ],
         "native_cases": len(results),
         "mismatches": 0,
         "dependencies_stubbed": ["0xab2940 item-to-catalog mapper", "0xf8f400 world/context accessor", "0xee9350/0xee9490/0xee94f0/0xee93d0 bitset access wrapper"],
