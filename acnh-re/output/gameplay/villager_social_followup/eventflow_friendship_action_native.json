@@ -1,0 +1,199 @@
+{
+  "cases": 12,
+  "mismatches": [],
+  "eventflow_binding": {
+    "action_name": "EventFlowActionNpcAddFriendship",
+    "parameter": "AddValue:int",
+    "sampled_event_uses": 12,
+    "registry_event_uses": 72,
+    "registry_flow_count": 21,
+    "factory_va": "0x4510b0",
+    "constructor_va": "0x27a170",
+    "vtable_va": "0x3040940",
+    "execute_slot_va": "0x27a220",
+    "add_value_member_offset": "0xd8",
+    "native_call_chain": [
+      "0x27a220",
+      "0xd34cb0",
+      "0xd34f80",
+      "0xef2c70"
+    ],
+    "verified_boundary": "0x27a220 ran and forwarded AddValue to the 0xd34cb0 entry. Execution stopped before 0xd34cb0 body."
+  },
+  "eventflow_samples": [
+    {
+      "flow": "NNPC_Quest_Delivery_TimeOver",
+      "event_index": 34,
+      "AddValue": -1,
+      "callback_args": {
+        "resident_slot": 4,
+        "actor_context_offset_from_prepared_context": 680,
+        "add_value": -1,
+        "forwarded_add_value": 4294967295
+      }
+    },
+    {
+      "flow": "NNPC_Quest_Delivery_TimeOver",
+      "event_index": 35,
+      "AddValue": -2,
+      "callback_args": {
+        "resident_slot": 4,
+        "actor_context_offset_from_prepared_context": 680,
+        "add_value": -2,
+        "forwarded_add_value": 4294967294
+      }
+    },
+    {
+      "flow": "NNPC_Quest_Delivery_TimeOver",
+      "event_index": 36,
+      "AddValue": -3,
+      "callback_args": {
+        "resident_slot": 4,
+        "actor_context_offset_from_prepared_context": 680,
+        "add_value": -3,
+        "forwarded_add_value": 4294967293
+      }
+    },
+    {
+      "flow": "NNPC_Quest_Sick_End",
+      "event_index": 77,
+      "AddValue": -1,
+      "callback_args": {
+        "resident_slot": 4,
+        "actor_context_offset_from_prepared_context": 680,
+        "add_value": -1,
+        "forwarded_add_value": 4294967295
+      }
+    },
+    {
+      "flow": "NNPC_GEvent_BirthdayN_H",
+      "event_index": 92,
+      "AddValue": -5,
+      "callback_args": {
+        "resident_slot": 4,
+        "actor_context_offset_from_prepared_context": 680,
+        "add_value": -5,
+        "forwarded_add_value": 4294967291
+      }
+    },
+    {
+      "flow": "NNPC_GEvent_BirthdayN_H",
+      "event_index": 102,
+      "AddValue": 6,
+      "callback_args": {
+        "resident_slot": 4,
+        "actor_context_offset_from_prepared_context": 680,
+        "add_value": 6,
+        "forwarded_add_value": 6
+      }
+    },
+    {
+      "flow": "NNPC_GEvent_BirthdayN_H",
+      "event_index": 103,
+      "AddValue": 4,
+      "callback_args": {
+        "resident_slot": 4,
+        "actor_context_offset_from_prepared_context": 680,
+        "add_value": 4,
+        "forwarded_add_value": 4
+      }
+    },
+    {
+      "flow": "NNPC_GEvent_BirthdayN_H",
+      "event_index": 104,
+      "AddValue": 8,
+      "callback_args": {
+        "resident_slot": 4,
+        "actor_context_offset_from_prepared_context": 680,
+        "add_value": 8,
+        "forwarded_add_value": 8
+      }
+    },
+    {
+      "flow": "NNPC_GEvent_BirthdayN_H",
+      "event_index": 106,
+      "AddValue": 3,
+      "callback_args": {
+        "resident_slot": 4,
+        "actor_context_offset_from_prepared_context": 680,
+        "add_value": 3,
+        "forwarded_add_value": 3
+      }
+    },
+    {
+      "flow": "NNPC_GEvent_BirthdayN_H",
+      "event_index": 107,
+      "AddValue": 5,
+      "callback_args": {
+        "resident_slot": 4,
+        "actor_context_offset_from_prepared_context": 680,
+        "add_value": 5,
+        "forwarded_add_value": 5
+      }
+    },
+    {
+      "flow": "NNPC_Talk_Force",
+      "event_index": 31,
+      "AddValue": 5,
+      "callback_args": {
+        "resident_slot": 4,
+        "actor_context_offset_from_prepared_context": 680,
+        "add_value": 5,
+        "forwarded_add_value": 5
+      }
+    },
+    {
+      "flow": "NNPC_Select_Furniture",
+      "event_index": 11,
+      "AddValue": 3,
+      "callback_args": {
+        "resident_slot": 4,
+        "actor_context_offset_from_prepared_context": 680,
+        "add_value": 3,
+        "forwarded_add_value": 3
+      }
+    }
+  ],
+  "activity_registry": {
+    "source": "mechanics/npc_state_registry_native.json",
+    "registered_state_count": 67,
+    "common_state_count": 43,
+    "activity_state_count": 24,
+    "conversation_states": {
+      "cConversationHost": {
+        "index": 60,
+        "registration_owner_va": "0xbfee00",
+        "callbacks": {
+          "entry": "0xc0b510",
+          "update": "0xc0bd20",
+          "exit": "0xc0c280"
+        }
+      },
+      "cConversationGuest": {
+        "index": 61,
+        "registration_owner_va": "0xbfee00",
+        "callbacks": {
+          "entry": "0xc0c9e0",
+          "update": "0xc0cb20",
+          "exit": "0xc0cc70"
+        }
+      }
+    }
+  },
+  "prepared_context": {
+    "action_object": "Synthetic instance with original EventFlow action vtable and AddValue at +0xd8.",
+    "actor_object": "Synthetic receiver carrying resident slot 4 at +0x448; validation dispatch uses original vtable slot and original 0x27a210 code.",
+    "context_to_actor_offset": "context+0x48",
+    "network_or_save_state": "not entered"
+  },
+  "dependencies_stubbed": [],
+  "scope": "Original 0x27a220 action callback, 0x27a210 validation method, 0x455d20, and 0x455d00 execute. The harness stops at the original 0xd34cb0 call.",
+  "limits": [
+    "EventFlow action objects and actor context are prepared inputs; the EventFlow interpreter, action constructor, and live MainNpc object are not run.",
+    "Execution stops before 0xd34cb0 reads or changes Friendship. The prior friendship delta artifact separately runs 0xd34f80 to the 0xef2c70 boundary.",
+    "The host/guest state artifact proves registration and callback target dispatch only; host/guest callback bodies and conversation topic selection remain open.",
+    "The registry event values prove configured AddValue inputs, not that every branch or event occurs in a given playthrough."
+  ],
+  "elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+  "nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900"
+}

@@ -62,12 +62,48 @@ PYTHONPATH=/workspace/acnh-re/.deps:tools python3 tools/npc_friendship_delta_nat
   serta argumen yang sampai ke entry `0xef2c70`, termasuk key `Friendship`.
 - **[PSEUDO]:** binding ke data record, pemilihan field di `0xf48840`, dan efek
   perubahan pada save. Badan writer belum berjalan dalam reproducer.
-- **Belum ditemukan:** penulis friendship untuk hadiah, surat, pukulan jaring,
-  pengabaian, decay harian, serta cap harian. Kasus delta negatif terkontrol di
-  sini bukan bukti bahwa decay tersebut terjadi dalam gameplay.
-- **Terbuka:** transisi `NpcAIActivityState`, pemilihan activity/talk topic,
-  dan eksekusi native host/guest conversation. Registry state yang sudah
-  terverifikasi dicatat di [`RESIDENT_MAP_NPC_FOLLOWUP.md`](RESIDENT_MAP_NPC_FOLLOWUP.md)
-  dan [`NPC_NAVIGATION_KERNEL.md`](NPC_NAVIGATION_KERNEL.md); nama
-  `cConversationHost`/`cConversationGuest` sendiri belum membuktikan state
-  entry, dialog, atau transisi runtime.
+
+## EventFlow friendship dan state conversation
+
+**[EF]** Indeks EventFlow mencatat 72 pemakaian
+`EventFlowActionNpcAddFriendship` pada 21 flow. Distribusi nilai `AddValue`:
+
+| Delta | Pemakaian | Delta | Pemakaian |
+|---:|---:|---:|---:|
+| -5 | 3 | +1 | 27 |
+| -3 | 8 | +2 | 10 |
+| -2 | 2 | +3 | 13 |
+| -1 | 3 | +4 | 2 |
+|  |  | +5 | 2 |
+|  |  | +6 | 1 |
+|  |  | +8 | 1 |
+
+Contoh yang bisa dirujuk tanpa teks dialog: `NNPC_Quest_Delivery_TimeOver`
+event 34–36 mengirim -1/-2/-3; `NNPC_GEvent_BirthdayN_H` event 92 mengirim
+-5 dan event 102–107 memberi +6/+4/+8/+4/+3/+5. Flow bernama
+`NNPC_Select_Present` juga memuat aksi +1.
+
+**Terbukti native:** callback aksi `0x27a220` berjalan dengan input `AddValue`
+dari 12 event pada lima flow dan meneruskan nilai itu tanpa perubahan ke entry
+`0xd34cb0`. Jalur validasi virtual memakai vtable aksi terdaftar
+`0x3040940`, slot `0x20` memanggil fungsi asli `0x27a210`, lalu callback
+mengambil resident slot serta `AddValue` dari object. Eksekusi berhenti saat
+masuk ke `0xd34cb0`; pembacaan dan perubahan save pada badan wrapper belum
+dijalankan oleh kasus EventFlow ini. Data: [eventflow_friendship_action_native.json](../output/gameplay/villager_social_followup/eventflow_friendship_action_native.json).
+
+Registry state asli yang sudah dijalankan mendaftarkan 43 state umum dan 24
+`NpcAIActivityState`. `cConversationHost` adalah indeks 60 dengan entry/update/
+exit `0xc0b510`/`0xc0bd20`/`0xc0c280`; `cConversationGuest` indeks 61 memakai
+`0xc0c9e0`/`0xc0cb20`/`0xc0cc70`. Dispatch native sebelumnya mencapai alamat
+masuk callback, tetapi tidak menjalankan badannya. **[PSEUDO]** kedua fungsi
+update memanggil helper `0xc30930`; helper memilih permintaan gerak/animasi
+`NpcConversationTalk` pada mode 0, `MaReNodding` pada mode 2, dan varian
+`NpcTalk*` pada mode 3. Ini memilih aksi ekspresi/animasi, bukan topik dialog.
+Ringkasan target callback: [eventflow_friendship_action_native.json](../output/gameplay/villager_social_followup/eventflow_friendship_action_native.json); bukti registrasi rinci: [`npc_state_registry_native.json`](../output/mechanics/npc_state_registry_native.json).
+
+**Masih terbuka:** perpindahan state host/guest, badan callback entry/update/exit,
+pemilihan topic/message dialog, dan batas frekuensi sosial harian. Nilai
+EventFlow adalah input yang dikonfigurasi, bukan bukti bahwa setiap cabang
+terjadi dalam satu playthrough. Contoh nilai negatif EventFlow juga bukan
+bukti decay harian. Penulis/delta untuk surat, pukulan jaring, dan pengabaian
+belum ditemukan.
