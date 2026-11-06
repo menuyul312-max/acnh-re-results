@@ -1,0 +1,124 @@
+{
+  "schema": "acnh.ui_hud_runtime_followup.scissor_coordinate_native.v1",
+  "source": {
+    "game_build": "ACNH 1.0.0",
+    "module": "ExeFS main",
+    "main_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+    "native_function": "0x19a9a80",
+    "evidence_kind": "Original AArch64 instructions executed in Unicorn with controlled rectangle/viewport memory; no game capture."
+  },
+  "fixture": {
+    "source_rect_ltrb": [
+      10.0,
+      20.0,
+      40.0,
+      60.0
+    ],
+    "viewport_logical_wh_and_target_ltrb": [
+      100.0,
+      200.0,
+      5.0,
+      7.0,
+      205.0,
+      407.0
+    ],
+    "target_pixel_bounds": [
+      5.0,
+      7.0,
+      205.0,
+      407.0
+    ]
+  },
+  "coordinate_modes": {
+    "derived_operations": {
+      "0": "identity",
+      "1": "counter-clockwise rotation",
+      "2": "clockwise rotation",
+      "3": "180-degree rotation",
+      "4": "horizontal reflection",
+      "5": "vertical reflection"
+    },
+    "label_limit": "The geometric operation is formula-derived; the game's enum names for values 0\u20135 remain unknown."
+  },
+  "checks": [
+    {
+      "mode": 0,
+      "derived_operation": "identity",
+      "expected_target_pixel_origin": [
+        25.0,
+        47.0
+      ],
+      "native_target_pixel_origin": [
+        25.0,
+        47.0
+      ],
+      "passed": true
+    },
+    {
+      "mode": 1,
+      "derived_operation": "counter-clockwise rotation",
+      "expected_target_pixel_origin": [
+        45.0,
+        327.0
+      ],
+      "native_target_pixel_origin": [
+        45.0,
+        327.0
+      ],
+      "passed": true
+    },
+    {
+      "mode": 2,
+      "derived_operation": "clockwise rotation",
+      "expected_target_pixel_origin": [
+        85.0,
+        27.0
+      ],
+      "native_target_pixel_origin": [
+        85.0,
+        27.0
+      ],
+      "passed": true
+    },
+    {
+      "mode": 3,
+      "derived_operation": "180-degree rotation",
+      "expected_target_pixel_origin": [
+        125.0,
+        287.0
+      ],
+      "native_target_pixel_origin": [
+        125.000008,
+        287.0
+      ],
+      "passed": true
+    },
+    {
+      "mode": 4,
+      "derived_operation": "horizontal reflection",
+      "expected_target_pixel_origin": [
+        125.0,
+        47.0
+      ],
+      "native_target_pixel_origin": [
+        125.000008,
+        47.0
+      ],
+      "passed": true
+    },
+    {
+      "mode": 5,
+      "derived_operation": "vertical reflection",
+      "expected_target_pixel_origin": [
+        25.0,
+        287.0
+      ],
+      "native_target_pixel_origin": [
+        25.0,
+        287.0
+      ],
+      "passed": true
+    }
+  ],
+  "mismatches": 0
+}
