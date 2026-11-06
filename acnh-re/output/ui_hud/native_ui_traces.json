@@ -66,7 +66,18 @@
       "ambiguous_reference_count": 35,
       "references_with_exactly_one_host_suffix_match": 35,
       "runtime_selection_status": "unresolved",
-      "reason": "The loader chain proves name-based BFLYT resource requests and a .zs manager route, but does not prove which archive/accessor wins for the duplicate .zs/.szs BFLYT names."
+      "reason": "The loader chain proves name-based BFLYT resource requests and a .zs manager route, but does not prove which archive/accessor wins for the duplicate .zs/.szs BFLYT names.",
+      "native_suffix_literal_search": {
+        "layout_archive_format_string": "Layout/%s.Nin_NX_NVN.zs",
+        "explicit_layout_szs_literal_found": "Swkbd/Layout/common.szs",
+        "explicit_layout_szs_literal_scope": "Keyboard layout package; no matching generic Layout/%s...szs selector was found in the indexed string references.",
+        "generic_szs_patterns_found": [
+          "%s/%s%s.szs",
+          "System/lp_resource%s.szs",
+          "Env/%s.szs"
+        ],
+        "limit": "Literal absence does not rule out generated paths, alias lookup, or archive resolution hidden behind the EuiAllocator resource interface."
+      }
     }
   },
   "main_screen_and_hud": {
@@ -97,8 +108,78 @@
         "limit": "This function is a MenuDevice component update; it does not prove the full MainScreenSmartPhone controller or screen-open lifecycle."
       }
     ],
-    "smartphone_controller_status": "unresolved",
-    "evidence_limit": "No exact native reference to MainScreenSmartPhone was found in the current 62-name layout-reference sample. The absence of that exact string does not rule out dynamically named construction or a controller that targets another layout."
+    "smartphone_controller_status": "native_page_candidate_mapped_layout_link_unproven",
+    "page_factory_and_vtable_evidence": {
+      "shared_factory_handoff": {
+        "calls": [
+          "0x1ea8210",
+          "0x1144600",
+          "0x1ea8220"
+        ],
+        "observed": [
+          "0x1ea8210 marks a new page object as initialized through 0x1ea40a0.",
+          "0x1144600 calls the page-builder interface at vtable offset +0x138 and copies a flag into the created object.",
+          "0x1ea8220 calls a page virtual method at +0x28 and appends the created page object to the factory collection."
+        ],
+        "limit": "This is construction/registration evidence; it does not establish the global open, close, back, focus-restore, or teardown order."
+      },
+      "MainScreenPage": {
+        "class_name": "MainScreenPage",
+        "class_name_string_va": "0x2993790",
+        "factory_va": "0x1229c50",
+        "allocation_size_bytes": "0x648",
+        "constructor_va": "0x1226540",
+        "constructor_vptr_global_va": "0x33076d8",
+        "constructor_vptr_relocation": {
+          "type": "R_AARCH64_RELATIVE",
+          "target_va": "0x310f0d0",
+          "stored_address_point_va": "0x310f0e0"
+        },
+        "vtable_address_point_va": "0x310f0e0",
+        "vtable_entry_count": 79,
+        "page_specific_methods": [
+          {
+            "slot": 25,
+            "offset_bytes": "0xc8",
+            "target_va": "0x12266c0",
+            "size_bytes": 936,
+            "observed": "Builds 27 stored child/context entries: one call to 0x112a4d0 and 26 calls to 0x112a190; stores returned pointers at object offsets 0x570 through 0x640 in 8-byte steps.",
+            "limit": "The 27 child/context entries are not individually identified as panes or page lifecycle callbacks."
+          },
+          {
+            "slot": 77,
+            "offset_bytes": "0x268",
+            "target_va": "0x1228740",
+            "size_bytes": 328,
+            "observed": "Traverses a sequence of child virtual interfaces and branches on their results before a final call through a child object.",
+            "limit": "The exact event or lifecycle phase represented by this slot is not named."
+          }
+        ],
+        "relationship_to_MainScreen_layout": "unproven"
+      },
+      "SmartPhoneIconPage": {
+        "class_name": "SmartPhoneIconPage",
+        "class_name_string_va": "0x2998f74",
+        "factory_va": "0x144f7a0",
+        "allocation_size_bytes": "0x570",
+        "constructor_va": "0x144ea70",
+        "constructor_vptr_global_va": "0x330d0c0",
+        "constructor_vptr_relocation": {
+          "type": "R_AARCH64_RELATIVE",
+          "target_va": "0x3131c08",
+          "stored_address_point_va": "0x3131c18"
+        },
+        "vtable_address_point_va": "0x3131c18",
+        "vtable_entry_count": 79,
+        "slot_25": {
+          "target_va": "0x144eae0",
+          "target_is_thunk_to": "0x1144bf0",
+          "limit": "The generic page interface is present, but this method does not identify MainScreenSmartPhone as its BFLYT resource."
+        },
+        "relationship_to_MainScreenSmartPhone_layout": "unproven"
+      }
+    },
+    "evidence_limit": "The indexed native string-reference corpus contains zero exact references to MainScreenSmartPhone. This rules out a literal reference in that corpus, not dynamically composed names or an indirect/differently named resource binding."
   },
   "focus_and_action_dispatch": {
     "action_name_table": {
@@ -1766,8 +1847,155 @@
           "0x2210280",
           "0x2210290"
         ],
-        "direct_callsite_status": "No direct-call rows point to these GetNpadStates import thunks in the local call index. Their use through indirect/system paths is not ruled out.",
-        "limitation": "No physical Npad button to UI message/action mapping has been recovered."
+        "direct_callsite_status": "Five GetNpadStates variants are direct calls from Npad manager update 0x1968b80 at 0x1968c14, 0x1968c2c, 0x1968c44, 0x1968c5c, and 0x1968c74. The update method is the +0x20 entry of a relocated vtable-like class table set by constructor 0x1968840. No static caller edge connects that update method to UI action dispatch.",
+        "limitation": "Npad style/state sampling, sensor/vibration paths, and Joy assignment helpers are mapped. The update scheduler and Npad button-to-UI action routing remain unresolved; API presence alone does not establish FocusKey/DecideKey or other UI mappings.",
+        "supported_id_setup": {
+          "initializer_va": "0x1968840",
+          "initializer_caller_va": "0x19a4950",
+          "initializer_callsite_va": "0x19a4a30",
+          "initialize_npad_import_va": "0x220f040",
+          "set_supported_npad_id_type_import_va": "0x220e750",
+          "set_supported_npad_id_type_callsite_va": "0x196893c",
+          "id_count": 9,
+          "ids": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            32
+          ],
+          "id_32_observed_use": "The sampling loop maps the final configured slot to handheld Npad ID 32.",
+          "set_supported_style_mask": "0x1f",
+          "set_supported_style_callsite_va": "0x1968a1c",
+          "evidence": "AArch64 setup copies the 9-entry ID array [0,1,2,3,4,5,6,7,32] and passes count 9; then enables style mask 0x1f."
+        },
+        "controller_state_manager": {
+          "constructor_va": "0x1968840",
+          "constructor_caller_va": "0x19a4950",
+          "update_va": "0x1968b80",
+          "update_candidate_vtable": {
+            "relocated_global_va": "0x3319068",
+            "relative_relocation_target": "0x31a4010",
+            "constructor_vptr_adjustment": "+0x10",
+            "vtable_address_point": "0x31a4020",
+            "update_entry_pointer_va": "0x31a4040",
+            "update_entry_slot_offset": "0x20",
+            "update_entry_target": "0x1968b80",
+            "table_targets": [
+              "0x1969080",
+              "0x1969180",
+              "0x1968a60",
+              "0x1968b10",
+              "0x1968b80"
+            ],
+            "evidence": "readelf R_AARCH64_RELATIVE entries bind 0x3319068 -> 0x31a4010, 0x31a4020 -> 0x1969080, and 0x31a4040 -> 0x1968b80; constructor code stores the relocated global pointer plus 0x10 as the object vptr."
+          },
+          "sampling_loop": {
+            "configured_player_slots": 8,
+            "iterations": "0..configured count inclusive; final slot maps to Npad ID 32 (handheld)",
+            "style_query_import": "0x2210240",
+            "style_query_callsite": "0x1968bd4",
+            "style_state_variants": [
+              {
+                "name": "HandheldState",
+                "import_va": "0x2210250",
+                "callsite_va": "0x1968c14",
+                "style_id": 1
+              },
+              {
+                "name": "JoyDualState",
+                "import_va": "0x2210260",
+                "callsite_va": "0x1968c2c",
+                "style_id": 2
+              },
+              {
+                "name": "FullKeyState",
+                "import_va": "0x2210270",
+                "callsite_va": "0x1968c44",
+                "style_id": 0
+              },
+              {
+                "name": "JoyLeftState",
+                "import_va": "0x2210280",
+                "callsite_va": "0x1968c5c",
+                "style_id": 3
+              },
+              {
+                "name": "JoyRightState",
+                "import_va": "0x2210290",
+                "callsite_va": "0x1968c74",
+                "style_id": 4
+              }
+            ],
+            "additional_sensor_and_vibration_calls": [
+              {
+                "name": "GetSixAxisSensorHandles",
+                "import_va": "0x22102a0",
+                "callsite_va": "0x1968cd4"
+              },
+              {
+                "name": "GetVibrationDeviceHandles",
+                "import_va": "0x22102b0",
+                "callsite_va": "0x1968cfc"
+              },
+              {
+                "name": "StartSixAxisSensor",
+                "import_va": "0x22102c0",
+                "callsite_va": "0x1968d20"
+              },
+              {
+                "name": "InitializeVibrationDevice",
+                "import_va": "0x22102d0",
+                "callsite_va": "0x1968d5c"
+              },
+              {
+                "name": "GetSixAxisSensorStates",
+                "import_va": "0x22102e0",
+                "callsite_va": "0x1968da8"
+              }
+            ]
+          },
+          "joy_assignment_helpers": [
+            {
+              "name": "GetNpadJoyAssignment",
+              "wrapper_va": "0x1968e30",
+              "import_va": "0x2210300"
+            },
+            {
+              "name": "SetNpadJoyAssignmentModeSingle",
+              "wrapper_va": "0x1968e60",
+              "import_va": "0x2210310"
+            },
+            {
+              "name": "SetNpadJoyAssignmentModeSingleWithDeviceType",
+              "wrapper_va": "0x1968e90",
+              "import_va": "0x2210320"
+            },
+            {
+              "name": "SetNpadJoyAssignmentModeDual",
+              "wrapper_va": "0x1968ec0",
+              "import_va": "0x2210330"
+            },
+            {
+              "name": "MergeSingleJoyAsDualJoy",
+              "wrapper_va": "0x1968ef0",
+              "import_va": "0x2210340"
+            },
+            {
+              "name": "SwapNpadAssignment",
+              "wrapper_va": "0x1968f40",
+              "import_va": "0x2210350"
+            }
+          ],
+          "limits": [
+            "The Npad manager and its update vtable slot are statically identified, correcting the previous no-callsite summary. The runtime scheduler invocation of 0x1968b80 is still indirect.",
+            "No call edge or recovered indirect callback currently links sampled Npad button states to UI action dispatcher 0x14845a0 or a specific 13-action control callback."
+          ]
+        }
       },
       "update_method": {
         "function_va": "0x14b8e50",
