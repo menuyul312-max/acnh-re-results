@@ -57,6 +57,33 @@ Untuk melihat graf langsung dari data decode bersama, jalankan:
 python acnh-re/tools/gameplay_flow.py --output-root /workspace/acnh-re/output tree SNPC_rco_03_ChkAfterRemodel --entry Root
 ```
 
-## 3. Grade, skor, tema, dan surat HHA
+## 3. Evaluasi grade, skor, tema, dan surat HHA
 
-**Masih terbuka sebagai aturan gameplay lengkap.** Stage dispatcher membuktikan hanya urutan enam flag mission. Perhitungan skor total, nama tier angka 3/4/5 sebagai grade yang tampil, threshold surat, tema HHA, dan kapan surat dibuat belum disatukan atau diuji di sini; stage native berikutnya akan mencatat bagian evaluator yang bisa dibuktikan dan batasnya.
+### Cabang bucket skor — terbukti terbatas
+
+`0x7b29d0` memanggil `0x7b4fc0` pada PC `0x7b2bec`. Cabang native `0x7b4fc0` membaca record pada `param1 + 0xb10`. Untuk input nonnegatif yang diuji, field `+0x150` dibagi empat dengan `>> 2`, dibagi field `+0x14c`, lalu dikali 100. Native memilih bit kategori internal 5 untuk rasio di bawah 20, bit 4 untuk 20 sampai kurang dari 50, dan bit 3 untuk 50 ke atas. Nama bucket ini belum dapat dipetakan ke grade yang ditampilkan.
+
+Reproducer menjalankan instruksi asli `0x7b4fc0` dengan record terkontrol. Pada baseline field lain yang disetel ke keadaan netral, sembilan probe melintasi ambang 20 dan 50, masing-masing dengan flag `cPlayer:HappyHomeMission1` ON/OFF pada batas relevan. Hasil mask yang diamati: bucket 5 menghasilkan `0x7822` baik flag ON maupun OFF; bucket 4 menghasilkan `0x7812` saat ON dan `0x7802` saat OFF; bucket 3 menghasilkan `0x780a` saat ON dan `0x7802` saat OFF. Jadi bit 3 dan 4 ditekan ketika getter mission mengembalikan false, sedangkan bit 5 tetap ada. Ada 9 kasus dan 0 mismatch.
+
+Getter `0xf4aff0` dikontrol oleh harness untuk mengembalikan nilai flag yang diminta; receiver `0x7b6470` hanya mencatat mask lalu menghentikan pemrosesan berikutnya. Helper lain di jalur ini juga distub agar mask native diteruskan ke receiver. Aritmetika rasio dan pemilihan bit di `0x7b4fc0` berjalan sebagai instruksi NSO asli. Uji memakai `param2=0`, sehingga lookup `GetSRankonHHA` pada cabang `param2` nonnol tidak dijalankan. Bukti ini tidak menentukan skor penuh per ruangan, bobot tema, atau nama grade.
+
+Artefak dan reproducer:
+
+- `output/gameplay/house_hha_followup/hha_score_bucket_native.json`
+- `tools/hha_score_bucket_native.py`
+
+Jalankan dari root worktree:
+
+```bash
+PYTHONPATH=/workspace/acnh-re/.deps python acnh-re/tools/hha_score_bucket_native.py
+```
+
+### Skor total, grade yang ditampilkan, dan tema — terbuka
+
+Skema resolved `ItemParam` memuat `ItemHHATheme`, `ItemHHACategory`, `ItemHHASet`, `ItemHHASituation1/2`, `ItemHHAPart`, `ItemHHASeason`, dan `ItemHHADirection`; `ItemFrom` memuat `HHABaseScore`. Indeks BDLI US English memuat 3 record `STR_HHA_Rank`, 25 `STR_HHA_Theme`, 19 `STR_HHA_Set`, dan 24 `STR_HHA_Situation`. Bukti yang dikumpulkan belum menghubungkan nilai field barang tersebut dengan bobot poin atau mask bucket yang diuji. Flag `cLifeSupportAchievement:GetSRankonHHA` bernama Jepang “mendapat S di HHA” dan direferensikan oleh beberapa fungsi native, tetapi threshold serta kaitnya dengan bit bucket 3/4/5 belum terbukti.
+
+### Flag surat grade — jalur setter terbukti; pengiriman terbuka
+
+Flag `cPlayer:HHAGradeMailFlag` memiliki label Jepang “HHA | kirim surat evaluasi ON?” dan tidak memiliki penulis EventFlow yang terindeks. Fungsi native `0x7b1fe0` merujuk string `HHAGradeMailFlag` dan memiliki satu panggilan setter flag `0xf4b0d0`. Ini membuktikan jalur native yang memperbarui flag tersebut, bukan bahwa surat benar-benar dibuat atau dikirim, kondisi grade yang memicunya, maupun waktunya.
+
+**Blocker bukti saat ini:** harness bucket mengontrol accessor flag dan menghentikan receiver laporan. Belum ada reproduksi penyimpanan flag atau jalur pengiriman surat yang menghubungkan hasil bucket ke surat pemain. Karena itu formula HHA lengkap, pemetaan grade, bonus tema, dan jadwal surat masih terbuka.

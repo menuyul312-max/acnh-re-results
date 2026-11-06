@@ -1,0 +1,362 @@
+{
+  "scope": "Bounded native reproduction of one HHA score-category branch; not a full score, grade, theme, or mail formula.",
+  "source": {
+    "main_nso": {
+      "path": "/workspace/acnh-re/inputs/additional_exefs/main",
+      "sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900"
+    },
+    "index_sqlite": {
+      "path": "/workspace/acnh-re/output/index.sqlite",
+      "sha256": "a78c7af27d37b8fd931bba8bc611623dacf7685cb6e8b4f827effa0765340aad"
+    },
+    "additional_romfs": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs"
+  },
+  "static_evidence": {
+    "function": {
+      "va": "0x7b4fc0",
+      "size": 772,
+      "ghidra_name": "FUN_008b4fc0",
+      "decompilation": {
+        "path": "binary/analysis_decomp/7b4fc0.c",
+        "sha256": "de61d5e21e33e7cdf938028124ecbe164650003d941d62a5108d6f1be160db52",
+        "bytes": 3533,
+        "has_warning": 1,
+        "bad_instruction_warning": 0
+      }
+    },
+    "caller": {
+      "va": "0x7b29d0",
+      "pc": "0x7b2bec",
+      "instruction": "BL"
+    },
+    "direct_call_counts": {
+      "0x7b6470": 1,
+      "0xee9350": 1,
+      "0xee93d0": 1,
+      "0xef8260": 1,
+      "0xf4aff0": 1,
+      "0xf53450": 1,
+      "0xf62fb0": 1,
+      "0xf95610": 1,
+      "0x198b590": 1,
+      "0x198b630": 1
+    },
+    "string_refs": [
+      {
+        "string_va": "0x2956223",
+        "text": "GetSRankonHHA"
+      },
+      {
+        "string_va": "0x29ba8cd",
+        "text": "HappyHomeMission1"
+      }
+    ],
+    "mission_flag": {
+      "key": "cPlayer:HappyHomeMission1",
+      "name_ja": "ハッピーホームでミッション１をクリヤーした",
+      "default": 0,
+      "max": 1,
+      "flow_access": 0,
+      "eventflow_writers": [],
+      "native_referencing_functions": [
+        "0x7b4330",
+        "0x7b4fc0",
+        "0x7b5e60"
+      ]
+    },
+    "grade_mail_flag": {
+      "key": "cPlayer:HHAGradeMailFlag",
+      "name_ja": "HHA|評価の手紙送付ON?",
+      "flow_access": 2,
+      "eventflow_writers": [],
+      "native_referencing_functions": [
+        "0x7b1fe0"
+      ],
+      "setter_call_from_0x7b1fe0": [
+        {
+          "pc": "0x7b2140",
+          "target": "0xf4b0d0",
+          "instruction": "BL"
+        }
+      ],
+      "native_string_refs_from_0x7b1fe0": [
+        {
+          "string_va": "0x292e423",
+          "text": "HHAGradeMailFlag"
+        }
+      ],
+      "interpretation_limit": "The reference and setter call establish a native flag update path; they do not establish that a letter is sent or when it is sent."
+    },
+    "s_rank_achievement_flag": {
+      "key": "cLifeSupportAchievement:GetSRankonHHA",
+      "name_ja": "HHAでSを取った",
+      "eventflow_writers": [],
+      "native_referencing_functions": [
+        "0x7b4a20",
+        "0x7b4d00",
+        "0x7b4fc0",
+        "0x7b52d0",
+        "0x7b5740",
+        "0x7b5e60"
+      ]
+    },
+    "item_hha_columns_resolved": {
+      "ItemParam": [
+        {
+          "name": "ItemHHAPart",
+          "type": "enum_crc32",
+          "offset": 8,
+          "width": 4,
+          "evidence": "crc32_exact_descriptor_and_local_schema"
+        },
+        {
+          "name": "ItemHHASeason",
+          "type": "enum_crc32",
+          "offset": 32,
+          "width": 4,
+          "evidence": "crc32_exact_descriptor_and_local_schema"
+        },
+        {
+          "name": "ItemHHASituation2",
+          "type": "enum_crc32",
+          "offset": 64,
+          "width": 4,
+          "evidence": "crc32_exact_descriptor_and_local_schema"
+        },
+        {
+          "name": "ItemHHASituation1",
+          "type": "enum_crc32",
+          "offset": 116,
+          "width": 4,
+          "evidence": "crc32_exact_descriptor_and_local_schema"
+        },
+        {
+          "name": "ItemHHACategory",
+          "type": "enum_crc32",
+          "offset": 120,
+          "width": 4,
+          "evidence": "crc32_exact_descriptor_and_local_schema"
+        },
+        {
+          "name": "ItemHHASet",
+          "type": "enum_crc32",
+          "offset": 124,
+          "width": 4,
+          "evidence": "crc32_exact_descriptor_and_local_schema"
+        },
+        {
+          "name": "ItemHHATheme",
+          "type": "enum_crc32",
+          "offset": 128,
+          "width": 4,
+          "evidence": "crc32_exact_descriptor_and_local_schema"
+        },
+        {
+          "name": "ItemHHADirection",
+          "type": "u8",
+          "offset": 303,
+          "width": 1,
+          "evidence": "crc32_exact_descriptor_and_local_schema"
+        }
+      ],
+      "ItemFrom": [
+        {
+          "name": "HHABaseScore",
+          "type": "s16",
+          "offset": 6,
+          "width": 2,
+          "evidence": "crc32_exact_descriptor_and_local_schema"
+        }
+      ]
+    },
+    "us_english_hha_bdli_inventory": {
+      "STR_HHA_Rank": {
+        "source": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/BDLI/String/USen/STR_HHA_Rank.bdli.zs",
+        "compressed_file_sha256": "c742f5ce8df2e8de3c67b7a84ebbed252043bb82837316a9c1e5b00321a4f856",
+        "compressed_file_bytes": 105,
+        "index_sha256": "b3fe1d7e91ac65a536083781258aaba995965724b304dba3d13840eaf5d2139e",
+        "index_bytes": 388,
+        "record_count": 3,
+        "message_member": "Sp/HHA/STR_HHA_Rank.msbt",
+        "payload_semantics": "unproven; compressed-file hash and indexed payload hash are kept distinct"
+      },
+      "STR_HHA_Theme": {
+        "source": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/BDLI/String/USen/STR_HHA_Theme.bdli.zs",
+        "compressed_file_sha256": "3832f1536d38253f5fa358c9db026006472c59d525a21a8ab66415641c8733ff",
+        "compressed_file_bytes": 532,
+        "index_sha256": "0f250ae52748c9081749d6f4d5620a8b27d239bc22f236d01a0e65c4a9f9c65d",
+        "index_bytes": 3100,
+        "record_count": 25,
+        "message_member": "Sp/HHA/STR_HHA_Theme.msbt",
+        "payload_semantics": "unproven; compressed-file hash and indexed payload hash are kept distinct"
+      },
+      "STR_HHA_Set": {
+        "source": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/BDLI/String/USen/STR_HHA_Set.bdli.zs",
+        "compressed_file_sha256": "33cb52db9a8666d7f328e42b8ea6513eeff5ba29ba2868ee09a445ba4df9973f",
+        "compressed_file_bytes": 400,
+        "index_sha256": "26105e71ec9d79e54e37500c49f48d8e9490beea0751f7624c3ed88d46c1f756",
+        "index_bytes": 2144,
+        "record_count": 19,
+        "message_member": "Sp/HHA/STR_HHA_Set.msbt",
+        "payload_semantics": "unproven; compressed-file hash and indexed payload hash are kept distinct"
+      },
+      "STR_HHA_Situation": {
+        "source": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/BDLI/String/USen/STR_HHA_Situation.bdli.zs",
+        "compressed_file_sha256": "8f73b8de9397994c25135db24aeb8c65358e559c61b67410ff8cb718287621eb",
+        "compressed_file_bytes": 517,
+        "index_sha256": "71cfbe7a49aedd78fbd41f29c296fe71b8309c09196f20624a1d09ea9b9f0df9",
+        "index_bytes": 3044,
+        "record_count": 24,
+        "message_member": "Sp/HHA/STR_HHA_Situation.msbt",
+        "payload_semantics": "unproven; compressed-file hash and indexed payload hash are kept distinct"
+      }
+    }
+  },
+  "native_execution": {
+    "instruction_source": "original AArch64 instructions at 0x7b4fc0 in ExeFS main NSO",
+    "cases": 9,
+    "mismatches": 0,
+    "native_bucket_branch": [
+      {
+        "ratio_condition": "ratio < 20.0",
+        "category_bit_index": 5,
+        "boundary_probe": "19.9"
+      },
+      {
+        "ratio_condition": "20.0 <= ratio < 50.0",
+        "category_bit_index": 4,
+        "boundary_probes": [
+          "20.0",
+          "49.9"
+        ]
+      },
+      {
+        "ratio_condition": "ratio >= 50.0",
+        "category_bit_index": 3,
+        "boundary_probes": [
+          "50.0",
+          "50.1"
+        ]
+      }
+    ],
+    "mission_flag_gate": "With cPlayer:HappyHomeMission1 false, native output suppresses category bits 3 and 4; category bit 5 remains in the observed mask.",
+    "controlled_record_fields": {
+      "record_pointer": "param1 + 0xb10",
+      "+0x8": 1,
+      "+0x130": -2,
+      "+0x138": -2,
+      "+0x14c": 1000,
+      "+0x150": "case field; for nonnegative probes native uses field>>2",
+      "+0x154": 0,
+      "param2": 0
+    },
+    "results": [
+      {
+        "id": "19_9_percent_mission_off",
+        "field_150": 796,
+        "mission1": false,
+        "effective_numerator": 199,
+        "bucket_bit_index": 5,
+        "expected_mask": 30754,
+        "observed_mask": "0x7822",
+        "native_return": 0
+      },
+      {
+        "id": "19_9_percent_mission_on",
+        "field_150": 796,
+        "mission1": true,
+        "effective_numerator": 199,
+        "bucket_bit_index": 5,
+        "expected_mask": 30754,
+        "observed_mask": "0x7822",
+        "native_return": 0
+      },
+      {
+        "id": "20_percent_mission_off",
+        "field_150": 800,
+        "mission1": false,
+        "effective_numerator": 200,
+        "bucket_bit_index": 4,
+        "expected_mask": 30722,
+        "observed_mask": "0x7802",
+        "native_return": 0
+      },
+      {
+        "id": "20_percent_mission_on",
+        "field_150": 800,
+        "mission1": true,
+        "effective_numerator": 200,
+        "bucket_bit_index": 4,
+        "expected_mask": 30738,
+        "observed_mask": "0x7812",
+        "native_return": 0
+      },
+      {
+        "id": "49_9_percent_mission_off",
+        "field_150": 1996,
+        "mission1": false,
+        "effective_numerator": 499,
+        "bucket_bit_index": 4,
+        "expected_mask": 30722,
+        "observed_mask": "0x7802",
+        "native_return": 0
+      },
+      {
+        "id": "49_9_percent_mission_on",
+        "field_150": 1996,
+        "mission1": true,
+        "effective_numerator": 499,
+        "bucket_bit_index": 4,
+        "expected_mask": 30738,
+        "observed_mask": "0x7812",
+        "native_return": 0
+      },
+      {
+        "id": "50_percent_mission_off",
+        "field_150": 2000,
+        "mission1": false,
+        "effective_numerator": 500,
+        "bucket_bit_index": 3,
+        "expected_mask": 30722,
+        "observed_mask": "0x7802",
+        "native_return": 0
+      },
+      {
+        "id": "50_percent_mission_on",
+        "field_150": 2000,
+        "mission1": true,
+        "effective_numerator": 500,
+        "bucket_bit_index": 3,
+        "expected_mask": 30730,
+        "observed_mask": "0x780a",
+        "native_return": 0
+      },
+      {
+        "id": "50_1_percent_mission_on",
+        "field_150": 2004,
+        "mission1": true,
+        "effective_numerator": 501,
+        "bucket_bit_index": 3,
+        "expected_mask": 30730,
+        "observed_mask": "0x780a",
+        "native_return": 0
+      }
+    ],
+    "stub_responsibilities": {
+      "0xef8260": "no-op global/helper boundary",
+      "0xf4aff0": "returns controlled cPlayer:HappyHomeMission1 value after verifying accessor key",
+      "0x198b590": "no-op conversion/helper boundary",
+      "0xf53450": "no-op conversion/helper boundary",
+      "0x198b630": "returns x0 unchanged so the generated bit mask reaches the receiver",
+      "0x7b6470": "captures x1/x2 and suppresses downstream report/message processing"
+    },
+    "unreplaced_behavior": "The ratio arithmetic, tier-bit selection, and mission-dependent bit suppression in 0x7b4fc0 execute as native NSO instructions."
+  },
+  "subsection_status": {
+    "ratio_bucket_branch": "proven for the tested controlled record values; internal bucket bit IDs only",
+    "total_hha_points_and_player_facing_grade": "open",
+    "theme_or_situation_bonus_weights": "open; item schema/catalogue evidence does not define native scoring weights",
+    "grade_mail_flag_write_path": "proven as a native key reference and setter call in 0x7b1fe0",
+    "grade_mail_trigger_and_delivery_timing": "open; not established by this function, the flag index, or the examined EventFlow references"
+  }
+}
