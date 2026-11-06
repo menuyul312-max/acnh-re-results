@@ -1,0 +1,451 @@
+{
+  "scope": "Player house upgrade request levels, loan amounts set in the after-remodel flow, and repayment/finish flow hooks.",
+  "status_by_subtopic": {
+    "loan_amount_by_house_level": "proven in EventFlow",
+    "upgrade_request_order_by_house_level": "proven in EventFlow",
+    "repayment_demo_and_finish_flags": "proven as EventFlow sequence; PlayerHasLoan result meaning not decoded here",
+    "calendar_day_or_elapsed_time_for_upgrade": "open",
+    "native_setloan_handler": "static chain linked to the registered PlayerSetLoan vtable; not dynamically emulated"
+  },
+  "sources": {
+    "eventflows": {
+      "SNPC_rco_03_ChkAfterRemodel": {
+        "entry": "Root",
+        "source": "B_data/EventFlow/SNPC_rco_03_ChkAfterRemodel.bfevfl",
+        "sha256": "f883ba9a6d9384e5da2a1ab79df685c52a0d8a810fa4f9b6ff9dd2e9505ac7a1",
+        "bytes": 16256,
+        "actions_observed": 44
+      },
+      "SNPC_rco_10_Common_UpgradeMyhome": {
+        "entry": "RcoCmnProcessUpgradeMyhome",
+        "source": "B_data/EventFlow/SNPC_rco_10_Common_UpgradeMyhome.bfevfl",
+        "sha256": "302d5df1018f8f02c6dc4139a760f717ac5cf9635d5b53ad68561da9091c4ee0",
+        "bytes": 10136,
+        "actions_observed": 10
+      },
+      "SNPC_rco_04_ChkFinishLoan": {
+        "entry": "Root",
+        "source": "B_data/EventFlow/SNPC_rco_04_ChkFinishLoan.bfevfl",
+        "sha256": "633215efe855e448343796d1577b2fe262f83ea9bda0e66be8e917c5fb6eec11",
+        "bytes": 4184,
+        "actions_observed": 15
+      },
+      "Player_GetDemo_Once": {
+        "entry": "Get_FinishLoan",
+        "source": "B_data/EventFlow/Player_GetDemo_Once.bfevfl",
+        "sha256": "191b49e0fcb1e2c116068b9e69d40c837031a28b9e579f83f19a1eeca999298b",
+        "bytes": 14840,
+        "actions_observed": 10
+      },
+      "Obj_RcoMachine": {
+        "entry": "RcoMachineATM",
+        "source": "B_data/EventFlow/Obj_RcoMachine.bfevfl",
+        "sha256": "603c89e8f36995fee4aafc93fd4c7921cb5b5e61b901ec5dd50efd3baf953717",
+        "bytes": 25040,
+        "actions_observed": 1
+      }
+    },
+    "elf": {
+      "path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/A_logic/main.elf",
+      "sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74"
+    },
+    "index_sqlite": {
+      "path": "/workspace/acnh-re/output/index.sqlite",
+      "sha256": "a78c7af27d37b8fd931bba8bc611623dacf7685cb6e8b4f827effa0765340aad",
+      "read_only": true
+    }
+  },
+  "upgrade_requests_by_current_player_house_level": {
+    "1": {
+      "flag": "cHouse:HouseOrder1",
+      "name_ja": "テント→6x6増築申込"
+    },
+    "2": {
+      "flag": "cHouse:HouseOrder2",
+      "name_ja": "6x6→8x8増築申込"
+    },
+    "3": {
+      "flag": "cHouse:HouseOrder3",
+      "name_ja": "8x8→8x8+奥増築申込"
+    },
+    "4": {
+      "flag": "cHouse:HouseOrder4",
+      "name_ja": "8x8+奥→8x8+奥左増築申込"
+    },
+    "5": {
+      "flag": "cHouse:HouseOrder5",
+      "name_ja": "8x8+奥左→8x8+奥左右増築申込"
+    },
+    "6": {
+      "flag": "cHouse:HouseOrder6",
+      "name_ja": "8x8+奥左右→2F増築申込"
+    },
+    "7": {
+      "flag": "cHouse:HouseOrder7",
+      "name_ja": "2F→地下増築申込"
+    }
+  },
+  "loan_actions_by_player_house_level_in_after_remodel_root": {
+    "2": {
+      "bells": 98000,
+      "event_index": 13,
+      "conditions": [
+        {
+          "query": "EventFlowQueryEventFlagSystemBool",
+          "params": {
+            "AccessKey": "cPlayer:RcoAfterHouseRemodel"
+          },
+          "case": 0
+        },
+        {
+          "query": "EventFlowQueryPlayerHouseLevel",
+          "params": {},
+          "case": 2
+        },
+        {
+          "query": "EventFlowQueryGeneralTalkChoice2",
+          "params": {},
+          "case": 0
+        },
+        {
+          "query": "EventFlowQueryGeneralTalkChoice2",
+          "params": {},
+          "case": 0
+        }
+      ]
+    },
+    "3": {
+      "bells": 198000,
+      "event_index": 5,
+      "conditions": [
+        {
+          "query": "EventFlowQueryEventFlagSystemBool",
+          "params": {
+            "AccessKey": "cPlayer:RcoAfterHouseRemodel"
+          },
+          "case": 0
+        },
+        {
+          "query": "EventFlowQueryPlayerHouseLevel",
+          "params": {},
+          "case": 3
+        }
+      ]
+    },
+    "4": {
+      "bells": 348000,
+      "event_index": 6,
+      "conditions": [
+        {
+          "query": "EventFlowQueryEventFlagSystemBool",
+          "params": {
+            "AccessKey": "cPlayer:RcoAfterHouseRemodel"
+          },
+          "case": 0
+        },
+        {
+          "query": "EventFlowQueryPlayerHouseLevel",
+          "params": {},
+          "case": 4
+        }
+      ]
+    },
+    "5": {
+      "bells": 548000,
+      "event_index": 7,
+      "conditions": [
+        {
+          "query": "EventFlowQueryEventFlagSystemBool",
+          "params": {
+            "AccessKey": "cPlayer:RcoAfterHouseRemodel"
+          },
+          "case": 0
+        },
+        {
+          "query": "EventFlowQueryPlayerHouseLevel",
+          "params": {},
+          "case": 5
+        }
+      ]
+    },
+    "6": {
+      "bells": 758000,
+      "event_index": 8,
+      "conditions": [
+        {
+          "query": "EventFlowQueryEventFlagSystemBool",
+          "params": {
+            "AccessKey": "cPlayer:RcoAfterHouseRemodel"
+          },
+          "case": 0
+        },
+        {
+          "query": "EventFlowQueryPlayerHouseLevel",
+          "params": {},
+          "case": 6
+        }
+      ]
+    },
+    "7": {
+      "bells": 1248000,
+      "event_index": 9,
+      "conditions": [
+        {
+          "query": "EventFlowQueryEventFlagSystemBool",
+          "params": {
+            "AccessKey": "cPlayer:RcoAfterHouseRemodel"
+          },
+          "case": 0
+        },
+        {
+          "query": "EventFlowQueryPlayerHouseLevel",
+          "params": {},
+          "case": 7
+        }
+      ]
+    },
+    "8": {
+      "bells": 2498000,
+      "event_index": 10,
+      "conditions": [
+        {
+          "query": "EventFlowQueryEventFlagSystemBool",
+          "params": {
+            "AccessKey": "cPlayer:RcoAfterHouseRemodel"
+          },
+          "case": 0
+        },
+        {
+          "query": "EventFlowQueryPlayerHouseLevel",
+          "params": {},
+          "case": 8
+        }
+      ]
+    }
+  },
+  "native_binding": {
+    "event_action": "EventFlowSystemActor.EventFlowActionPlayerSetLoan",
+    "parameters": {
+      "Bells": "int"
+    },
+    "vtable_method_candidate": "0x32e2f0",
+    "vtable_method_slot_index": 11,
+    "slot_role_status": "unresolved in event_handlers_resolved.json",
+    "direct_call_chain": [
+      {
+        "pc": "0x32e328",
+        "target": "0xeff7f0",
+        "instruction": "B_to_function_entry",
+        "owner_va": null
+      },
+      {
+        "pc": "0xeff8d4",
+        "target": "0xeaf1c0",
+        "instruction": "BL"
+      }
+    ],
+    "0xeaf1c0_string_refs": [
+      {
+        "string_va": "0x2921158",
+        "text": "RepayMoney"
+      },
+      {
+        "string_va": "0x2942919",
+        "text": "SetLoan"
+      },
+      {
+        "string_va": "0x29520a1",
+        "text": "CurLoan"
+      },
+      {
+        "string_va": "0x296baba",
+        "text": "IsRepayByDeposit"
+      }
+    ],
+    "interpretation_limit": "String references show loan-related property names; helper internals and save writes were not executed in this stage."
+  },
+  "repayment_flow": {
+    "atm_reserves_get_finish_loan_demo": [
+      {
+        "event_index": 3,
+        "action": "EventFlowActionReservePlayerMutterDemo",
+        "params": {
+          "EventFileName": "Player_GetDemo_Once",
+          "MutterStartTiming": "cNowDemoEnd",
+          "EntryPointName": "Get_FinishLoan",
+          "IsResistNpcCast": false
+        },
+        "conditions": [
+          {
+            "query": "EventFlowQueryEventFlagSystemBool",
+            "params": {
+              "AccessKey": "cPlayer:PlayerLoanRepaying"
+            },
+            "case": 0
+          },
+          {
+            "query": "EventFlowQueryPlayerHasLoan",
+            "params": {},
+            "case": 1
+          }
+        ]
+      }
+    ],
+    "finish_demo_writes": [
+      {
+        "event_index": 3,
+        "action": "EventFlowActionEventFlagSystemOff",
+        "params": {
+          "AccessKey": "cPlayer:PlayerLoanRepaying"
+        },
+        "conditions": []
+      },
+      {
+        "event_index": 1,
+        "action": "EventFlowActionEventFlagSystemOn",
+        "params": {
+          "AccessKey": "cPlayer:PlayerLoanFinish1st"
+        },
+        "conditions": []
+      },
+      {
+        "event_index": 19,
+        "action": "EventFlowActionEventFlagSystemAdd",
+        "params": {
+          "AccessKey": "cLifeSupportAchievement:RepayLoan",
+          "AddNum": 1
+        },
+        "conditions": [
+          {
+            "query": "EventFlowQueryPlayerHouseLevel",
+            "params": {},
+            "case": 1
+          }
+        ]
+      },
+      {
+        "event_index": 19,
+        "action": "EventFlowActionEventFlagSystemAdd",
+        "params": {
+          "AccessKey": "cLifeSupportAchievement:RepayLoan",
+          "AddNum": 1
+        },
+        "conditions": [
+          {
+            "query": "EventFlowQueryPlayerHouseLevel",
+            "params": {},
+            "case": 2
+          }
+        ]
+      },
+      {
+        "event_index": 19,
+        "action": "EventFlowActionEventFlagSystemAdd",
+        "params": {
+          "AccessKey": "cLifeSupportAchievement:RepayLoan",
+          "AddNum": 1
+        },
+        "conditions": [
+          {
+            "query": "EventFlowQueryPlayerHouseLevel",
+            "params": {},
+            "case": 3
+          }
+        ]
+      },
+      {
+        "event_index": 19,
+        "action": "EventFlowActionEventFlagSystemAdd",
+        "params": {
+          "AccessKey": "cLifeSupportAchievement:RepayLoan",
+          "AddNum": 1
+        },
+        "conditions": [
+          {
+            "query": "EventFlowQueryPlayerHouseLevel",
+            "params": {},
+            "case": 4
+          }
+        ]
+      },
+      {
+        "event_index": 19,
+        "action": "EventFlowActionEventFlagSystemAdd",
+        "params": {
+          "AccessKey": "cLifeSupportAchievement:RepayLoan",
+          "AddNum": 1
+        },
+        "conditions": [
+          {
+            "query": "EventFlowQueryPlayerHouseLevel",
+            "params": {},
+            "case": 5
+          }
+        ]
+      },
+      {
+        "event_index": 19,
+        "action": "EventFlowActionEventFlagSystemAdd",
+        "params": {
+          "AccessKey": "cLifeSupportAchievement:RepayLoan",
+          "AddNum": 1
+        },
+        "conditions": [
+          {
+            "query": "EventFlowQueryPlayerHouseLevel",
+            "params": {},
+            "case": 6
+          }
+        ]
+      },
+      {
+        "event_index": 19,
+        "action": "EventFlowActionEventFlagSystemAdd",
+        "params": {
+          "AccessKey": "cLifeSupportAchievement:RepayLoan",
+          "AddNum": 1
+        },
+        "conditions": [
+          {
+            "query": "EventFlowQueryPlayerHouseLevel",
+            "params": {},
+            "case": 7
+          }
+        ]
+      },
+      {
+        "event_index": 19,
+        "action": "EventFlowActionEventFlagSystemAdd",
+        "params": {
+          "AccessKey": "cLifeSupportAchievement:RepayLoan",
+          "AddNum": 1
+        },
+        "conditions": [
+          {
+            "query": "EventFlowQueryPlayerHouseLevel",
+            "params": {},
+            "case": 8
+          }
+        ]
+      }
+    ],
+    "finish_talk_clears_playerloanfinish1st": true,
+    "finish_talk_sets_pchousingloanfinish": true,
+    "note": "The flow contains PlayerLoanRepaying and PlayerHasLoan gates; branch result semantics for PlayerHasLoan are not asserted."
+  },
+  "timing_limit": {
+    "after_remodel_gate": "SNPC_rco_03_ChkAfterRemodel:Root reads cPlayer:RcoAfterHouseRemodel ON before PlayerHouseLevel and loan branches.",
+    "on_writer_in_eventflow": false,
+    "open": "The extracted flows show the request flag and after-remodel dialogue, but not which calendar day the native house rebuild sets RcoAfterHouseRemodel."
+  },
+  "rules": [
+    "PlayerHouseLevel 1..7 selects cHouse:HouseOrder1..7 when the player orders an upgrade.",
+    "In SNPC_rco_03_ChkAfterRemodel:Root, PlayerHouseLevel 2..8 selects PlayerSetLoan Bells 98,000; 198,000; 348,000; 548,000; 758,000; 1,248,000; 2,498,000, respectively.",
+    "The PlayerSetLoan action registration declares Bells as an int. Static native calls from its registered vtable method candidate reach 0xeff7f0 then 0xeaf1c0; 0xeaf1c0 references SetLoan, CurLoan, RepayMoney, IsRepayByDeposit."
+  ],
+  "limits": [
+    "Amounts are the Bell values supplied by EventFlow; this stage did not execute the EventFlow action or verify persistent save storage.",
+    "RcoAfterHouseRemodel has EventFlow OFF writers but no EventFlow ON writer, so the calendar rebuild completion trigger remains open.",
+    "The PlayerHasLoan query branch is preserved as a flow condition; its native result mapping is not established here."
+  ]
+}
