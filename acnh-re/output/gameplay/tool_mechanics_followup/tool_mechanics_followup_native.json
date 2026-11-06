@@ -2967,6 +2967,32 @@
       ]
     },
     "counters_and_flags": {
+      "break_tool_count_activity_counter": {
+        "source_id": 25,
+        "source": "B_data/Bcsv/EventFlagsPlayerActivityParam.bcsv",
+        "raw": {
+          "$blob": "blobs/253b8c853e2b40538af60c631deccc39a3a715b2dfc3547df42982bed273d199.bin",
+          "size": 12572,
+          "sha256": "253b8c853e2b40538af60c631deccc39a3a715b2dfc3547df42982bed273d199"
+        },
+        "record": {
+          "UniqueID": 16,
+          "MessageLabel": 117,
+          "TalkValueVisitor": 5,
+          "TalkValueVillager": 10,
+          "MaxValue": 64,
+          "FlagsFlowAccess": 0,
+          "Name": "道具を壊した回数",
+          "Key": "BreakToolCount"
+        },
+        "interpretation": "The source activity table labels this key as 道具を壊した回数 (number of tools broken), with MaxValue 64. It is an activity count, not a per-item wear value; the save-backed mutation remains unexecuted.",
+        "indexed_source": {
+          "source_id": 25,
+          "sha256": "253b8c853e2b40538af60c631deccc39a3a715b2dfc3547df42982bed273d199",
+          "size": 12572,
+          "format": "BCSV"
+        }
+      },
       "golden_axe_recipe_learning_counter": {
         "key": "cPlayer:GoldenAxeLearningCount",
         "definition": {
@@ -3675,6 +3701,8 @@
     "The ItemParam probe verifies that tool UniqueIDs resolve to real ItemParam rows through the exact lookup called by PlayerToolBreak; it does not read or prove a durability value.",
     "ItemParam exposes no column named durability, break count, use count, or uses; unresolved hashed columns remain possible but are not treated as durability without consumer evidence.",
     "The full PlayerToolBreak/BreakTool state routines were not emulated. The observed +0x898 increment and reset are state-local memory operations, not a verified inventory durability counter.",
+    "BreakToolCount is identified by EventFlagsPlayerActivityParam as a count of tools broken. Its save mutation and relationship to per-item wear remain unexecuted.",
+    "BreakToolCount is identified by EventFlagsPlayerActivityParam as a count of broken tools. Its save mutation and relationship to per-item wear remain unexecuted.",
     "Axe, shovel, net, rod, and watering action states are sourced from PlayerStateParam; their world-result and item-consumption chains remain open.",
     "The RingMenuTools BYML, native page registry, and slot-widget binder identify UI layout and button indexing; they do not connect a ring position to a runtime inventory item."
   ]

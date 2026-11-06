@@ -23,6 +23,10 @@ Two native paths tied to the break transition are now separated from durability 
 
 `tools/tool_break_action_native.py` exercises the original `0xe37830` action with both values of its branch byte at `param+0x1024`. For zero, it observes `BreakTool += 1` at the `0xf62e90` helper boundary; for nonzero, it observes dispatch to `0xe37950`. Both cases clear the state-local `+0x898`/`+0x89c` fields. Context and trailing helpers are stubbed, so this does not execute the nonzero branch's `0xe37950 -> 0xda5450` chain or the save mutation. Result: `output/gameplay/tool_mechanics_followup/tool_break_action_native.json`.
 
+**[TBL] Counter meaning:** `EventFlagsPlayerActivityParam` row `UniqueID=16` has `Key=BreakToolCount`, Japanese name `道具を壊した回数` (“number of tools broken”), and `MaxValue=64`. The native `0xda5450 -> 0xce9340` request therefore names an activity count for tool-break events; it is not evidence of a per-item wear value. This table/flag is separate from `cLifeSupportAchievement:BreakTool` (the one-time named achievement flag).
+
+`tools/tool_break_transition_native.py` joins the action and counter evidence by running original instructions `0xe37830 -> 0xe37950 -> 0xda5450` through the `0xce9340` writer boundary. Six controlled cases pass with zero mismatches: the zero action branch does not call the counter chain; the nonzero branch requests `BreakToolCount += 1` when a controlled `0xeaace0` guard is nonzero, while a zero guard emits no request. The `0xce9340` save mutation, player animation/context, and guard producer are stubbed. This closes the native call chain to a named activity writer request, but does not reveal the tool-use decrement or break threshold. Output: `output/gameplay/tool_mechanics_followup/tool_break_transition_native.json`.
+
 ## Per-family action evidence
 
 “Proven” below is limited to the stated static identity/state/handler evidence. “Open” means the world or inventory result has not been connected. The native action anchors are function/string-reference matches in the indexed main NSO; they are not full action simulations.

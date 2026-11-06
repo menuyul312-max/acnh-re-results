@@ -1,0 +1,85 @@
+{
+  "schema": "acnh-re/tool-break-transition-native/1",
+  "native_elf_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+  "entry": "0xe37830",
+  "native_chain": [
+    "0xe37830 BreakTool action",
+    "0xe37950 nonzero branch",
+    "0xda5450 counter wrapper",
+    "0xce9340 save-writer boundary"
+  ],
+  "cases": [
+    {
+      "break_action_branch_byte": 0,
+      "counter_context_kind_byte": 0,
+      "writer_enabled_by_controlled_eaace0_return": true,
+      "writer_requests": []
+    },
+    {
+      "break_action_branch_byte": 1,
+      "counter_context_kind_byte": 0,
+      "writer_enabled_by_controlled_eaace0_return": false,
+      "writer_requests": []
+    },
+    {
+      "break_action_branch_byte": 1,
+      "counter_context_kind_byte": 0,
+      "writer_enabled_by_controlled_eaace0_return": true,
+      "writer_requests": [
+        {
+          "key": "BreakToolCount",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "break_action_branch_byte": 1,
+      "counter_context_kind_byte": 1,
+      "writer_enabled_by_controlled_eaace0_return": true,
+      "writer_requests": [
+        {
+          "key": "BreakToolCount",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "break_action_branch_byte": 1,
+      "counter_context_kind_byte": 2,
+      "writer_enabled_by_controlled_eaace0_return": true,
+      "writer_requests": [
+        {
+          "key": "BreakToolCount",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "break_action_branch_byte": 1,
+      "counter_context_kind_byte": 3,
+      "writer_enabled_by_controlled_eaace0_return": true,
+      "writer_requests": [
+        {
+          "key": "BreakToolCount",
+          "amount": 1
+        }
+      ]
+    }
+  ],
+  "case_count": 6,
+  "mismatches": 0,
+  "dependencies_stubbed": [
+    "animation/action context helpers and trailing state helpers",
+    "0xeaace0 return is controlled to exercise DA5450's guard",
+    "0xce9340 captures the requested key/increment; save storage is not executed"
+  ],
+  "proven": [
+    "The original BreakTool action's zero branch does not enter the tested BreakToolCount chain.",
+    "For its nonzero branch, original E37950 and DA5450 reach the writer boundary and request BreakToolCount += 1 when the controlled EAACE0 result is nonzero.",
+    "A zero EAACE0 result suppresses that writer request; context-kind bytes 0, 1, 2, and out-of-range 3 do not alter the key/increment in these controlled cases."
+  ],
+  "limits": [
+    "Action context, animation, and EAACE0 outcome are synthetic; this is not an end-to-end player save run.",
+    "CE9340's backing save mutation, actual tool-wear decrement, and break threshold remain unproven."
+  ]
+}
