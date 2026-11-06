@@ -24,7 +24,7 @@ The native predicate at `0x3d9b60` has a selected-item branch that calls `0xf77f
 
 `tools/museum_donation_predicate_native.py` executes original instructions for `0x3d9b60`, `0xf77f60`, and the ordinary-record identity branch of `0xf58af0`. Five predicate cases cover selector tokens `cUISelect` and `cDeliveryItem`, no match, and matched records with marker `0`/`0xff`. The selected-item serializer, selector/context accessors, ItemParam view/type adapters, and lower inventory/equivalence calls are controlled; for the canonical synthetic item, the native matcher compares the 16-bit item ID and flags before the controlled lower checks.
 
-The same runner exercises native `0xf77e00`, the positive precondition used by the item-submission path. Its native `0xa9f670` getter reads a synthetic one-row ItemParam-kind table (the row-index accessor is controlled); the native ItemKind comparison accepts codes 70, 65, and 64. With an ordinary matching item record, a marker other than `0xff` rejects the second donation, while marker `0xff` makes this helper return true. An unmatched record returns true, and another ItemKind (66) is rejected before the 1,024-slot scan. Ten positive/negative cases (three supported kinds × three duplicate states, plus one unsupported kind) pass with zero mismatches. The marker's gameplay meaning still needs a live producer/state crosswalk.
+The same runner exercises native `0xf77e00`, the positive precondition used by the item-submission path. Its native `0xa9f670` getter reads a synthetic one-row ItemParam-kind table (the row-index accessor is controlled); the native ItemKind comparison accepts codes 70, 65, and 64. With an ordinary matching item record, a marker other than `0xff` rejects the second donation, while marker `0xff` makes this helper return true. An unmatched record returns true, and another ItemKind (66) is rejected before the 1,024-slot scan. Ten positive/negative cases (three supported kinds × three duplicate states, plus one unsupported kind) pass with zero mismatches. The marker's semantic meaning/domain and live value source remain open; the successful state-byte producer is traced separately in [`MUSEUM_ART_GYROID_FOLLOWUP.md`](MUSEUM_ART_GYROID_FOLLOWUP.md#marker-and-remaining-unknowns).
 
 Machine-readable output: [`predicate_native.json`](../output/gameplay/museum_donation_followup/predicate_native.json). Reproduce with:
 
@@ -32,7 +32,7 @@ Machine-readable output: [`predicate_native.json`](../output/gameplay/museum_don
 PYTHONPATH=/workspace/acnh-re/.deps python3 acnh-re/tools/museum_donation_predicate_native.py
 ```
 
-The native string initializer at `0x3da0b0` contains `cUISelect , cDeliveryItem`. The two tested tokens are taken from this literal; the fixture supplies parser/token state explicitly. The exact save-backed key adapters and meaning/producer of marker `0xff` remain open.
+The native string initializer at `0x3da0b0` contains `cUISelect , cDeliveryItem`. The two tested tokens are taken from this literal; the fixture supplies parser/token state explicitly. The exact save-backed key adapters and semantic meaning/domain and live value source of the marker remain open. The producer of the successful state byte was later traced to native `0xe68280`; see [`MUSEUM_ART_GYROID_FOLLOWUP.md`](MUSEUM_ART_GYROID_FOLLOWUP.md#marker-and-remaining-unknowns).
 
 ## SaveMuseum donation-list writer — native with controlled adapters
 
@@ -84,7 +84,7 @@ PYTHONPATH=/workspace/acnh-re/.deps python3 acnh-re/tools/open_donated_native.py
 | Area | Current evidence | Status |
 |---|---|---|
 | Item eligibility | Filter/query sequence; native `F77E00` supports Fossil/Fish/Insect and rejects an ordinary duplicate with marker other than `0xff`; predicate and ordinary ID comparison reproduced | Partial `[EF/N/TBL]`; item-key adapters, uncommon item flags, and marker semantics remain controlled/open |
-| Donation save state | `SaveLand.Museum` spans `0x3404`; native list layout, 1,024 slots, sentinel, packed date words/markers, caller, and writer traced | Partial `[SAVE/N]`; art/gyroid ledger, full-list semantics, and live date/marker meaning remain open |
+| Donation save state | `SaveLand.Museum` spans `0x3404`; native list layout, 1,024 slots, sentinel, packed date words/markers, caller, and writer traced | Partial `[SAVE/N]`; art/gyroid ledger, full-list semantics, live date meaning, and marker semantic label remain open |
 | Fossil assessment | `OwlFossilAppraise`, `AppraiseFossilDonationRate`, `Fossil_Check`, and follow-up branches traced; writer admits ItemKind Fossil | Partial `[EF/TBL/N]`; native appraisal result and the acceptance-to-20-donation counter link remain open |
-| Tent-to-building trigger | `DonationAmountForMuseum` decrement and `MuseumGrowupEnable1` EventFlow path identified; daily `0xf77050` transition is reproduced; item submission path reaches SaveMuseum writer | Partial `[EF/N]`; native link from accepted donation count to threshold/counter writer remains open |
+| Tent-to-building trigger | `0x2c2410` submission caller, writer, `0xf773f0` counter/`0x416260` threshold query, Border=20 EventFlow flag path, and daily `0xf77050` transition traced | Partial `[EF/PSEUDO/N]`; each native stage uses controlled/supplied boundaries; no live save-to-expansion trace |
 | `OpenDonatedNum` | All 84 table rows; 828 native boundary cases across session modes 0–3 | `[TBL/N]` with controlled field/save accessors; live persistence and host ownership remain open |

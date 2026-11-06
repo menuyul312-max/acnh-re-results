@@ -128,6 +128,32 @@
       "F58D00 item-record-validity return; all 1024 synthetic item records are valid"
     ]
   },
+  "save_to_expansion_boundary": {
+    "status": "cross-layer path is reconstructed from static native call sites, decoded EventFlow, and separately executed native functions; live end-to-end state is unavailable",
+    "steps": [
+      {
+        "stage": "accepted item submission",
+        "evidence": "Static FUN_003c2410 at 0x2c2410 opens SaveLand.Museum node +0x20a168 (0x3404 bytes), calls 0xf77e00, then calls 0xf780e0 only when the duplicate/category gate succeeds.",
+        "source": "museum_donation_followup/writer_native.json static_save_member_caller"
+      },
+      {
+        "stage": "SaveMuseum insertion",
+        "evidence": "The separate writer runner executes 0xf780e0 -> 0xf78130 with a synthetic save block and controlled save/item/state adapters.",
+        "source": "museum_donation_followup/writer_native.json"
+      },
+      {
+        "stage": "20-record threshold query",
+        "evidence": "Native 0xf773f0 counts Fossil/Fish/Insect records; native 0x416260 compares that count with Border. Decoded SNPC_owl_11_Tent_Entries uses Border=20 and its case 0 path sets MuseumGrowupEnable1.",
+        "source": "donation_count_native and static_findings.tent_expansion_threshold_path"
+      },
+      {
+        "stage": "daily museum upgrade",
+        "evidence": "Native 0xf77050 transitions MuseumLevel using a supplied MuseumGrowupEnable1 flag; this runner is separate from the donation writer and threshold fixtures.",
+        "source": "gameplay_native.json (0xf77050 museum upgrade)"
+      }
+    ],
+    "remaining_gap": "No captured live game process or real save file connects these stages. The SaveMuseum writer/counter/query, EventFlow flag effect, and daily facility updater use controlled or supplied state at their boundaries, so there is no live save-to-expansion proof."
+  },
   "owl_donation_item_type_static_native_map": {
     "handler_method_va": "0x3d8d10",
     "enum_result_table_va": "0x29f1e68",
@@ -171,8 +197,39 @@
     "stored_marker_offset": "+0x3004 + slot",
     "input_selector_source": "OwlDonationDone passes its event context +0x2a8 to F780E0; DA3FC0 uses its first byte, replacing values >7 with 0xff.",
     "query_behavior": "EF62F0 queries mode 2. EAA8C0 returns 0xffffffff if the current state token mismatches or the selected state view is absent/errored; otherwise it returns the byte at that view +0xb0d. F780E0 forwards the returned low byte into F78130.",
+    "state_byte_producer": {
+      "producer_va": "0xe68280",
+      "lookup_va": "0xe68900",
+      "state_record_stride": "0xb28",
+      "state_record_slots": 8,
+      "successful_query_condition": "EAA8C0 resolves a state row for the requested token, then returns 0xffffffff unless row +0xb08 is 0; on success it returns row +0xb0d as u8.",
+      "writes": [
+        "E68280 initializes the selected row's u16 at +0xb0d to 0x0100, then for param_2 < 3 stores param_3 to the low byte at +0xb0d and param_4 & 1 at +0xb0e.",
+        "E68280's row is selected from eight 0xb28-byte records; E68900 checks the requested index is below eight and the row active byte at +0xb0c is nonzero."
+      ],
+      "direct_callers": [
+        {
+          "va": "0xccd40",
+          "observed_arguments": "E68280(row, 2, 0, 1) in two branches"
+        },
+        {
+          "va": "0xcd9f0",
+          "observed_arguments": "E68280(row, 0, value_from_FA4300, 1)"
+        },
+        {
+          "va": "0x2f5240",
+          "observed_arguments": "E68280(row, 0, caller_param_2, 1)"
+        },
+        {
+          "va": "0xe684f0",
+          "observed_arguments": "forwards its param_2 and param_3 to E68280; called by 0xcfad0"
+        }
+      ],
+      "meaning_status": "Producer and dataflow are identified, but the semantic label/domain of param_3 is not. The call sites do not prove this byte is a donor ID or donation status.",
+      "evidence": "Static Ghidra decompilation of the original NSO; no producer state or live object was executed."
+    },
     "known_duplicate_gate_effect": "F77F60 treats marker 0xff as a non-duplicate exemption; F773F0 does not read marker bytes when counting accepted records.",
-    "remaining_meaning": "The successful state object's +0xb0d field and its runtime producer have no semantic label in the captured data; 0xff can also be a returned field value."
+    "remaining_meaning": "The successful state object's +0xb0d field has a traced producer, but neither its semantic label/domain nor the runtime value supplied by that producer is named in the captured data; 0xff can also be a returned field value."
   },
   "static_findings": {
     "captured_eventflows_scanned": 456,
@@ -874,6 +931,6 @@
     "No live save file or live table-manager memory is available; the SaveMuseum records and table manager are reconstructed fixtures.",
     "The native item key lookup and field getter are exercised across every local ItemParam row, but item-flag variants are not tested.",
     "No art-specific item/filter/handler path is proven in the captured data; this does not establish that the full game has no art donations.",
-    "The 0xff marker can be returned by a failed/mismatched context-state lookup, but the byte at the successful state object +0xb0d has no gameplay label in the dump."
+    "The 0xff marker can be returned by a failed/mismatched context-state lookup; producer 0xe68280 is traced, but the successful state object's +0xb0d value has no gameplay label/domain in the dump."
   ]
 }

@@ -55,9 +55,40 @@ The wrapper obtains that byte from a state query (`0xef62f0` → `0xeaa8c0`) and
 forwards the low byte. A failed, absent, or mismatched state lookup can return
 `0xff`; the duplicate gate `0xf77f60` treats `0xff` as a non-duplicate
 exemption, while the donation threshold counter does not read marker bytes.
-However, the successful state object's `+0xb0d` byte has no semantic name in
-the available symbols/data. The marker's intended gameplay meaning and its
-producer therefore remain unresolved.
+
+The successful byte now has a traced producer, though not a semantic label.
+Native `0xe68280` manages eight state records with stride `0xb28`; it initializes
+the u16 at record `+0xb0d` to `0x0100`, then for state kinds below 3 writes its
+third argument to byte `+0xb0d` and the low bit of its fourth argument to
+`+0xb0e`. The lookup `0xe68900` selects a row by the context token and requires
+its active byte at `+0xb0c`; `0xeaa8c0` returns `+0xb0d` only when that row's
+`+0xb08` state is zero. Direct writers include `0xcd9f0` (value from
+`0xfa4300`), `0x2f5240` (its caller's second argument), and `0xe684f0`; two
+`0xccd40` branches instead initialize state kind 2 with value 0. These call
+sites identify how the byte is populated but do not name the meaning or domain
+of the value. In particular, the evidence does not show that it is a donor ID
+or a donation-status enum. This is static `[PSEUDO]` evidence from the captured
+NSO, not a live state trace.
+
+## Save-to-expansion boundary
+
+The captured path can be joined at the code and data-contract level. Static
+native caller `0x2c2410` opens the `SaveLand.Museum` member at node `+0x20a168`
+(size `0x3404`), runs the item-kind/already-donated gate `0xf77e00`, and calls
+`0xf780e0` when that gate succeeds. The writer inserts into the same list that
+`0xf773f0` scans. EventFlow query `0x416260` compares that count with its
+`Border`; the decoded `SNPC_owl_11_Tent_Entries:owl_Tent_AfterDonation` flow uses
+`Border=20`, and its case 0 path sets `MuseumGrowupEnable1`. The daily native
+updater `0xf77050` consumes that flag and advances the museum from tent to
+construction and then to the completed building.
+
+The stages have separate controlled boundaries in the current evidence:
+`0xf780e0`/`0xf78130` and `0x416260`/`0xf773f0` were run against synthetic save
+views; the EventFlow link is decoded static data; `0xf77050` was run with the
+expansion flag supplied. No real save file or running game process is available
+here, so a live end-to-end check from a donation through the next-day museum
+level change remains open. The machine-readable stage map is in
+[`native.json`](../output/gameplay/museum_art_gyroid_followup/native.json).
 
 The following questions need more evidence than this dump provides:
 
@@ -69,9 +100,9 @@ The following questions need more evidence than this dump provides:
 - A live SaveMuseum item view and live ItemParam table-manager instance, plus
   item records with flags set, to validate behavior beyond the reconstructed
   native fixtures.
-- The semantic label/producer of the marker's successful `+0xb0d` state byte,
-  and a live end-to-end proof that the donor count causes the museum level to
-  change after its scheduled daily transition.
+- The semantic label/domain and live value source of the marker's successful
+  `+0xb0d` state byte, and a live end-to-end proof that the donor count causes
+  the museum level to change after its scheduled daily transition.
 
 ## Reproduction
 
