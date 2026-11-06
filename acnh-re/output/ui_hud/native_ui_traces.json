@@ -1,7 +1,7 @@
 {
   "schema": "acnh.ui_native_traces.v1",
   "source_build": "ACNH 1.0.0; ExeFS main hash f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
-  "analysis_basis": "Ghidra pseudocode and local SQLite call/string reference index for the supplied main executable; no runtime trace or game capture.",
+  "analysis_basis": "Ghidra pseudocode, local SQLite call/string reference index, and AArch64 instruction decoding of the supplied main NSO with the locally available LLVM disassembler; no runtime trace or game capture.",
   "resource_loading": {
     "page_archive_preload": {
       "path": [
@@ -1210,7 +1210,12 @@
                 "slot_offset": "0x118",
                 "target_va": "0x114e860"
               }
-            ]
+            ],
+            "default_slot": {
+              "slot_offset": "0x120",
+              "target_va": "0x114e870",
+              "interpretation": "default follow-up candidate; raw function body is a single ret"
+            }
           },
           {
             "start_va": "0x30fc6b8",
@@ -1291,14 +1296,160 @@
                 "slot_offset": "0x118",
                 "target_va": "0x114e860"
               }
-            ]
+            ],
+            "default_slot": {
+              "slot_offset": "0x120",
+              "target_va": "0x114e870",
+              "interpretation": "default follow-up candidate; raw function body is a single ret"
+            }
           }
         ],
         "limitations": [
           "The sequence offsets line up with dispatch slot offsets and the second-stage targets are shared by both sequences.",
           "No object vptr load/store or runtime instance was traced back to either sequence.",
           "Most target bodies still lack usable pseudocode; candidate target addresses do not establish their exact effects."
-        ]
+        ],
+        "followup_target_body_observations": {
+          "decode_source": "Raw main NSO bytes decoded as AArch64 with local LLVM libLLVM; addresses refer to the supplied 1.0.0 main image.",
+          "status": "These body observations are conditional on the slot-aligned pointer-array candidate mapping; array-to-object vptr association remains unproven.",
+          "return_only_candidates": [
+            {
+              "type": "LpLocator",
+              "target_va": "0x114e7d0",
+              "size_bytes": 4,
+              "instruction_bytes": "c0035fd6",
+              "instruction": "ret"
+            },
+            {
+              "type": "LpDragButton",
+              "target_va": "0x114e7e0",
+              "size_bytes": 4,
+              "instruction_bytes": "c0035fd6",
+              "instruction": "ret"
+            },
+            {
+              "type": "LpCharAnim",
+              "target_va": "0x114e7f0",
+              "size_bytes": 4,
+              "instruction_bytes": "c0035fd6",
+              "instruction": "ret"
+            },
+            {
+              "type": "LpTextAnim",
+              "target_va": "0x114e800",
+              "size_bytes": 4,
+              "instruction_bytes": "c0035fd6",
+              "instruction": "ret"
+            },
+            {
+              "type": "LpTraceGauge",
+              "target_va": "0x114e810",
+              "size_bytes": 4,
+              "instruction_bytes": "c0035fd6",
+              "instruction": "ret"
+            },
+            {
+              "type": "LpNumberAnim",
+              "target_va": "0x114e820",
+              "size_bytes": 4,
+              "instruction_bytes": "c0035fd6",
+              "instruction": "ret"
+            },
+            {
+              "type": "LpMultiNumberAnim",
+              "target_va": "0x114e830",
+              "size_bytes": 4,
+              "instruction_bytes": "c0035fd6",
+              "instruction": "ret"
+            },
+            {
+              "type": "LpTimer",
+              "target_va": "0x114e840",
+              "size_bytes": 4,
+              "instruction_bytes": "c0035fd6",
+              "instruction": "ret"
+            },
+            {
+              "type": "UISysScrollBtnList",
+              "target_va": "0x114e850",
+              "size_bytes": 4,
+              "instruction_bytes": "c0035fd6",
+              "instruction": "ret"
+            },
+            {
+              "type": "UISysScrollSign",
+              "target_va": "0x114e860",
+              "size_bytes": 4,
+              "instruction_bytes": "c0035fd6",
+              "instruction": "ret"
+            },
+            {
+              "type": "default",
+              "target_va": "0x114e870",
+              "size_bytes": 4,
+              "instruction_bytes": "c0035fd6",
+              "instruction": "ret"
+            }
+          ],
+          "nontrivial_candidates": [
+            {
+              "type": "LpUniteButton",
+              "target_va": "0x1673280",
+              "size_bytes": 200,
+              "observed_machine_pattern": [
+                "Initializes/checks a type-specific static guard/registry path.",
+                "If the second argument is non-null, calls a method through the first pointer in its vtable and tests the result.",
+                "On the accepted path, stores a context pointer into the argument object at offset +0x268 and a second pointer at +0x270."
+              ],
+              "unresolved": "The virtual method, registry token, and semantic names of fields +0x268/+0x270 are unresolved."
+            },
+            {
+              "type": "LpKeyDecideIcon",
+              "target_va": "0x1673350",
+              "size_bytes": 188,
+              "observed_machine_pattern": [
+                "Initializes/checks a type-specific static guard/registry path.",
+                "Calls a method through the second argument object vtable and tests its result.",
+                "On the accepted path, stores a context pointer into the argument object at offset +0x268."
+              ],
+              "unresolved": "The virtual method, registry token, and field semantics are unresolved."
+            },
+            {
+              "type": "LpSelector",
+              "target_va": "0x1673410",
+              "size_bytes": 188,
+              "observed_machine_pattern": [
+                "Initializes/checks a type-specific static guard/registry path.",
+                "Calls a method through the second argument object vtable and tests its result.",
+                "On the accepted path, stores a context pointer into the argument object at offset +0x268."
+              ],
+              "unresolved": "The virtual method, registry token, and field semantics are unresolved."
+            },
+            {
+              "type": "LpScrollBar",
+              "target_va": "0x16734d0",
+              "size_bytes": 188,
+              "observed_machine_pattern": [
+                "Initializes/checks a type-specific static guard/registry path.",
+                "Calls a method through the second argument object vtable and tests its result.",
+                "On the accepted path, stores a context pointer into the argument object at offset +0x268."
+              ],
+              "unresolved": "The virtual method, registry token, and field semantics are unresolved."
+            },
+            {
+              "type": "UISysBounding",
+              "target_va": "0x1673590",
+              "size_bytes": 188,
+              "observed_machine_pattern": [
+                "Initializes/checks a type-specific static guard/registry path.",
+                "Calls a method through the second argument object vtable and tests its result.",
+                "On the accepted path, stores a context pointer into the argument object at offset +0x268."
+              ],
+              "unresolved": "The virtual method, registry token, and field semantics are unresolved."
+            }
+          ],
+          "interpretation_limit": "Return-only code is a no-op if the candidate is the selected method. Nontrivial candidates share a handler-registration pattern but do not reveal component semantics or prove which table/object uses them."
+        }
       }
     },
     "touch_input_manager": {
@@ -1753,7 +1904,7 @@
   "remaining_evidence_needed": [
     "A direct runtime/resource-manager trace or complete allocator lookup logic showing which archive supplies each duplicate PRT1 name, including .szs cases.",
     "Caller/vptr identification for MainScreenSmartPhone open/update/close and its relationship to MainScreen HUD state.",
-    "Associate candidate pointer arrays 0x315b0d0 and 0x30fc6b8 with live component objects, then decompile/resolve remaining handlers for all component types and bind records to screens.",
+    "Associate candidate pointer arrays 0x315b0d0 and 0x30fc6b8 with live component objects, then resolve remaining handler bodies and bind records to screens. Raw disassembly shows 11 candidate follow-up slots are return-only and five have a repeated pointer-registration pattern, but their effects remain conditional on the unproven table association.",
     "Resolve Npad button producers, named UI message delivery for all 13 control actions, recipient/CNT1 callback order, modal push/pop, focus restoration, and screen lifecycle. TouchSelect/TouchUnselect names are known, but their recipient state machine is not.",
     "A native FLEU application path mapping arrays to named userData values and animation frame timing.",
     "Synchronized game captures for renderer comparisons (origin/scale, hit bounds, clipping, BNTX channel behavior, sampler/blend/shader and font output)."
