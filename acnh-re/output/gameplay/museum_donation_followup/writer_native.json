@@ -1,0 +1,162 @@
+{
+  "source_nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+  "native_addresses": {
+    "save_item_wrapper": "0xf780e0",
+    "list_insertion_writer": "0xf78130"
+  },
+  "native_layout": {
+    "save_block_size": "0x3404",
+    "museum_level": "u32 at +0",
+    "slot_count": 1024,
+    "slot_id_probe": "signed s16 at +0x1004 + 8*i; -2 means empty",
+    "item_record": "8 bytes at +0x1004 + 8*i",
+    "calendar_date_word": "u32 at +4 + 4*i; native 0xf41eb0 packs year u16, month u8, day u8",
+    "marker_byte": "u8 at +0x3004 + i"
+  },
+  "native_category_comparisons": {
+    "global_addresses": [
+      "0x35ec944",
+      "0x35ec948",
+      "0x35ec94c"
+    ],
+    "values_seeded": [
+      70,
+      65,
+      64
+    ],
+    "local_ItemParam_enum_crosswalk": {
+      "70": "Fossil",
+      "65": "Fish",
+      "64": "Insect"
+    },
+    "native_getter": "0xa9f670 reads a controlled one-row ItemParam-kind table natively; 0x1665ea0 supplies row index 0.",
+    "caveat": "Semantic labels use the local resolved ItemParam enum; the NSO globals themselves are numeric values."
+  },
+  "static_save_member_caller": {
+    "function": "0x2c2410 FUN_003c2410 (no stronger semantic name in the local native index)",
+    "museum_member_node_offset": "0x20a168",
+    "native_call_order": [
+      "0x2c2470 opens base + 0x20a168 as a 0x3404-byte museum view",
+      "0x2c2588 calls 0xf77e00 (supported-kind and not-already-donated gate)",
+      "0x2c25b8 calls 0xf780e0 only when that gate returns true",
+      "0xf78118 inside 0xf780e0 calls 0xf78130"
+    ],
+    "evidence_scope": "Static cross-reference and decompilation; FUN_003c2410 itself is not emulated by this focused writer runner."
+  },
+  "execution": "0xf780e0 \u2192 0xf78130, 0xf41eb0 calendar packing, 0xa9f670 ItemKind lookup, the 1024-slot scan, and the 8-byte item copy execute as original NSO instructions. The save block, save-view adapter, marker query, calendar scalar, item-validity result, ItemParam view constructor, and one-row table/index are synthetic/controlled. The sandbox's nn::time IsValidDate import checks the synthetic Y/M/D.",
+  "controlled_adapters": [
+    "0xda3fc0",
+    "0xef62f0",
+    "0x1fcac0",
+    "0xf58d00",
+    "0xa9c290",
+    "0x1665ea0"
+  ],
+  "cases": 7,
+  "mismatches": 0,
+  "results": [
+    {
+      "name": "fossil kind; first empty slot wins",
+      "controlled_item_kind": 70,
+      "controlled_validity": 1,
+      "empty_slots": [
+        3,
+        9
+      ],
+      "marker_argument": "0x0",
+      "inserted_at": 3,
+      "copied_record_matches": true,
+      "calendar_date_word": "0xf0407ea",
+      "marker_byte": "0x0",
+      "full_block_matches_expected": true
+    },
+    {
+      "name": "fish kind; marker byte is copied",
+      "controlled_item_kind": 65,
+      "controlled_validity": 1,
+      "empty_slots": [
+        5
+      ],
+      "marker_argument": "0x22",
+      "inserted_at": 5,
+      "copied_record_matches": true,
+      "calendar_date_word": "0xf0407ea",
+      "marker_byte": "0x22",
+      "full_block_matches_expected": true
+    },
+    {
+      "name": "insect kind; final slot boundary",
+      "controlled_item_kind": 64,
+      "controlled_validity": 1,
+      "empty_slots": [
+        1023
+      ],
+      "marker_argument": "0x7f",
+      "inserted_at": 1023,
+      "copied_record_matches": true,
+      "calendar_date_word": "0xf0407ea",
+      "marker_byte": "0x7f",
+      "full_block_matches_expected": true
+    },
+    {
+      "name": "other kind rejected",
+      "controlled_item_kind": 66,
+      "controlled_validity": 1,
+      "empty_slots": [
+        0
+      ],
+      "marker_argument": "0x1",
+      "inserted_at": null,
+      "copied_record_matches": false,
+      "calendar_date_word": null,
+      "marker_byte": null,
+      "full_block_matches_expected": true
+    },
+    {
+      "name": "invalid item rejected",
+      "controlled_item_kind": 70,
+      "controlled_validity": 0,
+      "empty_slots": [
+        0
+      ],
+      "marker_argument": "0x1",
+      "inserted_at": null,
+      "copied_record_matches": false,
+      "calendar_date_word": null,
+      "marker_byte": null,
+      "full_block_matches_expected": true
+    },
+    {
+      "name": "bit-31 marker argument exits before mutation",
+      "controlled_item_kind": 70,
+      "controlled_validity": 1,
+      "empty_slots": [
+        0
+      ],
+      "marker_argument": "0x80000000",
+      "inserted_at": null,
+      "copied_record_matches": false,
+      "calendar_date_word": null,
+      "marker_byte": null,
+      "full_block_matches_expected": true
+    },
+    {
+      "name": "full list leaves all records unchanged",
+      "controlled_item_kind": 70,
+      "controlled_validity": 1,
+      "empty_slots": [],
+      "marker_argument": "0x1",
+      "inserted_at": null,
+      "copied_record_matches": false,
+      "calendar_date_word": null,
+      "marker_byte": null,
+      "full_block_matches_expected": true
+    }
+  ],
+  "not_proven": [
+    "Semantic label/live EventFlow invocation for FUN_003c2410; its static calls into the gate and writer are proven.",
+    "Which calendar source supplies each live donation, and whether game logic assigns additional meaning to the stored date.",
+    "Meaning/producer of marker-byte values and which item identity/key the live item adapters construct.",
+    "Live ItemParam row selection and donation kinds outside the three accepted codes, including art or gyroids."
+  ]
+}

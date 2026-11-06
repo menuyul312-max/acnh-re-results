@@ -1,0 +1,164 @@
+{
+  "source_nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+  "addresses": {
+    "predicate": "0x3d9b60",
+    "duplicate_scan": "0xf77f60",
+    "ordinary_identity_matcher": "0xf58af0"
+  },
+  "native_execution": "0x3d9b60, 0xf77e00, 0xf77f60, 0xa9f670 ItemKind table lookup, and ordinary F58AF0 item identity/flag comparisons ran original instructions. The selected item context, one-row ItemParam table, and catalog byte array are synthetic.",
+  "selector_literal": "cUISelect , cDeliveryItem (string initialized by native 0x3da0b0; its parser/context result is controlled here)",
+  "duplicate_scan_contract": "F77F60 scans up to 1024 8-byte records using native F58AF0. For the synthetic ordinary item record (flags byte 0), equal 16-bit IDs pass the native identity checks; lower inventory ownership and ItemParam view-equivalence adapters return true. A matching slot marker 0xff makes F77F60 return 0; other marker values make it return 1. DonationCheckItemType inverts this result for its selected-item branch.",
+  "cases": 5,
+  "mismatches": 0,
+  "writer_precondition_native": {
+    "address": "0xf77e00",
+    "contract": "F77E00 accepts only ItemKind codes 70/65/64, then returns logical-not of F77F60 duplicate-list match. F77F60's matching marker 0xff suppresses the duplicate result; other marker bytes count as already present.",
+    "kind_labels_from_local_ItemParam_crosswalk": {
+      "70": "Fossil",
+      "65": "Fish",
+      "64": "Insect"
+    },
+    "kind_gate_cases": 10,
+    "kind_gate_mismatches": 0,
+    "results": [
+      {
+        "kind": 70,
+        "match_slot": null,
+        "marker_byte": 0,
+        "return": 1,
+        "expected_return": 1,
+        "native_scan_calls": 1024
+      },
+      {
+        "kind": 70,
+        "match_slot": 2,
+        "marker_byte": 0,
+        "return": 0,
+        "expected_return": 0,
+        "native_scan_calls": 3
+      },
+      {
+        "kind": 70,
+        "match_slot": 2,
+        "marker_byte": 255,
+        "return": 1,
+        "expected_return": 1,
+        "native_scan_calls": 3
+      },
+      {
+        "kind": 65,
+        "match_slot": null,
+        "marker_byte": 0,
+        "return": 1,
+        "expected_return": 1,
+        "native_scan_calls": 1024
+      },
+      {
+        "kind": 65,
+        "match_slot": 2,
+        "marker_byte": 0,
+        "return": 0,
+        "expected_return": 0,
+        "native_scan_calls": 3
+      },
+      {
+        "kind": 65,
+        "match_slot": 2,
+        "marker_byte": 255,
+        "return": 1,
+        "expected_return": 1,
+        "native_scan_calls": 3
+      },
+      {
+        "kind": 64,
+        "match_slot": null,
+        "marker_byte": 0,
+        "return": 1,
+        "expected_return": 1,
+        "native_scan_calls": 1024
+      },
+      {
+        "kind": 64,
+        "match_slot": 2,
+        "marker_byte": 0,
+        "return": 0,
+        "expected_return": 0,
+        "native_scan_calls": 3
+      },
+      {
+        "kind": 64,
+        "match_slot": 2,
+        "marker_byte": 255,
+        "return": 1,
+        "expected_return": 1,
+        "native_scan_calls": 3
+      },
+      {
+        "kind": 66,
+        "match_slot": null,
+        "marker_byte": 0,
+        "return": 0,
+        "expected_return": 0,
+        "native_scan_calls": 0
+      }
+    ],
+    "execution": "F77E00, F77F60, A9F670 table lookup, and ordinary F58AF0 identity checks execute from the original NSO; the ItemParam row index is controlled."
+  },
+  "dependencies_stubbed": [
+    "0x3da0b0 selector-state accessor",
+    "0x3d9b50/0x3d9b58 controlled virtual context/item-selection getters",
+    "0x455d20 object/context accessor",
+    "0xf58d00 valid selected-item lookup",
+    "0xeecf00/0xee9350/0xee93d0 catalog view accessors",
+    "0xf589b0 selected-item serializer",
+    "0xa9c290 synthetic ItemParam view; 0x1665ea0 controlled row index (native 0xa9f670 lookup runs)",
+    "0xa1e8c0 inventory ownership query and 0xa9c3a0 ItemParam-view equivalence"
+  ],
+  "results": [
+    {
+      "selector_type_state": "cUISelect",
+      "controlled_key_match_slot": null,
+      "marker_byte": 0,
+      "native_scan_calls": 1024,
+      "predicate_return": 1,
+      "expected_return": 1
+    },
+    {
+      "selector_type_state": "cUISelect",
+      "controlled_key_match_slot": 3,
+      "marker_byte": 0,
+      "native_scan_calls": 4,
+      "predicate_return": 0,
+      "expected_return": 0
+    },
+    {
+      "selector_type_state": "cUISelect",
+      "controlled_key_match_slot": 3,
+      "marker_byte": 255,
+      "native_scan_calls": 4,
+      "predicate_return": 1,
+      "expected_return": 1
+    },
+    {
+      "selector_type_state": "cDeliveryItem",
+      "controlled_key_match_slot": null,
+      "marker_byte": 0,
+      "native_scan_calls": 1024,
+      "predicate_return": 1,
+      "expected_return": 1
+    },
+    {
+      "selector_type_state": "cDeliveryItem",
+      "controlled_key_match_slot": 3,
+      "marker_byte": 0,
+      "native_scan_calls": 4,
+      "predicate_return": 0,
+      "expected_return": 0
+    }
+  ],
+  "open": [
+    "Per-kind ItemParam acceptance for special item encodings, beyond the tested ordinary 16-bit identity path",
+    "Meaning and producer of the 0xff marker in the museum donation list",
+    "Art or gyroid donation coverage; the traced writer and F77E00 gate accept only native ItemKind values 64/65/70"
+  ]
+}
