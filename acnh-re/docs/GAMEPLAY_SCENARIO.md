@@ -56,6 +56,13 @@ Data mesin untuk dokumen ini: [`output/gameplay/native_flag_refs.json`](../outpu
 | `0xf50ad0` | pemilih spesies bunga pulau: bulan 0–13 × dua belahan bumi × 63 pola pengecualian × setiap posisi undian (5000 run); mask bulan, geser enam bulan di belahan selatan, pengecualian, dan fallback sama dengan model; hanya `0xf53420` yang dikontrol (§10.4) | lulus |
 | `0xf50f50`, `0xf51040` | indeks `SpecialityFlower`/`VillageFlower` 0–7 → grup `ItemFrom` 0x57, 0x55, 0x58, 0x56, 0x54, 0x53, 0x52, 0x59; tanpa stub (§10.4) | lulus |
 | `0xf509e0` | buah asli dan buah saudara pulau baru: 3000 state RNG thread; lima buah muncul, buah saudara tidak pernah sama dengan buah asli, byte paksa-apel memberi Apple. Akses save, cek keberadaan item (ID `ItemParam` asli), dua helper parameter item, dan tabel item-per-indeks dikontrol (§10.4) | lulus |
+| `0x7ab350` | tempat pohon/kelapa di objek kerja sintetis: 195 kasus satu-fitur (pasir, satu/empat ubin air, set 5/9/10/11/18/19, ubin 1, tinggi ±4,9/±5, tepi lapangan) dan 1200 lapangan acak, kedua nilai `pantai`. Pasir, air, tinggi, `CliffLevel`, dan rect lapangan dikontrol; pemindaian set dan `0x7a2e10` native (§10.5) | lulus |
+| `0x7a2e10` | lereng mode 0 dan 1 atas 600 lapangan acak; ambang 5 dan pengecualian `CliffLevel` sama / diagonal sebagian air (§10.5) | lulus |
+| `0x4b5cc0` | tetangga bebas: 600 kasus atas set 1/3/20 dan rect lapangan terpotong; urutan tujuh tetangga, utara (0,−2) tidak pernah ditawarkan; `0xf53420` dikontrol (§10.5) | lulus |
+| `0x3060b80`, `0x3060cb0` | tabel gulma 7 kode musim × 7 ID (1A, 1B, 1C, 2A, 2B, 2C, 3) dibaca dari memori NSO setelah relokasi; sama dengan urutan `Grow`/`Label` di `FgMainParam` (§10.3) | lulus |
+| `0x4b6000` | tumbuh gulma: 120 lapangan sintetis (kepadatan, ubin siram, hari pertama atau bukan, argumen harian dan pulau baru, batas tercapai); urutan undian dan semua tulisan item sama dengan model (§10.3) | lulus |
+| `0x4b63e0` | sebar gulma: 120 lapangan (tinggi ±5, ubin terisi, set 2 di luar rect, masker pulau baru, batas 150/1300 tercapai): tulisan anak, jumlah, set 17, set 2, dan penghitung `+0x2e144` sama dengan model. Akses lapisan item, `FgMainParam`, tinggi, dan RNG harian dikontrol (§10.3) | lulus |
+| `0x4ba120` | konversi musim gulma: 30 lapangan, tiap kode musim, gulma campuran tujuh musim (§10.3) | lulus |
 
 Bacaan lain tetap [PSEUDO] sampai ada kasus emulasinya.
 
@@ -669,7 +676,7 @@ Data mesin: `output/gameplay/native_flag_refs.json` → `data.field_regrowth`. K
 
 Hari = 0 hanya menjalankan bagian per pemain. Hari < 0 (jam dimundurkan) punya jalur sendiri.
 
-Objek kerja menyimpan 32 bitset sel. Bitset ke-N ada di `+0x14028 + N × 0x1008`, terdiri dari header 8 byte dan 32.768 bit. Indeks bit = `(z >> 1) × 256 + (x >> 1)`, dengan x dan z dalam setengah unit (`0x7b0020` membalikkannya). Sensus `0x7a3ef0` mengisi set per jenis `FgMainParam.Kind` (tabel lompat `0x29f7a3c`), misalnya 5 = pohon, 6 = pohon dewasa yang bisa membawa barang, 8 = pohon buah, 9 = pohon tumbuh, 10 = kelapa, 11 = bambu, 17 = gulma, 18 = batu, 19 = tunggul. Sensus `0x7a46f0` (barang di tanah) dan `0x7a97e0` (pantai) mengisi penghitung berikut:
+Objek kerja diawali 5 bitset ubin item (0x4008 byte: header 8 byte dan 131.072 bit, bit = `z × 512 + x`) di `+N × 0x4008`, lalu 26 bitset unit sel. Bitset unit ke-N ada di `+0x14028 + N × 0x1008`, terdiri dari header 8 byte dan 32.768 bit; indeks ≥ 26 jatuh ke set 0. Indeks bit = `(z >> 1) × 256 + (x >> 1)`, dengan x dan z dalam ubin item (`0x7b0020` membalikkannya). Satu unit = 2 × 2 ubin item. Catatan koreksi: bacaan sebelumnya menyebut 32 bitset; batas indeks di instruksi adalah 26 (`cmp w8, #0x1a` di `0x7ab350`). Sensus `0x7a3ef0` mengisi set per jenis `FgMainParam.Kind` (tabel lompat `0x29f7a3c`), misalnya 5 = pohon, 6 = pohon dewasa yang bisa membawa barang, 8 = pohon buah, 9 = pohon tumbuh, 10 = kelapa, 11 = bambu, 17 = gulma, 18 = batu, 19 = tunggul. Sensus `0x7a46f0` (barang di tanah) dan `0x7a97e0` (pantai) mengisi penghitung berikut:
 
 | Penghitung | Isi |
 |---|---|
@@ -709,12 +716,36 @@ Saat sensus, cedar hias `0xec9a`/`0xec97` dikembalikan ke cedar biasa `0xea69` k
   - sarang tawon sampai 5;
   - furnitur sampai 2 setelah `VillageExtensionLevel2` = 1 (sebelumnya 1);
   - 100 Bell sampai 15 pohon, cedar hias dilewati.
-- **Gulma.** **[PSEUDO]** Hari yang disimulasikan = `min(hari, 20)`. Tiap hari:
-  - saat kode musim `Weed` (kolom 6, `0x203640`) berganti, `0x4ba120` mengonversi gulma;
-  - di hari lain, `0x4b6000`/`0x4b63e0` menyebarkan gulma (batas 150);
+- **Gulma.** Hari yang disimulasikan = `min(hari, 20)` **[PSEUDO]**. Bila hari > 20, tanggal terakhir lebih dulu dimajukan `hari − 20`; pergantian musim di celah itu mengonversi sekali. Tiap hari:
+  - saat kode musim `Weed` (kolom 6, `0x203640`) berganti, `0x4ba120` mengonversi gulma dan langkah tumbuh/sebar hari itu dilewati;
+  - di hari lain, `0x4b6000` menumbuhkan lalu `0x4b63e0` menyebarkan gulma (batas 150);
   - selama gulma < 150, gulma acak baru ditambah: 2 bila gulma ≤ 30, selain itu 1.
 
-  Varian dipilih `0xf53420(3)` dari tiga per kode musim: 0 Spr1A/B/C (`0x3060b80`), lalu 1 Smr, 2 Aut1, 3 Aut11, 4 Aut21, 5 Win1, 6 Win11 (pointer `0x3060cb0`). Batas `SeasonCalendar` belahan utara: 0 = 20 Mar–9 Jun, 1 = 10 Jun–15 Sep, 2 = 16–19 Sep, 3 = 20 Sep–31 Okt, 4 = Nov–15 Des, 5 = 16 Des–24 Feb, 6 = 25 Feb–19 Mar [TBL].
+  Varian gulma baru dipilih `0xf53420(3)` dari tiga ID tahap 1 per kode musim. Batas `SeasonCalendar` belahan utara: 0 = 20 Mar–9 Jun, 1 = 10 Jun–15 Sep, 2 = 16–19 Sep, 3 = 20 Sep–31 Okt, 4 = Nov–15 Des, 5 = 16 Des–24 Feb, 6 = 25 Feb–19 Mar [TBL].
+
+  Aturan di bawah ini **terbukti native** (`tools/island_weed_native.py`), kecuali loop pemanggil dan sumber bitmap siram.
+
+  | Unsur | Aturan |
+  |---|---|
+  | Tahap | Gulma = `FgMainParam.Kind` WeedSpr…WeedWin1 (`0x4d6620`); tahap = `Grow` 1–3 (`0x4d6650`). Rantai `GrowupFg`: 1A/1B/1C → 2A/2B/2C → 3 [TBL] |
+  | Tabel musim | 7 ID per kode musim, urutan 1A, 1B, 1C, 2A, 2B, 2C, 3. Kode 0 (Spr) di `0x3060b80`; kode 1–6 (Smr, Aut1, Aut11, Aut21, Win1, Win11) lewat pointer `0x3060cb0` |
+  | Siram | Bitset ubin 3 (`+0xc018`) = bitmap siram `SaveFg` (`0xf515c0`, 144 × 128 unit). Semua bit menyala bila flag save `+0x230` bit 0 aktif (`0x7a5c60`, juga menyalakan bit 0 `+0x2e144`). Hanya dipakai pada hari simulasi pertama |
+  | Tumbuh `0x4b6000(kerja, pertama, jumlah, batas, a, b, c, d)` | Tidak berjalan bila jumlah ≥ batas. Tiap unit set 17, urutan pindai z luar lalu x (ubin genap): tahap 1 naik satu langkah bila `rand100` ≤ a (b bila hari pertama dan disiram), tahap 2 bila ≤ c (d). Tahap 3 tidak mengundi |
+  | Sebar `0x4b63e0(kerja, musim, pertama, &jumlah, batas, a, b, c, d, masker)` | Memakai salinan set 17, jadi anak hari ini tidak ikut menyebar. Tahap 1 menyebar bila `rand100` ≤ a (b), tahap 2 bila ≤ 10 (c), tahap 3 bila ≤ 80 (d); angka dalam kurung untuk hari pertama di ubin siram. Kandidat = 8 unit tetangga di dalam rect lapangan, di set 2, di masker bila ada, dengan beda tinggi ≤ 5 (`0x7a2da0`). Satu kandidat diundi seragam menurut urutan bit ubin (`0x7afca0`, `0xf53450`). Anak ditulis hanya bila ubin lapisan 0 kosong. Lalu jumlah + 1, penghitung `+0x2e144` + 1 (berhenti di 150, `0x4b2400`), unit keluar dari set 0–4 dan 24 dan masuk set 17. Berhenti saat jumlah = batas |
+  | Anak `0x4b6d90` | Selalu tahap 1 dari musim berjalan. Induk tahap 3 → 1A/1B/1C acak (`0xf53420(3)`). Induk huruf A → B atau C, B → A atau C, C → A atau B (`0xf53420(2)`). Induk musim lain dipetakan dulu ke slotnya (`0x4b6c10` → `0x4b2f10`) |
+  | Konversi `0x4ba120(musim, kerja)` | Tiap gulma set 17 diganti ID dengan slot yang sama di tabel musim baru. ID yang tidak ada di tabel mana pun ditulis ulang apa adanya |
+
+  Peluang per hari dari argumen pemanggil (`rand100` = `0xf53420(100)`, 0–99, syarat ≤):
+
+  | Pemanggil | Tumbuh tahap 1 / 2 | Sebar tahap 1 / 2 / 3 | Batas |
+  |---|---|---|---|
+  | Harian `0x4b6e70` | 21 % / 6 % (siram hari pertama: 51 % / 11 %) | 1 % / 11 % / 81 % (siram hari pertama: 6 % / 21 % / 100 %) | 150, tanpa masker |
+  | Pulau baru `0x4ae640` | 6 % / 3 % | 21 % / 11 % / 81 % | 1300, masker, ≤ 20 putaran, tanpa gulma acak baru |
+
+  Masker pulau baru **[PSEUDO]**: semua unit, kecuali unit kiri, kanan, dan selatan dari ≤ 10 pohon buah (set 8 ∩ zona 0, diundi `0x7b0f00`) serta persegi 6 × 6 ubin dari (−2, −2) di sekitar ≤ 2 batu (set 18 ∩ zona 0).
+
+  Catatan koreksi: bacaan sebelumnya menyebut ubin 3 menyala penuh "bila argumen 2 `0x7a5c60` menyala". Disassembly `0x7a60d0`–`0x7a6144` menunjukkan sumbernya `0xf51f40` (flag save `+0x230` bit 0). Argumen 2 hanya menjadi bit 7 `+0x2e148`.
+
 - **Bunga.** **[PSEUDO]** Bunga dewasa yang disiram berkembang biak ke sel kosong di sampingnya. Mawar emas `0xeb7d` muncul pada `rand100` < 50 (`0x4c0e30`). Lily: `FlwLilyGrowCounter`/`FlwLilyFirstGrow`.
 
 ### 10.4 Isi awal pulau baru
@@ -731,7 +762,7 @@ Saat sensus, cedar hias `0xec9a`/`0xec97` dikembalikan ke cedar biasa `0xea69` k
    - zona 2: 2 sarang tawon, 5 × 100 Bell.
 6. Fosil: zona 1 empat, zona 2 dua. Kerang: zona 0 tiga, zona 1 sisanya sampai batas total.
 7. Jenis semua batu preset diundi ulang dengan `0x4d7110`. 20 ranting diletakkan di sekitar pohon, dan `DIYStone` di samping batu.
-8. Gulma tidak boleh dekat pohon buah dan batu. Gulma disebar sampai 1300, maksimal 20 putaran `0x4b6000`/`0x4b63e0`.
+8. Gulma tidak menyebar ke unit kiri, kanan, dan selatan pohon buah, atau ke persegi 6 × 6 di sekitar batu. Gulma disebar sampai 1300, maksimal 20 putaran `0x4b6000`/`0x4b63e0` (aturan dan peluang di §10.3).
 
 Catatan koreksi: bacaan sebelumnya menyebut langkah 3 memakai `0xf50f50`/`0x4ca690`. Itu salah. Kedua fungsi itu milik langkah bunga; fallback `0x4ca690` adalah `0xa42` `SeedCosmosRed`.
 
@@ -790,3 +821,69 @@ Loader yang sama dipakai pulau Commune (`0x565c90`) dan Mystery Tour (`0x5517e0`
 Tabel ada di `0x35e9138` (u32 grup, u16 mask). Nama grup berasal dari daftar enum `ItemFrom` di rodata `0x29b535d`.
 
 **Generator lain.** `0x4b3490` adalah pengisi pulau Mystery Tour, bukan pulau utama. Fungsi ini dipanggil `0x5602a0` saat atribut stage 0x11 aktif dan berujung ke `InduceInMysteriTourIslandToday`. Ia memakai ulang `0x4d7110`, `0x4b5900`, `0x4ca460`, `0x4ca690`, `0xf50f50`, dan `0xf51040`.
+
+### 10.5 Aturan penempatan
+
+Data mesin: `data.field_regrowth.placement` dan `data.field_regrowth.work_object` di `native_flag_refs.json`. Kasus native: `tools/island_placement_native.py`.
+
+**Atribut tanah.** **[PSEUDO]** `0x164b20` → `0x181cd0` memberi empat atribut `ColGroundAttributeParam` untuk satu ubin item. Kolom dibaca lewat pencarian baris `0x18f070`. Hash kolom dicocokkan lewat `output/mechanics/focus7/table_field_links.json`.
+
+| Fungsi | Arti |
+|---|---|
+| `0x18c4b0` | keempat atribut punya `Sand` (`0x18f460`) |
+| `0x18cb10(ubin, default)` | salah satu atribut punya `WaterCheck` (`0x18ef20`); `default` bila manajer tanah atau barisnya tidak ada |
+| `0x18c400` | salah satu punya `PlayerNoEntry` (`0x18f5b0`) |
+| `0x18c610` / `0x18c6c0` | salah satu atribut 41–43 (matras, terpal, lantai MyDesign) / atribut 45 (batu karang tak bisa dimasuki) |
+| `0x18ce50(rect)` | semua ubin "tanah polos" (`0x18c990`): lapisan tanah ada (`0x181fa0`), tidak kena `0x182c20`, flag unit `0x56dc00` mati, dan keempat atribut bukan `WaterCheck`, 7 (Null), 43, atau 46 (`0x186b40`) |
+
+**Set sel yang dipakai predikat.** **[PSEUDO]** Sensus `0x7a5c60` → `0x7a5090`, `0x7a3300`, `0x7a3d70`:
+
+| Set | Isi |
+|---|---|
+| ubin 0 | ubin lapisan 0 tanpa item (−2), ditambah item yang bisa dibuang (`0x4d7bf0`) dan dibersihkan sensus |
+| ubin 1 | ubin yang kena objek struktur/terrain (`0x7a26e0` → `0x18cbc0`/`0x18cd40`) |
+| ubin 2 | jejak item tanah (luas dari `0xa142b0`) dan batu yang baru diletakkan |
+| 1 | daratan bebas: unit di luar bitset pantai `*0x32e2410`, keempat ubin di ubin 0, tanah polos, tidak semuanya `Sand`, tanpa `PlayerNoEntry`, tanpa atribut 41–43/45, dan tidak ada objek di jalur 2×8 di selatannya; lalu disaring mask `0x7a55b0` |
+| 2 | set 1 dan `0x7a2a30` (tiap ubin lolos `0x18cf70`, flag unit `0x56d780` mati) |
+| 3 | set 1 dan `0x7a28b0` (seperti `0x7a2a30`, dan tidak di persegi plaza event `0x469640`) |
+| 4 | unit pantai (`0x7a97e0`) |
+| 20 | unit yang bisa dicapai pemain (`0x7a3200` pada keempat ubin): tanpa `PlayerNoEntry`; sebelum `VillageExtensionLevel2` = 1 hanya mask terhubung plaza (zona 0 di §10.4); `Level2` = 1 tanpa `Level3` → `CliffLevel` 0; keduanya = 1 → `CliffLevel` ≠ 3 |
+| 21 / 22 | unit `CliffLevel` 2 / 1 |
+| 23 | unit yang keempat ubinnya ada di ubin 0 |
+| 24 | tempat lily di atas tebing (`0x7a3ca0`: set 23, `0x7a2a30`, `CliffLevel` 1–2, `0x7a3ab0`) |
+| 25 | unit berisi item `ItemKind` 0x2f (Mushroom) yang dicek terhadap `0xcd0` (`0x7a46f0`); syarat persisnya belum dibaca |
+
+Setelah penempatan, `0x7aa200` mengeluarkan unit dari set 0–4 dan 24 dan memperbarui set 23.
+
+**Tempat pohon `0x7ab350(kerja, pos, pantai)`.** **Terbukti native.** Fungsi ini dipanggil pertumbuhan pohon `0x4b99a0` dan langkah 2 §10.4 (pantai = 1 untuk kelapa). Hasil 1 bila:
+
+1. Untuk 3×3 unit di sekitar `pos` (dx, dz ∈ {−2, 0, 2} ubin), ubin itu `Sand` tepat bila `pantai` = 1.
+2. Tidak ada unit yang keempat ubinnya air. Unit yang sebagian air hanya boleh di empat diagonal.
+3. Tidak ada unit tetangga (8) di set 5, 10, atau 11, kecuali yang juga di set 9 (pohon yang sedang tumbuh). Tidak ada tetangga di set 19 (tunggul) atau 18 (batu).
+4. Tidak ada tetangga yang seluruhnya di ubin 1 (struktur) atau di luar persegi lapangan.
+5. `0x7a2e10(pos, 1)` = 0.
+
+**Lereng `0x7a2e10(pos, mode)`.** **Terbukti native.** Hasil 1 bila salah satu dari 8 unit tetangga beda tinggi (`0x18d4c0`) ≥ 5 dari pusat. Dengan mode 1, tetangga seperti itu diabaikan bila `CliffLevel`-nya sama dengan pusat, atau bila ia diagonal dan sebagian (tidak seluruhnya) air.
+
+**Batu `0x7aa3c0`.** **[PSEUDO]** Kandidat = set 2 ∩ set 20. Kandidat dibuang bila:
+
+- ada tetangga yang seluruhnya di ubin 1 ∪ ubin 2 (`0x7af8a0`);
+- ada tetangga (8) yang bukan tanah polos;
+- `0x7a2e10(pos, 0)` = 1.
+
+Dari sisanya satu unit diundi seragam (`0x7b0f00`: `0xf53450` di RNG harian `0x35e9510`, lalu bit ke-k). Batu ditulis di lapisan 0 (`0x4ad3b0`), unit ditempati, penghitung batu naik (berhenti di 7), lalu set 18 dan ubin 2 diisi.
+
+**Fosil `0x7ad6e0`.** **[PSEUDO]** Satu unit seragam dari set 3 ∩ set 20. `0x7a28b0` harus masih lolos dan `0xf58d00` menerima item. Lalu `0xa143f0` mengubur item dan unit ditempati. Tidak ada pengulangan; karena itu loop fosil harian berhenti di kegagalan pertama.
+
+**Penempat umum `0x7aadc0(kerja, item, set, keluaran, set20)`.** **[PSEUDO]** Satu unit seragam dari set (∩ set 20 bila diminta). Jejak item (`0xf59e30`) harus 2 × 2 ubin. Item ditulis di lapisan 0 dan unit ditempati. Pemakainya:
+
+| Pembungkus | Objek | Set |
+|---|---|---|
+| `0x7ad870` | gulma (§10.3) | 2 ∩ 20 |
+| `0x7abe80` / `0x7abf30` | kerang / pecahan bintang | 4; ∩ 20 bila argumen flag-nya menyala |
+| `0x7abff0` | lily (`0x4b6e70`) | 24 |
+| `0x7ad860` | dari `0xfbef40` | 1 ∩ 20 |
+
+**Tetangga bebas `0x4b5cc0(keluaran, kerja, pos, set3, set20)`.** **Terbukti native.** Kandidat = set 3 (atau set 1), ∩ set 20 bila diminta. Hanya tujuh tetangga yang diperiksa, berurutan (−2,−2), (+2,−2), (−2,0), (+2,0), (−2,+2), (0,+2), (+2,+2). Unit tepat di utara (0,−2) tidak pernah ditawarkan. Tetangga di luar persegi lapangan dilewati. `0xf53420(n)` memilih satu. Pemakainya: rebung bambu, ranting, dan isi pohon (§10.3).
+
+**Masih terbuka.** Mask wilayah `0x7a55b0` (set 0 dan saringan set 1–3); bagian dalam `0x181fa0`, `0x182c20`, `0x56dc00`, `0x18cf70`, dan `0x7a26e0`; arti set 16 dan 25.

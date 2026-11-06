@@ -247,6 +247,43 @@ class NativeVerificationTests(unittest.TestCase):
         self.assertTrue(all(f not in sisters for f, sisters in fruit['seen']['random'].items()))
         self.assertEqual(set(fruit['seen']['forced']), {'0x8a5'})
 
+    def test_island_placement_cases_are_native(self):
+        cases = json.loads((ROOT/'output'/'gameplay'/'gameplay_native.json').read_text())['cases']
+        spot, slope, free = cases['0x7ab350 tree spot'], cases['0x7a2e10 slope check'], cases['0x4b5cc0 free neighbour']
+        self.assertTrue(spot['pass'] and slope['pass'] and free['pass'])
+        ok = set(spot['single_feature_accepted'])
+        self.assertIn('one water tile 0 (-2,-2)', ok)          # diagonal units may be partly water
+        self.assertNotIn('one water tile 0 (+0,-2)', ok)       # orthogonal ones may not
+        self.assertIn('height +5.0 (+2,+0)', ok)               # height step without a CliffLevel change is ignored
+        self.assertNotIn('height and cliff (+2,+0)', ok)
+        self.assertIn('set 5 and 9 (+2,+2)', ok)               # growing trees do not block
+        self.assertNotIn('set 18 (+2,+2)', ok)
+        self.assertEqual(sorted(k for k in ok if 'edge' in k), ['field edge south ok', 'field edge west ok'])
+        self.assertEqual(free['order'], [[-2, -2], [2, -2], [-2, 0], [2, 0], [-2, 2], [0, 2], [2, 2]])
+        self.assertIn(7, free['candidate_counts_seen'])
+
+    def test_island_weed_cases_are_native(self):
+        cases = json.loads((ROOT/'output'/'gameplay'/'gameplay_native.json').read_text())['cases']
+        tables, grow = cases['0x3060b80 weed season tables'], cases['0x4b6000 weed growth']
+        spread, conv = cases['0x4b63e0 weed spread'], cases['0x4ba120 weed season conversion']
+        self.assertTrue(tables['pass'] and grow['pass'] and spread['pass'] and conv['pass'])
+        self.assertEqual(tables['labels'][0], ['PltWeedSpr1A', 'PltWeedSpr1B', 'PltWeedSpr1C', 'PltWeedSpr2A',
+                                               'PltWeedSpr2B', 'PltWeedSpr2C', 'PltWeedSpr3'])
+        self.assertEqual(tables['labels'][6][6], 'PltWeedWin13')
+        self.assertEqual(spread['child_slots_seen'], [0, 1, 2])        # children are always stage 1
+        self.assertGreater(spread['runs_that_hit_cap'], 0)
+        self.assertEqual(spread['thresholds'], {'daily': [0, 5, 20, 100], 'new_island': [20, 20, 10, 80]})
+
+    def test_island_placement_reading(self):
+        fr = json.loads((ROOT/'output'/'gameplay'/'native_flag_refs.json').read_text())['data']['field_regrowth']
+        pl, sets = fr['placement'], fr['work_object']['sets']
+        self.assertIn('Sand 0x18f460', pl['ground_attributes'])
+        self.assertIn('set 2 and set 20', pl['rock_0x7aa3c0'])
+        self.assertIn('set 3 and set 20', pl['fossil_0x7ad6e0'])
+        self.assertIn('weeds 0x7ad870 (set 2, set 20)', pl['generic_0x7aadc0'])
+        self.assertIn('VillageExtensionLevel2', sets['20'])
+        self.assertIn('26 unit bitsets', fr['work_object']['bitsets'])
+
     def test_new_island_reading(self):
         fr = json.loads((ROOT/'output'/'gameplay'/'native_flag_refs.json').read_text())['data']['field_regrowth']
         ni = fr['new_island']
@@ -256,6 +293,16 @@ class NativeVerificationTests(unittest.TestCase):
         self.assertNotIn('LandFruit', ' '.join(ni['steps']))
         self.assertIn('BlockItemPreset', ni['creation']['outside_blocks'])
         self.assertIn('Cosmos stage-3', fr['preset_items'])
+
+    def test_weed_reading(self):
+        fr = json.loads((ROOT/'output'/'gameplay'/'native_flag_refs.json').read_text())['data']['field_regrowth']
+        w = fr['plants_0x4b6e70']['weed_rules']
+        self.assertIn('stage 2 when <= 10 (c), stage 3 when <= 80 (d)', w['spread_0x4b63e0'])
+        self.assertIn('stage 3 draws nothing', w['grow_0x4b6000'])
+        self.assertIn('slot A (0, 3) -> B or C', w['child_0x4b6d90'])
+        self.assertIn('terbukti native', w['evidence'])
+        self.assertIn('+0x230 bit 0', fr['work_object']['tile_sets']['3'])
+        self.assertNotIn('arg 2 is on', fr['work_object']['tile_sets']['3'])
 
     def test_field_regrowth_reading(self):
         refs = json.loads((ROOT/'output'/'gameplay'/'native_flag_refs.json').read_text())['data']
@@ -386,6 +433,27 @@ class VisitorScheduleNsoTests(unittest.TestCase):
         self.assertEqual(words(0x3060b80, 3), [0xeb28, 0xeb30, 0xeb31])
         kinds = self.read(0x293f104, 4096).split(b'\0', 1)[0].decode().split(',')
         self.assertEqual((kinds[3], kinds[9], kinds[29]), ('TreeCedar', 'TreeFruit', 'Stone'))
+
+    def test_island_placement_constants(self):
+        word = lambda a: int.from_bytes(self.read(a, 4), 'little')  # noqa: E731
+        self.assertEqual(word(0x7a2e94), 0x1e22900a)  # fmov s10, #5.0   (slope threshold)
+        self.assertEqual(word(0x7a2e98), 0x1e32900b)  # fmov s11, #-5.0
+        self.assertEqual(word(0x7abb34), 0x528000a8)  # mov w8, #5       (tree spot: trees ...)
+        self.assertEqual(word(0x7abb38), 0x52800136)  # mov w22, #9      (... minus growing trees)
+        self.assertEqual(word(0x7abb84), 0x52800148)  # mov w8, #0xa     (palms)
+        self.assertEqual(word(0x7abbd0), 0x52800168)  # mov w8, #0xb     (bamboo)
+        self.assertEqual(word(0x7abc1c), 0x52800268)  # mov w8, #0x13    (stumps)
+        self.assertEqual(word(0x7abc54), 0x52800248)  # mov w8, #0x12    (rocks)
+        self.assertEqual(word(0x7aa400), 0x528c0708)  # mov w8, #0x6038  (rock candidates: set 2 at +0x16038 ...)
+        self.assertEqual(word(0x7aa418), 0x52901908)  # mov w8, #0x80c8  (... and set 20 at +0x280c8)
+
+    def test_weed_constants(self):
+        word = lambda a: int.from_bytes(self.read(a, 4), 'little')  # noqa: E731
+        self.assertEqual(word(0x4b6728), 0x52800a09)  # mov w9, #0x50    (spread: stage 3 unwatered 80)
+        self.assertEqual(word(0x4b6748), 0x52800149)  # mov w9, #0xa     (spread: stage 2 unwatered 10)
+        self.assertEqual(word(0x4b0b80), 0x52800299)  # mov w25, #0x14   (new island: stage 1 spread 20)
+        self.assertEqual(word(0x4b0bc8), 0x52800a08)  # mov w8, #0x50    (new island: stage 3 watered 80)
+        self.assertEqual(word(0x4b2400), 0x528012c0)  # mov w0, #0x96    (weed counter clamp 150)
 
     def test_island_content_constants(self):
         word = lambda a: int.from_bytes(self.read(a, 4), 'little')  # noqa: E731

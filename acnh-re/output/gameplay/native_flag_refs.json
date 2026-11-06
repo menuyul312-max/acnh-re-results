@@ -1238,6 +1238,20 @@
      "cells are bits of 0x8000-bit sets in the 0x2e150-byte work object (bit = (z >> 1) * 256 + (x >> 1)); the beach set is *0x32e2410 and set 4 (empty beach cells)"
     ]
    },
+   "0x7ab350": {
+    "role": "tree / palm spot check (see data.field_regrowth.placement)",
+    "reading": [
+     "3x3 units: Sand must equal the beach argument, no fully-water unit, partly-water only on diagonals",
+     "no neighbour tree, palm or bamboo outside set 9, no stump or rock, no neighbour inside a structure footprint or outside the field",
+     "no slope 0x7a2e10(pos, 1): height step >= 5 to a neighbour with another CliffLevel or to a fully-water neighbour (terbukti native)"
+    ]
+   },
+   "0x4b5cc0": {
+    "role": "random free neighbour unit (bamboo shoot, branches, tree items)",
+    "reading": [
+     "seven neighbours of set 3 or set 1 (optionally and set 20), the unit directly north (0, -2) is never offered; 0xf53420(n) picks one (terbukti native)"
+    ]
+   },
    "0x7b8b30": {
     "role": "new-island zones (see data.field_regrowth.new_island.zones)",
     "reading": [
@@ -1437,12 +1451,20 @@
    "entry": "0xf53a70 day-change driver: 0x7a3410 builds a 0x2e150-byte field work object, 0x7a9760 -> 0x7a5c60 fills it from the save (census 0x7a3ef0 for trees/plants/rocks, 0x7a46f0 for ground items, 0x7a97e0 for the beach), 0x4ae640(days, work) runs the processors, 0x7b1dd0 writes back",
    "args": "param_1 = {s64 days since last growth, now, last, byte first_growth (no stored date yet), flags +0x19..+0x1c}; days 0 -> only per-player items; days < 0 (clock set back) -> separate path",
    "work_object": {
-    "bitsets": "32 bitsets of 0x1008 bytes (8-byte header + 32768 bits) at +0x14028 + N*0x1008; bit index = (z >> 1) * 256 + (x >> 1), and 0x7b0020 gives back x = 2*(i & 0xff), z = 2*(i >> 8) (half units)",
+    "bitsets": "5 item-tile bitsets of 0x4008 bytes (8-byte header + 131072 bits, bit = z * 512 + x) at +N*0x4008, then 26 unit bitsets of 0x1008 bytes (8-byte header + 32768 bits) at +0x14028 + N*0x1008 (indices >= 26 fall back to set 0); unit bit = (z >> 1) * 256 + (x >> 1), and 0x7b0020 gives back x = 2*(i & 0xff), z = 2*(i >> 8); x, z are item tiles, one unit = 2 x 2 tiles",
+    "tile_sets": {
+     "0": "layer-0 tiles without an item (item -2), plus removable items cleared by the census (0x4d7bf0)",
+     "1": "tiles of a structure/terrain object (0x7a26e0 hit: 0x18cbc0 / 0x18cd40)",
+     "2": "footprints of ground items (0xa142b0 extent) and placed rocks",
+     "3": "watered units of SaveFg (0xf515c0; all bits set when save flag +0x230 bit 0 is on, 0x7a5c60); read by flower breeding and weeds on the first simulated day",
+     "4": "written by the ground-item census 0x7a46f0"
+    },
     "sets": {
-     "1": "ground for the loose DIYStone (0x7aa9a0)",
-     "2": "empty ground",
-     "3": "diggable ground (fossils)",
-     "4": "empty beach cells (0x7a97e0)",
+     "0": "free units from the region pass 0x7a55b0 (copy of its mask)",
+     "1": "free land (0x7a5090): unit not in the beach bitset *0x32e2410, all four tiles in tile set 0, plain ground (0x18ce50), not all Sand, no PlayerNoEntry, no attribute 41-43 or 45, no object hit in the 2x8 strip south of it (0x7a26e0); then masked by 0x7a55b0",
+     "2": "set 1 and 0x7a2a30 (every tile plain ground with 0x18cf70 and no 0x56d780 unit flag)",
+     "3": "set 1 and 0x7a28b0 (as 0x7a2a30, and no tile inside the event-plaza rectangle 0x469640)",
+     "4": "beach units (in *0x32e2410; 0x7a97e0)",
      "5": "trees (oak, cedar, fruit, money tree)",
      "6": "mature trees that can hold a shake item (0x4d6950)",
      "7": "mature cedars",
@@ -1458,9 +1480,15 @@
      "17": "weeds",
      "18": "rocks",
      "19": "stumps",
-     "20": "free of players/structures (0x280c8)"
+     "20": "player-reachable units (0x7a3300 -> 0x7a3200 on all four tiles): no PlayerNoEntry, and VillageExtensionLevel2 != 1 -> plaza-connected mask (zone 0), Level2 = 1 and Level3 = 1 -> CliffLevel != 3, Level2 = 1 only -> CliffLevel 0",
+     "21": "CliffLevel 2 units",
+     "22": "CliffLevel 1 units",
+     "23": "units whose four tiles are all in tile set 0 (empty)",
+     "24": "cliff-top spots for the lily (0x7a3ca0: set 23, 0x7a2a30, CliffLevel 1-2, 0x7a3ab0)",
+     "25": "units holding an ItemKind 0x2f (Mushroom) item checked against 0xcd0 (0x7a46f0); exact condition not read"
     },
-    "counters_0x2e144": "bit 1 pitfall present; bits 2-4 buried fossils (stop at 6); bits 5-7 rocks (stop at 7); bits 8-18 weeds; bits 19-23 branches on ground (stop at 15); bits 24-28 beach shells; bits 29-31 trees with a wasp nest",
+    "occupy": "0x7aa200(work, rect) after a placement: the rect leaves sets 0-4 and 24 (0x7b0320 / 0x7b0500) and 0x7af7a0 / set 23 are updated",
+    "counters_0x2e144": "bit 0 every tile watered (save flag +0x230 bit 0, 0xf51f40); bit 1 pitfall present; bits 2-4 buried fossils (stop at 6); bits 5-7 rocks (stop at 7); bits 8-18 weeds; bits 19-23 branches on ground (stop at 15); bits 24-28 beach shells; bits 29-31 trees with a wasp nest",
     "counters_0x2e148": "bits 0-3 trees with 100 bells; bits 4-5 trees with furniture; bit 6 loose DIYStone present; bit 7 = 0x7a5c60 arg 2; bit 8 message bottle on beach; bits 9-13 kind 0x2f items; bits 14-17 star fragments on beach",
     "tree_census": "0x7a3ef0 switch on FgMainParam.Kind - 1 (jump table 0x29f7a3c): oak/cedar/palm/bamboo/fruit/money tree each counted (+0x2e0f8..+0x2e10c) and added to their set; Grow 4 sets ExistOak/ExistCedar/ExistSakura/ExistBanboo; decorated cedars 0xec9a/0xec97 revert to 0xea69 when the season ends (0x4cbb70); stumps of fruit trees 0xecbc..0xecbf become oak stumps 0xec6d/0xec6c/0xec6b/0xea9f; rocks failing 0x7a2a30 are removed"
    },
@@ -1484,7 +1512,19 @@
     "branches": "when branches on ground < 15: around random trees of set 6, a 6x6 area from (-2,-2) through 0x7af510 on 0x10020 and 0x4b5cc0; DIYBranch 0x9c4 placed (0x4ad3b0) until 15",
     "tree_items": "0x4d6e10 content: 0 -> 100Bell 0x839, 1 -> 1000Bell 0x842, 2 -> Honeycomb 0xcbf (wasp nest), 3 -> random furniture of ItemFrom groups 1,2,3,5,6. Daily on random trees of set 6 and 20: wasp nests up to 5 - nests; furniture up to 2 - furniture (VillageExtensionLevel2 = 1; 3 furniture -> 0) or 1 if none before that; 100 bells up to 15 - (trees with bells), skipping decorated cedars",
     "flowers": "grown flowers of set 15 with watered state 0xc018 breed into empty set-2 neighbours (0x7a2da0, 0x4d5e50), gold rose 0xeb7d at rand100 < 50 from 0x4c0e30; genetics are in output/flowers (baseline)",
-    "weeds": "simulated days = min(days, 20); per day: season change (SeasonCalendar column 6 Weed via 0x203640) -> 0x4ba120 converts weeds; otherwise 0x4b6000 / 0x4b63e0 spread (cap 150); while weeds < 150, 2 new weeds if weeds <= 30 else 1, variant = one of three per season code (table 0x3060b80 for code 0, pointers 0x3060cb0 for codes 1-6), r = 0xf53420(3), placed by 0x7ad870",
+    "weeds": "simulated days = min(days, 20); per day: season change (SeasonCalendar column 6 Weed via 0x203640) -> 0x4ba120 converts weeds; otherwise 0x4b6000 grows and 0x4b63e0 spreads them (cap 150; first = first simulated day); while weeds < 150, 2 new weeds if weeds <= 30 else 1, variant = one of three per season code (table 0x3060b80 for code 0, pointers 0x3060cb0 for codes 1-6), r = 0xf53420(3), placed by 0x7ad870; when days > 20 the last date is first moved forward by days - 20 and a season change in that gap converts once",
+    "weed_rules": {
+     "stage": "weed = FgMainParam Kind WeedSpr..WeedWin1 (0x4d6620: kind index 10-16, via 0x4cbd20); stage = Grow 1-3 (0x4d6650); GrowupFg chain 1A/1B/1C -> 2A/2B/2C -> 3 [TBL]",
+     "season_tables": "7 IDs per season code in the order 1A, 1B, 1C, 2A, 2B, 2C, 3: code 0 at 0x3060b80 (Spr 60200, 60208, 60209, 60210-60213), codes 1-6 through pointers 0x3060cb0 (Smr, Aut1, Aut11, Aut21, Win1, Win11; relocated, contiguous after code 0)",
+     "watered": "work tile set 3 (+0xc018) = watered bitmap of SaveFg (0xf515c0, 144 x 128 units; all bits on when save flag +0x230 bit 0 is set, 0x7a5c60); used only on the first simulated day",
+     "grow_0x4b6000": "(work, first, count, cap, a, b, c, d): nothing when count >= cap; for every unit of set 17 in scan order (z outer, x inner, even tiles): stage 1 grows one GrowupFg step (0x4d5ca0) when rand100 <= a (b when first and watered), stage 2 when rand100 <= c (d); stage 3 draws nothing. rand100 = 0xf53420(100), day RNG",
+     "spread_0x4b63e0": "(work, season, first, &count, cap, a, b, c, d, mask): nothing when count >= cap; snapshot of set 17 (children of today do not spread); per weed: stage 1 spreads when rand100 <= a (b when first and watered), stage 2 when <= 10 (c), stage 3 when <= 80 (d); candidates = the 8 neighbour units inside the field rectangle, in set 2, in mask when given, with |height - parent height| <= 5 (0x7a2da0); one drawn uniformly in tile-bit order (0x7afca0: 0xf53450, day RNG); the child (0x4b6c10 slot, 0x4b6d90) is written only when that layer-0 tile is empty; then count + 1, weed counter +0x2e144 bits 8-18 + 1 (clamped at 150, 0x7aa360/0x4b2400), the unit leaves sets 0-4 and 24 and joins set 17; stop when count reaches cap",
+     "child_0x4b6d90": "child is stage 1 of the given season: parent slot 6 (stage 3) -> slot 0xf53420(3) (1A/1B/1C); slot A (0, 3) -> B or C; slot B (1, 4) -> A or C; slot C (2, 5) -> A or B, each by 0xf53420(2); a parent of another season is first mapped to its slot (0x4b6c10 -> 0x4b2f10)",
+     "convert_0x4ba120": "(season, work): every weed of set 17 is replaced by the ID with the same slot in the new season table (0x4b2f10 searches the seven tables in code order 0..6); IDs not in any table are rewritten unchanged",
+     "daily_args": "0x4b6e70: 0x4b6000(150, 20, 50, 5, 10), 0x4b63e0(150, 0, 5, 20, 100, no mask): per day stage 1 grows 21 % (51 % watered on the first day), stage 2 6 % (11 %); stage 1 spreads 1 % (6 %), stage 2 11 % (21 %), stage 3 81 % (100 %)",
+     "new_island_args": "0x4ae640 (first growth, VillageExtensionLevel2 != 1): mask = all units minus the left, right and south unit of up to 10 fruit trees (set 8 and zone 0, drawn by 0x7b0f00) and the 6 x 6 tile square from (-2, -2) of up to 2 rocks (set 18 and zone 0); rounds 1..20 of 0x4b6000(1300, 5, 5, 2, 2) and 0x4b63e0(1300, 20, 20, 10, 80, mask) while count < 1300: grow 6 % / 3 %, spread 21 % / 11 % / 81 %; no random new weeds",
+     "evidence": "terbukti native: 0x4b6000, 0x4b63e0, 0x4ba120 and the season tables over synthetic fields (tools/island_weed_native.py); [PSEUDO]: the caller loops in 0x4b6e70 and 0x4ae640 and the watered bitmap source"
+    },
     "bamboo": "a bamboo (set 11) that reaches Grow 4 today sets ExistBanboo and drops its FgMainParam.NutItem (0x4ca0d0) on a free neighbour from 0x4b5cc0",
     "tree_cross": "when 0x4bd2d0 holds: a 5-cell cross around every set-13 tree, minus sets 20 and 25; up to min(5, 30 - count) objects chosen by 0x4d7c30 go to set 2 or set 3; object kind and count meaning not read"
    },
@@ -1506,7 +1546,7 @@
      "tree items per zone 0x4b5540(zone, count, content): zone 0: 2 wasp, 5 bells, 1 furniture; zone 1: 1 wasp, 5 bells, 1 furniture; zone 2: 2 wasp, 5 bells",
      "fossils 0x4b5780: zone 1: 4, zone 2: 2; shells 0x4b5b20: zone 0: 3, zone 1: total cap - 3",
      "every preset rock re-rolled with 0x4d7110; 20 branches around trees; DIYStone next to rocks",
-     "weeds: no weeds within 2 cells of up to 10 fruit trees or in 6x6 around up to 2 rocks; then up to 20 rounds of 0x4b6000(1300, 5, 5, 2, 2) and 0x4b63e0(1300, 20, 20, 10, 80) while weeds < 1300"
+     "weeds: no spread onto the left, right and south unit of up to 10 fruit trees or into the 6x6 square around up to 2 rocks; then up to 20 rounds of 0x4b6000(1300, 5, 5, 2, 2) and 0x4b63e0(1300, 20, 20, 10, 80) while weeds < 1300 (plants_0x4b6e70.weed_rules)"
     ],
     "creation": {
      "function": "0x5662e0 (from 0xfc3b00, before 0x56d640(1)): picks MainFieldParamUniqueID (+0xcfa2a of SaveMainField) and DistantViewUniqueID (+0xda2a8), writes SaveMainField.OutsideField (FieldBlockData 9 x 8 u16 part IDs + TemplateUniqueId) from the chosen FieldOutsideTemplate (0xf8f2a0), then 0x565e30",
@@ -1524,14 +1564,24 @@
     }
    },
    "preset_items": "ItemPreset A/B/C (96 files) key 5bc12308 is a 64-bit field item word, low 16 bits = FgMainParam.UniqueID [TBL]: oak 60000, cedar 60009, apple-tree placeholder 60001, spring weeds 60200/60208/60209, StoneA 60178 and 53-63 Cosmos stage-3 flowers per preset (Red 60017, Yellow 60043, White 60020; upper 32 bits = default gene byte 3/0x1c/0x10, in some presets the same value shifted left by 5); coordinates cover only the inner area (x 28-196, z 28-162 item units); no palm and no shell",
+   "placement": {
+    "ground_attributes": "ColGroundAttributeParam columns read through 0x18f070 row lookup: WaterCheck 0x18ef20 (0x186960), CanBury 0x18f1c0 (0x1869c0), Sand 0x18f460 (0x1869a0), PlayerNoEntry 0x18f5b0 (0x1869e0), NpcNoEntry 0x18f700 (0x186a00); 0x164b20 -> 0x181cd0 gives the four attributes of an item tile. 0x18c4b0 = all four Sand; 0x18cb10(tile, default) = any WaterCheck (default when the land manager or the lookup is missing); 0x18c400 = any PlayerNoEntry; 0x18c610 = any attribute 41-43; 0x18c6c0 = any attribute 45; 0x186b40 natural ground = not WaterCheck and not 7, 43 or 46",
+    "plain_ground": "0x18ce50(rect) = 0x18c990 on every tile: ground layer present (0x164e90 -> 0x181fa0), no 0x164ea0 -> 0x182c20 hit, unit flag 0x56dc00 off, all four attributes natural ground (0x186b40)",
+    "tree_spot_0x7ab350": "(work, pos, beach) -> 1 when a tree (beach 0) or palm (beach 1) may stand at pos: for the 3x3 units around pos (dx, dz in -2, 0, 2) the tile must be Sand exactly when beach, its 2x2 tiles must not all have WaterCheck, and only the four diagonal units may be partly water; no neighbour unit (8) in set 5, 10 or 11 unless also in set 9 (growing), none in set 19 or 18, none entirely in tile set 1, none outside the field rectangle; slope check 0x7a2e10(pos, 1) false",
+    "slope_0x7a2e10": "(pos, mode) -> 1 when a neighbour unit (8) differs in height (0x18d4c0) from pos by 5 or more; with mode 1 such a neighbour is ignored when its CliffLevel equals the centre one, or when it is a diagonal unit that is partly (not fully) water; a fully-water neighbour still counts",
+    "rock_0x7aa3c0": "(work, item) candidates = set 2 and set 20; a candidate is kept when no neighbour unit lies entirely in tile sets 1|2 (0x7af8a0), all eight neighbour units are plain ground (0x18ce50) and 0x7a2e10(pos, 0) is false; one kept unit is drawn uniformly (0x7b0f00: 0xf53450 on the day RNG 0x35e9510, then the k-th set bit), the rock is written on layer 0 (0x4ad3b0), the unit is occupied (0x7aa200), the rock counter +0x2e144 bits 5-7 rises (stops at 7), set 18 and tile set 2 get the rock",
+    "fossil_0x7ad6e0": "(work, item, out) one uniform unit of set 3 and set 20 (0x7b0f00, day RNG); 0x7a28b0 must still hold and 0xf58d00 accept the item, then 0xa143f0 buries it and 0x7aa200 occupies the unit; no retry, so the daily fossil loop stops at the first failure",
+    "generic_0x7aadc0": "(work, item, set, out, use_set_20): one uniform unit of the set (and set 20), item footprint 0xf59e30 must be 2 x 2 tiles, written on layer 0 by 0x4ad3b0, occupied by 0x7aa200. Users: weeds 0x7ad870 (set 2, set 20), shells 0x7abe80 and star fragments 0x7abf30 (set 4; set 20 only when their flag argument is set), lily 0x7abff0 (set 24, no set 20), 0x7ad860 from 0xfbef40 (set 1, set 20)",
+    "free_neighbour_0x4b5cc0": "(out, work, pos, use_set_3, use_set_20) candidate units = set 3 (or set 1), and set 20 when asked, among seven neighbours in the order (-2,-2), (+2,-2), (-2,0), (+2,0), (-2,+2), (0,+2), (+2,+2); the unit directly north (0,-2) is never a candidate; a neighbour outside the field rectangle is skipped; 0xf53420(n) picks one"
+   },
    "mystery_tour": "0x4b3490 (from 0x5602a0 when stage attribute 0x11 is set) populates a Mystery Tour island (reaches InduceInMysteriTourIslandToday); it reuses 0x4d7110, 0x4b5900, 0x4ca460, 0x4ca690, 0xf50f50 and 0xf51040",
-   "evidence": "terbukti native: 0x4d7110 rock kind, 0x7abd00 shell kind and season tables, 0x7a7010 shell caps (tools/field_regrowth_native.py); 0xf50ad0 flower pick, 0xf50f50/0xf51040 flower groups, 0xf509e0 speciality and sister fruit (tools/island_content_native.py); constants of the rock/fossil/weed branches checked in the instructions (tests); everything else [PSEUDO]",
+   "evidence": "terbukti native: 0x4d7110 rock kind, 0x7abd00 shell kind and season tables, 0x7a7010 shell caps (tools/field_regrowth_native.py); 0xf50ad0 flower pick, 0xf50f50/0xf51040 flower groups, 0xf509e0 speciality and sister fruit (tools/island_content_native.py); 0x7ab350 tree spot, 0x7a2e10 slope check, 0x4b5cc0 free neighbour (tools/island_placement_native.py, terrain accessors controlled); 0x4b6000 weed growth, 0x4b63e0 weed spread, 0x4ba120 weed season conversion and the weed season tables (tools/island_weed_native.py, item layer and FgMainParam accessors controlled); constants of the rock/fossil/weed branches checked in the instructions (tests); everything else [PSEUDO]",
    "open": [
     "seed of the field RNG 0x344d100",
-    "meaning of set 1, 16, 20 and of the per-player spot state 0xf51390",
-    "0x4b6000 / 0x4b63e0 weed spread internals",
-    "0x4ba120 seasonal weed conversion",
-    "placement checks 0x7ab350, 0x7aa3c0, 0x7ad6e0, 0x7ad870",
+    "meaning of set 16, set 25 and of the per-player spot state 0xf51390",
+    "source of the save flag +0x230 bit 0 that marks every tile watered (rain is likely, not read)",
+    "region pass 0x7a55b0 (set 0 and the mask on sets 1-3)",
+    "terrain internals behind 0x18ce50 / 0x18c990 (0x181fa0, 0x182c20, 0x56dc00) and 0x7a26e0 (0x164d70, 0x164c50)",
     "palm growth and coconut drop",
     "days < 0 branch",
     "contents of Field/BlockItemPreset (palms and coconuts of the beach blocks expected there; files absent from the supplied romfs)",

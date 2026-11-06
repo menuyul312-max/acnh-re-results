@@ -19,6 +19,8 @@ from visitor_schedule_native import visitor_cases  # noqa: E402
 from creature_spawn_native import fish_cases  # noqa: E402
 from field_regrowth_native import regrowth_cases  # noqa: E402
 from island_content_native import island_content_cases  # noqa: E402
+from island_placement_native import placement_cases  # noqa: E402
+from island_weed_native import weed_cases  # noqa: E402
 
 F = np.float32
 RNG_FN = 0x19aa0e0          # xorshift128 draw; stubbed with a controlled stream
@@ -212,6 +214,12 @@ def verify(weeks=3000):
     island = island_content_cases(samples=weeks)
     unhandled_island = island.pop('meta_unhandled')
     cases.update(island)
+    placement = placement_cases(samples=weeks // 5)
+    unhandled_placement = placement.pop('meta_unhandled')
+    cases.update(placement)
+    weeds = weed_cases(samples=max(8, weeks // 25))
+    unhandled_weeds = weeds.pop('meta_unhandled')
+    cases.update(weeds)
     return {'meta': {'source': f'ExeFS main sha256 {NSO_SHA256}', 'harness': 'tools/gameplay_native.py (nso_sandbox, unicorn)',
                      'stubs': {'0x19aa0e0': 'RNG draw replaced by a seeded Python stream', '0xf44d90/0xf44e70': 'flag get/set -> 0',
                                '0x3cca80 case': 'save-node lookup, base-price member, quantity accessor, requested amount, and quantity setter are controlled; the query function itself is native',
@@ -219,8 +227,10 @@ def verify(weeks=3000):
                                'visitor schedule cases': 'see tools/visitor_schedule_native.py: flags by name, calendar event days, K.K. concert days, the weather-pattern index per date and the xorshift draw are controlled; save-layout lookups, facility/house accessors, week/date helpers, bit selection and both functions are native',
                                'fish cases': 'see tools/creature_spawn_native.py: table row/column accessors over the real FishAppear*/FishStatusParam/ItemParam rows, the catch-count gate 0x5b8e30, clock, weather code, session mode and the RNG word are controlled; loops, mask tests, weight sums, draw transforms, cumulative picks, the 0x5b9270 gate and the hour-to-slot helpers are native',
                                'field regrowth cases': 'see tools/field_regrowth_native.py: only the season lookup 0x2035f0 is controlled; the field RNG 0x344d100, the day RNG 0x35e9510 (0xf53420), xorshift 0x19aa0e0, thresholds, item tables, the item writer 0xf588a0 and the beach-bitset scan of 0x7a7010 are native',
-                               'island content cases': 'see tools/island_content_native.py: flower pick 0xf50ad0 with only 0xf53420 controlled (returns the requested position, records the count); flower groups 0xf50f50/0xf51040 fully native; fruit 0xf509e0 with save-node accessors, the item-existence check 0xa1e8c0 (real ItemParam UniqueIDs), 0xaabd20/0xaab800, the item-by-index table, the TLS RNG state and nn::os::GetSystemTick (seed of the unused own RNG of item sets) controlled; set code, both xorshift steps and the pick are native'},
-                     'unhandled_imports': {**sb.unknown_imports, **unhandled_fac, **unhandled_vil, **unhandled_vis, **unhandled_fish, **unhandled_field, **unhandled_island}},
+                               'island content cases': 'see tools/island_content_native.py: flower pick 0xf50ad0 with only 0xf53420 controlled (returns the requested position, records the count); flower groups 0xf50f50/0xf51040 fully native; fruit 0xf509e0 with save-node accessors, the item-existence check 0xa1e8c0 (real ItemParam UniqueIDs), 0xaabd20/0xaab800, the item-by-index table, the TLS RNG state and nn::os::GetSystemTick (seed of the unused own RNG of item sets) controlled; set code, both xorshift steps and the pick are native',
+                               'island placement cases': 'see tools/island_placement_native.py: synthetic field; ground-attribute accessors 0x18c4b0 (Sand) and 0x18cb10 (WaterCheck), unit height 0x18d4c0, unit CliffLevel 0x54c970, the field rectangle 0xa13a80 and (for 0x4b5cc0) the day-RNG draw 0xf53420 are controlled; 0x7ab350, its neighbour scans 0x7b0b30/0x7b0890/0x7af8a0/0x7af200, the slope check 0x7a2e10 and the neighbour pick 0x4b5cc0 run native over real work-object bitsets',
+                               'island weed cases': 'see tools/island_weed_native.py: synthetic field; item-layer read/write 0xa13f30/0xa13fe0/0x4ad1f0/0x4ad3b0, item existence 0xf58f20, the FgMainParam row wrapper 0x4d4a90 with Kind/Grow getters 0x4d6620/0x4d6650 and the GrowupFg step 0x4d5ca0 (real FgMainParam rows), unit height 0x18d4c0, the field rectangle and the day-RNG draws 0xf53420/0xf53450 (shared seeded stream) are controlled; unit scan, set-17 snapshot, set 2/mask/watered tests, neighbour scan, height window 0x7a2da0, uniform pick 0x7afca0, season tables and slot lookups 0x4b2f10/0x4b6c10, child pick 0x4b6d90, set updates and the weed counter run native'},
+                     'unhandled_imports': {**sb.unknown_imports, **unhandled_fac, **unhandled_vil, **unhandled_vis, **unhandled_fish, **unhandled_field, **unhandled_island, **unhandled_placement, **unhandled_weeds}},
             'cases': cases, 'all_pass': all(c['pass'] for c in cases.values())}
 
 
