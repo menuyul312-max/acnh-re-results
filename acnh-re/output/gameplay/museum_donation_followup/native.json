@@ -1,0 +1,38 @@
+{
+  "meta": {
+    "source": "ExeFS main sha256 f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+    "runner": "tools/museum_donation_native.py",
+    "harness": "tools/nso_sandbox.py (Unicorn AArch64)",
+    "controlled_calls": {
+      "0x455f90": "base object initializer",
+      "0x4624d0": "registration callback; records its native argument"
+    },
+    "native_calls": [
+      "0x3d9ab0",
+      "0x3d9b60"
+    ]
+  },
+  "cases": {
+    "DonationCheckItemType constructor registration": {
+      "pass": true,
+      "object_name": "DonationCheckItemType",
+      "name_pointer": "0x298d4ef",
+      "name_field_offset": "0xc8",
+      "registration_argument": "0x800000b8",
+      "registration_argument_offset": "object+0xb8",
+      "vtable": "0x30543a8",
+      "predicate_vtable_offset": "0x30",
+      "predicate": "0x3d9b60"
+    },
+    "predicate with null evaluation context": {
+      "pass": true,
+      "context_field_offset": "0x8",
+      "native_return": 0,
+      "meaning": "false; the native predicate exits before item checks"
+    }
+  },
+  "limitations": [
+    "Positive eligibility for individual ItemKind values is not exercised; it requires a non-null live selection context and several native item/save accessors.",
+    "This check does not verify donation bit writers, fossil assessment, MuseumDonationNumCheck, museum construction, or FishStatusParam.OpenDonatedNum."
+  ]
+}
