@@ -67,13 +67,14 @@ def run():
         "native_elf_sha256": hashlib.sha256(NSO.read_bytes()).hexdigest(),
         "addresses": {"setter": hex(SETTER), "item_to_catalog_index": hex(ITEM_TO_CATALOG_INDEX)},
         "setter_contract": "After the mapper returns an index, EECAD0 accepts 0..15999, sets exactly that bit in a 2000-byte bitset, and returns 1. A mapper result of 0xffffffff returns 0. An index >=16000 returns 1 without setting a bit.",
+        "mapper_formula_static": "AB2940 reads ItemParam.RemakeID (field hash 0xcb5eb33f, s16); a negative RemakeID is rejected. Otherwise F5AB10 returns RemakeID*8 + (byte returned by AB0F50 & 7), with zero variant bits when AB0F50 returns null.",
         "input_item_id": 4318,
-        "mapper": "Stubbed to the listed controlled outputs; this verifies the native setter only, not real item-to-catalog mapping or event triggers.",
+        "mapper": "Stubbed to the listed controlled outputs for boundary testing. The formula is recovered statically from the native call chain; this runner does not execute ItemParam lookup or identify the meaning of the low three bits.",
         "native_cases": len(results),
         "mismatches": 0,
         "dependencies_stubbed": ["0xab2940 item-to-catalog mapper", "0xf8f400 world/context accessor", "0xee9350/0xee9490/0xee94f0/0xee93d0 bitset access wrapper"],
         "results": results,
-        "open": ["Which concrete items map to catalog indices", "Which acquisition paths call FillCatalog and under what conditions", "Save persistence and Nook Shopping/mailbox delivery flow"],
+        "open": ["Concrete item-to-RemakeID/variant values and semantics of the low three bits", "Which acquisition paths call FillCatalog and under what conditions", "Save persistence and Nook Shopping/mailbox delivery flow"],
     }
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(result, indent=2) + "\n")
