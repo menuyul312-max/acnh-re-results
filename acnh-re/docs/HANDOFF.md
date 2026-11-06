@@ -7,6 +7,7 @@ Baca file ini dulu; tidak perlu membaca seluruh repo. Antrian kerja yang bisa di
 | Area | Status | Baca bila perlu |
 |---|---|---|
 | Format data (BCSV, BYML, EventFlow, pesan, UI) | Lengkap secara struktural | [DATA_CONTRACT](DATA_CONTRACT.md) |
+| UI/HUD renderer | Jalur ScissorPane statik sampai NVN SetViewport/SetScissor; stack mengiris bounds dan restore; flag instance, perilaku lebih dari enam clip tersimpan, dan cakupan pixel masih perlu capture | [UI_HUD_LIFECYCLE_FOLLOWUP](UI_HUD_LIFECYCLE_FOLLOWUP.md); `output/ui_hud/runtime_followup/scissor_static_path.json`; antrean `ui-hud-renderer-runtime` |
 | Alur progres prolog → konser K.K. → Island Designer | Terpetakan dari EventFlow; penyelesaian bangunan dan pembuka K.K. dibaca dari pseudocode | [GAMEPLAY_FLOW](GAMEPLAY_FLOW.md) §1–11 |
 | Skenario hari, minggu, tahun, villager, pengunjung | Terpetakan; beberapa algoritma masih terbuka | [GAMEPLAY_SCENARIO](GAMEPLAY_SCENARIO.md) |
 | Pipeline pergantian hari native | Urutan dan peran prosesor terpetakan; semua prosesor punya bacaan (`0xf53a70`, `0xf545f0`) | `output/gameplay/native_flag_refs.json` |

@@ -774,6 +774,19 @@
       },
       "observation": "The setter writes 1 to object byte +0xe0 and copies four 32-bit bounds to +0xf0..+0xfc. The callback uses those stored bounds when +0xe0 is nonzero; when zero it computes bounds from the pane transform. Both branches converge on the stack-push call at 0x14c8e44, so +0xe0 selects the bounds source, not whether clipping is applied."
     },
+    "nested_scissor_submission": {
+      "trace_artifact": "scissor_static_path.json",
+      "native_observations": [
+        "0x14c8fe0 intersects incoming left/top/right/bottom bounds with the current top entry; an inverted result becomes a four-zero rectangle. It applies in mode 1, then saves the rectangle if the prior count is at most five (six saved entries). At count six, a further push applies its intersection but exits without saving or incrementing.",
+        "0x14c9250 decrements the count and reapplies the previous entry in mode 1. On an empty stack it applies a zero rectangle in mode 0.",
+        "0x14c90e0 mode 1 calls 0x19a9c60 for viewport/depth and 0x19a9d50 for scissor; mode 0 calls the combined 0x19a9960 path. Resolved GOT cells match the nvnCommandBufferSetViewport and nvnCommandBufferSetScissor API strings."
+      ],
+      "limits": [
+        "The stack fixture uses synthetic memory and stubs rectangle application; it does not execute NVN or compare pixels.",
+        "An empty-stack zero rectangle passes through the runtime viewport/coordinate transform, so its actual target-pixel result and GPU coverage are unknown.",
+        "The existing fixture does not exercise balanced traversal beyond six saved entries."
+      ]
+    },
     "catalogued_scissor_panes": [
       {
         "layout": "LMyDesignEditCanvas",
