@@ -182,9 +182,31 @@ playthrough tetap bergantung pada query/cabangnya.
 kartu, memeriksa saldo, mengurangi 200 Bells, lalu menjalankan
 `DropIntoPostOffice(cSaveMailUserInfo)`. Flow itu tidak memiliki aksi
 `NpcAddFriendship` atau query `HasAttachedPresent`, dan indeks exact-key tidak
-menemukan callsite Friendship writer di pengirim surat. Native handler untuk
-`UIMsgCardAdrHandling`, `UIMsgCardEditTextHandling`, dan `DropIntoPostOffice`
-belum ditelusuri, jadi efek penerimaan present terlampir masih terbuka.
+menemukan callsite Friendship writer di pengirim surat.
+
+**[EF + native static]** Jalur edit/simpan memakai `HasAttachedPresent` di
+`Obj_MessageCardRack` dan `Obj_MessageCardRack_05_EditingCardResume`, lalu dapat
+menjalankan `ReturnAttachedPresentToBaggage`. Registry handler menempatkan
+query pada callback `0x433bc0` dan aksi pengembalian pada `0x33ff10`. Keduanya
+membuat generic property view lewat `0x1589cf0` dan meneruskan descriptor
+`0x3245218` (query) atau `0x3245240` (aksi) ke virtual dispatcher. Query
+mengembalikan byte boolean dari dispatcher; nama field attachment dan efek
+mutasi aksi pengembalian belum ditemukan.
+
+Handler `DropIntoPostOffice` memakai callback `0x33d550`, yang menyiapkan
+pengiriman melalui `0x33d7a0` (`SendLetter`). Rantai ini membentuk record di
+`0xec5410`, menserialisasikannya di `0xec5500`, mengirimkannya lewat `0xf62e90`,
+lalu menyalin record mail melalui `0xf73ea0`. Serializer mengenali sentinel
+item `-2`: ia menulis `HasItem` dari pemeriksaan `item != -2` dan menulis
+`ItemUniqueID` jika item ada; `CardDesignID` juga diserialisasi, sedangkan
+`ToNpcUniqueID` ditulis pada cabang record type 1. EventFlow mengikat parameter
+`TmpMailInstance` ke `cSaveMailUserInfo`, yang menjadi record input jalur itu.
+Ini membuktikan bahwa record surat dapat membawa item terlampir, bukan bahwa
+penerimaan surat menambah Friendship. Pencarian direct-call pada helper kirim
+tidak menemukan panggilan `0xf48840` atau `0xef2c70`; efek di sisi penerima,
+descriptor save attachment yang live, dan hubungan item mail dengan writer
+Friendship masih terbuka. Rincian callback, key serialisasi, dan batas bukti
+tersimpan di [`friendship_reference_inventory.json`](../output/gameplay/villager_social_followup/friendship_reference_inventory.json).
 
 Fungsi proses mail hari-ganti mengikuti
 `0xf53a70 → 0xaba970 → 0xaba9d0 → 0xabb250 → 0xabbf00`. `0xabbf00` membaca
@@ -216,15 +238,27 @@ mengonfigurasi `NpcAddFriendship(-3)`; masing-masing berada setelah
 `HasAcquaintanceship` OFF. Satu pemanggilan `Hit` paling banyak menjalankan satu
 aksi -3 itu; rangkaian net-hit berikutnya dapat mengulang jalur setelah state
 hit di-reset. Handler `NpcSetHitTimer` `0x25c650` menyimpan `Timer * 30` pada
-offset konteks `+0xacac`. Handler `NpcClearHitParam` `0x258b10` mengosongkan
-counter u32 `+0xaca8` dan byte `+0xacb1`. Kode penghitung waktu dan penambah
-counter belum ditemukan, sehingga lama jendela hit serta frekuensi tepat per
-hari masih terbuka. Hitungan dapat dibangun kembali setelah `NpcClearHitParam`
-mengosongkan counter. Ini bukti pukulan jaring dapat memulai penalti bersyarat,
-bukan bahwa setiap pukulan langsung mengurangi poin. Callback aksi meneruskan
-nilai EventFlow 72/72; query dan transisi AI masih bukti pseudocode. Empat aksi
+offset konteks `+0xacac`. Emulasi callback asli dengan konteks sintetis
+mengonfirmasi `Timer=0,1,30,60,90` menulis `0,30,900,1800,2700`; jadi Timer 60
+menjadi 1.800 unit penyimpanan native, bukan bukti langsung durasi 60 detik.
+Pseudocode actor-update method pada index VA `0xc1e2e0` (simbol Ghidra
+`0xd1e2e0`) mengurangi `+0xacac` satu unit ketika cabang countdown tercapai.
+Karena itu unit tersebut menghitung invocation method yang memenuhi guard;
+frekuensi dispatch per frame/detik belum terbukti.
+
+Handler `NpcClearHitParam` `0x258b10` mengosongkan counter u32 `+0xaca8` dan byte
+`+0xacb1`; `NpcHitNum` membaca counter tersebut. Query `NpcIsHitByNet`
+`0x389c50` membaca byte berbeda, `+0xacb0`, jadi kedua byte tidak disamakan.
+Pencarian decomp yang tersedia menemukan clear dan read counter, tetapi belum
+menemukan writer increment `+0xaca8`. Hitungan dapat dibangun kembali setelah
+clear; penambah counter serta dispatch interval masih terbuka. Ini bukti
+pukulan jaring dapat memulai penalti bersyarat, bukan bahwa setiap pukulan
+langsung mengurangi poin. Callback aksi meneruskan nilai EventFlow 72/72; query
+dan transisi AI masih bukti pseudocode. Empat aksi
 -3 lain di entry `Push` dan aksi +5 di entry `Flea` pada flow sama bukan jalur
-net-hit.
+net-hit. Kasus native dan batas fixture ada di
+[`hit_timer_native.json`](../output/gameplay/villager_social_followup/hit_timer_native.json)
+dan [`npc_hit_timer_native.py`](../tools/npc_hit_timer_native.py).
 
 **[PSEUDO]** percakapan pertama per villager pada hari itu memberi
 `min(ContinuousTalkDays, 3)`, jadi bonus talk harian berhenti naik setelah +3.
@@ -346,15 +380,23 @@ dan tidak memverifikasi save sesudah write.
 ### Kandidat update harian Friendship
 
 **[PSEUDO; kandidat, belum terbukti berjalan]** day-change driver `0xf53a70`
-memanggil `0xabff90` setelah processor mail recipient `0xaba970`; guard internal
-`0xabff90` menentukan apakah pembaruan berjalan. Salah satu cabangnya memanggil
-`0xac0200`, yang membaca
-`Friendship` lewat `0xf486c0`, memanggil kalkulator `0xab9dc0`, lalu menyiapkan
-`nilai_lama + iStack_a0` untuk `0xf48840`. Decomp kalkulator menginisialisasi
-`iStack_a0` ke 0 dan mengisinya dengan -3 pada dua cabang validasi awal. Ini
-adalah jalur kandidat yang dapat mengurangi field pada proses harian, tetapi
-kondisi tersebut belum direproduksi native dan konteks caller selain day-change
-belum dipastikan. Karena itu belum cukup untuk menyebutnya decay normal.
+memanggil `0xabff90` setelah processor mail recipient `0xaba970`; indeks direct
+call memberi `0xf53a70` sebagai caller langsung `0xabff90`. Salah satu cabangnya
+memanggil `0xac0200`, yang membaca `Friendship` lewat `0xf486c0`, memanggil
+kalkulator `0xab9dc0`, lalu menyiapkan `nilai_lama + iStack_a0` untuk
+`0xf48840`. Kalkulator memiliki dua assignment -3 yang tampak statik: satu
+setelah helper date/task opaque, satu lagi setelah enam lookup key/property
+opaque (`0x3a`, `0x62`, `0x65`, `0x5f`, `0x31`, `0x2a`). Makna guard belum
+pulih. Selain jalur `0xabff90`, `0xac0200` juga memiliki caller langsung
+`0xabfcf0`; fungsi ini tidak punya parent direct-call terindeks. Writer karena
+itu belum terbukti khusus dipanggil saat day-change.
+
+Eksekusi bounded kalkulator dengan date helper terkontrol masih berhenti pada
+akses manager/task global yang belum dibangun, sebelum mencapai cabang hasil.
+Tidak ada fixture native untuk dua cabang -3 dan belum ada pengamatan hari
+normal. Ini jalur kandidat yang dapat mengurangi field, belum cukup untuk
+menyebutnya decay normal. Rute, xref, dan batasnya tercatat di
+[`friendship_reference_inventory.json`](../output/gameplay/villager_social_followup/friendship_reference_inventory.json).
 
 `0xd26b70` juga memanggil `0xd34c20`, tetapi helper `0xf48740` yang dipanggilnya
 tidak memanggil setter field; pseudo-code-nya membaca byte dari record. Saya
@@ -362,9 +404,10 @@ tidak menghitungnya sebagai writer tambahan. Daftar pembaca/penulis dan rantai
 candidate disimpan di
 [`friendship_source_candidates.json`](../output/gameplay/villager_social_followup/friendship_source_candidates.json).
 
-**Terbuka:** konteks yang memicu cabang -3 pada `0xab9dc0` dan apakah ia terjadi
-pada hari normal; efek penerimaan surat/present terlampir di handler mail; bukti
-descriptor save runtime yang asli; serta countdown dan penambah counter net-hit.
+**Terbuka:** konteks yang memicu dua cabang -3 pada `0xab9dc0` dan apakah salah
+satunya terjadi pada hari normal; efek penerimaan surat/present terlampir pada
+Friendship; bukti descriptor save runtime yang asli; serta penambah counter dan
+frekuensi dispatch timer net-hit.
 Penurunan -3 dari net-hit dan timeout quest adalah aksi bersyarat yang
 dikonfigurasi, bukan bukti decay pasif. Batas total Friendship harian juga belum
 terbukti; tidak ada cap agregat di bukti writer/EventFlow yang terindeks.

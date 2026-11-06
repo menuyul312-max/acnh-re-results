@@ -345,7 +345,301 @@
         }
       ],
       "finding": "The flow selects a cNpc address, edits the card, checks 200 Bells, deducts them, then invokes DropIntoPostOffice with cSaveMailUserInfo. It contains no NpcAddFriendship action and no explicit HasAttachedPresent query.",
-      "limit": "The native internals of UIMsgCardAdrHandling, UIMsgCardEditTextHandling, and DropIntoPostOffice are not traced here, so attached-present recipient effects remain open."
+      "limit": "The flow has no friendship action, but attached-item serialization can be traced through the native post-office action. Recipient-side Friendship effects remain open."
+    },
+    "attached_present_native_trace": {
+      "eventflow_nodes": {
+        "Obj_MessageCardRack": [
+          {
+            "event_index": 38,
+            "kind": "query",
+            "name": "EventFlowQueryHasAttachedPresent",
+            "params": {},
+            "cases": [
+              {
+                "value": 0,
+                "event": 77
+              },
+              {
+                "value": 1,
+                "event": 16
+              }
+            ]
+          },
+          {
+            "event_index": 39,
+            "kind": "action",
+            "name": "EventFlowActionReturnAttachedPresentToBaggage",
+            "params": {},
+            "next": 16
+          },
+          {
+            "event_index": 40,
+            "kind": "query",
+            "name": "EventFlowQueryHasAttachedPresent",
+            "params": {},
+            "cases": [
+              {
+                "value": 0,
+                "event": 64
+              },
+              {
+                "value": 1,
+                "event": 62
+              }
+            ]
+          },
+          {
+            "event_index": 129,
+            "kind": "action",
+            "name": "EventFlowActionReturnAttachedPresentToBaggage",
+            "params": {},
+            "next": 62
+          }
+        ],
+        "Obj_MessageCardRack_05_EditingCardResume": [
+          {
+            "event_index": 51,
+            "kind": "query",
+            "name": "EventFlowQueryHasAttachedPresent",
+            "params": {},
+            "cases": [
+              {
+                "value": 0,
+                "event": 23
+              },
+              {
+                "value": 1,
+                "event": 40
+              }
+            ]
+          },
+          {
+            "event_index": 52,
+            "kind": "action",
+            "name": "EventFlowActionReturnAttachedPresentToBaggage",
+            "params": {},
+            "next": 40
+          }
+        ],
+        "Obj_MessageCardRack_01_SendVillage": [
+          {
+            "event_index": 0,
+            "kind": "action",
+            "name": "EventFlowActionUIMsgCardAdrHandling",
+            "params": {
+              "MsgCardAdrType": "cResident"
+            },
+            "next": 1
+          },
+          {
+            "event_index": 6,
+            "kind": "action",
+            "name": "EventFlowActionUIMsgCardEditTextHandling",
+            "params": {
+              "TempFormType": ""
+            },
+            "next": 6
+          },
+          {
+            "event_index": 17,
+            "kind": "action",
+            "name": "EventFlowActionSaveSetFromUIResult",
+            "params": {
+              "SaveType": "cMsgCard"
+            },
+            "next": 8
+          },
+          {
+            "event_index": 18,
+            "kind": "action",
+            "name": "EventFlowActionDropIntoPostOffice",
+            "params": {
+              "TmpMailInstance": "cSaveMailUserInfo"
+            },
+            "next": 11
+          }
+        ]
+      },
+      "eventflow_calls": {
+        "Obj_MessageCardRack": [
+          {
+            "event_index": 17,
+            "kind": "queries",
+            "name": "EventFlowQueryHasAttachedPresent",
+            "params": null
+          },
+          {
+            "event_index": 18,
+            "kind": "actions",
+            "name": "EventFlowActionReturnAttachedPresentToBaggage",
+            "params": null
+          },
+          {
+            "event_index": 66,
+            "kind": "queries",
+            "name": "EventFlowQueryHasAttachedPresent",
+            "params": null
+          },
+          {
+            "event_index": 67,
+            "kind": "actions",
+            "name": "EventFlowActionReturnAttachedPresentToBaggage",
+            "params": null
+          }
+        ],
+        "Obj_MessageCardRack_05_EditingCardResume": [
+          {
+            "event_index": 24,
+            "kind": "queries",
+            "name": "EventFlowQueryHasAttachedPresent",
+            "params": null
+          },
+          {
+            "event_index": 25,
+            "kind": "actions",
+            "name": "EventFlowActionReturnAttachedPresentToBaggage",
+            "params": null
+          }
+        ],
+        "Obj_MessageCardRack_01_SendVillage": [
+          {
+            "event_index": 0,
+            "kind": "actions",
+            "name": "EventFlowActionUIMsgCardAdrHandling",
+            "params": {
+              "MsgCardAdrType": "cResident"
+            }
+          },
+          {
+            "event_index": 5,
+            "kind": "actions",
+            "name": "EventFlowActionUIMsgCardEditTextHandling",
+            "params": {
+              "TempFormType": ""
+            }
+          },
+          {
+            "event_index": 15,
+            "kind": "actions",
+            "name": "EventFlowActionSaveSetFromUIResult",
+            "params": {
+              "SaveType": "cMsgCard"
+            }
+          },
+          {
+            "event_index": 16,
+            "kind": "actions",
+            "name": "EventFlowActionDropIntoPostOffice",
+            "params": {
+              "TmpMailInstance": "cSaveMailUserInfo"
+            }
+          }
+        ]
+      },
+      "handler_registry": {
+        "EventFlowQueryHasAttachedPresent": {
+          "registration_va": "0x305d5e0",
+          "factory": "0x45c470",
+          "constructor": "0x433b60",
+          "object_size": 176,
+          "vtable": "0x3058738",
+          "execution_slot": "0x433bc0",
+          "slot_evidence": "contiguous code pointers; later class-specific slot roles unresolved"
+        },
+        "EventFlowActionReturnAttachedPresentToBaggage": {
+          "registration_va": "0x305b3d8",
+          "factory": "0x452b30",
+          "constructor": "0x33feb0",
+          "object_size": 184,
+          "vtable": "0x304c908",
+          "execution_slot": "0x33ff10",
+          "slot_evidence": "contiguous code pointers; later class-specific slot roles unresolved"
+        },
+        "EventFlowActionDropIntoPostOffice": {
+          "registration_va": "0x305b218",
+          "factory": "0x452430",
+          "constructor": "0x33d4a0",
+          "object_size": 240,
+          "vtable": "0x304c6d8",
+          "execution_slot": "0x33d550",
+          "slot_evidence": "contiguous code pointers; later class-specific slot roles unresolved"
+        },
+        "EventFlowActionUIMsgCardAdrHandling": {
+          "registration_va": "0x305a4f8",
+          "factory": "0x44efb0",
+          "constructor": "0x35ba30",
+          "object_size": 248,
+          "vtable": "0x304ea10",
+          "execution_slot": "0x34afa0",
+          "slot_evidence": "contiguous code pointers; later class-specific slot roles unresolved"
+        },
+        "EventFlowActionUIMsgCardEditTextHandling": {
+          "registration_va": "0x305b258",
+          "factory": "0x452530",
+          "constructor": "0x35bfc0",
+          "object_size": 248,
+          "vtable": "0x304eaa8",
+          "execution_slot": "0x34afa0",
+          "slot_evidence": "contiguous code pointers; later class-specific slot roles unresolved"
+        },
+        "EventFlowActionSaveSetFromUIResult": {
+          "registration_va": "0x305b4d8",
+          "factory": "0x452f30",
+          "constructor": "0x3345a0",
+          "object_size": 240,
+          "vtable": "0x304be70",
+          "execution_slot": "0x334650",
+          "slot_evidence": "contiguous code pointers; later class-specific slot roles unresolved"
+        }
+      },
+      "query_and_return_action": {
+        "has_present_execution_va": "0x433bc0",
+        "has_present_body_calls": [
+          "0x1589cf0",
+          "0x158a280"
+        ],
+        "has_present_descriptor_address": "0x3245218",
+        "return_present_execution_va": "0x33ff10",
+        "return_present_body_calls": [
+          "0x1589cf0",
+          "0x158a2d0"
+        ],
+        "return_present_descriptor_address": "0x3245240",
+        "interpretation": "Both handlers build a generic property view and dispatch through a virtual method. The query returns a boolean written by that dispatch; the underlying attached-item field and the return action side effect are not named in the available static evidence."
+      },
+      "post_office_native_path": {
+        "event_action_execution_va": "0x33d550",
+        "send_helper_va": "0x33d7a0",
+        "direct_helper_chain": [
+          "0xec5410",
+          "0xec5500",
+          "0xec5480",
+          "0xf62e90",
+          "0xf73ea0"
+        ],
+        "serializer_va": "0xec5500",
+        "serializer_string_keys": [
+          "CardDesignID",
+          "HasItem",
+          "ItemUniqueID",
+          "ReserveDay",
+          "ReserveMonth",
+          "ReserveYear",
+          "ToNpcUniqueID"
+        ],
+        "item_sentinel": -2,
+        "item_serialization": "The serializer writes HasItem from (item != -2); when present, it writes ItemUniqueID. It also writes CardDesignID; ToNpcUniqueID is in the record-type-1 branch.",
+        "input_binding": "The EventFlow passes TmpMailInstance=cSaveMailUserInfo to DropIntoPostOffice; its native helper passes the current temporary record at context+0x658 to the serializer.",
+        "writer_edges": {
+          "0x33d7a0_calls_f48840": false,
+          "0x33d7a0_calls_ef2c70": false,
+          "0xf62e90_calls_f48840": false,
+          "0xf62e90_calls_ef2c70": false
+        },
+        "limit": "The sender serializer confirms an optional item is included in the post-office mail record. It does not prove that receipt awards or changes Friendship, and the live save descriptor for the attachment is unresolved."
+      },
+      "finding": "The save/edit flows query for an attached present and can return it to baggage. The send-to-villager flow posts cSaveMailUserInfo through a native serializer that can include an item. No recipient-side Friendship write has been found in the traced path."
     },
     "villager_generated_mail_eventflows": {
       "action_use_count": 24,
@@ -1096,7 +1390,58 @@
       "timer_and_clear_pseudocode": {
         "NpcSetHitTimer": "Action handler 0x25c650 stores Timer * 30 at context offset +0xacac; Timer=60 is configured on the below-threshold return path.",
         "NpcClearHitParam": "Action handler 0x258b10 zeros the u32 at context offset +0xaca8 (the counter read by 0x388660) and byte +0xacb1.",
-        "limit": "The timer countdown and the code that increments the counter were not traced, so this does not prove an exact seconds-long hit window or calendar-day frequency."
+        "native_controlled_test": {
+          "evidence_status": "native_controlled",
+          "nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+          "native_handler": "0x25c650",
+          "field_offset": "0xacac",
+          "parameter_offset": "0xd8",
+          "controlled_boundaries": [
+            "0x455d20",
+            "0x1000",
+            "0x1010"
+          ],
+          "case_count": 5,
+          "mismatches": [],
+          "samples": [
+            {
+              "eventflow_timer": 0,
+              "stored_actor_timer": 0,
+              "expected_timer_x30": 0
+            },
+            {
+              "eventflow_timer": 1,
+              "stored_actor_timer": 30,
+              "expected_timer_x30": 30
+            },
+            {
+              "eventflow_timer": 30,
+              "stored_actor_timer": 900,
+              "expected_timer_x30": 900
+            },
+            {
+              "eventflow_timer": 60,
+              "stored_actor_timer": 1800,
+              "expected_timer_x30": 1800
+            },
+            {
+              "eventflow_timer": 90,
+              "stored_actor_timer": 2700,
+              "expected_timer_x30": 2700
+            }
+          ],
+          "finding": "The original handler writes Timer * 30 to NPC actor+0xacac.",
+          "limit": "The context and NPC are synthetic; this proves native scaling only. The update-dispatch interval, per-second cadence, and net-hit counter incrementer are not established."
+        },
+        "countdown_method": {
+          "indexed_va": "0xc1e2e0",
+          "decompiler_symbol": "0xd1e2e0",
+          "operation": "Pseudocode decrements +0xacac once when this actor-update method reaches its timer branch; one call is one decrement, independent of Timer parameter scaling.",
+          "invocation_frequency": "Not established: runtime dispatch cadence/frame interval is absent from the available static call/pointer-array evidence."
+        },
+        "flag_offset_caveat": "NpcIsHitByNet 0x389c50 reads byte +0xacb0; NpcClearHitParam clears adjacent byte +0xacb1. These are distinct offsets and the evidence does not equate them.",
+        "counter_increment_search": "The available decomp and analysis_decomp corpus exposes the +0xaca8 clear and NpcHitNum read, but no counter increment write. This bounded corpus search is not proof that no indirect or un-decompiled writer exists.",
+        "limit": "The native test proves Timer*30 storage in a synthetic context; static update pseudocode bounds countdown to one unit per eligible method invocation. The real update dispatch rate and the hit-counter incrementer remain unknown, so exact seconds, hits-per-window, and hits-per-day are not established."
       },
       "hit_entry_friendship_action_event_indices": [
         21,
@@ -1130,8 +1475,8 @@
       "flow_friendship_action_count": 8,
       "finding": "The net-hit path requires the hit-by-net query to pass and the hit counter to reach 3; the below-threshold path arms the 60-timer action and returns to the normal AI route. Outdoor additionally requires HitMainPlayer and HasAcquaintanceship before entering cHit/Hit. NNPC_Talk_Force:Hit then chooses one of three mutually exclusive random branches; only action sites 21, 32, or 33 can subtract -3, and each is reached through CheckNpcLook case 0 and NoAcquaintance_Chk. The helper exits when HasAcquaintanceship is OFF. Thus one Hit-entry invocation can execute at most one of these three -3 actions, while a later thresholded hit sequence may repeat it after hit state is reset. The same flow has four other -3 actions in Push and +5 in Flea; these are separate entries. All configured callback values are forwarded unchanged in the 72/72 native action test.",
       "limits": [
-        "The query and AI transition bodies are pseudocode evidence, not a controlled native end-to-end hit simulation.",
-        "The timer handler writes Timer*30 and the clear handler resets the count, but its countdown/incrementer was not traced; exact real-time cadence and hits-per-day are unknown.",
+        "The AI transition bodies are not exercised as an end-to-end native hit simulation.",
+        "The timer handler is tested natively with synthetic context; update cadence and the counter incrementer remain unknown.",
         "A net hit alone does not prove a Friendship loss: the threshold, AI route, acquaintance/look checks, and selected dialogue branch all matter."
       ]
     },
@@ -1141,16 +1486,50 @@
       "field_table": "EventFlagsNpcMemoryParam sets Friendship default 25/max 255 and ContinuousTalkDays default 0/max 7. These are field bounds, not an aggregate daily Friendship cap.",
       "milestone_flag": "NNPC_Talk_General:PresentAvailable_Chk uses FriendshipBecomeAcqHToday and FriendshipBecomeAcqH to gate ReceivedFirstPresent; these flags are not a writer-level point cap.",
       "quest_timeout": "NNPC_Quest_Delivery_TimeOver configures -1, -2, or -3 according to HasDeliveryItem and HasOpenedDeliveryItem query branches; this is a quest timeout penalty, not passive neglect decay.",
-      "daily_candidate": "The separate day-change call 0xf53a70 -> 0xabff90 -> 0xac0200 -> 0xab9dc0 can return -3 to the visible 0xf48840 write in pseudocode. 0xab9dc0 also has a second -3 return. These are separate from the net-hit EventFlow and quest-timeout penalties; neither candidate was executed or shown to occur on an ordinary day.",
+      "daily_candidate": {
+        "route": [
+          "0xf53a70",
+          "0xabff90",
+          "0xac0200",
+          "0xab9dc0",
+          "0xf48840"
+        ],
+        "indexed_edges": {
+          "0xf53a70_to_0xabff90": true,
+          "0xabff90_callers": [
+            "0xf53a70"
+          ],
+          "0xac0200_callers": [
+            "0xabfcf0",
+            "0xabff90"
+          ],
+          "0xab9dc0_callers": [
+            "0xac0200"
+          ]
+        },
+        "calc_minus_three_branches": [
+          "First conditional return stores -3 after an opaque date/task helper result check.",
+          "Second conditional return stores -3 if any of six opaque key/property lookups (0x3a, 0x62, 0x65, 0x5f, 0x31, 0x2a) reports the guarded condition."
+        ],
+        "other_caller_caveat": "0xac0200 also has direct caller 0xabfcf0; that function has no indexed direct caller, so the writer is not proven to be day-change-exclusive.",
+        "bounded_native_run_attempt": {
+          "status": "blocked_before_candidate_branch",
+          "setup": "Executed 0xab9dc0 from the matching main.nso with synthetic output/input buffers and controlled date conversion/range helpers.",
+          "stop": "The path reached an uninitialized manager/task object access at PC 0x22019d8 before either -3 assignment.",
+          "interpretation": "No candidate branch was exercised; this is not negative evidence about the -3 result."
+        },
+        "status": "Static candidate only. No controlled execution with live manager/save/table dependencies and no ordinary-day occurrence evidence.",
+        "finding": "This candidate is separate from the net-hit EventFlow and quest-timeout penalties; it cannot yet be labelled normal daily decay."
+      },
       "aggregate_cap_evidence": "The full indexed EventFlow action inventory contains 72 configured AddFriendship values, all forwarded unchanged at 0xd34cb0; the generic writer clamps an individual value against its supplied descriptor but has no visible daily accumulator/gate. The Friendship table row sets DefaultValue=25 and MaxValue=255. No aggregate day-total field or writer-side daily cap is identified in this direct-call/string-reference inventory.",
       "finding": "The evidence supports a per-source first-talk limit of one reward/day and a byte ceiling of 255, but does not establish a universal daily point cap. No-talk streak loss is documented separately from Friendship decay. The negative result is bounded to indexed direct writers and EventFlows in this 1.0.0 main build; indirect writes, dynamic keys, and absent modules remain possible."
     }
   },
   "open": [
-    "Run the day-change 0xab9dc0 -3 candidate with the real global/save/table dependencies and prove whether it occurs during ordinary play.",
-    "Trace the post-office UI/action handlers through delivery of cToNpc mail, including any attached-present processing; the daily recipient processor only establishes Friendship-dependent reply-mail selection.",
+    "Run the day-change 0xab9dc0 -3 candidate with the real manager/save/table dependencies and establish ordinary-day reachability; its two return guards are still opaque.",
+    "Trace delivery/receipt of cToNpc mail and its attached-present handler through a Friendship write; sender-side item serialization and return-to-baggage paths are now mapped, but recipient effect is unproved.",
     "Execute with the real runtime save root and Friendship descriptor table; current setter fixtures control both descriptor lookup and field offset.",
-    "Determine the timer countdown and hit-counter incrementer to establish the exact real-time cadence of repeated net-hit penalties.",
+    "Find the +0xaca8 hit-counter incrementer and runtime dispatch rate of indexed actor-update method 0xc1e2e0 to establish exact net-hit cadence.",
     "Determine host/guest state-transition conditions and prove whether 0x395bc0/0x395e50/0x3960d0 result indexes are dialog topics, messages, or another conversation selector."
   ]
 }

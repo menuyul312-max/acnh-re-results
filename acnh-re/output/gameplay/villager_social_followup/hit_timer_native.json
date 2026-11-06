@@ -1,0 +1,43 @@
+{
+  "evidence_status": "native_controlled",
+  "nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+  "native_handler": "0x25c650",
+  "field_offset": "0xacac",
+  "parameter_offset": "0xd8",
+  "controlled_boundaries": [
+    "0x455d20",
+    "0x1000",
+    "0x1010"
+  ],
+  "case_count": 5,
+  "mismatches": [],
+  "samples": [
+    {
+      "eventflow_timer": 0,
+      "stored_actor_timer": 0,
+      "expected_timer_x30": 0
+    },
+    {
+      "eventflow_timer": 1,
+      "stored_actor_timer": 30,
+      "expected_timer_x30": 30
+    },
+    {
+      "eventflow_timer": 30,
+      "stored_actor_timer": 900,
+      "expected_timer_x30": 900
+    },
+    {
+      "eventflow_timer": 60,
+      "stored_actor_timer": 1800,
+      "expected_timer_x30": 1800
+    },
+    {
+      "eventflow_timer": 90,
+      "stored_actor_timer": 2700,
+      "expected_timer_x30": 2700
+    }
+  ],
+  "finding": "The original handler writes Timer * 30 to NPC actor+0xacac.",
+  "limit": "The context and NPC are synthetic; this proves native scaling only. The update-dispatch interval, per-second cadence, and net-hit counter incrementer are not established."
+}

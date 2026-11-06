@@ -20,6 +20,7 @@ NATIVE_WRITER_ARTIFACT = ROOT / 'output/gameplay/villager_social_followup/friend
 NATIVE_DELTA_ARTIFACT = ROOT / 'output/gameplay/villager_social_followup/friendship_delta_native.json'
 SAVE_LAYOUT_ARTIFACT = ROOT / 'output/gameplay/save_layout.json'
 SAVE_LAYOUT_CROSSWALK_ARTIFACT = ROOT / 'output/gameplay/save_layout_external_crosswalk.json'
+HIT_TIMER_ARTIFACT = ROOT / 'output/gameplay/villager_social_followup/hit_timer_native.json'
 
 
 def main():
@@ -66,6 +67,8 @@ def main():
     # Read decoded BFEVFL sources for bounded negative claims such as the
     # player-to-villager post-office flow. No game text is loaded or emitted.
     flow_index = json.loads((analysis/'gameplay/flow_index.json').read_text())['data']
+    native_handlers = json.loads(
+        (analysis/'binary/event_handlers_resolved.json').read_text())['entries']
 
     def flow_actions(flow_name):
         meta = flow_index[flow_name]
@@ -93,6 +96,48 @@ def main():
                 'WHERE flow=? ORDER BY event_index', (flow_name,))
         ]
 
+    def flow_nodes(flow_name, wanted):
+        """Return matching query/action nodes with their actual EventFlow indexes."""
+        meta = flow_index[flow_name]
+        decoded_path = analysis/'decoded'/f"{meta['source_id']:05d}.json"
+        decoded = json.loads(decoded_path.read_text())
+        flowchart = next(fc for fc in decoded['data']['flowcharts']
+                         if fc['name'] == flow_name)
+        records = []
+        for event in flowchart['events']:
+            event_index = int(event['name'][5:])
+            if event.get('type') == 'switch':
+                actor = flowchart['actors'][event['actor']]
+                query = actor['queries'][event['query']]
+                if query in wanted:
+                    records.append({
+                        'event_index': event_index, 'kind': 'query',
+                        'name': query, 'params': event.get('params') or {},
+                        'cases': event.get('cases') or [],
+                    })
+            elif event.get('type') == 'action':
+                actor = flowchart['actors'][event['actor']]
+                action = actor['actions'][event['action']]
+                if action in wanted:
+                    records.append({
+                        'event_index': event_index, 'kind': 'action',
+                        'name': action, 'params': event.get('params') or {},
+                        'next': event.get('next'),
+                    })
+        return records
+
+    def native_handler(name):
+        entry = native_handlers[f'EventFlowSystemActor.{name}']
+        return {
+            'registration_va': entry.get('registration_va'),
+            'factory': entry.get('factory'),
+            'constructor': entry.get('constructor'),
+            'object_size': entry.get('object_size'),
+            'vtable': entry.get('vtable'),
+            'execution_slot': entry.get('slots', [])[-1],
+            'slot_evidence': entry.get('slot_span_evidence'),
+        }
+
     letter_flow = 'Obj_MessageCardRack_01_SendVillage'
     letter_actions = flow_actions(letter_flow)
     letter_friendship_actions = [x for x in letter_actions
@@ -102,6 +147,34 @@ def main():
         'EventFlowActionDropIntoPostOffice', 'EventFlowActionBellCountDown',
         'EventFlowQueryHasFreeInPostOffice', 'EventFlowQueryHasAttachedPresent',
         'EventFlowActionNpcAddFriendship'}]
+    attached_present_names = {
+        'EventFlowQueryHasAttachedPresent',
+        'EventFlowActionReturnAttachedPresentToBaggage',
+        'EventFlowActionDropIntoPostOffice',
+        'EventFlowActionUIMsgCardAdrHandling',
+        'EventFlowActionUIMsgCardEditTextHandling',
+        'EventFlowActionSaveSetFromUIResult',
+    }
+    attached_flow_nodes = {
+        flow_name: flow_nodes(flow_name, attached_present_names)
+        for flow_name in (
+            'Obj_MessageCardRack',
+            'Obj_MessageCardRack_05_EditingCardResume',
+            'Obj_MessageCardRack_01_SendVillage',
+        )
+    }
+    attached_event_calls = {
+        flow_name: [event for event in event_calls(flow_name)
+                    if event['name'] in attached_present_names]
+        for flow_name in (
+            'Obj_MessageCardRack',
+            'Obj_MessageCardRack_05_EditingCardResume',
+            'Obj_MessageCardRack_01_SendVillage',
+        )
+    }
+    mail_serializer_keys = sorted({row[0] for row in db.execute(
+        'SELECT text FROM string_refs WHERE function_va=? AND text IS NOT NULL',
+        (0xec5500,))})
     npc_mail_sends = {}
     for flow_name, event_index, name, params in db.execute(
             "SELECT flow,event_index,name,params_json FROM event_calls "
@@ -232,7 +305,53 @@ def main():
                 'flow': letter_flow,
                 'events': letter_delivery_events,
                 'finding': 'The flow selects a cNpc address, edits the card, checks 200 Bells, deducts them, then invokes DropIntoPostOffice with cSaveMailUserInfo. It contains no NpcAddFriendship action and no explicit HasAttachedPresent query.',
-                'limit': 'The native internals of UIMsgCardAdrHandling, UIMsgCardEditTextHandling, and DropIntoPostOffice are not traced here, so attached-present recipient effects remain open.',
+                'limit': 'The flow has no friendship action, but attached-item serialization can be traced through the native post-office action. Recipient-side Friendship effects remain open.',
+            },
+            'attached_present_native_trace': {
+                'eventflow_nodes': attached_flow_nodes,
+                'eventflow_calls': attached_event_calls,
+                'handler_registry': {
+                    'EventFlowQueryHasAttachedPresent': native_handler(
+                        'EventFlowQueryHasAttachedPresent'),
+                    'EventFlowActionReturnAttachedPresentToBaggage': native_handler(
+                        'EventFlowActionReturnAttachedPresentToBaggage'),
+                    'EventFlowActionDropIntoPostOffice': native_handler(
+                        'EventFlowActionDropIntoPostOffice'),
+                    'EventFlowActionUIMsgCardAdrHandling': native_handler(
+                        'EventFlowActionUIMsgCardAdrHandling'),
+                    'EventFlowActionUIMsgCardEditTextHandling': native_handler(
+                        'EventFlowActionUIMsgCardEditTextHandling'),
+                    'EventFlowActionSaveSetFromUIResult': native_handler(
+                        'EventFlowActionSaveSetFromUIResult'),
+                },
+                'query_and_return_action': {
+                    'has_present_execution_va': '0x433bc0',
+                    'has_present_body_calls': ['0x1589cf0', '0x158a280'],
+                    'has_present_descriptor_address': '0x3245218',
+                    'return_present_execution_va': '0x33ff10',
+                    'return_present_body_calls': ['0x1589cf0', '0x158a2d0'],
+                    'return_present_descriptor_address': '0x3245240',
+                    'interpretation': 'Both handlers build a generic property view and dispatch through a virtual method. The query returns a boolean written by that dispatch; the underlying attached-item field and the return action side effect are not named in the available static evidence.',
+                },
+                'post_office_native_path': {
+                    'event_action_execution_va': '0x33d550',
+                    'send_helper_va': '0x33d7a0',
+                    'direct_helper_chain': ['0xec5410', '0xec5500', '0xec5480',
+                                            '0xf62e90', '0xf73ea0'],
+                    'serializer_va': '0xec5500',
+                    'serializer_string_keys': mail_serializer_keys,
+                    'item_sentinel': -2,
+                    'item_serialization': 'The serializer writes HasItem from (item != -2); when present, it writes ItemUniqueID. It also writes CardDesignID; ToNpcUniqueID is in the record-type-1 branch.',
+                    'input_binding': 'The EventFlow passes TmpMailInstance=cSaveMailUserInfo to DropIntoPostOffice; its native helper passes the current temporary record at context+0x658 to the serializer.',
+                    'writer_edges': {
+                        '0x33d7a0_calls_f48840': 0xf48840 in calls(0x33d7a0),
+                        '0x33d7a0_calls_ef2c70': 0xef2c70 in calls(0x33d7a0),
+                        '0xf62e90_calls_f48840': 0xf48840 in calls(0xf62e90),
+                        '0xf62e90_calls_ef2c70': 0xef2c70 in calls(0xf62e90),
+                    },
+                    'limit': 'The sender serializer confirms an optional item is included in the post-office mail record. It does not prove that receipt awards or changes Friendship, and the live save descriptor for the attachment is unresolved.',
+                },
+                'finding': 'The save/edit flows query for an attached present and can return it to baggage. The send-to-villager flow posts cSaveMailUserInfo through a native serializer that can include an item. No recipient-side Friendship write has been found in the traced path.',
             },
             'villager_generated_mail_eventflows': {
                 'action_use_count': sum(len(x) for x in npc_mail_sends.values()),
@@ -287,7 +406,16 @@ def main():
                 'timer_and_clear_pseudocode': {
                     'NpcSetHitTimer': 'Action handler 0x25c650 stores Timer * 30 at context offset +0xacac; Timer=60 is configured on the below-threshold return path.',
                     'NpcClearHitParam': 'Action handler 0x258b10 zeros the u32 at context offset +0xaca8 (the counter read by 0x388660) and byte +0xacb1.',
-                    'limit': 'The timer countdown and the code that increments the counter were not traced, so this does not prove an exact seconds-long hit window or calendar-day frequency.',
+                    'native_controlled_test': json.loads(HIT_TIMER_ARTIFACT.read_text()),
+                    'countdown_method': {
+                        'indexed_va': '0xc1e2e0',
+                        'decompiler_symbol': '0xd1e2e0',
+                        'operation': 'Pseudocode decrements +0xacac once when this actor-update method reaches its timer branch; one call is one decrement, independent of Timer parameter scaling.',
+                        'invocation_frequency': 'Not established: runtime dispatch cadence/frame interval is absent from the available static call/pointer-array evidence.',
+                    },
+                    'flag_offset_caveat': 'NpcIsHitByNet 0x389c50 reads byte +0xacb0; NpcClearHitParam clears adjacent byte +0xacb1. These are distinct offsets and the evidence does not equate them.',
+                    'counter_increment_search': 'The available decomp and analysis_decomp corpus exposes the +0xaca8 clear and NpcHitNum read, but no counter increment write. This bounded corpus search is not proof that no indirect or un-decompiled writer exists.',
+                    'limit': 'The native test proves Timer*30 storage in a synthetic context; static update pseudocode bounds countdown to one unit per eligible method invocation. The real update dispatch rate and the hit-counter incrementer remain unknown, so exact seconds, hits-per-window, and hits-per-day are not established.',
                 },
                 'hit_entry_friendship_action_event_indices': hit_entry_event_indices,
                 'hit_entry_friendship_action_values': [x['AddValue'] for x in hit_entry_samples],
@@ -298,7 +426,7 @@ def main():
                 'all_flow_negative_friendship_action_count': len(talk_force_negative_samples),
                 'flow_friendship_action_count': len(talk_force_actions),
                 'finding': 'The net-hit path requires the hit-by-net query to pass and the hit counter to reach 3; the below-threshold path arms the 60-timer action and returns to the normal AI route. Outdoor additionally requires HitMainPlayer and HasAcquaintanceship before entering cHit/Hit. NNPC_Talk_Force:Hit then chooses one of three mutually exclusive random branches; only action sites 21, 32, or 33 can subtract -3, and each is reached through CheckNpcLook case 0 and NoAcquaintance_Chk. The helper exits when HasAcquaintanceship is OFF. Thus one Hit-entry invocation can execute at most one of these three -3 actions, while a later thresholded hit sequence may repeat it after hit state is reset. The same flow has four other -3 actions in Push and +5 in Flea; these are separate entries. All configured callback values are forwarded unchanged in the 72/72 native action test.',
-                'limits': ['The query and AI transition bodies are pseudocode evidence, not a controlled native end-to-end hit simulation.', 'The timer handler writes Timer*30 and the clear handler resets the count, but its countdown/incrementer was not traced; exact real-time cadence and hits-per-day are unknown.', 'A net hit alone does not prove a Friendship loss: the threshold, AI route, acquaintance/look checks, and selected dialogue branch all matter.'],
+                'limits': ['The AI transition bodies are not exercised as an end-to-end native hit simulation.', 'The timer handler is tested natively with synthetic context; update cadence and the counter incrementer remain unknown.', 'A net hit alone does not prove a Friendship loss: the threshold, AI route, acquaintance/look checks, and selected dialogue branch all matter.'],
             },
             'neglect_and_caps': {
                 'first_talk_of_day': '0xc84240 increments TalkCountToday and awards Friendship only when its resulting value is 1; the delta is min(ContinuousTalkDays, 3), as pseudocode evidence.',
@@ -306,16 +434,37 @@ def main():
                 'field_table': 'EventFlagsNpcMemoryParam sets Friendship default 25/max 255 and ContinuousTalkDays default 0/max 7. These are field bounds, not an aggregate daily Friendship cap.',
                 'milestone_flag': 'NNPC_Talk_General:PresentAvailable_Chk uses FriendshipBecomeAcqHToday and FriendshipBecomeAcqH to gate ReceivedFirstPresent; these flags are not a writer-level point cap.',
                 'quest_timeout': 'NNPC_Quest_Delivery_TimeOver configures -1, -2, or -3 according to HasDeliveryItem and HasOpenedDeliveryItem query branches; this is a quest timeout penalty, not passive neglect decay.',
-                'daily_candidate': 'The separate day-change call 0xf53a70 -> 0xabff90 -> 0xac0200 -> 0xab9dc0 can return -3 to the visible 0xf48840 write in pseudocode. 0xab9dc0 also has a second -3 return. These are separate from the net-hit EventFlow and quest-timeout penalties; neither candidate was executed or shown to occur on an ordinary day.',
+                'daily_candidate': {
+                    'route': ['0xf53a70', '0xabff90', '0xac0200', '0xab9dc0', '0xf48840'],
+                    'indexed_edges': {
+                        '0xf53a70_to_0xabff90': 0xabff90 in calls(0xf53a70),
+                        '0xabff90_callers': hexes(callers(0xabff90)),
+                        '0xac0200_callers': hexes(callers(0xac0200)),
+                        '0xab9dc0_callers': hexes(callers(0xab9dc0)),
+                    },
+                    'calc_minus_three_branches': [
+                        'First conditional return stores -3 after an opaque date/task helper result check.',
+                        'Second conditional return stores -3 if any of six opaque key/property lookups (0x3a, 0x62, 0x65, 0x5f, 0x31, 0x2a) reports the guarded condition.',
+                    ],
+                    'other_caller_caveat': '0xac0200 also has direct caller 0xabfcf0; that function has no indexed direct caller, so the writer is not proven to be day-change-exclusive.',
+                    'bounded_native_run_attempt': {
+                        'status': 'blocked_before_candidate_branch',
+                        'setup': 'Executed 0xab9dc0 from the matching main.nso with synthetic output/input buffers and controlled date conversion/range helpers.',
+                        'stop': 'The path reached an uninitialized manager/task object access at PC 0x22019d8 before either -3 assignment.',
+                        'interpretation': 'No candidate branch was exercised; this is not negative evidence about the -3 result.',
+                    },
+                    'status': 'Static candidate only. No controlled execution with live manager/save/table dependencies and no ordinary-day occurrence evidence.',
+                    'finding': 'This candidate is separate from the net-hit EventFlow and quest-timeout penalties; it cannot yet be labelled normal daily decay.',
+                },
                 'aggregate_cap_evidence': 'The full indexed EventFlow action inventory contains 72 configured AddFriendship values, all forwarded unchanged at 0xd34cb0; the generic writer clamps an individual value against its supplied descriptor but has no visible daily accumulator/gate. The Friendship table row sets DefaultValue=25 and MaxValue=255. No aggregate day-total field or writer-side daily cap is identified in this direct-call/string-reference inventory.',
                 'finding': 'The evidence supports a per-source first-talk limit of one reward/day and a byte ceiling of 255, but does not establish a universal daily point cap. No-talk streak loss is documented separately from Friendship decay. The negative result is bounded to indexed direct writers and EventFlows in this 1.0.0 main build; indirect writes, dynamic keys, and absent modules remain possible.',
             }
         },
         'open': [
-            'Run the day-change 0xab9dc0 -3 candidate with the real global/save/table dependencies and prove whether it occurs during ordinary play.',
-            'Trace the post-office UI/action handlers through delivery of cToNpc mail, including any attached-present processing; the daily recipient processor only establishes Friendship-dependent reply-mail selection.',
+            'Run the day-change 0xab9dc0 -3 candidate with the real manager/save/table dependencies and establish ordinary-day reachability; its two return guards are still opaque.',
+            'Trace delivery/receipt of cToNpc mail and its attached-present handler through a Friendship write; sender-side item serialization and return-to-baggage paths are now mapped, but recipient effect is unproved.',
             'Execute with the real runtime save root and Friendship descriptor table; current setter fixtures control both descriptor lookup and field offset.',
-            'Determine the timer countdown and hit-counter incrementer to establish the exact real-time cadence of repeated net-hit penalties.',
+            'Find the +0xaca8 hit-counter incrementer and runtime dispatch rate of indexed actor-update method 0xc1e2e0 to establish exact net-hit cadence.',
             'Determine host/guest state-transition conditions and prove whether 0x395bc0/0x395e50/0x3960d0 result indexes are dialog topics, messages, or another conversation selector.',
         ],
     }
