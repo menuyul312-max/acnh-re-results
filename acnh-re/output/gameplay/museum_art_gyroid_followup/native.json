@@ -202,34 +202,45 @@
       "lookup_va": "0xe68900",
       "state_record_stride": "0xb28",
       "state_record_slots": 8,
-      "successful_query_condition": "EAA8C0 resolves a state row for the requested token, then returns 0xffffffff unless row +0xb08 is 0; on success it returns row +0xb0d as u8.",
+      "successful_query_condition": "EAA8C0 verifies the mode-2 context token, resolves a row index through EAA990/E68900, then returns 0xffffffff unless the row is active and +0xb08 is 0; on success it returns row +0xb0d as u8.",
       "writes": [
-        "E68280 initializes the selected row's u16 at +0xb0d to 0x0100, then for param_2 < 3 stores param_3 to the low byte at +0xb0d and param_4 & 1 at +0xb0e.",
+        "E68280 initializes the selected row as kind 3/inactive with u16 +0xb0d = 0x0100; for param_2 < 3 it writes the state kind at +0xb08, active byte +0xb0c = 1, param_3 to byte +0xb0d, and param_4 & 1 at +0xb0e.",
         "E68280's row is selected from eight 0xb28-byte records; E68900 checks the requested index is below eight and the row active byte at +0xb0c is nonzero."
       ],
       "direct_callers": [
         {
           "va": "0xccd40",
-          "observed_arguments": "E68280(row, 2, 0, 1) in two branches"
+          "observed_arguments": "two branches call E68280(row, 2, 0, 1); active kind-2 rows are rejected by EAA8C0 mode 2"
         },
         {
           "va": "0xcd9f0",
-          "observed_arguments": "E68280(row, 0, value_from_FA4300, 1)"
+          "observed_arguments": "FA4300 maps an identity pair to an existing slot 0..7; on match, E68280(row, 0, slot, 1)"
+        },
+        {
+          "va": "0x2ee460",
+          "observed_arguments": "when FA3C10 finds no pair match, FA4100 allocates the pair in a free slot 0..7; after associated context copies, E68280(row, 0, slot, 1)"
         },
         {
           "va": "0x2f5240",
-          "observed_arguments": "E68280(row, 0, caller_param_2, 1)"
+          "observed_arguments": "called by 0x2f4f40 with the 0x2f5030 result; 0x2f5030 selects a 0..7 slot whose MakeVillagePlayerFlag query succeeds, or returns 0xffffffff"
         },
         {
           "va": "0xe684f0",
-          "observed_arguments": "forwards its param_2 and param_3 to E68280; called by 0xcfad0"
+          "observed_arguments": "wrapper called by 0xcfad0; forwards kind 0/1 and param_3 from a runtime configuration row"
         }
       ],
-      "meaning_status": "Producer and dataflow are identified, but the semantic label/domain of param_3 is not. The call sites do not prove this byte is a donor ID or donation status.",
-      "evidence": "Static Ghidra decompilation of the original NSO; no producer state or live object was executed."
+      "meaning_status": "Two kind-0 paths use 0..7 indices into an eight-entry identity-pair map, and another selects the MakeVillagePlayerFlag slot (the local EventFlow crosswalk calls this the island representative). The exact runtime keys in the E684F0/CFAD0 configuration remain unknown, and these callers do not prove that the Museum marker denotes the donor or a donation-status enum.",
+      "evidence": "Static Ghidra decompilation of the original NSO plus bounded fixture output at museum_donation_followup/marker_state_native.json; caller objects and live save state were not executed."
+    },
+    "bounded_native_fixture": {
+      "runner": "tools/museum_marker_state_native.py",
+      "output": "museum_donation_followup/marker_state_native.json",
+      "cases": 32,
+      "mismatches": 0,
+      "scope": "Original E68280/E684F0/E68900/EAA8C0/FA4100/FA4300 bodies; context, state views, and manager memory are synthetic or controlled."
     },
     "known_duplicate_gate_effect": "F77F60 treats marker 0xff as a non-duplicate exemption; F773F0 does not read marker bytes when counting accepted records.",
-    "remaining_meaning": "The successful state object's +0xb0d field has a traced producer, but neither its semantic label/domain nor the runtime value supplied by that producer is named in the captured data; 0xff can also be a returned field value."
+    "remaining_meaning": "The byte carries a player/context slot on the traced identity-pair and MakeVillagePlayerFlag paths, but its meaning in the Museum saved marker and the exact CFAD0 configuration values remain unproven; 0xff is also returned on query failure."
   },
   "static_findings": {
     "captured_eventflows_scanned": 456,
@@ -931,6 +942,6 @@
     "No live save file or live table-manager memory is available; the SaveMuseum records and table manager are reconstructed fixtures.",
     "The native item key lookup and field getter are exercised across every local ItemParam row, but item-flag variants are not tested.",
     "No art-specific item/filter/handler path is proven in the captured data; this does not establish that the full game has no art donations.",
-    "The 0xff marker can be returned by a failed/mismatched context-state lookup; producer 0xe68280 is traced, but the successful state object's +0xb0d value has no gameplay label/domain in the dump."
+    "A bounded state fixture validates native value forwarding and kind/token gates, but cannot show whether the Museum marker identifies the donor; the 0xcfad0 runtime configuration keys and live selector are unavailable."
   ]
 }

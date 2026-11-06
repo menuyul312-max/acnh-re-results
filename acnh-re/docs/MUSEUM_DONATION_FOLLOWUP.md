@@ -53,6 +53,15 @@ PYTHONPATH=/workspace/acnh-re/.deps python3 acnh-re/tools/museum_donation_writer
 
 Machine-readable outputs: [`predicate_native.json`](../output/gameplay/museum_donation_followup/predicate_native.json) and [`writer_native.json`](../output/gameplay/museum_donation_followup/writer_native.json).
 
+The marker's producer callers are now traced in
+[`MUSEUM_ART_GYROID_FOLLOWUP.md`](MUSEUM_ART_GYROID_FOLLOWUP.md#marker-and-remaining-unknowns).
+Two state-kind-0 callers supply an index in an eight-entry identity-pair map;
+one path selects the slot with `MakeVillagePlayerFlag` set. A bounded native
+fixture executes the writer, wrapper, lookup, and query over synthetic rows;
+it verifies 32 value and state cases. The result narrows the byte to a
+player/context-slot value on those paths, while the live Museum meaning and
+the `0xcfad0` runtime configuration keys remain open in the linked follow-up.
+
 ## Blathers and fossil assessment
 
 The decoded `SNPC_owl_02_Museum_Judgment` tree is preserved at [`fossil_judgment_flow.txt`](../output/gameplay/museum_donation_followup/fossil_judgment_flow.txt). Its `Root` first requires an unknown fossil (`FossilUnknown`) and opens an `OwlFossilJudgement` item filter. One branch calls `OwlFossilAppraise` and then checks `AppraiseFossilDonationRate`; another calls `Fossil_Check`, whose entry also calls `OwlFossilAppraise`, tags the selected item, and returns to `OwlIsDonation` with `DonationCheckItemType="cUISelect"`. The donation branch then uses `MuseumLevel` and `MuseumDonationNumCheck` borders 20 and 19 before `Donation_Accept` or `Donation_Decline`. Subsequent Blathers dialogue checks `OwlDonationFossilIsParts`, `OwlDonationFossilComplete`, and can set `MuseumFossilComplete`.
@@ -83,8 +92,8 @@ PYTHONPATH=/workspace/acnh-re/.deps python3 acnh-re/tools/open_donated_native.py
 
 | Area | Current evidence | Status |
 |---|---|---|
-| Item eligibility | Filter/query sequence; native `F77E00` supports Fossil/Fish/Insect and rejects an ordinary duplicate with marker other than `0xff`; predicate and ordinary ID comparison reproduced | Partial `[EF/N/TBL]`; item-key adapters, uncommon item flags, and marker semantics remain controlled/open |
-| Donation save state | `SaveLand.Museum` spans `0x3404`; native list layout, 1,024 slots, sentinel, packed date words/markers, caller, and writer traced | Partial `[SAVE/N]`; art/gyroid ledger, full-list semantics, live date meaning, and marker semantic label remain open |
+| Item eligibility | Filter/query sequence; native `F77E00` supports Fossil/Fish/Insect and rejects an ordinary duplicate with marker other than `0xff`; predicate and ordinary ID comparison reproduced | Partial `[EF/N/TBL]`; item-key adapters, uncommon item flags, and the live Museum meaning of the player/context marker remain controlled/open |
+| Donation save state | `SaveLand.Museum` spans `0x3404`; native list layout, 1,024 slots, sentinel, packed date words/markers, caller, writer, and 32-case marker state fixture traced | Partial `[SAVE/N]`; art/gyroid ledger, full-list semantics, live date meaning, whether the saved context slot denotes the donor, and runtime configuration keys remain open |
 | Fossil assessment | `OwlFossilAppraise`, `AppraiseFossilDonationRate`, `Fossil_Check`, and follow-up branches traced; writer admits ItemKind Fossil | Partial `[EF/TBL/N]`; native appraisal result and the acceptance-to-20-donation counter link remain open |
 | Tent-to-building trigger | `0x2c2410` submission caller, writer, `0xf773f0` counter/`0x416260` threshold query, Border=20 EventFlow flag path, and daily `0xf77050` transition traced | Partial `[EF/PSEUDO/N]`; each native stage uses controlled/supplied boundaries; no live save-to-expansion trace |
 | `OpenDonatedNum` | All 84 table rows; 828 native boundary cases across session modes 0–3 | `[TBL/N]` with controlled field/save accessors; live persistence and host ownership remain open |

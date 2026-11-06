@@ -56,19 +56,55 @@ forwards the low byte. A failed, absent, or mismatched state lookup can return
 `0xff`; the duplicate gate `0xf77f60` treats `0xff` as a non-duplicate
 exemption, while the donation threshold counter does not read marker bytes.
 
-The successful byte now has a traced producer, though not a semantic label.
-Native `0xe68280` manages eight state records with stride `0xb28`; it initializes
-the u16 at record `+0xb0d` to `0x0100`, then for state kinds below 3 writes its
-third argument to byte `+0xb0d` and the low bit of its fourth argument to
-`+0xb0e`. The lookup `0xe68900` selects a row by the context token and requires
-its active byte at `+0xb0c`; `0xeaa8c0` returns `+0xb0d` only when that row's
-`+0xb08` state is zero. Direct writers include `0xcd9f0` (value from
-`0xfa4300`), `0x2f5240` (its caller's second argument), and `0xe684f0`; two
-`0xccd40` branches instead initialize state kind 2 with value 0. These call
-sites identify how the byte is populated but do not name the meaning or domain
-of the value. In particular, the evidence does not show that it is a donor ID
-or a donation-status enum. This is static `[PSEUDO]` evidence from the captured
-NSO, not a live state trace.
+The successful byte has a traced producer and callers that narrow its value
+to an eight-slot context/player index on several paths. Native `0xe68280`
+manages eight state records with stride `0xb28`. A new row starts as kind 3,
+inactive, with u16 `+0xb0d = 0x0100`; when the state-kind argument is below 3,
+the writer stores that kind at `+0xb08`, activates `+0xb0c`, writes the low
+byte of its third argument to `+0xb0d`, and stores the low bit of its fourth
+argument at `+0xb0e`. `0xeaa8c0` returns `+0xb0d` only when mode 2's context
+token matches, `0xe68900` finds an active row, and the row kind is 0. Kinds 1
+and 2 are active but do not satisfy this query.
+
+The direct caller audit follows each value to its source:
+
+- `0xccd40` calls the writer at `0xccff0` and `0xcd350` with state kind 2,
+  value 0, and fourth argument 1. This creates an active kind-2 row; the mode-2
+query returns `0xffffffff` for it because its kind is nonzero.
+- `0xcd9f0` passes a 16-byte identity pair to `0xfa4300`. That helper returns
+  the matching row number in an eight-entry pair map, 0–7, or `0xffffffff`;
+  only a successful match reaches `0xe68280` with state kind 0 and that row
+  number as the third argument.
+- `0x2ee460` is an additional direct caller. When `0xfa3c10` says an identity
+  pair is not already mapped, `0xfa4100` stores it in the first free slot of
+  the same eight-entry map and returns 0–7 (or `0xffffffff` when full). The
+  caller copies the associated context data and writes that assigned slot as
+  the third argument with state kind 0.
+- `0x2f5240` receives the result of `0x2f5030` from its caller `0x2f4f40`.
+  The selector loop in `0x2f5030` is bounded to slots 0–7 and queries the
+  literal `MakeVillagePlayerFlag`; its successful result is the slot whose
+  flag is set, while the no-match path returns `0xffffffff`. The local
+  EventFlow crosswalk uses `MakeVillagePlayerFlag` for the island
+  representative, so this caller stores that representative's slot index.
+- The wrapper `0xe684f0`, called by `0xcfad0`, receives a state kind of 0 or 1
+  from bit 0 of each runtime configuration entry and its third argument from
+  that entry's first word. It forwards both values to `0xe68280`, then
+  reconciles the matching row. Those configuration words are not present as
+  static values in the captured data.
+
+These paths show that the field can carry an eight-slot player/context index;
+they do not establish that the byte in `SaveMuseum` is a donor ID or donation
+status. The bounds and transitions are static `[PSEUDO]` evidence, not a live
+state trace. A bounded native fixture now executes `0xe68280`, `0xe684f0`,
+`0xe68900`, `0xeaa8c0`, `0xfa4100`, and `0xfa4300`: all 32 cases pass, including
+the 0–7 writer/query round trips, pair-map assignment/lookup, kind-2 rejection,
+kind-1 rejection, token mismatch, absent row, out-of-range row, and full-map
+sentinels. Results are in
+[`marker_state_native.json`](../output/gameplay/museum_donation_followup/marker_state_native.json);
+the fixture controls the context snapshot, row view, allocation helpers, and
+manager memory; the larger pair/context caller bodies remain static-only. It
+validates the native data contract rather than the live meaning of a Museum
+marker.
 
 ## Save-to-expansion boundary
 
@@ -100,9 +136,12 @@ The following questions need more evidence than this dump provides:
 - A live SaveMuseum item view and live ItemParam table-manager instance, plus
   item records with flags set, to validate behavior beyond the reconstructed
   native fixtures.
-- The semantic label/domain and live value source of the marker's successful
-  `+0xb0d` state byte, and a live end-to-end proof that the donor count causes
-  the museum level to change after its scheduled daily transition.
+- Whether the successful player/context index means “donating player” in the
+  Museum flow, plus the concrete third-argument values supplied by the
+  `0xcfad0` runtime configuration entries.
+- A live end-to-end proof that the selected player/context index is saved for
+  a donation and that the donor count causes the museum level to change after
+  its scheduled daily transition.
 
 ## Reproduction
 
@@ -111,6 +150,7 @@ From this worktree, run:
 ```sh
 python3 -m py_compile acnh-re/tools/museum_art_gyroid_followup_native.py
 python3 acnh-re/tools/museum_art_gyroid_followup_native.py
+PYTHONPATH=/workspace/acnh-re/.deps python3 acnh-re/tools/museum_marker_state_native.py
 ```
 
 The native image and raw ItemParam SHA-256 values, tested cases, controlled
