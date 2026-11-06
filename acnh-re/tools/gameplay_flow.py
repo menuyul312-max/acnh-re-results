@@ -525,7 +525,7 @@ CREATURE_SPAWN = {
         },
         'type_pick': {
             'entry': 'field vtable 0x3068a68 slot 35 = 0x59bc10(field, out_item, kind): kind 0 -> 0x5b9380 (river), 1 -> 0x5b9f80 (sea)',
-            'flag': 'field byte +0x13e1 bit 0 chooses the variant; it also switches the position pick to the month/slot stored in 0x33d3f78 +0x210/+0x214 and to the 0xb54980/0xb548c0 gates; meaning of the flag and of that object is open',
+            'flag': 'field byte +0x13e1 bit 0 chooses the variant; it also switches the position pick to the month/slot stored in 0x33d3f78 +0x210/+0x214 and to the 0xb54980/0xb548c0 gates; 0x33d3f78 is the mystery-tour fish availability object built by 0xb53d20 (see insect.mystery_tour), so bit 0 = mystery-tour island [PSEUDO]',
             'bit0_clear': '0x5b98b0: current month/slot; r = rand32 * 100 >> 32; first row (trash rows included) with running sum of Prob > r; the picked row must pass 0x5b9270 and 0x5b8e30, otherwise no item (0xfffe)',
             'bit0_set': '0x5b95b0: month/slot from 0x33d3f78; rows passing 0x5b9270 and 0xb548c0 are kept, r = rand32 * W >> 32, first kept row with r < Prob after subtracting earlier weights',
         },
@@ -542,10 +542,36 @@ CREATURE_SPAWN = {
         'tables': 'InsectAppearParam (166 rows): one row per insect and hemisphere (AppearArea 0/1); 72 Prob columns = 12 months x 6 slots; per slot the weights do not sum to 100 [TBL]',
         'time_slot': '0x9f1870 (clock) / 0x9f1920 (given time): month - 1; hour 23-3 -> 0 Midnight, 4-7 -> 1 Morning, 8-15 -> 2 Daytime, 16 -> 3 Evening1, 17-18 -> 4 Evening2, 19-22 -> 5 Night',
         'prob_reader': '0x9582d0(table, hemisphere, &month, &slot, item): getter entry month * 6 + slot of the array the table constructor 0x95ebe0 fills at +0x170 (entry k = column Prob<Month><Slot>, checked by column hash)',
-        'weather_mask': '0xb56850 builds a mask over AppearWeather (rodata 0x297aeb1: AlwaysAppear, AppearInRain, AppearInSnowGroundTerm, NotAppearInRain, NotAppearInRainAndSnow, AppearInCherryBlossomOpenUpTerm, AppearInAutumnLeavesTerm): bit 0 always; bit 2 when 0x203c90 (snow-ground term); weather code 4/5 (0x204690) -> bit 1, otherwise bit 3 and, outside the snow term, bit 4; bit 5 when 0x203710 (cherry blossom), bit 6 when 0x2039d0 (autumn leaves)',
-        'candidates': '0xb56850: rows whose AppearWeather bit is in the mask, except 0x279 Nomi, with Prob != 0 for the manager month/slot (+0x200/+0x204) form a bitset; then per spawn group (0xb56f00, count +0x1c0) the first (kind 9: second) member of the group bitset that is a candidate is added to the manager set +0x208; the spawn draw itself and the group list are not read yet',
+        'island_draw': {
+            'entry': '0x957940(insect manager *0x33d3eb8): no direct caller (function pointer); returns an ItemID or 0xfffe',
+            'table': 'hemisphere = save root +0x651fc (values > 1 read as 0) -> 0x957bf0 table; rows in table order (count +0x1c0, row 0x965400, ItemID 0x95a110)',
+            'candidates': 'Prob(month * 6 + slot) != 0 for the clock month/slot (0x9f1870) and 0x958570(item) false',
+            'filter_0x958570': 'reject when InsectStatusParam.AppearFg (3 bytes, 18 bits used) has any bit except bit 3, or the ItemID is 0x24b Amenbo, 0x250 Ga, 0x252 Gengorou, 0x25c Funkorogashi, 0x268 Konohamushi, 0x28b Yadokari or 0x1425 Tagame (these spawn through their own spawn-point paths)',
+            'pick': 'W = sum Prob (u16); r = rand32 * W >> 32 (0x19aa0e0 on the TLS RNG); first candidate with r < Prob after subtracting the earlier weights; W = 0 -> 0xfffe',
+            'weather': 'the draw does not read AppearWeather; where the weather rule applies on the main island is open',
+        },
+        'appear_fg': {
+            'layout': 'InsectStatusParam.AppearFg = 3 raw bytes; 0x9e8fb0 maps bit i (i != 3, i < 18) through the manager table +0x350 (count +0x348, default 0x11) to a spawn-target enum and returns the bit mask of enum values',
+            'groups_by_bit_TBL': {'0-4': 'flower insects (butterflies, mantises, honeybee, stink bugs, ladybug; bit 3 = the four common butterflies, ignored by the filter)', '5': 'rock insects (Katatsumuri, Dangomushi, Mukade)', '6-8': 'Hae, Ari (spoiled items)', '10-12': 'tree trunk insects (cicadas, beetles, stag beetles)', '14-16': 'stump insects (Tamamushi, Baiorinmushi, two longhorn beetles)'},
+            'labels': 'group names inferred from the insect members [TBL]; the enum strings of table +0x350 are not read',
+        },
+        'species_cap_0x8ddbd0': {
+            'rule': 'count active insects of the field list (+0x290 [+0x2a0], entries +0x18 / count +0x10) whose ItemID satisfies the species predicate; spawn allowed while count < cap',
+            'caps': {'3': ['0x24b Amenbo', '0x250 Ga', '0x28b Yadokari'], '2': ['0x24e Dangomushi + 0x274 Mukade (shared)', '0x24f Funamushi', '0x252 Gengorou + 0x1425 Tagame (shared)', '0x268 Konohamushi', '0x27a Okera'], '1': ['0x255 Hae', '0x25e Ka']},
+            'never_here': '0x26b Kumo, 0x26e Minomushi (tree path 0x8e0400)',
+            'others': 'when 0xb5ac30 (0xfe8ab0 with argument 0x11) is false: unlimited, except an insect whose AppearFg enum mask is 0x40 (enum 6): cap 1 for that enum group, and only when 0x15c67d0(score mgr, 6, 1) >= 5 (session mode < 2) and 0x4c1310() >= 7; when 0xb5ac30 is true: 0x16e3 Sakurapetal and 0x1cce AutumnLeaf refused, others unlimited',
+        },
+        'mystery_tour': {
+            'availability_0xb56850': 'manager *0x33d3f70 holds MysteryTourInsectParam (11 rows: UniqueID, TargetInsect = 85-bit mask over InsectStatusParam row index); candidates = InsectStatusParam rows (except 0x279 Nomi) whose AppearWeather bit is in the weather mask and that have Prob != 0 for the tour month/slot; a row UniqueID is set in the result bitset when at least one member (UniqueID 9: two) is a candidate',
+            'weather_mask': 'over AppearWeather (rodata 0x297aeb1: AlwaysAppear, AppearInRain, AppearInSnowGroundTerm, NotAppearInRain, NotAppearInRainAndSnow, AppearInCherryBlossomOpenUpTerm, AppearInAutumnLeavesTerm): bit 0 always; bit 2 when 0x203c90 (snow-ground term); weather code 4/5 (0x204690) -> bit 1, otherwise bit 3 and, outside the snow term, bit 4; bit 5 when 0x203710 (cherry blossom), bit 6 when 0x2039d0 (autumn leaves)',
+            'draw_0x957d70': 'same weighted pick as 0x957940 over the tour candidate bitset, month/slot from *0x33d3f70 +0x218/+0x21c',
+            'fish_counterpart': '0xb53d20 (manager *0x33d3f78, fish Prob getter 0x5b34f0, Sirakansu only with weather 4/5): the object read by the fish type pick 0x5b95b0, so field byte +0x13e1 bit 0 selects the mystery-tour variant',
+            'driver': '0xb5ac90 calls 0xb56850(*0x33d3f70) then 0xb53d20(*0x33d3f78)',
+            'helpers': '0xb56f00 = BCSV row by index, 0xb58c10 = column offset of TargetInsect (hash 0xd086a528); not spawn groups (earlier reading corrected)',
+        },
+        'catalog': '0x9591d0 / 0x959410: availability of an insect over a time range (critterpedia style), same Prob getter',
         'special': {'0x959f70': 'flea on a villager (0xd21890): rand32 * 1000 >> 32 < Prob(Nomi) * arg', '0x8e0400': 'tree-shake spiders 0x26b Kumo and 0x26e Minomushi are placed when their Prob for the current month/slot is non-zero'},
-        'evidence': 'terbukti native: slots 0x9f1870/0x9f1920 and getter order 0x95ebe0; [PSEUDO]: weather mask and candidate set 0xb56850, 0x959f70, 0x8e0400; open: the weighted insect draw and the spawn-group list',
+        'evidence': 'terbukti native: draw 0x957940 and filter 0x958570 (tools/insect_spawn_native.py over the real tables), slots 0x9f1870/0x9f1920 and getter order 0x95ebe0; [PSEUDO]: species cap 0x8ddbd0, mystery-tour availability 0xb56850/0xb53d20 and draw 0x957d70, 0x959f70, 0x8e0400; open: weather rule on the main island, spawn-point paths per AppearFg group and their callers, enum names of table +0x350',
     },
 }
 FIELD_REGROWTH = {
