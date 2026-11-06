@@ -15,6 +15,7 @@ DEFAULT_OUTPUT = ROOT / "output/gameplay/catalog_registration_callers.json"
 TARGET = 0xEEBE80
 REGISTRATION_WRAPPER = 0xEFE070
 SPECIAL_ITEMKIND_INDICES = [0x4F, 0x50, 0x51, 0x52]
+CALLER_CONSTANT_ITEM_IDS = {0x876DB0: [0x139B, 0x134B]}
 
 
 def table_crosswalk(table_root):
@@ -54,6 +55,38 @@ def table_crosswalk(table_root):
         "join": "CRC32(ItemKind.Label) == ItemParam.ItemKind enum hash; rows retain source order/index",
         "rows": groups,
         "interpretation_limit": "The caller compares the ItemKind lookup result to these row indices. The table join labels those values but does not supply the caller's runtime trigger.",
+    }
+
+
+def caller_constant_item_crosswalk(table_root):
+    """Join literal UniqueID values observed at catalog caller 0x876db0 to ItemParam."""
+    item_table = json.loads((table_root / "tables_resolved/ItemParam.json").read_text())
+    columns = {column["name"]: i for i, column in enumerate(item_table["columns"])}
+    rows_by_id = {}
+    for row_index, row in enumerate(item_table["rows"]):
+        rows_by_id.setdefault(row[columns["UniqueID"]], []).append((row_index, row))
+    callers = []
+    for caller_va, unique_ids in CALLER_CONSTANT_ITEM_IDS.items():
+        matched_items = []
+        for unique_id in unique_ids:
+            for row_index, row in rows_by_id.get(unique_id, []):
+                matched_items.append({
+                    "itemparam_row": row_index,
+                    "unique_id": unique_id,
+                    "item_kind": row[columns["ItemKind"]]["labels"][0],
+                    "item_catalog_type": row[columns["ItemCatalogType"]]["labels"][0],
+                    "remake_id": row[columns["RemakeID"]],
+                })
+        callers.append({
+            "caller_va": hex(caller_va),
+            "hardcoded_unique_ids": [hex(value) for value in unique_ids],
+            "itemparam_matches": matched_items,
+        })
+    return {
+        "evidence_level": "STATIC_CALLER_LITERAL_PLUS_TABLE_JOIN",
+        "source_note": "UniqueID literals are observed in the caller's native pseudocode; field labels are from ItemParam rows.",
+        "callers": callers,
+        "interpretation_limit": "The table join identifies the literal item records, not the broader runtime condition that executes this caller.",
     }
 
 
@@ -279,6 +312,7 @@ def main():
             "interpretation_limit": "A purchase-counter string in a caller does not establish that this is specifically Nook Shopping or that it controls order eligibility/delivery.",
         },
         "itemkind_caller_crosswalk": table_crosswalk(args.table_root),
+        "caller_constant_item_id_crosswalk": caller_constant_item_crosswalk(args.table_root),
         "limitation": (
             "Direct call references identify call sites, not the runtime condition that reaches them. "
             "String references in immediate parents contextualize caller paths but do not prove item-specific "

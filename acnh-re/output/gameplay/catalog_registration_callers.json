@@ -1918,5 +1918,35 @@
     ],
     "interpretation_limit": "The caller compares the ItemKind lookup result to these row indices. The table join labels those values but does not supply the caller's runtime trigger."
   },
+  "caller_constant_item_id_crosswalk": {
+    "evidence_level": "STATIC_CALLER_LITERAL_PLUS_TABLE_JOIN",
+    "source_note": "UniqueID literals are observed in the caller's native pseudocode; field labels are from ItemParam rows.",
+    "callers": [
+      {
+        "caller_va": "0x876db0",
+        "hardcoded_unique_ids": [
+          "0x139b",
+          "0x134b"
+        ],
+        "itemparam_matches": [
+          {
+            "itemparam_row": 2261,
+            "unique_id": 5019,
+            "item_kind": "RoomFloor",
+            "item_catalog_type": "Sale",
+            "remake_id": -1
+          },
+          {
+            "itemparam_row": 2184,
+            "unique_id": 4939,
+            "item_kind": "RoomWall",
+            "item_catalog_type": "Sale",
+            "remake_id": -1
+          }
+        ]
+      }
+    ],
+    "interpretation_limit": "The table join identifies the literal item records, not the broader runtime condition that executes this caller."
+  },
   "limitation": "Direct call references identify call sites, not the runtime condition that reaches them. String references in immediate parents contextualize caller paths but do not prove item-specific eligibility or save persistence; absence of strings does not identify a gameplay source."
 }
