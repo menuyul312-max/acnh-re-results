@@ -56,12 +56,44 @@ cd acnh-re
 PYTHONPATH=/workspace/acnh-re/.deps:tools python3 tools/npc_friendship_delta_native.py
 ```
 
+### Setter record lokal/network dan mutasi byte
+
+**Terbukti native dengan descriptor sintetis:** test baru menjalankan badan
+`0xef2c70` dan writer asli `0xf48840`, lalu membaca kembali byte yang sama
+melalui getter asli `0xf486c0`. Jalur `0xef2c70` memilih record lokal dengan
+rumus `save_base + resident*0x10798 + player*0xa8 + 0x39f8`; mode network
+memakai `save_base + resident*0x10798 + player*0x700 + 0x1c0`. Enam kombinasi
+slot valid mencakup resident 0/9 dan player 0/159 lokal atau 0/7 network; empat
+kasus di luar batas ditolak sebelum writer. Pada valid path, hash Murmur dari
+literal `Friendship` di NSO `main` yang dihitung native adalah `0x8a80b4d9`, lalu
+`0xf48840` benar-benar mengubah byte record sintetis pada offset `+0x38`.
+Writer juga mempertahankan nilai yang sama, meng-clamp `0xffffffff` menjadi 0,
+dan meng-clamp 256 menjadi 255. Sepuluh kasus lulus tanpa mismatch.
+
+Reproduksi:
+
+```bash
+cd acnh-re
+PYTHONPATH=/workspace/acnh-re/.deps:tools python3 tools/npc_friendship_save_writer_native.py
+```
+
+Data: [friendship_save_writer_native.json](../output/gameplay/villager_social_followup/friendship_save_writer_native.json).
+Fixture mengontrol save-root getter, constructor view, lookup hash ke descriptor,
+lookup descriptor ke field byte `+0x38`, serta metadata maksimum byte 255.
+Karena tabel descriptor asli tidak dijalankan dan fixture save sintetis,
+temuan ini membuktikan efek native setter/getter setelah descriptor diberikan;
+ia belum membuktikan bahwa save pemain nyata memakai nilai tabel tersebut.
+
 ## Batas klaim dan pekerjaan tersisa
 
 - **Terbukti native:** perhitungan `0xd34f80` untuk poin lama yang dikendalikan,
   serta argumen yang sampai ke entry `0xef2c70`, termasuk key `Friendship`.
-- **[PSEUDO]:** binding ke data record, pemilihan field di `0xf48840`, dan efek
-  perubahan pada save. Badan writer belum berjalan dalam reproducer.
+- **Terbukti native pada fixture:** badan `0xef2c70`, setter byte asli
+  `0xf48840`, getter asli `0xf486c0`, rumus alamat record lokal/network, dan
+  batas byte setelah lookup descriptor yang dikendalikan.
+- **Masih [PSEUDO/fixture]:** save-root nyata, table lookup `Friendship` ke
+  descriptor field, descriptor ke offset `+0x38`, dan persistensi pada save
+  permainan. Tidak ada save pemain yang dibaca atau ditulis.
 
 ## EventFlow friendship dan state conversation
 

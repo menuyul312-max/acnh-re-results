@@ -19,6 +19,17 @@
       "artifacts": ["eventflow_friendship_action_native.json"]
     }
   ],
+  "native_setter_fixture": {
+    "status": "0xef2c70 -> original 0xf48840 write -> original 0xf486c0 readback; synthetic save root and controlled descriptor map",
+    "record_layouts": {
+      "local": "save_base + resident*0x10798 + player*0xa8 + 0x39f8",
+      "network": "save_base + resident*0x10798 + player*0x700 + 0x1c0"
+    },
+    "observed_friendship_hash": "0x8a80b4d9",
+    "friendship_record_byte": "0x38, supplied by controlled descriptor lookup",
+    "artifact": "friendship_save_writer_native.json",
+    "claim_limit": "native byte mutation is verified on synthetic records after controlled hash-to-field-index lookup; real save root and descriptor table remain unverified"
+  },
   "candidate_daily_writer": {
     "status": "pseudocode candidate; native branch not executed",
     "call_chain": ["0xf53a70", "0xabff90", "0xac0200", "0xab9dc0", "0xf48840"],

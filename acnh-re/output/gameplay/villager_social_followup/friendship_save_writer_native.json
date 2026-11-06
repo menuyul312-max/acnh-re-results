@@ -1,0 +1,249 @@
+{
+  "cases": 10,
+  "writer_calls": 6,
+  "mismatches": [],
+  "native_functions": {
+    "friendship_record_setter": "0xef2c70",
+    "field_writer_boundary": "0xf48840",
+    "field_getter": "0xf486c0",
+    "save_root_getter": "0xeecf20"
+  },
+  "cases_data": [
+    {
+      "name": "local_first_record",
+      "resident_slot": 0,
+      "player_slot": 0,
+      "value_u32": 42,
+      "initial_byte": 29,
+      "network_mode_arg": 0,
+      "record_address": 2147498488,
+      "read_back_byte": 42,
+      "expected_writer_calls": 1,
+      "writer_calls": [
+        {
+          "record_address": 2147498488,
+          "key_object": 2149581328,
+          "value_u32": 42
+        }
+      ],
+      "native_friendship_key_hashes": [
+        "0x8a80b4d9",
+        "0x8a80b4d9"
+      ]
+    },
+    {
+      "name": "local_last_resident_and_player",
+      "resident_slot": 9,
+      "player_slot": 159,
+      "value_u32": 255,
+      "initial_byte": 200,
+      "network_mode_arg": 2,
+      "record_address": 2148132520,
+      "read_back_byte": 255,
+      "expected_writer_calls": 1,
+      "writer_calls": [
+        {
+          "record_address": 2148132520,
+          "key_object": 2149581328,
+          "value_u32": 255
+        }
+      ],
+      "native_friendship_key_hashes": [
+        "0x8a80b4d9",
+        "0x8a80b4d9"
+      ]
+    },
+    {
+      "name": "local_mid_record_negative_clamps_to_zero",
+      "resident_slot": 4,
+      "player_slot": 7,
+      "value_u32": 4294967295,
+      "initial_byte": 22,
+      "network_mode_arg": 0,
+      "record_address": 2147769584,
+      "read_back_byte": 0,
+      "expected_writer_calls": 1,
+      "writer_calls": [
+        {
+          "record_address": 2147769584,
+          "key_object": 2149581328,
+          "value_u32": 4294967295
+        }
+      ],
+      "native_friendship_key_hashes": [
+        "0x8a80b4d9",
+        "0x8a80b4d9"
+      ]
+    },
+    {
+      "name": "network_first_record",
+      "resident_slot": 0,
+      "player_slot": 0,
+      "value_u32": 60,
+      "initial_byte": 10,
+      "network_mode_arg": 1,
+      "record_address": 2147484096,
+      "read_back_byte": 60,
+      "expected_writer_calls": 1,
+      "writer_calls": [
+        {
+          "record_address": 2147484096,
+          "key_object": 2149581328,
+          "value_u32": 60
+        }
+      ],
+      "native_friendship_key_hashes": [
+        "0x8a80b4d9",
+        "0x8a80b4d9"
+      ]
+    },
+    {
+      "name": "network_last_resident_and_player_clamps_to_byte",
+      "resident_slot": 9,
+      "player_slot": 7,
+      "value_u32": 256,
+      "initial_byte": 254,
+      "network_mode_arg": 3,
+      "record_address": 2148103960,
+      "read_back_byte": 255,
+      "expected_writer_calls": 1,
+      "writer_calls": [
+        {
+          "record_address": 2148103960,
+          "key_object": 2149581328,
+          "value_u32": 256
+        }
+      ],
+      "native_friendship_key_hashes": [
+        "0x8a80b4d9",
+        "0x8a80b4d9"
+      ]
+    },
+    {
+      "name": "network_middle_record_unchanged",
+      "resident_slot": 5,
+      "player_slot": 3,
+      "value_u32": 15,
+      "initial_byte": 15,
+      "network_mode_arg": 1,
+      "record_address": 2147826872,
+      "read_back_byte": 15,
+      "expected_writer_calls": 1,
+      "writer_calls": [
+        {
+          "record_address": 2147826872,
+          "key_object": 2149581328,
+          "value_u32": 15
+        }
+      ],
+      "native_friendship_key_hashes": [
+        "0x8a80b4d9",
+        "0x8a80b4d9"
+      ]
+    },
+    {
+      "name": "reject_local_resident_10",
+      "resident_slot": 10,
+      "player_slot": 0,
+      "value_u32": 1,
+      "initial_byte": 1,
+      "network_mode_arg": 0,
+      "record_address": null,
+      "read_back_byte": null,
+      "expected_writer_calls": 0,
+      "writer_calls": [],
+      "native_friendship_key_hashes": []
+    },
+    {
+      "name": "reject_local_player_160",
+      "resident_slot": 0,
+      "player_slot": 160,
+      "value_u32": 1,
+      "initial_byte": 1,
+      "network_mode_arg": 0,
+      "record_address": null,
+      "read_back_byte": null,
+      "expected_writer_calls": 0,
+      "writer_calls": [],
+      "native_friendship_key_hashes": []
+    },
+    {
+      "name": "reject_network_resident_10",
+      "resident_slot": 10,
+      "player_slot": 0,
+      "value_u32": 1,
+      "initial_byte": 1,
+      "network_mode_arg": 1,
+      "record_address": null,
+      "read_back_byte": null,
+      "expected_writer_calls": 0,
+      "writer_calls": [],
+      "native_friendship_key_hashes": []
+    },
+    {
+      "name": "reject_network_player_8",
+      "resident_slot": 0,
+      "player_slot": 8,
+      "value_u32": 1,
+      "initial_byte": 1,
+      "network_mode_arg": 1,
+      "record_address": null,
+      "read_back_byte": null,
+      "expected_writer_calls": 0,
+      "writer_calls": [],
+      "native_friendship_key_hashes": []
+    }
+  ],
+  "record_formulas": {
+    "local": "save_base + resident*0x10798 + player*0xa8 + 0x39f8",
+    "network": "save_base + resident*0x10798 + player*0x700 + 0x1c0"
+  },
+  "scope": "Original 0xef2c70 and 0xf48840 setter instructions execute; the test observes entry to the original writer and then checks the synthetic record with original 0xf486c0. A synthetic typed view points at a synthetic save base.",
+  "dependencies_stubbed": [
+    {
+      "va": "0xeecf20",
+      "purpose": "returns a synthetic save base"
+    },
+    {
+      "va": "0xee9350",
+      "purpose": "constructs a synthetic view over the selected record"
+    },
+    {
+      "va": "0xee9490",
+      "purpose": "skips typed-view copy/setup"
+    },
+    {
+      "va": "0xee94f0",
+      "purpose": "skips typed-view preparation"
+    },
+    {
+      "va": "0xcc5e20",
+      "purpose": "maps the native Friendship hash to a synthetic field descriptor"
+    },
+    {
+      "va": "0xf48190",
+      "purpose": "maps the synthetic descriptor to the independently observed byte offset +0x38"
+    },
+    {
+      "va": "0x1665e80 / 0x1665e60 / 0x1665e50",
+      "purpose": "supplies a synthetic type-metadata row whose maximum-byte descriptor resolves to 255"
+    },
+    {
+      "va": "0xef2720",
+      "purpose": "skips unrelated post-write bookkeeping"
+    },
+    {
+      "va": "0xda4020",
+      "purpose": "selects the no-notification path"
+    }
+  ],
+  "limits": [
+    "The backing save bytes and field descriptor are synthetic; no player save was read or changed.",
+    "The key wrapper has the same vtable and literal pointer as the d34f80 Friendship caller, but the wrapper object is synthetic.",
+    "The key-hash map and field-index descriptor are controlled; this does not independently prove the real metadata table resolves Friendship to +0x38.",
+    "The original 0xf48840 writer enforces the supplied descriptor and mutates the synthetic byte; the descriptor maximum 255 is a test fixture, not a proved table value.",
+    "It does not prove that the daily -3 candidate is reachable during ordinary play."
+  ],
+  "elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+  "nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900"
+}
