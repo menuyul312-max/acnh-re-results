@@ -1,0 +1,712 @@
+{
+  "evidence_basis": {
+    "analysis_root": "/workspace/acnh-re/output",
+    "index": "index.sqlite string_refs and direct_calls; queried read-only",
+    "elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+    "nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018a9e14e900"
+  },
+  "save_table_row": {
+    "table": "B_data/Bcsv/EventFlagsNpcMemoryParam.bcsv",
+    "row_count": 116,
+    "fields": {
+      "UniqueID": 10,
+      "DefaultValue": 25,
+      "Name": "親密度",
+      "FlagsFlowAccess": 1,
+      "Key": "Friendship",
+      "MaxValue": 255,
+      "h_5140e4b4": 0,
+      "h_5f77b61a": 0,
+      "h_8d401df7": 0
+    },
+    "interpretation": "The resolved table labels Friendship as a u8 value, initial/default 25, max 255. This describes table metadata, not execution of the runtime descriptor-map loader."
+  },
+  "string_reference_inventory": {
+    "key": "Friendship",
+    "function_count": 14,
+    "functions": [
+      {
+        "function_va": "0x39f070",
+        "callers": [
+          "0xd1e610",
+          "0xd268b0"
+        ],
+        "directly_calls_f486c0": false,
+        "directly_calls_f48840": false,
+        "directly_calls_ef2c70": false,
+        "note": "Friendship literal reference; this caller needs additional semantic tracing."
+      },
+      {
+        "function_va": "0xabaa80",
+        "callers": [
+          "0xaba9d0"
+        ],
+        "directly_calls_f486c0": true,
+        "directly_calls_f48840": false,
+        "directly_calls_ef2c70": false,
+        "note": "Reads Friendship in resident/player iteration and feeds the value through level conversion; no direct field writer in this function."
+      },
+      {
+        "function_va": "0xabbf00",
+        "callers": [
+          "0xabb250"
+        ],
+        "directly_calls_f486c0": true,
+        "directly_calls_f48840": false,
+        "directly_calls_ef2c70": false,
+        "note": "Mail-processing path (caller 0xabb250) reads Friendship, converts it to a level and uses it in branch selection; no direct Friendship writer call."
+      },
+      {
+        "function_va": "0xac0200",
+        "callers": [
+          "0xabfcf0",
+          "0xabff90"
+        ],
+        "directly_calls_f486c0": true,
+        "directly_calls_f48840": true,
+        "directly_calls_ef2c70": false,
+        "note": "Direct daily-candidate writer: reads Friendship, invokes candidate calculator 0xab9dc0, then passes Friendship plus candidate delta to 0xf48840."
+      },
+      {
+        "function_va": "0xca6c40",
+        "callers": [
+          "0xca67a0"
+        ],
+        "directly_calls_f486c0": true,
+        "directly_calls_f48840": false,
+        "directly_calls_ef2c70": false,
+        "note": "Reads friendship/acquaintance values and level-converts them while selecting/scoring NPC candidates; no direct Friendship writer call."
+      },
+      {
+        "function_va": "0xd1cfc0",
+        "callers": [
+          "0xd1c770",
+          "0xd1d0e0"
+        ],
+        "directly_calls_f486c0": true,
+        "directly_calls_f48840": false,
+        "directly_calls_ef2c70": false,
+        "note": "Reads Friendship as one input to a returned calculation; no direct Friendship writer call."
+      },
+      {
+        "function_va": "0xd24d20",
+        "callers": [
+          "0xd22ab0"
+        ],
+        "directly_calls_f486c0": true,
+        "directly_calls_f48840": false,
+        "directly_calls_ef2c70": false,
+        "note": "Reads Friendship in a move-in/abandoned-house path; no direct Friendship writer call."
+      },
+      {
+        "function_va": "0xd34a70",
+        "callers": [
+          "0x267eb0",
+          "0x268bf0",
+          "0x2b8ec0",
+          "0xfbe7a0",
+          "0xfbe9d0"
+        ],
+        "directly_calls_f486c0": false,
+        "directly_calls_f48840": false,
+        "directly_calls_ef2c70": false,
+        "note": "Reads Friendship and returns the 1–6 point band."
+      },
+      {
+        "function_va": "0xd34c20",
+        "callers": [
+          "0xd26b70"
+        ],
+        "directly_calls_f486c0": false,
+        "directly_calls_f48840": false,
+        "directly_calls_ef2c70": false,
+        "note": "Reads Friendship; no direct field writer call."
+      },
+      {
+        "function_va": "0xd34cb0",
+        "callers": [
+          "0xc84240"
+        ],
+        "directly_calls_f486c0": false,
+        "directly_calls_f48840": false,
+        "directly_calls_ef2c70": false,
+        "note": "Friendship delta wrapper: reads old value, applies 0xd34f80, and transitions the friendship-level flag when crossing its condition."
+      },
+      {
+        "function_va": "0xd34f80",
+        "callers": [
+          "0xd34cb0",
+          "0xfb9e30",
+          "0xfbc020"
+        ],
+        "directly_calls_f486c0": true,
+        "directly_calls_f48840": false,
+        "directly_calls_ef2c70": true,
+        "note": "Friendship delta/floor calculation; passes Friendship value to 0xef2c70."
+      },
+      {
+        "function_va": "0xed4460",
+        "callers": [
+          "0xeb1010",
+          "0xeb4e40",
+          "0xecc930",
+          "0xecd270"
+        ],
+        "directly_calls_f486c0": true,
+        "directly_calls_f48840": false,
+        "directly_calls_ef2c70": false,
+        "note": "Reads Friendship to populate NNPCFriendship/NNPCFavor values; no direct Friendship writer call."
+      },
+      {
+        "function_va": "0xf87670",
+        "callers": [
+          "0xf847f0"
+        ],
+        "directly_calls_f486c0": true,
+        "directly_calls_f48840": false,
+        "directly_calls_ef2c70": false,
+        "note": "Reads Friendship while populating a multi-resident synchronization/update structure; no direct Friendship writer call."
+      },
+      {
+        "function_va": "0xfb60a0",
+        "callers": [],
+        "directly_calls_f486c0": false,
+        "directly_calls_f48840": false,
+        "directly_calls_ef2c70": false,
+        "note": "Reads Friendship and level-converts it for a threshold/random branch; no direct Friendship writer call."
+      }
+    ]
+  },
+  "known_writer_paths": [
+    {
+      "path": [
+        "0xc84240",
+        "0xd34cb0",
+        "0xd34f80",
+        "0xef2c70",
+        "0xf48840"
+      ],
+      "basis": "Native talk/delta and setter fixtures plus direct-call graph.",
+      "caller_edges": {
+        "0xd34cb0": [
+          "0xc84240"
+        ],
+        "0xd34f80": [
+          "0xd34cb0",
+          "0xfb9e30",
+          "0xfbc020"
+        ],
+        "0xef2c70": [
+          "0xd34f80",
+          "0xf12fe0",
+          "0xfba210"
+        ]
+      },
+      "scope": "First-talk reward and EventFlow AddFriendship values; the EventFlow inventory proves all 72 configured AddValue arguments reach 0xd34cb0 unchanged."
+    },
+    {
+      "path": [
+        "0xf53a70",
+        "0xabff90",
+        "0xac0200",
+        "0xab9dc0",
+        "0xf48840"
+      ],
+      "basis": "Static caller edges and pseudocode only.",
+      "caller_edges": {
+        "0xac0200": [
+          "0xabfcf0",
+          "0xabff90"
+        ],
+        "0xab9dc0": [
+          "0xac0200"
+        ]
+      },
+      "scope": "Candidate day-change Friendship adjustment; the -3 branch and ordinary-play reachability remain unexecuted."
+    }
+  ],
+  "direct_writer_inventory": {
+    "field_writer": "0xf48840",
+    "direct_callers": [
+      "0xabb3f0",
+      "0xac0200",
+      "0xef2a50",
+      "0xef2c70",
+      "0xf135b0",
+      "0xf48a20",
+      "0xf48c40",
+      "0xf48cb0",
+      "0xf48cf0",
+      "0xf696c0",
+      "0xf698c0",
+      "0xf69b60",
+      "0xf76010",
+      "0xf764e0",
+      "0xf76780",
+      "0xf86ce0",
+      "0xf87320",
+      "0xf889e0",
+      "0xf8c540"
+    ],
+    "Friendship_literal_direct_writer": "0xac0200",
+    "Friendship_literal_direct_writer_callers": [
+      "0xabfcf0",
+      "0xabff90"
+    ],
+    "generic_key_writer": "0xef2c70",
+    "generic_key_writer_callers": [
+      "0xd34f80",
+      "0xf12fe0",
+      "0xfba210"
+    ],
+    "wrapper_key_check": {
+      "0xd34f80": "Friendship",
+      "0xf12fe0": [
+        "SameLand"
+      ],
+      "0xfba210": [
+        "SickQuestGossip",
+        "TalkedDuringSick"
+      ]
+    },
+    "limits": "Inventory is based on direct calls and indexed string references in this main.nso build; it cannot rule out indirect writes, dynamic field names, unindexed strings, or code in absent modules."
+  },
+  "mail_candidate": {
+    "static_path": [
+      "0xaba9d0",
+      "0xabb250",
+      "0xabbf00"
+    ],
+    "friendship_use": "0xabbf00 reads Friendship and converts it with 0xd34a20 while processing a candidate mail/item path; the routine contains no direct 0xf48840 or 0xef2c70 call.",
+    "classification": "Read-only with respect to Friendship in the visible pseudocode; exact MAIL_XX_ReMax semantic and any downstream social delta are unproven."
+  },
+  "eventflow_gift_related_actions": {
+    "source_artifact": "eventflow_friendship_action_native.json",
+    "flow_actions": {
+      "NNPC_GEvent_BirthdayN_H": {
+        "action_count": 7,
+        "AddValue": [
+          -5,
+          3,
+          4,
+          4,
+          5,
+          6,
+          8
+        ]
+      },
+      "NNPC_Quest_Delivery_Give": {
+        "action_count": 2,
+        "AddValue": [
+          1,
+          3
+        ]
+      },
+      "NNPC_Quest_Delivery_Report": {
+        "action_count": 1,
+        "AddValue": [
+          3
+        ]
+      },
+      "NNPC_Quest_Delivery_TimeOver": {
+        "action_count": 3,
+        "AddValue": [
+          -3,
+          -2,
+          -1
+        ]
+      },
+      "NNPC_Select_Creature": {
+        "action_count": 3,
+        "AddValue": [
+          1,
+          2,
+          2
+        ]
+      },
+      "NNPC_Select_Equipment": {
+        "action_count": 3,
+        "AddValue": [
+          1,
+          1,
+          2
+        ]
+      },
+      "NNPC_Select_Etc": {
+        "action_count": 5,
+        "AddValue": [
+          -2,
+          1,
+          1,
+          1,
+          2
+        ]
+      },
+      "NNPC_Select_Furniture": {
+        "action_count": 4,
+        "AddValue": [
+          1,
+          1,
+          1,
+          3
+        ]
+      },
+      "NNPC_Select_Present": {
+        "action_count": 1,
+        "AddValue": [
+          1
+        ]
+      },
+      "NNPC_Select_Sell_Gift": {
+        "action_count": 6,
+        "AddValue": [
+          1,
+          1,
+          2,
+          2,
+          3,
+          3
+        ]
+      },
+      "NNPC_Select_Tool": {
+        "action_count": 6,
+        "AddValue": [
+          1,
+          1,
+          1,
+          1,
+          2,
+          2
+        ]
+      }
+    },
+    "claim_limit": "These are configured action deltas and native callback forwarding. They do not establish every item-quality formula or that each conditional action occurs in a playthrough."
+  },
+  "behavior_source_review": {
+    "gift_selection": {
+      "flow_action_deltas": {
+        "NNPC_Select_Creature": {
+          "action_count": 3,
+          "AddValue": [
+            1,
+            2,
+            2
+          ]
+        },
+        "NNPC_Select_Equipment": {
+          "action_count": 3,
+          "AddValue": [
+            1,
+            1,
+            2
+          ]
+        },
+        "NNPC_Select_Etc": {
+          "action_count": 5,
+          "AddValue": [
+            -2,
+            1,
+            1,
+            1,
+            2
+          ]
+        },
+        "NNPC_Select_Furniture": {
+          "action_count": 4,
+          "AddValue": [
+            1,
+            1,
+            1,
+            3
+          ]
+        },
+        "NNPC_Select_Present": {
+          "action_count": 1,
+          "AddValue": [
+            1
+          ]
+        },
+        "NNPC_Select_Sell_Gift": {
+          "action_count": 6,
+          "AddValue": [
+            1,
+            1,
+            2,
+            2,
+            3,
+            3
+          ]
+        },
+        "NNPC_Select_Tool": {
+          "action_count": 6,
+          "AddValue": [
+            1,
+            1,
+            1,
+            1,
+            2,
+            2
+          ]
+        }
+      },
+      "birthday_gift_deltas": {
+        "NNPC_GEvent_BirthdayN_H": {
+          "action_count": 7,
+          "AddValue": [
+            -5,
+            3,
+            4,
+            4,
+            5,
+            6,
+            8
+          ]
+        }
+      },
+      "interpretation": "NNPC_Select_Present dispatches by selected item kind into creature, equipment, furniture, tool, and other item subflows. NNPC_Select_Sell_Gift is the villager buying a selected player item; CheckNpcFavorLevel selects configured +1/+2/+3 friendship branches, and the overflow branch sends MAIL_XX_OverFlow by NpcMailSendRandom after those deltas. These are different flows from player letters."
+    },
+    "player_letter": {
+      "flow": "Obj_MessageCardRack_01_SendVillage",
+      "source": "B_data/EventFlow/Obj_MessageCardRack_01_SendVillage.bfevfl",
+      "actions": [
+        {
+          "event_index": 0,
+          "action": "EventFlowActionUIMsgCardAdrHandling",
+          "params": {
+            "MsgCardAdrType": "cResident"
+          }
+        },
+        {
+          "event_index": 4,
+          "action": "EventFlowActionUIMsgCardSelectHandling",
+          "params": {}
+        },
+        {
+          "event_index": 6,
+          "action": "EventFlowActionUIMsgCardEditTextHandling",
+          "params": {
+            "TempFormType": ""
+          }
+        },
+        {
+          "event_index": 7,
+          "action": "EventFlowActionOpenMessageWindow",
+          "params": {
+            "IsCloseMessageWindow": true,
+            "MessageID": "TalkSNpc/dod/SP_dod_50_PostOffice:500"
+          }
+        },
+        {
+          "event_index": 9,
+          "action": "EventFlowActionOpenMessageWindow",
+          "params": {
+            "IsCloseMessageWindow": false,
+            "MessageID": "TalkSNpc/dod/SP_dod_50_PostOffice:510"
+          }
+        },
+        {
+          "event_index": 10,
+          "action": "EventFlowActionBellCountDown",
+          "params": {
+            "Money": -200,
+            "Reverse": false
+          }
+        },
+        {
+          "event_index": 11,
+          "action": "EventFlowActionOpenMessageWindow",
+          "params": {
+            "IsCloseMessageWindow": false,
+            "MessageID": "TalkSNpc/dod/SP_dod_50_PostOffice:501"
+          }
+        },
+        {
+          "event_index": 12,
+          "action": "EventFlowActionUIMoneyAppear",
+          "params": {}
+        },
+        {
+          "event_index": 13,
+          "action": "EventFlowActionUIMoneyDisappear",
+          "params": {}
+        },
+        {
+          "event_index": 14,
+          "action": "EventFlowActionUIMoneyDisappear",
+          "params": {}
+        },
+        {
+          "event_index": 17,
+          "action": "EventFlowActionSaveSetFromUIResult",
+          "params": {
+            "SaveType": "cMsgCard"
+          }
+        },
+        {
+          "event_index": 18,
+          "action": "EventFlowActionDropIntoPostOffice",
+          "params": {
+            "TmpMailInstance": "cSaveMailUserInfo"
+          }
+        },
+        {
+          "event_index": 33,
+          "action": "EventFlowActionOpenMessageWindow",
+          "params": {
+            "IsCloseMessageWindow": false,
+            "MessageID": "TalkSNpc/dod/SP_dod_50_PostOffice:200"
+          }
+        },
+        {
+          "event_index": 36,
+          "action": "EventFlowActionSetTagFromUIResult",
+          "params": {
+            "TagType": "cSelectPlayerName",
+            "TagID": 0
+          }
+        },
+        {
+          "event_index": 41,
+          "action": "EventFlowActionSetTagFromUIResult",
+          "params": {
+            "TagID": 0,
+            "TagType": "cSelectNpcName"
+          }
+        },
+        {
+          "event_index": 50,
+          "action": "EventFlowActionChangeAddressUnfinishMail",
+          "params": {}
+        },
+        {
+          "event_index": 52,
+          "action": "EventFlowActionUIMoneyDisappear",
+          "params": {}
+        },
+        {
+          "event_index": 54,
+          "action": "EventFlowActionUIMoneyDisappear",
+          "params": {}
+        },
+        {
+          "event_index": 57,
+          "action": "EventFlowActionUIMoneyDisappear",
+          "params": {}
+        },
+        {
+          "event_index": 16,
+          "action": "EventFlowActionOpenMessageWindow",
+          "params": {
+            "MessageID": "TalkSNpc/dod/SP_dod_50_PostOffice:210_01",
+            "IsCloseMessageWindow": false
+          }
+        },
+        {
+          "event_index": 19,
+          "action": "EventFlowActionOpenMessageWindow",
+          "params": {
+            "MessageID": "TalkSNpc/dod/SP_dod_50_PostOffice:210_02",
+            "IsCloseMessageWindow": false
+          }
+        },
+        {
+          "event_index": 20,
+          "action": "EventFlowActionOpenMessageWindow",
+          "params": {
+            "MessageID": "TalkSNpc/dod/SP_dod_50_PostOffice:220_01",
+            "IsCloseMessageWindow": false
+          }
+        },
+        {
+          "event_index": 21,
+          "action": "EventFlowActionOpenMessageWindow",
+          "params": {
+            "MessageID": "TalkSNpc/dod/SP_dod_50_PostOffice:220_02",
+            "IsCloseMessageWindow": false
+          }
+        }
+      ],
+      "npc_add_friendship_action_count": 0,
+      "finding": "The local player-to-villager post-office flow edits and posts a message card after a 200-Bell check; it contains no NpcAddFriendship action. The indexed exact-key friendship writer inventory also identifies no letter-sender callsite.",
+      "limit": "This does not rule out a later Friendship change when a delivered letter or attached present is processed."
+    },
+    "net_hits": {
+      "ai_flow_edges": [
+        {
+          "flow": "AI_NPC_Normal",
+          "entry": "End_Hit",
+          "checks": [
+            "NpcIsHitByNet",
+            "NpcHitNum(Border=3)"
+          ],
+          "route": "NNPC_Talk_Force:Hit"
+        },
+        {
+          "flow": "AI_NPC_Outdoor",
+          "entry": "Hit",
+          "checks": [
+            "NpcIsHitByNet",
+            "NpcHitNum(Border=3)",
+            "HasAcquaintanceship"
+          ],
+          "route": "NNPC_Talk_Force:Hit"
+        }
+      ],
+      "query_pseudocode": {
+        "NpcHitNum": "0x388660 returns case 0 when configured Border <= the NPC hit counter; AI_NPC_Normal and AI_NPC_Outdoor use Border=3.",
+        "NpcIsHitByNet": "0x389c50 returns case 0 when the NPC hit-by-net byte is nonzero."
+      },
+      "hit_entry_friendship_action_event_indices": [
+        21,
+        32,
+        33
+      ],
+      "hit_entry_friendship_action_values": [
+        -3,
+        -3,
+        -3
+      ],
+      "all_flow_negative_friendship_action_event_indices": [
+        21,
+        32,
+        33,
+        34,
+        36,
+        38,
+        64
+      ],
+      "all_flow_negative_friendship_action_values": [
+        -3,
+        -3,
+        -3,
+        -3,
+        -3,
+        -3,
+        -3
+      ],
+      "all_flow_negative_friendship_action_count": 7,
+      "flow_friendship_action_count": 8,
+      "finding": "After the hit checks, the AI flows can start NNPC_Talk_Force:Hit. EventFlow events 21, 32, and 33 in the Hit entry configure -3; each follows NoAcquaintance_Chk and CheckNpcLook case 0. NoAcquaintance_Chk exits when HasAcquaintanceship is OFF, so those negative branches require that flag to be ON. The same flow has four other -3 actions in Push and a +5 action in Flea; those are not net-hit branches. Callback forwarding for the configured actions is included in the 72/72 native action test.",
+      "limits": [
+        "Query bodies and AI transition gates are pseudocode evidence, not native execution.",
+        "The selected EventFlow dialogue branch is conditional; a net hit does not prove that every hit deducts points."
+      ]
+    },
+    "neglect_and_caps": {
+      "first_talk_of_day": "0xc84240 increments TalkCountToday and awards Friendship only when its resulting value is 1; the delta is min(ContinuousTalkDays, 3), as pseudocode evidence.",
+      "missed_talk": "The day-change reset helpers clear ContinuousTalkDays when the prior TalkCountToday is zero in the applicable mode. This removes the streak bonus; no direct Friendship decrement is shown on that path.",
+      "field_table": "EventFlagsNpcMemoryParam sets Friendship default 25/max 255 and ContinuousTalkDays default 0/max 7. These are field bounds, not an aggregate daily Friendship cap.",
+      "milestone_flag": "NNPC_Talk_General:PresentAvailable_Chk uses FriendshipBecomeAcqHToday and FriendshipBecomeAcqH to gate ReceivedFirstPresent; these flags are not a writer-level point cap.",
+      "quest_timeout": "NNPC_Quest_Delivery_TimeOver configures -1, -2, or -3 according to HasDeliveryItem and HasOpenedDeliveryItem query branches; this is a quest timeout penalty, not passive neglect decay.",
+      "daily_candidate": "The separate 0xf53a70 -> 0xabff90 -> 0xac0200 -> 0xab9dc0 path can supply -3 to a Friendship field write in pseudocode; reachability and its relationship to neglect remain unresolved.",
+      "finding": "No universal per-day Friendship point cap or passive no-talk point decay is identified by the indexed direct-writer and EventFlow evidence."
+    }
+  },
+  "open": [
+    "Execute the 0xab9dc0 -3 branch and prove whether the day-change path reaches it during ordinary play.",
+    "Trace recipient-side processing of player letters and any attached-present friendship effect; the post-office send flow itself contains no Friendship action.",
+    "Determine whether the separate 0xab9dc0 daily -3 candidate represents ordinary neglect/decay, and whether an aggregate daily Friendship cap exists.",
+    "Execute with the real runtime save root and Friendship field descriptor table; current native setter tests use a synthetic save and controlled descriptor lookup.",
+    "Determine host/guest state-transition conditions and prove whether 0x395bc0/0x395e50/0x3960d0 result indexes are dialog topics, messages, or another conversation selector."
+  ]
+}

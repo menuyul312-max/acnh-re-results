@@ -139,11 +139,71 @@ update memanggil helper `0xc30930`; helper memilih permintaan gerak/animasi
 Ringkasan target callback: [eventflow_friendship_action_native.json](../output/gameplay/villager_social_followup/eventflow_friendship_action_native.json); bukti registrasi rinci: [`npc_state_registry_native.json`](../output/mechanics/npc_state_registry_native.json).
 
 **Masih terbuka:** perpindahan state host/guest, badan callback entry/update/exit,
-dan pemilihan topic/message dialog. Nilai
-EventFlow adalah input yang dikonfigurasi, bukan bukti bahwa setiap cabang
-terjadi dalam satu playthrough. Contoh nilai negatif EventFlow juga bukan
-bukti decay harian. Penulis/delta untuk surat, pukulan jaring, dan pengabaian
-belum ditemukan.
+dan pemilihan topic/message dialog. Nilai EventFlow adalah input yang
+dikonfigurasi, bukan bukti bahwa setiap cabang terjadi dalam satu playthrough.
+
+### Hadiah dan surat
+
+**[EF]** `NNPC_Select_Present` memilih jalur dari jenis barang yang dipilih
+dengan filter `cGiftToNpc`. Subflow barang menetapkan nilai berbeda, bukan satu
+rumus umum. Cabang `UISelectedItemIsWrapping` juga mengonfigurasi +1 sebelum
+subflow jenis barang. Subflow memberi makanan/tanaman +1, bunga +2, perabot
+kategori `DecorateFtr` atau `DoorDeco` +3, fosil +1, dan pakaian/perlengkapan
+memakai query `DeliveryItemIsFavor` untuk memilih +1/+2. Musik memakai
+`IsFavoriteMusic` untuk +1/+2; sampah tertentu memakai -2, sedangkan barang
+lain pada jalur `Etc` +1. Fish dan insect melalui pemeriksaan museum/donasi
+sebelum diterima dengan +2. Nilai dan event index tiap subflow tersimpan di
+[`friendship_reference_inventory.json`](../output/gameplay/villager_social_followup/friendship_reference_inventory.json).
+
+Flow `NNPC_Select_Sell_Gift` adalah transaksi saat villager membeli barang
+pemain: cabang `CheckNpcFavorLevel` memberi +3/+2/+1. Saat inventory penuh,
+flow mengirim hadiah balasan lewat `NpcMailSendRandom` setelah delta yang sama.
+Ini berbeda dari surat yang dikirim pemain. Hadiah ulang tahun di
+`NNPC_GEvent_BirthdayN_H` mengonfigurasi +3/+4/+5/+6/+8 berdasarkan hasil
+pilihan/subflow; item yang lolos filter seperti `LostQuestDust`, turnip busuk,
+sampah, atau weed masuk cabang -5. Semua nilai ini adalah aksi yang telah
+dikonfigurasi dan callback-nya telah meneruskan tanpa perubahan; hasil
+playthrough tetap bergantung pada query/cabangnya.
+
+**[EF]** Surat pemain ke villager dibuat di
+`Obj_MessageCardRack_01_SendVillage`: alur memilih alamat `cResident`, mengedit
+kartu, memeriksa saldo, mengurangi 200 Bells, lalu menjalankan
+`DropIntoPostOffice`. Flow itu tidak memiliki aksi `NpcAddFriendship`, dan
+indeks exact-key tidak menemukan callsite writer Friendship di pengirim surat.
+Fungsi proses mail `0xabbf00` membaca Friendship untuk mengubah level sebelum
+memilih cabang, tetapi tidak memanggil writer langsung; hubungan cabang itu
+dengan surat penerima belum diketahui. Ini hanya menutup jalur pengiriman;
+efek setelah surat diterima, termasuk present terlampir, belum ditelusuri.
+
+### Pukulan jaring, pengabaian, dan batas harian
+
+**[PSEUDO + EF]** `AI_NPC_Normal:End_Hit` dan `AI_NPC_Outdoor:Hit` memeriksa
+`NpcIsHitByNet`, lalu `NpcHitNum(Border=3)`, dan dapat memulai
+`NNPC_Talk_Force:Hit`. Pseudocode query `0x389c50` mengembalikan case 0 saat
+flag hit-by-net NPC aktif; query `0x388660` mengembalikan case 0 saat hit
+counter sudah ≥ Border. Di entry `Hit`, tiga cabang mengonfigurasi
+`NpcAddFriendship(-3)`. Ketiganya melewati `NoAcquaintance_Chk` dan
+`CheckNpcLook` case 0; helper pertama menghentikan flow saat
+`HasAcquaintanceship` OFF. Ada pengurangan terkait net-hit setelah syarat
+hit/cabang percakapan itu, bukan bukti bahwa setiap pukulan langsung mengurangi
+poin. Callback asli meneruskan semua nilai EventFlow 72/72; query dan transisi
+AI masih bukti pseudocode. Empat aksi -3 lain di entry `Push` dan aksi +5 di
+entry `Flea` pada flow yang sama tidak termasuk jalur net-hit.
+
+**[PSEUDO]** percakapan pertama per villager pada hari itu memberi
+`min(ContinuousTalkDays, 3)`, jadi bonus talk harian berhenti naik setelah +3.
+Ketika siklus harian mendapati `TalkCountToday` nol pada mode yang sesuai,
+helper reset menghapus `ContinuousTalkDays`; efek pengabaian yang terbukti di
+jalur ini adalah hilangnya bonus streak berikutnya, bukan delta Friendship
+negatif. `NNPC_Quest_Delivery_TimeOver` terpisah memberi -1/-2/-3 menurut
+query `HasDeliveryItem` dan `HasOpenedDeliveryItem`; itu penalti timeout quest,
+bukan decay pasif.
+
+Tabel `EventFlagsNpcMemoryParam` memberi `Friendship` nilai awal 25 dan batas
+255, sedangkan `ContinuousTalkDays` berawal 0 dengan batas 7. Batas field bukan
+batas poin harian. Flag `FriendshipBecomeAcqHToday` di
+`NNPC_Talk_General:PresentAvailable_Chk` mengatur milestone `ReceivedFirstPresent`,
+bukan cap pada writer. Tidak ditemukan batas total `AddFriendship` per hari.
 
 ### State aktivitas dan host/guest
 
@@ -190,9 +250,10 @@ hari berturut-turut.
 
 `0xf4dbd0` membaca `TalkNpc0Count` sebagai gate, lalu memeriksa key
 `TalkNpc%dCount` untuk indeks 0–9 dan mengembalikan indeks pertama yang nilainya
-sama dengan argumen. Dua kasus native menjalankan body selector dan formatter
-asli dengan hasil lookup sintetis: gate mismatch memberi -1, sementara nilai
-yang cocok pada indeks 2 menghasilkan 2. Reproduksi:
+sesuai dengan argumen. Enam kasus native menjalankan body selector dan
+formatter asli dengan hasil lookup sintetis: gate mismatch memberi -1, nilai
+cocok pertama pada indeks 0/2/5/9 mengembalikan indeks tersebut, dan sepuluh
+counter tanpa kecocokan memberi -1. Reproduksi:
 
 ```bash
 cd acnh-re
@@ -253,9 +314,9 @@ tidak menghitungnya sebagai writer tambahan. Daftar pembaca/penulis dan rantai
 candidate disimpan di
 [`friendship_source_candidates.json`](../output/gameplay/villager_social_followup/friendship_source_candidates.json).
 
-**Terbuka:** konteks yang memicu cabang -3 pada `0xab9dc0`, apakah ia benar-benar
-terjadi pada hari normal, serta sumber lain seperti surat, pukulan jaring, atau
-pengabaian belum dibuktikan. Nilai negatif pada EventFlow tetap hanya input
-aksi yang dikonfigurasi. Action list mencakup pemberian/penjualan hadiah, tetapi
-tidak ada bukti di sana untuk surat, pukulan jaring, atau pengabaian. Native
-friendship test sebelumnya menguji floor level di `0xd34f80`, bukan sumber decay.
+**Terbuka:** konteks yang memicu cabang -3 pada `0xab9dc0` dan apakah ia terjadi
+pada hari normal; efek penerimaan surat; batas total poin Friendship per hari;
+serta bukti save nyata dan descriptor asli. Penurunan -3 dari net-hit dan
+timeout quest adalah aksi bersyarat yang dikonfigurasi, bukan decay pasif.
+Pengujian `0xd34f80` membuktikan floor saat turun lintas level, bukan sumber
+decay.

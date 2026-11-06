@@ -1,5 +1,5 @@
 {
-  "cases": 2,
+  "cases": 6,
   "mismatches": [],
   "native_functions": {
     "talk_counter_index_selector": "0xf4dbd0",
@@ -20,12 +20,27 @@
       "name": "initial_gate_mismatch"
     },
     {
-      "argument": 4,
+      "argument": 0,
+      "selected_index": 0,
+      "controlled_counter_reads": [
+        [
+          "TalkNpc0Count",
+          0
+        ],
+        [
+          "TalkNpc0Count",
+          0
+        ]
+      ],
+      "name": "first_match_at_index_0"
+    },
+    {
+      "argument": 2,
       "selected_index": 2,
       "controlled_counter_reads": [
         [
           "TalkNpc0Count",
-          4
+          2
         ],
         [
           "TalkNpc0Count",
@@ -37,10 +52,147 @@
         ],
         [
           "TalkNpc2Count",
-          4
+          2
         ]
       ],
       "name": "first_match_at_index_2"
+    },
+    {
+      "argument": 5,
+      "selected_index": 5,
+      "controlled_counter_reads": [
+        [
+          "TalkNpc0Count",
+          5
+        ],
+        [
+          "TalkNpc0Count",
+          6
+        ],
+        [
+          "TalkNpc1Count",
+          6
+        ],
+        [
+          "TalkNpc2Count",
+          6
+        ],
+        [
+          "TalkNpc3Count",
+          6
+        ],
+        [
+          "TalkNpc4Count",
+          6
+        ],
+        [
+          "TalkNpc5Count",
+          5
+        ]
+      ],
+      "name": "first_match_at_index_5"
+    },
+    {
+      "argument": 9,
+      "selected_index": 9,
+      "controlled_counter_reads": [
+        [
+          "TalkNpc0Count",
+          9
+        ],
+        [
+          "TalkNpc0Count",
+          10
+        ],
+        [
+          "TalkNpc1Count",
+          10
+        ],
+        [
+          "TalkNpc2Count",
+          10
+        ],
+        [
+          "TalkNpc3Count",
+          10
+        ],
+        [
+          "TalkNpc4Count",
+          10
+        ],
+        [
+          "TalkNpc5Count",
+          10
+        ],
+        [
+          "TalkNpc6Count",
+          10
+        ],
+        [
+          "TalkNpc7Count",
+          10
+        ],
+        [
+          "TalkNpc8Count",
+          10
+        ],
+        [
+          "TalkNpc9Count",
+          9
+        ]
+      ],
+      "name": "first_match_at_index_9"
+    },
+    {
+      "argument": 5,
+      "selected_index": -1,
+      "controlled_counter_reads": [
+        [
+          "TalkNpc0Count",
+          5
+        ],
+        [
+          "TalkNpc0Count",
+          6
+        ],
+        [
+          "TalkNpc1Count",
+          6
+        ],
+        [
+          "TalkNpc2Count",
+          6
+        ],
+        [
+          "TalkNpc3Count",
+          6
+        ],
+        [
+          "TalkNpc4Count",
+          6
+        ],
+        [
+          "TalkNpc5Count",
+          6
+        ],
+        [
+          "TalkNpc6Count",
+          6
+        ],
+        [
+          "TalkNpc7Count",
+          6
+        ],
+        [
+          "TalkNpc8Count",
+          6
+        ],
+        [
+          "TalkNpc9Count",
+          6
+        ]
+      ],
+      "name": "no_match_returns_minus_one"
     }
   ],
   "scope": "Original 0xf4dbd0 instructions and 0x47360 key formatting execute. The test stops each persisted counter lookup at 0xf4d560 and supplies controlled read results.",
@@ -56,7 +208,7 @@
   ],
   "limits": [
     "No real save record or underlying f4d560/f4da70 lookup state was executed.",
-    "This proves the selector returns the first index whose controlled TalkNpc%dCount read equals its argument, after an initial TalkNpc0Count gate.",
+    "Six native cases cover the initial TalkNpc0Count gate, return indices 0/2/5/9, and all-ten no-match behavior. The static loop covers all ten TalkNpc slots; controlled per-key read values are not real save reads.",
     "The callers 0x395bc0, 0x395e50, and 0x3960d0 are not executed; the result is not proven to be a conversation topic or message ID."
   ],
   "elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",

@@ -72,13 +72,18 @@ def run_case(name, argument, read_values, expected, expected_keys):
 
 
 def main():
-    cases = [
-        run_case('initial_gate_mismatch', 4, [3], -1,
-                 ['TalkNpc0Count']),
-        run_case('first_match_at_index_2', 4, [4, 3, 3, 4], 2,
-                 ['TalkNpc0Count', 'TalkNpc0Count',
-                  'TalkNpc1Count', 'TalkNpc2Count']),
-    ]
+    cases = [run_case('initial_gate_mismatch', 4, [3], -1,
+                      ['TalkNpc0Count'])]
+    for index in (0, 2, 5, 9):
+        keys = ['TalkNpc0Count'] + [f'TalkNpc{i}Count' for i in range(index + 1)]
+        values = [index] + [index + 1] * index + [index]
+        cases.append(run_case(f'first_match_at_index_{index}', index,
+                             values, index, keys))
+    cases.extend([
+        run_case('no_match_returns_minus_one', 5,
+                 [5] + [6] * 10, -1,
+                 ['TalkNpc0Count'] + [f'TalkNpc{i}Count' for i in range(10)]),
+    ])
     nso_hash = hashlib.sha256(Path(DEFAULT_NSO).read_bytes()).hexdigest()
     assert nso_hash == NSO_SHA256, nso_hash
     result = {
@@ -102,7 +107,7 @@ def main():
         ],
         'limits': [
             'No real save record or underlying f4d560/f4da70 lookup state was executed.',
-            'This proves the selector returns the first index whose controlled TalkNpc%dCount read equals its argument, after an initial TalkNpc0Count gate.',
+            'Six native cases cover the initial TalkNpc0Count gate, return indices 0/2/5/9, and all-ten no-match behavior. The static loop covers all ten TalkNpc slots; controlled per-key read values are not real save reads.',
             'The callers 0x395bc0, 0x395e50, and 0x3960d0 are not executed; the result is not proven to be a conversation topic or message ID.',
         ],
         'elf_sha256': ELF_SHA256,

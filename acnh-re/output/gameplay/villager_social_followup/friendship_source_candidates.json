@@ -17,6 +17,20 @@
       "status": "native action callback forwards configured AddValue; save update is not executed",
       "chain": ["0x27a220", "0xd34cb0", "0xd34f80", "0xef2c70"],
       "artifacts": ["eventflow_friendship_action_native.json"]
+    },
+    {
+      "name": "net-hit reaction conversation",
+      "status": "AI EventFlow trigger and friendship branches are pseudocode/EF; the AddFriendship callback forwarding is native",
+      "flow_path": ["AI_NPC_Normal:End_Hit", "AI_NPC_Outdoor:Hit", "NNPC_Talk_Force:Hit"],
+      "gates": ["NpcIsHitByNet", "NpcHitNum(Border=3)", "HasAcquaintanceship ON", "CheckNpcLook case 0"],
+      "delta": -3,
+      "artifacts": ["eventflow_friendship_action_native.json", "friendship_reference_inventory.json"]
+    },
+    {
+      "name": "player post-office letter",
+      "status": "send flow has no NpcAddFriendship action; later recipient-side effects are unresolved",
+      "flow_path": ["Obj_MessageCardRack_01_SendVillage", "DropIntoPostOffice"],
+      "artifacts": ["friendship_reference_inventory.json"]
     }
   ],
   "native_setter_fixture": {
@@ -52,9 +66,16 @@
       "reason": "calls 0xf48740, whose pseudocode reads a byte and returns it; no field setter call is visible there"
     }
   ],
+  "daily_reward_and_cap_findings": {
+    "first_talk_of_day": "0xc84240 passes min(ContinuousTalkDays, 3) to 0xd34cb0 when TalkCountToday becomes 1; [PSEUDO].",
+    "missed_talk": "The applicable day-change reset branch clears ContinuousTalkDays when TalkCountToday is zero; it removes the streak bonus without a visible Friendship decrement; [PSEUDO/native helper fixtures].",
+    "storage": "EventFlagsNpcMemoryParam sets Friendship default 25/max 255 and ContinuousTalkDays default 0/max 7; these are storage bounds, not an aggregate daily Friendship cap; [TBL].",
+    "delivery_timeout": "NNPC_Quest_Delivery_TimeOver has conditional -1/-2/-3 EventFlow actions. This is a quest timeout penalty, not passive neglect decay; [EF].",
+    "no_talk_decay": "No universal per-day Friendship point cap or passive no-talk decrement has been identified."
+  },
   "open": [
     "Native execution of 0xabff90 / 0xac0200 and the -3 candidate branch",
     "Whether any Friendship decrement is a normal daily decay",
-    "Other possible sources such as letters, net hits, or neglect"
+    "Recipient-side effects of delivered letters or attached presents"
   ]
 }
