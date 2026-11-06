@@ -81,3 +81,41 @@ python3 acnh-re/tools/gameplay_flow.py --output-root /workspace/acnh-re/output t
 python3 acnh-re/tools/gameplay_flow.py --output-root /workspace/acnh-re/output tree Ftr_Working --entry Workbench_Cmn_DIYdemo
 python3 acnh-re/tools/gameplay_flow.py --output-root /workspace/acnh-re/output tree Ftr_Working --entry RcoRemakeTrialOngoing
 ```
+
+## Tahap 3: skema resep, status belajar, dan pengurangan bahan
+
+Tahap ini menambah join tabel yang menyeluruh, transisi belajar/reset resep, dan dua probe native kecil. Hasil terstruktur ada di [crafting_recipe_flow_native.json](../output/gameplay/crafting_transaction_followup/crafting_recipe_flow_native.json). Harness membaca index bersama dalam mode SQLite `mode=ro`; semua native fixture dibuat di memori.
+
+### `RecipeCraftParam` dan kunci silang
+
+**[TBL]** Tabel berisi 552 baris dengan row size 52. Kunci `UniqueID` adalah `u16` pada offset `0x30`; rentangnya 6–672 dan memiliki 115 celah. `Item` (`u16`, offset `0x2c`) menunjuk ke `ItemParam.UniqueID`. Enam slot bahan adalah pasangan `MaterialN`/`AmountN`, keduanya `u16`; sentinelnya `MaterialN=65534` dengan jumlah 0. Offset fisik pasangan tidak berurutan di BCSV dan dicatat satu per satu dalam artifact.
+
+Join lengkap pada dump 1.0.0 menghasilkan 552/552 output unik yang cocok dengan `ItemParam.UniqueID`; baris output yang sama memiliki `ItemParam.DiyRecipeID == RecipeCraftParam.UniqueID`. Semua 1.020 slot bahan berisi item ID yang juga ada pada `ItemParam.UniqueID`. Dengan demikian `ItemParam.DiyRecipeID` adalah kunci silang balik untuk output resep, sedangkan material slot tetap menyimpan ID item langsung.
+
+Contoh `UniqueID=56`: item hasil 975, `ItemParam.DiyRecipeID=56`, dan lima buah masing-masing jumlah 1: Apple 2213, Pear 2285, Cherry 2287, Orange 2214, Peach 2286. `UniqueID=458` menghasilkan item 7211 (`CraftUnlock=WoodBridge`); `UniqueID=461` menghasilkan 5166 (`CraftUnlock=CampSite`). Baris ini menghubungkan angka di EventFlow dengan ID resep yang dipakai bitmap.
+
+### Perubahan state resep
+
+**[EVENTFLOW + NATIVE STATIC]** Aksi `PlayerSetCraftRecipe` berada pada constructor `0x32dc50` dan handler `0x32dd30`. Handler memetakan string `UnlockType` lewat enum 46 nilai. `ItemUniqueId=65534` pada tutorial mengarahkan aksi ke grup `CraftUnlock`; enumerator `0xede0f0` membuat daftar recipe ID yang cocok dan `0xedf590` menerapkan setter untuk tiap resep. Jalur `ItemUniqueId` yang valid memakai `0xedef00`.
+
+Event tutorial #22 memberi grup `DIYtutorial1` (satu baris tabel), kemudian #30 memberi `DIYtutorial2` (dua baris). Pada alur jembatan, query `PlayerHasCraftRecipe` meminta output item 7211; tabel menghubungkan ID itu ke resep 458/`WoodBridge`. Alur perkemahan memakai output 5166 dan resep 461/`CampSite`. Setelah `PlayerIsMadeCraftRecipe` cocok, aksi reset grup berjalan (#70 dan #75). Handler reset `0x32cff0` mengulang pemilihan berdasarkan `CraftUnlock`, lalu `0xedf6e0` mengirim setiap ID ke `0xedf830`, yang menghapus bit melalui `0xf290b0`.
+
+Writer `0xedf0e0` menggunakan bitmap resep dengan ID 0–2047. Alamat bit yang ditulis adalah `save+0x8e920 + selector*0x100 + (recipe_id >> 3)`, dengan mask `1 << (recipe_id & 7)`; selector di luar 0–7 kembali ke grup 0. Query native `0xee1ec0` mengambil `ItemParam.DiyRecipeID`, lalu memeriksa bit melalui `0xf28fd0`. Probe native memanggil langsung helper bit test/set/clear atas array 256-byte sintetis: ID 458 dan 461 berubah 0→1→0; ID 2047 diterima; ID 2048 diabaikan. Ini memverifikasi helper bit, bukan writer penuh atau save pemain. Query EventFlow `PlayerHasCraftRecipe` memiliki tambahan logika grup, dan nilai/polaritas akhirnya belum dijalankan terhadap save.
+
+`PlayerIsMadeCraftRecipe` adalah state terpisah dari resep yang dipelajari. Marker yang terlihat dari craft (`0xee17e0 → 0xf29080`) menulis bitmap kedua hanya untuk key di bawah `0x800`; EventFlow membawa `MadeItemID` 7211 dan 5166. Apakah query memakai jalur marker lain untuk ID di atas batas ini tetap terbuka.
+
+### Bahan dan titik commit workbench
+
+**[NATIVE]** Tahap material sebelumnya sudah menjalankan getter `0xedac50` dan cek cold-cache `0xee0be0` memakai lima slot asli resep 56 serta record A/B/C yang direkonstruksi. Probe baru menjalankan helper kuantitas bertanda `0xf9e410` pada pocket fixture berisi item Apple 2213: 9 dikurangi 3 menjadi 6, 2 dikurangi 3 menjadi 0, dan 9 dikurangi 9 menjadi 0. Hanya field jumlah `u16` di `+0x100` yang berubah; slot item tetap terisi di fixture ini, jadi hasil tersebut tidak menetapkan aturan kompaksi atau penghapusan slot.
+
+Probe ini memaksa `0xaac730` bernilai benar karena konteks manager penuh untuk predikat item itu belum dibangun. Selebihnya, pencarian slot, `0xf9e840`, alur `0xf9e410`, dan tulis jumlah berjalan sebagai instruksi ELF asli. Kasus permintaan lebih besar dari jumlah sengaja melewati gate kecukupan transaksi; hasil clamp ke nol bukan bukti bahwa craft penuh menerima bahan kurang. Gate `0xee0ed0` pada transaksi tetap belum dieksekusi sebagai jalur lengkap.
+
+**[NATIVE STATIC + EVENTFLOW]** `Workbench_Cmn_DIYdemo` mengirim `SaveSetFromUIResult cWorkCraft` (#212), lalu `PlayerWorkbenchMaking` (#208), `PlayerWorkbenchGetDemo` (#217), dan putaway (#221). Case 9 di handler SaveSet (`0x3358c0`) menyiapkan hasil lewat `0xedf8e0` dan masuk ke transaksi `0xee1420` sebelum aksi Making/Demo berikutnya. Transaksi memeriksa flag bahan melalui `0xee0ed0`; satu cabang berisi enam delta negatif melalui `0xeff060 → 0xf9e410`, diikuti jalur tambah hasil `0xefab90 → 0xefac20 → 0xf987c0` dan marker. `WorkCraftBgPage` `0x1596020` tetap merupakan initializer UI, bukan titik commit yang terbukti.
+
+`0xeff060` membuka member pocket pemain dan mengubah record yang ada di memori. Tidak terlihat undo/refund eksplisit setelah pengurangan dan pemberian hasil pada helper yang dibaca, tetapi transaksi lengkap, interupsi, rollback oleh manager lain, dan flush ke file save belum dieksekusi/ditemukan. Jadi batas yang terbukti sekarang adalah mutasi record save dalam memori; durabilitas permanen masih terbuka.
+
+Reproduksi tahap 3 (argumen `--output-root` menunjuk ke index/tabel bersama yang valid dan dibuka read-only):
+
+```sh
+python3 acnh-re/tools/crafting_recipe_flow_native.py --output-root /workspace/acnh-re/output
+```

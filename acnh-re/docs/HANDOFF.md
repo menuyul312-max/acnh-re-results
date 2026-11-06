@@ -2,7 +2,7 @@
 
 Baca file ini dulu; tidak perlu membaca seluruh repo. Antrian kerja yang bisa dibaca mesin ada di [`re_queue.json`](re_queue.json). Item `open` diurutkan menurut prioritas pemilik; sisa kecil yang belum terjawab ada di `left_open` tiap entri `done` (diaudit 6 November 2026, lihat `done_audit`).
 
-## Status singkat (5 November 2026)
+## Status singkat (6 November 2026)
 
 | Area | Status | Baca bila perlu |
 |---|---|---|
@@ -19,6 +19,7 @@ Baca file ini dulu; tidak perlu membaca seluruh repo. Antrian kerja yang bisa di
 | Tanggal konser K.K. | Terbaca: NormalLive = Sabtu (geser sesuai `TkkSkipNormal`), BirthdayLive dari jadwal ulang tahun per pemain | GAMEPLAY_SCENARIO §3.6 |
 | Kemunculan ikan dan serangga | Ikan terbukti native: undian per posisi `0x5b9ba0` (bobot float32, mask `AppearType`, `IsCreateBait`), undian persen `0x5b98b0`, gerbang hujan/mode `0x5b9270`, slot jam. Serangga terbukti native: undian pulau `0x957940` (bobot u16 `Prob`, `r = u × W >> 32`) dan saringan `AppearFg` `0x958570`; batas per spesies `0x8ddbd0` [PSEUDO]. `0xb56850`/`0xb53d20` = ketersediaan pulau misteri (koreksi bacaan lama); bit lapangan `+0x13e1` = mode pulau misteri [PSEUDO]. Terbuka: aturan cuaca serangga di pulau utama, jalur titik spawn per kelompok `AppearFg` | GAMEPLAY_SCENARIO §8; `output/gameplay/creature_spawn.json`; `native_flag_refs.json` → `data.creature_spawn` |
 | Lobak dan stok toko | Alur lokal input `cKabu` → query dan layout numerik terpetakan; output Nook, slot bersyarat, domain ID 0–14999, dan mekanisme batch tujuh hari terbukti. Keanggotaan bitset state 2/3, hasil RNG konkret, serta page binding build 1.0.0 tetap terbuka | GAMEPLAY_SCENARIO §3.7; `output/gameplay/kabu_ui_binding.json`; `output/gameplay/nook_shop_weekly_slot_map.json`; `re_queue.json` |
+| Crafting/DIY | 552/552 output dan 1.020/1.020 bahan RecipeCraftParam terhubung ke ItemParam; bit learn/reset dan konsumer kuantitas diuji native pada helper fixture; jalur SaveSet→transaksi workbench statik. Query/handler penuh, rollback, marker ID besar, tutorial remake, dan flush save tetap terbuka | [CRAFTING_TRANSACTION_FOLLOWUP](CRAFTING_TRANSACTION_FOLLOWUP.md#tahap-3-skema-resep-status-belajar-dan-pengurangan-bahan); `output/gameplay/crafting_transaction_followup/crafting_recipe_flow_native.json`; `re_queue.json` |
 | Friendship villager | Writer utama dan delta EventFlow terpetakan; hadiah, penjualan, net-hit, bonus talk pertama, batas field dan reset streak diringkas dengan label bukti. Tetap terbuka: efek penerimaan surat, kandidat harian -3, cap harian agregat dan descriptor save nyata | [VILLAGER_SOCIAL_FOLLOWUP](VILLAGER_SOCIAL_FOLLOWUP.md); `output/gameplay/villager_social_followup/friendship_reference_inventory.json` |
 | Objek lapangan pulau | Prosesor harian `0x4ae640` dan tanaman `0x4b6e70` terpetakan: batu, batu uang, fosil, pecahan bintang, kerang, ranting, isi pohon, pertumbuhan pohon/buah, gulma, dan isi awal pulau baru. Jenis batu, jenis kerang, batas kerang, serta tumbuh, sebar, dan konversi musim gulma terbukti native; sisanya [PSEUDO] | GAMEPLAY_SCENARIO §10; `native_flag_refs.json` → `data.field_regrowth` |
 | Aturan penempatan | Tempat pohon/kelapa `0x7ab350`, lereng `0x7a2e10`, dan tetangga bebas `0x4b5cc0` terbukti native (akses atribut tanah dikontrol). Batu `0x7aa3c0` (set 2 ∩ 20), fosil `0x7ad6e0` (set 3 ∩ 20), gulma dan penempat umum `0x7aadc0` [PSEUDO]. Objek kerja: 5 bitset ubin + 26 bitset unit; set 20 = area yang bisa dicapai pemain menurut `VillageExtensionLevel2/3` | GAMEPLAY_SCENARIO §10.5; `native_flag_refs.json` → `data.field_regrowth.placement` |
@@ -63,6 +64,7 @@ Level bukti: **[EF]** EventFlow, **[TBL]** tabel, **[PSEUDO]** pseudocode/disass
 | `tools/creature_spawn_native.py` (modul, dipanggil `gameplay_native.py`) | Rig emulasi undian ikan `0x5b9ba0`/`0x5b98b0`, gerbang `0x5b9270`, slot jam ikan/serangga, dan urutan getter `0x95ebe0` atas tabel asli; `... table` menulis `output/gameplay/creature_spawn.json` |
 | `tools/insect_spawn_native.py` (modul, dipanggil `gameplay_native.py`) | Rig emulasi undian serangga pulau `0x957940` dan saringan `AppearFg` `0x958570`; array getter `Prob` dibangun konstruktor asli `0x95ebe0`, getter per kolom membaca tabel asli |
 | `tools/villager_move_native.py` (modul, dipanggil `gameplay_native.py`) | Rig emulasi pindah keluar `0xf847f0`, pemilih `0xf87670`, pindah masuk `0xf84f10`; memuat `NmlNpcParam.bcsv` lokal sebagai objek tabel game dan menjalankan inisialisator `0xcc89e0`/`0xcd4050` |
+| `python3 acnh-re/tools/crafting_recipe_flow_native.py --output-root /workspace/acnh-re/output` | Join RecipeCraftParam↔ItemParam, probe native bit learn/reset dan pengurangan kuantitas; index SQLite dibuka read-only, probe pocket memakai satu predicate stubbed yang dijelaskan di artifact |
 | `python3 acnh-re/tools/save_layout_native.py` | Bangun ulang `output/gameplay/save_layout.json` (layout member save, terbukti native) |
 
 ## Aturan penting

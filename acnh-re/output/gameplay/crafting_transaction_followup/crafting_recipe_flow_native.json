@@ -1,0 +1,968 @@
+{
+  "evidence_labels": {
+    "EventFlow": "[EF: indexed Ftr_Working events]",
+    "bit leaf helpers": "[EXECUTED NATIVE: synthetic byte-array fixture]",
+    "handler routes": "[NATIVE STATIC: call index + pseudocode/disassembly available in shared corpus]",
+    "material delta helper": "[EXECUTED NATIVE: reconstructed pocket fixture; one predicate stub]",
+    "save durability and rollback": "[OPEN: no full player/UI/save runtime]",
+    "table rows and joins": "[TBL: shared resolved tables]"
+  },
+  "learn_recipe": {
+    "event_actions": [
+      {
+        "actor": "EventFlowSystemActor",
+        "flow": "Ftr_Working",
+        "index": 22,
+        "kind": "actions",
+        "name": "EventFlowActionPlayerSetCraftRecipe",
+        "params": {
+          "ItemUniqueId": 65534,
+          "UnlockType": "DIYtutorial1"
+        }
+      },
+      {
+        "actor": "EventFlowSystemActor",
+        "flow": "Ftr_Working",
+        "index": 30,
+        "kind": "actions",
+        "name": "EventFlowActionPlayerSetCraftRecipe",
+        "params": {
+          "ItemUniqueId": 65534,
+          "UnlockType": "DIYtutorial2"
+        }
+      },
+      {
+        "actor": "EventFlowSystemActor",
+        "flow": "Ftr_Working",
+        "index": 70,
+        "kind": "actions",
+        "name": "EventFlowActionPlayerResetCraftRecipe",
+        "params": {
+          "UnlockType": "WoodBridge"
+        }
+      },
+      {
+        "actor": "EventFlowSystemActor",
+        "flow": "Ftr_Working",
+        "index": 75,
+        "kind": "actions",
+        "name": "EventFlowActionPlayerResetCraftRecipe",
+        "params": {
+          "UnlockType": "CampSite"
+        }
+      }
+    ],
+    "group_and_item_paths": {
+      "claims": [
+        "The set handler maps UnlockType strings through the 46-entry native enum. For a group it builds a RecipeCraftParam.CraftUnlock-matching bitset and applies per-recipe learn setters; a valid item-specific request routes through 0xedef00.",
+        "The reset handler uses the same group bitset and routes each recipe ID through 0xedf830, which clears its learned bit with 0xf290b0.",
+        "0xee1ec0 converts the ItemParam row to its DiyRecipeID and checks the bit through 0xf28fd0. The EventFlow query has additional group logic and has not been run against a save; do not infer its result polarity from its display name alone."
+      ],
+      "reset_group_enumerator_calls": [
+        {
+          "pc": "0x32d14c",
+          "target": "0xede0f0"
+        },
+        {
+          "pc": "0x32d15c",
+          "target": "0xedf6e0"
+        }
+      ],
+      "set_group_enumerator_calls": [
+        {
+          "pc": "0x32de9c",
+          "target": "0xede0f0"
+        },
+        {
+          "pc": "0x32deac",
+          "target": "0xedf590"
+        },
+        {
+          "pc": "0x32df00",
+          "target": "0xedef00"
+        }
+      ]
+    },
+    "handler_registration": {
+      "query": {
+        "behavior_va": "0x42ac80",
+        "constructor": "0x42aba0"
+      },
+      "reset": {
+        "behavior_va": "0x32cff0",
+        "constructor": "0x32cf40"
+      },
+      "set": {
+        "behavior_va": "0x32dd30",
+        "constructor": "0x32dc50"
+      }
+    },
+    "native_leaf_probe": {
+      "cases": [
+        {
+          "after_clear_query": 0,
+          "after_set_query": 1,
+          "array_nonzero_after_set": 1,
+          "before_set_query": 0,
+          "expected_bit_mask": 4,
+          "expected_byte_offset": 57,
+          "recipe_id": 458,
+          "target_byte_after_clear": 0,
+          "valid_domain": true
+        },
+        {
+          "after_clear_query": 0,
+          "after_set_query": 1,
+          "array_nonzero_after_set": 1,
+          "before_set_query": 0,
+          "expected_bit_mask": 32,
+          "expected_byte_offset": 57,
+          "recipe_id": 461,
+          "target_byte_after_clear": 0,
+          "valid_domain": true
+        },
+        {
+          "after_clear_query": 0,
+          "after_set_query": 1,
+          "array_nonzero_after_set": 1,
+          "before_set_query": 0,
+          "expected_bit_mask": 128,
+          "expected_byte_offset": 255,
+          "recipe_id": 2047,
+          "target_byte_after_clear": 0,
+          "valid_domain": true
+        },
+        {
+          "after_clear_query": 0,
+          "after_set_query": 0,
+          "array_nonzero_after_set": 0,
+          "before_set_query": 0,
+          "expected_bit_mask": null,
+          "expected_byte_offset": null,
+          "recipe_id": 2048,
+          "target_byte_after_clear": 0,
+          "valid_domain": false
+        }
+      ],
+      "clear_va": "0xf290b0",
+      "fixture": "zeroed 256-byte array; no SaveGame member wrapper or player context",
+      "query_va": "0xf28fd0",
+      "set_va": "0xf29050",
+      "stubbed_boundaries": []
+    },
+    "query_and_made_examples": {
+      "item_to_recipe_join": [
+        {
+          "craft_unlock": "WoodBridge",
+          "diy_recipe_id": 458,
+          "item_id": 7211
+        },
+        {
+          "craft_unlock": "CampSite",
+          "diy_recipe_id": 461,
+          "item_id": 5166
+        }
+      ],
+      "made_checks": [
+        {
+          "actor": "EventFlowSystemActor",
+          "flow": "Ftr_Working",
+          "index": 69,
+          "kind": "queries",
+          "name": "EventFlowQueryPlayerIsMadeCraftRecipe",
+          "params": {
+            "CheckMode": "cAND",
+            "MadeItemID0": 7211,
+            "MadeItemID1": 65534,
+            "MadeItemID2": 65534,
+            "MadeItemID3": 65534,
+            "MadeItemID4": 65534,
+            "MadeItemID5": 65534,
+            "MadeItemID6": 65534,
+            "MadeItemID7": 65534
+          }
+        },
+        {
+          "actor": "EventFlowSystemActor",
+          "flow": "Ftr_Working",
+          "index": 74,
+          "kind": "queries",
+          "name": "EventFlowQueryPlayerIsMadeCraftRecipe",
+          "params": {
+            "CheckMode": "cAND",
+            "MadeItemID0": 5166,
+            "MadeItemID1": 65534,
+            "MadeItemID2": 65534,
+            "MadeItemID3": 65534,
+            "MadeItemID4": 65534,
+            "MadeItemID5": 65534,
+            "MadeItemID6": 65534,
+            "MadeItemID7": 65534
+          }
+        }
+      ],
+      "queries": [
+        {
+          "actor": "EventFlowSystemActor",
+          "flow": "Ftr_Working",
+          "index": 72,
+          "kind": "queries",
+          "name": "EventFlowQueryPlayerHasCraftRecipe",
+          "params": {
+            "ItemUniqueId": 7211,
+            "UnlockType": ""
+          }
+        },
+        {
+          "actor": "EventFlowSystemActor",
+          "flow": "Ftr_Working",
+          "index": 77,
+          "kind": "queries",
+          "name": "EventFlowQueryPlayerHasCraftRecipe",
+          "params": {
+            "ItemUniqueId": 5166,
+            "UnlockType": ""
+          }
+        }
+      ]
+    },
+    "save_bit_layout_static": {
+      "bit_mask": "1 << (recipe_id & 7)",
+      "byte_offset_within_selector": "recipe_id >> 3",
+      "direct_bit_helpers": {
+        "clear": "0xf290b0",
+        "set": "0xf29050",
+        "test": "0xf28fd0"
+      },
+      "player_save_member_offset": "0x8e920",
+      "recipe_id_domain": "0..2047",
+      "runtime_save_mutation": "not executed",
+      "selector_above_7": "falls back to selector group zero in the writer",
+      "selector_stride_bytes": "0x100"
+    }
+  },
+  "material_and_workbench": {
+    "availability": {
+      "cold_cache_native_helper": "0xee0be0",
+      "executed_real_row": 56,
+      "recipe_material_getter": "0xedac50",
+      "status": "previous native fixture: RecipeCraftParam row 56 reads five real one-count materials; cache source records A/B/C are reconstructed"
+    },
+    "consumption_leaf_probe": {
+      "cases": [
+        {
+          "available_count_after": 6,
+          "available_count_before": 9,
+          "case": "partial_removal",
+          "changed_byte_offsets": [
+            "0x100"
+          ],
+          "helper_return": 1,
+          "item_id": 2213,
+          "item_slot_bytes_after": "a508000000000000",
+          "recipe_unique_id": 56,
+          "requested_remove": 3,
+          "source_table_hashes": {
+            "ItemKind": "4cac0178cc69519585528b24ceef022ccb1fefa12b23fc9a9e4280e40185ba7b",
+            "ItemParam": "89230e97fc877ff2b2b48ac1c707ef32b3a7760118839c307f19797e2553458c"
+          },
+          "stack_match_gate_return": 1,
+          "stubbed_boundary": {
+            "effect": "force aac730 true; this item predicate stayed false with the installed tables because its full runtime manager context is not reconstructed",
+            "original_bytes": "fb0f1af8fa6701a9",
+            "va": "0xaac730"
+          }
+        },
+        {
+          "available_count_after": 0,
+          "available_count_before": 2,
+          "case": "below_request_clamps_zero",
+          "changed_byte_offsets": [
+            "0x100"
+          ],
+          "helper_return": 1,
+          "item_id": 2213,
+          "item_slot_bytes_after": "a508000000000000",
+          "recipe_unique_id": 56,
+          "requested_remove": 3,
+          "source_table_hashes": {
+            "ItemKind": "4cac0178cc69519585528b24ceef022ccb1fefa12b23fc9a9e4280e40185ba7b",
+            "ItemParam": "89230e97fc877ff2b2b48ac1c707ef32b3a7760118839c307f19797e2553458c"
+          },
+          "stack_match_gate_return": 1,
+          "stubbed_boundary": {
+            "effect": "force aac730 true; this item predicate stayed false with the installed tables because its full runtime manager context is not reconstructed",
+            "original_bytes": "fb0f1af8fa6701a9",
+            "va": "0xaac730"
+          }
+        },
+        {
+          "available_count_after": 0,
+          "available_count_before": 9,
+          "case": "exact_stack_becomes_zero",
+          "changed_byte_offsets": [
+            "0x100"
+          ],
+          "helper_return": 1,
+          "item_id": 2213,
+          "item_slot_bytes_after": "a508000000000000",
+          "recipe_unique_id": 56,
+          "requested_remove": 9,
+          "source_table_hashes": {
+            "ItemKind": "4cac0178cc69519585528b24ceef022ccb1fefa12b23fc9a9e4280e40185ba7b",
+            "ItemParam": "89230e97fc877ff2b2b48ac1c707ef32b3a7760118839c307f19797e2553458c"
+          },
+          "stack_match_gate_return": 1,
+          "stubbed_boundary": {
+            "effect": "force aac730 true; this item predicate stayed false with the installed tables because its full runtime manager context is not reconstructed",
+            "original_bytes": "fb0f1af8fa6701a9",
+            "va": "0xaac730"
+          }
+        }
+      ],
+      "fixture": "32 eight-byte item slots followed by u16 counts at +0x100; slot 0 is Apple item 2213; requested deltas are negative",
+      "signed_count_helper_va": "0xf9e410",
+      "stack_match_gate_va": "0xf9e840",
+      "stubbed_boundary": "Each case patches 0xaac730 to return true. Item lookup, pocket slot search, 0xf9e840 control flow, 0xf9e410, and the u16 count writes execute from the original ELF."
+    },
+    "eventflow_order": [
+      {
+        "actor": "EventFlowSystemActor",
+        "flow": "Ftr_Working",
+        "index": 212,
+        "kind": "actions",
+        "name": "EventFlowActionSaveSetFromUIResult",
+        "params": {
+          "SaveType": "cWorkCraft"
+        }
+      },
+      {
+        "actor": "Player",
+        "flow": "Ftr_Working",
+        "index": 208,
+        "kind": "actions",
+        "name": "EventFlowActionPlayerWorkbenchMaking",
+        "params": {
+          "IsRemake": false
+        }
+      },
+      {
+        "actor": "Player",
+        "flow": "Ftr_Working",
+        "index": 217,
+        "kind": "actions",
+        "name": "EventFlowActionPlayerWorkbenchGetDemo",
+        "params": {
+          "IsRemake": false,
+          "IsSkipFanfareSE": false,
+          "IsSkipGetDemoCameraPop": false
+        }
+      },
+      {
+        "actor": "Player",
+        "flow": "Ftr_Working",
+        "index": 221,
+        "kind": "actions",
+        "name": "EventFlowActionPlayerWorkbenchPutaway",
+        "params": {
+          "IsRemake": false
+        }
+      }
+    ],
+    "static_execution_chain": {
+      "inventory_record_mutator": {
+        "player_wrapper_member_offset": "0x1c0",
+        "save_member_access_calls": [
+          {
+            "pc": "0xeff098",
+            "target": "0xf8f400"
+          },
+          {
+            "pc": "0xeff0a8",
+            "target": "0xee9350"
+          },
+          {
+            "pc": "0xeff0c0",
+            "target": "0xee9490"
+          },
+          {
+            "pc": "0xeff0d0",
+            "target": "0xee94f0"
+          },
+          {
+            "pc": "0xeff0e4",
+            "target": "0xf9e410"
+          },
+          {
+            "pc": "0xeff0ec",
+            "target": "0xee93d0"
+          }
+        ],
+        "signed_count_helper": "0xf9e410",
+        "va": "0xeff060"
+      },
+      "post_add_marker": "0xee17e0 -> 0xf29080; the writer ignores IDs >= 0x800",
+      "result_award": "0xee1420 -> 0xefab90 -> 0xefac20 -> 0xf987c0",
+      "save_set_calls": [
+        {
+          "pc": "0x335a60",
+          "target": "0xedf8e0"
+        },
+        {
+          "pc": "0x335aa8",
+          "target": "0xee1420"
+        }
+      ],
+      "save_set_handler": "0x3358c0",
+      "save_set_type": "cWorkCraft (enum index 9)",
+      "timing_claim": "The cWorkCraft SaveSetFromUIResult action prepares the UI result and enters 0xee1420 before the following PlayerWorkbenchMaking/GetDemo EventFlow actions. WorkCraftBgPage is a page initializer, not the transaction.",
+      "transaction_calls": [
+        {
+          "pc": "0xee1478",
+          "target": "0xee0ed0"
+        },
+        {
+          "pc": "0xee14dc",
+          "target": "0xeff060"
+        },
+        {
+          "pc": "0xee14fc",
+          "target": "0xeff060"
+        },
+        {
+          "pc": "0xee151c",
+          "target": "0xeff060"
+        },
+        {
+          "pc": "0xee153c",
+          "target": "0xeff060"
+        },
+        {
+          "pc": "0xee155c",
+          "target": "0xeff060"
+        },
+        {
+          "pc": "0xee157c",
+          "target": "0xeff060"
+        },
+        {
+          "pc": "0xee17bc",
+          "target": "0xefab90"
+        },
+        {
+          "pc": "0xee17cc",
+          "target": "0xee17e0"
+        }
+      ],
+      "transaction_helper": "0xee1420"
+    }
+  },
+  "provenance": {
+    "analysis_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+    "index_mode": "SQLite URI mode=ro",
+    "output_root": "/workspace/acnh-re/output",
+    "read_only_index": "/workspace/acnh-re/output/index.sqlite",
+    "shared_manifest_sha256": "eb8d114129e01e6c3284a7a2613c3f451d649c0708a58a1a08cd757c5f3840a8"
+  },
+  "recipe_table_and_joins": {
+    "enum_row_counts": {
+      "CraftUnlock": {
+        "CampSite": 1,
+        "DIYbook1": 6,
+        "DIYbook2": 8,
+        "DIYbook3": 6,
+        "DIYbookNormalTools": 6,
+        "DIYtutorial1": 1,
+        "DIYtutorial2": 2,
+        "GoldTool": 6,
+        "ImmigrationQuest": 21,
+        "Inspire": 10,
+        "Market": 1,
+        "MileExchange": 29,
+        "None": 302,
+        "Owl001": 2,
+        "Ows01": 35,
+        "Ows02": 12,
+        "RcoDonationRewardA": 5,
+        "RcoDonationRewardB": 1,
+        "RemakeTutorial": 1,
+        "SeasonAutumnNuts": 9,
+        "SeasonChristmasOrnament": 12,
+        "SeasonMomiji": 9,
+        "SeasonMushroom": 12,
+        "SeasonSakura": 14,
+        "SeasonSnowCrystal": 7,
+        "SeasonSpringBamboo": 10,
+        "SeasonSummerShell": 8,
+        "Snowman": 15,
+        "WoodBridge": 1
+      },
+      "NPCUnlock": {
+        "ALL_NPC": 52,
+        "AN": 34,
+        "BO": 35,
+        "FU": 34,
+        "GE": 35,
+        "HA": 34,
+        "KO": 35,
+        "NO_TAKE": 226,
+        "OT": 33,
+        "ZK": 34
+      }
+    },
+    "events": [
+      {
+        "actor": "EventFlowSystemActor",
+        "flow": "Ftr_Working",
+        "index": 22,
+        "kind": "actions",
+        "name": "EventFlowActionPlayerSetCraftRecipe",
+        "params": {
+          "ItemUniqueId": 65534,
+          "UnlockType": "DIYtutorial1"
+        }
+      },
+      {
+        "actor": "EventFlowSystemActor",
+        "flow": "Ftr_Working",
+        "index": 30,
+        "kind": "actions",
+        "name": "EventFlowActionPlayerSetCraftRecipe",
+        "params": {
+          "ItemUniqueId": 65534,
+          "UnlockType": "DIYtutorial2"
+        }
+      },
+      {
+        "actor": "EventFlowSystemActor",
+        "flow": "Ftr_Working",
+        "index": 69,
+        "kind": "queries",
+        "name": "EventFlowQueryPlayerIsMadeCraftRecipe",
+        "params": {
+          "CheckMode": "cAND",
+          "MadeItemID0": 7211,
+          "MadeItemID1": 65534,
+          "MadeItemID2": 65534,
+          "MadeItemID3": 65534,
+          "MadeItemID4": 65534,
+          "MadeItemID5": 65534,
+          "MadeItemID6": 65534,
+          "MadeItemID7": 65534
+        }
+      },
+      {
+        "actor": "EventFlowSystemActor",
+        "flow": "Ftr_Working",
+        "index": 70,
+        "kind": "actions",
+        "name": "EventFlowActionPlayerResetCraftRecipe",
+        "params": {
+          "UnlockType": "WoodBridge"
+        }
+      },
+      {
+        "actor": "EventFlowSystemActor",
+        "flow": "Ftr_Working",
+        "index": 72,
+        "kind": "queries",
+        "name": "EventFlowQueryPlayerHasCraftRecipe",
+        "params": {
+          "ItemUniqueId": 7211,
+          "UnlockType": ""
+        }
+      },
+      {
+        "actor": "EventFlowSystemActor",
+        "flow": "Ftr_Working",
+        "index": 74,
+        "kind": "queries",
+        "name": "EventFlowQueryPlayerIsMadeCraftRecipe",
+        "params": {
+          "CheckMode": "cAND",
+          "MadeItemID0": 5166,
+          "MadeItemID1": 65534,
+          "MadeItemID2": 65534,
+          "MadeItemID3": 65534,
+          "MadeItemID4": 65534,
+          "MadeItemID5": 65534,
+          "MadeItemID6": 65534,
+          "MadeItemID7": 65534
+        }
+      },
+      {
+        "actor": "EventFlowSystemActor",
+        "flow": "Ftr_Working",
+        "index": 75,
+        "kind": "actions",
+        "name": "EventFlowActionPlayerResetCraftRecipe",
+        "params": {
+          "UnlockType": "CampSite"
+        }
+      },
+      {
+        "actor": "EventFlowSystemActor",
+        "flow": "Ftr_Working",
+        "index": 77,
+        "kind": "queries",
+        "name": "EventFlowQueryPlayerHasCraftRecipe",
+        "params": {
+          "ItemUniqueId": 5166,
+          "UnlockType": ""
+        }
+      },
+      {
+        "actor": "Player",
+        "flow": "Ftr_Working",
+        "index": 208,
+        "kind": "actions",
+        "name": "EventFlowActionPlayerWorkbenchMaking",
+        "params": {
+          "IsRemake": false
+        }
+      },
+      {
+        "actor": "EventFlowSystemActor",
+        "flow": "Ftr_Working",
+        "index": 212,
+        "kind": "actions",
+        "name": "EventFlowActionSaveSetFromUIResult",
+        "params": {
+          "SaveType": "cWorkCraft"
+        }
+      },
+      {
+        "actor": "Player",
+        "flow": "Ftr_Working",
+        "index": 217,
+        "kind": "actions",
+        "name": "EventFlowActionPlayerWorkbenchGetDemo",
+        "params": {
+          "IsRemake": false,
+          "IsSkipFanfareSE": false,
+          "IsSkipGetDemoCameraPop": false
+        }
+      },
+      {
+        "actor": "Player",
+        "flow": "Ftr_Working",
+        "index": 221,
+        "kind": "actions",
+        "name": "EventFlowActionPlayerWorkbenchPutaway",
+        "params": {
+          "IsRemake": false
+        }
+      }
+    ],
+    "joins": {
+      "ingredient_to_itemparam_unique_id": {
+        "join": "RecipeCraftParam.Material1..6 = ItemParam.UniqueID",
+        "matched_populated_slots": 1020,
+        "missing_rows": [],
+        "total_populated_slots": 1020
+      },
+      "itemparam_backlink_to_recipe": {
+        "join": "ItemParam.DiyRecipeID = RecipeCraftParam.UniqueID",
+        "matched_output_rows": 552,
+        "total_output_rows": 552,
+        "unmatched_rows": []
+      },
+      "recipe_item_to_itemparam_unique_id": {
+        "duplicate_output_ids": {},
+        "join": "RecipeCraftParam.Item = ItemParam.UniqueID",
+        "matched": 552,
+        "total": 552,
+        "unique_output_items": 552
+      }
+    },
+    "sample_rows": [
+      {
+        "craft_unlock": "None",
+        "materials": [
+          {
+            "item_id": 2213,
+            "quantity_table_u16": 1,
+            "slot": 1
+          },
+          {
+            "item_id": 2285,
+            "quantity_table_u16": 1,
+            "slot": 2
+          },
+          {
+            "item_id": 2287,
+            "quantity_table_u16": 1,
+            "slot": 3
+          },
+          {
+            "item_id": 2214,
+            "quantity_table_u16": 1,
+            "slot": 4
+          },
+          {
+            "item_id": 2286,
+            "quantity_table_u16": 1,
+            "slot": 5
+          },
+          {
+            "item_id": 65534,
+            "quantity_table_u16": 0,
+            "slot": 6
+          }
+        ],
+        "npc_unlock": "KO",
+        "output_item_diy_recipe_id": 56,
+        "output_item_id": 975,
+        "recipe_unique_id": 56,
+        "serial_id": 1900,
+        "villager_open_num": 100
+      },
+      {
+        "craft_unlock": "WoodBridge",
+        "materials": [
+          {
+            "item_id": 5973,
+            "quantity_table_u16": 4,
+            "slot": 1
+          },
+          {
+            "item_id": 3090,
+            "quantity_table_u16": 4,
+            "slot": 2
+          },
+          {
+            "item_id": 2502,
+            "quantity_table_u16": 4,
+            "slot": 3
+          },
+          {
+            "item_id": 65534,
+            "quantity_table_u16": 0,
+            "slot": 4
+          },
+          {
+            "item_id": 65534,
+            "quantity_table_u16": 0,
+            "slot": 5
+          },
+          {
+            "item_id": 65534,
+            "quantity_table_u16": 0,
+            "slot": 6
+          }
+        ],
+        "npc_unlock": "NO_TAKE",
+        "output_item_diy_recipe_id": 458,
+        "output_item_id": 7211,
+        "recipe_unique_id": 458,
+        "serial_id": 1,
+        "villager_open_num": 0
+      },
+      {
+        "craft_unlock": "CampSite",
+        "materials": [
+          {
+            "item_id": 2768,
+            "quantity_table_u16": 15,
+            "slot": 1
+          },
+          {
+            "item_id": 2767,
+            "quantity_table_u16": 15,
+            "slot": 2
+          },
+          {
+            "item_id": 2769,
+            "quantity_table_u16": 15,
+            "slot": 3
+          },
+          {
+            "item_id": 2511,
+            "quantity_table_u16": 15,
+            "slot": 4
+          },
+          {
+            "item_id": 65534,
+            "quantity_table_u16": 0,
+            "slot": 5
+          },
+          {
+            "item_id": 65534,
+            "quantity_table_u16": 0,
+            "slot": 6
+          }
+        ],
+        "npc_unlock": "NO_TAKE",
+        "output_item_diy_recipe_id": 461,
+        "output_item_id": 5166,
+        "recipe_unique_id": 461,
+        "serial_id": 1,
+        "villager_open_num": 0
+      }
+    ],
+    "schema": {
+      "empty_material_id": 65534,
+      "fields": [
+        {
+          "descriptor_width": 4,
+          "name": "VillagerOpenNum",
+          "offset": 4,
+          "type": "u32"
+        },
+        {
+          "descriptor_width": 4,
+          "name": "BoardColorID",
+          "offset": 8,
+          "type": "u32"
+        },
+        {
+          "descriptor_width": 4,
+          "name": "NPCUnlock",
+          "offset": 12,
+          "type": "enum_crc32"
+        },
+        {
+          "descriptor_width": 4,
+          "name": "CraftUnlock",
+          "offset": 16,
+          "type": "enum_crc32"
+        },
+        {
+          "descriptor_width": 2,
+          "name": "Amount4",
+          "offset": 20,
+          "type": "u16"
+        },
+        {
+          "descriptor_width": 2,
+          "name": "Amount2",
+          "offset": 22,
+          "type": "u16"
+        },
+        {
+          "descriptor_width": 2,
+          "name": "Material3",
+          "offset": 24,
+          "type": "u16"
+        },
+        {
+          "descriptor_width": 2,
+          "name": "Amount3",
+          "offset": 26,
+          "type": "u16"
+        },
+        {
+          "descriptor_width": 2,
+          "name": "Material4",
+          "offset": 28,
+          "type": "u16"
+        },
+        {
+          "descriptor_width": 2,
+          "name": "Material2",
+          "offset": 30,
+          "type": "u16"
+        },
+        {
+          "descriptor_width": 2,
+          "name": "Material5",
+          "offset": 32,
+          "type": "u16"
+        },
+        {
+          "descriptor_width": 2,
+          "name": "Amount5",
+          "offset": 34,
+          "type": "u16"
+        },
+        {
+          "descriptor_width": 2,
+          "name": "Material6",
+          "offset": 36,
+          "type": "u16"
+        },
+        {
+          "descriptor_width": 2,
+          "name": "Amount6",
+          "offset": 38,
+          "type": "u16"
+        },
+        {
+          "descriptor_width": 2,
+          "name": "Amount1",
+          "offset": 40,
+          "type": "u16"
+        },
+        {
+          "descriptor_width": 2,
+          "name": "Material1",
+          "offset": 42,
+          "type": "u16"
+        },
+        {
+          "descriptor_width": 2,
+          "name": "Item",
+          "offset": 44,
+          "type": "u16"
+        },
+        {
+          "descriptor_width": 2,
+          "name": "SerialID",
+          "offset": 46,
+          "type": "s16"
+        },
+        {
+          "descriptor_width": 4,
+          "name": "UniqueID",
+          "offset": 48,
+          "type": "u16"
+        }
+      ],
+      "material_and_amount_storage": "six u16 pairs; native getter 0xedac50 reads each actual pair and writes the low byte of Amount to its output quantity",
+      "row_count": 552,
+      "row_size_bytes": 52,
+      "unique_id_gaps_in_range": 115,
+      "unique_id_range": [
+        6,
+        672
+      ]
+    },
+    "sequence_examples": {
+      "camp_site_craft_unlock": "CampSite",
+      "camp_site_output_item_id": 5166,
+      "camp_site_recipe_id": 461,
+      "wood_bridge_craft_unlock": "WoodBridge",
+      "wood_bridge_output_item_id": 7211,
+      "wood_bridge_recipe_id": 458
+    },
+    "source_tables": {
+      "ItemKind": {
+        "raw_sha256": "4cac0178cc69519585528b24ceef022ccb1fefa12b23fc9a9e4280e40185ba7b",
+        "source_id": 63
+      },
+      "ItemParam": {
+        "raw_sha256": "89230e97fc877ff2b2b48ac1c707ef32b3a7760118839c307f19797e2553458c",
+        "source_id": 72
+      },
+      "RecipeCraftParam": {
+        "raw_sha256": "97fe6d73e183dab43dad7358627a0a1a43f5764f0a18fa044a63a9ecf56ba919",
+        "source_id": 127
+      }
+    }
+  },
+  "residuals": [
+    "Execute EventFlowActionPlayerSetCraftRecipe, reset, and PlayerHasCraftRecipe against a real save-member fixture; current bit probe tests the native leaf operations only.",
+    "Resolve query return polarity and the exact ItemParam.DiyRecipeID conversion path with a controlled save wrapper.",
+    "Run SaveSetFromUIResult cWorkCraft and 0xee1420 with a complete reconstructed player/UI fixture, including output insertion, interruption, and rollback observations.",
+    "Identify the serializer/flush boundary and determine whether item IDs above 0x7ff use a separate MadeItemID path."
+  ],
+  "save_and_rollback_boundaries": {
+    "made_marker": "0xf29080 uses a second bitmap lane and accepts only IDs below 0x800. EventFlow MadeItemID values 7211 and 5166 exceed that bound; whether the query uses another path is open.",
+    "mutation_target": "The six 0xeff060 calls resolve player-wrapper member +0x1c0 and mutate its in-memory count array; result insertion also uses the general item inventory path.",
+    "persistence": "The traced helper mutates a save member in memory; serializer/flush boundary to durable save file was not identified.",
+    "precheck": "0xee1420 consults the transaction material flag before ingredient mutation; insufficient precheck returns before the consumption loop.",
+    "rollback": "No undo/refund branch is visible in the handler after ingredient deltas and result award. Full atomicity, interruption handling, and later manager rollback remain unexecuted."
+  },
+  "schema": "acnh.crafting_recipe_flow_native.v1",
+  "scope": "Recipe table joins and state consumers, recipe bit leaf helpers, and one signed material inventory helper on controlled fixtures. SaveSetFromUIResult and the UI transaction are static only."
+}
