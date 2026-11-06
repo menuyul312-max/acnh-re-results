@@ -97,6 +97,12 @@ Pelacakan statis pada seluruh 904 constructor mempertahankan offset object dan m
 
 Pemetaan dispatch menentukan fungsi yang dituju. Ini belum merupakan spesifikasi lengkap perilaku semua action/query.
 
+### Friendship villager
+
+Indeks BFEVFL memuat 72 aksi `NpcAddFriendship` pada 21 flow; callback native meneruskan seluruh nilai `AddValue` tanpa perubahan ke wrapper delta. Surat pemain ke villager melewati flow post-office yang memilih alamat NPC, memeriksa/mengurangi 200 Bells, lalu mengirim kartu. Daily mail processor membaca Friendship untuk memilih balasan, tetapi tidak memanggil writer Friendship secara langsung. Handler native UI pengiriman dan efek present terlampir masih belum dipastikan.
+
+Jalur net-hit baru dapat memulai entry `NNPC_Talk_Force:Hit` setelah flag hit-by-net lolos dan counter mencapai 3; Outdoor juga memerlukan hit dari pemain dan acquaintance. Entry itu memiliki tiga cabang -3 yang saling eksklusif, jadi satu pemanggilan paling banyak mengurangi sekali. `NpcClearHitParam` mengosongkan hit counter setelah respons, sehingga rangkaian threshold berikutnya dapat mengulang penalti. Timer mengalikan nilai 60 dengan 30, tetapi incrementer dan countdown belum terlacak. Pencarian writer/EventFlow belum menemukan cap Friendship agregat harian; field tabel memiliki default 25 dan maksimum 255. Ada kandidat writer -3 hari-ganti yang belum terbukti aktif pada hari biasa. Save member `SaveLand.Npc.NpcVillager` baru cocok lewat skema lintas versi, sementara uji setter memakai save dan descriptor sintetis. Rincian, batas bukti, dan artifact: [VILLAGER_SOCIAL_FOLLOWUP](docs/VILLAGER_SOCIAL_FOLLOWUP.md) dan [inventaris sumber Friendship](output/gameplay/villager_social_followup/friendship_reference_inventory.json).
+
 ### Kurva lingkungan dan kondisi BGM
 
 Seluruh 114 parameter kurva terdiri dari 360 record sead berukuran 128 byte. Word pertama adalah jumlah float aktif, word kedua jenis kurva. Jenis 7 `Hermit2D` memakai tangent lokal; jenis 10 `Hermit2DSmooth` menskalakan tangent dengan panjang segmen. Fungsi native berada di `0x19ab390` dan `0x19ab540`. Sebanyak **25.253 perbandingan** cocok dalam toleransi f32. Satu record mempunyai urutan x tidak monoton; input tetap dipertahankan tanpa diurutkan ulang.

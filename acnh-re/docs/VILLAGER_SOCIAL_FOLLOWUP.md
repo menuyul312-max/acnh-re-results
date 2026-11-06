@@ -95,6 +95,18 @@ ia belum membuktikan bahwa save pemain nyata memakai nilai tabel tersebut.
   descriptor field, descriptor ke offset `+0x38`, dan persistensi pada save
   permainan. Tidak ada save pemain yang dibaca atau ditulis.
 
+Layout save lokal mempunyai node `0xa8` pada data `+0x8`, ukuran `0x1d6d48`,
+dan bukti fungsi untuk wilayah villager/NPC. Crosswalk eksternal lintas versi
+mencocokkannya dengan kandidat `SaveLand.Npc.NpcVillager`; nama tersebut bukan
+RTTI lokal. Tabel `EventFlagsNpcMemoryParam` memberi `Friendship` `UniqueID=10`,
+default 25, maksimum 255, tetapi tidak membuktikan indeks byte runtime. Fixture
+setter mengarahkan hash Friendship ke descriptor sintetis pada offset `+0x38`
+dan maksimum 255. Karena lookup map/index/metadata dikontrol, byte runtime
+nyata dan kaitannya dengan record SaveLand masih belum terbukti. Rujukan:
+[`save_layout.json`](../output/gameplay/save_layout.json),
+[`save_layout_external_crosswalk.json`](../output/gameplay/save_layout_external_crosswalk.json),
+dan [`friendship_reference_inventory.json`](../output/gameplay/villager_social_followup/friendship_reference_inventory.json).
+
 ## EventFlow friendship dan state conversation
 
 **[EF]** Indeks EventFlow mencatat 72 pemakaian
@@ -166,14 +178,25 @@ dikonfigurasi dan callback-nya telah meneruskan tanpa perubahan; hasil
 playthrough tetap bergantung pada query/cabangnya.
 
 **[EF]** Surat pemain ke villager dibuat di
-`Obj_MessageCardRack_01_SendVillage`: alur memilih alamat `cResident`, mengedit
+`Obj_MessageCardRack_01_SendVillage`: alur memilih alamat `cNpc`, mengedit
 kartu, memeriksa saldo, mengurangi 200 Bells, lalu menjalankan
-`DropIntoPostOffice`. Flow itu tidak memiliki aksi `NpcAddFriendship`, dan
-indeks exact-key tidak menemukan callsite writer Friendship di pengirim surat.
-Fungsi proses mail `0xabbf00` membaca Friendship untuk mengubah level sebelum
-memilih cabang, tetapi tidak memanggil writer langsung; hubungan cabang itu
-dengan surat penerima belum diketahui. Ini hanya menutup jalur pengiriman;
-efek setelah surat diterima, termasuk present terlampir, belum ditelusuri.
+`DropIntoPostOffice(cSaveMailUserInfo)`. Flow itu tidak memiliki aksi
+`NpcAddFriendship` atau query `HasAttachedPresent`, dan indeks exact-key tidak
+menemukan callsite Friendship writer di pengirim surat. Native handler untuk
+`UIMsgCardAdrHandling`, `UIMsgCardEditTextHandling`, dan `DropIntoPostOffice`
+belum ditelusuri, jadi efek penerimaan present terlampir masih terbuka.
+
+Fungsi proses mail hari-ganti mengikuti
+`0xf53a70 → 0xaba970 → 0xaba9d0 → 0xabb250 → 0xabbf00`. `0xabbf00` membaca
+Friendship lewat `0xf486c0`, mengubahnya ke band 1–6 lewat `0xd34a20`, lalu
+memakai band saat memilih respons mail; ia merujuk `MAIL_XX_ReMax` dan memanggil
+pembuat mail `0xabc820`/`0xabcbe0`. Ia tidak punya panggilan langsung ke
+`0xf48840` atau `0xef2c70`. Dengan bukti yang tersedia, pemrosesan penerima
+memengaruhi pemilihan balasan, tetapi perubahan Friendship langsung pada jalur
+ini belum terlihat. Inventaris `NpcMailSend` dan `NpcMailSendRandom` pada 10
+flow `NNPC_*` mencatat surat villager-ke-pemain (ulang tahun, quest, onboarding,
+overflow), bukan surat pemain-ke-villager; rinciannya ada di
+`friendship_reference_inventory.json` tanpa teks dialog.
 
 ### Pukulan jaring, pengabaian, dan batas harian
 
@@ -181,14 +204,27 @@ efek setelah surat diterima, termasuk present terlampir, belum ditelusuri.
 `NpcIsHitByNet`, lalu `NpcHitNum(Border=3)`, dan dapat memulai
 `NNPC_Talk_Force:Hit`. Pseudocode query `0x389c50` mengembalikan case 0 saat
 flag hit-by-net NPC aktif; query `0x388660` mengembalikan case 0 saat hit
-counter sudah ≥ Border. Di entry `Hit`, tiga cabang mengonfigurasi
-`NpcAddFriendship(-3)`. Ketiganya melewati `NoAcquaintance_Chk` dan
-`CheckNpcLook` case 0; helper pertama menghentikan flow saat
-`HasAcquaintanceship` OFF. Ada pengurangan terkait net-hit setelah syarat
-hit/cabang percakapan itu, bukan bukti bahwa setiap pukulan langsung mengurangi
-poin. Callback asli meneruskan semua nilai EventFlow 72/72; query dan transisi
-AI masih bukti pseudocode. Empat aksi -3 lain di entry `Push` dan aksi +5 di
-entry `Flea` pada flow yang sama tidak termasuk jalur net-hit.
+counter sudah ≥ Border. Jalur di bawah ambang mengatur `NpcSetHitTimer(60)` lalu
+kembali ke rute AI normal. Pada flow Outdoor, jalur Hit juga memerlukan
+`HitMainPlayer` dan `HasAcquaintanceship` ON sebelum masuk ke state `cHit` dengan
+entry `Hit`.
+
+Di entry `Hit`, selector `RandomChoiceExcludePrevious3` memilih satu dari tiga
+cabang yang saling eksklusif. Hanya aksi event 21, 32, atau 33 yang
+mengonfigurasi `NpcAddFriendship(-3)`; masing-masing berada setelah
+`CheckNpcLook` case 0 dan `NoAcquaintance_Chk`. Subflow keluar bila
+`HasAcquaintanceship` OFF. Satu pemanggilan `Hit` paling banyak menjalankan satu
+aksi -3 itu; rangkaian net-hit berikutnya dapat mengulang jalur setelah state
+hit di-reset. Handler `NpcSetHitTimer` `0x25c650` menyimpan `Timer * 30` pada
+offset konteks `+0xacac`. Handler `NpcClearHitParam` `0x258b10` mengosongkan
+counter u32 `+0xaca8` dan byte `+0xacb1`. Kode penghitung waktu dan penambah
+counter belum ditemukan, sehingga lama jendela hit serta frekuensi tepat per
+hari masih terbuka. Hitungan dapat dibangun kembali setelah `NpcClearHitParam`
+mengosongkan counter. Ini bukti pukulan jaring dapat memulai penalti bersyarat,
+bukan bahwa setiap pukulan langsung mengurangi poin. Callback aksi meneruskan
+nilai EventFlow 72/72; query dan transisi AI masih bukti pseudocode. Empat aksi
+-3 lain di entry `Push` dan aksi +5 di entry `Flea` pada flow sama bukan jalur
+net-hit.
 
 **[PSEUDO]** percakapan pertama per villager pada hari itu memberi
 `min(ContinuousTalkDays, 3)`, jadi bonus talk harian berhenti naik setelah +3.
@@ -200,10 +236,20 @@ query `HasDeliveryItem` dan `HasOpenedDeliveryItem`; itu penalti timeout quest,
 bukan decay pasif.
 
 Tabel `EventFlagsNpcMemoryParam` memberi `Friendship` nilai awal 25 dan batas
-255, sedangkan `ContinuousTalkDays` berawal 0 dengan batas 7. Batas field bukan
-batas poin harian. Flag `FriendshipBecomeAcqHToday` di
+255, sedangkan `ContinuousTalkDays` berawal 0 dengan batas 7. Uji delta native
+mengonfirmasi floor/level saat nilai turun; writer field membatasi nilai
+individu menurut descriptor yang dipasok. Batas byte ini bukan batas agregat
+harian. Flag `FriendshipBecomeAcqHToday` di
 `NNPC_Talk_General:PresentAvailable_Chk` mengatur milestone `ReceivedFirstPresent`,
 bukan cap pada writer. Tidak ditemukan batas total `AddFriendship` per hari.
+
+Pencarian mencakup seluruh 72 aksi `EventFlowActionNpcAddFriendship` pada 21
+flow; callback asli meneruskan `AddValue` tanpa perubahan. Jalur native setter
+umum tidak mempunyai akumulator harian yang terlihat. String-reference dan
+direct-call inventory menemukan writer `0xac0200` untuk kandidat hari-ganti
+serta writer generik `0xef2c70`, tanpa writer agregat lain yang terindeks. Ini
+menopang kesimpulan bahwa cap agregat belum ditemukan; penulis tidak langsung,
+key dinamis, atau modul yang tidak tersedia tetap di luar pencarian.
 
 ### State aktivitas dan host/guest
 
@@ -300,7 +346,9 @@ dan tidak memverifikasi save sesudah write.
 ### Kandidat update harian Friendship
 
 **[PSEUDO; kandidat, belum terbukti berjalan]** day-change driver `0xf53a70`
-memanggil `0xabff90`. Salah satu cabangnya memanggil `0xac0200`, yang membaca
+memanggil `0xabff90` setelah processor mail recipient `0xaba970`; guard internal
+`0xabff90` menentukan apakah pembaruan berjalan. Salah satu cabangnya memanggil
+`0xac0200`, yang membaca
 `Friendship` lewat `0xf486c0`, memanggil kalkulator `0xab9dc0`, lalu menyiapkan
 `nilai_lama + iStack_a0` untuk `0xf48840`. Decomp kalkulator menginisialisasi
 `iStack_a0` ke 0 dan mengisinya dengan -3 pada dua cabang validasi awal. Ini
@@ -315,8 +363,10 @@ candidate disimpan di
 [`friendship_source_candidates.json`](../output/gameplay/villager_social_followup/friendship_source_candidates.json).
 
 **Terbuka:** konteks yang memicu cabang -3 pada `0xab9dc0` dan apakah ia terjadi
-pada hari normal; efek penerimaan surat; batas total poin Friendship per hari;
-serta bukti save nyata dan descriptor asli. Penurunan -3 dari net-hit dan
-timeout quest adalah aksi bersyarat yang dikonfigurasi, bukan decay pasif.
+pada hari normal; efek penerimaan surat/present terlampir di handler mail; bukti
+descriptor save runtime yang asli; serta countdown dan penambah counter net-hit.
+Penurunan -3 dari net-hit dan timeout quest adalah aksi bersyarat yang
+dikonfigurasi, bukan bukti decay pasif. Batas total Friendship harian juga belum
+terbukti; tidak ada cap agregat di bukti writer/EventFlow yang terindeks.
 Pengujian `0xd34f80` membuktikan floor saat turun lintas level, bukan sumber
 decay.

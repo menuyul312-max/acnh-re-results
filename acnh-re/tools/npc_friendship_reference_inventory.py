@@ -18,6 +18,8 @@ NSO_SHA256 = 'f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018a9e14e900'
 EVENTFLOW_ARTIFACT = ROOT / 'output/gameplay/villager_social_followup/eventflow_friendship_action_native.json'
 NATIVE_WRITER_ARTIFACT = ROOT / 'output/gameplay/villager_social_followup/friendship_save_writer_native.json'
 NATIVE_DELTA_ARTIFACT = ROOT / 'output/gameplay/villager_social_followup/friendship_delta_native.json'
+SAVE_LAYOUT_ARTIFACT = ROOT / 'output/gameplay/save_layout.json'
+SAVE_LAYOUT_CROSSWALK_ARTIFACT = ROOT / 'output/gameplay/save_layout_external_crosswalk.json'
 
 
 def main():
@@ -82,10 +84,49 @@ def main():
                             'params': event.get('params') or {}})
         return records
 
+    def event_calls(flow_name):
+        return [
+            {'event_index': event_index, 'kind': kind, 'name': name,
+             'params': json.loads(params) if params else {}}
+            for event_index, kind, name, params in db.execute(
+                'SELECT event_index, kind, name, params_json FROM event_calls '
+                'WHERE flow=? ORDER BY event_index', (flow_name,))
+        ]
+
     letter_flow = 'Obj_MessageCardRack_01_SendVillage'
     letter_actions = flow_actions(letter_flow)
     letter_friendship_actions = [x for x in letter_actions
                                  if x['action'] == 'EventFlowActionNpcAddFriendship']
+    letter_events = event_calls(letter_flow)
+    letter_delivery_events = [x for x in letter_events if x['name'] in {
+        'EventFlowActionDropIntoPostOffice', 'EventFlowActionBellCountDown',
+        'EventFlowQueryHasFreeInPostOffice', 'EventFlowQueryHasAttachedPresent',
+        'EventFlowActionNpcAddFriendship'}]
+    npc_mail_sends = {}
+    for flow_name, event_index, name, params in db.execute(
+            "SELECT flow,event_index,name,params_json FROM event_calls "
+            "WHERE flow LIKE 'NNPC_%' AND name IN "
+            "('EventFlowActionNpcMailSend','EventFlowActionNpcMailSendRandom') "
+            "ORDER BY flow,event_index"):
+        npc_mail_sends.setdefault(flow_name, []).append({
+            'event_index': event_index, 'action': name,
+            'params': json.loads(params) if params else {},
+        })
+    mail_processor_edges = {
+        '0xf53a70': [hex(x) for x in calls(0xf53a70)
+                     if x in (0xaba970, 0xabff90)],
+        '0xaba970': [hex(x) for x in calls(0xaba970) if x == 0xaba9d0],
+        '0xaba9d0': [hex(x) for x in calls(0xaba9d0)
+                     if x in (0xabaa80, 0xabb250)],
+        '0xabb250': [hex(x) for x in calls(0xabb250)
+                     if x in (0xabbf00, 0xabb3f0, 0xabba50)],
+        '0xabbf00': [hex(x) for x in calls(0xabbf00)
+                     if x in (0xabc820, 0xabcbe0, 0xf48840, 0xef2c70)],
+    }
+    save_layout = json.loads(SAVE_LAYOUT_ARTIFACT.read_text())
+    save_crosswalk = json.loads(SAVE_LAYOUT_CROSSWALK_ARTIFACT.read_text())
+    npc_villager_node = next(
+        x for x in save_crosswalk['member_crosswalk'] if x['node'] == '0xa8')
     talk_force_samples = [x for x in flow['eventflow_samples']
                           if x['flow'] == 'NNPC_Talk_Force']
     hit_entry_event_indices = [21, 32, 33]
@@ -103,7 +144,7 @@ def main():
     refs_friendship = refs('Friendship')
     callsite_notes = {
         0xabaA80: 'Reads Friendship in resident/player iteration and feeds the value through level conversion; no direct field writer in this function.',
-        0xabbf00: 'Mail-processing path (caller 0xabb250) reads Friendship, converts it to a level and uses it in branch selection; no direct Friendship writer call.',
+        0xabbf00: 'Daily player-to-villager mail processor (0xaba970 -> 0xaba9d0 -> 0xabb250) reads Friendship, converts it to a level, and uses it to select a reply-mail branch; no direct Friendship writer call.',
         0xac0200: 'Direct daily-candidate writer: reads Friendship, invokes candidate calculator 0xab9dc0, then passes Friendship plus candidate delta to 0xf48840.',
         0xca6c40: 'Reads friendship/acquaintance values and level-converts them while selecting/scoring NPC candidates; no direct Friendship writer call.',
         0xd1cfc0: 'Reads Friendship as one input to a returned calculation; no direct Friendship writer call.',
@@ -183,10 +224,32 @@ def main():
             },
             'limits': 'Inventory is based on direct calls and indexed string references in this main.nso build; it cannot rule out indirect writes, dynamic field names, unindexed strings, or code in absent modules.',
         },
-        'mail_candidate': {
-            'static_path': ['0xaba9d0', '0xabb250', '0xabbf00'],
-            'friendship_use': '0xabbf00 reads Friendship and converts it with 0xd34a20 while processing a candidate mail/item path; the routine contains no direct 0xf48840 or 0xef2c70 call.',
-            'classification': 'Read-only with respect to Friendship in the visible pseudocode; exact MAIL_XX_ReMax semantic and any downstream social delta are unproven.',
+        'mail_processing': {
+            'day_change_path': ['0xf53a70', '0xaba970', '0xaba9d0', '0xabb250', '0xabbf00'],
+            'direct_call_targets': mail_processor_edges,
+            'friendship_read': '0xabbf00 reads Friendship with 0xf486c0, converts it with 0xd34a20, and uses the band when selecting response-mail branches. It references MAIL_XX_ReMax and calls 0xabc820/0xabcbe0 to create mail; it directly calls neither 0xf48840 nor 0xef2c70.',
+            'player_send_eventflow': {
+                'flow': letter_flow,
+                'events': letter_delivery_events,
+                'finding': 'The flow selects a cNpc address, edits the card, checks 200 Bells, deducts them, then invokes DropIntoPostOffice with cSaveMailUserInfo. It contains no NpcAddFriendship action and no explicit HasAttachedPresent query.',
+                'limit': 'The native internals of UIMsgCardAdrHandling, UIMsgCardEditTextHandling, and DropIntoPostOffice are not traced here, so attached-present recipient effects remain open.',
+            },
+            'villager_generated_mail_eventflows': {
+                'action_use_count': sum(len(x) for x in npc_mail_sends.values()),
+                'flows': npc_mail_sends,
+                'interpretation': 'These NNPC EventFlows send mail from a villager to the player (birthday, quest, life-start, and overflow paths); they are separate from player-to-villager post-office letters. Their action configurations do not add Friendship by themselves.',
+            },
+            'finding': 'The recipient-side daily mail processor reads Friendship to choose reply mail, but the visible processor has no direct Friendship writer edge. This does not rule out effects inside untraced mail UI/action handlers or attached-present handling.',
+        },
+        'save_and_runtime_descriptor': {
+            'table_row': friendship,
+            'local_save_member': {
+                'node': npc_villager_node,
+                'local_layout_member': next(x for x in save_layout['members'] if x['node'] == '0xa8'),
+                'interpretation': 'The native-selected save tree contains the large SaveLand.Npc.NpcVillager candidate region; the external schema name is cross-version corroboration, and neither source names the Friendship byte locally.',
+            },
+            'record_selection_fixture': json.loads(NATIVE_WRITER_ARTIFACT.read_text())['record_formulas'],
+            'runtime_descriptor_limit': 'The native 0xef2c70/0xf48840 setter test uses a synthetic save root and controlled hash/field-index/max descriptor. It proves record-slot arithmetic and writer behavior after those lookups, not the live Friendship descriptor mapping or a player save write.',
         },
         'eventflow_gift_related_actions': {
             'source_artifact': 'eventflow_friendship_action_native.json',
@@ -221,6 +284,11 @@ def main():
                     'NpcHitNum': '0x388660 returns case 0 when configured Border <= the NPC hit counter; AI_NPC_Normal and AI_NPC_Outdoor use Border=3.',
                     'NpcIsHitByNet': '0x389c50 returns case 0 when the NPC hit-by-net byte is nonzero.',
                 },
+                'timer_and_clear_pseudocode': {
+                    'NpcSetHitTimer': 'Action handler 0x25c650 stores Timer * 30 at context offset +0xacac; Timer=60 is configured on the below-threshold return path.',
+                    'NpcClearHitParam': 'Action handler 0x258b10 zeros the u32 at context offset +0xaca8 (the counter read by 0x388660) and byte +0xacb1.',
+                    'limit': 'The timer countdown and the code that increments the counter were not traced, so this does not prove an exact seconds-long hit window or calendar-day frequency.',
+                },
                 'hit_entry_friendship_action_event_indices': hit_entry_event_indices,
                 'hit_entry_friendship_action_values': [x['AddValue'] for x in hit_entry_samples],
                 'all_flow_negative_friendship_action_event_indices': [
@@ -229,8 +297,8 @@ def main():
                     x['AddValue'] for x in talk_force_negative_samples],
                 'all_flow_negative_friendship_action_count': len(talk_force_negative_samples),
                 'flow_friendship_action_count': len(talk_force_actions),
-                'finding': 'After the hit checks, the AI flows can start NNPC_Talk_Force:Hit. EventFlow events 21, 32, and 33 in the Hit entry configure -3; each follows NoAcquaintance_Chk and CheckNpcLook case 0. NoAcquaintance_Chk exits when HasAcquaintanceship is OFF, so those negative branches require that flag to be ON. The same flow has four other -3 actions in Push and a +5 action in Flea; those are not net-hit branches. Callback forwarding for the configured actions is included in the 72/72 native action test.',
-                'limits': ['Query bodies and AI transition gates are pseudocode evidence, not native execution.', 'The selected EventFlow dialogue branch is conditional; a net hit does not prove that every hit deducts points.'],
+                'finding': 'The net-hit path requires the hit-by-net query to pass and the hit counter to reach 3; the below-threshold path arms the 60-timer action and returns to the normal AI route. Outdoor additionally requires HitMainPlayer and HasAcquaintanceship before entering cHit/Hit. NNPC_Talk_Force:Hit then chooses one of three mutually exclusive random branches; only action sites 21, 32, or 33 can subtract -3, and each is reached through CheckNpcLook case 0 and NoAcquaintance_Chk. The helper exits when HasAcquaintanceship is OFF. Thus one Hit-entry invocation can execute at most one of these three -3 actions, while a later thresholded hit sequence may repeat it after hit state is reset. The same flow has four other -3 actions in Push and +5 in Flea; these are separate entries. All configured callback values are forwarded unchanged in the 72/72 native action test.',
+                'limits': ['The query and AI transition bodies are pseudocode evidence, not a controlled native end-to-end hit simulation.', 'The timer handler writes Timer*30 and the clear handler resets the count, but its countdown/incrementer was not traced; exact real-time cadence and hits-per-day are unknown.', 'A net hit alone does not prove a Friendship loss: the threshold, AI route, acquaintance/look checks, and selected dialogue branch all matter.'],
             },
             'neglect_and_caps': {
                 'first_talk_of_day': '0xc84240 increments TalkCountToday and awards Friendship only when its resulting value is 1; the delta is min(ContinuousTalkDays, 3), as pseudocode evidence.',
@@ -238,15 +306,16 @@ def main():
                 'field_table': 'EventFlagsNpcMemoryParam sets Friendship default 25/max 255 and ContinuousTalkDays default 0/max 7. These are field bounds, not an aggregate daily Friendship cap.',
                 'milestone_flag': 'NNPC_Talk_General:PresentAvailable_Chk uses FriendshipBecomeAcqHToday and FriendshipBecomeAcqH to gate ReceivedFirstPresent; these flags are not a writer-level point cap.',
                 'quest_timeout': 'NNPC_Quest_Delivery_TimeOver configures -1, -2, or -3 according to HasDeliveryItem and HasOpenedDeliveryItem query branches; this is a quest timeout penalty, not passive neglect decay.',
-                'daily_candidate': 'The separate 0xf53a70 -> 0xabff90 -> 0xac0200 -> 0xab9dc0 path can supply -3 to a Friendship field write in pseudocode; reachability and its relationship to neglect remain unresolved.',
-                'finding': 'No universal per-day Friendship point cap or passive no-talk point decay is identified by the indexed direct-writer and EventFlow evidence.',
+                'daily_candidate': 'The separate day-change call 0xf53a70 -> 0xabff90 -> 0xac0200 -> 0xab9dc0 can return -3 to the visible 0xf48840 write in pseudocode. 0xab9dc0 also has a second -3 return. These are separate from the net-hit EventFlow and quest-timeout penalties; neither candidate was executed or shown to occur on an ordinary day.',
+                'aggregate_cap_evidence': 'The full indexed EventFlow action inventory contains 72 configured AddFriendship values, all forwarded unchanged at 0xd34cb0; the generic writer clamps an individual value against its supplied descriptor but has no visible daily accumulator/gate. The Friendship table row sets DefaultValue=25 and MaxValue=255. No aggregate day-total field or writer-side daily cap is identified in this direct-call/string-reference inventory.',
+                'finding': 'The evidence supports a per-source first-talk limit of one reward/day and a byte ceiling of 255, but does not establish a universal daily point cap. No-talk streak loss is documented separately from Friendship decay. The negative result is bounded to indexed direct writers and EventFlows in this 1.0.0 main build; indirect writes, dynamic keys, and absent modules remain possible.',
             }
         },
         'open': [
-            'Execute the 0xab9dc0 -3 branch and prove whether the day-change path reaches it during ordinary play.',
-            'Trace recipient-side processing of player letters and any attached-present friendship effect; the post-office send flow itself contains no Friendship action.',
-            'Determine whether the separate 0xab9dc0 daily -3 candidate represents ordinary neglect/decay, and whether an aggregate daily Friendship cap exists.',
-            'Execute with the real runtime save root and Friendship field descriptor table; current native setter tests use a synthetic save and controlled descriptor lookup.',
+            'Run the day-change 0xab9dc0 -3 candidate with the real global/save/table dependencies and prove whether it occurs during ordinary play.',
+            'Trace the post-office UI/action handlers through delivery of cToNpc mail, including any attached-present processing; the daily recipient processor only establishes Friendship-dependent reply-mail selection.',
+            'Execute with the real runtime save root and Friendship descriptor table; current setter fixtures control both descriptor lookup and field offset.',
+            'Determine the timer countdown and hit-counter incrementer to establish the exact real-time cadence of repeated net-hit penalties.',
             'Determine host/guest state-transition conditions and prove whether 0x395bc0/0x395e50/0x3960d0 result indexes are dialog topics, messages, or another conversation selector.',
         ],
     }

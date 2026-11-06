@@ -54,7 +54,7 @@
         "directly_calls_f486c0": true,
         "directly_calls_f48840": false,
         "directly_calls_ef2c70": false,
-        "note": "Mail-processing path (caller 0xabb250) reads Friendship, converts it to a level and uses it in branch selection; no direct Friendship writer call."
+        "note": "Daily player-to-villager mail processor (0xaba970 -> 0xaba9d0 -> 0xabb250) reads Friendship, converts it to a level, and uses it to select a reply-mail branch; no direct Friendship writer call."
       },
       {
         "function_va": "0xac0200",
@@ -271,14 +271,451 @@
     },
     "limits": "Inventory is based on direct calls and indexed string references in this main.nso build; it cannot rule out indirect writes, dynamic field names, unindexed strings, or code in absent modules."
   },
-  "mail_candidate": {
-    "static_path": [
+  "mail_processing": {
+    "day_change_path": [
+      "0xf53a70",
+      "0xaba970",
       "0xaba9d0",
       "0xabb250",
       "0xabbf00"
     ],
-    "friendship_use": "0xabbf00 reads Friendship and converts it with 0xd34a20 while processing a candidate mail/item path; the routine contains no direct 0xf48840 or 0xef2c70 call.",
-    "classification": "Read-only with respect to Friendship in the visible pseudocode; exact MAIL_XX_ReMax semantic and any downstream social delta are unproven."
+    "direct_call_targets": {
+      "0xf53a70": [
+        "0xaba970",
+        "0xabff90"
+      ],
+      "0xaba970": [
+        "0xaba9d0"
+      ],
+      "0xaba9d0": [
+        "0xabaa80",
+        "0xabb250"
+      ],
+      "0xabb250": [
+        "0xabbf00",
+        "0xabb3f0",
+        "0xabba50"
+      ],
+      "0xabbf00": []
+    },
+    "friendship_read": "0xabbf00 reads Friendship with 0xf486c0, converts it with 0xd34a20, and uses the band when selecting response-mail branches. It references MAIL_XX_ReMax and calls 0xabc820/0xabcbe0 to create mail; it directly calls neither 0xf48840 nor 0xef2c70.",
+    "player_send_eventflow": {
+      "flow": "Obj_MessageCardRack_01_SendVillage",
+      "events": [
+        {
+          "event_index": 10,
+          "kind": "actions",
+          "name": "EventFlowActionBellCountDown",
+          "params": {
+            "Money": -200,
+            "Reverse": false
+          }
+        },
+        {
+          "event_index": 16,
+          "kind": "actions",
+          "name": "EventFlowActionDropIntoPostOffice",
+          "params": {
+            "TmpMailInstance": "cSaveMailUserInfo"
+          }
+        },
+        {
+          "event_index": 17,
+          "kind": "queries",
+          "name": "EventFlowQueryHasFreeInPostOffice",
+          "params": {
+            "Type": "cToVillagePlayer"
+          }
+        },
+        {
+          "event_index": 20,
+          "kind": "queries",
+          "name": "EventFlowQueryHasFreeInPostOffice",
+          "params": {
+            "Type": "cToVillagePlayer"
+          }
+        },
+        {
+          "event_index": 22,
+          "kind": "queries",
+          "name": "EventFlowQueryHasFreeInPostOffice",
+          "params": {
+            "Type": "cToNpc"
+          }
+        }
+      ],
+      "finding": "The flow selects a cNpc address, edits the card, checks 200 Bells, deducts them, then invokes DropIntoPostOffice with cSaveMailUserInfo. It contains no NpcAddFriendship action and no explicit HasAttachedPresent query.",
+      "limit": "The native internals of UIMsgCardAdrHandling, UIMsgCardEditTextHandling, and DropIntoPostOffice are not traced here, so attached-present recipient effects remain open."
+    },
+    "villager_generated_mail_eventflows": {
+      "action_use_count": 24,
+      "flows": {
+        "NNPC_ApproachE_WelcomeMigrants": [
+          {
+            "event_index": 64,
+            "action": "EventFlowActionNpcMailSend",
+            "params": {
+              "Route": "cFastToday",
+              "TagType": "cNone",
+              "FileIndex": "MAIL_XX_LifeStart",
+              "Present": "cDeliveryItem",
+              "LabelIndex": 2
+            }
+          },
+          {
+            "event_index": 65,
+            "action": "EventFlowActionNpcMailSend",
+            "params": {
+              "Route": "cFastToday",
+              "TagType": "cNone",
+              "FileIndex": "MAIL_XX_LifeStart",
+              "Present": "cDeliveryItem",
+              "LabelIndex": 2
+            }
+          }
+        ],
+        "NNPC_GEvent_BirthdayN_H": [
+          {
+            "event_index": 130,
+            "action": "EventFlowActionNpcMailSendRandom",
+            "params": {
+              "FileIndex": "MAIL_XX_BirthDayN",
+              "Present": "cReward",
+              "Route": "cFastTomorrow",
+              "LabelIndexBegin": 1,
+              "LabelIndexEnd": 3,
+              "TagType": "cNone"
+            }
+          },
+          {
+            "event_index": 131,
+            "action": "EventFlowActionNpcMailSendRandom",
+            "params": {
+              "FileIndex": "MAIL_XX_BirthDayN",
+              "Present": "cReward",
+              "Route": "cFastTomorrow",
+              "LabelIndexBegin": 4,
+              "LabelIndexEnd": 6,
+              "TagType": "cNone"
+            }
+          }
+        ],
+        "NNPC_GEvent_BirthdayP": [
+          {
+            "event_index": 59,
+            "action": "EventFlowActionNpcMailSendRandom",
+            "params": {
+              "Present": "cReward",
+              "Route": "cFastTomorrow",
+              "FileIndex": "MAIL_XX_BirthDayP",
+              "LabelIndexBegin": 7,
+              "LabelIndexEnd": 9,
+              "TagType": "cNone"
+            }
+          }
+        ],
+        "NNPC_GEvent_BirthdayP_H": [
+          {
+            "event_index": 83,
+            "action": "EventFlowActionNpcMailSendRandom",
+            "params": {
+              "Present": "cReward",
+              "FileIndex": "MAIL_XX_BirthDayP",
+              "LabelIndexBegin": 4,
+              "LabelIndexEnd": 6,
+              "Route": "cFastToday",
+              "TagType": "cNone"
+            }
+          },
+          {
+            "event_index": 84,
+            "action": "EventFlowActionNpcMailSendRandom",
+            "params": {
+              "Present": "cReward",
+              "LabelIndexBegin": 1,
+              "LabelIndexEnd": 3,
+              "FileIndex": "MAIL_XX_BirthDayP",
+              "Route": "cFastToday",
+              "TagType": "cNone"
+            }
+          }
+        ],
+        "NNPC_Quest_Sick_End": [
+          {
+            "event_index": 82,
+            "action": "EventFlowActionNpcMailSendRandom",
+            "params": {
+              "Present": "cReward",
+              "Route": "cFastTomorrow",
+              "LabelIndexBegin": 1,
+              "LabelIndexEnd": 3,
+              "TagType": "cNone",
+              "FileIndex": "MAIL_XX_OverFlow"
+            }
+          }
+        ],
+        "NNPC_Quest_VisitN_End": [
+          {
+            "event_index": 17,
+            "action": "EventFlowActionNpcMailSendRandom",
+            "params": {
+              "FileIndex": "MAIL_XX_Quest_VisitN",
+              "LabelIndexBegin": 1,
+              "LabelIndexEnd": 3,
+              "Present": "cReward",
+              "TagType": "cNone",
+              "Route": "cSlowRetry"
+            }
+          },
+          {
+            "event_index": 43,
+            "action": "EventFlowActionNpcMailSendRandom",
+            "params": {
+              "FileIndex": "MAIL_XX_Quest_VisitN",
+              "LabelIndexBegin": 1,
+              "LabelIndexEnd": 3,
+              "Present": "cVisitPresent",
+              "TagType": "cNone",
+              "Route": "cSlowRetry"
+            }
+          }
+        ],
+        "NNPC_Quest_VisitN_Home": [
+          {
+            "event_index": 103,
+            "action": "EventFlowActionNpcMailSend",
+            "params": {
+              "Present": "cReward",
+              "TagType": "cNone",
+              "LabelIndex": 4,
+              "FileIndex": "MAIL_XX_Quest_VisitN",
+              "Route": "cSlowRetry"
+            }
+          }
+        ],
+        "NNPC_Quest_VisitP_Layout": [
+          {
+            "event_index": 0,
+            "action": "EventFlowActionNpcMailSend",
+            "params": {
+              "Route": "cFastTomorrow",
+              "FileIndex": "MAIL_XX_Quest_VisitP",
+              "LabelIndex": 1,
+              "Present": "cReward",
+              "TagType": "cNone"
+            }
+          },
+          {
+            "event_index": 1,
+            "action": "EventFlowActionNpcMailSend",
+            "params": {
+              "Route": "cFastTomorrow",
+              "FileIndex": "MAIL_XX_Quest_VisitP",
+              "LabelIndex": 2,
+              "Present": "cReward",
+              "TagType": "cNone"
+            }
+          },
+          {
+            "event_index": 2,
+            "action": "EventFlowActionNpcMailSend",
+            "params": {
+              "Route": "cFastTomorrow",
+              "FileIndex": "MAIL_XX_Quest_VisitP",
+              "LabelIndex": 4,
+              "Present": "cReward",
+              "TagType": "cNone"
+            }
+          },
+          {
+            "event_index": 3,
+            "action": "EventFlowActionNpcMailSend",
+            "params": {
+              "Route": "cFastTomorrow",
+              "FileIndex": "MAIL_XX_Quest_VisitP",
+              "LabelIndex": 5,
+              "Present": "cReward",
+              "TagType": "cNone"
+            }
+          },
+          {
+            "event_index": 4,
+            "action": "EventFlowActionNpcMailSend",
+            "params": {
+              "Route": "cFastTomorrow",
+              "FileIndex": "MAIL_XX_Quest_VisitP",
+              "LabelIndex": 6,
+              "Present": "cReward",
+              "TagType": "cNone"
+            }
+          },
+          {
+            "event_index": 5,
+            "action": "EventFlowActionNpcMailSend",
+            "params": {
+              "Route": "cFastTomorrow",
+              "FileIndex": "MAIL_XX_Quest_VisitP",
+              "LabelIndex": 7,
+              "Present": "cReward",
+              "TagType": "cNone"
+            }
+          },
+          {
+            "event_index": 6,
+            "action": "EventFlowActionNpcMailSend",
+            "params": {
+              "Route": "cFastTomorrow",
+              "FileIndex": "MAIL_XX_Quest_VisitP",
+              "LabelIndex": 8,
+              "Present": "cReward",
+              "TagType": "cNone"
+            }
+          },
+          {
+            "event_index": 7,
+            "action": "EventFlowActionNpcMailSend",
+            "params": {
+              "Route": "cFastTomorrow",
+              "FileIndex": "MAIL_XX_Quest_VisitP",
+              "LabelIndex": 9,
+              "Present": "cReward",
+              "TagType": "cNone"
+            }
+          },
+          {
+            "event_index": 8,
+            "action": "EventFlowActionNpcMailSend",
+            "params": {
+              "Route": "cFastTomorrow",
+              "FileIndex": "MAIL_XX_Quest_VisitP",
+              "LabelIndex": 10,
+              "Present": "cReward",
+              "TagType": "cNone"
+            }
+          },
+          {
+            "event_index": 9,
+            "action": "EventFlowActionNpcMailSend",
+            "params": {
+              "Route": "cFastTomorrow",
+              "FileIndex": "MAIL_XX_Quest_VisitP",
+              "LabelIndex": 12,
+              "Present": "cReward",
+              "TagType": "cNone"
+            }
+          }
+        ],
+        "NNPC_Reaction_1P_LifeStart": [
+          {
+            "event_index": 42,
+            "action": "EventFlowActionNpcMailSend",
+            "params": {
+              "Present": "cReward",
+              "Route": "cFastToday",
+              "TagType": "cNone",
+              "LabelIndex": 1,
+              "FileIndex": "MAIL_XX_LifeStart"
+            }
+          },
+          {
+            "event_index": 45,
+            "action": "EventFlowActionNpcMailSend",
+            "params": {
+              "Route": "cFastToday",
+              "TagType": "cNone",
+              "LabelIndex": 1,
+              "FileIndex": "MAIL_XX_LifeStart",
+              "Present": "cDeliveryItem"
+            }
+          }
+        ],
+        "NNPC_Select_Sell_Gift": [
+          {
+            "event_index": 34,
+            "action": "EventFlowActionNpcMailSendRandom",
+            "params": {
+              "Present": "cReward",
+              "Route": "cFastTomorrow",
+              "LabelIndexBegin": 1,
+              "LabelIndexEnd": 3,
+              "TagType": "cNone",
+              "FileIndex": "MAIL_XX_OverFlow"
+            }
+          }
+        ]
+      },
+      "interpretation": "These NNPC EventFlows send mail from a villager to the player (birthday, quest, life-start, and overflow paths); they are separate from player-to-villager post-office letters. Their action configurations do not add Friendship by themselves."
+    },
+    "finding": "The recipient-side daily mail processor reads Friendship to choose reply mail, but the visible processor has no direct Friendship writer edge. This does not rule out effects inside untraced mail UI/action handlers or attached-present handling."
+  },
+  "save_and_runtime_descriptor": {
+    "table_row": {
+      "UniqueID": 10,
+      "DefaultValue": 25,
+      "Name": "親密度",
+      "FlagsFlowAccess": 1,
+      "Key": "Friendship",
+      "MaxValue": 255,
+      "h_5140e4b4": 0,
+      "h_5f77b61a": 0,
+      "h_8d401df7": 0
+    },
+    "local_save_member": {
+      "node": {
+        "node": "0xa8",
+        "parent": "0x38",
+        "depth": 2,
+        "data": "0x8",
+        "size": "0x1d6d48",
+        "local_name": "villagers and NPC move state, 0x1d6d48 bytes (0xf84320)",
+        "status": "one_struct_type_candidate",
+        "depth_aligned_matches": [
+          {
+            "path": "SaveLand.Npc.NpcVillager",
+            "type": "::Game::SaveNpcVillager",
+            "kind": "field_size"
+          },
+          {
+            "path": "SaveLand.Npc.NpcVillager",
+            "type": "::Game::SaveNpcVillager",
+            "kind": "struct_size"
+          }
+        ],
+        "matches": [
+          {
+            "path": "SaveLand.Npc.NpcVillager",
+            "type": "::Game::SaveNpcVillager",
+            "kind": "field_size"
+          },
+          {
+            "path": "SaveLand.Npc.NpcVillager",
+            "type": "::Game::SaveNpcVillager",
+            "kind": "struct_size"
+          }
+        ],
+        "depth_aligned_named_type_candidates": [
+          "::Game::SaveNpcVillager"
+        ],
+        "depth_aligned_struct_type_candidates": [
+          "::Game::SaveNpcVillager"
+        ]
+      },
+      "local_layout_member": {
+        "node": "0xa8",
+        "depth": 2,
+        "data": "0x8",
+        "size": "0x1d6d48",
+        "type": "0x30e8500",
+        "parent": "0x38",
+        "name": "villagers and NPC move state, 0x1d6d48 bytes (0xf84320)"
+      },
+      "interpretation": "The native-selected save tree contains the large SaveLand.Npc.NpcVillager candidate region; the external schema name is cross-version corroboration, and neither source names the Friendship byte locally."
+    },
+    "record_selection_fixture": {
+      "local": "save_base + resident*0x10798 + player*0xa8 + 0x39f8",
+      "network": "save_base + resident*0x10798 + player*0x700 + 0x1c0"
+    },
+    "runtime_descriptor_limit": "The native 0xef2c70/0xf48840 setter test uses a synthetic save root and controlled hash/field-index/max descriptor. It proves record-slot arithmetic and writer behavior after those lookups, not the live Friendship descriptor mapping or a player save write."
   },
   "eventflow_gift_related_actions": {
     "source_artifact": "eventflow_friendship_action_native.json",
@@ -656,6 +1093,11 @@
         "NpcHitNum": "0x388660 returns case 0 when configured Border <= the NPC hit counter; AI_NPC_Normal and AI_NPC_Outdoor use Border=3.",
         "NpcIsHitByNet": "0x389c50 returns case 0 when the NPC hit-by-net byte is nonzero."
       },
+      "timer_and_clear_pseudocode": {
+        "NpcSetHitTimer": "Action handler 0x25c650 stores Timer * 30 at context offset +0xacac; Timer=60 is configured on the below-threshold return path.",
+        "NpcClearHitParam": "Action handler 0x258b10 zeros the u32 at context offset +0xaca8 (the counter read by 0x388660) and byte +0xacb1.",
+        "limit": "The timer countdown and the code that increments the counter were not traced, so this does not prove an exact seconds-long hit window or calendar-day frequency."
+      },
       "hit_entry_friendship_action_event_indices": [
         21,
         32,
@@ -686,10 +1128,11 @@
       ],
       "all_flow_negative_friendship_action_count": 7,
       "flow_friendship_action_count": 8,
-      "finding": "After the hit checks, the AI flows can start NNPC_Talk_Force:Hit. EventFlow events 21, 32, and 33 in the Hit entry configure -3; each follows NoAcquaintance_Chk and CheckNpcLook case 0. NoAcquaintance_Chk exits when HasAcquaintanceship is OFF, so those negative branches require that flag to be ON. The same flow has four other -3 actions in Push and a +5 action in Flea; those are not net-hit branches. Callback forwarding for the configured actions is included in the 72/72 native action test.",
+      "finding": "The net-hit path requires the hit-by-net query to pass and the hit counter to reach 3; the below-threshold path arms the 60-timer action and returns to the normal AI route. Outdoor additionally requires HitMainPlayer and HasAcquaintanceship before entering cHit/Hit. NNPC_Talk_Force:Hit then chooses one of three mutually exclusive random branches; only action sites 21, 32, or 33 can subtract -3, and each is reached through CheckNpcLook case 0 and NoAcquaintance_Chk. The helper exits when HasAcquaintanceship is OFF. Thus one Hit-entry invocation can execute at most one of these three -3 actions, while a later thresholded hit sequence may repeat it after hit state is reset. The same flow has four other -3 actions in Push and +5 in Flea; these are separate entries. All configured callback values are forwarded unchanged in the 72/72 native action test.",
       "limits": [
-        "Query bodies and AI transition gates are pseudocode evidence, not native execution.",
-        "The selected EventFlow dialogue branch is conditional; a net hit does not prove that every hit deducts points."
+        "The query and AI transition bodies are pseudocode evidence, not a controlled native end-to-end hit simulation.",
+        "The timer handler writes Timer*30 and the clear handler resets the count, but its countdown/incrementer was not traced; exact real-time cadence and hits-per-day are unknown.",
+        "A net hit alone does not prove a Friendship loss: the threshold, AI route, acquaintance/look checks, and selected dialogue branch all matter."
       ]
     },
     "neglect_and_caps": {
@@ -698,15 +1141,16 @@
       "field_table": "EventFlagsNpcMemoryParam sets Friendship default 25/max 255 and ContinuousTalkDays default 0/max 7. These are field bounds, not an aggregate daily Friendship cap.",
       "milestone_flag": "NNPC_Talk_General:PresentAvailable_Chk uses FriendshipBecomeAcqHToday and FriendshipBecomeAcqH to gate ReceivedFirstPresent; these flags are not a writer-level point cap.",
       "quest_timeout": "NNPC_Quest_Delivery_TimeOver configures -1, -2, or -3 according to HasDeliveryItem and HasOpenedDeliveryItem query branches; this is a quest timeout penalty, not passive neglect decay.",
-      "daily_candidate": "The separate 0xf53a70 -> 0xabff90 -> 0xac0200 -> 0xab9dc0 path can supply -3 to a Friendship field write in pseudocode; reachability and its relationship to neglect remain unresolved.",
-      "finding": "No universal per-day Friendship point cap or passive no-talk point decay is identified by the indexed direct-writer and EventFlow evidence."
+      "daily_candidate": "The separate day-change call 0xf53a70 -> 0xabff90 -> 0xac0200 -> 0xab9dc0 can return -3 to the visible 0xf48840 write in pseudocode. 0xab9dc0 also has a second -3 return. These are separate from the net-hit EventFlow and quest-timeout penalties; neither candidate was executed or shown to occur on an ordinary day.",
+      "aggregate_cap_evidence": "The full indexed EventFlow action inventory contains 72 configured AddFriendship values, all forwarded unchanged at 0xd34cb0; the generic writer clamps an individual value against its supplied descriptor but has no visible daily accumulator/gate. The Friendship table row sets DefaultValue=25 and MaxValue=255. No aggregate day-total field or writer-side daily cap is identified in this direct-call/string-reference inventory.",
+      "finding": "The evidence supports a per-source first-talk limit of one reward/day and a byte ceiling of 255, but does not establish a universal daily point cap. No-talk streak loss is documented separately from Friendship decay. The negative result is bounded to indexed direct writers and EventFlows in this 1.0.0 main build; indirect writes, dynamic keys, and absent modules remain possible."
     }
   },
   "open": [
-    "Execute the 0xab9dc0 -3 branch and prove whether the day-change path reaches it during ordinary play.",
-    "Trace recipient-side processing of player letters and any attached-present friendship effect; the post-office send flow itself contains no Friendship action.",
-    "Determine whether the separate 0xab9dc0 daily -3 candidate represents ordinary neglect/decay, and whether an aggregate daily Friendship cap exists.",
-    "Execute with the real runtime save root and Friendship field descriptor table; current native setter tests use a synthetic save and controlled descriptor lookup.",
+    "Run the day-change 0xab9dc0 -3 candidate with the real global/save/table dependencies and prove whether it occurs during ordinary play.",
+    "Trace the post-office UI/action handlers through delivery of cToNpc mail, including any attached-present processing; the daily recipient processor only establishes Friendship-dependent reply-mail selection.",
+    "Execute with the real runtime save root and Friendship descriptor table; current setter fixtures control both descriptor lookup and field offset.",
+    "Determine the timer countdown and hit-counter incrementer to establish the exact real-time cadence of repeated net-hit penalties.",
     "Determine host/guest state-transition conditions and prove whether 0x395bc0/0x395e50/0x3960d0 result indexes are dialog topics, messages, or another conversation selector."
   ]
 }

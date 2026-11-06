@@ -22,14 +22,17 @@
       "name": "net-hit reaction conversation",
       "status": "AI EventFlow trigger and friendship branches are pseudocode/EF; the AddFriendship callback forwarding is native",
       "flow_path": ["AI_NPC_Normal:End_Hit", "AI_NPC_Outdoor:Hit", "NNPC_Talk_Force:Hit"],
-      "gates": ["NpcIsHitByNet", "NpcHitNum(Border=3)", "HasAcquaintanceship ON", "CheckNpcLook case 0"],
+      "gates": ["NpcIsHitByNet", "NpcHitNum(Border=3)", "Outdoor: HitMainPlayer and HasAcquaintanceship ON", "CheckNpcLook case 0"],
       "delta": -3,
+      "cadence": "Three mutually exclusive -3 actions exist in the Hit entry, so one entry invocation can execute at most one; below threshold the flow sets Timer=60, and NpcClearHitParam resets the counter. The handler multiplies timer by 30; the counter incrementer/countdown were not traced, so exact time window and per-day frequency remain unknown.",
       "artifacts": ["eventflow_friendship_action_native.json", "friendship_reference_inventory.json"]
     },
     {
       "name": "player post-office letter",
-      "status": "send flow has no NpcAddFriendship action; later recipient-side effects are unresolved",
+      "status": "send flow posts a cToNpc card after a 200-Bell check and has no NpcAddFriendship action; daily recipient processing reads Friendship to select reply mail but has no direct Friendship writer call",
       "flow_path": ["Obj_MessageCardRack_01_SendVillage", "DropIntoPostOffice"],
+      "recipient_processor": ["0xf53a70", "0xaba970", "0xaba9d0", "0xabb250", "0xabbf00"],
+      "limits": ["No explicit HasAttachedPresent query occurs in the send flow.", "UIMsgCardAdrHandling, UIMsgCardEditTextHandling, DropIntoPostOffice and attached-present processing were not traced natively."],
       "artifacts": ["friendship_reference_inventory.json"]
     }
   ],
@@ -42,7 +45,8 @@
     "observed_friendship_hash": "0x8a80b4d9",
     "friendship_record_byte": "0x38, supplied by controlled descriptor lookup",
     "artifact": "friendship_save_writer_native.json",
-    "claim_limit": "native byte mutation is verified on synthetic records after controlled hash-to-field-index lookup; real save root and descriptor table remain unverified"
+    "claim_limit": "native byte mutation is verified on synthetic records after controlled hash-to-field-index lookup; real save root and descriptor table remain unverified",
+    "local_save_candidate": "save_layout node 0xa8 at data +0x8 has size 0x1d6d48; external crosswalk candidate is SaveLand.Npc.NpcVillager, not local RTTI proof"
   },
   "candidate_daily_writer": {
     "status": "pseudocode candidate; native branch not executed",
@@ -71,11 +75,14 @@
     "missed_talk": "The applicable day-change reset branch clears ContinuousTalkDays when TalkCountToday is zero; it removes the streak bonus without a visible Friendship decrement; [PSEUDO/native helper fixtures].",
     "storage": "EventFlagsNpcMemoryParam sets Friendship default 25/max 255 and ContinuousTalkDays default 0/max 7; these are storage bounds, not an aggregate daily Friendship cap; [TBL].",
     "delivery_timeout": "NNPC_Quest_Delivery_TimeOver has conditional -1/-2/-3 EventFlow actions. This is a quest timeout penalty, not passive neglect decay; [EF].",
-    "no_talk_decay": "No universal per-day Friendship point cap or passive no-talk decrement has been identified."
+    "aggregate_cap_evidence": "All 72 indexed AddFriendship AddValue arguments are forwarded unchanged; the generic writer has no visible daily accumulator/gate. Friendship max 255 is a storage bound. No aggregate daily cap is identified in the indexed direct-writer/EventFlow evidence; indirect/dynamic writes and absent modules remain outside scope.",
+    "no_talk_decay": "The documented missed-talk reset removes ContinuousTalkDays and shows no Friendship decrement; no passive no-talk decrement has been identified."
   },
   "open": [
     "Native execution of 0xabff90 / 0xac0200 and the -3 candidate branch",
     "Whether any Friendship decrement is a normal daily decay",
-    "Recipient-side effects of delivered letters or attached presents"
+    "Native recipient-side effects of delivered letters or attached presents, especially handler/UI internals",
+    "Exact timer countdown and hit-counter incrementer for repeated net-hit penalties",
+    "Live save root/descriptor proof and ordinary-play reachability of the separate day-change -3 candidate"
   ]
 }
