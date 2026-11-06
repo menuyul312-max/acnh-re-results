@@ -1,0 +1,66 @@
+{
+  "schema": "acnh-re/tool-ring-index-native/1",
+  "native_elf_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+  "constructor": "0x14254f0",
+  "lookup": "0x1412770",
+  "array_offset_from_this": "0x1b980",
+  "table_values_by_index": [
+    2,
+    1,
+    0,
+    7,
+    6,
+    5,
+    4,
+    3
+  ],
+  "cases": [
+    {
+      "input_value": 0,
+      "native_table_index": 2
+    },
+    {
+      "input_value": 1,
+      "native_table_index": 1
+    },
+    {
+      "input_value": 2,
+      "native_table_index": 0
+    },
+    {
+      "input_value": 3,
+      "native_table_index": 7
+    },
+    {
+      "input_value": 4,
+      "native_table_index": 6
+    },
+    {
+      "input_value": 5,
+      "native_table_index": 5
+    },
+    {
+      "input_value": 6,
+      "native_table_index": 4
+    },
+    {
+      "input_value": 7,
+      "native_table_index": 3
+    },
+    {
+      "input_value": 8,
+      "native_table_index": 4294967295
+    }
+  ],
+  "case_count": 9,
+  "mismatches": 0,
+  "dependencies_stubbed": [
+    "0x14103f0 unrelated UI setup helper",
+    "0x1cfa8d0 unrelated UI state initializer"
+  ],
+  "interpretation": "Native constructor and lookup establish an eight-value permutation for an internal ring selector table. The values' semantic source and relationship to saved inventory items are not established.",
+  "remaining": [
+    "No item or inventory record is connected to these indices.",
+    "The menu selection/equip result is not exercised by this probe."
+  ]
+}
