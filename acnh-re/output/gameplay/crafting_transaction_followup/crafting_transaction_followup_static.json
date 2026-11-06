@@ -1,0 +1,954 @@
+{
+  "scope": "Static follow-up from cache check through recipe learning, craft inventory mutation, workbench UI and remake/customization source paths.",
+  "labels": {
+    "previous cold-cache material check": "[EXECUTED NATIVE; fixture reconstructed]",
+    "Ftr_Working progression": "[EVENTFLOW]",
+    "RecipeCraftParam/ItemParam/ItemRemake values": "[TBL]",
+    "handler bodies and call chain": "[NATIVE STATIC: decompiler + direct-call index]",
+    "unexecuted native paths and inferred semantics": "[OPEN / NOT EXECUTED]"
+  },
+  "provenance": {
+    "analysis_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+    "index_path": "/workspace/acnh-re/output/index.sqlite",
+    "main_nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+    "table_blob_sha256": {
+      "RecipeCraftParam": "97fe6d73e183dab43dad7358627a0a1a43f5764f0a18fa044a63a9ecf56ba919",
+      "ItemParam": "89230e97fc877ff2b2b48ac1c707ef32b3a7760118839c307f19797e2553458c",
+      "ItemKind": "4cac0178cc69519585528b24ceef022ccb1fefa12b23fc9a9e4280e40185ba7b",
+      "ItemRemake": "132e2753f485073d0267aeb19f3ceb9d07ea5ddcb2d69960c508c4ba3a68ffde"
+    }
+  },
+  "previous_executed_slice": {
+    "artifact": "crafting_transaction_followup_native.json",
+    "recipe_unique_id": 56,
+    "output_item_id": 975,
+    "cold_cache_scenarios": 3,
+    "native_check": "0xee0be0 plus A/B/C loaders and producers",
+    "limits": "A/B/C source records were reconstructed fixtures; this did not run the UI transaction."
+  },
+  "recipe_learning": {
+    "status": "EVENTFLOW_AND_NATIVE_STATIC_PROVEN; not executed against a real save",
+    "unlock_type_enum": [
+      "None",
+      "Shop",
+      "SeqRcoAlbeit",
+      "Sequence1",
+      "Sza001",
+      "Owl001",
+      "Slo001",
+      "TV",
+      "Sza002",
+      "TownmakeLicenceLv5",
+      "NnpcHA000",
+      "NnpcAN000",
+      "DIYtutorial1",
+      "DIYtutorial2",
+      "TrashRecipeTires",
+      "RcoDonationRewardA",
+      "Snowman",
+      "DIYbook1",
+      "DIYbook2",
+      "DIYbook3",
+      "DIYbookVariety",
+      "DIYbookFence1",
+      "DIYbookFence2",
+      "WoodBridge",
+      "CampSite",
+      "Ows01",
+      "Ows02",
+      "DIYbookNormalTools",
+      "DIYbookFence3",
+      "DIYbookFence4",
+      "SeasonSakura",
+      "SeasonSpringBamboo",
+      "SeasonSummerShell",
+      "SeasonAutumnNuts",
+      "SeasonMomiji",
+      "SeasonChristmasOrnament",
+      "SeasonMushroom",
+      "SeasonSnowCrystal",
+      "RcoDonationRewardB",
+      "ImmigrationQuest",
+      "RemakeTutorial",
+      "MileExchange",
+      "Market",
+      "Inspire",
+      "GoldTool",
+      "Broadcast"
+    ],
+    "tutorial_unlock_indices": {
+      "DIYtutorial1": 12,
+      "DIYtutorial2": 13
+    },
+    "events": [
+      {
+        "flow": "Ftr_Working",
+        "index": 22,
+        "actor": "EventFlowSystemActor",
+        "kind": "actions",
+        "name": "EventFlowActionPlayerSetCraftRecipe",
+        "params": {
+          "UnlockType": "DIYtutorial1",
+          "ItemUniqueId": 65534
+        }
+      },
+      {
+        "flow": "Ftr_Working",
+        "index": 30,
+        "actor": "EventFlowSystemActor",
+        "kind": "actions",
+        "name": "EventFlowActionPlayerSetCraftRecipe",
+        "params": {
+          "UnlockType": "DIYtutorial2",
+          "ItemUniqueId": 65534
+        }
+      },
+      {
+        "flow": "Ftr_Working",
+        "index": 69,
+        "actor": "EventFlowSystemActor",
+        "kind": "queries",
+        "name": "EventFlowQueryPlayerIsMadeCraftRecipe",
+        "params": {
+          "CheckMode": "cAND",
+          "MadeItemID0": 7211,
+          "MadeItemID1": 65534,
+          "MadeItemID2": 65534,
+          "MadeItemID3": 65534,
+          "MadeItemID4": 65534,
+          "MadeItemID5": 65534,
+          "MadeItemID6": 65534,
+          "MadeItemID7": 65534
+        }
+      },
+      {
+        "flow": "Ftr_Working",
+        "index": 70,
+        "actor": "EventFlowSystemActor",
+        "kind": "actions",
+        "name": "EventFlowActionPlayerResetCraftRecipe",
+        "params": {
+          "UnlockType": "WoodBridge"
+        }
+      },
+      {
+        "flow": "Ftr_Working",
+        "index": 72,
+        "actor": "EventFlowSystemActor",
+        "kind": "queries",
+        "name": "EventFlowQueryPlayerHasCraftRecipe",
+        "params": {
+          "ItemUniqueId": 7211,
+          "UnlockType": ""
+        }
+      },
+      {
+        "flow": "Ftr_Working",
+        "index": 74,
+        "actor": "EventFlowSystemActor",
+        "kind": "queries",
+        "name": "EventFlowQueryPlayerIsMadeCraftRecipe",
+        "params": {
+          "CheckMode": "cAND",
+          "MadeItemID1": 65534,
+          "MadeItemID2": 65534,
+          "MadeItemID3": 65534,
+          "MadeItemID4": 65534,
+          "MadeItemID5": 65534,
+          "MadeItemID6": 65534,
+          "MadeItemID7": 65534,
+          "MadeItemID0": 5166
+        }
+      },
+      {
+        "flow": "Ftr_Working",
+        "index": 75,
+        "actor": "EventFlowSystemActor",
+        "kind": "actions",
+        "name": "EventFlowActionPlayerResetCraftRecipe",
+        "params": {
+          "UnlockType": "CampSite"
+        }
+      },
+      {
+        "flow": "Ftr_Working",
+        "index": 77,
+        "actor": "EventFlowSystemActor",
+        "kind": "queries",
+        "name": "EventFlowQueryPlayerHasCraftRecipe",
+        "params": {
+          "ItemUniqueId": 5166,
+          "UnlockType": ""
+        }
+      }
+    ],
+    "handler": {
+      "name": "EventFlowActionPlayerSetCraftRecipe",
+      "constructor": "0x32dc50",
+      "behavior_va": "0x32dd30",
+      "decomp": "/workspace/acnh-re/output/binary/analysis_decomp/32dd30.c",
+      "direct_calls": [
+        {
+          "pc": "0x32dd58",
+          "target": "0x455d00"
+        },
+        {
+          "pc": "0x32dd64",
+          "target": "0xda3fc0"
+        },
+        {
+          "pc": "0x32ddd8",
+          "target": "0x2baa20"
+        },
+        {
+          "pc": "0x32de9c",
+          "target": "0xede0f0"
+        },
+        {
+          "pc": "0x32deac",
+          "target": "0xedf590"
+        },
+        {
+          "pc": "0x32deb8",
+          "target": "0xf588a0"
+        },
+        {
+          "pc": "0x32dec0",
+          "target": "0xf58d00"
+        },
+        {
+          "pc": "0x32ded0",
+          "target": "0xa9c290"
+        },
+        {
+          "pc": "0x32ded8",
+          "target": "0xaa8720"
+        },
+        {
+          "pc": "0x32dee8",
+          "target": "0xab4f60"
+        },
+        {
+          "pc": "0x32df00",
+          "target": "0xedef00"
+        }
+      ],
+      "claim": "The action maps UnlockType against the native 46-entry enum, routes a group through 0xede0f0/0xedf590, and a valid ItemUniqueId through 0xedef00. The save helper 0xedf0e0 writes an indexed bit in the player save structure."
+    },
+    "query": {
+      "name": "EventFlowQueryPlayerHasCraftRecipe",
+      "constructor": "0x42aba0",
+      "behavior_va": "0x42ac80",
+      "decomp": "/workspace/acnh-re/output/binary/analysis_decomp/42ac80.c",
+      "direct_calls": [
+        {
+          "pc": "0x42acb0",
+          "target": "0xda3fc0"
+        },
+        {
+          "pc": "0x42acbc",
+          "target": "0xf588a0"
+        },
+        {
+          "pc": "0x42acd4",
+          "target": "0xa9c290"
+        },
+        {
+          "pc": "0x42acdc",
+          "target": "0xaa8720"
+        },
+        {
+          "pc": "0x42acec",
+          "target": "0xab4f60"
+        },
+        {
+          "pc": "0x42ad04",
+          "target": "0xee1ec0"
+        },
+        {
+          "pc": "0x42ad84",
+          "target": "0x2baa20"
+        },
+        {
+          "pc": "0x42ae38",
+          "target": "0xede0f0"
+        },
+        {
+          "pc": "0x42ae48",
+          "target": "0xee1f80"
+        }
+      ],
+      "claim": "The query checks the requested item and UnlockType through save-state helpers; return polarity and a real save result were not dynamically verified."
+    }
+  },
+  "craft_transaction": {
+    "status": "NATIVE_STATIC_CHAIN_PROVEN; full transaction not executed",
+    "save_type_enum": [
+      "cPlayerName",
+      "cBirthDay",
+      "cNickname",
+      "cPhrase",
+      "cGreeting",
+      "cVillage",
+      "cCharaMakeResult",
+      "cTownName",
+      "cMsgCard",
+      "cWorkCraft",
+      "cWorkRemake",
+      "cMelody",
+      "cFlag",
+      "cTownName2"
+    ],
+    "events": [
+      {
+        "flow": "Ftr_Working",
+        "index": 10,
+        "actor": "EventFlowSystemActor",
+        "kind": "actions",
+        "name": "EventFlowActionUIWorkingHandling",
+        "params": {
+          "DisplayType": "cCraft"
+        }
+      },
+      {
+        "flow": "Ftr_Working",
+        "index": 208,
+        "actor": "Player",
+        "kind": "actions",
+        "name": "EventFlowActionPlayerWorkbenchMaking",
+        "params": {
+          "IsRemake": false
+        }
+      },
+      {
+        "flow": "Ftr_Working",
+        "index": 212,
+        "actor": "EventFlowSystemActor",
+        "kind": "actions",
+        "name": "EventFlowActionSaveSetFromUIResult",
+        "params": {
+          "SaveType": "cWorkCraft"
+        }
+      },
+      {
+        "flow": "Ftr_Working",
+        "index": 217,
+        "actor": "Player",
+        "kind": "actions",
+        "name": "EventFlowActionPlayerWorkbenchGetDemo",
+        "params": {
+          "IsSkipGetDemoCameraPop": false,
+          "IsSkipFanfareSE": false,
+          "IsRemake": false
+        }
+      },
+      {
+        "flow": "Ftr_Working",
+        "index": 221,
+        "actor": "Player",
+        "kind": "actions",
+        "name": "EventFlowActionPlayerWorkbenchPutaway",
+        "params": {
+          "IsRemake": false
+        }
+      }
+    ],
+    "save_set_handler": {
+      "behavior_va": "0x334650",
+      "cWorkCraft_case": 9,
+      "helper_va": "0x3358c0",
+      "calls": [
+        {
+          "pc": "0x3358e8",
+          "target": "0x154a6d0"
+        },
+        {
+          "pc": "0x335964",
+          "target": "0xf589b0"
+        },
+        {
+          "pc": "0x3359c4",
+          "target": "0xf589b0"
+        },
+        {
+          "pc": "0x3359dc",
+          "target": "0xf589b0"
+        },
+        {
+          "pc": "0x3359f0",
+          "target": "0xf589b0"
+        },
+        {
+          "pc": "0x335a08",
+          "target": "0xf589b0"
+        },
+        {
+          "pc": "0x335a1c",
+          "target": "0xf589b0"
+        },
+        {
+          "pc": "0x335a34",
+          "target": "0xf589b0"
+        },
+        {
+          "pc": "0x335a60",
+          "target": "0xedf8e0"
+        },
+        {
+          "pc": "0x335aa8",
+          "target": "0xee1420"
+        },
+        {
+          "pc": "0x335abc",
+          "target": "0xda3fc0"
+        },
+        {
+          "pc": "0x335ae0",
+          "target": "0xf589b0"
+        },
+        {
+          "pc": "0x335b28",
+          "target": "0xf589b0"
+        },
+        {
+          "pc": "0x335b40",
+          "target": "0xf589b0"
+        },
+        {
+          "pc": "0x335b54",
+          "target": "0xf589b0"
+        },
+        {
+          "pc": "0x335b70",
+          "target": "0xf589b0"
+        },
+        {
+          "pc": "0x335b84",
+          "target": "0xf589b0"
+        },
+        {
+          "pc": "0x335b9c",
+          "target": "0xf589b0"
+        },
+        {
+          "pc": "0x335bbc",
+          "target": "0xda4020"
+        },
+        {
+          "pc": "0x335be0",
+          "target": "0xf589e0"
+        },
+        {
+          "pc": "0x335c08",
+          "target": "0xf589e0"
+        },
+        {
+          "pc": "0x335c28",
+          "target": "0xf589e0"
+        },
+        {
+          "pc": "0x335c44",
+          "target": "0xf589e0"
+        },
+        {
+          "pc": "0x335c64",
+          "target": "0xf589e0"
+        },
+        {
+          "pc": "0x335c84",
+          "target": "0xf589e0"
+        },
+        {
+          "pc": "0x335ca4",
+          "target": "0xf589e0"
+        },
+        {
+          "pc": "0x335cd8",
+          "target": "0x1576780"
+        },
+        {
+          "pc": "0x335ce0",
+          "target": "0x1540c60"
+        },
+        {
+          "pc": "0x335cfc",
+          "target": "0x154a6a0"
+        }
+      ]
+    },
+    "transaction_helper": {
+      "va": "0xee1420",
+      "decomp": "/workspace/acnh-re/output/binary/analysis_decomp/ee1420.c",
+      "material_mutator_call_sites": [
+        {
+          "pc": "0xee14dc",
+          "target": "0xeff060"
+        },
+        {
+          "pc": "0xee14fc",
+          "target": "0xeff060"
+        },
+        {
+          "pc": "0xee151c",
+          "target": "0xeff060"
+        },
+        {
+          "pc": "0xee153c",
+          "target": "0xeff060"
+        },
+        {
+          "pc": "0xee155c",
+          "target": "0xeff060"
+        },
+        {
+          "pc": "0xee157c",
+          "target": "0xeff060"
+        }
+      ],
+      "inventory_delta_helper": {
+        "va": "0xeff060",
+        "decomp": "/workspace/acnh-re/output/binary/analysis_decomp/eff060.c",
+        "calls": [
+          {
+            "pc": "0xeff084",
+            "target": "0xda3fc0"
+          },
+          {
+            "pc": "0xeff08c",
+            "target": "0xef6700"
+          },
+          {
+            "pc": "0xeff098",
+            "target": "0xf8f400"
+          },
+          {
+            "pc": "0xeff0a8",
+            "target": "0xee9350"
+          },
+          {
+            "pc": "0xeff0c0",
+            "target": "0xee9490"
+          },
+          {
+            "pc": "0xeff0d0",
+            "target": "0xee94f0"
+          },
+          {
+            "pc": "0xeff0e4",
+            "target": "0xf9e410"
+          },
+          {
+            "pc": "0xeff0ec",
+            "target": "0xee93d0"
+          }
+        ]
+      },
+      "signed_quantity_helper": {
+        "va": "0xf9e410",
+        "decomp": "/workspace/acnh-re/output/binary/analysis_decomp/f9e410.c",
+        "behavior": "negative delta subtracts from the matching item count and clamps below zero to zero"
+      },
+      "result_award_route": {
+        "calls_from_transaction": [
+          {
+            "pc": "0xee17bc",
+            "target": "0xefab90"
+          },
+          {
+            "pc": "0xee17cc",
+            "target": "0xee17e0"
+          }
+        ],
+        "general_add": {
+          "va": "0xefac20",
+          "decomp": "/workspace/acnh-re/output/binary/analysis_decomp/efac20.c",
+          "calls": [
+            {
+              "pc": "0xefad2c",
+              "target": "0xf987c0"
+            }
+          ],
+          "add_impl_va": "0xf987c0"
+        },
+        "post_add_marker": {
+          "va": "0xee17e0",
+          "decomp": "/workspace/acnh-re/output/binary/analysis_decomp/ee17e0.c",
+          "calls": [
+            {
+              "pc": "0xee185c",
+              "target": "0xf29080"
+            }
+          ],
+          "semantic_mapping": "bounded bit marker observed; equivalence to EventFlow MadeItemID was not proved"
+        }
+      },
+      "claim": "One conditional native branch contains six per-slot calls that pass negative material quantities to an inventory mutator, followed by a general item-add route and a bounded post-craft bit marker."
+    }
+  },
+  "workbench_page_and_remake": {
+    "page_refs": {
+      "WorkCraftBgPage": "0x1596020",
+      "WorkCraftInfoPage": "0x1597b90",
+      "WorkCraftListPage": "0x159cbc0"
+    },
+    "workcraft_bg_page": {
+      "function_va": "0x1596020",
+      "decomp": "/workspace/acnh-re/output/binary/analysis_decomp/1596020.c",
+      "calls": [
+        {
+          "pc": "0x1596058",
+          "target": "0x19892c0"
+        },
+        {
+          "pc": "0x15960c4",
+          "target": "0x1967710"
+        },
+        {
+          "pc": "0x15960d4",
+          "target": "0x1595940"
+        },
+        {
+          "pc": "0x15960e0",
+          "target": "0x1da8210"
+        },
+        {
+          "pc": "0x15960ec",
+          "target": "0x1144600"
+        },
+        {
+          "pc": "0x15960f8",
+          "target": "0x1da8220"
+        },
+        {
+          "pc": "0x1596114",
+          "target": "0x19892c0"
+        },
+        {
+          "pc": "0x1596138",
+          "target": "0x220e3e0"
+        },
+        {
+          "pc": "0x1596168",
+          "target": "0x220e3f0"
+        }
+      ],
+      "claim": "This is a page-initialization path: it creates/configures the page and manager state. It does not establish transaction effects."
+    },
+    "remake_item": {
+      "tutorial_item_unique_id": 3436,
+      "item_name_jp": "もくせいクロゼット",
+      "remake_id": 168,
+      "kit_item_unique_id": 2513,
+      "kit_item_name_jp": "リメイクキット",
+      "kit_item_kind": "CraftRemake",
+      "table_cost": 2,
+      "remake_record_unique_id": 168
+    },
+    "events": [
+      {
+        "flow": "Ftr_Working",
+        "index": 37,
+        "actor": "EventFlowSystemActor",
+        "kind": "actions",
+        "name": "EventFlowActionUIItemSelectWindowHandling",
+        "params": {
+          "FilterType": "cWorkBenchRemake",
+          "ItemUniqueID": 65534,
+          "ItemKindType": "",
+          "ItemFilterType": "",
+          "Mode": "cItemSelectRemake"
+        }
+      },
+      {
+        "flow": "Ftr_Working",
+        "index": 11,
+        "actor": "EventFlowSystemActor",
+        "kind": "actions",
+        "name": "EventFlowActionUIWorkingHandling",
+        "params": {
+          "DisplayType": "cRemakeSelect"
+        }
+      },
+      {
+        "flow": "Ftr_Working",
+        "index": 182,
+        "actor": "EventFlowSystemActor",
+        "kind": "actions",
+        "name": "EventFlowActionSaveSetFromUIResult",
+        "params": {
+          "SaveType": "cWorkRemake"
+        }
+      },
+      {
+        "flow": "Ftr_Working",
+        "index": 184,
+        "actor": "Player",
+        "kind": "actions",
+        "name": "EventFlowActionPlayerWorkbenchMaking",
+        "params": {
+          "IsRemake": true
+        }
+      },
+      {
+        "flow": "Ftr_Working",
+        "index": 185,
+        "actor": "Player",
+        "kind": "actions",
+        "name": "EventFlowActionPlayerWorkbenchGetDemo",
+        "params": {
+          "IsSkipGetDemoCameraPop": false,
+          "IsSkipFanfareSE": false,
+          "IsRemake": true
+        }
+      },
+      {
+        "flow": "Ftr_Working",
+        "index": 94,
+        "actor": "EventFlowSystemActor",
+        "kind": "queries",
+        "name": "EventFlowQueryHasTargetItem",
+        "params": {
+          "NeedNum": 1,
+          "ItemUniqueId": 3436
+        }
+      },
+      {
+        "flow": "Ftr_Working",
+        "index": 98,
+        "actor": "EventFlowSystemActor",
+        "kind": "actions",
+        "name": "EventFlowActionSetItemToPocket",
+        "params": {
+          "ItemUniqueId": 2513,
+          "SetNum": 50
+        }
+      },
+      {
+        "flow": "Ftr_Working",
+        "index": 100,
+        "actor": "EventFlowSystemActor",
+        "kind": "actions",
+        "name": "EventFlowActionUIWorkingHandling",
+        "params": {
+          "DisplayType": "cRemakeSelectTutorial"
+        }
+      },
+      {
+        "flow": "Ftr_Working",
+        "index": 104,
+        "actor": "EventFlowSystemActor",
+        "kind": "actions",
+        "name": "EventFlowActionEventFlagSystemOn",
+        "params": {
+          "AccessKey": "cPlayer:EnableDiyRemake"
+        }
+      }
+    ],
+    "save_set_handler": {
+      "cWorkRemake_case": 10,
+      "helper_va": "0x335d10",
+      "calls": [
+        {
+          "pc": "0x335d34",
+          "target": "0x154a670"
+        },
+        {
+          "pc": "0x335d50",
+          "target": "0x455d00"
+        },
+        {
+          "pc": "0x335d6c",
+          "target": "0xf588a0"
+        },
+        {
+          "pc": "0x335d7c",
+          "target": "0xefbdf0"
+        },
+        {
+          "pc": "0x335d84",
+          "target": "0x154a370"
+        },
+        {
+          "pc": "0x335dc0",
+          "target": "0xefcfc0"
+        },
+        {
+          "pc": "0x335dd0",
+          "target": "0xefbad0"
+        },
+        {
+          "pc": "0x335de8",
+          "target": "0xda3fc0"
+        },
+        {
+          "pc": "0x335df0",
+          "target": "0xef6a10"
+        },
+        {
+          "pc": "0x335e04",
+          "target": "0xee9350"
+        },
+        {
+          "pc": "0x335e1c",
+          "target": "0xee9490"
+        },
+        {
+          "pc": "0x335e2c",
+          "target": "0xee94f0"
+        },
+        {
+          "pc": "0x335e3c",
+          "target": "0xfa2f90"
+        },
+        {
+          "pc": "0x335e48",
+          "target": "0xf589b0"
+        },
+        {
+          "pc": "0x335e54",
+          "target": "0x1580700"
+        },
+        {
+          "pc": "0x335e64",
+          "target": "0xa9c290"
+        },
+        {
+          "pc": "0x335e6c",
+          "target": "0xaacee0"
+        },
+        {
+          "pc": "0x335e7c",
+          "target": "0xda3fc0"
+        },
+        {
+          "pc": "0x335e88",
+          "target": "0xab0e20"
+        },
+        {
+          "pc": "0x335e98",
+          "target": "0xeefa70"
+        },
+        {
+          "pc": "0x335ea0",
+          "target": "0xb6250"
+        },
+        {
+          "pc": "0x335eac",
+          "target": "0xb60c0"
+        },
+        {
+          "pc": "0x335eb8",
+          "target": "0xab1310"
+        },
+        {
+          "pc": "0x335ec0",
+          "target": "0xb6250"
+        },
+        {
+          "pc": "0x335ecc",
+          "target": "0xf589b0"
+        },
+        {
+          "pc": "0x335ed8",
+          "target": "0xf589e0"
+        },
+        {
+          "pc": "0x335ee0",
+          "target": "0xb6250"
+        },
+        {
+          "pc": "0x335ef0",
+          "target": "0xf589e0"
+        },
+        {
+          "pc": "0x335ef8",
+          "target": "0xee93d0"
+        },
+        {
+          "pc": "0x335f14",
+          "target": "0xefb1f0"
+        },
+        {
+          "pc": "0x335f28",
+          "target": "0xda3fc0"
+        },
+        {
+          "pc": "0x335f34",
+          "target": "0xf58890"
+        },
+        {
+          "pc": "0x335f3c",
+          "target": "0xda4020"
+        },
+        {
+          "pc": "0x335f5c",
+          "target": "0xf589e0"
+        },
+        {
+          "pc": "0x335f64",
+          "target": "0x15767e0"
+        },
+        {
+          "pc": "0x335f90",
+          "target": "0xf62e90"
+        },
+        {
+          "pc": "0x335fa4",
+          "target": "0xf631d0"
+        },
+        {
+          "pc": "0x335fc0",
+          "target": "0xce9340"
+        },
+        {
+          "pc": "0x335fec",
+          "target": "0x1544a20"
+        },
+        {
+          "pc": "0x335ff8",
+          "target": "0x154a340"
+        },
+        {
+          "pc": "0x336024",
+          "target": "0xf589b0"
+        },
+        {
+          "pc": "0x33603c",
+          "target": "0x154a640"
+        }
+      ],
+      "dispatch_decomp": "/workspace/acnh-re/output/binary/analysis_decomp/334650.c",
+      "inventory_update_decomp": "/workspace/acnh-re/output/binary/analysis_decomp/f99b10.c",
+      "kit_quantity_argument_disassembly": {
+        "0x335d54": "ldr w21, [x19, #0x14]",
+        "0x335d64": "mov w1, #0x9d1",
+        "0x335d78": "mov w2, w21",
+        "0x335d7c": "bl #0xefbdf0",
+        "0xefbe04": "mov w19, w2",
+        "0xefbe08": "mov x20, x1",
+        "0xefbe0c": "mov x21, x0",
+        "0xefbe84": "mov x1, x20",
+        "0xefbe88": "mov w2, w19",
+        "0xefbe8c": "bl #0xf99b10"
+      },
+      "claim": "The tutorial grants 50 Remake Kits and selects Remake for item 3436. SaveSetFromUIResult builds item 2513 and passes a quantity loaded from context+0x14 through 0xefbdf0 to 0xf99b10, whose native code changes inventory quantity. The ItemRemake row says item 3436 costs two kits, but this row-to-context mapping was not run in the game."
+    }
+  },
+  "status_by_slice": {
+    "cold_cache_and_required_material_check": "PROVEN EXECUTED NATIVE on reconstructed fixture",
+    "tutorial_recipe_unlock_and_query": "PROVEN EVENTFLOW + NATIVE STATIC; save mutation not executed",
+    "pocket material gate in transaction helper": "PROVEN STATIC; not same execution as cold-cache helper",
+    "ingredient consumption and result add": "PROVEN NATIVE STATIC call chain; not executed end to end",
+    "workbench UI page": "PROVEN PAGE INITIALIZER; user interaction not executed",
+    "customization/remake": "PROVEN EVENTFLOW + TABLE COST + NATIVE KIT INVENTORY UPDATE; row-to-quantity mapping open",
+    "cancel_or_rollback": "OPEN; no rollback behavior established"
+  },
+  "open_limits": [
+    "The previous cache fixture is reconstructed; it is not a supplied player save.",
+    "No real save/player/UI runtime was available, so recipe learn state, pocket precheck, material subtraction, result item insertion, and remake were not executed end to end.",
+    "The native craft call order is visible in decompilation; atomicity and rollback on interruption/failure remain unproved.",
+    "The WorkCraftBgPage function is a page initializer, not proof that the page itself commits a transaction.",
+    "The remake handler passes a context-derived quantity for item 2513 into an inventory update, but the mapping from ItemRemake.RemakeKitNum=2 for item 3436 to that quantity was not executed in the game.",
+    "The post-craft bitmap helper accepts only keys below 0x800; its relation to EventFlow MadeItemID values such as 7211 was not established."
+  ]
+}

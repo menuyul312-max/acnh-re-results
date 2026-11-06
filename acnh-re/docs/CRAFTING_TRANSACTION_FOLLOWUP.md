@@ -30,3 +30,52 @@ python3 -m unittest -v acnh-re.tests.test_crafting_transaction_followup_native
 ```
 
 Runner memakai main ELF yang hash-nya `5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74`, NSO `inputs/additional_exefs/main` dengan hash `f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900`, RomFS tambahan, tabel bersama di `/workspace/acnh-re/output`, dan index read-only di `/workspace/acnh-re/output/index.sqlite`. Ringkasan seluruh state, call count, hash, stub, dan batas klaim ada di [crafting_transaction_followup_native.json](../output/gameplay/crafting_transaction_followup/crafting_transaction_followup_native.json).
+
+## Tahap 2: resep, transaksi, workbench, dan remake
+
+Tahap ini menelusuri handler native dan EventFlow secara statik. Label **[NATIVE STATIC]** berarti pseudocode decompiler dan call-site index cocok; fungsi transaksi belum dijalankan dengan konteks pemain nyata.
+
+### Belajar resep
+
+**[EVENTFLOW]** Dalam `Ftr_Working:RcoDIYtrialOngoing`, cabang tutorial memanggil `PlayerSetCraftRecipe` untuk `DIYtutorial1` (#22) dan kemudian `DIYtutorial2` (#30). `Ftr_Working:ChkCraftWoodBridge` dan `ChkCraftCampKit` memanggil query `PlayerHasCraftRecipe` untuk ID 7211 dan 5166, lalu menguji `PlayerIsMadeCraftRecipe` dan memanggil `PlayerResetCraftRecipe` pada grup WoodBridge/CampSite. Ini bukti pemakaian dan urutan EventFlow, belum bukti hasil pada save tertentu.
+
+**[NATIVE STATIC]** `PlayerSetCraftRecipe` terdaftar pada constructor `0x32dc50`, dengan behavior di `0x32dd30`. Handler mencocokkan `UnlockType` dengan enum 46 nama; indeks `DIYtutorial1/2` adalah 12/13. Jalur grup memanggil helper `0xede0f0` dan enumerator `0xedf590`, sedangkan item spesifik melewati `0xedef00`. Helper save `0xedf0e0` menulis bit terindeks ke struktur save pemain. Query `PlayerHasCraftRecipe` di `0x42ac80` menggunakan helper `0xee1ec0` dan `0xee1f80` untuk memeriksa state. Perilaku ini belum dijalankan terhadap save nyata, sehingga nilai kembalian query dan perubahan bit untuk ID tutorial masih open.
+
+### Cek bahan, konsumsi, dan hasil craft
+
+**[EVENTFLOW]** Jalur `Workbench_Cmn_DIYdemo` memilih `SaveSetFromUIResult SaveType=cWorkCraft` (#212), lalu `PlayerWorkbenchMaking IsRemake=false` (#208) dan `PlayerWorkbenchGetDemo IsRemake=false` (#217). Handler `SaveSetFromUIResult` memetakan `cWorkCraft` ke case 9 dan helper `0x3358c0`.
+
+**[NATIVE STATIC]** Helper `0x3358c0` menyiapkan hasil UI melalui `0xedf8e0` dan memanggil `0xee1420`. Fungsi transaksi memiliki enam call-site menuju `0xeff060`. Pada satu cabang kondisional, ia melewatkan kuantitas bahan bertanda negatif untuk enam slot; `0xeff060` meneruskan delta ke `0xf9e410`, yang mengurangi jumlah item yang cocok dan membatasi hasil negatif ke nol. Setelah pemrosesan bahan, jalur hasil memanggil `0xefab90` → `0xefac20` → `0xf987c0`, helper penambahan item umum. Jalur lain memanggil `0xee17e0` → `0xf29080`, yang menulis bit untuk key di bawah `0x800`; hubungan marker terbatas ini dengan `MadeItemID` seperti 7211 belum terbukti.
+
+**Belum dieksekusi end-to-end:** precheck inventori pada helper transaksi (`0xee0ed0`), perubahan kuantitas bahan di save pemain, penambahan hasil, dan urutan/rollback saat interupsi. Bukti ini berbeda dari cold-cache check tahap 1: `0xee0be0` menguji cache bahan yang direkonstruksi, sedangkan `0xee1420` memakai jalur transaksi pemain.
+
+### Workbench dan customization
+
+**[NATIVE STATIC]** String `WorkCraftBgPage` menunjuk ke initializer `0x1596020`, yang mengatur object halaman dan manager UI. Fungsi ini tidak membuktikan commit transaksi. `WorkCraftInfoPage` dan `WorkCraftListPage` mempunyai initializer terpisah di `0x1597b90` dan `0x159cbc0`.
+
+**[EVENTFLOW + TBL]** Jalur remake memilih item dengan filter `cWorkBenchRemake`, menjalankan `UIWorkingHandling cRemakeSelect`, lalu `SaveSetFromUIResult cWorkRemake` (#182), `PlayerWorkbenchMaking IsRemake=true` (#184), dan `PlayerWorkbenchGetDemo IsRemake=true` (#185). Dalam tutorial remake, event memberi 50 item 2513 sebelum memilih item 3436. Tabel `ItemParam` mengenali 2513 sebagai `CraftRemake` bernama リメイクキット dan 3436 sebagai もくせいクロゼット. Baris `ItemRemake.UniqueID=168` untuk item 3436 menetapkan `RemakeKitNum=2`.
+
+**[NATIVE STATIC]** `cWorkRemake` berada di case 10 `SaveSetFromUIResult`, menuju `0x335d10`. Disassembly menunjukkan handler membuat ID kit `0x9d1` (2513), memuat jumlah dari `context+0x14`, lalu meneruskan ID dan jumlah itu ke `0xefbdf0`. Helper tersebut meneruskan argumen jumlah ke `0xf99b10`, yang mengubah inventory. Jadi pengurangan kit 2513 pada jumlah yang diberikan terbukti statik. Baris `ItemRemake` menyatakan item 3436 memerlukan dua kit; hubungan biaya tabel itu dengan nilai `context+0x14` masih belum diuji dalam game.
+
+### Status dan batas
+
+| Bagian | Status | Batas klaim |
+| --- | --- | --- |
+| Cold-cache dan cukup bahan | **Proven, dieksekusi native** | Save member A/B/C adalah fixture rekonstruksi. |
+| Unlock/query resep | **Proven, EventFlow + native statik** | Mutasi dan query tidak dijalankan terhadap save nyata. |
+| Pengurangan bahan dan tambah hasil | **Proven, native statik** | Call path terlihat; transaksi tidak dijalankan end-to-end. |
+| WorkCraftBgPage | **Proven, initializer halaman** | Interaksi UI/commit tidak dijalankan. |
+| Remake tutorial dan pengurangan kit | **Proven, EventFlow + tabel + native statik** | ID kit dan jumlah konteks mencapai helper perubahan inventory; nilai 2 dari row tabel ke jumlah konteks belum diuji. |
+| Cancel/rollback | **Open** | Belum ditemukan atau dijalankan jalur rollback yang membuktikan perilaku saat gagal/interupsi. |
+
+Harness pemeriksa statik menyimpan call graph, enum, nilai tabel, provenance, dan status di [crafting_transaction_followup_static.json](../output/gameplay/crafting_transaction_followup/crafting_transaction_followup_static.json). Ia hanya membaca index, tabel, decompilation dan output tahap 1; tidak menyalin sumber besar.
+
+Reproduksi tahap 2 dari root worktree:
+
+```sh
+python3 acnh-re/tools/crafting_transaction_followup_static.py
+python3 -m unittest -v acnh-re.tests.test_crafting_transaction_followup_static
+python3 acnh-re/tools/gameplay_flow.py --output-root /workspace/acnh-re/output tree Ftr_Working --entry RcoDIYtrialOngoing
+python3 acnh-re/tools/gameplay_flow.py --output-root /workspace/acnh-re/output tree Ftr_Working --entry Workbench_Cmn_DIYdemo
+python3 acnh-re/tools/gameplay_flow.py --output-root /workspace/acnh-re/output tree Ftr_Working --entry RcoRemakeTrialOngoing
+```
