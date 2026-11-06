@@ -1,0 +1,303 @@
+{
+  "cases": 25,
+  "groups": {
+    "ordinary_delta": 8,
+    "boundary_loss": 5,
+    "level_thresholds": 12
+  },
+  "mismatches": [],
+  "native_functions": {
+    "conversation_side_effect_caller": "0xc84240",
+    "friendship_delta_wrapper": "0xd34cb0",
+    "delta_and_floor_calculation": "0xd34f80",
+    "save_field_writer": "0xef2c70",
+    "friendship_level_converter": "0xd34a20"
+  },
+  "save_binding": {
+    "key": "Friendship",
+    "key_va": "0x29a5d44",
+    "local_record_base_formula_in_0xef2c70": "save_base + resident_slot*0x10798 + player_slot*0xa8 + 0x39f8",
+    "network_record_base_formula_in_0xef2c70": "save_base + resident_slot*0x10798 + player_slot*0x700 + 0x1c0",
+    "field_selector": "0xef2c70 forwards the Friendship key to 0xf48840 on the selected record; this harness stops at 0xef2c70 entry."
+  },
+  "samples": [
+    {
+      "name": "zero_to_one",
+      "starting_points": 0,
+      "delta": 1,
+      "starting_level": 1,
+      "candidate_at_save_writer": 1,
+      "candidate_level": 1,
+      "save_writer_args": {
+        "resident_slot": 1,
+        "player_slot": 2,
+        "key": "Friendship",
+        "candidate_points": 1,
+        "network_mode": 0
+      }
+    },
+    {
+      "name": "cross_30",
+      "starting_points": 29,
+      "delta": 1,
+      "starting_level": 1,
+      "candidate_at_save_writer": 30,
+      "candidate_level": 2,
+      "save_writer_args": {
+        "resident_slot": 1,
+        "player_slot": 2,
+        "key": "Friendship",
+        "candidate_points": 30,
+        "network_mode": 0
+      }
+    },
+    {
+      "name": "cross_60",
+      "starting_points": 59,
+      "delta": 1,
+      "starting_level": 2,
+      "candidate_at_save_writer": 60,
+      "candidate_level": 3,
+      "save_writer_args": {
+        "resident_slot": 1,
+        "player_slot": 2,
+        "key": "Friendship",
+        "candidate_points": 60,
+        "network_mode": 0
+      }
+    },
+    {
+      "name": "cross_100",
+      "starting_points": 99,
+      "delta": 1,
+      "starting_level": 3,
+      "candidate_at_save_writer": 100,
+      "candidate_level": 4,
+      "save_writer_args": {
+        "resident_slot": 1,
+        "player_slot": 2,
+        "key": "Friendship",
+        "candidate_points": 100,
+        "network_mode": 0
+      }
+    },
+    {
+      "name": "cross_150",
+      "starting_points": 149,
+      "delta": 1,
+      "starting_level": 4,
+      "candidate_at_save_writer": 150,
+      "candidate_level": 5,
+      "save_writer_args": {
+        "resident_slot": 1,
+        "player_slot": 2,
+        "key": "Friendship",
+        "candidate_points": 150,
+        "network_mode": 0
+      }
+    },
+    {
+      "name": "cross_200",
+      "starting_points": 199,
+      "delta": 1,
+      "starting_level": 5,
+      "candidate_at_save_writer": 200,
+      "candidate_level": 6,
+      "save_writer_args": {
+        "resident_slot": 1,
+        "player_slot": 2,
+        "key": "Friendship",
+        "candidate_points": 200,
+        "network_mode": 0
+      }
+    },
+    {
+      "name": "within_band",
+      "starting_points": 100,
+      "delta": 3,
+      "starting_level": 4,
+      "candidate_at_save_writer": 103,
+      "candidate_level": 4,
+      "save_writer_args": {
+        "resident_slot": 1,
+        "player_slot": 2,
+        "key": "Friendship",
+        "candidate_points": 103,
+        "network_mode": 0
+      }
+    },
+    {
+      "name": "floor_at_30",
+      "starting_points": 30,
+      "delta": -1,
+      "starting_level": 2,
+      "candidate_at_save_writer": 30,
+      "candidate_level": 2,
+      "save_writer_args": {
+        "resident_slot": 1,
+        "player_slot": 2,
+        "key": "Friendship",
+        "candidate_points": 30,
+        "network_mode": 0
+      }
+    },
+    {
+      "name": "floor_at_60",
+      "starting_points": 60,
+      "delta": -1,
+      "starting_level": 3,
+      "candidate_at_save_writer": 60,
+      "candidate_level": 3,
+      "save_writer_args": {
+        "resident_slot": 1,
+        "player_slot": 2,
+        "key": "Friendship",
+        "candidate_points": 60,
+        "network_mode": 0
+      }
+    },
+    {
+      "name": "floor_at_100",
+      "starting_points": 100,
+      "delta": -1,
+      "starting_level": 4,
+      "candidate_at_save_writer": 100,
+      "candidate_level": 4,
+      "save_writer_args": {
+        "resident_slot": 1,
+        "player_slot": 2,
+        "key": "Friendship",
+        "candidate_points": 100,
+        "network_mode": 0
+      }
+    },
+    {
+      "name": "floor_at_150",
+      "starting_points": 150,
+      "delta": -1,
+      "starting_level": 5,
+      "candidate_at_save_writer": 150,
+      "candidate_level": 5,
+      "save_writer_args": {
+        "resident_slot": 1,
+        "player_slot": 2,
+        "key": "Friendship",
+        "candidate_points": 150,
+        "network_mode": 0
+      }
+    },
+    {
+      "name": "floor_at_200",
+      "starting_points": 200,
+      "delta": -1,
+      "starting_level": 6,
+      "candidate_at_save_writer": 200,
+      "candidate_level": 6,
+      "save_writer_args": {
+        "resident_slot": 1,
+        "player_slot": 2,
+        "key": "Friendship",
+        "candidate_points": 200,
+        "network_mode": 0
+      }
+    },
+    {
+      "name": "loss_inside_band",
+      "starting_points": 99,
+      "delta": -1,
+      "starting_level": 3,
+      "candidate_at_save_writer": 98,
+      "candidate_level": 3,
+      "save_writer_args": {
+        "resident_slot": 1,
+        "player_slot": 2,
+        "key": "Friendship",
+        "candidate_points": 98,
+        "network_mode": 0
+      }
+    }
+  ],
+  "level_threshold_samples": [
+    {
+      "points": 0,
+      "observed_level": 1
+    },
+    {
+      "points": 29,
+      "observed_level": 1
+    },
+    {
+      "points": 30,
+      "observed_level": 2
+    },
+    {
+      "points": 59,
+      "observed_level": 2
+    },
+    {
+      "points": 60,
+      "observed_level": 3
+    },
+    {
+      "points": 99,
+      "observed_level": 3
+    },
+    {
+      "points": 100,
+      "observed_level": 4
+    },
+    {
+      "points": 149,
+      "observed_level": 4
+    },
+    {
+      "points": 150,
+      "observed_level": 5
+    },
+    {
+      "points": 199,
+      "observed_level": 5
+    },
+    {
+      "points": 200,
+      "observed_level": 6
+    },
+    {
+      "points": 255,
+      "observed_level": 6
+    }
+  ],
+  "prepared_context": {
+    "resident_slot": 1,
+    "player_slot": 2,
+    "starting_friendship": "Synthetic u32 read from row+0x38 by a controlled getter stub.",
+    "network_mode": 0
+  },
+  "scope": "Original 0xd34f80 instructions execute through candidate calculation and branch to the original 0xef2c70 save-writer entry. The setter body is not entered.",
+  "dependencies_stubbed": [
+    {
+      "va": "0xef2320",
+      "purpose": "returns a synthetic resident save-row address"
+    },
+    {
+      "va": "0xee9350",
+      "purpose": "constructs a minimal member wrapper around the prepared synthetic row"
+    },
+    {
+      "va": "0xf486c0",
+      "purpose": "reads the controlled starting Friendship u32"
+    },
+    {
+      "va": "0xee93d0",
+      "purpose": "releases the synthetic wrapper without side effects"
+    }
+  ],
+  "limits": [
+    "Execution stops on entry to 0xef2c70, before its save mutation and field-selector call 0xf48840.",
+    "The starting points are controlled; no live villager/player save was loaded.",
+    "The tested negative deltas show 0xd34f80 floors a cross-level decrease at the starting level threshold. This does not identify a daily decay source or prove that negative deltas occur in normal gameplay.",
+    "The talk caller and ConversationHost/ConversationGuest state handlers are not executed by this test."
+  ],
+  "elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+  "nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900"
+}
