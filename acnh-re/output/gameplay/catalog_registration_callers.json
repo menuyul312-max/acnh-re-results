@@ -26,6 +26,26 @@
           "entry_count": 12,
           "status": "relocated code pointer sequence; not automatically a C++ vtable"
         }
+      ],
+      "event_handler_slot_bindings": [
+        {
+          "handler": "EventFlowSystemActor.EventFlowActionSetCatalogFlagPhotoStudioPreset",
+          "kind": "actions",
+          "factory_va": "0x4521b0",
+          "constructor_va": "0x2fb6e0",
+          "vtable_va": "0x3048268",
+          "slot_index": 11,
+          "vtable_evidence": "bounded_constructor_trace; exact outer_object_offset_zero_store",
+          "event_flow_uses": [
+            {
+              "flow": "SNPC_spn_03_Studio",
+              "event_index": 13,
+              "actor": "EventFlowSystemActor",
+              "kind": "actions",
+              "params": null
+            }
+          ]
+        }
       ]
     },
     {
@@ -48,6 +68,82 @@
           "entry_count": 12,
           "status": "relocated code pointer sequence; not automatically a C++ vtable"
         }
+      ],
+      "event_handler_slot_bindings": [
+        {
+          "handler": "EventFlowSystemActor.EventFlowActionSonkatsuBuyDone",
+          "kind": "actions",
+          "factory_va": "0x454530",
+          "constructor_va": "0x3419c0",
+          "vtable_va": "0x304cba8",
+          "slot_index": 11,
+          "vtable_evidence": "bounded_constructor_trace; exact outer_object_offset_zero_store",
+          "event_flow_uses": [
+            {
+              "flow": "Obj_RcoMachine_MileExchange",
+              "event_index": 15,
+              "actor": "EventFlowSystemActor",
+              "kind": "actions",
+              "params": {
+                "SetBaggage": false
+              }
+            },
+            {
+              "flow": "Obj_RcoMachine_MileExchange",
+              "event_index": 38,
+              "actor": "EventFlowSystemActor",
+              "kind": "actions",
+              "params": {
+                "SetBaggage": false
+              }
+            },
+            {
+              "flow": "Obj_RcoMachine_MileExchange",
+              "event_index": 39,
+              "actor": "EventFlowSystemActor",
+              "kind": "actions",
+              "params": {
+                "SetBaggage": true
+              }
+            },
+            {
+              "flow": "Obj_RcoMachine_MileExchange",
+              "event_index": 48,
+              "actor": "EventFlowSystemActor",
+              "kind": "actions",
+              "params": {
+                "SetBaggage": true
+              }
+            },
+            {
+              "flow": "Obj_RcoMachine_MileExchange",
+              "event_index": 53,
+              "actor": "EventFlowSystemActor",
+              "kind": "actions",
+              "params": {
+                "SetBaggage": false
+              }
+            },
+            {
+              "flow": "Obj_RcoMachine_MileExchange",
+              "event_index": 76,
+              "actor": "EventFlowSystemActor",
+              "kind": "actions",
+              "params": {
+                "SetBaggage": true
+              }
+            },
+            {
+              "flow": "Obj_RcoMachine_MileExchange",
+              "event_index": 111,
+              "actor": "EventFlowSystemActor",
+              "kind": "actions",
+              "params": {
+                "SetBaggage": false
+              }
+            }
+          ]
+        }
       ]
     },
     {
@@ -67,7 +163,8 @@
       "pseudocode": "binary/analysis_decomp/876db0.c",
       "string_refs": [],
       "direct_call_count": 2,
-      "code_pointer_array_memberships": []
+      "code_pointer_array_memberships": [],
+      "event_handler_slot_bindings": []
     },
     {
       "function_va": "0xdad9f0",
@@ -142,7 +239,8 @@
       "pseudocode": "binary/analysis_decomp/dad9f0.c",
       "string_refs": [],
       "direct_call_count": 16,
-      "code_pointer_array_memberships": []
+      "code_pointer_array_memberships": [],
+      "event_handler_slot_bindings": []
     },
     {
       "function_va": "0xdadfe0",
@@ -157,7 +255,8 @@
       "pseudocode": "binary/analysis_decomp/dadfe0.c",
       "string_refs": [],
       "direct_call_count": 1,
-      "code_pointer_array_memberships": []
+      "code_pointer_array_memberships": [],
+      "event_handler_slot_bindings": []
     },
     {
       "function_va": "0xdb0450",
@@ -172,7 +271,8 @@
       "pseudocode": "binary/analysis_decomp/db0450.c",
       "string_refs": [],
       "direct_call_count": 1,
-      "code_pointer_array_memberships": []
+      "code_pointer_array_memberships": [],
+      "event_handler_slot_bindings": []
     },
     {
       "function_va": "0xdb07c0",
@@ -191,7 +291,8 @@
         "MainmenuEncyclopedia"
       ],
       "direct_call_count": 1,
-      "code_pointer_array_memberships": []
+      "code_pointer_array_memberships": [],
+      "event_handler_slot_bindings": []
     },
     {
       "function_va": "0xea7f60",
@@ -230,7 +331,8 @@
       "pseudocode": "binary/analysis_decomp/ea7f60.c",
       "string_refs": [],
       "direct_call_count": 7,
-      "code_pointer_array_memberships": []
+      "code_pointer_array_memberships": [],
+      "event_handler_slot_bindings": []
     },
     {
       "function_va": "0xeebb00",
@@ -317,7 +419,8 @@
       "pseudocode": "binary/analysis_decomp/eebb00.c",
       "string_refs": [],
       "direct_call_count": 19,
-      "code_pointer_array_memberships": []
+      "code_pointer_array_memberships": [],
+      "event_handler_slot_bindings": []
     },
     {
       "function_va": "0xefb1f0",
@@ -332,7 +435,8 @@
       "pseudocode": "binary/analysis_decomp/efb1f0.c",
       "string_refs": [],
       "direct_call_count": 1,
-      "code_pointer_array_memberships": []
+      "code_pointer_array_memberships": [],
+      "event_handler_slot_bindings": []
     },
     {
       "function_va": "0xefdda0",
@@ -347,7 +451,8 @@
       "pseudocode": "binary/analysis_decomp/efdda0.c",
       "string_refs": [],
       "direct_call_count": 1,
-      "code_pointer_array_memberships": []
+      "code_pointer_array_memberships": [],
+      "event_handler_slot_bindings": []
     },
     {
       "function_va": "0xefe070",
@@ -362,7 +467,8 @@
       "pseudocode": "binary/analysis_decomp/efe070.c",
       "string_refs": [],
       "direct_call_count": 1,
-      "code_pointer_array_memberships": []
+      "code_pointer_array_memberships": [],
+      "event_handler_slot_bindings": []
     },
     {
       "function_va": "0xefe260",
@@ -377,7 +483,8 @@
       "pseudocode": "binary/analysis_decomp/efe260.c",
       "string_refs": [],
       "direct_call_count": 1,
-      "code_pointer_array_memberships": []
+      "code_pointer_array_memberships": [],
+      "event_handler_slot_bindings": []
     },
     {
       "function_va": "0xefe4d0",
@@ -392,7 +499,8 @@
       "pseudocode": "binary/analysis_decomp/efe4d0.c",
       "string_refs": [],
       "direct_call_count": 1,
-      "code_pointer_array_memberships": []
+      "code_pointer_array_memberships": [],
+      "event_handler_slot_bindings": []
     },
     {
       "function_va": "0xefe760",
@@ -407,7 +515,8 @@
       "pseudocode": "binary/analysis_decomp/efe760.c",
       "string_refs": [],
       "direct_call_count": 1,
-      "code_pointer_array_memberships": []
+      "code_pointer_array_memberships": [],
+      "event_handler_slot_bindings": []
     },
     {
       "function_va": "0xefec70",
@@ -422,7 +531,8 @@
       "pseudocode": "binary/analysis_decomp/efec70.c",
       "string_refs": [],
       "direct_call_count": 1,
-      "code_pointer_array_memberships": []
+      "code_pointer_array_memberships": [],
+      "event_handler_slot_bindings": []
     },
     {
       "function_va": "0xefee80",
@@ -437,7 +547,8 @@
       "pseudocode": "binary/analysis_decomp/efee80.c",
       "string_refs": [],
       "direct_call_count": 1,
-      "code_pointer_array_memberships": []
+      "code_pointer_array_memberships": [],
+      "event_handler_slot_bindings": []
     }
   ],
   "code_pointer_array_audit": {
@@ -445,6 +556,12 @@
     "source": "/workspace/acnh-re/output/binary/code_pointer_arrays.json",
     "matched_caller_functions": 2,
     "interpretation_limit": "Membership proves only that a function address occurs in a relocated code-pointer sequence. The inventory does not classify the sequence as a C++ vtable or identify its runtime caller."
+  },
+  "event_handler_slot_audit": {
+    "available": true,
+    "source": "/workspace/acnh-re/output/binary/event_handlers_resolved.json",
+    "matched_caller_functions": 2,
+    "interpretation_limit": "A resolved constructor/vtable slot identifies the registered EventFlow handler and indexed EventFlow uses. It does not establish which runtime branch was taken in a particular playthrough."
   },
   "registration_wrapper_trace": {
     "wrapper_va": "0xefe070",

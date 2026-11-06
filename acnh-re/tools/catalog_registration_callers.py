@@ -10,6 +10,7 @@ ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_INDEX = Path("/workspace/acnh-re/output/index.sqlite")
 DEFAULT_TABLE_ROOT = Path("/workspace/acnh-re/output")
 DEFAULT_POINTER_ARRAYS = Path("/workspace/acnh-re/output/binary/code_pointer_arrays.json")
+DEFAULT_EVENT_HANDLERS = Path("/workspace/acnh-re/output/binary/event_handlers_resolved.json")
 DEFAULT_OUTPUT = ROOT / "output/gameplay/catalog_registration_callers.json"
 TARGET = 0xEEBE80
 REGISTRATION_WRAPPER = 0xEFE070
@@ -139,11 +140,71 @@ def pointer_array_matches(pointer_arrays_path, callers):
     }
 
 
+def event_handler_slot_matches(event_handlers_path, callers, conn):
+    """Join caller addresses to resolved EventFlow handler slots and indexed uses."""
+    if not event_handlers_path.exists():
+        return {
+            "available": False,
+            "source": str(event_handlers_path),
+            "matched_caller_functions": 0,
+            "interpretation_limit": "Resolved EventFlow handler inventory is absent.",
+        }
+
+    event_handlers = json.loads(event_handlers_path.read_text())
+    matches = set()
+    for caller in callers:
+        function_va = int(caller["function_va"], 16)
+        bindings = []
+        for handler_name, handler in event_handlers.get("entries", {}).items():
+            for slot_index, slot_va in enumerate(handler.get("slots") or []):
+                if int(slot_va, 16) != function_va:
+                    continue
+                short_name = handler_name.rsplit(".", 1)[-1]
+                uses = conn.execute(
+                    """SELECT flow, event_index, actor, kind, params_json
+                       FROM event_calls WHERE name=? ORDER BY flow, event_index""",
+                    (short_name,),
+                ).fetchall()
+                bindings.append({
+                    "handler": handler_name,
+                    "kind": handler.get("kind"),
+                    "factory_va": handler.get("factory"),
+                    "constructor_va": handler.get("constructor"),
+                    "vtable_va": handler.get("vtable"),
+                    "slot_index": slot_index,
+                    "vtable_evidence": handler.get("vtable_evidence"),
+                    "event_flow_uses": [
+                        {
+                            "flow": flow,
+                            "event_index": event_index,
+                            "actor": actor,
+                            "kind": kind,
+                            "params": json.loads(params_json) if params_json else {},
+                        }
+                        for flow, event_index, actor, kind, params_json in uses
+                    ],
+                })
+        caller["event_handler_slot_bindings"] = bindings
+        if bindings:
+            matches.add(function_va)
+
+    return {
+        "available": True,
+        "source": str(event_handlers_path),
+        "matched_caller_functions": len(matches),
+        "interpretation_limit": (
+            "A resolved constructor/vtable slot identifies the registered EventFlow handler and indexed "
+            "EventFlow uses. It does not establish which runtime branch was taken in a particular playthrough."
+        ),
+    }
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--index-db", type=Path, default=DEFAULT_INDEX)
     parser.add_argument("--table-root", type=Path, default=DEFAULT_TABLE_ROOT)
     parser.add_argument("--pointer-arrays", type=Path, default=DEFAULT_POINTER_ARRAYS)
+    parser.add_argument("--event-handlers", type=Path, default=DEFAULT_EVENT_HANDLERS)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     args = parser.parse_args()
 
@@ -154,6 +215,7 @@ def main():
         raise SystemExit(f"no direct-call records for {TARGET:#x} in {args.index_db}")
     wrapper_calls, wrapper_callers, wrapper_unresolved = caller_groups(conn, REGISTRATION_WRAPPER)
     pointer_array_audit = pointer_array_matches(args.pointer_arrays, callers.values())
+    event_handler_audit = event_handler_slot_matches(args.event_handlers, callers.values(), conn)
 
     result = {
         "schema": "acnh-re/catalog-registration-callers/1",
@@ -164,6 +226,7 @@ def main():
         "unresolved_call_sites": unresolved,
         "callers": sorted(callers.values(), key=lambda item: int(item["function_va"], 16)),
         "code_pointer_array_audit": pointer_array_audit,
+        "event_handler_slot_audit": event_handler_audit,
         "registration_wrapper_trace": {
             "wrapper_va": hex(REGISTRATION_WRAPPER),
             "pseudocode": "binary/analysis_decomp/efe070.c",
