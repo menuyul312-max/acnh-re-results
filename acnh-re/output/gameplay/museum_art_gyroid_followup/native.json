@@ -1,0 +1,879 @@
+{
+  "schema": "acnh-re/museum-art-gyroid-followup/1",
+  "native_image_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+  "itemparam_native_adapter": {
+    "itemparam_raw_sha256": "89230e97fc877ff2b2b48ac1c707ef32b3a7760118839c307f19797e2553458c",
+    "itemkind_raw_sha256": "4cac0178cc69519585528b24ceef022ccb1fefa12b23fc9a9e4280e40185ba7b",
+    "source_rows_checked": 8208,
+    "unique_id_lookups_checked": 8208,
+    "mismatches": 0,
+    "native_path": [
+      "0xa9c290",
+      "0x1665ea0",
+      "0xa9f670"
+    ],
+    "contract": "A9C290 resolves the item’s first u16 UniqueID through the ItemParam base/count/row map; 1665EA0 derives its raw-BCSV row index; A9F670 reads the ItemKind enum column.",
+    "controlled": [
+      "the native ItemParam manager, row-pointer map, and enum column vector are reconstructed from the exact local BCSV blobs",
+      "0xf58d00 item-record-validity return",
+      "0xf589b0 temporary item-view initialization",
+      "0xa9c3a0 item-view equivalence/fallback result"
+    ]
+  },
+  "donation_count_native": {
+    "query_va": "0x416260",
+    "counter_va": "0xf773f0",
+    "kind_globals": {
+      "0x35ec944": 70,
+      "0x35ec948": 65,
+      "0x35ec94c": 64
+    },
+    "counted_item_kinds": {
+      "Fossil": 70,
+      "Fish": 65,
+      "Insect": 64
+    },
+    "save_slots": 1024,
+    "marker_bytes_in_counted_slots": "0xff (marker is not read by F773F0; its record and ItemKind still contribute)",
+    "native_cases": 12,
+    "mismatches": 0,
+    "cases": [
+      {
+        "scenario": "below_20",
+        "supported_record_count": 19,
+        "border": 5,
+        "native_returns_count_below_border": 0,
+        "expected": 0
+      },
+      {
+        "scenario": "below_20",
+        "supported_record_count": 19,
+        "border": 19,
+        "native_returns_count_below_border": 0,
+        "expected": 0
+      },
+      {
+        "scenario": "below_20",
+        "supported_record_count": 19,
+        "border": 20,
+        "native_returns_count_below_border": 1,
+        "expected": 1
+      },
+      {
+        "scenario": "at_20",
+        "supported_record_count": 20,
+        "border": 5,
+        "native_returns_count_below_border": 0,
+        "expected": 0
+      },
+      {
+        "scenario": "at_20",
+        "supported_record_count": 20,
+        "border": 19,
+        "native_returns_count_below_border": 0,
+        "expected": 0
+      },
+      {
+        "scenario": "at_20",
+        "supported_record_count": 20,
+        "border": 20,
+        "native_returns_count_below_border": 0,
+        "expected": 0
+      },
+      {
+        "scenario": "above_20",
+        "supported_record_count": 21,
+        "border": 5,
+        "native_returns_count_below_border": 0,
+        "expected": 0
+      },
+      {
+        "scenario": "above_20",
+        "supported_record_count": 21,
+        "border": 19,
+        "native_returns_count_below_border": 0,
+        "expected": 0
+      },
+      {
+        "scenario": "above_20",
+        "supported_record_count": 21,
+        "border": 20,
+        "native_returns_count_below_border": 0,
+        "expected": 0
+      },
+      {
+        "scenario": "non_donation_kinds_excluded",
+        "supported_record_count": 19,
+        "border": 5,
+        "native_returns_count_below_border": 0,
+        "expected": 0
+      },
+      {
+        "scenario": "non_donation_kinds_excluded",
+        "supported_record_count": 19,
+        "border": 19,
+        "native_returns_count_below_border": 0,
+        "expected": 0
+      },
+      {
+        "scenario": "non_donation_kinds_excluded",
+        "supported_record_count": 19,
+        "border": 20,
+        "native_returns_count_below_border": 1,
+        "expected": 1
+      }
+    ],
+    "controlled": [
+      "SaveLand.Museum view acquisition at EECF00/EE9350/EE93D0",
+      "F58D00 item-record-validity return; all 1024 synthetic item records are valid"
+    ]
+  },
+  "owl_donation_item_type_static_native_map": {
+    "handler_method_va": "0x3d8d10",
+    "enum_result_table_va": "0x29f1e68",
+    "enum_result_table_u32": [
+      4,
+      0,
+      0,
+      0,
+      0,
+      3,
+      2
+    ],
+    "item_kind_to_eventflow_result": {
+      "64": 0,
+      "65": 4,
+      "66": 0,
+      "67": 0,
+      "68": 0,
+      "69": 0,
+      "70": 3,
+      "71": 2
+    },
+    "item_kind_labels": {
+      "64": "Insect",
+      "65": "Fish",
+      "66": "ShellDrift",
+      "67": "ShellFish",
+      "68": "FishToy",
+      "69": "InsectToy",
+      "70": "Fossil",
+      "71": "FossilUnknown"
+    },
+    "execution_scope": "Static original instructions and rodata table; no EventFlow callback/context is emulated."
+  },
+  "marker_trace_static": {
+    "action_method_va": "0x2c2410",
+    "writer_wrapper_va": "0xf780e0",
+    "writer_va": "0xf78130",
+    "query_wrapper_va": "0xef62f0",
+    "query_body_va": "0xeaa8c0",
+    "stored_marker_offset": "+0x3004 + slot",
+    "input_selector_source": "OwlDonationDone passes its event context +0x2a8 to F780E0; DA3FC0 uses its first byte, replacing values >7 with 0xff.",
+    "query_behavior": "EF62F0 queries mode 2. EAA8C0 returns 0xffffffff if the current state token mismatches or the selected state view is absent/errored; otherwise it returns the byte at that view +0xb0d. F780E0 forwards the returned low byte into F78130.",
+    "known_duplicate_gate_effect": "F77F60 treats marker 0xff as a non-duplicate exemption; F773F0 does not read marker bytes when counting accepted records.",
+    "remaining_meaning": "The successful state object's +0xb0d field and its runtime producer have no semantic label in the captured data; 0xff can also be a returned field value."
+  },
+  "static_findings": {
+    "captured_eventflows_scanned": 456,
+    "owl_donation_flows": [
+      {
+        "source": "B_data/EventFlow/NNPC_Select_Creature.bfevfl",
+        "flowchart": "NNPC_Select_Creature",
+        "queries": [],
+        "item_filter_names": []
+      },
+      {
+        "source": "B_data/EventFlow/NNPC_Select_Furniture.bfevfl",
+        "flowchart": "NNPC_Select_Furniture",
+        "queries": [],
+        "item_filter_names": []
+      },
+      {
+        "source": "B_data/EventFlow/SNPC_owl_01_Museum_Donation.bfevfl",
+        "flowchart": "SNPC_owl_01_Museum_Donation",
+        "queries": [
+          "EventFlowQueryOwlDonationFakeRate",
+          "EventFlowQueryOwlDonationFossilComplete",
+          "EventFlowQueryOwlDonationFossilIsParts",
+          "EventFlowQueryOwlDonationItemType",
+          "EventFlowQueryOwlDonationSameItem"
+        ],
+        "item_filter_names": [
+          "OwlDonation",
+          "OwlTentDonation0",
+          "OwlTentDonation1"
+        ]
+      },
+      {
+        "source": "B_data/EventFlow/SNPC_owl_02_Museum_Judgment.bfevfl",
+        "flowchart": "SNPC_owl_02_Museum_Judgment",
+        "queries": [],
+        "item_filter_names": [
+          "OwlFossilJudgement"
+        ]
+      },
+      {
+        "source": "B_data/EventFlow/SNPC_owl_03_Museum_Commentary.bfevfl",
+        "flowchart": "SNPC_owl_03_Museum_Commentary",
+        "queries": [
+          "EventFlowQueryOwlDonationItemType"
+        ],
+        "item_filter_names": [
+          "OwlCommentary"
+        ]
+      },
+      {
+        "source": "B_data/EventFlow/SNPC_rco_01_Tent_1_Entries.bfevfl",
+        "flowchart": "SNPC_rco_01_Tent_1_Entries",
+        "queries": [],
+        "item_filter_names": [
+          "RcoDonationForMuseum"
+        ]
+      }
+    ],
+    "owl_fake_rate": {
+      "declarations": [
+        {
+          "source": "B_data/EventFlow/SNPC_owl_01_Museum_Donation.bfevfl",
+          "flowchart": "SNPC_owl_01_Museum_Donation",
+          "declaration_count": 1,
+          "event_uses": 0
+        }
+      ],
+      "registered_native_handler": false
+    },
+    "owl_donation_done": {
+      "events": [
+        {
+          "source": "B_data/EventFlow/SNPC_owl_01_Museum_Donation.bfevfl",
+          "flowchart": "SNPC_owl_01_Museum_Donation",
+          "name": "Event36",
+          "type": "action",
+          "params": {
+            "EntryVariableKeyBool_MultiComplete": "MultiComplete",
+            "EntryVariableKeyInt_CompleteRoomType": "CompleteRoomType"
+          },
+          "next": 43,
+          "action": "EventFlowActionOwlDonationDone"
+        },
+        {
+          "source": "B_data/EventFlow/SNPC_owl_01_Museum_Donation.bfevfl",
+          "flowchart": "SNPC_owl_01_Museum_Donation",
+          "name": "Event63",
+          "type": "action",
+          "params": {
+            "EntryVariableKeyBool_MultiComplete": "MultiComplete",
+            "EntryVariableKeyInt_CompleteRoomType": "CompleteRoomType"
+          },
+          "next": 81,
+          "action": "EventFlowActionOwlDonationDone"
+        },
+        {
+          "source": "B_data/EventFlow/SNPC_rco_01_Tent_1_Entries.bfevfl",
+          "flowchart": "SNPC_rco_01_Tent_1_Entries",
+          "name": "Event74",
+          "type": "action",
+          "params": {
+            "EntryVariableKeyBool_MultiComplete": "MultiComplete",
+            "EntryVariableKeyInt_CompleteRoomType": "CompleteRoomType"
+          },
+          "next": 85,
+          "action": "EventFlowActionOwlDonationDone"
+        }
+      ],
+      "native_handler_slots": [
+        "0x2c2760",
+        "0x2c2800",
+        "0x2c23d0",
+        "0x19679b0",
+        "0x2c2400",
+        "0x238fd0",
+        "0x23c0c0",
+        "0x238ff0",
+        "0x23c0d0",
+        "0x23c0e0",
+        "0x23c0f0",
+        "0x2c2410"
+      ]
+    },
+    "museum_donation_threshold_events": [
+      {
+        "source": "B_data/EventFlow/SNPC_owl_00_Common.bfevfl",
+        "flowchart": "SNPC_owl_00_Common",
+        "name": "Event26",
+        "type": "switch",
+        "params": {
+          "Border": 20
+        },
+        "cases": [
+          {
+            "value": 0,
+            "event": 34
+          },
+          {
+            "value": 1,
+            "event": 38
+          }
+        ],
+        "query": "EventFlowQueryMuseumDonationNumCheck"
+      },
+      {
+        "source": "B_data/EventFlow/SNPC_owl_00_Common.bfevfl",
+        "flowchart": "SNPC_owl_00_Common",
+        "name": "Event35",
+        "type": "switch",
+        "params": {
+          "Border": 20
+        },
+        "cases": [
+          {
+            "value": 0,
+            "event": 47
+          },
+          {
+            "value": 1,
+            "event": 44
+          }
+        ],
+        "query": "EventFlowQueryMuseumDonationNumCheck"
+      },
+      {
+        "source": "B_data/EventFlow/SNPC_owl_02_Museum_Judgment.bfevfl",
+        "flowchart": "SNPC_owl_02_Museum_Judgment",
+        "name": "Event192",
+        "type": "switch",
+        "params": {
+          "Border": 19
+        },
+        "cases": [
+          {
+            "value": 0,
+            "event": 29
+          },
+          {
+            "value": 1,
+            "event": 30
+          }
+        ],
+        "query": "EventFlowQueryMuseumDonationNumCheck"
+      },
+      {
+        "source": "B_data/EventFlow/SNPC_owl_02_Museum_Judgment.bfevfl",
+        "flowchart": "SNPC_owl_02_Museum_Judgment",
+        "name": "Event40",
+        "type": "switch",
+        "params": {
+          "Border": 20
+        },
+        "cases": [
+          {
+            "value": 0,
+            "event": 40
+          },
+          {
+            "value": 1,
+            "event": 28
+          }
+        ],
+        "query": "EventFlowQueryMuseumDonationNumCheck"
+      },
+      {
+        "source": "B_data/EventFlow/SNPC_owl_02_Museum_Judgment.bfevfl",
+        "flowchart": "SNPC_owl_02_Museum_Judgment",
+        "name": "Event50",
+        "type": "switch",
+        "params": {
+          "Border": 20
+        },
+        "cases": [
+          {
+            "value": 0,
+            "event": 43
+          },
+          {
+            "value": 1,
+            "event": 44
+          }
+        ],
+        "query": "EventFlowQueryMuseumDonationNumCheck"
+      },
+      {
+        "source": "B_data/EventFlow/SNPC_owl_10_Tent.bfevfl",
+        "flowchart": "SNPC_owl_10_Tent",
+        "name": "Event32",
+        "type": "switch",
+        "params": {
+          "Border": 20
+        },
+        "cases": [
+          {
+            "value": 0,
+            "event": 48
+          },
+          {
+            "value": 1,
+            "event": 0
+          }
+        ],
+        "query": "EventFlowQueryMuseumDonationNumCheck"
+      },
+      {
+        "source": "B_data/EventFlow/SNPC_owl_10_Tent.bfevfl",
+        "flowchart": "SNPC_owl_10_Tent",
+        "name": "Event65",
+        "type": "switch",
+        "params": {
+          "Border": 20
+        },
+        "cases": [
+          {
+            "value": 0,
+            "event": 46
+          },
+          {
+            "value": 1,
+            "event": 26
+          }
+        ],
+        "query": "EventFlowQueryMuseumDonationNumCheck"
+      },
+      {
+        "source": "B_data/EventFlow/SNPC_owl_10_Tent.bfevfl",
+        "flowchart": "SNPC_owl_10_Tent",
+        "name": "Event73",
+        "type": "switch",
+        "params": {
+          "Border": 20
+        },
+        "cases": [
+          {
+            "value": 0,
+            "event": 39
+          },
+          {
+            "value": 1,
+            "event": 41
+          }
+        ],
+        "query": "EventFlowQueryMuseumDonationNumCheck"
+      },
+      {
+        "source": "B_data/EventFlow/SNPC_owl_11_Tent_Entries.bfevfl",
+        "flowchart": "SNPC_owl_11_Tent_Entries",
+        "name": "Event0",
+        "type": "switch",
+        "params": {
+          "Border": 20
+        },
+        "cases": [
+          {
+            "value": 0,
+            "event": 35
+          },
+          {
+            "value": 1,
+            "event": 22
+          }
+        ],
+        "query": "EventFlowQueryMuseumDonationNumCheck"
+      },
+      {
+        "source": "B_data/EventFlow/SNPC_owl_11_Tent_Entries.bfevfl",
+        "flowchart": "SNPC_owl_11_Tent_Entries",
+        "name": "Event9",
+        "type": "switch",
+        "params": {
+          "Border": 19
+        },
+        "cases": [
+          {
+            "value": 0,
+            "event": 13
+          },
+          {
+            "value": 1,
+            "event": 12
+          }
+        ],
+        "query": "EventFlowQueryMuseumDonationNumCheck"
+      },
+      {
+        "source": "B_data/EventFlow/SNPC_owl_11_Tent_Entries.bfevfl",
+        "flowchart": "SNPC_owl_11_Tent_Entries",
+        "name": "Event15",
+        "type": "switch",
+        "params": {
+          "Border": 20
+        },
+        "cases": [
+          {
+            "value": 0,
+            "event": 18
+          },
+          {
+            "value": 1,
+            "event": 5
+          }
+        ],
+        "query": "EventFlowQueryMuseumDonationNumCheck"
+      },
+      {
+        "source": "B_data/EventFlow/SNPC_rco_00_Common.bfevfl",
+        "flowchart": "SNPC_rco_00_Common",
+        "name": "Event93",
+        "type": "switch",
+        "params": {
+          "Border": 5
+        },
+        "cases": [
+          {
+            "value": 0,
+            "event": 7
+          },
+          {
+            "value": 1,
+            "event": 3
+          }
+        ],
+        "query": "EventFlowQueryMuseumDonationNumCheck"
+      },
+      {
+        "source": "B_data/EventFlow/SNPC_rco_00_Common.bfevfl",
+        "flowchart": "SNPC_rco_00_Common",
+        "name": "Event165",
+        "type": "switch",
+        "params": {
+          "Border": 5
+        },
+        "cases": [
+          {
+            "value": 0,
+            "event": 16
+          },
+          {
+            "value": 1,
+            "event": 17
+          }
+        ],
+        "query": "EventFlowQueryMuseumDonationNumCheck"
+      },
+      {
+        "source": "B_data/EventFlow/SNPC_rco_01_Tent_1_Entries.bfevfl",
+        "flowchart": "SNPC_rco_01_Tent_1_Entries",
+        "name": "Event112",
+        "type": "switch",
+        "params": {
+          "Border": 5
+        },
+        "cases": [
+          {
+            "value": 0,
+            "event": 86
+          },
+          {
+            "value": 1,
+            "event": 34
+          }
+        ],
+        "query": "EventFlowQueryMuseumDonationNumCheck"
+      },
+      {
+        "source": "B_data/EventFlow/SNPC_rco_10_Common_WhatShouldIDo.bfevfl",
+        "flowchart": "SNPC_rco_10_Common_WhatShouldIDo",
+        "name": "Event1",
+        "type": "switch",
+        "params": {
+          "Border": 5
+        },
+        "cases": [
+          {
+            "value": 0,
+            "event": 67
+          },
+          {
+            "value": 1,
+            "event": 70
+          }
+        ],
+        "query": "EventFlowQueryMuseumDonationNumCheck"
+      },
+      {
+        "source": "B_data/EventFlow/SNPC_rco_51_DonationReward.bfevfl",
+        "flowchart": "SNPC_rco_51_DonationReward",
+        "name": "Event6",
+        "type": "switch",
+        "params": {
+          "Border": 5
+        },
+        "cases": [
+          {
+            "value": 0,
+            "event": 9
+          },
+          {
+            "value": 1,
+            "event": 1
+          }
+        ],
+        "query": "EventFlowQueryMuseumDonationNumCheck"
+      },
+      {
+        "source": "B_data/EventFlow/SNPC_rco_51_DonationReward.bfevfl",
+        "flowchart": "SNPC_rco_51_DonationReward",
+        "name": "Event7",
+        "type": "switch",
+        "params": {
+          "Border": 4
+        },
+        "cases": [
+          {
+            "value": 0,
+            "event": 8
+          },
+          {
+            "value": 1,
+            "event": 2
+          }
+        ],
+        "query": "EventFlowQueryMuseumDonationNumCheck"
+      },
+      {
+        "source": "B_data/EventFlow/SNPC_rco_51_DonationReward.bfevfl",
+        "flowchart": "SNPC_rco_51_DonationReward",
+        "name": "Event8",
+        "type": "switch",
+        "params": {
+          "Border": 3
+        },
+        "cases": [
+          {
+            "value": 0,
+            "event": 7
+          },
+          {
+            "value": 1,
+            "event": 3
+          }
+        ],
+        "query": "EventFlowQueryMuseumDonationNumCheck"
+      },
+      {
+        "source": "B_data/EventFlow/SNPC_rco_51_DonationReward.bfevfl",
+        "flowchart": "SNPC_rco_51_DonationReward",
+        "name": "Event9",
+        "type": "switch",
+        "params": {
+          "Border": 2
+        },
+        "cases": [
+          {
+            "value": 0,
+            "event": 5
+          },
+          {
+            "value": 1,
+            "event": 4
+          }
+        ],
+        "query": "EventFlowQueryMuseumDonationNumCheck"
+      }
+    ],
+    "tent_expansion_threshold_path": {
+      "source": "B_data/EventFlow/SNPC_owl_11_Tent_Entries.bfevfl",
+      "query_event": {
+        "name": "Event0",
+        "type": "switch",
+        "params": {
+          "Border": 20
+        },
+        "cases": [
+          {
+            "value": 0,
+            "event": 35
+          },
+          {
+            "value": 1,
+            "event": 22
+          }
+        ],
+        "query": "EventFlowQueryMuseumDonationNumCheck"
+      },
+      "case_0_event": {
+        "name": "Event35",
+        "type": "action",
+        "params": {
+          "MessageID": "TalkSNpc/owl/SP_owl_01_MuseumTent:191_01",
+          "IsCloseMessageWindow": false
+        },
+        "next": 41,
+        "action": "EventFlowActionOpenMessageWindow"
+      },
+      "case_0_next_event": {
+        "name": "Event41",
+        "type": "action",
+        "params": {
+          "AccessKey": "cLand:MuseumGrowupEnable1"
+        },
+        "next": null,
+        "action": "EventFlowActionEventFlagSystemOn"
+      },
+      "case_0_next_action": "EventFlowActionEventFlagSystemOn",
+      "expansion_flags_in_flow": [
+        "cLand:DonationAmountForMuseum",
+        "cLand:MuseumGrowupEnable1",
+        "cLand:MuseumTentBuiltToday",
+        "cPlayer:FutaReadyForMuseum",
+        "cPlayer:FutaReadyForMuseumToday"
+      ]
+    },
+    "item_filters": {
+      "RcoDonationForMuseum": {
+        "item_kind_codes": [
+          64,
+          65
+        ],
+        "item_kind_labels": [
+          "Insect",
+          "Fish"
+        ],
+        "check_donation": 0,
+        "item_num": 1
+      },
+      "OwlTentDonation0": {
+        "item_kind_codes": [
+          64,
+          65,
+          70,
+          71
+        ],
+        "item_kind_labels": [
+          "Insect",
+          "Fish",
+          "Fossil",
+          "FossilUnknown"
+        ],
+        "check_donation": 1,
+        "item_num": 1
+      },
+      "OwlTentDonation1": {
+        "item_kind_codes": [
+          64,
+          65,
+          70
+        ],
+        "item_kind_labels": [
+          "Insect",
+          "Fish",
+          "Fossil"
+        ],
+        "check_donation": 1,
+        "item_num": 1
+      },
+      "OwlDonation": {
+        "item_kind_codes": [
+          64,
+          65,
+          70
+        ],
+        "item_kind_labels": [
+          "Insect",
+          "Fish",
+          "Fossil"
+        ],
+        "check_donation": 1,
+        "item_num": -1
+      },
+      "OwlCommentary": {
+        "item_kind_codes": [
+          64,
+          65,
+          70,
+          71
+        ],
+        "item_kind_labels": [
+          "Insect",
+          "Fish",
+          "Fossil",
+          "FossilUnknown"
+        ],
+        "check_donation": 0,
+        "item_num": 1
+      },
+      "OwlFossilJudgement": {
+        "item_kind_codes": [
+          71
+        ],
+        "item_kind_labels": [
+          "FossilUnknown"
+        ],
+        "check_donation": 0,
+        "item_num": -1
+      }
+    },
+    "itemparam": {
+      "rows": 8208,
+      "source": "B_data/Bcsv/ItemParam.bcsv",
+      "raw_sha256": "89230e97fc877ff2b2b48ac1c707ef32b3a7760118839c307f19797e2553458c",
+      "fake_art_convert_id_nonzero_rows": 0
+    },
+    "museum_tables": [
+      {
+        "name": "MuseumFossilDonateInfo",
+        "rows": 73
+      },
+      {
+        "name": "MuseumNPCLayoutInfo",
+        "rows": 83
+      },
+      {
+        "name": "MuseumNPCSilhouette",
+        "rows": 17
+      },
+      {
+        "name": "MuseumNPCSpotTalk",
+        "rows": 9
+      },
+      {
+        "name": "MuseumNameboardInfo",
+        "rows": 67
+      },
+      {
+        "name": "MuseumWatchPoint",
+        "rows": 86
+      }
+    ],
+    "gyroid": {
+      "flow": "00486.json",
+      "source": "B_data/EventFlow/Obj_Gyroid_BuildDonation.bfevfl",
+      "flowchart": "Obj_Gyroid_BuildDonation",
+      "actions": [
+        "EventFlowActionPublicWorksSetBell",
+        "EventFlowActionPublicWorksSetName",
+        "EventFlowActionPublicWorksUpdate",
+        "EventFlowActionUIMoneyAppear",
+        "EventFlowActionUIMoneyDisappear",
+        "EventFlowActionUITenKeyHandling"
+      ],
+      "queries": [
+        "EventFlowQueryDonationDone"
+      ],
+      "access_keys": [
+        "cLand:RcoBuildBridgeSlopeStatusCounter"
+      ],
+      "museum_access_keys": [],
+      "conclusion": "The located Gyroid flow pays a public-works bridge/slope project; it does not invoke the museum intake/save path."
+    }
+  },
+  "hook_counts": {
+    "0xa9c3a0": 45072,
+    "0xf589b0": 90144,
+    "0xf58d00": 127008
+  },
+  "limits": [
+    "No live save file or live table-manager memory is available; the SaveMuseum records and table manager are reconstructed fixtures.",
+    "The native item key lookup and field getter are exercised across every local ItemParam row, but item-flag variants are not tested.",
+    "No art-specific item/filter/handler path is proven in the captured data; this does not establish that the full game has no art donations.",
+    "The 0xff marker can be returned by a failed/mismatched context-state lookup, but the byte at the successful state object +0xb0d has no gameplay label in the dump."
+  ]
+}
