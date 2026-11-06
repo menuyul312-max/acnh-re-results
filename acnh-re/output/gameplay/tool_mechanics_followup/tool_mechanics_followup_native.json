@@ -1,0 +1,3618 @@
+{
+  "schema": "acnh-tool-mechanics-followup/1",
+  "sources": {
+    "main_nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+    "main_nso_path": "/workspace/acnh-parallel/tool_catalog_economy/acnh-re/inputs/additional_exefs/main",
+    "itemparam": {
+      "source_id": 72,
+      "raw": {
+        "$blob": "blobs/89230e97fc877ff2b2b48ac1c707ef32b3a7760118839c307f19797e2553458c.bin",
+        "size": 4104780,
+        "sha256": "89230e97fc877ff2b2b48ac1c707ef32b3a7760118839c307f19797e2553458c"
+      }
+    },
+    "player_state_param": {
+      "source_id": 124,
+      "sha256": "746619914744a62365b7b4cc74fd5b7fad169e78dffe74c3c03c726d3ea49b0d",
+      "size": 25696,
+      "format": "BCSV"
+    },
+    "player_tool_break_eventflow": {
+      "source_id": 523,
+      "sha256": "5f2b1bb4a72cbed1e299c58b7de7eca8e08127b3a32d4102d613231141487033",
+      "size": 4112,
+      "format": "BFEVFL"
+    },
+    "ring_menu_tools": {
+      "source_id": 1692,
+      "sha256": "3474fa03cd22c72f9258240b3ccb0e698a07c7631abbecd142346ffd2493b32e",
+      "size": 536,
+      "format": "BYML"
+    }
+  },
+  "native_itemparam_probe": {
+    "function_va": "0xf58d00",
+    "native_callee_va": "0xa1e8c0",
+    "caller_va": "0xe37a50",
+    "caller_string": "PlayerToolBreak",
+    "itemparam_dense_table": {
+      "source_id": 72,
+      "raw_sha256": "89230e97fc877ff2b2b48ac1c707ef32b3a7760118839c307f19797e2553458c",
+      "row_count": 8208,
+      "row_size": 500,
+      "unique_id_range": [
+        80,
+        12353
+      ],
+      "reconstructed_rows": 8208,
+      "item_definition_lookup_contract": "0xf58d00 -> 0xa1e8c0 checks the dense ItemParam row pointer for the item's UniqueID."
+    },
+    "positive_tool_ids": [
+      2099,
+      2100,
+      2376,
+      2377,
+      2379,
+      2822,
+      3068,
+      3082,
+      3083,
+      3084,
+      5784,
+      5856,
+      8176,
+      8177,
+      8178,
+      8179,
+      8471,
+      8472,
+      8473,
+      8533,
+      8534,
+      8535,
+      8536,
+      8574,
+      8575,
+      8576,
+      8577,
+      8578,
+      8579,
+      8580,
+      8660,
+      9617
+    ],
+    "negative_ids": [
+      {
+        "unique_id": 79,
+        "accepted": false
+      },
+      {
+        "unique_id": 12354,
+        "accepted": false
+      },
+      {
+        "unique_id": 65534,
+        "accepted": false
+      },
+      {
+        "unique_id": 65535,
+        "accepted": false
+      }
+    ],
+    "cases": 36,
+    "mismatches": [],
+    "item_word_mutations": 0,
+    "native_function_stubs": [],
+    "unresolved_import_calls": {},
+    "reconstructed_state": [
+      "ItemParam BCSV row bytes copied to a sandbox allocation.",
+      "Dense UniqueID-to-row pointer index and ItemParam definition wrapper.",
+      "Packed item words with the tested UniqueID and zero remaining fields."
+    ],
+    "native_callee_calls": [
+      {
+        "pc": "0xf58d64",
+        "target": "0xa1e8c0",
+        "instruction": "B_to_function_entry"
+      },
+      {
+        "pc": "0xf58d78",
+        "target": "0xa1e8c0",
+        "instruction": "B_to_function_entry"
+      },
+      {
+        "pc": "0xf58d8c",
+        "target": "0xa1e8c0",
+        "instruction": "B_to_function_entry"
+      },
+      {
+        "pc": "0xf58da0",
+        "target": "0xa1e8c0",
+        "instruction": "B_to_function_entry"
+      }
+    ]
+  },
+  "itemparam_tool_families": {
+    "families": {
+      "Axe": 4,
+      "Shovel": 6,
+      "Net": 6,
+      "FishingRod": 6,
+      "Slingshot": 4,
+      "Watering": 6
+    },
+    "items": [
+      {
+        "unique_id": 2100,
+        "label": "ToolAxe",
+        "item_name_ja": "オノ",
+        "item_kind": "Axe",
+        "item_from": "ShopTimer",
+        "diy_recipe_id": 271,
+        "remake_id": -1
+      },
+      {
+        "unique_id": 3068,
+        "label": "ToolAxeStone",
+        "item_name_ja": "ショボいオノ",
+        "item_kind": "Axe",
+        "item_from": "Shop_EnableAxe",
+        "diy_recipe_id": 10,
+        "remake_id": -1
+      },
+      {
+        "unique_id": 5856,
+        "label": "ToolAxeStoneNormal",
+        "item_name_ja": "いしのオノ",
+        "item_kind": "Axe",
+        "item_from": "None",
+        "diy_recipe_id": 285,
+        "remake_id": -1
+      },
+      {
+        "unique_id": 9617,
+        "label": "ToolAxeGold",
+        "item_name_ja": "きんのオノ",
+        "item_kind": "Axe",
+        "item_from": "None",
+        "diy_recipe_id": 663,
+        "remake_id": -1
+      },
+      {
+        "unique_id": 2377,
+        "label": "ToolAngling",
+        "item_name_ja": "つりざお",
+        "item_kind": "FishingRod",
+        "item_from": "None",
+        "diy_recipe_id": 282,
+        "remake_id": 826
+      },
+      {
+        "unique_id": 3084,
+        "label": "ToolFishingrodWood",
+        "item_name_ja": "ショボいつりざお",
+        "item_kind": "FishingRod",
+        "item_from": "MarketAlways",
+        "diy_recipe_id": 21,
+        "remake_id": -1
+      },
+      {
+        "unique_id": 8471,
+        "label": "ToolFishingrodColorful",
+        "item_name_ja": "おサカナつりざお",
+        "item_kind": "FishingRod",
+        "item_from": "ShopVarietyFishingRod",
+        "diy_recipe_id": -1,
+        "remake_id": 836
+      },
+      {
+        "unique_id": 8472,
+        "label": "ToolFishingrodDuck",
+        "item_name_ja": "カラフルなつりざお",
+        "item_kind": "FishingRod",
+        "item_from": "ShopVarietyFishingRod",
+        "diy_recipe_id": -1,
+        "remake_id": 835
+      },
+      {
+        "unique_id": 8473,
+        "label": "ToolFishingrodOutdoor",
+        "item_name_ja": "アウトドアなつりざお",
+        "item_kind": "FishingRod",
+        "item_from": "ShopVarietyFishingRod",
+        "diy_recipe_id": -1,
+        "remake_id": 833
+      },
+      {
+        "unique_id": 8660,
+        "label": "ToolFishingrodGold",
+        "item_name_ja": "きんのつりざお",
+        "item_kind": "FishingRod",
+        "item_from": "None",
+        "diy_recipe_id": 662,
+        "remake_id": -1
+      },
+      {
+        "unique_id": 2376,
+        "label": "ToolNet",
+        "item_name_ja": "ショボいあみ",
+        "item_kind": "Net",
+        "item_from": "MarketAlways",
+        "diy_recipe_id": 22,
+        "remake_id": -1
+      },
+      {
+        "unique_id": 5784,
+        "label": "ToolNetNormal",
+        "item_name_ja": "あみ",
+        "item_kind": "Net",
+        "item_from": "None",
+        "diy_recipe_id": 283,
+        "remake_id": 825
+      },
+      {
+        "unique_id": 8176,
+        "label": "ToolNetStar",
+        "item_name_ja": "スターなあみ",
+        "item_kind": "Net",
+        "item_from": "ShopVarietyNet",
+        "diy_recipe_id": -1,
+        "remake_id": 829
+      },
+      {
+        "unique_id": 8177,
+        "label": "ToolNetPattern",
+        "item_name_ja": "カラフルなあみ",
+        "item_kind": "Net",
+        "item_from": "ShopVarietyNet",
+        "diy_recipe_id": -1,
+        "remake_id": 828
+      },
+      {
+        "unique_id": 8178,
+        "label": "ToolNetOutdoor",
+        "item_name_ja": "アウトドアなあみ",
+        "item_kind": "Net",
+        "item_from": "ShopVarietyNet",
+        "diy_recipe_id": -1,
+        "remake_id": 801
+      },
+      {
+        "unique_id": 8179,
+        "label": "ToolNetGold",
+        "item_name_ja": "きんのあみ",
+        "item_kind": "Net",
+        "item_from": "None",
+        "diy_recipe_id": 658,
+        "remake_id": -1
+      },
+      {
+        "unique_id": 2099,
+        "label": "ToolScoop",
+        "item_name_ja": "スコップ",
+        "item_kind": "Shovel",
+        "item_from": "None",
+        "diy_recipe_id": 281,
+        "remake_id": 827
+      },
+      {
+        "unique_id": 3082,
+        "label": "ToolShovelWood",
+        "item_name_ja": "ショボいスコップ",
+        "item_kind": "Shovel",
+        "item_from": "Shop_EnableShovel",
+        "diy_recipe_id": 19,
+        "remake_id": -1
+      },
+      {
+        "unique_id": 8574,
+        "label": "ToolScoopGold",
+        "item_name_ja": "きんのスコップ",
+        "item_kind": "Shovel",
+        "item_from": "None",
+        "diy_recipe_id": 660,
+        "remake_id": -1
+      },
+      {
+        "unique_id": 8575,
+        "label": "ToolScoopOutdoor",
+        "item_name_ja": "アウトドアなスコップ",
+        "item_kind": "Shovel",
+        "item_from": "ShopVarietyShovel",
+        "diy_recipe_id": -1,
+        "remake_id": 863
+      },
+      {
+        "unique_id": 8576,
+        "label": "ToolScoopPattern",
+        "item_name_ja": "がらものスコップ",
+        "item_kind": "Shovel",
+        "item_from": "ShopVarietyShovel",
+        "diy_recipe_id": -1,
+        "remake_id": 870
+      },
+      {
+        "unique_id": 8577,
+        "label": "ToolScoopColorful",
+        "item_name_ja": "カラフルなスコップ",
+        "item_kind": "Shovel",
+        "item_from": "ShopVarietyShovel",
+        "diy_recipe_id": -1,
+        "remake_id": 862
+      },
+      {
+        "unique_id": 2822,
+        "label": "ToolSlingshot",
+        "item_name_ja": "パチンコ",
+        "item_kind": "Slingshot",
+        "item_from": "MarketAlways",
+        "diy_recipe_id": 29,
+        "remake_id": 856
+      },
+      {
+        "unique_id": 8578,
+        "label": "ToolSlingshotGold",
+        "item_name_ja": "きんのパチンコ",
+        "item_kind": "Slingshot",
+        "item_from": "None",
+        "diy_recipe_id": 661,
+        "remake_id": -1
+      },
+      {
+        "unique_id": 8579,
+        "label": "ToolSlingshotOutdoor",
+        "item_name_ja": "アウトドアなパチンコ",
+        "item_kind": "Slingshot",
+        "item_from": "ShopVarietySlingShot",
+        "diy_recipe_id": -1,
+        "remake_id": 857
+      },
+      {
+        "unique_id": 8580,
+        "label": "ToolSlingshotColorful",
+        "item_name_ja": "カラフルなパチンコ",
+        "item_kind": "Slingshot",
+        "item_from": "ShopVarietySlingShot",
+        "diy_recipe_id": -1,
+        "remake_id": 858
+      },
+      {
+        "unique_id": 2379,
+        "label": "ToolWatering",
+        "item_name_ja": "ジョウロ",
+        "item_kind": "Watering",
+        "item_from": "None",
+        "diy_recipe_id": 280,
+        "remake_id": 653
+      },
+      {
+        "unique_id": 3083,
+        "label": "ToolWateringWood",
+        "item_name_ja": "ショボいジョウロ",
+        "item_kind": "Watering",
+        "item_from": "MarketAlways",
+        "diy_recipe_id": 20,
+        "remake_id": -1
+      },
+      {
+        "unique_id": 8533,
+        "label": "ToolWateringGold",
+        "item_name_ja": "きんのジョウロ",
+        "item_kind": "Watering",
+        "item_from": "None",
+        "diy_recipe_id": 659,
+        "remake_id": -1
+      },
+      {
+        "unique_id": 8534,
+        "label": "ToolWateringColorful",
+        "item_name_ja": "カラフルなジョウロ",
+        "item_kind": "Watering",
+        "item_from": "ShopVarietyWatering",
+        "diy_recipe_id": -1,
+        "remake_id": 860
+      },
+      {
+        "unique_id": 8535,
+        "label": "ToolWateringElephant",
+        "item_name_ja": "ゾウさんジョウロ",
+        "item_kind": "Watering",
+        "item_from": "ShopVarietyWatering",
+        "diy_recipe_id": -1,
+        "remake_id": 878
+      },
+      {
+        "unique_id": 8536,
+        "label": "ToolWateringOutdoor",
+        "item_name_ja": "アウトドアなジョウロ",
+        "item_kind": "Watering",
+        "item_from": "ShopVarietyWatering",
+        "diy_recipe_id": -1,
+        "remake_id": 861
+      }
+    ],
+    "named_durability_columns": [],
+    "unresolved_hashed_columns": [
+      "h_9ba040c2",
+      "h_164a5f24",
+      "h_7dcd5be1",
+      "h_9ec34ed4",
+      "h_4b97cdab",
+      "h_f179f796"
+    ]
+  },
+  "player_state_param_tool_states": {
+    "source": {
+      "source_id": 124,
+      "raw": {
+        "$blob": "blobs/746619914744a62365b7b4cc74fd5b7fad169e78dffe74c3c03c726d3ea49b0d.bin",
+        "size": 25696,
+        "sha256": "746619914744a62365b7b4cc74fd5b7fad169e78dffe74c3c03c726d3ea49b0d"
+      },
+      "states": {
+        "Axe": [
+          {
+            "StateName": "AxeReady",
+            "PacketType": {
+              "hash": "a93002a5",
+              "labels": [
+                "Overwrite",
+                "上書き"
+              ]
+            },
+            "ToolState": {
+              "hash": "d14b7584",
+              "labels": [
+                "IfNotDemoDraw",
+                "デモでなければ表示"
+              ]
+            },
+            "ObjCheckRate": 1.0,
+            "ObjCheckType": {
+              "hash": "bbf0555b",
+              "labels": [
+                "Heavy",
+                "動かない"
+              ]
+            },
+            "ChangeDemo": {
+              "hash": "80f874cd",
+              "labels": [
+                "Disable",
+                "デモ不可"
+              ]
+            },
+            "BgCheckType": {
+              "hash": "26296dd2",
+              "labels": [
+                "Normal",
+                "通常"
+              ]
+            },
+            "EnableRodCloth": 0
+          },
+          {
+            "StateName": "AxeReadyWait",
+            "PacketType": {
+              "hash": "a93002a5",
+              "labels": [
+                "Overwrite",
+                "上書き"
+              ]
+            },
+            "ToolState": {
+              "hash": "d14b7584",
+              "labels": [
+                "IfNotDemoDraw",
+                "デモでなければ表示"
+              ]
+            },
+            "ObjCheckRate": 1.0,
+            "ObjCheckType": {
+              "hash": "bbf0555b",
+              "labels": [
+                "Heavy",
+                "動かない"
+              ]
+            },
+            "ChangeDemo": {
+              "hash": "80f874cd",
+              "labels": [
+                "Disable",
+                "デモ不可"
+              ]
+            },
+            "BgCheckType": {
+              "hash": "26296dd2",
+              "labels": [
+                "Normal",
+                "通常"
+              ]
+            },
+            "EnableRodCloth": 0
+          },
+          {
+            "StateName": "AxeHitTree",
+            "PacketType": {
+              "hash": "9c751860",
+              "labels": [
+                "Sequential",
+                "累積"
+              ]
+            },
+            "ToolState": {
+              "hash": "d14b7584",
+              "labels": [
+                "IfNotDemoDraw",
+                "デモでなければ表示"
+              ]
+            },
+            "ObjCheckRate": 1.0,
+            "ObjCheckType": {
+              "hash": "bbf0555b",
+              "labels": [
+                "Heavy",
+                "動かない"
+              ]
+            },
+            "ChangeDemo": {
+              "hash": "80f874cd",
+              "labels": [
+                "Disable",
+                "デモ不可"
+              ]
+            },
+            "BgCheckType": {
+              "hash": "26296dd2",
+              "labels": [
+                "Normal",
+                "通常"
+              ]
+            },
+            "EnableRodCloth": 0
+          }
+        ],
+        "Shovel": [
+          {
+            "StateName": "ScoopReady",
+            "PacketType": {
+              "hash": "a93002a5",
+              "labels": [
+                "Overwrite",
+                "上書き"
+              ]
+            },
+            "ToolState": {
+              "hash": "d14b7584",
+              "labels": [
+                "IfNotDemoDraw",
+                "デモでなければ表示"
+              ]
+            },
+            "ObjCheckRate": 1.0,
+            "ObjCheckType": {
+              "hash": "bbf0555b",
+              "labels": [
+                "Heavy",
+                "動かない"
+              ]
+            },
+            "ChangeDemo": {
+              "hash": "80f874cd",
+              "labels": [
+                "Disable",
+                "デモ不可"
+              ]
+            },
+            "BgCheckType": {
+              "hash": "26296dd2",
+              "labels": [
+                "Normal",
+                "通常"
+              ]
+            },
+            "EnableRodCloth": 0
+          },
+          {
+            "StateName": "ScoopReadyWait",
+            "PacketType": {
+              "hash": "a93002a5",
+              "labels": [
+                "Overwrite",
+                "上書き"
+              ]
+            },
+            "ToolState": {
+              "hash": "d14b7584",
+              "labels": [
+                "IfNotDemoDraw",
+                "デモでなければ表示"
+              ]
+            },
+            "ObjCheckRate": 1.0,
+            "ObjCheckType": {
+              "hash": "bbf0555b",
+              "labels": [
+                "Heavy",
+                "動かない"
+              ]
+            },
+            "ChangeDemo": {
+              "hash": "80f874cd",
+              "labels": [
+                "Disable",
+                "デモ不可"
+              ]
+            },
+            "BgCheckType": {
+              "hash": "26296dd2",
+              "labels": [
+                "Normal",
+                "通常"
+              ]
+            },
+            "EnableRodCloth": 0
+          },
+          {
+            "StateName": "ScoopDig",
+            "PacketType": {
+              "hash": "9c751860",
+              "labels": [
+                "Sequential",
+                "累積"
+              ]
+            },
+            "ToolState": {
+              "hash": "d14b7584",
+              "labels": [
+                "IfNotDemoDraw",
+                "デモでなければ表示"
+              ]
+            },
+            "ObjCheckRate": 1.0,
+            "ObjCheckType": {
+              "hash": "bbf0555b",
+              "labels": [
+                "Heavy",
+                "動かない"
+              ]
+            },
+            "ChangeDemo": {
+              "hash": "80f874cd",
+              "labels": [
+                "Disable",
+                "デモ不可"
+              ]
+            },
+            "BgCheckType": {
+              "hash": "26296dd2",
+              "labels": [
+                "Normal",
+                "通常"
+              ]
+            },
+            "EnableRodCloth": 0
+          },
+          {
+            "StateName": "ScoopDigGetPutaway",
+            "PacketType": {
+              "hash": "9c751860",
+              "labels": [
+                "Sequential",
+                "累積"
+              ]
+            },
+            "ToolState": {
+              "hash": "d14b7584",
+              "labels": [
+                "IfNotDemoDraw",
+                "デモでなければ表示"
+              ]
+            },
+            "ObjCheckRate": 1.0,
+            "ObjCheckType": {
+              "hash": "bbf0555b",
+              "labels": [
+                "Heavy",
+                "動かない"
+              ]
+            },
+            "ChangeDemo": {
+              "hash": "80f874cd",
+              "labels": [
+                "Disable",
+                "デモ不可"
+              ]
+            },
+            "BgCheckType": {
+              "hash": "26296dd2",
+              "labels": [
+                "Normal",
+                "通常"
+              ]
+            },
+            "EnableRodCloth": 0
+          },
+          {
+            "StateName": "ScoopDigGetDemo",
+            "PacketType": {
+              "hash": "9c751860",
+              "labels": [
+                "Sequential",
+                "累積"
+              ]
+            },
+            "ToolState": {
+              "hash": "d14b7584",
+              "labels": [
+                "IfNotDemoDraw",
+                "デモでなければ表示"
+              ]
+            },
+            "ObjCheckRate": 1.0,
+            "ObjCheckType": {
+              "hash": "bbf0555b",
+              "labels": [
+                "Heavy",
+                "動かない"
+              ]
+            },
+            "ChangeDemo": {
+              "hash": "70d3cf9a",
+              "labels": [
+                "IsDemo",
+                "デモ状態"
+              ]
+            },
+            "BgCheckType": {
+              "hash": "26296dd2",
+              "labels": [
+                "Normal",
+                "通常"
+              ]
+            },
+            "EnableRodCloth": 0
+          },
+          {
+            "StateName": "ScoopBury",
+            "PacketType": {
+              "hash": "9c751860",
+              "labels": [
+                "Sequential",
+                "累積"
+              ]
+            },
+            "ToolState": {
+              "hash": "d14b7584",
+              "labels": [
+                "IfNotDemoDraw",
+                "デモでなければ表示"
+              ]
+            },
+            "ObjCheckRate": 1.0,
+            "ObjCheckType": {
+              "hash": "bbf0555b",
+              "labels": [
+                "Heavy",
+                "動かない"
+              ]
+            },
+            "ChangeDemo": {
+              "hash": "80f874cd",
+              "labels": [
+                "Disable",
+                "デモ不可"
+              ]
+            },
+            "BgCheckType": {
+              "hash": "26296dd2",
+              "labels": [
+                "Normal",
+                "通常"
+              ]
+            },
+            "EnableRodCloth": 0
+          }
+        ],
+        "Net": [
+          {
+            "StateName": "NetWait",
+            "PacketType": {
+              "hash": "a93002a5",
+              "labels": [
+                "Overwrite",
+                "上書き"
+              ]
+            },
+            "ToolState": {
+              "hash": "d14b7584",
+              "labels": [
+                "IfNotDemoDraw",
+                "デモでなければ表示"
+              ]
+            },
+            "ObjCheckRate": 1.0,
+            "ObjCheckType": {
+              "hash": "26296dd2",
+              "labels": [
+                "Normal",
+                "通常"
+              ]
+            },
+            "ChangeDemo": {
+              "hash": "d33bcb2b",
+              "labels": [
+                "EnableToDemoStandSpeak",
+                "デモ立ちSpeak可"
+              ]
+            },
+            "BgCheckType": {
+              "hash": "26296dd2",
+              "labels": [
+                "Normal",
+                "通常"
+              ]
+            },
+            "EnableRodCloth": 0
+          },
+          {
+            "StateName": "NetSwing",
+            "PacketType": {
+              "hash": "a93002a5",
+              "labels": [
+                "Overwrite",
+                "上書き"
+              ]
+            },
+            "ToolState": {
+              "hash": "d14b7584",
+              "labels": [
+                "IfNotDemoDraw",
+                "デモでなければ表示"
+              ]
+            },
+            "ObjCheckRate": 1.0,
+            "ObjCheckType": {
+              "hash": "bbf0555b",
+              "labels": [
+                "Heavy",
+                "動かない"
+              ]
+            },
+            "ChangeDemo": {
+              "hash": "80f874cd",
+              "labels": [
+                "Disable",
+                "デモ不可"
+              ]
+            },
+            "BgCheckType": {
+              "hash": "26296dd2",
+              "labels": [
+                "Normal",
+                "通常"
+              ]
+            },
+            "EnableRodCloth": 0
+          },
+          {
+            "StateName": "NetGetDemo",
+            "PacketType": {
+              "hash": "a93002a5",
+              "labels": [
+                "Overwrite",
+                "上書き"
+              ]
+            },
+            "ToolState": {
+              "hash": "d14b7584",
+              "labels": [
+                "IfNotDemoDraw",
+                "デモでなければ表示"
+              ]
+            },
+            "ObjCheckRate": 1.0,
+            "ObjCheckType": {
+              "hash": "bbf0555b",
+              "labels": [
+                "Heavy",
+                "動かない"
+              ]
+            },
+            "ChangeDemo": {
+              "hash": "70d3cf9a",
+              "labels": [
+                "IsDemo",
+                "デモ状態"
+              ]
+            },
+            "BgCheckType": {
+              "hash": "26296dd2",
+              "labels": [
+                "Normal",
+                "通常"
+              ]
+            },
+            "EnableRodCloth": 0
+          },
+          {
+            "StateName": "NetRelease",
+            "PacketType": {
+              "hash": "a93002a5",
+              "labels": [
+                "Overwrite",
+                "上書き"
+              ]
+            },
+            "ToolState": {
+              "hash": "d14b7584",
+              "labels": [
+                "IfNotDemoDraw",
+                "デモでなければ表示"
+              ]
+            },
+            "ObjCheckRate": 1.0,
+            "ObjCheckType": {
+              "hash": "bbf0555b",
+              "labels": [
+                "Heavy",
+                "動かない"
+              ]
+            },
+            "ChangeDemo": {
+              "hash": "80f874cd",
+              "labels": [
+                "Disable",
+                "デモ不可"
+              ]
+            },
+            "BgCheckType": {
+              "hash": "26296dd2",
+              "labels": [
+                "Normal",
+                "通常"
+              ]
+            },
+            "EnableRodCloth": 0
+          }
+        ],
+        "FishingRod": [
+          {
+            "StateName": "RodCasting",
+            "PacketType": {
+              "hash": "a93002a5",
+              "labels": [
+                "Overwrite",
+                "上書き"
+              ]
+            },
+            "ToolState": {
+              "hash": "d14b7584",
+              "labels": [
+                "IfNotDemoDraw",
+                "デモでなければ表示"
+              ]
+            },
+            "ObjCheckRate": 1.0,
+            "ObjCheckType": {
+              "hash": "bbf0555b",
+              "labels": [
+                "Heavy",
+                "動かない"
+              ]
+            },
+            "ChangeDemo": {
+              "hash": "80f874cd",
+              "labels": [
+                "Disable",
+                "デモ不可"
+              ]
+            },
+            "BgCheckType": {
+              "hash": "26296dd2",
+              "labels": [
+                "Normal",
+                "通常"
+              ]
+            },
+            "EnableRodCloth": 0
+          },
+          {
+            "StateName": "RodCastingFail",
+            "PacketType": {
+              "hash": "a93002a5",
+              "labels": [
+                "Overwrite",
+                "上書き"
+              ]
+            },
+            "ToolState": {
+              "hash": "d14b7584",
+              "labels": [
+                "IfNotDemoDraw",
+                "デモでなければ表示"
+              ]
+            },
+            "ObjCheckRate": 1.0,
+            "ObjCheckType": {
+              "hash": "bbf0555b",
+              "labels": [
+                "Heavy",
+                "動かない"
+              ]
+            },
+            "ChangeDemo": {
+              "hash": "80f874cd",
+              "labels": [
+                "Disable",
+                "デモ不可"
+              ]
+            },
+            "BgCheckType": {
+              "hash": "26296dd2",
+              "labels": [
+                "Normal",
+                "通常"
+              ]
+            },
+            "EnableRodCloth": 0
+          },
+          {
+            "StateName": "RodWaitHit",
+            "PacketType": {
+              "hash": "a93002a5",
+              "labels": [
+                "Overwrite",
+                "上書き"
+              ]
+            },
+            "ToolState": {
+              "hash": "d14b7584",
+              "labels": [
+                "IfNotDemoDraw",
+                "デモでなければ表示"
+              ]
+            },
+            "ObjCheckRate": 1.0,
+            "ObjCheckType": {
+              "hash": "bbf0555b",
+              "labels": [
+                "Heavy",
+                "動かない"
+              ]
+            },
+            "ChangeDemo": {
+              "hash": "3290a903",
+              "labels": [
+                "EnableToDemoNetLock",
+                "デモネットロック可"
+              ]
+            },
+            "BgCheckType": {
+              "hash": "26296dd2",
+              "labels": [
+                "Normal",
+                "通常"
+              ]
+            },
+            "EnableRodCloth": 0
+          },
+          {
+            "StateName": "RodFall",
+            "PacketType": {
+              "hash": "a93002a5",
+              "labels": [
+                "Overwrite",
+                "上書き"
+              ]
+            },
+            "ToolState": {
+              "hash": "d14b7584",
+              "labels": [
+                "IfNotDemoDraw",
+                "デモでなければ表示"
+              ]
+            },
+            "ObjCheckRate": 1.0,
+            "ObjCheckType": {
+              "hash": "bbf0555b",
+              "labels": [
+                "Heavy",
+                "動かない"
+              ]
+            },
+            "ChangeDemo": {
+              "hash": "3290a903",
+              "labels": [
+                "EnableToDemoNetLock",
+                "デモネットロック可"
+              ]
+            },
+            "BgCheckType": {
+              "hash": "26296dd2",
+              "labels": [
+                "Normal",
+                "通常"
+              ]
+            },
+            "EnableRodCloth": 0
+          },
+          {
+            "StateName": "RodHit",
+            "PacketType": {
+              "hash": "a93002a5",
+              "labels": [
+                "Overwrite",
+                "上書き"
+              ]
+            },
+            "ToolState": {
+              "hash": "d14b7584",
+              "labels": [
+                "IfNotDemoDraw",
+                "デモでなければ表示"
+              ]
+            },
+            "ObjCheckRate": 1.0,
+            "ObjCheckType": {
+              "hash": "bbf0555b",
+              "labels": [
+                "Heavy",
+                "動かない"
+              ]
+            },
+            "ChangeDemo": {
+              "hash": "80f874cd",
+              "labels": [
+                "Disable",
+                "デモ不可"
+              ]
+            },
+            "BgCheckType": {
+              "hash": "26296dd2",
+              "labels": [
+                "Normal",
+                "通常"
+              ]
+            },
+            "EnableRodCloth": 0
+          },
+          {
+            "StateName": "RodReturnFloat",
+            "PacketType": {
+              "hash": "a93002a5",
+              "labels": [
+                "Overwrite",
+                "上書き"
+              ]
+            },
+            "ToolState": {
+              "hash": "d14b7584",
+              "labels": [
+                "IfNotDemoDraw",
+                "デモでなければ表示"
+              ]
+            },
+            "ObjCheckRate": 1.0,
+            "ObjCheckType": {
+              "hash": "bbf0555b",
+              "labels": [
+                "Heavy",
+                "動かない"
+              ]
+            },
+            "ChangeDemo": {
+              "hash": "80f874cd",
+              "labels": [
+                "Disable",
+                "デモ不可"
+              ]
+            },
+            "BgCheckType": {
+              "hash": "26296dd2",
+              "labels": [
+                "Normal",
+                "通常"
+              ]
+            },
+            "EnableRodCloth": 0
+          },
+          {
+            "StateName": "RodFight",
+            "PacketType": {
+              "hash": "a93002a5",
+              "labels": [
+                "Overwrite",
+                "上書き"
+              ]
+            },
+            "ToolState": {
+              "hash": "d14b7584",
+              "labels": [
+                "IfNotDemoDraw",
+                "デモでなければ表示"
+              ]
+            },
+            "ObjCheckRate": 1.0,
+            "ObjCheckType": {
+              "hash": "bbf0555b",
+              "labels": [
+                "Heavy",
+                "動かない"
+              ]
+            },
+            "ChangeDemo": {
+              "hash": "70d3cf9a",
+              "labels": [
+                "IsDemo",
+                "デモ状態"
+              ]
+            },
+            "BgCheckType": {
+              "hash": "26296dd2",
+              "labels": [
+                "Normal",
+                "通常"
+              ]
+            },
+            "EnableRodCloth": 0
+          },
+          {
+            "StateName": "RodCatch",
+            "PacketType": {
+              "hash": "a93002a5",
+              "labels": [
+                "Overwrite",
+                "上書き"
+              ]
+            },
+            "ToolState": {
+              "hash": "d14b7584",
+              "labels": [
+                "IfNotDemoDraw",
+                "デモでなければ表示"
+              ]
+            },
+            "ObjCheckRate": 1.0,
+            "ObjCheckType": {
+              "hash": "bbf0555b",
+              "labels": [
+                "Heavy",
+                "動かない"
+              ]
+            },
+            "ChangeDemo": {
+              "hash": "70d3cf9a",
+              "labels": [
+                "IsDemo",
+                "デモ状態"
+              ]
+            },
+            "BgCheckType": {
+              "hash": "26296dd2",
+              "labels": [
+                "Normal",
+                "通常"
+              ]
+            },
+            "EnableRodCloth": 0
+          },
+          {
+            "StateName": "RodGetDemo",
+            "PacketType": {
+              "hash": "a93002a5",
+              "labels": [
+                "Overwrite",
+                "上書き"
+              ]
+            },
+            "ToolState": {
+              "hash": "d14b7584",
+              "labels": [
+                "IfNotDemoDraw",
+                "デモでなければ表示"
+              ]
+            },
+            "ObjCheckRate": 1.0,
+            "ObjCheckType": {
+              "hash": "bbf0555b",
+              "labels": [
+                "Heavy",
+                "動かない"
+              ]
+            },
+            "ChangeDemo": {
+              "hash": "70d3cf9a",
+              "labels": [
+                "IsDemo",
+                "デモ状態"
+              ]
+            },
+            "BgCheckType": {
+              "hash": "26296dd2",
+              "labels": [
+                "Normal",
+                "通常"
+              ]
+            },
+            "EnableRodCloth": 0
+          },
+          {
+            "StateName": "RodReleaseFish",
+            "PacketType": {
+              "hash": "a93002a5",
+              "labels": [
+                "Overwrite",
+                "上書き"
+              ]
+            },
+            "ToolState": {
+              "hash": "d14b7584",
+              "labels": [
+                "IfNotDemoDraw",
+                "デモでなければ表示"
+              ]
+            },
+            "ObjCheckRate": 1.0,
+            "ObjCheckType": {
+              "hash": "bbf0555b",
+              "labels": [
+                "Heavy",
+                "動かない"
+              ]
+            },
+            "ChangeDemo": {
+              "hash": "80f874cd",
+              "labels": [
+                "Disable",
+                "デモ不可"
+              ]
+            },
+            "BgCheckType": {
+              "hash": "26296dd2",
+              "labels": [
+                "Normal",
+                "通常"
+              ]
+            },
+            "EnableRodCloth": 0
+          },
+          {
+            "StateName": "RodReleaseTrash",
+            "PacketType": {
+              "hash": "a93002a5",
+              "labels": [
+                "Overwrite",
+                "上書き"
+              ]
+            },
+            "ToolState": {
+              "hash": "d14b7584",
+              "labels": [
+                "IfNotDemoDraw",
+                "デモでなければ表示"
+              ]
+            },
+            "ObjCheckRate": 1.0,
+            "ObjCheckType": {
+              "hash": "bbf0555b",
+              "labels": [
+                "Heavy",
+                "動かない"
+              ]
+            },
+            "ChangeDemo": {
+              "hash": "80f874cd",
+              "labels": [
+                "Disable",
+                "デモ不可"
+              ]
+            },
+            "BgCheckType": {
+              "hash": "26296dd2",
+              "labels": [
+                "Normal",
+                "通常"
+              ]
+            },
+            "EnableRodCloth": 0
+          }
+        ],
+        "Slingshot": [
+          {
+            "StateName": "SlingshotWait",
+            "PacketType": {
+              "hash": "a93002a5",
+              "labels": [
+                "Overwrite",
+                "上書き"
+              ]
+            },
+            "ToolState": {
+              "hash": "d14b7584",
+              "labels": [
+                "IfNotDemoDraw",
+                "デモでなければ表示"
+              ]
+            },
+            "ObjCheckRate": 1.0,
+            "ObjCheckType": {
+              "hash": "bbf0555b",
+              "labels": [
+                "Heavy",
+                "動かない"
+              ]
+            },
+            "ChangeDemo": {
+              "hash": "80f874cd",
+              "labels": [
+                "Disable",
+                "デモ不可"
+              ]
+            },
+            "BgCheckType": {
+              "hash": "26296dd2",
+              "labels": [
+                "Normal",
+                "通常"
+              ]
+            },
+            "EnableRodCloth": 0
+          },
+          {
+            "StateName": "SlingshotShooting",
+            "PacketType": {
+              "hash": "a93002a5",
+              "labels": [
+                "Overwrite",
+                "上書き"
+              ]
+            },
+            "ToolState": {
+              "hash": "d14b7584",
+              "labels": [
+                "IfNotDemoDraw",
+                "デモでなければ表示"
+              ]
+            },
+            "ObjCheckRate": 1.0,
+            "ObjCheckType": {
+              "hash": "bbf0555b",
+              "labels": [
+                "Heavy",
+                "動かない"
+              ]
+            },
+            "ChangeDemo": {
+              "hash": "80f874cd",
+              "labels": [
+                "Disable",
+                "デモ不可"
+              ]
+            },
+            "BgCheckType": {
+              "hash": "26296dd2",
+              "labels": [
+                "Normal",
+                "通常"
+              ]
+            },
+            "EnableRodCloth": 0
+          },
+          {
+            "StateName": "SlingshotDropWait",
+            "PacketType": {
+              "hash": "a93002a5",
+              "labels": [
+                "Overwrite",
+                "上書き"
+              ]
+            },
+            "ToolState": {
+              "hash": "d14b7584",
+              "labels": [
+                "IfNotDemoDraw",
+                "デモでなければ表示"
+              ]
+            },
+            "ObjCheckRate": 1.0,
+            "ObjCheckType": {
+              "hash": "bbf0555b",
+              "labels": [
+                "Heavy",
+                "動かない"
+              ]
+            },
+            "ChangeDemo": {
+              "hash": "70d3cf9a",
+              "labels": [
+                "IsDemo",
+                "デモ状態"
+              ]
+            },
+            "BgCheckType": {
+              "hash": "26296dd2",
+              "labels": [
+                "Normal",
+                "通常"
+              ]
+            },
+            "EnableRodCloth": 0
+          },
+          {
+            "StateName": "SlingshotShocked",
+            "PacketType": {
+              "hash": "a93002a5",
+              "labels": [
+                "Overwrite",
+                "上書き"
+              ]
+            },
+            "ToolState": {
+              "hash": "d14b7584",
+              "labels": [
+                "IfNotDemoDraw",
+                "デモでなければ表示"
+              ]
+            },
+            "ObjCheckRate": 1.0,
+            "ObjCheckType": {
+              "hash": "bbf0555b",
+              "labels": [
+                "Heavy",
+                "動かない"
+              ]
+            },
+            "ChangeDemo": {
+              "hash": "70d3cf9a",
+              "labels": [
+                "IsDemo",
+                "デモ状態"
+              ]
+            },
+            "BgCheckType": {
+              "hash": "26296dd2",
+              "labels": [
+                "Normal",
+                "通常"
+              ]
+            },
+            "EnableRodCloth": 0
+          }
+        ],
+        "Watering": [
+          {
+            "StateName": "Watering",
+            "PacketType": {
+              "hash": "9c751860",
+              "labels": [
+                "Sequential",
+                "累積"
+              ]
+            },
+            "ToolState": {
+              "hash": "d14b7584",
+              "labels": [
+                "IfNotDemoDraw",
+                "デモでなければ表示"
+              ]
+            },
+            "ObjCheckRate": 1.0,
+            "ObjCheckType": {
+              "hash": "bbf0555b",
+              "labels": [
+                "Heavy",
+                "動かない"
+              ]
+            },
+            "ChangeDemo": {
+              "hash": "80f874cd",
+              "labels": [
+                "Disable",
+                "デモ不可"
+              ]
+            },
+            "BgCheckType": {
+              "hash": "26296dd2",
+              "labels": [
+                "Normal",
+                "通常"
+              ]
+            },
+            "EnableRodCloth": 0
+          }
+        ]
+      }
+    },
+    "families": {
+      "Axe": [
+        {
+          "StateName": "AxeReady",
+          "PacketType": {
+            "hash": "a93002a5",
+            "labels": [
+              "Overwrite",
+              "上書き"
+            ]
+          },
+          "ToolState": {
+            "hash": "d14b7584",
+            "labels": [
+              "IfNotDemoDraw",
+              "デモでなければ表示"
+            ]
+          },
+          "ObjCheckRate": 1.0,
+          "ObjCheckType": {
+            "hash": "bbf0555b",
+            "labels": [
+              "Heavy",
+              "動かない"
+            ]
+          },
+          "ChangeDemo": {
+            "hash": "80f874cd",
+            "labels": [
+              "Disable",
+              "デモ不可"
+            ]
+          },
+          "BgCheckType": {
+            "hash": "26296dd2",
+            "labels": [
+              "Normal",
+              "通常"
+            ]
+          },
+          "EnableRodCloth": 0
+        },
+        {
+          "StateName": "AxeReadyWait",
+          "PacketType": {
+            "hash": "a93002a5",
+            "labels": [
+              "Overwrite",
+              "上書き"
+            ]
+          },
+          "ToolState": {
+            "hash": "d14b7584",
+            "labels": [
+              "IfNotDemoDraw",
+              "デモでなければ表示"
+            ]
+          },
+          "ObjCheckRate": 1.0,
+          "ObjCheckType": {
+            "hash": "bbf0555b",
+            "labels": [
+              "Heavy",
+              "動かない"
+            ]
+          },
+          "ChangeDemo": {
+            "hash": "80f874cd",
+            "labels": [
+              "Disable",
+              "デモ不可"
+            ]
+          },
+          "BgCheckType": {
+            "hash": "26296dd2",
+            "labels": [
+              "Normal",
+              "通常"
+            ]
+          },
+          "EnableRodCloth": 0
+        },
+        {
+          "StateName": "AxeHitTree",
+          "PacketType": {
+            "hash": "9c751860",
+            "labels": [
+              "Sequential",
+              "累積"
+            ]
+          },
+          "ToolState": {
+            "hash": "d14b7584",
+            "labels": [
+              "IfNotDemoDraw",
+              "デモでなければ表示"
+            ]
+          },
+          "ObjCheckRate": 1.0,
+          "ObjCheckType": {
+            "hash": "bbf0555b",
+            "labels": [
+              "Heavy",
+              "動かない"
+            ]
+          },
+          "ChangeDemo": {
+            "hash": "80f874cd",
+            "labels": [
+              "Disable",
+              "デモ不可"
+            ]
+          },
+          "BgCheckType": {
+            "hash": "26296dd2",
+            "labels": [
+              "Normal",
+              "通常"
+            ]
+          },
+          "EnableRodCloth": 0
+        }
+      ],
+      "Shovel": [
+        {
+          "StateName": "ScoopReady",
+          "PacketType": {
+            "hash": "a93002a5",
+            "labels": [
+              "Overwrite",
+              "上書き"
+            ]
+          },
+          "ToolState": {
+            "hash": "d14b7584",
+            "labels": [
+              "IfNotDemoDraw",
+              "デモでなければ表示"
+            ]
+          },
+          "ObjCheckRate": 1.0,
+          "ObjCheckType": {
+            "hash": "bbf0555b",
+            "labels": [
+              "Heavy",
+              "動かない"
+            ]
+          },
+          "ChangeDemo": {
+            "hash": "80f874cd",
+            "labels": [
+              "Disable",
+              "デモ不可"
+            ]
+          },
+          "BgCheckType": {
+            "hash": "26296dd2",
+            "labels": [
+              "Normal",
+              "通常"
+            ]
+          },
+          "EnableRodCloth": 0
+        },
+        {
+          "StateName": "ScoopReadyWait",
+          "PacketType": {
+            "hash": "a93002a5",
+            "labels": [
+              "Overwrite",
+              "上書き"
+            ]
+          },
+          "ToolState": {
+            "hash": "d14b7584",
+            "labels": [
+              "IfNotDemoDraw",
+              "デモでなければ表示"
+            ]
+          },
+          "ObjCheckRate": 1.0,
+          "ObjCheckType": {
+            "hash": "bbf0555b",
+            "labels": [
+              "Heavy",
+              "動かない"
+            ]
+          },
+          "ChangeDemo": {
+            "hash": "80f874cd",
+            "labels": [
+              "Disable",
+              "デモ不可"
+            ]
+          },
+          "BgCheckType": {
+            "hash": "26296dd2",
+            "labels": [
+              "Normal",
+              "通常"
+            ]
+          },
+          "EnableRodCloth": 0
+        },
+        {
+          "StateName": "ScoopDig",
+          "PacketType": {
+            "hash": "9c751860",
+            "labels": [
+              "Sequential",
+              "累積"
+            ]
+          },
+          "ToolState": {
+            "hash": "d14b7584",
+            "labels": [
+              "IfNotDemoDraw",
+              "デモでなければ表示"
+            ]
+          },
+          "ObjCheckRate": 1.0,
+          "ObjCheckType": {
+            "hash": "bbf0555b",
+            "labels": [
+              "Heavy",
+              "動かない"
+            ]
+          },
+          "ChangeDemo": {
+            "hash": "80f874cd",
+            "labels": [
+              "Disable",
+              "デモ不可"
+            ]
+          },
+          "BgCheckType": {
+            "hash": "26296dd2",
+            "labels": [
+              "Normal",
+              "通常"
+            ]
+          },
+          "EnableRodCloth": 0
+        },
+        {
+          "StateName": "ScoopDigGetPutaway",
+          "PacketType": {
+            "hash": "9c751860",
+            "labels": [
+              "Sequential",
+              "累積"
+            ]
+          },
+          "ToolState": {
+            "hash": "d14b7584",
+            "labels": [
+              "IfNotDemoDraw",
+              "デモでなければ表示"
+            ]
+          },
+          "ObjCheckRate": 1.0,
+          "ObjCheckType": {
+            "hash": "bbf0555b",
+            "labels": [
+              "Heavy",
+              "動かない"
+            ]
+          },
+          "ChangeDemo": {
+            "hash": "80f874cd",
+            "labels": [
+              "Disable",
+              "デモ不可"
+            ]
+          },
+          "BgCheckType": {
+            "hash": "26296dd2",
+            "labels": [
+              "Normal",
+              "通常"
+            ]
+          },
+          "EnableRodCloth": 0
+        },
+        {
+          "StateName": "ScoopDigGetDemo",
+          "PacketType": {
+            "hash": "9c751860",
+            "labels": [
+              "Sequential",
+              "累積"
+            ]
+          },
+          "ToolState": {
+            "hash": "d14b7584",
+            "labels": [
+              "IfNotDemoDraw",
+              "デモでなければ表示"
+            ]
+          },
+          "ObjCheckRate": 1.0,
+          "ObjCheckType": {
+            "hash": "bbf0555b",
+            "labels": [
+              "Heavy",
+              "動かない"
+            ]
+          },
+          "ChangeDemo": {
+            "hash": "70d3cf9a",
+            "labels": [
+              "IsDemo",
+              "デモ状態"
+            ]
+          },
+          "BgCheckType": {
+            "hash": "26296dd2",
+            "labels": [
+              "Normal",
+              "通常"
+            ]
+          },
+          "EnableRodCloth": 0
+        },
+        {
+          "StateName": "ScoopBury",
+          "PacketType": {
+            "hash": "9c751860",
+            "labels": [
+              "Sequential",
+              "累積"
+            ]
+          },
+          "ToolState": {
+            "hash": "d14b7584",
+            "labels": [
+              "IfNotDemoDraw",
+              "デモでなければ表示"
+            ]
+          },
+          "ObjCheckRate": 1.0,
+          "ObjCheckType": {
+            "hash": "bbf0555b",
+            "labels": [
+              "Heavy",
+              "動かない"
+            ]
+          },
+          "ChangeDemo": {
+            "hash": "80f874cd",
+            "labels": [
+              "Disable",
+              "デモ不可"
+            ]
+          },
+          "BgCheckType": {
+            "hash": "26296dd2",
+            "labels": [
+              "Normal",
+              "通常"
+            ]
+          },
+          "EnableRodCloth": 0
+        }
+      ],
+      "Net": [
+        {
+          "StateName": "NetWait",
+          "PacketType": {
+            "hash": "a93002a5",
+            "labels": [
+              "Overwrite",
+              "上書き"
+            ]
+          },
+          "ToolState": {
+            "hash": "d14b7584",
+            "labels": [
+              "IfNotDemoDraw",
+              "デモでなければ表示"
+            ]
+          },
+          "ObjCheckRate": 1.0,
+          "ObjCheckType": {
+            "hash": "26296dd2",
+            "labels": [
+              "Normal",
+              "通常"
+            ]
+          },
+          "ChangeDemo": {
+            "hash": "d33bcb2b",
+            "labels": [
+              "EnableToDemoStandSpeak",
+              "デモ立ちSpeak可"
+            ]
+          },
+          "BgCheckType": {
+            "hash": "26296dd2",
+            "labels": [
+              "Normal",
+              "通常"
+            ]
+          },
+          "EnableRodCloth": 0
+        },
+        {
+          "StateName": "NetSwing",
+          "PacketType": {
+            "hash": "a93002a5",
+            "labels": [
+              "Overwrite",
+              "上書き"
+            ]
+          },
+          "ToolState": {
+            "hash": "d14b7584",
+            "labels": [
+              "IfNotDemoDraw",
+              "デモでなければ表示"
+            ]
+          },
+          "ObjCheckRate": 1.0,
+          "ObjCheckType": {
+            "hash": "bbf0555b",
+            "labels": [
+              "Heavy",
+              "動かない"
+            ]
+          },
+          "ChangeDemo": {
+            "hash": "80f874cd",
+            "labels": [
+              "Disable",
+              "デモ不可"
+            ]
+          },
+          "BgCheckType": {
+            "hash": "26296dd2",
+            "labels": [
+              "Normal",
+              "通常"
+            ]
+          },
+          "EnableRodCloth": 0
+        },
+        {
+          "StateName": "NetGetDemo",
+          "PacketType": {
+            "hash": "a93002a5",
+            "labels": [
+              "Overwrite",
+              "上書き"
+            ]
+          },
+          "ToolState": {
+            "hash": "d14b7584",
+            "labels": [
+              "IfNotDemoDraw",
+              "デモでなければ表示"
+            ]
+          },
+          "ObjCheckRate": 1.0,
+          "ObjCheckType": {
+            "hash": "bbf0555b",
+            "labels": [
+              "Heavy",
+              "動かない"
+            ]
+          },
+          "ChangeDemo": {
+            "hash": "70d3cf9a",
+            "labels": [
+              "IsDemo",
+              "デモ状態"
+            ]
+          },
+          "BgCheckType": {
+            "hash": "26296dd2",
+            "labels": [
+              "Normal",
+              "通常"
+            ]
+          },
+          "EnableRodCloth": 0
+        },
+        {
+          "StateName": "NetRelease",
+          "PacketType": {
+            "hash": "a93002a5",
+            "labels": [
+              "Overwrite",
+              "上書き"
+            ]
+          },
+          "ToolState": {
+            "hash": "d14b7584",
+            "labels": [
+              "IfNotDemoDraw",
+              "デモでなければ表示"
+            ]
+          },
+          "ObjCheckRate": 1.0,
+          "ObjCheckType": {
+            "hash": "bbf0555b",
+            "labels": [
+              "Heavy",
+              "動かない"
+            ]
+          },
+          "ChangeDemo": {
+            "hash": "80f874cd",
+            "labels": [
+              "Disable",
+              "デモ不可"
+            ]
+          },
+          "BgCheckType": {
+            "hash": "26296dd2",
+            "labels": [
+              "Normal",
+              "通常"
+            ]
+          },
+          "EnableRodCloth": 0
+        }
+      ],
+      "FishingRod": [
+        {
+          "StateName": "RodCasting",
+          "PacketType": {
+            "hash": "a93002a5",
+            "labels": [
+              "Overwrite",
+              "上書き"
+            ]
+          },
+          "ToolState": {
+            "hash": "d14b7584",
+            "labels": [
+              "IfNotDemoDraw",
+              "デモでなければ表示"
+            ]
+          },
+          "ObjCheckRate": 1.0,
+          "ObjCheckType": {
+            "hash": "bbf0555b",
+            "labels": [
+              "Heavy",
+              "動かない"
+            ]
+          },
+          "ChangeDemo": {
+            "hash": "80f874cd",
+            "labels": [
+              "Disable",
+              "デモ不可"
+            ]
+          },
+          "BgCheckType": {
+            "hash": "26296dd2",
+            "labels": [
+              "Normal",
+              "通常"
+            ]
+          },
+          "EnableRodCloth": 0
+        },
+        {
+          "StateName": "RodCastingFail",
+          "PacketType": {
+            "hash": "a93002a5",
+            "labels": [
+              "Overwrite",
+              "上書き"
+            ]
+          },
+          "ToolState": {
+            "hash": "d14b7584",
+            "labels": [
+              "IfNotDemoDraw",
+              "デモでなければ表示"
+            ]
+          },
+          "ObjCheckRate": 1.0,
+          "ObjCheckType": {
+            "hash": "bbf0555b",
+            "labels": [
+              "Heavy",
+              "動かない"
+            ]
+          },
+          "ChangeDemo": {
+            "hash": "80f874cd",
+            "labels": [
+              "Disable",
+              "デモ不可"
+            ]
+          },
+          "BgCheckType": {
+            "hash": "26296dd2",
+            "labels": [
+              "Normal",
+              "通常"
+            ]
+          },
+          "EnableRodCloth": 0
+        },
+        {
+          "StateName": "RodWaitHit",
+          "PacketType": {
+            "hash": "a93002a5",
+            "labels": [
+              "Overwrite",
+              "上書き"
+            ]
+          },
+          "ToolState": {
+            "hash": "d14b7584",
+            "labels": [
+              "IfNotDemoDraw",
+              "デモでなければ表示"
+            ]
+          },
+          "ObjCheckRate": 1.0,
+          "ObjCheckType": {
+            "hash": "bbf0555b",
+            "labels": [
+              "Heavy",
+              "動かない"
+            ]
+          },
+          "ChangeDemo": {
+            "hash": "3290a903",
+            "labels": [
+              "EnableToDemoNetLock",
+              "デモネットロック可"
+            ]
+          },
+          "BgCheckType": {
+            "hash": "26296dd2",
+            "labels": [
+              "Normal",
+              "通常"
+            ]
+          },
+          "EnableRodCloth": 0
+        },
+        {
+          "StateName": "RodFall",
+          "PacketType": {
+            "hash": "a93002a5",
+            "labels": [
+              "Overwrite",
+              "上書き"
+            ]
+          },
+          "ToolState": {
+            "hash": "d14b7584",
+            "labels": [
+              "IfNotDemoDraw",
+              "デモでなければ表示"
+            ]
+          },
+          "ObjCheckRate": 1.0,
+          "ObjCheckType": {
+            "hash": "bbf0555b",
+            "labels": [
+              "Heavy",
+              "動かない"
+            ]
+          },
+          "ChangeDemo": {
+            "hash": "3290a903",
+            "labels": [
+              "EnableToDemoNetLock",
+              "デモネットロック可"
+            ]
+          },
+          "BgCheckType": {
+            "hash": "26296dd2",
+            "labels": [
+              "Normal",
+              "通常"
+            ]
+          },
+          "EnableRodCloth": 0
+        },
+        {
+          "StateName": "RodHit",
+          "PacketType": {
+            "hash": "a93002a5",
+            "labels": [
+              "Overwrite",
+              "上書き"
+            ]
+          },
+          "ToolState": {
+            "hash": "d14b7584",
+            "labels": [
+              "IfNotDemoDraw",
+              "デモでなければ表示"
+            ]
+          },
+          "ObjCheckRate": 1.0,
+          "ObjCheckType": {
+            "hash": "bbf0555b",
+            "labels": [
+              "Heavy",
+              "動かない"
+            ]
+          },
+          "ChangeDemo": {
+            "hash": "80f874cd",
+            "labels": [
+              "Disable",
+              "デモ不可"
+            ]
+          },
+          "BgCheckType": {
+            "hash": "26296dd2",
+            "labels": [
+              "Normal",
+              "通常"
+            ]
+          },
+          "EnableRodCloth": 0
+        },
+        {
+          "StateName": "RodReturnFloat",
+          "PacketType": {
+            "hash": "a93002a5",
+            "labels": [
+              "Overwrite",
+              "上書き"
+            ]
+          },
+          "ToolState": {
+            "hash": "d14b7584",
+            "labels": [
+              "IfNotDemoDraw",
+              "デモでなければ表示"
+            ]
+          },
+          "ObjCheckRate": 1.0,
+          "ObjCheckType": {
+            "hash": "bbf0555b",
+            "labels": [
+              "Heavy",
+              "動かない"
+            ]
+          },
+          "ChangeDemo": {
+            "hash": "80f874cd",
+            "labels": [
+              "Disable",
+              "デモ不可"
+            ]
+          },
+          "BgCheckType": {
+            "hash": "26296dd2",
+            "labels": [
+              "Normal",
+              "通常"
+            ]
+          },
+          "EnableRodCloth": 0
+        },
+        {
+          "StateName": "RodFight",
+          "PacketType": {
+            "hash": "a93002a5",
+            "labels": [
+              "Overwrite",
+              "上書き"
+            ]
+          },
+          "ToolState": {
+            "hash": "d14b7584",
+            "labels": [
+              "IfNotDemoDraw",
+              "デモでなければ表示"
+            ]
+          },
+          "ObjCheckRate": 1.0,
+          "ObjCheckType": {
+            "hash": "bbf0555b",
+            "labels": [
+              "Heavy",
+              "動かない"
+            ]
+          },
+          "ChangeDemo": {
+            "hash": "70d3cf9a",
+            "labels": [
+              "IsDemo",
+              "デモ状態"
+            ]
+          },
+          "BgCheckType": {
+            "hash": "26296dd2",
+            "labels": [
+              "Normal",
+              "通常"
+            ]
+          },
+          "EnableRodCloth": 0
+        },
+        {
+          "StateName": "RodCatch",
+          "PacketType": {
+            "hash": "a93002a5",
+            "labels": [
+              "Overwrite",
+              "上書き"
+            ]
+          },
+          "ToolState": {
+            "hash": "d14b7584",
+            "labels": [
+              "IfNotDemoDraw",
+              "デモでなければ表示"
+            ]
+          },
+          "ObjCheckRate": 1.0,
+          "ObjCheckType": {
+            "hash": "bbf0555b",
+            "labels": [
+              "Heavy",
+              "動かない"
+            ]
+          },
+          "ChangeDemo": {
+            "hash": "70d3cf9a",
+            "labels": [
+              "IsDemo",
+              "デモ状態"
+            ]
+          },
+          "BgCheckType": {
+            "hash": "26296dd2",
+            "labels": [
+              "Normal",
+              "通常"
+            ]
+          },
+          "EnableRodCloth": 0
+        },
+        {
+          "StateName": "RodGetDemo",
+          "PacketType": {
+            "hash": "a93002a5",
+            "labels": [
+              "Overwrite",
+              "上書き"
+            ]
+          },
+          "ToolState": {
+            "hash": "d14b7584",
+            "labels": [
+              "IfNotDemoDraw",
+              "デモでなければ表示"
+            ]
+          },
+          "ObjCheckRate": 1.0,
+          "ObjCheckType": {
+            "hash": "bbf0555b",
+            "labels": [
+              "Heavy",
+              "動かない"
+            ]
+          },
+          "ChangeDemo": {
+            "hash": "70d3cf9a",
+            "labels": [
+              "IsDemo",
+              "デモ状態"
+            ]
+          },
+          "BgCheckType": {
+            "hash": "26296dd2",
+            "labels": [
+              "Normal",
+              "通常"
+            ]
+          },
+          "EnableRodCloth": 0
+        },
+        {
+          "StateName": "RodReleaseFish",
+          "PacketType": {
+            "hash": "a93002a5",
+            "labels": [
+              "Overwrite",
+              "上書き"
+            ]
+          },
+          "ToolState": {
+            "hash": "d14b7584",
+            "labels": [
+              "IfNotDemoDraw",
+              "デモでなければ表示"
+            ]
+          },
+          "ObjCheckRate": 1.0,
+          "ObjCheckType": {
+            "hash": "bbf0555b",
+            "labels": [
+              "Heavy",
+              "動かない"
+            ]
+          },
+          "ChangeDemo": {
+            "hash": "80f874cd",
+            "labels": [
+              "Disable",
+              "デモ不可"
+            ]
+          },
+          "BgCheckType": {
+            "hash": "26296dd2",
+            "labels": [
+              "Normal",
+              "通常"
+            ]
+          },
+          "EnableRodCloth": 0
+        },
+        {
+          "StateName": "RodReleaseTrash",
+          "PacketType": {
+            "hash": "a93002a5",
+            "labels": [
+              "Overwrite",
+              "上書き"
+            ]
+          },
+          "ToolState": {
+            "hash": "d14b7584",
+            "labels": [
+              "IfNotDemoDraw",
+              "デモでなければ表示"
+            ]
+          },
+          "ObjCheckRate": 1.0,
+          "ObjCheckType": {
+            "hash": "bbf0555b",
+            "labels": [
+              "Heavy",
+              "動かない"
+            ]
+          },
+          "ChangeDemo": {
+            "hash": "80f874cd",
+            "labels": [
+              "Disable",
+              "デモ不可"
+            ]
+          },
+          "BgCheckType": {
+            "hash": "26296dd2",
+            "labels": [
+              "Normal",
+              "通常"
+            ]
+          },
+          "EnableRodCloth": 0
+        }
+      ],
+      "Slingshot": [
+        {
+          "StateName": "SlingshotWait",
+          "PacketType": {
+            "hash": "a93002a5",
+            "labels": [
+              "Overwrite",
+              "上書き"
+            ]
+          },
+          "ToolState": {
+            "hash": "d14b7584",
+            "labels": [
+              "IfNotDemoDraw",
+              "デモでなければ表示"
+            ]
+          },
+          "ObjCheckRate": 1.0,
+          "ObjCheckType": {
+            "hash": "bbf0555b",
+            "labels": [
+              "Heavy",
+              "動かない"
+            ]
+          },
+          "ChangeDemo": {
+            "hash": "80f874cd",
+            "labels": [
+              "Disable",
+              "デモ不可"
+            ]
+          },
+          "BgCheckType": {
+            "hash": "26296dd2",
+            "labels": [
+              "Normal",
+              "通常"
+            ]
+          },
+          "EnableRodCloth": 0
+        },
+        {
+          "StateName": "SlingshotShooting",
+          "PacketType": {
+            "hash": "a93002a5",
+            "labels": [
+              "Overwrite",
+              "上書き"
+            ]
+          },
+          "ToolState": {
+            "hash": "d14b7584",
+            "labels": [
+              "IfNotDemoDraw",
+              "デモでなければ表示"
+            ]
+          },
+          "ObjCheckRate": 1.0,
+          "ObjCheckType": {
+            "hash": "bbf0555b",
+            "labels": [
+              "Heavy",
+              "動かない"
+            ]
+          },
+          "ChangeDemo": {
+            "hash": "80f874cd",
+            "labels": [
+              "Disable",
+              "デモ不可"
+            ]
+          },
+          "BgCheckType": {
+            "hash": "26296dd2",
+            "labels": [
+              "Normal",
+              "通常"
+            ]
+          },
+          "EnableRodCloth": 0
+        },
+        {
+          "StateName": "SlingshotDropWait",
+          "PacketType": {
+            "hash": "a93002a5",
+            "labels": [
+              "Overwrite",
+              "上書き"
+            ]
+          },
+          "ToolState": {
+            "hash": "d14b7584",
+            "labels": [
+              "IfNotDemoDraw",
+              "デモでなければ表示"
+            ]
+          },
+          "ObjCheckRate": 1.0,
+          "ObjCheckType": {
+            "hash": "bbf0555b",
+            "labels": [
+              "Heavy",
+              "動かない"
+            ]
+          },
+          "ChangeDemo": {
+            "hash": "70d3cf9a",
+            "labels": [
+              "IsDemo",
+              "デモ状態"
+            ]
+          },
+          "BgCheckType": {
+            "hash": "26296dd2",
+            "labels": [
+              "Normal",
+              "通常"
+            ]
+          },
+          "EnableRodCloth": 0
+        },
+        {
+          "StateName": "SlingshotShocked",
+          "PacketType": {
+            "hash": "a93002a5",
+            "labels": [
+              "Overwrite",
+              "上書き"
+            ]
+          },
+          "ToolState": {
+            "hash": "d14b7584",
+            "labels": [
+              "IfNotDemoDraw",
+              "デモでなければ表示"
+            ]
+          },
+          "ObjCheckRate": 1.0,
+          "ObjCheckType": {
+            "hash": "bbf0555b",
+            "labels": [
+              "Heavy",
+              "動かない"
+            ]
+          },
+          "ChangeDemo": {
+            "hash": "70d3cf9a",
+            "labels": [
+              "IsDemo",
+              "デモ状態"
+            ]
+          },
+          "BgCheckType": {
+            "hash": "26296dd2",
+            "labels": [
+              "Normal",
+              "通常"
+            ]
+          },
+          "EnableRodCloth": 0
+        }
+      ],
+      "Watering": [
+        {
+          "StateName": "Watering",
+          "PacketType": {
+            "hash": "9c751860",
+            "labels": [
+              "Sequential",
+              "累積"
+            ]
+          },
+          "ToolState": {
+            "hash": "d14b7584",
+            "labels": [
+              "IfNotDemoDraw",
+              "デモでなければ表示"
+            ]
+          },
+          "ObjCheckRate": 1.0,
+          "ObjCheckType": {
+            "hash": "bbf0555b",
+            "labels": [
+              "Heavy",
+              "動かない"
+            ]
+          },
+          "ChangeDemo": {
+            "hash": "80f874cd",
+            "labels": [
+              "Disable",
+              "デモ不可"
+            ]
+          },
+          "BgCheckType": {
+            "hash": "26296dd2",
+            "labels": [
+              "Normal",
+              "通常"
+            ]
+          },
+          "EnableRodCloth": 0
+        }
+      ]
+    }
+  },
+  "player_tool_break_eventflow": {
+    "source": {
+      "source_id": 523,
+      "sha256": "5f2b1bb4a72cbed1e299c58b7de7eca8e08127b3a32d4102d613231141487033",
+      "size": 4112,
+      "format": "BFEVFL"
+    },
+    "entries": {
+      "ToolBreak_Axe": [
+        {
+          "event_index": 2,
+          "op": "SetTagFromSystem",
+          "params": {
+            "TagType": "cPlayerGetItemName",
+            "SetTagType": "cDegit",
+            "TagID": 0,
+            "Value": 0,
+            "AccessKey": ""
+          },
+          "text": null
+        },
+        {
+          "event_index": 3,
+          "op": "MSG",
+          "params": null,
+          "text": "TalkSys/SYS_Player:290"
+        },
+        {
+          "event_index": 4,
+          "op": "IF",
+          "params": null,
+          "text": "PlayerHasCraftRecipe {\"ItemUniqueId\": 9617, \"UnlockType\": \"\"}"
+        },
+        {
+          "event_index": 6,
+          "op": "IF",
+          "params": null,
+          "text": "EventFlagSystemInt {\"AccessKey\": \"cPlayer:GoldenAxeLearningCount\", \"FlagCheckType\": 3, \"Border\": 99}"
+        },
+        {
+          "event_index": 5,
+          "op": "IF",
+          "params": null,
+          "text": "EventFlagSystemBool {\"AccessKey\": \"cPlayer:MainmenuRecipe\"}"
+        },
+        {
+          "event_index": 8,
+          "op": "ReservePlayerMutterDemo",
+          "params": {
+            "IsResistNpcCast": false,
+            "MutterStartTiming": "cNextDemoEnd_Simple",
+            "EventFileName": "Player_GetDemo_Recipe_DIY",
+            "EntryPointName": "GetRecipe_GoldenAxe"
+          },
+          "text": null
+        },
+        {
+          "event_index": 7,
+          "op": "EventFlagSystemAdd",
+          "params": {
+            "AccessKey": "cPlayer:GoldenAxeLearningCount",
+            "AddNum": 1
+          },
+          "text": null
+        }
+      ],
+      "ToolBreak_Scoop": [
+        {
+          "event_index": 0,
+          "op": "SetTagFromSystem",
+          "params": {
+            "TagType": "cPlayerGetItemName",
+            "SetTagType": "cDegit",
+            "TagID": 0,
+            "Value": 0,
+            "AccessKey": ""
+          },
+          "text": null
+        },
+        {
+          "event_index": 1,
+          "op": "MSG",
+          "params": null,
+          "text": "TalkSys/SYS_Player:290"
+        }
+      ],
+      "ToolBreak_Watering": [
+        {
+          "event_index": 0,
+          "op": "SetTagFromSystem",
+          "params": {
+            "TagType": "cPlayerGetItemName",
+            "SetTagType": "cDegit",
+            "TagID": 0,
+            "Value": 0,
+            "AccessKey": ""
+          },
+          "text": null
+        },
+        {
+          "event_index": 1,
+          "op": "MSG",
+          "params": null,
+          "text": "TalkSys/SYS_Player:290"
+        }
+      ],
+      "ToolBreak_Net": [
+        {
+          "event_index": 0,
+          "op": "SetTagFromSystem",
+          "params": {
+            "TagType": "cPlayerGetItemName",
+            "SetTagType": "cDegit",
+            "TagID": 0,
+            "Value": 0,
+            "AccessKey": ""
+          },
+          "text": null
+        },
+        {
+          "event_index": 1,
+          "op": "MSG",
+          "params": null,
+          "text": "TalkSys/SYS_Player:290"
+        }
+      ],
+      "ToolBreak_Slingshot": [
+        {
+          "event_index": 0,
+          "op": "SetTagFromSystem",
+          "params": {
+            "TagType": "cPlayerGetItemName",
+            "SetTagType": "cDegit",
+            "TagID": 0,
+            "Value": 0,
+            "AccessKey": ""
+          },
+          "text": null
+        },
+        {
+          "event_index": 1,
+          "op": "MSG",
+          "params": null,
+          "text": "TalkSys/SYS_Player:290"
+        }
+      ],
+      "ToolBreak_FishingRod": [
+        {
+          "event_index": 0,
+          "op": "SetTagFromSystem",
+          "params": {
+            "TagType": "cPlayerGetItemName",
+            "SetTagType": "cDegit",
+            "TagID": 0,
+            "Value": 0,
+            "AccessKey": ""
+          },
+          "text": null
+        },
+        {
+          "event_index": 1,
+          "op": "MSG",
+          "params": null,
+          "text": "TalkSys/SYS_Player:290"
+        }
+      ]
+    },
+    "counters_and_flags": {
+      "golden_axe_recipe_learning_counter": {
+        "key": "cPlayer:GoldenAxeLearningCount",
+        "definition": {
+          "table": "EventFlagsPlayerParam",
+          "source_id": 26,
+          "name_ja": "金のオノレシピひらめきカウンタ",
+          "max": 200,
+          "default": 0,
+          "flow_access": 2,
+          "net_access": null,
+          "reset_policy_raw": {
+            "h_5140e4b4": 0,
+            "h_bed25a86": 1
+          }
+        },
+        "interpretation": "Separate recipe-learning counter changed by ToolBreak_Axe; not tool durability."
+      },
+      "break_tool_achievement": {
+        "key": "cLifeSupportAchievement:BreakTool",
+        "definition": {
+          "table": "EventFlagsLifeSupportAchievementParam",
+          "source_id": 20,
+          "name_ja": "道具を壊した",
+          "max": 1,
+          "default": null,
+          "flow_access": null,
+          "net_access": null,
+          "reset_policy_raw": {}
+        },
+        "interpretation": "Achievement flag named for breaking a tool; the indexed 1.0.0 EventFlow data has no writer, so native writer or lack of write is unresolved."
+      }
+    },
+    "axe_entry_observations": [
+      "ToolBreak_Axe checks PlayerHasCraftRecipe for ItemUniqueId 9617.",
+      "It checks cPlayer:GoldenAxeLearningCount against Border 99.",
+      "On case 1 it adds 1 to cPlayer:GoldenAxeLearningCount; case 0 can queue GetRecipe_GoldenAxe when MainmenuRecipe is on."
+    ]
+  },
+  "native_break_path": {
+    "player_tool_break_va": "0xe37a50",
+    "player_tool_break_strings": [
+      {
+        "va": "0x294c618",
+        "text": "PlayerToolBreak"
+      },
+      {
+        "va": "0x2956e57",
+        "text": "ToolBreak_%s"
+      },
+      {
+        "va": "0x2965aa1",
+        "text": "Player_ToolBreak"
+      },
+      {
+        "va": "0x2965aa1",
+        "text": "Player_ToolBreak"
+      },
+      {
+        "va": "0x29a72ff",
+        "text": "PlayerToolBreakKeep"
+      },
+      {
+        "va": "0x29a72ff",
+        "text": "PlayerToolBreakKeep"
+      },
+      {
+        "va": "0x29a72ff",
+        "text": "PlayerToolBreakKeep"
+      }
+    ],
+    "break_tool_action_va": "0xe37830",
+    "break_tool_action_strings": [
+      {
+        "va": "0x298e0d5",
+        "text": "BreakTool"
+      }
+    ],
+    "itemparam_lookup_call": [
+      {
+        "pc": "0xe37d34",
+        "target": "0xf58d00",
+        "instruction": "BL"
+      }
+    ],
+    "state_counter_instruction_sites": [
+      {
+        "va": "0xe37c60",
+        "bytes": "08050011",
+        "instruction": "add w8, w8, #1"
+      },
+      {
+        "va": "0xe37c64",
+        "bytes": "689a08b9",
+        "instruction": "str w8, [x19, #0x898]"
+      },
+      {
+        "va": "0xe37c70",
+        "bytes": "08050011",
+        "instruction": "add w8, w8, #1"
+      },
+      {
+        "va": "0xe37c74",
+        "bytes": "689a08b9",
+        "instruction": "str w8, [x19, #0x898]"
+      },
+      {
+        "va": "0xe37904",
+        "bytes": "7f9a08b9",
+        "instruction": "str wzr, [x19, #0x898]"
+      },
+      {
+        "va": "0xe37908",
+        "bytes": "7f722239",
+        "instruction": "strb wzr, [x19, #0x89c]"
+      }
+    ],
+    "counter_interpretation": "The native PlayerToolBreak state increments its local +0x898 field on these branches; BreakTool clears +0x898 and +0x89c. This does not establish per-tool inventory durability or a decrement."
+  },
+  "tool_action_results": {
+    "native_action_anchor_refs": {
+      "Axe": [
+        {
+          "function_va": "0xe36ec0",
+          "string_refs": [
+            {
+              "va": "0x2976567",
+              "text": "PlayerAxeDullHitTree"
+            },
+            {
+              "va": "0x298e0c4",
+              "text": "PlayerAxeHitTree"
+            }
+          ]
+        }
+      ],
+      "Shovel": [
+        {
+          "function_va": "0xe52390",
+          "string_refs": [
+            {
+              "va": "0x292abcd",
+              "text": "PlayerScoopDigStump"
+            },
+            {
+              "va": "0x29b1555",
+              "text": "PlayerScoopDig"
+            }
+          ]
+        },
+        {
+          "function_va": "0xe52850",
+          "string_refs": [
+            {
+              "va": "0x29428be",
+              "text": "PlayerScoopBury"
+            },
+            {
+              "va": "0x297c1f1",
+              "text": "ScoopBuryFromSwing"
+            }
+          ]
+        },
+        {
+          "function_va": "0xe541a0",
+          "string_refs": [
+            {
+              "va": "0x2993174",
+              "text": "PlayerScoopDigGetDemo"
+            },
+            {
+              "va": "0x29a1f2b",
+              "text": "PlayerScoopDigGetDemoKeep"
+            }
+          ]
+        }
+      ],
+      "Net": [
+        {
+          "function_va": "0xe43f30",
+          "string_refs": [
+            {
+              "va": "0x295baa4",
+              "text": "CommonNetSwing"
+            }
+          ]
+        },
+        {
+          "function_va": "0xe45b80",
+          "string_refs": [
+            {
+              "va": "0x2965aca",
+              "text": "PlayerNetGetDemo"
+            },
+            {
+              "va": "0x29b692d",
+              "text": "PlayerNetGetDemoKeep"
+            }
+          ]
+        }
+      ],
+      "FishingRod": [
+        {
+          "function_va": "0xe4bb10",
+          "string_refs": [
+            {
+              "va": "0x2993165",
+              "text": "ToolRodCasting"
+            },
+            {
+              "va": "0x29ccf47",
+              "text": "CommonRodCasting"
+            }
+          ]
+        },
+        {
+          "function_va": "0xe4d420",
+          "string_refs": [
+            {
+              "va": "0x294c679",
+              "text": "ToolRodWaitHit"
+            },
+            {
+              "va": "0x29765bd",
+              "text": "CommonRodWaitHit"
+            }
+          ]
+        },
+        {
+          "function_va": "0xe4dd40",
+          "string_refs": [
+            {
+              "va": "0x29428af",
+              "text": "CommonRodCatch"
+            },
+            {
+              "va": "0x294c645",
+              "text": "CommonRodCatchSideways"
+            },
+            {
+              "va": "0x2970cbd",
+              "text": "ToolRodCatch"
+            }
+          ]
+        },
+        {
+          "function_va": "0xe4e730",
+          "string_refs": [
+            {
+              "va": "0x294c65c",
+              "text": "CommonRodGetDemoSidewaysKeep"
+            },
+            {
+              "va": "0x29765dd",
+              "text": "CatchFishContinuously"
+            },
+            {
+              "va": "0x29765dd",
+              "text": "CatchFishContinuously"
+            },
+            {
+              "va": "0x299cd83",
+              "text": "ToolRodGetDemo"
+            },
+            {
+              "va": "0x29a738c",
+              "text": "CommonRodGetDemoSideways"
+            },
+            {
+              "va": "0x29abb9f",
+              "text": "CommonRodGetDemoKeep"
+            },
+            {
+              "va": "0x29b1544",
+              "text": "CommonRodGetDemo"
+            },
+            {
+              "va": "0x29b5a9b",
+              "text": "BeyDaily_QuestStart"
+            },
+            {
+              "va": "0x29ccdae",
+              "text": "CatchFishContinueCount"
+            },
+            {
+              "va": "0x29ccdae",
+              "text": "CatchFishContinueCount"
+            }
+          ]
+        }
+      ],
+      "Slingshot": [
+        {
+          "function_va": "0xe564b0",
+          "string_refs": [
+            {
+              "va": "0x2970cca",
+              "text": "PlayerSlingshotShooting"
+            }
+          ]
+        }
+      ],
+      "Watering": [
+        {
+          "function_va": "0xe585c0",
+          "string_refs": [
+            {
+              "va": "0x296a529",
+              "text": "CommonWateringUpperLevel"
+            },
+            {
+              "va": "0x298e0f3",
+              "text": "CommonWatering"
+            }
+          ]
+        }
+      ]
+    },
+    "state_registry": {
+      "function_va": "0xdd9a60",
+      "tool_state_string_refs": [
+        {
+          "va": "0x293b141",
+          "text": "State::cRodFight"
+        },
+        {
+          "va": "0x2942813",
+          "text": "State::cNetSwing"
+        },
+        {
+          "va": "0x2942824",
+          "text": "State::cNetGetDemo"
+        },
+        {
+          "va": "0x2942837",
+          "text": "State::cSlingshotDropWait"
+        },
+        {
+          "va": "0x29477c1",
+          "text": "State::cScoopDigGetDemo"
+        },
+        {
+          "va": "0x29477f8",
+          "text": "State::cRodGetDemo"
+        },
+        {
+          "va": "0x294c529",
+          "text": "State::cScoopDig"
+        },
+        {
+          "va": "0x294c559",
+          "text": "State::cAxeHitTree"
+        },
+        {
+          "va": "0x294c585",
+          "text": "State::cWatering"
+        },
+        {
+          "va": "0x2960982",
+          "text": "State::cScoopReadyWait"
+        },
+        {
+          "va": "0x2960999",
+          "text": "State::cScoopDigGetPutaway"
+        },
+        {
+          "va": "0x29609b4",
+          "text": "State::cScoopBury"
+        },
+        {
+          "va": "0x2965a02",
+          "text": "State::cRodFall"
+        },
+        {
+          "va": "0x296b96d",
+          "text": "State::cNetRelease"
+        },
+        {
+          "va": "0x2970baa",
+          "text": "State::cNetWait"
+        },
+        {
+          "va": "0x2976524",
+          "text": "State::cRodReleaseTrash"
+        },
+        {
+          "va": "0x297c108",
+          "text": "State::cRodWaitHit"
+        },
+        {
+          "va": "0x29894c0",
+          "text": "State::cRodCatch"
+        },
+        {
+          "va": "0x299822a",
+          "text": "State::cRodHit"
+        },
+        {
+          "va": "0x299cbf4",
+          "text": "State::cScoopReady"
+        },
+        {
+          "va": "0x29a7283",
+          "text": "State::cRodReleaseFish"
+        },
+        {
+          "va": "0x29abaa8",
+          "text": "State::cSlingshotShooting"
+        },
+        {
+          "va": "0x29b1468",
+          "text": "State::cAxeReadyWait"
+        },
+        {
+          "va": "0x29b14a6",
+          "text": "State::cSlingshotWait"
+        },
+        {
+          "va": "0x29b6833",
+          "text": "State::cAxeReady"
+        },
+        {
+          "va": "0x29b68b4",
+          "text": "State::cRodCastingFail"
+        },
+        {
+          "va": "0x29bd70d",
+          "text": "State::cRodReturnFloat"
+        },
+        {
+          "va": "0x29bd724",
+          "text": "State::cSlingshotShocked"
+        },
+        {
+          "va": "0x29c2e36",
+          "text": "State::cRodCasting"
+        }
+      ],
+      "interpretation": "Constructor/registry evidence for tool state names, not a durability calculator or proof of world-result mutation."
+    },
+    "Axe": {
+      "status": "state-and-break-flow-proven",
+      "open": [
+        "tree-hit result, drop result, and inventory/durability mutation"
+      ]
+    },
+    "Shovel": {
+      "status": "state-proven",
+      "open": [
+        "dig/bury world result and inventory/durability mutation"
+      ]
+    },
+    "Net": {
+      "status": "state-proven",
+      "open": [
+        "capture eligibility, caught-insect inventory result, and durability mutation"
+      ]
+    },
+    "FishingRod": {
+      "status": "state-proven",
+      "open": [
+        "bite/catch/release output, inventory result, and durability mutation"
+      ]
+    },
+    "Slingshot": {
+      "status": "native-launch-call-mapped",
+      "function_va": "0xe564b0",
+      "string_refs": [
+        {
+          "va": "0x2970cca",
+          "text": "PlayerSlingshotShooting"
+        }
+      ],
+      "launch_consumer_call": [
+        {
+          "pc": "0xe567c0",
+          "target": "0x803690",
+          "instruction": "BL"
+        }
+      ],
+      "result": "On its valid-target path PlayerSlingshotShooting reaches 0x803690 to write projectile start/direction state; the consumer scales the three supplied velocity components by 6.",
+      "open": [
+        "projectile actor creation/collision, inventory result, and durability mutation"
+      ]
+    },
+    "Watering": {
+      "status": "state-proven",
+      "open": [
+        "plant watering mutation, flower response, and durability mutation"
+      ]
+    }
+  },
+  "tool_ring": {
+    "layout": {
+      "source_id": 1692,
+      "source": "B_data/Pack/StaticParam.pack!Param/Layout/RingMenuTools.byml",
+      "source_sha256": "3474fa03cd22c72f9258240b3ccb0e698a07c7631abbecd142346ffd2493b32e",
+      "user_name": "UI_RingMenuTools",
+      "parts": [
+        {
+          "group": "Ring",
+          "path": "/L_RingTool_00",
+          "base_option": 0,
+          "animations": [
+            {
+              "tag": "Change",
+              "option": 0
+            }
+          ]
+        },
+        {
+          "group": "Button",
+          "path": "/L_RingTool_00/L_Btn",
+          "base_option": 2,
+          "animations": [
+            {
+              "tag": "Confirm",
+              "option": 0
+            },
+            {
+              "tag": "InvAnim",
+              "option": 0
+            }
+          ]
+        }
+      ],
+      "tool_item_assignments_present_in_byml": false
+    },
+    "native_menu_type_string": "cInvalid , cPocketMenu , cRingMenuToolsMain , cRingMenuReactionMain , cRingMenuEmoticonList , cMenuChat , cSwkbdInput , cPlayerMarker , cPlayerNameMarker , cNetConnectWait , cClockCtrlFront , cMenuDevice , cPhotoCameraGuide , cSonkatsuResultMain , cSonkatsuQuestMain , cMenuBook , cMenuRecipe , cCatalog , cMyDesignList , cMyDesignEdit , cMyDesignSet , cMenuProfile , cProfileWinPlayerTitle , cMap , cMenuMobileBank , cCustomHome , cShopSonkatsu , cLostList , cMelodyEdit , cBoard , cBoardEdit , cBoardInfo , cShopBuy , cShopBuyTailor , cMapRemove , cShopBridgeSlope , cAddress , cMsgCardDesignSelect , cMsgCardEditText , cMsgCardView , cDateInput , cTrip , cMapSelect , cDateInputYear , cNetDemoBack , cRingMenuStick , cRoadSelect , cStorage , cCloset , cClosetBalloon , cClosetCoordinateEdit , cCharaMake , cWorkCraft , cWorkRemake , cAudioPlayer , cInteriorEdit , cPost , cMsgBottle , cKabuBuy , cHarvestBox , cStaffRoll , cBirthdayMessage , cPhotoIslandStorage , cPhotoIslandInteriorEdit , cAmiiboTouchGuide , cAmiiboPreviousNoticeGuide , cTitle , cAddresseeSelMulti , cSwkbdTextAreaInputBell , cMapMini , cAmiiboStationBG , cDreamBG , cPrologueBG , cSelectCursor , cFader , cLoadIcon , cMessageWindow , cNetErrorWindow , cKeyGuide , cTelop , cCommonDialog , cCommonWipe , cMainScreen , cSystemDialog , cChatBalloon , cIllegalReport , cFriendList , cSWKBDName , cSWKBDVillage , cSWKBDPhrase , cSWKBDPhrase7 , cSWKBDGreeting , cSWKBDNicname , cSWKBDPasswordLocal , cSWKBDPassword , cSWKBDChat , cSWKBDMsgCard , cSWKBDBoard , cSWKBDCoordinateName , cSWKBDCatalogShooping , cSWKBDTotakekeRequest , cSWKBDProfile , cSWKBDMyDesign , cSWKBDMyDesignSearchID , cSWKBDMyDesignSearchAuthorId , cSWKBDMyDesignSearchName , cSWKBDMyDesignSearchAuthorName , cSWKBDTaste , cSWKBDRaiseMoney , cSWKBDMobileBank , cSWKBDMobileBankDeposit , cSWKBDLoanWallet , cSWKBDLoanDeposit , cSWKBDKabu , cSWKBDHeartShout , cSWKBDReport , cSWKBDBirthday",
+    "native_menu_type_ordinal": 2,
+    "native_initializer_va": "0x15566b0",
+    "native_initializer_refs": [
+      {
+        "va": "0x2993d3e",
+        "text": "cInvalid , cPocketMenu , cRingMenuToolsMain , cRingMenuReactionMain , cRingMenuEmoticonList , cMenuChat , cSwkbdInput , cPlayerMarker , cPlayerNameMarker , cNetConnectWait , cClockCtrlFront , cMenuDevice , cPhotoCameraGuide , cSonkatsuResultMain , cSonkatsuQuestMain , cMenuBook , cMenuRecipe , cCatalog , cMyDesignList , cMyDesignEdit , cMyDesignSet , cMenuProfile , cProfileWinPlayerTitle , cMap , cMenuMobileBank , cCustomHome , cShopSonkatsu , cLostList , cMelodyEdit , cBoard , cBoardEdit , cBoardInfo , cShopBuy , cShopBuyTailor , cMapRemove , cShopBridgeSlope , cAddress , cMsgCardDesignSelect , cMsgCardEditText , cMsgCardView , cDateInput , cTrip , cMapSelect , cDateInputYear , cNetDemoBack , cRingMenuStick , cRoadSelect , cStorage , cCloset , cClosetBalloon , cClosetCoordinateEdit , cCharaMake , cWorkCraft , cWorkRemake , cAudioPlayer , cInteriorEdit , cPost , cMsgBottle , cKabuBuy , cHarvestBox , cStaffRoll , cBirthdayMessage , cPhotoIslandStorage , cPhotoIslandInteriorEdit , cAmiiboTouchGuide , cAmiiboPreviousNoticeGuide , cTitle , cAddresseeSelMulti , cSwkbdTextAreaInputBell , cMapMini , cAmiiboStationBG , cDreamBG , cPrologueBG , cSelectCursor , cFader , cLoadIcon , cMessageWindow , cNetErrorWindow , cKeyGuide , cTelop , cCommonDialog , cCommonWipe , cMainScreen , cSystemDialog , cChatBalloon , cIllegalReport , cFriendList , cSWKBDName , cSWKBDVillage , cSWKBDPhrase , cSWKBDPhrase7 , cSWKBDGreeting , cSWKBDNicname , cSWKBDPasswordLocal , cSWKBDPassword , cSWKBDChat , cSWKBDMsgCard , cSWKBDBoard , cSWKBDCoordinateName , cSWKBDCatalogShooping , cSWKBDTotakekeRequest , cSWKBDProfile , cSWKBDMyDesign , cSWKBDMyDesignSearchID , cSWKBDMyDesignSearchAuthorId , cSWKBDMyDesignSearchName , cSWKBDMyDesignSearchAuthorName , cSWKBDTaste , cSWKBDRaiseMoney , cSWKBDMobileBank , cSWKBDMobileBankDeposit , cSWKBDLoanWallet , cSWKBDLoanDeposit , cSWKBDKabu , cSWKBDHeartShout , cSWKBDReport , cSWKBDBirthday"
+      },
+      {
+        "va": "0x2993d3e",
+        "text": "cInvalid , cPocketMenu , cRingMenuToolsMain , cRingMenuReactionMain , cRingMenuEmoticonList , cMenuChat , cSwkbdInput , cPlayerMarker , cPlayerNameMarker , cNetConnectWait , cClockCtrlFront , cMenuDevice , cPhotoCameraGuide , cSonkatsuResultMain , cSonkatsuQuestMain , cMenuBook , cMenuRecipe , cCatalog , cMyDesignList , cMyDesignEdit , cMyDesignSet , cMenuProfile , cProfileWinPlayerTitle , cMap , cMenuMobileBank , cCustomHome , cShopSonkatsu , cLostList , cMelodyEdit , cBoard , cBoardEdit , cBoardInfo , cShopBuy , cShopBuyTailor , cMapRemove , cShopBridgeSlope , cAddress , cMsgCardDesignSelect , cMsgCardEditText , cMsgCardView , cDateInput , cTrip , cMapSelect , cDateInputYear , cNetDemoBack , cRingMenuStick , cRoadSelect , cStorage , cCloset , cClosetBalloon , cClosetCoordinateEdit , cCharaMake , cWorkCraft , cWorkRemake , cAudioPlayer , cInteriorEdit , cPost , cMsgBottle , cKabuBuy , cHarvestBox , cStaffRoll , cBirthdayMessage , cPhotoIslandStorage , cPhotoIslandInteriorEdit , cAmiiboTouchGuide , cAmiiboPreviousNoticeGuide , cTitle , cAddresseeSelMulti , cSwkbdTextAreaInputBell , cMapMini , cAmiiboStationBG , cDreamBG , cPrologueBG , cSelectCursor , cFader , cLoadIcon , cMessageWindow , cNetErrorWindow , cKeyGuide , cTelop , cCommonDialog , cCommonWipe , cMainScreen , cSystemDialog , cChatBalloon , cIllegalReport , cFriendList , cSWKBDName , cSWKBDVillage , cSWKBDPhrase , cSWKBDPhrase7 , cSWKBDGreeting , cSWKBDNicname , cSWKBDPasswordLocal , cSWKBDPassword , cSWKBDChat , cSWKBDMsgCard , cSWKBDBoard , cSWKBDCoordinateName , cSWKBDCatalogShooping , cSWKBDTotakekeRequest , cSWKBDProfile , cSWKBDMyDesign , cSWKBDMyDesignSearchID , cSWKBDMyDesignSearchAuthorId , cSWKBDMyDesignSearchName , cSWKBDMyDesignSearchAuthorName , cSWKBDTaste , cSWKBDRaiseMoney , cSWKBDMobileBank , cSWKBDMobileBankDeposit , cSWKBDLoanWallet , cSWKBDLoanDeposit , cSWKBDKabu , cSWKBDHeartShout , cSWKBDReport , cSWKBDBirthday"
+      }
+    ],
+    "romfs_layout_assets": {
+      "RingMenuTools.Nin_NX_NVN.zs": {
+        "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Layout/RingMenuTools.Nin_NX_NVN.zs",
+        "compressed_sha256": "5daf07ccdff6d89e1c102f0221b24e0c2e613c77f6678787dbb733e6be4a312d",
+        "compressed_size": 244,
+        "embedded_layout_members": [
+          "RingMenuTools.arc",
+          "blyt/RingMenuTools.bflyt"
+        ],
+        "inventory_slot_nodes": [],
+        "animation_names": [],
+        "ring_root_node_present": true
+      },
+      "LRingMenuTools.Nin_NX_NVN.zs": {
+        "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Layout/LRingMenuTools.Nin_NX_NVN.zs",
+        "compressed_sha256": "3424acfbdd932b0ac99756909aa5246ea1852602c7b59c0ff937d727fc912d65",
+        "compressed_size": 7693,
+        "embedded_layout_members": [
+          "LRingMenuTools.arc",
+          "anim/LRingMenuTools_ActiveReg.bflan",
+          "anim/LRingMenuTools_In.bflan",
+          "anim/LRingMenuTools_InEffect.bflan",
+          "anim/LRingMenuTools_Inv0.bflan",
+          "anim/LRingMenuTools_Inv1.bflan",
+          "anim/LRingMenuTools_Inv2.bflan",
+          "anim/LRingMenuTools_Inv3.bflan",
+          "anim/LRingMenuTools_Inv4.bflan",
+          "anim/LRingMenuTools_Inv5.bflan",
+          "anim/LRingMenuTools_Inv6.bflan",
+          "anim/LRingMenuTools_Inv7.bflan",
+          "anim/LRingMenuTools_Out.bflan",
+          "blyt/LRingMenuTools.bflyt",
+          "timg/__Combined.bntx"
+        ],
+        "inventory_slot_nodes": [
+          "Inv0",
+          "Inv1",
+          "Inv2",
+          "Inv3",
+          "Inv4",
+          "Inv5",
+          "Inv6",
+          "Inv7"
+        ],
+        "animation_names": [
+          "ActiveReg",
+          "InEffect",
+          "Inv0",
+          "Inv1",
+          "Inv2",
+          "Inv3",
+          "Inv4",
+          "Inv5",
+          "Inv6",
+          "Inv7"
+        ],
+        "ring_root_node_present": false
+      },
+      "LRingMenuToolsBtn.Nin_NX_NVN.zs": {
+        "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Layout/LRingMenuToolsBtn.Nin_NX_NVN.zs",
+        "compressed_sha256": "1a51f53d631663e1aabdc74639c0b88f0a6a3a5057a61af69950e818461430af",
+        "compressed_size": 39707,
+        "embedded_layout_members": [
+          "LRingMenuToolsBtn.arc",
+          "anim/LRingMenuToolsBtn_ActiveReg.bflan",
+          "anim/LRingMenuToolsBtn_Confirm.bflan",
+          "anim/LRingMenuToolsBtn_Decide.bflan",
+          "anim/LRingMenuToolsBtn_DecideActiveReg.bflan",
+          "anim/LRingMenuToolsBtn_EquipIn.bflan",
+          "anim/LRingMenuToolsBtn_EquipOut.bflan",
+          "anim/LRingMenuToolsBtn_InvAnim.bflan",
+          "anim/LRingMenuToolsBtn_Loop.bflan",
+          "anim/LRingMenuToolsBtn_Select.bflan",
+          "anim/LRingMenuToolsBtn_SelectActiveReg.bflan",
+          "anim/LRingMenuToolsBtn_UnSelect.bflan",
+          "anim/LRingMenuToolsBtn_UnSelectActiveReg.bflan",
+          "blyt/LRingMenuToolsBtn.bflyt",
+          "timg/__Combined.bntx"
+        ],
+        "inventory_slot_nodes": [],
+        "animation_names": [
+          "ActiveReg",
+          "Confirm",
+          "DecideActiveReg",
+          "EquipIn",
+          "EquipOut",
+          "InvAnim",
+          "Loop",
+          "Select",
+          "SelectActiveReg",
+          "UnSelect",
+          "UnSelectActiveReg"
+        ],
+        "ring_root_node_present": false
+      }
+    },
+    "layout_interpretation": "RomFS layout strings establish eight inventory-slot nodes and select/confirm/equip animations; they do not identify the runtime item stored in a slot.",
+    "open": [
+      "runtime ring slot-to-item map, selection handler, and resulting tool action"
+    ]
+  },
+  "limitations": [
+    "The ItemParam probe verifies that tool UniqueIDs resolve to real ItemParam rows through the exact lookup called by PlayerToolBreak; it does not read or prove a durability value.",
+    "ItemParam exposes no column named durability, break count, use count, or uses; unresolved hashed columns remain possible but are not treated as durability without consumer evidence.",
+    "The full PlayerToolBreak/BreakTool state routines were not emulated. The observed +0x898 increment and reset are state-local memory operations, not a verified inventory durability counter.",
+    "Axe, shovel, net, rod, and watering action states are sourced from PlayerStateParam; their world-result and item-consumption chains remain open.",
+    "The RingMenuTools BYML and native page registry identify layout/menu structures; they do not contain the runtime tool-slot item mapping."
+  ]
+}
