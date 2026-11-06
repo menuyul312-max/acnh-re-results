@@ -41,6 +41,10 @@ class CraftingTransactionFollowupStaticTests(unittest.TestCase):
         self.assertEqual(remake['tutorial_item_unique_id'], 3436)
         self.assertEqual(remake['kit_item_unique_id'], 2513)
         self.assertEqual(remake['table_cost'], 2)
+        quantity_flow = self.report['workbench_page_and_remake']['save_set_handler']['kit_quantity_argument_disassembly']
+        self.assertEqual(quantity_flow['0x335d64'], 'mov w1, #0x9d1')
+        self.assertEqual(quantity_flow['0x335d78'], 'mov w2, w21')
+        self.assertEqual(quantity_flow['0xefbe88'], 'mov w2, w19')
         self.assertEqual(self.report['status_by_slice']['cancel_or_rollback'],
                          'OPEN; no rollback behavior established')
 

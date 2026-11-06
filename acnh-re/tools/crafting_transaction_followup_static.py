@@ -7,6 +7,7 @@ from pathlib import Path
 import hashlib
 import json
 import sqlite3
+import sys
 
 REPO = Path(__file__).resolve().parents[1]
 SHARED = Path('/workspace/acnh-re')
@@ -108,13 +109,32 @@ def decomp(name):
     return path, path.read_text()
 
 
+def disassemble(source_elf, addresses):
+    sys.path.insert(0, str(SHARED / '.deps'))
+    sys.path.insert(0, str(REPO / 'tools'))
+    from native_image import Image  # noqa: E402
+
+    image = Image(source_elf)
+    result = {}
+    for address in addresses:
+        instructions = image.disasm(address, 4)
+        require(instructions, f'no instruction at {address:#x}')
+        instruction = instructions[0]
+        result[f'0x{address:x}'] = f'{instruction.mnemonic} {instruction.op_str}'.strip()
+    return result
+
+
 def build_report():
     require(DB.is_file() and ELF.is_file(), 'shared index or main ELF is unavailable')
     db = sqlite3.connect(DB)
     db.row_factory = sqlite3.Row
     manifest = json.loads(MANIFEST.read_text())
+    analysis_elf = Path(manifest['source_root']) / 'A_logic' / 'main.elf'
+    require(analysis_elf.is_file(), f'missing source ELF: {analysis_elf}')
     handlers = json.loads(HANDLERS.read_text())
     previous = json.loads(PREVIOUS.read_text())
+    require(sha256(analysis_elf) == previous['provenance']['analysis_elf_sha256'],
+            'source ELF checksum differs from the executed cache stage')
 
     set_recipe_handler = handlers['entries']['EventFlowSystemActor.EventFlowActionPlayerSetCraftRecipe']
     has_recipe_query = handlers['entries']['EventFlowSystemActor.EventFlowQueryPlayerHasCraftRecipe']
@@ -205,9 +225,18 @@ def build_report():
             'remake tutorial kit award changed')
     remake_save_calls = direct_calls(db, 0x335d10)
     remake_update_path, remake_update = decomp('f99b10')
+    remake_kit_arg_disasm = disassemble(
+        analysis_elf, (0x335d54, 0x335d64, 0x335d78, 0x335d7c,
+              0xefbe04, 0xefbe08, 0xefbe0c, 0xefbe84, 0xefbe88, 0xefbe8c))
     require(any(int(c['target'], 16) == 0xefbdf0 for c in remake_save_calls)
             and any(int(c['target'], 16) == 0xefbad0 for c in remake_save_calls),
             'cWorkRemake handler no longer routes into remake/inventory helpers')
+    require(remake_kit_arg_disasm['0x335d64'] == 'mov w1, #0x9d1'
+            and remake_kit_arg_disasm['0x335d78'] == 'mov w2, w21'
+            and '0xefbdf0' in remake_kit_arg_disasm['0x335d7c']
+            and remake_kit_arg_disasm['0xefbe88'] == 'mov w2, w19'
+            and '0xf99b10' in remake_kit_arg_disasm['0xefbe8c'],
+            'remake kit ID/quantity argument flow changed')
     require('FUN_01099b10' in decomp('efbdf0')[1]
             and 'FUN_01098650' in remake_update,
             'remake update helper route changed')
@@ -235,7 +264,7 @@ def build_report():
             'unexecuted native paths and inferred semantics': '[OPEN / NOT EXECUTED]'
         },
         'provenance': {
-            'analysis_elf_sha256': sha256(ELF),
+            'analysis_elf_sha256': sha256(analysis_elf),
             'index_path': str(DB),
             'main_nso_sha256': previous['provenance']['main_nso_sha256'],
             'table_blob_sha256': {
@@ -333,7 +362,8 @@ def build_report():
                 'calls': remake_save_calls,
                 'dispatch_decomp': str(save_type_dispatch_path),
                 'inventory_update_decomp': str(remake_update_path),
-                'claim': 'The tutorial grants 50 Remake Kits and selects Remake for item 3436. SaveSetFromUIResult routes customization selection into native remake/inventory helpers; the exact cost-to-delta argument flow was not executed or fully resolved.'
+                'kit_quantity_argument_disassembly': remake_kit_arg_disasm,
+                'claim': 'The tutorial grants 50 Remake Kits and selects Remake for item 3436. SaveSetFromUIResult builds item 2513 and passes a quantity loaded from context+0x14 through 0xefbdf0 to 0xf99b10, whose native code changes inventory quantity. The ItemRemake row says item 3436 costs two kits, but this row-to-context mapping was not run in the game.'
             }
         },
         'status_by_slice': {
@@ -342,7 +372,7 @@ def build_report():
             'pocket material gate in transaction helper': 'PROVEN STATIC; not same execution as cold-cache helper',
             'ingredient consumption and result add': 'PROVEN NATIVE STATIC call chain; not executed end to end',
             'workbench UI page': 'PROVEN PAGE INITIALIZER; user interaction not executed',
-            'customization/remake': 'PROVEN EVENTFLOW + TABLE COST + NATIVE STATIC ROUTE; exact item delta open',
+            'customization/remake': 'PROVEN EVENTFLOW + TABLE COST + NATIVE KIT INVENTORY UPDATE; row-to-quantity mapping open',
             'cancel_or_rollback': 'OPEN; no rollback behavior established'
         },
         'open_limits': [
@@ -350,7 +380,7 @@ def build_report():
             'No real save/player/UI runtime was available, so recipe learn state, pocket precheck, material subtraction, result item insertion, and remake were not executed end to end.',
             'The native craft call order is visible in decompilation; atomicity and rollback on interruption/failure remain unproved.',
             'The WorkCraftBgPage function is a page initializer, not proof that the page itself commits a transaction.',
-            'The remake table gives a cost of two kits for item 3436, but the native runtime argument mapping from that row to the signed inventory delta was not executed.',
+            'The remake handler passes a context-derived quantity for item 2513 into an inventory update, but the mapping from ItemRemake.RemakeKitNum=2 for item 3436 to that quantity was not executed in the game.',
             'The post-craft bitmap helper accepts only keys below 0x800; its relation to EventFlow MadeItemID values such as 7211 was not established.'
         ]
     }

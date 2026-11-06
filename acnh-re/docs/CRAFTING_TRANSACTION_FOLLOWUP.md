@@ -55,7 +55,7 @@ Tahap ini menelusuri handler native dan EventFlow secara statik. Label **[NATIVE
 
 **[EVENTFLOW + TBL]** Jalur remake memilih item dengan filter `cWorkBenchRemake`, menjalankan `UIWorkingHandling cRemakeSelect`, lalu `SaveSetFromUIResult cWorkRemake` (#182), `PlayerWorkbenchMaking IsRemake=true` (#184), dan `PlayerWorkbenchGetDemo IsRemake=true` (#185). Dalam tutorial remake, event memberi 50 item 2513 sebelum memilih item 3436. Tabel `ItemParam` mengenali 2513 sebagai `CraftRemake` bernama リメイクキット dan 3436 sebagai もくせいクロゼット. Baris `ItemRemake.UniqueID=168` untuk item 3436 menetapkan `RemakeKitNum=2`.
 
-**[NATIVE STATIC]** `cWorkRemake` berada di case 10 `SaveSetFromUIResult`, menuju `0x335d10`. Call graph meneruskan jalur ke helper remake/inventori (`0xefbdf0`, `0xefbad0`, antara lain); helper `0xefbdf0` memakai `0xf99b10` untuk memperbarui item inventory. Tabel membuktikan biaya dua kit untuk closet ini, tetapi hubungan row biaya tersebut ke delta inventory native belum dieksekusi atau ditelusuri penuh.
+**[NATIVE STATIC]** `cWorkRemake` berada di case 10 `SaveSetFromUIResult`, menuju `0x335d10`. Disassembly menunjukkan handler membuat ID kit `0x9d1` (2513), memuat jumlah dari `context+0x14`, lalu meneruskan ID dan jumlah itu ke `0xefbdf0`. Helper tersebut meneruskan argumen jumlah ke `0xf99b10`, yang mengubah inventory. Jadi pengurangan kit 2513 pada jumlah yang diberikan terbukti statik. Baris `ItemRemake` menyatakan item 3436 memerlukan dua kit; hubungan biaya tabel itu dengan nilai `context+0x14` masih belum diuji dalam game.
 
 ### Status dan batas
 
@@ -65,7 +65,7 @@ Tahap ini menelusuri handler native dan EventFlow secara statik. Label **[NATIVE
 | Unlock/query resep | **Proven, EventFlow + native statik** | Mutasi dan query tidak dijalankan terhadap save nyata. |
 | Pengurangan bahan dan tambah hasil | **Proven, native statik** | Call path terlihat; transaksi tidak dijalankan end-to-end. |
 | WorkCraftBgPage | **Proven, initializer halaman** | Interaksi UI/commit tidak dijalankan. |
-| Remake tutorial dan biaya tabel | **Proven, EventFlow + tabel** | Argumen konsumsi 2 kit di native belum diuji. |
+| Remake tutorial dan pengurangan kit | **Proven, EventFlow + tabel + native statik** | ID kit dan jumlah konteks mencapai helper perubahan inventory; nilai 2 dari row tabel ke jumlah konteks belum diuji. |
 | Cancel/rollback | **Open** | Belum ditemukan atau dijalankan jalur rollback yang membuktikan perilaku saat gagal/interupsi. |
 
 Harness pemeriksa statik menyimpan call graph, enum, nilai tabel, provenance, dan status di [crafting_transaction_followup_static.json](../output/gameplay/crafting_transaction_followup/crafting_transaction_followup_static.json). Ia hanya membaca index, tabel, decompilation dan output tahap 1; tidak menyalin sumber besar.

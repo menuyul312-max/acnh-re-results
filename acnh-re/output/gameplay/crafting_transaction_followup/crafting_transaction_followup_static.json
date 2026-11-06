@@ -8,7 +8,7 @@
     "unexecuted native paths and inferred semantics": "[OPEN / NOT EXECUTED]"
   },
   "provenance": {
-    "analysis_elf_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+    "analysis_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
     "index_path": "/workspace/acnh-re/output/index.sqlite",
     "main_nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
     "table_blob_sha256": {
@@ -919,7 +919,19 @@
       ],
       "dispatch_decomp": "/workspace/acnh-re/output/binary/analysis_decomp/334650.c",
       "inventory_update_decomp": "/workspace/acnh-re/output/binary/analysis_decomp/f99b10.c",
-      "claim": "The tutorial grants 50 Remake Kits and selects Remake for item 3436. SaveSetFromUIResult routes customization selection into native remake/inventory helpers; the exact cost-to-delta argument flow was not executed or fully resolved."
+      "kit_quantity_argument_disassembly": {
+        "0x335d54": "ldr w21, [x19, #0x14]",
+        "0x335d64": "mov w1, #0x9d1",
+        "0x335d78": "mov w2, w21",
+        "0x335d7c": "bl #0xefbdf0",
+        "0xefbe04": "mov w19, w2",
+        "0xefbe08": "mov x20, x1",
+        "0xefbe0c": "mov x21, x0",
+        "0xefbe84": "mov x1, x20",
+        "0xefbe88": "mov w2, w19",
+        "0xefbe8c": "bl #0xf99b10"
+      },
+      "claim": "The tutorial grants 50 Remake Kits and selects Remake for item 3436. SaveSetFromUIResult builds item 2513 and passes a quantity loaded from context+0x14 through 0xefbdf0 to 0xf99b10, whose native code changes inventory quantity. The ItemRemake row says item 3436 costs two kits, but this row-to-context mapping was not run in the game."
     }
   },
   "status_by_slice": {
@@ -928,7 +940,7 @@
     "pocket material gate in transaction helper": "PROVEN STATIC; not same execution as cold-cache helper",
     "ingredient consumption and result add": "PROVEN NATIVE STATIC call chain; not executed end to end",
     "workbench UI page": "PROVEN PAGE INITIALIZER; user interaction not executed",
-    "customization/remake": "PROVEN EVENTFLOW + TABLE COST + NATIVE STATIC ROUTE; exact item delta open",
+    "customization/remake": "PROVEN EVENTFLOW + TABLE COST + NATIVE KIT INVENTORY UPDATE; row-to-quantity mapping open",
     "cancel_or_rollback": "OPEN; no rollback behavior established"
   },
   "open_limits": [
@@ -936,7 +948,7 @@
     "No real save/player/UI runtime was available, so recipe learn state, pocket precheck, material subtraction, result item insertion, and remake were not executed end to end.",
     "The native craft call order is visible in decompilation; atomicity and rollback on interruption/failure remain unproved.",
     "The WorkCraftBgPage function is a page initializer, not proof that the page itself commits a transaction.",
-    "The remake table gives a cost of two kits for item 3436, but the native runtime argument mapping from that row to the signed inventory delta was not executed.",
+    "The remake handler passes a context-derived quantity for item 2513 into an inventory update, but the mapping from ItemRemake.RemakeKitNum=2 for item 3436 to that quantity was not executed in the game.",
     "The post-craft bitmap helper accepts only keys below 0x800; its relation to EventFlow MadeItemID values such as 7211 was not established."
   ]
 }
