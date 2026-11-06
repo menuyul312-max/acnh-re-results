@@ -168,7 +168,7 @@ Villager biasa (`NNPC_*`) dibagi menurut 8 kode kepribadian: AN, BO, FU, GE, HA,
    - 3 furnitur dalam diserahkan ke kotak (`Obj_ReservedPlaceBox`, `ImmQ_*_Interior1-3Donate`);
    - furnitur luar dicek lewat `IsSettlerQuestOutsideComplete`.
 4. **[EF]** Pengumuman pagi menjalankan `ImmQFtrChkA/B/C`: bila ketiga furnitur dalam dan furnitur luar lengkap, aksi `CompleteSettlerQuestSubject` dan `DecideSettlerNpc` dijalankan. **[NATIVE]** Pemilihan villager dan flag `ImmQ_*_Complete`. Flag `ImmQ_*_Invited` tidak punya penulis di EventFlow.
-5. **[EF]** `ImmQEndChk`: bila A, B, dan C selesai, `RcmImmQuestComplete` ON dan `ImmQClearNextDay` ON. Hadiahnya 50 `simple wooden fence` (11711). Keesokan harinya workshop remake tersedia (`RemakeUnlock`).
+5. **[EF]** `ImmQEndChk`: bila A, B, dan C selesai, `RcmImmQuestComplete` ON dan `ImmQClearNextDay` ON. Hadiahnya 50 `simple wooden fence` (11711). Keesokan harinya workshop remake tersedia (`RemakeUnlock`). Pembatalan di alur remake biasa kembali atau keluar sebelum handler transaksi; alur tutorial, biaya kit, dan batas persistensi dijelaskan di [CRAFTING_REMAKE_COST_STATIC.md](CRAFTING_REMAKE_COST_STATIC.md).
 
 ## 8. Resident Services dan Isabelle
 

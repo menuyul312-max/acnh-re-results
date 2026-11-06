@@ -55,7 +55,7 @@ Tahap ini menelusuri handler native dan EventFlow secara statik. Label **[NATIVE
 
 **[EVENTFLOW + TBL]** Jalur remake memilih item dengan filter `cWorkBenchRemake`, menjalankan `UIWorkingHandling cRemakeSelect`, lalu `SaveSetFromUIResult cWorkRemake` (#182), `PlayerWorkbenchMaking IsRemake=true` (#184), dan `PlayerWorkbenchGetDemo IsRemake=true` (#185). Dalam tutorial remake, event memberi 50 item 2513 sebelum memilih item 3436. Tabel `ItemParam` mengenali 2513 sebagai `CraftRemake` bernama リメイクキット dan 3436 sebagai もくせいクロゼット. Baris `ItemRemake.UniqueID=168` untuk item 3436 menetapkan `RemakeKitNum=2`.
 
-**[NATIVE STATIC]** `cWorkRemake` berada di case 10 `SaveSetFromUIResult`, menuju `0x335d10`. Disassembly menunjukkan handler membuat ID kit `0x9d1` (2513), memuat jumlah dari `context+0x14`, lalu meneruskan ID dan jumlah itu ke `0xefbdf0`. Helper tersebut meneruskan argumen jumlah ke `0xf99b10`, yang mengubah inventory. Jadi pengurangan kit 2513 pada jumlah yang diberikan terbukti statik. Baris `ItemRemake` menyatakan item 3436 memerlukan dua kit; hubungan biaya tabel itu dengan nilai `context+0x14` masih belum diuji dalam game.
+**[NATIVE STATIC]** `cWorkRemake` berada di case 10 `SaveSetFromUIResult`, menuju `0x335d10`. Disassembly menunjukkan handler membuat ID kit `0x9d1` (2513), memuat jumlah dari `context+0x14`, lalu meneruskan ID dan jumlah itu ke `0xefbdf0`. Helper tersebut meneruskan argumen jumlah ke `0xf99b10`, yang mengubah inventory. Pemetaan row `ItemRemake.RemakeKitNum` ke jumlah itu pada jalur bit-4-clear sudah dibuktikan di [CRAFTING_REMAKE_COST_STATIC.md](CRAFTING_REMAKE_COST_STATIC.md). Jalur tutorial memakai `cRemakeSelectTutorial`; sumber bit 4 adalah predikat tipe item, dan crosswalk kode `0x38` ke `CraftPhoneCase` masih berstatus kandidat.
 
 ### Status dan batas
 
@@ -65,8 +65,10 @@ Tahap ini menelusuri handler native dan EventFlow secara statik. Label **[NATIVE
 | Unlock/query resep | **Proven, EventFlow + native statik** | Mutasi dan query tidak dijalankan terhadap save nyata. |
 | Pengurangan bahan dan tambah hasil | **Proven, native statik** | Call path terlihat; transaksi tidak dijalankan end-to-end. |
 | WorkCraftBgPage | **Proven, initializer halaman** | Interaksi UI/commit tidak dijalankan. |
-| Remake tutorial dan pengurangan kit | **Proven, EventFlow + tabel + native statik** | ID kit dan jumlah konteks mencapai helper perubahan inventory; nilai 2 dari row tabel ke jumlah konteks belum diuji. |
-| Cancel/rollback | **Open** | Belum ditemukan atau dijalankan jalur rollback yang membuktikan perilaku saat gagal/interupsi. |
+| Remake tutorial dan pengurangan kit | **Proven statik untuk bit-4-clear** | Tutorial memberi 50 kit dan memilih item 3436; cost 2 mengalir ke kuantitas inventori pada jalur normal. Bit 4 diturunkan dari predikat tipe item `0x38`; nilai runtime untuk item tutorial belum diuji. |
+| Cancel sebelum handler | **Proven di EventFlow untuk entry Remake biasa** | Batal dari pemilih hasil keluar/ulang sebelum `Workbench_Cmn_DIYdemo`; nilai tombol yang diterjemahkan UI dan pembatalan internal tutorial belum dibuktikan. |
+| Rollback/refund setelah handler | **Open** | Caller mengabaikan status pengurangan kit dan tidak menunjukkan refund eksplisit; nested rollback lain dan interupsi transaksi lengkap belum dijalankan. |
+| Persistensi inventory | **Mutasi record pemain terbukti statik** | `0xefbdf0` membuka member `player+0x70`, tetapi batas flush/durabilitas ke file save belum ditemukan. |
 
 Harness pemeriksa statik menyimpan call graph, enum, nilai tabel, provenance, dan status di [crafting_transaction_followup_static.json](../output/gameplay/crafting_transaction_followup/crafting_transaction_followup_static.json). Ia hanya membaca index, tabel, decompilation dan output tahap 1; tidak menyalin sumber besar.
 

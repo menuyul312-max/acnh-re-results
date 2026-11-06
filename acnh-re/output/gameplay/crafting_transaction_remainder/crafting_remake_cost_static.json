@@ -1,11 +1,14 @@
 {
   "claims": {
     "3436_cost_value_on_flag_bit4_clear_path": "2",
-    "inventory_persistence_flush_boundary": "UNRESOLVED",
+    "inventory_persistence_flush_boundary": "PLAYER_SAVE_MEMBER_MUTATION_PROVEN; DURABLE_FLUSH_UNRESOLVED",
     "normal_remake_cost_row_to_inventory_quantity": "PROVEN_STATIC",
-    "rollback_or_refund_on_interruption": "UNRESOLVED",
+    "ordinary_remake_cancel_before_handler": "PROVEN_EVENTFLOW_BRANCH",
+    "rollback_or_refund_on_interruption": "NO_EXPLICIT_HANDLER_REFUND; FULL_ATOMICITY_UNRESOLVED",
     "save_transaction_executed_with_real_player_data": false,
-    "tutorial_displaytype_to_flag_bit4_mapping": "UNRESOLVED"
+    "tutorial_displaytype_to_flag_bit4_mapping": "NO_DIRECT_DEPENDENCY_FOUND; bit4 is set from selected-item type predicate 0x38",
+    "tutorial_internal_cancel": "UNRESOLVED",
+    "tutorial_item_runtime_bit4": "UNRESOLVED_STATIC_CROSSWALK"
   },
   "eventflow": {
     "100": {
@@ -37,13 +40,40 @@
         "IsSkipFanfareSE": false,
         "IsSkipGetDemoCameraPop": false
       }
+    },
+    "97": {
+      "kind": "actions",
+      "name": "EventFlowActionUIItemSelectWindowHandling",
+      "params": {
+        "FilterType": "cItemName",
+        "ItemFilterType": "",
+        "ItemKindType": "",
+        "ItemUniqueID": 3436,
+        "Mode": "cItemSelectRemakeTutorial"
+      }
     }
+  },
+  "eventflow_branches": {
+    "normal_remake_cancel_behavior": "UIResultMenuDecide case 1 after cRemakeSelect retries Remake; case 1 after item selection exits before Workbench_Cmn_DIYdemo and cWorkRemake.",
+    "ordinary_remake": "# Ftr_Working (source: decoded EventFlow; bool flag case 0 = ON, case 1 = OFF; #N = event index)\n== ENTRY Remake\n  #37 UIItemSelectWindowHandling {\"FilterType\": \"cWorkBenchRemake\", \"ItemUniqueID\": 65534, \"ItemKindType\": \"\", \"ItemFilterType\": \"\", \"Mode\": \"cItemSelectRemake\"}\n  #9 IF UIResultMenuDecide {}\n    case 0:\n      #11 UIWorkingHandling {\"DisplayType\": \"cRemakeSelect\"}\n      #8 IF UIResultMenuDecide {}\n        case 0:\n          #189 SetSubflowResult {\"SetIndex\": 0, \"ResultValue\": 1}\n          #193 SetSubflowResult {\"SetIndex\": 1, \"ResultValue\": 0}\n          #187 CALL Ftr_Working:Workbench_Cmn_DIYdemo\n          #48 IF GeneralTalkChoice2 {}\n            case 0:\n              #82 BGMPropertyControl {\"BGMProperty\": 21}\n              #80 PlayerWorkbenchPutaway {\"IsRemake\": true}\n              #81 PlayerDemoTurnToStarter {}\n              #83 BGMPropertyControl {\"BGMProperty\": 22}\n              #266 PlayerWorkbenchThinking {}\n              #3 CALL Ftr_Working:Remake\n            case 1:\n              #232 CALL Ftr_Working:Workbench_Cmn_DIYfinish\n        case 1:\n          #6 CALL Ftr_Working:Remake\n    case 1:\n",
+    "tutorial_cancel_behavior": "No EventFlow result/cancel query follows cRemakeSelectTutorial; page-internal cancellation is unresolved.",
+    "tutorial_remake": "# Ftr_Working (source: decoded EventFlow; bool flag case 0 = ON, case 1 = OFF; #N = event index)\n== ENTRY RcoRemakeTrialOngoing\n  #94 IF HasTargetItem {\"NeedNum\": 1, \"ItemUniqueId\": 3436}\n    case 0:\n      #149 IF NetHasVisitor {}\n        case 0:\n          #156 CALL Ftr_Working:RcoWorkingTableRemakeWorkshop\n        case 1:\n          #252 EventFlagSystemOn {\"AccessKey\": \"cPlayerTemp:RcoTalkSceneFlag\"}\n          #258 RcoStandUpChair {}\n          #255 NpcWaitTalkPrepare {}\n          #254 NpcWaitTurn {}\n          #256 PlayerChangeStateDemoTalk {}\n          #105 NpcEventItemSet {\"InsertTarget\": \"cTalk\", \"TagID\": 0, \"EntryVariableKeyInt_ItemPrice\": \"ItemPrice\", \"ItemUniqueId\": 3436}\n          #167 IF EventFlagSystemBool {\"AccessKey\": \"cPlayer:RcoRemakeTrialGetFurniture\"}\n            case ON:\n              #95 IF SystemHasBaggageSpace {\"CheckNum\": 1, \"CheckTargrt\": \"cPocketBag\"}\n                case 0:\n                  #96 IF EventFlagSystemBool {\"AccessKey\": \"cPlayer:RemakeWs_TalkWhenItemFull\"}\n                    case ON:\n                      #179 MSG TalkSNpc/rco/SP_rco_09_RemakeWorkShop:305_02\n                      #181 MSG TalkSNpc/rco/SP_rco_09_RemakeWorkShop:302\n                      #248 IF OfficeLevel {}\n                        case 0:\n                          #263 IF IsSharePlay {\"TargetMode\": 0}\n                            case 0:\n                              #264 CALL Ftr_Working:RemakeWS_SharePlay\n                            case 1:\n                              #174 MSG TalkSNpc/rco/SP_rco_09_RemakeWorkShop:304\n                              #262 IF EventFlagSystemBool {\"AccessKey\": \"cLandTemp:RcoRemakeWSInThisScene\"}\n                                case ON:\n                                  #175 SetDeliveryItemAtRandom {\"ItemUniqueID\": 2513, \"ApplyToSave\": false, \"ItemRemakeDecideType\": \"cVillageRemakePattern\", \"RemakePatternIndex\": 0}\n                                  #176 NpcDelivery {\"Command\": 1, \"Option\": \"Default\"}\n                                  #276 MSG TalkSNpc/rco/SP_rco_09_RemakeWorkShop:304_02\n                                  #98 SetItemToPocket {\"ItemUniqueId\": 2513, \"SetNum\": 50}\n                                  #245 PlayerDemoTurn {\"Direction4\": \"cNorth\"}\n                                  #244 PlayerWaitTurn {}\n                                  #97 UIItemSelectWindowHandling {\"ItemKindType\": \"\", \"ItemFilterType\": \"\", \"FilterType\": \"cItemName\", \"ItemUniqueID\": 3436, \"Mode\": \"cItemSelectRemakeTutorial\"}\n                                  #100 UIWorkingHandling {\"DisplayType\": \"cRemakeSelectTutorial\"}\n                                  #188 SetSubflowResult {\"SetIndex\": 0, \"ResultValue\": 1}\n                                  #194 SetSubflowResult {\"ResultValue\": 1, \"SetIndex\": 1}\n                                  #195 CALL Ftr_Working:Workbench_Cmn_DIYdemo\n                                  #101 FORK\n                                    || #238 MSG TalkSNpc/rco/SP_rco_09_RemakeWorkShop:401\n                                    || #226 CALL Ftr_Working:Workbench_Cmn_DIYfinish\n                                  #236 MSG TalkSNpc/rco/SP_rco_09_RemakeWorkShop:402\n                                  #237 MSG TalkSNpc/rco/SP_rco_09_RemakeWorkShop:403\n                                  #103 EventFlagSystemOff {\"AccessKey\": \"cPlayer:RcoRemakeTrialOngoing\"}\n                                  #106 EventFlagSystemOff {\"AccessKey\": \"cPlayer:RcoEnableRemakeTrial\"}\n                                  #104 EventFlagSystemOn {\"AccessKey\": \"cPlayer:EnableDiyRemake\"}\n                                case OFF:\n                                  #247 NpcRailMove {\"MoveType\": 0, \"RailID\": 2, \"IsWarp\": false, \"PointA\": 0, \"PointB\": 1, \"IsReverse\": false}\n                                  #261 EventFlagSystemOn {\"AccessKey\": \"cLandTemp:RcoRemakeWSInThisScene\"}\n                                  -> (#175)\n                        case 1:\n                          -> (#263)\n                        case 2:\n                          #249 MSG TalkSNpc/rco/SP_rco_09_RemakeWorkShop:304_01\n                          -> (#98)\n                    case OFF:\n                      #178 MSG TalkSNpc/rco/SP_rco_09_RemakeWorkShop:305_01\n                      -> (#181)\n                case 1:\n                  #177 CALL Ftr_Working:RcoWorkingTableRemakeWorkshop\n            case OFF:\n              #170 EventFlagSystemOff {\"AccessKey\": \"cPlayer:RcoRemakeTrialGetFurniture\"}\n              #168 MSG TalkSNpc/rco/SP_rco_09_RemakeWorkShop:301\n              #169 MSG TalkSNpc/rco/SP_rco_09_RemakeWorkShop:302\n              #171 IF SystemHasBaggageSpace {\"CheckNum\": 1, \"CheckTargrt\": \"cPocketBag\"}\n                case 0:\n                  -> (#248)\n                case 1:\n                  #173 MSG TalkSNpc/rco/SP_rco_09_RemakeWorkShop:303\n                  #180 EventFlagSystemOn {\"AccessKey\": \"cPlayer:RemakeWs_TalkWhenItemFull\"}\n    case 1:\n      #155 CALL Ftr_Working:RcoWorkingTableRemakeWorkshop\n"
   },
   "limits": [
     "Static disassembly, EventFlow and table evidence do not execute a full cWorkRemake interaction.",
     "The table field is u16 in the BCSV schema; the native accessor loads its low byte. All 654 current table values are 1..50, so this build has no truncation case.",
-    "Ftr_Working#100 uses cRemakeSelectTutorial, but the flag-bit4 mapping is not established; the normal flag-bit4-clear path is the one statically tied to the table cost."
+    "Ftr_Working#100 uses cRemakeSelectTutorial, but bit4 is derived from a selected-item type check; the exact runtime code-to-ItemKind bridge and tutorial cancel behavior remain untested.",
+    "Ordinary Remake cancel branches are mapped in EventFlow, but UIResultMenuDecide case-to-button mapping is inferred from the branch shape.",
+    "Inventory mutation is shown inside a player-associated save member; the durable save flush boundary and full transaction rollback are not identified."
   ],
+  "persistent_save_boundary": {
+    "durability": "UNRESOLVED",
+    "evidence": "0xefbdf0 obtains a player-associated member view and passes its memory to f99b10; no serializer or durable flush is identified in the handler chain.",
+    "inventory_mutator": "0xf99b10",
+    "member_offset_in_player_record": "+0x70",
+    "member_view_length_parameter": "0x17c",
+    "player_context_accessor": "0xf8f400(player, 0)"
+  },
   "provenance": {
     "elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
     "index": "shared /workspace/acnh-re/output/index.sqlite opened read-only",
@@ -52,8 +82,9 @@
   },
   "rollback_boundary": {
     "explicit_kit_refund_calls_in_handler": 0,
+    "kit_return_status": "0xefbdf0 returns the f99b10 status, but 0x335d80 immediately writes w0=1; no failure branch consumes the status.",
     "kit_update_call_sites_in_0x335d10": 1,
-    "meaning": "At this handler call-site level, the kit-update return is ignored, no explicit inverse kit award appears, and both visible post-consume branches rejoin. This does not rule out rollback in nested helpers, other event flows, or save-system code.",
+    "meaning": "At the decoded handler/helper boundary, no explicit kit compensation appears. The post-consume helpers update the remake result; this does not rule out rollback in other event flows or save-system code.",
     "return_flow": {
       "after_kit_call": "0xefbdf0 returns to 0x335d80, which overwrites W0 with constant 1 before continuing; no immediate branch consumes the helper result.",
       "join_and_publish": "both visible paths rejoin at 0x335f18 and later publish a UI result via 0x154a640 at 0x33603c",
@@ -87,9 +118,25 @@
       "at": "0x335d10",
       "evidence": "read UI-result +0x14; when >=1, pass it with item ID 2513 to 0xefbdf0 -> 0xf99b10",
       "step": 5
+    },
+    {
+      "at": "0x15ad1c0 / 0x15806f0 / 0xa9cb60",
+      "evidence": "state bit4 comes from a selected-item predicate with type code 0x38; it is not read from DisplayType",
+      "step": 6
+    },
+    {
+      "at": "0x15ae950",
+      "evidence": "bit4 set writes quantity 0 and result flag 1; bit4 clear copies state +0x1928 to payload +0x14",
+      "step": 7
     }
   ],
   "table_case": {
+    "ItemKind_CraftPhoneCase_candidate": {
+      "Label": "CraftPhoneCase",
+      "UniqueID": 256,
+      "native_code_match": "0x38 equals ordinal 56; enum-to-row bridge is not directly proven",
+      "ordinal": 56
+    },
     "ItemParam.RemakeID": 168,
     "ItemParam.UniqueID": 3436,
     "ItemRemake.RemakeKitNum": 2,
@@ -106,6 +153,13 @@
       50
     ],
     "all_ItemRemake_rows": 654,
+    "tutorial_target_ItemKind": {
+      "hash": "7e0e8482",
+      "labels": [
+        "Ftr",
+        "\u5bb6\u5177"
+      ]
+    },
     "values_over_255": 0
   },
   "transaction_order": {
@@ -141,5 +195,25 @@
       ],
       "scope": "static direct-call/control-flow reconstruction; nested helper semantics are not all resolved"
     }
+  },
+  "tutorial_bit4": {
+    "DisplayType_direct_dependency": false,
+    "RemakeKitNum": 2,
+    "bit4_builder": "0x15ad1c0 sets state +0x1c bit 4 from 0x15806f0",
+    "predicate": "0x15806f0 tail-branches to 0xa9cb60 with code 0x38",
+    "runtime_result_for_target": "UNRESOLVED; code-to-ItemKind crosswalk is a candidate only",
+    "selected_target": 3436,
+    "selected_target_ItemKind": {
+      "hash": "7e0e8482",
+      "labels": [
+        "Ftr",
+        "\u5bb6\u5177"
+      ]
+    }
+  },
+  "ui_preflight_hint": {
+    "caller": "0x136d9d0 uses the result to select a UI property value of 1.0 or 2.0.",
+    "helper": "0x1580580 returns true for type code 0x38; otherwise compares RemakeKitNum with the supplied count after its state gates.",
+    "meaning": "The property meaning and whether it disables selection are unresolved."
   }
 }
