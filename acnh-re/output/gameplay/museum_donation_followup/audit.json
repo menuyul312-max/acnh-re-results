@@ -1,0 +1,298 @@
+{
+  "schema": "museum-donation-followup/1",
+  "evidence_level": {
+    "N": "native NSO execution",
+    "EF": "decoded EventFlow",
+    "SAVE": "save-layout/crosswalk",
+    "TBL": "resolved BCSV table"
+  },
+  "source_sha256": {
+    "SNPC_rco_01_Tent_1_Entries": "76c70d56a2f2a2d568adf2bbe5776c5e04a8def689a616134a32b637854669f5",
+    "SNPC_owl_01_Museum_Donation": "47d5cb72bdcdfe175eb3952111da30602e9c6207ddc46ccc51c6510ede8aca8c",
+    "SNPC_owl_02_Museum_Judgment": "a73860648bf8338d3f7ccf985b407dd7bdd3d0f10c2d6b627513ed8351046cde",
+    "SNPC_owl_11_Tent_Entries": "7f8a5aa55cac7985706e506824ccb2c34320a436f683fd8a57ed07d436d126ac",
+    "MuseumFossilDonateInfo": "b26cab2abc6b7e10b6f8a8e1fa906c198e36f7536c66215ce3da455f52150829",
+    "FishStatusParam": "a861a192c47e744771d1dea160d0da64d52cc4149413e316ba935e8a5d394f39"
+  },
+  "save_museum": {
+    "evidence": "SAVE",
+    "member": {
+      "node": "0x20a168",
+      "depth": 1,
+      "data": "0x411a80",
+      "size": "0x3404",
+      "type": "0x30ea050",
+      "parent": "0x0",
+      "name": "museum block; state 0..4 at +0 (0xf77050)"
+    },
+    "museum_level_member": {
+      "node": "0x20a1a0",
+      "depth": 2,
+      "data": "0x411a80",
+      "size": "0x4",
+      "type": "0x30ea0b0",
+      "parent": "0x20a168"
+    },
+    "crosswalk": {
+      "node": "0x20a168",
+      "parent": "0x0",
+      "depth": 1,
+      "data": "0x411a80",
+      "size": "0x3404",
+      "local_name": "museum block; state 0..4 at +0 (0xf77050)",
+      "status": "one_struct_type_candidate",
+      "depth_aligned_matches": [
+        {
+          "path": "SaveLand.Museum",
+          "type": "::Game::SaveMuseum",
+          "kind": "field_size"
+        },
+        {
+          "path": "SaveLand.Museum",
+          "type": "::Game::SaveMuseum",
+          "kind": "struct_size"
+        }
+      ],
+      "matches": [
+        {
+          "path": "SaveLand.Museum",
+          "type": "::Game::SaveMuseum",
+          "kind": "field_size"
+        },
+        {
+          "path": "SaveLand.Museum",
+          "type": "::Game::SaveMuseum",
+          "kind": "struct_size"
+        }
+      ],
+      "depth_aligned_named_type_candidates": [
+        "::Game::SaveMuseum"
+      ],
+      "depth_aligned_struct_type_candidates": [
+        "::Game::SaveMuseum"
+      ]
+    }
+  },
+  "flags": {
+    "cLand:DonationAmountForMuseum": {
+      "table": "EventFlagsLandParam",
+      "default": 15,
+      "max": 15,
+      "writer_status": "eventflow",
+      "eventflow_writers": [
+        {
+          "flow": "SNPC_owl_11_Tent_Entries",
+          "entry": "owl_Tent_AfterDonation",
+          "event": 22,
+          "op": "add",
+          "value": -1
+        }
+      ],
+      "eventflow_reader_count": 0
+    },
+    "cLand:MuseumGrowupEnable1": {
+      "table": "EventFlagsLandParam",
+      "default": 0,
+      "max": 1,
+      "writer_status": "eventflow",
+      "eventflow_writers": [
+        {
+          "flow": "SNPC_owl_11_Tent_Entries",
+          "entry": "owl_Tent_AfterDonation",
+          "event": 37,
+          "op": "on",
+          "value": 1
+        },
+        {
+          "flow": "SNPC_owl_11_Tent_Entries",
+          "entry": "owl_Tent_AfterDonation",
+          "event": 41,
+          "op": "on",
+          "value": 1
+        }
+      ],
+      "eventflow_reader_count": 3
+    },
+    "cLand:MuseumFossilComplete": {
+      "table": "EventFlagsLandParam",
+      "default": 0,
+      "max": 1,
+      "writer_status": "eventflow",
+      "eventflow_writers": [
+        {
+          "flow": "SNPC_owl_01_Museum_Donation",
+          "entry": "Root",
+          "event": 111,
+          "op": "on",
+          "value": 1
+        },
+        {
+          "flow": "SNPC_owl_01_Museum_Donation",
+          "entry": "Comp_Check",
+          "event": 111,
+          "op": "on",
+          "value": 1
+        },
+        {
+          "flow": "SNPC_owl_01_Museum_Donation",
+          "entry": "owl_Donation_AfterItemSel",
+          "event": 111,
+          "op": "on",
+          "value": 1
+        },
+        {
+          "flow": "SNPC_owl_01_Museum_Donation",
+          "entry": "OwlTentDonationAgain",
+          "event": 111,
+          "op": "on",
+          "value": 1
+        }
+      ],
+      "eventflow_reader_count": 0
+    },
+    "cLand:OwlFoundFossil": {
+      "table": "EventFlagsLandParam",
+      "default": 0,
+      "max": 1,
+      "writer_status": "eventflow",
+      "eventflow_writers": [
+        {
+          "flow": "SNPC_owl_01_Museum_Donation",
+          "entry": "Root",
+          "event": 96,
+          "op": "on",
+          "value": 1
+        },
+        {
+          "flow": "SNPC_owl_01_Museum_Donation",
+          "entry": "Fossil_DonationTypeChk",
+          "event": 96,
+          "op": "on",
+          "value": 1
+        },
+        {
+          "flow": "SNPC_owl_01_Museum_Donation",
+          "entry": "owl_Donation_AfterItemSel",
+          "event": 96,
+          "op": "on",
+          "value": 1
+        },
+        {
+          "flow": "SNPC_owl_01_Museum_Donation",
+          "entry": "Eplanation_ExpertOpinion",
+          "event": 96,
+          "op": "on",
+          "value": 1
+        },
+        {
+          "flow": "SNPC_owl_01_Museum_Donation",
+          "entry": "OwlTentDonationAgain",
+          "event": 96,
+          "op": "on",
+          "value": 1
+        }
+      ],
+      "eventflow_reader_count": 21
+    },
+    "cPlayer:OwlDonationDone": {
+      "table": "EventFlagsPlayerParam",
+      "default": 0,
+      "max": 1,
+      "writer_status": "eventflow",
+      "eventflow_writers": [
+        {
+          "flow": "SNPC_owl_11_Tent_Entries",
+          "entry": "owl_Tent_AfterDonation",
+          "event": 1,
+          "op": "on",
+          "value": 1
+        }
+      ],
+      "eventflow_reader_count": 4
+    },
+    "cPlayerTemp:OwlKnownFossil": {
+      "table": "EventFlagsPlayerTempParam",
+      "default": 0,
+      "max": 1,
+      "writer_status": "eventflow",
+      "eventflow_writers": [
+        {
+          "flow": "SNPC_owl_11_Tent_Entries",
+          "entry": "owl_DonatedFossil1st_Known",
+          "event": 14,
+          "op": "on",
+          "value": 1
+        }
+      ],
+      "eventflow_reader_count": 5
+    }
+  },
+  "tables": {
+    "MuseumFossilDonateInfo": {
+      "evidence": "TBL",
+      "rows": 73,
+      "columns": [
+        "StageName",
+        "UniqueID",
+        "WatchItem",
+        "ModelID",
+        "CameraParamName"
+      ],
+      "stage_counts": {
+        "IdrMuseumFossil_0": 9,
+        "IdrMuseumFossil_1": 54,
+        "IdrMuseumFossil_2": 10
+      }
+    },
+    "FishStatusParam": {
+      "evidence": "TBL",
+      "rows": 84,
+      "OpenDonatedNum_histogram": {
+        "0": 45,
+        "20": 22,
+        "50": 12,
+        "100": 5
+      }
+    }
+  },
+  "eventflow_findings": {
+    "visitor_fish_insect_donation": {
+      "evidence": "EF",
+      "flow": "SNPC_rco_01_Tent_1_Entries:RcoTentFishInsect",
+      "item_filter": "RcoDonationForMuseum",
+      "query": "OwlIsDonation",
+      "query_params": {
+        "DonationCheckItemType": "cUISelect"
+      },
+      "museum_count_border": 5
+    },
+    "fossil_judgment": {
+      "evidence": "EF",
+      "flow": "SNPC_owl_02_Museum_Judgment:Root",
+      "fossil_filter": "OwlFossilJudgement",
+      "assessment_action": "OwlFossilAppraise",
+      "assessment_query": "AppraiseFossilDonationRate",
+      "see": "fossil_judgment_flow.txt"
+    },
+    "tent_expansion_threshold": {
+      "evidence": "EF",
+      "flow": "SNPC_owl_11_Tent_Entries:owl_Tent_AfterDonation",
+      "query": "MuseumDonationNumCheck",
+      "border": 20,
+      "case_0_writes": [
+        "cPlayer:FutaReadyForMuseum",
+        "cPlayer:FutaReadyForMuseumToday",
+        "cLand:MuseumGrowupEnable1"
+      ],
+      "case_1_decrements": {
+        "flag": "cLand:DonationAmountForMuseum",
+        "value": -1
+      }
+    }
+  },
+  "native_limitations": [
+    "Native 0x3d9b60 verified only for a null context; positive per-item eligibility is untested.",
+    "MuseumFossilDonateInfo is display/model metadata; it does not identify assessment or save-bit semantics.",
+    "OpenDonatedNum distribution is table evidence only; 0x5b8e30 remains pseudo because its catch-count accessor is controlled in the existing rig."
+  ]
+}

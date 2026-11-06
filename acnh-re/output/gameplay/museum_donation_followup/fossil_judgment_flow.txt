@@ -1,0 +1,112 @@
+# SNPC_owl_02_Museum_Judgment (source: decoded EventFlow; bool flag case 0 = ON, case 1 = OFF; #N = event index)
+== ENTRY Root
+  #1 IF HasKindItem {"CheckItemKindType": "cKind", "ItemKindType": "FossilUnknown", "ItemFilterType": ""}
+    case 0:
+      #8 MSG TalkSNpc/owl/SP_owl_00_Common:202
+      #13 UIItemSelectWindowHandling {"Mode": "cItemSelect", "FilterType": "cItemFilter", "ItemFilterType": "OwlFossilJudgement", "ItemUniqueID": 65534, "ItemKindType": ""}
+      #12 IF UIResultMenuDecide {}
+        case 0:
+          #53 SetDeliveryItem {"SetItemTarget": 4, "ApplyToSave": false}
+          #11 NpcDelivery {"Command": 0, "Option": "Keep"}
+          #10 IF UIResultItemWindowNumCheck {"Num": 2, "JudgeTarget": "cItemSelect"}
+            case 0:
+              #6 MSG TalkSNpc/owl/SP_owl_00_Common:214
+              #47 OwlFossilAppraise {}
+              #14 IF AppraiseFossilDonationRate {}
+                case 0:
+                  #51 MSG TalkSNpc/owl/SP_owl_00_Common:215
+                  #35 IF MuseumLevel {}
+                    case 0:
+                      #42 IF MuseumDonationNumCheck {"Border": 20}
+                        case 0:
+                          #43 MSG TalkSNpc/owl/SP_owl_00_Common:228
+                          #45 NpcDelivery {"Command": 10, "Option": "\"Default\""}
+                          #46 CALL SNPC_owl_00_Common:Again
+                        case 1:
+                          #44 MSG TalkSNpc/owl/SP_owl_00_Common:229
+                          -> (#45)
+                    case 1:
+                      #36 MSG TalkSNpc/owl/SP_owl_00_Common:217
+                      #21 NpcDelivery {"Command": 10, "Option": "\"Default\""}
+                      #22 CALL SNPC_owl_00_Common:Again
+                    case 2:
+                      -> (#36)
+                case 1:
+                  #52 MSG TalkSNpc/owl/SP_owl_00_Common:216
+                  -> (#35)
+                case 2:
+                  #5 MSG TalkSNpc/owl/SP_owl_00_Common:219
+                  -> (#21)
+            case 1:
+              #20 CALL SNPC_owl_02_Museum_Judgment:Fossil_Check
+              #15 IF OwlIsDonation {"DonationCheckItemType": "cUISelect"}
+                case 0:
+                  #23 MSG TalkSNpc/owl/SP_owl_00_Common:209
+                  -> (#21)
+                case 1:
+                  #24 IF MuseumLevel {}
+                    case 0:
+                      #39 IF MuseumDonationNumCheck {"Border": 20}
+                        case 0:
+                          #40 MSG TalkSNpc/owl/SP_owl_00_Common:227
+                          #41 NpcDelivery {"Command": 10, "Option": "\"Default\""}
+                        case 1:
+                          #28 IF MuseumDonationNumCheck {"Border": 19}
+                            case 0:
+                              #29 MSG TalkSNpc/owl/SP_owl_00_Common:212
+                              #31 IF GeneralTalkChoice2 {}
+                                case 0:
+                                  #38 CALL SNPC_owl_02_Museum_Judgment:Donation_Accept
+                                case 1:
+                                  #37 CALL SNPC_owl_02_Museum_Judgment:Donation_Decline
+                            case 1:
+                              #30 MSG TalkSNpc/owl/SP_owl_00_Common:211
+                              -> (#31)
+                    case 1:
+                      #16 IF NetHasVisitor {}
+                        case 0:
+                          #27 MSG TalkSNpc/owl/SP_owl_00_Common:210
+                          #25 NpcDelivery {"Command": 10, "Option": "\"Default\""}
+                          #26 CALL SNPC_owl_00_Common:Again
+                        case 1:
+                          #4 MSG TalkSNpc/owl/SP_owl_00_Common:213
+                          #9 IF GeneralTalkChoice2 {}
+                            case 0:
+                              #2 MSG TalkSNpc/owl/SP_owl_00_Common:221
+                              #48 CALL SNPC_owl_01_Museum_Donation:Fossil_DonationTypeChk
+                            case 1:
+                              #3 MSG TalkSNpc/owl/SP_owl_00_Common:220
+                              #17 NpcDelivery {"Command": 10, "Option": "\"Default\""}
+                              #55 IF EventFlagSystemBool {"AccessKey": "cLand:OwlFoundFossil"}
+                                case ON:
+                                  #18 CALL SNPC_owl_00_Common:Again
+                                case OFF:
+                                  #54 CALL SNPC_owl_01_Museum_Donation:Eplanation_ExpertOpinion
+                                  -> (#18)
+                    case 2:
+                      -> (#16)
+        case 1:
+          #7 MSG TalkSNpc/owl/SP_owl_00_Common:203
+          #19 CALL SNPC_owl_00_Common:Again
+    case 1:
+      #0 MSG TalkSNpc/owl/SP_owl_00_Common:201
+      -> (#19)
+== ENTRY Fossil_Check
+  #32 MSG TalkSNpc/owl/SP_owl_00_Common:204
+  #49 OwlFossilAppraise {}
+  #50 SetTagFromUIResult {"TagType": "cItemName", "TagID": 0}
+  #33 MSG TalkSNpc/owl/SP_owl_00_Common:205
+  #34 MSG TalkSNpc/owl/SP_owl_00_Common:206
+== ENTRY Donation_Decline
+  #3 MSG TalkSNpc/owl/SP_owl_00_Common:220
+  #17 NpcDelivery {"Command": 10, "Option": "\"Default\""}
+  #55 IF EventFlagSystemBool {"AccessKey": "cLand:OwlFoundFossil"}
+    case ON:
+      #18 CALL SNPC_owl_00_Common:Again
+    case OFF:
+      #54 CALL SNPC_owl_01_Museum_Donation:Eplanation_ExpertOpinion
+      -> (#18)
+== ENTRY Donation_Accept
+  #2 MSG TalkSNpc/owl/SP_owl_00_Common:221
+  #48 CALL SNPC_owl_01_Museum_Donation:Fossil_DonationTypeChk
+
