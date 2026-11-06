@@ -1,0 +1,59 @@
+{
+  "schema": "acnh-re/tool-break-counter-native/1",
+  "native_elf_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+  "entry": "0xda5450",
+  "native_contract": "DA5450 returns without a save-writer request when the descriptor's first byte is zero. For nonzero input, its original instructions construct the key BreakToolCount and request increment 1 through CE9340.",
+  "static_callers": [
+    {
+      "caller": "0xe37950",
+      "context": "called by the PlayerToolBreak/BreakTool action transition at 0xe37a50/0xe37830"
+    },
+    {
+      "caller": "0xe45b80",
+      "context": "Net get-demo state; caller-dependent guard data controls whether the wrapper emits"
+    },
+    {
+      "caller": "0xe4e730",
+      "context": "Rod get-demo state; caller-dependent guard data controls whether the wrapper emits"
+    }
+  ],
+  "cases": [
+    {
+      "input_flag": 0,
+      "writer_requests": []
+    },
+    {
+      "input_flag": 1,
+      "writer_requests": [
+        {
+          "key": "BreakToolCount",
+          "amount": 1,
+          "value_context": 2147483649
+        }
+      ]
+    },
+    {
+      "input_flag": 2,
+      "writer_requests": [
+        {
+          "key": "BreakToolCount",
+          "amount": 1,
+          "value_context": 2147483649
+        }
+      ]
+    }
+  ],
+  "case_count": 3,
+  "mismatches": 0,
+  "dependencies_stubbed": [
+    "0xead570",
+    "0xead650",
+    "0xead5d0 input descriptor helpers",
+    "0xce9340 generic save writer boundary"
+  ],
+  "remaining": [
+    "The CE9340/CE9390 backed field mutation was not executed",
+    "BreakToolCount semantics and its relationship to inventory durability remain unproven",
+    "No per-item use decrement or break threshold is established"
+  ]
+}

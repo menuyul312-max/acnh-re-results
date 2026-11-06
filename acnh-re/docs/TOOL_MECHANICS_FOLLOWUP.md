@@ -12,6 +12,15 @@ The observed writes in `PlayerToolBreak` increment player-state memory at byte o
 
 The named ItemParam columns contain no durability, break-count, use-count, or uses field. Hash-named columns remain unresolved and are not assigned durability semantics without a native consumer. Therefore a claim such as “tool X breaks after N uses” is still open.
 
+## Native break-counter requests
+
+Two native paths tied to the break transition are now separated from durability claims:
+
+- `0xe37830` (`BreakTool`) branches on byte `param+0x1024`; the zero branch calls `0xf62e90` with key `BreakTool` and increment `1`. The local flag index contains `cLifeSupportAchievement:BreakTool` (max 1) but no EventFlow writer. This supplies a native call site for the achievement key; the generic save-backed counter implementation was not executed here.
+- `0xe37950` calls `0xda5450`, which constructs the key `BreakToolCount` and requests increment `1` through `0xce9340` only when the input descriptor's first byte is nonzero. `e37950` is used by the tool-break transition; `0xda5450` is also called from net and rod get-demo states, so its name alone does not prove when a break occurred.
+
+`tools/tool_break_counter_native.py` runs the original `0xda5450` instructions for input flag values 0, 1, and 2. The generic writer `0xce9340` is stubbed to capture the request; zero emits none, while nonzero values emit exactly `BreakToolCount += 1` (3 cases, 0 mismatch). It does not execute the save mutation or prove that this counter is a durability value. Result: `output/gameplay/tool_mechanics_followup/tool_break_counter_native.json`.
+
 ## Per-family action evidence
 
 “Proven” below is limited to the stated static identity/state/handler evidence. “Open” means the world or inventory result has not been connected. The native action anchors are function/string-reference matches in the indexed main NSO; they are not full action simulations.
