@@ -43,7 +43,7 @@ Ini membuktikan nominal yang dikirim EventFlow setelah cabang remodel, bukan nil
 
 Alur bayar juga terlihat di EventFlow: ATM memeriksa `PlayerLoanRepaying`, lalu cabang `PlayerHasLoan` case 1 dapat memesan demo `Player_GetDemo_Once:Get_FinishLoan`. Demo itu mematikan `PlayerLoanRepaying`, menyalakan `PlayerLoanFinish1st`, dan menambah achievement `RepayLoan`. Obrolan `SNPC_rco_04_ChkFinishLoan` kemudian menandai selesai sepenuhnya dengan `PcHousingLoanFinish` saat `PlayerHouseLevel` 8. Arti hasil native `PlayerHasLoan` case 1 belum diperiksa.
 
-Waktu kalender upgrade masih **terbuka**. Flag `RcoAfterHouseRemodel` menjadi gate EventFlow dan flow mematikannya setelah percakapan, tetapi tidak ada penulis EventFlow yang menyalakannya. Sumber yang diperiksa belum menunjukkan native event yang menetapkan flag tersebut atau jumlah hari renovasi.
+Penulis native `RcoAfterHouseRemodel` kini terpetakan. Jalur pembaruan rumah `0xf545f0` memanggil `0xf96960`; fungsi itu mengunjungi delapan blok state berjarak `0x26400` dan meneruskan tiap blok ke `0xf949c0`. Fungsi terakhir menyimpan level awal, menjalankan helper remodel sesuai level, lalu membandingkan level awal dan hasilnya. Jika berubah, ia memanggil setter `0xf4b0d0` untuk `RcoAfterHouseRemodel` menggunakan byte state pada `param1 + 0x263d0`, dan juga memperbarui `ExtendMyHome`. Pemanggil `0xf545f0` adalah `0xf53a70`, jalur pembaruan harian yang juga memproses flag seperti `TodayCreateVillage` dan `PlayToday`. Ini membuktikan sinyal flag saat perubahan level terdeteksi oleh updater; kode yang ditelusuri tidak memuat hitung mundur atau angka jumlah hari renovasi. Gate EventFlow tetap mematikan flag setelah dialog.
 
 Artefak: `output/gameplay/house_hha_followup/house_loan_eventflow.json`. Reproducer statisnya:
 
@@ -78,12 +78,31 @@ Jalankan dari root worktree:
 PYTHONPATH=/workspace/acnh-re/.deps python acnh-re/tools/hha_score_bucket_native.py
 ```
 
+### Skor item menuju akumulator HHA — terbukti terbatas; kait ke bucket masih terbuka
+
+Evaluator `0x7b1fe0` memproses objek rumah dan memanggil `0x7b36b0` untuk item yang lolos pemeriksaan. Instruksi native `0x7b36b0` memanggil helper item `0xab9050` di PC `0x7b37b8`, lalu menambahkan nilai baliknya ke record ruangan `param1 + 0xb10`, offset `+0x24`. Pseudocode helper `0xab9050` mencari hash field `0xd62525d0`; hash ini sama persis dengan kolom `ItemFrom:HHABaseScore` pada schema resolved (offset 6, lebar 2 byte). Reproducer menjalankan instruksi asli `0x7b36b0` dengan nilai balik helper terkontrol 0, 200, dan 499; ketiganya menambahkan nilai yang sama ke `+0x24`, sementara `+0x150` tetap pada sentinel uji. Ada 3 kasus dan 0 mismatch. Identitas sumber skor dibuktikan lewat kesamaan hash schema; harness tidak menjalankan lookup tabel item sebenarnya.
+
+Di evaluator `0x7b1fe0`, setelah pemindaian, native membentuk `+0x136c` sebagai jumlah 12 akumulator ruangan pada `+0x24` sampai `+0x50`. Cabang bucket `0x7b4fc0` membaca field berbeda: `+0x150` sebagai pembilang dan `+0x14c` sebagai penyebut. Untuk pembilang nonnegatif, ia menggeser `+0x150` empat bit ke kanan, membagi hasilnya dengan `+0x14c`, lalu mengalikan 100. Ambang internal yang terlihat adalah 20 dan 50; konstanta float 100.0 dan 50.0 berada di `0x29d6408` dan `0x29d62ac`. Harness bucket lama menguji scalar `+0x150` langsung dengan instruksi `0x7b4fc0`.
+
+Karena akumulator item `+0x24..+0x50`/total `+0x136c` dan pembilang bucket `+0x150` merupakan field berbeda, bukti yang ada belum menghubungkan nilai helper item ke scalar bucket. Semantik penuh `+0x150`, pembobotan tema, ambang grade yang ditampilkan, dan hubungan total `+0x136c` dengan grade tetap **terbuka**.
+
+Reproducer dan hasil untuk akumulator item:
+
+- `output/gameplay/house_hha_followup/hha_item_score_accumulator_native.json`
+- `tools/hha_item_score_accumulator_native.py`
+
+Jalankan dengan dependency cache bersama:
+
+```bash
+PYTHONPATH=/workspace/acnh-re/.deps python acnh-re/tools/hha_item_score_accumulator_native.py
+```
+
 ### Skor total, grade yang ditampilkan, dan tema — terbuka
 
 Skema resolved `ItemParam` memuat `ItemHHATheme`, `ItemHHACategory`, `ItemHHASet`, `ItemHHASituation1/2`, `ItemHHAPart`, `ItemHHASeason`, dan `ItemHHADirection`; `ItemFrom` memuat `HHABaseScore`. Indeks BDLI US English memuat 3 record `STR_HHA_Rank`, 25 `STR_HHA_Theme`, 19 `STR_HHA_Set`, dan 24 `STR_HHA_Situation`. Bukti yang dikumpulkan belum menghubungkan nilai field barang tersebut dengan bobot poin atau mask bucket yang diuji. Flag `cLifeSupportAchievement:GetSRankonHHA` bernama Jepang “mendapat S di HHA” dan direferensikan oleh beberapa fungsi native, tetapi threshold serta kaitnya dengan bit bucket 3/4/5 belum terbukti.
 
-### Flag surat grade — jalur setter terbukti; pengiriman terbuka
+### Flag surat grade — syarat setter parsial terbukti; pengiriman terbuka
 
-Flag `cPlayer:HHAGradeMailFlag` memiliki label Jepang “HHA | kirim surat evaluasi ON?” dan tidak memiliki penulis EventFlow yang terindeks. Fungsi native `0x7b1fe0` merujuk string `HHAGradeMailFlag` dan memiliki satu panggilan setter flag `0xf4b0d0`. Ini membuktikan jalur native yang memperbarui flag tersebut, bukan bahwa surat benar-benar dibuat atau dikirim, kondisi grade yang memicunya, maupun waktunya.
+Flag `cPlayer:HHAGradeMailFlag` memiliki label Jepang “HHA | kirim surat evaluasi ON?” dan tidak memiliki penulis EventFlow yang terindeks. Manager `0x7b1dd0`, yang dipanggil dari `0xf53a70`, mencoba evaluasi indeks ruangan 0–7; bila `0x7b1fe0` berhasil, ia melanjutkan ke `0x7b29d0`. Di awal `0x7b1fe0`, setter `0xf4b0d0` dipanggil sebelum pemindaian furniture bila indeks ruangan bukan nol, nilai field level yang dibaca lebih besar dari 1, dan field state ruangan `+0x158` bukan `-1`. Setter menerima nilai pada field tersebut. Ini membatasi syarat setter, tetapi arti tepat kedua nilai state dan hubungan dengan evaluasi grade sebelumnya belum terpetakan. Karena setter berjalan sebelum pemindaian dan bucket pada pass yang sama, jalur ini tidak menunjukkan pembuatan atau pengiriman surat dan tidak menetapkan grade dari skor yang baru dihitung pada pemanggilan yang sama.
 
-**Blocker bukti saat ini:** harness bucket mengontrol accessor flag dan menghentikan receiver laporan. Belum ada reproduksi penyimpanan flag atau jalur pengiriman surat yang menghubungkan hasil bucket ke surat pemain. Karena itu formula HHA lengkap, pemetaan grade, bonus tema, dan jadwal surat masih terbuka.
+**Batas bukti saat ini:** harness akumulator mengontrol batas helper item; harness bucket mengontrol field `+0x150`, accessor mission, dan menghentikan receiver laporan. Keduanya menjalankan jalur native terpisah. Belum ada reproduksi save yang menghubungkan field item, total, bucket, `HHAGradeMailFlag`, dan jalur pembuatan/pengiriman surat. Karena itu formula HHA lengkap, pemetaan grade, bonus tema, serta syarat dan jadwal surat tetap terbuka.
