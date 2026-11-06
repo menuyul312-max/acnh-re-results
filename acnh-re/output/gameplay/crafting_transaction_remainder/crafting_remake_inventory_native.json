@@ -1,0 +1,91 @@
+{
+  "cases": {
+    "exact_stack_boundary": {
+      "available_before": 2,
+      "changed_offsets": [],
+      "freeparam_after": 1,
+      "freeparam_before": 1,
+      "inventory_bytes_unchanged": true,
+      "native_return": 1,
+      "requested_remove": 2,
+      "slot_record_after": [
+        2513,
+        0,
+        1
+      ],
+      "slot_record_before": [
+        2513,
+        0,
+        1
+      ]
+    },
+    "insufficient_stack": {
+      "available_before": 1,
+      "changed_offsets": [],
+      "freeparam_after": 0,
+      "freeparam_before": 0,
+      "inventory_bytes_unchanged": true,
+      "native_return": 0,
+      "requested_remove": 2,
+      "slot_record_after": [
+        2513,
+        0,
+        0
+      ],
+      "slot_record_before": [
+        2513,
+        0,
+        0
+      ]
+    },
+    "sufficient_stack": {
+      "available_before": 50,
+      "changed_offsets": [
+        "0xbc",
+        "0x15c"
+      ],
+      "freeparam_after": 47,
+      "freeparam_before": 49,
+      "inventory_bytes_unchanged": false,
+      "native_return": 1,
+      "requested_remove": 2,
+      "slot_record_after": [
+        2513,
+        0,
+        47
+      ],
+      "slot_record_before": [
+        2513,
+        0,
+        49
+      ]
+    }
+  },
+  "claims": {
+    "exact_stack_boundary": "UNRESOLVED_FIXTURE_SEMANTICS_NATIVE_RETURNS_SUCCESS_WITH_NO_BUFFER_CHANGE",
+    "persistent_save_flush_or_rollback": "UNRESOLVED",
+    "real_player_save_or_cWorkRemake_event_executed": false,
+    "request_larger_than_available_does_not_change_fixture": "PROVEN_NATIVE_ON_RECONSTRUCTED_FIXTURE",
+    "two_kits_reduce_FreeParam_49_to_47": "PROVEN_NATIVE_ON_RECONSTRUCTED_FIXTURE"
+  },
+  "fixture": {
+    "inventory_shape": "reconstructed 0x500-byte pocket-like record; one active item slot at +0xb8; active count at +0x158; empty secondary area; category byte +0x178=0",
+    "item_kind": "CraftRemake",
+    "kit_item_id": 2513,
+    "stack_limit_from_native_ItemKind": 50
+  },
+  "notes": [
+    "In this item-record encoding, the related inventory cache reader maps FreeParam low16 + 1 to displayed stack quantity for stackable normal items; the 50-kit fixture therefore starts at FreeParam 49.",
+    "The sufficient case also writes 0xff to adjacent byte +0x15c. Its UI/order-list semantics are not named by this fixture and are not interpreted here.",
+    "The helper, requirement comparison, table lookups and inventory mutation execute natively. ItemParam/ItemKind blobs are supplied; the pocket record and item descriptor are synthetic.",
+    "No dependency function was stubbed. This helper-level run does not establish that the full event transaction is atomic or persisted to disk."
+  ],
+  "provenance": {
+    "elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+    "helper": "0xf99b10",
+    "itemkind_raw_sha256": "4cac0178cc69519585528b24ceef022ccb1fefa12b23fc9a9e4280e40185ba7b",
+    "itemparam_raw_sha256": "89230e97fc877ff2b2b48ac1c707ef32b3a7760118839c307f19797e2553458c"
+  },
+  "result": "NATIVE_HELPER_EXECUTED",
+  "schema": "acnh.crafting_remake_inventory_native.v1"
+}
