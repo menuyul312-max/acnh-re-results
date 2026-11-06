@@ -1,0 +1,145 @@
+{
+  "cases": 216,
+  "groups": {
+    "complete_region_predicate": 216
+  },
+  "mismatches": [],
+  "threshold": 0.10999999940395355,
+  "samples": [
+    {
+      "mode": 0,
+      "overlay": "none",
+      "height_difference": 0.0,
+      "native_result": 1
+    },
+    {
+      "mode": 0,
+      "overlay": "none",
+      "height_difference": 0.10999999940395355,
+      "native_result": 1
+    },
+    {
+      "mode": 0,
+      "overlay": "none",
+      "height_difference": 0.35999999940395355,
+      "native_result": 0
+    },
+    {
+      "mode": 0,
+      "overlay": "active",
+      "height_difference": 0.0,
+      "native_result": 1
+    },
+    {
+      "mode": 0,
+      "overlay": "active",
+      "height_difference": 0.10999999940395355,
+      "native_result": 0
+    },
+    {
+      "mode": 0,
+      "overlay": "active",
+      "height_difference": 0.35999999940395355,
+      "native_result": 0
+    },
+    {
+      "mode": 0,
+      "overlay": "inherit",
+      "height_difference": 0.0,
+      "native_result": 1
+    },
+    {
+      "mode": 0,
+      "overlay": "inherit",
+      "height_difference": 0.10999999940395355,
+      "native_result": 1
+    },
+    {
+      "mode": 0,
+      "overlay": "inherit",
+      "height_difference": 0.35999999940395355,
+      "native_result": 0
+    },
+    {
+      "mode": 1,
+      "overlay": "none",
+      "height_difference": 0.0,
+      "native_result": 1
+    },
+    {
+      "mode": 1,
+      "overlay": "none",
+      "height_difference": 0.10999999940395355,
+      "native_result": 1
+    },
+    {
+      "mode": 1,
+      "overlay": "none",
+      "height_difference": 0.35999999940395355,
+      "native_result": 0
+    },
+    {
+      "mode": 1,
+      "overlay": "active",
+      "height_difference": 0.0,
+      "native_result": 1
+    },
+    {
+      "mode": 1,
+      "overlay": "active",
+      "height_difference": 0.10999999940395355,
+      "native_result": 1
+    },
+    {
+      "mode": 1,
+      "overlay": "active",
+      "height_difference": 0.35999999940395355,
+      "native_result": 0
+    },
+    {
+      "mode": 1,
+      "overlay": "inherit",
+      "height_difference": 0.0,
+      "native_result": 1
+    },
+    {
+      "mode": 1,
+      "overlay": "inherit",
+      "height_difference": 0.10999999940395355,
+      "native_result": 1
+    },
+    {
+      "mode": 1,
+      "overlay": "inherit",
+      "height_difference": 0.35999999940395355,
+      "native_result": 0
+    }
+  ],
+  "outcomes": {
+    "true": 130,
+    "false": 86
+  },
+  "native_functions": [
+    "0x181fa0",
+    "0x52c950",
+    "0x52c970",
+    "0x52c9b0",
+    "0x52c9e0"
+  ],
+  "rules": [
+    "Iterates the inclusive rectangular cell range; out-of-world cells are skipped. An entirely outside region returns true in these tests.",
+    "Mode low bit0 requires world-word bit0 and reads base or an available overlay whose first attribute byte is not7. Mode low bit1 requires word bit1 and reads base only.",
+    "The running maximum-minus-minimum of record float0 must not exceed the original threshold; equality passes. Input records are preserved."
+  ],
+  "scope": "Complete original rectangle predicate on finite reconstructed base/overlay heights and word flags; independent flag/range oracle.",
+  "limits": [
+    "This checks record float0, not all12 terrain samples or geometric collision.",
+    "Preset/PBC loader, source word generation, inverted rectangles, NaN/infinite heights and live placement callers remain unproven."
+  ],
+  "source_reference": [
+    "mechanics/terrain_nav_flags_native.json",
+    "mechanics/continuation_frontier.json"
+  ],
+  "dependencies_stubbed": [],
+  "elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74"
+}
