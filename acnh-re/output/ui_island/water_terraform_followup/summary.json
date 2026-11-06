@@ -1,0 +1,239 @@
+{
+  "schema": "acnh-re/island-water-terraform-followup-1",
+  "scope": "Bounded region terrain predicate, mutation and registry release. Does not execute the full island editor or save transaction.",
+  "inputs": {
+    "nso_path": "/workspace/acnh-re/inputs/additional_exefs/main",
+    "nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+    "elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+    "index_path": "/workspace/acnh-re/output/index.sqlite",
+    "dependency_versions": {
+      "unicorn": "2.1.4",
+      "pyelftools": "0.33",
+      "capstone": "5.0.9"
+    },
+    "elf_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/A_logic/main.elf"
+  },
+  "romfs_source_tables": [
+    {
+      "path": "B_data/Bcsv/FieldLandMakingUnitModelParam.bcsv",
+      "format": "BCSV",
+      "size": 24964,
+      "sha256": "289ad2fb68d511121a0779f24e21dfc5f8c627a6053c6aaf334b6a56481d36fc"
+    },
+    {
+      "path": "B_data/Bcsv/ColGroundAttributeParam.bcsv",
+      "format": "BCSV",
+      "size": 5432,
+      "sha256": "33705cfa93db0695a632afc8e891655518c1a3fbff5ae3f598062191075aefcb"
+    },
+    {
+      "path": "B_data/Bcsv/FieldOutsideParts.bcsv",
+      "format": "BCSV",
+      "size": 6588,
+      "sha256": "1d244d825f4ef111afae5df2568486ceab243caccd21c17259b5ec59830650e6"
+    },
+    {
+      "path": "B_data/Bcsv/FieldOutsideTemplate.bcsv",
+      "format": "BCSV",
+      "size": 5284,
+      "sha256": "1c615f1c8b42d4f690f81fd577261a3daf61f814bb3b1f93354fd1b714c5a314"
+    }
+  ],
+  "static_direct_call_edges": [
+    {
+      "owner": "0x18ce50",
+      "target": "0x164e90",
+      "instruction": "BL",
+      "call_site": "0x18ce84",
+      "evidence": "static_direct_call_index"
+    },
+    {
+      "owner": "0x164e90",
+      "target": "0x181fa0",
+      "instruction": "B_to_function_entry",
+      "call_site": "0x164e98",
+      "evidence": "static_direct_call_index"
+    },
+    {
+      "owner": "0x163740",
+      "target": "0x181fa0",
+      "instruction": "B_to_function_entry",
+      "call_site": "0x163748",
+      "evidence": "static_direct_call_index"
+    },
+    {
+      "owner": "0x165240",
+      "target": "0x181ae0",
+      "instruction": "B_to_function_entry",
+      "call_site": "0x1652d4",
+      "evidence": "static_direct_call_index"
+    },
+    {
+      "owner": "0x168140",
+      "target": "0x165240",
+      "instruction": "BL",
+      "call_site": "0x168164",
+      "evidence": "static_direct_call_index"
+    },
+    {
+      "owner": "0x156970",
+      "target": "0x168140",
+      "instruction": "BL",
+      "call_site": "0x156b08",
+      "evidence": "static_direct_call_index"
+    },
+    {
+      "owner": "0x156970",
+      "target": "0x168140",
+      "instruction": "BL",
+      "call_site": "0x156b5c",
+      "evidence": "static_direct_call_index"
+    },
+    {
+      "owner": "0x156970",
+      "target": "0x168140",
+      "instruction": "BL",
+      "call_site": "0x156bb0",
+      "evidence": "static_direct_call_index"
+    },
+    {
+      "owner": "0x15f4e0",
+      "target": "0x168140",
+      "instruction": "BL",
+      "call_site": "0x15f594",
+      "evidence": "static_direct_call_index"
+    },
+    {
+      "owner": "0x160940",
+      "target": "0x168140",
+      "instruction": "BL",
+      "call_site": "0x160a00",
+      "evidence": "static_direct_call_index"
+    },
+    {
+      "owner": "0x160940",
+      "target": "0x168140",
+      "instruction": "BL",
+      "call_site": "0x160b44",
+      "evidence": "static_direct_call_index"
+    }
+  ],
+  "pseudocode_sources": [
+    {
+      "function": "0x18ce50",
+      "path": "binary/analysis_decomp/18ce50.c",
+      "sha256": "7c51f6ba2c8a190af36c86e379d7efbad6075b02d5540992047107fcf20e5db6"
+    },
+    {
+      "function": "0x164e90",
+      "path": "binary/analysis_decomp/164e90.c",
+      "sha256": "de4ba498b6bd679d800da728411a5fda9eee7bf81eb86d27d1e4b9ac24af118f"
+    },
+    {
+      "function": "0x163740",
+      "path": "binary/analysis_decomp/163740.c",
+      "sha256": "39c723098504d3406956b656c5f02830fbd63e32b1ab24091259a7546f6747cd"
+    },
+    {
+      "function": "0x181fa0",
+      "path": "binary/analysis_decomp/181fa0.c",
+      "sha256": "a6028052ec6dcca34863b50052ad72e35cafd124666a0993cc5b0a1b46ebb304"
+    },
+    {
+      "function": "0x165240",
+      "path": "binary/analysis_decomp/165240.c",
+      "sha256": "2f4c3ab93d60d2949fffd2322b21d7e4ce748c4725f68e81c82848fe106ce889"
+    },
+    {
+      "function": "0x181ae0",
+      "path": "binary/analysis_decomp/181ae0.c",
+      "sha256": "11f227aaa6ebd1a170d7ee1b089d5a5a528cdad6c9db4ede44d9ced032ccfcab"
+    },
+    {
+      "function": "0x168140",
+      "path": "binary/analysis_decomp/168140.c",
+      "sha256": "e2c71b52e8d25e21fb38d188ae8b12d6c5ffd3dd29ed4440cc00777180d0705e"
+    },
+    {
+      "function": "0x156970",
+      "path": "binary/analysis_decomp/156970.c",
+      "sha256": "f14cfce00eabeef287ee27e3dafb9b94bc242c7827f806963f759eb2c392e0bc"
+    },
+    {
+      "function": "0x15f4e0",
+      "path": "binary/analysis_decomp/15f4e0.c",
+      "sha256": "5f48b2c550a71628cdb5a5d2a91d4600428ed6d5b36651da36cdcad5a11e6ace"
+    },
+    {
+      "function": "0x160940",
+      "path": "binary/analysis_decomp/160940.c",
+      "sha256": "4f4e28cc2cba1f178490de7160a39f5546eb8813f8b6235ae40665b6355955a7"
+    }
+  ],
+  "native_runs": [
+    {
+      "path": "output/ui_island/water_terraform_followup/native/terrain_region_check_native.json",
+      "sha256": "38dfb5984bdcdd15edd8d0c4fd890ed18ff40c541f3228a0a27adf90f838d1b9",
+      "cases": 216,
+      "groups": {
+        "complete_region_predicate": 216
+      },
+      "native_functions": [
+        "0x181fa0",
+        "0x52c950",
+        "0x52c970",
+        "0x52c9b0",
+        "0x52c9e0"
+      ],
+      "dependencies_stubbed": []
+    },
+    {
+      "path": "output/ui_island/water_terraform_followup/native/terrain_region_mutation_native.json",
+      "sha256": "e0f9a21baba5fac787810e05b6506b66f43096d19833bcf1923dfa8cfa9e77a3",
+      "cases": 164,
+      "groups": {
+        "complete_region_bit_mutators": 120,
+        "world_height_forwarders": 16,
+        "null_world_mutation_wrapper": 4,
+        "active_world_mutation_wrapper": 20,
+        "region_to_navigation_decoder": 4
+      },
+      "native_functions": {
+        "word_bit6_region": "0x181ae0",
+        "word_bit2_region": "0x185c80",
+        "guarded_world_mutator": "0x1637b0",
+        "height_forwarders": [
+          "0x163740",
+          "0x164e90"
+        ],
+        "word_decoder": "0x185e70"
+      },
+      "dependencies_stubbed": []
+    },
+    {
+      "path": "output/ui_island/water_terraform_followup/native/world_registry_release_native.json",
+      "sha256": "c7bd7b38fa041264febe06d2716f146d4642b2dc650679b3b0b0260c08fa0c2e",
+      "cases": 126,
+      "groups": {
+        "complete_registry_removal": 75,
+        "release_wrapper": 48,
+        "null_entry_guard": 1,
+        "repeat_call_contract": 2
+      },
+      "native_functions": [
+        "0x165240",
+        "0x168140",
+        "0x168180",
+        "0x168190",
+        "0x1967c60",
+        "0x181ae0"
+      ],
+      "dependencies_stubbed": []
+    }
+  ],
+  "limits": [
+    "Fixtures reconstruct grid/world/list state; the game is not launched.",
+    "Region registration/insertion, Island Designer reachability, LandMaking writes, save serialization, render refresh and collision refresh were not executed.",
+    "Water surface and flow behavior are not inferred from static PBC/material data."
+  ]
+}

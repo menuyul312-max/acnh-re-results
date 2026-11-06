@@ -1,0 +1,62 @@
+{
+  "cases": 126,
+  "groups": {
+    "complete_registry_removal": 75,
+    "release_wrapper": 48,
+    "null_entry_guard": 1,
+    "repeat_call_contract": 2
+  },
+  "mismatches": [],
+  "samples": [
+    {
+      "wrapped": false,
+      "calls": 2,
+      "remaining_count": 1,
+      "enabled_byte": 1
+    },
+    {
+      "wrapped": true,
+      "calls": 2,
+      "remaining_count": 2,
+      "enabled_byte": 0
+    }
+  ],
+  "native_functions": [
+    "0x165240",
+    "0x168140",
+    "0x168180",
+    "0x168190",
+    "0x1967c60",
+    "0x181ae0"
+  ],
+  "layout": {
+    "owner_world_members": [
+      "0x60",
+      "0x68",
+      "0x70"
+    ],
+    "owner_count": "0xf18",
+    "owner_link_offset_s32": "0xf1c",
+    "entry_enabled_byte": "0x40",
+    "entry_kind_s32": "0x44",
+    "entry_rectangle": "0x18"
+  },
+  "rules": [
+    "Null entry or enabled low bit clear skips removal. An accepted entry is unlinked and count decremented before checking its kind.",
+    "Kinds1/2/3 clear word bit6 over the entry rectangle in owner worlds+0x60/+0x68/+0x70. Other tested kinds still unlink/decrement but do not mutate a world.",
+    "Direct removal leaves the enabled byte intact. Wrapper0x168140 obtains the owner from the world singleton and clears the byte after the call, including when its low bit was already clear.",
+    "Two direct calls on the prepared entry decrement twice; two wrapper calls decrement once. This is a helper lifecycle contract, not a demonstrated live-game bug."
+  ],
+  "scope": "Complete original release chain on prepared three-node lists and three distinct runtime world grids.",
+  "limits": [
+    "Entry allocation, registration/insertion, original owner constructor and full actor identity/lifetime remain unproven.",
+    "Link offset is configured to0x48 in the fixture, not claimed as the sole original layout. Negative/custom link offsets and invalid list state are untested.",
+    "No live placement, async task, steering or physics is executed."
+  ],
+  "source_reference": [
+    "mechanics/terrain_region_mutation_native.json",
+    "mechanics/terrain_nav_flags_native.json"
+  ],
+  "dependencies_stubbed": [],
+  "elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74"
+}
