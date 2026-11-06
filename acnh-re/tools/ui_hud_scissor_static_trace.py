@@ -142,8 +142,8 @@ def main() -> None:
                               "renderer_roles": {"0x19a9960": "sets NVN scissor, viewport, and depth range",
                                                  "0x19a9c60": "sets NVN viewport and depth range",
                                                  "0x19a9d50": "sets NVN scissor"}},
-            "limits": ["No direct caller or vtable identity was recovered for 0x14c8fe0/0x14c9250.",
-                       "This nested-scissor context is not yet tied to the ScissorPane object created by the viewport adjustment path."]},
+            "limits": ["The ScissorPane render callback 0x14c8d30 calls 0x14c8fe0, and its auxiliary object's vtable hook reaches 0x14c9250; see scissorpane_restore_native.json for the native instance-path trace.",
+                       "This artifact follows static helper/API calls and does not establish active flags on a live BFLYT instance or rendered pixel coverage."]},
         "nvn_state_apis": {
             "apis": api_paths,
             "coordinate_conversion": {
@@ -154,8 +154,7 @@ def main() -> None:
         },
         "call_edges": {hex(caller): [hex(target) for target in sorted(targets)]
                        for caller, targets in required_edges.items()},
-        "open": ["Connect the nested-scissor context to the specific ScissorPane viewport object and its four stored values.",
-                 "Determine framebuffer origin and empty-stack scissor semantics from runtime or caller data.",
+        "open": ["Determine framebuffer origin and GPU coverage semantics for the statically observed empty-stack zero rectangle.",
                  "Verify rendered clipping and nested pane behavior against a synchronized game capture."]
     }
     destination = ROOT / "output/ui_hud/runtime_followup/scissor_static_path.json"

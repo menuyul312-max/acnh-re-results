@@ -1,0 +1,166 @@
+{
+  "schema": "acnh.ui_hud_runtime_followup.scissorpane_restore_native.v2",
+  "native_elf_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+  "scissorpane_factory_and_vtable": {
+    "factory": "0x14c89c0",
+    "factory_label": "ScissorPane",
+    "constructor": "0x14c8a90",
+    "constructor_allocation_size": "0x110",
+    "pane_vtable": {
+      "relocation_slot": "0x330ee30",
+      "vtable_start": "0x313a388",
+      "address_point": "0x313a398",
+      "render_hook_slot_offset": "0xa8",
+      "slot_target": "0x14c8d30",
+      "evidence": "The factory stores this relocated address point in the allocated ScissorPane; slot +0xa8 is its native rectangle-to-stack callback at 0x14c8d30."
+    },
+    "auxiliary_object_vtable": {
+      "relocation_slot": "0x330ee38",
+      "vtable_start": "0x313a478",
+      "address_point": "0x313a488",
+      "restore_hook_slot_offset": "0xa8",
+      "slot_target": "0x14c8e90",
+      "evidence": "The constructor installs this second address point on its child/context object; slot +0xa8 is the restore thunk at 0x14c8e90."
+    },
+    "generic_renderer_dispatch": {
+      "entry": "0x192fb20",
+      "observed": "loads object vtable slot +0xa8 and calls it on the visible-pane branch, then visits child panes through slot +0xa0",
+      "native_probe_cases": 1,
+      "mismatches": 0
+    }
+  },
+  "native_rect_setter": {
+    "entry": "0x14c8d00",
+    "enable_byte_offset": "0xe0",
+    "rectangle_offsets": [
+      "0xf0",
+      "0xf4",
+      "0xf8",
+      "0xfc"
+    ],
+    "synthetic_cases": 2,
+    "mismatches": 0,
+    "scope": "The original setter copies the enable byte and four input floats into the synthetic ScissorPane object."
+  },
+  "scissorpane_render_to_push": {
+    "render_callback": "0x14c8d30",
+    "push_helper": "0x14c8fe0",
+    "native_probe_cases": 2,
+    "mismatches": 0,
+    "results": [
+      {
+        "path": "direct virtual target",
+        "context": 2147483936,
+        "render_argument": 4660,
+        "rectangle": [
+          10.0,
+          20.0,
+          100.0,
+          120.0
+        ]
+      },
+      {
+        "path": "generic pane renderer through relocated vtable slot +0xa8",
+        "context": 2147483936,
+        "render_argument": 22136,
+        "rectangle": [
+          10.0,
+          20.0,
+          100.0,
+          120.0
+        ]
+      }
+    ],
+    "scope": "Original render-callback instructions run with a synthetic pane and context; only the scissor-stack push boundary is stubbed."
+  },
+  "native_scissor_stack": {
+    "push_helper": "0x14c8fe0",
+    "restore_helper": "0x14c9250",
+    "apply_boundary": "0x14c90e0",
+    "push_cases": 2,
+    "restore_cases": 2,
+    "apply_boundary_calls": 4,
+    "mismatches": 0,
+    "results": [
+      {
+        "context": 2147484080,
+        "mode_argument": 49,
+        "apply_mode": 1,
+        "rectangle": [
+          0.0,
+          0.0,
+          100.0,
+          100.0
+        ]
+      },
+      {
+        "context": 2147484080,
+        "mode_argument": 50,
+        "apply_mode": 1,
+        "rectangle": [
+          10.0,
+          20.0,
+          90.0,
+          80.0
+        ]
+      },
+      {
+        "context": 2147484080,
+        "mode_argument": 65,
+        "apply_mode": 1,
+        "rectangle": [
+          0.0,
+          0.0,
+          100.0,
+          100.0
+        ]
+      },
+      {
+        "context": 2147484080,
+        "mode_argument": 66,
+        "apply_mode": 0,
+        "rectangle": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    ],
+    "scope": "Original stack push/restore instructions run with synthetic memory; only rectangle application is stubbed, so no NVN/GPU state is executed."
+  },
+  "restore_thunk": {
+    "entry": "0x14c8e90",
+    "native_instructions": [
+      "load context-holder pointer from global cell 0x330ed18",
+      "load scissor-context pointer from the holder",
+      "forward incoming x2 as x1",
+      "tail-branch to 0x14c9250"
+    ],
+    "stack_restore": "0x14c9250",
+    "native_probe_cases": 3,
+    "mismatches": 0,
+    "results": [
+      {
+        "context": "0x71001000",
+        "forwarded_second_argument": "0x0",
+        "restore_target": "0x14c9250"
+      },
+      {
+        "context": "0x71002000",
+        "forwarded_second_argument": "0x1234",
+        "restore_target": "0x14c9250"
+      },
+      {
+        "context": "0x71001000",
+        "forwarded_second_argument": "0xffffffff",
+        "restore_target": "0x14c9250"
+      }
+    ]
+  },
+  "scope_and_limits": [
+    "The ScissorPane setter, render callback, generic renderer dispatch, nested-stack push/restore helpers, and child restore thunk run as original native instructions against synthetic objects/context memory.",
+    "The renderer-to-push callback and push/restore-to-apply boundaries are stubbed at function boundaries; no BFLYT archive instance or NVN command is run.",
+    "This proves the static ScissorPane instance-to-generic-scissor-context path and stack bookkeeping, but not live pane visibility conditions, shader coverage, framebuffer origin, or pixel parity against a game capture."
+  ]
+}
