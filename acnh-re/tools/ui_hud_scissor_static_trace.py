@@ -19,7 +19,9 @@ SCISSOR_SETUP = 0x14C8FE0
 SCISSOR_RESTORE = 0x14C9250
 SCISSOR_APPLY = 0x14C90E0
 VIEWPORT_RECT_APPLY = 0x19A9960
-API_NAME = "nvnCommandBufferSetScissor"
+SCISSOR_ONLY_APPLY = 0x19A9D50
+VIEWPORT_ONLY_APPLY = 0x19A9C60
+API_NAMES = ("nvnCommandBufferSetScissor", "nvnCommandBufferSetViewport")
 
 
 def function_size(db: sqlite3.Connection, va: int) -> int:
@@ -87,23 +89,37 @@ def main() -> None:
                         help="shared analysis output containing index.sqlite")
     args = parser.parse_args()
     db = sqlite3.connect(args.output_root / "index.sqlite")
-    string_rows = list(db.execute("select string_va from string_refs where function_va=? and text=?",
-                                  (RESOLVER, API_NAME)))
-    if len(string_rows) != 1:
-        raise ValueError(f"expected one {API_NAME} reference in resolver, got {len(string_rows)}")
-    string_va = string_rows[0][0]
     segments = re_helpers.nso_segments(NSO)
     md = Cs(CS_ARCH_ARM64, CS_MODE_ARM)
     md.detail = True
     resolver_instructions = decode(md, segments, db, RESOLVER)
-    resolver_callsite, resolver_cell = find_resolver_cell(md, resolver_instructions, string_va)
-    renderer_instructions = decode(md, segments, db, VIEWPORT_RECT_APPLY)
-    renderer_callsite, renderer_cell = find_indirect_call_cell(md, renderer_instructions, resolver_cell)
+    api_paths = {}
+    for api_name in API_NAMES:
+        string_rows = list(db.execute("select string_va from string_refs where function_va=? and text=?",
+                                      (RESOLVER, api_name)))
+        if len(string_rows) != 1:
+            raise ValueError(f"expected one {api_name} reference in resolver, got {len(string_rows)}")
+        string_va = string_rows[0][0]
+        resolver_callsite, resolver_cell = find_resolver_cell(md, resolver_instructions, string_va)
+        target_functions = ({"nvnCommandBufferSetScissor": (VIEWPORT_RECT_APPLY, SCISSOR_ONLY_APPLY),
+                             "nvnCommandBufferSetViewport": (VIEWPORT_RECT_APPLY, VIEWPORT_ONLY_APPLY)}[api_name])
+        calls = []
+        for target_function in target_functions:
+            instructions = decode(md, segments, db, target_function)
+            callsite, loaded_cell = find_indirect_call_cell(md, instructions, resolver_cell)
+            calls.append({"function": hex(target_function), "callsite": hex(callsite),
+                          "loaded_got_cell": hex(loaded_cell)})
+        api_paths[api_name] = {"string_va": hex(string_va), "resolver": hex(RESOLVER),
+                               "resolver_callsite": hex(resolver_callsite),
+                               "resolver_got_cell": hex(resolver_cell), "indirect_calls": calls}
 
     required_edges = {
         SCISSOR_SETUP: {SCISSOR_APPLY},
         SCISSOR_RESTORE: {SCISSOR_APPLY},
         SCISSOR_APPLY: {VIEWPORT_RECT_APPLY, 0x19A9C60, 0x19A9D50},
+        VIEWPORT_RECT_APPLY: {0x19A9A80},
+        VIEWPORT_ONLY_APPLY: {0x19A9A80},
+        SCISSOR_ONLY_APPLY: {0x19A9A80},
     }
     for caller, targets in required_edges.items():
         missing = targets - direct_calls(db, caller)
@@ -111,7 +127,7 @@ def main() -> None:
             raise ValueError(f"missing call edges from {caller:#x}: {[hex(x) for x in sorted(missing)]}")
 
     result = {
-        "schema": "acnh.ui_hud_runtime_followup.scissor_static_path.v1",
+        "schema": "acnh.ui_hud_runtime_followup.scissor_static_path.v2",
         "source": {"game_build": "ACNH 1.0.0", "module": "ExeFS main",
                    "main_sha256": __import__("hashlib").sha256(NSO.read_bytes()).hexdigest(),
                    "evidence_kind": "Native disassembly, direct call index, and imported API string/global-cell cross-check; no game capture."},
@@ -122,26 +138,31 @@ def main() -> None:
             "observed": ["0x14c8fe0 intersects an incoming rectangle with the top saved rectangle when the context count is nonzero, applies it through 0x14c90e0, and stores up to six rectangle entries.",
                          "0x14c9250 decrements the context count and reapplies the previous saved rectangle through 0x14c90e0; its empty-stack branch passes a zero rectangle and mode 0.",
                          "0x14c90e0 dispatches to 0x19a9960, 0x19a9c60, and 0x19a9d50 for viewport/scissor state updates."],
+            "mode_dispatch": {"mode_bit": "0x14c90e0 branches on bit 0 of its mode argument; one branch calls 0x19a9960, the other calls 0x19a9c60 then 0x19a9d50.",
+                              "renderer_roles": {"0x19a9960": "sets NVN scissor, viewport, and depth range",
+                                                 "0x19a9c60": "sets NVN viewport and depth range",
+                                                 "0x19a9d50": "sets NVN scissor"}},
             "limits": ["No direct caller or vtable identity was recovered for 0x14c8fe0/0x14c9250.",
                        "This nested-scissor context is not yet tied to the ScissorPane object created by the viewport adjustment path."]},
-        "nvn_scissor_api": {"api_name": API_NAME, "string_va": hex(string_va),
-                            "resolver": hex(RESOLVER), "resolver_callsite": hex(resolver_callsite),
-                            "resolver_got_cell": hex(resolver_cell),
-                            "indirect_caller": hex(VIEWPORT_RECT_APPLY),
-                            "indirect_callsite": hex(renderer_callsite),
-                            "matching_cell": hex(renderer_cell),
-                            "finding": "The original resolver looks up nvnCommandBufferSetScissor and stores the returned pointer through the same GOT cell that 0x19a9960 later loads and calls with the computed rectangle."},
+        "nvn_state_apis": {
+            "apis": api_paths,
+            "coordinate_conversion": {
+                "rect_transform": "0x19a9a80 applies coordinate-mode cases 1–5 from param1+0x18 to source bounds at param1+0x8..+0x14. It reads logical viewport dimensions from param3+0x8/+0xc and target pixel bounds from param3+0x10..+0x1c; the enum's native label is unknown.",
+                "pixel_mapping": "0x19a9960/0x19a9c60/0x19a9d50 scale the transformed origin and extent by logical viewport dimensions, map them into the target pixel bounds, then convert origin and size to integers by truncation.",
+                "limits": "Static native math only; framebuffer origin convention, GPU pixel coverage, and parity against a capture remain unverified."
+            }
+        },
         "call_edges": {hex(caller): [hex(target) for target in sorted(targets)]
                        for caller, targets in required_edges.items()},
         "open": ["Connect the nested-scissor context to the specific ScissorPane viewport object and its four stored values.",
-                 "Determine exact viewport coordinate conversion and empty-stack scissor semantics from runtime or constructor/caller data.",
+                 "Determine framebuffer origin and empty-stack scissor semantics from runtime or caller data.",
                  "Verify rendered clipping and nested pane behavior against a synchronized game capture."]
     }
     destination = ROOT / "output/ui_hud/runtime_followup/scissor_static_path.json"
     destination.parent.mkdir(parents=True, exist_ok=True)
     destination.write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({"artifact": str(destination), "resolver_callsite": hex(resolver_callsite),
-                      "resolver_cell": hex(resolver_cell), "renderer_callsite": hex(renderer_callsite),
+    print(json.dumps({"artifact": str(destination), "apis_traced": list(api_paths),
+                      "renderer_calls_verified": sum(len(x["indirect_calls"]) for x in api_paths.values()),
                       "call_edges_verified": len(required_edges), "open": result["open"]}, indent=2))
 
 
