@@ -1,0 +1,90 @@
+{
+  "scope": "Controlled native probe of item-score helper return into one HHA room category accumulator.",
+  "source": {
+    "main_nso": {
+      "path": "/workspace/acnh-re/inputs/additional_exefs/main",
+      "sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900"
+    },
+    "index_sqlite": {
+      "path": "/workspace/acnh-re/output/index.sqlite",
+      "sha256": "a78c7af27d37b8fd931bba8bc611623dacf7685cb6e8b4f827effa0765340aad"
+    }
+  },
+  "native_path": {
+    "function": "0x7b36b0",
+    "score_helper_call_pc": "0x7b37b8",
+    "score_helper_target": "0xab9050",
+    "room_record_pointer": "evaluator + 0xb10",
+    "category_accumulator_offset": "0x24",
+    "bucket_input_offset": "0x150",
+    "observed_operation": "room[0x24] += score_helper_return"
+  },
+  "score_source_identity": {
+    "helper_va": "0xab9050",
+    "helper_decomp": {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/ab9050.c",
+      "sha256": "76da26626a0f94ef493c5c2aa57e3b3ff64f56c8b0a6777a59acaa2dcbe4235b"
+    },
+    "native_helper_key": "0xd62525d0",
+    "native_decomp_literal": "-0x29dada30",
+    "ItemFrom_column": {
+      "name": "HHABaseScore",
+      "hash": "0xd62525d0",
+      "offset": 6,
+      "width": 2,
+      "evidence": "crc32_exact_descriptor_and_local_schema"
+    },
+    "identity_basis": "the native helper searches for key 0xd62525d0; this exactly equals ItemFrom:HHABaseScore resolved column hash"
+  },
+  "native_execution": {
+    "cases": 3,
+    "mismatches": 0,
+    "results": [
+      {
+        "controlled_score_helper_return": 0,
+        "category_field_before": 17,
+        "category_field_after": 17,
+        "bucket_field_before": 777,
+        "bucket_field_after": 777,
+        "score_helper_calls": [
+          {
+            "input_pointer": "0x703fef90",
+            "controlled_return": 0
+          }
+        ]
+      },
+      {
+        "controlled_score_helper_return": 200,
+        "category_field_before": 17,
+        "category_field_after": 217,
+        "bucket_field_before": 777,
+        "bucket_field_after": 777,
+        "score_helper_calls": [
+          {
+            "input_pointer": "0x703fef90",
+            "controlled_return": 200
+          }
+        ]
+      },
+      {
+        "controlled_score_helper_return": 499,
+        "category_field_before": 17,
+        "category_field_after": 516,
+        "bucket_field_before": 777,
+        "bucket_field_after": 777,
+        "score_helper_calls": [
+          {
+            "input_pointer": "0x703fef90",
+            "controlled_return": 499
+          }
+        ]
+      }
+    ]
+  },
+  "limits": [
+    "The runtime harness stubs 0xab9050; its identity as ItemFrom:HHABaseScore is established by the exact native lookup hash and resolved column-hash match, not by running the table lookup against a live item.",
+    "The native item-score contribution updates +0x24. It does not update +0x150 in this function.",
+    "The evaluator later sums room offsets +0x24..+0x50 into +0x136c, while 0x7b4fc0 reads +0x150/+0x14c. No path connecting those values is established here.",
+    "No displayed HHA grade, theme bonus, mail creation, or mail delivery is emulated."
+  ]
+}
