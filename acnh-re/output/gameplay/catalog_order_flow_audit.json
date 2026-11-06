@@ -1,0 +1,367 @@
+{
+  "schema": "acnh-re/catalog-order-flow-audit/1",
+  "evidence_level": "EVENTFLOW_AND_STATIC_HANDLER_TRACE",
+  "source": "B_data/EventFlow/Obj_RcoMachine.bfevfl",
+  "source_sha256": "603c89e8f36995fee4aafc93fd4c7921cb5b5e61b901ec5dd50efd3baf953717",
+  "entrypoints": {
+    "RcoMachineOnlineShopping": {
+      "main_event": 58,
+      "events": [
+        {
+          "event_index": 58,
+          "source_event_name": "Event11",
+          "type": "action",
+          "action": "EventFlowActionUICatalogHandling",
+          "params": null,
+          "next": 138
+        },
+        {
+          "event_index": 138,
+          "source_event_name": "Event82",
+          "type": "switch",
+          "query": "EventFlowQueryIsDeliveryToOthers",
+          "params": null,
+          "cases": [
+            {
+              "value": 0,
+              "event": 60
+            },
+            {
+              "value": 1,
+              "event": 78
+            }
+          ]
+        },
+        {
+          "event_index": 60,
+          "source_event_name": "Event90",
+          "type": "subflow",
+          "flowchart": "",
+          "entry_point": "DeliverVillager",
+          "next": 78
+        },
+        {
+          "event_index": 78,
+          "source_event_name": "Event9",
+          "type": "switch",
+          "query": "EventFlowQueryEventFlagSystemInt",
+          "params": {
+            "AccessKey": "cLifeSupportAchievement:BuyItemCatalog",
+            "Border": 100,
+            "FlagCheckType": 3
+          },
+          "cases": [
+            {
+              "value": 0,
+              "event": 80
+            }
+          ]
+        },
+        {
+          "event_index": 80,
+          "source_event_name": "Event12",
+          "type": "switch",
+          "query": "EventFlowQueryEventFlagSystemBool",
+          "params": {
+            "AccessKey": "cPlayer:MainmenuOnlineShopping"
+          },
+          "cases": [
+            {
+              "value": 1,
+              "event": 79
+            }
+          ]
+        },
+        {
+          "event_index": 79,
+          "source_event_name": "Event10",
+          "type": "action",
+          "action": "EventFlowActionOpenMessageWindow",
+          "params": {
+            "MessageID": "TalkObj/OBJ_RcoMachine:071",
+            "IsCloseMessageWindow": true
+          },
+          "next": 82
+        },
+        {
+          "event_index": 82,
+          "source_event_name": "Event14",
+          "type": "subflow",
+          "flowchart": "Obj_RcoMachine_MileExchange",
+          "entry_point": "RecipeReceiveing1_Receive",
+          "next": 81
+        },
+        {
+          "event_index": 81,
+          "source_event_name": "Event13",
+          "type": "action",
+          "action": "EventFlowActionEventFlagSystemOn",
+          "params": {
+            "AccessKey": "cPlayer:MainmenuOnlineShopping"
+          },
+          "next": 84
+        },
+        {
+          "event_index": 84,
+          "source_event_name": "Event16",
+          "type": "action",
+          "action": "EventFlowActionUIMenuDeviceAppear",
+          "params": {
+            "EventType": "cInstall",
+            "Application": "cCatalog"
+          },
+          "next": 85
+        },
+        {
+          "event_index": 85,
+          "source_event_name": "Event19",
+          "type": "action",
+          "action": "EventFlowActionOpenMessageWindow",
+          "params": {
+            "MessageID": "TalkObj/OBJ_RcoMachine:072",
+            "IsCloseMessageWindow": false
+          },
+          "next": 83
+        },
+        {
+          "event_index": 83,
+          "source_event_name": "Event15",
+          "type": "subflow",
+          "flowchart": "Obj_RcoMachine_MileExchange",
+          "entry_point": "RecipeReceiveing2_End",
+          "next": 86
+        },
+        {
+          "event_index": 86,
+          "source_event_name": "Event20",
+          "type": "action",
+          "action": "EventFlowActionReservePlayerMutterDemo",
+          "params": {
+            "MutterStartTiming": "cNowDemoEnd",
+            "IsResistNpcCast": false,
+            "EventFileName": "Player_GetDemo_Once",
+            "EntryPointName": "Get_ShoppingAppli"
+          },
+          "next": 87
+        },
+        {
+          "event_index": 87,
+          "source_event_name": "Event21",
+          "type": "action",
+          "action": "EventFlowActionExitFlowchart",
+          "params": null,
+          "next": null
+        }
+      ]
+    },
+    "DeliverVillager": {
+      "main_event": 68,
+      "events": [
+        {
+          "event_index": 68,
+          "source_event_name": "Event221",
+          "type": "action",
+          "action": "EventFlowActionUIMsgCardAdrHandling",
+          "params": {
+            "MsgCardAdrType": "cPlayerResident"
+          },
+          "next": 69
+        },
+        {
+          "event_index": 69,
+          "source_event_name": "Event222",
+          "type": "switch",
+          "query": "EventFlowQueryUIResultMenuDecide",
+          "params": null,
+          "cases": [
+            {
+              "value": 0,
+              "event": 61
+            },
+            {
+              "value": 1,
+              "event": 73
+            }
+          ]
+        },
+        {
+          "event_index": 61,
+          "source_event_name": "Event94",
+          "type": "action",
+          "action": "EventFlowActionUIMsgCardSelectHandling",
+          "params": null,
+          "next": 62
+        },
+        {
+          "event_index": 62,
+          "source_event_name": "Event133",
+          "type": "switch",
+          "query": "EventFlowQueryUIResultMenuDecide",
+          "params": null,
+          "cases": [
+            {
+              "value": 0,
+              "event": 63
+            },
+            {
+              "value": 1,
+              "event": 75
+            }
+          ]
+        },
+        {
+          "event_index": 63,
+          "source_event_name": "Event134",
+          "type": "action",
+          "action": "EventFlowActionUIMsgCardEditTextHandling",
+          "params": {
+            "TempFormType": ""
+          },
+          "next": 64
+        },
+        {
+          "event_index": 64,
+          "source_event_name": "Event156",
+          "type": "switch",
+          "query": "EventFlowQueryUIResultMenuDecide",
+          "params": null,
+          "cases": [
+            {
+              "value": 0,
+              "event": 65
+            },
+            {
+              "value": 1,
+              "event": 73
+            }
+          ]
+        },
+        {
+          "event_index": 65,
+          "source_event_name": "Event161",
+          "type": "action",
+          "action": "EventFlowActionSaveSetFromUIResult",
+          "params": {
+            "SaveType": "cMsgCard"
+          },
+          "next": 66
+        },
+        {
+          "event_index": 66,
+          "source_event_name": "Event162",
+          "type": "action",
+          "action": "EventFlowActionCatalogMailSend",
+          "params": null,
+          "next": 74
+        },
+        {
+          "event_index": 74,
+          "source_event_name": "Event227",
+          "type": "action",
+          "action": "EventFlowActionClearCatalogShoppingMsgCardSetting",
+          "params": null,
+          "next": 67
+        },
+        {
+          "event_index": 67,
+          "source_event_name": "Event220",
+          "type": "action",
+          "action": "EventFlowActionUICatalogRestartHandling",
+          "params": {
+            "IsSent": true
+          },
+          "next": 71
+        },
+        {
+          "event_index": 71,
+          "source_event_name": "Event224",
+          "type": "subflow",
+          "flowchart": "",
+          "entry_point": "Restart",
+          "next": null
+        },
+        {
+          "event_index": 73,
+          "source_event_name": "Event226",
+          "type": "action",
+          "action": "EventFlowActionClearCatalogShoppingMsgCardSetting",
+          "params": null,
+          "next": 70
+        },
+        {
+          "event_index": 70,
+          "source_event_name": "Event223",
+          "type": "action",
+          "action": "EventFlowActionUICatalogRestartHandling",
+          "params": {
+            "IsSent": false
+          },
+          "next": 72
+        },
+        {
+          "event_index": 72,
+          "source_event_name": "Event225",
+          "type": "subflow",
+          "flowchart": "",
+          "entry_point": "Restart",
+          "next": null
+        },
+        {
+          "event_index": 75,
+          "source_event_name": "Event228",
+          "type": "subflow",
+          "flowchart": "",
+          "entry_point": "ReSelectDestination",
+          "next": null
+        }
+      ]
+    }
+  },
+  "catalog_mail_send_handler": {
+    "name": "EventFlowActionCatalogMailSend",
+    "event_uses": 1,
+    "parameters": {},
+    "factory": "0x450570",
+    "constructor": "0x33a510",
+    "vtable": "0x304c208",
+    "slots": [
+      "0x33a690",
+      "0x33a730",
+      "0x33a540",
+      "0x19679b0",
+      "0x33a560",
+      "0x238fd0",
+      "0x23c0c0",
+      "0x238ff0",
+      "0x23c0d0",
+      "0x23c0e0",
+      "0x23c0f0",
+      "0x33a570"
+    ],
+    "slot_span_evidence": "contiguous code pointers; later class-specific slot roles unresolved"
+  },
+  "catalog_mail_send_static_method_trace": {
+    "function": "0x33a570",
+    "string_references": [
+      "SendLetter"
+    ],
+    "calls": [
+      "0xf62e90",
+      "0xf73ea0"
+    ],
+    "limitation": "The resolver does not assign the method's vtable slot a semantic role; this is a static association only."
+  },
+  "unlock_threshold": {
+    "flag": "cLifeSupportAchievement:BuyItemCatalog",
+    "border": 100,
+    "check_type": 3,
+    "player_flag": "cPlayer:MainmenuOnlineShopping",
+    "application": "cCatalog",
+    "event_type": "cInstall"
+  },
+  "open": [
+    "Which items UICatalogHandling accepts and how prices/order limits work",
+    "Actual item mail payload construction and delivery arrival timing",
+    "Whether ItemMailboxCatalogData governs this mail flow or a separate mailbox UI"
+  ]
+}
