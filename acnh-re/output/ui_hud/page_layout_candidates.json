@@ -1,0 +1,2421 @@
+{
+  "schema": "acnh-ui-page-layout-name-candidates-v1",
+  "source_build": "ACNH 1.0.0 local ExeFS main.elf and 523-layout RomFS catalog",
+  "generated_date_utc": "2026-11-06",
+  "summary": {
+    "factory_class_count": 135,
+    "name_only_candidates": 74,
+    "without_simple_name_candidate": 61
+  },
+  "matching_rule": "Strip the exact suffix Page from the native page class string, then compare the result exactly with screen_catalog.json layout name.",
+  "limits": [
+    "Name equality is only a candidate link. It does not prove the page loads or owns that BFLYT.",
+    "Layout native-string references may belong to unrelated code paths; they are included for follow-up only and do not prove a page-to-layout edge.",
+    "All page-to-layout links remain unproven until a direct native call/data edge or runtime trace connects the page to the layout request."
+  ],
+  "pages": [
+    {
+      "class_name": "AddressPage",
+      "factory_va": "0x112c3c0",
+      "class_name_string_va": "0x29769b9",
+      "normalized_candidate_name": "Address",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "AddresseeSelMultiPage",
+      "factory_va": "0x1132310",
+      "class_name_string_va": "0x293b4bb",
+      "normalized_candidate_name": "AddresseeSelMulti",
+      "candidate_layouts": [
+        {
+          "layout_name": "AddresseeSelMulti",
+          "source": "Layout/AddresseeSelMulti.Nin_NX_NVN.zs",
+          "member": "AddresseeSelMulti.arc!blyt/AddresseeSelMulti.bflyt",
+          "sha256": "e6ce9894bf2194f6c1fbc7fa5aa30becd7921ff4f087a9d56869901e15124419",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 38,
+          "exact_native_string_ref_candidates": [
+            {
+              "string_va": "0x292645d",
+              "function_va": "0x1134220"
+            },
+            {
+              "string_va": "0x292645d",
+              "function_va": "0x1545400"
+            }
+          ]
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "AmiiboPreviousNoticeGuidePage",
+      "factory_va": "0x1136590",
+      "class_name_string_va": "0x293b4d1",
+      "normalized_candidate_name": "AmiiboPreviousNoticeGuide",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "AmiiboStationBGPage",
+      "factory_va": "0x1137990",
+      "class_name_string_va": "0x2942b9b",
+      "normalized_candidate_name": "AmiiboStationBG",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "AmiiboTouchGuidePage",
+      "factory_va": "0x1138fb0",
+      "class_name_string_va": "0x29d1c23",
+      "normalized_candidate_name": "AmiiboTouchGuide",
+      "candidate_layouts": [
+        {
+          "layout_name": "AmiiboTouchGuide",
+          "source": "Layout/AmiiboTouchGuide.Nin_NX_NVN.zs",
+          "member": "AmiiboTouchGuide.arc!blyt/AmiiboTouchGuide.bflyt",
+          "sha256": "5d83d92134970d7f3370f30a40a4d293a0bc8004197b9796ded146f5d63f4253",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 31,
+          "exact_native_string_ref_candidates": []
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "AudioPlayerPage",
+      "factory_va": "0x113c2c0",
+      "class_name_string_va": "0x295bdb4",
+      "normalized_candidate_name": "AudioPlayer",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "BellPage",
+      "factory_va": "0x1157c60",
+      "class_name_string_va": "0x29a7772",
+      "normalized_candidate_name": "Bell",
+      "candidate_layouts": [
+        {
+          "layout_name": "Bell",
+          "source": "Layout/Bell.Nin_NX_NVN.zs",
+          "member": "Bell.arc!blyt/Bell.bflyt",
+          "sha256": "81fabd3fc6f8c3303cf656d7c3407b58050149d17e945a814af9544606fd292a",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 3,
+          "exact_native_string_ref_candidates": []
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "BirthdayMessagePage",
+      "factory_va": "0x1158fc0",
+      "class_name_string_va": "0x292648e",
+      "normalized_candidate_name": "BirthdayMessage",
+      "candidate_layouts": [
+        {
+          "layout_name": "BirthdayMessage",
+          "source": "Layout/BirthdayMessage.Nin_NX_NVN.zs",
+          "member": "BirthdayMessage.arc!blyt/BirthdayMessage.bflyt",
+          "sha256": "e427a20882fc4082415db615a5e0640c4d73518669b6870339ae30c733d1da26",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 6,
+          "exact_native_string_ref_candidates": [
+            {
+              "string_va": "0x29760e6",
+              "function_va": "0xf701a0"
+            },
+            {
+              "string_va": "0x29760e6",
+              "function_va": "0xae8590"
+            }
+          ]
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "BoardEditPage",
+      "factory_va": "0x115da70",
+      "class_name_string_va": "0x2971086",
+      "normalized_candidate_name": "BoardEdit",
+      "candidate_layouts": [
+        {
+          "layout_name": "BoardEdit",
+          "source": "Layout/BoardEdit.Nin_NX_NVN.zs",
+          "member": "BoardEdit.arc!blyt/BoardEdit.bflyt",
+          "sha256": "e5c8051f361b30f2242104e5dbb1afabaddd10ea04eb6de4954ad1f938ffc555",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 45,
+          "exact_native_string_ref_candidates": [
+            {
+              "string_va": "0x292afc9",
+              "function_va": "0x1160b00"
+            }
+          ]
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "BoardInfoPage",
+      "factory_va": "0x1165390",
+      "class_name_string_va": "0x29c344d",
+      "normalized_candidate_name": "BoardInfo",
+      "candidate_layouts": [
+        {
+          "layout_name": "BoardInfo",
+          "source": "Layout/BoardInfo.Nin_NX_NVN.zs",
+          "member": "BoardInfo.arc!blyt/BoardInfo.bflyt",
+          "sha256": "a953101eb9f58bb3c7f5bad78757ad7a04231871dc1a04d6fe62e8e1def2d388",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 5,
+          "exact_native_string_ref_candidates": []
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "BoardPage",
+      "factory_va": "0x1171df0",
+      "class_name_string_va": "0x2926506",
+      "normalized_candidate_name": "Board",
+      "candidate_layouts": [
+        {
+          "layout_name": "Board",
+          "source": "Layout/Board.Nin_NX_NVN.zs",
+          "member": "Board.arc!blyt/Board.bflyt",
+          "sha256": "d81b6f6f201ea6556267d1569c10beac4fade8cf99541eb45f458b829cc340c9",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 11,
+          "exact_native_string_ref_candidates": [
+            {
+              "string_va": "0x29c2fe8",
+              "function_va": "0x1175500"
+            },
+            {
+              "string_va": "0x29c2fe8",
+              "function_va": "0xf22930"
+            },
+            {
+              "string_va": "0x29c2fe8",
+              "function_va": "0xf22a10"
+            },
+            {
+              "string_va": "0x29c2fe8",
+              "function_va": "0xf22f60"
+            }
+          ]
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "BootBGPage",
+      "factory_va": "0x1178120",
+      "class_name_string_va": "0x2993654",
+      "normalized_candidate_name": "BootBG",
+      "candidate_layouts": [
+        {
+          "layout_name": "BootBG",
+          "source": "Layout/BootBG.Nin_NX_NVN.zs",
+          "member": "BootBG.arc!blyt/BootBG.bflyt",
+          "sha256": "886a09979000baac89b2f2b673db59764e90d45ea8c7d81135e1340809b83fe4",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 5,
+          "exact_native_string_ref_candidates": []
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "CatalogBGPage",
+      "factory_va": "0x11793d0",
+      "class_name_string_va": "0x295241a",
+      "normalized_candidate_name": "CatalogBG",
+      "candidate_layouts": [
+        {
+          "layout_name": "CatalogBG",
+          "source": "Layout/CatalogBG.Nin_NX_NVN.zs",
+          "member": "CatalogBG.arc!blyt/CatalogBG.bflyt",
+          "sha256": "a3d0556cb3e83b589400b2b6f1a677c58d69fb719ea1531ea598bbea42c0489c",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 4,
+          "exact_native_string_ref_candidates": []
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "CatalogPage",
+      "factory_va": "0x1183640",
+      "class_name_string_va": "0x298e3e1",
+      "normalized_candidate_name": "Catalog",
+      "candidate_layouts": [
+        {
+          "layout_name": "Catalog",
+          "source": "Layout/Catalog.Nin_NX_NVN.zs",
+          "member": "Catalog.arc!blyt/Catalog.bflyt",
+          "sha256": "4d67e2a7d3e4737766c1a02181553ffe7350e67d646db03d63d434f5ca10a2f0",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 86,
+          "exact_native_string_ref_candidates": [
+            {
+              "string_va": "0x29abe33",
+              "function_va": "0x1182400"
+            },
+            {
+              "string_va": "0x29abe33",
+              "function_va": "0x1181c60"
+            },
+            {
+              "string_va": "0x29abe33",
+              "function_va": "0x11879d0"
+            },
+            {
+              "string_va": "0x29abe33",
+              "function_va": "0x11878c0"
+            },
+            {
+              "string_va": "0x29abe33",
+              "function_va": "0x1187af0"
+            },
+            {
+              "string_va": "0x29abe33",
+              "function_va": "0x1187fb0"
+            },
+            {
+              "string_va": "0x29abe33",
+              "function_va": "0x11876e0"
+            }
+          ]
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "CharaMakeBgPage",
+      "factory_va": "0x118cdf0",
+      "class_name_string_va": "0x2998a72",
+      "normalized_candidate_name": "CharaMakeBg",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "CharaMakeMWSelWinPage",
+      "factory_va": "0x1192470",
+      "class_name_string_va": "0x29abe55",
+      "normalized_candidate_name": "CharaMakeMWSelWin",
+      "candidate_layouts": [
+        {
+          "layout_name": "CharaMakeMWSelWin",
+          "source": "Layout/CharaMakeMWSelWin.Nin_NX_NVN.zs",
+          "member": "CharaMakeMWSelWin.arc!blyt/CharaMakeMWSelWin.bflyt",
+          "sha256": "2c1904b517219ca3be8dc6d95f4b3642f4ac7e53ef21fc4861f088d4f806e1f1",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 22,
+          "exact_native_string_ref_candidates": [
+            {
+              "string_va": "0x296be17",
+              "function_va": "0x1192e60"
+            }
+          ]
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "CharaMakePage",
+      "factory_va": "0x119a470",
+      "class_name_string_va": "0x29b6ccc",
+      "normalized_candidate_name": "CharaMake",
+      "candidate_layouts": [
+        {
+          "layout_name": "CharaMake",
+          "source": "Layout/CharaMake.Nin_NX_NVN.zs",
+          "member": "CharaMake.arc!blyt/CharaMake.bflyt",
+          "sha256": "251b48fc218d87ed64305d3b00bb20874daf5dcb3b99103dd90941ab3fa82a01",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 120,
+          "exact_native_string_ref_candidates": [
+            {
+              "string_va": "0x2942c60",
+              "function_va": "0x119f2d0"
+            }
+          ]
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "ChatBalloonPage",
+      "factory_va": "0x11a8110",
+      "class_name_string_va": "0x299d176",
+      "normalized_candidate_name": "ChatBalloon",
+      "candidate_layouts": [
+        {
+          "layout_name": "ChatBalloon",
+          "source": "Layout/ChatBalloon.Nin_NX_NVN.zs",
+          "member": "ChatBalloon.arc!blyt/ChatBalloon.bflyt",
+          "sha256": "c65db0087959a8c93fcefb5410ae2dc83f25620d781dc7c61e8e1195add4984a",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 10,
+          "exact_native_string_ref_candidates": []
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "ClosetBGPage",
+      "factory_va": "0x11b4e40",
+      "class_name_string_va": "0x29cd2e9",
+      "normalized_candidate_name": "ClosetBG",
+      "candidate_layouts": [
+        {
+          "layout_name": "ClosetBG",
+          "source": "Layout/ClosetBG.Nin_NX_NVN.zs",
+          "member": "ClosetBG.arc!blyt/ClosetBG.bflyt",
+          "sha256": "a4376fa54d38e5798dfc83cf0dafc8d0bcaf37c77f3ded8ac939ec7053489a71",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 10,
+          "exact_native_string_ref_candidates": []
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "ClosetCoordinatePage",
+      "factory_va": "0x11c2880",
+      "class_name_string_va": "0x2989e27",
+      "normalized_candidate_name": "ClosetCoordinate",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "ClosetPage",
+      "factory_va": "0x11c65b0",
+      "class_name_string_va": "0x294ca57",
+      "normalized_candidate_name": "Closet",
+      "candidate_layouts": [
+        {
+          "layout_name": "Closet",
+          "source": "Layout/Closet.Nin_NX_NVN.zs",
+          "member": "Closet.arc!blyt/Closet.bflyt",
+          "sha256": "3f58d88dc918c420b7fc01abd8bba4cdab7f1bac4ccd0a0eaf38305aa3e7358a",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 51,
+          "exact_native_string_ref_candidates": []
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "CordeIconSelecterPage",
+      "factory_va": "0x11c9ad0",
+      "class_name_string_va": "0x29d1cca",
+      "normalized_candidate_name": "CordeIconSelecter",
+      "candidate_layouts": [
+        {
+          "layout_name": "CordeIconSelecter",
+          "source": "Layout/CordeIconSelecter.Nin_NX_NVN.zs",
+          "member": "CordeIconSelecter.arc!blyt/CordeIconSelecter.bflyt",
+          "sha256": "52aece9e6ab79e87938f374c936fb628f38812fefe59dfeaea543ae7d5692ffa",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 2,
+          "exact_native_string_ref_candidates": []
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "ClosetBalloonPage",
+      "factory_va": "0x11cd2e0",
+      "class_name_string_va": "0x297c647",
+      "normalized_candidate_name": "ClosetBalloon",
+      "candidate_layouts": [
+        {
+          "layout_name": "ClosetBalloon",
+          "source": "Layout/ClosetBalloon.Nin_NX_NVN.zs",
+          "member": "ClosetBalloon.arc!blyt/ClosetBalloon.bflyt",
+          "sha256": "fa25306eaa127b574c517b44b4d5852d8e712ac922478f2ddebc6ab7110e5a64",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 40,
+          "exact_native_string_ref_candidates": []
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "CommandSelectPage",
+      "factory_va": "0x11cf940",
+      "class_name_string_va": "0x29265e5",
+      "normalized_candidate_name": "CommandSelect",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "CommonBGPage",
+      "factory_va": "0x11d22d0",
+      "class_name_string_va": "0x29936b6",
+      "normalized_candidate_name": "CommonBG",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "DeviceContentBootWipePage",
+      "factory_va": "0x11d3ea0",
+      "class_name_string_va": "0x296be4f",
+      "normalized_candidate_name": "DeviceContentBootWipe",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "InteriorWipePage",
+      "factory_va": "0x11d3ff0",
+      "class_name_string_va": "0x29c34a2",
+      "normalized_candidate_name": "InteriorWipe",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "StudioInteriorWipePage",
+      "factory_va": "0x11d4140",
+      "class_name_string_va": "0x29214e4",
+      "normalized_candidate_name": "StudioInteriorWipe",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "CustomHomeBGPage",
+      "factory_va": "0x11d6720",
+      "class_name_string_va": "0x29214fb",
+      "normalized_candidate_name": "CustomHomeBG",
+      "candidate_layouts": [
+        {
+          "layout_name": "CustomHomeBG",
+          "source": "Layout/CustomHomeBG.Nin_NX_NVN.zs",
+          "member": "CustomHomeBG.arc!blyt/CustomHomeBG.bflyt",
+          "sha256": "faccc60afdc2be39ff50abccc89a55907f02eedca04e59d316364e7fe42b04c1",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 8,
+          "exact_native_string_ref_candidates": []
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "CustomHomePage",
+      "factory_va": "0x11db1a0",
+      "class_name_string_va": "0x29571fc",
+      "normalized_candidate_name": "CustomHome",
+      "candidate_layouts": [
+        {
+          "layout_name": "CustomHome",
+          "source": "Layout/CustomHome.Nin_NX_NVN.zs",
+          "member": "CustomHome.arc!blyt/CustomHome.bflyt",
+          "sha256": "fb6ff9f262c545e0c2247ce05ff1b6dbcd0b65cdcf9ccdcfb128f3789ae23609",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 54,
+          "exact_native_string_ref_candidates": []
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "DateInputPage",
+      "factory_va": "0x11e2200",
+      "class_name_string_va": "0x2989e60",
+      "normalized_candidate_name": "DateInput",
+      "candidate_layouts": [
+        {
+          "layout_name": "DateInput",
+          "source": "Layout/DateInput.Nin_NX_NVN.zs",
+          "member": "DateInput.arc!blyt/DateInput.bflyt",
+          "sha256": "2f2faed68871c59992eafa1ce96e38b83b441e965b45f798e42cb1648be5cb0d",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 36,
+          "exact_native_string_ref_candidates": []
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "DateInputYearPage",
+      "factory_va": "0x11e4150",
+      "class_name_string_va": "0x29936c3",
+      "normalized_candidate_name": "DateInputYear",
+      "candidate_layouts": [
+        {
+          "layout_name": "DateInputYear",
+          "source": "Layout/DateInputYear.Nin_NX_NVN.zs",
+          "member": "DateInputYear.arc!blyt/DateInputYear.bflyt",
+          "sha256": "93089575657d5a5d24c11f54962b0138fbd5d0d72cd0850a4adf1933b6628e17",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 53,
+          "exact_native_string_ref_candidates": []
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "CommonDialogPage",
+      "factory_va": "0x11e6e70",
+      "class_name_string_va": "0x29abee8",
+      "normalized_candidate_name": "CommonDialog",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "CommonDialogBGPage",
+      "factory_va": "0x11e6fc0",
+      "class_name_string_va": "0x29abed5",
+      "normalized_candidate_name": "CommonDialogBG",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "SystemDialogPage",
+      "factory_va": "0x11eaaf0",
+      "class_name_string_va": "0x2998b45",
+      "normalized_candidate_name": "SystemDialog",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "DreamBGPage",
+      "factory_va": "0x11ec100",
+      "class_name_string_va": "0x29b6d34",
+      "normalized_candidate_name": "DreamBG",
+      "candidate_layouts": [
+        {
+          "layout_name": "DreamBG",
+          "source": "Layout/DreamBG.Nin_NX_NVN.zs",
+          "member": "DreamBG.arc!blyt/DreamBG.bflyt",
+          "sha256": "d1acdd431a6761e16ceb0e98608126275047edcfdc523d8ad3aaa42d6fe352f2",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 2,
+          "exact_native_string_ref_candidates": []
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "CircleFaderPage",
+      "factory_va": "0x11f0b30",
+      "class_name_string_va": "0x299d1b1",
+      "normalized_candidate_name": "CircleFader",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "NormalFaderPage",
+      "factory_va": "0x11f0c80",
+      "class_name_string_va": "0x29abef9",
+      "normalized_candidate_name": "NormalFader",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "DALFaderPage",
+      "factory_va": "0x11f0dd0",
+      "class_name_string_va": "0x295247e",
+      "normalized_candidate_name": "DALFader",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "FriendListPage",
+      "factory_va": "0x11fd720",
+      "class_name_string_va": "0x29abf18",
+      "normalized_candidate_name": "FriendList",
+      "candidate_layouts": [
+        {
+          "layout_name": "FriendList",
+          "source": "Layout/FriendList.Nin_NX_NVN.zs",
+          "member": "FriendList.arc!blyt/FriendList.bflyt",
+          "sha256": "072509b6df8de7cb9d9c775060059465367b0bdc6b9552fae2ca2cc747e6fe48",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 30,
+          "exact_native_string_ref_candidates": [
+            {
+              "string_va": "0x2947e5d",
+              "function_va": "0x11ff770"
+            },
+            {
+              "string_va": "0x2947e5d",
+              "function_va": "0x11fcdf0"
+            },
+            {
+              "string_va": "0x2947e5d",
+              "function_va": "0x11fc680"
+            }
+          ]
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "HarvestBoxPage",
+      "factory_va": "0x1201950",
+      "class_name_string_va": "0x29524a7",
+      "normalized_candidate_name": "HarvestBox",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "IllegalReportPage",
+      "factory_va": "0x12088e0",
+      "class_name_string_va": "0x2957262",
+      "normalized_candidate_name": "IllegalReport",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "InteriorGuidePage",
+      "factory_va": "0x1210eb0",
+      "class_name_string_va": "0x2960ec2",
+      "normalized_candidate_name": "InteriorGuide",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "KabuBuyPage",
+      "factory_va": "0x1215c30",
+      "class_name_string_va": "0x293b645",
+      "normalized_candidate_name": "KabuBuy",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "KeyGuidePage",
+      "factory_va": "0x12186f0",
+      "class_name_string_va": "0x2942e54",
+      "normalized_candidate_name": "KeyGuide",
+      "candidate_layouts": [
+        {
+          "layout_name": "KeyGuide",
+          "source": "Layout/KeyGuide.Nin_NX_NVN.zs",
+          "member": "KeyGuide.arc!blyt/KeyGuide.bflyt",
+          "sha256": "4c272a4f65a443c9de62812a2d3ad0d28f31891cec62443eb677dac302c7b134",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 8,
+          "exact_native_string_ref_candidates": [
+            {
+              "string_va": "0x296be72",
+              "function_va": "0x11e9210"
+            },
+            {
+              "string_va": "0x296be72",
+              "function_va": "0x1219d30"
+            }
+          ]
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "LoadIconPage",
+      "factory_va": "0x121ac80",
+      "class_name_string_va": "0x29711ca",
+      "normalized_candidate_name": "LoadIcon",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "LostListPage",
+      "factory_va": "0x121d8e0",
+      "class_name_string_va": "0x29bdbeb",
+      "normalized_candidate_name": "LostList",
+      "candidate_layouts": [
+        {
+          "layout_name": "LostList",
+          "source": "Layout/LostList.Nin_NX_NVN.zs",
+          "member": "LostList.arc!blyt/LostList.bflyt",
+          "sha256": "8ed78c05c01a7c259c7362d78ab1289730690dcca5a27c23e53aee333523540a",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 17,
+          "exact_native_string_ref_candidates": []
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "MainScreenPage",
+      "factory_va": "0x1229c50",
+      "class_name_string_va": "0x2993790",
+      "normalized_candidate_name": "MainScreen",
+      "candidate_layouts": [
+        {
+          "layout_name": "MainScreen",
+          "source": "Layout/MainScreen.Nin_NX_NVN.zs",
+          "member": "MainScreen.arc!blyt/MainScreen.bflyt",
+          "sha256": "344a6d8e9f7234dd7003e91b89555898f5cb78e29a34eb1ee7b485025690cf9e",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 32,
+          "exact_native_string_ref_candidates": [
+            {
+              "string_va": "0x2993760",
+              "function_va": "0x14797c0"
+            },
+            {
+              "string_va": "0x2993760",
+              "function_va": "0x132e050"
+            },
+            {
+              "string_va": "0x2993760",
+              "function_va": "0x1315ac0"
+            },
+            {
+              "string_va": "0x2993760",
+              "function_va": "0x1315f90"
+            },
+            {
+              "string_va": "0x2993760",
+              "function_va": "0x1214110"
+            }
+          ]
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "MapPage",
+      "factory_va": "0x1230df0",
+      "class_name_string_va": "0x2976b07",
+      "normalized_candidate_name": "Map",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "MapMiniPage",
+      "factory_va": "0x123a470",
+      "class_name_string_va": "0x2998bf4",
+      "normalized_candidate_name": "MapMini",
+      "candidate_layouts": [
+        {
+          "layout_name": "MapMini",
+          "source": "Layout/MapMini.Nin_NX_NVN.zs",
+          "member": "MapMini.arc!blyt/MapMini.bflyt",
+          "sha256": "8286ef55cf3e91a43e4f7bb602859c49d2446429148d59fa67004cd028487a48",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 10,
+          "exact_native_string_ref_candidates": [
+            {
+              "string_va": "0x29d1db5",
+              "function_va": "0x1567140"
+            }
+          ]
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "MapRemovePage",
+      "factory_va": "0x123dcc0",
+      "class_name_string_va": "0x29b6e26",
+      "normalized_candidate_name": "MapRemove",
+      "candidate_layouts": [
+        {
+          "layout_name": "MapRemove",
+          "source": "Layout/MapRemove.Nin_NX_NVN.zs",
+          "member": "MapRemove.arc!blyt/MapRemove.bflyt",
+          "sha256": "9dfa87d4be63fb3c20d4b66f680b1e72d05dcb55e05f1f42b6800c1df0bce1b7",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 14,
+          "exact_native_string_ref_candidates": [
+            {
+              "string_va": "0x2998c00",
+              "function_va": "0x123f130"
+            },
+            {
+              "string_va": "0x2998c00",
+              "function_va": "0x123f280"
+            }
+          ]
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "MapSelectPage",
+      "factory_va": "0x1242550",
+      "class_name_string_va": "0x29a2521",
+      "normalized_candidate_name": "MapSelect",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "MelodyEditPage",
+      "factory_va": "0x1245ea0",
+      "class_name_string_va": "0x29bdc31",
+      "normalized_candidate_name": "MelodyEdit",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "MenuBookDetailPage",
+      "factory_va": "0x12496e0",
+      "class_name_string_va": "0x29c354d",
+      "normalized_candidate_name": "MenuBookDetail",
+      "candidate_layouts": [
+        {
+          "layout_name": "MenuBookDetail",
+          "source": "Layout/MenuBookDetail.Nin_NX_NVN.zs",
+          "member": "MenuBookDetail.arc!blyt/MenuBookDetail.bflyt",
+          "sha256": "2d409469262d762cd30b1f45468d79cf9babe30ecde295bfa8d4440c77985ebb",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 24,
+          "exact_native_string_ref_candidates": [
+            {
+              "string_va": "0x2960f5b",
+              "function_va": "0x124b380"
+            },
+            {
+              "string_va": "0x2960f5b",
+              "function_va": "0x124a590"
+            }
+          ]
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "MenuBookPage",
+      "factory_va": "0x1251500",
+      "class_name_string_va": "0x293b6b8",
+      "normalized_candidate_name": "MenuBook",
+      "candidate_layouts": [
+        {
+          "layout_name": "MenuBook",
+          "source": "Layout/MenuBook.Nin_NX_NVN.zs",
+          "member": "MenuBook.arc!blyt/MenuBook.bflyt",
+          "sha256": "b9bd1a1acea2561525d01a689fa41356f9155709a67c4a63d0da4c868e907cb9",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 206,
+          "exact_native_string_ref_candidates": [
+            {
+              "string_va": "0x2960f72",
+              "function_va": "0x12547a0"
+            },
+            {
+              "string_va": "0x2960f72",
+              "function_va": "0x124fc40"
+            }
+          ]
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "MenuChatPage",
+      "factory_va": "0x12575b0",
+      "class_name_string_va": "0x2942e9b",
+      "normalized_candidate_name": "MenuChat",
+      "candidate_layouts": [
+        {
+          "layout_name": "MenuChat",
+          "source": "Layout/MenuChat.Nin_NX_NVN.zs",
+          "member": "MenuChat.arc!blyt/MenuChat.bflyt",
+          "sha256": "6a82f41103d912b0f15398653d0429d6dd3d797f5e5d83a75b69fdc11ceff323",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 3,
+          "exact_native_string_ref_candidates": []
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "MenuDevicePage",
+      "factory_va": "0x125ae40",
+      "class_name_string_va": "0x29bdc4f",
+      "normalized_candidate_name": "MenuDevice",
+      "candidate_layouts": [
+        {
+          "layout_name": "MenuDevice",
+          "source": "Layout/MenuDevice.Nin_NX_NVN.zs",
+          "member": "MenuDevice.arc!blyt/MenuDevice.bflyt",
+          "sha256": "4a241584f43ecc1e0e28449bccce710346eec748cd569c1149276f74bfd11b69",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 47,
+          "exact_native_string_ref_candidates": [
+            {
+              "string_va": "0x295bfe8",
+              "function_va": "0x125a840"
+            },
+            {
+              "string_va": "0x295bfe8",
+              "function_va": "0x125e830"
+            },
+            {
+              "string_va": "0x295bfe8",
+              "function_va": "0x125e3e0"
+            },
+            {
+              "string_va": "0x295bfe8",
+              "function_va": "0x125e5f0"
+            },
+            {
+              "string_va": "0x295bfe8",
+              "function_va": "0x125d7a0"
+            },
+            {
+              "string_va": "0x295bfe8",
+              "function_va": "0x1545400"
+            }
+          ]
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "MenuMobileBankPage",
+      "factory_va": "0x125ff00",
+      "class_name_string_va": "0x299386f",
+      "normalized_candidate_name": "MenuMobileBank",
+      "candidate_layouts": [
+        {
+          "layout_name": "MenuMobileBank",
+          "source": "Layout/MenuMobileBank.Nin_NX_NVN.zs",
+          "member": "MenuMobileBank.arc!blyt/MenuMobileBank.bflyt",
+          "sha256": "d4f237e5617c7bfe4bd7a07a4a870057bf2f1a654a5f66a741b26fb86df258d5",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 47,
+          "exact_native_string_ref_candidates": [
+            {
+              "string_va": "0x295c01c",
+              "function_va": "0x1263b30"
+            },
+            {
+              "string_va": "0x295c01c",
+              "function_va": "0x1263d40"
+            },
+            {
+              "string_va": "0x295c01c",
+              "function_va": "0x1263340"
+            }
+          ]
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "MenuProfileBgPage",
+      "factory_va": "0x1265630",
+      "class_name_string_va": "0x2998c47",
+      "normalized_candidate_name": "MenuProfileBg",
+      "candidate_layouts": [
+        {
+          "layout_name": "MenuProfileBg",
+          "source": "Layout/MenuProfileBg.Nin_NX_NVN.zs",
+          "member": "MenuProfileBg.arc!blyt/MenuProfileBg.bflyt",
+          "sha256": "6494a7a13b10d7a72ebf0267ebea4d18b45793a7a3a3b94b74fedd1e71d2a775",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 4,
+          "exact_native_string_ref_candidates": []
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "MenuProfilePage",
+      "factory_va": "0x1268a10",
+      "class_name_string_va": "0x293b705",
+      "normalized_candidate_name": "MenuProfile",
+      "candidate_layouts": [
+        {
+          "layout_name": "MenuProfile",
+          "source": "Layout/MenuProfile.Nin_NX_NVN.zs",
+          "member": "MenuProfile.arc!blyt/MenuProfile.bflyt",
+          "sha256": "ffafd4bee53a8012217d447e42e0b6082e8db14ac3a0af9a8ba3c0b7cfae080e",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 4,
+          "exact_native_string_ref_candidates": [
+            {
+              "string_va": "0x298e605",
+              "function_va": "0x126be10"
+            },
+            {
+              "string_va": "0x298e605",
+              "function_va": "0x12683f0"
+            },
+            {
+              "string_va": "0x298e605",
+              "function_va": "0x126c080"
+            },
+            {
+              "string_va": "0x298e605",
+              "function_va": "0x126c3b0"
+            },
+            {
+              "string_va": "0x298e605",
+              "function_va": "0x126c230"
+            },
+            {
+              "string_va": "0x298e605",
+              "function_va": "0x126c4e0"
+            },
+            {
+              "string_va": "0x298e605",
+              "function_va": "0x126c7b0"
+            },
+            {
+              "string_va": "0x298e605",
+              "function_va": "0x126c6e0"
+            }
+          ]
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "ProfileWinPhotoPage",
+      "factory_va": "0x126f630",
+      "class_name_string_va": "0x296bfe8",
+      "normalized_candidate_name": "ProfileWinPhoto",
+      "candidate_layouts": [
+        {
+          "layout_name": "ProfileWinPhoto",
+          "source": "Layout/ProfileWinPhoto.Nin_NX_NVN.zs",
+          "member": "ProfileWinPhoto.arc!blyt/ProfileWinPhoto.bflyt",
+          "sha256": "c29a8019ca400f75e19cfdfac0cabaeb1c793264ecfda962f4eb3bd382277e79",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 26,
+          "exact_native_string_ref_candidates": []
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "ProfileWinPlayerTitlePage",
+      "factory_va": "0x1276150",
+      "class_name_string_va": "0x299d292",
+      "normalized_candidate_name": "ProfileWinPlayerTitle",
+      "candidate_layouts": [
+        {
+          "layout_name": "ProfileWinPlayerTitle",
+          "source": "Layout/ProfileWinPlayerTitle.Nin_NX_NVN.zs",
+          "member": "ProfileWinPlayerTitle.arc!blyt/ProfileWinPlayerTitle.bflyt",
+          "sha256": "13cf0bf7d561a110de73b353823c5d1d3781b42168b9692164a85936b2979992",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 14,
+          "exact_native_string_ref_candidates": []
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "MenuRecipePage",
+      "factory_va": "0x127c4c0",
+      "class_name_string_va": "0x2989f34",
+      "normalized_candidate_name": "MenuRecipe",
+      "candidate_layouts": [
+        {
+          "layout_name": "MenuRecipe",
+          "source": "Layout/MenuRecipe.Nin_NX_NVN.zs",
+          "member": "MenuRecipe.arc!blyt/MenuRecipe.bflyt",
+          "sha256": "c54f8be27c12465de6bea65a2ff80f0b1533c25a9dad82e873623f81f3c6b60e",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 78,
+          "exact_native_string_ref_candidates": [
+            {
+              "string_va": "0x29c358d",
+              "function_va": "0x127ba10"
+            },
+            {
+              "string_va": "0x29c358d",
+              "function_va": "0x127f3d0"
+            },
+            {
+              "string_va": "0x29c358d",
+              "function_va": "0x127f2d0"
+            },
+            {
+              "string_va": "0x29c358d",
+              "function_va": "0x127f4e0"
+            },
+            {
+              "string_va": "0x29c358d",
+              "function_va": "0x127e2d0"
+            },
+            {
+              "string_va": "0x29c358d",
+              "function_va": "0x127df60"
+            }
+          ]
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "HighAndLowWindowPage",
+      "factory_va": "0x1282ef0",
+      "class_name_string_va": "0x293b744",
+      "normalized_candidate_name": "HighAndLowWindow",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "MonologueMessageWindowPage",
+      "factory_va": "0x12872d0",
+      "class_name_string_va": "0x292b214",
+      "normalized_candidate_name": "MonologueMessageWindow",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "NoticeMessageWindowPage",
+      "factory_va": "0x1288200",
+      "class_name_string_va": "0x294cc4f",
+      "normalized_candidate_name": "NoticeMessageWindow",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "SelectMessageWindowTalkPage",
+      "factory_va": "0x1289850",
+      "class_name_string_va": "0x2976bd7",
+      "normalized_candidate_name": "SelectMessageWindowTalk",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "TalkMessageWindowPage",
+      "factory_va": "0x128bac0",
+      "class_name_string_va": "0x2976bf3",
+      "normalized_candidate_name": "TalkMessageWindow",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "MovieNookIncLogoPage",
+      "factory_va": "0x128f570",
+      "class_name_string_va": "0x2966fb8",
+      "normalized_candidate_name": "MovieNookIncLogo",
+      "candidate_layouts": [
+        {
+          "layout_name": "MovieNookIncLogo",
+          "source": "Layout/MovieNookIncLogo.Nin_NX_NVN.zs",
+          "member": "MovieNookIncLogo.arc!blyt/MovieNookIncLogo.bflyt",
+          "sha256": "053c41e1435424ec5a3c7f4329b99796963b55a342d57cc4890c0bf285701a03",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 13,
+          "exact_native_string_ref_candidates": [
+            {
+              "string_va": "0x293b759",
+              "function_va": "0x1567140"
+            }
+          ]
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "MovieSkipGuidePage",
+      "factory_va": "0x1290980",
+      "class_name_string_va": "0x29d1e69",
+      "normalized_candidate_name": "MovieSkipGuide",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "MovieTitleLogoPage",
+      "factory_va": "0x1291d80",
+      "class_name_string_va": "0x29938b1",
+      "normalized_candidate_name": "MovieTitleLogo",
+      "candidate_layouts": [
+        {
+          "layout_name": "MovieTitleLogo",
+          "source": "Layout/MovieTitleLogo.Nin_NX_NVN.zs",
+          "member": "MovieTitleLogo.arc!blyt/MovieTitleLogo.bflyt",
+          "sha256": "50bf0eac8e80469c72c6fb2ae2f52b0d4101d06d227e2be9dd8442c48e469d10",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 7,
+          "exact_native_string_ref_candidates": [
+            {
+              "string_va": "0x2989f76",
+              "function_va": "0x1567140"
+            }
+          ]
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "MsgBottlePage",
+      "factory_va": "0x1295090",
+      "class_name_string_va": "0x29a79f4",
+      "normalized_candidate_name": "MsgBottle",
+      "candidate_layouts": [
+        {
+          "layout_name": "MsgBottle",
+          "source": "Layout/MsgBottle.Nin_NX_NVN.zs",
+          "member": "MsgBottle.arc!blyt/MsgBottle.bflyt",
+          "sha256": "26fd45b0c917522c88f8a091342efb4ecdb1b59a9034e8ce3539b3b044db0205",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 6,
+          "exact_native_string_ref_candidates": []
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "MsgCardDesignSelectPage",
+      "factory_va": "0x1297cd0",
+      "class_name_string_va": "0x296c01d",
+      "normalized_candidate_name": "MsgCardDesignSelect",
+      "candidate_layouts": [
+        {
+          "layout_name": "MsgCardDesignSelect",
+          "source": "Layout/MsgCardDesignSelect.Nin_NX_NVN.zs",
+          "member": "MsgCardDesignSelect.arc!blyt/MsgCardDesignSelect.bflyt",
+          "sha256": "93332ee5c0eaf0945c4d7502391098bfc722d49707abebc6b955b3f44086d2a6",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 5,
+          "exact_native_string_ref_candidates": [
+            {
+              "string_va": "0x29a7a02",
+              "function_va": "0x1298f80"
+            },
+            {
+              "string_va": "0x29a7a02",
+              "function_va": "0x1297860"
+            }
+          ]
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "MsgCardEditTextPage",
+      "factory_va": "0x129a8c0",
+      "class_name_string_va": "0x29ac0b1",
+      "normalized_candidate_name": "MsgCardEditText",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "MsgCardViewPage",
+      "factory_va": "0x12a0ab0",
+      "class_name_string_va": "0x29a2620",
+      "normalized_candidate_name": "MsgCardView",
+      "candidate_layouts": [
+        {
+          "layout_name": "MsgCardView",
+          "source": "Layout/MsgCardView.Nin_NX_NVN.zs",
+          "member": "MsgCardView.arc!blyt/MsgCardView.bflyt",
+          "sha256": "5e6f51e603dcc127b828a6ff3ad8c8943d1c5eb43a2ff2648e5e048ab17b3f47",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 27,
+          "exact_native_string_ref_candidates": []
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "MyDesignColorSelectPage",
+      "factory_va": "0x12d3890",
+      "class_name_string_va": "0x29d1fce",
+      "normalized_candidate_name": "MyDesignColorSelect",
+      "candidate_layouts": [
+        {
+          "layout_name": "MyDesignColorSelect",
+          "source": "Layout/MyDesignColorSelect.Nin_NX_NVN.zs",
+          "member": "MyDesignColorSelect.arc!blyt/MyDesignColorSelect.bflyt",
+          "sha256": "a201121e97208ed900232aeb21a0a3d3026c3d62d6543f873d3f62a408d01c01",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 12,
+          "exact_native_string_ref_candidates": []
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "MyDesignEditBGPage",
+      "factory_va": "0x12d5d50",
+      "class_name_string_va": "0x29268b6",
+      "normalized_candidate_name": "MyDesignEditBG",
+      "candidate_layouts": [
+        {
+          "layout_name": "MyDesignEditBG",
+          "source": "Layout/MyDesignEditBG.Nin_NX_NVN.zs",
+          "member": "MyDesignEditBG.arc!blyt/MyDesignEditBG.bflyt",
+          "sha256": "20dc5bc02ab18c6a6b9143d3ad5003d873e8ad2a823ddedec52e2a3b55403487",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 3,
+          "exact_native_string_ref_candidates": []
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "MyDesignEditCanvasSelWinPage",
+      "factory_va": "0x12d7790",
+      "class_name_string_va": "0x2952865",
+      "normalized_candidate_name": "MyDesignEditCanvasSelWin",
+      "candidate_layouts": [
+        {
+          "layout_name": "MyDesignEditCanvasSelWin",
+          "source": "Layout/MyDesignEditCanvasSelWin.Nin_NX_NVN.zs",
+          "member": "MyDesignEditCanvasSelWin.arc!blyt/MyDesignEditCanvasSelWin.bflyt",
+          "sha256": "fb90f11e5d76a07a33c7db7be2f46224c4a51ddcf661e3a63c03d7f144f35a24",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 29,
+          "exact_native_string_ref_candidates": [
+            {
+              "string_va": "0x29b1d0d",
+              "function_va": "0x12d92d0"
+            }
+          ]
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "MyDesignEditPaletteSelectPage",
+      "factory_va": "0x12dfc10",
+      "class_name_string_va": "0x298e742",
+      "normalized_candidate_name": "MyDesignEditPaletteSelect",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "MyDesignEditPage",
+      "factory_va": "0x12e5060",
+      "class_name_string_va": "0x29ac1ed",
+      "normalized_candidate_name": "MyDesignEdit",
+      "candidate_layouts": [
+        {
+          "layout_name": "MyDesignEdit",
+          "source": "Layout/MyDesignEdit.Nin_NX_NVN.zs",
+          "member": "MyDesignEdit.arc!blyt/MyDesignEdit.bflyt",
+          "sha256": "6fabebc582adc77d73d925f902ef1f0ae4553a4bb3f8686a71d6f669f79c554b",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 81,
+          "exact_native_string_ref_candidates": [
+            {
+              "string_va": "0x295c142",
+              "function_va": "0x12e85e0"
+            },
+            {
+              "string_va": "0x295c142",
+              "function_va": "0x12e3cc0"
+            }
+          ]
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "MyDesignFinishPage",
+      "factory_va": "0x12eadd0",
+      "class_name_string_va": "0x292b3d1",
+      "normalized_candidate_name": "MyDesignFinish",
+      "candidate_layouts": [
+        {
+          "layout_name": "MyDesignFinish",
+          "source": "Layout/MyDesignFinish.Nin_NX_NVN.zs",
+          "member": "MyDesignFinish.arc!blyt/MyDesignFinish.bflyt",
+          "sha256": "5367bf76b4a6472a7e2cd794fbec790394411166998c519c9e6387ddbef99102",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 22,
+          "exact_native_string_ref_candidates": []
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "MyDesignListPage",
+      "factory_va": "0x12f1180",
+      "class_name_string_va": "0x2926918",
+      "normalized_candidate_name": "MyDesignList",
+      "candidate_layouts": [
+        {
+          "layout_name": "MyDesignList",
+          "source": "Layout/MyDesignList.Nin_NX_NVN.zs",
+          "member": "MyDesignList.arc!blyt/MyDesignList.bflyt",
+          "sha256": "c0805a08b62cff6071ac8e0a3ff5adb7ec11d78024bd2675b021cae8023619a0",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 36,
+          "exact_native_string_ref_candidates": [
+            {
+              "string_va": "0x2998e15",
+              "function_va": "0x12f5de0"
+            },
+            {
+              "string_va": "0x2998e15",
+              "function_va": "0x12f5790"
+            }
+          ]
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "MyDesignSetPage",
+      "factory_va": "0x12fb020",
+      "class_name_string_va": "0x29ac21a",
+      "normalized_candidate_name": "MyDesignSet",
+      "candidate_layouts": [
+        {
+          "layout_name": "MyDesignSet",
+          "source": "Layout/MyDesignSet.Nin_NX_NVN.zs",
+          "member": "MyDesignSet.arc!blyt/MyDesignSet.bflyt",
+          "sha256": "2cfce80911289c1b8b6dc830a9b2a2ed0c41dfa87ea9368e9fa2f5df194112a1",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 27,
+          "exact_native_string_ref_candidates": []
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "NameWindowOnBellAndPointPage",
+      "factory_va": "0x12fcc60",
+      "class_name_string_va": "0x29b7085",
+      "normalized_candidate_name": "NameWindowOnBellAndPoint",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "NetConnectWaitPage",
+      "factory_va": "0x12fda40",
+      "class_name_string_va": "0x29611b6",
+      "normalized_candidate_name": "NetConnectWait",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "NetDemoBackPage",
+      "factory_va": "0x12ff0e0",
+      "class_name_string_va": "0x2976df2",
+      "normalized_candidate_name": "NetDemoBack",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "NetErrorWindowPage",
+      "factory_va": "0x1300f90",
+      "class_name_string_va": "0x292fdbe",
+      "normalized_candidate_name": "NetErrorWindow",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "PhotoCameraGuidePage",
+      "factory_va": "0x134aa60",
+      "class_name_string_va": "0x29c7eed",
+      "normalized_candidate_name": "PhotoCameraGuide",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "PhotoIslandStoragePage",
+      "factory_va": "0x1356ae0",
+      "class_name_string_va": "0x296127f",
+      "normalized_candidate_name": "PhotoIslandStorage",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "PlayerMarkerPage",
+      "factory_va": "0x135c5a0",
+      "class_name_string_va": "0x29a7c66",
+      "normalized_candidate_name": "PlayerMarker",
+      "candidate_layouts": [
+        {
+          "layout_name": "PlayerMarker",
+          "source": "Layout/PlayerMarker.Nin_NX_NVN.zs",
+          "member": "PlayerMarker.arc!blyt/PlayerMarker.bflyt",
+          "sha256": "568b7341ba275f167d5d601f7bb3a5306715ee855981d32978f6ecb5c77cae10",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 2,
+          "exact_native_string_ref_candidates": []
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "PlayerNameMarkerPage",
+      "factory_va": "0x135f760",
+      "class_name_string_va": "0x2976e5a",
+      "normalized_candidate_name": "PlayerNameMarker",
+      "candidate_layouts": [
+        {
+          "layout_name": "PlayerNameMarker",
+          "source": "Layout/PlayerNameMarker.Nin_NX_NVN.zs",
+          "member": "PlayerNameMarker.arc!blyt/PlayerNameMarker.bflyt",
+          "sha256": "b23583415ed12f6371ecbf8b9b5dcf37c8260d162d5b91fe1b4d2571e61d7260",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 2,
+          "exact_native_string_ref_candidates": []
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "PocketMenuPage",
+      "factory_va": "0x1369320",
+      "class_name_string_va": "0x292fe49",
+      "normalized_candidate_name": "PocketMenu",
+      "candidate_layouts": [
+        {
+          "layout_name": "PocketMenu",
+          "source": "Layout/PocketMenu.Nin_NX_NVN.zs",
+          "member": "PocketMenu.arc!blyt/PocketMenu.bflyt",
+          "sha256": "0ec2645c09382749d6161531d3129b61abe241b336e99bb2dadddcfe5fac3941",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 138,
+          "exact_native_string_ref_candidates": [
+            {
+              "string_va": "0x29612c2",
+              "function_va": "0x1370d70"
+            }
+          ]
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "PostMsgCardViewPage",
+      "factory_va": "0x1374560",
+      "class_name_string_va": "0x2998ee1",
+      "normalized_candidate_name": "PostMsgCardView",
+      "candidate_layouts": [
+        {
+          "layout_name": "PostMsgCardView",
+          "source": "Layout/PostMsgCardView.Nin_NX_NVN.zs",
+          "member": "PostMsgCardView.arc!blyt/PostMsgCardView.bflyt",
+          "sha256": "8514c92925f0616899662f6a0fe430c090063b3630f1015e1ce5fc86fe5faff5",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 41,
+          "exact_native_string_ref_candidates": []
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "PostPage",
+      "factory_va": "0x137a400",
+      "class_name_string_va": "0x29a7c77",
+      "normalized_candidate_name": "Post",
+      "candidate_layouts": [
+        {
+          "layout_name": "Post",
+          "source": "Layout/Post.Nin_NX_NVN.zs",
+          "member": "Post.arc!blyt/Post.bflyt",
+          "sha256": "67f38c74b130a592cb68ad9118723b8d1f46a4d4c24a6cfb1e8e8ecb5fa22482",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 41,
+          "exact_native_string_ref_candidates": []
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "ProhibitChatMarkPage",
+      "factory_va": "0x140e410",
+      "class_name_string_va": "0x2971458",
+      "normalized_candidate_name": "ProhibitChatMark",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "PrologueBGPage",
+      "factory_va": "0x140f330",
+      "class_name_string_va": "0x298a248",
+      "normalized_candidate_name": "PrologueBG",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "RingMenuCordePage",
+      "factory_va": "0x1416eb0",
+      "class_name_string_va": "0x296c26e",
+      "normalized_candidate_name": "RingMenuCorde",
+      "candidate_layouts": [
+        {
+          "layout_name": "RingMenuCorde",
+          "source": "Layout/RingMenuCorde.Nin_NX_NVN.zs",
+          "member": "RingMenuCorde.arc!blyt/RingMenuCorde.bflyt",
+          "sha256": "a094e5cbafe73f44a4785dac18420b1a5e2d2490159505c4c3897a9ead767bf5",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 3,
+          "exact_native_string_ref_candidates": []
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "RingMenuEmoticonListPage",
+      "factory_va": "0x141a3e0",
+      "class_name_string_va": "0x295c2cd",
+      "normalized_candidate_name": "RingMenuEmoticonList",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "RingMenuEmoticonPage",
+      "factory_va": "0x141ddc0",
+      "class_name_string_va": "0x298e7d9",
+      "normalized_candidate_name": "RingMenuEmoticon",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "RingMenuStickPage",
+      "factory_va": "0x1421d40",
+      "class_name_string_va": "0x29a7c93",
+      "normalized_candidate_name": "RingMenuStick",
+      "candidate_layouts": [
+        {
+          "layout_name": "RingMenuStick",
+          "source": "Layout/RingMenuStick.Nin_NX_NVN.zs",
+          "member": "RingMenuStick.arc!blyt/RingMenuStick.bflyt",
+          "sha256": "a379254c0c656c0d4813513115f2320672aa8d3c1e3463fcf54370305aa9665d",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 2,
+          "exact_native_string_ref_candidates": []
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "RingMenuToolsPage",
+      "factory_va": "0x1426310",
+      "class_name_string_va": "0x29d20bd",
+      "normalized_candidate_name": "RingMenuTools",
+      "candidate_layouts": [
+        {
+          "layout_name": "RingMenuTools",
+          "source": "Layout/RingMenuTools.Nin_NX_NVN.zs",
+          "member": "RingMenuTools.arc!blyt/RingMenuTools.bflyt",
+          "sha256": "5e57475bac83134b19fbbe1b2259c3b5605c424e6f559cace613ed6d87b0cce5",
+          "design_size": [
+            1280.0,
+            720.0
+          ],
+          "pane_count": 2,
+          "exact_native_string_ref_candidates": []
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "RoadSelectPage",
+      "factory_va": "0x142a940",
+      "class_name_string_va": "0x292fec6",
+      "normalized_candidate_name": "RoadSelect",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "SaveIconPage",
+      "factory_va": "0x142d550",
+      "class_name_string_va": "0x29c37dd",
+      "normalized_candidate_name": "SaveIcon",
+      "candidate_layouts": [
+        {
+          "layout_name": "SaveIcon",
+          "source": "Layout/SaveIcon.Nin_NX_NVN.zs",
+          "member": "SaveIcon.arc!blyt/SaveIcon.bflyt",
+          "sha256": "6de724fc03835e53b3b4ccf7485d3a0fcfa4eb20cf09fa973153eb8aeba31358",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 2,
+          "exact_native_string_ref_candidates": []
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "SelectCursorPage",
+      "factory_va": "0x142f480",
+      "class_name_string_va": "0x29d20fa",
+      "normalized_candidate_name": "SelectCursor",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "ShopBridgeSlopeBGPage",
+      "factory_va": "0x1430810",
+      "class_name_string_va": "0x2943150",
+      "normalized_candidate_name": "ShopBridgeSlopeBG",
+      "candidate_layouts": [
+        {
+          "layout_name": "ShopBridgeSlopeBG",
+          "source": "Layout/ShopBridgeSlopeBG.Nin_NX_NVN.zs",
+          "member": "ShopBridgeSlopeBG.arc!blyt/ShopBridgeSlopeBG.bflyt",
+          "sha256": "75f1e93137a918a5b325fa3d15acef0e584731d93a93939a0079b4b20a1ef099",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 3,
+          "exact_native_string_ref_candidates": []
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "ShopBridgeSlopePage",
+      "factory_va": "0x1432ad0",
+      "class_name_string_va": "0x29ac2f1",
+      "normalized_candidate_name": "ShopBridgeSlope",
+      "candidate_layouts": [
+        {
+          "layout_name": "ShopBridgeSlope",
+          "source": "Layout/ShopBridgeSlope.Nin_NX_NVN.zs",
+          "member": "ShopBridgeSlope.arc!blyt/ShopBridgeSlope.bflyt",
+          "sha256": "85af12e9c3f61ef43dcc8413cf05c179684ef12376e8d67d5723aa1c6d931f2e",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 11,
+          "exact_native_string_ref_candidates": [
+            {
+              "string_va": "0x294820c",
+              "function_va": "0x1432290"
+            },
+            {
+              "string_va": "0x294820c",
+              "function_va": "0x1432720"
+            }
+          ]
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "ShopBuyPage",
+      "factory_va": "0x1437b30",
+      "class_name_string_va": "0x292fed5",
+      "normalized_candidate_name": "ShopBuy",
+      "candidate_layouts": [
+        {
+          "layout_name": "ShopBuy",
+          "source": "Layout/ShopBuy.Nin_NX_NVN.zs",
+          "member": "ShopBuy.arc!blyt/ShopBuy.bflyt",
+          "sha256": "6245e7c78c3ed27050332c93e29d4f8282b77c67957bb42b649e179b998bed35",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 27,
+          "exact_native_string_ref_candidates": [
+            {
+              "string_va": "0x29c37ea",
+              "function_va": "0x14375b0"
+            }
+          ]
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "ShopBuyTailorBGPage",
+      "factory_va": "0x143ab10",
+      "class_name_string_va": "0x2998f1c",
+      "normalized_candidate_name": "ShopBuyTailorBG",
+      "candidate_layouts": [
+        {
+          "layout_name": "ShopBuyTailorBG",
+          "source": "Layout/ShopBuyTailorBG.Nin_NX_NVN.zs",
+          "member": "ShopBuyTailorBG.arc!blyt/ShopBuyTailorBG.bflyt",
+          "sha256": "c7da29b5b83775e0e5e2f9621e487da53375e550ae5d282217bf9d12dc152e5e",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 25,
+          "exact_native_string_ref_candidates": []
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "ShopBuyTailorPage",
+      "factory_va": "0x143f540",
+      "class_name_string_va": "0x295c2fb",
+      "normalized_candidate_name": "ShopBuyTailor",
+      "candidate_layouts": [
+        {
+          "layout_name": "ShopBuyTailor",
+          "source": "Layout/ShopBuyTailor.Nin_NX_NVN.zs",
+          "member": "ShopBuyTailor.arc!blyt/ShopBuyTailor.bflyt",
+          "sha256": "38ba936b925664f364bfc475287f37636afac4aef545d2439f2b9322dbf79610",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 28,
+          "exact_native_string_ref_candidates": [
+            {
+              "string_va": "0x2998f30",
+              "function_va": "0x14449e0"
+            },
+            {
+              "string_va": "0x2998f30",
+              "function_va": "0x1444500"
+            }
+          ]
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "ShopSonkatsuBGPage",
+      "factory_va": "0x14465b0",
+      "class_name_string_va": "0x2998f43",
+      "normalized_candidate_name": "ShopSonkatsuBG",
+      "candidate_layouts": [
+        {
+          "layout_name": "ShopSonkatsuBG",
+          "source": "Layout/ShopSonkatsuBG.Nin_NX_NVN.zs",
+          "member": "ShopSonkatsuBG.arc!blyt/ShopSonkatsuBG.bflyt",
+          "sha256": "2f9a0abacf747165c17a792b123099bcc38cc55cb2e10148bf5e339f24a287e3",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 4,
+          "exact_native_string_ref_candidates": []
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "ShopSonkatsuPage",
+      "factory_va": "0x144b360",
+      "class_name_string_va": "0x29bdfad",
+      "normalized_candidate_name": "ShopSonkatsu",
+      "candidate_layouts": [
+        {
+          "layout_name": "ShopSonkatsu",
+          "source": "Layout/ShopSonkatsu.Nin_NX_NVN.zs",
+          "member": "ShopSonkatsu.arc!blyt/ShopSonkatsu.bflyt",
+          "sha256": "cd06167515412fb5bd5fe43c1f8f9e11986690d087b8892d996eb347841d5809",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 65,
+          "exact_native_string_ref_candidates": [
+            {
+              "string_va": "0x2921929",
+              "function_va": "0x144ad50"
+            },
+            {
+              "string_va": "0x2921929",
+              "function_va": "0x1449350"
+            },
+            {
+              "string_va": "0x2921929",
+              "function_va": "0x144d760"
+            }
+          ]
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "SmartPhoneIconPage",
+      "factory_va": "0x144f7a0",
+      "class_name_string_va": "0x2998f74",
+      "normalized_candidate_name": "SmartPhoneIcon",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "SonkatsuPage",
+      "factory_va": "0x1451c60",
+      "class_name_string_va": "0x292193b",
+      "normalized_candidate_name": "Sonkatsu",
+      "candidate_layouts": [
+        {
+          "layout_name": "Sonkatsu",
+          "source": "Layout/Sonkatsu.Nin_NX_NVN.zs",
+          "member": "Sonkatsu.arc!blyt/Sonkatsu.bflyt",
+          "sha256": "b55b43734ee8b2184034d2bacb435cce031dd90a642f4bd9c18b13c9a6401632",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 3,
+          "exact_native_string_ref_candidates": []
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "SonkatsuCategoryPage",
+      "factory_va": "0x14530e0",
+      "class_name_string_va": "0x29c3801",
+      "normalized_candidate_name": "SonkatsuCategory",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "SonkatsuQuestListPage",
+      "factory_va": "0x1455e50",
+      "class_name_string_va": "0x295c31c",
+      "normalized_candidate_name": "SonkatsuQuestList",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "SonkatsuQuestTopPage",
+      "factory_va": "0x145b0d0",
+      "class_name_string_va": "0x2921948",
+      "normalized_candidate_name": "SonkatsuQuestTop",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "SonkatsuResultBgPage",
+      "factory_va": "0x145c6b0",
+      "class_name_string_va": "0x294317f",
+      "normalized_candidate_name": "SonkatsuResultBg",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "SonkatsuResultDialogPage",
+      "factory_va": "0x145ecb0",
+      "class_name_string_va": "0x29cd713",
+      "normalized_candidate_name": "SonkatsuResultDialog",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "SonkatsuResultInfoPage",
+      "factory_va": "0x1462810",
+      "class_name_string_va": "0x2976f0d",
+      "normalized_candidate_name": "SonkatsuResultInfo",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "SonkatsuResultListPage",
+      "factory_va": "0x14674b0",
+      "class_name_string_va": "0x2926a52",
+      "normalized_candidate_name": "SonkatsuResultList",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "StaffCreditPage",
+      "factory_va": "0x146ee10",
+      "class_name_string_va": "0x292ff31",
+      "normalized_candidate_name": "StaffCredit",
+      "candidate_layouts": [
+        {
+          "layout_name": "StaffCredit",
+          "source": "Layout/StaffCredit.Nin_NX_NVN.zs",
+          "member": "StaffCredit.arc!blyt/StaffCredit.bflyt",
+          "sha256": "6bb0365cdf659e0ae692efde31b9eb3c67893c5f4d0784251b7cea98a79ea369",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 10,
+          "exact_native_string_ref_candidates": [
+            {
+              "string_va": "0x298a2f5",
+              "function_va": "0x1470e90"
+            }
+          ]
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "StoragePage",
+      "factory_va": "0x1474250",
+      "class_name_string_va": "0x295c373",
+      "normalized_candidate_name": "Storage",
+      "candidate_layouts": [
+        {
+          "layout_name": "Storage",
+          "source": "Layout/Storage.Nin_NX_NVN.zs",
+          "member": "Storage.arc!blyt/Storage.bflyt",
+          "sha256": "b17712c2a623ed23f1af25882284bcd9271fe0dc4dadd3d564502e737f116940",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 45,
+          "exact_native_string_ref_candidates": []
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "SwkbdPage",
+      "factory_va": "0x1537930",
+      "class_name_string_va": "0x2999143",
+      "normalized_candidate_name": "Swkbd",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "SwkbdTextAreaInputBankPage",
+      "factory_va": "0x153d4f0",
+      "class_name_string_va": "0x2993d23",
+      "normalized_candidate_name": "SwkbdTextAreaInputBank",
+      "candidate_layouts": [
+        {
+          "layout_name": "SwkbdTextAreaInputBank",
+          "source": "Layout/SwkbdTextAreaInputBank.Nin_NX_NVN.zs",
+          "member": "SwkbdTextAreaInputBank.arc!blyt/SwkbdTextAreaInputBank.bflyt",
+          "sha256": "35456f0ddd5b07efd3cbf420ec42b9de848be7095802a5ee46db18202e6792b7",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 23,
+          "exact_native_string_ref_candidates": []
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "SwkbdTextAreaInputBellPage",
+      "factory_va": "0x153f4c0",
+      "class_name_string_va": "0x294848c",
+      "normalized_candidate_name": "SwkbdTextAreaInputBell",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "TelopPage",
+      "factory_va": "0x1569bf0",
+      "class_name_string_va": "0x294d46d",
+      "normalized_candidate_name": "Telop",
+      "candidate_layouts": [
+        {
+          "layout_name": "Telop",
+          "source": "Layout/Telop.Nin_NX_NVN.zs",
+          "member": "Telop.arc!blyt/Telop.bflyt",
+          "sha256": "4ee98d034471ba87992e34ac22a27ae58d6e60c7ac70d4521377b065817e902e",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 10,
+          "exact_native_string_ref_candidates": [
+            {
+              "string_va": "0x29b9f1e",
+              "function_va": "0xd3720"
+            }
+          ]
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "TitlePage",
+      "factory_va": "0x156d2a0",
+      "class_name_string_va": "0x2971664",
+      "normalized_candidate_name": "Title",
+      "candidate_layouts": [
+        {
+          "layout_name": "Title",
+          "source": "Layout/Title.Nin_NX_NVN.zs",
+          "member": "Title.arc!blyt/Title.bflyt",
+          "sha256": "40b872f05178df2009b2c5cca853e86120d9e01dee729fd4c54b5ad388749d0c",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 22,
+          "exact_native_string_ref_candidates": [
+            {
+              "string_va": "0x295568d",
+              "function_va": "0x3f410"
+            },
+            {
+              "string_va": "0x295568d",
+              "function_va": "0x156e0c0"
+            },
+            {
+              "string_va": "0x295568d",
+              "function_va": "0x1567140"
+            }
+          ]
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "TripPage",
+      "factory_va": "0x15716f0",
+      "class_name_string_va": "0x2943300",
+      "normalized_candidate_name": "Trip",
+      "candidate_layouts": [
+        {
+          "layout_name": "Trip",
+          "source": "Layout/Trip.Nin_NX_NVN.zs",
+          "member": "Trip.arc!blyt/Trip.bflyt",
+          "sha256": "b333edfb6ab9c11ad2a3f8eca753bab59249cde045967bea1a0b3b6b89d7641d",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 44,
+          "exact_native_string_ref_candidates": []
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "VersionGuidePage",
+      "factory_va": "0x1594a60",
+      "class_name_string_va": "0x2952b15",
+      "normalized_candidate_name": "VersionGuide",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "WorkCraftBgPage",
+      "factory_va": "0x1596020",
+      "class_name_string_va": "0x2961535",
+      "normalized_candidate_name": "WorkCraftBg",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "WorkCraftInfoPage",
+      "factory_va": "0x1597b90",
+      "class_name_string_va": "0x295c58f",
+      "normalized_candidate_name": "WorkCraftInfo",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "WorkCraftListPage",
+      "factory_va": "0x159cbc0",
+      "class_name_string_va": "0x293bb74",
+      "normalized_candidate_name": "WorkCraftList",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "WorkBenchRemakeBGPage",
+      "factory_va": "0x15a0ab0",
+      "class_name_string_va": "0x294d489",
+      "normalized_candidate_name": "WorkBenchRemakeBG",
+      "candidate_layouts": [
+        {
+          "layout_name": "WorkBenchRemakeBG",
+          "source": "Layout/WorkBenchRemakeBG.Nin_NX_NVN.zs",
+          "member": "WorkBenchRemakeBG.arc!blyt/WorkBenchRemakeBG.bflyt",
+          "sha256": "e237f64d3ea56b48c735e3a233bbe15fc2db1a183a1335a5e8644d92977dbcdc",
+          "design_size": [
+            1920.0,
+            1080.0
+          ],
+          "pane_count": 4,
+          "exact_native_string_ref_candidates": [
+            {
+              "string_va": "0x29ac4d0",
+              "function_va": "0x159b9d0"
+            }
+          ]
+        }
+      ],
+      "status": "name_only_candidate_unproven"
+    },
+    {
+      "class_name": "WorkBenchRemakeFabricCmnListPage",
+      "factory_va": "0x15a3e30",
+      "class_name_string_va": "0x293bb86",
+      "normalized_candidate_name": "WorkBenchRemakeFabricCmnList",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    },
+    {
+      "class_name": "WorkBenchRemakePage",
+      "factory_va": "0x15aa480",
+      "class_name_string_va": "0x2977099",
+      "normalized_candidate_name": "WorkBenchRemake",
+      "candidate_layouts": [],
+      "status": "no_simple_name_candidate"
+    }
+  ]
+}

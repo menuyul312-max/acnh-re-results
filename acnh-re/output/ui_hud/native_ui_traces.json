@@ -3023,12 +3023,46 @@
   },
   "remaining_evidence_needed": [
     "A direct runtime/resource-manager trace or complete allocator lookup logic showing which archive supplies each duplicate PRT1 name, including .szs cases.",
-    "Caller/vptr identification for MainScreenSmartPhone open/update/close and its relationship to MainScreen HUD state.",
+    "Scheduler callsites and virtual slots for page open/update/close/back beyond the registration-time slot-5 callback; MainScreenSmartPhone linkage to MainScreen HUD state also remains unproven.",
     "Associate candidate pointer arrays 0x315b0d0 and 0x30fc6b8 with live component objects, then resolve remaining handler bodies and bind records to screens. Raw disassembly shows 11 candidate follow-up slots are return-only and five have a repeated pointer-registration pattern, but their effects remain conditional on the unproven table association.",
     "Resolve physical Npad producers, identify the indirect touch callback vtable targets, and connect callbacks to concrete action/FSM/CNT1 records; determine callback order, modal stack, focus restoration, and screen lifecycle.",
     "A native FLEU application path mapping arrays to named userData values and animation frame timing.",
     "Synchronized game captures for renderer comparisons (origin/scale, hit bounds, clipping, BNTX channel behavior, sampler/blend/shader and font output)."
   ],
+  "page_factory_registry": {
+    "artifact": "output/ui_hud/page_factory_catalog.json",
+    "factory_count_matching_shared_pattern": 135,
+    "distinct_class_names": 135,
+    "distinct_constructor_functions": 135,
+    "distinct_constructor_vptr_address_points": 135,
+    "constructor_relocations_resolved": 135,
+    "uniform_pointer_targets_across_all_135_pages": 55,
+    "pointer_sequence_entry_count_distribution": {
+      "79": 131,
+      "82": 4
+    },
+    "factory_criterion": "336-byte raw-ELF function with decompilation, one allocation-size literal, and direct calls to raw targets 0x1da8210, 0x1144600, and 0x1da8220 (Ghidra labels FUN_01ea8210, FUN_01244600, and FUN_01ea8220); the remaining non-generic direct-call target is the constructor.",
+    "vptr_resolution": "Constructor's relocated global plus 0x10 resolves through an R_AARCH64_RELATIVE slot to the observed pointer address point; the code-pointer sequence is counted at that address point.",
+    "shared_handoff_slot_observation": {
+      "registration_helper_va": "0x1da8220",
+      "state_and_virtual_dispatch_helper_va": "0x1da40b0",
+      "shared_virtual_slot_index": 5,
+      "shared_virtual_slot_offset_bytes": "0x28",
+      "target_raw_va": "0x1da5380",
+      "target_page_count": 135,
+      "observed_call_path": "The registration helper calls 0x1da40b0; that helper writes integer 2 at page-object byte offset +0x48 and dispatches through vptr+0x28. All 135 constructor-installed pointer sequences contain target 0x1da5380 at slot 5.",
+      "target_body_observation": "AArch64 disassembly shows iteration over object storage beginning at offsets +0x1c8 and +0x1e0 and calls helper functions for the entries; the exact semantic names of these containers and the resulting page state are unresolved."
+    },
+    "page_to_layout_name_candidates": {
+      "artifact": "output/ui_hud/page_layout_candidates.json",
+      "candidate_count": 74,
+      "factory_class_count": 135,
+      "rule": "Remove the exact suffix Page from the class-name string and compare the result with screen_catalog layout names.",
+      "status": "name_only_candidates_unproven",
+      "limit": "Neither name equality nor layout-name string references in other functions prove that a page loads or owns that layout."
+    },
+    "limit": "This inventories factories matching the shared pattern. It does not prove the complete set of all pages, page-to-layout ownership, meanings of most virtual slots, or open/close/back/modal lifecycle."
+  },
   "smartphone_native_neighbors": {
     "candidate_page_factory": {
       "function_va": "0x144f7a0",
