@@ -165,12 +165,32 @@ membersihkan `TalkCountToday`; bila mode proses di bawah 2, kode membaca
 `TalkCountToday` dan menghapus `ContinuousTalkDays` saat tidak ada talk yang
 tercatat. Fungsi reset umum `0xf48cf0` juga menghapus kedua field, tetapi
 caller-nya `0xf05e80`, di luar jalur perubahan hari yang ditelusuri. Ini
-menguatkan gate satu kali per villager per reset counter, namun belum menguji
-mode perubahan hari native atau memastikan semua konfigurasi mode memakai
-reset yang sama.
+menautkan reset counter ke siklus perubahan hari, tetapi mode pemanggil masih
+bukti pseudocode.
+
+**Terbukti native pada helper reset:** reproducer menjalankan `0xf76010` dan
+`0xf696c0` dengan nilai `TalkCountToday` dan mode terkendali, menangkap semua
+write di entry `0xf48840`. Delapan kasus mencakup mode 0/1/2 dan hitungan 0/1;
+11 panggilan setter yang diharapkan cocok. Pada `0xf76010`, mode 0 dengan
+hitungan positif mempertahankan kedua field; mode 1 dengan hitungan positif
+menghapus `TalkCountToday` dan mempertahankan `ContinuousTalkDays`; tanpa talk
+atau pada mode ≥2, streak dihapus. `0xf696c0` juga selalu menghapus
+`TalkCountToday`, dan mempertahankan streak hanya bila mode <2 dan hitungan
+sebelumnya positif. Reproduksi:
+
+```bash
+cd acnh-re
+PYTHONPATH=/workspace/acnh-re/.deps:tools python3 tools/npc_talk_streak_reset_native.py
+```
+
+Detail kasus ada di
+[`talk_streak_reset_native.json`](../output/gameplay/villager_social_followup/talk_streak_reset_native.json).
+Test memakai getter/setter sintetis, tidak menjalankan event perubahan hari,
+dan tidak memverifikasi save sesudah write.
 
 **Terbuka:** writer lain yang memberi atau mengurangi `Friendship`, sumber
-negatif yang benar-benar terpicu dalam permainan, serta batas/policy reset
-untuk `TalkNpc%dCount` belum terikat ke eksekusi save live. Nilai negatif pada
-EventFlow tetap hanya input aksi yang dikonfigurasi. Native friendship test
-sebelumnya menguji floor level di `0xd34f80`, bukan sumber decay.
+negatif yang benar-benar terpicu dalam permainan, mode yang dipakai event
+perubahan hari, serta batas/policy reset untuk `TalkNpc%dCount` belum terikat
+ke save live. Nilai negatif pada EventFlow tetap hanya input aksi yang
+dikonfigurasi. Native friendship test sebelumnya menguji floor level di
+`0xd34f80`, bukan sumber decay.
