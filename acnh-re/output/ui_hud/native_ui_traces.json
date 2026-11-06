@@ -794,7 +794,7 @@
         "limit": "Mode 4 and its state owner are not identified."
       }
     ],
-    "known_action_emitters_summary": "Static callsites now connect action IDs 4, 6, 7, 8, 9, 10, 11, and 12 to concrete control methods. ButtonCheck, ButtonRepeat, and ButtonFocusActive are independently identified by the native type resolver. The remaining action names are present in the lookup table but their full producers are not identified in this path. Touchscreen handling is now traced to named TouchSelect/TouchUnselect UI messages through the 61-entry native message registry; this remains distinct from the 13 control-animation action names, and recipient-to-state-machine binding is unresolved.",
+    "known_action_emitters_summary": "Static dispatch callsites now cover all 13 action IDs from FocusKey through Inactive. Typed emitter methods independently identify DecideKey, Invalid, Check/Uncheck, RepeatKey/Touch, and Active/Inactive. Focus/UnFocus and DecideTouch callsites are located, but their physical event producers, final recipient/CNT1 binding, callback order, and timing remain unresolved. Touchscreen dataflow now statically connects HID sampling, hit-test, pointer-target recording, matching control-tree traversal, and indirect virtual callbacks; TouchSelect/TouchUnselect are recorded in a diagnostic message history, not proven as delivered receiver events.",
     "button_control_type_resolver": {
       "type_name_function_va": "0x14817e0",
       "inherit_resolution_function_va": "0x1481a40",
@@ -1450,7 +1450,218 @@
           ],
           "interpretation_limit": "Return-only code is a no-op if the candidate is the selected method. Nontrivial candidates share a handler-registration pattern but do not reveal component semantics or prove which table/object uses them."
         }
-      }
+      },
+      "setup_handler_correlations": [
+        {
+          "type_candidate": "LpLocator",
+          "setup_slot_offset": "0x10",
+          "pointer_array_target": "0x1db2c00",
+          "handler_body_va": "0x1db2c10",
+          "factory_va": "0x1db5b50",
+          "class_token": "PartsCtrl",
+          "allocated_controller_bytes": "0x200",
+          "followup_helpers": [
+            "0x1db0be0"
+          ],
+          "observed_behavior": "Candidate setup creates a PartsCtrl controller, inserts it into the component controller list, and performs shared post-setup.",
+          "confidence_limit": "Conditional on the slot-aligned pointer-array candidate mapping."
+        },
+        {
+          "type_candidate": "LpUniteButton",
+          "setup_slot_offset": "0x18",
+          "pointer_array_target": "0x1db2fc0",
+          "handler_body_va": "0x1db3020",
+          "factory_va": "0x1db5cf0",
+          "class_token": "UniteBtnCtrl",
+          "allocated_controller_bytes": "0x2c8",
+          "followup_helpers": [
+            "0x1dd0b40"
+          ],
+          "observed_behavior": "Candidate setup creates UniteBtnCtrl and configures the shared 18-state selectable widget machine.",
+          "confidence_limit": "Conditional on the slot-aligned pointer-array candidate mapping; a separate AppUniteBtnCtrl path is recorded in controller_factory_correlations."
+        },
+        {
+          "type_candidate": "LpDragButton",
+          "setup_slot_offset": "0x20",
+          "pointer_array_target": "0x1db33d0",
+          "handler_body_va": "0x1db33e0",
+          "factory_va": "0x1db5e90",
+          "class_token": "DragBtnCtrl",
+          "allocated_controller_bytes": "0x308",
+          "followup_helpers": [
+            "0x1db7e30",
+            "0x1db82f0"
+          ],
+          "observed_user_data_tags": [
+            "*CaptureTarget"
+          ],
+          "observed_behavior": "Creates DragBtnCtrl and configures drag/drop states with Drag, Drop, Cancel, TargetMove, TargetDrop, and Into transitions.",
+          "confidence_limit": "Conditional on the slot-aligned pointer-array candidate mapping."
+        },
+        {
+          "type_candidate": "LpKeyDecideIcon",
+          "setup_slot_offset": "0x28",
+          "pointer_array_targets": [
+            "0x1db3790",
+            "0x114de90"
+          ],
+          "handler_bodies": [
+            "0x1db37e0",
+            "0x114ded0"
+          ],
+          "factory_va": "0x1db6030",
+          "class_token": "KeyDecideIconCtrl",
+          "allocated_controller_bytes": "0x2a8",
+          "followup_helpers": [
+            "0x1daf3a0",
+            "0x1daf3f0"
+          ],
+          "observed_behavior": "Creates KeyDecideIconCtrl and configures the eight-state Decide/InvDecide profile.",
+          "confidence_limit": "Conditional on the slot-aligned pointer-array candidate mapping."
+        },
+        {
+          "type_candidate": "LpSelector",
+          "setup_slot_offset": "0x30",
+          "pointer_array_target": "0x1db3b90",
+          "handler_body_va": "0x1db3be0",
+          "followup_helpers": [
+            "0x1dc5650",
+            "0x1dc5740"
+          ],
+          "observed_user_data_tags": [
+            "*ScrollMinus",
+            "*ScrollPlus",
+            "*Cursor"
+          ],
+          "observed_behavior": "Configures a four-ID selection/touch/invalid profile; the four-state enum getter is a name/range match only.",
+          "confidence_limit": "Conditional on the slot-aligned pointer-array candidate mapping and enum-to-instance ownership."
+        },
+        {
+          "type_candidate": "LpScrollBar",
+          "setup_slot_offset": "0x38",
+          "pointer_array_target": "0x1db3f90",
+          "handler_body_va": "0x1db3fe0",
+          "followup_helpers": [
+            "0x1dc3790",
+            "0x1dc3ad0"
+          ],
+          "observed_user_data_tags": [
+            "*Volume",
+            "*Root;<*Translate",
+            "*Translate",
+            "*ScrollArea",
+            "*Cursor",
+            "*AdjustWindow"
+          ],
+          "observed_behavior": "Configures a select/touch/invalid/valid profile using IDs 0..4; the six-name enum includes a sixth state not configured here.",
+          "confidence_limit": "Conditional on the slot-aligned pointer-array candidate mapping and enum-to-instance ownership; the shared helper also has another caller."
+        },
+        {
+          "type_candidate": "LpCharAnim",
+          "setup_slot_offset": "0x40",
+          "pointer_array_target": "0x1db4390",
+          "handler_body_va": "0x1db43a0",
+          "factory_va": "0x1db6510",
+          "class_token": "CharAnimCtrl",
+          "allocated_controller_bytes": "0xad8",
+          "followup_helpers": [
+            "0x1db0be0"
+          ],
+          "observed_behavior": "Creates a CharAnimCtrl controller and then runs shared post-setup.",
+          "confidence_limit": "Conditional on the slot-aligned pointer-array candidate mapping."
+        },
+        {
+          "type_candidate": "LpTextAnim",
+          "setup_slot_offset": "0x48",
+          "pointer_array_target": "0x1db4750",
+          "handler_body_va": "0x1db4760",
+          "factory_va": "0x1db66b0",
+          "class_token": "TextAnimCtrl",
+          "allocated_controller_bytes": "0xc80",
+          "followup_helpers": [
+            "0x1db0be0"
+          ],
+          "observed_behavior": "Creates a TextAnimCtrl controller and then runs shared post-setup.",
+          "confidence_limit": "Conditional on the slot-aligned pointer-array candidate mapping."
+        },
+        {
+          "type_candidate": "LpTraceGauge",
+          "setup_slot_offset": "0x50",
+          "pointer_array_target": "0x1db4b10",
+          "handler_body_va": "0x1db4b20",
+          "factory_va": "0x1db6850",
+          "class_token": "TraceGaugeCtrl",
+          "allocated_controller_bytes": "0x278",
+          "followup_helpers": [
+            "0x1dcf7c0"
+          ],
+          "observed_user_data_tags": [
+            "TracingSpeed",
+            "*TraceColor",
+            "*GaugeBorder",
+            "TracingFraction",
+            "TracingWait",
+            "*State",
+            "StateLoop",
+            "*GaugeSize"
+          ],
+          "observed_behavior": "Creates TraceGaugeCtrl; its specialized setup reads trace-speed/fraction/wait, color/border, state-loop, and gauge-size data, plus an indexed-name pattern `%s_%02d`.",
+          "confidence_limit": "Conditional on the slot-aligned pointer-array candidate mapping; meanings and animation timing of the tags are not fully resolved."
+        },
+        {
+          "type_candidate": "LpNumberAnim",
+          "setup_slot_offset": "0x58",
+          "pointer_array_target": "0x1db4ed0",
+          "handler_body_va": "0x1db4ee0",
+          "factory_va": "0x1db69f0",
+          "class_token": "NumberAnimCtrl",
+          "allocated_controller_bytes": "0x228",
+          "followup_helpers": [
+            "0x1db93a0"
+          ],
+          "observed_user_data_tags": [
+            "*Number",
+            "*Count",
+            "*Invisible"
+          ],
+          "observed_behavior": "Creates NumberAnimCtrl and binds number, count, and invisibility tags.",
+          "confidence_limit": "Conditional on the slot-aligned pointer-array candidate mapping."
+        },
+        {
+          "type_candidate": "LpMultiNumberAnim",
+          "setup_slot_offset": "0x60",
+          "pointer_array_target": "0x1db5290",
+          "handler_body_va": "0x1db52a0",
+          "factory_va": "0x1db6b90",
+          "class_token": "MultiNumberAnimCtrl",
+          "allocated_controller_bytes": "0x248",
+          "followup_helpers": [
+            "0x1db98f0",
+            "0x1db9930"
+          ],
+          "observed_behavior": "Creates MultiNumberAnimCtrl and runs its multi-number setup helper before shared base post-setup.",
+          "confidence_limit": "Conditional on the slot-aligned pointer-array candidate mapping."
+        },
+        {
+          "type_candidate": "LpTimer",
+          "setup_slot_offset": "0x68",
+          "pointer_array_target": "0x1db5650",
+          "handler_body_va": "0x1db5660",
+          "factory_va": "0x1db6d30",
+          "class_token": "TimerCtrl",
+          "allocated_controller_bytes": "0x440",
+          "followup_helpers": [
+            "0x1dcbb70"
+          ],
+          "observed_user_data_tags": [
+            "TimeText",
+            "StateCount",
+            "StateLoop"
+          ],
+          "observed_behavior": "Creates TimerCtrl, reads timer text/count/loop tags, and constructs indexed child-name lookups using `%s_%02d`.",
+          "confidence_limit": "Conditional on the slot-aligned pointer-array candidate mapping; exact display/timing semantics remain unresolved."
+        }
+      ]
     },
     "touch_input_manager": {
       "source_build": "ACNH 1.0.0; supplied ExeFS main",
@@ -1472,7 +1683,9 @@
       "platform_sampling": {
         "multi_touch_function_va": "0x14b8f60",
         "platform_import": "nn::hid::GetTouchScreenStates<16>",
-        "direct_callers_in_index": [],
+        "direct_callers_in_index": [
+          "0x14b8e50"
+        ],
         "observed": [
           "Reads up to 16 platform touch states.",
           "Matches platform contact IDs to persistent UI pointer records, updates coordinates and contact flags, and handles new/unmatched contacts."
@@ -1487,7 +1700,7 @@
           "0x1303a10 obtains a UI rectangle, returns the last accepted contact and normalized u/v coordinates; 0x1302f10 updates/interpolates pointer state."
         ],
         "limitations": [
-          "0x14b8f60 has no direct caller in the indexed call graph, consistent with indirect update dispatch but not proving the exact scheduler edge.",
+          "The direct update wrapper call 0x14b8e50 -> 0x14b8f60 is now identified; the precise scheduler edge from the registered update node to this wrapper remains indirect/unresolved.",
           "The coordinate helper path and pointer-manager path both sample HID touch, but no exact call edge between those separate paths is shown."
         ]
       },
@@ -1522,16 +1735,25 @@
           }
         ],
         "observed": [
-          "The processor scans pointer records, hit-tests layout/control geometry recursively, records a target control, and calls the generic UI message emitter.",
-          "The message emitter validates IDs below 61, indexes the native message-name table, and forwards the resulting named message through 0x15329b0.",
-          "The native message registry maps 0x2d to TouchSelect and 0x2e to TouchUnselect."
+          "The processor scans pointer records, hit-tests layout/control geometry recursively, and passes the resolved target control plus contact index to 0x14b8950.",
+          "The target is inserted into the active pointer record through 0x14b8350 -> 0x14b97b0, then the update wrapper traverses control subtrees through 0x14b7a10 and matches controls against that recorded target.",
+          "A matching control runs pointer-state helpers 0x14b7c90, 0x14b8100, and 0x14b8200; the first helper changes control flags, records TouchSelect/TouchUnselect IDs as applicable, and invokes indirect virtual methods."
         ],
         "overlap_with_control_state_machine": "The 18-state widget machine contains a TouchSelect trigger (state 0 to 8). Its exit trigger spells TouchUnSelect with capital S, while the message registry spells TouchUnselect. This lexical overlap is evidence of a related touch vocabulary, not proof that this pointer message is delivered to a particular LpUniteButton state machine.",
         "limitations": [
-          "This establishes pointer-to-named-message routing within the UI system, but not the final recipient handler, FocusTouch/UnFocusTouch/DecideTouch action emission, or platform-button mapping.",
-          "Message code 0x22 is recorded as a name-table index only; this analysis does not infer what “Decide_Invalid” means in the hit-test branch.",
-          "The local direct-call index does not connect poller 0x14b8f60 to processor 0x14b94c0. Their shared manager/pointer data context supports grouping them as one subsystem, but an indirect runtime edge has not been traced."
-        ]
+          "The static call graph now connects HID sample -> hit-test -> recorded target control -> matching control-tree update -> indirect virtual callback. The callback target class and vtable implementation remain unresolved.",
+          "The callback path is not yet tied to FocusTouch/UnFocusTouch/DecideTouch action dispatch, a named control state-machine instance, or a specific CNT1 animation.",
+          "TouchSelect/TouchUnselect names are recorded through the diagnostic message/history path; they do not by themselves prove receiver delivery.",
+          "Message code 0x22 is a name-table index only; this analysis does not infer what “Decide_Invalid” means at that callsite.",
+          "The scheduler edge from the registered update node to 0x14b8e50 and platform-button mapping have not been recovered."
+        ],
+        "message_trace_recording": {
+          "message_index_emitter_va": "0x1533050",
+          "name_registry_va": "0x1533fa0",
+          "recording_helper_va": "0x15329b0",
+          "observed": "The emitter validates an ID against the 61-name registry, resolves the text, and forwards it to a bounded history/ring-buffer helper that stores message text and per-entry context.",
+          "limit": "This proves named message recording/telemetry, not delivery to the control callback. The callback path is via indirect virtual calls in pointer-state helpers."
+        }
       },
       "npad_sampling": {
         "initializer_va": "0x14ced30",
@@ -1546,6 +1768,676 @@
         ],
         "direct_callsite_status": "No direct-call rows point to these GetNpadStates import thunks in the local call index. Their use through indirect/system paths is not ruled out.",
         "limitation": "No physical Npad button to UI message/action mapping has been recovered."
+      },
+      "update_method": {
+        "function_va": "0x14b8e50",
+        "observed_call_order": [
+          {
+            "callsite_va": "0x14b8e6c",
+            "target_va": "0x14b8f60",
+            "operation": "Poll GetTouchScreenStates<16> and update persistent pointer records."
+          },
+          {
+            "callsite_va": "0x14b8f38",
+            "target_va": "0x14b94c0",
+            "operation": "Hit-test manager pointer records and store newly resolved target controls."
+          },
+          {
+            "callsite_va": "0x14b8f40",
+            "target_va": "0x14b7a10",
+            "argument": "manager subobject at +0x88",
+            "operation": "Traverse the first control subtree and update controls matching active pointer records."
+          },
+          {
+            "callsite_va": "0x14b8f54",
+            "target_va": "0x14b7a10",
+            "call_kind": "tail branch",
+            "argument": "manager subobject at +0x2a8",
+            "operation": "Traverse the second control subtree and update controls matching active pointer records."
+          }
+        ],
+        "shared_context": "Both calls receive the same manager pointer in x0 (saved as x19 by the wrapper). The path has state/availability early-return guards and intervening record cleanup; this is a direct static caller chain, not a runtime trace.",
+        "edge_evidence": "AArch64 at 0x14b8e50: BL at 0x14b8e6c targets 0x14b8f60; BL at 0x14b8f38 targets 0x14b94c0.",
+        "observed_pointer_target_flow": {
+          "hit_target_recording": [
+            {
+              "callsite_va": "0x14b966c",
+              "caller_va": "0x14b94c0",
+              "target_va": "0x14b8950",
+              "operation": "Passes the selected hit-test target and touch-record index."
+            },
+            {
+              "callsite_va": "0x14b8984",
+              "caller_va": "0x14b8950",
+              "target_va": "0x14b8350",
+              "operation": "Stores selected control in the pointer registry."
+            },
+            {
+              "callsite_va": "0x14b84c8",
+              "caller_va": "0x14b8350",
+              "target_va": "0x14b97b0",
+              "operation": "Adds the selected control pointer to the manager pointer record."
+            }
+          ],
+          "control_tree_match": [
+            {
+              "callsite_va": "0x14b7ae4",
+              "caller_va": "0x14b7a10",
+              "target_va": "0x14b7c90",
+              "operation": "Runs touch-state transition handling when the traversed control matches a pointer target."
+            },
+            {
+              "callsite_va": "0x14b7af0",
+              "caller_va": "0x14b7a10",
+              "target_va": "0x14b8100",
+              "operation": "Runs a second pointer/control update helper."
+            },
+            {
+              "callsite_va": "0x14b7b08",
+              "caller_va": "0x14b7a10",
+              "target_va": "0x14b8200",
+              "call_kind": "tail branch",
+              "operation": "Runs a third pointer/control update helper."
+            }
+          ],
+          "observed_data_effects": "The selected control pointer is stored at pointer-record offset +0x30; the selected target byte at +0x21e is set. The recursive traversal compares its current control pointer against records at +0x30. On a match it updates control flags and invokes the three helpers above.",
+          "limits": [
+            "The target control class/vtable slots are indirect and not bound to a specific widget class.",
+            "The virtual callback is not yet mapped to FocusTouch/UnFocusTouch/DecideTouch action dispatch or a specific CNT1 animation."
+          ]
+        }
+      }
+    },
+    "action_dispatch_callsite_coverage": {
+      "dispatcher_va": "0x14845a0",
+      "action_name_table_va": "0x1485c20",
+      "status": "A statically decoded callsite now covers each action table index 0..12. This proves index-to-named-action dispatch coverage, not the device event or final control instance that causes it.",
+      "evidence_method": "Immediate action-index arguments were read from AArch64 disassembly at the generic dispatcher callsites; indices 6..12 also match the previously decompiled typed emitters.",
+      "actions": [
+        {
+          "id": 0,
+          "name": "FocusKey",
+          "callsites_va": [
+            "0x1483a9c"
+          ],
+          "callsite_kind": "tail branch to generic action dispatcher"
+        },
+        {
+          "id": 1,
+          "name": "FocusTouch",
+          "callsites_va": [
+            "0x14834b4"
+          ],
+          "callsite_kind": "direct call; immediate index"
+        },
+        {
+          "id": 2,
+          "name": "UnFocusKey",
+          "callsites_va": [
+            "0x1483a60"
+          ],
+          "callsite_kind": "tail branch to generic action dispatcher"
+        },
+        {
+          "id": 3,
+          "name": "UnFocusTouch",
+          "callsites_va": [
+            "0x1483350",
+            "0x14837d0"
+          ],
+          "callsite_kind": "tail branch; immediate index"
+        },
+        {
+          "id": 4,
+          "name": "DecideKey",
+          "callsites_va": [
+            "0x1483b74"
+          ],
+          "callsite_kind": "direct call from typed control method"
+        },
+        {
+          "id": 5,
+          "name": "DecideTouch",
+          "callsites_va": [
+            "0x14833cc",
+            "0x14837e4",
+            "0x147e5d8",
+            "0x147e614",
+            "0x147e650",
+            "0x147e68c",
+            "0x147e6c8",
+            "0x147e704",
+            "0x147e740",
+            "0x147e77c",
+            "0x147e7b8",
+            "0x147e7f4",
+            "0x147e840"
+          ],
+          "callsite_kind": "direct calls; the 11 0x147e5xx..0x147e8xx sites all pass immediate index 5"
+        },
+        {
+          "id": 6,
+          "name": "Invalid",
+          "callsites_va": [
+            "0x1483dac"
+          ],
+          "callsite_kind": "direct call from typed control method"
+        },
+        {
+          "id": 7,
+          "name": "Check",
+          "callsites_va": [
+            "0x1483f68",
+            "0x14852f4"
+          ],
+          "callsite_kind": "dynamic branch index in the Check/Uncheck methods"
+        },
+        {
+          "id": 8,
+          "name": "Uncheck",
+          "callsites_va": [
+            "0x1483f68",
+            "0x14852f4"
+          ],
+          "callsite_kind": "dynamic branch index in the Check/Uncheck methods"
+        },
+        {
+          "id": 9,
+          "name": "RepeatKey",
+          "callsites_va": [
+            "0x1483c80"
+          ],
+          "callsite_kind": "direct call from ButtonRepeat method"
+        },
+        {
+          "id": 10,
+          "name": "RepeatTouch",
+          "callsites_va": [
+            "0x1485554"
+          ],
+          "callsite_kind": "direct call from ButtonRepeat method"
+        },
+        {
+          "id": 11,
+          "name": "Active",
+          "callsites_va": [
+            "0x1484090"
+          ],
+          "callsite_kind": "dynamic branch index in ButtonFocusActive method"
+        },
+        {
+          "id": 12,
+          "name": "Inactive",
+          "callsites_va": [
+            "0x1484090"
+          ],
+          "callsite_kind": "dynamic branch index in ButtonFocusActive method"
+        }
+      ],
+      "limitations": [
+        "The calls prove that named action IDs are dispatched, but do not identify which platform input or game event selected them.",
+        "The touch message recipient is still not tied to these action calls, CNT1 records, or an individual screen/controller instance.",
+        "The callsites do not establish callback order or animation start/frame timing."
+      ]
+    },
+    "specialized_widget_state_machines": {
+      "ring_tool_active_register": {
+        "classification": "path-specific control cluster; exact runtime component owner remains unproven",
+        "builder_va": "0x1424660",
+        "transition_initializer_va": "0x1424ae0",
+        "state_enum_va": "0x1425340",
+        "path_gate": "/L_RingTool_00/L_Btn_",
+        "observed_user_data_and_pane_names": [
+          "ActiveReg",
+          "P_Icon_00",
+          "P_IconActiveReg_00",
+          "InvAnim",
+          "Confirm"
+        ],
+        "states": [
+          {
+            "id": 0,
+            "name": "cUnselected"
+          },
+          {
+            "id": 1,
+            "name": "cSelected"
+          },
+          {
+            "id": 2,
+            "name": "cDecided"
+          }
+        ],
+        "transitions": [
+          {
+            "from": 0,
+            "to": 1,
+            "trigger": "SelectActiveReg"
+          },
+          {
+            "from": 1,
+            "to": 0,
+            "trigger": "UnSelectActiveReg"
+          },
+          {
+            "from": 1,
+            "to": 2,
+            "trigger": "DecideActiveReg"
+          }
+        ],
+        "observed_additional_transition_links": [
+          {
+            "helper": "0x1caf8d0",
+            "args": [
+              1,
+              2,
+              1,
+              0
+            ]
+          },
+          {
+            "helper": "0x1caf820",
+            "args": [
+              0,
+              2,
+              1
+            ]
+          }
+        ],
+        "evidence": "The path-filtering builder checks the RingTool button path and binds ActiveReg/icon-related names before calling the three-state transition initializer.",
+        "limits": [
+          "The state profile is tied to this RingTool path, but the live page/controller instance and physical input source are not recovered.",
+          "Opaque helper flags are preserved without assigning undocumented meanings."
+        ]
+      },
+      "key_decide_inverse_control": {
+        "classification": "candidate LpKeyDecideIcon setup path; array-to-object association remains conditional",
+        "handler_candidates": [
+          "0x1db3790",
+          "0x114de90"
+        ],
+        "handler_bodies": [
+          "0x1db37e0",
+          "0x114ded0"
+        ],
+        "state_initializer_wrapper_va": "0x1daf3a0",
+        "transition_initializer_va": "0x1daf3f0",
+        "state_enum_va": "0x1db02b0",
+        "states": [
+          {
+            "id": 0,
+            "name": "cUnselected"
+          },
+          {
+            "id": 1,
+            "name": "cDecided"
+          },
+          {
+            "id": 2,
+            "name": "cContinueDecided"
+          },
+          {
+            "id": 3,
+            "name": "cInvUnselected"
+          },
+          {
+            "id": 4,
+            "name": "cInvDecided"
+          },
+          {
+            "id": 5,
+            "name": "cInvContinueDecided"
+          },
+          {
+            "id": 6,
+            "name": "cValid"
+          },
+          {
+            "id": 7,
+            "name": "cInvalid"
+          }
+        ],
+        "transitions": [
+          {
+            "from": 0,
+            "to": 1,
+            "trigger": "*Decide"
+          },
+          {
+            "from": 0,
+            "to": 2,
+            "trigger": "*Decide"
+          },
+          {
+            "from": 1,
+            "to": 0,
+            "trigger": "*Cancel;<*Decide"
+          },
+          {
+            "from": 3,
+            "to": 4,
+            "trigger": "*InvDecide"
+          },
+          {
+            "from": 3,
+            "to": 5,
+            "trigger": "*InvDecide"
+          },
+          {
+            "from": 4,
+            "to": 3,
+            "trigger": "*InvCancel;<*InvDecide"
+          },
+          {
+            "from": 3,
+            "to": 6,
+            "trigger": "*Valid;<*Invalid"
+          },
+          {
+            "from": 0,
+            "to": 7,
+            "trigger": "*Invalid"
+          }
+        ],
+        "observed_additional_transition_links": [
+          {
+            "helper": "0x1caf8d0",
+            "args": [
+              0,
+              2,
+              0,
+              0
+            ]
+          },
+          {
+            "helper": "0x1caf8d0",
+            "args": [
+              3,
+              5,
+              3,
+              0
+            ]
+          },
+          {
+            "helper": "0x1caf990",
+            "args": [
+              6,
+              0,
+              0
+            ]
+          },
+          {
+            "helper": "0x1caf990",
+            "args": [
+              7,
+              3,
+              0
+            ]
+          }
+        ],
+        "evidence": "Both candidate LpKeyDecideIcon setup bodies call 0x1daf3a0; that wrapper initializes the eight-state decision/inverse transition profile.",
+        "limits": [
+          "The type label comes from slot-aligned pointer-array candidates; array-to-live-object/vptr ownership is not proved.",
+          "Trigger names and state IDs do not establish the device event or animation callback order."
+        ]
+      },
+      "scroll_control_profiles": {
+        "scrollbar_candidate": {
+          "handler_candidate": "0x1db3f90",
+          "handler_body": "0x1db3fe0",
+          "shared_initializer_va": "0x1dc3790",
+          "transition_initializer_va": "0x1dc3ad0",
+          "observed_user_data_tags": [
+            "*Volume",
+            "*Root;<*Translate",
+            "*Translate",
+            "*ScrollArea",
+            "*Cursor",
+            "*AdjustWindow"
+          ],
+          "transitions": [
+            {
+              "from": 0,
+              "to": 1,
+              "trigger": "*Select"
+            },
+            {
+              "from": 1,
+              "to": 0,
+              "trigger": "*UnSelect;<*Select"
+            },
+            {
+              "from": 0,
+              "to": 2,
+              "trigger": "*TouchSelect;*Select"
+            },
+            {
+              "from": 2,
+              "to": 0,
+              "trigger": "*TouchUnSelect;<*TouchSelect;*UnSelect;<*Select"
+            },
+            {
+              "from": 0,
+              "to": 3,
+              "trigger": "*Invalid"
+            },
+            {
+              "from": 0,
+              "to": 4,
+              "trigger": "*Valid;<*Invalid"
+            },
+            {
+              "from": 3,
+              "to": 4,
+              "trigger": "*Valid;<*Invalid"
+            }
+          ],
+          "observed_additional_transition_links": [
+            {
+              "helper": "0x1caf820",
+              "args": [
+                1,
+                3,
+                0
+              ]
+            },
+            {
+              "helper": "0x1caf990",
+              "args": [
+                4,
+                0,
+                0
+              ]
+            }
+          ],
+          "additional_shared_initializer_caller": "0x1309ed0 (binds *GuideOff before the same initializer)",
+          "state_enum_candidate_va": "0x1dc4f60",
+          "state_enum_match_note": "The enum exposes six names; the scrollbar transition initializer uses IDs 0..4, including a Valid target. Exact enum-to-live-class binding is not proven.",
+          "states": [
+            {
+              "id": 0,
+              "name": "cUnselected"
+            },
+            {
+              "id": 1,
+              "name": "cSelected"
+            },
+            {
+              "id": 2,
+              "name": "cTouchSelected"
+            },
+            {
+              "id": 3,
+              "name": "cInvalid"
+            },
+            {
+              "id": 4,
+              "name": "cValid"
+            },
+            {
+              "id": 5,
+              "name": "cInvalidFromSelect"
+            }
+          ]
+        },
+        "selector_candidate": {
+          "handler_candidate": "0x1db3b90",
+          "handler_body": "0x1db3be0",
+          "shared_initializer_va": "0x1dc5650",
+          "transition_initializer_va": "0x1dc5740",
+          "observed_user_data_tags": [
+            "*ScrollMinus",
+            "*ScrollPlus",
+            "*Cursor"
+          ],
+          "transitions": [
+            {
+              "from": 0,
+              "to": 1,
+              "trigger": "*Select"
+            },
+            {
+              "from": 1,
+              "to": 0,
+              "trigger": "*UnSelect;<*Select"
+            },
+            {
+              "from": 0,
+              "to": 2,
+              "trigger": "*TouchSelect;*Select"
+            },
+            {
+              "from": 2,
+              "to": 0,
+              "trigger": "*TouchUnSelect;<*TouchSelect;*UnSelect;<*Select"
+            },
+            {
+              "from": 0,
+              "to": 3,
+              "trigger": "*Invalid"
+            },
+            {
+              "from": 3,
+              "to": 0,
+              "trigger": "*Valid;<*Invalid"
+            }
+          ],
+          "state_enum_candidate_va": "0x1dc63a0",
+          "state_enum_match_note": "The four enum names match the four state IDs used by this transition initializer; no direct accessor-to-live-object edge is recovered.",
+          "states": [
+            {
+              "id": 0,
+              "name": "cUnselected"
+            },
+            {
+              "id": 1,
+              "name": "cSelected"
+            },
+            {
+              "id": 2,
+              "name": "cTouchSelected"
+            },
+            {
+              "id": 3,
+              "name": "cInvalid"
+            }
+          ]
+        },
+        "limits": [
+          "The tag names and transition tables are directly observed; the enum candidates match the state-ID ranges but enum-to-live-class ownership is not directly proven.",
+          "The scrollbar profile uses state IDs 0..4; its six-name enum also includes cInvalidFromSelect (ID 5), which is not configured by this initializer.",
+          "Mapping to LpScrollBar/LpSelector remains conditional on the candidate pointer-array slot association."
+        ]
+      },
+      "drag_drop_capture": {
+        "classification": "candidate LpDragButton setup path; array-to-object association remains conditional",
+        "handler_candidate": "0x1db33d0",
+        "handler_body": "0x1db33e0",
+        "setup_va": "0x1db7e30",
+        "transition_initializer_va": "0x1db82f0",
+        "observed_user_data_tag": "*CaptureTarget",
+        "state_ids_observed": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "transitions": [
+          {
+            "from": 0,
+            "to": 1,
+            "trigger": "*Drag"
+          },
+          {
+            "from": 1,
+            "to": 0,
+            "trigger": "*Drop"
+          },
+          {
+            "from": 1,
+            "to": 2,
+            "trigger": "*Cancel"
+          },
+          {
+            "from": 1,
+            "to": 3,
+            "trigger": "*TargetMove"
+          },
+          {
+            "from": 0,
+            "to": 4,
+            "trigger": "*TargetDrop"
+          },
+          {
+            "from": 4,
+            "to": 0,
+            "trigger": "*Into"
+          }
+        ],
+        "observed_additional_transition_links": [
+          {
+            "helper": "0x1caf8d0",
+            "args": [
+              1,
+              2,
+              0,
+              0
+            ]
+          }
+        ],
+        "limits": [
+          "State labels beyond the integer IDs are not present in the recovered initializer.",
+          "The type association is based on the matching candidate slot and direct candidate handler call path; an active object vptr was not recovered."
+        ]
+      },
+      "four_state_enum_selector_candidate": {
+        "state_enum_va": "0x1dc63a0",
+        "states": [
+          {
+            "id": 0,
+            "name": "cUnselected"
+          },
+          {
+            "id": 1,
+            "name": "cSelected"
+          },
+          {
+            "id": 2,
+            "name": "cTouchSelected"
+          },
+          {
+            "id": 3,
+            "name": "cInvalid"
+          }
+        ],
+        "enum_accessor_va": "0x1dc6250",
+        "observed": "The four names cUnselected/cSelected/cTouchSelected/cInvalid align with the 0..3 state IDs configured by 0x1dc5740. The getter accessor is 0x1dc6250; the enum class is not directly bound to the candidate selector object.",
+        "limits": [
+          "This is a state-count/name correlation, not proof that a live selector instance uses this enum object."
+        ],
+        "classification": "four-state enum getter matching the selector profile by state count/name order; component ownership remains unproven",
+        "matched_transition_candidate_va": "0x1dc5740"
       }
     }
   },
@@ -1905,7 +2797,7 @@
     "A direct runtime/resource-manager trace or complete allocator lookup logic showing which archive supplies each duplicate PRT1 name, including .szs cases.",
     "Caller/vptr identification for MainScreenSmartPhone open/update/close and its relationship to MainScreen HUD state.",
     "Associate candidate pointer arrays 0x315b0d0 and 0x30fc6b8 with live component objects, then resolve remaining handler bodies and bind records to screens. Raw disassembly shows 11 candidate follow-up slots are return-only and five have a repeated pointer-registration pattern, but their effects remain conditional on the unproven table association.",
-    "Resolve Npad button producers, named UI message delivery for all 13 control actions, recipient/CNT1 callback order, modal push/pop, focus restoration, and screen lifecycle. TouchSelect/TouchUnselect names are known, but their recipient state machine is not.",
+    "Resolve physical Npad producers, identify the indirect touch callback vtable targets, and connect callbacks to concrete action/FSM/CNT1 records; determine callback order, modal stack, focus restoration, and screen lifecycle.",
     "A native FLEU application path mapping arrays to named userData values and animation frame timing.",
     "Synchronized game captures for renderer comparisons (origin/scale, hit bounds, clipping, BNTX channel behavior, sampler/blend/shader and font output)."
   ],
