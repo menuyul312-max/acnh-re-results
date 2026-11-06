@@ -32,7 +32,7 @@ Machine-readable output: [`predicate_native.json`](../output/gameplay/museum_don
 PYTHONPATH=/workspace/acnh-re/.deps python3 acnh-re/tools/museum_donation_predicate_native.py
 ```
 
-The native string initializer at `0x3da0b0` contains `cUISelect , cDeliveryItem`. The two tested tokens are taken from this literal; the fixture supplies parser/token state explicitly. The exact save-backed key adapters and semantic meaning/domain and live value source of the marker remain open. The producer of the successful state byte was later traced to native `0xe68280`; see [`MUSEUM_ART_GYROID_FOLLOWUP.md`](MUSEUM_ART_GYROID_FOLLOWUP.md#marker-and-remaining-unknowns).
+The native string initializer at `0x3da0b0` contains `cUISelect , cDeliveryItem`. The two tested tokens are taken from this literal; the fixture supplies parser/token state explicitly. The successful marker value is now joined statically to the low byte of an active kind-0 CFAD0 runtime configuration key; the concrete Museum keys and their player meaning remain open. See [`MUSEUM_ART_GYROID_FOLLOWUP.md`](MUSEUM_ART_GYROID_FOLLOWUP.md#marker-and-remaining-unknowns).
 
 ## SaveMuseum donation-list writer — native with controlled adapters
 
@@ -53,14 +53,15 @@ PYTHONPATH=/workspace/acnh-re/.deps python3 acnh-re/tools/museum_donation_writer
 
 Machine-readable outputs: [`predicate_native.json`](../output/gameplay/museum_donation_followup/predicate_native.json) and [`writer_native.json`](../output/gameplay/museum_donation_followup/writer_native.json).
 
-The marker's producer callers are now traced in
-[`MUSEUM_ART_GYROID_FOLLOWUP.md`](MUSEUM_ART_GYROID_FOLLOWUP.md#marker-and-remaining-unknowns).
-Two state-kind-0 callers supply an index in an eight-entry identity-pair map;
-one path selects the slot with `MakeVillagePlayerFlag` set. A bounded native
-fixture executes the writer, wrapper, lookup, and query over synthetic rows;
-it verifies 32 value and state cases. The result narrows the byte to a
-player/context-slot value on those paths, while the live Museum meaning and
-the `0xcfad0` runtime configuration keys remain open in the linked follow-up.
+The marker's value flow is now joined in
+[`MUSEUM_ART_GYROID_FOLLOWUP.md`](MUSEUM_ART_GYROID_FOLLOWUP.md#marker-and-remaining-unknowns):
+`OwlDonationDone` selects an active kind-0 row, and CFAD0 populates that row's
+`+0xb0d` from the low byte of a runtime configuration key. Other
+state-kind-0 callers pass identity-pair or `MakeVillagePlayerFlag` slots, but
+those generic uses do not label the Museum value. The bounded native fixture
+executes the writer, wrapper, lookup, and query over synthetic rows and
+verifies 32 value and state cases; it does not contain the Museum's runtime
+configuration keys.
 
 ## Blathers and fossil assessment
 
@@ -70,9 +71,9 @@ This proves the fossil appraisal and donation decision order at the EventFlow la
 
 ## Save state, donation count, and expansion
 
-The save-layout tree labels a `SaveLand.Museum` block at save offset `0x411a80`, size `0x3404`, crosswalked to `::Game::SaveMuseum`. It exposes a four-byte `MuseumLevel` field at offset `+0`; native readers/writer map the remaining bytes to 1,024 item records, 1,024 packed year/month/day words, and 1,024 marker bytes. The traced insertion path accepts Fossil, Fish, and Insect. It does not establish whether art or gyroids use a separate ledger, whether the 1,024-entry data is the complete museum ledger, or the live meaning of each marker/date field. The flags visible in EventFlow are progression state, not proof of per-species save bits: `cPlayer:OwlDonationDone` is set after the donation path, `cLand:DonationAmountForMuseum` starts at 15 and is decremented by one while the 20-donation border has not been reached, and `cLand:OwlFoundFossil`/`MuseumFossilComplete` control fossil conversation and completion.
+The save-layout tree labels a `SaveLand.Museum` block at save offset `0x411a80`, size `0x3404`, crosswalked to `::Game::SaveMuseum`. It exposes a four-byte `MuseumLevel` field at offset `+0`; native readers/writer map the remaining bytes to 1,024 item records, 1,024 packed year/month/day words, and 1,024 marker bytes. The traced insertion path accepts Fossil, Fish, and Insect. The per-item marker now has a static source label: it is the low byte of the active kind-0 CFAD0 configuration key selected by `OwlDonationDone`; the concrete key and whether it encodes the donor remain open. This does not establish whether art or gyroids use a separate ledger, whether the 1,024-entry data is the complete museum ledger, or the live meaning of each date field. The flags visible in EventFlow are progression state, not proof of per-species save bits: `cPlayer:OwlDonationDone` is set after the donation path, `cLand:DonationAmountForMuseum` starts at 15 and is decremented by one while the 20-donation border has not been reached, and `cLand:OwlFoundFossil`/`MuseumFossilComplete` control fossil conversation and completion.
 
-In `SNPC_owl_11_Tent_Entries:owl_Tent_AfterDonation`, the 20-donation check's case 0 path sets `FutaReadyForMuseum`, `FutaReadyForMuseumToday`, and `MuseumGrowupEnable1`. Case 1 subtracts one from `DonationAmountForMuseum` and may offer another item filter. This establishes the EventFlow threshold trigger. The later daily state transition has separate native coverage already recorded in `gameplay_native.json`: `0xf77050` changes the tent into construction and then the completed museum on successive day changes. That native test starts from a supplied `MuseumGrowupEnable1` state; it does not execute or verify the preceding donation writer.
+In `SNPC_owl_11_Tent_Entries:owl_Tent_AfterDonation`, `0x416260` returns `count < Border`, so the `Border=20` case 0 branch is the at-least-20 path; it sets `FutaReadyForMuseum`, `FutaReadyForMuseumToday`, and `MuseumGrowupEnable1`. Case 1 subtracts one from `DonationAmountForMuseum` and may offer another item filter. The daily driver `0xf53a70` calls dispatcher `0xf545f0`, which acquires `SaveLand.Museum` at node `+0x20a168` (size `0x3404`) and calls `0xf77050`. The native fixture supplies saved level 2, an initial `MuseumConstruction1=0`, and the upgrade flag: the first one-day call clears the flag and sets `MuseumConstruction1=1`; a second one-day call advances the saved level to 3, clears the counter, and sets `Museum2Built`. EventFlow query `0x416b00` maps saved levels 0–4 through `0xf772c0` and rodata `[3,3,0,1,2]`, so saved levels 2 and 3 appear as EventFlow values 0 and 1. This establishes the static and controlled-native stages, but no real save ties a donation to that later transition.
 
 `OpenDonatedNum` belongs to the separate fish-spawn gate. `FishStatusParam` contains 84 rows with thresholds 0 (45 rows), 20 (22), 50 (12), and 100 (5). Existing scenario notes describe `0x5b8e30` as comparing that field with the player's catch count, but mark the comparison `[PSEUDO]` because the accessor is controlled in the native rig. This table/gate evidence concerns how many fish must have been caught for a species to spawn; it does not identify the museum's donated-item ledger.
 
@@ -92,8 +93,8 @@ PYTHONPATH=/workspace/acnh-re/.deps python3 acnh-re/tools/open_donated_native.py
 
 | Area | Current evidence | Status |
 |---|---|---|
-| Item eligibility | Filter/query sequence; native `F77E00` supports Fossil/Fish/Insect and rejects an ordinary duplicate with marker other than `0xff`; predicate and ordinary ID comparison reproduced | Partial `[EF/N/TBL]`; item-key adapters, uncommon item flags, and the live Museum meaning of the player/context marker remain controlled/open |
-| Donation save state | `SaveLand.Museum` spans `0x3404`; native list layout, 1,024 slots, sentinel, packed date words/markers, caller, writer, and 32-case marker state fixture traced | Partial `[SAVE/N]`; art/gyroid ledger, full-list semantics, live date meaning, whether the saved context slot denotes the donor, and runtime configuration keys remain open |
+| Item eligibility | Filter/query sequence; native `F77E00` supports Fossil/Fish/Insect and rejects an ordinary duplicate with marker `0xff`; predicate and ordinary ID comparison reproduced | Partial `[EF/N/TBL]`; item-key adapters and uncommon item flags remain controlled/open; the duplicate gate's `0xff` exemption is established |
+| Donation save state | `SaveLand.Museum` spans `0x3404`; native list layout, 1,024 slots, sentinel, packed date words/markers, caller, writer, 32-case marker fixture, and CFAD0 key-byte value flow traced | Partial `[SAVE/N]`; art/gyroid ledger, full-list semantics, live date meaning, concrete CFAD0 runtime keys, and whether a key identifies the donor remain open |
 | Fossil assessment | `OwlFossilAppraise`, `AppraiseFossilDonationRate`, `Fossil_Check`, and follow-up branches traced; writer admits ItemKind Fossil | Partial `[EF/TBL/N]`; native appraisal result and the acceptance-to-20-donation counter link remain open |
-| Tent-to-building trigger | `0x2c2410` submission caller, writer, `0xf773f0` counter/`0x416260` threshold query, Border=20 EventFlow flag path, and daily `0xf77050` transition traced | Partial `[EF/PSEUDO/N]`; each native stage uses controlled/supplied boundaries; no live save-to-expansion trace |
+| Tent-to-building trigger | `0x2c2410` submission caller, writer, `0xf773f0` counter/`0x416260` threshold query, Border=20 EventFlow flag path, `0xf545f0` daily dispatch, `0xf77050` two-day upgrade, and EventFlow `MuseumLevel` map traced | Partial `[EF/PSEUDO/N]`; the donation, flag, and daily transition were not executed against one live save |
 | `OpenDonatedNum` | All 84 table rows; 828 native boundary cases across session modes 0–3 | `[TBL/N]` with controlled field/save accessors; live persistence and host ownership remain open |

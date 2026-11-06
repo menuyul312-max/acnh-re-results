@@ -272,10 +272,10 @@ def run_native_cases():
         "case_count": len(value_cases) + len(pair_cases) + len(allocator_cases) + 8,
         "mismatches": 0,
         "not_proven": [
-            "The identity-pair slots and the MakeVillagePlayerFlag slot are identified, but the runtime selector supplied by CFAD0 is unobserved; this does not establish that the Museum marker denotes the donor.",
+            "Static callers show E68280 can receive 0..7 identity-pair or MakeVillagePlayerFlag slot values, but the Museum path reads a kind-0 CFAD0 configuration key from +0xb0d; the fixture's row values are synthetic and do not identify the donor.",
             "The full 0x2ee460 pair/context-copy and 0x2f5030/0x2f5240 caller bodies are static-only; the fixture exercises their slot allocators and the shared writer/query contract with controlled inputs.",
-            "The caller of E684F0 supplies each param_3 from a runtime configuration row; its concrete values are absent from the captured tables/runtime snapshot.",
-            "No live save file or running game is available to trace the runtime selector through OwlDonationDone into the next-day facility transition.",
+            "CFAD0 supplies E684F0 with the first u32 from a runtime configuration row, and E68280 stores its low byte at +0xb0d; concrete CFAD0 row values are absent from the captured tables/runtime snapshot.",
+            "No live save file or running game is available to trace the selected CFAD0 key through OwlDonationDone into the next-day facility transition.",
         ],
     }
 

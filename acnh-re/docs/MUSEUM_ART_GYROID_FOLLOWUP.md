@@ -49,22 +49,30 @@ reproduction is [`museum_art_gyroid_followup_native.py`](../tools/museum_art_gyr
 
 ## Marker and remaining unknowns
 
-The native `OwlDonationDone` handler passes its context selector through
-`0xf780e0`; the writer `0xf78130` stores a byte at SaveMuseum `+0x3004 + slot`.
-The wrapper obtains that byte from a state query (`0xef62f0` → `0xeaa8c0`) and
-forwards the low byte. A failed, absent, or mismatched state lookup can return
-`0xff`; the duplicate gate `0xf77f60` treats `0xff` as a non-duplicate
-exemption, while the donation threshold counter does not read marker bytes.
+The `OwlDonationDone` method at `0x2c2410` passes its event context `+0x2a8` to
+`0xf780e0` after the item-kind/already-donated gate succeeds. `0xda3fc0` takes
+the first context byte and normalizes values above 7 to `0xff`; this is the
+mode-2 query selector. `0xf780e0` calls `0xef62f0` and forwards its return in
+`w0` to `0xf78130`, which stores a successful byte at SaveMuseum
+`+0x3004 + slot`. `0xeaa8c0` returns `0xffffffff` for a context-token mismatch,
+missing/inactive row, or nonzero state kind; `0xf78130` rejects that negative
+result. On success, `0xeaa8c0` returns the selected active kind-0 row's
+`+0xb0d` byte as an unsigned byte. The duplicate gate `0xf77f60` treats a
+saved `0xff` as a non-duplicate exemption, while the donation threshold
+counter does not read marker bytes.
 
-The successful byte has a traced producer and callers that narrow its value
-to an eight-slot context/player index on several paths. Native `0xe68280`
-manages eight state records with stride `0xb28`. A new row starts as kind 3,
-inactive, with u16 `+0xb0d = 0x0100`; when the state-kind argument is below 3,
-the writer stores that kind at `+0xb08`, activates `+0xb0c`, writes the low
-byte of its third argument to `+0xb0d`, and stores the low bit of its fourth
-argument at `+0xb0e`. `0xeaa8c0` returns `+0xb0d` only when mode 2's context
-token matches, `0xe68900` finds an active row, and the row kind is 0. Kinds 1
-and 2 are active but do not satisfy this query.
+Native `0xe68280` manages eight state records with stride `0xb28`. A new row
+starts as kind 3, inactive, with u16 `+0xb0d = 0x0100`; when the state-kind
+argument is below 3, the writer stores that kind at `+0xb08`, activates
+`+0xb0c`, writes the low byte of its third argument to `+0xb0d`, and stores the
+low bit of its fourth argument at `+0xb0e`. The Museum value source is visible
+in the other half of the call graph: `0xcfad0` calls `0xe684f0` for each
+runtime configuration row, passing kind from bit 0 of the row's second word
+and the row's first u32 as the third argument. `0xe684f0` forwards that u32 to
+`0xe68280`; `0xeaa8c0` returns its low byte only for the selected active
+kind-0 row. This joins the saved Museum byte to the low byte of a CFAD0 runtime
+configuration key. The concrete keys are stored in a runtime row list and do
+not appear in the extracted EventFlow or table data.
 
 The direct caller audit follows each value to its source:
 
@@ -88,42 +96,61 @@ query returns `0xffffffff` for it because its kind is nonzero.
   representative, so this caller stores that representative's slot index.
 - The wrapper `0xe684f0`, called by `0xcfad0`, receives a state kind of 0 or 1
   from bit 0 of each runtime configuration entry and its third argument from
-  that entry's first word. It forwards both values to `0xe68280`, then
-  reconciles the matching row. Those configuration words are not present as
-  static values in the captured data.
+  that entry's first u32. It forwards both values to `0xe68280`, which stores
+  the key's low byte at `+0xb0d`, then reconciles the matching row. The exact
+  configuration words are not present as static values in the captured data.
 
-These paths show that the field can carry an eight-slot player/context index;
-they do not establish that the byte in `SaveMuseum` is a donor ID or donation
-status. The bounds and transitions are static `[PSEUDO]` evidence, not a live
-state trace. A bounded native fixture now executes `0xe68280`, `0xe684f0`,
+The Museum marker therefore has a precise storage-level label: the low byte of
+the selected active kind-0 CFAD0 configuration key. Its successful query
+domain is a byte (`0x00..0xff`); query failure is the separate `0xffffffff`
+sentinel and causes the writer to exit without inserting. A successful value
+whose low byte is `0xff` would be stored as `0xff` and receive the duplicate
+gate exemption too. The captured files do not show whether any active CFAD0
+key has that value or whether a key maps to the donating player, so the marker
+cannot be labeled a donor ID or donation-status enum. The other kind-0
+callers' 0–7 values are generic state-manager uses, not observed Museum keys.
+The bounds and state transitions are static `[PSEUDO]` evidence, not a live
+state trace. A bounded native fixture executes `0xe68280`, `0xe684f0`,
 `0xe68900`, `0xeaa8c0`, `0xfa4100`, and `0xfa4300`: all 32 cases pass, including
-the 0–7 writer/query round trips, pair-map assignment/lookup, kind-2 rejection,
-kind-1 rejection, token mismatch, absent row, out-of-range row, and full-map
-sentinels. Results are in
+the 0–7 writer/query round trips, synthetic wrapper keys, pair-map
+assignment/lookup, kind-2 rejection, kind-1 rejection, token mismatch, absent
+row, out-of-range row, and full-map sentinels. Results are in
 [`marker_state_native.json`](../output/gameplay/museum_donation_followup/marker_state_native.json);
 the fixture controls the context snapshot, row view, allocation helpers, and
-manager memory; the larger pair/context caller bodies remain static-only. It
-validates the native data contract rather than the live meaning of a Museum
-marker.
+manager memory. Its row values are synthetic and do not stand in for the
+CFAD0 keys used by Museum. The larger pair/context caller bodies remain
+static-only.
 
 ## Save-to-expansion boundary
 
-The captured path can be joined at the code and data-contract level. Static
-native caller `0x2c2410` opens the `SaveLand.Museum` member at node `+0x20a168`
-(size `0x3404`), runs the item-kind/already-donated gate `0xf77e00`, and calls
-`0xf780e0` when that gate succeeds. The writer inserts into the same list that
-`0xf773f0` scans. EventFlow query `0x416260` compares that count with its
-`Border`; the decoded `SNPC_owl_11_Tent_Entries:owl_Tent_AfterDonation` flow uses
-`Border=20`, and its case 0 path sets `MuseumGrowupEnable1`. The daily native
-updater `0xf77050` consumes that flag and advances the museum from tent to
-construction and then to the completed building.
+The static path joins the writer, count, flag, and day-change code. Native
+caller `0x2c2410` opens `SaveLand.Museum` at node `+0x20a168` (size `0x3404`),
+runs the item-kind/already-donated gate `0xf77e00`, and calls `0xf780e0` when
+that gate succeeds. The writer inserts into the same item list that
+`0xf773f0` scans; the counter counts Fossil/Fish/Insect records and ignores
+marker bytes. EventFlow query `0x416260` returns `count < Border`, so its
+`Border=20` case 0 branch is the at-least-20 path. In
+`SNPC_owl_11_Tent_Entries:owl_Tent_AfterDonation`, that branch sets `FutaReadyForMuseum`,
+`FutaReadyForMuseumToday`, and `MuseumGrowupEnable1`.
 
-The stages have separate controlled boundaries in the current evidence:
-`0xf780e0`/`0xf78130` and `0x416260`/`0xf773f0` were run against synthetic save
-views; the EventFlow link is decoded static data; `0xf77050` was run with the
-expansion flag supplied. No real save file or running game process is available
-here, so a live end-to-end check from a donation through the next-day museum
-level change remains open. The machine-readable stage map is in
+The day-change driver `0xf53a70` calls `0xf545f0`; that dispatcher acquires the
+same Museum save member and calls `0xf77050` with it. In the native transition,
+saved level 1 advances to 2 when the museum-tent structure is present. At saved
+level 2, a supplied `MuseumGrowupEnable1` flag is cleared; with the fixture's
+initial construction counter at 0, one elapsed day sets it to 1, and a second
+elapsed day advances the saved level to 3, clears the counter, and sets
+`Museum2Built`. The existing native fixture supplies saved level 2, the flag,
+and two one-day calls, and confirms those two outputs. EventFlow's
+`MuseumLevel` query at `0x416b00` reads the same save member and maps saved
+levels 0–4 through `0xf772c0` and rodata `0x29f1f94` (`[3, 3, 0, 1, 2]`), so
+EventFlow values 0 and 1 correspond to saved levels 2 and 3.
+
+The stages remain separate in execution: `0xf780e0`/`0xf78130` and
+`0x416260`/`0xf773f0` ran against synthetic save views; EventFlow supplies the
+20-record flag path; `0xf77050` ran with the level, day deltas, and expansion
+flag supplied. No real save or running process is available to show that a
+particular donation set the flag in the same save later advanced by the daily
+dispatcher. The machine-readable stage map and marker join are in
 [`native.json`](../output/gameplay/museum_art_gyroid_followup/native.json).
 
 The following questions need more evidence than this dump provides:
@@ -136,12 +163,12 @@ The following questions need more evidence than this dump provides:
 - A live SaveMuseum item view and live ItemParam table-manager instance, plus
   item records with flags set, to validate behavior beyond the reconstructed
   native fixtures.
-- Whether the successful player/context index means “donating player” in the
-  Museum flow, plus the concrete third-argument values supplied by the
-  `0xcfad0` runtime configuration entries.
-- A live end-to-end proof that the selected player/context index is saved for
-  a donation and that the donor count causes the museum level to change after
-  its scheduled daily transition.
+- The concrete `0xcfad0` runtime configuration keys used by Museum and whether
+  any key encodes the donating player. The static join shows only the selected
+  kind-0 key's low byte reaching the per-item marker.
+- A live end-to-end proof that a donation saved into a real Museum list caused
+  `MuseumGrowupEnable1` to be set and the next daily dispatcher pass advanced
+  that same save's MuseumLevel.
 
 ## Reproduction
 
