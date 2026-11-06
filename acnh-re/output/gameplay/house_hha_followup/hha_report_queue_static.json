@@ -113,10 +113,45 @@
     }
   ],
   "grade_mail_label_candidate_crosswalk": {
-    "evidence_level": "NUMERIC_RESOURCE_LABEL_CROSSWALK",
+    "evidence_level": "HHA_PACKAGE_AND_LABEL_FORMATTER_ROUTE",
     "resource": "Sp/HHA/MAIL_SP_HHA_Grade.msbt",
     "resource_label_count": 127,
-    "record_code_field": "0xac77a0 stores its param_6 at record offset +0x28; HHA caller supplies the codes above.",
+    "record_code_field": "0xac77a0 stores caller param_6 as u8 at record offset +0x38; 0xac7a00 reads +0x38 and forwards it to the localized text builder.",
+    "message_resource_selector": {
+      "record_offset": "0x34",
+      "builder_param": "param_5",
+      "hha_caller_value": 11,
+      "native_registry_string_va": "0x29501df",
+      "native_registry_index": 11,
+      "selected_registry_entry": "MAIL_SP_HHA_Grade",
+      "native_registry_entry_count": 21,
+      "selection_function_va": "0xac7a00",
+      "text_builder_chain": [
+        "0xac7a00",
+        "0xf71be0",
+        "0xf71cd0"
+      ]
+    },
+    "formatter": {
+      "record_label_offset": "0x38",
+      "hha_vtable_pointer_site": "0x32e8cb0",
+      "hha_vtable_header_relocation": "0x3088400",
+      "report_record_producers": [
+        "0x7b5b00",
+        "0x7b61e0",
+        "0x7b6470"
+      ],
+      "generic_type_3_handler_va": "0xac1ff0",
+      "hha_virtual_dispatch": {
+        "+0x28": "0xac78f0",
+        "+0x38": "0xac7350",
+        "+0x40": "0x348250",
+        "+0x48": "0xac7a00",
+        "+0x50": "0x7b8420"
+      },
+      "formatter_method_va": "0xac7a00",
+      "label_is_passed_to_text_builder": true
+    },
     "record_code_sources": {
       "0x7b5b00": {
         "meaning": "selected report-condition ordinal",
@@ -132,7 +167,7 @@
           25,
           30
         ],
-        "candidate_message_label_ids": [
+        "formatter_input_label_ids": [
           "001",
           "002",
           "005",
@@ -144,7 +179,7 @@
           "025",
           "030"
         ],
-        "matched_message_label_ids": [
+        "matched_grade_archive_label_ids": [
           "001",
           "002",
           "005",
@@ -156,7 +191,7 @@
           "025",
           "030"
         ],
-        "unmatched_message_label_ids": []
+        "unmatched_grade_archive_label_ids": []
       },
       "0x7b6470": {
         "meaning": "score/report-mask index",
@@ -176,7 +211,7 @@
           56,
           57
         ],
-        "candidate_message_label_ids": [
+        "formatter_input_label_ids": [
           "040",
           "041",
           "042",
@@ -192,7 +227,7 @@
           "056",
           "057"
         ],
-        "matched_message_label_ids": [
+        "matched_grade_archive_label_ids": [
           "040",
           "041",
           "042",
@@ -208,11 +243,54 @@
           "056",
           "057"
         ],
-        "unmatched_message_label_ids": []
+        "unmatched_grade_archive_label_ids": []
+      },
+      "0x7b61e0": {
+        "meaning": "HHA report subcategory ordinal",
+        "record_codes": [
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          80,
+          81
+        ],
+        "formatter_input_label_ids": [
+          "070",
+          "071",
+          "072",
+          "073",
+          "074",
+          "075",
+          "076",
+          "077",
+          "078",
+          "080",
+          "081"
+        ],
+        "matched_grade_archive_label_ids": [
+          "070",
+          "071",
+          "072",
+          "073",
+          "074",
+          "075",
+          "076",
+          "077",
+          "078",
+          "080",
+          "081"
+        ],
+        "unmatched_grade_archive_label_ids": []
       }
     },
     "all_listed_codes_match_resource_label_ids": true,
-    "interpretation_limit": "Matching decimal IDs establish a numeric crosswalk only. No resolved queue consumer has been shown to pass record +0x28 as a MAIL_SP_HHA_Grade label or send the mail."
+    "interpretation_limit": "Static vtable relocation and dispatch evidence proves HHA records select MAIL_SP_HHA_Grade and pass record +0x38 through the localized text builder; all 35 valid numeric codes from three HHA producers match exact label IDs. This proves message formatting inputs, not mail insertion, HHAGradeMailFlag consumption, or delivery timing."
   },
   "build_celebration_native_route": {
     "daily_processor_chain": [
@@ -327,7 +405,7 @@
     "limits": [
       "This is a static cross-reference of separate native functions, not an end-to-end native execution.",
       "The aggregate +0x136c is not itself mapped to a displayed HHA rank or threshold; the proven downstream values are per-area deltas and report-mask details.",
-      "Queued record codes 0x33/0x34 numerically match MAIL_SP_HHA_Grade label IDs 051/052, but no consumer confirms that they are passed as those label IDs."
+      "The HHA report-record formatter receives the package selector and label byte described in grade_mail_label_candidate_crosswalk; this proves formatted text inputs, not a sent mail or rank cutoff."
     ]
   },
   "shared_queue_lifecycle": {
@@ -613,12 +691,63 @@
       "append": "0xabf610 appends a record object to the shared queue when its virtual eligibility method succeeds.",
       "pump": "0xac0a60 dispatches the generic queue, handles type-3 entries, then checks and flushes the queue.",
       "type_3": "0xabfb40 selects entries whose virtual type at +0x14 equals 3 and invokes the generic record handler.",
-      "event_handoff": "0xac13f0 routes a generic event record through 0xabfa00 filter/dispatch/remove."
+      "event_handoff": "0xac13f0 routes a generic event record through 0xabfa00 filter/dispatch/remove.",
+      "generic_record_handler": "0xac1ff0 invokes record vtable slots +0x28, +0x38, and +0x40; the HHA +0x38 method reaches its +0x48 formatter for HHA records whose +0x10 sentinel is -1."
     },
-    "hha_specific_consumer_found": false,
+    "hha_specific_consumer_found": true,
+    "hha_report_record_dispatch": {
+      "record_producers": [
+        "0x7b5b00",
+        "0x7b61e0",
+        "0x7b6470"
+      ],
+      "vtable_global_pointer_site": "0x32e8cb0",
+      "relative_relocation_type": 1027,
+      "vtable_header_addend": "0x3088400",
+      "runtime_vtable_address_point": "0x3088410",
+      "slot_targets": {
+        "+0x28": {
+          "function_va": "0xac78f0",
+          "relative_relocation_site": "0x3088438",
+          "relative_relocation_type": 1027
+        },
+        "+0x38": {
+          "function_va": "0xac7350",
+          "relative_relocation_site": "0x3088448",
+          "relative_relocation_type": 1027
+        },
+        "+0x40": {
+          "function_va": "0x348250",
+          "relative_relocation_site": "0x3088450",
+          "relative_relocation_type": 1027
+        },
+        "+0x48": {
+          "function_va": "0xac7a00",
+          "relative_relocation_site": "0x3088458",
+          "relative_relocation_type": 1027
+        },
+        "+0x50": {
+          "function_va": "0x7b8420",
+          "relative_relocation_site": "0x3088460",
+          "relative_relocation_type": 1027
+        }
+      },
+      "queue_to_formatter": [
+        "0xabfb40",
+        "0xac1ff0",
+        "vtable +0x38 -> 0xac7350",
+        "vtable +0x48 -> 0xac7a00"
+      ],
+      "grade_mail_send_proven": false,
+      "limits": [
+        "The formatter selects the MAIL_SP_HHA_Grade registry entry and passes the +0x38 label value into the text builder.",
+        "The queue handler does not call EventFlowActionSystemMailSend; indexed HHA EventFlow still exposes only BuildCelebration.",
+        "HHAGradeMailFlag is still only referenced by its native setter path; no reader/clear or mailbox insertion edge is proven."
+      ]
+    },
     "limits": [
-      "HHA evaluator callsites prove records enter the shared queue, but no direct or resolved virtual edge from those records to the generic consumer is identified.",
-      "The pump, type-3 handler, and event handoff are generic queue lifecycle code; they do not prove a grade-mail or HHA UI consumer."
+      "The HHA-specific queue record class and localized formatter are resolved through static RELATIVE relocations and the generic type-3 dispatch.",
+      "The resolved consumer proves which package and label byte are formatted; it does not establish an actual grade-mail send, delivery timing, or flag consumption."
     ]
   },
   "selector_and_saved_flag_source": {
@@ -627,6 +756,8 @@
       "node_accessor_global_va": "0x33dc730",
       "read_type": "u32",
       "invalid_value_behavior": "values > 8 are clamped to 0",
+      "semantic_name": "PlayerHouseLevel",
+      "local_descriptor_name": null,
       "switch_values": {
         "2": {
           "area_denominator": 36,
@@ -657,6 +788,17 @@
           "area_count": 6
         }
       },
+      "eventflow_semantic_cross_reference": {
+        "registered_handler": "EventFlowQueryPlayerHouseLevel",
+        "event_uses": 38,
+        "vtable": "0x3058150",
+        "getter_slot_index": 6,
+        "getter_va": "0x42bfb0",
+        "getter_node_accessor_global_va": "0x33dc730",
+        "same_node_accessor_as_hha_evaluator": true,
+        "getter_value_normalization": "Reads u32; values > 8 become 0; returns level-1 for raw 1..8 and 0 for raw 0/invalid.",
+        "semantic_conclusion": "EventFlow PlayerHouseLevel query and HHA evaluator read the same local 4-byte descriptor; its HouseLevel meaning is established even though the descriptor itself has no recovered local name."
+      },
       "save_layout_candidate": {
         "local_sample_node": "0x17cd80",
         "local_vtable": "0x30e95d0",
@@ -680,7 +822,7 @@
             "kind": "struct_size"
           }
         ],
-        "confidence_note": "The local descriptor is unnamed; HouseLevel is an offset/size cross-version candidate, not local RTTI proof."
+        "confidence_note": "The local descriptor is unnamed. The registered PlayerHouseLevel query reads the same accessor, while HouseLevel remains the exact external offset/size candidate rather than local RTTI proof."
       }
     },
     "saved_grade_mail_flag_source": {
@@ -1169,7 +1311,9 @@
     "7b53b0.c": "256e96b273d641b7722778bc461f97fcf8e617a01d134ae442c258e5247ae2b6",
     "7b55e0.c": "e4194147b77d036e7db45418c3e7fd4a2da367c6b5998360bca576395360575f",
     "7b5e60.c": "025385ec1ce1cec7249edf4692e1ae257d0f99a4eec33f105f7e2d7851c486fd",
-    "7b61e0.c": "61237beaf7abdcf661587fc503005f16701a0e65bb72b1d9c5a72a53773edb7e"
+    "7b61e0.c": "61237beaf7abdcf661587fc503005f16701a0e65bb72b1d9c5a72a53773edb7e",
+    "f71be0.c": "3bd0574da47c5b1339e92aec8cbc782bab02b10362657f59d78025448c1fdd18",
+    "f71cd0.c": "745e97f01d3a226ad741ea28bcbec1d008626913b584e711e0be82951beb8780"
   },
-  "scope": "Static references establish HHA score/report record creation, a shared queue lifecycle, localized HHA UI resources, fixed-point progression cutoffs, and a numeric candidate mapping from report codes to MAIL_SP_HHA_Grade label IDs. They do not establish the HHA-specific queue consumer, displayed rank point cutoffs, or conversion to sent grade mail."
+  "scope": "Static references establish HHA score/report record creation, a shared queue lifecycle, the HHA report-record vtable consumer and localized formatter route selecting MAIL_SP_HHA_Grade, fixed-point progression cutoffs, and the label-byte mapping. They do not establish HHAGradeMailFlag consumption, mailbox insertion/delivery, or displayed rank point cutoffs."
 }

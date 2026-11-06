@@ -3,7 +3,10 @@
 import hashlib
 import json
 import sqlite3
+import struct
 from pathlib import Path
+
+from exefs_modules import NsoModule
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA = Path("/workspace/acnh-re")
@@ -12,6 +15,7 @@ FLAG_REFS = DATA / "output/gameplay/native_flag_refs.json"
 DECOMP = DATA / "output/binary/analysis_decomp"
 NSO = DATA / "inputs/additional_exefs/main"
 POINTER_ARRAYS = DATA / "output/binary/code_pointer_arrays.json"
+EVENT_HANDLERS = DATA / "output/binary/event_handlers_resolved.json"
 USEN_MESSAGES = DATA / "output/additional_romfs/messages/USen"
 OUT = ROOT / "output/gameplay/house_hha_followup/hha_report_queue_static.json"
 
@@ -29,7 +33,22 @@ HHA_GRADE_LABEL_RECORD_CODES = {
         "meaning": "score/report-mask index",
         "codes": [40, 41, 42, 44, 45, 46, 48, 51, 52, 53, 54, 55, 56, 57],
     },
+    "0x7b61e0": {
+        "meaning": "HHA report subcategory ordinal",
+        "codes": [70, 71, 72, 73, 74, 75, 76, 77, 78, 80, 81],
+    },
 }
+HHA_REPORT_VTABLE_GLOBAL = 0x32E8CB0
+HHA_REPORT_VTABLE_HEADER = 0x3088400
+HHA_REPORT_VTABLE_SLOTS = {
+    0x28: 0xAC78F0,
+    0x38: 0xAC7350,
+    0x40: 0x348250,
+    0x48: 0xAC7A00,
+    0x50: 0x7B8420,
+}
+HHA_MESSAGE_REGISTRY_VA = 0x29501DF
+HHA_MESSAGE_REGISTRY_SIZE = 0x1AB
 SCORE_TOTAL_EVALUATOR = 0x7B1FE0
 ITEM_SCORE_ACCUMULATOR = 0x7B36B0
 SCORE_BUCKET = 0x7B4FC0
@@ -99,9 +118,66 @@ def localized_inventory():
     return inventory
 
 
+def relative_relocations(nso):
+    """Read RELA entries needed to resolve the HHA report-record vtable."""
+    regions = []
+    if 7 in nso.tags:
+        regions.append((nso.tags[7], nso.tags.get(8, 0), nso.tags.get(9)))
+    if 23 in nso.tags:
+        regions.append((nso.tags[23], nso.tags.get(2, 0), 24))
+
+    result = {}
+    visited = set()
+    for table_va, size, stride in regions:
+        if stride != 24 or size % 24:
+            raise AssertionError({"invalid_rela_region": [hex(table_va), size, stride]})
+        for offset in range(0, size, 24):
+            record_va = table_va + offset
+            if record_va in visited:
+                continue
+            visited.add(record_va)
+            site, info, addend = struct.unpack("<QQq", nso.read(record_va, 24))
+            kind = info & 0xFFFFFFFF
+            if site == HHA_REPORT_VTABLE_GLOBAL or (
+                HHA_REPORT_VTABLE_HEADER <= site < HHA_REPORT_VTABLE_HEADER + 0x80
+            ):
+                result[site] = {"type": kind, "addend": addend}
+    return result
+
+
 def main():
+    nso = NsoModule(NSO.read_bytes())
+    relocs = relative_relocations(nso)
+    vtable_global_reloc = relocs.get(HHA_REPORT_VTABLE_GLOBAL)
+    if not vtable_global_reloc or vtable_global_reloc["type"] != 1027:
+        raise AssertionError({"missing_hha_vtable_global_relocation": vtable_global_reloc})
+    if vtable_global_reloc["addend"] != HHA_REPORT_VTABLE_HEADER:
+        raise AssertionError({"unexpected_hha_vtable_header": vtable_global_reloc})
+    vtable_slot_relocations = {}
+    for slot, expected_target in HHA_REPORT_VTABLE_SLOTS.items():
+        site = HHA_REPORT_VTABLE_HEADER + 0x10 + slot
+        row = relocs.get(site)
+        if not row or row["type"] != 1027 or row["addend"] != expected_target:
+            raise AssertionError({"unexpected_hha_vtable_slot": {
+                "slot": hex(slot), "site": hex(site), "expected_target": hex(expected_target),
+                "actual": row,
+            }})
+        vtable_slot_relocations[slot] = {"site": site, **row}
+
+    registry_raw = nso.read(HHA_MESSAGE_REGISTRY_VA, HHA_MESSAGE_REGISTRY_SIZE)
+    registry_text = registry_raw.split(b"\0", 1)[0].decode("ascii")
+    registry_entries = [part.strip() for part in registry_text.split(",")]
+    if len(registry_entries) <= 0x0B or registry_entries[0x0B] != "MAIL_SP_HHA_Grade":
+        raise AssertionError({"unexpected_message_registry_entry_11": registry_entries[:14]})
+
     db = sqlite3.connect(f"file:{DB}?mode=ro", uri=True)
     db.row_factory = sqlite3.Row
+
+    hha_record_producers = [0x7B5B00, 0x7B61E0, 0x7B6470]
+    for function in hha_record_producers:
+        path = DECOMP / f"{function:x}.c"
+        if not path.is_file() or "33e8cb0" not in path.read_text(errors="replace"):
+            raise AssertionError({"missing_hha_record_vtable_reference": hex(function)})
 
     def xrefs(target, owner=None):
         if owner is None:
@@ -162,12 +238,12 @@ def main():
         source: {
             "meaning": record_source["meaning"],
             "record_codes": record_source["codes"],
-            "candidate_message_label_ids": [f"{code:03d}" for code in record_source["codes"]],
-            "matched_message_label_ids": [
+            "formatter_input_label_ids": [f"{code:03d}" for code in record_source["codes"]],
+            "matched_grade_archive_label_ids": [
                 f"{code:03d}" for code in record_source["codes"]
                 if f"{code:03d}" in grade_message_labels
             ],
-            "unmatched_message_label_ids": [
+            "unmatched_grade_archive_label_ids": [
                 f"{code:03d}" for code in record_source["codes"]
                 if f"{code:03d}" not in grade_message_labels
             ],
@@ -175,17 +251,42 @@ def main():
         for source, record_source in HHA_GRADE_LABEL_RECORD_CODES.items()
     }
     grade_label_crosswalk = {
-        "evidence_level": "NUMERIC_RESOURCE_LABEL_CROSSWALK",
+        "evidence_level": "HHA_PACKAGE_AND_LABEL_FORMATTER_ROUTE",
         "resource": "Sp/HHA/MAIL_SP_HHA_Grade.msbt",
         "resource_label_count": len(grade_message_labels),
-        "record_code_field": "0xac77a0 stores its param_6 at record offset +0x28; HHA caller supplies the codes above.",
+        "record_code_field": "0xac77a0 stores caller param_6 as u8 at record offset +0x38; 0xac7a00 reads +0x38 and forwards it to the localized text builder.",
+        "message_resource_selector": {
+            "record_offset": "0x34",
+            "builder_param": "param_5",
+            "hha_caller_value": 11,
+            "native_registry_string_va": hex_addr(HHA_MESSAGE_REGISTRY_VA),
+            "native_registry_index": 11,
+            "selected_registry_entry": registry_entries[11],
+            "native_registry_entry_count": len(registry_entries),
+            "selection_function_va": "0xac7a00",
+            "text_builder_chain": ["0xac7a00", "0xf71be0", "0xf71cd0"],
+        },
+        "formatter": {
+            "record_label_offset": "0x38",
+            "hha_vtable_pointer_site": hex_addr(HHA_REPORT_VTABLE_GLOBAL),
+            "hha_vtable_header_relocation": hex_addr(HHA_REPORT_VTABLE_HEADER),
+            "report_record_producers": [hex_addr(x) for x in hha_record_producers],
+            "generic_type_3_handler_va": "0xac1ff0",
+            "hha_virtual_dispatch": {
+                f"+0x{slot:x}": hex_addr(target) for slot, target in HHA_REPORT_VTABLE_SLOTS.items()
+            },
+            "formatter_method_va": "0xac7a00",
+            "label_is_passed_to_text_builder": True,
+        },
         "record_code_sources": grade_label_codes,
         "all_listed_codes_match_resource_label_ids": all(
-            not row["unmatched_message_label_ids"] for row in grade_label_codes.values()
+            not row["unmatched_grade_archive_label_ids"] for row in grade_label_codes.values()
         ),
         "interpretation_limit": (
-            "Matching decimal IDs establish a numeric crosswalk only. No resolved queue consumer has been shown "
-            "to pass record +0x28 as a MAIL_SP_HHA_Grade label or send the mail."
+            "Static vtable relocation and dispatch evidence proves HHA records select MAIL_SP_HHA_Grade and pass "
+            "record +0x38 through the localized text builder; all 35 valid numeric codes from three HHA producers "
+            "match exact label IDs. "
+            "This proves message formatting inputs, not mail insertion, HHAGradeMailFlag consumption, or delivery timing."
         ),
     }
 
@@ -282,7 +383,7 @@ def main():
         "limits": [
             "This is a static cross-reference of separate native functions, not an end-to-end native execution.",
             "The aggregate +0x136c is not itself mapped to a displayed HHA rank or threshold; the proven downstream values are per-area deltas and report-mask details.",
-            "Queued record codes 0x33/0x34 numerically match MAIL_SP_HHA_Grade label IDs 051/052, but no consumer confirms that they are passed as those label IDs.",
+            "The HHA report-record formatter receives the package selector and label byte described in grade_mail_label_candidate_crosswalk; this proves formatted text inputs, not a sent mail or rank cutoff.",
         ],
     }
 
@@ -303,11 +404,34 @@ def main():
             "pump": "0xac0a60 dispatches the generic queue, handles type-3 entries, then checks and flushes the queue.",
             "type_3": "0xabfb40 selects entries whose virtual type at +0x14 equals 3 and invokes the generic record handler.",
             "event_handoff": "0xac13f0 routes a generic event record through 0xabfa00 filter/dispatch/remove.",
+            "generic_record_handler": "0xac1ff0 invokes record vtable slots +0x28, +0x38, and +0x40; the HHA +0x38 method reaches its +0x48 formatter for HHA records whose +0x10 sentinel is -1.",
         },
-        "hha_specific_consumer_found": False,
+        "hha_specific_consumer_found": True,
+        "hha_report_record_dispatch": {
+            "record_producers": [hex_addr(x) for x in hha_record_producers],
+            "vtable_global_pointer_site": hex_addr(HHA_REPORT_VTABLE_GLOBAL),
+            "relative_relocation_type": vtable_global_reloc["type"],
+            "vtable_header_addend": hex_addr(vtable_global_reloc["addend"]),
+            "runtime_vtable_address_point": hex_addr(vtable_global_reloc["addend"] + 0x10),
+            "slot_targets": {
+                f"+0x{slot:x}": {
+                    "function_va": hex_addr(target),
+                    "relative_relocation_site": hex_addr(vtable_slot_relocations[slot]["site"]),
+                    "relative_relocation_type": vtable_slot_relocations[slot]["type"],
+                }
+                for slot, target in HHA_REPORT_VTABLE_SLOTS.items()
+            },
+            "queue_to_formatter": ["0xabfb40", "0xac1ff0", "vtable +0x38 -> 0xac7350", "vtable +0x48 -> 0xac7a00"],
+            "grade_mail_send_proven": False,
+            "limits": [
+                "The formatter selects the MAIL_SP_HHA_Grade registry entry and passes the +0x38 label value into the text builder.",
+                "The queue handler does not call EventFlowActionSystemMailSend; indexed HHA EventFlow still exposes only BuildCelebration.",
+                "HHAGradeMailFlag is still only referenced by its native setter path; no reader/clear or mailbox insertion edge is proven.",
+            ],
+        },
         "limits": [
-            "HHA evaluator callsites prove records enter the shared queue, but no direct or resolved virtual edge from those records to the generic consumer is identified.",
-            "The pump, type-3 handler, and event handoff are generic queue lifecycle code; they do not prove a grade-mail or HHA UI consumer.",
+            "The HHA-specific queue record class and localized formatter are resolved through static RELATIVE relocations and the generic type-3 dispatch.",
+            "The resolved consumer proves which package and label byte are formatted; it does not establish an actual grade-mail send, delivery timing, or flag consumption.",
         ],
     }
 
@@ -336,6 +460,31 @@ def main():
     crosswalk_path = ROOT / "output/gameplay/save_layout_external_crosswalk.json"
     selector_candidate = {}
     saved_byte_candidate = {}
+    player_house_level_query = {}
+    if EVENT_HANDLERS.is_file():
+        entries = json.loads(EVENT_HANDLERS.read_text())["entries"]
+        handler = entries.get("EventFlowSystemActor.EventFlowQueryPlayerHouseLevel")
+        getter_decomp = DECOMP / "42bfb0.c"
+        evaluator_decomp = DECOMP / "7b1fe0.c"
+        if not handler or len(handler.get("slots", [])) <= 6:
+            raise AssertionError("missing EventFlowQueryPlayerHouseLevel handler")
+        if handler["slots"][6] != "0x42bfb0":
+            raise AssertionError({"unexpected_player_house_level_getter": handler["slots"]})
+        if not getter_decomp.is_file() or "33dc730" not in getter_decomp.read_text(errors="replace"):
+            raise AssertionError("PlayerHouseLevel getter no longer references the HHA selector accessor")
+        if not evaluator_decomp.is_file() or "33dc730" not in evaluator_decomp.read_text(errors="replace"):
+            raise AssertionError("HHA evaluator selector accessor evidence is missing")
+        player_house_level_query = {
+            "registered_handler": handler["name"],
+            "event_uses": handler.get("event_uses"),
+            "vtable": handler.get("vtable"),
+            "getter_slot_index": 6,
+            "getter_va": handler["slots"][6],
+            "getter_node_accessor_global_va": "0x33dc730",
+            "same_node_accessor_as_hha_evaluator": True,
+            "getter_value_normalization": "Reads u32; values > 8 become 0; returns level-1 for raw 1..8 and 0 for raw 0/invalid.",
+            "semantic_conclusion": "EventFlow PlayerHouseLevel query and HHA evaluator read the same local 4-byte descriptor; its HouseLevel meaning is established even though the descriptor itself has no recovered local name.",
+        }
     if crosswalk_path.is_file():
         crosswalk = json.loads(crosswalk_path.read_text())
         for row in crosswalk.get("vtable_crosswalk", []):
@@ -347,7 +496,7 @@ def main():
                     "size": row.get("size"),
                     "instances": row.get("instances"),
                     "external_matches": row.get("matches", []),
-                    "confidence_note": "The local descriptor is unnamed; HouseLevel is an offset/size cross-version candidate, not local RTTI proof.",
+                    "confidence_note": "The local descriptor is unnamed. The registered PlayerHouseLevel query reads the same accessor, while HouseLevel remains the exact external offset/size candidate rather than local RTTI proof.",
                 }
             if row.get("sample_node") == "0x18b058":
                 saved_byte_candidate = {
@@ -366,6 +515,8 @@ def main():
             "node_accessor_global_va": "0x33dc730",
             "read_type": "u32",
             "invalid_value_behavior": "values > 8 are clamped to 0",
+            "semantic_name": "PlayerHouseLevel",
+            "local_descriptor_name": None,
             "switch_values": {
                 "2": {"area_denominator": 36, "area_count": 1},
                 "3": {"area_denominator": 64, "area_count": 1},
@@ -375,6 +526,7 @@ def main():
                 "7": {"area_denominator": 232, "area_count": 5},
                 "8": {"area_denominator": 292, "area_count": 6},
             },
+            "eventflow_semantic_cross_reference": player_house_level_query,
             "save_layout_candidate": selector_candidate,
         },
         "saved_grade_mail_flag_source": {
@@ -407,7 +559,8 @@ def main():
     decomp_hashes = {}
     for name in ("7b1dd0", "7b1fe0", "7b1960", "7b29d0", "7b4720", "7b4a20",
                  "7b4fc0", "7b5b00", "7b6470", "aba970", "aba9d0", "abb250",
-                 "abb3f0", "ac77a0", "abf610", "7b53b0", "7b55e0", "7b5e60", "7b61e0"):
+                 "abb3f0", "ac77a0", "abf610", "7b53b0", "7b55e0", "7b5e60", "7b61e0",
+                 "7b8420", "f71be0", "f71cd0"):
         path = DECOMP / f"{name}.c"
         if path.exists():
             decomp_hashes[f"{name}.c"] = hsha(path)
@@ -443,9 +596,9 @@ def main():
         "decomp_sha256": decomp_hashes,
         "scope": (
             "Static references establish HHA score/report record creation, a shared queue lifecycle, "
-            "localized HHA UI resources, fixed-point progression cutoffs, and a numeric candidate mapping "
-            "from report codes to MAIL_SP_HHA_Grade label IDs. They do not establish the HHA-specific queue "
-            "consumer, displayed rank point cutoffs, or conversion to sent grade mail."
+            "the HHA report-record vtable consumer and localized formatter route selecting MAIL_SP_HHA_Grade, "
+            "fixed-point progression cutoffs, and the label-byte mapping. They do not establish HHAGradeMailFlag "
+            "consumption, mailbox insertion/delivery, or displayed rank point cutoffs."
         ),
     }
     db.close()
