@@ -1,0 +1,575 @@
+{
+  "cases": 12,
+  "groups": {
+    "saved_origin:admitted_prefix": 2,
+    "saved_origin:rejected_return_0": 4,
+    "recentered:admitted_prefix": 4,
+    "recentered:rejected_return_0": 2
+  },
+  "mismatches": [],
+  "samples": [
+    {
+      "name": "fixed_interior",
+      "mode": "saved_origin",
+      "from_world": [
+        50.0,
+        0.0,
+        75.0
+      ],
+      "to_world": [
+        170.0,
+        0.0,
+        150.0
+      ],
+      "from_grid_input": [
+        10,
+        15
+      ],
+      "to_grid_input": [
+        34,
+        30
+      ],
+      "observed": "admitted_prefix",
+      "stop_pc": "0xc884c8",
+      "return_value": null,
+      "grid": {
+        "origin_xz": [
+          10,
+          10
+        ],
+        "region_start_xz": [
+          10,
+          10
+        ],
+        "region_end_exclusive_xz": [
+          35,
+          31
+        ],
+        "width_height": [
+          25,
+          21
+        ]
+      }
+    },
+    {
+      "name": "fixed_reverse_interior",
+      "mode": "saved_origin",
+      "from_world": [
+        170.0,
+        0.0,
+        150.0
+      ],
+      "to_world": [
+        50.0,
+        0.0,
+        75.0
+      ],
+      "from_grid_input": [
+        34,
+        30
+      ],
+      "to_grid_input": [
+        10,
+        15
+      ],
+      "observed": "admitted_prefix",
+      "stop_pc": "0xc884c8",
+      "return_value": null,
+      "grid": {
+        "origin_xz": [
+          10,
+          10
+        ],
+        "region_start_xz": [
+          10,
+          10
+        ],
+        "region_end_exclusive_xz": [
+          35,
+          31
+        ],
+        "width_height": [
+          25,
+          21
+        ]
+      }
+    },
+    {
+      "name": "fixed_x_lower_exclusive",
+      "mode": "saved_origin",
+      "from_world": [
+        45.0,
+        0.0,
+        50.0
+      ],
+      "to_world": [
+        150.0,
+        0.0,
+        100.0
+      ],
+      "from_grid_input": [
+        9,
+        10
+      ],
+      "to_grid_input": [
+        30,
+        20
+      ],
+      "observed": "rejected_return_0",
+      "stop_pc": "0x60000000",
+      "return_value": 0,
+      "grid": {
+        "origin_xz": [
+          10,
+          10
+        ],
+        "region_start_xz": [
+          10,
+          10
+        ],
+        "region_end_exclusive_xz": [
+          35,
+          31
+        ],
+        "width_height": [
+          25,
+          21
+        ]
+      }
+    },
+    {
+      "name": "fixed_x_upper_exclusive",
+      "mode": "saved_origin",
+      "from_world": [
+        50.0,
+        0.0,
+        50.0
+      ],
+      "to_world": [
+        175.0,
+        0.0,
+        100.0
+      ],
+      "from_grid_input": [
+        10,
+        10
+      ],
+      "to_grid_input": [
+        35,
+        20
+      ],
+      "observed": "rejected_return_0",
+      "stop_pc": "0x60000000",
+      "return_value": 0,
+      "grid": {
+        "origin_xz": [
+          10,
+          10
+        ],
+        "region_start_xz": [
+          10,
+          10
+        ],
+        "region_end_exclusive_xz": [
+          35,
+          31
+        ],
+        "width_height": [
+          25,
+          21
+        ]
+      }
+    },
+    {
+      "name": "fixed_z_lower_exclusive",
+      "mode": "saved_origin",
+      "from_world": [
+        50.0,
+        0.0,
+        45.0
+      ],
+      "to_world": [
+        100.0,
+        0.0,
+        150.0
+      ],
+      "from_grid_input": [
+        10,
+        9
+      ],
+      "to_grid_input": [
+        20,
+        30
+      ],
+      "observed": "rejected_return_0",
+      "stop_pc": "0x60000000",
+      "return_value": 0,
+      "grid": {
+        "origin_xz": [
+          10,
+          10
+        ],
+        "region_start_xz": [
+          10,
+          10
+        ],
+        "region_end_exclusive_xz": [
+          35,
+          31
+        ],
+        "width_height": [
+          25,
+          21
+        ]
+      }
+    },
+    {
+      "name": "fixed_z_upper_exclusive",
+      "mode": "saved_origin",
+      "from_world": [
+        50.0,
+        0.0,
+        50.0
+      ],
+      "to_world": [
+        100.0,
+        0.0,
+        155.0
+      ],
+      "from_grid_input": [
+        10,
+        10
+      ],
+      "to_grid_input": [
+        20,
+        31
+      ],
+      "observed": "rejected_return_0",
+      "stop_pc": "0x60000000",
+      "return_value": 0,
+      "grid": {
+        "origin_xz": [
+          10,
+          10
+        ],
+        "region_start_xz": [
+          10,
+          10
+        ],
+        "region_end_exclusive_xz": [
+          35,
+          31
+        ],
+        "width_height": [
+          25,
+          21
+        ]
+      }
+    },
+    {
+      "name": "centered_full_span",
+      "mode": "recentered",
+      "from_world": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "to_world": [
+        120.0,
+        0.0,
+        100.0
+      ],
+      "from_grid_input": [
+        0,
+        0
+      ],
+      "to_grid_input": [
+        24,
+        20
+      ],
+      "observed": "admitted_prefix",
+      "stop_pc": "0xc884c8",
+      "return_value": null,
+      "grid": {
+        "origin_xz": [
+          0,
+          0
+        ],
+        "region_start_xz": [
+          0,
+          0
+        ],
+        "region_end_exclusive_xz": [
+          25,
+          21
+        ],
+        "width_height": [
+          25,
+          21
+        ]
+      }
+    },
+    {
+      "name": "centered_exact_width_edge",
+      "mode": "recentered",
+      "from_world": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "to_world": [
+        125.0,
+        0.0,
+        100.0
+      ],
+      "from_grid_input": [
+        0,
+        0
+      ],
+      "to_grid_input": [
+        25,
+        20
+      ],
+      "observed": "rejected_return_0",
+      "stop_pc": "0x60000000",
+      "return_value": 0,
+      "grid": {
+        "origin_xz": [
+          0,
+          0
+        ],
+        "region_start_xz": [
+          0,
+          0
+        ],
+        "region_end_exclusive_xz": [
+          25,
+          21
+        ],
+        "width_height": [
+          25,
+          21
+        ]
+      }
+    },
+    {
+      "name": "centered_rounding_inside",
+      "mode": "recentered",
+      "from_world": [
+        10.0,
+        0.0,
+        0.0
+      ],
+      "to_world": [
+        125.0,
+        0.0,
+        100.0
+      ],
+      "from_grid_input": [
+        2,
+        0
+      ],
+      "to_grid_input": [
+        25,
+        20
+      ],
+      "observed": "admitted_prefix",
+      "stop_pc": "0xc884c8",
+      "return_value": null,
+      "grid": {
+        "origin_xz": [
+          1,
+          0
+        ],
+        "region_start_xz": [
+          1,
+          0
+        ],
+        "region_end_exclusive_xz": [
+          26,
+          21
+        ],
+        "width_height": [
+          25,
+          21
+        ]
+      }
+    },
+    {
+      "name": "centered_rounding_edge",
+      "mode": "recentered",
+      "from_world": [
+        5.0,
+        0.0,
+        0.0
+      ],
+      "to_world": [
+        125.0,
+        0.0,
+        100.0
+      ],
+      "from_grid_input": [
+        1,
+        0
+      ],
+      "to_grid_input": [
+        25,
+        20
+      ],
+      "observed": "rejected_return_0",
+      "stop_pc": "0x60000000",
+      "return_value": 0,
+      "grid": {
+        "origin_xz": [
+          0,
+          0
+        ],
+        "region_start_xz": [
+          0,
+          0
+        ],
+        "region_end_exclusive_xz": [
+          25,
+          21
+        ],
+        "width_height": [
+          25,
+          21
+        ]
+      }
+    },
+    {
+      "name": "centered_low_clamp",
+      "mode": "recentered",
+      "from_world": [
+        5.0,
+        0.0,
+        5.0
+      ],
+      "to_world": [
+        25.0,
+        0.0,
+        25.0
+      ],
+      "from_grid_input": [
+        1,
+        1
+      ],
+      "to_grid_input": [
+        5,
+        5
+      ],
+      "observed": "admitted_prefix",
+      "stop_pc": "0xc884c8",
+      "return_value": null,
+      "grid": {
+        "origin_xz": [
+          0,
+          0
+        ],
+        "region_start_xz": [
+          0,
+          0
+        ],
+        "region_end_exclusive_xz": [
+          25,
+          21
+        ],
+        "width_height": [
+          25,
+          21
+        ]
+      }
+    },
+    {
+      "name": "centered_high_clamp",
+      "mode": "recentered",
+      "from_world": [
+        495.0,
+        0.0,
+        450.0
+      ],
+      "to_world": [
+        500.0,
+        0.0,
+        500.0
+      ],
+      "from_grid_input": [
+        99,
+        90
+      ],
+      "to_grid_input": [
+        100,
+        100
+      ],
+      "observed": "admitted_prefix",
+      "stop_pc": "0xc884c8",
+      "return_value": null,
+      "grid": {
+        "origin_xz": [
+          76,
+          80
+        ],
+        "region_start_xz": [
+          76,
+          80
+        ],
+        "region_end_exclusive_xz": [
+          101,
+          101
+        ],
+        "width_height": [
+          25,
+          21
+        ]
+      }
+    }
+  ],
+  "native_functions": {
+    "grid_producer": "0xc88310",
+    "region_update": "0xc88b80",
+    "world_to_grid_coordinate": "0x15c0a60",
+    "region_bounds_accessor": "0x565070",
+    "admitted_prefix_stop_before": "0xc884c8",
+    "first_grid_array_initialization_call": "0x220e440"
+  },
+  "graph_layout": {
+    "origin_xz_u16": "graph+0x0",
+    "region_start_xz_u16": "graph+0x4",
+    "region_end_exclusive_xz_u16": "graph+0x8",
+    "width_s32": "graph+0xc",
+    "height_s32": "graph+0x10"
+  },
+  "prepared_context": {
+    "grid_dimensions": [
+      25,
+      21
+    ],
+    "native_region_global_bounds": {
+      "min_xz": [
+        0,
+        0
+      ],
+      "max_xz_inclusive": [
+        100,
+        100
+      ]
+    },
+    "singleton_holder_and_manager": "Synthetic object state at heap addresses; native accessor instructions execute.",
+    "position_vectors": "Inputs are cell-index * 5.0 on X/Z, Y=0; conversion to grid coordinates still executes in 0x15c0a60."
+  },
+  "rules": [
+    "0xc88310 runs the original region update then tests both converted endpoints against [originX, originX+width) and [originZ, originZ+height).",
+    "The fixed-origin cases preserve the prepared origin and admit both endpoints at the lower bound and the last in-range cell; either endpoint at the exclusive upper edge or one cell below the lower edge returns 0.",
+    "In recentered cases, the region origin is computed from the midpoint and then clamped by the prepared global region bounds. The tested [2,0] -> [25,20] case admits with origin [1,0]; [1,0] -> [25,20] lands at origin [0,0] and rejects at the exclusive X edge.",
+    "Accepted cases stop after both endpoint predicates pass and immediately before the first grid-array initialization. They do not prove the later terrain-to-grid production or route search."
+  ],
+  "scope": "Original 0xc88310/0xc88b80/0x15c0a60 instructions execute on explicit grid and singleton context. Rejected routes run to the original return; accepted routes stop before array initialization.",
+  "limits": [
+    "The global region bounds and existing grid are prepared test inputs, not recovered live-island state.",
+    "The accepted prefix does not execute grid flags, terrain costs, graph initialization, worker submission or A*.",
+    "No request scheduler, cancellation or result publication is exercised; no NPC activity/social behavior is inferred."
+  ],
+  "dependencies_stubbed": [],
+  "elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74"
+}
