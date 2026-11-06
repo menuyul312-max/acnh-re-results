@@ -1,0 +1,534 @@
+{
+  "scope": "Single real RecipeCraftParam row: native material extraction followed by native warm-cache sufficiency checks. Inventory counters are controlled synthetic inputs; no item removal/result grant is tested.",
+  "native_execution": {
+    "harness": "tools/native_emulator.py; original A_logic/main.elf image and function bytes, no function or dependency stubs",
+    "elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+    "main_nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+    "function_calls": {
+      "0xedac50": 6,
+      "0xee0be0": 12
+    },
+    "mismatches": 0
+  },
+  "labels": {
+    "RecipeCraftParam": "[TBL]",
+    "Ftr_Working event calls": "[EF]",
+    "0xedac50 and 0xee0be0 execution": "[NATIVE]",
+    "0xedc240 argument mapping": "[PSEUDO]",
+    "availability counters and player state": "[PSEUDO: controlled synthetic state]"
+  },
+  "provenance": {
+    "main_nso_path": "/workspace/acnh-re/inputs/additional_exefs/main",
+    "main_nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+    "analysis_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+    "database_path": "/workspace/acnh-re/output/index.sqlite",
+    "database_sha256": "a78c7af27d37b8fd931bba8bc611623dacf7685cb6e8b4f827effa0765340aad",
+    "romfs_recipe_path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Bcsv/RecipeCraftParam.bcsv",
+    "romfs_recipe_sha256": "97fe6d73e183dab43dad7358627a0a1a43f5764f0a18fa044a63a9ecf56ba919",
+    "romfs_working_eventflow_path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/EventFlow/Ftr_Working.bfevfl",
+    "romfs_working_eventflow_sha256": "47f0f918f5f42180dec1faebb8822ac64b33e6009cb0e0164f2a5bfd94a5ef97",
+    "recipe_table_source_id": 127,
+    "recipe_table_raw_sha256": "97fe6d73e183dab43dad7358627a0a1a43f5764f0a18fa044a63a9ecf56ba919",
+    "itemparam_raw_sha256": "89230e97fc877ff2b2b48ac1c707ef32b3a7760118839c307f19797e2553458c",
+    "itemkind_raw_sha256": "4cac0178cc69519585528b24ceef022ccb1fefa12b23fc9a9e4280e40185ba7b",
+    "native_functions": [
+      "0xedac50",
+      "0xee0be0"
+    ],
+    "requirement_check_native_call_sites_in_0xedc240": [
+      "0xedcca4",
+      "0xedcffc",
+      "0xedd240",
+      "0xedd488",
+      "0xedd6d0",
+      "0xedd914"
+    ],
+    "requirement_check_slot_arguments_in_0xedc240_pseudocode": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "ftr_working_eventflow_calls": [
+      {
+        "event_index": 10,
+        "name": "EventFlowActionUIWorkingHandling",
+        "params": {
+          "DisplayType": "cCraft"
+        }
+      },
+      {
+        "event_index": 11,
+        "name": "EventFlowActionUIWorkingHandling",
+        "params": {
+          "DisplayType": "cRemakeSelect"
+        }
+      },
+      {
+        "event_index": 21,
+        "name": "EventFlowActionUIWorkingHandling",
+        "params": {
+          "DisplayType": "cCraftTutorial"
+        }
+      },
+      {
+        "event_index": 22,
+        "name": "EventFlowActionPlayerSetCraftRecipe",
+        "params": {
+          "UnlockType": "DIYtutorial1",
+          "ItemUniqueId": 65534
+        }
+      },
+      {
+        "event_index": 30,
+        "name": "EventFlowActionPlayerSetCraftRecipe",
+        "params": {
+          "UnlockType": "DIYtutorial2",
+          "ItemUniqueId": 65534
+        }
+      },
+      {
+        "event_index": 49,
+        "name": "EventFlowActionPlayerWorkbenchPutaway",
+        "params": {
+          "IsRemake": false
+        }
+      },
+      {
+        "event_index": 50,
+        "name": "EventFlowActionPlayerWorkbenchThinking",
+        "params": null
+      },
+      {
+        "event_index": 53,
+        "name": "EventFlowActionPlayerWorkbenchThinking",
+        "params": null
+      },
+      {
+        "event_index": 54,
+        "name": "EventFlowActionPlayerWorkbenchThinking",
+        "params": null
+      },
+      {
+        "event_index": 69,
+        "name": "EventFlowQueryPlayerIsMadeCraftRecipe",
+        "params": {
+          "CheckMode": "cAND",
+          "MadeItemID0": 7211,
+          "MadeItemID1": 65534,
+          "MadeItemID2": 65534,
+          "MadeItemID3": 65534,
+          "MadeItemID4": 65534,
+          "MadeItemID5": 65534,
+          "MadeItemID6": 65534,
+          "MadeItemID7": 65534
+        }
+      },
+      {
+        "event_index": 70,
+        "name": "EventFlowActionPlayerResetCraftRecipe",
+        "params": {
+          "UnlockType": "WoodBridge"
+        }
+      },
+      {
+        "event_index": 72,
+        "name": "EventFlowQueryPlayerHasCraftRecipe",
+        "params": {
+          "ItemUniqueId": 7211,
+          "UnlockType": ""
+        }
+      },
+      {
+        "event_index": 74,
+        "name": "EventFlowQueryPlayerIsMadeCraftRecipe",
+        "params": {
+          "CheckMode": "cAND",
+          "MadeItemID1": 65534,
+          "MadeItemID2": 65534,
+          "MadeItemID3": 65534,
+          "MadeItemID4": 65534,
+          "MadeItemID5": 65534,
+          "MadeItemID6": 65534,
+          "MadeItemID7": 65534,
+          "MadeItemID0": 5166
+        }
+      },
+      {
+        "event_index": 75,
+        "name": "EventFlowActionPlayerResetCraftRecipe",
+        "params": {
+          "UnlockType": "CampSite"
+        }
+      },
+      {
+        "event_index": 77,
+        "name": "EventFlowQueryPlayerHasCraftRecipe",
+        "params": {
+          "ItemUniqueId": 5166,
+          "UnlockType": ""
+        }
+      },
+      {
+        "event_index": 80,
+        "name": "EventFlowActionPlayerWorkbenchPutaway",
+        "params": {
+          "IsRemake": true
+        }
+      },
+      {
+        "event_index": 100,
+        "name": "EventFlowActionUIWorkingHandling",
+        "params": {
+          "DisplayType": "cRemakeSelectTutorial"
+        }
+      },
+      {
+        "event_index": 150,
+        "name": "EventFlowActionPlayerWorkbenchThinking",
+        "params": null
+      },
+      {
+        "event_index": 184,
+        "name": "EventFlowActionPlayerWorkbenchMaking",
+        "params": {
+          "IsRemake": true
+        }
+      },
+      {
+        "event_index": 185,
+        "name": "EventFlowActionPlayerWorkbenchGetDemo",
+        "params": {
+          "IsSkipGetDemoCameraPop": false,
+          "IsSkipFanfareSE": false,
+          "IsRemake": true
+        }
+      },
+      {
+        "event_index": 197,
+        "name": "EventFlowActionPlayerWorkbenchGetDemo",
+        "params": {
+          "IsSkipGetDemoCameraPop": true,
+          "IsSkipFanfareSE": true,
+          "IsRemake": true
+        }
+      },
+      {
+        "event_index": 205,
+        "name": "EventFlowActionPlayerWorkbenchGetDemo",
+        "params": {
+          "IsSkipGetDemoCameraPop": true,
+          "IsSkipFanfareSE": true,
+          "IsRemake": false
+        }
+      },
+      {
+        "event_index": 208,
+        "name": "EventFlowActionPlayerWorkbenchMaking",
+        "params": {
+          "IsRemake": false
+        }
+      },
+      {
+        "event_index": 217,
+        "name": "EventFlowActionPlayerWorkbenchGetDemo",
+        "params": {
+          "IsSkipGetDemoCameraPop": false,
+          "IsSkipFanfareSE": false,
+          "IsRemake": false
+        }
+      },
+      {
+        "event_index": 221,
+        "name": "EventFlowActionPlayerWorkbenchPutaway",
+        "params": {
+          "IsRemake": false
+        }
+      },
+      {
+        "event_index": 227,
+        "name": "EventFlowActionPlayerWorkbenchPutaway",
+        "params": {
+          "IsRemake": true
+        }
+      },
+      {
+        "event_index": 231,
+        "name": "EventFlowActionPlayerWorkbenchPutaway",
+        "params": {
+          "IsRemake": true
+        }
+      },
+      {
+        "event_index": 235,
+        "name": "EventFlowActionPlayerWorkbenchPutaway",
+        "params": {
+          "IsRemake": false
+        }
+      },
+      {
+        "event_index": 265,
+        "name": "EventFlowActionPlayerWorkbenchThinking",
+        "params": null
+      },
+      {
+        "event_index": 266,
+        "name": "EventFlowActionPlayerWorkbenchThinking",
+        "params": null
+      },
+      {
+        "event_index": 271,
+        "name": "EventFlowActionPlayerSetCraftRecipe",
+        "params": {
+          "UnlockType": "None",
+          "ItemUniqueId": 4703
+        }
+      },
+      {
+        "event_index": 273,
+        "name": "EventFlowActionPlayerSetCraftRecipe",
+        "params": {
+          "UnlockType": "None",
+          "ItemUniqueId": 2615
+        }
+      },
+      {
+        "event_index": 274,
+        "name": "EventFlowActionPlayerSetCraftRecipe",
+        "params": {
+          "UnlockType": "None",
+          "ItemUniqueId": 3068
+        }
+      }
+    ],
+    "dependencies_stubbed": []
+  },
+  "recipe": {
+    "recipe_unique_id": 56,
+    "output_item_id": 975,
+    "output_label": "FtrFruitbasket",
+    "output_name": "フルーツバスケット",
+    "materials": [
+      {
+        "slot": 0,
+        "item_id": 2213,
+        "quantity": 1,
+        "label": "Apple",
+        "name": "リンゴ"
+      },
+      {
+        "slot": 1,
+        "item_id": 2285,
+        "quantity": 1,
+        "label": "Pear",
+        "name": "ナシ"
+      },
+      {
+        "slot": 2,
+        "item_id": 2287,
+        "quantity": 1,
+        "label": "Cherry",
+        "name": "さくらんぼ"
+      },
+      {
+        "slot": 3,
+        "item_id": 2214,
+        "quantity": 1,
+        "label": "Orange",
+        "name": "オレンジ"
+      },
+      {
+        "slot": 4,
+        "item_id": 2286,
+        "quantity": 1,
+        "label": "Peach",
+        "name": "モモ"
+      },
+      {
+        "slot": 5,
+        "item_id": 65534,
+        "quantity": 0,
+        "label": null,
+        "name": null
+      }
+    ]
+  },
+  "scenarios": {
+    "exact_material_counts": {
+      "slots": [
+        {
+          "slot": 0,
+          "item_id": 2213,
+          "required": 1,
+          "available_in_A": 1,
+          "counter_parts_C_A_B": [
+            0,
+            1,
+            0
+          ],
+          "flag_after": 1
+        },
+        {
+          "slot": 1,
+          "item_id": 2285,
+          "required": 1,
+          "available_in_A": 1,
+          "counter_parts_C_A_B": [
+            0,
+            1,
+            0
+          ],
+          "flag_after": 1
+        },
+        {
+          "slot": 2,
+          "item_id": 2287,
+          "required": 1,
+          "available_in_A": 1,
+          "counter_parts_C_A_B": [
+            0,
+            1,
+            0
+          ],
+          "flag_after": 1
+        },
+        {
+          "slot": 3,
+          "item_id": 2214,
+          "required": 1,
+          "available_in_A": 1,
+          "counter_parts_C_A_B": [
+            0,
+            1,
+            0
+          ],
+          "flag_after": 1
+        },
+        {
+          "slot": 4,
+          "item_id": 2286,
+          "required": 1,
+          "available_in_A": 1,
+          "counter_parts_C_A_B": [
+            0,
+            1,
+            0
+          ],
+          "flag_after": 1
+        },
+        {
+          "slot": 5,
+          "item_id": 65534,
+          "required": 0,
+          "available_in_A": 0,
+          "counter_parts_C_A_B": [
+            0,
+            0,
+            0
+          ],
+          "flag_after": 1
+        }
+      ],
+      "final_sufficient_flag": 1,
+      "counters_unchanged": true
+    },
+    "one_required_material_missing": {
+      "missing_material_slot": 1,
+      "missing_item_id": 2285,
+      "missing_label": "Pear",
+      "missing_name": "ナシ",
+      "result": {
+        "slots": [
+          {
+            "slot": 0,
+            "item_id": 2213,
+            "required": 1,
+            "available_in_A": 1,
+            "counter_parts_C_A_B": [
+              0,
+              1,
+              0
+            ],
+            "flag_after": 1
+          },
+          {
+            "slot": 1,
+            "item_id": 2285,
+            "required": 1,
+            "available_in_A": 0,
+            "counter_parts_C_A_B": [
+              0,
+              0,
+              0
+            ],
+            "flag_after": 0
+          },
+          {
+            "slot": 2,
+            "item_id": 2287,
+            "required": 1,
+            "available_in_A": 1,
+            "counter_parts_C_A_B": [
+              0,
+              1,
+              0
+            ],
+            "flag_after": 0
+          },
+          {
+            "slot": 3,
+            "item_id": 2214,
+            "required": 1,
+            "available_in_A": 1,
+            "counter_parts_C_A_B": [
+              0,
+              1,
+              0
+            ],
+            "flag_after": 0
+          },
+          {
+            "slot": 4,
+            "item_id": 2286,
+            "required": 1,
+            "available_in_A": 1,
+            "counter_parts_C_A_B": [
+              0,
+              1,
+              0
+            ],
+            "flag_after": 0
+          },
+          {
+            "slot": 5,
+            "item_id": 65534,
+            "required": 0,
+            "available_in_A": 0,
+            "counter_parts_C_A_B": [
+              0,
+              0,
+              0
+            ],
+            "flag_after": 0
+          }
+        ],
+        "final_sufficient_flag": 0,
+        "counters_unchanged": true
+      }
+    }
+  },
+  "verified_rules": [
+    "Native 0xedac50 writes the six actual recipe material slots and low quantity bytes from RecipeCraftParam.",
+    "Native 0xee0be0 leaves the sufficient byte set for all five ingredients at exact inventory counts.",
+    "One missing unit in the Pear slot clears the sufficient byte; subsequent checks preserve the failed state.",
+    "The requirement helper writes observed cache counts into the recipe slot and does not mutate the cache counters.",
+    "RecipeCraftParam BCSV in the provided additional RomFS is byte-identical to the table raw blob."
+  ],
+  "gaps": [
+    "The counter cache in this focused run is seeded directly; the player-save acquisition and A/B/C cache loaders are not repeated here.",
+    "No material consumption, output item award, cancellation/rollback, learned-recipe gate, or full WorkCraftBgPage interaction is executed.",
+    "Recipe selection/unlock source rules and Remake remain open; this is a material availability slice, not full crafting completion."
+  ]
+}
