@@ -65,6 +65,7 @@ Data mesin untuk dokumen ini: [`output/gameplay/native_flag_refs.json`](../outpu
 | `0x4b6000` | tumbuh gulma: 120 lapangan sintetis (kepadatan, ubin siram, hari pertama atau bukan, argumen harian dan pulau baru, batas tercapai); urutan undian dan semua tulisan item sama dengan model (§10.3) | lulus |
 | `0x4b63e0` | sebar gulma: 120 lapangan (tinggi ±5, ubin terisi, set 2 di luar rect, masker pulau baru, batas 150/1300 tercapai): tulisan anak, jumlah, set 17, set 2, dan penghitung `+0x2e144` sama dengan model. Akses lapisan item, `FgMainParam`, tinggi, dan RNG harian dikontrol (§10.3) | lulus |
 | `0x4ba120` | konversi musim gulma: 30 lapangan, tiap kode musim, gulma campuran tujuh musim (§10.3) | lulus |
+| `0x3d9b60`, `0xf77e00`, `0xf77f60`, `0xf780e0`, `0xf78130` | predicate pilihan Blathers dan SaveMuseum: 1.024 slot, sentinel `-2`, item 8 byte, tanggal packed `year/month/day` per-slot `+4`, marker `+0x3004`; gate Fossil/Fish/Insect dan duplicate check `0xff` diuji native dengan adapter save/item terkontrol (lihat [museum donation follow-up](MUSEUM_DONATION_FOLLOWUP.md)) | lulus dengan adapter |
 
 Bacaan lain tetap [PSEUDO] sampai ada kasus emulasinya.
 
@@ -626,7 +627,7 @@ Lalu `0x5b9a00` → `0x5b9ba0` (sungai) atau `0x5ba610` → `0x5ba7b0` (laut) me
 - Bit 0 mati, `0x5b98b0` (terbukti native): `r = u × 100 >> 32`; baris pertama (termasuk sampah) dengan jumlah berjalan > `r`; baris itu harus lolos `0x5b9270` dan `0x5b8e30`, jika tidak hasilnya kosong (`0xfffe`) tanpa undian ulang.
 - Bit 0 hidup, `0x5b95b0` [PSEUDO]: baris yang lolos `0x5b9270` dan `0xb548c0` disaring dulu; `r = u × W >> 32`.
 
-**Gerbang.** `0x5b9270` (terbukti native): Sirakansu (0x8ec) hanya bila kode cuaca jam ini 4 atau 5 (hujan, hujan lebat). `0x204480` mengubah 4/5 menjadi 6/7 saat `0x202490` melaporkan salju [PSEUDO], dan kode 6/7 menolak Sirakansu. Mode sesi `0xbc82d0` ≥ 2 membuang Can (0xd8a), Boot (0xd8d), Tire (0xd8e), dan semua `ItemKind` `Ore`. `0x5b8e30` [PSEUDO, distub di rig]: `OpenDonatedNum` ≤ penghitung `CatchFish` pemain. Di mode sesi ≥ 2 ambangnya `FishNetHostCatchNumResult`. Nilai ambang di tabel: 0 (45 ikan), 20 (22), 50 (12), dan 100 (5).
+**Gerbang.** `0x5b9270` (terbukti native): Sirakansu (0x8ec) hanya bila kode cuaca jam ini 4 atau 5 (hujan, hujan lebat). `0x204480` mengubah 4/5 menjadi 6/7 saat `0x202490` melaporkan salju [PSEUDO], dan kode 6/7 menolak Sirakansu. Mode sesi `0xbc82d0` ≥ 2 membuang Can (0xd8a), Boot (0xd8d), Tire (0xd8e), dan semua `ItemKind` `Ore`. `0x5b8e30` (native dengan accessor field/save terkontrol; lihat `tools/open_donated_native.py`): `OpenDonatedNum` ≤ penghitung `CatchFish` pemain untuk mode 0/1; mode 2/3 memakai `FishNetHostCatchNumResult`. **828** batas nilai untuk seluruh 84 baris `FishStatusParam` lulus tanpa mismatch. Nilai ambang di tabel: 0 (45 ikan), 20 (22), 50 (12), dan 100 (5). Pengambilan tabel BCSV dan nilai save live tetap dikontrol dalam harness.
 
 **Daftar ensiklopedia.** `0x5bb150` → `0x5bbd80` menghitung ketersediaan per item untuk rentang waktu. `AppearType` 0–3 membaca tabel sungai, 4 dan 6 tabel laut, dan 5 (`Anywhere`) keduanya. Hasilnya mask tiga slot.
 

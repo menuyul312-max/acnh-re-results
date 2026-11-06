@@ -1,0 +1,159 @@
+{
+  "native_nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+  "fish_status_raw_sha256": "a861a192c47e744771d1dea160d0da64d52cc4149413e316ba935e8a5d394f39",
+  "addresses": {
+    "gate": "0x5b8e30",
+    "mode_query": "0xbc82d0",
+    "open_donated_hash": "0xeac6a012"
+  },
+  "native_contract": "F5B8E30 returns true exactly when the FishStatusParam.OpenDonatedNum u16 value is <= the selected catch count. Session modes 0/1 query CatchFish; modes 2/3 query FishNetHostCatchNumResult.",
+  "table_source": "All 84 ItemID/OpenDonatedNum pairs come from the locally resolved baseline FishStatusParam table. Synthetic native row views contain the real threshold and field hash; the BCSV loader is not executed.",
+  "field_resolver": "Native one-time field-cache initialization/search runs. Controlled 0x1665E80/60/50 adapters supply one field pair (hash 0xeac6a012, value offset +4); the function stores offset +4 and reuses it across the test set.",
+  "save_accessors_controlled": [
+    "0xf588a0 item row accessor",
+    "0xda3fc0 table view",
+    "0xe772e0/0xe712f0/0xe77280 save wrappers",
+    "0xda4020 flag result",
+    "0xf628a0 CatchFish value",
+    "0xf44ad0 FishNetHostCatchNumResult value",
+    "0xbc82d0 session mode"
+  ],
+  "fish_status_rows": 84,
+  "open_donated_num_histogram": {
+    "0": 45,
+    "20": 22,
+    "50": 12,
+    "100": 5
+  },
+  "modes_tested": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "threshold_boundary_comparisons": 828,
+  "field_resolver_calls": {
+    "row_open": 1,
+    "field_pairs": 1,
+    "field_count": 1
+  },
+  "mismatches": [],
+  "samples": [
+    {
+      "item_id": 2237,
+      "threshold": 0,
+      "mode": 0,
+      "catch_count": 0,
+      "return": 1
+    },
+    {
+      "item_id": 2237,
+      "threshold": 0,
+      "mode": 0,
+      "catch_count": 1,
+      "return": 1
+    },
+    {
+      "item_id": 2237,
+      "threshold": 0,
+      "mode": 1,
+      "catch_count": 0,
+      "return": 1
+    },
+    {
+      "item_id": 2237,
+      "threshold": 0,
+      "mode": 1,
+      "catch_count": 1,
+      "return": 1
+    },
+    {
+      "item_id": 2237,
+      "threshold": 0,
+      "mode": 2,
+      "catch_count": 0,
+      "return": 1
+    },
+    {
+      "item_id": 2237,
+      "threshold": 0,
+      "mode": 2,
+      "catch_count": 1,
+      "return": 1
+    },
+    {
+      "item_id": 2237,
+      "threshold": 0,
+      "mode": 3,
+      "catch_count": 0,
+      "return": 1
+    },
+    {
+      "item_id": 2237,
+      "threshold": 0,
+      "mode": 3,
+      "catch_count": 1,
+      "return": 1
+    },
+    {
+      "item_id": 5254,
+      "threshold": 20,
+      "mode": 0,
+      "catch_count": 19,
+      "return": 0
+    },
+    {
+      "item_id": 5254,
+      "threshold": 20,
+      "mode": 0,
+      "catch_count": 20,
+      "return": 1
+    },
+    {
+      "item_id": 5254,
+      "threshold": 20,
+      "mode": 0,
+      "catch_count": 21,
+      "return": 1
+    },
+    {
+      "item_id": 5254,
+      "threshold": 20,
+      "mode": 1,
+      "catch_count": 19,
+      "return": 0
+    },
+    {
+      "item_id": 5254,
+      "threshold": 20,
+      "mode": 1,
+      "catch_count": 20,
+      "return": 1
+    },
+    {
+      "item_id": 5254,
+      "threshold": 20,
+      "mode": 1,
+      "catch_count": 21,
+      "return": 1
+    },
+    {
+      "item_id": 5254,
+      "threshold": 20,
+      "mode": 2,
+      "catch_count": 19,
+      "return": 0
+    },
+    {
+      "item_id": 5254,
+      "threshold": 20,
+      "mode": 2,
+      "catch_count": 20,
+      "return": 1
+    }
+  ],
+  "open": [
+    "Live save accessors and network-host ownership semantics",
+    "This fish spawn gate does not identify the museum donation ledger or species donation bits."
+  ]
+}
