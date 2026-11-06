@@ -1,0 +1,406 @@
+{
+  "schema": "acnh-ui-page-registry-factory-candidates-v1",
+  "source_build": "ACNH 1.0.0 local ExeFS main.elf",
+  "generated_date_utc": "2026-11-06",
+  "summary": {
+    "registry_entries": 31,
+    "normalized_name_candidates": 23,
+    "without_exact_normalized_factory_name": 8
+  },
+  "matching_rule": "Remove the leading c from registry page names that have it, then compare exactly with factory class name minus the suffix Page; entries without c are compared as exact names.",
+  "limit": "This only correlates two exact name conventions. Registry flags do not expose a factory function pointer in the examined pseudocode, so none of these row-to-factory links is marked proven.",
+  "entries": [
+    {
+      "registry_page_name": "cAddress",
+      "registry_helper_va": "0x1549090",
+      "raw_integer_arguments": [
+        0,
+        4
+      ],
+      "normalization_rule": "remove leading c",
+      "normalized_candidate_class_name": "AddressPage",
+      "candidate_factory_va": "0x112c3c0",
+      "candidate_class_name_string_va": "0x29769b9",
+      "status": "normalized_name_candidate_unproven"
+    },
+    {
+      "registry_page_name": "cAudio",
+      "registry_helper_va": "0x1549400",
+      "raw_integer_arguments": [
+        13
+      ],
+      "normalization_rule": "remove leading c",
+      "normalized_candidate_class_name": null,
+      "candidate_factory_va": null,
+      "candidate_class_name_string_va": null,
+      "status": "no_exact_normalized_class_name"
+    },
+    {
+      "registry_page_name": "cCharaMake",
+      "registry_helper_va": "0x1549090",
+      "raw_integer_arguments": [
+        0,
+        10
+      ],
+      "normalization_rule": "remove leading c",
+      "normalized_candidate_class_name": "CharaMakePage",
+      "candidate_factory_va": "0x119a470",
+      "candidate_class_name_string_va": "0x29b6ccc",
+      "status": "normalized_name_candidate_unproven"
+    },
+    {
+      "registry_page_name": "cCustomHome",
+      "registry_helper_va": "0x1549090",
+      "raw_integer_arguments": [
+        0,
+        14
+      ],
+      "normalization_rule": "remove leading c",
+      "normalized_candidate_class_name": "CustomHomePage",
+      "candidate_factory_va": "0x11db1a0",
+      "candidate_class_name_string_va": "0x29571fc",
+      "status": "normalized_name_candidate_unproven"
+    },
+    {
+      "registry_page_name": "cKabuBuy",
+      "registry_helper_va": "0x1549090",
+      "raw_integer_arguments": [
+        0,
+        12
+      ],
+      "normalization_rule": "remove leading c",
+      "normalized_candidate_class_name": "KabuBuyPage",
+      "candidate_factory_va": "0x1215c30",
+      "candidate_class_name_string_va": "0x293b645",
+      "status": "normalized_name_candidate_unproven"
+    },
+    {
+      "registry_page_name": "cMsgCardDesignSelect",
+      "registry_helper_va": "0x1549090",
+      "raw_integer_arguments": [
+        0,
+        5
+      ],
+      "normalization_rule": "remove leading c",
+      "normalized_candidate_class_name": "MsgCardDesignSelectPage",
+      "candidate_factory_va": "0x1297cd0",
+      "candidate_class_name_string_va": "0x296c01d",
+      "status": "normalized_name_candidate_unproven"
+    },
+    {
+      "registry_page_name": "cMsgCardEditText",
+      "registry_helper_va": "0x1549750",
+      "raw_integer_arguments": [
+        13,
+        15
+      ],
+      "normalization_rule": "remove leading c",
+      "normalized_candidate_class_name": "MsgCardEditTextPage",
+      "candidate_factory_va": "0x129a8c0",
+      "candidate_class_name_string_va": "0x29ac0b1",
+      "status": "normalized_name_candidate_unproven"
+    },
+    {
+      "registry_page_name": "cMsgCardView",
+      "registry_helper_va": "0x1549400",
+      "raw_integer_arguments": [
+        0
+      ],
+      "normalization_rule": "remove leading c",
+      "normalized_candidate_class_name": "MsgCardViewPage",
+      "candidate_factory_va": "0x12a0ab0",
+      "candidate_class_name_string_va": "0x29a2620",
+      "status": "normalized_name_candidate_unproven"
+    },
+    {
+      "registry_page_name": "cMyDesignList",
+      "registry_helper_va": "0x1549090",
+      "raw_integer_arguments": [
+        0,
+        16
+      ],
+      "normalization_rule": "remove leading c",
+      "normalized_candidate_class_name": "MyDesignListPage",
+      "candidate_factory_va": "0x12f1180",
+      "candidate_class_name_string_va": "0x2926918",
+      "status": "normalized_name_candidate_unproven"
+    },
+    {
+      "registry_page_name": "cMyDesignSet",
+      "registry_helper_va": "0x1549400",
+      "raw_integer_arguments": [
+        17
+      ],
+      "normalization_rule": "remove leading c",
+      "normalized_candidate_class_name": "MyDesignSetPage",
+      "candidate_factory_va": "0x12fb020",
+      "candidate_class_name_string_va": "0x29ac21a",
+      "status": "normalized_name_candidate_unproven"
+    },
+    {
+      "registry_page_name": "cShopBuy",
+      "registry_helper_va": "0x1549750",
+      "raw_integer_arguments": [
+        1,
+        6
+      ],
+      "normalization_rule": "remove leading c",
+      "normalized_candidate_class_name": "ShopBuyPage",
+      "candidate_factory_va": "0x1437b30",
+      "candidate_class_name_string_va": "0x292fed5",
+      "status": "normalized_name_candidate_unproven"
+    },
+    {
+      "registry_page_name": "cShopBuyTailor",
+      "registry_helper_va": "0x1549090",
+      "raw_integer_arguments": [
+        0,
+        7
+      ],
+      "normalization_rule": "remove leading c",
+      "normalized_candidate_class_name": "ShopBuyTailorPage",
+      "candidate_factory_va": "0x143f540",
+      "candidate_class_name_string_va": "0x295c2fb",
+      "status": "normalized_name_candidate_unproven"
+    },
+    {
+      "registry_page_name": "cStampEdit",
+      "registry_helper_va": "0x1549400",
+      "raw_integer_arguments": [
+        0
+      ],
+      "normalization_rule": "remove leading c",
+      "normalized_candidate_class_name": null,
+      "candidate_factory_va": null,
+      "candidate_class_name_string_va": null,
+      "status": "no_exact_normalized_class_name"
+    },
+    {
+      "registry_page_name": "cSwkbdInput",
+      "registry_helper_va": "0x1549090",
+      "raw_integer_arguments": [
+        0,
+        11
+      ],
+      "normalization_rule": "remove leading c",
+      "normalized_candidate_class_name": null,
+      "candidate_factory_va": null,
+      "candidate_class_name_string_va": null,
+      "status": "no_exact_normalized_class_name"
+    },
+    {
+      "registry_page_name": "cSwkbdTextAreaInputBell",
+      "registry_helper_va": "0x1549090",
+      "raw_integer_arguments": [
+        0,
+        12
+      ],
+      "normalization_rule": "remove leading c",
+      "normalized_candidate_class_name": "SwkbdTextAreaInputBellPage",
+      "candidate_factory_va": "0x153f4c0",
+      "candidate_class_name_string_va": "0x294848c",
+      "status": "normalized_name_candidate_unproven"
+    },
+    {
+      "registry_page_name": "cTripList",
+      "registry_helper_va": "0x1549090",
+      "raw_integer_arguments": [
+        0,
+        9
+      ],
+      "normalization_rule": "remove leading c",
+      "normalized_candidate_class_name": null,
+      "candidate_factory_va": null,
+      "candidate_class_name_string_va": null,
+      "status": "no_exact_normalized_class_name"
+    },
+    {
+      "registry_page_name": "cWorkCraft",
+      "registry_helper_va": "0x1549750",
+      "raw_integer_arguments": [
+        1,
+        2
+      ],
+      "normalization_rule": "remove leading c",
+      "normalized_candidate_class_name": null,
+      "candidate_factory_va": null,
+      "candidate_class_name_string_va": null,
+      "status": "no_exact_normalized_class_name"
+    },
+    {
+      "registry_page_name": "cWorkRemake",
+      "registry_helper_va": "0x1549090",
+      "raw_integer_arguments": [
+        0,
+        3
+      ],
+      "normalization_rule": "remove leading c",
+      "normalized_candidate_class_name": null,
+      "candidate_factory_va": null,
+      "candidate_class_name_string_va": null,
+      "status": "no_exact_normalized_class_name"
+    },
+    {
+      "registry_page_name": "cGetItem",
+      "registry_helper_va": "0x1549400",
+      "raw_integer_arguments": [
+        0
+      ],
+      "normalization_rule": "remove leading c",
+      "normalized_candidate_class_name": null,
+      "candidate_factory_va": null,
+      "candidate_class_name_string_va": null,
+      "status": "no_exact_normalized_class_name"
+    },
+    {
+      "registry_page_name": "cPocketMenu",
+      "registry_helper_va": "0x1549750",
+      "raw_integer_arguments": [
+        1,
+        13
+      ],
+      "normalization_rule": "remove leading c",
+      "normalized_candidate_class_name": "PocketMenuPage",
+      "candidate_factory_va": "0x1369320",
+      "candidate_class_name_string_va": "0x292fe49",
+      "status": "normalized_name_candidate_unproven"
+    },
+    {
+      "registry_page_name": "cDateInput",
+      "registry_helper_va": "0x1549090",
+      "raw_integer_arguments": [
+        0,
+        8
+      ],
+      "normalization_rule": "remove leading c",
+      "normalized_candidate_class_name": "DateInputPage",
+      "candidate_factory_va": "0x11e2200",
+      "candidate_class_name_string_va": "0x2989e60",
+      "status": "normalized_name_candidate_unproven"
+    },
+    {
+      "registry_page_name": "cDateInputYear",
+      "registry_helper_va": "0x1549090",
+      "raw_integer_arguments": [
+        0,
+        8
+      ],
+      "normalization_rule": "remove leading c",
+      "normalized_candidate_class_name": "DateInputYearPage",
+      "candidate_factory_va": "0x11e4150",
+      "candidate_class_name_string_va": "0x29936c3",
+      "status": "normalized_name_candidate_unproven"
+    },
+    {
+      "registry_page_name": "cMelodyEdit",
+      "registry_helper_va": "0x1549090",
+      "raw_integer_arguments": [
+        0,
+        18
+      ],
+      "normalization_rule": "remove leading c",
+      "normalized_candidate_class_name": "MelodyEditPage",
+      "candidate_factory_va": "0x1245ea0",
+      "candidate_class_name_string_va": "0x29bdc31",
+      "status": "normalized_name_candidate_unproven"
+    },
+    {
+      "registry_page_name": "cMapSelect",
+      "registry_helper_va": "0x1549400",
+      "raw_integer_arguments": [
+        19
+      ],
+      "normalization_rule": "remove leading c",
+      "normalized_candidate_class_name": "MapSelectPage",
+      "candidate_factory_va": "0x1242550",
+      "candidate_class_name_string_va": "0x29a2521",
+      "status": "normalized_name_candidate_unproven"
+    },
+    {
+      "registry_page_name": "cMapRemove",
+      "registry_helper_va": "0x1549750",
+      "raw_integer_arguments": [
+        1,
+        20
+      ],
+      "normalization_rule": "remove leading c",
+      "normalized_candidate_class_name": "MapRemovePage",
+      "candidate_factory_va": "0x123dcc0",
+      "candidate_class_name_string_va": "0x29b6e26",
+      "status": "normalized_name_candidate_unproven"
+    },
+    {
+      "registry_page_name": "cCatalog",
+      "registry_helper_va": "0x1549090",
+      "raw_integer_arguments": [
+        21,
+        15
+      ],
+      "normalization_rule": "remove leading c",
+      "normalized_candidate_class_name": "CatalogPage",
+      "candidate_factory_va": "0x1183640",
+      "candidate_class_name_string_va": "0x298e3e1",
+      "status": "normalized_name_candidate_unproven"
+    },
+    {
+      "registry_page_name": "MenuDevice",
+      "registry_helper_va": "0x1549400",
+      "raw_integer_arguments": [
+        22
+      ],
+      "normalization_rule": "exact name",
+      "normalized_candidate_class_name": "MenuDevicePage",
+      "candidate_factory_va": "0x125ae40",
+      "candidate_class_name_string_va": "0x29bdc4f",
+      "status": "normalized_name_candidate_unproven"
+    },
+    {
+      "registry_page_name": "AddresseeSelMulti",
+      "registry_helper_va": "0x1549400",
+      "raw_integer_arguments": [
+        0
+      ],
+      "normalization_rule": "exact name",
+      "normalized_candidate_class_name": "AddresseeSelMultiPage",
+      "candidate_factory_va": "0x1132310",
+      "candidate_class_name_string_va": "0x293b4bb",
+      "status": "normalized_name_candidate_unproven"
+    },
+    {
+      "registry_page_name": "cIllegalReport",
+      "registry_helper_va": "0x1549400",
+      "raw_integer_arguments": [
+        24
+      ],
+      "normalization_rule": "remove leading c",
+      "normalized_candidate_class_name": "IllegalReportPage",
+      "candidate_factory_va": "0x12088e0",
+      "candidate_class_name_string_va": "0x2957262",
+      "status": "normalized_name_candidate_unproven"
+    },
+    {
+      "registry_page_name": "cTitle",
+      "registry_helper_va": "0x1549400",
+      "raw_integer_arguments": [
+        0
+      ],
+      "normalization_rule": "remove leading c",
+      "normalized_candidate_class_name": "TitlePage",
+      "candidate_factory_va": "0x156d2a0",
+      "candidate_class_name_string_va": "0x2971664",
+      "status": "normalized_name_candidate_unproven"
+    },
+    {
+      "registry_page_name": "cRingMenuToolsMain",
+      "registry_helper_va": "0x1549400",
+      "raw_integer_arguments": [
+        13
+      ],
+      "normalization_rule": "remove leading c",
+      "normalized_candidate_class_name": null,
+      "candidate_factory_va": null,
+      "candidate_class_name_string_va": null,
+      "status": "no_exact_normalized_class_name"
+    }
+  ]
+}

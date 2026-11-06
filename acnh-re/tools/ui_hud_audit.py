@@ -1260,6 +1260,13 @@ def audit_extended_user_data(animation_data, section_audit):
             raw = archive_cache[source][archive_name][inner_member]
             target_inventory = {(target["name"], target["target_type_id"]): target
                                 for target in animation.get("targets", [])}
+            animation_context = {
+                "frame_count": animation.get("frames"),
+                "loop_byte": animation.get("loop_byte"),
+                "curve_track_count": animation.get("track_count"),
+                "curve_key_count": animation.get("key_count"),
+                "count_scope": "ordinary numeric curve tracks/keys; FLEU records are separate",
+            }
             for content, info in fleu_contents:
                 parsed = _parse_extended_user_data_info(raw, info["offset"], pai_end)
                 target = target_inventory.get((content.get("name"), content.get("target_type_id")), {})
@@ -1290,6 +1297,7 @@ def audit_extended_user_data(animation_data, section_audit):
                                       "no_matching_pane_user_data_key")
                     record = {"source": source, "animation_member": animation["member"],
                               "animation_sha256": animation["sha256"],
+                              "animation_context": animation_context,
                               "tag": animation.get("tag", {}).get("name"),
                               "content_target_name": content.get("name"),
                               "content_target_type_id": content.get("target_type_id"),
@@ -1313,6 +1321,15 @@ def audit_extended_user_data(animation_data, section_audit):
                            "error": f"extended user data parse: {exc}"})
     keys = Counter(record["key_name"] for record in records)
     binding_status_counts = Counter(x["pane_user_data_binding"]["status"] for x in records)
+    animation_contexts = {}
+    for record in records:
+        key = (record["source"], record["animation_member"])
+        animation_contexts[key] = {
+            "source": record["source"],
+            "animation_member": record["animation_member"],
+            **record["animation_context"],
+            "fleu_record_count": animation_contexts.get(key, {}).get("fleu_record_count", 0) + 1,
+        }
     return {"schema": "acnh.ui_bflan_extended_user_data.v1",
             "evidence": "FLEU uses its dedicated inline ExtendedUserDataAnim record, not the standard numeric target/curve block. Each record was parsed within its pai1 bounds and preserves its three float arrays, raw header fields, key string, and record hash. Its key name is cross-referenced to usd1 entries on the uniquely named same-archive pane candidate.",
             "counts": {"source_archives": len(archive_cache), "infos": len(infos),
@@ -1323,6 +1340,7 @@ def audit_extended_user_data(animation_data, section_audit):
                        "parse_errors": len(errors)},
             "format_reference": "https://github.com/crackheadakira/nnbfl/blob/af30eaf9a92324bfe7ecc2af8df9c8dbf8848a79/nnbfl/src/bflan/anim_info.rs",
             "value_array_semantics": "The format defines three f32 arrays per record; this report preserves them by array index and does not assign runtime meaning to each array.",
+            "animation_contexts": list(animation_contexts.values()),
             "infos": infos, "records": records, "parse_errors": errors}
 
 

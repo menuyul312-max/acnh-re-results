@@ -1530,6 +1530,22 @@
             }
           ],
           "interpretation_limit": "Return-only code is a no-op if the candidate is the selected method. Nontrivial candidates share a handler-registration pattern but do not reveal component semantics or prove which table/object uses them."
+        },
+        "address_reference_probe": {
+          "source": "inputs/additional_exefs/main (1.0.0 main NSO)",
+          "candidate_table_addresses": [
+            "0x315b0d0",
+            "0x30fc6b8"
+          ],
+          "candidate_address_points": [
+            "0x315b0e0",
+            "0x30fc6c8"
+          ],
+          "direct_adrp_add_or_ldr_materializations_in_text": 0,
+          "R_AARCH64_RELATIVE_addends_pointing_to_table_or_address_point": 0,
+          "raw_word_search_note": "The four apparent raw-word matches occur as r_offset fields inside the MOD0 DT_RELA metadata, not as loaded pointer values.",
+          "interpretation": "This scan did not find a direct static inbound reference that binds either candidate sequence to an object vptr.",
+          "limit": "The probe covers ADRP followed within three instructions by ADD/LDR, R_AARCH64_RELATIVE addends, and raw aligned 64-bit words. It does not rule out MOVZ/MOVK address construction, arithmetic/dynamic lookup, or an indirect runtime binding."
         }
       },
       "setup_handler_correlations": [
@@ -1848,7 +1864,7 @@
           "0x2210290"
         ],
         "direct_callsite_status": "Five GetNpadStates variants are direct calls from Npad manager update 0x1968b80 at 0x1968c14, 0x1968c2c, 0x1968c44, 0x1968c5c, and 0x1968c74. The update method is the +0x20 entry of a relocated vtable-like class table set by constructor 0x1968840. No static caller edge connects that update method to UI action dispatch.",
-        "limitation": "Npad style/state sampling, sensor/vibration paths, and Joy assignment helpers are mapped. The update scheduler and Npad button-to-UI action routing remain unresolved; API presence alone does not establish FocusKey/DecideKey or other UI mappings.",
+        "limitation": "Npad IDs/styles and GetNpadStates sampling are mapped. The separate VibrationThread worker is statically traced through its concrete callback to nn::hid::SendVibrationValue, and its 16-entry inline ring setup is proven. The vibration-ring producer/read-index reset/trigger, update scheduler, and Npad button-to-UI action routing remain unresolved.",
         "supported_id_setup": {
           "initializer_va": "0x1968840",
           "initializer_caller_va": "0x19a4950",
@@ -1995,6 +2011,136 @@
             "The Npad manager and its update vtable slot are statically identified, correcting the previous no-callsite summary. The runtime scheduler invocation of 0x1968b80 is still indirect.",
             "No call edge or recovered indirect callback currently links sampled Npad button states to UI action dispatcher 0x14845a0 or a specific 13-action control callback."
           ]
+        },
+        "background_worker": {
+          "status": "worker_and_vibration_delivery_resolved_static; queue_producer_unresolved",
+          "manager_constructor_va": "0x1968840",
+          "worker_constructor_callsite_va": "0x19688c4",
+          "worker_object_offset_bytes": 33712,
+          "worker_constructor_va": "0x19a2aa0",
+          "entry_pointer_relocation": {
+            "site_va": "0x33197c0",
+            "type": "R_AARCH64_RELATIVE (1027)",
+            "addend_va": "0x19a2c80",
+            "evidence": "Decoded from the main NSO MOD0 DT_RELA table; the relocation binds the worker entry pointer to the thread entry body."
+          },
+          "thread_name": {
+            "callsite_va": "0x19a2bdc",
+            "import": "nn::os::SetThreadName",
+            "string_va": "0x29582a9",
+            "string": "VibrationThread"
+          },
+          "thread_creation": {
+            "callsite_va": "0x19a2bbc",
+            "plt_va": "0x220f830",
+            "got_va": "0x32cf1e0",
+            "import": "nn::os::CreateThread"
+          },
+          "entry_va": "0x19a2c80",
+          "entry_observed_operations": [
+            "Sets the current thread TLS value through nn::os::SetTlsValue.",
+            "Queries current core number and thread ID.",
+            "Indirectly dispatches through the worker address point at object vptr +0x80."
+          ],
+          "worker_method": {
+            "target_va": "0x19a3970",
+            "slot_offset_bytes": "0x80",
+            "relocation_site_va": "0x31a6a50",
+            "relative_relocation_target_va": "0x19a3970",
+            "observed_queue_helper_va": "0x19a2900",
+            "queue_imports": [
+              "nn::os::ReceiveMessageQueue",
+              "nn::os::TryReceiveMessageQueue"
+            ],
+            "observed": "The worker method loops on a message-queue helper. The Npad manager constructor passes zero for the helper mode word; this selects ReceiveMessageQueue in the helper, while nonzero selects TryReceiveMessageQueue.",
+            "message_callback_dispatch": {
+              "callsite_va": "0x19a39bc",
+              "vtable_load_offset_bytes": "0x88",
+              "base_address_point_entry_site_va": "0x31a6a58",
+              "base_entry_relocation": "__cxa_pure_virtual",
+              "concrete_address_point_va": "0x31a4058",
+              "concrete_entry_site_va": "0x31a40e0",
+              "concrete_entry_relocation_target_va": "0x1968f80",
+              "vptr_installation_callsite_va": "0x19688e4",
+              "observed": "The Npad manager replaces the base worker vptr after construction. The worker loop therefore dispatches the queued notification to concrete Npad-manager callback 0x1968f80, rather than the base pure-virtual entry.",
+              "limit": "This identifies the callback target and its vibration API call, but not the producer that inserts records into the callback ring or the gameplay event that triggers them."
+            },
+            "base_class_address_point_va": "0x31a69d0",
+            "concrete_address_point_va": "0x31a4058",
+            "concrete_slot_relocation_site_va": "0x31a40d8",
+            "concrete_slot_relocation_target_va": "0x19a3970"
+          },
+          "separation_from_controller_sampling": {
+            "controller_state_update_va": "0x1968b80",
+            "controller_state_vtable_slot_offset_bytes": "0x20",
+            "observed": "The VibrationThread queue loop is not a direct call path to the GetNpadStates sampling loop or UI action dispatcher.",
+            "remaining": "No producer of Npad button transitions, queue message format, or mapping to the 13 UI actions is established."
+          },
+          "limits": [
+            "The thread object, thread entry, VibrationThread name, queue loop, CreateThread import, and direct constructor call to the thread-start wrapper are statically identified.",
+            "The concrete worker vptr installed by the Npad manager resolves the queue callback to 0x1968f80, which submits ring-buffered handle/value records to nn::hid::SendVibrationValue.",
+            "The Npad constructor initializes an inline ring with a 16-record capacity and zero pending count; it does not explicitly initialize the read-index field at the observed constructor site.",
+            "The nn::os::StartThread import is called by the wrapper when its state field at +0x204 is zero; the dynamic state value is not observed.",
+            "The ring-buffer producer/enqueue path, read-index reset source, and gameplay event that generates each vibration value remain unresolved.",
+            "This vibration delivery path does not establish Npad button-to-UI action routing or connect the worker to the GetNpadStates polling loop."
+          ],
+          "start_thread_method": {
+            "constructor_callsite_va": "0x1968a44",
+            "target_va": "0x19a2fc0",
+            "receiver_object_offset_bytes": 33712,
+            "behavior": "The Npad manager constructor directly calls this method on the VibrationThread object after setup. The method checks object state at +0x204; when it is zero, it calls nn::os::StartThread with the ThreadType pointer at +0xE8, obtains the thread ID, and writes the started state.",
+            "start_thread_callsite_va": "0x19a2fec",
+            "start_thread_import": "nn::os::StartThread",
+            "start_thread_got_va": "0x32cea60",
+            "status": "direct constructor call to the thread-start wrapper proven; underlying nn::os::StartThread call is guarded by the worker state field",
+            "worker_vptr_relationship": "The vptr at worker subobject offset +0 is changed from the base-class address point to concrete address point 0x31a4058 at constructor callsite 0x19688e4."
+          },
+          "concrete_vptr_installation": {
+            "worker_object_manager_offset_bytes": 33712,
+            "base_constructor_address_point_va": "0x31a69d0",
+            "concrete_vptr_store_callsite_va": "0x19688e4",
+            "concrete_vtable_global_relocation_site_va": "0x3319070",
+            "relative_relocation_target_va": "0x31a4048",
+            "address_point_va": "0x31a4058",
+            "observed": "The worker constructor initially installs base address point 0x31a69d0. After that constructor returns, the Npad manager stores the concrete address point 0x31a4058 into the worker subobject at manager offset +33712."
+          },
+          "vibration_delivery": {
+            "handler_va": "0x1968f80",
+            "ring_buffer_fields": {
+              "entries_pointer_offset_bytes": 264,
+              "entry_capacity_offset_bytes": 272,
+              "read_index_offset_bytes": 276,
+              "pending_count_offset_bytes": 280,
+              "entry_stride_bytes": 20
+            },
+            "entry_shape": "The handler copies 20 bytes per entry: a 4-byte device handle followed by a 16-byte vibration value. It passes pointers to those adjacent fields to SendVibrationValue.",
+            "api_import": "nn::hid::SendVibrationValue",
+            "plt_va": "0x2210360",
+            "got_va": "0x32cf778",
+            "callsite_va": "0x1969008",
+            "observed": "The concrete message callback removes one pending 20-byte entry from the ring and directly submits its device handle and vibration value to the Nintendo HID vibration API.",
+            "ring_buffer_initialization": {
+              "manager_constructor_va": "0x1968840",
+              "worker_subobject_offset_bytes": 33712,
+              "constructor_callsite_stores": {
+                "entries_pointer_callsite_va": "0x19688ec",
+                "entries_pointer_manager_offset_bytes": 33976,
+                "entries_pointer_target_manager_offset_bytes": 33996,
+                "capacity_callsite_va": "0x19688f8",
+                "capacity_manager_offset_bytes": 33984,
+                "capacity_records": 16,
+                "pending_count_callsite_va": "0x19688f4",
+                "pending_count_manager_offset_bytes": 33992,
+                "pending_count_initial_value": 0,
+                "read_index_manager_offset_bytes": 33988,
+                "read_index_explicit_initialization": "not found in this constructor"
+              },
+              "record_stride_bytes": 20,
+              "inline_storage_required_bytes": 320,
+              "observed": "The Npad constructor sets the ring entry pointer to manager+33996, capacity to 16, and pending count to zero. These manager offsets equal worker-subobject offsets +264, +272, and +280. The 16-entry storage requires 320 bytes at the inline target; the constructor does not explicitly write the read-index field at manager+33988.",
+              "limit": "This proves ring storage setup and capacity, not which code enqueues records or how the read index is initialized before the first use."
+            }
+          }
         }
       },
       "update_method": {
@@ -2988,11 +3134,31 @@
     },
     "fleu_relation": {
       "observed_overlap": [
+        "C_Id",
         "S_BorderSize",
         "S_BorderVolume",
         "S_ColorOverlay0Volume"
       ],
-      "unresolved": "The 15 FLEU records are structurally bound to USD1 keys; native renderer consumes several other matching keys. The native update function applying FLEU arrays and their timing are not proven. C_Id now has a static asset profile, but no exact native string consumer or runtime semantics are established.",
+      "unresolved": "Native named-userData readers for all four FLEU key names have now been identified. This proves the game consumes matching USD1 names, but does not prove these functions apply the three FLEU arrays, identify the frame updater, establish array-element semantics, or provide frame timing.",
+      "animation_context_summary": {
+        "source_artifact": "output/ui_hud/extended_user_data.json",
+        "unique_animation_assets": 7,
+        "c_id_record_count": 11,
+        "c_id_animation_frame_count": 2,
+        "border_size_animation_frame_counts": [
+          4,
+          12
+        ],
+        "cursor3_wait_animation": {
+          "frame_count": 720,
+          "loop_byte": 1,
+          "fleu_base_count": 50,
+          "ordinary_curve_track_count": 6,
+          "ordinary_curve_key_count": 108
+        },
+        "base_count_limit": "FLEU base_count is the count of values in each of its three arrays; observed values (3/5 for C_Id and 50 for Cursor3) differ from the containing BFLAN frame_count and must not be used as animation duration.",
+        "ordinary_curve_count_scope": "track_count/key_count exclude FLEU records, which are cataloged separately."
+      },
       "c_id_static_profile": {
         "record_count": 11,
         "source_layouts": [
@@ -3016,8 +3182,56 @@
         "same_pane_usd1_value": [
           0
         ],
-        "observed": "All 11 C_Id FLEU records bind uniquely to a same-archive USD1 int32 value of 0. They occur on color-named tracks in common control/footer assets; the three arrays have lengths 3 or 5 according to the record base_count.",
-        "limit": "These patterns constrain the data context but do not identify the native custom-property consumer or array element meanings."
+        "observed": "All 11 C_Id FLEU records bind uniquely to a same-archive USD1 int32 value of 0. They occur in four common control/footer assets, all inside 2-frame BFLANs; each record has three arrays of 3 or 5 values.",
+        "limit": "Native static userData readers for C_Id, C_W, and C_B are now identified, but no edge proves those functions apply the C_Id FLEU arrays or defines their animation semantics."
+      },
+      "native_named_key_consumers": {
+        "C_Id": {
+          "key_string_va": "0x29529fe",
+          "reader_va": "0x14c9500",
+          "direct_caller_functions": [
+            "0x14c7420",
+            "0x14c74b0"
+          ],
+          "lookup_helper_va": "0x1930000",
+          "observed_followup_va": "0x14c9670",
+          "related_lookup_keys": [
+            {
+              "name": "C_W",
+              "string_va": "0x29b722d"
+            },
+            {
+              "name": "C_B",
+              "string_va": "0x293ba13"
+            }
+          ],
+          "observed": "Reads the named C_Id USD1 value and passes the result through 0x14c9670, which consults indexed color data and the related C_W/C_B records before updating the target color/control data.",
+          "limit": "This is a static native named-userData consumer. No call edge ties it to FLEU array evaluation or a BFLAN frame callback."
+        },
+        "S_BorderSize": {
+          "key_string_va": "0x29ac3c3",
+          "reader_va": "0x14ca030",
+          "aggregate_caller_va": "0x14ca2b0",
+          "lookup_helper_va": "0x1930000",
+          "observed": "Reads the named value into the renderer-side border parameter block.",
+          "limit": "No FLEU array application or frame callback is proven."
+        },
+        "S_BorderVolume": {
+          "key_string_va": "0x296c396",
+          "reader_va": "0x14ca030",
+          "aggregate_caller_va": "0x14ca2b0",
+          "lookup_helper_va": "0x1930000",
+          "observed": "Reads the named value into the renderer-side border parameter block.",
+          "limit": "No FLEU array application or frame callback is proven."
+        },
+        "S_ColorOverlay0Volume": {
+          "key_string_va": "0x29ac386",
+          "reader_va": "0x14c9990",
+          "aggregate_caller_va": "0x14ca2b0",
+          "lookup_helper_va": "0x1930000",
+          "observed": "Reads the named value into the renderer-side color-overlay parameter block.",
+          "limit": "No FLEU array application or frame callback is proven."
+        }
       }
     }
   },
@@ -3025,8 +3239,8 @@
     "A direct runtime/resource-manager trace or complete allocator lookup logic showing which archive supplies each duplicate PRT1 name, including .szs cases.",
     "Scheduler callsites and virtual slots for page open/update/close/back beyond the registration-time slot-5 callback; MainScreenSmartPhone linkage to MainScreen HUD state also remains unproven.",
     "Associate candidate pointer arrays 0x315b0d0 and 0x30fc6b8 with live component objects, then resolve remaining handler bodies and bind records to screens. Raw disassembly shows 11 candidate follow-up slots are return-only and five have a repeated pointer-registration pattern, but their effects remain conditional on the unproven table association.",
-    "Resolve physical Npad producers, identify the indirect touch callback vtable targets, and connect callbacks to concrete action/FSM/CNT1 records; determine callback order, modal stack, focus restoration, and screen lifecycle.",
-    "A native FLEU application path mapping arrays to named userData values and animation frame timing.",
+    "Trace vibration-ring producer/enqueue callsites, identify where the read index at worker offset +276 is initialized, and determine which gameplay events produce the 20-byte device-handle/vibration-value records; the guarded nn::os::StartThread state remains dynamic. Also connect GetNpadStates or other physical input producers to the 13 UI action IDs, resolve indirect touch callback targets, and determine callback order, modal stack, focus restoration, and screen lifecycle.",
+    "Prove the FLEU array application path into the four matching named USD1 readers (C_Id, S_BorderSize, S_BorderVolume, S_ColorOverlay0Volume), determine array-element semantics, and recover runtime frame-to-value timing.",
     "Synchronized game captures for renderer comparisons (origin/scale, hit bounds, clipping, BNTX channel behavior, sampler/blend/shader and font output)."
   ],
   "page_factory_registry": {
@@ -3060,6 +3274,14 @@
       "rule": "Remove the exact suffix Page from the class-name string and compare the result with screen_catalog layout names.",
       "status": "name_only_candidates_unproven",
       "limit": "Neither name equality nor layout-name string references in other functions prove that a page loads or owns that layout."
+    },
+    "page_registry_to_factory_candidates": {
+      "artifact": "output/ui_hud/page_registry_factory_candidates.json",
+      "registry_entry_count": 31,
+      "normalized_name_candidates": 23,
+      "without_exact_normalized_factory_name": 8,
+      "status": "name_only_candidates_unproven",
+      "limit": "The registry's byte flags do not expose a factory pointer in the examined pseudocode; exact normalized names do not prove row-to-factory dispatch."
     },
     "limit": "This inventories factories matching the shared pattern. It does not prove the complete set of all pages, page-to-layout ownership, meanings of most virtual slots, or open/close/back/modal lifecycle."
   },
