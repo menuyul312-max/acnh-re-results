@@ -1,0 +1,81 @@
+{
+  "schema": "acnh-re/tool-slingshot-launch-native/1",
+  "native_elf_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+  "static_callsite": {
+    "owner_va": "0xe564b0",
+    "call_pc": "0xe567c0",
+    "target_va": "0x803690"
+  },
+  "launch_handoff_va": "0x803690",
+  "native_functions_executed": [
+    "0x803690 original launch handoff instructions",
+    "controlled output-method and launch-dispatch boundaries"
+  ],
+  "native_functions_stubbed": [
+    "0x29ac0 supplies the projectile output record and intercepts the post-write helper",
+    "0x1f068d0 captures the launch-dispatch flag; projectile creation and physics are outside this harness"
+  ],
+  "cases": [
+    {
+      "case": 0,
+      "start_vector": [
+        10.5,
+        -2.25,
+        0.125
+      ],
+      "velocity_vector": [
+        1.5,
+        -2.0,
+        0.25
+      ],
+      "projectile_output_start_hex": "00002841000010c00000003e",
+      "state_start_hex": "00002841000010c00000003e",
+      "state_scaled_velocity": [
+        9.0,
+        -12.0,
+        1.5
+      ],
+      "scale_factor": 6.0,
+      "launch_dispatch_flag": 1
+    },
+    {
+      "case": 1,
+      "start_vector": [
+        -1.0,
+        0.0,
+        3.75
+      ],
+      "velocity_vector": [
+        -0.5,
+        4.0,
+        0.0
+      ],
+      "projectile_output_start_hex": "000080bf0000000000007040",
+      "state_start_hex": "000080bf0000000000007040",
+      "state_scaled_velocity": [
+        -3.0,
+        24.0,
+        0.0
+      ],
+      "scale_factor": 6.0,
+      "launch_dispatch_flag": 1
+    }
+  ],
+  "case_count": 2,
+  "native_function_entry_counts": {
+    "0x29ac0": 4,
+    "0x803690": 2,
+    "0x1f068d0": 2
+  },
+  "mismatches": 0,
+  "unresolved_imports": {},
+  "proven": [
+    "PlayerSlingshotShooting directly calls 0x803690 at 0xe567c0.",
+    "The native handoff copies the input start vector into the projectile output record and player-state offsets +0x280..+0x288.",
+    "The native handoff scales all three supplied velocity components by 6 and records launch flag 1 for the downstream dispatch."
+  ],
+  "limits": [
+    "The projectile output accessor and downstream launch dispatch are controlled boundaries.",
+    "This does not run projectile creation, collision, balloon-item drops, or inventory/save persistence."
+  ]
+}

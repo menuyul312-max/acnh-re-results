@@ -20,9 +20,11 @@ NET_GET_DEMO = 0xE45B80
 ROD_GET_DEMO = 0xE4E730
 RESULT_TO_INVENTORY = 0xEFEC70
 INVENTORY_WRITER = 0xEFEE80
+INVENTORY_COMPACTOR = 0xEFFEA0
 NATIVE_FUNCTIONS_TO_TRACE = (
     RESULT_TO_INVENTORY,
     INVENTORY_WRITER,
+    INVENTORY_COMPACTOR,
     0xF57ED0,
     0xF58D00,
     0xA1E8C0,
@@ -124,12 +126,31 @@ def net_rod_callers(research_output: Path) -> list[dict]:
     return callers
 
 
+def catch_result_preparation_calls(research_output: Path) -> list[dict]:
+    """Record the catch-state helper reached before result inventory insertion."""
+    with sqlite3.connect(research_output / "index.sqlite") as db:
+        rows = db.execute(
+            "SELECT owner_va, pc, target_va FROM direct_calls "
+            "WHERE target_va=? AND owner_va IN (?, ?) ORDER BY owner_va, pc",
+            (0xDB00F0, NET_GET_DEMO, ROD_GET_DEMO),
+        ).fetchall()
+    expected = {
+        (NET_GET_DEMO, 0xE45CBC, 0xDB00F0),
+        (ROD_GET_DEMO, 0xE4EA70, 0xDB00F0),
+    }
+    if set(rows) != expected:
+        raise AssertionError(f"net/rod result preparation calls changed: {rows}")
+    return [{"owner_va": hex(owner), "call_pc": hex(pc), "target_va": hex(target)}
+            for owner, pc, target in rows]
+
+
 def run(research_output: Path, nso_path: Path, output: Path) -> dict:
     if sha256(nso_path.read_bytes()) != NSO_SHA256:
         raise ValueError("main NSO does not match the indexed 1.0.0 image")
 
     table, table_parts, samples = source_sample_items(research_output)
     callers = net_rod_callers(research_output)
+    preparation_calls = catch_result_preparation_calls(research_output)
     sandbox = Sandbox(nso_path)
     itemparam = build_itemparam_lookup(sandbox, research_output, table, table_parts)
     native_function_entries = {va: 0 for va in NATIVE_FUNCTIONS_TO_TRACE}
@@ -161,6 +182,14 @@ def run(research_output: Path, nso_path: Path, output: Path) -> dict:
         return 0
 
     sandbox.stub(0xAB60C0, preserve_unmodified_item)
+
+    # Game startup constructs the shared empty-item singleton before any catches
+    # can happen. Sandbox does not run global constructors, so provide the same
+    # 0xfffe item word at the global pointer consumed by the full-pocket path.
+    empty_item = sandbox.alloc(8)
+    empty_item_word = struct.pack("<HBBI", 0xFFFE, 0, 0, 0)
+    sandbox.uc.mem_write(empty_item, empty_item_word)
+    sandbox.uc.mem_write(0x32D25E0, struct.pack("<Q", empty_item))
 
     def capture_catalog(sb):
         catalog_calls.append({
@@ -227,6 +256,46 @@ def run(research_output: Path, nso_path: Path, output: Path) -> dict:
                 "neighboring_slots_unchanged": True,
             })
 
+    full_inventory_cases = []
+    for item in (samples["Insect"], samples["Fish"]):
+        source = struct.pack("<HBBI", item["unique_id"], 0, 0, 0)
+        item_pointer = sandbox.alloc(8)
+        sandbox.uc.mem_write(item_pointer, source)
+        original_slots = [
+            struct.pack("<HBBI", 2100 + index, 0, 0, 0)
+            for index in range(20)
+        ]
+        for index, word in enumerate(original_slots):
+            sandbox.uc.mem_write(inventory + index * 8, word)
+        sandbox.uc.mem_write(inventory + 0xA0, struct.pack("<I", 20))
+
+        catalog_start = len(catalog_calls)
+        accepted = sandbox.call(RESULT_TO_INVENTORY,
+                                (request, item_pointer, 0)) & 1
+        stored_slots = [sandbox.read(inventory + index * 8, 8)
+                        for index in range(20)]
+        expected_slots = original_slots[1:] + [source]
+        if accepted != 1 or stored_slots != expected_slots:
+            raise AssertionError({
+                "item": item,
+                "accepted": accepted,
+                "stored_slots": [word.hex() for word in stored_slots],
+                "expected_slots": [word.hex() for word in expected_slots],
+            })
+        full_inventory_cases.append({
+            "result_kind": item["item_kind"],
+            "result_item_unique_id": item["unique_id"],
+            "result_item_label": item["label"],
+            "capacity": 20,
+            "helper_return": accepted,
+            "evicted_initial_slot": 0,
+            "first_stored_original_item_after_compaction": 2101,
+            "result_stored_at_slot": 19,
+            "result_word_hex": source.hex(),
+            "catalog_registration_request_count": len(catalog_calls) - catalog_start,
+            "all_original_items_except_slot_zero_preserved": True,
+        })
+
     if sandbox.unknown_imports:
         raise AssertionError(f"unexpected native imports: {sandbox.unknown_imports}")
     missing_native_functions = [hex(va) for va, count in native_function_entries.items()
@@ -239,10 +308,12 @@ def run(research_output: Path, nso_path: Path, output: Path) -> dict:
         "native_elf_sha256": sha256(nso_path.read_bytes()),
         "itemparam_source": itemparam,
         "sample_result_items": list(samples.values()),
+        "static_catch_result_preparation_calls": preparation_calls,
         "static_result_helper_callers": callers,
         "native_functions_executed": [
             "0xefec70 result-to-inventory helper",
             "0xefee80 inventory insertion wrapper",
+            "0xeffea0 full-pocket compaction helper",
             "0xf57ed0 bounded slot writer",
             "0xf58d00 item-word validation",
             "0xa1e8c0 native ItemParam row resolver",
@@ -257,6 +328,7 @@ def run(research_output: Path, nso_path: Path, output: Path) -> dict:
             "0x4c6110 optional foreign-item conversion context returns absent",
             "0xab60c0 item-category normalization returns the unmodified base item word",
             "0xeebe80 catalog registration is captured, not executed",
+            "0x32d25e0 points to a synthetic 0xfffe empty-item word because global constructors are not run",
         ],
         "native_function_entry_counts": {
             hex(va): count for va, count in sorted(native_function_entries.items())
@@ -267,22 +339,27 @@ def run(research_output: Path, nso_path: Path, output: Path) -> dict:
             "capacity": 20,
             "empty_item_unique_id": 65534,
             "first_empty_slot_rule": "native helper scans from slot 0 and inserts at the first -2/0xfffe item id",
+            "full_inventory_rule": "native helper clears slot 0 to the empty-item singleton, compacts slots 1..19 left, then inserts the result at slot 19",
         },
         "cases": cases,
-        "case_count": len(cases),
-        "catalog_registration_requests_per_case": 2,
+        "full_inventory_cases": full_inventory_cases,
+        "case_count": len(cases) + len(full_inventory_cases),
+        "first_empty_case_count": len(cases),
+        "full_inventory_case_count": len(full_inventory_cases),
+        "catalog_registration_requests_per_first_empty_case": 2,
         "mismatches": 0,
         "unresolved_imports": sandbox.unknown_imports,
         "proven": [
             "The original result-to-inventory function accepts valid source ItemParam words for one insect and one fish sample.",
             "For base fish/insect words with optional normalization held at identity, the original native insertion path writes the 8-byte item word into each first-empty slot across all 20 tested positions; other slots remain unchanged.",
+            "With a full 20-slot synthetic pocket and the native empty-item singleton initialized to 0xfffe, the original path clears slot 0, compacts slots 1..19 left, inserts the result at slot 19, and returns success; the other 19 original items retain their packed words.",
             "The original writer path includes EFEE80 and F57ED0 and reaches the packed-word copy operations; this is a real in-memory inventory mutation in the bounded emulator, not a stubbed slot write.",
             "The indexed native call sites show both NetGetDemo (0xe45b80) and RodGetDemo (0xe4e730) directly call the shared result-to-inventory helper at 0xefec70.",
         ],
         "limits": [
             "NetGetDemo and RodGetDemo caller bodies were not run end-to-end; result item production/catch eligibility is not established by this probe.",
             "Player-owner lookup, inventory-view selection, and catalog registration are controlled or stubbed; catalog/save persistence is not executed.",
-            "No-empty-slot replacement/compaction behavior was not run; the test always supplies one first-empty sentinel.",
+            "The Sandbox does not run the game's global constructors; the full-pocket probe supplies a synthetic 0xfffe empty-item singleton at global pointer 0x32d25e0.",
             "This proves caught insect/fish result insertion for the shared helper, not tool durability decrement or break threshold.",
         ],
     }

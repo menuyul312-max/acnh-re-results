@@ -23,6 +23,18 @@
       "item_kind": "Insect"
     }
   ],
+  "static_catch_result_preparation_calls": [
+    {
+      "owner_va": "0xe45b80",
+      "call_pc": "0xe45cbc",
+      "target_va": "0xdb00f0"
+    },
+    {
+      "owner_va": "0xe4e730",
+      "call_pc": "0xe4ea70",
+      "target_va": "0xdb00f0"
+    }
+  ],
   "static_result_helper_callers": [
     {
       "owner_va": "0xe45b80",
@@ -36,6 +48,7 @@
   "native_functions_executed": [
     "0xefec70 result-to-inventory helper",
     "0xefee80 inventory insertion wrapper",
+    "0xeffea0 full-pocket compaction helper",
     "0xf57ed0 bounded slot writer",
     "0xf58d00 item-word validation",
     "0xa1e8c0 native ItemParam row resolver",
@@ -49,24 +62,27 @@
     "0xa9c290 optional item-definition wrapper and 0xab2a50 optional remake query",
     "0x4c6110 optional foreign-item conversion context returns absent",
     "0xab60c0 item-category normalization returns the unmodified base item word",
-    "0xeebe80 catalog registration is captured, not executed"
+    "0xeebe80 catalog registration is captured, not executed",
+    "0x32d25e0 points to a synthetic 0xfffe empty-item word because global constructors are not run"
   ],
   "native_function_entry_counts": {
-    "0xa1e8c0": 200,
-    "0xefec70": 40,
-    "0xefee80": 40,
-    "0xf57ed0": 40,
-    "0xf589b0": 40,
-    "0xf589e0": 40,
-    "0xf58d00": 160,
-    "0xf59550": 40
+    "0xa1e8c0": 216,
+    "0xefec70": 42,
+    "0xefee80": 44,
+    "0xeffea0": 2,
+    "0xf57ed0": 44,
+    "0xf589b0": 82,
+    "0xf589e0": 120,
+    "0xf58d00": 172,
+    "0xf59550": 44
   },
   "inventory_shape": {
     "record_stride_bytes": 8,
     "capacity_field_offset": "0xa0",
     "capacity": 20,
     "empty_item_unique_id": 65534,
-    "first_empty_slot_rule": "native helper scans from slot 0 and inserts at the first -2/0xfffe item id"
+    "first_empty_slot_rule": "native helper scans from slot 0 and inserts at the first -2/0xfffe item id",
+    "full_inventory_rule": "native helper clears slot 0 to the empty-item singleton, compacts slots 1..19 left, then inserts the result at slot 19"
   },
   "cases": [
     {
@@ -470,20 +486,51 @@
       "neighboring_slots_unchanged": true
     }
   ],
-  "case_count": 40,
-  "catalog_registration_requests_per_case": 2,
+  "full_inventory_cases": [
+    {
+      "result_kind": "Insect",
+      "result_item_unique_id": 582,
+      "result_item_label": "FtrInsectAburazemi",
+      "capacity": 20,
+      "helper_return": 1,
+      "evicted_initial_slot": 0,
+      "first_stored_original_item_after_compaction": 2101,
+      "result_stored_at_slot": 19,
+      "result_word_hex": "4602000000000000",
+      "catalog_registration_request_count": 2,
+      "all_original_items_except_slot_zero_preserved": true
+    },
+    {
+      "result_kind": "Fish",
+      "result_item_unique_id": 328,
+      "result_item_label": "FtrFishFuna",
+      "capacity": 20,
+      "helper_return": 1,
+      "evicted_initial_slot": 0,
+      "first_stored_original_item_after_compaction": 2101,
+      "result_stored_at_slot": 19,
+      "result_word_hex": "4801000000000000",
+      "catalog_registration_request_count": 2,
+      "all_original_items_except_slot_zero_preserved": true
+    }
+  ],
+  "case_count": 42,
+  "first_empty_case_count": 40,
+  "full_inventory_case_count": 2,
+  "catalog_registration_requests_per_first_empty_case": 2,
   "mismatches": 0,
   "unresolved_imports": {},
   "proven": [
     "The original result-to-inventory function accepts valid source ItemParam words for one insect and one fish sample.",
     "For base fish/insect words with optional normalization held at identity, the original native insertion path writes the 8-byte item word into each first-empty slot across all 20 tested positions; other slots remain unchanged.",
+    "With a full 20-slot synthetic pocket and the native empty-item singleton initialized to 0xfffe, the original path clears slot 0, compacts slots 1..19 left, inserts the result at slot 19, and returns success; the other 19 original items retain their packed words.",
     "The original writer path includes EFEE80 and F57ED0 and reaches the packed-word copy operations; this is a real in-memory inventory mutation in the bounded emulator, not a stubbed slot write.",
     "The indexed native call sites show both NetGetDemo (0xe45b80) and RodGetDemo (0xe4e730) directly call the shared result-to-inventory helper at 0xefec70."
   ],
   "limits": [
     "NetGetDemo and RodGetDemo caller bodies were not run end-to-end; result item production/catch eligibility is not established by this probe.",
     "Player-owner lookup, inventory-view selection, and catalog registration are controlled or stubbed; catalog/save persistence is not executed.",
-    "No-empty-slot replacement/compaction behavior was not run; the test always supplies one first-empty sentinel.",
+    "The Sandbox does not run the game's global constructors; the full-pocket probe supplies a synthetic 0xfffe empty-item singleton at global pointer 0x32d25e0.",
     "This proves caught insect/fish result insertion for the shared helper, not tool durability decrement or break threshold."
   ]
 }
