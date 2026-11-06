@@ -1,0 +1,52 @@
+{
+  "schema": "acnh.ui_hud_runtime_followup.scissor_static_path.v1",
+  "source": {
+    "game_build": "ACNH 1.0.0",
+    "module": "ExeFS main",
+    "main_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+    "evidence_kind": "Native disassembly, direct call index, and imported API string/global-cell cross-check; no game capture."
+  },
+  "scissor_context": {
+    "push_candidate": "0x14c8fe0",
+    "restore_candidate": "0x14c9250",
+    "apply": "0x14c90e0",
+    "observed": [
+      "0x14c8fe0 intersects an incoming rectangle with the top saved rectangle when the context count is nonzero, applies it through 0x14c90e0, and stores up to six rectangle entries.",
+      "0x14c9250 decrements the context count and reapplies the previous saved rectangle through 0x14c90e0; its empty-stack branch passes a zero rectangle and mode 0.",
+      "0x14c90e0 dispatches to 0x19a9960, 0x19a9c60, and 0x19a9d50 for viewport/scissor state updates."
+    ],
+    "limits": [
+      "No direct caller or vtable identity was recovered for 0x14c8fe0/0x14c9250.",
+      "This nested-scissor context is not yet tied to the ScissorPane object created by the viewport adjustment path."
+    ]
+  },
+  "nvn_scissor_api": {
+    "api_name": "nvnCommandBufferSetScissor",
+    "string_va": "0x297d8cd",
+    "resolver": "0x18fb3f0",
+    "resolver_callsite": "0x18fe1c4",
+    "resolver_got_cell": "0x3317c60",
+    "indirect_caller": "0x19a9960",
+    "indirect_callsite": "0x19a9a24",
+    "matching_cell": "0x3317c60",
+    "finding": "The original resolver looks up nvnCommandBufferSetScissor and stores the returned pointer through the same GOT cell that 0x19a9960 later loads and calls with the computed rectangle."
+  },
+  "call_edges": {
+    "0x14c8fe0": [
+      "0x14c90e0"
+    ],
+    "0x14c9250": [
+      "0x14c90e0"
+    ],
+    "0x14c90e0": [
+      "0x19a9960",
+      "0x19a9c60",
+      "0x19a9d50"
+    ]
+  },
+  "open": [
+    "Connect the nested-scissor context to the specific ScissorPane viewport object and its four stored values.",
+    "Determine exact viewport coordinate conversion and empty-stack scissor semantics from runtime or constructor/caller data.",
+    "Verify rendered clipping and nested pane behavior against a synchronized game capture."
+  ]
+}
