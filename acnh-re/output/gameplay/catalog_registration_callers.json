@@ -18,7 +18,15 @@
       ],
       "pseudocode": "binary/analysis_decomp/2fb740.c",
       "string_refs": [],
-      "direct_call_count": 1
+      "direct_call_count": 1,
+      "code_pointer_array_memberships": [
+        {
+          "pointer_array_start_va": "0x3048268",
+          "slot_index": 11,
+          "entry_count": 12,
+          "status": "relocated code pointer sequence; not automatically a C++ vtable"
+        }
+      ]
     },
     {
       "function_va": "0x341a70",
@@ -32,7 +40,15 @@
       ],
       "pseudocode": "binary/analysis_decomp/341a70.c",
       "string_refs": [],
-      "direct_call_count": 1
+      "direct_call_count": 1,
+      "code_pointer_array_memberships": [
+        {
+          "pointer_array_start_va": "0x304cba8",
+          "slot_index": 11,
+          "entry_count": 12,
+          "status": "relocated code pointer sequence; not automatically a C++ vtable"
+        }
+      ]
     },
     {
       "function_va": "0x876db0",
@@ -50,7 +66,8 @@
       ],
       "pseudocode": "binary/analysis_decomp/876db0.c",
       "string_refs": [],
-      "direct_call_count": 2
+      "direct_call_count": 2,
+      "code_pointer_array_memberships": []
     },
     {
       "function_va": "0xdad9f0",
@@ -124,7 +141,8 @@
       ],
       "pseudocode": "binary/analysis_decomp/dad9f0.c",
       "string_refs": [],
-      "direct_call_count": 16
+      "direct_call_count": 16,
+      "code_pointer_array_memberships": []
     },
     {
       "function_va": "0xdadfe0",
@@ -138,7 +156,8 @@
       ],
       "pseudocode": "binary/analysis_decomp/dadfe0.c",
       "string_refs": [],
-      "direct_call_count": 1
+      "direct_call_count": 1,
+      "code_pointer_array_memberships": []
     },
     {
       "function_va": "0xdb0450",
@@ -152,7 +171,8 @@
       ],
       "pseudocode": "binary/analysis_decomp/db0450.c",
       "string_refs": [],
-      "direct_call_count": 1
+      "direct_call_count": 1,
+      "code_pointer_array_memberships": []
     },
     {
       "function_va": "0xdb07c0",
@@ -170,7 +190,8 @@
         "FillInsectList",
         "MainmenuEncyclopedia"
       ],
-      "direct_call_count": 1
+      "direct_call_count": 1,
+      "code_pointer_array_memberships": []
     },
     {
       "function_va": "0xea7f60",
@@ -208,7 +229,8 @@
       ],
       "pseudocode": "binary/analysis_decomp/ea7f60.c",
       "string_refs": [],
-      "direct_call_count": 7
+      "direct_call_count": 7,
+      "code_pointer_array_memberships": []
     },
     {
       "function_va": "0xeebb00",
@@ -294,7 +316,8 @@
       ],
       "pseudocode": "binary/analysis_decomp/eebb00.c",
       "string_refs": [],
-      "direct_call_count": 19
+      "direct_call_count": 19,
+      "code_pointer_array_memberships": []
     },
     {
       "function_va": "0xefb1f0",
@@ -308,7 +331,8 @@
       ],
       "pseudocode": "binary/analysis_decomp/efb1f0.c",
       "string_refs": [],
-      "direct_call_count": 1
+      "direct_call_count": 1,
+      "code_pointer_array_memberships": []
     },
     {
       "function_va": "0xefdda0",
@@ -322,7 +346,8 @@
       ],
       "pseudocode": "binary/analysis_decomp/efdda0.c",
       "string_refs": [],
-      "direct_call_count": 1
+      "direct_call_count": 1,
+      "code_pointer_array_memberships": []
     },
     {
       "function_va": "0xefe070",
@@ -336,7 +361,8 @@
       ],
       "pseudocode": "binary/analysis_decomp/efe070.c",
       "string_refs": [],
-      "direct_call_count": 1
+      "direct_call_count": 1,
+      "code_pointer_array_memberships": []
     },
     {
       "function_va": "0xefe260",
@@ -350,7 +376,8 @@
       ],
       "pseudocode": "binary/analysis_decomp/efe260.c",
       "string_refs": [],
-      "direct_call_count": 1
+      "direct_call_count": 1,
+      "code_pointer_array_memberships": []
     },
     {
       "function_va": "0xefe4d0",
@@ -364,7 +391,8 @@
       ],
       "pseudocode": "binary/analysis_decomp/efe4d0.c",
       "string_refs": [],
-      "direct_call_count": 1
+      "direct_call_count": 1,
+      "code_pointer_array_memberships": []
     },
     {
       "function_va": "0xefe760",
@@ -378,7 +406,8 @@
       ],
       "pseudocode": "binary/analysis_decomp/efe760.c",
       "string_refs": [],
-      "direct_call_count": 1
+      "direct_call_count": 1,
+      "code_pointer_array_memberships": []
     },
     {
       "function_va": "0xefec70",
@@ -392,7 +421,8 @@
       ],
       "pseudocode": "binary/analysis_decomp/efec70.c",
       "string_refs": [],
-      "direct_call_count": 1
+      "direct_call_count": 1,
+      "code_pointer_array_memberships": []
     },
     {
       "function_va": "0xefee80",
@@ -406,9 +436,16 @@
       ],
       "pseudocode": "binary/analysis_decomp/efee80.c",
       "string_refs": [],
-      "direct_call_count": 1
+      "direct_call_count": 1,
+      "code_pointer_array_memberships": []
     }
   ],
+  "code_pointer_array_audit": {
+    "available": true,
+    "source": "/workspace/acnh-re/output/binary/code_pointer_arrays.json",
+    "matched_caller_functions": 2,
+    "interpretation_limit": "Membership proves only that a function address occurs in a relocated code-pointer sequence. The inventory does not classify the sequence as a C++ vtable or identify its runtime caller."
+  },
   "registration_wrapper_trace": {
     "wrapper_va": "0xefe070",
     "pseudocode": "binary/analysis_decomp/efe070.c",

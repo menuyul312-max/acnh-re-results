@@ -9,6 +9,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_INDEX = Path("/workspace/acnh-re/output/index.sqlite")
 DEFAULT_TABLE_ROOT = Path("/workspace/acnh-re/output")
+DEFAULT_POINTER_ARRAYS = Path("/workspace/acnh-re/output/binary/code_pointer_arrays.json")
 DEFAULT_OUTPUT = ROOT / "output/gameplay/catalog_registration_callers.json"
 TARGET = 0xEEBE80
 REGISTRATION_WRAPPER = 0xEFE070
@@ -98,10 +99,51 @@ def caller_groups(conn, target):
     return call_rows, grouped, unresolved
 
 
+def pointer_array_matches(pointer_arrays_path, callers):
+    """Attach exact pointer-sequence membership without labeling tables as vtables."""
+    if not pointer_arrays_path.exists():
+        return {
+            "available": False,
+            "source": str(pointer_arrays_path),
+            "matched_caller_functions": 0,
+            "interpretation_limit": "Code-pointer inventory is absent; no dispatch inference is available.",
+        }
+
+    pointer_arrays = json.loads(pointer_arrays_path.read_text())
+    matched = set()
+    for caller in callers:
+        function_va = int(caller["function_va"], 16)
+        memberships = []
+        for pointer_array in pointer_arrays:
+            entries = pointer_array.get("entries", [])
+            for slot_index, entry in enumerate(entries):
+                if int(entry["target_va"], 16) == function_va:
+                    memberships.append({
+                        "pointer_array_start_va": pointer_array.get("start_va"),
+                        "slot_index": slot_index,
+                        "entry_count": len(entries),
+                        "status": pointer_array.get("status"),
+                    })
+        caller["code_pointer_array_memberships"] = memberships
+        if memberships:
+            matched.add(function_va)
+
+    return {
+        "available": True,
+        "source": str(pointer_arrays_path),
+        "matched_caller_functions": len(matched),
+        "interpretation_limit": (
+            "Membership proves only that a function address occurs in a relocated code-pointer sequence. "
+            "The inventory does not classify the sequence as a C++ vtable or identify its runtime caller."
+        ),
+    }
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--index-db", type=Path, default=DEFAULT_INDEX)
     parser.add_argument("--table-root", type=Path, default=DEFAULT_TABLE_ROOT)
+    parser.add_argument("--pointer-arrays", type=Path, default=DEFAULT_POINTER_ARRAYS)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     args = parser.parse_args()
 
@@ -111,6 +153,7 @@ def main():
     if not calls:
         raise SystemExit(f"no direct-call records for {TARGET:#x} in {args.index_db}")
     wrapper_calls, wrapper_callers, wrapper_unresolved = caller_groups(conn, REGISTRATION_WRAPPER)
+    pointer_array_audit = pointer_array_matches(args.pointer_arrays, callers.values())
 
     result = {
         "schema": "acnh-re/catalog-registration-callers/1",
@@ -120,6 +163,7 @@ def main():
         "resolved_caller_functions": len(callers),
         "unresolved_call_sites": unresolved,
         "callers": sorted(callers.values(), key=lambda item: int(item["function_va"], 16)),
+        "code_pointer_array_audit": pointer_array_audit,
         "registration_wrapper_trace": {
             "wrapper_va": hex(REGISTRATION_WRAPPER),
             "pseudocode": "binary/analysis_decomp/efe070.c",
