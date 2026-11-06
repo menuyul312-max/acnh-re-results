@@ -1,0 +1,159 @@
+{
+  "native_elf_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+  "native_functions": {
+    "setter": "0xeecad0",
+    "getter": "0xeecba0"
+  },
+  "scope": "Original setter, getter, mapper, and index arithmetic run on a synthetic 2000-byte bitset. ItemParam/save context and accessor boundaries are stubbed; no live save is loaded or written.",
+  "cases": 13,
+  "mismatches": 0,
+  "dependencies_stubbed": [
+    "item validity",
+    "ItemParam row/RemakeID lookup",
+    "variant-byte source",
+    "world/save accessor wrappers",
+    "synthetic bitset manager"
+  ],
+  "results": [
+    {
+      "remake_id": 0,
+      "variant_input": 0,
+      "variant_present": true,
+      "valid_item": true,
+      "mapped_index": 0,
+      "setter_return": 1,
+      "getter_return": true,
+      "expected_getter": true,
+      "bitset_matches": true
+    },
+    {
+      "remake_id": 0,
+      "variant_input": 7,
+      "variant_present": true,
+      "valid_item": true,
+      "mapped_index": 7,
+      "setter_return": 1,
+      "getter_return": true,
+      "expected_getter": true,
+      "bitset_matches": true
+    },
+    {
+      "remake_id": 3,
+      "variant_input": 7,
+      "variant_present": true,
+      "valid_item": true,
+      "mapped_index": 31,
+      "setter_return": 1,
+      "getter_return": true,
+      "expected_getter": true,
+      "bitset_matches": true
+    },
+    {
+      "remake_id": 4,
+      "variant_input": 0,
+      "variant_present": true,
+      "valid_item": true,
+      "mapped_index": 32,
+      "setter_return": 1,
+      "getter_return": true,
+      "expected_getter": true,
+      "bitset_matches": true
+    },
+    {
+      "remake_id": 31,
+      "variant_input": 0,
+      "variant_present": true,
+      "valid_item": true,
+      "mapped_index": 248,
+      "setter_return": 1,
+      "getter_return": true,
+      "expected_getter": true,
+      "bitset_matches": true
+    },
+    {
+      "remake_id": 31,
+      "variant_input": 7,
+      "variant_present": true,
+      "valid_item": true,
+      "mapped_index": 255,
+      "setter_return": 1,
+      "getter_return": true,
+      "expected_getter": true,
+      "bitset_matches": true
+    },
+    {
+      "remake_id": 1999,
+      "variant_input": 0,
+      "variant_present": true,
+      "valid_item": true,
+      "mapped_index": 15992,
+      "setter_return": 1,
+      "getter_return": true,
+      "expected_getter": true,
+      "bitset_matches": true
+    },
+    {
+      "remake_id": 1999,
+      "variant_input": 7,
+      "variant_present": true,
+      "valid_item": true,
+      "mapped_index": 15999,
+      "setter_return": 1,
+      "getter_return": true,
+      "expected_getter": true,
+      "bitset_matches": true
+    },
+    {
+      "remake_id": 2000,
+      "variant_input": 0,
+      "variant_present": true,
+      "valid_item": true,
+      "mapped_index": 16000,
+      "setter_return": 1,
+      "getter_return": false,
+      "expected_getter": false,
+      "bitset_matches": true
+    },
+    {
+      "remake_id": -1,
+      "variant_input": 0,
+      "variant_present": true,
+      "valid_item": true,
+      "mapped_index": null,
+      "setter_return": 0,
+      "getter_return": false,
+      "expected_getter": false,
+      "bitset_matches": true
+    },
+    {
+      "remake_id": 7,
+      "variant_input": 255,
+      "variant_present": false,
+      "valid_item": true,
+      "mapped_index": 56,
+      "setter_return": 1,
+      "getter_return": true,
+      "expected_getter": true,
+      "bitset_matches": true
+    },
+    {
+      "remake_id": 5,
+      "variant_input": 2,
+      "variant_present": true,
+      "valid_item": false,
+      "mapped_index": null,
+      "setter_return": 0,
+      "getter_return": false,
+      "expected_getter": false,
+      "bitset_matches": true
+    },
+    {
+      "remake_id": 3,
+      "set_variant": 5,
+      "queried_neighbor_variant": 4,
+      "getter_return": false,
+      "expected_getter": false,
+      "bitset_matches": true
+    }
+  ]
+}

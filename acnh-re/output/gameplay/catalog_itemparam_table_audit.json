@@ -165,6 +165,61 @@
     "NotSee": 23,
     "Sale": 348
   },
+  "item_remake_crosswalk": {
+    "evidence_level": "TABLE_JOIN_ONLY",
+    "remake_id_join": "ItemParam.RemakeID == ItemRemake.UniqueID",
+    "item_kind_join": "ItemParam.ItemKind label == ItemKind.Label; read ItemKind.ItemRemakeType",
+    "item_param_rows_with_nonnegative_remake_id": 1044,
+    "distinct_remake_ids": 654,
+    "item_remake_rows": 654,
+    "item_param_rows_without_item_remake_row": 0,
+    "item_kind_label_join_misses": {},
+    "item_remake_type_counts": {
+      "Ftr": 1022,
+      "Smartphone": 2,
+      "Tool": 20
+    },
+    "item_catalog_type_by_item_remake_type": {
+      "Ftr": {
+        "NotForSale": 283,
+        "NotSee": 391,
+        "Sale": 348
+      },
+      "Smartphone": {
+        "NotSee": 2
+      },
+      "Tool": {
+        "NotSee": 20
+      }
+    },
+    "item_re_fabric_type_counts_across_joined_rows": {
+      "CommonAndMyDesign": 69,
+      "MyDesign": 81,
+      "None": 894
+    },
+    "item_unique_id_matches_to_item_remake": 654,
+    "item_unique_id_mismatch_rows": 390,
+    "item_unique_id_mismatch_groups": [
+      {
+        "remake_id": 652,
+        "item_remake_item_unique_id": 6426,
+        "mismatch_rows": 390,
+        "item_param_rows_for_remake_id": 391,
+        "item_kinds": [
+          "Bromide"
+        ],
+        "catalog_types": [
+          "NotSee"
+        ],
+        "interpretation": "shared RemakeID group; table join does not imply each row has a distinct ItemRemake record"
+      }
+    ],
+    "remake_id_fanout_histogram": {
+      "1": 653,
+      "391": 1
+    },
+    "interpretation_limit": "The tables show join structure and supported remake categories. They do not reveal which packed-item payload values are produced for each visible design/color or how registration is gated at runtime."
+  },
   "max_nonnegative_remake_id": 901,
   "interpretation_limit": "ItemCatalogType and RemakeID are table fields. Their values do not alone prove runtime registration, order availability, save bits, or UI visibility."
 }
