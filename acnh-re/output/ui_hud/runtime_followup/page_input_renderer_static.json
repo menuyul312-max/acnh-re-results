@@ -1,0 +1,851 @@
+{
+  "schema": "acnh.ui_hud_runtime_followup.page_input_renderer_static.v1",
+  "source": {
+    "game_build": "ACNH 1.0.0",
+    "module": "ExeFS main",
+    "main_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+    "evidence_kind": "Raw AArch64 static inspection, indexed direct-call rows, and committed BFLYT audit outputs.",
+    "capture_status": "No synchronized live game capture or runtime pointer trace is present in the available evidence.",
+    "local_input_scope": "This worktree has the ExeFS main image; RomFS-derived UI evidence is available only as committed catalogues, not as raw archives under inputs/."
+  },
+  "page_loader_and_lifecycle": {
+    "factory_count": 135,
+    "registration": {
+      "helper": "0x1da8220",
+      "shared_virtual_slot_index": 5,
+      "shared_virtual_slot_offset_bytes": "0x28",
+      "target": "0x1da5380",
+      "observation": "The registration helper calls 0x1da40b0; that helper writes integer 2 at page-object byte offset +0x48 and dispatches through vptr+0x28. All 135 constructor-installed pointer sequences contain target 0x1da5380 at slot 5."
+    },
+    "slot46_layout_getters": {
+      "summary": {
+        "factory_pages_examined": 135,
+        "unique_method_targets": 135,
+        "unique_returned_identifiers": 135,
+        "duplicate_returned_identifiers": {},
+        "exact_layout_name_matches": 134,
+        "returned_identifiers_without_catalogued_layout": 1,
+        "getter_targets_with_direct_B_or_BL_references": 0,
+        "direct_B_or_BL_reference_sites_to_getters": 0,
+        "getter_targets_with_exactly_one_relative_relocation": 135,
+        "registry_query_slot_17_target_distribution": {
+          "0x166ec70": 135
+        },
+        "registry_page_slot_30_target_distribution": {
+          "0x1144dc0": 135
+        },
+        "unmatched_pages": [
+          {
+            "page_class": "SwkbdPage",
+            "returned_identifier": "SwkbdDummy"
+          }
+        ]
+      },
+      "method": "One relocated three-instruction string getter at slot 46 (+0x170) in each of 135 observed factory page pointer sequences.",
+      "direct_getter_calls": "The static page audit records zero direct B/BL references to the getter targets."
+    },
+    "candidate_selector": {
+      "helper": "0x1da8270",
+      "direct_callsite_count": 1,
+      "direct_callsite_va": "0x1cbad40",
+      "observed": [
+        "Iterates a collection represented by fields at object offsets +0x50, +0x58, and +0x64 (80, 88, and 100 bytes).",
+        "Reads a candidate page pointer from each entry at +0x10, dispatches virtual slot 17 at page vptr offset +0x88 with the supplied query in x1, and tests return bit 0.",
+        "On a true result returns the collection entry address plus +0x20; otherwise returns null after the scan."
+      ],
+      "limit": "The common slot-30 body reads page object state at +0x210 and follows helper branches; it does not identify the page by its slot-46 returned layout string. Query, predicate, and returned collection-entry semantics remain unresolved."
+    },
+    "status": "Factory construction and collection insertion are statically mapped; getter-to-layout-loader handoff, page open/update/close/back scheduling, modal ordering, focus restoration, and page teardown remain unresolved."
+  },
+  "npad_to_action_route": {
+    "npad_update_function": "0x1968b80",
+    "direct_call_count_inside_update": 11,
+    "direct_call_targets_inside_update": [
+      {
+        "callsite": "0x1968bd4",
+        "target": "0x2210240"
+      },
+      {
+        "callsite": "0x1968c14",
+        "target": "0x2210250"
+      },
+      {
+        "callsite": "0x1968c2c",
+        "target": "0x2210260"
+      },
+      {
+        "callsite": "0x1968c44",
+        "target": "0x2210270"
+      },
+      {
+        "callsite": "0x1968c5c",
+        "target": "0x2210280"
+      },
+      {
+        "callsite": "0x1968c74",
+        "target": "0x2210290"
+      },
+      {
+        "callsite": "0x1968cd4",
+        "target": "0x22102a0"
+      },
+      {
+        "callsite": "0x1968cfc",
+        "target": "0x22102b0"
+      },
+      {
+        "callsite": "0x1968d20",
+        "target": "0x22102c0"
+      },
+      {
+        "callsite": "0x1968d5c",
+        "target": "0x22102d0"
+      },
+      {
+        "callsite": "0x1968da8",
+        "target": "0x22102e0"
+      }
+    ],
+    "action_dispatcher": "0x14845a0",
+    "direct_calls_into_action_dispatcher": 28,
+    "action_dispatcher_direct_call_sites": [
+      {
+        "callsite": "0x147e5d8",
+        "owner": null
+      },
+      {
+        "callsite": "0x147e614",
+        "owner": null
+      },
+      {
+        "callsite": "0x147e650",
+        "owner": null
+      },
+      {
+        "callsite": "0x147e68c",
+        "owner": null
+      },
+      {
+        "callsite": "0x147e6c8",
+        "owner": null
+      },
+      {
+        "callsite": "0x147e704",
+        "owner": null
+      },
+      {
+        "callsite": "0x147e740",
+        "owner": null
+      },
+      {
+        "callsite": "0x147e77c",
+        "owner": null
+      },
+      {
+        "callsite": "0x147e7b8",
+        "owner": null
+      },
+      {
+        "callsite": "0x147e7f4",
+        "owner": null
+      },
+      {
+        "callsite": "0x147e840",
+        "owner": null
+      },
+      {
+        "callsite": "0x147f0fc",
+        "owner": null
+      },
+      {
+        "callsite": "0x1482be4",
+        "owner": "0x1482ae0"
+      },
+      {
+        "callsite": "0x1482c64",
+        "owner": "0x1482ae0"
+      },
+      {
+        "callsite": "0x1483350",
+        "owner": null
+      },
+      {
+        "callsite": "0x14833cc",
+        "owner": null
+      },
+      {
+        "callsite": "0x14834b4",
+        "owner": null
+      },
+      {
+        "callsite": "0x14837d0",
+        "owner": null
+      },
+      {
+        "callsite": "0x14837e4",
+        "owner": null
+      },
+      {
+        "callsite": "0x1483a60",
+        "owner": null
+      },
+      {
+        "callsite": "0x1483a9c",
+        "owner": null
+      },
+      {
+        "callsite": "0x1483b74",
+        "owner": "0x1483aa0"
+      },
+      {
+        "callsite": "0x1483c80",
+        "owner": "0x1483c40"
+      },
+      {
+        "callsite": "0x1483dac",
+        "owner": "0x1483d80"
+      },
+      {
+        "callsite": "0x1483f68",
+        "owner": "0x1483e40"
+      },
+      {
+        "callsite": "0x1484090",
+        "owner": "0x1483f80"
+      },
+      {
+        "callsite": "0x14852f4",
+        "owner": "0x1485220"
+      },
+      {
+        "callsite": "0x1485554",
+        "owner": "0x1485520"
+      }
+    ],
+    "direct_edge_from_npad_update_to_action_dispatcher": false,
+    "interpretation": "The indexed updater's direct calls go to its recorded HID/runtime call targets, but none lead directly to the generic UI action dispatcher. This does not exclude a virtual callback, another scheduler function, or state translated between the two subsystems."
+  },
+  "hit_pane_identity": {
+    "native_inputs": {
+      "node_pane_lookup": {
+        "callsite": "0x1482298",
+        "helper": "0x1485ab0",
+        "dynamic_name_source": "[controller_params+8]+0x18",
+        "lookup_context": "[controller_params+0x10]",
+        "descriptor_base": "global cell [0x330de88] + 0x10",
+        "token": "Hit",
+        "result_field": "control+0x220"
+      },
+      "control_visibility_lookup": {
+        "constructor_callsite": "0x14827c4",
+        "helper_callsite": "0x1488618",
+        "helper": "0x1485ab0",
+        "dynamic_name_source": "[controller_params+8]+0x18",
+        "lookup_context": "[controller_params+0x10]",
+        "descriptor_base": "global cell [0x330de88] + 0x10",
+        "token": "Hit",
+        "result_field": "control+0x420+0x70"
+      },
+      "interpretation": "The constructor builds the node+0x20 lookup and the control-side Hit lookup from the same controller parameter fields, descriptor base, helper, and token. Their calls are separate and native code does not compare the returned pointers; this is same-key input evidence, not a direct pointer-equality assertion.",
+      "instructions": {
+        "constructor_sources": [
+          {
+            "address": "0x1482204",
+            "mnemonic": "mov",
+            "operands": "x20, x1"
+          },
+          {
+            "address": "0x1482268",
+            "mnemonic": "ldp",
+            "operands": "x8, x1, [x20, #8]"
+          },
+          {
+            "address": "0x148226c",
+            "mnemonic": "ldr",
+            "operands": "x8, [x8, #0x18]"
+          },
+          {
+            "address": "0x1482278",
+            "mnemonic": "ldr",
+            "operands": "x23, [x23, #0xe88]"
+          },
+          {
+            "address": "0x148228c",
+            "mnemonic": "add",
+            "operands": "x9, x23, #0x10"
+          },
+          {
+            "address": "0x1482298",
+            "mnemonic": "bl",
+            "operands": "#0x1485ab0"
+          },
+          {
+            "address": "0x14822a4",
+            "mnemonic": "str",
+            "operands": "x0, [x19, #0x220]"
+          },
+          {
+            "address": "0x14827c0",
+            "mnemonic": "ldp",
+            "operands": "x1, x2, [x20, #8]"
+          },
+          {
+            "address": "0x14827c4",
+            "mnemonic": "bl",
+            "operands": "#0x14885b0"
+          }
+        ],
+        "control_lookup_sources": [
+          {
+            "address": "0x14885c4",
+            "mnemonic": "ldr",
+            "operands": "x8, [x1, #0x18]"
+          },
+          {
+            "address": "0x14885d0",
+            "mnemonic": "ldr",
+            "operands": "x22, [x22, #0xe88]"
+          },
+          {
+            "address": "0x14885d4",
+            "mnemonic": "mov",
+            "operands": "x20, x2"
+          },
+          {
+            "address": "0x14885f0",
+            "mnemonic": "add",
+            "operands": "x21, x22, #0x10"
+          },
+          {
+            "address": "0x14885fc",
+            "mnemonic": "adrp",
+            "operands": "x8, #0x2947000"
+          },
+          {
+            "address": "0x1488600",
+            "mnemonic": "add",
+            "operands": "x8, x8, #0x51b"
+          },
+          {
+            "address": "0x1488610",
+            "mnemonic": "mov",
+            "operands": "x1, x20"
+          },
+          {
+            "address": "0x1488614",
+            "mnemonic": "stp",
+            "operands": "x21, x8, [sp, #0x10]"
+          },
+          {
+            "address": "0x1488618",
+            "mnemonic": "bl",
+            "operands": "#0x1485ab0"
+          },
+          {
+            "address": "0x1488620",
+            "mnemonic": "str",
+            "operands": "x0, [x19, #0x70]"
+          }
+        ]
+      }
+    },
+    "asset_pair_count": 18,
+    "asset_pairs": [
+      {
+        "layout": "BtnLineNml",
+        "control_type": "ButtonNormal",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          840.0,
+          60.0
+        ],
+        "source": "BtnLineNml.Nin_NX_NVN.zs"
+      },
+      {
+        "layout": "BtnLine_Root",
+        "control_type": "ButtonNormal",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          840.0,
+          60.0
+        ],
+        "source": "BtnLine_Root.Nin_NX_NVN.zs"
+      },
+      {
+        "layout": "BtnOpt_Root",
+        "control_type": "ButtonCheck",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          1080.0,
+          100.0
+        ],
+        "source": "BtnOpt_Root.Nin_NX_NVN.zs"
+      },
+      {
+        "layout": "FooterBtn",
+        "control_type": "ButtonRepeat",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          674.0,
+          72.0
+        ],
+        "source": "FooterBtn.Nin_NX_NVN.zs"
+      },
+      {
+        "layout": "SwkbdBtnBS",
+        "control_type": "ButtonRepeat",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          100.0,
+          100.0
+        ],
+        "source": "SwkbdBtnBS.Nin_NX_NVN.zs"
+      },
+      {
+        "layout": "SwkbdBtnBalloon2",
+        "control_type": "ButtonNormal",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          110.0,
+          110.0
+        ],
+        "source": "SwkbdBtnBalloon2.Nin_NX_NVN.zs"
+      },
+      {
+        "layout": "SwkbdBtnEnter",
+        "control_type": "ButtonNormal",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          100.0,
+          100.0
+        ],
+        "source": "SwkbdBtnEnter.Nin_NX_NVN.zs"
+      },
+      {
+        "layout": "SwkbdBtnNumeric",
+        "control_type": "ButtonNormal",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          100.0,
+          100.0
+        ],
+        "source": "SwkbdBtnNumeric.Nin_NX_NVN.zs"
+      },
+      {
+        "layout": "SwkbdBtnOptCheck",
+        "control_type": "ButtonCheck",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          100.0,
+          100.0
+        ],
+        "source": "SwkbdBtnOptCheck.Nin_NX_NVN.zs"
+      },
+      {
+        "layout": "SwkbdBtnOptLineBreak",
+        "control_type": "ButtonRepeat",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          100.0,
+          100.0
+        ],
+        "source": "SwkbdBtnOptLineBreak.Nin_NX_NVN.zs"
+      },
+      {
+        "layout": "SwkbdBtnOptNml",
+        "control_type": "ButtonNormal",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          100.0,
+          100.0
+        ],
+        "source": "SwkbdBtnOptNml.Nin_NX_NVN.zs"
+      },
+      {
+        "layout": "SwkbdBtnOptRpt",
+        "control_type": "ButtonRepeat",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          100.0,
+          100.0
+        ],
+        "source": "SwkbdBtnOptRpt.Nin_NX_NVN.zs"
+      },
+      {
+        "layout": "SwkbdBtnOpt_Root",
+        "control_type": "ButtonNormal",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          100.0,
+          100.0
+        ],
+        "source": "SwkbdBtnOpt_Root.Nin_NX_NVN.zs"
+      },
+      {
+        "layout": "SwkbdBtnShift",
+        "control_type": "ButtonNormal",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          100.0,
+          100.0
+        ],
+        "source": "SwkbdBtnShift.Nin_NX_NVN.zs"
+      },
+      {
+        "layout": "SwkbdBtnTransArwCheck",
+        "control_type": "ButtonCheck",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          60.0,
+          46.0
+        ],
+        "source": "SwkbdBtnTransArwCheck.Nin_NX_NVN.zs"
+      },
+      {
+        "layout": "SwkbdBtnTransArwNml",
+        "control_type": "ButtonNormal",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          76.0,
+          46.0
+        ],
+        "source": "SwkbdBtnTransArwNml.Nin_NX_NVN.zs"
+      },
+      {
+        "layout": "SwkbdBtnTransWord",
+        "control_type": "ButtonNormal",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          1530.0,
+          72.0
+        ],
+        "source": "SwkbdBtnTransWord.Nin_NX_NVN.zs"
+      },
+      {
+        "layout": "SwkbdBtn_Root",
+        "control_type": "ButtonNormal",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          100.0,
+          100.0
+        ],
+        "source": "SwkbdBtn_Root.Nin_NX_NVN.zs"
+      }
+    ],
+    "b_hit_declared_visible_counts": {
+      "true": 18,
+      "false": 0
+    },
+    "return_pointer_comparison_present": false,
+    "status": "Both native lookups use the same dynamic name source, context, descriptor base, helper, and Hit token. Their returns are stored separately and are not compared. The 18 same-layout B_Hit:Hit records support the asset name crosswalk; no live dynamic prefix or pane pointer was captured."
+  },
+  "static_pane_and_scissor_flags": {
+    "hit_visibility_helper": {
+      "function": "0x14c80d0",
+      "instructions": [
+        {
+          "address": "0x14c80d0",
+          "mnemonic": "ldr",
+          "operands": "x8, [x0]"
+        },
+        {
+          "address": "0x14c80d4",
+          "mnemonic": "ldrb",
+          "operands": "w9, [x8, #0x58]"
+        },
+        {
+          "address": "0x14c80d8",
+          "mnemonic": "tbnz",
+          "operands": "w9, #0, #0x14c80e4"
+        },
+        {
+          "address": "0x14c80dc",
+          "mnemonic": "mov",
+          "operands": "w0, wzr"
+        },
+        {
+          "address": "0x14c80e4",
+          "mnemonic": "tbz",
+          "operands": "w1, #0, #0x14c80f0"
+        },
+        {
+          "address": "0x14c80e8",
+          "mnemonic": "ldrb",
+          "operands": "w9, [x8, #0x5a]"
+        },
+        {
+          "address": "0x14c80ec",
+          "mnemonic": "cbz",
+          "operands": "w9, #0x14c8134"
+        },
+        {
+          "address": "0x14c80fc",
+          "mnemonic": "ldrb",
+          "operands": "w9, [x8, #0x58]"
+        },
+        {
+          "address": "0x14c8100",
+          "mnemonic": "tbz",
+          "operands": "w9, #0, #0x14c8144"
+        },
+        {
+          "address": "0x14c8104",
+          "mnemonic": "tbz",
+          "operands": "w9, #1, #0x14c8110"
+        }
+      ],
+      "observation": "The helper tests bit 0 of the pane byte at +0x58 and then walks the parent chain under its input options. The byte is consulted as visibility state in the hit-test path; live instance values are unavailable."
+    },
+    "generic_renderer_callback_gate": {
+      "function": "0x192fb20",
+      "instructions": [
+        {
+          "address": "0x192fb30",
+          "mnemonic": "ldrb",
+          "operands": "w8, [x0, #0x58]"
+        },
+        {
+          "address": "0x192fb34",
+          "mnemonic": "mov",
+          "operands": "w9, #0x81"
+        },
+        {
+          "address": "0x192fb38",
+          "mnemonic": "bics",
+          "operands": "wzr, w9, w8"
+        },
+        {
+          "address": "0x192fb3c",
+          "mnemonic": "b.ne",
+          "operands": "#0x192fc0c"
+        },
+        {
+          "address": "0x192fb50",
+          "mnemonic": "tbz",
+          "operands": "w8, #4, #0x192fb7c"
+        },
+        {
+          "address": "0x192fb54",
+          "mnemonic": "ldrb",
+          "operands": "w8, [x21, #0x5a]"
+        },
+        {
+          "address": "0x192fb5c",
+          "mnemonic": "ldrb",
+          "operands": "w8, [x21, #0x62]"
+        },
+        {
+          "address": "0x192fb60",
+          "mnemonic": "tbnz",
+          "operands": "w8, #1, #0x192fb90"
+        },
+        {
+          "address": "0x192fb64",
+          "mnemonic": "ldr",
+          "operands": "x8, [x21]"
+        },
+        {
+          "address": "0x192fb68",
+          "mnemonic": "ldr",
+          "operands": "x8, [x8, #0xa8]"
+        },
+        {
+          "address": "0x192fb78",
+          "mnemonic": "blr",
+          "operands": "x8"
+        },
+        {
+          "address": "0x192fbe8",
+          "mnemonic": "ldr",
+          "operands": "x8, [x21, #-8]!"
+        },
+        {
+          "address": "0x192fbec",
+          "mnemonic": "ldr",
+          "operands": "x8, [x8, #0xa0]"
+        },
+        {
+          "address": "0x192fbfc",
+          "mnemonic": "blr",
+          "operands": "x8"
+        }
+      ],
+      "raw_conditions": [
+        "Pane byte +0x58 has both mask bits 0 and 7 set (mask 0x81).",
+        "Pane byte +0x5c has bit 4 set.",
+        "Pane byte +0x5a is nonzero.",
+        "Pane byte +0x62 has bit 1 clear."
+      ],
+      "callback": "The pane vtable slot +0xa8 (byte offset 168) is called after those raw gates; the child traversal later calls slot +0xa0 (offset 160). These raw object fields are not named active/visible flags by the disassembly."
+    },
+    "scissor_bounds_selector": {
+      "setter_function": "0x14c8d00",
+      "callback_function": "0x14c8d30",
+      "instructions": {
+        "setter": [
+          {
+            "address": "0x14c8d00",
+            "mnemonic": "mov",
+            "operands": "w8, #1"
+          },
+          {
+            "address": "0x14c8d04",
+            "mnemonic": "strb",
+            "operands": "w8, [x0, #0xe0]"
+          },
+          {
+            "address": "0x14c8d08",
+            "mnemonic": "ldr",
+            "operands": "w8, [x1]"
+          },
+          {
+            "address": "0x14c8d0c",
+            "mnemonic": "str",
+            "operands": "w8, [x0, #0xf0]"
+          },
+          {
+            "address": "0x14c8d10",
+            "mnemonic": "ldr",
+            "operands": "w8, [x1, #4]"
+          },
+          {
+            "address": "0x14c8d14",
+            "mnemonic": "str",
+            "operands": "w8, [x0, #0xf4]"
+          },
+          {
+            "address": "0x14c8d18",
+            "mnemonic": "ldr",
+            "operands": "w8, [x1, #8]"
+          },
+          {
+            "address": "0x14c8d1c",
+            "mnemonic": "str",
+            "operands": "w8, [x0, #0xf8]"
+          },
+          {
+            "address": "0x14c8d20",
+            "mnemonic": "ldr",
+            "operands": "w8, [x1, #0xc]"
+          },
+          {
+            "address": "0x14c8d24",
+            "mnemonic": "str",
+            "operands": "w8, [x0, #0xfc]"
+          }
+        ],
+        "callback": [
+          {
+            "address": "0x14c8d44",
+            "mnemonic": "ldrb",
+            "operands": "w8, [x0, #0xe0]"
+          },
+          {
+            "address": "0x14c8d4c",
+            "mnemonic": "cbz",
+            "operands": "w8, #0x14c8d7c"
+          },
+          {
+            "address": "0x14c8d50",
+            "mnemonic": "ldp",
+            "operands": "w8, w9, [x0, #0xf0]"
+          },
+          {
+            "address": "0x14c8d54",
+            "mnemonic": "stp",
+            "operands": "w8, w9, [sp]"
+          },
+          {
+            "address": "0x14c8d7c",
+            "mnemonic": "ldr",
+            "operands": "x20, [x0, #0x28]"
+          },
+          {
+            "address": "0x14c8e40",
+            "mnemonic": "mov",
+            "operands": "x1, x19"
+          },
+          {
+            "address": "0x14c8e44",
+            "mnemonic": "bl",
+            "operands": "#0x14c8fe0"
+          }
+        ]
+      },
+      "observation": "The setter writes 1 to object byte +0xe0 and copies four 32-bit bounds to +0xf0..+0xfc. The callback uses those stored bounds when +0xe0 is nonzero; when zero it computes bounds from the pane transform. Both branches converge on the stack-push call at 0x14c8e44, so +0xe0 selects the bounds source, not whether clipping is applied."
+    },
+    "catalogued_scissor_panes": [
+      {
+        "layout": "LMyDesignEditCanvas",
+        "pane": {
+          "type": "scr1",
+          "name": "S_Scissor_01",
+          "user": "",
+          "visible": true,
+          "origin": 0,
+          "alpha": 255,
+          "translate": [
+            0.0,
+            -10.0,
+            0.0
+          ],
+          "rotate": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": [
+            1.0,
+            1.0
+          ],
+          "size": [
+            650.0,
+            650.0
+          ]
+        }
+      },
+      {
+        "layout": "LMyDesignEditCanvas",
+        "pane": {
+          "type": "scr1",
+          "name": "S_Scissor_00",
+          "user": "",
+          "visible": true,
+          "origin": 0,
+          "alpha": 255,
+          "translate": [
+            0.0,
+            -10.0,
+            0.0
+          ],
+          "rotate": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": [
+            1.0,
+            1.0
+          ],
+          "size": [
+            650.0,
+            650.0
+          ]
+        }
+      }
+    ],
+    "synthetic_fixture": {
+      "artifact": "scissorpane_restore_native.json",
+      "checks_without_mismatch": 11,
+      "pixel_or_nvn_capture": false
+    }
+  },
+  "limits": [
+    "No synchronized live capture aligns page scheduler events, Npad samples, BFLYT instance pointers, renderer flags, and GPU output.",
+    "The current worktree does not contain raw RomFS archives under inputs/; BFLYT claims here use the committed parser/catalogue outputs.",
+    "The static Npad call graph does not establish indirect routes from HID state to the 13 UI action IDs.",
+    "The parent-bound pointer used by hit testing is not named a render clip by native code; its geometric intersection is established, but visual clipping from that field is not.",
+    "The renderer's pane flag bytes and ScissorPane bounds-source byte have no recovered runtime active-state names beyond the code behavior recorded above.",
+    "Scissor stack fixtures do not execute NVN or compare displayed pixels, so framebuffer origin and actual clip coverage remain unmeasured."
+  ]
+}

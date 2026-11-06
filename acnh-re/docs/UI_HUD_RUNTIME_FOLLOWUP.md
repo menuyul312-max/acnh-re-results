@@ -31,3 +31,11 @@ python3 acnh-re/tools/ui_hud_dispatch_disasm.py \
 ```
 
 Disassembler memakai LLVM lokal. Klaim native statis dan fixture synthetic diberi label terpisah; fixture tidak memuat BFLYT live instance, tidak mengirim command NVN, dan tidak menggantikan capture game.
+
+## Pembaruan lifecycle, routing input, dan flag render
+
+Laporan lanjutan [UI_HUD_LIFECYCLE_FOLLOWUP.md](UI_HUD_LIFECYCLE_FOLLOWUP.md) menambahkan batas statis untuk loader/lifecycle halaman, jalur Npad-ke-aksi, identitas pane `Hit`, serta flag callback renderer. Slot getter layout page terbukti sebagai crosswalk, tetapi handoff ke loader dan lifecycle scheduler masih belum ditemukan. Method sampling Npad tidak memiliki direct call ke dispatcher aksi umum; kemungkinan edge virtual atau state perantara belum tertutup.
+
+Ada dua rincian flag yang perlu dipertahankan. Renderer umum `0x192fb20` menguji bit mentah pada objek pane sebelum memanggil callback `+0xa8`, tetapi disassembly tidak memberi nama semantik active flag. Byte `ScissorPane +0xe0` memilih bounds yang sudah disimpan dibanding bounds transform hasil pane; kedua cabang tetap mencapai stack push. BFLYT mengatalogkan semua 18 `B_Hit` dan dua ScissorPane sebagai `visible=true`, tetapi nilai live object tidak tersedia. Rincian instruksi ada di [page_input_renderer_static.json](../output/ui_hud/runtime_followup/page_input_renderer_static.json), dibuat oleh [ui_hud_lifecycle_static_trace.py](../tools/ui_hud_lifecycle_static_trace.py).
+
+Tidak ada capture live sinkron yang menyandingkan page event, Npad sample, pointer pane, flag renderer, dan output GPU. Worktree ini juga hanya memiliki input ExeFS `main`; bukti RomFS tersedia sebagai output katalog sebelumnya, bukan arsip mentah untuk diurai ulang.

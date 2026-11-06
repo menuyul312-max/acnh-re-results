@@ -36,6 +36,8 @@ Ada 35 pemakaian dengan dua kandidat BFLYT bernama sama, mencakup tiga nama part
 
 ## Bukti native dan batas perilaku
 
+Follow-up terbaru menelusuri lebih jauh batas page registry, Npad/action dispatch, identitas `B_Hit`, dan flag renderer di [UI_HUD_LIFECYCLE_FOLLOWUP.md](UI_HUD_LIFECYCLE_FOLLOWUP.md). Factory mengisi state object `+0x48` dengan nilai `1` lalu `2` selama registration, tetapi semantik nilai itu belum diketahui. Helper seleksi page hanya menelusuri kandidat melalui slot 17/30; getter slot 46 belum tersambung ke loader/scheduler. Update Npad tidak memanggil dispatcher aksi umum secara langsung. Renderer menguji flag mentah sebelum callback ScissorPane; field `+0xe0` memilih sumber bounds, bukan mengaktifkan atau menonaktifkan push. Nilai object live dan clipping pixel masih belum teramati.
+
 ExeFS `main` mencatat 31 pendaftaran halaman dan tiga helper registrasi. Korelasi yang sudah ada mencakup prompt item/MainScreen (`0x1214110`), ConfirmedFruit (`0x132e050`), entri anak MenuMapFull (`0x12330c0`), keluarga dialog umum/telepon (`0x11e6d70`), serta keyboard chat (`0x151ec70`).
 
 Rantai resource native yang kini dipetakan: startup `0x98b70` memanggil `0x1541580`, yang membaca daftar nama dan membentuk `Layout/%s.Nin_NX_NVN.zs`. Manager layout (`0x14c3cf0` → `0x14c49e0` → `0x14bfe60` → `0x14bebd0`) membuka arsip `.zs`, meminta member `%s.arc`, lalu mendaftarkan accessor. Loader layout meminta `%s.bflyt` melalui accessor (`0x14c77a0` → `0x191c8d0`). Jalur sublayout PRT1 (`0x1cf1230` → `0x1cf0de0` → `0x1ceb3e0`) membangun key `EuiAllocator:<locale><layout-name>` dan meminta child `.bflyt`. Pemindaian literal native menemukan `Swkbd/Layout/common.szs` untuk paket keyboard, tetapi tidak menemukan pola selector `.szs` generik bagi layout; pola generik `.szs` yang ditemukan mengarah ke resource lain. Ini membuktikan sebuah jalur archive `.zs`, tetapi belum memperlihatkan aturan yang memilih di antara kandidat `.zs`/`.szs` untuk setiap part ganda.
@@ -152,6 +154,7 @@ Pratinjau [HUD_layout_preview.png](../work/ui_hud_preview/HUD_layout_preview.png
 - [74 kandidat nama page-to-layout yang belum terbukti](../output/ui_hud/page_layout_candidates.json)
 - [23 kandidat nama antara registry halaman dan factory](../output/ui_hud/page_registry_factory_candidates.json)
 - [Crosswalk identifier getter page ke nama layout](../output/ui_hud/page_layout_method_bindings.json)
+- [Follow-up page lifecycle, Npad/action, hit-pane identity, dan renderer flags](../output/ui_hud/runtime_followup/page_input_renderer_static.json)
 - [Struktur section, userData, CNT1, WND1, BND1, dan SCR1](../output/ui_hud/section_semantics.json)
 - [Batas group `grs1/gre1` dan `grp1`](../output/ui_hud/group_structure.json)
 - [35 referensi part ganda dan kandidat hash](../output/ui_hud/part_reference_ambiguities.json)
