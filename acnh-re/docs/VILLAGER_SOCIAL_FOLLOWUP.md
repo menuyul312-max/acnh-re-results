@@ -115,11 +115,16 @@ event 34–36 mengirim -1/-2/-3; `NNPC_GEvent_BirthdayN_H` event 92 mengirim
 -5 dan event 102–107 memberi +6/+4/+8/+4/+3/+5. Flow bernama
 `NNPC_Select_Present` juga memuat aksi +1.
 
-**Terbukti native:** callback aksi `0x27a220` berjalan dengan input `AddValue`
-dari 12 event pada lima flow dan meneruskan nilai itu tanpa perubahan ke entry
-`0xd34cb0`. Jalur validasi virtual memakai vtable aksi terdaftar
+**Terbukti native:** callback aksi `0x27a220` dijalankan untuk seluruh 72
+pemakaian `AddValue` pada 21 flow yang ditemukan di BFEVFL dan meneruskan
+setiap nilai tanpa perubahan ke entry `0xd34cb0` (72/72 cocok). Jalur validasi
+virtual memakai vtable aksi terdaftar
 `0x3040940`, slot `0x20` memanggil fungsi asli `0x27a210`, lalu callback
-mengambil resident slot serta `AddValue` dari object. Eksekusi berhenti saat
+mengambil resident slot serta `AddValue` dari object sintetis. Nama flow
+mencakup `NNPC_Select_Present`, `NNPC_Select_Sell_Gift`, pilihan tool/furnitur,
+delivery quest, sakit, treasure hunt, dan percakapan paksa. Ini menegaskan nilai
+aksi yang dikonfigurasi, bukan membuktikan semua kondisi atau urutan aksi pada
+playthrough. Eksekusi berhenti saat
 masuk ke `0xd34cb0`; pembacaan dan perubahan save pada badan wrapper belum
 dijalankan oleh kasus EventFlow ini. Data: [eventflow_friendship_action_native.json](../output/gameplay/villager_social_followup/eventflow_friendship_action_native.json).
 
@@ -251,5 +256,6 @@ candidate disimpan di
 **Terbuka:** konteks yang memicu cabang -3 pada `0xab9dc0`, apakah ia benar-benar
 terjadi pada hari normal, serta sumber lain seperti surat, pukulan jaring, atau
 pengabaian belum dibuktikan. Nilai negatif pada EventFlow tetap hanya input
-aksi yang dikonfigurasi. Native friendship test sebelumnya menguji floor level
-di `0xd34f80`, bukan sumber decay.
+aksi yang dikonfigurasi. Action list mencakup pemberian/penjualan hadiah, tetapi
+tidak ada bukti di sana untuk surat, pukulan jaring, atau pengabaian. Native
+friendship test sebelumnya menguji floor level di `0xd34f80`, bukan sumber decay.
