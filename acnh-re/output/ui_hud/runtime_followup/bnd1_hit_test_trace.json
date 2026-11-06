@@ -1,0 +1,333 @@
+{
+  "schema": "acnh.ui_hud_runtime_followup.hit_test_bounds.v1",
+  "scope": "Single static call path: BND1 B_Hit pane binding and touchscreen pointer hit testing.",
+  "source": {
+    "game_build": "ACNH 1.0.0",
+    "exefs_module": "main",
+    "main_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+    "section_semantics_sha256": "cc396ec6dca029f2c22ea2bb582e0e075618043e826ae189507466879097d7bb",
+    "evidence_kind": "Static asset tables and AArch64 disassembly/decompiler output; no native runtime execution."
+  },
+  "asset_crosswalk": {
+    "label": "[TBL]",
+    "source_artifact": "output/ui_hud/section_semantics.json",
+    "counts": {
+      "bnd1_records": 158,
+      "scr1_records": 2,
+      "bnd1_b_hit_records": 18,
+      "cnt1_records_with_b_hit_hit": 18,
+      "same_layout_bnd1_cnt1_matches": 18
+    },
+    "same_layout_matches": [
+      {
+        "layout": "BtnLineNml",
+        "control_type": "ButtonNormal",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          840.0,
+          60.0
+        ],
+        "source": "BtnLineNml.Nin_NX_NVN.zs"
+      },
+      {
+        "layout": "BtnLine_Root",
+        "control_type": "ButtonNormal",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          840.0,
+          60.0
+        ],
+        "source": "BtnLine_Root.Nin_NX_NVN.zs"
+      },
+      {
+        "layout": "BtnOpt_Root",
+        "control_type": "ButtonCheck",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          1080.0,
+          100.0
+        ],
+        "source": "BtnOpt_Root.Nin_NX_NVN.zs"
+      },
+      {
+        "layout": "FooterBtn",
+        "control_type": "ButtonRepeat",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          674.0,
+          72.0
+        ],
+        "source": "FooterBtn.Nin_NX_NVN.zs"
+      },
+      {
+        "layout": "SwkbdBtnBS",
+        "control_type": "ButtonRepeat",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          100.0,
+          100.0
+        ],
+        "source": "SwkbdBtnBS.Nin_NX_NVN.zs"
+      },
+      {
+        "layout": "SwkbdBtnBalloon2",
+        "control_type": "ButtonNormal",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          110.0,
+          110.0
+        ],
+        "source": "SwkbdBtnBalloon2.Nin_NX_NVN.zs"
+      },
+      {
+        "layout": "SwkbdBtnEnter",
+        "control_type": "ButtonNormal",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          100.0,
+          100.0
+        ],
+        "source": "SwkbdBtnEnter.Nin_NX_NVN.zs"
+      },
+      {
+        "layout": "SwkbdBtnNumeric",
+        "control_type": "ButtonNormal",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          100.0,
+          100.0
+        ],
+        "source": "SwkbdBtnNumeric.Nin_NX_NVN.zs"
+      },
+      {
+        "layout": "SwkbdBtnOptCheck",
+        "control_type": "ButtonCheck",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          100.0,
+          100.0
+        ],
+        "source": "SwkbdBtnOptCheck.Nin_NX_NVN.zs"
+      },
+      {
+        "layout": "SwkbdBtnOptLineBreak",
+        "control_type": "ButtonRepeat",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          100.0,
+          100.0
+        ],
+        "source": "SwkbdBtnOptLineBreak.Nin_NX_NVN.zs"
+      },
+      {
+        "layout": "SwkbdBtnOptNml",
+        "control_type": "ButtonNormal",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          100.0,
+          100.0
+        ],
+        "source": "SwkbdBtnOptNml.Nin_NX_NVN.zs"
+      },
+      {
+        "layout": "SwkbdBtnOptRpt",
+        "control_type": "ButtonRepeat",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          100.0,
+          100.0
+        ],
+        "source": "SwkbdBtnOptRpt.Nin_NX_NVN.zs"
+      },
+      {
+        "layout": "SwkbdBtnOpt_Root",
+        "control_type": "ButtonNormal",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          100.0,
+          100.0
+        ],
+        "source": "SwkbdBtnOpt_Root.Nin_NX_NVN.zs"
+      },
+      {
+        "layout": "SwkbdBtnShift",
+        "control_type": "ButtonNormal",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          100.0,
+          100.0
+        ],
+        "source": "SwkbdBtnShift.Nin_NX_NVN.zs"
+      },
+      {
+        "layout": "SwkbdBtnTransArwCheck",
+        "control_type": "ButtonCheck",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          60.0,
+          46.0
+        ],
+        "source": "SwkbdBtnTransArwCheck.Nin_NX_NVN.zs"
+      },
+      {
+        "layout": "SwkbdBtnTransArwNml",
+        "control_type": "ButtonNormal",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          76.0,
+          46.0
+        ],
+        "source": "SwkbdBtnTransArwNml.Nin_NX_NVN.zs"
+      },
+      {
+        "layout": "SwkbdBtnTransWord",
+        "control_type": "ButtonNormal",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          1530.0,
+          72.0
+        ],
+        "source": "SwkbdBtnTransWord.Nin_NX_NVN.zs"
+      },
+      {
+        "layout": "SwkbdBtn_Root",
+        "control_type": "ButtonNormal",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          100.0,
+          100.0
+        ],
+        "source": "SwkbdBtn_Root.Nin_NX_NVN.zs"
+      }
+    ],
+    "finding": "Every catalogued BND1 record named B_Hit has a same-layout CNT1 binding B_Hit:Hit. The 18 matches cover 11 ButtonNormal, 4 ButtonRepeat, and 3 ButtonCheck records.",
+    "limit": "Same-layout asset binding is static correlation; it does not establish that this pane instance supplies the runtime touch hit-test geometry."
+  },
+  "native_functions": {
+    "label": "[PSEUDO]",
+    "source": "ExeFS main; addresses are ELF VAs. Function decompiler-output hashes are cross-checks from the shared read-only index.",
+    "functions": {
+      "0x14821d0": {
+        "size_bytes": 2320,
+        "decompiler_output_sha256": "52c7636930642fb4722e5a048045257292ceb1c33463deac4b9c02ffd7264236"
+      },
+      "0x14885b0": {
+        "size_bytes": 632,
+        "decompiler_output_sha256": "aaf04eaf64ec3795a35f9863b1ec7ca9b895caa2a80e4889c61d1ac7212a8799"
+      },
+      "0x14b7820": {
+        "size_bytes": 496,
+        "decompiler_output_sha256": "fd09758c6a4ea83b942f4fb73dcc8e932825e38c3826abff2eaccc660fa3a7fe"
+      },
+      "0x14b8850": {
+        "size_bytes": 248,
+        "decompiler_output_sha256": "e6543709c18255e41b0eadc155f459ec7129adba401945a13ced42ee48c56dc8"
+      },
+      "0x14b8950": {
+        "size_bytes": 68,
+        "decompiler_output_sha256": "b96c011fbc61b8cbbb96bc7ade538d00551bfaaf03247fb04f8fa77698a01159"
+      },
+      "0x14b94c0": {
+        "size_bytes": 480,
+        "decompiler_output_sha256": "e7a377cac8679447dfa4d58a3e05d91d3caf5bd5b51d65be8faa849d01447a79"
+      },
+      "0x14b7a10": {
+        "size_bytes": 252,
+        "decompiler_output_sha256": "0925f623e875c718c3140cf50b0782eacab91d2ec10f9afcd98964732ad79472"
+      }
+    },
+    "string_references_in_0x14885b0": [
+      {
+        "string_va": "0x292b53f",
+        "text": "C_Cursor"
+      },
+      {
+        "string_va": "0x296c317",
+        "text": "P_BtnFocusKey"
+      },
+      {
+        "string_va": "0x2998ffe",
+        "text": "B_Hit"
+      },
+      {
+        "string_va": "0x29ac32d",
+        "text": "Cursor"
+      }
+    ],
+    "direct_call_edges": {
+      "0x14821d0_to_0x14885b0": [
+        {
+          "callsite_va": "0x14827c4",
+          "caller_va": "0x14821d0",
+          "target_va": "0x14885b0",
+          "instruction": "BL"
+        }
+      ],
+      "touch_processor_to_tree_hit_test_0x14b8850": [
+        {
+          "callsite_va": "0x14b88e4",
+          "caller_va": "0x14b8850",
+          "target_va": "0x14b8850",
+          "instruction": "BL"
+        },
+        {
+          "callsite_va": "0x14b958c",
+          "caller_va": "0x14b94c0",
+          "target_va": "0x14b8850",
+          "instruction": "BL"
+        }
+      ],
+      "tree_hit_test_to_rect_helper_0x14b7820": [
+        {
+          "callsite_va": "0x14b7d34",
+          "caller_va": "0x14b7c90",
+          "target_va": "0x14b7820",
+          "instruction": "BL"
+        },
+        {
+          "callsite_va": "0x14b7d7c",
+          "caller_va": "0x14b7c90",
+          "target_va": "0x14b7820",
+          "instruction": "BL"
+        },
+        {
+          "callsite_va": "0x14b88c4",
+          "caller_va": "0x14b8850",
+          "target_va": "0x14b7820",
+          "instruction": "BL"
+        },
+        {
+          "callsite_va": "0x14b891c",
+          "caller_va": "0x14b8850",
+          "target_va": "0x14b7820",
+          "instruction": "BL"
+        }
+      ],
+      "touch_target_registration_0x14b8950": [
+        {
+          "callsite_va": "0x14b966c",
+          "caller_va": "0x14b94c0",
+          "target_va": "0x14b8950",
+          "instruction": "BL"
+        }
+      ]
+    },
+    "observations": [
+      "Control constructor 0x14821d0 calls 0x14885b0 at 0x14827c4. That helper looks up Cursor and P_BtnFocusKey first, then C_Cursor and B_Hit fallbacks, and stores the selected pane pointers at control offsets +0x68/+0x70. B_Hit is used on a fallback branch.",
+      "Touch processor 0x14b94c0 calls recursive tree helper 0x14b8850 at 0x14b958c; the returned node pointer is stored at pointer-record offset +0x38 at 0x14b9594.",
+      "Tree helper 0x14b8850 calls 0x14b7820 for node geometry and descends through child/sibling links at offsets +0x8/+0x18. The processor then routes the stored target through 0x14b8950 and the existing traversal path 0x14b7a10.",
+      "Geometry helper 0x14b7820 reads two four-float rectangle records from node offsets +0x30..+0x3c and +0x40..+0x4c. If the secondary rectangle-associated pointer at +0x28 is non-null, it selects the overlapping bounds before testing the sampled point against the resulting rectangle. Raw instruction sequence at 0x14b78bc..0x14b7a00 contains the float-bound selection and point comparisons."
+    ],
+    "limit": "No recovered def-use or call edge connects control field +0x68 (the B_Hit fallback pointer) to the node rectangle fields consumed by 0x14b7820. The second rectangle is not assigned clip semantics; coordinate space, overlap precedence, BND1 instance ownership, and GPU clip use remain unresolved."
+  },
+  "reproducer": {
+    "kind": "Raw AArch64 disassembly; not a native runtime test.",
+    "command": "python3 acnh-re/tools/ui_hud_dispatch_disasm.py 0x14827a0:0x60 0x14885b0:0x278 0x14b7820:0x1f0 0x14b8850:0xf8 0x14b94c0:0x1e0",
+    "requires": "Local LLVM AArch64 disassembler and inputs/additional_exefs/main."
+  },
+  "status": {
+    "touch_sampling_to_hit_test_tree": "static call path supported by existing native_ui_traces.json and the call edges above",
+    "BND1_B_Hit_to_touch_hit_geometry": "not proven",
+    "native_runtime_emulation": "not run"
+  }
+}
