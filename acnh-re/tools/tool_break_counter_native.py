@@ -60,7 +60,7 @@ def run():
         "case_count": len(cases),
         "mismatches": 0,
         "dependencies_stubbed": ["0xead570", "0xead650", "0xead5d0 input descriptor helpers", "0xce9340 generic save writer boundary"],
-        "remaining": ["The CE9340/CE9390 backed field mutation was not executed", "BreakToolCount semantics and its relationship to inventory durability remain unproven", "No per-item use decrement or break threshold is established"],
+        "remaining": ["The CE9340/CE9390 backed field mutation was not executed", "The source table identifies BreakToolCount as the number of tools broken, but its relationship to per-item wear remains unproven", "No per-item use decrement or break threshold is established"],
     }
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(result, indent=2) + "\n")

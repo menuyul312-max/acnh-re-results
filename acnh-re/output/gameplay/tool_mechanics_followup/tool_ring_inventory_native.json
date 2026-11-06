@@ -1,0 +1,173 @@
+{
+  "schema": "acnh-re/tool-ring-inventory-native/1",
+  "native_elf_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+  "itemparam_source_id": 72,
+  "itemparam_raw_sha256": "89230e97fc877ff2b2b48ac1c707ef32b3a7760118839c307f19797e2553458c",
+  "ring_selection_callback_va": "0x1417f70",
+  "ring_callback_item_lookup_call": {
+    "call_pc": "0x1418008",
+    "helper_va": "0x11b7210",
+    "selected_index_source": "*(uint32_t *)(page + 0x1b9f8)",
+    "pocket_context_source": "page + 0x1f8"
+  },
+  "item_word_helper": {
+    "function_va": "0x11b7210",
+    "pocket_slot_accessor_va": "0xef7260",
+    "pocket_slot_accessor_call_pc": "0x11b7264",
+    "slot_count_bound": 8,
+    "record_stride_bytes": "0x2450",
+    "item_word_offset_in_record": "0x2418",
+    "copy_operation_va": "0xf589e0"
+  },
+  "callback_index_argument": {
+    "callback_va": "0x1417f70",
+    "stored_index_field_offset_from_page": "0x1b9f8",
+    "reader_argument_register": "w2",
+    "reader_call_pc": "0x1418008",
+    "reader_va": "0x11b7210",
+    "instructions": [
+      {
+        "va": "0x1417f8c",
+        "instruction": "mov w8, #0xb9f8",
+        "bytes_le_hex": "083f9752"
+      },
+      {
+        "va": "0x1417f90",
+        "instruction": "movk w8, #1, lsl #16",
+        "bytes_le_hex": "2800a072"
+      },
+      {
+        "va": "0x1417f94",
+        "instruction": "add x23, x0, x8",
+        "bytes_le_hex": "1700088b"
+      },
+      {
+        "va": "0x1417ffc",
+        "instruction": "ldr w2, [x23]",
+        "bytes_le_hex": "e20240b9"
+      },
+      {
+        "va": "0x1418008",
+        "instruction": "bl #0x11b7210",
+        "bytes_le_hex": "827cf697"
+      }
+    ]
+  },
+  "native_functions_executed": [
+    "0x11b7210 original item-word reader invoked directly by the harness",
+    "0xef7260 original selected-pocket pointer arithmetic",
+    "0xf589e0 original 8-byte packed-item copy"
+  ],
+  "native_functions_stubbed": [
+    "0xda4020 indicates the controlled pocket context is present",
+    "0xda3fc0/0xeab1f0 provide a synthetic pocket-storage base",
+    "0xee9350/0xee93d0 create and release the result reference wrapper"
+  ],
+  "static_call_chain": [
+    {
+      "owner_va": "0x11b7210",
+      "call_pc": "0x11b7264",
+      "target_va": "0xef7260"
+    },
+    {
+      "owner_va": "0x1417f70",
+      "call_pc": "0x1418008",
+      "target_va": "0x11b7210"
+    }
+  ],
+  "cases": [
+    {
+      "ring_selection_index": 0,
+      "pocket_inventory_slot": 0,
+      "item_unique_id": 2100,
+      "item_label": "ToolAxe",
+      "item_kind": "Axe",
+      "source_record_offset_from_pocket_base": "0x6318",
+      "packed_word_hex": "34080000000000a5",
+      "exact_word_copied": true
+    },
+    {
+      "ring_selection_index": 1,
+      "pocket_inventory_slot": 1,
+      "item_unique_id": 2099,
+      "item_label": "ToolScoop",
+      "item_kind": "Shovel",
+      "source_record_offset_from_pocket_base": "0x8768",
+      "packed_word_hex": "33080100010000a5",
+      "exact_word_copied": true
+    },
+    {
+      "ring_selection_index": 2,
+      "pocket_inventory_slot": 2,
+      "item_unique_id": 2376,
+      "item_label": "ToolNet",
+      "item_kind": "Net",
+      "source_record_offset_from_pocket_base": "0xabb8",
+      "packed_word_hex": "48090200020000a5",
+      "exact_word_copied": true
+    },
+    {
+      "ring_selection_index": 3,
+      "pocket_inventory_slot": 3,
+      "item_unique_id": 2377,
+      "item_label": "ToolAngling",
+      "item_kind": "FishingRod",
+      "source_record_offset_from_pocket_base": "0xd008",
+      "packed_word_hex": "49090300030000a5",
+      "exact_word_copied": true
+    },
+    {
+      "ring_selection_index": 4,
+      "pocket_inventory_slot": 4,
+      "item_unique_id": 2822,
+      "item_label": "ToolSlingshot",
+      "item_kind": "Slingshot",
+      "source_record_offset_from_pocket_base": "0xf458",
+      "packed_word_hex": "060b0400040000a5",
+      "exact_word_copied": true
+    },
+    {
+      "ring_selection_index": 5,
+      "pocket_inventory_slot": 5,
+      "item_unique_id": 2379,
+      "item_label": "ToolWatering",
+      "item_kind": "Watering",
+      "source_record_offset_from_pocket_base": "0x118a8",
+      "packed_word_hex": "4b090500050000a5",
+      "exact_word_copied": true
+    },
+    {
+      "ring_selection_index": 6,
+      "pocket_inventory_slot": 6,
+      "item_unique_id": 9617,
+      "item_label": "ToolAxeGold",
+      "item_kind": "Axe",
+      "source_record_offset_from_pocket_base": "0x13cf8",
+      "packed_word_hex": "91250600060000a5",
+      "exact_word_copied": true
+    },
+    {
+      "ring_selection_index": 7,
+      "pocket_inventory_slot": 7,
+      "item_unique_id": 8179,
+      "item_label": "ToolNetGold",
+      "item_kind": "Net",
+      "source_record_offset_from_pocket_base": "0x16148",
+      "packed_word_hex": "f31f0700070000a5",
+      "exact_word_copied": true
+    }
+  ],
+  "case_count": 8,
+  "mismatches": 0,
+  "unresolved_imports": {},
+  "proven": [
+    "The RingMenuTools selection callback passes its stored index directly as the selected pocket-slot argument to 0x11b7210.",
+    "The original 0x11b7210 and 0xef7260 use that index to read pocket storage at base+0x3f00+index*0x2450+0x2418, then the original 0xf589e0 copies the packed word to the callback's output.",
+    "Native reproduction confirms exact selection-index-to-record mapping for indices 0 through 7 using eight valid source ItemParam tool variants from all six tool families."
+  ],
+  "limits": [
+    "The synthetic item reader runs the helper, not the full ring menu, controller input, UI animation, or save-backed pocket object.",
+    "The helper proves which pocket item word the selection index reads; transfer into the player's held-hand object and transition into ToolChange/ToolPullout or a tool-use action remain unproven.",
+    "The widget binder separately maps button suffixes to indices 0 through 7; the full runtime callback-to-layout animation timing is not emulated."
+  ]
+}

@@ -237,6 +237,26 @@ def state_summary(table_path: Path) -> tuple[dict, dict]:
     return {"source_id": table["source_id"], "raw": table["raw"], "states": result}, result
 
 
+def activity_counter_summary(table_path: Path) -> dict:
+    """Resolve the named BreakToolCount activity-counter definition."""
+    table = load_json(table_path)
+    index = {column["name"]: i for i, column in enumerate(table["columns"])}
+    rows = [row for row in table["rows"] if row[index["Key"]] == "BreakToolCount"]
+    if len(rows) != 1:
+        raise AssertionError(f"expected one BreakToolCount activity row, found {len(rows)}")
+    row = rows[0]
+    record = {name: row[index[name]] for name in (
+        "UniqueID", "MessageLabel", "TalkValueVisitor", "TalkValueVillager",
+        "MaxValue", "FlagsFlowAccess", "Name", "Key")}
+    return {
+        "source_id": table["source_id"],
+        "source": table["source"],
+        "raw": table["raw"],
+        "record": record,
+        "interpretation": "The source activity table labels this key as 道具を壊した回数 (number of tools broken), with MaxValue 64. It is an activity count, not a per-item wear value; the save-backed mutation remains unexecuted.",
+    }
+
+
 def ring_summary(path: Path) -> dict:
     doc = load_json(path)
     xlink = doc["root"]["@XLink"]
@@ -303,6 +323,7 @@ def main() -> None:
                         default=Path("/workspace/acnh-re/output"))
     parser.add_argument("--itemparam", type=Path)
     parser.add_argument("--player-state", type=Path)
+    parser.add_argument("--activity-param", type=Path)
     parser.add_argument("--ring-menu", type=Path)
     parser.add_argument("--tool-break-tree", type=Path,
                         default=ROOT / "output/gameplay/trees/Player_ToolBreak.txt")
@@ -315,6 +336,7 @@ def main() -> None:
     args = parser.parse_args()
     itemparam_path = args.itemparam or args.research_output / "tables_resolved/ItemParam.json"
     player_state_path = args.player_state or args.research_output / "tables_resolved/PlayerStateParam.json"
+    activity_param_path = args.activity_param or args.research_output / "tables_resolved/EventFlagsPlayerActivityParam.json"
     ring_path = args.ring_menu or args.research_output / "byml_resolved/01692.json"
 
     db = sqlite3.connect(args.research_output / "index.sqlite")
@@ -325,6 +347,8 @@ def main() -> None:
         items_columns = [column["name"] for column in items_table["columns"]]
         family_counts = {family: len(ids) for family, ids in family_ids.items()}
         state_table, states = state_summary(player_state_path)
+        activity_counter = activity_counter_summary(activity_param_path)
+        activity_counter = activity_counter_summary(activity_param_path)
         flow = parse_flow_tree(args.tool_break_tree)
         ring = ring_summary(ring_path)
         flag_index = load_json(args.flag_index)["data"]
@@ -345,6 +369,8 @@ def main() -> None:
 
         break_flow_source = source_record(db, "B_data/EventFlow/Player_ToolBreak.bfevfl")
         state_source = source_record(db, "B_data/Bcsv/PlayerStateParam.bcsv")
+        activity_source = source_record(db, "B_data/Bcsv/EventFlagsPlayerActivityParam.bcsv")
+        activity_source = source_record(db, "B_data/Bcsv/EventFlagsPlayerActivityParam.bcsv")
         ring_source = source_record(db, "B_data/Pack/StaticParam.pack!Param/Layout/RingMenuTools.byml")
         break_refs = refs_for(db, 0xE37A50)
         break_action_refs = refs_for(db, 0xE37830)
@@ -390,6 +416,10 @@ def main() -> None:
                 "source": break_flow_source,
                 "entries": flow,
                 "counters_and_flags": {
+                    "break_tool_count_activity_counter": {
+                        **activity_counter,
+                        "indexed_source": activity_source,
+                    },
                     "golden_axe_recipe_learning_counter": {
                         "key": "cPlayer:GoldenAxeLearningCount",
                         "definition": golden_axe_counter,
@@ -399,6 +429,10 @@ def main() -> None:
                         "key": "cLifeSupportAchievement:BreakTool",
                         "definition": break_achievement,
                         "interpretation": "Achievement flag named for breaking a tool; the indexed 1.0.0 EventFlow data has no writer, so native writer or lack of write is unresolved.",
+                    },
+                    "break_tool_count_activity_counter": {
+                        **activity_counter,
+                        "indexed_source": activity_source,
                     },
                 },
                 "axe_entry_observations": [
@@ -432,8 +466,16 @@ def main() -> None:
                 },
                 "Axe": {"status": "state-and-break-flow-proven", "open": ["tree-hit result, drop result, and inventory/durability mutation"]},
                 "Shovel": {"status": "state-proven", "open": ["dig/bury world result and inventory/durability mutation"]},
-                "Net": {"status": "state-proven", "open": ["capture eligibility, caught-insect inventory result, and durability mutation"]},
-                "FishingRod": {"status": "state-proven", "open": ["bite/catch/release output, inventory result, and durability mutation"]},
+                "Net": {
+                    "status": "state-and-shared-inventory-helper-call-proven",
+                    "result_inventory_helper_call": direct_calls_to(db, 0xE45B80, 0xEFEC70),
+                    "open": ["capture eligibility/result production, no-empty-slot behavior, persistent save write, and durability mutation"],
+                },
+                "FishingRod": {
+                    "status": "state-and-shared-inventory-helper-call-proven",
+                    "result_inventory_helper_call": direct_calls_to(db, 0xE4E730, 0xEFEC70),
+                    "open": ["bite/catch/release output production, no-empty-slot behavior, persistent save write, and durability mutation"],
+                },
                 "Slingshot": {"status": "native-launch-call-mapped", "function_va": "0xe564b0",
                     "string_refs": slingshot_refs, "launch_consumer_call": slingshot_launch_call,
                     "result": "On its valid-target path PlayerSlingshotShooting reaches 0x803690 to write projectile start/direction state; the consumer scales the three supplied velocity components by 6.",
@@ -469,15 +511,26 @@ def main() -> None:
                     "native_probe_result": "output/gameplay/tool_mechanics_followup/tool_ring_index_native.json",
                     "interpretation": "Verified internal selector transform; semantic source and inventory relationship remain unresolved.",
                 },
+                "native_selected_item_reader": {
+                    "callback_va": "0x1417f70",
+                    "stored_index_field_offset_from_page": "0x1b9f8",
+                    "reader_call_pc": "0x1418008",
+                    "reader_va": "0x11b7210",
+                    "pocket_accessor_va": "0xef7260",
+                    "native_probe_result": "output/gameplay/tool_mechanics_followup/tool_ring_inventory_native.json",
+                    "interpretation": "The callback's stored index is passed in w2 to the item reader; the native probe reproduces matching index-to-pocket-record reads for 0..7. UI input provenance, saved pocket contents, and equip/action effects remain open.",
+                },
                 "layout_interpretation": "RomFS layout strings establish eight inventory-slot nodes and select/confirm/equip animations; they do not identify the runtime item stored in a slot.",
-                "open": ["inventory item-to-ring-slot map, selection/equip handler, and resulting tool action"],
+                "open": ["UI/controller input to the stored index, saved inventory assignment to pocket records, selection/equip handler, and resulting tool action"],
             },
             "limitations": [
                 "The ItemParam probe verifies that tool UniqueIDs resolve to real ItemParam rows through the exact lookup called by PlayerToolBreak; it does not read or prove a durability value.",
                 "ItemParam exposes no column named durability, break count, use count, or uses; unresolved hashed columns remain possible but are not treated as durability without consumer evidence.",
                 "The full PlayerToolBreak/BreakTool state routines were not emulated. The observed +0x898 increment and reset are state-local memory operations, not a verified inventory durability counter.",
-                "Axe, shovel, net, rod, and watering action states are sourced from PlayerStateParam; their world-result and item-consumption chains remain open.",
-                "The RingMenuTools BYML, native page registry, and slot-widget binder identify UI layout and button indexing; they do not connect a ring position to a runtime inventory item.",
+                "BreakToolCount is identified by EventFlagsPlayerActivityParam as a count of tools broken. Its save mutation and relationship to per-item wear remain unexecuted.",
+                "BreakToolCount is identified by EventFlagsPlayerActivityParam as a count of broken tools. Its save mutation and relationship to per-item wear remain unexecuted.",
+                "Axe, shovel, and watering action states are sourced from PlayerStateParam; their world-result and item-consumption chains remain open. Net and rod get-demo routines call the shared result inventory helper, whose bounded insertion writer is exercised in tool_catch_inventory_native.py; catch production, save persistence, full-inventory behavior, and wear remain open.",
+                "The RingMenuTools BYML, native page registry, and slot-widget binder identify UI layout and button indexing. The separate native item-reader probe maps callback indices 0..7 to pocket records, but UI input provenance, saved pocket contents, held-hand transfer, and equip/action remain open.",
             ],
         }
     finally:
