@@ -6,6 +6,7 @@ catalogues. It does not emulate a live session or issue GPU commands.
 """
 from __future__ import annotations
 
+import argparse
 import hashlib
 import json
 from pathlib import Path
@@ -16,7 +17,7 @@ from capstone import Cs, CS_ARCH_ARM64, CS_MODE_ARM
 
 ROOT = Path(__file__).resolve().parent.parent
 NSO = ROOT / "inputs/additional_exefs/main"
-INDEX = ROOT / "output/index.sqlite"
+DEFAULT_OUTPUT_ROOT = Path("/workspace/acnh-re/output")
 OUTPUT = ROOT / "output/ui_hud/runtime_followup/page_input_renderer_static.json"
 sys.path.insert(0, str(ROOT / "tools"))
 import re_helpers  # noqa: E402
@@ -58,8 +59,24 @@ def instruction_rows(instructions, addresses: list[int]) -> list[dict[str, str]]
     return rows
 
 
+def owner_callsite_map(db: sqlite3.Connection, target: int) -> dict[int, int]:
+    rows = list(db.execute(
+        "select owner_va,pc from direct_calls where target_va=? and owner_va is not null",
+        (target,),
+    ))
+    result = {int(owner): int(pc) for owner, pc in rows}
+    if len(result) != len(rows):
+        raise AssertionError(f"multiple indexed direct calls per owner to {target:#x}")
+    return result
+
+
 def main() -> None:
-    db = sqlite3.connect(f"file:{INDEX}?mode=ro", uri=True)
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--output-root", type=Path, default=DEFAULT_OUTPUT_ROOT,
+                        help="shared analysis output containing the read-only index.sqlite")
+    args = parser.parse_args()
+    index_path = args.output_root / "index.sqlite"
+    db = sqlite3.connect(f"file:{index_path}?mode=ro", uri=True)
     segments = re_helpers.nso_segments(NSO)
     md = Cs(CS_ARCH_ARM64, CS_MODE_ARM)
     md.detail = True
@@ -100,6 +117,64 @@ def main() -> None:
 
     page_method_summary = page_methods["summary"]
     page_registration = page_factories["shared_handoff_slot_observation"]
+    page_factory_rows = page_factories["pages"]
+    page_factory_owners = {int(row["factory_va"], 16) for row in page_factory_rows}
+    init_calls = owner_callsite_map(db, 0x1DA8210)
+    common_init_calls = owner_callsite_map(db, 0x1144600)
+    register_calls = owner_callsite_map(db, PAGE_REGISTER)
+    state_sequence_rows = []
+    state_sequence_branch_count = 0
+    for owner in sorted(page_factory_owners):
+        if owner not in init_calls or owner not in common_init_calls or owner not in register_calls:
+            raise AssertionError(f"page factory {owner:#x} lacks the indexed state/init/register sequence")
+        init_pc, common_pc, register_pc = (
+            init_calls[owner], common_init_calls[owner], register_calls[owner]
+        )
+        if not init_pc < common_pc < register_pc:
+            raise AssertionError(f"page factory {owner:#x} call order changed")
+        factory_body = disassemble_function(md, segments, db, owner)
+        intervening_branches = [
+            instruction for instruction in factory_body
+            if init_pc < instruction.address < register_pc
+            and (
+                instruction.mnemonic == "b"
+                or instruction.mnemonic.startswith("b.")
+                or instruction.mnemonic in {"cbz", "cbnz", "tbz", "tbnz"}
+            )
+        ]
+        state_sequence_branch_count += len(intervening_branches)
+        if intervening_branches:
+            raise AssertionError(
+                f"page factory {owner:#x} has a branch in its state/init/register interval"
+            )
+        state_sequence_rows.append({
+            "factory": hex(owner),
+            "state_one_callsite": hex(init_pc),
+            "common_page_init_callsite": hex(common_pc),
+            "registration_callsite": hex(register_pc),
+        })
+    if len(page_factory_owners) != page_factories["summary"]["factory_count"]:
+        raise AssertionError("page factory address count disagrees with catalogue summary")
+
+    base_pane_constructor = disassemble_function(md, segments, db, 0x192D3D0)
+    scissor_factory = disassemble_function(md, segments, db, 0x14C89C0)
+    raw_pane_flag_copy_candidate = disassemble_function(md, segments, db, 0x192D490)
+    base_flag_rows = instruction_rows(base_pane_constructor, [0x192D3F8, 0x192D43C, 0x192D440])
+    scissor_base_call_rows = instruction_rows(scissor_factory, [0x14C89F0, 0x14C8A34])
+    raw_flag_copy_rows = instruction_rows(raw_pane_flag_copy_candidate, [
+        0x192D648, 0x192D64C, 0x192D8B0, 0x192D8B4,
+    ])
+    raw_flag_copy_direct_callers = db.execute(
+        "select count(*) from direct_calls where target_va=?", (0x192D490,)
+    ).fetchone()[0]
+    visibility_label_refs = {}
+    for label in ("VisibleOn", "VisibleOff"):
+        visibility_label_refs[label] = [
+            hex(row[0]) for row in db.execute(
+                "select distinct function_va from string_refs where text=? order by function_va",
+                (label,),
+            )
+        ]
     page_selector = native_traces["page_factory_registry"][
         "shared_registration_and_selection_helpers"
     ]["candidate_selection_helper"]
@@ -161,6 +236,22 @@ def main() -> None:
         },
         "page_loader_and_lifecycle": {
             "factory_count": page_factories["summary"]["factory_count"],
+            "factory_state_sequence": {
+                "field_offset_bytes": "0x48",
+                "state_one_helper": hex(0x1DA8210),
+                "state_one_store_helper": hex(0x1DA40A0),
+                "state_one_value": 1,
+                "common_page_initializer": hex(0x1144600),
+                "registration_helper": hex(PAGE_REGISTER),
+                "registration_store_helper": hex(0x1DA40B0),
+                "registration_value": 2,
+                "factory_count_checked": len(state_sequence_rows),
+                "all_factories_call_same_helpers_in_order": True,
+                "branch_instruction_count_between_first_and_last_helper_calls": state_sequence_branch_count,
+                "helper_callsites_share_a_straight_line_region": state_sequence_branch_count == 0,
+                "callsite_samples": state_sequence_rows[:3],
+                "observation": "All 135 catalogued factory functions have indexed direct calls ordered state-one helper -> common page initializer -> registration helper, with no conditional or unconditional branch between those callsites. This is the construction/registration region only; the field has no recovered open/active/visible name or scheduler edge.",
+            },
             "registration": {
                 "helper": hex(PAGE_REGISTER),
                 "shared_virtual_slot_index": page_registration["shared_virtual_slot_index"],
@@ -204,6 +295,29 @@ def main() -> None:
             "status": "Both native lookups use the same dynamic name source, context, descriptor base, helper, and Hit token. Their returns are stored separately and are not compared. The 18 same-layout B_Hit:Hit records support the asset name crosswalk; no live dynamic prefix or pane pointer was captured.",
         },
         "static_pane_and_scissor_flags": {
+            "constructor_defaults_and_source_candidates": {
+                "scissor_factory": hex(0x14C89C0),
+                "auxiliary_scissor_constructor": hex(0x14C8A90),
+                "base_pane_constructor": hex(0x192D3D0),
+                "factory_to_base_call_instructions": scissor_base_call_rows,
+                "factory_to_base_call_observation": "Both allocation branches in the ScissorPane factory call the base Pane constructor. The subsequent auxiliary constructor at 0x14c8a90 initializes the auxiliary object; it is not the factory-to-base callsite.",
+                "base_flag_initialization_instructions": base_flag_rows,
+                "observed_base_values": {
+                    "+0x58": "0x11",
+                    "+0x5b..+0x5c": 0,
+                },
+                "gate_comparison": "The base defaults alone fail the generic renderer callback gate: +0x58 lacks bit 7 and +0x5c lacks bit 4. Later layout/runtime writes are needed before the ScissorPane callback can pass that gate.",
+                "unlinked_raw_pane_flag_copy_candidate": {
+                    "function": hex(0x192D490),
+                    "instructions": raw_flag_copy_rows,
+                    "input_byte_+0x08_to_object_+0x58": True,
+                    "input_byte_+0x0b_to_object_+0x5c": True,
+                    "indexed_direct_caller_count": raw_flag_copy_direct_callers,
+                    "limit": "The function body copies pane-like bytes into the renderer fields, but the available call index contains no direct caller. Its connection to the ScissorPane layout-loader path is not established.",
+                },
+                "visible_label_strings": visibility_label_refs,
+                "visible_label_limit": "VisibleOn/VisibleOff string references are present in page functions, but the available evidence does not connect those labels to writes of these renderer flag bytes or to current callback state.",
+            },
             "hit_visibility_helper": {
                 "function": hex(PANE_HIT_VISIBILITY),
                 "instructions": visibility_rows,
@@ -225,6 +339,19 @@ def main() -> None:
                 "callback_function": hex(SCISSOR_RENDER_CALLBACK),
                 "instructions": {"setter": setter_rows, "callback": callback_rows},
                 "observation": "The setter writes 1 to object byte +0xe0 and copies four 32-bit bounds to +0xf0..+0xfc. The callback uses those stored bounds when +0xe0 is nonzero; when zero it computes bounds from the pane transform. Both branches converge on the stack-push call at 0x14c8e44, so +0xe0 selects the bounds source, not whether clipping is applied.",
+            },
+            "nested_scissor_submission": {
+                "trace_artifact": "scissor_static_path.json",
+                "native_observations": [
+                    "0x14c8fe0 intersects incoming left/top/right/bottom bounds with the current top entry; an inverted result becomes a four-zero rectangle. It applies in mode 1, then saves the rectangle if the prior count is at most five (six saved entries). At count six, a further push applies its intersection but exits without saving or incrementing.",
+                    "0x14c9250 decrements and reapplies the previous entry in mode 1. On an empty stack it applies a zero rectangle in mode 0.",
+                    "0x14c90e0 mode 1 calls 0x19a9c60 for viewport/depth and 0x19a9d50 for scissor; mode 0 calls the combined 0x19a9960 path. Resolved GOT cells match the nvnCommandBufferSetViewport and nvnCommandBufferSetScissor API strings.",
+                ],
+                "limits": [
+                    "The stack fixture uses synthetic memory and stubs rectangle application; it does not execute NVN or compare pixels.",
+                    "An empty-stack zero rectangle passes through the runtime viewport/coordinate transform, so its actual target-pixel result and GPU coverage are unknown.",
+                    "The existing fixture does not exercise balanced traversal beyond six saved entries.",
+                ],
             },
             "catalogued_scissor_panes": [
                 {"layout": row["layout"], "pane": row["pane"]}

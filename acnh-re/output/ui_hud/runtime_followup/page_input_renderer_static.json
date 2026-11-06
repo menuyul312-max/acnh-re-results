@@ -10,6 +10,41 @@
   },
   "page_loader_and_lifecycle": {
     "factory_count": 135,
+    "factory_state_sequence": {
+      "field_offset_bytes": "0x48",
+      "state_one_helper": "0x1da8210",
+      "state_one_store_helper": "0x1da40a0",
+      "state_one_value": 1,
+      "common_page_initializer": "0x1144600",
+      "registration_helper": "0x1da8220",
+      "registration_store_helper": "0x1da40b0",
+      "registration_value": 2,
+      "factory_count_checked": 135,
+      "all_factories_call_same_helpers_in_order": true,
+      "branch_instruction_count_between_first_and_last_helper_calls": 0,
+      "helper_callsites_share_a_straight_line_region": true,
+      "callsite_samples": [
+        {
+          "factory": "0x112c3c0",
+          "state_one_callsite": "0x112c480",
+          "common_page_init_callsite": "0x112c48c",
+          "registration_callsite": "0x112c498"
+        },
+        {
+          "factory": "0x1132310",
+          "state_one_callsite": "0x11323d0",
+          "common_page_init_callsite": "0x11323dc",
+          "registration_callsite": "0x11323e8"
+        },
+        {
+          "factory": "0x1136590",
+          "state_one_callsite": "0x1136650",
+          "common_page_init_callsite": "0x113665c",
+          "registration_callsite": "0x1136668"
+        }
+      ],
+      "observation": "All 135 catalogued factory functions have indexed direct calls ordered state-one helper -> common page initializer -> registration helper, with no conditional or unconditional branch between those callsites. This is the construction/registration region only; the field has no recovered open/active/visible name or scheduler edge."
+    },
     "registration": {
       "helper": "0x1da8220",
       "shared_virtual_slot_index": 5,
@@ -540,6 +575,86 @@
     "status": "Both native lookups use the same dynamic name source, context, descriptor base, helper, and Hit token. Their returns are stored separately and are not compared. The 18 same-layout B_Hit:Hit records support the asset name crosswalk; no live dynamic prefix or pane pointer was captured."
   },
   "static_pane_and_scissor_flags": {
+    "constructor_defaults_and_source_candidates": {
+      "scissor_factory": "0x14c89c0",
+      "auxiliary_scissor_constructor": "0x14c8a90",
+      "base_pane_constructor": "0x192d3d0",
+      "factory_to_base_call_instructions": [
+        {
+          "address": "0x14c89f0",
+          "mnemonic": "bl",
+          "operands": "#0x192d3d0"
+        },
+        {
+          "address": "0x14c8a34",
+          "mnemonic": "bl",
+          "operands": "#0x192d3d0"
+        }
+      ],
+      "factory_to_base_call_observation": "Both allocation branches in the ScissorPane factory call the base Pane constructor. The subsequent auxiliary constructor at 0x14c8a90 initializes the auxiliary object; it is not the factory-to-base callsite.",
+      "base_flag_initialization_instructions": [
+        {
+          "address": "0x192d3f8",
+          "mnemonic": "sturh",
+          "operands": "wzr, [x0, #0x5b]"
+        },
+        {
+          "address": "0x192d43c",
+          "mnemonic": "mov",
+          "operands": "w8, #0x11"
+        },
+        {
+          "address": "0x192d440",
+          "mnemonic": "strb",
+          "operands": "w8, [x0, #0x58]"
+        }
+      ],
+      "observed_base_values": {
+        "+0x58": "0x11",
+        "+0x5b..+0x5c": 0
+      },
+      "gate_comparison": "The base defaults alone fail the generic renderer callback gate: +0x58 lacks bit 7 and +0x5c lacks bit 4. Later layout/runtime writes are needed before the ScissorPane callback can pass that gate.",
+      "unlinked_raw_pane_flag_copy_candidate": {
+        "function": "0x192d490",
+        "instructions": [
+          {
+            "address": "0x192d648",
+            "mnemonic": "ldrb",
+            "operands": "w8, [x23, #0xb]"
+          },
+          {
+            "address": "0x192d64c",
+            "mnemonic": "strb",
+            "operands": "w8, [x19, #0x5c]"
+          },
+          {
+            "address": "0x192d8b0",
+            "mnemonic": "ldrb",
+            "operands": "w8, [x23, #8]"
+          },
+          {
+            "address": "0x192d8b4",
+            "mnemonic": "strb",
+            "operands": "w8, [x19, #0x58]"
+          }
+        ],
+        "input_byte_+0x08_to_object_+0x58": true,
+        "input_byte_+0x0b_to_object_+0x5c": true,
+        "indexed_direct_caller_count": 0,
+        "limit": "The function body copies pane-like bytes into the renderer fields, but the available call index contains no direct caller. Its connection to the ScissorPane layout-loader path is not established."
+      },
+      "visible_label_strings": {
+        "VisibleOn": [
+          "0x1258d10",
+          "0x12ece60"
+        ],
+        "VisibleOff": [
+          "0x1258d10",
+          "0x12ece60"
+        ]
+      },
+      "visible_label_limit": "VisibleOn/VisibleOff string references are present in page functions, but the available evidence does not connect those labels to writes of these renderer flag bytes or to current callback state."
+    },
     "hit_visibility_helper": {
       "function": "0x14c80d0",
       "instructions": [
@@ -778,7 +893,7 @@
       "trace_artifact": "scissor_static_path.json",
       "native_observations": [
         "0x14c8fe0 intersects incoming left/top/right/bottom bounds with the current top entry; an inverted result becomes a four-zero rectangle. It applies in mode 1, then saves the rectangle if the prior count is at most five (six saved entries). At count six, a further push applies its intersection but exits without saving or incrementing.",
-        "0x14c9250 decrements the count and reapplies the previous entry in mode 1. On an empty stack it applies a zero rectangle in mode 0.",
+        "0x14c9250 decrements and reapplies the previous entry in mode 1. On an empty stack it applies a zero rectangle in mode 0.",
         "0x14c90e0 mode 1 calls 0x19a9c60 for viewport/depth and 0x19a9d50 for scissor; mode 0 calls the combined 0x19a9960 path. Resolved GOT cells match the nvnCommandBufferSetViewport and nvnCommandBufferSetScissor API strings."
       ],
       "limits": [
