@@ -1,0 +1,952 @@
+{
+  "schema": "acnh-re/tool-durability-native/1",
+  "game_version": "1.0.0",
+  "evidence_level": "NATIVE_HELPER_AND_APPLY_WRAPPER_EXECUTION_WITH_BOUNDED_STUBS",
+  "native_elf_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+  "functions_executed": {
+    "current_damage_getter": "0xaa7700",
+    "current_damage_incrementer": "0xaa77d0",
+    "current_damage_reset": "0xaa79a0",
+    "remaining_damage_calculator": "0xaa7ce0",
+    "wear_apply_and_slot_dirty_marker": "0xe895a0"
+  },
+  "contract": {
+    "packed_word_current_damage_offset": 6,
+    "current_damage_width_bits": 10,
+    "increment_adds_to_current_damage_and_clamps_at": 999,
+    "remaining_damage_formula": "supplied ItemOutfitInfo.BreakDamage - current ToolDamage",
+    "table_stub_limit": "ItemParam eligibility/cache and BreakDamage table getter are supplied by stubs; this does not execute a live save or prove the transition into PlayerToolBreak."
+  },
+  "stubs": [
+    "0xaa7880 item-class eligibility",
+    "0x1665ea0 row index",
+    "0xaa7a30 table cache",
+    "0xaa7b90 BreakDamage table value"
+  ],
+  "tool_count": 32,
+  "case_count": 96,
+  "apply_wrapper_case_count": 1,
+  "apply_wrapper_case": {
+    "function": "0xe895a0",
+    "item_unique_id": 2100,
+    "pocket_slot_index": 3,
+    "start_tool_damage": 99,
+    "amount": 1,
+    "result": 1,
+    "end_tool_damage": 100,
+    "reserved_bits_preserved": true,
+    "dirty_slot_marker": "0x4000",
+    "other_slot_markers_zero": true,
+    "bounded_stubs": [
+      "0xf58d00 item-use gate",
+      "0xa9c290 item-view construction",
+      "0x1665ea0 ItemParam row index",
+      "0xaa7a30 table cache",
+      "0xda4020 pocket-context gate"
+    ]
+  },
+  "mismatches": 0,
+  "unknown_imports": {},
+  "tools": [
+    {
+      "unique_id": 2100,
+      "label": "ToolAxe",
+      "item_kind": "Axe",
+      "item_outfit_info_unique_id": 77,
+      "item_outfit_info_row_index": 43,
+      "item_outfit_info_label": "AxeMiddleLevel",
+      "break_damage": 100,
+      "cases": {
+        "threshold_minus_one_then_plus_one": {
+          "start": 99,
+          "remaining_before": 1,
+          "increment_result": 1,
+          "after": 100,
+          "remaining_after": 0,
+          "reserved_bits_preserved": true
+        },
+        "saturation": {
+          "998_plus_1": 999,
+          "999_plus_1": 999
+        },
+        "reset": {
+          "result": 1,
+          "damage": 0,
+          "reserved_bits_preserved": true
+        }
+      }
+    },
+    {
+      "unique_id": 3068,
+      "label": "ToolAxeStone",
+      "item_kind": "Axe",
+      "item_outfit_info_unique_id": 99,
+      "item_outfit_info_row_index": 45,
+      "item_outfit_info_label": "AxeDull",
+      "break_damage": 40,
+      "cases": {
+        "threshold_minus_one_then_plus_one": {
+          "start": 39,
+          "remaining_before": 1,
+          "increment_result": 1,
+          "after": 40,
+          "remaining_after": 0,
+          "reserved_bits_preserved": true
+        },
+        "saturation": {
+          "998_plus_1": 999,
+          "999_plus_1": 999
+        },
+        "reset": {
+          "result": 1,
+          "damage": 0,
+          "reserved_bits_preserved": true
+        }
+      }
+    },
+    {
+      "unique_id": 5856,
+      "label": "ToolAxeStoneNormal",
+      "item_kind": "Axe",
+      "item_outfit_info_unique_id": 117,
+      "item_outfit_info_row_index": 46,
+      "item_outfit_info_label": "AxeDullMiddleLevel",
+      "break_damage": 100,
+      "cases": {
+        "threshold_minus_one_then_plus_one": {
+          "start": 99,
+          "remaining_before": 1,
+          "increment_result": 1,
+          "after": 100,
+          "remaining_after": 0,
+          "reserved_bits_preserved": true
+        },
+        "saturation": {
+          "998_plus_1": 999,
+          "999_plus_1": 999
+        },
+        "reset": {
+          "result": 1,
+          "damage": 0,
+          "reserved_bits_preserved": true
+        }
+      }
+    },
+    {
+      "unique_id": 9617,
+      "label": "ToolAxeGold",
+      "item_kind": "Axe",
+      "item_outfit_info_unique_id": 78,
+      "item_outfit_info_row_index": 44,
+      "item_outfit_info_label": "AxeUpperLevel",
+      "break_damage": 200,
+      "cases": {
+        "threshold_minus_one_then_plus_one": {
+          "start": 199,
+          "remaining_before": 1,
+          "increment_result": 1,
+          "after": 200,
+          "remaining_after": 0,
+          "reserved_bits_preserved": true
+        },
+        "saturation": {
+          "998_plus_1": 999,
+          "999_plus_1": 999
+        },
+        "reset": {
+          "result": 1,
+          "damage": 0,
+          "reserved_bits_preserved": true
+        }
+      }
+    },
+    {
+      "unique_id": 2099,
+      "label": "ToolScoop",
+      "item_kind": "Shovel",
+      "item_outfit_info_unique_id": 81,
+      "item_outfit_info_row_index": 52,
+      "item_outfit_info_label": "ScoopMiddleLevel",
+      "break_damage": 100,
+      "cases": {
+        "threshold_minus_one_then_plus_one": {
+          "start": 99,
+          "remaining_before": 1,
+          "increment_result": 1,
+          "after": 100,
+          "remaining_after": 0,
+          "reserved_bits_preserved": true
+        },
+        "saturation": {
+          "998_plus_1": 999,
+          "999_plus_1": 999
+        },
+        "reset": {
+          "result": 1,
+          "damage": 0,
+          "reserved_bits_preserved": true
+        }
+      }
+    },
+    {
+      "unique_id": 3082,
+      "label": "ToolShovelWood",
+      "item_kind": "Shovel",
+      "item_outfit_info_unique_id": 1,
+      "item_outfit_info_row_index": 51,
+      "item_outfit_info_label": "Scoop",
+      "break_damage": 40,
+      "cases": {
+        "threshold_minus_one_then_plus_one": {
+          "start": 39,
+          "remaining_before": 1,
+          "increment_result": 1,
+          "after": 40,
+          "remaining_after": 0,
+          "reserved_bits_preserved": true
+        },
+        "saturation": {
+          "998_plus_1": 999,
+          "999_plus_1": 999
+        },
+        "reset": {
+          "result": 1,
+          "damage": 0,
+          "reserved_bits_preserved": true
+        }
+      }
+    },
+    {
+      "unique_id": 8574,
+      "label": "ToolScoopGold",
+      "item_kind": "Shovel",
+      "item_outfit_info_unique_id": 82,
+      "item_outfit_info_row_index": 53,
+      "item_outfit_info_label": "ScoopUpperLevel",
+      "break_damage": 200,
+      "cases": {
+        "threshold_minus_one_then_plus_one": {
+          "start": 199,
+          "remaining_before": 1,
+          "increment_result": 1,
+          "after": 200,
+          "remaining_after": 0,
+          "reserved_bits_preserved": true
+        },
+        "saturation": {
+          "998_plus_1": 999,
+          "999_plus_1": 999
+        },
+        "reset": {
+          "result": 1,
+          "damage": 0,
+          "reserved_bits_preserved": true
+        }
+      }
+    },
+    {
+      "unique_id": 8575,
+      "label": "ToolScoopOutdoor",
+      "item_kind": "Shovel",
+      "item_outfit_info_unique_id": 81,
+      "item_outfit_info_row_index": 52,
+      "item_outfit_info_label": "ScoopMiddleLevel",
+      "break_damage": 100,
+      "cases": {
+        "threshold_minus_one_then_plus_one": {
+          "start": 99,
+          "remaining_before": 1,
+          "increment_result": 1,
+          "after": 100,
+          "remaining_after": 0,
+          "reserved_bits_preserved": true
+        },
+        "saturation": {
+          "998_plus_1": 999,
+          "999_plus_1": 999
+        },
+        "reset": {
+          "result": 1,
+          "damage": 0,
+          "reserved_bits_preserved": true
+        }
+      }
+    },
+    {
+      "unique_id": 8576,
+      "label": "ToolScoopPattern",
+      "item_kind": "Shovel",
+      "item_outfit_info_unique_id": 81,
+      "item_outfit_info_row_index": 52,
+      "item_outfit_info_label": "ScoopMiddleLevel",
+      "break_damage": 100,
+      "cases": {
+        "threshold_minus_one_then_plus_one": {
+          "start": 99,
+          "remaining_before": 1,
+          "increment_result": 1,
+          "after": 100,
+          "remaining_after": 0,
+          "reserved_bits_preserved": true
+        },
+        "saturation": {
+          "998_plus_1": 999,
+          "999_plus_1": 999
+        },
+        "reset": {
+          "result": 1,
+          "damage": 0,
+          "reserved_bits_preserved": true
+        }
+      }
+    },
+    {
+      "unique_id": 8577,
+      "label": "ToolScoopColorful",
+      "item_kind": "Shovel",
+      "item_outfit_info_unique_id": 81,
+      "item_outfit_info_row_index": 52,
+      "item_outfit_info_label": "ScoopMiddleLevel",
+      "break_damage": 100,
+      "cases": {
+        "threshold_minus_one_then_plus_one": {
+          "start": 99,
+          "remaining_before": 1,
+          "increment_result": 1,
+          "after": 100,
+          "remaining_after": 0,
+          "reserved_bits_preserved": true
+        },
+        "saturation": {
+          "998_plus_1": 999,
+          "999_plus_1": 999
+        },
+        "reset": {
+          "result": 1,
+          "damage": 0,
+          "reserved_bits_preserved": true
+        }
+      }
+    },
+    {
+      "unique_id": 2376,
+      "label": "ToolNet",
+      "item_kind": "Net",
+      "item_outfit_info_unique_id": 31,
+      "item_outfit_info_row_index": 39,
+      "item_outfit_info_label": "Net",
+      "break_damage": 10,
+      "cases": {
+        "threshold_minus_one_then_plus_one": {
+          "start": 9,
+          "remaining_before": 1,
+          "increment_result": 1,
+          "after": 10,
+          "remaining_after": 0,
+          "reserved_bits_preserved": true
+        },
+        "saturation": {
+          "998_plus_1": 999,
+          "999_plus_1": 999
+        },
+        "reset": {
+          "result": 1,
+          "damage": 0,
+          "reserved_bits_preserved": true
+        }
+      }
+    },
+    {
+      "unique_id": 5784,
+      "label": "ToolNetNormal",
+      "item_kind": "Net",
+      "item_outfit_info_unique_id": 75,
+      "item_outfit_info_row_index": 40,
+      "item_outfit_info_label": "NetMiddleLevel",
+      "break_damage": 30,
+      "cases": {
+        "threshold_minus_one_then_plus_one": {
+          "start": 29,
+          "remaining_before": 1,
+          "increment_result": 1,
+          "after": 30,
+          "remaining_after": 0,
+          "reserved_bits_preserved": true
+        },
+        "saturation": {
+          "998_plus_1": 999,
+          "999_plus_1": 999
+        },
+        "reset": {
+          "result": 1,
+          "damage": 0,
+          "reserved_bits_preserved": true
+        }
+      }
+    },
+    {
+      "unique_id": 8176,
+      "label": "ToolNetStar",
+      "item_kind": "Net",
+      "item_outfit_info_unique_id": 75,
+      "item_outfit_info_row_index": 40,
+      "item_outfit_info_label": "NetMiddleLevel",
+      "break_damage": 30,
+      "cases": {
+        "threshold_minus_one_then_plus_one": {
+          "start": 29,
+          "remaining_before": 1,
+          "increment_result": 1,
+          "after": 30,
+          "remaining_after": 0,
+          "reserved_bits_preserved": true
+        },
+        "saturation": {
+          "998_plus_1": 999,
+          "999_plus_1": 999
+        },
+        "reset": {
+          "result": 1,
+          "damage": 0,
+          "reserved_bits_preserved": true
+        }
+      }
+    },
+    {
+      "unique_id": 8177,
+      "label": "ToolNetPattern",
+      "item_kind": "Net",
+      "item_outfit_info_unique_id": 75,
+      "item_outfit_info_row_index": 40,
+      "item_outfit_info_label": "NetMiddleLevel",
+      "break_damage": 30,
+      "cases": {
+        "threshold_minus_one_then_plus_one": {
+          "start": 29,
+          "remaining_before": 1,
+          "increment_result": 1,
+          "after": 30,
+          "remaining_after": 0,
+          "reserved_bits_preserved": true
+        },
+        "saturation": {
+          "998_plus_1": 999,
+          "999_plus_1": 999
+        },
+        "reset": {
+          "result": 1,
+          "damage": 0,
+          "reserved_bits_preserved": true
+        }
+      }
+    },
+    {
+      "unique_id": 8178,
+      "label": "ToolNetOutdoor",
+      "item_kind": "Net",
+      "item_outfit_info_unique_id": 75,
+      "item_outfit_info_row_index": 40,
+      "item_outfit_info_label": "NetMiddleLevel",
+      "break_damage": 30,
+      "cases": {
+        "threshold_minus_one_then_plus_one": {
+          "start": 29,
+          "remaining_before": 1,
+          "increment_result": 1,
+          "after": 30,
+          "remaining_after": 0,
+          "reserved_bits_preserved": true
+        },
+        "saturation": {
+          "998_plus_1": 999,
+          "999_plus_1": 999
+        },
+        "reset": {
+          "result": 1,
+          "damage": 0,
+          "reserved_bits_preserved": true
+        }
+      }
+    },
+    {
+      "unique_id": 8179,
+      "label": "ToolNetGold",
+      "item_kind": "Net",
+      "item_outfit_info_unique_id": 76,
+      "item_outfit_info_row_index": 41,
+      "item_outfit_info_label": "NetUpperLevel",
+      "break_damage": 90,
+      "cases": {
+        "threshold_minus_one_then_plus_one": {
+          "start": 89,
+          "remaining_before": 1,
+          "increment_result": 1,
+          "after": 90,
+          "remaining_after": 0,
+          "reserved_bits_preserved": true
+        },
+        "saturation": {
+          "998_plus_1": 999,
+          "999_plus_1": 999
+        },
+        "reset": {
+          "result": 1,
+          "damage": 0,
+          "reserved_bits_preserved": true
+        }
+      }
+    },
+    {
+      "unique_id": 2377,
+      "label": "ToolAngling",
+      "item_kind": "FishingRod",
+      "item_outfit_info_unique_id": 83,
+      "item_outfit_info_row_index": 55,
+      "item_outfit_info_label": "FishingRodMiddleLevel",
+      "break_damage": 30,
+      "cases": {
+        "threshold_minus_one_then_plus_one": {
+          "start": 29,
+          "remaining_before": 1,
+          "increment_result": 1,
+          "after": 30,
+          "remaining_after": 0,
+          "reserved_bits_preserved": true
+        },
+        "saturation": {
+          "998_plus_1": 999,
+          "999_plus_1": 999
+        },
+        "reset": {
+          "result": 1,
+          "damage": 0,
+          "reserved_bits_preserved": true
+        }
+      }
+    },
+    {
+      "unique_id": 3084,
+      "label": "ToolFishingrodWood",
+      "item_kind": "FishingRod",
+      "item_outfit_info_unique_id": 15,
+      "item_outfit_info_row_index": 54,
+      "item_outfit_info_label": "FishingRod",
+      "break_damage": 10,
+      "cases": {
+        "threshold_minus_one_then_plus_one": {
+          "start": 9,
+          "remaining_before": 1,
+          "increment_result": 1,
+          "after": 10,
+          "remaining_after": 0,
+          "reserved_bits_preserved": true
+        },
+        "saturation": {
+          "998_plus_1": 999,
+          "999_plus_1": 999
+        },
+        "reset": {
+          "result": 1,
+          "damage": 0,
+          "reserved_bits_preserved": true
+        }
+      }
+    },
+    {
+      "unique_id": 8471,
+      "label": "ToolFishingrodColorful",
+      "item_kind": "FishingRod",
+      "item_outfit_info_unique_id": 83,
+      "item_outfit_info_row_index": 55,
+      "item_outfit_info_label": "FishingRodMiddleLevel",
+      "break_damage": 30,
+      "cases": {
+        "threshold_minus_one_then_plus_one": {
+          "start": 29,
+          "remaining_before": 1,
+          "increment_result": 1,
+          "after": 30,
+          "remaining_after": 0,
+          "reserved_bits_preserved": true
+        },
+        "saturation": {
+          "998_plus_1": 999,
+          "999_plus_1": 999
+        },
+        "reset": {
+          "result": 1,
+          "damage": 0,
+          "reserved_bits_preserved": true
+        }
+      }
+    },
+    {
+      "unique_id": 8472,
+      "label": "ToolFishingrodDuck",
+      "item_kind": "FishingRod",
+      "item_outfit_info_unique_id": 83,
+      "item_outfit_info_row_index": 55,
+      "item_outfit_info_label": "FishingRodMiddleLevel",
+      "break_damage": 30,
+      "cases": {
+        "threshold_minus_one_then_plus_one": {
+          "start": 29,
+          "remaining_before": 1,
+          "increment_result": 1,
+          "after": 30,
+          "remaining_after": 0,
+          "reserved_bits_preserved": true
+        },
+        "saturation": {
+          "998_plus_1": 999,
+          "999_plus_1": 999
+        },
+        "reset": {
+          "result": 1,
+          "damage": 0,
+          "reserved_bits_preserved": true
+        }
+      }
+    },
+    {
+      "unique_id": 8473,
+      "label": "ToolFishingrodOutdoor",
+      "item_kind": "FishingRod",
+      "item_outfit_info_unique_id": 83,
+      "item_outfit_info_row_index": 55,
+      "item_outfit_info_label": "FishingRodMiddleLevel",
+      "break_damage": 30,
+      "cases": {
+        "threshold_minus_one_then_plus_one": {
+          "start": 29,
+          "remaining_before": 1,
+          "increment_result": 1,
+          "after": 30,
+          "remaining_after": 0,
+          "reserved_bits_preserved": true
+        },
+        "saturation": {
+          "998_plus_1": 999,
+          "999_plus_1": 999
+        },
+        "reset": {
+          "result": 1,
+          "damage": 0,
+          "reserved_bits_preserved": true
+        }
+      }
+    },
+    {
+      "unique_id": 8660,
+      "label": "ToolFishingrodGold",
+      "item_kind": "FishingRod",
+      "item_outfit_info_unique_id": 84,
+      "item_outfit_info_row_index": 56,
+      "item_outfit_info_label": "FishingRodUpperLevel",
+      "break_damage": 90,
+      "cases": {
+        "threshold_minus_one_then_plus_one": {
+          "start": 89,
+          "remaining_before": 1,
+          "increment_result": 1,
+          "after": 90,
+          "remaining_after": 0,
+          "reserved_bits_preserved": true
+        },
+        "saturation": {
+          "998_plus_1": 999,
+          "999_plus_1": 999
+        },
+        "reset": {
+          "result": 1,
+          "damage": 0,
+          "reserved_bits_preserved": true
+        }
+      }
+    },
+    {
+      "unique_id": 2822,
+      "label": "ToolSlingshot",
+      "item_kind": "Slingshot",
+      "item_outfit_info_unique_id": 85,
+      "item_outfit_info_row_index": 59,
+      "item_outfit_info_label": "SlingshotMiddleLevel",
+      "break_damage": 20,
+      "cases": {
+        "threshold_minus_one_then_plus_one": {
+          "start": 19,
+          "remaining_before": 1,
+          "increment_result": 1,
+          "after": 20,
+          "remaining_after": 0,
+          "reserved_bits_preserved": true
+        },
+        "saturation": {
+          "998_plus_1": 999,
+          "999_plus_1": 999
+        },
+        "reset": {
+          "result": 1,
+          "damage": 0,
+          "reserved_bits_preserved": true
+        }
+      }
+    },
+    {
+      "unique_id": 8578,
+      "label": "ToolSlingshotGold",
+      "item_kind": "Slingshot",
+      "item_outfit_info_unique_id": 86,
+      "item_outfit_info_row_index": 60,
+      "item_outfit_info_label": "SlingshotUpperLevel",
+      "break_damage": 60,
+      "cases": {
+        "threshold_minus_one_then_plus_one": {
+          "start": 59,
+          "remaining_before": 1,
+          "increment_result": 1,
+          "after": 60,
+          "remaining_after": 0,
+          "reserved_bits_preserved": true
+        },
+        "saturation": {
+          "998_plus_1": 999,
+          "999_plus_1": 999
+        },
+        "reset": {
+          "result": 1,
+          "damage": 0,
+          "reserved_bits_preserved": true
+        }
+      }
+    },
+    {
+      "unique_id": 8579,
+      "label": "ToolSlingshotOutdoor",
+      "item_kind": "Slingshot",
+      "item_outfit_info_unique_id": 85,
+      "item_outfit_info_row_index": 59,
+      "item_outfit_info_label": "SlingshotMiddleLevel",
+      "break_damage": 20,
+      "cases": {
+        "threshold_minus_one_then_plus_one": {
+          "start": 19,
+          "remaining_before": 1,
+          "increment_result": 1,
+          "after": 20,
+          "remaining_after": 0,
+          "reserved_bits_preserved": true
+        },
+        "saturation": {
+          "998_plus_1": 999,
+          "999_plus_1": 999
+        },
+        "reset": {
+          "result": 1,
+          "damage": 0,
+          "reserved_bits_preserved": true
+        }
+      }
+    },
+    {
+      "unique_id": 8580,
+      "label": "ToolSlingshotColorful",
+      "item_kind": "Slingshot",
+      "item_outfit_info_unique_id": 85,
+      "item_outfit_info_row_index": 59,
+      "item_outfit_info_label": "SlingshotMiddleLevel",
+      "break_damage": 20,
+      "cases": {
+        "threshold_minus_one_then_plus_one": {
+          "start": 19,
+          "remaining_before": 1,
+          "increment_result": 1,
+          "after": 20,
+          "remaining_after": 0,
+          "reserved_bits_preserved": true
+        },
+        "saturation": {
+          "998_plus_1": 999,
+          "999_plus_1": 999
+        },
+        "reset": {
+          "result": 1,
+          "damage": 0,
+          "reserved_bits_preserved": true
+        }
+      }
+    },
+    {
+      "unique_id": 2379,
+      "label": "ToolWatering",
+      "item_kind": "Watering",
+      "item_outfit_info_unique_id": 79,
+      "item_outfit_info_row_index": 48,
+      "item_outfit_info_label": "WateringMiddleLevel",
+      "break_damage": 60,
+      "cases": {
+        "threshold_minus_one_then_plus_one": {
+          "start": 59,
+          "remaining_before": 1,
+          "increment_result": 1,
+          "after": 60,
+          "remaining_after": 0,
+          "reserved_bits_preserved": true
+        },
+        "saturation": {
+          "998_plus_1": 999,
+          "999_plus_1": 999
+        },
+        "reset": {
+          "result": 1,
+          "damage": 0,
+          "reserved_bits_preserved": true
+        }
+      }
+    },
+    {
+      "unique_id": 3083,
+      "label": "ToolWateringWood",
+      "item_kind": "Watering",
+      "item_outfit_info_unique_id": 19,
+      "item_outfit_info_row_index": 47,
+      "item_outfit_info_label": "Watering",
+      "break_damage": 20,
+      "cases": {
+        "threshold_minus_one_then_plus_one": {
+          "start": 19,
+          "remaining_before": 1,
+          "increment_result": 1,
+          "after": 20,
+          "remaining_after": 0,
+          "reserved_bits_preserved": true
+        },
+        "saturation": {
+          "998_plus_1": 999,
+          "999_plus_1": 999
+        },
+        "reset": {
+          "result": 1,
+          "damage": 0,
+          "reserved_bits_preserved": true
+        }
+      }
+    },
+    {
+      "unique_id": 8533,
+      "label": "ToolWateringGold",
+      "item_kind": "Watering",
+      "item_outfit_info_unique_id": 80,
+      "item_outfit_info_row_index": 49,
+      "item_outfit_info_label": "WateringUpperLevel",
+      "break_damage": 180,
+      "cases": {
+        "threshold_minus_one_then_plus_one": {
+          "start": 179,
+          "remaining_before": 1,
+          "increment_result": 1,
+          "after": 180,
+          "remaining_after": 0,
+          "reserved_bits_preserved": true
+        },
+        "saturation": {
+          "998_plus_1": 999,
+          "999_plus_1": 999
+        },
+        "reset": {
+          "result": 1,
+          "damage": 0,
+          "reserved_bits_preserved": true
+        }
+      }
+    },
+    {
+      "unique_id": 8534,
+      "label": "ToolWateringColorful",
+      "item_kind": "Watering",
+      "item_outfit_info_unique_id": 79,
+      "item_outfit_info_row_index": 48,
+      "item_outfit_info_label": "WateringMiddleLevel",
+      "break_damage": 60,
+      "cases": {
+        "threshold_minus_one_then_plus_one": {
+          "start": 59,
+          "remaining_before": 1,
+          "increment_result": 1,
+          "after": 60,
+          "remaining_after": 0,
+          "reserved_bits_preserved": true
+        },
+        "saturation": {
+          "998_plus_1": 999,
+          "999_plus_1": 999
+        },
+        "reset": {
+          "result": 1,
+          "damage": 0,
+          "reserved_bits_preserved": true
+        }
+      }
+    },
+    {
+      "unique_id": 8535,
+      "label": "ToolWateringElephant",
+      "item_kind": "Watering",
+      "item_outfit_info_unique_id": 79,
+      "item_outfit_info_row_index": 48,
+      "item_outfit_info_label": "WateringMiddleLevel",
+      "break_damage": 60,
+      "cases": {
+        "threshold_minus_one_then_plus_one": {
+          "start": 59,
+          "remaining_before": 1,
+          "increment_result": 1,
+          "after": 60,
+          "remaining_after": 0,
+          "reserved_bits_preserved": true
+        },
+        "saturation": {
+          "998_plus_1": 999,
+          "999_plus_1": 999
+        },
+        "reset": {
+          "result": 1,
+          "damage": 0,
+          "reserved_bits_preserved": true
+        }
+      }
+    },
+    {
+      "unique_id": 8536,
+      "label": "ToolWateringOutdoor",
+      "item_kind": "Watering",
+      "item_outfit_info_unique_id": 79,
+      "item_outfit_info_row_index": 48,
+      "item_outfit_info_label": "WateringMiddleLevel",
+      "break_damage": 60,
+      "cases": {
+        "threshold_minus_one_then_plus_one": {
+          "start": 59,
+          "remaining_before": 1,
+          "increment_result": 1,
+          "after": 60,
+          "remaining_after": 0,
+          "reserved_bits_preserved": true
+        },
+        "saturation": {
+          "998_plus_1": 999,
+          "999_plus_1": 999
+        },
+        "reset": {
+          "result": 1,
+          "damage": 0,
+          "reserved_bits_preserved": true
+        }
+      }
+    }
+  ],
+  "remaining": [
+    "Threshold-to-PlayerToolBreak dispatch is not exercised; the native tool state path is only statically tied to the wear helpers.",
+    "The PlayerToolBreak path's durable save flush and a live action-to-break sequence are not available in this fixture."
+  ]
+}
