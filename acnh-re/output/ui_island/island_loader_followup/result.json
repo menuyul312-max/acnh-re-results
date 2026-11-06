@@ -1,0 +1,394 @@
+{
+  "scope": "One bounded outer-generator path audit plus deterministic execution of the native integer RNG helpers. The four-slot 0x529910 body and 0x528bf0 setup are not invoked in this iteration.",
+  "evidence_labels": {
+    "NATIVE": "ELF instructions, call sites, and bounded original-instruction harness results.",
+    "PSEUDO": "Control-flow interpretation derived from the native instruction sequence/decompilation.",
+    "TBL": "Raw BCSV/BYML data read from the supplied additional RomFS and cross-checked with committed summaries.",
+    "EF": "Inference or limitation requiring unavailable PBC payloads or unexecuted runtime resource state."
+  },
+  "sources": {
+    "elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+    "index_sqlite": "/workspace/acnh-re/output/index.sqlite",
+    "additional_romfs": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs",
+    "raw_tables": {
+      "FieldMainFieldParam": {
+        "sha256": "3ebd1057e41b0666aa30c6d8beee9220b52d8fb5280c478e8eb13eaca5d27944",
+        "rows": 96
+      },
+      "FieldOutsideTemplate": {
+        "sha256": "1c615f1c8b42d4f690f81fd577261a3daf61f814bb3b1f93354fd1b714c5a314",
+        "rows": 36
+      },
+      "FieldLandMakingUnitModelParam": {
+        "sha256": "289ad2fb68d511121a0779f24e21dfc5f8c627a6053c6aaf334b6a56481d36fc",
+        "rows": 246
+      }
+    }
+  },
+  "generator_path": {
+    "label": "[NATIVE] call graph / [PSEUDO] execution order",
+    "function_sizes_from_index": {
+      "0x529910": {
+        "size_bytes": 1220,
+        "name": "FUN_00629910"
+      },
+      "0x528bf0": {
+        "size_bytes": 476,
+        "name": "FUN_00628bf0"
+      },
+      "0x558f40": {
+        "size_bytes": 1864,
+        "name": "FUN_00658f40"
+      },
+      "0x54e330": {
+        "size_bytes": 304,
+        "name": "FUN_0064e330"
+      },
+      "0x552bb0": {
+        "size_bytes": 992,
+        "name": "FUN_00652bb0"
+      }
+    },
+    "callsites": {
+      "0x529910": [
+        {
+          "pc": "0x529a0c",
+          "target": "0x552bb0"
+        },
+        {
+          "pc": "0x529a80",
+          "target": "0x528bf0"
+        },
+        {
+          "pc": "0x529b1c",
+          "target": "0x552bb0"
+        },
+        {
+          "pc": "0x529b90",
+          "target": "0x528bf0"
+        },
+        {
+          "pc": "0x529c2c",
+          "target": "0x552bb0"
+        },
+        {
+          "pc": "0x529ca0",
+          "target": "0x528bf0"
+        },
+        {
+          "pc": "0x529d3c",
+          "target": "0x552bb0"
+        },
+        {
+          "pc": "0x529db0",
+          "target": "0x528bf0"
+        }
+      ],
+      "0x528bf0": [
+        {
+          "pc": "0x528c98",
+          "target": "0x558f40"
+        }
+      ]
+    },
+    "direct_call_counts": {
+      "0x529910": {
+        "0x552bb0": 4,
+        "0x528bf0": 4
+      },
+      "0x528bf0": {
+        "0x558f40": 1
+      }
+    },
+    "ELF_vs_index_calls_match": true,
+    "per_slot_flow": [
+      "0x529910 builds a row-eligibility bitset from FieldMainFieldParam.",
+      "The original xorshift draw is multiplied by the eligible count; 0x52a110 returns the ranked source row, then its bit is removed.",
+      "0x54e190 binds the source row and 0x54e330 reads OutsideTemplateKind.",
+      "0x552bb0 selects a FieldOutsideTemplate UniqueID for that category using the shared RNG state.",
+      "0x529910 constructs a 0xe0-byte setup parameter with the source-row UID, selected template UID and slot index, then calls 0x528bf0.",
+      "0x528bf0 calls 0x558f40 only when the template resource and destination grid are non-null."
+    ],
+    "slot_invariants": {
+      "generator_selector_calls": 4,
+      "generator_setup_calls": 4,
+      "unique_source_rows": true,
+      "raw_table_category_counts": {
+        "0": 30,
+        "1": 33,
+        "2": 33
+      },
+      "source_preset_uid_range": [
+        0,
+        119
+      ],
+      "template_rows": 36,
+      "landmaking_unit_rows": 246
+    },
+    "native_execution_status": "[NATIVE] The standalone RNG seed-expansion and eight draw steps pass. [PSEUDO] The parent generator sequence is documented from code and its four call sites; this iteration does not invoke 0x529910 or 0x528bf0.",
+    "rng": {
+      "seed": "0x4d41504a",
+      "native_functions": [
+        "0x19aa040",
+        "0x19aa0e0"
+      ],
+      "draws_checked": 8,
+      "draws": [
+        {
+          "u32": 2048676392,
+          "state_after": [
+            1685073247,
+            2384147481,
+            1885012395,
+            2048676392
+          ]
+        },
+        {
+          "u32": 2682491617,
+          "state_after": [
+            2384147481,
+            1885012395,
+            2048676392,
+            2682491617
+          ]
+        },
+        {
+          "u32": 3356477176,
+          "state_after": [
+            1885012395,
+            2048676392,
+            2682491617,
+            3356477176
+          ]
+        },
+        {
+          "u32": 1626460171,
+          "state_after": [
+            2048676392,
+            2682491617,
+            3356477176,
+            1626460171
+          ]
+        },
+        {
+          "u32": 4175708975,
+          "state_after": [
+            2682491617,
+            3356477176,
+            1626460171,
+            4175708975
+          ]
+        },
+        {
+          "u32": 2064888392,
+          "state_after": [
+            3356477176,
+            1626460171,
+            4175708975,
+            2064888392
+          ]
+        },
+        {
+          "u32": 3449652180,
+          "state_after": [
+            1626460171,
+            4175708975,
+            2064888392,
+            3449652180
+          ]
+        },
+        {
+          "u32": 587359204,
+          "state_after": [
+            4175708975,
+            2064888392,
+            3449652180,
+            587359204
+          ]
+        }
+      ],
+      "mismatches": 0,
+      "scope": "Original seed expansion and xorshift instructions ran natively on a deterministic seed. This does not execute 0x529910's GetSystemTick-seeded constructor or its caller draw order."
+    }
+  },
+  "preset_to_runtime": {
+    "label": "[NATIVE] field transfer / [EF] PBC and transform join",
+    "source_record": {
+      "stride_bytes": 14,
+      "fields": [
+        {
+          "offset": 0,
+          "size": 2,
+          "field": "layer0.unit_id"
+        },
+        {
+          "offset": 2,
+          "size": 2,
+          "field": "layer0.variation_index"
+        },
+        {
+          "offset": 4,
+          "size": 1,
+          "field": "layer0.rotation"
+        },
+        {
+          "offset": 5,
+          "size": 1,
+          "field": "padding"
+        },
+        {
+          "offset": 6,
+          "size": 2,
+          "field": "layer1.unit_id"
+        },
+        {
+          "offset": 8,
+          "size": 2,
+          "field": "layer1.variation_index"
+        },
+        {
+          "offset": 10,
+          "size": 1,
+          "field": "layer1.rotation"
+        },
+        {
+          "offset": 11,
+          "size": 1,
+          "field": "padding"
+        },
+        {
+          "offset": 12,
+          "size": 1,
+          "field": "height"
+        },
+        {
+          "offset": 13,
+          "size": 1,
+          "field": "padding"
+        }
+      ]
+    },
+    "preset_collection": {
+      "count": 96,
+      "grid": [
+        112,
+        96
+      ],
+      "all_grid_cells": 1032192
+    },
+    "native_transfer": {
+      "call_chain": [
+        {
+          "caller": "0x529910",
+          "callee": "0x528bf0",
+          "evidence": "four repeated generation slots call the preset setup function"
+        },
+        {
+          "caller": "0x528bf0",
+          "callee": "0x558f40",
+          "condition": "preset resource and destination grid pointers are non-null"
+        }
+      ],
+      "grid_iteration": {
+        "width": 112,
+        "height": 96,
+        "source_cell_index": "x + 112*z",
+        "source_cell_byte_offset": "14 * (x + 112*z)",
+        "layer_loop": "0, 1",
+        "source_layer_byte_offsets": [
+          0,
+          6
+        ],
+        "source_height_byte_offset": 12,
+        "coordinates": "passed to destination grid accessors; out-of-range coordinates are skipped"
+      },
+      "wrapper_backing_store": {
+        "constructor_elf_va": "0x559690",
+        "nested_vtable_global_elf_va": "0x32e4838",
+        "nested_vtable_address_point": "0x3065e88",
+        "payload_accessor_vtable_offset": "0xf0",
+        "payload_accessor_elf_va": "0x55ac40",
+        "payload_accessor_rule": "0x55ac40 returns this+0x28; constructor copies at returned_pointer+8, i.e. constructor_object+0xf0.",
+        "zeroed_bytes": 150528,
+        "copy_bytes": 150528,
+        "size_equation": "0x24c00 = 112 * 96 * 14",
+        "interpretation": "The wrapper's inline backing buffer begins at constructor_object+0xf0 and has the same total size as the decoded 14-byte preset grid.",
+        "does_not_prove": "This size match does not establish that the wrapper buffer is the destination accessor's cell storage or the separate 52-byte ground/collision grid."
+      },
+      "destination_cell_writes": [
+        {
+          "offset": 0,
+          "size": 2,
+          "field": "layer0.unit_id"
+        },
+        {
+          "offset": 2,
+          "size": 2,
+          "field": "layer0.variation_index"
+        },
+        {
+          "offset": 4,
+          "size": 1,
+          "field": "layer0.rotation"
+        },
+        {
+          "offset": 6,
+          "size": 2,
+          "field": "layer1.unit_id"
+        },
+        {
+          "offset": 8,
+          "size": 2,
+          "field": "layer1.variation_index"
+        },
+        {
+          "offset": 10,
+          "size": 1,
+          "field": "layer1.rotation"
+        },
+        {
+          "offset": 12,
+          "size": 1,
+          "field": "height"
+        }
+      ],
+      "write_offsets_note": "Offsets are relative to the cell pointer returned by the destination grid accessor. The accessor's internal allocation/chunk stride is not established here.",
+      "unit_id_rule": "Source ID is copied unless it equals the native empty-unit sentinel; that value is replaced by the native default-unit ID. Sentinel/default runtime values were not resolved.",
+      "variation_rule": "The loader looks up the destination unit's FieldUnitParam Variation u16 limit (CRC32 0xc733aa77); a source variation index greater than the limit is reset to 0, otherwise it is copied.",
+      "height_rule": "The source height byte is copied to cell offset 12. Downstream height accessor 0xf52860 clamps values above 5 to 4; all decoded presets in this corpus contain heights 0–3."
+    },
+    "runtime_ground_record": {
+      "stride_bytes": 52,
+      "height_bytes": [
+        0,
+        48
+      ],
+      "material_bytes": [
+        48,
+        52
+      ],
+      "grid_index": "x + width*z"
+    },
+    "join_status": "[EF] 0x558f40 transfers the 14-byte preset schema into destination LandMaking cell fields; it does not expand the cell into the separate 52-byte ground/PBC record. ModelName + '_pbc' resource naming is statically cataloged, but payload values are absent from both this partial RomFS and the indexed source corpus.",
+    "transform_status": "[EF] The 2x2 PBC-per-unit and 5.0-unit PBC cell model is carried by earlier audit metadata; the exact 14-byte cell to PBC subcell rotation/origin/height transform and runtime cache bootstrap are not proven by this loader.",
+    "variation_cache_rule": "The loader looks up the destination unit's FieldUnitParam Variation u16 limit (CRC32 0xc733aa77); a source variation index greater than the limit is reset to 0, otherwise it is copied.",
+    "height_rule": "The source height byte is copied to cell offset 12. Downstream height accessor 0xf52860 clamps values above 5 to 4; all decoded presets in this corpus contain heights 0–3.",
+    "missing_assets": {
+      "pbc_named_files_in_additional_romfs": [],
+      "pbc_named_files_in_index_sqlite": 0,
+      "blocker": "The user-supplied additional RomFS is partial and contains no PBC-named payloads; exact 52-byte record join and per-cell transform cannot be validated from missing asset bytes."
+    }
+  },
+  "verification": {
+    "assertions_passed": [
+      "Raw additional BCSV row counts: FieldMainFieldParam=96, FieldOutsideTemplate=36, FieldLandMakingUnitModelParam=246.",
+      "FieldMainFieldParam contains 96 unique preset UIDs and category counts 30/33/33 for OutsideTemplateKind 0..2.",
+      "The additional RomFS contains 96 LandMaking preset BYML files.",
+      "Disassembled ELF direct BL targets match the index.sqlite call graph; 0x529910 has exactly four 0x552bb0 and four 0x528bf0 calls, and 0x528bf0 directly references 0x558f40.",
+      "The 14-byte destination field offsets are [0,2,4,6,8,10,12], and the separate runtime/PBC record stride is 52 bytes.",
+      "No PBC-named file is present in the additional RomFS or index.sqlite.",
+      "Original native RNG seed expansion and eight deterministic u32 draws match independent arithmetic with unchanged state transitions."
+    ],
+    "mismatches": 0
+  }
+}
