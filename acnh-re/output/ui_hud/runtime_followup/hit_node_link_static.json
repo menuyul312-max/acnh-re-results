@@ -1,0 +1,498 @@
+{
+  "schema": "acnh.ui_hud_runtime_followup.hit_node_link_static.v1",
+  "source": {
+    "game_build": "ACNH 1.0.0",
+    "module": "ExeFS main",
+    "main_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+    "evidence_kind": "Raw AArch64 instruction/data-flow checks plus same-layout BFLYT/CNT1 catalogue crosswalk; no runtime instance trace."
+  },
+  "native_constructor_dataflow": {
+    "function": "0x14821d0",
+    "control_object": "x19",
+    "inline_hit_node": {
+      "base_expression": "control+0x200",
+      "pane_pointer_field": "control+0x220 = node+0x20",
+      "allocation_address_instruction": "0x1482258",
+      "pointer_store_instruction": "0x14822a4"
+    },
+    "pane_lookup": {
+      "helper": "0x1485ab0",
+      "dynamic_key_source": "[controller_params+8]+0x18",
+      "literal_action_token": {
+        "address": "0x294751b",
+        "text": "Hit"
+      },
+      "result_flow": "lookup return x0 is stored at control+0x220, exactly the inline hit node's +0x20 Pane pointer field",
+      "callsite": "0x1482298"
+    },
+    "parent_attach": {
+      "helper": "0x14b87b0",
+      "callsite": "0x14824d4",
+      "node_argument": "x21 = control+0x200",
+      "parent_argument": "[controller_params+0x20]"
+    },
+    "instructions": {
+      "node_and_lookup": [
+        {
+          "address": "0x1482258",
+          "mnemonic": "add",
+          "operands": "x21, x19, #0x200"
+        },
+        {
+          "address": "0x1482264",
+          "mnemonic": "bl",
+          "operands": "#0x14b7520"
+        },
+        {
+          "address": "0x1482268",
+          "mnemonic": "ldp",
+          "operands": "x8, x1, [x20, #8]"
+        },
+        {
+          "address": "0x148226c",
+          "mnemonic": "ldr",
+          "operands": "x8, [x8, #0x18]"
+        },
+        {
+          "address": "0x1482270",
+          "mnemonic": "str",
+          "operands": "x8, [sp, #0x38]"
+        },
+        {
+          "address": "0x148227c",
+          "mnemonic": "adrp",
+          "operands": "x8, #0x2947000"
+        },
+        {
+          "address": "0x1482280",
+          "mnemonic": "add",
+          "operands": "x8, x8, #0x51b"
+        },
+        {
+          "address": "0x1482298",
+          "mnemonic": "bl",
+          "operands": "#0x1485ab0"
+        },
+        {
+          "address": "0x14822a4",
+          "mnemonic": "str",
+          "operands": "x0, [x19, #0x220]"
+        }
+      ],
+      "attach": [
+        {
+          "address": "0x14824cc",
+          "mnemonic": "ldr",
+          "operands": "x1, [x20, #0x20]"
+        },
+        {
+          "address": "0x14824d0",
+          "mnemonic": "mov",
+          "operands": "x0, x21"
+        },
+        {
+          "address": "0x14824d4",
+          "mnemonic": "bl",
+          "operands": "#0x14b87b0"
+        }
+      ],
+      "parallel_control_pane_lookup_callsite": [
+        {
+          "address": "0x14827c0",
+          "mnemonic": "ldp",
+          "operands": "x1, x2, [x20, #8]"
+        },
+        {
+          "address": "0x14827c4",
+          "mnemonic": "bl",
+          "operands": "#0x14885b0"
+        }
+      ]
+    }
+  },
+  "same_key_lookup_inputs": {
+    "node_pane_lookup": {
+      "callsite": "0x1482298",
+      "helper": "0x1485ab0",
+      "dynamic_name_source": "[controller_params+8]+0x18",
+      "lookup_context": "[controller_params+0x10]",
+      "descriptor_base": "global cell [0x330de88] + 0x10",
+      "token": "Hit",
+      "result_field": "control+0x220"
+    },
+    "control_visibility_lookup": {
+      "constructor_callsite": "0x14827c4",
+      "helper_callsite": "0x1488618",
+      "helper": "0x1485ab0",
+      "dynamic_name_source": "[controller_params+8]+0x18",
+      "lookup_context": "[controller_params+0x10]",
+      "descriptor_base": "global cell [0x330de88] + 0x10",
+      "token": "Hit",
+      "result_field": "control+0x420+0x70"
+    },
+    "interpretation": "The constructor builds the node+0x20 lookup and the control-side Hit lookup from the same controller parameter fields, descriptor base, helper, and token. Their calls are separate and native code does not compare the returned pointers; this is same-key input evidence, not a direct pointer-equality assertion.",
+    "instructions": {
+      "constructor_sources": [
+        {
+          "address": "0x1482204",
+          "mnemonic": "mov",
+          "operands": "x20, x1"
+        },
+        {
+          "address": "0x1482268",
+          "mnemonic": "ldp",
+          "operands": "x8, x1, [x20, #8]"
+        },
+        {
+          "address": "0x148226c",
+          "mnemonic": "ldr",
+          "operands": "x8, [x8, #0x18]"
+        },
+        {
+          "address": "0x1482278",
+          "mnemonic": "ldr",
+          "operands": "x23, [x23, #0xe88]"
+        },
+        {
+          "address": "0x148228c",
+          "mnemonic": "add",
+          "operands": "x9, x23, #0x10"
+        },
+        {
+          "address": "0x1482298",
+          "mnemonic": "bl",
+          "operands": "#0x1485ab0"
+        },
+        {
+          "address": "0x14822a4",
+          "mnemonic": "str",
+          "operands": "x0, [x19, #0x220]"
+        },
+        {
+          "address": "0x14827c0",
+          "mnemonic": "ldp",
+          "operands": "x1, x2, [x20, #8]"
+        },
+        {
+          "address": "0x14827c4",
+          "mnemonic": "bl",
+          "operands": "#0x14885b0"
+        }
+      ],
+      "control_lookup_sources": [
+        {
+          "address": "0x14885c4",
+          "mnemonic": "ldr",
+          "operands": "x8, [x1, #0x18]"
+        },
+        {
+          "address": "0x14885d0",
+          "mnemonic": "ldr",
+          "operands": "x22, [x22, #0xe88]"
+        },
+        {
+          "address": "0x14885d4",
+          "mnemonic": "mov",
+          "operands": "x20, x2"
+        },
+        {
+          "address": "0x14885f0",
+          "mnemonic": "add",
+          "operands": "x21, x22, #0x10"
+        },
+        {
+          "address": "0x14885fc",
+          "mnemonic": "adrp",
+          "operands": "x8, #0x2947000"
+        },
+        {
+          "address": "0x1488600",
+          "mnemonic": "add",
+          "operands": "x8, x8, #0x51b"
+        },
+        {
+          "address": "0x1488610",
+          "mnemonic": "mov",
+          "operands": "x1, x20"
+        },
+        {
+          "address": "0x1488614",
+          "mnemonic": "stp",
+          "operands": "x21, x8, [sp, #0x10]"
+        },
+        {
+          "address": "0x1488618",
+          "mnemonic": "bl",
+          "operands": "#0x1485ab0"
+        },
+        {
+          "address": "0x1488620",
+          "mnemonic": "str",
+          "operands": "x0, [x19, #0x70]"
+        }
+      ]
+    }
+  },
+  "hit_node_consumer": {
+    "geometry_helper": "0x14b7820",
+    "pane_pointer_read": "node+0x20; passed to pane visibility test before rectangle evaluation",
+    "primary_rect": "node+0x30..+0x3c",
+    "secondary_pane_pointer_read": "node+0x28",
+    "secondary_rect": "node+0x40..+0x4c; intersected with the first rectangle when the pointer is non-null",
+    "parent_bound_inheritance": {
+      "helper": "0x14b87b0",
+      "condition": "child node flags at +0x50 include bit 0x40",
+      "dataflow": "parent+0x28 Pane pointer is copied into child+0x28",
+      "instructions": [
+        {
+          "address": "0x14b87dc",
+          "mnemonic": "mov",
+          "operands": "w8, #6"
+        },
+        {
+          "address": "0x14b87f0",
+          "mnemonic": "ldrh",
+          "operands": "w9, [x19, #0x50]"
+        },
+        {
+          "address": "0x14b87fc",
+          "mnemonic": "ldr",
+          "operands": "x8, [x20, #0x28]"
+        },
+        {
+          "address": "0x14b8800",
+          "mnemonic": "str",
+          "operands": "x8, [x19, #0x28]"
+        }
+      ]
+    },
+    "instructions": [
+      {
+        "address": "0x14b78a0",
+        "mnemonic": "ldr",
+        "operands": "x8, [x20, #0x20]"
+      },
+      {
+        "address": "0x14b78b4",
+        "mnemonic": "bl",
+        "operands": "#0x14c80d0"
+      },
+      {
+        "address": "0x14b78bc",
+        "mnemonic": "ldp",
+        "operands": "s0, s4, [x20, #0x30]"
+      },
+      {
+        "address": "0x14b78c0",
+        "mnemonic": "ldr",
+        "operands": "x8, [x20, #0x28]"
+      },
+      {
+        "address": "0x14b79b0",
+        "mnemonic": "fmov",
+        "operands": "w10, s3"
+      }
+    ]
+  },
+  "asset_crosswalk": {
+    "records_named_B_Hit_and_bound_as_Hit": 18,
+    "same_layout_matches": [
+      {
+        "layout": "BtnLineNml",
+        "control_type": "ButtonNormal",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          840.0,
+          60.0
+        ],
+        "source": "BtnLineNml.Nin_NX_NVN.zs"
+      },
+      {
+        "layout": "BtnLine_Root",
+        "control_type": "ButtonNormal",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          840.0,
+          60.0
+        ],
+        "source": "BtnLine_Root.Nin_NX_NVN.zs"
+      },
+      {
+        "layout": "BtnOpt_Root",
+        "control_type": "ButtonCheck",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          1080.0,
+          100.0
+        ],
+        "source": "BtnOpt_Root.Nin_NX_NVN.zs"
+      },
+      {
+        "layout": "FooterBtn",
+        "control_type": "ButtonRepeat",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          674.0,
+          72.0
+        ],
+        "source": "FooterBtn.Nin_NX_NVN.zs"
+      },
+      {
+        "layout": "SwkbdBtnBS",
+        "control_type": "ButtonRepeat",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          100.0,
+          100.0
+        ],
+        "source": "SwkbdBtnBS.Nin_NX_NVN.zs"
+      },
+      {
+        "layout": "SwkbdBtnBalloon2",
+        "control_type": "ButtonNormal",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          110.0,
+          110.0
+        ],
+        "source": "SwkbdBtnBalloon2.Nin_NX_NVN.zs"
+      },
+      {
+        "layout": "SwkbdBtnEnter",
+        "control_type": "ButtonNormal",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          100.0,
+          100.0
+        ],
+        "source": "SwkbdBtnEnter.Nin_NX_NVN.zs"
+      },
+      {
+        "layout": "SwkbdBtnNumeric",
+        "control_type": "ButtonNormal",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          100.0,
+          100.0
+        ],
+        "source": "SwkbdBtnNumeric.Nin_NX_NVN.zs"
+      },
+      {
+        "layout": "SwkbdBtnOptCheck",
+        "control_type": "ButtonCheck",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          100.0,
+          100.0
+        ],
+        "source": "SwkbdBtnOptCheck.Nin_NX_NVN.zs"
+      },
+      {
+        "layout": "SwkbdBtnOptLineBreak",
+        "control_type": "ButtonRepeat",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          100.0,
+          100.0
+        ],
+        "source": "SwkbdBtnOptLineBreak.Nin_NX_NVN.zs"
+      },
+      {
+        "layout": "SwkbdBtnOptNml",
+        "control_type": "ButtonNormal",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          100.0,
+          100.0
+        ],
+        "source": "SwkbdBtnOptNml.Nin_NX_NVN.zs"
+      },
+      {
+        "layout": "SwkbdBtnOptRpt",
+        "control_type": "ButtonRepeat",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          100.0,
+          100.0
+        ],
+        "source": "SwkbdBtnOptRpt.Nin_NX_NVN.zs"
+      },
+      {
+        "layout": "SwkbdBtnOpt_Root",
+        "control_type": "ButtonNormal",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          100.0,
+          100.0
+        ],
+        "source": "SwkbdBtnOpt_Root.Nin_NX_NVN.zs"
+      },
+      {
+        "layout": "SwkbdBtnShift",
+        "control_type": "ButtonNormal",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          100.0,
+          100.0
+        ],
+        "source": "SwkbdBtnShift.Nin_NX_NVN.zs"
+      },
+      {
+        "layout": "SwkbdBtnTransArwCheck",
+        "control_type": "ButtonCheck",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          60.0,
+          46.0
+        ],
+        "source": "SwkbdBtnTransArwCheck.Nin_NX_NVN.zs"
+      },
+      {
+        "layout": "SwkbdBtnTransArwNml",
+        "control_type": "ButtonNormal",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          76.0,
+          46.0
+        ],
+        "source": "SwkbdBtnTransArwNml.Nin_NX_NVN.zs"
+      },
+      {
+        "layout": "SwkbdBtnTransWord",
+        "control_type": "ButtonNormal",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          1530.0,
+          72.0
+        ],
+        "source": "SwkbdBtnTransWord.Nin_NX_NVN.zs"
+      },
+      {
+        "layout": "SwkbdBtn_Root",
+        "control_type": "ButtonNormal",
+        "pane_action": "B_Hit:Hit",
+        "bnd1_size": [
+          100.0,
+          100.0
+        ],
+        "source": "SwkbdBtn_Root.Nin_NX_NVN.zs"
+      }
+    ]
+  },
+  "separate_control_visibility_binding": {
+    "helper": "0x14885b0",
+    "callsite_in_same_constructor": "0x14827c4",
+    "writes_control_offsets": [
+      "+0x68",
+      "+0x70"
+    ],
+    "fallback_name_observed": "B_Hit",
+    "interpretation": "The controller visibility helper stores its Hit lookup at +0x70. Its lookup uses the same key sources as the constructor lookup feeding node+0x20, but the return values are not compared in native code."
+  },
+  "limits": [
+    "Native code proves a controller Hit lookup result flows into node+0x20 and that node+0x20 is consumed by hit testing. The separate control-side Hit lookup at +0x70 is constructed with the same dynamic name source, lookup context, descriptor base, helper, and token. The asset catalogue's 18 same-layout B_Hit:Hit pairs are a strong name crosswalk, but the dynamic prefix value for a live instance was not captured and the two return values are not explicitly compared.",
+    "The node+0x28 pointer is populated from a parent's +0x28 under child flag 0x40; native code does not identify its section type or label it as render clipping.",
+    "The control-side +0x70 Hit result and node+0x20 Pane pointer use the same key inputs, but the native constructor does not compare the returned pointers. A synchronized layout/control instance trace or the corresponding raw BFLYT/controller data is needed to close direct instance identity.",
+    "Hit-test coordinates have not been compared with a known-resolution/orientation game capture, so screen origin and pixel parity remain open."
+  ]
+}
