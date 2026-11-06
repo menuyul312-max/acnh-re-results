@@ -466,8 +466,16 @@ def main() -> None:
                 },
                 "Axe": {"status": "state-and-break-flow-proven", "open": ["tree-hit result, drop result, and inventory/durability mutation"]},
                 "Shovel": {"status": "state-proven", "open": ["dig/bury world result and inventory/durability mutation"]},
-                "Net": {"status": "state-proven", "open": ["capture eligibility, caught-insect inventory result, and durability mutation"]},
-                "FishingRod": {"status": "state-proven", "open": ["bite/catch/release output, inventory result, and durability mutation"]},
+                "Net": {
+                    "status": "state-and-shared-inventory-helper-call-proven",
+                    "result_inventory_helper_call": direct_calls_to(db, 0xE45B80, 0xEFEC70),
+                    "open": ["capture eligibility/result production, no-empty-slot behavior, persistent save write, and durability mutation"],
+                },
+                "FishingRod": {
+                    "status": "state-and-shared-inventory-helper-call-proven",
+                    "result_inventory_helper_call": direct_calls_to(db, 0xE4E730, 0xEFEC70),
+                    "open": ["bite/catch/release output production, no-empty-slot behavior, persistent save write, and durability mutation"],
+                },
                 "Slingshot": {"status": "native-launch-call-mapped", "function_va": "0xe564b0",
                     "string_refs": slingshot_refs, "launch_consumer_call": slingshot_launch_call,
                     "result": "On its valid-target path PlayerSlingshotShooting reaches 0x803690 to write projectile start/direction state; the consumer scales the three supplied velocity components by 6.",
@@ -503,8 +511,17 @@ def main() -> None:
                     "native_probe_result": "output/gameplay/tool_mechanics_followup/tool_ring_index_native.json",
                     "interpretation": "Verified internal selector transform; semantic source and inventory relationship remain unresolved.",
                 },
+                "native_selected_item_reader": {
+                    "callback_va": "0x1417f70",
+                    "stored_index_field_offset_from_page": "0x1b9f8",
+                    "reader_call_pc": "0x1418008",
+                    "reader_va": "0x11b7210",
+                    "pocket_accessor_va": "0xef7260",
+                    "native_probe_result": "output/gameplay/tool_mechanics_followup/tool_ring_inventory_native.json",
+                    "interpretation": "The callback's stored index is passed in w2 to the item reader; the native probe reproduces matching index-to-pocket-record reads for 0..7. UI input provenance, saved pocket contents, and equip/action effects remain open.",
+                },
                 "layout_interpretation": "RomFS layout strings establish eight inventory-slot nodes and select/confirm/equip animations; they do not identify the runtime item stored in a slot.",
-                "open": ["inventory item-to-ring-slot map, selection/equip handler, and resulting tool action"],
+                "open": ["UI/controller input to the stored index, saved inventory assignment to pocket records, selection/equip handler, and resulting tool action"],
             },
             "limitations": [
                 "The ItemParam probe verifies that tool UniqueIDs resolve to real ItemParam rows through the exact lookup called by PlayerToolBreak; it does not read or prove a durability value.",
@@ -512,8 +529,8 @@ def main() -> None:
                 "The full PlayerToolBreak/BreakTool state routines were not emulated. The observed +0x898 increment and reset are state-local memory operations, not a verified inventory durability counter.",
                 "BreakToolCount is identified by EventFlagsPlayerActivityParam as a count of tools broken. Its save mutation and relationship to per-item wear remain unexecuted.",
                 "BreakToolCount is identified by EventFlagsPlayerActivityParam as a count of broken tools. Its save mutation and relationship to per-item wear remain unexecuted.",
-                "Axe, shovel, net, rod, and watering action states are sourced from PlayerStateParam; their world-result and item-consumption chains remain open.",
-                "The RingMenuTools BYML, native page registry, and slot-widget binder identify UI layout and button indexing; they do not connect a ring position to a runtime inventory item.",
+                "Axe, shovel, and watering action states are sourced from PlayerStateParam; their world-result and item-consumption chains remain open. Net and rod get-demo routines call the shared result inventory helper, whose bounded insertion writer is exercised in tool_catch_inventory_native.py; catch production, save persistence, full-inventory behavior, and wear remain open.",
+                "The RingMenuTools BYML, native page registry, and slot-widget binder identify UI layout and button indexing. The separate native item-reader probe maps callback indices 0..7 to pocket records, but UI input provenance, saved pocket contents, held-hand transfer, and equip/action remain open.",
             ],
         }
     finally:

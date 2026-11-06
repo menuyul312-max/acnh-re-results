@@ -1,0 +1,489 @@
+{
+  "schema": "acnh-re/tool-catch-inventory-native/1",
+  "native_elf_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+  "itemparam_source": {
+    "source_id": 72,
+    "raw_sha256": "89230e97fc877ff2b2b48ac1c707ef32b3a7760118839c307f19797e2553458c",
+    "row_count": 8208,
+    "unique_id_range": [
+      80,
+      12353
+    ],
+    "resolver_wrapper_reconstructed": true
+  },
+  "sample_result_items": [
+    {
+      "unique_id": 328,
+      "label": "FtrFishFuna",
+      "item_kind": "Fish"
+    },
+    {
+      "unique_id": 582,
+      "label": "FtrInsectAburazemi",
+      "item_kind": "Insect"
+    }
+  ],
+  "static_result_helper_callers": [
+    {
+      "owner_va": "0xe45b80",
+      "call_pc": "0xe45dfc"
+    },
+    {
+      "owner_va": "0xe4e730",
+      "call_pc": "0xe4ebd0"
+    }
+  ],
+  "native_functions_executed": [
+    "0xefec70 result-to-inventory helper",
+    "0xefee80 inventory insertion wrapper",
+    "0xf57ed0 bounded slot writer",
+    "0xf58d00 item-word validation",
+    "0xa1e8c0 native ItemParam row resolver",
+    "0xf59550 item-word normalization wrapper, with optional category conversion dependencies controlled",
+    "0xf589b0/0xf589e0 packed-word copy operations"
+  ],
+  "native_functions_stubbed": [
+    "0xe76d50 returns a synthetic player/inventory owner",
+    "0xda3fc0 selector-context construction",
+    "0xf9d4a0 returns 1 to select inventory view at owner+0x4d8",
+    "0xa9c290 optional item-definition wrapper and 0xab2a50 optional remake query",
+    "0x4c6110 optional foreign-item conversion context returns absent",
+    "0xab60c0 item-category normalization returns the unmodified base item word",
+    "0xeebe80 catalog registration is captured, not executed"
+  ],
+  "native_function_entry_counts": {
+    "0xa1e8c0": 200,
+    "0xefec70": 40,
+    "0xefee80": 40,
+    "0xf57ed0": 40,
+    "0xf589b0": 40,
+    "0xf589e0": 40,
+    "0xf58d00": 160,
+    "0xf59550": 40
+  },
+  "inventory_shape": {
+    "record_stride_bytes": 8,
+    "capacity_field_offset": "0xa0",
+    "capacity": 20,
+    "empty_item_unique_id": 65534,
+    "first_empty_slot_rule": "native helper scans from slot 0 and inserts at the first -2/0xfffe item id"
+  },
+  "cases": [
+    {
+      "result_kind": "Insect",
+      "result_item_unique_id": 582,
+      "result_item_label": "FtrInsectAburazemi",
+      "first_empty_slot": 0,
+      "helper_return": 1,
+      "source_word_hex": "4602000000000000",
+      "stored_word_hex": "4602000000000000",
+      "neighboring_slots_unchanged": true
+    },
+    {
+      "result_kind": "Insect",
+      "result_item_unique_id": 582,
+      "result_item_label": "FtrInsectAburazemi",
+      "first_empty_slot": 1,
+      "helper_return": 1,
+      "source_word_hex": "4602000000000000",
+      "stored_word_hex": "4602000000000000",
+      "neighboring_slots_unchanged": true
+    },
+    {
+      "result_kind": "Insect",
+      "result_item_unique_id": 582,
+      "result_item_label": "FtrInsectAburazemi",
+      "first_empty_slot": 2,
+      "helper_return": 1,
+      "source_word_hex": "4602000000000000",
+      "stored_word_hex": "4602000000000000",
+      "neighboring_slots_unchanged": true
+    },
+    {
+      "result_kind": "Insect",
+      "result_item_unique_id": 582,
+      "result_item_label": "FtrInsectAburazemi",
+      "first_empty_slot": 3,
+      "helper_return": 1,
+      "source_word_hex": "4602000000000000",
+      "stored_word_hex": "4602000000000000",
+      "neighboring_slots_unchanged": true
+    },
+    {
+      "result_kind": "Insect",
+      "result_item_unique_id": 582,
+      "result_item_label": "FtrInsectAburazemi",
+      "first_empty_slot": 4,
+      "helper_return": 1,
+      "source_word_hex": "4602000000000000",
+      "stored_word_hex": "4602000000000000",
+      "neighboring_slots_unchanged": true
+    },
+    {
+      "result_kind": "Insect",
+      "result_item_unique_id": 582,
+      "result_item_label": "FtrInsectAburazemi",
+      "first_empty_slot": 5,
+      "helper_return": 1,
+      "source_word_hex": "4602000000000000",
+      "stored_word_hex": "4602000000000000",
+      "neighboring_slots_unchanged": true
+    },
+    {
+      "result_kind": "Insect",
+      "result_item_unique_id": 582,
+      "result_item_label": "FtrInsectAburazemi",
+      "first_empty_slot": 6,
+      "helper_return": 1,
+      "source_word_hex": "4602000000000000",
+      "stored_word_hex": "4602000000000000",
+      "neighboring_slots_unchanged": true
+    },
+    {
+      "result_kind": "Insect",
+      "result_item_unique_id": 582,
+      "result_item_label": "FtrInsectAburazemi",
+      "first_empty_slot": 7,
+      "helper_return": 1,
+      "source_word_hex": "4602000000000000",
+      "stored_word_hex": "4602000000000000",
+      "neighboring_slots_unchanged": true
+    },
+    {
+      "result_kind": "Insect",
+      "result_item_unique_id": 582,
+      "result_item_label": "FtrInsectAburazemi",
+      "first_empty_slot": 8,
+      "helper_return": 1,
+      "source_word_hex": "4602000000000000",
+      "stored_word_hex": "4602000000000000",
+      "neighboring_slots_unchanged": true
+    },
+    {
+      "result_kind": "Insect",
+      "result_item_unique_id": 582,
+      "result_item_label": "FtrInsectAburazemi",
+      "first_empty_slot": 9,
+      "helper_return": 1,
+      "source_word_hex": "4602000000000000",
+      "stored_word_hex": "4602000000000000",
+      "neighboring_slots_unchanged": true
+    },
+    {
+      "result_kind": "Insect",
+      "result_item_unique_id": 582,
+      "result_item_label": "FtrInsectAburazemi",
+      "first_empty_slot": 10,
+      "helper_return": 1,
+      "source_word_hex": "4602000000000000",
+      "stored_word_hex": "4602000000000000",
+      "neighboring_slots_unchanged": true
+    },
+    {
+      "result_kind": "Insect",
+      "result_item_unique_id": 582,
+      "result_item_label": "FtrInsectAburazemi",
+      "first_empty_slot": 11,
+      "helper_return": 1,
+      "source_word_hex": "4602000000000000",
+      "stored_word_hex": "4602000000000000",
+      "neighboring_slots_unchanged": true
+    },
+    {
+      "result_kind": "Insect",
+      "result_item_unique_id": 582,
+      "result_item_label": "FtrInsectAburazemi",
+      "first_empty_slot": 12,
+      "helper_return": 1,
+      "source_word_hex": "4602000000000000",
+      "stored_word_hex": "4602000000000000",
+      "neighboring_slots_unchanged": true
+    },
+    {
+      "result_kind": "Insect",
+      "result_item_unique_id": 582,
+      "result_item_label": "FtrInsectAburazemi",
+      "first_empty_slot": 13,
+      "helper_return": 1,
+      "source_word_hex": "4602000000000000",
+      "stored_word_hex": "4602000000000000",
+      "neighboring_slots_unchanged": true
+    },
+    {
+      "result_kind": "Insect",
+      "result_item_unique_id": 582,
+      "result_item_label": "FtrInsectAburazemi",
+      "first_empty_slot": 14,
+      "helper_return": 1,
+      "source_word_hex": "4602000000000000",
+      "stored_word_hex": "4602000000000000",
+      "neighboring_slots_unchanged": true
+    },
+    {
+      "result_kind": "Insect",
+      "result_item_unique_id": 582,
+      "result_item_label": "FtrInsectAburazemi",
+      "first_empty_slot": 15,
+      "helper_return": 1,
+      "source_word_hex": "4602000000000000",
+      "stored_word_hex": "4602000000000000",
+      "neighboring_slots_unchanged": true
+    },
+    {
+      "result_kind": "Insect",
+      "result_item_unique_id": 582,
+      "result_item_label": "FtrInsectAburazemi",
+      "first_empty_slot": 16,
+      "helper_return": 1,
+      "source_word_hex": "4602000000000000",
+      "stored_word_hex": "4602000000000000",
+      "neighboring_slots_unchanged": true
+    },
+    {
+      "result_kind": "Insect",
+      "result_item_unique_id": 582,
+      "result_item_label": "FtrInsectAburazemi",
+      "first_empty_slot": 17,
+      "helper_return": 1,
+      "source_word_hex": "4602000000000000",
+      "stored_word_hex": "4602000000000000",
+      "neighboring_slots_unchanged": true
+    },
+    {
+      "result_kind": "Insect",
+      "result_item_unique_id": 582,
+      "result_item_label": "FtrInsectAburazemi",
+      "first_empty_slot": 18,
+      "helper_return": 1,
+      "source_word_hex": "4602000000000000",
+      "stored_word_hex": "4602000000000000",
+      "neighboring_slots_unchanged": true
+    },
+    {
+      "result_kind": "Insect",
+      "result_item_unique_id": 582,
+      "result_item_label": "FtrInsectAburazemi",
+      "first_empty_slot": 19,
+      "helper_return": 1,
+      "source_word_hex": "4602000000000000",
+      "stored_word_hex": "4602000000000000",
+      "neighboring_slots_unchanged": true
+    },
+    {
+      "result_kind": "Fish",
+      "result_item_unique_id": 328,
+      "result_item_label": "FtrFishFuna",
+      "first_empty_slot": 0,
+      "helper_return": 1,
+      "source_word_hex": "4801000000000000",
+      "stored_word_hex": "4801000000000000",
+      "neighboring_slots_unchanged": true
+    },
+    {
+      "result_kind": "Fish",
+      "result_item_unique_id": 328,
+      "result_item_label": "FtrFishFuna",
+      "first_empty_slot": 1,
+      "helper_return": 1,
+      "source_word_hex": "4801000000000000",
+      "stored_word_hex": "4801000000000000",
+      "neighboring_slots_unchanged": true
+    },
+    {
+      "result_kind": "Fish",
+      "result_item_unique_id": 328,
+      "result_item_label": "FtrFishFuna",
+      "first_empty_slot": 2,
+      "helper_return": 1,
+      "source_word_hex": "4801000000000000",
+      "stored_word_hex": "4801000000000000",
+      "neighboring_slots_unchanged": true
+    },
+    {
+      "result_kind": "Fish",
+      "result_item_unique_id": 328,
+      "result_item_label": "FtrFishFuna",
+      "first_empty_slot": 3,
+      "helper_return": 1,
+      "source_word_hex": "4801000000000000",
+      "stored_word_hex": "4801000000000000",
+      "neighboring_slots_unchanged": true
+    },
+    {
+      "result_kind": "Fish",
+      "result_item_unique_id": 328,
+      "result_item_label": "FtrFishFuna",
+      "first_empty_slot": 4,
+      "helper_return": 1,
+      "source_word_hex": "4801000000000000",
+      "stored_word_hex": "4801000000000000",
+      "neighboring_slots_unchanged": true
+    },
+    {
+      "result_kind": "Fish",
+      "result_item_unique_id": 328,
+      "result_item_label": "FtrFishFuna",
+      "first_empty_slot": 5,
+      "helper_return": 1,
+      "source_word_hex": "4801000000000000",
+      "stored_word_hex": "4801000000000000",
+      "neighboring_slots_unchanged": true
+    },
+    {
+      "result_kind": "Fish",
+      "result_item_unique_id": 328,
+      "result_item_label": "FtrFishFuna",
+      "first_empty_slot": 6,
+      "helper_return": 1,
+      "source_word_hex": "4801000000000000",
+      "stored_word_hex": "4801000000000000",
+      "neighboring_slots_unchanged": true
+    },
+    {
+      "result_kind": "Fish",
+      "result_item_unique_id": 328,
+      "result_item_label": "FtrFishFuna",
+      "first_empty_slot": 7,
+      "helper_return": 1,
+      "source_word_hex": "4801000000000000",
+      "stored_word_hex": "4801000000000000",
+      "neighboring_slots_unchanged": true
+    },
+    {
+      "result_kind": "Fish",
+      "result_item_unique_id": 328,
+      "result_item_label": "FtrFishFuna",
+      "first_empty_slot": 8,
+      "helper_return": 1,
+      "source_word_hex": "4801000000000000",
+      "stored_word_hex": "4801000000000000",
+      "neighboring_slots_unchanged": true
+    },
+    {
+      "result_kind": "Fish",
+      "result_item_unique_id": 328,
+      "result_item_label": "FtrFishFuna",
+      "first_empty_slot": 9,
+      "helper_return": 1,
+      "source_word_hex": "4801000000000000",
+      "stored_word_hex": "4801000000000000",
+      "neighboring_slots_unchanged": true
+    },
+    {
+      "result_kind": "Fish",
+      "result_item_unique_id": 328,
+      "result_item_label": "FtrFishFuna",
+      "first_empty_slot": 10,
+      "helper_return": 1,
+      "source_word_hex": "4801000000000000",
+      "stored_word_hex": "4801000000000000",
+      "neighboring_slots_unchanged": true
+    },
+    {
+      "result_kind": "Fish",
+      "result_item_unique_id": 328,
+      "result_item_label": "FtrFishFuna",
+      "first_empty_slot": 11,
+      "helper_return": 1,
+      "source_word_hex": "4801000000000000",
+      "stored_word_hex": "4801000000000000",
+      "neighboring_slots_unchanged": true
+    },
+    {
+      "result_kind": "Fish",
+      "result_item_unique_id": 328,
+      "result_item_label": "FtrFishFuna",
+      "first_empty_slot": 12,
+      "helper_return": 1,
+      "source_word_hex": "4801000000000000",
+      "stored_word_hex": "4801000000000000",
+      "neighboring_slots_unchanged": true
+    },
+    {
+      "result_kind": "Fish",
+      "result_item_unique_id": 328,
+      "result_item_label": "FtrFishFuna",
+      "first_empty_slot": 13,
+      "helper_return": 1,
+      "source_word_hex": "4801000000000000",
+      "stored_word_hex": "4801000000000000",
+      "neighboring_slots_unchanged": true
+    },
+    {
+      "result_kind": "Fish",
+      "result_item_unique_id": 328,
+      "result_item_label": "FtrFishFuna",
+      "first_empty_slot": 14,
+      "helper_return": 1,
+      "source_word_hex": "4801000000000000",
+      "stored_word_hex": "4801000000000000",
+      "neighboring_slots_unchanged": true
+    },
+    {
+      "result_kind": "Fish",
+      "result_item_unique_id": 328,
+      "result_item_label": "FtrFishFuna",
+      "first_empty_slot": 15,
+      "helper_return": 1,
+      "source_word_hex": "4801000000000000",
+      "stored_word_hex": "4801000000000000",
+      "neighboring_slots_unchanged": true
+    },
+    {
+      "result_kind": "Fish",
+      "result_item_unique_id": 328,
+      "result_item_label": "FtrFishFuna",
+      "first_empty_slot": 16,
+      "helper_return": 1,
+      "source_word_hex": "4801000000000000",
+      "stored_word_hex": "4801000000000000",
+      "neighboring_slots_unchanged": true
+    },
+    {
+      "result_kind": "Fish",
+      "result_item_unique_id": 328,
+      "result_item_label": "FtrFishFuna",
+      "first_empty_slot": 17,
+      "helper_return": 1,
+      "source_word_hex": "4801000000000000",
+      "stored_word_hex": "4801000000000000",
+      "neighboring_slots_unchanged": true
+    },
+    {
+      "result_kind": "Fish",
+      "result_item_unique_id": 328,
+      "result_item_label": "FtrFishFuna",
+      "first_empty_slot": 18,
+      "helper_return": 1,
+      "source_word_hex": "4801000000000000",
+      "stored_word_hex": "4801000000000000",
+      "neighboring_slots_unchanged": true
+    },
+    {
+      "result_kind": "Fish",
+      "result_item_unique_id": 328,
+      "result_item_label": "FtrFishFuna",
+      "first_empty_slot": 19,
+      "helper_return": 1,
+      "source_word_hex": "4801000000000000",
+      "stored_word_hex": "4801000000000000",
+      "neighboring_slots_unchanged": true
+    }
+  ],
+  "case_count": 40,
+  "catalog_registration_requests_per_case": 2,
+  "mismatches": 0,
+  "unresolved_imports": {},
+  "proven": [
+    "The original result-to-inventory function accepts valid source ItemParam words for one insect and one fish sample.",
+    "For base fish/insect words with optional normalization held at identity, the original native insertion path writes the 8-byte item word into each first-empty slot across all 20 tested positions; other slots remain unchanged.",
+    "The original writer path includes EFEE80 and F57ED0 and reaches the packed-word copy operations; this is a real in-memory inventory mutation in the bounded emulator, not a stubbed slot write.",
+    "The indexed native call sites show both NetGetDemo (0xe45b80) and RodGetDemo (0xe4e730) directly call the shared result-to-inventory helper at 0xefec70."
+  ],
+  "limits": [
+    "NetGetDemo and RodGetDemo caller bodies were not run end-to-end; result item production/catch eligibility is not established by this probe.",
+    "Player-owner lookup, inventory-view selection, and catalog registration are controlled or stubbed; catalog/save persistence is not executed.",
+    "No-empty-slot replacement/compaction behavior was not run; the test always supplies one first-empty sentinel.",
+    "This proves caught insect/fish result insertion for the shared helper, not tool durability decrement or break threshold."
+  ]
+}
