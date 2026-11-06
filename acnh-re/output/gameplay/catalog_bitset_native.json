@@ -1,0 +1,74 @@
+{
+  "native_elf_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+  "addresses": {
+    "setter": "0xeecad0",
+    "item_to_catalog_index": "0xab2940"
+  },
+  "setter_contract": "After the mapper returns an index, EECAD0 accepts 0..15999, sets exactly that bit in a 2000-byte bitset, and returns 1. A mapper result of 0xffffffff returns 0. An index >=16000 returns 1 without setting a bit.",
+  "input_item_id": 4318,
+  "mapper": "Stubbed to the listed controlled outputs; this verifies the native setter only, not real item-to-catalog mapping or event triggers.",
+  "native_cases": 6,
+  "mismatches": 0,
+  "dependencies_stubbed": [
+    "0xab2940 item-to-catalog mapper",
+    "0xf8f400 world/context accessor",
+    "0xee9350/0xee9490/0xee94f0/0xee93d0 bitset access wrapper"
+  ],
+  "results": [
+    {
+      "stubbed_mapped_index": 0,
+      "return": 1,
+      "set_words": [
+        [
+          0,
+          "0x00000001"
+        ]
+      ]
+    },
+    {
+      "stubbed_mapped_index": 31,
+      "return": 1,
+      "set_words": [
+        [
+          0,
+          "0x80000000"
+        ]
+      ]
+    },
+    {
+      "stubbed_mapped_index": 32,
+      "return": 1,
+      "set_words": [
+        [
+          1,
+          "0x00000001"
+        ]
+      ]
+    },
+    {
+      "stubbed_mapped_index": 15999,
+      "return": 1,
+      "set_words": [
+        [
+          499,
+          "0x80000000"
+        ]
+      ]
+    },
+    {
+      "stubbed_mapped_index": 16000,
+      "return": 1,
+      "set_words": []
+    },
+    {
+      "stubbed_mapped_index": 4294967295,
+      "return": 0,
+      "set_words": []
+    }
+  ],
+  "open": [
+    "Which concrete items map to catalog indices",
+    "Which acquisition paths call FillCatalog and under what conditions",
+    "Save persistence and Nook Shopping/mailbox delivery flow"
+  ]
+}
