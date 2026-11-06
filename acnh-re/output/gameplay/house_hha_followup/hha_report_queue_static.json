@@ -1,0 +1,146 @@
+{
+  "schema": "acnh-re/hha-report-queue-static/1",
+  "native_elf_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+  "core_bucket_report_call_chain": [
+    {
+      "caller": "0x7b29d0",
+      "target": "0x7b4fc0",
+      "call_pc": "0x7b2bec"
+    },
+    {
+      "caller": "0x7b4fc0",
+      "target": "0x7b6470",
+      "call_pc": "0x7b52b0"
+    },
+    {
+      "caller": "0x7b6470",
+      "target": "0xac77a0",
+      "call_pc": "0x7b66f0"
+    },
+    {
+      "caller": "0x7b6470",
+      "target": "0xabf610",
+      "call_pc": "0x7b6724"
+    }
+  ],
+  "report_record_builder_nso_va": "0xac77a0",
+  "report_queue_append_nso_va": "0xabf610",
+  "report_branches": [
+    {
+      "function": "0x7b6470",
+      "record_builder_calls": [
+        {
+          "pc": "0x7b66f0",
+          "owner": null,
+          "instruction": "BL"
+        }
+      ],
+      "queue_append_calls": [
+        {
+          "pc": "0x7b6724",
+          "owner": null,
+          "instruction": "BL"
+        }
+      ]
+    },
+    {
+      "function": "0x7b53b0",
+      "record_builder_calls": [
+        {
+          "pc": "0x7b54e8",
+          "owner": "0x7b53b0",
+          "instruction": "BL"
+        }
+      ],
+      "queue_append_calls": [
+        {
+          "pc": "0x7b54f4",
+          "owner": "0x7b53b0",
+          "instruction": "BL"
+        }
+      ]
+    },
+    {
+      "function": "0x7b55e0",
+      "record_builder_calls": [
+        {
+          "pc": "0x7b56f4",
+          "owner": "0x7b55e0",
+          "instruction": "BL"
+        }
+      ],
+      "queue_append_calls": [
+        {
+          "pc": "0x7b56fc",
+          "owner": "0x7b55e0",
+          "instruction": "BL"
+        }
+      ]
+    },
+    {
+      "function": "0x7b5e60",
+      "record_builder_calls": [
+        {
+          "pc": "0x7b6180",
+          "owner": "0x7b5e60",
+          "instruction": "BL"
+        }
+      ],
+      "queue_append_calls": [
+        {
+          "pc": "0x7b618c",
+          "owner": "0x7b5e60",
+          "instruction": "BL"
+        }
+      ]
+    },
+    {
+      "function": "0x7b61e0",
+      "record_builder_calls": [
+        {
+          "pc": "0x7b63f4",
+          "owner": "0x7b61e0",
+          "instruction": "BL"
+        }
+      ],
+      "queue_append_calls": [
+        {
+          "pc": "0x7b6428",
+          "owner": null,
+          "instruction": "BL"
+        }
+      ]
+    }
+  ],
+  "mail_lookup": {
+    "indexed_hha_mail_actions": [
+      {
+        "flow": "SNPC_rco_10_Common_UpgradeMyhome",
+        "event_index": 45,
+        "actor": "EventFlowSystemActor",
+        "kind": "actions",
+        "name": "EventFlowActionSystemMailSend",
+        "params_json": "{\"FromType\": \"cHHA\", \"FileIndex\": \"MAIL_SP_HHA_BuildCelebration\", \"Present\": \"cReward\", \"Route\": \"cFastTomorrow\", \"LabelIndex\": 1, \"TagType\": \"cNone\", \"ToSharePlayer\": false}"
+      }
+    ],
+    "indexed_grade_flag_eventflow_accesses": [],
+    "native_flag_references": [
+      "0x7b1fe0"
+    ],
+    "native_flag_name_ja": "HHA|評価の手紙送付ON?"
+  },
+  "decomp_sha256": {
+    "7b1dd0.c": "c7064c469e4d1c555d2783c5bb3d5a2474eb087cebfe6e388ba8eee0890bdde5",
+    "7b1fe0.c": "8cb13dff97c159c991008500e5d6317d69c936bc8bc28071b462edc10c6c57e5",
+    "7b29d0.c": "5677f7126eda051d55fbcef6f64bde0f2fd12f6ba8cbd18ad4b40ab85b96a64a",
+    "7b4fc0.c": "de61d5e21e33e7cdf938028124ecbe164650003d941d62a5108d6f1be160db52",
+    "7b6470.c": "3c050b05f6ad0c12e6144e3280672704a5d912224b245d072ae08fd616e75cc2",
+    "ac77a0.c": "2bb530751d484d07bbada5868eeee323de3efd45e575f2a2444b19294673303c",
+    "abf610.c": "4875bdffd84630969a27471b92eb512e359366790c0cb54bfd8999974c601df4",
+    "7b53b0.c": "256e96b273d641b7722778bc461f97fcf8e617a01d134ae442c258e5247ae2b6",
+    "7b55e0.c": "e4194147b77d036e7db45418c3e7fd4a2da367c6b5998360bca576395360575f",
+    "7b5e60.c": "025385ec1ce1cec7249edf4692e1ae257d0f99a4eec33f105f7e2d7851c486fd",
+    "7b61e0.c": "61237beaf7abdcf661587fc503005f16701a0e65bb72b1d9c5a72a53773edb7e"
+  },
+  "scope": "Static call references establish that the score-bucket path and several HHA branches build report records and call a shared queue helper. The queue consumer, localization mapping, and any later conversion to a grade mail are not established by this evidence."
+}

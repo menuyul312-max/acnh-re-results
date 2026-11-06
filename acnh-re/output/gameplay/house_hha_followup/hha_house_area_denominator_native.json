@@ -1,0 +1,87 @@
+{
+  "schema": "acnh-re/hha-house-area-denominator-native/1",
+  "native_elf_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+  "native_block": {
+    "start": "0x7b2144",
+    "stop_after_switch": "0x7b224c",
+    "selector_stack_offset": "0x198",
+    "denominator_offset": "0x14c",
+    "room_count_offset": "0x154"
+  },
+  "contract": "For selectors 2..8, the native switch writes an area denominator to record +0x14c and a count to +0x154. The tested values are cumulative: 36, 64, 100, 136, 172, 232, 292; counts 1..6.",
+  "scope": "This executes the original switch and field writes only. It begins after the preceding state lookup and HHAGradeMailFlag setter, and stops before helper 0x7b7c30. It does not identify the selector's source field or execute full HHA scoring/mail handling.",
+  "cases": 7,
+  "mismatches": 0,
+  "results": [
+    {
+      "selector": 2,
+      "initial_denominator": 0,
+      "actual_denominator": 36,
+      "initial_room_count": 0,
+      "actual_room_count": 1,
+      "expected_denominator": 36,
+      "expected_room_count": 1,
+      "match": true
+    },
+    {
+      "selector": 3,
+      "initial_denominator": 0,
+      "actual_denominator": 64,
+      "initial_room_count": 0,
+      "actual_room_count": 1,
+      "expected_denominator": 64,
+      "expected_room_count": 1,
+      "match": true
+    },
+    {
+      "selector": 4,
+      "initial_denominator": 0,
+      "actual_denominator": 100,
+      "initial_room_count": 0,
+      "actual_room_count": 2,
+      "expected_denominator": 100,
+      "expected_room_count": 2,
+      "match": true
+    },
+    {
+      "selector": 5,
+      "initial_denominator": 0,
+      "actual_denominator": 136,
+      "initial_room_count": 0,
+      "actual_room_count": 3,
+      "expected_denominator": 136,
+      "expected_room_count": 3,
+      "match": true
+    },
+    {
+      "selector": 6,
+      "initial_denominator": 0,
+      "actual_denominator": 172,
+      "initial_room_count": 0,
+      "actual_room_count": 4,
+      "expected_denominator": 172,
+      "expected_room_count": 4,
+      "match": true
+    },
+    {
+      "selector": 7,
+      "initial_denominator": 0,
+      "actual_denominator": 232,
+      "initial_room_count": 0,
+      "actual_room_count": 5,
+      "expected_denominator": 232,
+      "expected_room_count": 5,
+      "match": true
+    },
+    {
+      "selector": 8,
+      "initial_denominator": 0,
+      "actual_denominator": 292,
+      "initial_room_count": 0,
+      "actual_room_count": 6,
+      "expected_denominator": 292,
+      "expected_room_count": 6,
+      "match": true
+    }
+  ]
+}
