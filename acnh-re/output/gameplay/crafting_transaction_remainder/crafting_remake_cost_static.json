@@ -1,0 +1,145 @@
+{
+  "claims": {
+    "3436_cost_value_on_flag_bit4_clear_path": "2",
+    "inventory_persistence_flush_boundary": "UNRESOLVED",
+    "normal_remake_cost_row_to_inventory_quantity": "PROVEN_STATIC",
+    "rollback_or_refund_on_interruption": "UNRESOLVED",
+    "save_transaction_executed_with_real_player_data": false,
+    "tutorial_displaytype_to_flag_bit4_mapping": "UNRESOLVED"
+  },
+  "eventflow": {
+    "100": {
+      "kind": "actions",
+      "name": "EventFlowActionUIWorkingHandling",
+      "params": {
+        "DisplayType": "cRemakeSelectTutorial"
+      }
+    },
+    "182": {
+      "kind": "actions",
+      "name": "EventFlowActionSaveSetFromUIResult",
+      "params": {
+        "SaveType": "cWorkRemake"
+      }
+    },
+    "184": {
+      "kind": "actions",
+      "name": "EventFlowActionPlayerWorkbenchMaking",
+      "params": {
+        "IsRemake": true
+      }
+    },
+    "185": {
+      "kind": "actions",
+      "name": "EventFlowActionPlayerWorkbenchGetDemo",
+      "params": {
+        "IsRemake": true,
+        "IsSkipFanfareSE": false,
+        "IsSkipGetDemoCameraPop": false
+      }
+    }
+  },
+  "limits": [
+    "Static disassembly, EventFlow and table evidence do not execute a full cWorkRemake interaction.",
+    "The table field is u16 in the BCSV schema; the native accessor loads its low byte. All 654 current table values are 1..50, so this build has no truncation case.",
+    "Ftr_Working#100 uses cRemakeSelectTutorial, but the flag-bit4 mapping is not established; the normal flag-bit4-clear path is the one statically tied to the table cost."
+  ],
+  "provenance": {
+    "elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+    "index": "shared /workspace/acnh-re/output/index.sqlite opened read-only",
+    "itemparam_raw_sha256": "89230e97fc877ff2b2b48ac1c707ef32b3a7760118839c307f19797e2553458c",
+    "itemremake_raw_sha256": "132e2753f485073d0267aeb19f3ceb9d07ea5ddcb2d69960c508c4ba3a68ffde"
+  },
+  "rollback_boundary": {
+    "explicit_kit_refund_calls_in_handler": 0,
+    "kit_update_call_sites_in_0x335d10": 1,
+    "meaning": "At this handler call-site level, the kit-update return is ignored, no explicit inverse kit award appears, and both visible post-consume branches rejoin. This does not rule out rollback in nested helpers, other event flows, or save-system code.",
+    "return_flow": {
+      "after_kit_call": "0xefbdf0 returns to 0x335d80, which overwrites W0 with constant 1 before continuing; no immediate branch consumes the helper result.",
+      "join_and_publish": "both visible paths rejoin at 0x335f18 and later publish a UI result via 0x154a640 at 0x33603c",
+      "post_consume_split": "0x335dd4 reads result+0x18; the non-1 path branches to 0x335f00 and calls 0xefb1f0, while the 1 path completes a separate object-state path and branches to 0x335f18."
+    },
+    "return_value_checked_immediately_after_call": false
+  },
+  "schema": "acnh.crafting_remake_cost_static.v1",
+  "static_native_chain": [
+    {
+      "at": "0xab2330",
+      "evidence": "resolver embeds field hash 0x29ecb129 and returns the byte at the resolved RemakeKitNum offset",
+      "step": 1
+    },
+    {
+      "at": "0x15ad1c0 via 0x15ad070",
+      "evidence": "call 0xab2330; store returned value at workbench state +0x1928",
+      "step": 2
+    },
+    {
+      "at": "0x15ae950",
+      "evidence": "for flag bit4=0, copy state +0x1928 to UI-result payload +0x14 and publish through 0x154a640",
+      "step": 3
+    },
+    {
+      "at": "0x1546070 / 0x1546020",
+      "evidence": "setter maps payload +0x14 to manager +0x5c; getter returns manager +0x48, whose +0x14 is manager +0x5c",
+      "step": 4
+    },
+    {
+      "at": "0x335d10",
+      "evidence": "read UI-result +0x14; when >=1, pass it with item ID 2513 to 0xefbdf0 -> 0xf99b10",
+      "step": 5
+    }
+  ],
+  "table_case": {
+    "ItemParam.RemakeID": 168,
+    "ItemParam.UniqueID": 3436,
+    "ItemRemake.RemakeKitNum": 2,
+    "ItemRemake.RemakeKitNum_column": {
+      "hash": "29ecb129",
+      "offset": 72,
+      "type": "u16",
+      "width": 2
+    },
+    "ItemRemake.UniqueID": 168,
+    "RemakeKit.ItemParam.UniqueID": 2513,
+    "RemakeKitNum_range_all_rows": [
+      1,
+      50
+    ],
+    "all_ItemRemake_rows": 654,
+    "values_over_255": 0
+  },
+  "transaction_order": {
+    "eventflow_tree": "# Ftr_Working (source: decoded EventFlow; bool flag case 0 = ON, case 1 = OFF; #N = event index)\n== ENTRY Workbench_Cmn_DIYdemo\n  #191 SetTagFromUIResult {\"TagType\": \"cItemName\", \"TagID\": 0}\n  #192 BGMPropertyControl {\"BGMProperty\": 19}\n  #190 IF SubflowResultChoice2 {\"SetIndex\": 0}\n    case 0:\n      #212 SaveSetFromUIResult {\"SaveType\": \"cWorkCraft\"}\n      #208 PlayerWorkbenchMaking {\"IsRemake\": false}\n      #207 BGMPropertyControl {\"BGMProperty\": 20}\n      #213 IF SubflowResultChoice2 {\"SetIndex\": 1}\n        case 0:\n          #217 PlayerWorkbenchGetDemo {\"IsSkipGetDemoCameraPop\": false, \"IsSkipFanfareSE\": false, \"IsRemake\": false}\n          #218 MSG TalkFtr/FTR_WorkingTable:031\n        case 1:\n          #209 FORK\n            || #205 PlayerWorkbenchGetDemo {\"IsSkipGetDemoCameraPop\": true, \"IsSkipFanfareSE\": true, \"IsRemake\": false}\n            || #206 MSG TalkFtr/FTR_WorkingTable:031_01\n            || #211 NpcReaction {\"ReactionType\": \"cAccomplish\"}\n    case 1:\n      #182 SaveSetFromUIResult {\"SaveType\": \"cWorkRemake\"}\n      #184 PlayerWorkbenchMaking {\"IsRemake\": true}\n      #186 BGMPropertyControl {\"BGMProperty\": 20}\n      #201 IF SubflowResultChoice2 {\"SetIndex\": 1}\n        case 0:\n          #185 PlayerWorkbenchGetDemo {\"IsSkipGetDemoCameraPop\": false, \"IsSkipFanfareSE\": false, \"IsRemake\": true}\n          #183 MSG TalkFtr/FTR_WorkingTable:032\n        case 1:\n          #198 FORK\n            || #197 PlayerWorkbenchGetDemo {\"IsSkipGetDemoCameraPop\": true, \"IsSkipFanfareSE\": true, \"IsRemake\": true}\n            || #196 MSG TalkFtr/FTR_WorkingTable:032_01\n            || #199 NpcReaction {\"ReactionType\": \"cAccomplish\"}\n",
+    "native_handler": {
+      "entry": "0x335d10 (cWorkRemake SaveSetFromUIResult case)",
+      "ordered_calls": [
+        {
+          "pc": "0x335d7c",
+          "purpose": "kit inventory update (item 2513, context quantity)",
+          "target": "0xefbdf0"
+        },
+        {
+          "pc": "0x335dc0",
+          "purpose": "derive post-remake value from the selected UI result",
+          "target": "0xefcfc0"
+        },
+        {
+          "pc": "0x335dd0",
+          "purpose": "post-remake item helper",
+          "target": "0xefbad0"
+        },
+        {
+          "pc": "0x335f14",
+          "purpose": "alternate post-consume helper on result+0x18 != 1",
+          "target": "0xefb1f0"
+        },
+        {
+          "pc": "0x33603c",
+          "purpose": "publish the handler UI result",
+          "target": "0x154a640"
+        }
+      ],
+      "scope": "static direct-call/control-flow reconstruction; nested helper semantics are not all resolved"
+    }
+  }
+}
