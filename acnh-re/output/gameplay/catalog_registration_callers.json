@@ -19,6 +19,7 @@
       "pseudocode": "binary/analysis_decomp/2fb740.c",
       "string_refs": [],
       "direct_call_count": 1,
+      "upstream_direct_callers": [],
       "code_pointer_array_memberships": [
         {
           "pointer_array_start_va": "0x3048268",
@@ -61,6 +62,7 @@
       "pseudocode": "binary/analysis_decomp/341a70.c",
       "string_refs": [],
       "direct_call_count": 1,
+      "upstream_direct_callers": [],
       "code_pointer_array_memberships": [
         {
           "pointer_array_start_va": "0x304cba8",
@@ -163,6 +165,21 @@
       "pseudocode": "binary/analysis_decomp/876db0.c",
       "string_refs": [],
       "direct_call_count": 2,
+      "upstream_direct_callers": [
+        {
+          "function_va": "0x876cd0",
+          "name": "FUN_00976cd0",
+          "call_sites": [
+            {
+              "pc": "0x876ce8",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/876cd0.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        }
+      ],
       "code_pointer_array_memberships": [],
       "event_handler_slot_bindings": []
     },
@@ -239,6 +256,146 @@
       "pseudocode": "binary/analysis_decomp/dad9f0.c",
       "string_refs": [],
       "direct_call_count": 16,
+      "upstream_direct_callers": [
+        {
+          "function_va": "0xda92a0",
+          "name": "FUN_00ea92a0",
+          "call_sites": [
+            {
+              "pc": "0xda92c8",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/da92a0.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0xdd3540",
+          "name": "FUN_00ed3540",
+          "call_sites": [
+            {
+              "pc": "0xdd3580",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/dd3540.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0xe11b90",
+          "name": "FUN_00f11b90",
+          "call_sites": [
+            {
+              "pc": "0xe11d5c",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/e11b90.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0xe11da0",
+          "name": "FUN_00f11da0",
+          "call_sites": [
+            {
+              "pc": "0xe11da4",
+              "instruction": "B_to_function_entry"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/e11da0.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0xe1cbc0",
+          "name": "FUN_00f1cbc0",
+          "call_sites": [
+            {
+              "pc": "0xe1cd48",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/e1cbc0.c",
+          "string_refs": [
+            "PlayerOutfitChange",
+            "PlayerOutfitChangeHead"
+          ],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0xe33810",
+          "name": "FUN_00f33810",
+          "call_sites": [
+            {
+              "pc": "0xe339a0",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/e33810.c",
+          "string_refs": [
+            "HandToolAfterToolChange",
+            "PlayerToolChangeOff",
+            "PlayerToolChangeOn",
+            "ToolChangeShortcut"
+          ],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0xe33a10",
+          "name": "FUN_00f33a10",
+          "call_sites": [
+            {
+              "pc": "0xe33b04",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/e33a10.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0xe33c60",
+          "name": "FUN_00f33c60",
+          "call_sites": [
+            {
+              "pc": "0xe33cc0",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/e33c60.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0xe38ff0",
+          "name": "FUN_00f38ff0",
+          "call_sites": [
+            {
+              "pc": "0xe3905c",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/e38ff0.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0xe7dee0",
+          "name": "FUN_00f7dee0",
+          "call_sites": [
+            {
+              "pc": "0xe7e2b4",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/e7dee0.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        }
+      ],
       "code_pointer_array_memberships": [],
       "event_handler_slot_bindings": []
     },
@@ -255,6 +412,353 @@
       "pseudocode": "binary/analysis_decomp/dadfe0.c",
       "string_refs": [],
       "direct_call_count": 1,
+      "upstream_direct_callers": [
+        {
+          "function_va": "0xda92a0",
+          "name": "FUN_00ea92a0",
+          "call_sites": [
+            {
+              "pc": "0xda92e4",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/da92a0.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0xe12fc0",
+          "name": "FUN_00f12fc0",
+          "call_sites": [
+            {
+              "pc": "0xe1302c",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/e12fc0.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0xe1c100",
+          "name": "FUN_00f1c100",
+          "call_sites": [
+            {
+              "pc": "0xe1c154",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/e1c100.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0xe1cbc0",
+          "name": "FUN_00f1cbc0",
+          "call_sites": [
+            {
+              "pc": "0xe1cd64",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/e1cbc0.c",
+          "string_refs": [
+            "PlayerOutfitChange",
+            "PlayerOutfitChangeHead"
+          ],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0xe33660",
+          "name": "FUN_00f33660",
+          "call_sites": [
+            {
+              "pc": "0xe33754",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/e33660.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0xe33810",
+          "name": "FUN_00f33810",
+          "call_sites": [
+            {
+              "pc": "0xe33994",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/e33810.c",
+          "string_refs": [
+            "HandToolAfterToolChange",
+            "PlayerToolChangeOff",
+            "PlayerToolChangeOn",
+            "ToolChangeShortcut"
+          ],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0xe33a10",
+          "name": "FUN_00f33a10",
+          "call_sites": [
+            {
+              "pc": "0xe33af8",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/e33a10.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0xe33c60",
+          "name": "FUN_00f33c60",
+          "call_sites": [
+            {
+              "pc": "0xe33cb4",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/e33c60.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0xe34410",
+          "name": "FUN_00f34410",
+          "call_sites": [
+            {
+              "pc": "0xe34464",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/e34410.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0xe34d70",
+          "name": "FUN_00f34d70",
+          "call_sites": [
+            {
+              "pc": "0xe34dcc",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/e34d70.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0xe37230",
+          "name": "FUN_00f37230",
+          "call_sites": [
+            {
+              "pc": "0xe37284",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/e37230.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0xe37830",
+          "name": "FUN_00f37830",
+          "call_sites": [
+            {
+              "pc": "0xe378bc",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/e37830.c",
+          "string_refs": [
+            "BreakTool"
+          ],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0xe37a50",
+          "name": "FUN_00f37a50",
+          "call_sites": [
+            {
+              "pc": "0xe37ccc",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/e37a50.c",
+          "string_refs": [
+            "PlayerToolBreak",
+            "PlayerToolBreakKeep",
+            "PlayerToolBreakKeep",
+            "PlayerToolBreakKeep",
+            "Player_ToolBreak",
+            "Player_ToolBreak",
+            "ToolBreak_%s"
+          ],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0xe37ed0",
+          "name": "FUN_00f37ed0",
+          "call_sites": [
+            {
+              "pc": "0xe37f5c",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/e37ed0.c",
+          "string_refs": [
+            "ForceToolBreakDemo"
+          ],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0xe38ff0",
+          "name": "FUN_00f38ff0",
+          "call_sites": [
+            {
+              "pc": "0xe39078",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/e38ff0.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0xe3c490",
+          "name": "FUN_00f3c490",
+          "call_sites": [
+            {
+              "pc": "0xe3c59c",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/e3c490.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0xe3c6a0",
+          "name": "FUN_00f3c6a0",
+          "call_sites": [
+            {
+              "pc": "0xe3c710",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/e3c6a0.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0xe3c890",
+          "name": "FUN_00f3c890",
+          "call_sites": [
+            {
+              "pc": "0xe3c908",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/e3c890.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0xe3d0b0",
+          "name": "FUN_00f3d0b0",
+          "call_sites": [
+            {
+              "pc": "0xe3d1bc",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/e3d0b0.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0xe468d0",
+          "name": "FUN_00f468d0",
+          "call_sites": [
+            {
+              "pc": "0xe469a0",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/e468d0.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0xe47fb0",
+          "name": "FUN_00f47fb0",
+          "call_sites": [
+            {
+              "pc": "0xe48014",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/e47fb0.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0xe4fa00",
+          "name": "FUN_00f4fa00",
+          "call_sites": [
+            {
+              "pc": "0xe4fb24",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/e4fa00.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0xe7e380",
+          "name": "FUN_00f7e380",
+          "call_sites": [
+            {
+              "pc": "0xe7e4f4",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/e7e380.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0xe89780",
+          "name": "FUN_00f89780",
+          "call_sites": [
+            {
+              "pc": "0xe89950",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/e89780.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0xe8c180",
+          "name": "FUN_00f8c180",
+          "call_sites": [
+            {
+              "pc": "0xe8c3a0",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/e8c180.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        }
+      ],
       "code_pointer_array_memberships": [],
       "event_handler_slot_bindings": []
     },
@@ -271,6 +775,152 @@
       "pseudocode": "binary/analysis_decomp/db0450.c",
       "string_refs": [],
       "direct_call_count": 1,
+      "upstream_direct_callers": [
+        {
+          "function_va": "0xdd4250",
+          "name": "FUN_00ed4250",
+          "call_sites": [
+            {
+              "pc": "0xdd42c0",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/dd4250.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0xe01f50",
+          "name": "FUN_00f01f50",
+          "call_sites": [
+            {
+              "pc": "0xe02350",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/e01f50.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0xe07b50",
+          "name": "FUN_00f07b50",
+          "call_sites": [
+            {
+              "pc": "0xe07bc0",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/e07b50.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0xe082c0",
+          "name": "FUN_00f082c0",
+          "call_sites": [
+            {
+              "pc": "0xe083b4",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/e082c0.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0xe21e40",
+          "name": "FUN_00f21e40",
+          "call_sites": [
+            {
+              "pc": "0xe21e7c",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/e21e40.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0xe3c920",
+          "name": "FUN_00f3c920",
+          "call_sites": [
+            {
+              "pc": "0xe3c95c",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/e3c920.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0xe53090",
+          "name": "FUN_00f53090",
+          "call_sites": [
+            {
+              "pc": "0xe53310",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/e53090.c",
+          "string_refs": [
+            "FullItem_Plant",
+            "FullItem_Plant",
+            "Get_Pickup",
+            "Get_Pickup",
+            "Get_Scoop",
+            "Get_Scoop",
+            "PlayerScoopDigGetPutawayAfter",
+            "PlayerScoopDigGetPutawayAfter",
+            "PlayerScoopDigGetPutawayAfter",
+            "Player_GetDemo",
+            "Player_GetDemo",
+            "Player_GetDemo",
+            "Player_GetDemo"
+          ],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0xe54030",
+          "name": "FUN_00f54030",
+          "call_sites": [
+            {
+              "pc": "0xe54088",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/e54030.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0xe540b0",
+          "name": "FUN_00f540b0",
+          "call_sites": [
+            {
+              "pc": "0xe5416c",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/e540b0.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0xe84ad0",
+          "name": "FUN_00f84ad0",
+          "call_sites": [
+            {
+              "pc": "0xe84cd8",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/e84ad0.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        }
+      ],
       "code_pointer_array_memberships": [],
       "event_handler_slot_bindings": []
     },
@@ -291,6 +941,47 @@
         "MainmenuEncyclopedia"
       ],
       "direct_call_count": 1,
+      "upstream_direct_callers": [
+        {
+          "function_va": "0xdb14d0",
+          "name": "FUN_00eb14d0",
+          "call_sites": [
+            {
+              "pc": "0xdb1560",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/db14d0.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0xe468d0",
+          "name": "FUN_00f468d0",
+          "call_sites": [
+            {
+              "pc": "0xe46948",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/e468d0.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0xe4fa00",
+          "name": "FUN_00f4fa00",
+          "call_sites": [
+            {
+              "pc": "0xe4fa98",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/e4fa00.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        }
+      ],
       "code_pointer_array_memberships": [],
       "event_handler_slot_bindings": []
     },
@@ -331,6 +1022,21 @@
       "pseudocode": "binary/analysis_decomp/ea7f60.c",
       "string_refs": [],
       "direct_call_count": 7,
+      "upstream_direct_callers": [
+        {
+          "function_va": "0x11a1a80",
+          "name": "FUN_012a1a80",
+          "call_sites": [
+            {
+              "pc": "0x11a1b98",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/11a1a80.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        }
+      ],
       "code_pointer_array_memberships": [],
       "event_handler_slot_bindings": []
     },
@@ -419,6 +1125,21 @@
       "pseudocode": "binary/analysis_decomp/eebb00.c",
       "string_refs": [],
       "direct_call_count": 19,
+      "upstream_direct_callers": [
+        {
+          "function_va": "0xe7dee0",
+          "name": "FUN_00f7dee0",
+          "call_sites": [
+            {
+              "pc": "0xe7e1cc",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/e7dee0.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        }
+      ],
       "code_pointer_array_memberships": [],
       "event_handler_slot_bindings": []
     },
@@ -435,6 +1156,133 @@
       "pseudocode": "binary/analysis_decomp/efb1f0.c",
       "string_refs": [],
       "direct_call_count": 1,
+      "upstream_direct_callers": [
+        {
+          "function_va": "0xdafee0",
+          "name": "FUN_00eafee0",
+          "call_sites": [
+            {
+              "pc": "0xdb00d8",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/dafee0.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0xe1c170",
+          "name": "FUN_00f1c170",
+          "call_sites": [
+            {
+              "pc": "0xe1c214",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/e1c170.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0xe893c0",
+          "name": "FUN_00f893c0",
+          "call_sites": [
+            {
+              "pc": "0xe89564",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/e893c0.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0xefbad0",
+          "name": "FUN_00ffbad0",
+          "call_sites": [
+            {
+              "pc": "0xefbb18",
+              "instruction": "B_to_function_entry"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/efbad0.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0x11421d0",
+          "name": "FUN_012421d0",
+          "call_sites": [
+            {
+              "pc": "0x11423bc",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/11421d0.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0x136e080",
+          "name": "FUN_0146e080",
+          "call_sites": [
+            {
+              "pc": "0x136e0c4",
+              "instruction": "B_to_function_entry"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/136e080.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0x136f5c0",
+          "name": "FUN_0146f5c0",
+          "call_sites": [
+            {
+              "pc": "0x136f698",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/136f5c0.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0x136f8c0",
+          "name": "FUN_0146f8c0",
+          "call_sites": [
+            {
+              "pc": "0x136f928",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/136f8c0.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0x136fda0",
+          "name": "FUN_0146fda0",
+          "call_sites": [
+            {
+              "pc": "0x1370070",
+              "instruction": "BL"
+            },
+            {
+              "pc": "0x1370128",
+              "instruction": "BL"
+            },
+            {
+              "pc": "0x13702a0",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/136fda0.c",
+          "string_refs": [],
+          "direct_call_count": 3
+        }
+      ],
       "code_pointer_array_memberships": [],
       "event_handler_slot_bindings": []
     },
@@ -451,6 +1299,21 @@
       "pseudocode": "binary/analysis_decomp/efdda0.c",
       "string_refs": [],
       "direct_call_count": 1,
+      "upstream_direct_callers": [
+        {
+          "function_va": "0xefdee0",
+          "name": "FUN_00ffdee0",
+          "call_sites": [
+            {
+              "pc": "0xefdeec",
+              "instruction": "B_to_function_entry"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/efdee0.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        }
+      ],
       "code_pointer_array_memberships": [],
       "event_handler_slot_bindings": []
     },
@@ -467,6 +1330,59 @@
       "pseudocode": "binary/analysis_decomp/efe070.c",
       "string_refs": [],
       "direct_call_count": 1,
+      "upstream_direct_callers": [
+        {
+          "function_va": "0x11b64d0",
+          "name": "FUN_012b64d0",
+          "call_sites": [
+            {
+              "pc": "0x11b6540",
+              "instruction": "B_to_function_entry"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/11b64d0.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0x14439c0",
+          "name": "FUN_015439c0",
+          "call_sites": [
+            {
+              "pc": "0x1443b70",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/14439c0.c",
+          "string_refs": [
+            "BuyItem",
+            "HowmuchBuyItem",
+            "HowmuchBuyItem"
+          ],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0x1476e10",
+          "name": "FUN_01576e10",
+          "call_sites": [
+            {
+              "pc": "0x1476eb4",
+              "instruction": "BL"
+            },
+            {
+              "pc": "0x1476ee8",
+              "instruction": "BL"
+            },
+            {
+              "pc": "0x1476f14",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/1476e10.c",
+          "string_refs": [],
+          "direct_call_count": 3
+        }
+      ],
       "code_pointer_array_memberships": [],
       "event_handler_slot_bindings": []
     },
@@ -483,6 +1399,25 @@
       "pseudocode": "binary/analysis_decomp/efe260.c",
       "string_refs": [],
       "direct_call_count": 1,
+      "upstream_direct_callers": [
+        {
+          "function_va": "0x120e190",
+          "name": "FUN_0130e190",
+          "call_sites": [
+            {
+              "pc": "0x120e3f8",
+              "instruction": "BL"
+            },
+            {
+              "pc": "0x120e4a4",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/120e190.c",
+          "string_refs": [],
+          "direct_call_count": 2
+        }
+      ],
       "code_pointer_array_memberships": [],
       "event_handler_slot_bindings": []
     },
@@ -499,6 +1434,23 @@
       "pseudocode": "binary/analysis_decomp/efe4d0.c",
       "string_refs": [],
       "direct_call_count": 1,
+      "upstream_direct_callers": [
+        {
+          "function_va": "0xe44a0",
+          "name": "FUN_001e44a0",
+          "call_sites": [
+            {
+              "pc": "0xe4594",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/e44a0.c",
+          "string_refs": [
+            "CatchtFesBox_Valid"
+          ],
+          "direct_call_count": 1
+        }
+      ],
       "code_pointer_array_memberships": [],
       "event_handler_slot_bindings": []
     },
@@ -515,6 +1467,38 @@
       "pseudocode": "binary/analysis_decomp/efe760.c",
       "string_refs": [],
       "direct_call_count": 1,
+      "upstream_direct_callers": [
+        {
+          "function_va": "0xefe4d0",
+          "name": "FUN_00ffe4d0",
+          "call_sites": [
+            {
+              "pc": "0xefe554",
+              "instruction": "BL"
+            },
+            {
+              "pc": "0xefe578",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/efe4d0.c",
+          "string_refs": [],
+          "direct_call_count": 2
+        },
+        {
+          "function_va": "0xefe690",
+          "name": "FUN_00ffe690",
+          "call_sites": [
+            {
+              "pc": "0xefe69c",
+              "instruction": "B_to_function_entry"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/efe690.c",
+          "string_refs": [],
+          "direct_call_count": 1
+        }
+      ],
       "code_pointer_array_memberships": [],
       "event_handler_slot_bindings": []
     },
@@ -531,6 +1515,48 @@
       "pseudocode": "binary/analysis_decomp/efec70.c",
       "string_refs": [],
       "direct_call_count": 1,
+      "upstream_direct_callers": [
+        {
+          "function_va": "0xe45b80",
+          "name": "FUN_00f45b80",
+          "call_sites": [
+            {
+              "pc": "0xe45dfc",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/e45b80.c",
+          "string_refs": [
+            "PlayerNetGetDemo",
+            "PlayerNetGetDemoKeep"
+          ],
+          "direct_call_count": 1
+        },
+        {
+          "function_va": "0xe4e730",
+          "name": "FUN_00f4e730",
+          "call_sites": [
+            {
+              "pc": "0xe4ebd0",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/e4e730.c",
+          "string_refs": [
+            "BeyDaily_QuestStart",
+            "CatchFishContinueCount",
+            "CatchFishContinueCount",
+            "CatchFishContinuously",
+            "CatchFishContinuously",
+            "CommonRodGetDemo",
+            "CommonRodGetDemoKeep",
+            "CommonRodGetDemoSideways",
+            "CommonRodGetDemoSidewaysKeep",
+            "ToolRodGetDemo"
+          ],
+          "direct_call_count": 1
+        }
+      ],
       "code_pointer_array_memberships": [],
       "event_handler_slot_bindings": []
     },
@@ -547,6 +1573,25 @@
       "pseudocode": "binary/analysis_decomp/efee80.c",
       "string_refs": [],
       "direct_call_count": 1,
+      "upstream_direct_callers": [
+        {
+          "function_va": "0xefec70",
+          "name": "FUN_00ffec70",
+          "call_sites": [
+            {
+              "pc": "0xefed60",
+              "instruction": "BL"
+            },
+            {
+              "pc": "0xefee54",
+              "instruction": "BL"
+            }
+          ],
+          "pseudocode": "binary/analysis_decomp/efec70.c",
+          "string_refs": [],
+          "direct_call_count": 2
+        }
+      ],
       "code_pointer_array_memberships": [],
       "event_handler_slot_bindings": []
     }
@@ -873,5 +1918,5 @@
     ],
     "interpretation_limit": "The caller compares the ItemKind lookup result to these row indices. The table join labels those values but does not supply the caller's runtime trigger."
   },
-  "limitation": "Direct call references identify call sites, not the runtime condition that reaches them. String references can label a caller but absence of strings does not identify its gameplay source."
+  "limitation": "Direct call references identify call sites, not the runtime condition that reaches them. String references in immediate parents contextualize caller paths but do not prove item-specific eligibility or save persistence; absence of strings does not identify a gameplay source."
 }

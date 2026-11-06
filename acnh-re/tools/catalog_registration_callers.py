@@ -100,6 +100,45 @@ def caller_groups(conn, target):
     return call_rows, grouped, unresolved
 
 
+def upstream_callers(conn, target_function_va):
+    """Return indexed direct callers of a function, including local string context."""
+    rows = conn.execute(
+        """SELECT pc, instruction, owner_va FROM direct_calls
+           WHERE target_va=? ORDER BY owner_va, pc""",
+        (target_function_va,),
+    ).fetchall()
+    grouped = {}
+    for pc, instruction, owner_va in rows:
+        if owner_va is None:
+            continue
+        rec = grouped.setdefault(owner_va, {
+            "function_va": hex(owner_va),
+            "name": None,
+            "call_sites": [],
+        })
+        rec["call_sites"].append({"pc": hex(pc), "instruction": instruction})
+    for owner_va, rec in grouped.items():
+        name = conn.execute("SELECT name FROM native_functions WHERE va=?", (owner_va,)).fetchone()
+        if name:
+            rec["name"] = name[0]
+        else:
+            name = conn.execute("SELECT ghidra_name FROM functions WHERE va=?", (owner_va,)).fetchone()
+            if name:
+                rec["name"] = name[0]
+        path = conn.execute("SELECT path FROM decomp_new WHERE va=?", (owner_va,)).fetchone()
+        if path:
+            rec["pseudocode"] = path[0]
+        else:
+            path = conn.execute("SELECT decomp_path FROM functions WHERE va=?", (owner_va,)).fetchone()
+            if path:
+                rec["pseudocode"] = path[0]
+        rec["string_refs"] = [row[0] for row in conn.execute(
+            "SELECT text FROM string_refs WHERE function_va=? ORDER BY text", (owner_va,)
+        )]
+        rec["direct_call_count"] = len(rec["call_sites"])
+    return sorted(grouped.values(), key=lambda item: int(item["function_va"], 16))
+
+
 def pointer_array_matches(pointer_arrays_path, callers):
     """Attach exact pointer-sequence membership without labeling tables as vtables."""
     if not pointer_arrays_path.exists():
@@ -214,6 +253,8 @@ def main():
     if not calls:
         raise SystemExit(f"no direct-call records for {TARGET:#x} in {args.index_db}")
     wrapper_calls, wrapper_callers, wrapper_unresolved = caller_groups(conn, REGISTRATION_WRAPPER)
+    for function_va, caller in callers.items():
+        caller["upstream_direct_callers"] = upstream_callers(conn, function_va)
     pointer_array_audit = pointer_array_matches(args.pointer_arrays, callers.values())
     event_handler_audit = event_handler_slot_matches(args.event_handlers, callers.values(), conn)
 
@@ -240,7 +281,8 @@ def main():
         "itemkind_caller_crosswalk": table_crosswalk(args.table_root),
         "limitation": (
             "Direct call references identify call sites, not the runtime condition that reaches them. "
-            "String references can label a caller but absence of strings does not identify its gameplay source."
+            "String references in immediate parents contextualize caller paths but do not prove item-specific "
+            "eligibility or save persistence; absence of strings does not identify a gameplay source."
         ),
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
