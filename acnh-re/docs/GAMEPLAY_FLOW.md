@@ -137,6 +137,7 @@ Villager biasa (`NNPC_*`) dibagi menurut 8 kode kepribadian: AN, BO, FU, GE, HA,
 1. **[TXT]** Pinjaman berurutan dari `SP_rco_02_Loan` dan `SP_rco_00_Common`: 98.000 (rumah) → 198.000 → 348.000 → 548.000 → 758.000 → 1.248.000 (lantai 2) → 2.498.000 Bells (basement).
 2. **[EF]** Query `PlayerHouseLevel` bernilai 0–8. `StructureHouseShapeParam` berisi Tent dan `Level00`–`Level04`.
 3. **[EF]** Proses pinjaman ada di `SNPC_rco_10_Common_UpgradeMyhome`, `SNPC_rco_03_ChkAfterRemodel`, dan `SNPC_rco_04_ChkFinishLoan`. Saat semuanya lunas, `PcHousingLoanFinish` ON dan Tom Nook mengucapkan "debt-free and set for life".
+4. **[PSEUDO]** Updater rumah native menyalakan `RcoAfterHouseRemodel` saat level berubah; angka construction-day tidak ditemukan di jalur yang ditelusuri. Evaluasi HHA membaca selector rumah lewat node `0x33dc730`, menghitung bucket coverage 20%/50%, dan memasukkan report record ke antrean bersama. Cutoff fixed-point 10k–150k terbukti di jalur milestone, tetapi bukan cutoff grade S/A/B. Rumus grade penuh, overlap, dan pengiriman grade mail masih terbuka; lihat [follow-up rumah/HHA](HOUSE_HHA_FOLLOWUP.md).
 
 ## 5. Nook's Cranny
 

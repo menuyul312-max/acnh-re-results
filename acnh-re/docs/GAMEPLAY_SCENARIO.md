@@ -689,6 +689,7 @@ Spesies lain: bila `0xb5ac30` (`0xfe8ab0` dengan argumen 0x11) salah, tanpa bata
 | 5 | Skor pulau end-to-end native | `0x15c68c0`, `0x15c61f0` |
 | 6 | Prosesor toko native | `0xfc4560` |
 | 7 | Nama simbolik yang belum terbukti (bit flag, vtable save, enum OfficeLevel, binding `KabuBuyPage`, sel pantai) | `left_open` di item selesai `re_queue.json` |
+| 8 | Rumah/HHA: selector lokal masih kandidat cross-version; overlap footprint, cutoff S/A/B, konsumen queue dan grade mail belum tersambung. Perlu capture save, item/posisi, flag, queue, dan mailbox yang tersinkron | `HOUSE_HHA_FOLLOWUP.md`; `re_queue.json` → `house-upgrade-hha.left_open` |
 
 Titik masuk baris 2–3 diambil dari `index.sqlite` (`hash_refs`, `string_refs`, `direct_calls`), jadi masih berupa kandidat; perannya belum dibaca. Cuaca dan genetika bunga sudah ada di baseline (`output/weather`, `output/flowers`) dan tidak perlu diulang. `plants_and_breeding` juga tercatat sebagai target riset agen mechanics, jadi hasil baris 2 hanya ditulis ke `output/gameplay` dan dokumen `GAMEPLAY_*`.
 
