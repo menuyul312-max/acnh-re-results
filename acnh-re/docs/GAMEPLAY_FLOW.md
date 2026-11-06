@@ -129,6 +129,7 @@ Villager biasa (`NNPC_*`) dibagi menurut 8 kode kepribadian: AN, BO, FU, GE, HA,
    - bila `MuseumConstruction1` + hari ≥2 → state 3, `Museum2Built` ON, `Museum2BuiltToday` ON.
 
    Jadi gedung selesai dua pergantian hari setelah donasi ke-20, atau lebih cepat bila ada hari yang terlewat.
+   Batas bukti untuk jalur item→SaveMuseum→ambang 20→flag→pembaruan harian, dan sisa ketidakpastian art/gyroid serta marker, ada di [follow-up donasi museum](MUSEUM_DONATION_FOLLOWUP.md) dan [follow-up art/gyroid](MUSEUM_ART_GYROID_FOLLOWUP.md).
 6. **[EF]** `Demo_PublicAnnouncement_Process:MuseumGrouUpChk` membuka penjualan resep shovel dan vaulting pole di toko (`MarketSellRecipeScoopStick`).
 
 ## 4. Rumah dan pinjaman

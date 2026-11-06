@@ -650,6 +650,22 @@
    }
   },
   "all_readings": {
+   "0xe68280": {
+    "role": "write one per-token state record (eight rows, stride 0xb28)",
+    "reading": [
+     "writes active-row state kind at +0xb08 and active byte +0xb0c; initializes u16 +0xb0d to 0x0100, then for kind < 3 stores param_3 as byte +0xb0d and param_4 & 1 at +0xb0e",
+     "direct callers include 0xcd9f0, 0x2f5240, 0xccd40 and wrapper 0xe684f0; param_3 semantic name/domain remains unresolved",
+     "static producer for the museum marker query at 0xeaa8c0; runtime value source is not established"
+    ]
+   },
+   "0xeaa8c0": {
+    "role": "resolve a token-selected state row and return its +0xb0d byte in query mode 2",
+    "reading": [
+     "mode 2 verifies the context token; 0xe68900 selects one of eight active rows by token index",
+     "returns 0xffffffff when the token mismatches, the row is absent/error-marked, or row +0xb08 is nonzero; otherwise returns row +0xb0d as u8",
+     "called by the marker wrapper 0xef62f0 and stored by 0xf780e0 -> 0xf78130 at SaveMuseum +0x3004 + slot; the byte meaning/domain remains unresolved"
+    ]
+   },
    "0xf77050": {
     "role": "museum facility state at day change (states 0-4, param_2 = elapsed days)",
     "reading": [

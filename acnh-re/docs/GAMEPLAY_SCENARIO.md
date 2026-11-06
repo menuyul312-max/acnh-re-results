@@ -36,7 +36,7 @@ Data mesin untuk dokumen ini: [`output/gameplay/native_flag_refs.json`](../outpu
 | `0xfdc020` | kode pengunjung hari ini = `codes[hari]`, kode ≥ 10 → 0 (§3.2) | lulus |
 | `0xf7d7e0` | tamu campsite: 0/5/10/15/20% untuk ≤2/3/4/5/≥6 hari (§2.1) | lulus |
 | `0xfcc300` | Able Sisters: kit ada → +1 hari `TailorConstruction1` = 1 → +2 hari state 2 (`TailorBuilt`, `TailorBuiltToday`); 2 hari terlewat sekaligus → langsung buka tanpa `Today`; tanpa kit tetap state 1 | lulus |
-| `0xf77050` | tenda museum dan upgrade: kit → state 2; `MuseumGrowupEnable1` + satu hari → hitungan 1; hari berikutnya → state 3 dan `Museum2Built`. Flag `*Today` hanya pada tepat satu hari berlalu | lulus |
+| `0xf77050` | tenda museum dan upgrade: kit → state 2; `MuseumGrowupEnable1` + satu hari → hitungan 1; hari berikutnya → state 3 dan `Museum2Built`. Tes memasok flag upgrade; jalur hidup dari donasi ke flag belum tersambung end-to-end ([follow-up museum](MUSEUM_ART_GYROID_FOLLOWUP.md)) | lulus |
 | `0xf26330` | campsite: kit → state 2, `CampSiteBuilt`, `CeremonyBuildCampSite`, `CampSiteBuiltToday`; tanpa kit tetap state 1 | lulus |
 | `0xf847f0`, `0xf855c0` | undian pindah keluar: `r < 5 × menetap + penghitung` (hanya bila jeda 0, menetap ≥ 6, penghitung ≥ 5); jeda/penghitung; calon `AbandonedHouse`; `ForceMoveOut` (slot pertama saja); konfirmasi → status 2 → pergi (§5.1) | lulus |
 | `0xf87670` | bobot pemilihan calon (float32, 3 pemain, pengurang level 6), seluruh 229 nilai undian; pengecualian slot; jendela ulang tahun pada tiga tanggal (§5.1) | lulus |
@@ -65,7 +65,7 @@ Data mesin untuk dokumen ini: [`output/gameplay/native_flag_refs.json`](../outpu
 | `0x4b6000` | tumbuh gulma: 120 lapangan sintetis (kepadatan, ubin siram, hari pertama atau bukan, argumen harian dan pulau baru, batas tercapai); urutan undian dan semua tulisan item sama dengan model (§10.3) | lulus |
 | `0x4b63e0` | sebar gulma: 120 lapangan (tinggi ±5, ubin terisi, set 2 di luar rect, masker pulau baru, batas 150/1300 tercapai): tulisan anak, jumlah, set 17, set 2, dan penghitung `+0x2e144` sama dengan model. Akses lapisan item, `FgMainParam`, tinggi, dan RNG harian dikontrol (§10.3) | lulus |
 | `0x4ba120` | konversi musim gulma: 30 lapangan, tiap kode musim, gulma campuran tujuh musim (§10.3) | lulus |
-| `0x3d9b60`, `0xf77e00`, `0xf77f60`, `0xf780e0`, `0xf78130` | predicate pilihan Blathers dan SaveMuseum: 1.024 slot, sentinel `-2`, item 8 byte, tanggal packed `year/month/day` per-slot `+4`, marker `+0x3004`; gate Fossil/Fish/Insect dan duplicate check `0xff` diuji native dengan adapter save/item terkontrol (lihat [museum donation follow-up](MUSEUM_DONATION_FOLLOWUP.md)) | lulus dengan adapter |
+| `0x3d9b60`, `0xf77e00`, `0xf77f60`, `0xf780e0`, `0xf78130` | predicate pilihan Blathers dan SaveMuseum: 1.024 slot, sentinel `-2`, item 8 byte, tanggal packed `year/month/day` per-slot `+4`, marker `+0x3004`; gate Fossil/Fish/Insect dan duplicate check `0xff` diuji native dengan adapter terkontrol. Producer state marker `+0xb0d` ditelusuri ke `0xe68280`; label/domain nilainya masih terbuka (lihat [museum donation](MUSEUM_DONATION_FOLLOWUP.md) dan [art/gyroid](MUSEUM_ART_GYROID_FOLLOWUP.md)) | lulus dengan adapter |
 
 Bacaan lain tetap [PSEUDO] sampai ada kasus emulasinya.
 
