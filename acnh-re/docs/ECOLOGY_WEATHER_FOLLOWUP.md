@@ -20,6 +20,18 @@ Audit ini menutup satu bagian terbatas dari `weather-beyond-day-pattern`: konver
 
 Indeks flow, hash sumber, pemakaian handler, serta kosakata enum tersimpan di [`sky_event_index.json`](../output/gameplay/ecology_weather_followup/sky_event_index.json). Teks dialog tidak dimasukkan.
 
+## Reproduksi uji native
+
+Jalankan dari root worktree:
+
+```sh
+python3 acnh-re/output/gameplay/ecology_weather_followup/verify_weather_remap.py
+```
+
+Runner menjalankan ulang 96 perbandingan, mencocokkan seluruh kasus dan matriks dengan [`weather_remap_native.json`](../output/gameplay/ecology_weather_followup/weather_remap_native.json), lalu memeriksa hash ExeFS `main` dan ELF. Ia memerlukan Python 3, Unicorn 2.1.4, pyelftools 0.33, dan input `acnh-re/inputs/additional_exefs/main`. Dependencies diambil dari `.deps` worktree, `/workspace/acnh-re/.deps`, atau path yang diberikan melalui `ACNH_RE_DEPS`; capstone tidak diperlukan.
+
+Hasil verifikasi commit ini: input NSO SHA-256 `f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900`, ELF SHA-256 `5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74`, hasil JSON SHA-256 `611323215534adad2098578317b4b436d620c9b7e16fb1e0cb8d766d1a822a65`, runner SHA-256 `c6a0efa131acb9ee997f60dd9bb161d9f7dfecd80e0903a5d02341ae80d5beb0`.
+
 ## Batas dan pekerjaan terbuka
 
 - Semantik internal `0x202490` dan state manager lingkungan belum diuji native; emulasi hanya menyuntikkan nilai predicate agar cabang `0x204480` dapat dijalankan.
