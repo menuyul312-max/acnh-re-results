@@ -62,12 +62,115 @@ PYTHONPATH=/workspace/acnh-re/.deps:tools python3 tools/npc_friendship_delta_nat
   serta argumen yang sampai ke entry `0xef2c70`, termasuk key `Friendship`.
 - **[PSEUDO]:** binding ke data record, pemilihan field di `0xf48840`, dan efek
   perubahan pada save. Badan writer belum berjalan dalam reproducer.
-- **Belum ditemukan:** penulis friendship untuk hadiah, surat, pukulan jaring,
-  pengabaian, decay harian, serta cap harian. Kasus delta negatif terkontrol di
-  sini bukan bukti bahwa decay tersebut terjadi dalam gameplay.
-- **Terbuka:** transisi `NpcAIActivityState`, pemilihan activity/talk topic,
-  dan eksekusi native host/guest conversation. Registry state yang sudah
-  terverifikasi dicatat di [`RESIDENT_MAP_NPC_FOLLOWUP.md`](RESIDENT_MAP_NPC_FOLLOWUP.md)
-  dan [`NPC_NAVIGATION_KERNEL.md`](NPC_NAVIGATION_KERNEL.md); nama
-  `cConversationHost`/`cConversationGuest` sendiri belum membuktikan state
-  entry, dialog, atau transisi runtime.
+
+## EventFlow friendship dan state conversation
+
+**[EF]** Indeks EventFlow mencatat 72 pemakaian
+`EventFlowActionNpcAddFriendship` pada 21 flow. Distribusi nilai `AddValue`:
+
+| Delta | Pemakaian | Delta | Pemakaian |
+|---:|---:|---:|---:|
+| -5 | 3 | +1 | 27 |
+| -3 | 8 | +2 | 10 |
+| -2 | 2 | +3 | 13 |
+| -1 | 3 | +4 | 2 |
+|  |  | +5 | 2 |
+|  |  | +6 | 1 |
+|  |  | +8 | 1 |
+
+Contoh yang bisa dirujuk tanpa teks dialog: `NNPC_Quest_Delivery_TimeOver`
+event 34–36 mengirim -1/-2/-3; `NNPC_GEvent_BirthdayN_H` event 92 mengirim
+-5 dan event 102–107 memberi +6/+4/+8/+4/+3/+5. Flow bernama
+`NNPC_Select_Present` juga memuat aksi +1.
+
+**Terbukti native:** callback aksi `0x27a220` berjalan dengan input `AddValue`
+dari 12 event pada lima flow dan meneruskan nilai itu tanpa perubahan ke entry
+`0xd34cb0`. Jalur validasi virtual memakai vtable aksi terdaftar
+`0x3040940`, slot `0x20` memanggil fungsi asli `0x27a210`, lalu callback
+mengambil resident slot serta `AddValue` dari object. Eksekusi berhenti saat
+masuk ke `0xd34cb0`; pembacaan dan perubahan save pada badan wrapper belum
+dijalankan oleh kasus EventFlow ini. Data: [eventflow_friendship_action_native.json](../output/gameplay/villager_social_followup/eventflow_friendship_action_native.json).
+
+Registry state asli yang sudah dijalankan mendaftarkan 43 state umum dan 24
+`NpcAIActivityState`. `cConversationHost` adalah indeks 60 dengan entry/update/
+exit `0xc0b510`/`0xc0bd20`/`0xc0c280`; `cConversationGuest` indeks 61 memakai
+`0xc0c9e0`/`0xc0cb20`/`0xc0cc70`. Dispatch native sebelumnya mencapai alamat
+masuk callback, tetapi tidak menjalankan badannya. **[PSEUDO]** kedua fungsi
+update memanggil helper `0xc30930`; helper memilih permintaan gerak/animasi
+`NpcConversationTalk` pada mode 0, `MaReNodding` pada mode 2, dan varian
+`NpcTalk*` pada mode 3. Ini memilih aksi ekspresi/animasi, bukan topik dialog.
+Ringkasan target callback: [eventflow_friendship_action_native.json](../output/gameplay/villager_social_followup/eventflow_friendship_action_native.json); bukti registrasi rinci: [`npc_state_registry_native.json`](../output/mechanics/npc_state_registry_native.json).
+
+**Masih terbuka:** perpindahan state host/guest, badan callback entry/update/exit,
+dan pemilihan topic/message dialog. Nilai
+EventFlow adalah input yang dikonfigurasi, bukan bukti bahwa setiap cabang
+terjadi dalam satu playthrough. Contoh nilai negatif EventFlow juga bukan
+bukti decay harian. Penulis/delta untuk surat, pukulan jaring, dan pengabaian
+belum ditemukan.
+
+### State aktivitas dan host/guest
+
+**Terbukti pada registry native:** proses registrasi dan dispatch yang sudah
+ada mendaftarkan 24 state `NpcAIActivityState` dan menautkan
+`cConversationHost`/`cConversationGuest` ke callback di atas. Output rinci ada
+di [`npc_state_registry_native.json`](../output/mechanics/npc_state_registry_native.json);
+ringkasan conversation tersimpan di artifact EventFlow follow-up.
+
+**[PSEUDO]** update host `0xc0bd20` dan guest `0xc0cb20` memanggil `0xc30930`.
+Mode 0 mengajukan aksi `NpcConversationTalk`, mode 2 `MaReNodding`, dan mode 3
+memilih `NpcTalkShocked`, `NpcTalkEh`, atau `NpcTalkAha`. Ini bukti pemilihan
+aksi/animasi percakapan. **Terbuka:** transisi masuk/keluar host/guest, badan
+callback utuh, sinkronisasi guest jaringan, dan pemilihan topic/message.
+
+### Counter percakapan
+
+**Terbukti native sampai batas writer:** reproducer menjalankan `0xce9af0`,
+formatter `0x47360`, normalizer indeks pemain `0xda3fc0`, dan wrapper
+`0xef62f0`. Untuk slot villager 0, 3, dan 9, native wrapper memformat key
+`TalkNpc0Count`, `TalkNpc3Count`, atau `TalkNpc9Count`, lalu `TalkAllNpcCount`.
+Nilai hasil resolver terkontrol yang sama diteruskan dua kali ke entry writer
+`0xce9390`, dengan argumen operasi 1. Enam dari enam panggilan boundary cocok.
+Reproduksi:
+
+```bash
+cd acnh-re
+PYTHONPATH=/workspace/acnh-re/.deps:tools python3 tools/npc_talk_counter_native.py
+```
+
+Kasus dan argumen tersedia di
+[`talk_counter_native.json`](../output/gameplay/villager_social_followup/talk_counter_native.json).
+Resolver `0xeaa8c0` mengembalikan nilai masukan sintetis dan writer `0xce9390`
+ditangkap sebelum lookup/perubahan map save; bukti ini tidak menetapkan reset
+policy atau semantik game untuk nama `TalkNpc%dCount` dan `TalkAllNpcCount`.
+
+**[PSEUDO]** `0xc84240` memperbarui `TalkCountToday`, memanggil wrapper counter
+`0xce9af0`, lalu bila nilai `TalkCountToday` menjadi 1 menambah
+`ContinuousTalkDays`. Nilai setelah kenaikan menentukan delta friendship
+`min(ContinuousTalkDays, 3)`, yaitu 1, 2, lalu 3. Field table
+`EventFlagsNpcMemoryParam` memberi `TalkCountToday` dan `ContinuousTalkDays`
+max 7; tabel berbahasa Jepang menamai keduanya sebagai hitungan hari ini dan
+hari berturut-turut.
+
+`0xf4dbd0` adalah helper seleksi statis yang membaca `TalkNpc0Count`, kemudian
+memeriksa key `TalkNpc%dCount` untuk indeks 0–9 dan mengembalikan indeks
+pertama yang nilainya berbeda dari argumennya. Caller-nya `0x395bc0`,
+`0x395e50`, dan `0x3960d0`. Saya belum membuktikan bahwa indeks ini memilih
+topic atau pesan; fungsi itu dan caller-nya belum dijalankan native.
+
+### Reset harian dan sumber friendship
+
+**[PSEUDO]** jalur perubahan hari `0xf53a70 → 0xf545f0 → 0xf84320 → 0xf12aa0`
+memproses record villager. `0xf12aa0` memanggil `0xf76010`/`0xf696c0` untuk
+membersihkan `TalkCountToday`; bila mode proses di bawah 2, kode membaca
+`TalkCountToday` dan menghapus `ContinuousTalkDays` saat tidak ada talk yang
+tercatat. Fungsi reset umum `0xf48cf0` juga menghapus kedua field, tetapi
+caller-nya `0xf05e80`, di luar jalur perubahan hari yang ditelusuri. Ini
+menguatkan gate satu kali per villager per reset counter, namun belum menguji
+mode perubahan hari native atau memastikan semua konfigurasi mode memakai
+reset yang sama.
+
+**Terbuka:** writer lain yang memberi atau mengurangi `Friendship`, sumber
+negatif yang benar-benar terpicu dalam permainan, serta batas/policy reset
+untuk `TalkNpc%dCount` belum terikat ke eksekusi save live. Nilai negatif pada
+EventFlow tetap hanya input aksi yang dikonfigurasi. Native friendship test
+sebelumnya menguji floor level di `0xd34f80`, bukan sumber decay.
