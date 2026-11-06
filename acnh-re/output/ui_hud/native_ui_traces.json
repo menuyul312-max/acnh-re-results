@@ -794,7 +794,7 @@
         "limit": "Mode 4 and its state owner are not identified."
       }
     ],
-    "known_action_emitters_summary": "Static callsites now connect action IDs 4, 6, 7, 8, 9, 10, 11, and 12 to concrete control methods. ButtonCheck, ButtonRepeat, and ButtonFocusActive are independently identified by the native type resolver. The remaining action names are present in the lookup table but their full producers are not identified in this path.",
+    "known_action_emitters_summary": "Static callsites now connect action IDs 4, 6, 7, 8, 9, 10, 11, and 12 to concrete control methods. ButtonCheck, ButtonRepeat, and ButtonFocusActive are independently identified by the native type resolver. The remaining action names are present in the lookup table but their full producers are not identified in this path. Touchscreen handling is now traced to named TouchSelect/TouchUnselect UI messages through the 61-entry native message registry; this remains distinct from the 13 control-animation action names, and recipient-to-state-machine binding is unresolved.",
     "button_control_type_resolver": {
       "type_name_function_va": "0x14817e0",
       "inherit_resolution_function_va": "0x1481a40",
@@ -982,7 +982,420 @@
           "observed": "0x1db5cf0 stores the class token UniteBtnCtrl and constructs the controller; 0x1db3020 calls this factory and then the common 18-state initializer 0x1dd0b40."
         }
       ],
-      "relationship_limit": "The matching LpUniteButton name in CNT1 and these native controller/type-dispatch paths provide a stronger family-level correlation. No recovered indirect handler body assigns all 91 CNT1 records to a specific factory, screen, or event source."
+      "relationship_limit": "The matching LpUniteButton name in CNT1 and these native controller/type-dispatch paths provide a stronger family-level correlation. No recovered indirect handler body assigns all 91 CNT1 records to a specific factory, screen, or event source.",
+      "pointer_array_candidates": {
+        "evidence_file": "output/binary/code_pointer_arrays.json",
+        "status": "slot-aligned code-pointer candidates; array-to-object vptr association is unproven",
+        "setup_sequences": [
+          {
+            "start_va": "0x315b0d0",
+            "status": "candidate sequence; explicitly not automatically a C++ vtable",
+            "slot_targets": [
+              {
+                "type": "LpLocator",
+                "slot_offset": "0x10",
+                "target_va": "0x1db2c00"
+              },
+              {
+                "type": "LpUniteButton",
+                "slot_offset": "0x18",
+                "target_va": "0x1db2fc0"
+              },
+              {
+                "type": "LpDragButton",
+                "slot_offset": "0x20",
+                "target_va": "0x1db33d0"
+              },
+              {
+                "type": "LpKeyDecideIcon",
+                "slot_offset": "0x28",
+                "target_va": "0x1db3790"
+              },
+              {
+                "type": "LpSelector",
+                "slot_offset": "0x30",
+                "target_va": "0x1db3b90"
+              },
+              {
+                "type": "LpScrollBar",
+                "slot_offset": "0x38",
+                "target_va": "0x1db3f90"
+              },
+              {
+                "type": "LpCharAnim",
+                "slot_offset": "0x40",
+                "target_va": "0x1db4390"
+              },
+              {
+                "type": "LpTextAnim",
+                "slot_offset": "0x48",
+                "target_va": "0x1db4750"
+              },
+              {
+                "type": "LpTraceGauge",
+                "slot_offset": "0x50",
+                "target_va": "0x1db4b10"
+              },
+              {
+                "type": "LpNumberAnim",
+                "slot_offset": "0x58",
+                "target_va": "0x1db4ed0"
+              },
+              {
+                "type": "LpMultiNumberAnim",
+                "slot_offset": "0x60",
+                "target_va": "0x1db5290"
+              },
+              {
+                "type": "LpTimer",
+                "slot_offset": "0x68",
+                "target_va": "0x1db5650"
+              }
+            ],
+            "default_slot": {
+              "slot_offset": "0x70",
+              "target_va": "0x1671c00",
+              "interpretation": "candidate nested UISys type dispatcher"
+            }
+          },
+          {
+            "start_va": "0x30fc6b8",
+            "status": "alternate candidate sequence; explicitly not automatically a C++ vtable",
+            "slot_targets": [
+              {
+                "type": "LpLocator",
+                "slot_offset": "0x10",
+                "target_va": "0x114b030"
+              },
+              {
+                "type": "LpUniteButton",
+                "slot_offset": "0x18",
+                "target_va": "0x114d360"
+              },
+              {
+                "type": "LpDragButton",
+                "slot_offset": "0x20",
+                "target_va": "0x1db33d0"
+              },
+              {
+                "type": "LpKeyDecideIcon",
+                "slot_offset": "0x28",
+                "target_va": "0x114de90"
+              },
+              {
+                "type": "LpSelector",
+                "slot_offset": "0x30",
+                "target_va": "0x1db3b90"
+              },
+              {
+                "type": "LpScrollBar",
+                "slot_offset": "0x38",
+                "target_va": "0x1db3f90"
+              },
+              {
+                "type": "LpCharAnim",
+                "slot_offset": "0x40",
+                "target_va": "0x1db4390"
+              },
+              {
+                "type": "LpTextAnim",
+                "slot_offset": "0x48",
+                "target_va": "0x1db4750"
+              },
+              {
+                "type": "LpTraceGauge",
+                "slot_offset": "0x50",
+                "target_va": "0x114e270"
+              },
+              {
+                "type": "LpNumberAnim",
+                "slot_offset": "0x58",
+                "target_va": "0x1db4ed0"
+              },
+              {
+                "type": "LpMultiNumberAnim",
+                "slot_offset": "0x60",
+                "target_va": "0x1db5290"
+              },
+              {
+                "type": "LpTimer",
+                "slot_offset": "0x68",
+                "target_va": "0x1db5650"
+              }
+            ],
+            "default_slot": {
+              "slot_offset": "0x70",
+              "target_va": "0x1145dc0",
+              "interpretation": "unresolved alternate default candidate"
+            }
+          }
+        ],
+        "followup_sequences": [
+          {
+            "start_va": "0x315b0d0",
+            "status": "candidate sequence; explicitly not automatically a C++ vtable",
+            "slot_targets": [
+              {
+                "type": "LpLocator",
+                "slot_offset": "0xa8",
+                "target_va": "0x114e7d0"
+              },
+              {
+                "type": "LpUniteButton",
+                "slot_offset": "0xb0",
+                "target_va": "0x1673280"
+              },
+              {
+                "type": "LpDragButton",
+                "slot_offset": "0xb8",
+                "target_va": "0x114e7e0"
+              },
+              {
+                "type": "LpKeyDecideIcon",
+                "slot_offset": "0xc0",
+                "target_va": "0x1673350"
+              },
+              {
+                "type": "LpSelector",
+                "slot_offset": "0xc8",
+                "target_va": "0x1673410"
+              },
+              {
+                "type": "LpScrollBar",
+                "slot_offset": "0xd0",
+                "target_va": "0x16734d0"
+              },
+              {
+                "type": "LpCharAnim",
+                "slot_offset": "0xd8",
+                "target_va": "0x114e7f0"
+              },
+              {
+                "type": "LpTextAnim",
+                "slot_offset": "0xe0",
+                "target_va": "0x114e800"
+              },
+              {
+                "type": "LpTraceGauge",
+                "slot_offset": "0xe8",
+                "target_va": "0x114e810"
+              },
+              {
+                "type": "LpNumberAnim",
+                "slot_offset": "0xf0",
+                "target_va": "0x114e820"
+              },
+              {
+                "type": "LpMultiNumberAnim",
+                "slot_offset": "0xf8",
+                "target_va": "0x114e830"
+              },
+              {
+                "type": "LpTimer",
+                "slot_offset": "0x100",
+                "target_va": "0x114e840"
+              },
+              {
+                "type": "UISysBounding",
+                "slot_offset": "0x108",
+                "target_va": "0x1673590"
+              },
+              {
+                "type": "UISysScrollBtnList",
+                "slot_offset": "0x110",
+                "target_va": "0x114e850"
+              },
+              {
+                "type": "UISysScrollSign",
+                "slot_offset": "0x118",
+                "target_va": "0x114e860"
+              }
+            ]
+          },
+          {
+            "start_va": "0x30fc6b8",
+            "status": "same second-stage target sequence at aligned offsets",
+            "slot_targets": [
+              {
+                "type": "LpLocator",
+                "slot_offset": "0xa8",
+                "target_va": "0x114e7d0"
+              },
+              {
+                "type": "LpUniteButton",
+                "slot_offset": "0xb0",
+                "target_va": "0x1673280"
+              },
+              {
+                "type": "LpDragButton",
+                "slot_offset": "0xb8",
+                "target_va": "0x114e7e0"
+              },
+              {
+                "type": "LpKeyDecideIcon",
+                "slot_offset": "0xc0",
+                "target_va": "0x1673350"
+              },
+              {
+                "type": "LpSelector",
+                "slot_offset": "0xc8",
+                "target_va": "0x1673410"
+              },
+              {
+                "type": "LpScrollBar",
+                "slot_offset": "0xd0",
+                "target_va": "0x16734d0"
+              },
+              {
+                "type": "LpCharAnim",
+                "slot_offset": "0xd8",
+                "target_va": "0x114e7f0"
+              },
+              {
+                "type": "LpTextAnim",
+                "slot_offset": "0xe0",
+                "target_va": "0x114e800"
+              },
+              {
+                "type": "LpTraceGauge",
+                "slot_offset": "0xe8",
+                "target_va": "0x114e810"
+              },
+              {
+                "type": "LpNumberAnim",
+                "slot_offset": "0xf0",
+                "target_va": "0x114e820"
+              },
+              {
+                "type": "LpMultiNumberAnim",
+                "slot_offset": "0xf8",
+                "target_va": "0x114e830"
+              },
+              {
+                "type": "LpTimer",
+                "slot_offset": "0x100",
+                "target_va": "0x114e840"
+              },
+              {
+                "type": "UISysBounding",
+                "slot_offset": "0x108",
+                "target_va": "0x1673590"
+              },
+              {
+                "type": "UISysScrollBtnList",
+                "slot_offset": "0x110",
+                "target_va": "0x114e850"
+              },
+              {
+                "type": "UISysScrollSign",
+                "slot_offset": "0x118",
+                "target_va": "0x114e860"
+              }
+            ]
+          }
+        ],
+        "limitations": [
+          "The sequence offsets line up with dispatch slot offsets and the second-stage targets are shared by both sequences.",
+          "No object vptr load/store or runtime instance was traced back to either sequence.",
+          "Most target bodies still lack usable pseudocode; candidate target addresses do not establish their exact effects."
+        ]
+      }
+    },
+    "touch_input_manager": {
+      "source_build": "ACNH 1.0.0; supplied ExeFS main",
+      "initialization": {
+        "application_initializer_va": "0x1535ad0",
+        "touch_manager_initializer_va": "0x14b8b60",
+        "update_label": "guiTouchManager::update()",
+        "observed": [
+          "The application initializer creates and initializes the touch-manager object.",
+          "The manager registers its update node through 0x1979ff0 and initializes per-pointer bookkeeping arrays.",
+          "The related application teardown at 0x1536d90 calls 0x14b8ce0; that path clears touch-manager storage through 0x14b8d20."
+        ],
+        "teardown_path": [
+          "0x1536d90",
+          "0x14b8ce0",
+          "0x14b8d20"
+        ]
+      },
+      "platform_sampling": {
+        "multi_touch_function_va": "0x14b8f60",
+        "platform_import": "nn::hid::GetTouchScreenStates<16>",
+        "direct_callers_in_index": [],
+        "observed": [
+          "Reads up to 16 platform touch states.",
+          "Matches platform contact IDs to persistent UI pointer records, updates coordinates and contact flags, and handles new/unmatched contacts."
+        ],
+        "coordinate_path": [
+          "0x1302f10",
+          "0x1303a10",
+          "0x1302a70"
+        ],
+        "coordinate_path_observed": [
+          "The 0x1302a70 path also calls GetTouchScreenStates<16>, filters contact points against a computed screen rectangle, and retains normalized coordinates.",
+          "0x1303a10 obtains a UI rectangle, returns the last accepted contact and normalized u/v coordinates; 0x1302f10 updates/interpolates pointer state."
+        ],
+        "limitations": [
+          "0x14b8f60 has no direct caller in the indexed call graph, consistent with indirect update dispatch but not proving the exact scheduler edge.",
+          "The coordinate helper path and pointer-manager path both sample HID touch, but no exact call edge between those separate paths is shown."
+        ]
+      },
+      "hit_test_and_messages": {
+        "pointer_processor_va": "0x14b94c0",
+        "hit_test_helper_va": "0x14b8850",
+        "message_emitter_va": "0x1533050",
+        "message_name_registry_va": "0x1533fa0",
+        "message_name_count": 61,
+        "observed_message_codes": [
+          {
+            "code": "0x22",
+            "name": "Decide_Invalid",
+            "callsite_va": "0x14b94c0",
+            "meaning_limit": "Exact registry index/name observed; semantic role at this callsite is unresolved."
+          },
+          {
+            "code": "0x2d",
+            "name": "TouchSelect",
+            "callsite_va": "0x14b7c90",
+            "meaning_limit": "Emitted by the pointer-state path when its select conditions pass."
+          },
+          {
+            "code": "0x2e",
+            "name": "TouchUnselect",
+            "callsites_va": [
+              "0x14b7b10",
+              "0x14b7c90",
+              "0x14b8350"
+            ],
+            "meaning_limit": "Emitted on pointer-state exit/release branches; exact event recipient/state effect remains indirect."
+          }
+        ],
+        "observed": [
+          "The processor scans pointer records, hit-tests layout/control geometry recursively, records a target control, and calls the generic UI message emitter.",
+          "The message emitter validates IDs below 61, indexes the native message-name table, and forwards the resulting named message through 0x15329b0.",
+          "The native message registry maps 0x2d to TouchSelect and 0x2e to TouchUnselect."
+        ],
+        "overlap_with_control_state_machine": "The 18-state widget machine contains a TouchSelect trigger (state 0 to 8). Its exit trigger spells TouchUnSelect with capital S, while the message registry spells TouchUnselect. This lexical overlap is evidence of a related touch vocabulary, not proof that this pointer message is delivered to a particular LpUniteButton state machine.",
+        "limitations": [
+          "This establishes pointer-to-named-message routing within the UI system, but not the final recipient handler, FocusTouch/UnFocusTouch/DecideTouch action emission, or platform-button mapping.",
+          "Message code 0x22 is recorded as a name-table index only; this analysis does not infer what “Decide_Invalid” means in the hit-test branch.",
+          "The local direct-call index does not connect poller 0x14b8f60 to processor 0x14b94c0. Their shared manager/pointer data context supports grouping them as one subsystem, but an indirect runtime edge has not been traced."
+        ]
+      },
+      "npad_sampling": {
+        "initializer_va": "0x14ced30",
+        "initializer_caller_va": "0x1535ad0",
+        "observed": "The initializer calls nn::hid::InitializeNpad and nn::hid::InitializeTouchScreen before delegating to 0x14ced60.",
+        "get_npad_states_imports": [
+          "0x2210250",
+          "0x2210260",
+          "0x2210270",
+          "0x2210280",
+          "0x2210290"
+        ],
+        "direct_callsite_status": "No direct-call rows point to these GetNpadStates import thunks in the local call index. Their use through indirect/system paths is not ruled out.",
+        "limitation": "No physical Npad button to UI message/action mapping has been recovered."
+      }
     }
   },
   "special_user_data_consumers": {
@@ -1270,7 +1683,37 @@
           "0x135c150",
           "0x1461b90"
         ]
-      }
+      },
+      "nested_factory_paths": [
+        {
+          "type": "UISysBounding",
+          "dispatch_va": "0x1671c00",
+          "dispatch_slot_offset": "0x90",
+          "slot_target_candidate_va": "0x1671d70",
+          "followup_va": "0x1671db0",
+          "factory_va": "0x16737c0",
+          "factory_class_token": "BoundingCtrl",
+          "evidence": "The nested dispatcher compares the type name and calls +0x90. Candidate pointer sequences contain 0x1671d70 at that slot; 0x1671d70 calls 0x1671db0, which calls the confirmed BoundingCtrl factory."
+        },
+        {
+          "type": "UISysScrollBtnList",
+          "dispatch_va": "0x1671c00",
+          "dispatch_slot_offset": "0x98",
+          "slot_target_candidate_va": "0x1672110",
+          "factory_va": "0x1673960",
+          "factory_class_token": "ScrollBtnListCtrl",
+          "evidence": "The nested dispatcher compares the type name and calls +0x98. Candidate sequences contain 0x1672110 at that slot; nearby follow-up implementation 0x1672150 calls the confirmed ScrollBtnListCtrl factory. The short slot-target body is not decompiled."
+        },
+        {
+          "type": "UISysScrollSign",
+          "dispatch_va": "0x1671c00",
+          "dispatch_slot_offset": "0xa0",
+          "slot_target_candidate_va": "0x16724b0",
+          "factory_va": "0x1673b00",
+          "factory_class_token": "ScrollSignCtrl",
+          "evidence": "The nested dispatcher compares the type name and calls +0xa0. Candidate sequences contain 0x16724b0 at that slot; nearby follow-up implementation 0x16724f0 calls the confirmed ScrollSignCtrl factory. The short slot-target body is not decompiled."
+        }
+      ]
     },
     "fleu_relation": {
       "observed_overlap": [
@@ -1309,9 +1752,9 @@
   },
   "remaining_evidence_needed": [
     "A direct runtime/resource-manager trace or complete allocator lookup logic showing which archive supplies each duplicate PRT1 name, including .szs cases.",
-    "Caller/vtable identification for MainScreenSmartPhone open/update/close and its relationship to MainScreen HUD state.",
-    "Resolve the indirect type-handler targets selected by 0x1db2140 and 0x1672890, then bind concrete component instances to CNT1 actions and screen controllers.",
-    "Input-device event producer to all 13 mapped action names (including Focus/UnFocus/DecideTouch), callback/CNT1 order, modal push/pop, focus restoration, and teardown paths.",
+    "Caller/vptr identification for MainScreenSmartPhone open/update/close and its relationship to MainScreen HUD state.",
+    "Associate candidate pointer arrays 0x315b0d0 and 0x30fc6b8 with live component objects, then decompile/resolve remaining handlers for all component types and bind records to screens.",
+    "Resolve Npad button producers, named UI message delivery for all 13 control actions, recipient/CNT1 callback order, modal push/pop, focus restoration, and screen lifecycle. TouchSelect/TouchUnselect names are known, but their recipient state machine is not.",
     "A native FLEU application path mapping arrays to named userData values and animation frame timing.",
     "Synchronized game captures for renderer comparisons (origin/scale, hit bounds, clipping, BNTX channel behavior, sampler/blend/shader and font output)."
   ],
