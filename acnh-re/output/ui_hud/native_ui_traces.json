@@ -108,7 +108,7 @@
         "limit": "This function is a MenuDevice component update; it does not prove the full MainScreenSmartPhone controller or screen-open lifecycle."
       }
     ],
-    "smartphone_controller_status": "native_page_candidate_mapped_layout_link_unproven",
+    "smartphone_controller_status": "page_layout_identifier_crosswalk_proven; runtime_controller_and_loader_handoff_unproven",
     "page_factory_and_vtable_evidence": {
       "shared_factory_handoff": {
         "calls": [
@@ -117,11 +117,11 @@
           "0x1ea8220"
         ],
         "observed": [
-          "0x1ea8210 marks a new page object as initialized through 0x1ea40a0.",
+          "0x1da8210 marks a new page object as initialized through 0x1da40a0.",
           "0x1144600 calls the page-builder interface at vtable offset +0x138 and copies a flag into the created object.",
-          "0x1ea8220 calls a page virtual method at +0x28 and appends the created page object to the factory collection."
+          "0x1da8220 calls the shared page virtual slot +0x28 through 0x1da40b0, inserts a page-relative intrusive-list node through 0x1967c40, and increments the collection counter."
         ],
-        "limit": "This is construction/registration evidence; it does not establish the global open, close, back, focus-restore, or teardown order."
+        "limit": "This is construction/registration evidence; it does not establish the page-specific layout loader handoff, global open, close, back, focus-restore, or teardown order."
       },
       "MainScreenPage": {
         "class_name": "MainScreenPage",
@@ -155,7 +155,7 @@
             "limit": "The exact event or lifecycle phase represented by this slot is not named."
           }
         ],
-        "relationship_to_MainScreen_layout": "unproven"
+        "relationship_to_MainScreen_layout": "slot46_returns_exact_MainScreen_identifier; loader_handoff_and_runtime_ownership_unproven"
       },
       "SmartPhoneIconPage": {
         "class_name": "SmartPhoneIconPage",
@@ -174,12 +174,20 @@
         "slot_25": {
           "target_va": "0x144eae0",
           "target_is_thunk_to": "0x1144bf0",
-          "limit": "The generic page interface is present, but this method does not identify MainScreenSmartPhone as its BFLYT resource."
+          "limit": "This slot-25 method does not identify the BFLYT resource. The separate slot-46 getter returns MainScreenSmartPhone, but loader use and runtime ownership remain unresolved."
         },
-        "relationship_to_MainScreenSmartPhone_layout": "unproven"
+        "relationship_to_MainScreenSmartPhone_layout": "slot46_returns_exact_MainScreenSmartPhone_identifier; loader_handoff_and_runtime_ownership_unproven",
+        "slot_46": {
+          "target_va": "0x144f010",
+          "offset_bytes": "0x170",
+          "returned_string_va": "0x296c2c8",
+          "returned_identifier": "MainScreenSmartPhone",
+          "matches_catalogued_bflyt_name": true,
+          "limit": "This proves a static identifier match only; it does not prove loader use or runtime ownership."
+        }
       }
     },
-    "evidence_limit": "The indexed native string-reference corpus contains zero exact references to MainScreenSmartPhone. This rules out a literal reference in that corpus, not dynamically composed names or an indirect/differently named resource binding."
+    "evidence_limit": "The native string-reference index contains no direct literal reference to MainScreenSmartPhone, but the page slot-46 getter builds and returns that exact string through ADRP/ADD/RET. The string-return identity is proven; resource-loader use, runtime ownership, and rendering remain unproven."
   },
   "focus_and_action_dispatch": {
     "action_name_table": {
@@ -906,7 +914,46 @@
       "observed": "The resolver returns a valid marker and mode ID; the caller constructs mode-specific control state and callbacks.",
       "limits": [
         "The type IDs identify controller families, but do not by themselves identify concrete physical input bindings."
-      ]
+      ],
+      "registered_callback_binding": {
+        "control_method_va": "0x14821d0",
+        "callback_provider_field_offset_in_input_record_bytes": 56,
+        "provider_factory_virtual_slot_offset_bytes": 24,
+        "provider_factory_callsite_va": "0x148222c",
+        "factory_argument": "control object + 1264",
+        "callback_result_field_offset_in_control_bytes": 1256,
+        "event_method_va": "0x1483390",
+        "event_action_callsites": [
+          {
+            "va": "0x14833cc",
+            "action_id": 5,
+            "action": "DecideTouch"
+          },
+          {
+            "va": "0x14834b4",
+            "action_id": 1,
+            "action": "FocusTouch"
+          }
+        ],
+        "callback_invoke_callsite_va": "0x14834dc",
+        "callback_virtual_slot_offset_bytes": 32,
+        "callback_arguments": [
+          "x0 = callback object from control + 1256",
+          "x1 = control object",
+          "x2 = integer state/value from control + 1408"
+        ],
+        "vtable_candidate_entry": {
+          "site_va": "0x330dfc8",
+          "relocation_type": "R_AARCH64_RELATIVE (1027)",
+          "target_va": "0x1483390",
+          "limit": "This binds a function-table/vtable-like entry to the event method; the owning live vptr and concrete callback class are not identified."
+        },
+        "status": "callback_provider_creation_and_control_method_invocation_proven_statically",
+        "limits": [
+          "No direct edge has been recovered from guiTouchManager pointer dispatch to this event method.",
+          "The provider implementation, final screen/controller receiver, and relationship to each CNT1/FSM instance remain unresolved."
+        ]
+      }
     },
     "ui_component_dispatch": {
       "data_dispatch": {
@@ -1838,7 +1885,7 @@
         ],
         "overlap_with_control_state_machine": "The 18-state widget machine contains a TouchSelect trigger (state 0 to 8). Its exit trigger spells TouchUnSelect with capital S, while the message registry spells TouchUnselect. This lexical overlap is evidence of a related touch vocabulary, not proof that this pointer message is delivered to a particular LpUniteButton state machine.",
         "limitations": [
-          "The static call graph now connects HID sample -> hit-test -> recorded target control -> matching control-tree update -> indirect virtual callback. The callback target class and vtable implementation remain unresolved.",
+          "The static call graph now connects HID sample -> hit-test -> recorded target control -> matching control-tree update -> indirect virtual callback. The callback provider/factory slot and invocation slot are now identified in the control layer, but the concrete target class and vtable implementation remain unresolved.",
           "The callback path is not yet tied to FocusTouch/UnFocusTouch/DecideTouch action dispatch, a named control state-machine instance, or a specific CNT1 animation.",
           "TouchSelect/TouchUnselect names are recorded through the diagnostic message/history path; they do not by themselves prove receiver delivery.",
           "Message code 0x22 is a name-table index only; this analysis does not infer what “Decide_Invalid” means at that callsite.",
@@ -1850,7 +1897,8 @@
           "recording_helper_va": "0x15329b0",
           "observed": "The emitter validates an ID against the 61-name registry, resolves the text, and forwards it to a bounded history/ring-buffer helper that stores message text and per-entry context.",
           "limit": "This proves named message recording/telemetry, not delivery to the control callback. The callback path is via indirect virtual calls in pointer-state helpers."
-        }
+        },
+        "control_callback_binding_observation": "Separately, UI controller method 0x14821d0 obtains a callback object from the input descriptor provider at +56 through virtual slot +24 and stores it at control offset +1256; event method 0x1483390 invokes that object through virtual slot +32 (0x14834dc). The event method contains the DecideTouch and FocusTouch action dispatch callsites. This narrows the callback mechanism but does not prove the touch-manager-to-method edge or concrete receiver."
       },
       "npad_sampling": {
         "initializer_va": "0x14ced30",
@@ -2813,6 +2861,173 @@
         "classification": "four-state enum getter matching the selector profile by state count/name order; component ownership remains unproven",
         "matched_transition_candidate_va": "0x1dc5740"
       }
+    },
+    "native_haptics": {
+      "status": "two_statically_distinct_hid_output_paths_identified; middleware_graph_partially_mapped",
+      "module": "main",
+      "source_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+      "paths": [
+        {
+          "name": "npad_vibration_thread_ring",
+          "output_api": "nn::hid::SendVibrationValue",
+          "plt_va": "0x2210360",
+          "callsite_va": "0x1969008",
+          "handler_va": "0x1968f80",
+          "status": "ring_drain_proven_enqueue_source_unresolved",
+          "relation": "The concrete worker drains manager-owned 20-byte records and submits a device handle plus a 16-byte VibrationValue. No static producer or link to the middleware writer path has been found."
+        },
+        {
+          "name": "hid_vibration_player_writer_and_node_graph",
+          "status": "api_calls_and_object_counts_mapped_asset_and_runtime_channel_semantics_unresolved",
+          "graph": {
+            "graph_initializer_va": "0x1c8e0c0",
+            "direct_initializer_callers": [
+              "0x1c8dd10",
+              "0x1c93158",
+              "0x1c93458"
+            ],
+            "vibration_target": {
+              "constructor_import": "nn::hid::VibrationTarget::VibrationTarget",
+              "plt_va": "0x2211520",
+              "direct_constructor_call_count": 17,
+              "constructor_callsite_first": "0x1c8de20",
+              "constructor_callsite_last": "0x1c8dea0",
+              "object_stride_bytes": 72
+            },
+            "vibration_mixer": {
+              "constructor_import": "nn::hid::VibrationMixer::VibrationMixer",
+              "plt_va": "0x2211530",
+              "direct_constructor_call_count": 19,
+              "constructor_callsites_first_last": [
+                "0x1c8ded4",
+                "0x1c8dff4"
+              ],
+              "object_stride_bytes": 72,
+              "update_import": "nn::hid::VibrationNode::Update",
+              "update_plt_va": "0x2211560",
+              "update_callsite_va": "0x1c8ee1c",
+              "sample_callback_import": "nn::hid::VibrationMixer::OnNextSampleRequired",
+              "sample_callback_plt_va": "0x2211690",
+              "sample_callback_callsite_va": "0x1c93654",
+              "player_sample_callback_import": "nn::hid::VibrationPlayer::OnNextSampleRequired",
+              "player_sample_callback_plt_va": "0x22116a0",
+              "player_sample_callback_callsite_va": "0x1c936e4"
+            },
+            "node_connection": {
+              "constructor_import": "nn::hid::VibrationNodeConnection::VibrationNodeConnection",
+              "constructor_plt_va": "0x2211540",
+              "direct_constructor_call_count": 18,
+              "graph_constructor_callsite_first_last": [
+                "0x1c8e020",
+                "0x1c8e0a0"
+              ],
+              "object_stride_bytes": 56,
+              "connect_import": "nn::hid::VibrationNodeConnection::Connect",
+              "connect_plt_va": "0x2211550",
+              "graph_connect_call_count": 18,
+              "graph_connect_callsite_first_last": [
+                "0x1c8ea04",
+                "0x1c8ebe0"
+              ],
+              "additional_controller_constructor_call_count": 3
+            },
+            "limits": [
+              "Object counts and strides follow direct constructor call sequences; semantic endpoint/channel labels are not established.",
+              "The graph update call is statically visible, but its scheduler and runtime frequency are unknown."
+            ]
+          },
+          "player_writer_controller": {
+            "vibration_player_constructor_import": "nn::hid::VibrationPlayer::VibrationPlayer",
+            "vibration_player_constructor_plt_va": "0x22115c0",
+            "vibration_player_constructor_callsite_va": "0x1c90c34",
+            "vibration_writer_constructor_import": "nn::hid::VibrationWriter::VibrationWriter",
+            "vibration_writer_constructor_plt_va": "0x22115d0",
+            "vibration_writer_constructor_callsite_va": "0x1c90c60",
+            "controller_fields": {
+              "player_pointer_offset_bytes": 592,
+              "writer_pointer_offset_bytes": 600,
+              "descriptor_type_offset_bytes": 32,
+              "descriptor_data_pointer_offset_bytes": 40,
+              "descriptor_length_offset_bytes": 48
+            },
+            "descriptor_dispatch": {
+              "method_va": "0x1c90e90",
+              "caller_va": "0x1c8f5bc",
+              "observed": "The method copies a descriptor type, data pointer, length and value payload into controller fields. One branch calls VibrationPlayer::Load with the pointer at +40 and signed length at +48; another branch constructs a 16-byte value and calls VibrationWriter::Write. Other branches construct/connect VibrationNodeConnection objects.",
+              "player_load_import": "nn::hid::VibrationPlayer::Load",
+              "player_load_plt_va": "0x22115f0",
+              "player_load_callsite_va": "0x1c90f08",
+              "writer_write_import": "nn::hid::VibrationWriter::Write",
+              "writer_write_plt_va": "0x2211600",
+              "descriptor_value_write_callsite_va": "0x1c90f2c",
+              "discriminator_observations": [
+                {
+                  "value": 0,
+                  "observed_path": "The descriptor branch calls VibrationPlayer::Load using the saved data pointer and signed length.",
+                  "callsite_va": "0x1c90f08"
+                },
+                {
+                  "value": 2,
+                  "observed_path": "The descriptor branch packs the saved value payload into 16 bytes and calls VibrationWriter::Write.",
+                  "callsite_va": "0x1c90f2c"
+                }
+              ],
+              "connection_setup": {
+                "constructor_import": "nn::hid::VibrationNodeConnection::VibrationNodeConnection",
+                "constructor_callsite_vas": [
+                  "0x1c90f88",
+                  "0x1c91008",
+                  "0x1c91148"
+                ],
+                "connect_import": "nn::hid::VibrationNodeConnection::Connect",
+                "connect_callsite_vas": [
+                  "0x1c9109c",
+                  "0x1c910f8",
+                  "0x1c911dc"
+                ],
+                "limit": "The calls occur in the descriptor method continuation; their source/destination roles and whether each edge is active at runtime are unresolved."
+              }
+            },
+            "player_state_control": {
+              "update_method_va": "0x1c913a0",
+              "direct_caller_va": "0x1c8f1b4",
+              "set_current_position_callsite_va": "0x1c913e0",
+              "play_callsite_va": "0x1c913e8",
+              "stop_import": "nn::hid::VibrationPlayer::Stop",
+              "stop_plt_va": "0x22115e0",
+              "is_loaded_callsite_va": "0x1c91a88",
+              "conditional_unload_callsite_va": "0x1c91a94",
+              "set_loop_callsite_va": "0x1c91fb4"
+            },
+            "writer_write_callsite_vas": [
+              "0x1c90f2c",
+              "0x1c9108c",
+              "0x1c910e8",
+              "0x1c911cc",
+              "0x1c916ac",
+              "0x1c91710",
+              "0x1c91928",
+              "0x1c9194c",
+              "0x1c91970",
+              "0x1c91d80",
+              "0x1c91edc"
+            ],
+            "writer_write_call_count": 11,
+            "composed_value_callsite": {
+              "va": "0x1c91d80",
+              "observed": "Combines four computed float values into a 16-byte stack record passed to VibrationWriter::Write.",
+              "limit": "The four float lanes are not safely identified as named frequency/amplitude channels from this callsite alone."
+            },
+            "controller_constructor_va": "0x1c90bd0"
+          },
+          "limits": [
+            "The available ExeFS input contains main only; the referenced nnSdk.nss and multimedia.nss implementations are not present for analysis.",
+            "No static edge currently joins VibrationWriter::Write to the Npad manager ring producer or to a specific UI action.",
+            "The haptic payload source, resource/archive name, event meaning, and runtime timing remain unresolved."
+          ]
+        }
+      ],
+      "interpretation": "The Npad worker ring and the VibrationPlayer/Writer graph are two distinct call paths in main because they terminate at different imported HID APIs. This proves distinct native call chains, not that they can never share an upstream gameplay event or device."
     }
   },
   "special_user_data_consumers": {
@@ -3237,9 +3452,9 @@
   },
   "remaining_evidence_needed": [
     "A direct runtime/resource-manager trace or complete allocator lookup logic showing which archive supplies each duplicate PRT1 name, including .szs cases.",
-    "Scheduler callsites and virtual slots for page open/update/close/back beyond the registration-time slot-5 callback; MainScreenSmartPhone linkage to MainScreen HUD state also remains unproven.",
+    "Scheduler callsites and virtual slots for page open/update/close/back; resolve whether and how the slot-46 identifier getter is handed to the resource loader and tied to an instantiated/rendered BFLYT; MainScreenSmartPhone linkage to MainScreen HUD state also remains unproven.",
     "Associate candidate pointer arrays 0x315b0d0 and 0x30fc6b8 with live component objects, then resolve remaining handler bodies and bind records to screens. Raw disassembly shows 11 candidate follow-up slots are return-only and five have a repeated pointer-registration pattern, but their effects remain conditional on the unproven table association.",
-    "Trace vibration-ring producer/enqueue callsites, identify where the read index at worker offset +276 is initialized, and determine which gameplay events produce the 20-byte device-handle/vibration-value records; the guarded nn::os::StartThread state remains dynamic. Also connect GetNpadStates or other physical input producers to the 13 UI action IDs, resolve indirect touch callback targets, and determine callback order, modal stack, focus restoration, and screen lifecycle.",
+    "Trace the Npad vibration-ring producer/enqueue callsites and read-index reset, identify the gameplay event for its 20-byte records, and connect the separately mapped VibrationPlayer/Writer graph to its payload/resource source and runtime scheduler; the guarded StartThread state remains dynamic. Also connect Npad polling to the 13 UI action IDs, resolve indirect touch callback targets, and determine callback order, modal stack, focus restoration, and screen lifecycle.",
     "Prove the FLEU array application path into the four matching named USD1 readers (C_Id, S_BorderSize, S_BorderVolume, S_ColorOverlay0Volume), determine array-element semantics, and recover runtime frame-to-value timing.",
     "Synchronized game captures for renderer comparisons (origin/scale, hit bounds, clipping, BNTX channel behavior, sampler/blend/shader and font output)."
   ],
@@ -3272,8 +3487,8 @@
       "candidate_count": 74,
       "factory_class_count": 135,
       "rule": "Remove the exact suffix Page from the class-name string and compare the result with screen_catalog layout names.",
-      "status": "name_only_candidates_unproven",
-      "limit": "Neither name equality nor layout-name string references in other functions prove that a page loads or owns that layout."
+      "status": "name_only_candidates; method-slot identifier crosswalk now available",
+      "limit": "Removing the Page suffix yields only name-based candidates. Slot-46 returned-string evidence is catalogued separately for 134 of the 135 scanned pages, but neither method semantics nor an exact identifier proves loader handoff, runtime ownership, instantiation, or rendering."
     },
     "page_registry_to_factory_candidates": {
       "artifact": "output/ui_hud/page_registry_factory_candidates.json",
@@ -3283,7 +3498,90 @@
       "status": "name_only_candidates_unproven",
       "limit": "The registry's byte flags do not expose a factory pointer in the examined pseudocode; exact normalized names do not prove row-to-factory dispatch."
     },
-    "limit": "This inventories factories matching the shared pattern. It does not prove the complete set of all pages, page-to-layout ownership, meanings of most virtual slots, or open/close/back/modal lifecycle."
+    "limit": "This inventories factories matching the shared pattern. It does not prove the complete set of all pages, page-to-layout ownership, meanings of most virtual slots, or open/close/back/modal lifecycle.",
+    "page_layout_identifier_method_crosswalk": {
+      "artifact": "output/ui_hud/page_layout_method_bindings.json",
+      "generator": "tools/ui_hud_page_layout_bindings.py",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "resolution": "For each of 135 constructor-installed relocated code-pointer sequences, the R_AARCH64_RELATIVE relocation at address_point + 0x170 resolves to a unique target. Each target is a three-instruction ADRP x0 / ADD x0,x0,#imm / RET string getter.",
+      "summary": {
+        "factory_pages_examined": 135,
+        "unique_method_targets": 135,
+        "exact_layout_name_matches": 134,
+        "returned_identifiers_without_catalogued_layout": 1,
+        "unmatched_page": "SwkbdPage",
+        "unmatched_identifier": "SwkbdDummy",
+        "unique_returned_identifiers": 135,
+        "duplicate_returned_identifiers": {},
+        "getter_targets_with_direct_B_or_BL_references": 0,
+        "direct_B_or_BL_reference_sites_to_getters": 0,
+        "getter_targets_with_exactly_one_relative_relocation": 135
+      },
+      "representative_bindings": [
+        {
+          "page_class": "MainScreenPage",
+          "address_point_va": "0x310f0e0",
+          "method_va": "0x1228a90",
+          "returned_string_va": "0x2993760",
+          "returned_identifier": "MainScreen",
+          "exact_layout_name_match": true
+        },
+        {
+          "page_class": "SmartPhoneIconPage",
+          "address_point_va": "0x3131c18",
+          "method_va": "0x144f010",
+          "returned_string_va": "0x296c2c8",
+          "returned_identifier": "MainScreenSmartPhone",
+          "exact_layout_name_match": true
+        }
+      ],
+      "interpretation": "This proves that the observed slot returns the recorded layout identifier and that the identifier exactly matches a catalogued BFLYT name for 134 pages. Each of the 135 getter targets has exactly one relative relocation (its slot-46 entry), and no direct B/BL instruction targets a getter. The slot semantic name, indirect receiver association, loader handoff, runtime ownership, instantiation, and rendering remain unresolved."
+    },
+    "shared_registration_and_selection_helpers": {
+      "factory_registration": {
+        "register_va": "0x1da8220",
+        "direct_factory_callsite_count": 135,
+        "all_scanned_factory_classes_call_helper": true,
+        "observed_operations": [
+          "Calls 0x1da40b0 on the supplied page pointer; this writes state value 2 at page offset +0x48 and dispatches through shared slot 5 at +0x28 to 0x1da5380.",
+          "Uses the supplied manager-like object list head at +0x78 (120 bytes), page-relative intrusive-node offset at +0x8c (140 bytes), and calls 0x1967c40 to link the node.",
+          "Increments the supplied object count at +0x88 (136 bytes)."
+        ],
+        "limit": "This proves the shared factory handoff and intrusive-list insertion for the 135 scanned factory classes. The exact C++ type/name of the list owner, page lifecycle state, and meaning of the collection are unresolved."
+      },
+      "candidate_selection_helper": {
+        "helper_va": "0x1da8270",
+        "direct_callsite_count": 1,
+        "direct_callsite_va": "0x1cbad40",
+        "observed_operations": [
+          "Iterates a collection represented by fields at object offsets +0x50, +0x58, and +0x64 (80, 88, and 100 bytes).",
+          "Reads a candidate page pointer from each entry at +0x10, dispatches virtual slot 17 at page vptr offset +0x88 with the supplied query in x1, and tests return bit 0.",
+          "On a true result returns the collection entry address plus +0x20; otherwise returns null after the scan."
+        ],
+        "uniform_page_slot_targets": {
+          "slot_17_offset": "0x88",
+          "slot_17_target": "0x166ec70",
+          "page_count": 135,
+          "slot_17_thunk_observation": "0x166ec70 forwards to page virtual slot 30 at vptr offset +0xf0.",
+          "slot_30_offset": "0xf0",
+          "slot_30_target": "0x1144dc0",
+          "slot_17_target_count": 135,
+          "slot_30_target_count": 135,
+          "distribution_from_artifact": {
+            "slot_17": {
+              "0x166ec70": 135
+            },
+            "slot_30": {
+              "0x1144dc0": 135
+            }
+          }
+        },
+        "limit": "The common slot-30 body reads page object state at +0x210 and follows helper branches; it does not identify the page by its slot-46 returned layout string. Query, predicate, and returned collection-entry semantics remain unresolved.",
+        "artifact": "output/ui_hud/page_layout_method_bindings.json"
+      },
+      "relationship_to_layout_getter": "The selection path is distinct from slot 46: the registry helper dispatches through slots 17 and 30, while the 135 unique slot-46 methods return the per-page identifiers catalogued in page_layout_method_bindings.json. No static edge has been proven from the selection helper or its caller to a slot-46 getter or the layout resource loader."
+    }
   },
   "smartphone_native_neighbors": {
     "candidate_page_factory": {
@@ -3299,9 +3597,10 @@
     },
     "relationship_to_layout": {
       "layout": "MainScreenSmartPhone",
-      "status": "unproven",
-      "observed": "The existing exact string-reference scan found no MainScreenSmartPhone name in main. SmartPhoneIconPage is a separate string/class candidate; no direct call, asset key, or constructor edge currently connects it to the MainScreenSmartPhone BFLYT."
+      "status": "slot46_identifier_match; loader_and_runtime_ownership_unproven",
+      "observed": "The constructor-installed pointer sequence at address point 0x3131c18 has slot 46 (+0x170) relocated to 0x144f010. Its ADRP/ADD/RET body returns the exact string MainScreenSmartPhone, which matches the catalogued BFLYT name and source Layout/MainScreenSmartPhone.Nin_NX_NVN.zs.",
+      "limit": "No static edge proves that a page manager calls this getter, passes the string to the layout loader, instantiates that BFLYT for this page, or updates/renders it."
     },
-    "limit": "Do not treat the SmartPhoneIconPage class name as proof that it owns, opens, or updates Layout/MainScreenSmartPhone.Nin_NX_NVN.zs."
+    "limit": "The page factory and slot-46 layout identifier are statically associated by the constructor-installed pointer sequence, but no evidence establishes loader handoff or runtime ownership."
   }
 }

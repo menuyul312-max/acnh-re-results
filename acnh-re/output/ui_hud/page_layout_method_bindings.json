@@ -1,0 +1,3822 @@
+{
+  "schema": "acnh.ui_page_layout_identifier_bindings.v1",
+  "source_build": "ACNH main.elf from the locally extracted game build; same RomFS/ExeFS corpus used by the static UI analysis",
+  "main_nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+  "source_artifacts": [
+    "output/ui_hud/page_factory_catalog.json",
+    "output/ui_hud/screen_catalog.json",
+    "inputs/additional_exefs/main"
+  ],
+  "method": {
+    "slot_index": 46,
+    "slot_offset_bytes": "0x170",
+    "resolution": "R_AARCH64_RELATIVE relocation at address_point + 0x170 resolves to an AArch64 ADRP/ADD/RET getter; its returned NUL-terminated string is compared exactly to screen_catalog layout names.",
+    "interpretation": "The code-pointer slot returns a string identical to a catalogued layout name. This is a static page-to-layout identifier crosswalk; the slot's semantic name, caller, loader handoff, runtime ownership, instantiation, and rendering are not established."
+  },
+  "summary": {
+    "factory_pages_examined": 135,
+    "unique_method_targets": 135,
+    "unique_returned_identifiers": 135,
+    "duplicate_returned_identifiers": {},
+    "exact_layout_name_matches": 134,
+    "returned_identifiers_without_catalogued_layout": 1,
+    "getter_targets_with_direct_B_or_BL_references": 0,
+    "direct_B_or_BL_reference_sites_to_getters": 0,
+    "getter_targets_with_exactly_one_relative_relocation": 135,
+    "registry_query_slot_17_target_distribution": {
+      "0x166ec70": 135
+    },
+    "registry_page_slot_30_target_distribution": {
+      "0x1144dc0": 135
+    },
+    "unmatched_pages": [
+      {
+        "page_class": "SwkbdPage",
+        "returned_identifier": "SwkbdDummy"
+      }
+    ]
+  },
+  "limits": [
+    "The 135 pages are those matching the existing shared-factory scan, not a proof of every page in the game.",
+    "An exact returned string does not prove that a loader calls the method or that the page loads, owns, or renders that BFLYT.",
+    "No direct B/BL instruction targets any of the 135 getter functions; indirect calls are not associated with a page receiver by this static crosswalk.",
+    "A returned identifier absent from the available 523-layout catalog may resolve through another archive, version, alias, or no resource; this static corpus does not decide which."
+  ],
+  "pages": [
+    {
+      "page_class": "AddressPage",
+      "factory_va": "0x112c3c0",
+      "constructor_va": "0x1128de0",
+      "constructor_vptr_relocation_slot_va": "0x3303510",
+      "address_point_va": "0x30f9d20",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x30f9e90",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x1129b70",
+      "method_body": [
+        "adrp\tx0, #25169920",
+        "add\tx0, x0, #3988",
+        "ret"
+      ],
+      "returned_string_va": "0x292af94",
+      "returned_identifier": "Addressee",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "Addressee",
+        "source": "Layout/Addressee.Nin_NX_NVN.zs",
+        "member": "Addressee.arc!blyt/Addressee.bflyt",
+        "sha256": "fa348bb64a3fc45a9901ea7e785582d59e14e3638169edcbc206be5893adae45"
+      }
+    },
+    {
+      "page_class": "AddresseeSelMultiPage",
+      "factory_va": "0x1132310",
+      "constructor_va": "0x1130780",
+      "constructor_vptr_relocation_slot_va": "0x3303888",
+      "address_point_va": "0x30fa560",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x30fa6d0",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x11315e0",
+      "method_body": [
+        "adrp\tx0, #25120768",
+        "add\tx0, x0, #1117",
+        "ret"
+      ],
+      "returned_string_va": "0x292645d",
+      "returned_identifier": "AddresseeSelMulti",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "AddresseeSelMulti",
+        "source": "Layout/AddresseeSelMulti.Nin_NX_NVN.zs",
+        "member": "AddresseeSelMulti.arc!blyt/AddresseeSelMulti.bflyt",
+        "sha256": "e6ce9894bf2194f6c1fbc7fa5aa30becd7921ff4f087a9d56869901e15124419"
+      }
+    },
+    {
+      "page_class": "AmiiboPreviousNoticeGuidePage",
+      "factory_va": "0x1136590",
+      "constructor_va": "0x1135a80",
+      "constructor_vptr_relocation_slot_va": "0x3303a28",
+      "address_point_va": "0x30fac80",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x30fadf0",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x1136240",
+      "method_body": [
+        "adrp\tx0, #25546752",
+        "add\tx0, x0, #1492",
+        "ret"
+      ],
+      "returned_string_va": "0x29935d4",
+      "returned_identifier": "AmiiboTouchGuideL",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "AmiiboTouchGuideL",
+        "source": "Layout/AmiiboTouchGuideL.Nin_NX_NVN.zs",
+        "member": "AmiiboTouchGuideL.arc!blyt/AmiiboTouchGuideL.bflyt",
+        "sha256": "9cb0e5d8feb7e6129bb6f79fd5d075c6bdda5f8595141b2d2af6bd4cf27cbada"
+      }
+    },
+    {
+      "page_class": "AmiiboStationBGPage",
+      "factory_va": "0x1137990",
+      "constructor_va": "0x1137300",
+      "constructor_vptr_relocation_slot_va": "0x3303ae0",
+      "address_point_va": "0x30fb1b0",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x30fb320",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x1137630",
+      "method_body": [
+        "adrp\tx0, #25714688",
+        "add\tx0, x0, #2618",
+        "ret"
+      ],
+      "returned_string_va": "0x29bda3a",
+      "returned_identifier": "AmiiboStation",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "AmiiboStation",
+        "source": "Layout/AmiiboStation.Nin_NX_NVN.zs",
+        "member": "AmiiboStation.arc!blyt/AmiiboStation.bflyt",
+        "sha256": "c72c71ef42d71946310ef3de780cf3df299f6da072824fce08fb7316a71d8c6f"
+      }
+    },
+    {
+      "page_class": "AmiiboTouchGuidePage",
+      "factory_va": "0x1138fb0",
+      "constructor_va": "0x1138210",
+      "constructor_vptr_relocation_slot_va": "0x3303b70",
+      "address_point_va": "0x30fb670",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x30fb7e0",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x1138bb0",
+      "method_body": [
+        "adrp\tx0, #25292800",
+        "add\tx0, x0, #254",
+        "ret"
+      ],
+      "returned_string_va": "0x29570fe",
+      "returned_identifier": "AmiiboTouchGuide",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "AmiiboTouchGuide",
+        "source": "Layout/AmiiboTouchGuide.Nin_NX_NVN.zs",
+        "member": "AmiiboTouchGuide.arc!blyt/AmiiboTouchGuide.bflyt",
+        "sha256": "5d83d92134970d7f3370f30a40a4d293a0bc8004197b9796ded146f5d63f4253"
+      }
+    },
+    {
+      "page_class": "AudioPlayerPage",
+      "factory_va": "0x113c2c0",
+      "constructor_va": "0x113a250",
+      "constructor_vptr_relocation_slot_va": "0x3303c28",
+      "address_point_va": "0x30fbbb8",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x30fbd28",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x113b0f0",
+      "method_body": [
+        "adrp\tx0, #25296896",
+        "add\tx0, x0, #3267",
+        "ret"
+      ],
+      "returned_string_va": "0x295bcc3",
+      "returned_identifier": "Audio",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "Audio",
+        "source": "Layout/Audio.Nin_NX_NVN.zs",
+        "member": "Audio.arc!blyt/Audio.bflyt",
+        "sha256": "68ac5262dfe000318bedceedbe5dbcccc1b0861dba4d28bf7c70d80e40d396b4"
+      }
+    },
+    {
+      "page_class": "BellPage",
+      "factory_va": "0x1157c60",
+      "constructor_va": "0x1157280",
+      "constructor_vptr_relocation_slot_va": "0x3304478",
+      "address_point_va": "0x30fd418",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x30fd588",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x1157850",
+      "method_body": [
+        "adrp\tx0, #25120768",
+        "add\tx0, x0, #2556",
+        "ret"
+      ],
+      "returned_string_va": "0x294c9fc",
+      "returned_identifier": "Bell",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "Bell",
+        "source": "Layout/Bell.Nin_NX_NVN.zs",
+        "member": "Bell.arc!blyt/Bell.bflyt",
+        "sha256": "81fabd3fc6f8c3303cf656d7c3407b58050149d17e945a814af9544606fd292a"
+      }
+    },
+    {
+      "page_class": "BirthdayMessagePage",
+      "factory_va": "0x1158fc0",
+      "constructor_va": "0x11586d0",
+      "constructor_vptr_relocation_slot_va": "0x3304518",
+      "address_point_va": "0x30fd8e8",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x30fda58",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x1158c90",
+      "method_body": [
+        "adrp\tx0, #25288704",
+        "add\tx0, x0, #230",
+        "ret"
+      ],
+      "returned_string_va": "0x29760e6",
+      "returned_identifier": "BirthdayMessage",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "BirthdayMessage",
+        "source": "Layout/BirthdayMessage.Nin_NX_NVN.zs",
+        "member": "BirthdayMessage.arc!blyt/BirthdayMessage.bflyt",
+        "sha256": "e427a20882fc4082415db615a5e0640c4d73518669b6870339ae30c733d1da26"
+      }
+    },
+    {
+      "page_class": "BoardEditPage",
+      "factory_va": "0x115da70",
+      "constructor_va": "0x115a480",
+      "constructor_vptr_relocation_slot_va": "0x33045b8",
+      "address_point_va": "0x30fddb8",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x30fdf28",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x115c1d0",
+      "method_body": [
+        "adrp\tx0, #24961024",
+        "add\tx0, x0, #4041",
+        "ret"
+      ],
+      "returned_string_va": "0x292afc9",
+      "returned_identifier": "BoardEdit",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "BoardEdit",
+        "source": "Layout/BoardEdit.Nin_NX_NVN.zs",
+        "member": "BoardEdit.arc!blyt/BoardEdit.bflyt",
+        "sha256": "e5c8051f361b30f2242104e5dbb1afabaddd10ea04eb6de4954ad1f938ffc555"
+      }
+    },
+    {
+      "page_class": "BoardInfoPage",
+      "factory_va": "0x1165390",
+      "constructor_va": "0x1163670",
+      "constructor_vptr_relocation_slot_va": "0x3304840",
+      "address_point_va": "0x30fe640",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x30fe7b0",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x1164420",
+      "method_body": [
+        "adrp\tx0, #25440256",
+        "add\tx0, x0, #1948",
+        "ret"
+      ],
+      "returned_string_va": "0x29a779c",
+      "returned_identifier": "BoardInfo",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "BoardInfo",
+        "source": "Layout/BoardInfo.Nin_NX_NVN.zs",
+        "member": "BoardInfo.arc!blyt/BoardInfo.bflyt",
+        "sha256": "a953101eb9f58bb3c7f5bad78757ad7a04231871dc1a04d6fe62e8e1def2d388"
+      }
+    },
+    {
+      "page_class": "BoardPage",
+      "factory_va": "0x1171df0",
+      "constructor_va": "0x11687c0",
+      "constructor_vptr_relocation_slot_va": "0x33049d0",
+      "address_point_va": "0x30fed08",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x30fee78",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x11696e0",
+      "method_body": [
+        "adrp\tx0, #25530368",
+        "add\tx0, x0, #4072",
+        "ret"
+      ],
+      "returned_string_va": "0x29c2fe8",
+      "returned_identifier": "Board",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "Board",
+        "source": "Layout/Board.Nin_NX_NVN.zs",
+        "member": "Board.arc!blyt/Board.bflyt",
+        "sha256": "d81b6f6f201ea6556267d1569c10beac4fade8cf99541eb45f458b829cc340c9"
+      }
+    },
+    {
+      "page_class": "BootBGPage",
+      "factory_va": "0x1178120",
+      "constructor_va": "0x1177920",
+      "constructor_vptr_relocation_slot_va": "0x3304bc0",
+      "address_point_va": "0x30ff7f8",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x30ff968",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x1177e50",
+      "method_body": [
+        "adrp\tx0, #25534464",
+        "add\tx0, x0, #2855",
+        "ret"
+      ],
+      "returned_string_va": "0x29d1b27",
+      "returned_identifier": "BootBG",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "BootBG",
+        "source": "Layout/BootBG.Nin_NX_NVN.zs",
+        "member": "BootBG.arc!blyt/BootBG.bflyt",
+        "sha256": "886a09979000baac89b2f2b673db59764e90d45ea8c7d81135e1340809b83fe4"
+      }
+    },
+    {
+      "page_class": "CatalogBGPage",
+      "factory_va": "0x11793d0",
+      "constructor_va": "0x1178d10",
+      "constructor_vptr_relocation_slot_va": "0x3304c58",
+      "address_point_va": "0x30ffcb8",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x30ffe28",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x1179060",
+      "method_body": [
+        "adrp\tx0, #25133056",
+        "add\tx0, x0, #169",
+        "ret"
+      ],
+      "returned_string_va": "0x29710a9",
+      "returned_identifier": "CatalogBG",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "CatalogBG",
+        "source": "Layout/CatalogBG.Nin_NX_NVN.zs",
+        "member": "CatalogBG.arc!blyt/CatalogBG.bflyt",
+        "sha256": "a3d0556cb3e83b589400b2b6f1a677c58d69fb719ea1531ea598bbea42c0489c"
+      }
+    },
+    {
+      "page_class": "CatalogPage",
+      "factory_va": "0x1183640",
+      "constructor_va": "0x117b1a0",
+      "constructor_vptr_relocation_slot_va": "0x3304d00",
+      "address_point_va": "0x31001b8",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3100328",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x117cf80",
+      "method_body": [
+        "adrp\tx0, #25358336",
+        "add\tx0, x0, #3635",
+        "ret"
+      ],
+      "returned_string_va": "0x29abe33",
+      "returned_identifier": "Catalog",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "Catalog",
+        "source": "Layout/Catalog.Nin_NX_NVN.zs",
+        "member": "Catalog.arc!blyt/Catalog.bflyt",
+        "sha256": "4d67e2a7d3e4737766c1a02181553ffe7350e67d646db03d63d434f5ca10a2f0"
+      }
+    },
+    {
+      "page_class": "CharaMakeBgPage",
+      "factory_va": "0x118cdf0",
+      "constructor_va": "0x118c5f0",
+      "constructor_vptr_relocation_slot_va": "0x3305008",
+      "address_point_va": "0x3100b80",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3100cf0",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x118cb20",
+      "method_body": [
+        "adrp\tx0, #25317376",
+        "add\tx0, x0, #2625",
+        "ret"
+      ],
+      "returned_string_va": "0x29b1a41",
+      "returned_identifier": "CharaMakeBG",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "CharaMakeBG",
+        "source": "Layout/CharaMakeBG.Nin_NX_NVN.zs",
+        "member": "CharaMakeBG.arc!blyt/CharaMakeBG.bflyt",
+        "sha256": "f6abe6102e76829d04ef23a65a50b73ba0f88505945a0c68115da47dd8d5e0b3"
+      }
+    },
+    {
+      "page_class": "CharaMakeMWSelWinPage",
+      "factory_va": "0x1192470",
+      "constructor_va": "0x11916d0",
+      "constructor_vptr_relocation_slot_va": "0x3305128",
+      "address_point_va": "0x3101278",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x31013e8",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x11920c0",
+      "method_body": [
+        "adrp\tx0, #25006080",
+        "add\tx0, x0, #3607",
+        "ret"
+      ],
+      "returned_string_va": "0x296be17",
+      "returned_identifier": "CharaMakeMWSelWin",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "CharaMakeMWSelWin",
+        "source": "Layout/CharaMakeMWSelWin.Nin_NX_NVN.zs",
+        "member": "CharaMakeMWSelWin.arc!blyt/CharaMakeMWSelWin.bflyt",
+        "sha256": "2c1904b517219ca3be8dc6d95f4b3642f4ac7e53ef21fc4861f088d4f806e1f1"
+      }
+    },
+    {
+      "page_class": "CharaMakePage",
+      "factory_va": "0x119a470",
+      "constructor_va": "0x1193880",
+      "constructor_vptr_relocation_slot_va": "0x33051f8",
+      "address_point_va": "0x31017f8",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3101968",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x11959c0",
+      "method_body": [
+        "adrp\tx0, #24825856",
+        "add\tx0, x0, #3168",
+        "ret"
+      ],
+      "returned_string_va": "0x2942c60",
+      "returned_identifier": "CharaMake",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "CharaMake",
+        "source": "Layout/CharaMake.Nin_NX_NVN.zs",
+        "member": "CharaMake.arc!blyt/CharaMake.bflyt",
+        "sha256": "251b48fc218d87ed64305d3b00bb20874daf5dcb3b99103dd90941ab3fa82a01"
+      }
+    },
+    {
+      "page_class": "ChatBalloonPage",
+      "factory_va": "0x11a8110",
+      "constructor_va": "0x11a4c60",
+      "constructor_vptr_relocation_slot_va": "0x33054b0",
+      "address_point_va": "0x3102298",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3102408",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x11a5520",
+      "method_body": [
+        "adrp\tx0, #25112576",
+        "add\tx0, x0, #2726",
+        "ret"
+      ],
+      "returned_string_va": "0x2998aa6",
+      "returned_identifier": "ChatBalloon",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "ChatBalloon",
+        "source": "Layout/ChatBalloon.Nin_NX_NVN.zs",
+        "member": "ChatBalloon.arc!blyt/ChatBalloon.bflyt",
+        "sha256": "c65db0087959a8c93fcefb5410ae2dc83f25620d781dc7c61e8e1195add4984a"
+      }
+    },
+    {
+      "page_class": "ClosetBGPage",
+      "factory_va": "0x11b4e40",
+      "constructor_va": "0x11b46d0",
+      "constructor_vptr_relocation_slot_va": "0x33057b0",
+      "address_point_va": "0x3103708",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3103878",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x11b4c00",
+      "method_body": [
+        "adrp\tx0, #24846336",
+        "add\tx0, x0, #3662",
+        "ret"
+      ],
+      "returned_string_va": "0x2966e4e",
+      "returned_identifier": "ClosetBG",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "ClosetBG",
+        "source": "Layout/ClosetBG.Nin_NX_NVN.zs",
+        "member": "ClosetBG.arc!blyt/ClosetBG.bflyt",
+        "sha256": "a4376fa54d38e5798dfc83cf0dafc8d0bcaf37c77f3ded8ac939ec7053489a71"
+      }
+    },
+    {
+      "page_class": "ClosetCoordinatePage",
+      "factory_va": "0x11c2880",
+      "constructor_va": "0x11c1500",
+      "constructor_vptr_relocation_slot_va": "0x33059e8",
+      "address_point_va": "0x31040a8",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3104218",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x11c21c0",
+      "method_body": [
+        "adrp\tx0, #24809472",
+        "add\tx0, x0, #3651",
+        "ret"
+      ],
+      "returned_string_va": "0x296be43",
+      "returned_identifier": "ClosetCorde",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "ClosetCorde",
+        "source": "Layout/ClosetCorde.Nin_NX_NVN.zs",
+        "member": "ClosetCorde.arc!blyt/ClosetCorde.bflyt",
+        "sha256": "cf6f7604d6d8be258ebd7b13c32a2c2be4c9442b40cf01c851b0aa8386430e14"
+      }
+    },
+    {
+      "page_class": "ClosetPage",
+      "factory_va": "0x11c65b0",
+      "constructor_va": "0x11c4c60",
+      "constructor_vptr_relocation_slot_va": "0x3305b00",
+      "address_point_va": "0x3104a08",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3104b78",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x11c5ce0",
+      "method_body": [
+        "adrp\tx0, #24649728",
+        "add\tx0, x0, #3640",
+        "ret"
+      ],
+      "returned_string_va": "0x2947e38",
+      "returned_identifier": "Closet",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "Closet",
+        "source": "Layout/Closet.Nin_NX_NVN.zs",
+        "member": "Closet.arc!blyt/Closet.bflyt",
+        "sha256": "3f58d88dc918c420b7fc01abd8bba4cdab7f1bac4ccd0a0eaf38305aa3e7358a"
+      }
+    },
+    {
+      "page_class": "CordeIconSelecterPage",
+      "factory_va": "0x11c9ad0",
+      "constructor_va": "0x11c8fc0",
+      "constructor_vptr_relocation_slot_va": "0x3305b78",
+      "address_point_va": "0x3105540",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x31056b0",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x11c96c0",
+      "method_body": [
+        "adrp\tx0, #25198592",
+        "add\tx0, x0, #3296",
+        "ret"
+      ],
+      "returned_string_va": "0x29d1ce0",
+      "returned_identifier": "CordeIconSelecter",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "CordeIconSelecter",
+        "source": "Layout/CordeIconSelecter.Nin_NX_NVN.zs",
+        "member": "CordeIconSelecter.arc!blyt/CordeIconSelecter.bflyt",
+        "sha256": "52aece9e6ab79e87938f374c936fb628f38812fefe59dfeaea543ae7d5692ffa"
+      }
+    },
+    {
+      "page_class": "ClosetBalloonPage",
+      "factory_va": "0x11cd2e0",
+      "constructor_va": "0x11cc7f0",
+      "constructor_vptr_relocation_slot_va": "0x3305c68",
+      "address_point_va": "0x3105ad8",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3105c48",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x11ccda0",
+      "method_body": [
+        "adrp\tx0, #24600576",
+        "add\tx0, x0, #3239",
+        "ret"
+      ],
+      "returned_string_va": "0x2942ca7",
+      "returned_identifier": "ClosetBalloon",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "ClosetBalloon",
+        "source": "Layout/ClosetBalloon.Nin_NX_NVN.zs",
+        "member": "ClosetBalloon.arc!blyt/ClosetBalloon.bflyt",
+        "sha256": "fa25306eaa127b574c517b44b4d5852d8e712ac922478f2ddebc6ab7110e5a64"
+      }
+    },
+    {
+      "page_class": "CommandSelectPage",
+      "factory_va": "0x11cf940",
+      "constructor_va": "0x11ce440",
+      "constructor_vptr_relocation_slot_va": "0x3305ce8",
+      "address_point_va": "0x3105fa8",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3106118",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x11cefb0",
+      "method_body": [
+        "adrp\tx0, #24674304",
+        "add\tx0, x0, #2628",
+        "ret"
+      ],
+      "returned_string_va": "0x2956a44",
+      "returned_identifier": "CmnSubWin",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "CmnSubWin",
+        "source": "Layout/CmnSubWin.Nin_NX_NVN.zs",
+        "member": "CmnSubWin.arc!blyt/CmnSubWin.bflyt",
+        "sha256": "05e6f69d0eb0733efe1eae97a70794741e18a414a3bbeaf74f1ff3ae1e07d1f8"
+      }
+    },
+    {
+      "page_class": "CommonBGPage",
+      "factory_va": "0x11d22d0",
+      "constructor_va": "0x11d1850",
+      "constructor_vptr_relocation_slot_va": "0x3305de8",
+      "address_point_va": "0x31065d0",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3106740",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x11d1d80",
+      "method_body": [
+        "adrp\tx0, #25108480",
+        "add\tx0, x0, #1176",
+        "ret"
+      ],
+      "returned_string_va": "0x29c3498",
+      "returned_identifier": "MsgCardBG",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "MsgCardBG",
+        "source": "Layout/MsgCardBG.Nin_NX_NVN.zs",
+        "member": "MsgCardBG.arc!blyt/MsgCardBG.bflyt",
+        "sha256": "d874b36a87ecc2d05c461c19d3aff12abbeb8cfb6d09ca28d84380b9181c58a1"
+      }
+    },
+    {
+      "page_class": "DeviceContentBootWipePage",
+      "factory_va": "0x11d3ea0",
+      "constructor_va": "0x11d4be0",
+      "constructor_vptr_relocation_slot_va": "0x3305e70",
+      "address_point_va": "0x3106c78",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3106de8",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x11d5130",
+      "method_body": [
+        "adrp\tx0, #24993792",
+        "add\tx0, x0, #3764",
+        "ret"
+      ],
+      "returned_string_va": "0x29abeb4",
+      "returned_identifier": "WipeDevice",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "WipeDevice",
+        "source": "Layout/WipeDevice.Nin_NX_NVN.zs",
+        "member": "WipeDevice.arc!blyt/WipeDevice.bflyt",
+        "sha256": "64e8761ba48597e514bf920497bfc280ab32e24d768094a0737930e4bc1f6586"
+      }
+    },
+    {
+      "page_class": "InteriorWipePage",
+      "factory_va": "0x11d3ff0",
+      "constructor_va": "0x11d5140",
+      "constructor_vptr_relocation_slot_va": "0x3305e88",
+      "address_point_va": "0x3106f00",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3107070",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x11d56a0",
+      "method_body": [
+        "adrp\tx0, #25067520",
+        "add\tx0, x0, #2900",
+        "ret"
+      ],
+      "returned_string_va": "0x29bdb54",
+      "returned_identifier": "WipeInterior",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "WipeInterior",
+        "source": "Layout/WipeInterior.Nin_NX_NVN.zs",
+        "member": "WipeInterior.arc!blyt/WipeInterior.bflyt",
+        "sha256": "50f81497a58754120d33815ca59c4c392e7b4bb0bd5e9d0f8afca0bdd61c96ec"
+      }
+    },
+    {
+      "page_class": "StudioInteriorWipePage",
+      "factory_va": "0x11d4140",
+      "constructor_va": "0x11d56b0",
+      "constructor_vptr_relocation_slot_va": "0x3305ea0",
+      "address_point_va": "0x3107188",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x31072f8",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x11d5c10",
+      "method_body": [
+        "adrp\tx0, #25149440",
+        "add\tx0, x0, #3383",
+        "ret"
+      ],
+      "returned_string_va": "0x29d1d37",
+      "returned_identifier": "WipeInteriorStudio",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "WipeInteriorStudio",
+        "source": "Layout/WipeInteriorStudio.Nin_NX_NVN.zs",
+        "member": "WipeInteriorStudio.arc!blyt/WipeInteriorStudio.bflyt",
+        "sha256": "d8f744718881cd7a321df319db7a3d6922bc29a681c2cc44c33e1e8ae56fa9cb"
+      }
+    },
+    {
+      "page_class": "CustomHomeBGPage",
+      "factory_va": "0x11d6720",
+      "constructor_va": "0x11d5c20",
+      "constructor_vptr_relocation_slot_va": "0x3305eb8",
+      "address_point_va": "0x3107410",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3107580",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x11d6170",
+      "method_body": [
+        "adrp\tx0, #24752128",
+        "add\tx0, x0, #286",
+        "ret"
+      ],
+      "returned_string_va": "0x297111e",
+      "returned_identifier": "CustomHomeBG",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "CustomHomeBG",
+        "source": "Layout/CustomHomeBG.Nin_NX_NVN.zs",
+        "member": "CustomHomeBG.arc!blyt/CustomHomeBG.bflyt",
+        "sha256": "faccc60afdc2be39ff50abccc89a55907f02eedca04e59d316364e7fe42b04c1"
+      }
+    },
+    {
+      "page_class": "CustomHomePage",
+      "factory_va": "0x11db1a0",
+      "constructor_va": "0x11d7050",
+      "constructor_vptr_relocation_slot_va": "0x3305f48",
+      "address_point_va": "0x31078d0",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3107a40",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x11d7e30",
+      "method_body": [
+        "adrp\tx0, #25083904",
+        "add\tx0, x0, #1203",
+        "ret"
+      ],
+      "returned_string_va": "0x29c34b3",
+      "returned_identifier": "CustomHome",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "CustomHome",
+        "source": "Layout/CustomHome.Nin_NX_NVN.zs",
+        "member": "CustomHome.arc!blyt/CustomHome.bflyt",
+        "sha256": "fb6ff9f262c545e0c2247ce05ff1b6dbcd0b65cdcf9ccdcfb128f3789ae23609"
+      }
+    },
+    {
+      "page_class": "DateInputPage",
+      "factory_va": "0x11e2200",
+      "constructor_va": "0x11e12e0",
+      "constructor_vptr_relocation_slot_va": "0x3306200",
+      "address_point_va": "0x31084f0",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3108660",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x11e1cc0",
+      "method_body": [
+        "adrp\tx0, #24555520",
+        "add\tx0, x0, #2658",
+        "ret"
+      ],
+      "returned_string_va": "0x294ca62",
+      "returned_identifier": "DateInput",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "DateInput",
+        "source": "Layout/DateInput.Nin_NX_NVN.zs",
+        "member": "DateInput.arc!blyt/DateInput.bflyt",
+        "sha256": "2f2faed68871c59992eafa1ce96e38b83b441e965b45f798e42cb1648be5cb0d"
+      }
+    },
+    {
+      "page_class": "DateInputYearPage",
+      "factory_va": "0x11e4150",
+      "constructor_va": "0x11e2f80",
+      "constructor_vptr_relocation_slot_va": "0x3306248",
+      "address_point_va": "0x3108a20",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3108b90",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x11e3b50",
+      "method_body": [
+        "adrp\tx0, #24899584",
+        "add\tx0, x0, #1128",
+        "ret"
+      ],
+      "returned_string_va": "0x29a2468",
+      "returned_identifier": "DateInputYear",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "DateInputYear",
+        "source": "Layout/DateInputYear.Nin_NX_NVN.zs",
+        "member": "DateInputYear.arc!blyt/DateInputYear.bflyt",
+        "sha256": "93089575657d5a5d24c11f54962b0138fbd5d0d72cd0850a4adf1933b6628e17"
+      }
+    },
+    {
+      "page_class": "CommonDialogPage",
+      "factory_va": "0x11e6e70",
+      "constructor_va": "0x11e5480",
+      "constructor_vptr_relocation_slot_va": "0x33062b0",
+      "address_point_va": "0x31091c0",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3109330",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x11e62f0",
+      "method_body": [
+        "adrp\tx0, #24616960",
+        "add\tx0, x0, #3625",
+        "ret"
+      ],
+      "returned_string_va": "0x2960e29",
+      "returned_identifier": "CmnDialog",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "CmnDialog",
+        "source": "Layout/CmnDialog.Nin_NX_NVN.zs",
+        "member": "CmnDialog.arc!blyt/CmnDialog.bflyt",
+        "sha256": "13032dc728e51e954d5ee85a98965f4807efd6b85cdd86fbbd179fd6d1fde6ee"
+      }
+    },
+    {
+      "page_class": "CommonDialogBGPage",
+      "factory_va": "0x11e6fc0",
+      "constructor_va": "0x11e5090",
+      "constructor_vptr_relocation_slot_va": "0x3306288",
+      "address_point_va": "0x3108f38",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x31090a8",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x11e53c0",
+      "method_body": [
+        "adrp\tx0, #25067520",
+        "add\tx0, x0, #822",
+        "ret"
+      ],
+      "returned_string_va": "0x29cd336",
+      "returned_identifier": "CmnDialogBG",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "CmnDialogBG",
+        "source": "Layout/CmnDialogBG.Nin_NX_NVN.zs",
+        "member": "CmnDialogBG.arc!blyt/CmnDialogBG.bflyt",
+        "sha256": "6e677f5451d99e8d3812649f2dcf3c3c37c2c9c18c49b02b4158ff01b0142e67"
+      }
+    },
+    {
+      "page_class": "SystemDialogPage",
+      "factory_va": "0x11eaaf0",
+      "constructor_va": "0x11e9d70",
+      "constructor_vptr_relocation_slot_va": "0x33063b8",
+      "address_point_va": "0x3109768",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x31098d8",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x11ea2c0",
+      "method_body": [
+        "adrp\tx0, #24580096",
+        "add\tx0, x0, #3909",
+        "ret"
+      ],
+      "returned_string_va": "0x295bf45",
+      "returned_identifier": "CmnDialogS",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "CmnDialogS",
+        "source": "Layout/CmnDialogS.Nin_NX_NVN.zs",
+        "member": "CmnDialogS.arc!blyt/CmnDialogS.bflyt",
+        "sha256": "daed0bbe51f8cecc198b1c54257a237c306b31d1d60c37627a604c11c9ff4735"
+      }
+    },
+    {
+      "page_class": "DreamBGPage",
+      "factory_va": "0x11ec100",
+      "constructor_va": "0x11eba70",
+      "constructor_vptr_relocation_slot_va": "0x33064d0",
+      "address_point_va": "0x3109ca0",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3109e10",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x11ebda0",
+      "method_body": [
+        "adrp\tx0, #24948736",
+        "add\tx0, x0, #3392",
+        "ret"
+      ],
+      "returned_string_va": "0x29b6d40",
+      "returned_identifier": "DreamBG",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "DreamBG",
+        "source": "Layout/DreamBG.Nin_NX_NVN.zs",
+        "member": "DreamBG.arc!blyt/DreamBG.bflyt",
+        "sha256": "d1acdd431a6761e16ceb0e98608126275047edcfdc523d8ad3aaa42d6fe352f2"
+      }
+    },
+    {
+      "page_class": "CircleFaderPage",
+      "factory_va": "0x11f0b30",
+      "constructor_va": "0x11ef640",
+      "constructor_vptr_relocation_slot_va": "0x3306640",
+      "address_point_va": "0x310a520",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x310a690",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x11f0120",
+      "method_body": [
+        "adrp\tx0, #24825856",
+        "add\tx0, x0, #449",
+        "ret"
+      ],
+      "returned_string_va": "0x299d1c1",
+      "returned_identifier": "WipeCircle",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "WipeCircle",
+        "source": "Layout/WipeCircle.Nin_NX_NVN.zs",
+        "member": "WipeCircle.arc!blyt/WipeCircle.bflyt",
+        "sha256": "e25667e727c5be5e4ede677c1792ad59bdfb7ea891a7d4d6e2d0174fff8e8c4a"
+      }
+    },
+    {
+      "page_class": "NormalFaderPage",
+      "factory_va": "0x11f0c80",
+      "constructor_va": "0x11ef9a0",
+      "constructor_vptr_relocation_slot_va": "0x3306648",
+      "address_point_va": "0x310a7a8",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x310a918",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x11f03b0",
+      "method_body": [
+        "adrp\tx0, #24338432",
+        "add\tx0, x0, #1535",
+        "ret"
+      ],
+      "returned_string_va": "0x29265ff",
+      "returned_identifier": "Fade",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "Fade",
+        "source": "Layout/Fade.Nin_NX_NVN.zs",
+        "member": "Fade.arc!blyt/Fade.bflyt",
+        "sha256": "b6b3be0cf3dfca9ef31595bb592f34572811d5ec843431bbc62a92d296c8bf18"
+      }
+    },
+    {
+      "page_class": "DALFaderPage",
+      "factory_va": "0x11f0dd0",
+      "constructor_va": "0x11efc20",
+      "constructor_vptr_relocation_slot_va": "0x3306650",
+      "address_point_va": "0x310aa30",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x310aba0",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x11f0640",
+      "method_body": [
+        "adrp\tx0, #24600576",
+        "add\tx0, x0, #3705",
+        "ret"
+      ],
+      "returned_string_va": "0x2966e79",
+      "returned_identifier": "WipeVisitorDemo",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "WipeVisitorDemo",
+        "source": "Layout/WipeVisitorDemo.Nin_NX_NVN.zs",
+        "member": "WipeVisitorDemo.arc!blyt/WipeVisitorDemo.bflyt",
+        "sha256": "c775b9ac34d09da67904ede1e67b85fbe62ee62e46779560e6de4da52e26801c"
+      }
+    },
+    {
+      "page_class": "FriendListPage",
+      "factory_va": "0x11fd720",
+      "constructor_va": "0x11f9c00",
+      "constructor_vptr_relocation_slot_va": "0x3306ad8",
+      "address_point_va": "0x310b4e8",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x310b658",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x11fad20",
+      "method_body": [
+        "adrp\tx0, #24432640",
+        "add\tx0, x0, #3677",
+        "ret"
+      ],
+      "returned_string_va": "0x2947e5d",
+      "returned_identifier": "FriendList",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "FriendList",
+        "source": "Layout/FriendList.Nin_NX_NVN.zs",
+        "member": "FriendList.arc!blyt/FriendList.bflyt",
+        "sha256": "072509b6df8de7cb9d9c775060059465367b0bdc6b9552fae2ca2cc747e6fe48"
+      }
+    },
+    {
+      "page_class": "HarvestBoxPage",
+      "factory_va": "0x1201950",
+      "constructor_va": "0x1200500",
+      "constructor_vptr_relocation_slot_va": "0x3306c80",
+      "address_point_va": "0x310bdb0",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x310bf20",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x1200f90",
+      "method_body": [
+        "adrp\tx0, #24801280",
+        "add\tx0, x0, #2175",
+        "ret"
+      ],
+      "returned_string_va": "0x29a787f",
+      "returned_identifier": "Basket",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "Basket",
+        "source": "Layout/Basket.Nin_NX_NVN.zs",
+        "member": "Basket.arc!blyt/Basket.bflyt",
+        "sha256": "73adb4d2fffed51cef55d50b7b93cc00883412214ee6bdedbb7c5cd6f826977b"
+      }
+    },
+    {
+      "page_class": "IllegalReportPage",
+      "factory_va": "0x12088e0",
+      "constructor_va": "0x1204c20",
+      "constructor_vptr_relocation_slot_va": "0x3306e20",
+      "address_point_va": "0x310c628",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x310c798",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x1206390",
+      "method_body": [
+        "adrp\tx0, #24715264",
+        "add\tx0, x0, #2963",
+        "ret"
+      ],
+      "returned_string_va": "0x2998b93",
+      "returned_identifier": "Report",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "Report",
+        "source": "Layout/Report.Nin_NX_NVN.zs",
+        "member": "Report.arc!blyt/Report.bflyt",
+        "sha256": "3123c8eb49977a73692fe4bc8150096ba3d076f50b23326b75095f34514a8faa"
+      }
+    },
+    {
+      "page_class": "InteriorGuidePage",
+      "factory_va": "0x1210eb0",
+      "constructor_va": "0x120f930",
+      "constructor_vptr_relocation_slot_va": "0x3307140",
+      "address_point_va": "0x310d0b0",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x310d220",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x1210490",
+      "method_body": [
+        "adrp\tx0, #24444928",
+        "add\tx0, x0, #3796",
+        "ret"
+      ],
+      "returned_string_va": "0x2960ed4",
+      "returned_identifier": "Interior",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "Interior",
+        "source": "Layout/Interior.Nin_NX_NVN.zs",
+        "member": "Interior.arc!blyt/Interior.bflyt",
+        "sha256": "fa4a40d52adb7f91d26542a29013f965d0f448652a4589f9e827f80c805d951d"
+      }
+    },
+    {
+      "page_class": "KabuBuyPage",
+      "factory_va": "0x1215c30",
+      "constructor_va": "0x1215290",
+      "constructor_vptr_relocation_slot_va": "0x3307210",
+      "address_point_va": "0x310d7f0",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x310d960",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x1215970",
+      "method_body": [
+        "adrp\tx0, #24469504",
+        "add\tx0, x0, #3802",
+        "ret"
+      ],
+      "returned_string_va": "0x296beda",
+      "returned_identifier": "SwkbdTextAreaKaburiba",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "SwkbdTextAreaKaburiba",
+        "source": "Layout/SwkbdTextAreaKaburiba.Nin_NX_NVN.zs",
+        "member": "SwkbdTextAreaKaburiba.arc!blyt/SwkbdTextAreaKaburiba.bflyt",
+        "sha256": "f5771f4a786b89b1c184b00889ae9b05f1a549ecaa9edc9befb615bfe461900e"
+      }
+    },
+    {
+      "page_class": "KeyGuidePage",
+      "factory_va": "0x12186f0",
+      "constructor_va": "0x1217460",
+      "constructor_vptr_relocation_slot_va": "0x33072a0",
+      "address_point_va": "0x310dd40",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x310deb0",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x1217be0",
+      "method_body": [
+        "adrp\tx0, #24461312",
+        "add\tx0, x0, #3698",
+        "ret"
+      ],
+      "returned_string_va": "0x296be72",
+      "returned_identifier": "KeyGuide",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "KeyGuide",
+        "source": "Layout/KeyGuide.Nin_NX_NVN.zs",
+        "member": "KeyGuide.arc!blyt/KeyGuide.bflyt",
+        "sha256": "4c272a4f65a443c9de62812a2d3ad0d28f31891cec62443eb677dac302c7b134"
+      }
+    },
+    {
+      "page_class": "LoadIconPage",
+      "factory_va": "0x121ac80",
+      "constructor_va": "0x1219f70",
+      "constructor_vptr_relocation_slot_va": "0x3307330",
+      "address_point_va": "0x310e210",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x310e380",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x121a930",
+      "method_body": [
+        "adrp\tx0, #24674304",
+        "add\tx0, x0, #1201",
+        "ret"
+      ],
+      "returned_string_va": "0x29a24b1",
+      "returned_identifier": "Load",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "Load",
+        "source": "Layout/Load.Nin_NX_NVN.zs",
+        "member": "Load.arc!blyt/Load.bflyt",
+        "sha256": "4b8c6218b3cb3e7a9b44c494161cf7c3940efd7e3ef873d660cb73284ae5f490"
+      }
+    },
+    {
+      "page_class": "LostListPage",
+      "factory_va": "0x121d8e0",
+      "constructor_va": "0x121bec0",
+      "constructor_vptr_relocation_slot_va": "0x3307398",
+      "address_point_va": "0x310e6d0",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x310e840",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x121c900",
+      "method_body": [
+        "adrp\tx0, #24666112",
+        "add\tx0, x0, #1206",
+        "ret"
+      ],
+      "returned_string_va": "0x29a24b6",
+      "returned_identifier": "LostList",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "LostList",
+        "source": "Layout/LostList.Nin_NX_NVN.zs",
+        "member": "LostList.arc!blyt/LostList.bflyt",
+        "sha256": "8ed78c05c01a7c259c7362d78ab1289730690dcca5a27c23e53aee333523540a"
+      }
+    },
+    {
+      "page_class": "MainScreenPage",
+      "factory_va": "0x1229c50",
+      "constructor_va": "0x1226540",
+      "constructor_vptr_relocation_slot_va": "0x33076d8",
+      "address_point_va": "0x310f0e0",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x310f250",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x1228a90",
+      "method_body": [
+        "adrp\tx0, #24555520",
+        "add\tx0, x0, #1888",
+        "ret"
+      ],
+      "returned_string_va": "0x2993760",
+      "returned_identifier": "MainScreen",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "MainScreen",
+        "source": "Layout/MainScreen.Nin_NX_NVN.zs",
+        "member": "MainScreen.arc!blyt/MainScreen.bflyt",
+        "sha256": "344a6d8e9f7234dd7003e91b89555898f5cb78e29a34eb1ee7b485025690cf9e"
+      }
+    },
+    {
+      "page_class": "MapPage",
+      "factory_va": "0x1230df0",
+      "constructor_va": "0x122d4e0",
+      "constructor_vptr_relocation_slot_va": "0x3307828",
+      "address_point_va": "0x310f7a0",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x310f910",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x122f7a0",
+      "method_body": [
+        "adrp\tx0, #24432640",
+        "add\tx0, x0, #1805",
+        "ret"
+      ],
+      "returned_string_va": "0x297c70d",
+      "returned_identifier": "MenuMapFull",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "MenuMapFull",
+        "source": "Layout/MenuMapFull.Nin_NX_NVN.zs",
+        "member": "MenuMapFull.arc!blyt/MenuMapFull.bflyt",
+        "sha256": "688a04a65e4e70c096e5d0b6d582d901e8a602ac1f2f66d5fd37ba41c62f8d46"
+      }
+    },
+    {
+      "page_class": "MapMiniPage",
+      "factory_va": "0x123a470",
+      "constructor_va": "0x12396e0",
+      "constructor_vptr_relocation_slot_va": "0x3307978",
+      "address_point_va": "0x3110000",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3110170",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x1239a80",
+      "method_body": [
+        "adrp\tx0, #24739840",
+        "add\tx0, x0, #3509",
+        "ret"
+      ],
+      "returned_string_va": "0x29d1db5",
+      "returned_identifier": "MapMini",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "MapMini",
+        "source": "Layout/MapMini.Nin_NX_NVN.zs",
+        "member": "MapMini.arc!blyt/MapMini.bflyt",
+        "sha256": "8286ef55cf3e91a43e4f7bb602859c49d2446429148d59fa67004cd028487a48"
+      }
+    },
+    {
+      "page_class": "MapRemovePage",
+      "factory_va": "0x123dcc0",
+      "constructor_va": "0x123b780",
+      "constructor_vptr_relocation_slot_va": "0x3307a28",
+      "address_point_va": "0x31104c0",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3110630",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x123c7f0",
+      "method_body": [
+        "adrp\tx0, #24494080",
+        "add\tx0, x0, #3072",
+        "ret"
+      ],
+      "returned_string_va": "0x2998c00",
+      "returned_identifier": "MapRemove",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "MapRemove",
+        "source": "Layout/MapRemove.Nin_NX_NVN.zs",
+        "member": "MapRemove.arc!blyt/MapRemove.bflyt",
+        "sha256": "9dfa87d4be63fb3c20d4b66f680b1e72d05dcb55e05f1f42b6800c1df0bce1b7"
+      }
+    },
+    {
+      "page_class": "MapSelectPage",
+      "factory_va": "0x1242550",
+      "constructor_va": "0x12406d0",
+      "constructor_vptr_relocation_slot_va": "0x3307b48",
+      "address_point_va": "0x3110b38",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3110ca8",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x1241910",
+      "method_body": [
+        "adrp\tx0, #24162304",
+        "add\tx0, x0, #3011",
+        "ret"
+      ],
+      "returned_string_va": "0x294cbc3",
+      "returned_identifier": "CharaMakeMap",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "CharaMakeMap",
+        "source": "Layout/CharaMakeMap.Nin_NX_NVN.zs",
+        "member": "CharaMakeMap.arc!blyt/CharaMakeMap.bflyt",
+        "sha256": "b110eb4c09bb23ce89f3f7a32139a68d1cc6b37c615788d75284a113941ca6ea"
+      }
+    },
+    {
+      "page_class": "MelodyEditPage",
+      "factory_va": "0x1245ea0",
+      "constructor_va": "0x1245040",
+      "constructor_vptr_relocation_slot_va": "0x3307c78",
+      "address_point_va": "0x31112b0",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3111420",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x1245690",
+      "method_body": [
+        "adrp\tx0, #24317952",
+        "add\tx0, x0, #2839",
+        "ret"
+      ],
+      "returned_string_va": "0x2976b17",
+      "returned_identifier": "Melody",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "Melody",
+        "source": "Layout/Melody.Nin_NX_NVN.zs",
+        "member": "Melody.arc!blyt/Melody.bflyt",
+        "sha256": "4813ac4c7c83d903eb2a3438eb115998688dc84bbdef06bc0d07ab7fb340f717"
+      }
+    },
+    {
+      "page_class": "MenuBookDetailPage",
+      "factory_va": "0x12496e0",
+      "constructor_va": "0x1247f30",
+      "constructor_vptr_relocation_slot_va": "0x3307d70",
+      "address_point_va": "0x3111810",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3111980",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x1248f90",
+      "method_body": [
+        "adrp\tx0, #24215552",
+        "add\tx0, x0, #3931",
+        "ret"
+      ],
+      "returned_string_va": "0x2960f5b",
+      "returned_identifier": "MenuBookDetail",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "MenuBookDetail",
+        "source": "Layout/MenuBookDetail.Nin_NX_NVN.zs",
+        "member": "MenuBookDetail.arc!blyt/MenuBookDetail.bflyt",
+        "sha256": "2d409469262d762cd30b1f45468d79cf9babe30ecde295bfa8d4440c77985ebb"
+      }
+    },
+    {
+      "page_class": "MenuBookPage",
+      "factory_va": "0x1251500",
+      "constructor_va": "0x124cd60",
+      "constructor_vptr_relocation_slot_va": "0x3307e28",
+      "address_point_va": "0x3111d70",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3111ee0",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x124e7b0",
+      "method_body": [
+        "adrp\tx0, #24190976",
+        "add\tx0, x0, #3954",
+        "ret"
+      ],
+      "returned_string_va": "0x2960f72",
+      "returned_identifier": "MenuBook",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "MenuBook",
+        "source": "Layout/MenuBook.Nin_NX_NVN.zs",
+        "member": "MenuBook.arc!blyt/MenuBook.bflyt",
+        "sha256": "b9bd1a1acea2561525d01a689fa41356f9155709a67c4a63d0da4c868e907cb9"
+      }
+    },
+    {
+      "page_class": "MenuChatPage",
+      "factory_va": "0x12575b0",
+      "constructor_va": "0x1256df0",
+      "constructor_vptr_relocation_slot_va": "0x3307fd0",
+      "address_point_va": "0x31124d8",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3112648",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x1257220",
+      "method_body": [
+        "adrp\tx0, #24031232",
+        "add\tx0, x0, #3752",
+        "ret"
+      ],
+      "returned_string_va": "0x2942ea8",
+      "returned_identifier": "MenuChat",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "MenuChat",
+        "source": "Layout/MenuChat.Nin_NX_NVN.zs",
+        "member": "MenuChat.arc!blyt/MenuChat.bflyt",
+        "sha256": "6a82f41103d912b0f15398653d0429d6dd3d797f5e5d83a75b69fdc11ceff323"
+      }
+    },
+    {
+      "page_class": "MenuDevicePage",
+      "factory_va": "0x125ae40",
+      "constructor_va": "0x1258460",
+      "constructor_vptr_relocation_slot_va": "0x3308098",
+      "address_point_va": "0x3112a18",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3112b88",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x12595f0",
+      "method_body": [
+        "adrp\tx0, #24125440",
+        "add\tx0, x0, #4072",
+        "ret"
+      ],
+      "returned_string_va": "0x295bfe8",
+      "returned_identifier": "MenuDevice",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "MenuDevice",
+        "source": "Layout/MenuDevice.Nin_NX_NVN.zs",
+        "member": "MenuDevice.arc!blyt/MenuDevice.bflyt",
+        "sha256": "4a241584f43ecc1e0e28449bccce710346eec748cd569c1149276f74bfd11b69"
+      }
+    },
+    {
+      "page_class": "MenuMobileBankPage",
+      "factory_va": "0x125ff00",
+      "constructor_va": "0x125edf0",
+      "constructor_vptr_relocation_slot_va": "0x33081c8",
+      "address_point_va": "0x3112f98",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3113108",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x125fb30",
+      "method_body": [
+        "adrp\tx0, #24104960",
+        "add\tx0, x0, #28",
+        "ret"
+      ],
+      "returned_string_va": "0x295c01c",
+      "returned_identifier": "MenuMobileBank",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "MenuMobileBank",
+        "source": "Layout/MenuMobileBank.Nin_NX_NVN.zs",
+        "member": "MenuMobileBank.arc!blyt/MenuMobileBank.bflyt",
+        "sha256": "d4f237e5617c7bfe4bd7a07a4a870057bf2f1a654a5f66a741b26fb86df258d5"
+      }
+    },
+    {
+      "page_class": "MenuProfileBgPage",
+      "factory_va": "0x1265630",
+      "constructor_va": "0x1264fb0",
+      "constructor_vptr_relocation_slot_va": "0x3308398",
+      "address_point_va": "0x3113638",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x31137a8",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x12652e0",
+      "method_body": [
+        "adrp\tx0, #23879680",
+        "add\tx0, x0, #450",
+        "ret"
+      ],
+      "returned_string_va": "0x292b1c2",
+      "returned_identifier": "MenuProfileBg",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "MenuProfileBg",
+        "source": "Layout/MenuProfileBg.Nin_NX_NVN.zs",
+        "member": "MenuProfileBg.arc!blyt/MenuProfileBg.bflyt",
+        "sha256": "6494a7a13b10d7a72ebf0267ebea4d18b45793a7a3a3b94b74fedd1e71d2a775"
+      }
+    },
+    {
+      "page_class": "MenuProfilePage",
+      "factory_va": "0x1268a10",
+      "constructor_va": "0x1265eb0",
+      "constructor_vptr_relocation_slot_va": "0x3308428",
+      "address_point_va": "0x3113af8",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3113c68",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x1266b10",
+      "method_body": [
+        "adrp\tx0, #24281088",
+        "add\tx0, x0, #1541",
+        "ret"
+      ],
+      "returned_string_va": "0x298e605",
+      "returned_identifier": "MenuProfile",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "MenuProfile",
+        "source": "Layout/MenuProfile.Nin_NX_NVN.zs",
+        "member": "MenuProfile.arc!blyt/MenuProfile.bflyt",
+        "sha256": "ffafd4bee53a8012217d447e42e0b6082e8db14ac3a0af9a8ba3c0b7cfae080e"
+      }
+    },
+    {
+      "page_class": "ProfileWinPhotoPage",
+      "factory_va": "0x126f630",
+      "constructor_va": "0x126d910",
+      "constructor_vptr_relocation_slot_va": "0x3308650",
+      "address_point_va": "0x3114178",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x31142e8",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x126e870",
+      "method_body": [
+        "adrp\tx0, #23908352",
+        "add\tx0, x0, #1821",
+        "ret"
+      ],
+      "returned_string_va": "0x293b71d",
+      "returned_identifier": "ProfileWinPhoto",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "ProfileWinPhoto",
+        "source": "Layout/ProfileWinPhoto.Nin_NX_NVN.zs",
+        "member": "ProfileWinPhoto.arc!blyt/ProfileWinPhoto.bflyt",
+        "sha256": "c29a8019ca400f75e19cfdfac0cabaeb1c793264ecfda962f4eb3bd382277e79"
+      }
+    },
+    {
+      "page_class": "ProfileWinPlayerTitlePage",
+      "factory_va": "0x1276150",
+      "constructor_va": "0x1274350",
+      "constructor_vptr_relocation_slot_va": "0x33087b8",
+      "address_point_va": "0x3114768",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x31148d8",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x1274e40",
+      "method_body": [
+        "adrp\tx0, #24498176",
+        "add\tx0, x0, #3643",
+        "ret"
+      ],
+      "returned_string_va": "0x29d1e3b",
+      "returned_identifier": "ProfileWinPlayerTitle",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "ProfileWinPlayerTitle",
+        "source": "Layout/ProfileWinPlayerTitle.Nin_NX_NVN.zs",
+        "member": "ProfileWinPlayerTitle.arc!blyt/ProfileWinPlayerTitle.bflyt",
+        "sha256": "13cf0bf7d561a110de73b353823c5d1d3781b42168b9692164a85936b2979992"
+      }
+    },
+    {
+      "page_class": "MenuRecipePage",
+      "factory_va": "0x127c4c0",
+      "constructor_va": "0x1277e20",
+      "constructor_vptr_relocation_slot_va": "0x33088c0",
+      "address_point_va": "0x3114e00",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3114f70",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x1278bd0",
+      "method_body": [
+        "adrp\tx0, #24424448",
+        "add\tx0, x0, #1421",
+        "ret"
+      ],
+      "returned_string_va": "0x29c358d",
+      "returned_identifier": "MenuRecipe",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "MenuRecipe",
+        "source": "Layout/MenuRecipe.Nin_NX_NVN.zs",
+        "member": "MenuRecipe.arc!blyt/MenuRecipe.bflyt",
+        "sha256": "c54f8be27c12465de6bea65a2ff80f0b1533c25a9dad82e873623f81f3c6b60e"
+      }
+    },
+    {
+      "page_class": "HighAndLowWindowPage",
+      "factory_va": "0x1282ef0",
+      "constructor_va": "0x1281e70",
+      "constructor_vptr_relocation_slot_va": "0x3308b08",
+      "address_point_va": "0x3115ab8",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3115c28",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x12824b0",
+      "method_body": [
+        "adrp\tx0, #24207360",
+        "add\tx0, x0, #3194",
+        "ret"
+      ],
+      "returned_string_va": "0x2998c7a",
+      "returned_identifier": "HighAndLow",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "HighAndLow",
+        "source": "Layout/HighAndLow.Nin_NX_NVN.zs",
+        "member": "HighAndLow.arc!blyt/HighAndLow.bflyt",
+        "sha256": "eeebda7e7a6dc717118826ab53e8929b385c1da10d0d2baaa68cc596fec70454"
+      }
+    },
+    {
+      "page_class": "MonologueMessageWindowPage",
+      "factory_va": "0x12872d0",
+      "constructor_va": "0x1286be0",
+      "constructor_vptr_relocation_slot_va": "0x3308cb8",
+      "address_point_va": "0x31163f0",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3116560",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x1287120",
+      "method_body": [
+        "adrp\tx0, #24186880",
+        "add\tx0, x0, #3205",
+        "ret"
+      ],
+      "returned_string_va": "0x2998c85",
+      "returned_identifier": "MsgWinSelf",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "MsgWinSelf",
+        "source": "Layout/MsgWinSelf.Nin_NX_NVN.zs",
+        "member": "MsgWinSelf.arc!blyt/MsgWinSelf.bflyt",
+        "sha256": "bf0f298a2f020b76345dd5534eddb6b65d28d23ccd9a2885574fedbbcbe3f619"
+      }
+    },
+    {
+      "page_class": "NoticeMessageWindowPage",
+      "factory_va": "0x1288200",
+      "constructor_va": "0x12878e0",
+      "constructor_vptr_relocation_slot_va": "0x3308d08",
+      "address_point_va": "0x3116928",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3116a98",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x1287ee0",
+      "method_body": [
+        "adrp\tx0, #24145920",
+        "add\tx0, x0, #1586",
+        "ret"
+      ],
+      "returned_string_va": "0x298e632",
+      "returned_identifier": "MsgWinNotice",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "MsgWinNotice",
+        "source": "Layout/MsgWinNotice.Nin_NX_NVN.zs",
+        "member": "MsgWinNotice.arc!blyt/MsgWinNotice.bflyt",
+        "sha256": "3c2a48d0f60726e00bc711f1cbd8a6bbc2f560e58b8080f08b68343ab445b8b0"
+      }
+    },
+    {
+      "page_class": "SelectMessageWindowTalkPage",
+      "factory_va": "0x1289850",
+      "constructor_va": "0x1288770",
+      "constructor_vptr_relocation_slot_va": "0x3308d48",
+      "address_point_va": "0x3116e30",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3116fa0",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x1289200",
+      "method_body": [
+        "adrp\tx0, #23998464",
+        "add\tx0, x0, #16",
+        "ret"
+      ],
+      "returned_string_va": "0x296c010",
+      "returned_identifier": "MsgWinSelWin",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "MsgWinSelWin",
+        "source": "Layout/MsgWinSelWin.Nin_NX_NVN.zs",
+        "member": "MsgWinSelWin.arc!blyt/MsgWinSelWin.bflyt",
+        "sha256": "6fa3e417fb20dbfe2f8bf0caa802f1537faac14c7994af2ef0599381af10eeed"
+      }
+    },
+    {
+      "page_class": "TalkMessageWindowPage",
+      "factory_va": "0x128bac0",
+      "constructor_va": "0x128ad50",
+      "constructor_vptr_relocation_slot_va": "0x3308e18",
+      "address_point_va": "0x31173a0",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3117510",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x128b490",
+      "method_body": [
+        "adrp\tx0, #24031232",
+        "add\tx0, x0, #3081",
+        "ret"
+      ],
+      "returned_string_va": "0x2976c09",
+      "returned_identifier": "MsgWin",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "MsgWin",
+        "source": "Layout/MsgWin.Nin_NX_NVN.zs",
+        "member": "MsgWin.arc!blyt/MsgWin.bflyt",
+        "sha256": "c0c0ccb75d8d1d2f15bb35aae20a61d08af1d992a90aa1e3a17a71b331e55935"
+      }
+    },
+    {
+      "page_class": "MovieNookIncLogoPage",
+      "factory_va": "0x128f570",
+      "constructor_va": "0x128eee0",
+      "constructor_vptr_relocation_slot_va": "0x3308f88",
+      "address_point_va": "0x3117db0",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3117f20",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x128f210",
+      "method_body": [
+        "adrp\tx0, #23773184",
+        "add\tx0, x0, #1881",
+        "ret"
+      ],
+      "returned_string_va": "0x293b759",
+      "returned_identifier": "MovieNookIncLogo",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "MovieNookIncLogo",
+        "source": "Layout/MovieNookIncLogo.Nin_NX_NVN.zs",
+        "member": "MovieNookIncLogo.arc!blyt/MovieNookIncLogo.bflyt",
+        "sha256": "053c41e1435424ec5a3c7f4329b99796963b55a342d57cc4890c0bf285701a03"
+      }
+    },
+    {
+      "page_class": "MovieSkipGuidePage",
+      "factory_va": "0x1290980",
+      "constructor_va": "0x12900c0",
+      "constructor_vptr_relocation_slot_va": "0x3309018",
+      "address_point_va": "0x3118270",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x31183e0",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x12905a0",
+      "method_body": [
+        "adrp\tx0, #24231936",
+        "add\tx0, x0, #146",
+        "ret"
+      ],
+      "returned_string_va": "0x29ac092",
+      "returned_identifier": "KeyGuideSkip",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "KeyGuideSkip",
+        "source": "Layout/KeyGuideSkip.Nin_NX_NVN.zs",
+        "member": "KeyGuideSkip.arc!blyt/KeyGuideSkip.bflyt",
+        "sha256": "225db5d8f4ed1f643ff2dce4d8ef28449dd5edad4b4f0ed797dfcd4668d056df"
+      }
+    },
+    {
+      "page_class": "MovieTitleLogoPage",
+      "factory_va": "0x1291d80",
+      "constructor_va": "0x12916f0",
+      "constructor_vptr_relocation_slot_va": "0x33090b8",
+      "address_point_va": "0x3118790",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3118900",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x1291a20",
+      "method_body": [
+        "adrp\tx0, #24084480",
+        "add\tx0, x0, #3958",
+        "ret"
+      ],
+      "returned_string_va": "0x2989f76",
+      "returned_identifier": "MovieTitleLogo",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "MovieTitleLogo",
+        "source": "Layout/MovieTitleLogo.Nin_NX_NVN.zs",
+        "member": "MovieTitleLogo.arc!blyt/MovieTitleLogo.bflyt",
+        "sha256": "50bf0eac8e80469c72c6fb2ae2f52b0d4101d06d227e2be9dd8442c48e469d10"
+      }
+    },
+    {
+      "page_class": "MsgBottlePage",
+      "factory_va": "0x1295090",
+      "constructor_va": "0x1294300",
+      "constructor_vptr_relocation_slot_va": "0x3309160",
+      "address_point_va": "0x3118e60",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3118fd0",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x1294ce0",
+      "method_body": [
+        "adrp\tx0, #24236032",
+        "add\tx0, x0, #3010",
+        "ret"
+      ],
+      "returned_string_va": "0x29b1bc2",
+      "returned_identifier": "MsgBottle",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "MsgBottle",
+        "source": "Layout/MsgBottle.Nin_NX_NVN.zs",
+        "member": "MsgBottle.arc!blyt/MsgBottle.bflyt",
+        "sha256": "26fd45b0c917522c88f8a091342efb4ecdb1b59a9034e8ce3539b3b044db0205"
+      }
+    },
+    {
+      "page_class": "MsgCardDesignSelectPage",
+      "factory_va": "0x1297cd0",
+      "constructor_va": "0x1296560",
+      "constructor_vptr_relocation_slot_va": "0x3309220",
+      "address_point_va": "0x31193a0",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3119510",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x1296fb0",
+      "method_body": [
+        "adrp\tx0, #24186880",
+        "add\tx0, x0, #2562",
+        "ret"
+      ],
+      "returned_string_va": "0x29a7a02",
+      "returned_identifier": "MsgCardDesignSelect",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "MsgCardDesignSelect",
+        "source": "Layout/MsgCardDesignSelect.Nin_NX_NVN.zs",
+        "member": "MsgCardDesignSelect.arc!blyt/MsgCardDesignSelect.bflyt",
+        "sha256": "93332ee5c0eaf0945c4d7502391098bfc722d49707abebc6b955b3f44086d2a6"
+      }
+    },
+    {
+      "page_class": "MsgCardEditTextPage",
+      "factory_va": "0x129a8c0",
+      "constructor_va": "0x1299800",
+      "constructor_vptr_relocation_slot_va": "0x3309320",
+      "address_point_va": "0x31199a8",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3119b18",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x129a260",
+      "method_body": [
+        "adrp\tx0, #24170496",
+        "add\tx0, x0, #2582",
+        "ret"
+      ],
+      "returned_string_va": "0x29a7a16",
+      "returned_identifier": "MsgCardEdit",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "MsgCardEdit",
+        "source": "Layout/MsgCardEdit.Nin_NX_NVN.zs",
+        "member": "MsgCardEdit.arc!blyt/MsgCardEdit.bflyt",
+        "sha256": "835419faaae1037e710a9fb24d1c6de11a08d7ff4dd427ccdd0c958bc51ee1d2"
+      }
+    },
+    {
+      "page_class": "MsgCardViewPage",
+      "factory_va": "0x12a0ab0",
+      "constructor_va": "0x129ea20",
+      "constructor_vptr_relocation_slot_va": "0x3309510",
+      "address_point_va": "0x311a1d8",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x311a348",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x129fd40",
+      "method_body": [
+        "adrp\tx0, #23949312",
+        "add\tx0, x0, #3164",
+        "ret"
+      ],
+      "returned_string_va": "0x2976c5c",
+      "returned_identifier": "MsgCardView",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "MsgCardView",
+        "source": "Layout/MsgCardView.Nin_NX_NVN.zs",
+        "member": "MsgCardView.arc!blyt/MsgCardView.bflyt",
+        "sha256": "5e6f51e603dcc127b828a6ff3ad8c8943d1c5eb43a2ff2648e5e048ab17b3f47"
+      }
+    },
+    {
+      "page_class": "MyDesignColorSelectPage",
+      "factory_va": "0x12d3890",
+      "constructor_va": "0x12d21d0",
+      "constructor_vptr_relocation_slot_va": "0x3309bc8",
+      "address_point_va": "0x311dfd8",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x311e148",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x12d3160",
+      "method_body": [
+        "adrp\tx0, #23674880",
+        "add\tx0, x0, #259",
+        "ret"
+      ],
+      "returned_string_va": "0x2967103",
+      "returned_identifier": "MyDesignColorSelect",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "MyDesignColorSelect",
+        "source": "Layout/MyDesignColorSelect.Nin_NX_NVN.zs",
+        "member": "MyDesignColorSelect.arc!blyt/MyDesignColorSelect.bflyt",
+        "sha256": "a201121e97208ed900232aeb21a0a3d3026c3d62d6543f873d3f62a408d01c01"
+      }
+    },
+    {
+      "page_class": "MyDesignEditBGPage",
+      "factory_va": "0x12d5d50",
+      "constructor_va": "0x12d56c0",
+      "constructor_vptr_relocation_slot_va": "0x3309ca8",
+      "address_point_va": "0x311e598",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x311e708",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x12d59f0",
+      "method_body": [
+        "adrp\tx0, #23420928",
+        "add\tx0, x0, #833",
+        "ret"
+      ],
+      "returned_string_va": "0x292b341",
+      "returned_identifier": "MyDesignEditBG",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "MyDesignEditBG",
+        "source": "Layout/MyDesignEditBG.Nin_NX_NVN.zs",
+        "member": "MyDesignEditBG.arc!blyt/MyDesignEditBG.bflyt",
+        "sha256": "20dc5bc02ab18c6a6b9143d3ad5003d873e8ad2a823ddedec52e2a3b55403487"
+      }
+    },
+    {
+      "page_class": "MyDesignEditCanvasSelWinPage",
+      "factory_va": "0x12d7790",
+      "constructor_va": "0x12d65a0",
+      "constructor_vptr_relocation_slot_va": "0x3309d38",
+      "address_point_va": "0x311ea58",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x311ebc8",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x12d7070",
+      "method_body": [
+        "adrp\tx0, #23961600",
+        "add\tx0, x0, #3341",
+        "ret"
+      ],
+      "returned_string_va": "0x29b1d0d",
+      "returned_identifier": "MyDesignEditCanvasSelWin",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "MyDesignEditCanvasSelWin",
+        "source": "Layout/MyDesignEditCanvasSelWin.Nin_NX_NVN.zs",
+        "member": "MyDesignEditCanvasSelWin.arc!blyt/MyDesignEditCanvasSelWin.bflyt",
+        "sha256": "fb90f11e5d76a07a33c7db7be2f46224c4a51ddcf661e3a63c03d7f144f35a24"
+      }
+    },
+    {
+      "page_class": "MyDesignEditPaletteSelectPage",
+      "factory_va": "0x12dfc10",
+      "constructor_va": "0x12de620",
+      "constructor_vptr_relocation_slot_va": "0x3309f10",
+      "address_point_va": "0x311f5a8",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x311f718",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x12def30",
+      "method_body": [
+        "adrp\tx0, #23502848",
+        "add\tx0, x0, #235",
+        "ret"
+      ],
+      "returned_string_va": "0x29480eb",
+      "returned_identifier": "MyDesignColorPaletteSelect",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "MyDesignColorPaletteSelect",
+        "source": "Layout/MyDesignColorPaletteSelect.Nin_NX_NVN.zs",
+        "member": "MyDesignColorPaletteSelect.arc!blyt/MyDesignColorPaletteSelect.bflyt",
+        "sha256": "b2f5df417a2a9ba96c7377669e16193a2dc89fabbe27da28b5060cecb300b17b"
+      }
+    },
+    {
+      "page_class": "MyDesignEditPage",
+      "factory_va": "0x12e5060",
+      "constructor_va": "0x12db770",
+      "constructor_vptr_relocation_slot_va": "0x3309ee8",
+      "address_point_va": "0x311f280",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x311f3f0",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x12de610",
+      "method_body": [
+        "adrp\tx0, #23584768",
+        "add\tx0, x0, #322",
+        "ret"
+      ],
+      "returned_string_va": "0x295c142",
+      "returned_identifier": "MyDesignEdit",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "MyDesignEdit",
+        "source": "Layout/MyDesignEdit.Nin_NX_NVN.zs",
+        "member": "MyDesignEdit.arc!blyt/MyDesignEdit.bflyt",
+        "sha256": "6fabebc582adc77d73d925f902ef1f0ae4553a4bb3f8686a71d6f669f79c554b"
+      }
+    },
+    {
+      "page_class": "MyDesignFinishPage",
+      "factory_va": "0x12eadd0",
+      "constructor_va": "0x12ea450",
+      "constructor_vptr_relocation_slot_va": "0x330a2d8",
+      "address_point_va": "0x31201d0",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3120340",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x12eaa60",
+      "method_body": [
+        "adrp\tx0, #23973888",
+        "add\tx0, x0, #3699",
+        "ret"
+      ],
+      "returned_string_va": "0x29c7e73",
+      "returned_identifier": "MyDesignFinish",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "MyDesignFinish",
+        "source": "Layout/MyDesignFinish.Nin_NX_NVN.zs",
+        "member": "MyDesignFinish.arc!blyt/MyDesignFinish.bflyt",
+        "sha256": "5367bf76b4a6472a7e2cd794fbec790394411166998c519c9e6387ddbef99102"
+      }
+    },
+    {
+      "page_class": "MyDesignListPage",
+      "factory_va": "0x12f1180",
+      "constructor_va": "0x12ecb50",
+      "constructor_vptr_relocation_slot_va": "0x330a368",
+      "address_point_va": "0x31207c8",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3120938",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x12ed700",
+      "method_body": [
+        "adrp\tx0, #23769088",
+        "add\tx0, x0, #3605",
+        "ret"
+      ],
+      "returned_string_va": "0x2998e15",
+      "returned_identifier": "MyDesignList",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "MyDesignList",
+        "source": "Layout/MyDesignList.Nin_NX_NVN.zs",
+        "member": "MyDesignList.arc!blyt/MyDesignList.bflyt",
+        "sha256": "c0805a08b62cff6071ac8e0a3ff5adb7ec11d78024bd2675b021cae8023619a0"
+      }
+    },
+    {
+      "page_class": "MyDesignSetPage",
+      "factory_va": "0x12fb020",
+      "constructor_va": "0x12f85b0",
+      "constructor_vptr_relocation_slot_va": "0x330a570",
+      "address_point_va": "0x3120ed0",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3121040",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x12f9010",
+      "method_body": [
+        "adrp\tx0, #23519232",
+        "add\tx0, x0, #293",
+        "ret"
+      ],
+      "returned_string_va": "0x2967125",
+      "returned_identifier": "MyDesignSet",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "MyDesignSet",
+        "source": "Layout/MyDesignSet.Nin_NX_NVN.zs",
+        "member": "MyDesignSet.arc!blyt/MyDesignSet.bflyt",
+        "sha256": "2cfce80911289c1b8b6dc830a9b2a2ed0c41dfa87ea9368e9fa2f5df194112a1"
+      }
+    },
+    {
+      "page_class": "NameWindowOnBellAndPointPage",
+      "factory_va": "0x12fcc60",
+      "constructor_va": "0x12fc690",
+      "constructor_vptr_relocation_slot_va": "0x330a698",
+      "address_point_va": "0x31215a8",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3121718",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x12fca10",
+      "method_body": [
+        "adrp\tx0, #23220224",
+        "add\tx0, x0, #1439",
+        "ret"
+      ],
+      "returned_string_va": "0x292159f",
+      "returned_identifier": "ItemBalloon",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "ItemBalloon",
+        "source": "Layout/ItemBalloon.Nin_NX_NVN.zs",
+        "member": "ItemBalloon.arc!blyt/ItemBalloon.bflyt",
+        "sha256": "8ca994ad651c2b341211623daa7d62d4a931ac90e9ec0e5d75ef873c47d9d98b"
+      }
+    },
+    {
+      "page_class": "NetConnectWaitPage",
+      "factory_va": "0x12fda40",
+      "constructor_va": "0x12fd360",
+      "constructor_vptr_relocation_slot_va": "0x330a6e8",
+      "address_point_va": "0x3121a68",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3121bd8",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x12fd6e0",
+      "method_body": [
+        "adrp\tx0, #23785472",
+        "add\tx0, x0, #554",
+        "ret"
+      ],
+      "returned_string_va": "0x29ac22a",
+      "returned_identifier": "LoadScene",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "LoadScene",
+        "source": "Layout/LoadScene.Nin_NX_NVN.zs",
+        "member": "LoadScene.arc!blyt/LoadScene.bflyt",
+        "sha256": "15baa6b9ab0510d8755a618b554c3be103b73502f237ea31a84e298c31d12b65"
+      }
+    },
+    {
+      "page_class": "NetDemoBackPage",
+      "factory_va": "0x12ff0e0",
+      "constructor_va": "0x12fe3a0",
+      "constructor_vptr_relocation_slot_va": "0x330a778",
+      "address_point_va": "0x3121f28",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3122098",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x12fec80",
+      "method_body": [
+        "adrp\tx0, #23642112",
+        "add\tx0, x0, #361",
+        "ret"
+      ],
+      "returned_string_va": "0x298a169",
+      "returned_identifier": "LoadGoOut",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "LoadGoOut",
+        "source": "Layout/LoadGoOut.Nin_NX_NVN.zs",
+        "member": "LoadGoOut.arc!blyt/LoadGoOut.bflyt",
+        "sha256": "4cf9508a601a41a5d10d4c9d0e3075b6251fe31433aee4e2fe474a28e4dc2a7c"
+      }
+    },
+    {
+      "page_class": "NetErrorWindowPage",
+      "factory_va": "0x1300f90",
+      "constructor_va": "0x1300420",
+      "constructor_vptr_relocation_slot_va": "0x330a808",
+      "address_point_va": "0x3122418",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3122588",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x1300a30",
+      "method_body": [
+        "adrp\tx0, #23343104",
+        "add\tx0, x0, #149",
+        "ret"
+      ],
+      "returned_string_va": "0x2943095",
+      "returned_identifier": "ErrorWindow",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "ErrorWindow",
+        "source": "Layout/ErrorWindow.Nin_NX_NVN.zs",
+        "member": "ErrorWindow.arc!blyt/ErrorWindow.bflyt",
+        "sha256": "93f99c77be66f4b857a3d2e133f24a5caed63eefcbd05a7195294ce468aab527"
+      }
+    },
+    {
+      "page_class": "PhotoCameraGuidePage",
+      "factory_va": "0x134aa60",
+      "constructor_va": "0x1347a70",
+      "constructor_vptr_relocation_slot_va": "0x330b590",
+      "address_point_va": "0x3127628",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3127798",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x13486e0",
+      "method_body": [
+        "adrp\tx0, #22966272",
+        "add\tx0, x0, #3583",
+        "ret"
+      ],
+      "returned_string_va": "0x292fdff",
+      "returned_identifier": "CameraGuide",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "CameraGuide",
+        "source": "Layout/CameraGuide.Nin_NX_NVN.zs",
+        "member": "CameraGuide.arc!blyt/CameraGuide.bflyt",
+        "sha256": "965a1cf3ff1982bf9656e3508c97b9729df19d20d69f45fa5a596bcf60917f95"
+      }
+    },
+    {
+      "page_class": "PhotoIslandStoragePage",
+      "factory_va": "0x1356ae0",
+      "constructor_va": "0x1351110",
+      "constructor_vptr_relocation_slot_va": "0x330b778",
+      "address_point_va": "0x3127ec0",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3128030",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x1351c90",
+      "method_body": [
+        "adrp\tx0, #23158784",
+        "add\tx0, x0, #442",
+        "ret"
+      ],
+      "returned_string_va": "0x29671ba",
+      "returned_identifier": "StorageInteriorStudio",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "StorageInteriorStudio",
+        "source": "Layout/StorageInteriorStudio.Nin_NX_NVN.zs",
+        "member": "StorageInteriorStudio.arc!blyt/StorageInteriorStudio.bflyt",
+        "sha256": "75bad533272da1831d16e1fc31e57cdc7fb37a69d8d1886950e7f72d287633de"
+      }
+    },
+    {
+      "page_class": "PlayerMarkerPage",
+      "factory_va": "0x135c5a0",
+      "constructor_va": "0x135b460",
+      "constructor_vptr_relocation_slot_va": "0x330b928",
+      "address_point_va": "0x3128710",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3128880",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x135c140",
+      "method_body": [
+        "adrp\tx0, #22847488",
+        "add\tx0, x0, #2479",
+        "ret"
+      ],
+      "returned_string_va": "0x29269af",
+      "returned_identifier": "PlayerMarker",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "PlayerMarker",
+        "source": "Layout/PlayerMarker.Nin_NX_NVN.zs",
+        "member": "PlayerMarker.arc!blyt/PlayerMarker.bflyt",
+        "sha256": "568b7341ba275f167d5d601f7bb3a5306715ee855981d32978f6ecb5c77cae10"
+      }
+    },
+    {
+      "page_class": "PlayerNameMarkerPage",
+      "factory_va": "0x135f760",
+      "constructor_va": "0x135eaa0",
+      "constructor_vptr_relocation_slot_va": "0x330b9b8",
+      "address_point_va": "0x3128bd0",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3128d40",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x135f480",
+      "method_body": [
+        "adrp\tx0, #23539712",
+        "add\tx0, x0, #124",
+        "ret"
+      ],
+      "returned_string_va": "0x29d207c",
+      "returned_identifier": "PlayerNameMarker",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "PlayerNameMarker",
+        "source": "Layout/PlayerNameMarker.Nin_NX_NVN.zs",
+        "member": "PlayerNameMarker.arc!blyt/PlayerNameMarker.bflyt",
+        "sha256": "b23583415ed12f6371ecbf8b9b5dcf37c8260d162d5b91fe1b4d2571e61d7260"
+      }
+    },
+    {
+      "page_class": "PocketMenuPage",
+      "factory_va": "0x1369320",
+      "constructor_va": "0x1367220",
+      "constructor_vptr_relocation_slot_va": "0x330ba58",
+      "address_point_va": "0x3129380",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x31294f0",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x1368860",
+      "method_body": [
+        "adrp\tx0, #23040000",
+        "add\tx0, x0, #706",
+        "ret"
+      ],
+      "returned_string_va": "0x29612c2",
+      "returned_identifier": "PocketMenu",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "PocketMenu",
+        "source": "Layout/PocketMenu.Nin_NX_NVN.zs",
+        "member": "PocketMenu.arc!blyt/PocketMenu.bflyt",
+        "sha256": "0ec2645c09382749d6161531d3129b61abe241b336e99bb2dadddcfe5fac3941"
+      }
+    },
+    {
+      "page_class": "PostMsgCardViewPage",
+      "factory_va": "0x1374560",
+      "constructor_va": "0x1372c60",
+      "constructor_vptr_relocation_slot_va": "0x330bc78",
+      "address_point_va": "0x3129cf8",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3129e68",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x1373ad0",
+      "method_body": [
+        "adrp\tx0, #22908928",
+        "add\tx0, x0, #3752",
+        "ret"
+      ],
+      "returned_string_va": "0x294cea8",
+      "returned_identifier": "PostMsgCardView",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "PostMsgCardView",
+        "source": "Layout/PostMsgCardView.Nin_NX_NVN.zs",
+        "member": "PostMsgCardView.arc!blyt/PostMsgCardView.bflyt",
+        "sha256": "8514c92925f0616899662f6a0fe430c090063b3630f1015e1ce5fc86fe5faff5"
+      }
+    },
+    {
+      "page_class": "PostPage",
+      "factory_va": "0x137a400",
+      "constructor_va": "0x1377ac0",
+      "constructor_vptr_relocation_slot_va": "0x330be48",
+      "address_point_va": "0x312a398",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x312a508",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x1378e30",
+      "method_body": [
+        "adrp\tx0, #23375872",
+        "add\tx0, x0, #1953",
+        "ret"
+      ],
+      "returned_string_va": "0x29c37a1",
+      "returned_identifier": "Post",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "Post",
+        "source": "Layout/Post.Nin_NX_NVN.zs",
+        "member": "Post.arc!blyt/Post.bflyt",
+        "sha256": "67f38c74b130a592cb68ad9118723b8d1f46a4d4c24a6cfb1e8e8ecb5fa22482"
+      }
+    },
+    {
+      "page_class": "ProhibitChatMarkPage",
+      "factory_va": "0x140e410",
+      "constructor_va": "0x140dd90",
+      "constructor_vptr_relocation_slot_va": "0x330c0a8",
+      "address_point_va": "0x312ab68",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x312acd8",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x140e0c0",
+      "method_body": [
+        "adrp\tx0, #22319104",
+        "add\tx0, x0, #1322",
+        "ret"
+      ],
+      "returned_string_va": "0x295752a",
+      "returned_identifier": "ChatBanMark",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "ChatBanMark",
+        "source": "Layout/ChatBanMark.Nin_NX_NVN.zs",
+        "member": "ChatBanMark.arc!blyt/ChatBanMark.bflyt",
+        "sha256": "c7f8d48d6418e7590087cbfb3d8c84c258af5c7793bbd8b5d83056ba5a6791a6"
+      }
+    },
+    {
+      "page_class": "PrologueBGPage",
+      "factory_va": "0x140f330",
+      "constructor_va": "0x140eca0",
+      "constructor_vptr_relocation_slot_va": "0x330c138",
+      "address_point_va": "0x312b028",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x312b198",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x140efd0",
+      "method_body": [
+        "adrp\tx0, #22712320",
+        "add\tx0, x0, #321",
+        "ret"
+      ],
+      "returned_string_va": "0x29b7141",
+      "returned_identifier": "WipePrologue",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "WipePrologue",
+        "source": "Layout/WipePrologue.Nin_NX_NVN.zs",
+        "member": "WipePrologue.arc!blyt/WipePrologue.bflyt",
+        "sha256": "411ad0aee7fb031004d5246ba101471a108e0cb964b2b2ae7761721bdb8588bc"
+      }
+    },
+    {
+      "page_class": "RingMenuCordePage",
+      "factory_va": "0x1416eb0",
+      "constructor_va": "0x1415a20",
+      "constructor_vptr_relocation_slot_va": "0x330c398",
+      "address_point_va": "0x312bdf8",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x312bf68",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x1416640",
+      "method_body": [
+        "adrp\tx0, #22085632",
+        "add\tx0, x0, #2542",
+        "ret"
+      ],
+      "returned_string_va": "0x29269ee",
+      "returned_identifier": "RingMenuCorde",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "RingMenuCorde",
+        "source": "Layout/RingMenuCorde.Nin_NX_NVN.zs",
+        "member": "RingMenuCorde.arc!blyt/RingMenuCorde.bflyt",
+        "sha256": "a094e5cbafe73f44a4785dac18420b1a5e2d2490159505c4c3897a9ead767bf5"
+      }
+    },
+    {
+      "page_class": "RingMenuEmoticonListPage",
+      "factory_va": "0x141a3e0",
+      "constructor_va": "0x1418ff0",
+      "constructor_vptr_relocation_slot_va": "0x330c430",
+      "address_point_va": "0x312c4b8",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x312c628",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x1419900",
+      "method_body": [
+        "adrp\tx0, #22757376",
+        "add\tx0, x0, #1712",
+        "ret"
+      ],
+      "returned_string_va": "0x29cd6b0",
+      "returned_identifier": "ListSigns",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "ListSigns",
+        "source": "Layout/ListSigns.Nin_NX_NVN.zs",
+        "member": "ListSigns.arc!blyt/ListSigns.bflyt",
+        "sha256": "4ad0e98ede9ff94ced9b6edb21cb6b7acf7736375a8933722954bceb82ab2507"
+      }
+    },
+    {
+      "page_class": "RingMenuEmoticonPage",
+      "factory_va": "0x141ddc0",
+      "constructor_va": "0x141cb20",
+      "constructor_vptr_relocation_slot_va": "0x330c510",
+      "address_point_va": "0x312ca78",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x312cbe8",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x141d8d0",
+      "method_body": [
+        "adrp\tx0, #22761472",
+        "add\tx0, x0, #152",
+        "ret"
+      ],
+      "returned_string_va": "0x29d2098",
+      "returned_identifier": "RingMenuSigns",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "RingMenuSigns",
+        "source": "Layout/RingMenuSigns.Nin_NX_NVN.zs",
+        "member": "RingMenuSigns.arc!blyt/RingMenuSigns.bflyt",
+        "sha256": "1571729e877fe87d8502089312b93b0145afde9035ffc641799b29ba4aae8e18"
+      }
+    },
+    {
+      "page_class": "RingMenuStickPage",
+      "factory_va": "0x1421d40",
+      "constructor_va": "0x1420e40",
+      "constructor_vptr_relocation_slot_va": "0x330c618",
+      "address_point_va": "0x312d318",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x312d488",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x14218f0",
+      "method_body": [
+        "adrp\tx0, #22724608",
+        "add\tx0, x0, #1732",
+        "ret"
+      ],
+      "returned_string_va": "0x29cd6c4",
+      "returned_identifier": "RingMenuStick",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "RingMenuStick",
+        "source": "Layout/RingMenuStick.Nin_NX_NVN.zs",
+        "member": "RingMenuStick.arc!blyt/RingMenuStick.bflyt",
+        "sha256": "a379254c0c656c0d4813513115f2320672aa8d3c1e3463fcf54370305aa9665d"
+      }
+    },
+    {
+      "page_class": "RingMenuToolsPage",
+      "factory_va": "0x1426310",
+      "constructor_va": "0x1423f70",
+      "constructor_vptr_relocation_slot_va": "0x330c6d8",
+      "address_point_va": "0x312db40",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x312dcb0",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x14251d0",
+      "method_body": [
+        "adrp\tx0, #22224896",
+        "add\tx0, x0, #1339",
+        "ret"
+      ],
+      "returned_string_va": "0x295753b",
+      "returned_identifier": "RingMenuTools",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "RingMenuTools",
+        "source": "Layout/RingMenuTools.Nin_NX_NVN.zs",
+        "member": "RingMenuTools.arc!blyt/RingMenuTools.bflyt",
+        "sha256": "5e57475bac83134b19fbbe1b2259c3b5605c424e6f559cace613ed6d87b0cce5"
+      }
+    },
+    {
+      "page_class": "RoadSelectPage",
+      "factory_va": "0x142a940",
+      "constructor_va": "0x1428ee0",
+      "constructor_vptr_relocation_slot_va": "0x330c7b8",
+      "address_point_va": "0x312e278",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x312e3e8",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x1429b60",
+      "method_body": [
+        "adrp\tx0, #22249472",
+        "add\tx0, x0, #761",
+        "ret"
+      ],
+      "returned_string_va": "0x29612f9",
+      "returned_identifier": "Road",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "Road",
+        "source": "Layout/Road.Nin_NX_NVN.zs",
+        "member": "Road.arc!blyt/Road.bflyt",
+        "sha256": "eb1ab363244964c2bc08d72ca2ee111536647e82ff9052bee70c45dbf5c5300e"
+      }
+    },
+    {
+      "page_class": "SaveIconPage",
+      "factory_va": "0x142d550",
+      "constructor_va": "0x142cba0",
+      "constructor_vptr_relocation_slot_va": "0x330c8a0",
+      "address_point_va": "0x312e7e8",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x312e958",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x142d0d0",
+      "method_body": [
+        "adrp\tx0, #22028288",
+        "add\tx0, x0, #3104",
+        "ret"
+      ],
+      "returned_string_va": "0x292fc20",
+      "returned_identifier": "SaveIcon",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "SaveIcon",
+        "source": "Layout/SaveIcon.Nin_NX_NVN.zs",
+        "member": "SaveIcon.arc!blyt/SaveIcon.bflyt",
+        "sha256": "6de724fc03835e53b3b4ccf7485d3a0fcfa4eb20cf09fa973153eb8aeba31358"
+      }
+    },
+    {
+      "page_class": "SelectCursorPage",
+      "factory_va": "0x142f480",
+      "constructor_va": "0x142e080",
+      "constructor_vptr_relocation_slot_va": "0x330c930",
+      "address_point_va": "0x312eca8",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x312ee18",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x142e570",
+      "method_body": [
+        "adrp\tx0, #22073344",
+        "add\tx0, x0, #2469",
+        "ret"
+      ],
+      "returned_string_va": "0x293b9a5",
+      "returned_identifier": "LCursor",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "LCursor",
+        "source": "Layout/LCursor.Nin_NX_NVN.zs",
+        "member": "LCursor.arc!blyt/LCursor.bflyt",
+        "sha256": "5fb7a886081ba301bc31bd6391ea4257a4b956134fa5ee85a429aa901cbbac55"
+      }
+    },
+    {
+      "page_class": "ShopBridgeSlopeBGPage",
+      "factory_va": "0x1430810",
+      "constructor_va": "0x1430180",
+      "constructor_vptr_relocation_slot_va": "0x330c988",
+      "address_point_va": "0x312f190",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x312f300",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x14304b0",
+      "method_body": [
+        "adrp\tx0, #22118400",
+        "add\tx0, x0, #496",
+        "ret"
+      ],
+      "returned_string_va": "0x29481f0",
+      "returned_identifier": "ShopBridgeSlopeBG",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "ShopBridgeSlopeBG",
+        "source": "Layout/ShopBridgeSlopeBG.Nin_NX_NVN.zs",
+        "member": "ShopBridgeSlopeBG.arc!blyt/ShopBridgeSlopeBG.bflyt",
+        "sha256": "75f1e93137a918a5b325fa3d15acef0e584731d93a93939a0079b4b20a1ef099"
+      }
+    },
+    {
+      "page_class": "ShopBridgeSlopePage",
+      "factory_va": "0x1432ad0",
+      "constructor_va": "0x1431090",
+      "constructor_vptr_relocation_slot_va": "0x330ca18",
+      "address_point_va": "0x312f650",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x312f7c0",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x1431cd0",
+      "method_body": [
+        "adrp\tx0, #22114304",
+        "add\tx0, x0, #524",
+        "ret"
+      ],
+      "returned_string_va": "0x294820c",
+      "returned_identifier": "ShopBridgeSlope",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "ShopBridgeSlope",
+        "source": "Layout/ShopBridgeSlope.Nin_NX_NVN.zs",
+        "member": "ShopBridgeSlope.arc!blyt/ShopBridgeSlope.bflyt",
+        "sha256": "85af12e9c3f61ef43dcc8413cf05c179684ef12376e8d67d5723aa1c6d931f2e"
+      }
+    },
+    {
+      "page_class": "ShopBuyPage",
+      "factory_va": "0x1437b30",
+      "constructor_va": "0x1434db0",
+      "constructor_vptr_relocation_slot_va": "0x330cb48",
+      "address_point_va": "0x312fd40",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x312feb0",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x1435b60",
+      "method_body": [
+        "adrp\tx0, #22601728",
+        "add\tx0, x0, #2026",
+        "ret"
+      ],
+      "returned_string_va": "0x29c37ea",
+      "returned_identifier": "ShopBuy",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "ShopBuy",
+        "source": "Layout/ShopBuy.Nin_NX_NVN.zs",
+        "member": "ShopBuy.arc!blyt/ShopBuy.bflyt",
+        "sha256": "6245e7c78c3ed27050332c93e29d4f8282b77c67957bb42b649e179b998bed35"
+      }
+    },
+    {
+      "page_class": "ShopBuyTailorBGPage",
+      "factory_va": "0x143ab10",
+      "constructor_va": "0x143a330",
+      "constructor_vptr_relocation_slot_va": "0x330cc80",
+      "address_point_va": "0x3130398",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3130508",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x143a860",
+      "method_body": [
+        "adrp\tx0, #22224896",
+        "add\tx0, x0, #679",
+        "ret"
+      ],
+      "returned_string_va": "0x296c2a7",
+      "returned_identifier": "ShopBuyTailorBG",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "ShopBuyTailorBG",
+        "source": "Layout/ShopBuyTailorBG.Nin_NX_NVN.zs",
+        "member": "ShopBuyTailorBG.arc!blyt/ShopBuyTailorBG.bflyt",
+        "sha256": "c7da29b5b83775e0e5e2f9621e487da53375e550ae5d282217bf9d12dc152e5e"
+      }
+    },
+    {
+      "page_class": "ShopBuyTailorPage",
+      "factory_va": "0x143f540",
+      "constructor_va": "0x143b4e0",
+      "constructor_vptr_relocation_slot_va": "0x330cd10",
+      "address_point_va": "0x3130858",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x31309c8",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x143c5c0",
+      "method_body": [
+        "adrp\tx0, #22396928",
+        "add\tx0, x0, #3888",
+        "ret"
+      ],
+      "returned_string_va": "0x2998f30",
+      "returned_identifier": "ShopBuyTailor",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "ShopBuyTailor",
+        "source": "Layout/ShopBuyTailor.Nin_NX_NVN.zs",
+        "member": "ShopBuyTailor.arc!blyt/ShopBuyTailor.bflyt",
+        "sha256": "38ba936b925664f364bfc475287f37636afac4aef545d2439f2b9322dbf79610"
+      }
+    },
+    {
+      "page_class": "ShopSonkatsuBGPage",
+      "factory_va": "0x14465b0",
+      "constructor_va": "0x1445dc0",
+      "constructor_vptr_relocation_slot_va": "0x330cea8",
+      "address_point_va": "0x3131040",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x31311b0",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x14462f0",
+      "method_body": [
+        "adrp\tx0, #22532096",
+        "add\tx0, x0, #2034",
+        "ret"
+      ],
+      "returned_string_va": "0x29c37f2",
+      "returned_identifier": "ShopSonkatsuBG",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "ShopSonkatsuBG",
+        "source": "Layout/ShopSonkatsuBG.Nin_NX_NVN.zs",
+        "member": "ShopSonkatsuBG.arc!blyt/ShopSonkatsuBG.bflyt",
+        "sha256": "2f9a0abacf747165c17a792b123099bcc38cc55cb2e10148bf5e339f24a287e3"
+      }
+    },
+    {
+      "page_class": "ShopSonkatsuPage",
+      "factory_va": "0x144b360",
+      "constructor_va": "0x14470b0",
+      "constructor_vptr_relocation_slot_va": "0x330cf48",
+      "address_point_va": "0x3131500",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3131670",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x1447fe0",
+      "method_body": [
+        "adrp\tx0, #21864448",
+        "add\tx0, x0, #2345",
+        "ret"
+      ],
+      "returned_string_va": "0x2921929",
+      "returned_identifier": "ShopSonkatsu",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "ShopSonkatsu",
+        "source": "Layout/ShopSonkatsu.Nin_NX_NVN.zs",
+        "member": "ShopSonkatsu.arc!blyt/ShopSonkatsu.bflyt",
+        "sha256": "cd06167515412fb5bd5fe43c1f8f9e11986690d087b8892d996eb347841d5809"
+      }
+    },
+    {
+      "page_class": "SmartPhoneIconPage",
+      "factory_va": "0x144f7a0",
+      "constructor_va": "0x144ea70",
+      "constructor_vptr_relocation_slot_va": "0x330d0c0",
+      "address_point_va": "0x3131c18",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3131d88",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x144f010",
+      "method_body": [
+        "adrp\tx0, #22138880",
+        "add\tx0, x0, #712",
+        "ret"
+      ],
+      "returned_string_va": "0x296c2c8",
+      "returned_identifier": "MainScreenSmartPhone",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "MainScreenSmartPhone",
+        "source": "Layout/MainScreenSmartPhone.Nin_NX_NVN.zs",
+        "member": "MainScreenSmartPhone.arc!blyt/MainScreenSmartPhone.bflyt",
+        "sha256": "32c10cdd5899f0cf84664c7a589dc0d8b9d815c445b88e7c0299a5a19e2bd312"
+      }
+    },
+    {
+      "page_class": "SonkatsuPage",
+      "factory_va": "0x1451c60",
+      "constructor_va": "0x14513c0",
+      "constructor_vptr_relocation_slot_va": "0x330d190",
+      "address_point_va": "0x3132148",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x31322b8",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x1451990",
+      "method_body": [
+        "adrp\tx0, #22061056",
+        "add\tx0, x0, #3557",
+        "ret"
+      ],
+      "returned_string_va": "0x295bde5",
+      "returned_identifier": "Sonkatsu",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "Sonkatsu",
+        "source": "Layout/Sonkatsu.Nin_NX_NVN.zs",
+        "member": "Sonkatsu.arc!blyt/Sonkatsu.bflyt",
+        "sha256": "b55b43734ee8b2184034d2bacb435cce031dd90a642f4bd9c18b13c9a6401632"
+      }
+    },
+    {
+      "page_class": "SonkatsuCategoryPage",
+      "factory_va": "0x14530e0",
+      "constructor_va": "0x1452780",
+      "constructor_vptr_relocation_slot_va": "0x330d220",
+      "address_point_va": "0x3132618",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3132788",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x1452d50",
+      "method_body": [
+        "adrp\tx0, #22265856",
+        "add\tx0, x0, #2079",
+        "ret"
+      ],
+      "returned_string_va": "0x298e81f",
+      "returned_identifier": "MenuPointTopBar",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "MenuPointTopBar",
+        "source": "Layout/MenuPointTopBar.Nin_NX_NVN.zs",
+        "member": "MenuPointTopBar.arc!blyt/MenuPointTopBar.bflyt",
+        "sha256": "67c2d4f0271f3598520d9dca02a9099c578e5f4aea8b39067fa36ae7fe6dcce2"
+      }
+    },
+    {
+      "page_class": "SonkatsuQuestListPage",
+      "factory_va": "0x1455e50",
+      "constructor_va": "0x1454270",
+      "constructor_vptr_relocation_slot_va": "0x330d2e8",
+      "address_point_va": "0x3132ae8",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3132c58",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x14552f0",
+      "method_body": [
+        "adrp\tx0, #21827584",
+        "add\tx0, x0, #2623",
+        "ret"
+      ],
+      "returned_string_va": "0x2926a3f",
+      "returned_identifier": "MenuPointQuestList",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "MenuPointQuestList",
+        "source": "Layout/MenuPointQuestList.Nin_NX_NVN.zs",
+        "member": "MenuPointQuestList.arc!blyt/MenuPointQuestList.bflyt",
+        "sha256": "993e6b280e7c2e7c5e990e5a7a38b80be5039c20c25254ad2f62248ced68fcb9"
+      }
+    },
+    {
+      "page_class": "SonkatsuQuestTopPage",
+      "factory_va": "0x145b0d0",
+      "constructor_va": "0x1459740",
+      "constructor_vptr_relocation_slot_va": "0x330d448",
+      "address_point_va": "0x31332c0",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3133430",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x1459f80",
+      "method_body": [
+        "adrp\tx0, #22405120",
+        "add\tx0, x0, #408",
+        "ret"
+      ],
+      "returned_string_va": "0x29b7198",
+      "returned_identifier": "MenuPointTopQuest",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "MenuPointTopQuest",
+        "source": "Layout/MenuPointTopQuest.Nin_NX_NVN.zs",
+        "member": "MenuPointTopQuest.arc!blyt/MenuPointTopQuest.bflyt",
+        "sha256": "eead29f8db1e112f4f7736840fe55c4fb1924b29301304453855d8bb34f6c3ff"
+      }
+    },
+    {
+      "page_class": "SonkatsuResultBgPage",
+      "factory_va": "0x145c6b0",
+      "constructor_va": "0x145c010",
+      "constructor_vptr_relocation_slot_va": "0x330d4d8",
+      "address_point_va": "0x31337a0",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3133910",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x145c340",
+      "method_body": [
+        "adrp\tx0, #22245376",
+        "add\tx0, x0, #3142",
+        "ret"
+      ],
+      "returned_string_va": "0x2993c46",
+      "returned_identifier": "MenuPointResultBg",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "MenuPointResultBg",
+        "source": "Layout/MenuPointResultBg.Nin_NX_NVN.zs",
+        "member": "MenuPointResultBg.arc!blyt/MenuPointResultBg.bflyt",
+        "sha256": "6b5f2e1186073e5d8cf41b66d5c84e781a5fd2000f467abc0669c4576dc0a4eb"
+      }
+    },
+    {
+      "page_class": "SonkatsuResultDialogPage",
+      "factory_va": "0x145ecb0",
+      "constructor_va": "0x145cf30",
+      "constructor_vptr_relocation_slot_va": "0x330d568",
+      "address_point_va": "0x3133c60",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3133dd0",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x145df80",
+      "method_body": [
+        "adrp\tx0, #21995520",
+        "add\tx0, x0, #1422",
+        "ret"
+      ],
+      "returned_string_va": "0x295758e",
+      "returned_identifier": "MenuPointResultDialog",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "MenuPointResultDialog",
+        "source": "Layout/MenuPointResultDialog.Nin_NX_NVN.zs",
+        "member": "MenuPointResultDialog.arc!blyt/MenuPointResultDialog.bflyt",
+        "sha256": "255c41dcd8f571371025d56758538d02e954bf55eb5832db4fdd3227f8638328"
+      }
+    },
+    {
+      "page_class": "SonkatsuResultInfoPage",
+      "factory_va": "0x1462810",
+      "constructor_va": "0x1460c10",
+      "constructor_vptr_relocation_slot_va": "0x330d660",
+      "address_point_va": "0x3134200",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3134370",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x1461a80",
+      "method_body": [
+        "adrp\tx0, #21958656",
+        "add\tx0, x0, #2311",
+        "ret"
+      ],
+      "returned_string_va": "0x2952907",
+      "returned_identifier": "MenuPointResultInfo",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "MenuPointResultInfo",
+        "source": "Layout/MenuPointResultInfo.Nin_NX_NVN.zs",
+        "member": "MenuPointResultInfo.arc!blyt/MenuPointResultInfo.bflyt",
+        "sha256": "ba1a5ce16c085e1b94379760030de8e6a5e6dc7025d1992191cbd430f56a3df7"
+      }
+    },
+    {
+      "page_class": "SonkatsuResultListPage",
+      "factory_va": "0x14674b0",
+      "constructor_va": "0x1464b30",
+      "constructor_vptr_relocation_slot_va": "0x330d7e0",
+      "address_point_va": "0x3134830",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x31349a0",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x1465650",
+      "method_body": [
+        "adrp\tx0, #21880832",
+        "add\tx0, x0, #208",
+        "ret"
+      ],
+      "returned_string_va": "0x29430d0",
+      "returned_identifier": "MenuPointResultList",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "MenuPointResultList",
+        "source": "Layout/MenuPointResultList.Nin_NX_NVN.zs",
+        "member": "MenuPointResultList.arc!blyt/MenuPointResultList.bflyt",
+        "sha256": "8123ac2162028b2180fef8f47437010b8b04758616e051b8dc48798e0c325900"
+      }
+    },
+    {
+      "page_class": "StaffCreditPage",
+      "factory_va": "0x146ee10",
+      "constructor_va": "0x146d330",
+      "constructor_vptr_relocation_slot_va": "0x330dad0",
+      "address_point_va": "0x3135078",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x31351e8",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x146e000",
+      "method_body": [
+        "adrp\tx0, #22134784",
+        "add\tx0, x0, #757",
+        "ret"
+      ],
+      "returned_string_va": "0x298a2f5",
+      "returned_identifier": "StaffCredit",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "StaffCredit",
+        "source": "Layout/StaffCredit.Nin_NX_NVN.zs",
+        "member": "StaffCredit.arc!blyt/StaffCredit.bflyt",
+        "sha256": "6bb0365cdf659e0ae692efde31b9eb3c67893c5f4d0784251b7cea98a79ea369"
+      }
+    },
+    {
+      "page_class": "StoragePage",
+      "factory_va": "0x1474250",
+      "constructor_va": "0x1471940",
+      "constructor_vptr_relocation_slot_va": "0x330db70",
+      "address_point_va": "0x31355b8",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3135728",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x1472600",
+      "method_body": [
+        "adrp\tx0, #21794816",
+        "add\tx0, x0, #2515",
+        "ret"
+      ],
+      "returned_string_va": "0x293b9d3",
+      "returned_identifier": "Storage",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "Storage",
+        "source": "Layout/Storage.Nin_NX_NVN.zs",
+        "member": "Storage.arc!blyt/Storage.bflyt",
+        "sha256": "b17712c2a623ed23f1af25882284bcd9271fe0dc4dadd3d564502e737f116940"
+      }
+    },
+    {
+      "page_class": "SwkbdPage",
+      "factory_va": "0x1537930",
+      "constructor_va": "0x1534920",
+      "constructor_vptr_relocation_slot_va": "0x330fb40",
+      "address_point_va": "0x313f6e8",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x313f858",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x1534e30",
+      "method_body": [
+        "adrp\tx0, #21360640",
+        "add\tx0, x0, #3352",
+        "ret"
+      ],
+      "returned_string_va": "0x2993d18",
+      "returned_identifier": "SwkbdDummy",
+      "exact_layout_name_match": false,
+      "layout": null
+    },
+    {
+      "page_class": "SwkbdTextAreaInputBankPage",
+      "factory_va": "0x153d4f0",
+      "constructor_va": "0x153cbc0",
+      "constructor_vptr_relocation_slot_va": "0x330fdf0",
+      "address_point_va": "0x31403b0",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3140520",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x153d2b0",
+      "method_body": [
+        "adrp\tx0, #21098496",
+        "add\tx0, x0, #1131",
+        "ret"
+      ],
+      "returned_string_va": "0x295c46b",
+      "returned_identifier": "SwkbdTextAreaInputBank",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "SwkbdTextAreaInputBank",
+        "source": "Layout/SwkbdTextAreaInputBank.Nin_NX_NVN.zs",
+        "member": "SwkbdTextAreaInputBank.arc!blyt/SwkbdTextAreaInputBank.bflyt",
+        "sha256": "35456f0ddd5b07efd3cbf420ec42b9de848be7095802a5ee46db18202e6792b7"
+      }
+    },
+    {
+      "page_class": "SwkbdTextAreaInputBellPage",
+      "factory_va": "0x153f4c0",
+      "constructor_va": "0x153eb50",
+      "constructor_vptr_relocation_slot_va": "0x330fe98",
+      "address_point_va": "0x31408d8",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3140a48",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x153f280",
+      "method_body": [
+        "adrp\tx0, #21463040",
+        "add\tx0, x0, #884",
+        "ret"
+      ],
+      "returned_string_va": "0x29b7374",
+      "returned_identifier": "SwkbdTextAreaHaniwa",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "SwkbdTextAreaHaniwa",
+        "source": "Layout/SwkbdTextAreaHaniwa.Nin_NX_NVN.zs",
+        "member": "SwkbdTextAreaHaniwa.arc!blyt/SwkbdTextAreaHaniwa.bflyt",
+        "sha256": "220ab52c8560c8101646a1903f95fdcfaa20e3483efa685104d4b049e6689155"
+      }
+    },
+    {
+      "page_class": "TelopPage",
+      "factory_va": "0x1569bf0",
+      "constructor_va": "0x1568680",
+      "constructor_vptr_relocation_slot_va": "0x33103c0",
+      "address_point_va": "0x3143480",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x31435f0",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x15690c0",
+      "method_body": [
+        "adrp\tx0, #21299200",
+        "add\tx0, x0, #3870",
+        "ret"
+      ],
+      "returned_string_va": "0x29b9f1e",
+      "returned_identifier": "Telop",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "Telop",
+        "source": "Layout/Telop.Nin_NX_NVN.zs",
+        "member": "Telop.arc!blyt/Telop.bflyt",
+        "sha256": "4ee98d034471ba87992e34ac22a27ae58d6e60c7ac70d4521377b065817e902e"
+      }
+    },
+    {
+      "page_class": "TitlePage",
+      "factory_va": "0x156d2a0",
+      "constructor_va": "0x156c2b0",
+      "constructor_vptr_relocation_slot_va": "0x33104e8",
+      "address_point_va": "0x3143bc8",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3143d38",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x156cde0",
+      "method_body": [
+        "adrp\tx0, #20877312",
+        "add\tx0, x0, #1677",
+        "ret"
+      ],
+      "returned_string_va": "0x295568d",
+      "returned_identifier": "Title",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "Title",
+        "source": "Layout/Title.Nin_NX_NVN.zs",
+        "member": "Title.arc!blyt/Title.bflyt",
+        "sha256": "40b872f05178df2009b2c5cca853e86120d9e01dee729fd4c54b5ad388749d0c"
+      }
+    },
+    {
+      "page_class": "TripPage",
+      "factory_va": "0x15716f0",
+      "constructor_va": "0x156e970",
+      "constructor_vptr_relocation_slot_va": "0x33105c8",
+      "address_point_va": "0x3144148",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x31442b8",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x1570360",
+      "method_body": [
+        "adrp\tx0, #21000192",
+        "add\tx0, x0, #46",
+        "ret"
+      ],
+      "returned_string_va": "0x297702e",
+      "returned_identifier": "Trip",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "Trip",
+        "source": "Layout/Trip.Nin_NX_NVN.zs",
+        "member": "Trip.arc!blyt/Trip.bflyt",
+        "sha256": "b333edfb6ab9c11ad2a3f8eca753bab59249cde045967bea1a0b3b6b89d7641d"
+      }
+    },
+    {
+      "page_class": "VersionGuidePage",
+      "factory_va": "0x1594a60",
+      "constructor_va": "0x1594210",
+      "constructor_vptr_relocation_slot_va": "0x3310aa0",
+      "address_point_va": "0x3145500",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3145670",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x15947b0",
+      "method_body": [
+        "adrp\tx0, #20787200",
+        "add\tx0, x0, #1221",
+        "ret"
+      ],
+      "returned_string_va": "0x29674c5",
+      "returned_identifier": "Version",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "Version",
+        "source": "Layout/Version.Nin_NX_NVN.zs",
+        "member": "Version.arc!blyt/Version.bflyt",
+        "sha256": "792ba5524225837a7559594b89c230bf3fd415bcafcdc24401ba6f94fb0e0301"
+      }
+    },
+    {
+      "page_class": "WorkCraftBgPage",
+      "factory_va": "0x1596020",
+      "constructor_va": "0x1595940",
+      "constructor_vptr_relocation_slot_va": "0x3310b20",
+      "address_point_va": "0x31459d0",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3145b40",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x1595e70",
+      "method_body": [
+        "adrp\tx0, #20758528",
+        "add\tx0, x0, #1349",
+        "ret"
+      ],
+      "returned_string_va": "0x2961545",
+      "returned_identifier": "WorkBenchBG",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "WorkBenchBG",
+        "source": "Layout/WorkBenchBG.Nin_NX_NVN.zs",
+        "member": "WorkBenchBG.arc!blyt/WorkBenchBG.bflyt",
+        "sha256": "74538ae233d2a481c899a890bc677e619fa7af71a2226a5464782ee1f3a01e19"
+      }
+    },
+    {
+      "page_class": "WorkCraftInfoPage",
+      "factory_va": "0x1597b90",
+      "constructor_va": "0x1596620",
+      "constructor_vptr_relocation_slot_va": "0x3310b78",
+      "address_point_va": "0x3145e90",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3146000",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x1597220",
+      "method_body": [
+        "adrp\tx0, #21131264",
+        "add\tx0, x0, #309",
+        "ret"
+      ],
+      "returned_string_va": "0x29be135",
+      "returned_identifier": "WorkBenchInfo",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "WorkBenchInfo",
+        "source": "Layout/WorkBenchInfo.Nin_NX_NVN.zs",
+        "member": "WorkBenchInfo.arc!blyt/WorkBenchInfo.bflyt",
+        "sha256": "f8b7af3e4acd855e3ea991d0decaa62fc9fa60911397a8a526e739921cb62735"
+      }
+    },
+    {
+      "page_class": "WorkCraftListPage",
+      "factory_va": "0x159cbc0",
+      "constructor_va": "0x159ad00",
+      "constructor_vptr_relocation_slot_va": "0x3310c18",
+      "address_point_va": "0x31464e0",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3146650",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x159b900",
+      "method_body": [
+        "adrp\tx0, #21086208",
+        "add\tx0, x0, #999",
+        "ret"
+      ],
+      "returned_string_va": "0x29b73e7",
+      "returned_identifier": "WorkBench",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "WorkBench",
+        "source": "Layout/WorkBench.Nin_NX_NVN.zs",
+        "member": "WorkBench.arc!blyt/WorkBench.bflyt",
+        "sha256": "475188c3996c5ecca9e4d95d32ccee704696e4bdf850916e307590f2e2a1bd0b"
+      }
+    },
+    {
+      "page_class": "WorkBenchRemakeBGPage",
+      "factory_va": "0x15a0ab0",
+      "constructor_va": "0x15a0420",
+      "constructor_vptr_relocation_slot_va": "0x3310ce0",
+      "address_point_va": "0x3146de8",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3146f58",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x15a0750",
+      "method_body": [
+        "adrp\tx0, #21020672",
+        "add\tx0, x0, #1232",
+        "ret"
+      ],
+      "returned_string_va": "0x29ac4d0",
+      "returned_identifier": "WorkBenchRemakeBG",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "WorkBenchRemakeBG",
+        "source": "Layout/WorkBenchRemakeBG.Nin_NX_NVN.zs",
+        "member": "WorkBenchRemakeBG.arc!blyt/WorkBenchRemakeBG.bflyt",
+        "sha256": "e237f64d3ea56b48c735e3a233bbe15fc2db1a183a1335a5e8644d92977dbcdc"
+      }
+    },
+    {
+      "page_class": "WorkBenchRemakeFabricCmnListPage",
+      "factory_va": "0x15a3e30",
+      "constructor_va": "0x15a1300",
+      "constructor_vptr_relocation_slot_va": "0x3310d70",
+      "address_point_va": "0x31472a8",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3147418",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x15a1d60",
+      "method_body": [
+        "adrp\tx0, #20819968",
+        "add\tx0, x0, #3080",
+        "ret"
+      ],
+      "returned_string_va": "0x297cc08",
+      "returned_identifier": "WorkBenchRemakeFabricCmnDialog",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "WorkBenchRemakeFabricCmnDialog",
+        "source": "Layout/WorkBenchRemakeFabricCmnDialog.Nin_NX_NVN.zs",
+        "member": "WorkBenchRemakeFabricCmnDialog.arc!blyt/WorkBenchRemakeFabricCmnDialog.bflyt",
+        "sha256": "f960220e8f19f626573b3450c043f8a9cc35d7b5bc7a2556e16595405a3d361d"
+      }
+    },
+    {
+      "page_class": "WorkBenchRemakePage",
+      "factory_va": "0x15aa480",
+      "constructor_va": "0x15a73c0",
+      "constructor_vptr_relocation_slot_va": "0x3310e80",
+      "address_point_va": "0x31478f0",
+      "registry_query_slot_17_target_va": "0x166ec70",
+      "registry_page_slot_30_target_va": "0x1144dc0",
+      "method_slot_index": 46,
+      "method_slot_offset_bytes": "0x170",
+      "method_relocation_slot_va": "0x3147a60",
+      "method_relocation_type": "R_AARCH64_RELATIVE",
+      "method_va": "0x15a8cb0",
+      "method_body": [
+        "adrp\tx0, #20770816",
+        "add\tx0, x0, #173",
+        "ret"
+      ],
+      "returned_string_va": "0x29770ad",
+      "returned_identifier": "WorkBenchRemakeSelect",
+      "exact_layout_name_match": true,
+      "layout": {
+        "name": "WorkBenchRemakeSelect",
+        "source": "Layout/WorkBenchRemakeSelect.Nin_NX_NVN.zs",
+        "member": "WorkBenchRemakeSelect.arc!blyt/WorkBenchRemakeSelect.bflyt",
+        "sha256": "0add5d0a40c26cf39d5cb604716e5b21e2d8c4fce6973f6c2a99cf00fbf9a746"
+      }
+    }
+  ]
+}
