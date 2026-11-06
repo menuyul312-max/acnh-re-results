@@ -1,0 +1,121 @@
+{
+  "native_elf_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+  "native_functions": {
+    "select_missing_variant": "0xf5ab20",
+    "set_item_variant": "0xaabf10",
+    "item_remake_id": "0xab2810"
+  },
+  "scope": "F5AB20, AB2810 and AABF10 execute native code. Stubs supply item validity, ItemParam wrapper/RemakeID field lookup, supported variant count, variant-byte pointer, and deterministic RNG. The 2,000-byte bitset and item payload are synthetic; no live save or real item row is loaded.",
+  "formula": "For the eight slots RemakeID*8..RemakeID*8+7, native F5AB20 counts clear bits and selects rank floor(rng_u32*missing_count/2^32); AABF10 writes that zero-based variant ordinal to the payload's low three bits.",
+  "cases": 5,
+  "mismatches": 0,
+  "dependencies_stubbed": [
+    "item validity",
+    "A9C290 item wrapper",
+    "AAC250 variant count",
+    "A1E920 RemakeID field adapter",
+    "AB0F50 variant-byte pointer",
+    "19AA040/19AA0E0 RNG"
+  ],
+  "results": [
+    {
+      "name": "first-uncollected",
+      "collected_variants": [
+        0,
+        2,
+        5
+      ],
+      "missing_variants": [
+        1,
+        3,
+        4,
+        6,
+        7
+      ],
+      "rng_u32": 0,
+      "selected_variant": 1,
+      "output_payload_byte_at_offset_4": 169,
+      "native_setter_calls": 1,
+      "match": true
+    },
+    {
+      "name": "middle-uncollected",
+      "collected_variants": [
+        0,
+        2,
+        5
+      ],
+      "missing_variants": [
+        1,
+        3,
+        4,
+        6,
+        7
+      ],
+      "rng_u32": 2147483648,
+      "selected_variant": 4,
+      "output_payload_byte_at_offset_4": 172,
+      "native_setter_calls": 1,
+      "match": true
+    },
+    {
+      "name": "last-uncollected",
+      "collected_variants": [
+        0,
+        2,
+        5
+      ],
+      "missing_variants": [
+        1,
+        3,
+        4,
+        6,
+        7
+      ],
+      "rng_u32": 4294967295,
+      "selected_variant": 7,
+      "output_payload_byte_at_offset_4": 175,
+      "native_setter_calls": 1,
+      "match": true
+    },
+    {
+      "name": "single-uncollected",
+      "collected_variants": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        7
+      ],
+      "missing_variants": [
+        6
+      ],
+      "rng_u32": 4294967295,
+      "selected_variant": 6,
+      "output_payload_byte_at_offset_4": 174,
+      "native_setter_calls": 1,
+      "match": true
+    },
+    {
+      "name": "all-collected",
+      "collected_variants": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "missing_variants": [],
+      "rng_u32": 305419896,
+      "selected_variant": null,
+      "output_payload_byte_at_offset_4": 0,
+      "native_setter_calls": 0,
+      "match": true
+    }
+  ]
+}

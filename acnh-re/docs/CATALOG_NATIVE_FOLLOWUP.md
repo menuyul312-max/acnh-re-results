@@ -12,6 +12,8 @@ The source table join now confirms the layout behind those IDs: all 654 distinct
 
 The native `0xab0f50` control flow narrows those conditions further. `ItemRemakeType=Smartphone` exposes the payload byte only for `ItemKind` row indices `0x6c` and `0x38`; the resolved table labels both as Smartphone categories, while an out-of-range `ItemKind` value returns null. The Tool branch calls `0xaa7880`, which rejects row index `0x4e` and exposes the byte only when bit 8 is the first set bit in the 13-position vector returned by `0xa9e440`. The Ftr branch calls `0xaa84f0`, which reads the resolved `ItemKind.CanFtr` field (hash `0x90bc0855`); this identifies the gate as the item-kind furniture capability flag, though the mapper fixture still stubs that predicate. `0xf5ab20` consumes the 2,000-byte catalog bitset, enumerates absent indices within an item's eight-slot `RemakeID` range, chooses one absent variant with RNG, and writes the chosen low three bits through `0xaabf10`. Its caller `0xfa6380` is invoked by `0xfa60c0`, whose static trace updates `TodayGrowUp`, `BeyEvent_TotalPoint` thresholds at 100/200/300, and `BeyRequireFishSize`; this places the missing-variant selector on an event-point processing path, without proving that it is the only catalog acquisition source.
 
+`tools/catalog_variant_selection_native.py` now executes native `0xf5ab20`, `0xab2810`, and `0xaabf10` on a synthetic 2,000-byte bitset and item payload. Five cases verify first/middle/last missing variant selection, a single remaining variant, and no setter call when all eight variants are present; all five match with zero mismatches. The deterministic RNG confirms rank `floor(random_u32 * missing_count / 2^32)`, and native `0xaabf10` writes the selected ordinal into the low three bits at payload offset `+4`. Item validity, RemakeID field adaptation, variant count, payload pointer, and RNG are stubbed; this is a native helper fixture, not a live-save or real-item run. Output: `output/gameplay/catalog_variant_selection_native.json`.
+
 
 The catalog detail renderer adds a concrete UI binding for that selector. `0x118b6a0` shows the `STR_Remake_BodyColor` label for a remake-capable item and calls `0xab2700`; that helper formats a lookup key as `"%s_%05d_%d"`, with the last number read from the same low three payload bits. The byte therefore acts as a variant ordinal in the item-specific display key, not a directly decoded color name. The player-facing names still require matching message resources.
 
@@ -30,9 +32,10 @@ Run it with:
 ```sh
 PYTHONPATH=/workspace/acnh-re/.deps python acnh-re/tools/catalog_bitset_native.py
 PYTHONPATH=/workspace/acnh-re/.deps python acnh-re/tools/catalog_variant_mapper_native.py
+PYTHONPATH=/workspace/acnh-re/.deps python acnh-re/tools/catalog_variant_selection_native.py
 ```
 
-The first command writes `output/gameplay/catalog_bitset_native.json`; the second writes `output/gameplay/catalog_variant_mapper_native.json`.
+The commands write `catalog_bitset_native.json`, `catalog_variant_mapper_native.json`, and `catalog_variant_selection_native.json` in `output/gameplay/`, respectively.
 
 ## Static trigger evidence and open work
 
