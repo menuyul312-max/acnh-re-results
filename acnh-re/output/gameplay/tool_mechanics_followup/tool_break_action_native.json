@@ -1,0 +1,49 @@
+{
+  "schema": "acnh-re/tool-break-action-native/1",
+  "native_elf_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+  "entry": "0xe37830",
+  "cases": [
+    {
+      "branch_byte": 0,
+      "helper_boundary_calls": [
+        {
+          "helper": "F62E90",
+          "key": "BreakTool",
+          "amount": 1
+        }
+      ],
+      "state_offset_0x898_after": 0,
+      "state_offset_0x89c_after": 0
+    },
+    {
+      "branch_byte": 1,
+      "helper_boundary_calls": [
+        {
+          "helper": "E37950",
+          "arg0": "0x703fefc8",
+          "arg1": "0x80000ffc"
+        }
+      ],
+      "state_offset_0x898_after": 0,
+      "state_offset_0x89c_after": 0
+    }
+  ],
+  "case_count": 2,
+  "mismatches": 0,
+  "dependencies_stubbed": [
+    "0xdad700, 0xda7b10, 0x15bbc00 action-context helpers",
+    "0xda8ba0, 0xda3fc0 and 0xe37950 nonzero-branch context path",
+    "0xf62e90 achievement request boundary",
+    "0xdadfe0, 0xdfd7e0, 0xdb5720, 0xdb4360 trailing state helpers"
+  ],
+  "proven": [
+    "The native zero branch requests BreakTool += 1 through 0xf62e90.",
+    "The native nonzero branch dispatches to 0xe37950.",
+    "Both branches clear the state-local fields at +0x898 and +0x89c."
+  ],
+  "remaining": [
+    "The 0xe37950 context chain was not executed end-to-end here; 0xda5450 was separately tested at its writer boundary.",
+    "No inventory item mutation, per-item use decrement, or break threshold is established.",
+    "The save-backed behavior behind 0xf62e90 remains unexecuted."
+  ]
+}
