@@ -188,9 +188,25 @@ Detail kasus ada di
 Test memakai getter/setter sintetis, tidak menjalankan event perubahan hari,
 dan tidak memverifikasi save sesudah write.
 
-**Terbuka:** writer lain yang memberi atau mengurangi `Friendship`, sumber
-negatif yang benar-benar terpicu dalam permainan, mode yang dipakai event
-perubahan hari, serta batas/policy reset untuk `TalkNpc%dCount` belum terikat
-ke save live. Nilai negatif pada EventFlow tetap hanya input aksi yang
-dikonfigurasi. Native friendship test sebelumnya menguji floor level di
-`0xd34f80`, bukan sumber decay.
+### Kandidat update harian Friendship
+
+**[PSEUDO; kandidat, belum terbukti berjalan]** day-change driver `0xf53a70`
+memanggil `0xabff90`. Salah satu cabangnya memanggil `0xac0200`, yang membaca
+`Friendship` lewat `0xf486c0`, memanggil kalkulator `0xab9dc0`, lalu menyiapkan
+`nilai_lama + iStack_a0` untuk `0xf48840`. Decomp kalkulator menginisialisasi
+`iStack_a0` ke 0 dan mengisinya dengan -3 pada dua cabang validasi awal. Ini
+adalah jalur kandidat yang dapat mengurangi field pada proses harian, tetapi
+kondisi tersebut belum direproduksi native dan konteks caller selain day-change
+belum dipastikan. Karena itu belum cukup untuk menyebutnya decay normal.
+
+`0xd26b70` juga memanggil `0xd34c20`, tetapi helper `0xf48740` yang dipanggilnya
+tidak memanggil setter field; pseudo-code-nya membaca byte dari record. Saya
+tidak menghitungnya sebagai writer tambahan. Daftar pembaca/penulis dan rantai
+candidate disimpan di
+[`friendship_source_candidates.json`](../output/gameplay/villager_social_followup/friendship_source_candidates.json).
+
+**Terbuka:** konteks yang memicu cabang -3 pada `0xab9dc0`, apakah ia benar-benar
+terjadi pada hari normal, serta sumber lain seperti surat, pukulan jaring, atau
+pengabaian belum dibuktikan. Nilai negatif pada EventFlow tetap hanya input
+aksi yang dikonfigurasi. Native friendship test sebelumnya menguji floor level
+di `0xd34f80`, bukan sumber decay.
