@@ -165,7 +165,7 @@
       },
       "evidence": "0x416b00 reads SaveLand.Museum at node +0x20a168, calls 0xf772c0 (clamp above 4 to 0), and indexes the five-u32 rodata map [3, 3, 0, 1, 2]."
     },
-    "remaining_gap": "No captured live game process or real save file connects the accepted donation, the EventFlow flag write, and a later daily pass in one execution. The SaveMuseum writer/counter/query and daily updater use controlled or supplied state at their boundaries. The CFAD0 row keys are runtime data and are absent from the captured static tables, so the saved marker cannot be assigned a donor/player identity here."
+    "remaining_gap": "No captured live game process or real save file connects the accepted donation, the EventFlow flag write, and a later daily pass in one execution. The SaveMuseum writer/counter/query and daily updater use controlled or supplied state at their boundaries. NHSE cross-checks the saved marker byte as a donor/player number, but the active CFAD0 row values and the selector-to-player mapping are runtime data absent from the captured tables."
   },
   "owl_donation_item_type_static_native_map": {
     "handler_method_va": "0x3d8d10",
@@ -223,19 +223,19 @@
         "0xeaa8c0",
         "0xf78130"
       ],
-      "cfad0_configuration_path": {
+      "cfad0_runtime_row_path": {
         "caller_va": "0xcf420",
         "enumerator_va": "0xcfad0",
-        "configuration_rows": "runtime pointers at param_1+0x100, count at param_1+0xf8; concrete rows are not present in captured static tables",
+        "runtime_rows": "runtime pointers at param_1+0x100, count at param_1+0xf8; concrete rows are not present in captured static tables",
         "wrapper_va": "0xe684f0",
         "writer_va": "0xe68280",
         "argument_flow": "CFAD0 calls E684F0(manager, second_word & 1, first_u32); E684F0 forwards that first_u32 to E68280, which stores its low byte at the active row +0xb0d.",
-        "query_join": "OwlDonationDone's mode-2 query selects an active state row using its event-context selector and returns that row's +0xb0d byte; this becomes the per-item SaveMuseum marker.",
-        "concrete_active_keys": "Unavailable: the key values are supplied by the runtime configuration row list, which is not embedded in the extracted EventFlow or table files."
+        "query_join": "OwlDonationDone's mode-2 query selects an active state row using its event-context selector and returns that row's +0xb0d byte; this becomes the per-item SaveMuseum marker, which the NHSE save-format/editor cross-check labels as the donor/player number.",
+        "concrete_active_row_keys": "Unavailable: the key values are supplied by the runtime row list, which is not embedded in the extracted EventFlow or table files."
       },
-      "persisted_semantic_label": "low byte of the active kind-0 CFAD0 runtime configuration key selected by OwlDonationDone",
+      "persisted_semantic_label": "donor/player number; game-side producer is the low byte of the selected active kind-0 CFAD0 runtime row key (NHSE save-format/editor cross-check)",
       "byte_domain": "On a successful state query the value is a u8 (0x00..0xff). Query failure returns 0xffffffff and F78130 exits without writing. F77F60 treats a saved 0xff byte as a non-duplicate exemption; static evidence does not show whether any active CFAD0 key has low byte 0xff.",
-      "donor_identity_status": "Not established. Other E68280 callers pass 0..7 identity-pair or MakeVillagePlayerFlag slot values, but these are generic state-manager call sites and do not identify the CFAD0 key used by Museum."
+      "donor_identity_status": "The saved +0x3004 byte is labeled as the donor/player number by the NHSE Museum save-format/editor cross-check. The game's stored value is the low byte of the selected active CFAD0 row key; its concrete runtime full-u32 key and the selector-to-player mapping are still unavailable. Other E68280 callers passing 0..7 are generic state-manager evidence and do not provide Museum's runtime row keys."
     },
     "state_byte_producer": {
       "producer_va": "0xe68280",
@@ -266,10 +266,10 @@
         },
         {
           "va": "0xe684f0",
-          "observed_arguments": "wrapper called by 0xcfad0; forwards kind 0/1 and param_3 from a runtime configuration row"
+          "observed_arguments": "wrapper called by 0xcfad0; forwards kind 0/1 and param_3 from a runtime row"
         }
       ],
-      "meaning_status": "The Museum marker path returns the active kind-0 row's +0xb0d byte; CFAD0 populates that byte from the low byte of a runtime configuration row's first u32. Other E68280 callers do pass 0..7 identity-pair or MakeVillagePlayerFlag slot values, but those values cannot be assigned to the Museum path without the missing CFAD0 runtime rows.",
+      "meaning_status": "The Museum marker path returns the active kind-0 row's +0xb0d byte; CFAD0 populates that byte from the low byte of a runtime row's first u32. NHSE labels the matching SaveMuseum byte as the donating player number. Exact CFAD0 row values and selector-to-player mapping still require runtime evidence; other E68280 callers' 0..7 values are not substitutes for those rows.",
       "evidence": "Static Ghidra decompilation of the original NSO plus bounded fixture output at museum_donation_followup/marker_state_native.json; caller objects and live save state were not executed."
     },
     "bounded_native_fixture": {
@@ -280,7 +280,313 @@
       "scope": "Original E68280/E684F0/E68900/EAA8C0/FA4100/FA4300 bodies; context, state views, and manager memory are synthetic or controlled."
     },
     "known_duplicate_gate_effect": "F77F60 treats marker 0xff as a non-duplicate exemption; F773F0 does not read marker bytes when counting accepted records.",
-    "remaining_meaning": "The Museum saved marker is statically joined to the low byte of an active kind-0 CFAD0 configuration key. The key's concrete runtime value and any donor/player identity it may encode remain unobserved. Query failure is 0xffffffff and is rejected by the writer; saved 0xff is instead the duplicate gate's exemption value."
+    "remaining_meaning": "NHSE's save-format/editor cross-check labels the Museum saved marker as the donor/player number; the game's static path obtains it as the low byte of an active kind-0 CFAD0 runtime row key. The key's concrete runtime full-u32 value, active row list, and selector-to-player mapping remain unobserved. Query failure is 0xffffffff and is rejected by the writer; saved 0xff is instead the duplicate gate's exemption value."
+  },
+  "runtime_row_boundary": {
+    "source_nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+    "file_backed_segments": [
+      {
+        "va_start": "0x0",
+        "file_end_va": "0x2211a60",
+        "bytes": 35723872
+      },
+      {
+        "va_start": "0x2212000",
+        "file_end_va": "0x301b77c",
+        "bytes": 14718844
+      },
+      {
+        "va_start": "0x301c000",
+        "file_end_va": "0x333dec8",
+        "bytes": 3284680
+      }
+    ],
+    "zero_fill_bss_range": {
+      "start_va": "0x333dec8",
+      "end_va_exclusive": "0x3ab7000",
+      "bytes": 7835960
+    },
+    "runtime_global_pointer_cells": [
+      {
+        "va": "0x33d3cb0",
+        "file_backed": false,
+        "role": "CFAD0/EAA8C0 state-manager pointer cell; runtime value is not in the NSO image"
+      },
+      {
+        "va": "0x33d4ff0",
+        "file_backed": false,
+        "role": "CFAD0/EAA8C0 state-manager pointer cell; runtime value is not in the NSO image"
+      }
+    ],
+    "static_reference_inventory": {
+      "function_index_direct_callers": [
+        "0xcf420"
+      ],
+      "code_pointer_array_catalog": {
+        "sequences_scanned": 18348,
+        "entries_scanned": 192637,
+        "target_hits": {
+          "0xcfad0": [],
+          "0xcfce0": [],
+          "0xd0090": [],
+          "0xd0310": [],
+          "0xe684f0": [],
+          "0xe68280": []
+        },
+        "scope_limit": "The catalog lists relocated code-pointer sequences, not arbitrary object memory or CFAD0 runtime rows; a miss does not exclude indirect references outside this catalog."
+      },
+      "resolved_tables_scanned": 164,
+      "museum_named_tables": [
+        "MuseumFossilDonateInfo",
+        "MuseumNPCLayoutInfo",
+        "MuseumNPCSilhouette",
+        "MuseumNPCSpotTalk",
+        "MuseumNameboardInfo",
+        "MuseumWatchPoint"
+      ],
+      "eventflows_scanned": 456,
+      "owl_donation_done_uses": 3,
+      "local_save_layout_crosscheck": {
+        "root_size": "0x4fa0d8",
+        "museum_node": "0x20a168",
+        "museum_gsave_land_relative_data_offset": "0x411a80",
+        "museum_size": "0x3404"
+      }
+    },
+    "cfad0_runtime_row_list": {
+      "enumerator_va": "0xcfad0",
+      "direct_caller_va": "0xcf420",
+      "count_offset": "+0xf8",
+      "pointer_array_offset": "+0x100",
+      "row_payload": [
+        "u32 key at row+0",
+        "u32 flags at row+4; bit0 selects kind 0/1"
+      ],
+      "state_writer_call": "E684F0(manager, row[1] & 1, row[0])",
+      "row_list_mutators": [
+        "0xcfce0",
+        "0xd0090",
+        "0xd0310"
+      ],
+      "storage_status": "The row pointer array and its records are object-owned runtime state; CFAD0 dereferences them and the captured static image has no literal row-value array.",
+      "concrete_key_values": null
+    },
+    "owl_donation_done_context_selection": {
+      "action_va": "0x2c2410",
+      "context_to_writer_va": [
+        "0xf780e0",
+        "0xef62f0",
+        "0xeaa8c0"
+      ],
+      "selector_normalizer_va": "0xda3fc0",
+      "selector_rule": "Reads the context's first byte; values above 7 become 0xff.",
+      "selector_resolver_va": "0xeaa990",
+      "resolver_rule": "For session modes below 2, the selector is used as the state-row index and the row must be active. In mode 2, the selector must equal the current session-context byte from CC85B0, then F68930 maps it to an active row index.",
+      "query_rule": "EAA8C0 returns the selected active kind-0 row's +0xb0d byte; nonzero kind, inactive/missing row, or selector mismatch returns 0xffffffff.",
+      "eventflow_action_uses": [
+        {
+          "source": "B_data/EventFlow/SNPC_owl_01_Museum_Donation.bfevfl",
+          "flowchart": "SNPC_owl_01_Museum_Donation",
+          "name": "Event36",
+          "type": "action",
+          "params": {
+            "EntryVariableKeyBool_MultiComplete": "MultiComplete",
+            "EntryVariableKeyInt_CompleteRoomType": "CompleteRoomType"
+          },
+          "next": 43,
+          "action": "EventFlowActionOwlDonationDone"
+        },
+        {
+          "source": "B_data/EventFlow/SNPC_owl_01_Museum_Donation.bfevfl",
+          "flowchart": "SNPC_owl_01_Museum_Donation",
+          "name": "Event63",
+          "type": "action",
+          "params": {
+            "EntryVariableKeyBool_MultiComplete": "MultiComplete",
+            "EntryVariableKeyInt_CompleteRoomType": "CompleteRoomType"
+          },
+          "next": 81,
+          "action": "EventFlowActionOwlDonationDone"
+        },
+        {
+          "source": "B_data/EventFlow/SNPC_rco_01_Tent_1_Entries.bfevfl",
+          "flowchart": "SNPC_rco_01_Tent_1_Entries",
+          "name": "Event74",
+          "type": "action",
+          "params": {
+            "EntryVariableKeyBool_MultiComplete": "MultiComplete",
+            "EntryVariableKeyInt_CompleteRoomType": "CompleteRoomType"
+          },
+          "next": 85,
+          "action": "EventFlowActionOwlDonationDone"
+        }
+      ],
+      "eventflow_parameter_keys": [
+        "EntryVariableKeyBool_MultiComplete",
+        "EntryVariableKeyInt_CompleteRoomType"
+      ],
+      "interpretation_limit": "The selector participates in context/active-row selection, but its mapping to a donor/player number is not proven. A separate NHSE save-format/editor cross-check labels the returned saved byte as the donating player number.",
+      "eventflow_action_use_counts": {
+        "SNPC_owl_01_Museum_Donation": 2,
+        "SNPC_rco_01_Tent_1_Entries": 1
+      }
+    },
+    "external_save_format_crosscheck": {
+      "repository": "kwsch/NHSE",
+      "commit": "cb0745415945776f73375bf0a434a8babf059307",
+      "source_files": {
+        "museum_struct": {
+          "url": "https://github.com/kwsch/NHSE/blob/cb0745415945776f73375bf0a434a8babf059307/NHSE.Core/Structures/Misc/Museum.cs",
+          "blob_sha": "ead687405381cb1e48ba832f2354d678e5b076f7"
+        },
+        "museum_editor": {
+          "url": "https://github.com/kwsch/NHSE/blob/cb0745415945776f73375bf0a434a8babf059307/NHSE.Core/Structures/Misc/MuseumEditor.cs",
+          "blob_sha": "08758d0ec31ba9558954051b00f8b7603c6ac2eb"
+        },
+        "version_1_0_offsets": {
+          "url": "https://github.com/kwsch/NHSE/blob/cb0745415945776f73375bf0a434a8babf059307/NHSE.Core/Save/Offsets/MainSaveOffsets10.cs",
+          "blob_sha": "a756da713c8b0fe28b974f55767db542b97165d1"
+        },
+        "editor_form": {
+          "url": "https://github.com/kwsch/NHSE/blob/cb0745415945776f73375bf0a434a8babf059307/NHSE.WinForms/Subforms/Map/MuseumEditor.cs",
+          "blob_sha": "3f1feaf364e05bdbea94bf5029bd6c5e13e35a4d"
+        }
+      },
+      "corroborated_layout": {
+        "size": "0x3404",
+        "entry_count": 1024,
+        "dates_offset": "+0x0004",
+        "items_offset": "+0x1004",
+        "players_offset": "+0x3004",
+        "player_bytes": 1024,
+        "version_1_0_museum_save_offset": "GSaveLandStart + 0x411a80",
+        "version_1_0_gsave_land_start": "0x108",
+        "version_1_0_absolute_museum_offset": "0x411b88",
+        "local_layout_root_size": "0x4fa0d8",
+        "local_museum_data_offset_relative_to_layout_root": "0x411a80"
+      },
+      "semantic_crosscheck": "NHSE calls the +0x3004 1024-byte field Players; its editor reads/writes Players[index] and renders entries as 'Player {player} donated a(n) {name}'. This independently labels the saved marker byte as a donor/player number.",
+      "scope_limit": "The Museum structure is generic NHSE code; the separate MainSaveOffsets10 source matches this build's v1.0.0 Museum suboffset (+0x411a80 from GSaveLandStart 0x108, absolute MainSave offset 0x411b88; the native layout root size 0x4fa0d8 is the GSaveLand payload). This third-party save-format/editor cross-check does not expose the game's live CFAD0 row list, full u32 keys, runtime selector-to-player mapping, or a same-save day-change trace. NHSE's UI permits byte values 0..255 and does not establish which values the game emits.",
+      "semantic_join": "The game's static path stores the selected active kind-0 CFAD0 row key's low byte into SaveMuseum +0x3004+slot; NHSE's crosswalk labels that saved byte as the donor/player number. The low-byte meaning is cross-checked; the full runtime key and selected row values remain unknown."
+    },
+    "captured_museum_table_schemas": {
+      "MuseumFossilDonateInfo": {
+        "rows": 73,
+        "columns": [
+          "StageName",
+          "UniqueID",
+          "WatchItem",
+          "ModelID",
+          "CameraParamName"
+        ]
+      },
+      "MuseumNPCLayoutInfo": {
+        "rows": 83,
+        "columns": [
+          "UniqueID",
+          "WatchPointID",
+          "WatchItem",
+          "ReactionTalkKey",
+          "ReactionTalkLabelKey",
+          "BalloonTalkKey",
+          "BalloonTalkLabelKey"
+        ]
+      },
+      "MuseumNPCSilhouette": {
+        "rows": 17,
+        "columns": [
+          "SilhouettePosZ",
+          "SilhouettePosY",
+          "MuseumNpcRace",
+          "SilhouettePosX",
+          "UniqueID",
+          "SilhouetteName"
+        ]
+      },
+      "MuseumNPCSpotTalk": {
+        "rows": 9,
+        "columns": [
+          "StageName",
+          "UniqueID",
+          "SpotTalkName",
+          "SpotTalkKey",
+          "SpotTalkLabelKey"
+        ]
+      },
+      "MuseumNameboardInfo": {
+        "rows": 67,
+        "columns": [
+          "NameboardAngleY",
+          "StageName",
+          "NameboardPosZ",
+          "NameboardPosX",
+          "NameboardPosY",
+          "UniqueID",
+          "DonateItemFifth",
+          "DonateItemFirst",
+          "DonateItemSecond",
+          "DonateItemFourth",
+          "DonateItemThird",
+          "ModelResName"
+        ]
+      },
+      "MuseumWatchPoint": {
+        "rows": 86,
+        "columns": [
+          "WalkWatchOffsetZ",
+          "WalkWatchOffsetY",
+          "WatchPosX",
+          "WatchPosY",
+          "WatchPosZ",
+          "WatchAngleY",
+          "StageName",
+          "SilhouetteID",
+          "WalkWatchOffsetX",
+          "h_35ac2c17",
+          "UniqueID",
+          "PointName",
+          "BattlePoint",
+          "SilhouettePoint"
+        ]
+      }
+    },
+    "separate_progression_flag_crosswalk": {
+      "EventFlagsPlayerParam": {
+        "OwlDonationDone": {
+          "UniqueID": 138,
+          "DefaultValue": 0,
+          "MaxValue": 1
+        }
+      },
+      "EventFlagsLandParam": {
+        "MuseumGrowupEnable1": {
+          "UniqueID": 32,
+          "DefaultValue": 0,
+          "MaxValue": 1
+        },
+        "MuseumConstruction1": {
+          "UniqueID": 33,
+          "DefaultValue": 0,
+          "MaxValue": 5
+        },
+        "Museum2Built": {
+          "UniqueID": 34,
+          "DefaultValue": 0,
+          "MaxValue": 1
+        }
+      },
+      "limit": "These EventFlow progression flags are table-backed but do not provide the runtime CFAD0 row list or selected row values; the saved marker's player-number meaning comes from the separate NHSE cross-check."
+    },
+    "real_save_day_change_boundary": {
+      "static_join": "Accepted-item writer and 20-record flag path target SaveLand.Museum; day-change dispatcher later reads the same member and runs F77050.",
+      "native_fixture_scope": "Writer/count/marker/day-change helpers run on controlled or supplied state; the level-2 plus flag fixture advances across two one-day calls.",
+      "same_save_end_to_end": false,
+      "missing_runtime_evidence": [
+        "a real SaveMuseum image",
+        "live CFAD0 row values",
+        "one same-save trace from donation through MuseumGrowupEnable1 to a later daily transition"
+      ]
+    }
   },
   "static_findings": {
     "captured_eventflows_scanned": 456,
@@ -982,6 +1288,6 @@
     "No live save file or live table-manager memory is available; the SaveMuseum records and table manager are reconstructed fixtures.",
     "The native item key lookup and field getter are exercised across every local ItemParam row, but item-flag variants are not tested.",
     "No art-specific item/filter/handler path is proven in the captured data; this does not establish that the full game has no art donations.",
-    "A bounded state fixture validates native value forwarding and kind/token gates, but its row values are synthetic. Static code joins the Museum marker to the active kind-0 CFAD0 key byte; concrete CFAD0 runtime keys and any donor/player mapping are unavailable."
+    "A bounded state fixture validates native value forwarding and kind/token gates, but its row values are synthetic. The game's static code joins the Museum marker to the active kind-0 CFAD0 key byte; NHSE independently labels the saved byte as the donor/player number. Concrete CFAD0 runtime row values and selector-to-player mapping are unavailable."
   ]
 }

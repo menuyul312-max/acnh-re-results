@@ -244,7 +244,7 @@ def run_native_cases():
             "stored_plus_b0d": error_value,
             "query_result": hex(query_state2),
         },
-        "runtime_key_wrapper_case": {
+        "runtime_row_key_wrapper_case": {
             "wrapper_param_2": 0,
             "wrapper_param_3": "0x42",
             "returned_record": wrapper_index,
@@ -272,9 +272,9 @@ def run_native_cases():
         "case_count": len(value_cases) + len(pair_cases) + len(allocator_cases) + 8,
         "mismatches": 0,
         "not_proven": [
-            "Static callers show E68280 can receive 0..7 identity-pair or MakeVillagePlayerFlag slot values, but the Museum path reads a kind-0 CFAD0 configuration key from +0xb0d; the fixture's row values are synthetic and do not identify the donor.",
+            "The NHSE save-format/editor cross-check labels the SaveMuseum +0x3004 byte as the donating player number; this game-side fixture shows it is returned from a kind-0 CFAD0 runtime row key at +0xb0d. Fixture rows are synthetic and do not reveal concrete CFAD0 keys or the context-selector-to-player mapping.",
             "The full 0x2ee460 pair/context-copy and 0x2f5030/0x2f5240 caller bodies are static-only; the fixture exercises their slot allocators and the shared writer/query contract with controlled inputs.",
-            "CFAD0 supplies E684F0 with the first u32 from a runtime configuration row, and E68280 stores its low byte at +0xb0d; concrete CFAD0 row values are absent from the captured tables/runtime snapshot.",
+            "CFAD0 supplies E684F0 with the first u32 from a runtime row, and E68280 stores its low byte at +0xb0d; concrete CFAD0 full-u32 row values are absent from the captured tables/runtime snapshot.",
             "No live save file or running game is available to trace the selected CFAD0 key through OwlDonationDone into the next-day facility transition.",
         ],
     }

@@ -238,7 +238,7 @@ def verify():
         "results": results,
         "open": [
             "Per-kind ItemParam acceptance for special item encodings, beyond the tested ordinary 16-bit identity path",
-            "Semantic meaning/domain and live value source of the successful +0xb0d state byte; static producer 0xe68280 is documented in MUSEUM_ART_GYROID_FOLLOWUP.md",
+            "Concrete runtime CFAD0 full-u32 keys, selector-to-player mapping, and live marker values remain unavailable. NHSE labels the SaveMuseum +0x3004 byte as the donor/player number; predicate fixtures use controlled marker values.",
             "Art or gyroid donation coverage; the traced writer and F77E00 gate accept only native ItemKind values 64/65/70",
         ],
     }

@@ -10,6 +10,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import sqlite3
 import struct
 import sys
 import zlib
@@ -23,6 +24,7 @@ sys.path.insert(0, str(TOOLS))
 
 from native_emulator import Sandbox, regs  # noqa: E402
 import inventory_requirements_native as item_tables  # noqa: E402
+from nso_sandbox import load_nso, NSO_SHA256 as MAIN_NSO_SHA256  # noqa: E402
 from unicorn import UC_HOOK_CODE  # noqa: E402
 
 ITEM_VIEW_INIT = 0xA9C290
@@ -236,6 +238,220 @@ def static_audit(data_root, item_table, item_cols, kind_labels):
     }
 
 
+def runtime_row_boundary_audit(static):
+    """Record which parts of the CFAD0 key path exist only at runtime.
+
+    The module's BSS range is derived from the supplied NSO segments. The
+    field contracts are from the static decompilation and EventFlow/table
+    index; this function intentionally does not synthesize row values.
+    """
+    nso_path = ROOT / "inputs/additional_exefs/main"
+    segments, bss_size, _mod0, _image = load_nso(nso_path)
+    nso_hash = hashlib.sha256(nso_path.read_bytes()).hexdigest()
+    if nso_hash != MAIN_NSO_SHA256:
+        raise AssertionError(f"unexpected main NSO hash: {nso_hash}")
+
+    segment_ranges = [
+        {"va_start": hex(va), "file_end_va": hex(va + len(data)), "bytes": len(data)}
+        for va, data in segments
+    ]
+    bss_start = max(va + len(data) for va, data in segments)
+    bss_end = bss_start + bss_size
+    global_cells = [0x33D3CB0, 0x33D4FF0]
+    if any(not (bss_start <= cell < bss_end) for cell in global_cells):
+        raise AssertionError({"bss": (hex(bss_start), hex(bss_end)),
+                              "global_cells": [hex(cell) for cell in global_cells]})
+
+    index_path = DATA_ROOT / "output/index.sqlite"
+    with sqlite3.connect(f"file:{index_path}?mode=ro", uri=True) as index_db:
+        cfad0_callers = sorted(row[0] for row in index_db.execute(
+            "SELECT DISTINCT owner_va FROM direct_calls WHERE target_va = ?", (0xCFAD0,)
+        ))
+    if cfad0_callers != [0xCF420]:
+        raise AssertionError({"unexpected direct CFAD0 callers": [hex(x) for x in cfad0_callers]})
+
+    pointer_map_path = DATA_ROOT / "output/binary/code_pointer_arrays.json"
+    pointer_map = load_json(pointer_map_path)
+    pointer_targets = (0xCFAD0, 0xCFCE0, 0xD0090, 0xD0310, 0xE684F0, 0xE68280)
+    pointer_map_hits = {hex(target): [] for target in pointer_targets}
+    for array in pointer_map:
+        for entry in array.get("entries", []):
+            target = int(entry.get("target_va", "0"), 16)
+            if target in pointer_targets:
+                pointer_map_hits[hex(target)].append({
+                    "array_va": array.get("start_va"),
+                    "pointer_va": entry.get("pointer_va"),
+                })
+
+    flow_events = static["owl_donation_done"].get("events", [])
+    flow_use_counts = Counter(event.get("flowchart") for event in flow_events)
+    if flow_use_counts != Counter({
+        "SNPC_owl_01_Museum_Donation": 2,
+        "SNPC_rco_01_Tent_1_Entries": 1,
+    }):
+        raise AssertionError({"unexpected OwlDonationDone EventFlow use counts": flow_use_counts})
+    event_param_keys = sorted({
+        key for event in flow_events for key in (event.get("params") or {})
+    })
+    if event_param_keys != [
+        "EntryVariableKeyBool_MultiComplete",
+        "EntryVariableKeyInt_CompleteRoomType",
+    ]:
+        raise AssertionError({"unexpected OwlDonationDone EventFlow params": event_param_keys})
+
+    def rows_by_key(table_name, wanted):
+        table_path = DATA_ROOT / "output/tables_resolved" / f"{table_name}.json"
+        table = load_json(table_path)
+        columns = [column["name"] for column in table["columns"]]
+        rows = [dict(zip(columns, row)) for row in table["rows"]]
+        found = {row["Key"]: row for row in rows if row.get("Key") in wanted}
+        if set(found) != set(wanted):
+            raise AssertionError({"table": table_name, "missing_keys": sorted(set(wanted) - set(found))})
+        return found
+
+    player_flags = rows_by_key("EventFlagsPlayerParam", {"OwlDonationDone"})
+    land_flags = rows_by_key("EventFlagsLandParam", {
+        "MuseumGrowupEnable1", "MuseumConstruction1", "Museum2Built"
+    })
+
+    museum_table_schemas = {}
+    for table_name in (
+        "MuseumFossilDonateInfo", "MuseumNPCLayoutInfo", "MuseumNPCSilhouette",
+        "MuseumNPCSpotTalk", "MuseumNameboardInfo", "MuseumWatchPoint",
+    ):
+        table = load_json(DATA_ROOT / "output/tables_resolved" / f"{table_name}.json")
+        museum_table_schemas[table_name] = {
+            "rows": len(table["rows"]),
+            "columns": [column["name"] for column in table["columns"]],
+        }
+    resolved_table_files = sorted((DATA_ROOT / "output/tables_resolved").glob("*.json"))
+    museum_named_table_files = [path.stem for path in resolved_table_files
+                                if "museum" in path.stem.lower()]
+    local_save_layout = load_json(DATA_ROOT / "output/gameplay/save_layout.json")
+    layout_root = next(member for member in local_save_layout["members"]
+                       if member.get("parent") is None)
+    local_museum_member = next(member for member in local_save_layout["members"]
+                               if member.get("node") == "0x20a168")
+    if (layout_root.get("size"), local_museum_member.get("data"),
+            local_museum_member.get("size")) != ("0x4fa0d8", "0x411a80", "0x3404"):
+        raise AssertionError({"unexpected local SaveLand.Museum layout": {
+            "root": layout_root, "museum": local_museum_member,
+        }})
+
+    return {
+        "source_nso_sha256": nso_hash,
+        "file_backed_segments": segment_ranges,
+        "zero_fill_bss_range": {"start_va": hex(bss_start), "end_va_exclusive": hex(bss_end),
+                                "bytes": bss_size},
+        "runtime_global_pointer_cells": [
+            {"va": hex(cell), "file_backed": False,
+             "role": "CFAD0/EAA8C0 state-manager pointer cell; runtime value is not in the NSO image"}
+            for cell in global_cells
+        ],
+        "static_reference_inventory": {
+            "function_index_direct_callers": [hex(address) for address in cfad0_callers],
+            "code_pointer_array_catalog": {
+                "sequences_scanned": len(pointer_map),
+                "entries_scanned": sum(len(array.get("entries", [])) for array in pointer_map),
+                "target_hits": pointer_map_hits,
+                "scope_limit": "The catalog lists relocated code-pointer sequences, not arbitrary object memory or CFAD0 runtime rows; a miss does not exclude indirect references outside this catalog.",
+            },
+            "resolved_tables_scanned": len(resolved_table_files),
+            "museum_named_tables": museum_named_table_files,
+            "eventflows_scanned": static["captured_eventflows_scanned"],
+            "owl_donation_done_uses": len(flow_events),
+            "local_save_layout_crosscheck": {
+                "root_size": layout_root["size"],
+                "museum_node": local_museum_member["node"],
+                "museum_gsave_land_relative_data_offset": local_museum_member["data"],
+                "museum_size": local_museum_member["size"],
+            },
+        },
+        "cfad0_runtime_row_list": {
+            "enumerator_va": "0xcfad0",
+            "direct_caller_va": "0xcf420",
+            "count_offset": "+0xf8",
+            "pointer_array_offset": "+0x100",
+            "row_payload": ["u32 key at row+0", "u32 flags at row+4; bit0 selects kind 0/1"],
+            "state_writer_call": "E684F0(manager, row[1] & 1, row[0])",
+            "row_list_mutators": ["0xcfce0", "0xd0090", "0xd0310"],
+            "storage_status": "The row pointer array and its records are object-owned runtime state; CFAD0 dereferences them and the captured static image has no literal row-value array.",
+            "concrete_key_values": None,
+        },
+        "owl_donation_done_context_selection": {
+            "action_va": "0x2c2410",
+            "context_to_writer_va": ["0xf780e0", "0xef62f0", "0xeaa8c0"],
+            "selector_normalizer_va": "0xda3fc0",
+            "selector_rule": "Reads the context's first byte; values above 7 become 0xff.",
+            "selector_resolver_va": "0xeaa990",
+            "resolver_rule": "For session modes below 2, the selector is used as the state-row index and the row must be active. In mode 2, the selector must equal the current session-context byte from CC85B0, then F68930 maps it to an active row index.",
+            "query_rule": "EAA8C0 returns the selected active kind-0 row's +0xb0d byte; nonzero kind, inactive/missing row, or selector mismatch returns 0xffffffff.",
+            "eventflow_action_uses": flow_events,
+            "eventflow_parameter_keys": event_param_keys,
+            "interpretation_limit": "The selector participates in context/active-row selection, but its mapping to a donor/player number is not proven. A separate NHSE save-format/editor cross-check labels the returned saved byte as the donating player number.",
+            "eventflow_action_use_counts": dict(sorted(flow_use_counts.items())),
+        },
+        "external_save_format_crosscheck": {
+            "repository": "kwsch/NHSE",
+            "commit": "cb0745415945776f73375bf0a434a8babf059307",
+            "source_files": {
+                "museum_struct": {
+                    "url": "https://github.com/kwsch/NHSE/blob/cb0745415945776f73375bf0a434a8babf059307/NHSE.Core/Structures/Misc/Museum.cs",
+                    "blob_sha": "ead687405381cb1e48ba832f2354d678e5b076f7",
+                },
+                "museum_editor": {
+                    "url": "https://github.com/kwsch/NHSE/blob/cb0745415945776f73375bf0a434a8babf059307/NHSE.Core/Structures/Misc/MuseumEditor.cs",
+                    "blob_sha": "08758d0ec31ba9558954051b00f8b7603c6ac2eb",
+                },
+                "version_1_0_offsets": {
+                    "url": "https://github.com/kwsch/NHSE/blob/cb0745415945776f73375bf0a434a8babf059307/NHSE.Core/Save/Offsets/MainSaveOffsets10.cs",
+                    "blob_sha": "a756da713c8b0fe28b974f55767db542b97165d1",
+                },
+                "editor_form": {
+                    "url": "https://github.com/kwsch/NHSE/blob/cb0745415945776f73375bf0a434a8babf059307/NHSE.WinForms/Subforms/Map/MuseumEditor.cs",
+                    "blob_sha": "3f1feaf364e05bdbea94bf5029bd6c5e13e35a4d",
+                },
+            },
+            "corroborated_layout": {
+                "size": "0x3404",
+                "entry_count": 1024,
+                "dates_offset": "+0x0004",
+                "items_offset": "+0x1004",
+                "players_offset": "+0x3004",
+                "player_bytes": 1024,
+                "version_1_0_museum_save_offset": "GSaveLandStart + 0x411a80",
+                "version_1_0_gsave_land_start": "0x108",
+                "version_1_0_absolute_museum_offset": "0x411b88",
+                "local_layout_root_size": layout_root["size"],
+                "local_museum_data_offset_relative_to_layout_root": local_museum_member["data"],
+            },
+            "semantic_crosscheck": "NHSE calls the +0x3004 1024-byte field Players; its editor reads/writes Players[index] and renders entries as 'Player {player} donated a(n) {name}'. This independently labels the saved marker byte as a donor/player number.",
+            "scope_limit": "The Museum structure is generic NHSE code; the separate MainSaveOffsets10 source matches this build's v1.0.0 Museum suboffset (+0x411a80 from GSaveLandStart 0x108, absolute MainSave offset 0x411b88; the native layout root size 0x4fa0d8 is the GSaveLand payload). This third-party save-format/editor cross-check does not expose the game's live CFAD0 row list, full u32 keys, runtime selector-to-player mapping, or a same-save day-change trace. NHSE's UI permits byte values 0..255 and does not establish which values the game emits.",
+            "semantic_join": "The game's static path stores the selected active kind-0 CFAD0 row key's low byte into SaveMuseum +0x3004+slot; NHSE's crosswalk labels that saved byte as the donor/player number. The low-byte meaning is cross-checked; the full runtime key and selected row values remain unknown.",
+        },
+        "captured_museum_table_schemas": museum_table_schemas,
+        "separate_progression_flag_crosswalk": {
+            "EventFlagsPlayerParam": {
+                key: {"UniqueID": row["UniqueID"], "DefaultValue": row["DefaultValue"],
+                      "MaxValue": row["MaxValue"]}
+                for key, row in player_flags.items()
+            },
+            "EventFlagsLandParam": {
+                key: {"UniqueID": row["UniqueID"], "DefaultValue": row["DefaultValue"],
+                      "MaxValue": row["MaxValue"]}
+                for key, row in land_flags.items()
+            },
+            "limit": "These EventFlow progression flags are table-backed but do not provide the runtime CFAD0 row list or selected row values; the saved marker's player-number meaning comes from the separate NHSE cross-check.",
+        },
+        "real_save_day_change_boundary": {
+            "static_join": "Accepted-item writer and 20-record flag path target SaveLand.Museum; day-change dispatcher later reads the same member and runs F77050.",
+            "native_fixture_scope": "Writer/count/marker/day-change helpers run on controlled or supplied state; the level-2 plus flag fixture advances across two one-day calls.",
+            "same_save_end_to_end": False,
+            "missing_runtime_evidence": ["a real SaveMuseum image", "live CFAD0 row values", "one same-save trace from donation through MuseumGrowupEnable1 to a later daily transition"],
+        },
+    }
+
+
 def run_native_audit():
     item_tables.ROOT = DATA_ROOT
     sb = Sandbox()
@@ -354,6 +570,7 @@ def run_native_audit():
                             "expected": expected})
 
     static = static_audit(DATA_ROOT, item_table, cols, kind_labels)
+    runtime_row_boundary = runtime_row_boundary_audit(static)
     donation_type_table = struct.unpack("<7I", sb.image.read(0x29F1E68, 28))
     donation_type_map = {str(kind): (donation_type_table[kind - 65] if 65 <= kind <= 71 else 0)
                          for kind in range(64, 72)}
@@ -422,7 +639,7 @@ def run_native_audit():
                 "saved_museum_level_to_eventflow_value": {"0": 3, "1": 3, "2": 0, "3": 1, "4": 2},
                 "evidence": "0x416b00 reads SaveLand.Museum at node +0x20a168, calls 0xf772c0 (clamp above 4 to 0), and indexes the five-u32 rodata map [3, 3, 0, 1, 2].",
             },
-            "remaining_gap": "No captured live game process or real save file connects the accepted donation, the EventFlow flag write, and a later daily pass in one execution. The SaveMuseum writer/counter/query and daily updater use controlled or supplied state at their boundaries. The CFAD0 row keys are runtime data and are absent from the captured static tables, so the saved marker cannot be assigned a donor/player identity here.",
+            "remaining_gap": "No captured live game process or real save file connects the accepted donation, the EventFlow flag write, and a later daily pass in one execution. The SaveMuseum writer/counter/query and daily updater use controlled or supplied state at their boundaries. NHSE cross-checks the saved marker byte as a donor/player number, but the active CFAD0 row values and the selector-to-player mapping are runtime data absent from the captured tables.",
         },
         "owl_donation_item_type_static_native_map": {
             "handler_method_va": "0x3d8d10",
@@ -445,19 +662,19 @@ def run_native_audit():
                 "owl_donation_done_save_member": {"node_offset": "+0x20a168", "size": "0x3404"},
                 "accepted_item_gate_va": "0xf77e00",
                 "marker_writer_path": ["0x2c2410", "0xf780e0", "0xef62f0", "0xeaa8c0", "0xf78130"],
-                "cfad0_configuration_path": {
+                "cfad0_runtime_row_path": {
                     "caller_va": "0xcf420",
                     "enumerator_va": "0xcfad0",
-                    "configuration_rows": "runtime pointers at param_1+0x100, count at param_1+0xf8; concrete rows are not present in captured static tables",
+                    "runtime_rows": "runtime pointers at param_1+0x100, count at param_1+0xf8; concrete rows are not present in captured static tables",
                     "wrapper_va": "0xe684f0",
                     "writer_va": "0xe68280",
                     "argument_flow": "CFAD0 calls E684F0(manager, second_word & 1, first_u32); E684F0 forwards that first_u32 to E68280, which stores its low byte at the active row +0xb0d.",
-                    "query_join": "OwlDonationDone's mode-2 query selects an active state row using its event-context selector and returns that row's +0xb0d byte; this becomes the per-item SaveMuseum marker.",
-                    "concrete_active_keys": "Unavailable: the key values are supplied by the runtime configuration row list, which is not embedded in the extracted EventFlow or table files.",
+                    "query_join": "OwlDonationDone's mode-2 query selects an active state row using its event-context selector and returns that row's +0xb0d byte; this becomes the per-item SaveMuseum marker, which the NHSE save-format/editor cross-check labels as the donor/player number.",
+                    "concrete_active_row_keys": "Unavailable: the key values are supplied by the runtime row list, which is not embedded in the extracted EventFlow or table files.",
                 },
-                "persisted_semantic_label": "low byte of the active kind-0 CFAD0 runtime configuration key selected by OwlDonationDone",
+                "persisted_semantic_label": "donor/player number; game-side producer is the low byte of the selected active kind-0 CFAD0 runtime row key (NHSE save-format/editor cross-check)",
                 "byte_domain": "On a successful state query the value is a u8 (0x00..0xff). Query failure returns 0xffffffff and F78130 exits without writing. F77F60 treats a saved 0xff byte as a non-duplicate exemption; static evidence does not show whether any active CFAD0 key has low byte 0xff.",
-                "donor_identity_status": "Not established. Other E68280 callers pass 0..7 identity-pair or MakeVillagePlayerFlag slot values, but these are generic state-manager call sites and do not identify the CFAD0 key used by Museum.",
+                "donor_identity_status": "The saved +0x3004 byte is labeled as the donor/player number by the NHSE Museum save-format/editor cross-check. The game's stored value is the low byte of the selected active CFAD0 row key; its concrete runtime full-u32 key and the selector-to-player mapping are still unavailable. Other E68280 callers passing 0..7 are generic state-manager evidence and do not provide Museum's runtime row keys.",
             },
             "state_byte_producer": {
                 "producer_va": "0xe68280",
@@ -474,9 +691,9 @@ def run_native_audit():
                     {"va": "0xcd9f0", "observed_arguments": "FA4300 maps an identity pair to an existing slot 0..7; on match, E68280(row, 0, slot, 1)"},
                     {"va": "0x2ee460", "observed_arguments": "when FA3C10 finds no pair match, FA4100 allocates the pair in a free slot 0..7; after associated context copies, E68280(row, 0, slot, 1)"},
                     {"va": "0x2f5240", "observed_arguments": "called by 0x2f4f40 with the 0x2f5030 result; 0x2f5030 selects a 0..7 slot whose MakeVillagePlayerFlag query succeeds, or returns 0xffffffff"},
-                    {"va": "0xe684f0", "observed_arguments": "wrapper called by 0xcfad0; forwards kind 0/1 and param_3 from a runtime configuration row"},
+                    {"va": "0xe684f0", "observed_arguments": "wrapper called by 0xcfad0; forwards kind 0/1 and param_3 from a runtime row"},
                 ],
-                "meaning_status": "The Museum marker path returns the active kind-0 row's +0xb0d byte; CFAD0 populates that byte from the low byte of a runtime configuration row's first u32. Other E68280 callers do pass 0..7 identity-pair or MakeVillagePlayerFlag slot values, but those values cannot be assigned to the Museum path without the missing CFAD0 runtime rows.",
+                "meaning_status": "The Museum marker path returns the active kind-0 row's +0xb0d byte; CFAD0 populates that byte from the low byte of a runtime row's first u32. NHSE labels the matching SaveMuseum byte as the donating player number. Exact CFAD0 row values and selector-to-player mapping still require runtime evidence; other E68280 callers' 0..7 values are not substitutes for those rows.",
                 "evidence": "Static Ghidra decompilation of the original NSO plus bounded fixture output at museum_donation_followup/marker_state_native.json; caller objects and live save state were not executed.",
             },
             "bounded_native_fixture": {
@@ -487,15 +704,16 @@ def run_native_audit():
                 "scope": "Original E68280/E684F0/E68900/EAA8C0/FA4100/FA4300 bodies; context, state views, and manager memory are synthetic or controlled.",
             },
             "known_duplicate_gate_effect": "F77F60 treats marker 0xff as a non-duplicate exemption; F773F0 does not read marker bytes when counting accepted records.",
-            "remaining_meaning": "The Museum saved marker is statically joined to the low byte of an active kind-0 CFAD0 configuration key. The key's concrete runtime value and any donor/player identity it may encode remain unobserved. Query failure is 0xffffffff and is rejected by the writer; saved 0xff is instead the duplicate gate's exemption value.",
+            "remaining_meaning": "NHSE's save-format/editor cross-check labels the Museum saved marker as the donor/player number; the game's static path obtains it as the low byte of an active kind-0 CFAD0 runtime row key. The key's concrete runtime full-u32 value, active row list, and selector-to-player mapping remain unobserved. Query failure is 0xffffffff and is rejected by the writer; saved 0xff is instead the duplicate gate's exemption value.",
         },
+        "runtime_row_boundary": runtime_row_boundary,
         "static_findings": static,
         "hook_counts": {hex(address): count for address, count in sorted(hook_counts.items())},
         "limits": [
             "No live save file or live table-manager memory is available; the SaveMuseum records and table manager are reconstructed fixtures.",
             "The native item key lookup and field getter are exercised across every local ItemParam row, but item-flag variants are not tested.",
             "No art-specific item/filter/handler path is proven in the captured data; this does not establish that the full game has no art donations.",
-            "A bounded state fixture validates native value forwarding and kind/token gates, but its row values are synthetic. Static code joins the Museum marker to the active kind-0 CFAD0 key byte; concrete CFAD0 runtime keys and any donor/player mapping are unavailable.",
+            "A bounded state fixture validates native value forwarding and kind/token gates, but its row values are synthetic. The game's static code joins the Museum marker to the active kind-0 CFAD0 key byte; NHSE independently labels the saved byte as the donor/player number. Concrete CFAD0 runtime row values and selector-to-player mapping are unavailable.",
         ],
     }
 

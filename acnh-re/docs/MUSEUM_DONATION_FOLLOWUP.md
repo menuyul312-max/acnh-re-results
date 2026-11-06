@@ -32,11 +32,11 @@ Machine-readable output: [`predicate_native.json`](../output/gameplay/museum_don
 PYTHONPATH=/workspace/acnh-re/.deps python3 acnh-re/tools/museum_donation_predicate_native.py
 ```
 
-The native string initializer at `0x3da0b0` contains `cUISelect , cDeliveryItem`. The two tested tokens are taken from this literal; the fixture supplies parser/token state explicitly. The successful marker value is now joined statically to the low byte of an active kind-0 CFAD0 runtime configuration key; the concrete Museum keys and their player meaning remain open. See [`MUSEUM_ART_GYROID_FOLLOWUP.md`](MUSEUM_ART_GYROID_FOLLOWUP.md#marker-and-remaining-unknowns).
+The native string initializer at `0x3da0b0` contains `cUISelect , cDeliveryItem`. The two tested tokens are taken from this literal; the fixture supplies parser/token state explicitly. The successful marker value is joined statically to the low byte of an active kind-0 CFAD0 runtime row key. A pinned NHSE save-format/editor cross-check labels the saved `+0x3004` byte as the donor/player number; concrete runtime row keys and selector-to-player mapping remain open. See [`MUSEUM_ART_GYROID_FOLLOWUP.md`](MUSEUM_ART_GYROID_FOLLOWUP.md#external-save-format-cross-check).
 
 ## SaveMuseum donation-list writer — native with controlled adapters
 
-The NSO save-layout audit places `SaveLand.Museum` at save offset `0x411a80`, size `0x3404`. Native `0xf77f60` reads item records beginning at view `+0x1004` and marker bytes at `+0x3004`. The insertion routine `0xf78130` confirms a 1,024-slot layout: it probes a signed 16-bit ID at `+0x1004 + 8*i` and treats `-2` as empty; it copies an 8-byte item record to that slot, writes a packed calendar date (`year:u16, month:u8, day:u8`) at `+4 + 4*i`, and writes one marker byte at `+0x3004 + i`. Native `0xf41eb0` copies those date fields from the calendar source and calls the `nn::time::IsValidDate` import. With `MuseumLevel` at `+0`, these fields exactly fill the `0x3404` block.
+The NSO save-layout audit places `SaveLand.Museum` at GSaveLand-relative offset `+0x411a80`, size `0x3404` (absolute MainSave offset `0x411b88` for this v1.0.0 layout). Native `0xf77f60` reads item records beginning at view `+0x1004` and marker bytes at `+0x3004`. The insertion routine `0xf78130` confirms a 1,024-slot layout: it probes a signed 16-bit ID at `+0x1004 + 8*i` and treats `-2` as empty; it copies an 8-byte item record to that slot, writes a packed calendar date (`year:u16, month:u8, day:u8`) at `+4 + 4*i`, and writes one marker byte at `+0x3004 + i`. Native `0xf41eb0` copies those date fields from the calendar source and calls the `nn::time::IsValidDate` import. With `MuseumLevel` at `+0`, these fields exactly fill the `0x3404` block.
 
 `0xf78130` compares the item's native `ItemKind` value with three globals (at `0x35ec944`, `0x35ec948`, `0x35ec94c`) and only inserts values 70, 65, and 64. The local resolved ItemParam enum crosswalk labels those Fossil, Fish, and Insect, respectively. The runner executes native `0xa9f670` over a synthetic one-row kind table while controlling its row index; this tests the category gates but not the live ItemParam row selection.
 
@@ -56,12 +56,20 @@ Machine-readable outputs: [`predicate_native.json`](../output/gameplay/museum_do
 The marker's value flow is now joined in
 [`MUSEUM_ART_GYROID_FOLLOWUP.md`](MUSEUM_ART_GYROID_FOLLOWUP.md#marker-and-remaining-unknowns):
 `OwlDonationDone` selects an active kind-0 row, and CFAD0 populates that row's
-`+0xb0d` from the low byte of a runtime configuration key. Other
+`+0xb0d` from the low byte of a runtime row key. Other
 state-kind-0 callers pass identity-pair or `MakeVillagePlayerFlag` slots, but
-those generic uses do not label the Museum value. The bounded native fixture
+those generic uses do not expose Museum's runtime row keys. The bounded native fixture
 executes the writer, wrapper, lookup, and query over synthetic rows and
-verifies 32 value and state cases; it does not contain the Museum's runtime
-configuration keys.
+verifies 32 value and state cases; it does not contain the Museum's concrete
+runtime row values. NHSE independently names the saved byte array `Players`
+and renders records as “Player {player} donated …”, which supplies the donor
+number semantics but not the CFAD0 runtime key list. The follow-up also bounds the missing source: both
+state-manager pointer cells used by CFAD0/EAA8C0 lie in the NSO's zero-fill
+BSS, CFAD0 traverses an object-owned dynamic row list, and the three
+OwlDonationDone EventFlow uses provide only `MultiComplete` and
+`CompleteRoomType`. The context selector chooses an active row, but is not
+itself proof of the selected player index; see the
+[`runtime-key boundary`](MUSEUM_ART_GYROID_FOLLOWUP.md#runtime-key-and-active-row-boundary).
 
 ## Blathers and fossil assessment
 
@@ -71,7 +79,7 @@ This proves the fossil appraisal and donation decision order at the EventFlow la
 
 ## Save state, donation count, and expansion
 
-The save-layout tree labels a `SaveLand.Museum` block at save offset `0x411a80`, size `0x3404`, crosswalked to `::Game::SaveMuseum`. It exposes a four-byte `MuseumLevel` field at offset `+0`; native readers/writer map the remaining bytes to 1,024 item records, 1,024 packed year/month/day words, and 1,024 marker bytes. The traced insertion path accepts Fossil, Fish, and Insect. The per-item marker now has a static source label: it is the low byte of the active kind-0 CFAD0 configuration key selected by `OwlDonationDone`; the concrete key and whether it encodes the donor remain open. This does not establish whether art or gyroids use a separate ledger, whether the 1,024-entry data is the complete museum ledger, or the live meaning of each date field. The flags visible in EventFlow are progression state, not proof of per-species save bits: `cPlayer:OwlDonationDone` is set after the donation path, `cLand:DonationAmountForMuseum` starts at 15 and is decremented by one while the 20-donation border has not been reached, and `cLand:OwlFoundFossil`/`MuseumFossilComplete` control fossil conversation and completion.
+The save-layout tree labels a `SaveLand.Museum` block at GSaveLand-relative offset `+0x411a80`, size `0x3404`, crosswalked to `::Game::SaveMuseum`. The native layout root is `0x4fa0d8` bytes; NHSE's version-1.0.0 map gives `GSaveLandStart=0x108`, so the same member is at absolute MainSave offset `0x411b88`. The block exposes a four-byte `MuseumLevel` field at offset `+0`; native readers/writer map the remaining bytes to 1,024 item records, 1,024 packed year/month/day words, and 1,024 marker bytes. NHSE's Museum schema/editor identifies the `+0x3004` byte array as donor player numbers. The game's static writer obtains that byte as the low byte of the active kind-0 CFAD0 runtime row key, so the saved value's donor/player meaning is cross-checked while the active row's full key and selector-to-player mapping remain unobserved. The traced insertion path accepts Fossil, Fish, and Insect. This does not establish whether art or gyroids use a separate ledger, whether the 1,024-entry data is the complete museum ledger, or the live meaning of each date field. The flags visible in EventFlow are progression state, not proof of per-species save bits: `cPlayer:OwlDonationDone` is set after the donation path, `cLand:DonationAmountForMuseum` starts at 15 and is decremented by one while the 20-donation border has not been reached, and `cLand:OwlFoundFossil`/`MuseumFossilComplete` control fossil conversation and completion.
 
 In `SNPC_owl_11_Tent_Entries:owl_Tent_AfterDonation`, `0x416260` returns `count < Border`, so the `Border=20` case 0 branch is the at-least-20 path; it sets `FutaReadyForMuseum`, `FutaReadyForMuseumToday`, and `MuseumGrowupEnable1`. Case 1 subtracts one from `DonationAmountForMuseum` and may offer another item filter. The daily driver `0xf53a70` calls dispatcher `0xf545f0`, which acquires `SaveLand.Museum` at node `+0x20a168` (size `0x3404`) and calls `0xf77050`. The native fixture supplies saved level 2, an initial `MuseumConstruction1=0`, and the upgrade flag: the first one-day call clears the flag and sets `MuseumConstruction1=1`; a second one-day call advances the saved level to 3, clears the counter, and sets `Museum2Built`. EventFlow query `0x416b00` maps saved levels 0–4 through `0xf772c0` and rodata `[3,3,0,1,2]`, so saved levels 2 and 3 appear as EventFlow values 0 and 1. This establishes the static and controlled-native stages, but no real save ties a donation to that later transition.
 
@@ -94,7 +102,7 @@ PYTHONPATH=/workspace/acnh-re/.deps python3 acnh-re/tools/open_donated_native.py
 | Area | Current evidence | Status |
 |---|---|---|
 | Item eligibility | Filter/query sequence; native `F77E00` supports Fossil/Fish/Insect and rejects an ordinary duplicate with marker `0xff`; predicate and ordinary ID comparison reproduced | Partial `[EF/N/TBL]`; item-key adapters and uncommon item flags remain controlled/open; the duplicate gate's `0xff` exemption is established |
-| Donation save state | `SaveLand.Museum` spans `0x3404`; native list layout, 1,024 slots, sentinel, packed date words/markers, caller, writer, 32-case marker fixture, and CFAD0 key-byte value flow traced | Partial `[SAVE/N]`; art/gyroid ledger, full-list semantics, live date meaning, concrete CFAD0 runtime keys, and whether a key identifies the donor remain open |
+| Donation save state | `SaveLand.Museum` spans `0x3404`; native list layout, 1,024 slots, sentinel, packed date words/markers, caller, writer, 32-case marker fixture, and CFAD0 key-byte value flow traced; NHSE independently labels the matching marker byte as donor/player number; pointer cells and row-list boundary are runtime-only | Partial `[SAVE/N]`; art/gyroid ledger, full-list semantics, live date meaning, concrete CFAD0 row values/full u32 key, selector-to-player mapping, and a real-save join remain open |
 | Fossil assessment | `OwlFossilAppraise`, `AppraiseFossilDonationRate`, `Fossil_Check`, and follow-up branches traced; writer admits ItemKind Fossil | Partial `[EF/TBL/N]`; native appraisal result and the acceptance-to-20-donation counter link remain open |
 | Tent-to-building trigger | `0x2c2410` submission caller, writer, `0xf773f0` counter/`0x416260` threshold query, Border=20 EventFlow flag path, `0xf545f0` daily dispatch, `0xf77050` two-day upgrade, and EventFlow `MuseumLevel` map traced | Partial `[EF/PSEUDO/N]`; the donation, flag, and daily transition were not executed against one live save |
 | `OpenDonatedNum` | All 84 table rows; 828 native boundary cases across session modes 0–3 | `[TBL/N]` with controlled field/save accessors; live persistence and host ownership remain open |

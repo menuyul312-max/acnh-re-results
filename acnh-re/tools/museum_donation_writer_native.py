@@ -205,7 +205,7 @@ def verify():
         "not_proven": [
             "Semantic label/live EventFlow invocation for FUN_003c2410; its static calls into the gate and writer are proven.",
             "Which calendar source supplies each live donation, and whether game logic assigns additional meaning to the stored date.",
-            "Semantic meaning/domain and live value source of marker-byte values; static producer 0xe68280 is documented in MUSEUM_ART_GYROID_FOLLOWUP.md. The live item identity/key adapters are also controlled.",
+            "Concrete runtime CFAD0 full-u32 keys, selector-to-player mapping, and live marker values remain unavailable. NHSE labels the SaveMuseum +0x3004 byte as the donor/player number; this writer fixture uses controlled marker values. Live item identity/key adapters are also controlled.",
             "Live ItemParam row selection and donation kinds outside the three accepted codes, including art or gyroids.",
         ],
     }
