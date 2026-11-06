@@ -50,6 +50,8 @@ Data mesin untuk dokumen ini: [`output/gameplay/native_flag_refs.json`](../outpu
 | `0x5b9270` | gerbang ikan: Sirakansu hanya kode cuaca 4/5; mode sesi ≥ 2 membuang Can/Boot/Tire dan `Ore` (§8.1) | lulus |
 | `0x5e3570`, `0x5e36b0`, `0x9f1870`, `0x9f1920` | jam → slot ikan (3) dan serangga (6), mask slot untuk rentang jam (576 pasangan) (§8.1, §8.2) | lulus |
 | `0x95ebe0` | konstruktor `InsectAppearParam`: entri getter ke-k membaca kolom `Prob<Bulan><Slot>` dengan k = bulan × 6 + slot, dicek lewat hash kolom (§8.2) | lulus |
+| `0x957940` | undian serangga pulau: 1008 sampel atas tabel `InsectAppearParam`/`InsectStatusParam` asli (2 belahan bumi × 12 bulan × 6 slot × 7 undian, termasuk 0, `0xffffffff`, `0x80000000`): ItemID sama dengan model §8.2 (bobot u16, `r = u × W >> 32`, pengurangan kumulatif, `0xfffe` bila kosong) | lulus |
+| `0x958570` | saringan `AppearFg`: 85 serangga (57 ditolak), setiap bit `AppearFg` tunggal 0–23 menolak kecuali bit 3, plus 7 ID khusus (§8.2) | lulus |
 | `0x4d7110` | jenis batu baru: satu undian RNG lapangan `0x344d100`, indeks `u × 5 >> 32` ke tabel StoneA–E; 3000 state acak, state RNG sesudahnya ikut dicek, tanpa stub (§10) | lulus |
 | `0x7abd00` | jenis kerang: undian `0xf53420(100)` dari RNG harian asli dan dua tabel ambang musim (musim 0–3, 12.000 sampel); hanya lookup musim `0x2035f0` yang dikontrol (§10) | lulus |
 | `0x7a7010` | batas kerang harian/total dari bitset pantai: 3/9, 8/9 (satu sisi), 10/16 (dua sisi); 409 bitset termasuk batas x = 98/100 dan z = 78/80/180/182 (§10) | lulus |
@@ -620,7 +622,7 @@ Lalu `0x5b9a00` → `0x5b9ba0` (sungai) atau `0x5ba610` → `0x5ba7b0` (laut) me
 3. Kandidat pertama yang jumlah berjalannya > `r` terpilih.
 4. Tanpa kandidat [PSEUDO]: sungai → `Funa` (0x148), atau `Medaka` (0x8ae) bila mask memuat `Pond`; laut → `Aji` (0x8d8).
 
-**Undian per jenis.** Vtable yang sama slot 35 = `0x59bc10(field, out, kind)`: kind 0 → `0x5b9380` (sungai), 1 → `0x5b9f80` (laut). Bit 0 byte lapangan `+0x13e1` memilih varian. Bit itu juga memindahkan undian per posisi ke bulan/slot yang tersimpan di objek `0x33d3f78` `+0x210/+0x214` dan ke gerbang `0xb54980`/`0xb548c0`; arti flag dan objeknya masih terbuka.
+**Undian per jenis.** Vtable yang sama slot 35 = `0x59bc10(field, out, kind)`: kind 0 → `0x5b9380` (sungai), 1 → `0x5b9f80` (laut). Bit 0 byte lapangan `+0x13e1` memilih varian. Bit itu juga memindahkan undian per posisi ke bulan/slot yang tersimpan di objek `0x33d3f78` `+0x210/+0x214` dan ke gerbang `0xb54980`/`0xb548c0`. Objek `0x33d3f78` adalah ketersediaan ikan pulau misteri (tur Nook Miles) yang dibangun `0xb53d20`, pasangan ikan dari `0xb56850` (§8.2). Jadi bit 0 = mode pulau misteri [PSEUDO].
 - Bit 0 mati, `0x5b98b0` (terbukti native): `r = u × 100 >> 32`; baris pertama (termasuk sampah) dengan jumlah berjalan > `r`; baris itu harus lolos `0x5b9270` dan `0x5b8e30`, jika tidak hasilnya kosong (`0xfffe`) tanpa undian ulang.
 - Bit 0 hidup, `0x5b95b0` [PSEUDO]: baris yang lolos `0x5b9270` dan `0xb548c0` disaring dulu; `r = u × W >> 32`.
 
@@ -630,27 +632,56 @@ Lalu `0x5b9a00` → `0x5b9ba0` (sungai) atau `0x5ba610` → `0x5ba7b0` (laut) me
 
 ### 8.2 Serangga
 
-**Tabel [TBL].** `InsectAppearParam` (166 baris): satu baris per serangga per belahan bumi, 72 kolom `Prob` (12 bulan × 6 slot). Jumlah per slot tidak 100.
+**Tabel [TBL].** `InsectAppearParam` (166 baris): satu baris per serangga per belahan bumi, 72 kolom `Prob` (12 bulan × 6 slot). Jumlah per slot tidak 100. `InsectStatusParam` (85 baris) memberi `AppearWeather`, `Kind`, dan `AppearFg` (3 byte mentah).
 
-**Slot (terbukti native).** `0x9f1870` (jam sekarang) dan `0x9f1920` (waktu diberikan): jam 23–3 → `Midnight`, 4–7 → `Morning`, 8–15 → `Daytime`, 16 → `Evening1`, 17–18 → `Evening2`, 19–22 → `Night`. `0x9582d0` membaca `Prob` lewat entri getter bulan × 6 + slot. Urutan entri dari konstruktor `0x95ebe0` terbukti native.
+**Slot (terbukti native).** `0x9f1870` (jam sekarang) dan `0x9f1920` (waktu diberikan): jam 23–3 → `Midnight`, 4–7 → `Morning`, 8–15 → `Daytime`, 16 → `Evening1`, 17–18 → `Evening2`, 19–22 → `Night`. Getter `Prob` adalah entri bulan × 6 + slot dari array yang diisi konstruktor `0x95ebe0` di `+0x170`; urutannya terbukti native.
 
-**Mask cuaca [PSEUDO].** `0xb56850` membentuk mask atas enum `AppearWeather` (rodata `0x297aeb1`):
-- bit `AlwaysAppear` selalu aktif;
-- bit `AppearInSnowGroundTerm` aktif pada periode salju (`0x203c90`);
-- saat kode cuaca 4/5 aktif bit `AppearInRain`; selain itu aktif bit `NotAppearInRain`, ditambah bit `NotAppearInRainAndSnow` di luar periode salju;
-- bit `AppearInCherryBlossomOpenUpTerm` bila `0x203710`, bit `AppearInAutumnLeavesTerm` bila `0x2039d0` (peran kedua helper disimpulkan dari posisi bit).
+**Undian pulau (terbukti native).** `0x957940(manajer *0x33d3eb8)` tidak punya pemanggil langsung (dipanggil lewat pointer fungsi):
+1. Bulan/slot dari jam (`0x9f1870`); belahan bumi dari root save `+0x651fc` (nilai > 1 dibaca 0), lalu tabel lewat `0x957bf0`.
+2. Kandidat = baris (urutan tabel) dengan `Prob(bulan × 6 + slot)` ≠ 0 yang tidak ditolak `0x958570`.
+3. `W = Σ Prob` (u16), `r = rand32 × W >> 32` (RNG TLS `0x19aa0e0`). Dipilih kandidat pertama dengan `r < Prob` setelah dikurangi bobot sebelumnya. Bila W = 0 → `0xfffe`.
 
-Baris dengan bit cuaca di mask dan `Prob` ≠ 0 untuk bulan/slot manajer menjadi kandidat. Nomi (0x279) dikecualikan. Kandidat lalu disebar ke grup spawn (`0xb56f00`).
+**Saringan `0x958570` (terbukti native).** Serangga ditolak dari undian umum bila `AppearFg` punya bit apa pun selain bit 3, atau ID-nya salah satu dari 0x24b Amenbo, 0x250 Ga, 0x252 Gengorou, 0x25c Funkorogashi, 0x268 Konohamushi, 0x28b Yadokari, 0x1425 Tagame. Serangga yang ditolak muncul lewat jalur titik spawn masing-masing. Hasilnya, undian umum berisi serangga terbang/tanah tanpa titik khusus, termasuk empat kupu-kupu umum yang hanya punya bit 3.
 
-**Kasus khusus [PSEUDO].** Kutu pada villager (`0x959f70`, dari `0xd21890`): `u × 1000 >> 32 < Prob(Nomi) × arg`. Laba-laba Kumo (0x26b) dan Minomushi (0x26e) dari pohon (`0x8e0400`) hanya disiapkan bila `Prob` slot ini ≠ 0.
+**`AppearFg` [TBL] + [PSEUDO].** 18 bit dipakai (bit 3 dilewati). `0x9e8fb0` memetakan bit i lewat tabel manajer `+0x350` (jumlah `+0x348`, default 0x11) ke enum target spawn dan mengembalikan mask enum. Nama enumnya belum dibaca; kelompok menurut anggota tabel:
 
-**Masih terbuka.** Undian berbobot serangga dan daftar grup spawn (`0xb56f00`, `0xb58c10`, `AppearFg`).
+| Bit | Anggota | Kelompok (disimpulkan) |
+|---|---|---|
+| 0–4 | kupu-kupu besar, belalang sembah, lebah madu, kepinding, kepik (bit 3: empat kupu-kupu umum) | bunga |
+| 5 | Katatsumuri, Dangomushi, Mukade | batu |
+| 6–8 | Hae, Ari | benda busuk/sampah |
+| 10–12 | tonggeret, kumbang, kumbang tanduk | batang pohon |
+| 14–16 | Tamamushi, Baiorinmushi, dua kumbang sungut panjang | tunggul |
+
+**Batas per spesies `0x8ddbd0` [PSEUDO].** Menghitung serangga aktif di daftar lapangan (`+0x290`[`+0x2a0`], entri `+0x18`, jumlah `+0x10`) yang cocok dengan predikat spesies. Spawn diizinkan selama jumlah < batas:
+
+| Batas | Spesies |
+|---|---|
+| 3 | 0x24b Amenbo, 0x250 Ga, 0x28b Yadokari |
+| 2 | 0x24e Dangomushi + 0x274 Mukade (bersama), 0x24f Funamushi, 0x252 Gengorou + 0x1425 Tagame (bersama), 0x268 Konohamushi, 0x27a Okera |
+| 1 | 0x255 Hae, 0x25e Ka |
+| selalu ditolak | 0x26b Kumo, 0x26e Minomushi (jalur pohon `0x8e0400`) |
+
+Spesies lain: bila `0xb5ac30` (`0xfe8ab0` dengan argumen 0x11) salah, tanpa batas. Pengecualiannya serangga yang mask enum `AppearFg`-nya 0x40 (enum 6): batas 1 per grup itu, dan hanya bila `0x15c67d0(skor, 6, 1)` ≥ 5 (mode sesi < 2) dan `0x4c1310()` ≥ 7. Bila `0xb5ac30` benar: 0x16e3 Sakurapetal dan 0x1cce AutumnLeaf ditolak, lainnya tanpa batas. Arti `0xb5ac30` dan kedua ambang belum dibaca.
+
+**Pulau misteri (tur Nook Miles) [PSEUDO].** Bacaan lama "kandidat disebar ke grup spawn" keliru. `0xb5ac90` memanggil `0xb56850(*0x33d3f70)` lalu `0xb53d20(*0x33d3f78)`:
+- `0xb56850`: manajer memuat `MysteryTourInsectParam` (11 baris; `TargetInsect` = mask 85 bit atas indeks baris `InsectStatusParam`). Kandidat = baris `InsectStatusParam` (kecuali 0x279 Nomi) yang bit `AppearWeather`-nya ada di mask cuaca dan `Prob` bulan/slot tur ≠ 0. UniqueID tema diset bila minimal satu anggota menjadi kandidat (UniqueID 9: dua). `0xb56f00` = baris BCSV per indeks, `0xb58c10` = offset kolom `TargetInsect` (hash 0xd086a528).
+- Mask cuaca: bit `AlwaysAppear` selalu; `AppearInSnowGroundTerm` pada periode salju (`0x203c90`); kode cuaca 4/5 (`0x204690`) → `AppearInRain`, selain itu `NotAppearInRain` dan, di luar periode salju, `NotAppearInRainAndSnow`; `AppearInCherryBlossomOpenUpTerm` bila `0x203710`; `AppearInAutumnLeavesTerm` bila `0x2039d0`.
+- `0x957d70`: undian berbobot yang sama dengan `0x957940` atas kandidat tur, bulan/slot dari `*0x33d3f70 +0x218/+0x21c`.
+- `0xb53d20`: pasangan ikan (getter `Prob` ikan `0x5b34f0`, Sirakansu hanya cuaca 4/5). Objek inilah yang dibaca undian ikan saat bit `+0x13e1` aktif (§8.1).
+
+**Kasus khusus [PSEUDO].** Kutu pada villager (`0x959f70`, dari `0xd21890`): `u × 1000 >> 32 < Prob(Nomi) × arg`. Laba-laba Kumo (0x26b) dan Minomushi (0x26e) dari pohon (`0x8e0400`) hanya disiapkan bila `Prob` slot ini ≠ 0. Ketersediaan per rentang waktu (gaya ensiklopedia): `0x9591d0`, `0x959410`.
+
+**Masih terbuka.**
+- `0x957940` tidak membaca `AppearWeather`; tempat aturan cuaca diterapkan di pulau utama belum ditemukan.
+- Jalur titik spawn per kelompok `AppearFg` (bunga, batu, pohon, tunggul) dan pemanggilnya; nama enum tabel `+0x350`.
+- Arti `0xb5ac30`, ambang `0x15c67d0`/`0x4c1310` di batas spesies; batas `0x8ddbd0` belum dijalankan native.
 
 ## 9. Celah berikutnya (prioritas)
 
 | # | Celah | Titik masuk |
 |---|---|---|
-| 1 | Undian serangga dan grup spawn (ikan selesai, §8) | `0xb56850` → `0xb56f00`/`0xb58c10`, `InsectStatusParam.AppearFg` (`0x8e17f0`), enum `Kind` `0x9b7ec0` |
+| 1 | ~~Undian serangga~~ undian umum selesai (§8.2); sisa: aturan cuaca pulau utama, jalur titik spawn per kelompok `AppearFg` | `0x957940`, `0x9e8fb0`, `0x8ddbd0` |
 | 2 | ~~Regenerasi objek lapangan harian~~ selesai, lihat §10; sisa di `re_queue.json` → `field-daily-regrowth.left_open` | `0x4ae640`, `0x4b6e70`, `0x7a3ef0` |
 | 3 | Nook Miles+, pencapaian, skor turnamen | `0xf66020` → `0xf60690`, `0x309ff0`, `0x586bd0`, `0xfa60c0` |
 | 4 | Penambah poin keakraban | penulis field yang dibaca `0xd34a20` |

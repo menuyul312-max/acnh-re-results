@@ -221,6 +221,24 @@ class NativeVerificationTests(unittest.TestCase):
         self.assertEqual(cases['0x9f1870 / 0x9f1920 insect time slot']['native'],
                          [0] * 4 + [1] * 4 + [2] * 8 + [3] + [4] * 2 + [5] * 4 + [0])
 
+    def test_insect_draw_cases_are_native(self):
+        cases = json.loads((ROOT/'output'/'gameplay'/'gameplay_native.json').read_text())['cases']
+        draw, filt = cases['0x957940 insect weighted draw'], cases['0x958570 insect AppearFg filter']
+        self.assertTrue(draw['pass'] and filt['pass'])
+        self.assertEqual(draw['samples'], 2 * 12 * 6 * 7)
+        self.assertEqual(filt['items'], 85)
+        self.assertEqual([b for b, r in filt['single_bit_reject'].items() if not r], ['3'])
+        for special in ('0x24b', '0x250', '0x252', '0x25c', '0x268', '0x28b', '0x1425'):
+            self.assertIn(special, filt['rejected'])
+
+    def test_insect_reading(self):
+        ins = json.loads((ROOT/'output'/'gameplay'/'native_flag_refs.json').read_text())['data']['creature_spawn']['insect']
+        self.assertIn('r = rand32 * W >> 32', ins['island_draw']['pick'])
+        self.assertIn('does not read AppearWeather', ins['island_draw']['weather'])
+        self.assertIn('MysteryTourInsectParam', ins['mystery_tour']['availability_0xb56850'])
+        self.assertEqual(ins['species_cap_0x8ddbd0']['caps']['1'], ['0x255 Hae', '0x25e Ka'])
+        self.assertIn('terbukti native: draw 0x957940', ins['evidence'])
+
     def test_field_regrowth_cases_are_native(self):
         cases = json.loads((ROOT/'output'/'gameplay'/'gameplay_native.json').read_text())['cases']
         stone, shell, caps = cases['0x4d7110 new rock kind'], cases['0x7abd00 shell kind'], cases['0x7a7010 shell caps']
