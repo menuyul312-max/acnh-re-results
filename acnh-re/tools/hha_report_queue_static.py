@@ -20,6 +20,16 @@ BUCKET_RECEIVER = 0x7B6470
 REPORT_RECORD_BUILDER = 0xAC77A0
 REPORT_QUEUE_APPEND = 0xABF610
 REPORT_BUILDERS = [0x7B6470, 0x7B53B0, 0x7B55E0, 0x7B5E60, 0x7B61E0]
+HHA_GRADE_LABEL_RECORD_CODES = {
+    "0x7b5b00": {
+        "meaning": "selected report-condition ordinal",
+        "codes": [1, 2, 5, 10, 11, 12, 15, 20, 25, 30],
+    },
+    "0x7b6470": {
+        "meaning": "score/report-mask index",
+        "codes": [40, 41, 42, 44, 45, 46, 48, 51, 52, 53, 54, 55, 56, 57],
+    },
+}
 SCORE_TOTAL_EVALUATOR = 0x7B1FE0
 ITEM_SCORE_ACCUMULATOR = 0x7B36B0
 SCORE_BUCKET = 0x7B4FC0
@@ -38,6 +48,15 @@ QUEUE_LIFECYCLE = {
 }
 HHA_UI_FUNCTIONS = {0xAC2E30, 0xAC3360}
 HHA_UI_TRAMPOLINES = {0x7B8420, 0x7B8270}
+BUILD_CELEBRATION_NATIVE_CHAIN = [
+    (0xF53A70, 0xABA970, 0xF53F28),
+    (0xABA970, 0xABA9D0, 0xABA9B8),
+    (0xABA9D0, 0xABB250, 0xABA9F0),
+    (0xABB250, 0xABB3F0, 0xABB318),
+    (0xABB3F0, 0x7B1960, 0xABB44C),
+    (0xABB3F0, 0xABF610, 0xABB990),
+    (0x7B1960, 0xF95610, 0x7B19FC),
+]
 HHA_MESSAGE_MEMBERS = (
     "Sp/HHA/STR_HHA_Rank.msbt",
     "Sp/HHA/STR_HHA_RoomLocation.msbt",
@@ -132,6 +151,89 @@ def main():
             "queue_append_calls": xrefs_in_function(REPORT_QUEUE_APPEND, function),
         })
 
+    hha_mail_rows = [dict(r) for r in db.execute(
+        "SELECT flow,event_index,actor,kind,name,params_json FROM event_calls "
+        "WHERE params_json LIKE '%MAIL_SP_HHA%' OR params_json LIKE '%cHHA%' "
+        "ORDER BY flow,event_index")]
+
+    grade_resource = localized_inventory().get("Sp/HHA/MAIL_SP_HHA_Grade.msbt", {})
+    grade_message_labels = sorted(set(grade_resource.get("labels", [])))
+    grade_label_codes = {
+        source: {
+            "meaning": record_source["meaning"],
+            "record_codes": record_source["codes"],
+            "candidate_message_label_ids": [f"{code:03d}" for code in record_source["codes"]],
+            "matched_message_label_ids": [
+                f"{code:03d}" for code in record_source["codes"]
+                if f"{code:03d}" in grade_message_labels
+            ],
+            "unmatched_message_label_ids": [
+                f"{code:03d}" for code in record_source["codes"]
+                if f"{code:03d}" not in grade_message_labels
+            ],
+        }
+        for source, record_source in HHA_GRADE_LABEL_RECORD_CODES.items()
+    }
+    grade_label_crosswalk = {
+        "evidence_level": "NUMERIC_RESOURCE_LABEL_CROSSWALK",
+        "resource": "Sp/HHA/MAIL_SP_HHA_Grade.msbt",
+        "resource_label_count": len(grade_message_labels),
+        "record_code_field": "0xac77a0 stores its param_6 at record offset +0x28; HHA caller supplies the codes above.",
+        "record_code_sources": grade_label_codes,
+        "all_listed_codes_match_resource_label_ids": all(
+            not row["unmatched_message_label_ids"] for row in grade_label_codes.values()
+        ),
+        "interpretation_limit": (
+            "Matching decimal IDs establish a numeric crosswalk only. No resolved queue consumer has been shown "
+            "to pass record +0x28 as a MAIL_SP_HHA_Grade label or send the mail."
+        ),
+    }
+
+    build_celebration_edges = []
+    for caller, target, call_pc in BUILD_CELEBRATION_NATIVE_CHAIN:
+        actual = xrefs_in_function(target, caller)
+        if not any(int(row["pc"], 16) == call_pc for row in actual):
+            raise AssertionError({
+                "missing_build_celebration_edge": {
+                    "caller": hex(caller), "target": hex(target), "call_pc": hex(call_pc)
+                },
+                "actual": actual,
+            })
+        build_celebration_edges.append({
+            "caller_va": hex(caller), "target_va": hex(target), "call_pc": hex(call_pc)
+        })
+    build_flag = json.loads(FLAG_REFS.read_text())["data"]["flags"][
+        "cNpcMemory:HHABuildCelebraition"
+    ]
+    build_celebration_route = {
+        "daily_processor_chain": build_celebration_edges,
+        "native_flag": "cNpcMemory:HHABuildCelebraition",
+        "native_flag_name_ja": build_flag["name_ja"],
+        "native_flag_referencing_functions": build_flag["referencing_functions"],
+        "event_builder_va": "0xabb3f0",
+        "event_builder_string_reference": "HHABuildCelebraition",
+        "queue_append_va": "0xabf610",
+        "house_state_helper_va": "0x7b1960",
+        "helper_house_state_stride": "0x160",
+        "helper_active_state_bit": 6,
+        "helper_reads_saved_byte_via": "0xf95610",
+        "builder_gate": "(state_word_at_house_row_plus_0x144 & 0xfffffffc) == 4",
+        "build_celebration_eventflow_mail": [
+            {
+                "flow": row["flow"], "event_index": row["event_index"],
+                "actor": row["actor"], "kind": row["kind"], "name": row["name"],
+                "params_json": row["params_json"],
+            }
+            for row in hha_mail_rows
+            if "MAIL_SP_HHA_BuildCelebration" in row["params_json"]
+        ],
+        "interpretation_limit": (
+            "This is an adjacent house-expansion celebration producer. It queues a generic type-3 event and "
+            "shares a saved-byte reader with HHA evaluation, but no edge proves that it sends the grade mail, "
+            "consumes HHAGradeMailFlag, or matches the HHA report queue records."
+        ),
+    }
+
     score_decomp = {
         name: DECOMP / f"{name}.c"
         for name in ("7b1fe0", "7b4fc0", "7b6470", "ab9050")
@@ -180,14 +282,10 @@ def main():
         "limits": [
             "This is a static cross-reference of separate native functions, not an end-to-end native execution.",
             "The aggregate +0x136c is not itself mapped to a displayed HHA rank or threshold; the proven downstream values are per-area deltas and report-mask details.",
-            "Queued record codes 0x33/0x34 have no proven localization, UI, or mail consumer in the indexed evidence.",
+            "Queued record codes 0x33/0x34 numerically match MAIL_SP_HHA_Grade label IDs 051/052, but no consumer confirms that they are passed as those label IDs.",
         ],
     }
 
-    hha_mail_rows = [dict(r) for r in db.execute(
-        "SELECT flow,event_index,actor,kind,name,params_json FROM event_calls "
-        "WHERE params_json LIKE '%MAIL_SP_HHA%' OR params_json LIKE '%cHHA%' "
-        "ORDER BY flow,event_index")]
     grade_flag_eventflow_rows = [dict(r) for r in db.execute(
         "SELECT flow,event_index,actor,kind,name,params_json FROM event_calls "
         "WHERE params_json LIKE '%HHAGradeMailFlag%' OR name LIKE '%HHAGradeMailFlag%' "
@@ -307,8 +405,9 @@ def main():
     }
 
     decomp_hashes = {}
-    for name in ("7b1dd0", "7b1fe0", "7b29d0", "7b4720", "7b4fc0", "7b6470",
-                 "ac77a0", "abf610", "7b53b0", "7b55e0", "7b5e60", "7b61e0"):
+    for name in ("7b1dd0", "7b1fe0", "7b1960", "7b29d0", "7b4720", "7b4a20",
+                 "7b4fc0", "7b5b00", "7b6470", "aba970", "aba9d0", "abb250",
+                 "abb3f0", "ac77a0", "abf610", "7b53b0", "7b55e0", "7b5e60", "7b61e0"):
         path = DECOMP / f"{name}.c"
         if path.exists():
             decomp_hashes[f"{name}.c"] = hsha(path)
@@ -320,6 +419,8 @@ def main():
         "report_record_builder_nso_va": "0xac77a0",
         "report_queue_append_nso_va": "0xabf610",
         "report_branches": report_branches,
+        "grade_mail_label_candidate_crosswalk": grade_label_crosswalk,
+        "build_celebration_native_route": build_celebration_route,
         "score_total_to_report_bridge": score_total_bridge,
         "shared_queue_lifecycle": queue_lifecycle,
         "selector_and_saved_flag_source": selector_and_saved_flag,
@@ -342,8 +443,9 @@ def main():
         "decomp_sha256": decomp_hashes,
         "scope": (
             "Static references establish HHA score/report record creation, a shared queue lifecycle, "
-            "localized HHA UI resources, and fixed-point progression cutoffs. They do not establish "
-            "the HHA-specific queue consumer, displayed rank point cutoffs, or conversion to grade mail."
+            "localized HHA UI resources, fixed-point progression cutoffs, and a numeric candidate mapping "
+            "from report codes to MAIL_SP_HHA_Grade label IDs. They do not establish the HHA-specific queue "
+            "consumer, displayed rank point cutoffs, or conversion to sent grade mail."
         ),
     }
     db.close()

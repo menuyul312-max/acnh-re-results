@@ -112,6 +112,172 @@
       ]
     }
   ],
+  "grade_mail_label_candidate_crosswalk": {
+    "evidence_level": "NUMERIC_RESOURCE_LABEL_CROSSWALK",
+    "resource": "Sp/HHA/MAIL_SP_HHA_Grade.msbt",
+    "resource_label_count": 127,
+    "record_code_field": "0xac77a0 stores its param_6 at record offset +0x28; HHA caller supplies the codes above.",
+    "record_code_sources": {
+      "0x7b5b00": {
+        "meaning": "selected report-condition ordinal",
+        "record_codes": [
+          1,
+          2,
+          5,
+          10,
+          11,
+          12,
+          15,
+          20,
+          25,
+          30
+        ],
+        "candidate_message_label_ids": [
+          "001",
+          "002",
+          "005",
+          "010",
+          "011",
+          "012",
+          "015",
+          "020",
+          "025",
+          "030"
+        ],
+        "matched_message_label_ids": [
+          "001",
+          "002",
+          "005",
+          "010",
+          "011",
+          "012",
+          "015",
+          "020",
+          "025",
+          "030"
+        ],
+        "unmatched_message_label_ids": []
+      },
+      "0x7b6470": {
+        "meaning": "score/report-mask index",
+        "record_codes": [
+          40,
+          41,
+          42,
+          44,
+          45,
+          46,
+          48,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57
+        ],
+        "candidate_message_label_ids": [
+          "040",
+          "041",
+          "042",
+          "044",
+          "045",
+          "046",
+          "048",
+          "051",
+          "052",
+          "053",
+          "054",
+          "055",
+          "056",
+          "057"
+        ],
+        "matched_message_label_ids": [
+          "040",
+          "041",
+          "042",
+          "044",
+          "045",
+          "046",
+          "048",
+          "051",
+          "052",
+          "053",
+          "054",
+          "055",
+          "056",
+          "057"
+        ],
+        "unmatched_message_label_ids": []
+      }
+    },
+    "all_listed_codes_match_resource_label_ids": true,
+    "interpretation_limit": "Matching decimal IDs establish a numeric crosswalk only. No resolved queue consumer has been shown to pass record +0x28 as a MAIL_SP_HHA_Grade label or send the mail."
+  },
+  "build_celebration_native_route": {
+    "daily_processor_chain": [
+      {
+        "caller_va": "0xf53a70",
+        "target_va": "0xaba970",
+        "call_pc": "0xf53f28"
+      },
+      {
+        "caller_va": "0xaba970",
+        "target_va": "0xaba9d0",
+        "call_pc": "0xaba9b8"
+      },
+      {
+        "caller_va": "0xaba9d0",
+        "target_va": "0xabb250",
+        "call_pc": "0xaba9f0"
+      },
+      {
+        "caller_va": "0xabb250",
+        "target_va": "0xabb3f0",
+        "call_pc": "0xabb318"
+      },
+      {
+        "caller_va": "0xabb3f0",
+        "target_va": "0x7b1960",
+        "call_pc": "0xabb44c"
+      },
+      {
+        "caller_va": "0xabb3f0",
+        "target_va": "0xabf610",
+        "call_pc": "0xabb990"
+      },
+      {
+        "caller_va": "0x7b1960",
+        "target_va": "0xf95610",
+        "call_pc": "0x7b19fc"
+      }
+    ],
+    "native_flag": "cNpcMemory:HHABuildCelebraition",
+    "native_flag_name_ja": "増築祝いの手紙を出した",
+    "native_flag_referencing_functions": [
+      "0xabb3f0",
+      "0xabec30"
+    ],
+    "event_builder_va": "0xabb3f0",
+    "event_builder_string_reference": "HHABuildCelebraition",
+    "queue_append_va": "0xabf610",
+    "house_state_helper_va": "0x7b1960",
+    "helper_house_state_stride": "0x160",
+    "helper_active_state_bit": 6,
+    "helper_reads_saved_byte_via": "0xf95610",
+    "builder_gate": "(state_word_at_house_row_plus_0x144 & 0xfffffffc) == 4",
+    "build_celebration_eventflow_mail": [
+      {
+        "flow": "SNPC_rco_10_Common_UpgradeMyhome",
+        "event_index": 45,
+        "actor": "EventFlowSystemActor",
+        "kind": "actions",
+        "name": "EventFlowActionSystemMailSend",
+        "params_json": "{\"FromType\": \"cHHA\", \"FileIndex\": \"MAIL_SP_HHA_BuildCelebration\", \"Present\": \"cReward\", \"Route\": \"cFastTomorrow\", \"LabelIndex\": 1, \"TagType\": \"cNone\", \"ToSharePlayer\": false}"
+      }
+    ],
+    "interpretation_limit": "This is an adjacent house-expansion celebration producer. It queues a generic type-3 event and shares a saved-byte reader with HHA evaluation, but no edge proves that it sends the grade mail, consumes HHAGradeMailFlag, or matches the HHA report queue records."
+  },
   "score_total_to_report_bridge": {
     "evaluator_va": "0x7b1fe0",
     "item_score_accumulator_va": "0x7b36b0",
@@ -161,7 +327,7 @@
     "limits": [
       "This is a static cross-reference of separate native functions, not an end-to-end native execution.",
       "The aggregate +0x136c is not itself mapped to a displayed HHA rank or threshold; the proven downstream values are per-area deltas and report-mask details.",
-      "Queued record codes 0x33/0x34 have no proven localization, UI, or mail consumer in the indexed evidence."
+      "Queued record codes 0x33/0x34 numerically match MAIL_SP_HHA_Grade label IDs 051/052, but no consumer confirms that they are passed as those label IDs."
     ]
   },
   "shared_queue_lifecycle": {
@@ -987,10 +1153,17 @@
   "decomp_sha256": {
     "7b1dd0.c": "c7064c469e4d1c555d2783c5bb3d5a2474eb087cebfe6e388ba8eee0890bdde5",
     "7b1fe0.c": "8cb13dff97c159c991008500e5d6317d69c936bc8bc28071b462edc10c6c57e5",
+    "7b1960.c": "c28e2266b43fe51dd5a6934ff48250a7e737381a9a50c205b48dbbe409cb7230",
     "7b29d0.c": "5677f7126eda051d55fbcef6f64bde0f2fd12f6ba8cbd18ad4b40ab85b96a64a",
     "7b4720.c": "cdd8d5b5c0ee6a8b22513cbc498da5241dd73b36eb958a923215ee019bf709a4",
+    "7b4a20.c": "ab1ab4339d158730a19042d3529c53488bc8cf044fcb4ca3ba3fb4987fdc68bd",
     "7b4fc0.c": "de61d5e21e33e7cdf938028124ecbe164650003d941d62a5108d6f1be160db52",
+    "7b5b00.c": "5e12c53c4b0fdf9b60ee7930a67c20e43008dfe349ffb871888951ae9a651c07",
     "7b6470.c": "3c050b05f6ad0c12e6144e3280672704a5d912224b245d072ae08fd616e75cc2",
+    "aba970.c": "cb08af6359b82324c20908825d40d2a5590b5d59fddf6a10e7213b14539ca268",
+    "aba9d0.c": "fd82b5a5c8d59a0014d7c22e481a19df576a60bb48b703e549c80afc9b8e71c5",
+    "abb250.c": "3a6ab122e30effdd356135f048e63c38033a2ccdf621d812b83323417bdf2d47",
+    "abb3f0.c": "119a3ddd9a3c1403b2d4ad5798843b21a85aa26480a70ee915b7ad1b179c7326",
     "ac77a0.c": "2bb530751d484d07bbada5868eeee323de3efd45e575f2a2444b19294673303c",
     "abf610.c": "4875bdffd84630969a27471b92eb512e359366790c0cb54bfd8999974c601df4",
     "7b53b0.c": "256e96b273d641b7722778bc461f97fcf8e617a01d134ae442c258e5247ae2b6",
@@ -998,5 +1171,5 @@
     "7b5e60.c": "025385ec1ce1cec7249edf4692e1ae257d0f99a4eec33f105f7e2d7851c486fd",
     "7b61e0.c": "61237beaf7abdcf661587fc503005f16701a0e65bb72b1d9c5a72a53773edb7e"
   },
-  "scope": "Static references establish HHA score/report record creation, a shared queue lifecycle, localized HHA UI resources, and fixed-point progression cutoffs. They do not establish the HHA-specific queue consumer, displayed rank point cutoffs, or conversion to grade mail."
+  "scope": "Static references establish HHA score/report record creation, a shared queue lifecycle, localized HHA UI resources, fixed-point progression cutoffs, and a numeric candidate mapping from report codes to MAIL_SP_HHA_Grade label IDs. They do not establish the HHA-specific queue consumer, displayed rank point cutoffs, or conversion to sent grade mail."
 }
