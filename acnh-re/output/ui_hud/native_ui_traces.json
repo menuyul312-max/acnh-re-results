@@ -826,6 +826,163 @@
       "limits": [
         "The type IDs identify controller families, but do not by themselves identify concrete physical input bindings."
       ]
+    },
+    "ui_component_dispatch": {
+      "data_dispatch": {
+        "function_va": "0x1db2140",
+        "callers": [
+          "0x112a6f0",
+          "0x11455c0",
+          "0x135c150",
+          "0x142e610",
+          "0x1461b90"
+        ],
+        "virtual_handler_slot_offsets": [
+          {
+            "type": "LpLocator",
+            "offset": "0x10"
+          },
+          {
+            "type": "LpUniteButton",
+            "offset": "0x18"
+          },
+          {
+            "type": "LpDragButton",
+            "offset": "0x20"
+          },
+          {
+            "type": "LpKeyDecideIcon",
+            "offset": "0x28"
+          },
+          {
+            "type": "LpSelector",
+            "offset": "0x30"
+          },
+          {
+            "type": "LpScrollBar",
+            "offset": "0x38"
+          },
+          {
+            "type": "LpCharAnim",
+            "offset": "0x40"
+          },
+          {
+            "type": "LpTextAnim",
+            "offset": "0x48"
+          },
+          {
+            "type": "LpTraceGauge",
+            "offset": "0x50"
+          },
+          {
+            "type": "LpNumberAnim",
+            "offset": "0x58"
+          },
+          {
+            "type": "LpMultiNumberAnim",
+            "offset": "0x60"
+          },
+          {
+            "type": "LpTimer",
+            "offset": "0x68"
+          }
+        ],
+        "observed": "Reads UI component type names (including LpUniteButton) from the parsed layout/UI data and selects a type-specific virtual handler. The LpUniteButton branch selects vtable offset +0x18; the handler receives the component context and parsed record.",
+        "limit": "The pseudocode proves the type-to-slot selection and call shape, not the indirect method body, event source, or callback timing."
+      },
+      "followup_dispatch": {
+        "function_va": "0x1672890",
+        "callers": [
+          "0x112a6f0",
+          "0x135c150",
+          "0x1461b90"
+        ],
+        "virtual_handler_slot_offsets": [
+          {
+            "type": "LpLocator",
+            "offset": "0xa8"
+          },
+          {
+            "type": "LpUniteButton",
+            "offset": "0xb0"
+          },
+          {
+            "type": "LpDragButton",
+            "offset": "0xb8"
+          },
+          {
+            "type": "LpKeyDecideIcon",
+            "offset": "0xc0"
+          },
+          {
+            "type": "LpSelector",
+            "offset": "0xc8"
+          },
+          {
+            "type": "LpScrollBar",
+            "offset": "0xd0"
+          },
+          {
+            "type": "LpCharAnim",
+            "offset": "0xd8"
+          },
+          {
+            "type": "LpTextAnim",
+            "offset": "0xe0"
+          },
+          {
+            "type": "LpTraceGauge",
+            "offset": "0xe8"
+          },
+          {
+            "type": "LpNumberAnim",
+            "offset": "0xf0"
+          },
+          {
+            "type": "LpMultiNumberAnim",
+            "offset": "0xf8"
+          },
+          {
+            "type": "LpTimer",
+            "offset": "0x100"
+          },
+          {
+            "type": "UISysBounding",
+            "offset": "0x108"
+          },
+          {
+            "type": "UISysScrollBtnList",
+            "offset": "0x110"
+          },
+          {
+            "type": "UISysScrollSign",
+            "offset": "0x118"
+          }
+        ],
+        "observed": "Selects a second type-specific virtual handler for the same UI component type family. In callers 0x112a6f0, 0x135c150, and 0x1461b90 this dispatch occurs after 0x1db2140 in the builder path.",
+        "limit": "Indirect handler targets and per-type effects are unresolved; this is not proof of screen lifecycle or input routing."
+      },
+      "controller_factory_correlations": [
+        {
+          "class_name": "AppUniteBtnCtrl",
+          "factory_va": "0x112a910",
+          "factory_callers": [
+            "0x112a6f0",
+            "0x114db30"
+          ],
+          "shared_widget_setup_va": "0x130ca20",
+          "state_machine_initializer_va": "0x1dd0b40",
+          "observed": "0x112a910 stores the class token AppUniteBtnCtrl and creates a child control; its builder caller 0x112a6f0 also calls shared widget setup 0x130ca20, which delegates to 0x1dd0b40."
+        },
+        {
+          "class_name": "UniteBtnCtrl",
+          "factory_va": "0x1db5cf0",
+          "factory_caller": "0x1db3020",
+          "state_machine_initializer_va": "0x1dd0b40",
+          "observed": "0x1db5cf0 stores the class token UniteBtnCtrl and constructs the controller; 0x1db3020 calls this factory and then the common 18-state initializer 0x1dd0b40."
+        }
+      ],
+      "relationship_limit": "The matching LpUniteButton name in CNT1 and these native controller/type-dispatch paths provide a stronger family-level correlation. No recovered indirect handler body assigns all 91 CNT1 records to a specific factory, screen, or event source."
     }
   },
   "special_user_data_consumers": {
@@ -971,7 +1128,149 @@
         "UISysScrollSign"
       ],
       "observed": "Dispatches parsed ui2dsys type names to distinct virtual handlers; 0x1671c00 handles the three UISys* types in the same family.",
-      "limitation": "The mapping identifies component families but does not yet decode every handler's state transitions or bind all 803 asset-side records to their runtime instances."
+      "limitation": "Slot selection and builder order are static evidence; vtable targets, per-type runtime effects, asset-instance binding, and input/event behavior remain unresolved.",
+      "setup_dispatch_va": "0x1db2140",
+      "followup_dispatch_va": "0x1672890",
+      "observed_handler_slot_offsets": [
+        {
+          "type": "LpLocator",
+          "offset": "0xa8"
+        },
+        {
+          "type": "LpUniteButton",
+          "offset": "0xb0"
+        },
+        {
+          "type": "LpDragButton",
+          "offset": "0xb8"
+        },
+        {
+          "type": "LpKeyDecideIcon",
+          "offset": "0xc0"
+        },
+        {
+          "type": "LpSelector",
+          "offset": "0xc8"
+        },
+        {
+          "type": "LpScrollBar",
+          "offset": "0xd0"
+        },
+        {
+          "type": "LpCharAnim",
+          "offset": "0xd8"
+        },
+        {
+          "type": "LpTextAnim",
+          "offset": "0xe0"
+        },
+        {
+          "type": "LpTraceGauge",
+          "offset": "0xe8"
+        },
+        {
+          "type": "LpNumberAnim",
+          "offset": "0xf0"
+        },
+        {
+          "type": "LpMultiNumberAnim",
+          "offset": "0xf8"
+        },
+        {
+          "type": "LpTimer",
+          "offset": "0x100"
+        },
+        {
+          "type": "UISysBounding",
+          "offset": "0x108"
+        },
+        {
+          "type": "UISysScrollBtnList",
+          "offset": "0x110"
+        },
+        {
+          "type": "UISysScrollSign",
+          "offset": "0x118"
+        }
+      ],
+      "setup_dispatch_type_names": [
+        "LpLocator",
+        "LpUniteButton",
+        "LpDragButton",
+        "LpKeyDecideIcon",
+        "LpSelector",
+        "LpScrollBar",
+        "LpCharAnim",
+        "LpTextAnim",
+        "LpTraceGauge",
+        "LpNumberAnim",
+        "LpMultiNumberAnim",
+        "LpTimer"
+      ],
+      "setup_dispatch_slot_offsets": [
+        {
+          "type": "LpLocator",
+          "offset": "0x10"
+        },
+        {
+          "type": "LpUniteButton",
+          "offset": "0x18"
+        },
+        {
+          "type": "LpDragButton",
+          "offset": "0x20"
+        },
+        {
+          "type": "LpKeyDecideIcon",
+          "offset": "0x28"
+        },
+        {
+          "type": "LpSelector",
+          "offset": "0x30"
+        },
+        {
+          "type": "LpScrollBar",
+          "offset": "0x38"
+        },
+        {
+          "type": "LpCharAnim",
+          "offset": "0x40"
+        },
+        {
+          "type": "LpTextAnim",
+          "offset": "0x48"
+        },
+        {
+          "type": "LpTraceGauge",
+          "offset": "0x50"
+        },
+        {
+          "type": "LpNumberAnim",
+          "offset": "0x58"
+        },
+        {
+          "type": "LpMultiNumberAnim",
+          "offset": "0x60"
+        },
+        {
+          "type": "LpTimer",
+          "offset": "0x68"
+        }
+      ],
+      "dispatch_callers": {
+        "0x1db2140": [
+          "0x112a6f0",
+          "0x11455c0",
+          "0x135c150",
+          "0x142e610",
+          "0x1461b90"
+        ],
+        "0x1672890": [
+          "0x112a6f0",
+          "0x135c150",
+          "0x1461b90"
+        ]
+      }
     },
     "fleu_relation": {
       "observed_overlap": [
@@ -1011,6 +1310,7 @@
   "remaining_evidence_needed": [
     "A direct runtime/resource-manager trace or complete allocator lookup logic showing which archive supplies each duplicate PRT1 name, including .szs cases.",
     "Caller/vtable identification for MainScreenSmartPhone open/update/close and its relationship to MainScreen HUD state.",
+    "Resolve the indirect type-handler targets selected by 0x1db2140 and 0x1672890, then bind concrete component instances to CNT1 actions and screen controllers.",
     "Input-device event producer to all 13 mapped action names (including Focus/UnFocus/DecideTouch), callback/CNT1 order, modal push/pop, focus restoration, and teardown paths.",
     "A native FLEU application path mapping arrays to named userData values and animation frame timing.",
     "Synchronized game captures for renderer comparisons (origin/scale, hit bounds, clipping, BNTX channel behavior, sampler/blend/shader and font output)."
