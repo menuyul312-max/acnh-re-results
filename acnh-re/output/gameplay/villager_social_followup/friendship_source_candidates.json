@@ -1,0 +1,49 @@
+{
+  "evidence_basis": {
+    "shared_index": "/workspace/acnh-re/output/index.sqlite (read-only)",
+    "method": "Friendship string references, direct-call edges, and decompiled pseudocode",
+    "elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+    "nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900"
+  },
+  "known_paths": [
+    {
+      "name": "first-talk streak reward",
+      "status": "native calculation and writer boundary; caller is pseudocode",
+      "chain": ["0xc84240", "0xd34cb0", "0xd34f80", "0xef2c70"],
+      "artifacts": ["friendship_delta_native.json", "talk_streak_reset_native.json"]
+    },
+    {
+      "name": "EventFlow AddFriendship action",
+      "status": "native action callback forwards configured AddValue; save update is not executed",
+      "chain": ["0x27a220", "0xd34cb0", "0xd34f80", "0xef2c70"],
+      "artifacts": ["eventflow_friendship_action_native.json"]
+    }
+  ],
+  "candidate_daily_writer": {
+    "status": "pseudocode candidate; native branch not executed",
+    "call_chain": ["0xf53a70", "0xabff90", "0xac0200", "0xab9dc0", "0xf48840"],
+    "caller_edges": {
+      "0xf53a70": ["0xabff90"],
+      "0xabff90": ["0xac0200"],
+      "0xac0200": ["0xab9dc0", "0xf486c0", "0xf48840"]
+    },
+    "operation_in_pseudocode": "reads Friendship, obtains iStack_a0 from 0xab9dc0, and passes Friendship + iStack_a0 to 0xf48840",
+    "delta_observed_in_pseudocode": {
+      "initial_value": 0,
+      "validation_branches_assign": [-3],
+      "claim_limit": "does not prove that the -3 branch is reachable in ordinary daily play or that this is normal friendship decay"
+    },
+    "additional_caller": "0xabfcf0 also calls 0xac0200; its gameplay context is unresolved"
+  },
+  "not_counted_as_writer": [
+    {
+      "function": "0xd34c20",
+      "reason": "calls 0xf48740, whose pseudocode reads a byte and returns it; no field setter call is visible there"
+    }
+  ],
+  "open": [
+    "Native execution of 0xabff90 / 0xac0200 and the -3 candidate branch",
+    "Whether any Friendship decrement is a normal daily decay",
+    "Other possible sources such as letters, net hits, or neglect"
+  ]
+}
