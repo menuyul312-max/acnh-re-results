@@ -150,7 +150,10 @@ python3 acnh-re/tools/gameplay_flow.py build
 
 ## 8. Kerja bersama beberapa agen
 
-- Satu agen satu area. Kerjakan di branch sendiri bila memungkinkan, lalu merge ke `main`.
-- Sebelum mulai, lakukan `git pull`, lalu baca commit terakhir dan "Fokus terbaru" di README.
-- Jangan menulis ulang dokumen tahap milik agen lain. Tambahkan tautan atau catatan lanjutan.
-- README root hanya berisi ringkasan dan tautan. Rincian masuk `docs/`; angka masuk JSON.
+- Satu agen satu area, satu branch dan satu worktree. Mulai dari `main` terbaru; jangan berbagi working tree yang sama.
+- Simpan hasil tiap jalur pada file baru yang ruang lingkupnya jelas. Jangan menulis ulang dokumen agen lain atau mengubah `HANDOFF.md`, `re_queue.json`, dan README selama pekerjaan paralel berlangsung.
+- Jalankan reproducer dan pemeriksaan `git diff --check`. Catat checksum input, dependency, stub/fixture, mismatch, dan batas bukti. Jangan menandai item antrean `done` jika kriteria selesai di `re_queue.json` belum tercapai.
+- Integrator meninjau daftar file dan bukti tiap branch, lalu menggabungkan branch satu per satu ke `main` lokal. Jika remote maju, fetch dan bandingkan dulu; gunakan merge fast-forward/non-force. Push atau PR dilakukan setelah pemilik meminta sinkronisasi.
+- Di satu managed workspace, semua agent dapat membaca filesystem yang sama. Simpan dump sekali di lokasi baca-saja dan berikan path yang sama ke tiap worktree; tidak perlu upload ulang per agent. Jika agent berjalan di environment terpisah, gunakan volume/library bersama atau pasang dump sekali di environment koordinasi.
+- Pada sesi 6 November 2026, data bersama berada di `/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs` (RomFS tambahan, bukan dump penuh), ExeFS `main` di `acnh-re/inputs/additional_exefs/main`, dan indeks native di `/workspace/acnh-re/output/index.sqlite`. Pastikan versi dan hash sumber sama sebelum menggabungkan bukti. Beberapa payload PBC tidak ada dalam RomFS tambahan ini.
+- README root hanya berisi ringkasan dan tautan. Rincian masuk `docs/`; angka dan hasil reproducer masuk JSON.
