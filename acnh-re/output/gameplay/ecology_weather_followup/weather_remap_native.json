@@ -1,0 +1,559 @@
+{
+  "artifact": "weather_remap_native",
+  "evidence": "terbukti native (emulasi AArch64 terkendali; dependensi dicatat di bawah)",
+  "native_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+  "input_main_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+  "targets": {
+    "0x204480": "hourly weather code lookup and snow-term remap",
+    "0x204590": "predicate true when effective code satisfies (code | 1) == 5",
+    "0x202490": "called by 0x204480 with selector 4; its internal predicate is stubbed in this audit"
+  },
+  "execution": {
+    "valid_hours": 24,
+    "predicate_states": [
+      false,
+      true
+    ],
+    "0x204480_direct_calls": 48,
+    "0x204480_calls_via_0x204590": 48,
+    "0x204480_total_entries": 96,
+    "0x204590_calls": 48,
+    "comparisons": 96,
+    "mismatches": [],
+    "code_matrix": {
+      "input_codes": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "snow_predicate_false": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "snow_predicate_true": [
+        0,
+        1,
+        2,
+        3,
+        6,
+        7,
+        6,
+        7
+      ],
+      "rain_gate_false": [
+        false,
+        false,
+        false,
+        false,
+        true,
+        true,
+        false,
+        false
+      ],
+      "rain_gate_true": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
+    },
+    "cases": [
+      {
+        "hour": 0,
+        "controlled_pattern_code": 0,
+        "snow_predicate": false,
+        "effective_code": 0,
+        "rain_predicate_0x204590": false
+      },
+      {
+        "hour": 1,
+        "controlled_pattern_code": 1,
+        "snow_predicate": false,
+        "effective_code": 1,
+        "rain_predicate_0x204590": false
+      },
+      {
+        "hour": 2,
+        "controlled_pattern_code": 2,
+        "snow_predicate": false,
+        "effective_code": 2,
+        "rain_predicate_0x204590": false
+      },
+      {
+        "hour": 3,
+        "controlled_pattern_code": 3,
+        "snow_predicate": false,
+        "effective_code": 3,
+        "rain_predicate_0x204590": false
+      },
+      {
+        "hour": 4,
+        "controlled_pattern_code": 4,
+        "snow_predicate": false,
+        "effective_code": 4,
+        "rain_predicate_0x204590": true
+      },
+      {
+        "hour": 5,
+        "controlled_pattern_code": 5,
+        "snow_predicate": false,
+        "effective_code": 5,
+        "rain_predicate_0x204590": true
+      },
+      {
+        "hour": 6,
+        "controlled_pattern_code": 6,
+        "snow_predicate": false,
+        "effective_code": 6,
+        "rain_predicate_0x204590": false
+      },
+      {
+        "hour": 7,
+        "controlled_pattern_code": 7,
+        "snow_predicate": false,
+        "effective_code": 7,
+        "rain_predicate_0x204590": false
+      },
+      {
+        "hour": 8,
+        "controlled_pattern_code": 0,
+        "snow_predicate": false,
+        "effective_code": 0,
+        "rain_predicate_0x204590": false
+      },
+      {
+        "hour": 9,
+        "controlled_pattern_code": 1,
+        "snow_predicate": false,
+        "effective_code": 1,
+        "rain_predicate_0x204590": false
+      },
+      {
+        "hour": 10,
+        "controlled_pattern_code": 2,
+        "snow_predicate": false,
+        "effective_code": 2,
+        "rain_predicate_0x204590": false
+      },
+      {
+        "hour": 11,
+        "controlled_pattern_code": 3,
+        "snow_predicate": false,
+        "effective_code": 3,
+        "rain_predicate_0x204590": false
+      },
+      {
+        "hour": 12,
+        "controlled_pattern_code": 4,
+        "snow_predicate": false,
+        "effective_code": 4,
+        "rain_predicate_0x204590": true
+      },
+      {
+        "hour": 13,
+        "controlled_pattern_code": 5,
+        "snow_predicate": false,
+        "effective_code": 5,
+        "rain_predicate_0x204590": true
+      },
+      {
+        "hour": 14,
+        "controlled_pattern_code": 6,
+        "snow_predicate": false,
+        "effective_code": 6,
+        "rain_predicate_0x204590": false
+      },
+      {
+        "hour": 15,
+        "controlled_pattern_code": 7,
+        "snow_predicate": false,
+        "effective_code": 7,
+        "rain_predicate_0x204590": false
+      },
+      {
+        "hour": 16,
+        "controlled_pattern_code": 0,
+        "snow_predicate": false,
+        "effective_code": 0,
+        "rain_predicate_0x204590": false
+      },
+      {
+        "hour": 17,
+        "controlled_pattern_code": 1,
+        "snow_predicate": false,
+        "effective_code": 1,
+        "rain_predicate_0x204590": false
+      },
+      {
+        "hour": 18,
+        "controlled_pattern_code": 2,
+        "snow_predicate": false,
+        "effective_code": 2,
+        "rain_predicate_0x204590": false
+      },
+      {
+        "hour": 19,
+        "controlled_pattern_code": 3,
+        "snow_predicate": false,
+        "effective_code": 3,
+        "rain_predicate_0x204590": false
+      },
+      {
+        "hour": 20,
+        "controlled_pattern_code": 4,
+        "snow_predicate": false,
+        "effective_code": 4,
+        "rain_predicate_0x204590": true
+      },
+      {
+        "hour": 21,
+        "controlled_pattern_code": 5,
+        "snow_predicate": false,
+        "effective_code": 5,
+        "rain_predicate_0x204590": true
+      },
+      {
+        "hour": 22,
+        "controlled_pattern_code": 6,
+        "snow_predicate": false,
+        "effective_code": 6,
+        "rain_predicate_0x204590": false
+      },
+      {
+        "hour": 23,
+        "controlled_pattern_code": 7,
+        "snow_predicate": false,
+        "effective_code": 7,
+        "rain_predicate_0x204590": false
+      },
+      {
+        "hour": 0,
+        "controlled_pattern_code": 0,
+        "snow_predicate": true,
+        "effective_code": 0,
+        "rain_predicate_0x204590": false
+      },
+      {
+        "hour": 1,
+        "controlled_pattern_code": 1,
+        "snow_predicate": true,
+        "effective_code": 1,
+        "rain_predicate_0x204590": false
+      },
+      {
+        "hour": 2,
+        "controlled_pattern_code": 2,
+        "snow_predicate": true,
+        "effective_code": 2,
+        "rain_predicate_0x204590": false
+      },
+      {
+        "hour": 3,
+        "controlled_pattern_code": 3,
+        "snow_predicate": true,
+        "effective_code": 3,
+        "rain_predicate_0x204590": false
+      },
+      {
+        "hour": 4,
+        "controlled_pattern_code": 4,
+        "snow_predicate": true,
+        "effective_code": 6,
+        "rain_predicate_0x204590": false
+      },
+      {
+        "hour": 5,
+        "controlled_pattern_code": 5,
+        "snow_predicate": true,
+        "effective_code": 7,
+        "rain_predicate_0x204590": false
+      },
+      {
+        "hour": 6,
+        "controlled_pattern_code": 6,
+        "snow_predicate": true,
+        "effective_code": 6,
+        "rain_predicate_0x204590": false
+      },
+      {
+        "hour": 7,
+        "controlled_pattern_code": 7,
+        "snow_predicate": true,
+        "effective_code": 7,
+        "rain_predicate_0x204590": false
+      },
+      {
+        "hour": 8,
+        "controlled_pattern_code": 0,
+        "snow_predicate": true,
+        "effective_code": 0,
+        "rain_predicate_0x204590": false
+      },
+      {
+        "hour": 9,
+        "controlled_pattern_code": 1,
+        "snow_predicate": true,
+        "effective_code": 1,
+        "rain_predicate_0x204590": false
+      },
+      {
+        "hour": 10,
+        "controlled_pattern_code": 2,
+        "snow_predicate": true,
+        "effective_code": 2,
+        "rain_predicate_0x204590": false
+      },
+      {
+        "hour": 11,
+        "controlled_pattern_code": 3,
+        "snow_predicate": true,
+        "effective_code": 3,
+        "rain_predicate_0x204590": false
+      },
+      {
+        "hour": 12,
+        "controlled_pattern_code": 4,
+        "snow_predicate": true,
+        "effective_code": 6,
+        "rain_predicate_0x204590": false
+      },
+      {
+        "hour": 13,
+        "controlled_pattern_code": 5,
+        "snow_predicate": true,
+        "effective_code": 7,
+        "rain_predicate_0x204590": false
+      },
+      {
+        "hour": 14,
+        "controlled_pattern_code": 6,
+        "snow_predicate": true,
+        "effective_code": 6,
+        "rain_predicate_0x204590": false
+      },
+      {
+        "hour": 15,
+        "controlled_pattern_code": 7,
+        "snow_predicate": true,
+        "effective_code": 7,
+        "rain_predicate_0x204590": false
+      },
+      {
+        "hour": 16,
+        "controlled_pattern_code": 0,
+        "snow_predicate": true,
+        "effective_code": 0,
+        "rain_predicate_0x204590": false
+      },
+      {
+        "hour": 17,
+        "controlled_pattern_code": 1,
+        "snow_predicate": true,
+        "effective_code": 1,
+        "rain_predicate_0x204590": false
+      },
+      {
+        "hour": 18,
+        "controlled_pattern_code": 2,
+        "snow_predicate": true,
+        "effective_code": 2,
+        "rain_predicate_0x204590": false
+      },
+      {
+        "hour": 19,
+        "controlled_pattern_code": 3,
+        "snow_predicate": true,
+        "effective_code": 3,
+        "rain_predicate_0x204590": false
+      },
+      {
+        "hour": 20,
+        "controlled_pattern_code": 4,
+        "snow_predicate": true,
+        "effective_code": 6,
+        "rain_predicate_0x204590": false
+      },
+      {
+        "hour": 21,
+        "controlled_pattern_code": 5,
+        "snow_predicate": true,
+        "effective_code": 7,
+        "rain_predicate_0x204590": false
+      },
+      {
+        "hour": 22,
+        "controlled_pattern_code": 6,
+        "snow_predicate": true,
+        "effective_code": 6,
+        "rain_predicate_0x204590": false
+      },
+      {
+        "hour": 23,
+        "controlled_pattern_code": 7,
+        "snow_predicate": true,
+        "effective_code": 7,
+        "rain_predicate_0x204590": false
+      }
+    ]
+  },
+  "observed_contract": {
+    "0x204480": "If 0x202490(world, byte[world+0x651da], byte[world+0x651db], 4) returns signed value >= 1, raw code 4 maps to 6 and raw code 5 maps to 7; all other codes tested unchanged.",
+    "0x204590": "Returns true exactly for effective code 4 or 5 in tested domain.",
+    "table_selection": "0x201b90 was controlled to return table index 0; synthetic hourly parameter getter returned a pointer to an s32 table value."
+  },
+  "controlled_dependencies": [
+    {
+      "address": "0x201b90",
+      "controlled_return": 0,
+      "reason": "isolate a valid table index; original environment lookup not modeled"
+    },
+    {
+      "address": "0x202490",
+      "controlled_returns": [
+        0,
+        1
+      ],
+      "reason": "exercise both sides of the remap; native date/season semantics are outside this rig"
+    },
+    {
+      "address": "synthetic vtable +0xf0",
+      "controlled_return": "pointer to controlled s32 weather code",
+      "reason": "provide per-hour parameter data without constructing game parameter objects"
+    }
+  ],
+  "input_table": {
+    "world_fields": {
+      "+0x653b0": 1,
+      "+0x100": 1,
+      "+0x108": "synthetic table pointer array",
+      "+0x651da": 1,
+      "+0x651db": 1
+    },
+    "hours": [
+      {
+        "hour": 0,
+        "raw_code": 0
+      },
+      {
+        "hour": 1,
+        "raw_code": 1
+      },
+      {
+        "hour": 2,
+        "raw_code": 2
+      },
+      {
+        "hour": 3,
+        "raw_code": 3
+      },
+      {
+        "hour": 4,
+        "raw_code": 4
+      },
+      {
+        "hour": 5,
+        "raw_code": 5
+      },
+      {
+        "hour": 6,
+        "raw_code": 6
+      },
+      {
+        "hour": 7,
+        "raw_code": 7
+      },
+      {
+        "hour": 8,
+        "raw_code": 0
+      },
+      {
+        "hour": 9,
+        "raw_code": 1
+      },
+      {
+        "hour": 10,
+        "raw_code": 2
+      },
+      {
+        "hour": 11,
+        "raw_code": 3
+      },
+      {
+        "hour": 12,
+        "raw_code": 4
+      },
+      {
+        "hour": 13,
+        "raw_code": 5
+      },
+      {
+        "hour": 14,
+        "raw_code": 6
+      },
+      {
+        "hour": 15,
+        "raw_code": 7
+      },
+      {
+        "hour": 16,
+        "raw_code": 0
+      },
+      {
+        "hour": 17,
+        "raw_code": 1
+      },
+      {
+        "hour": 18,
+        "raw_code": 2
+      },
+      {
+        "hour": 19,
+        "raw_code": 3
+      },
+      {
+        "hour": 20,
+        "raw_code": 4
+      },
+      {
+        "hour": 21,
+        "raw_code": 5
+      },
+      {
+        "hour": 22,
+        "raw_code": 6
+      },
+      {
+        "hour": 23,
+        "raw_code": 7
+      }
+    ],
+    "weather_pattern_code_labels_from_local_table": [
+      "快晴",
+      "晴れ",
+      "曇り",
+      "雨雲",
+      "雨",
+      "大雨"
+    ]
+  },
+  "limits": [
+    "This verifies the original instructions of 0x204480 and 0x204590 over a controlled parameter object.",
+    "It does not verify the environment manager initialization, the native implementation of 0x201b90, or the date/season semantics returned by 0x202490.",
+    "The caller-specific 0x5b9270 item gate was not invoked in this harness; its call path is [PSEUDO]."
+  ]
+}

@@ -1,0 +1,589 @@
+{
+  "artifact": "sky_event_index",
+  "evidence_labels": {
+    "[EF]": "parsed and validated BFEVFL",
+    "[TBL]": "handler registry/table",
+    "[PSEUDO]": "native decomp/string references; not full runtime trigger emulation"
+  },
+  "sources": {
+    "eventflow_root": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/EventFlow",
+    "eventflow_files": 456,
+    "eventflow_validation_errors": 0,
+    "gameenv_szs": {
+      "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Env/GameEnv.szs",
+      "sha256": "0a8731393af15a8249ffadcd115e47411a9c52769b84785cd5fcd3563234bce8",
+      "bytes": 2257358,
+      "format": "Yaz0 -> SARC -> GameEnv.genvb"
+    },
+    "index_sqlite": "/workspace/acnh-re/output/index.sqlite",
+    "native_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74"
+  },
+  "scanned_eventflow_uses": {
+    "counts": {
+      "EventFlowQueryEnvSpecialWeather": 5,
+      "EventFlowActionSetWeatherPattern": 2
+    },
+    "records": [
+      {
+        "file": "Demo_PublicAnnouncement_40_CmnNoNews.bfevfl",
+        "flow": "Demo_PublicAnnouncement_40_CmnNoNews",
+        "source_sha256": "2b5d3189df7e890862dff7fc054ab9aa6dda14f612ed67ca59636454d18cac97",
+        "event_index": 69,
+        "event_name": "Event87",
+        "kind": "switch",
+        "handler": "EventFlowQueryEnvSpecialWeather",
+        "params": null,
+        "cases": [
+          {
+            "value": 0,
+            "event": 8
+          },
+          {
+            "value": 1,
+            "event": 70
+          },
+          {
+            "value": 2,
+            "event": 70
+          },
+          {
+            "value": 3,
+            "event": 71
+          },
+          {
+            "value": 4,
+            "event": 77
+          },
+          {
+            "value": 5,
+            "event": 77
+          },
+          {
+            "value": 6,
+            "event": 77
+          },
+          {
+            "value": 7,
+            "event": 77
+          },
+          {
+            "value": 8,
+            "event": 77
+          },
+          {
+            "value": 9,
+            "event": 77
+          }
+        ],
+        "evidence": "[EF]"
+      },
+      {
+        "file": "Demo_PublicAnnouncement_40_CmnNoNews.bfevfl",
+        "flow": "Demo_PublicAnnouncement_40_CmnNoNews",
+        "source_sha256": "2b5d3189df7e890862dff7fc054ab9aa6dda14f612ed67ca59636454d18cac97",
+        "event_index": 78,
+        "event_name": "Event92",
+        "kind": "switch",
+        "handler": "EventFlowQueryEnvSpecialWeather",
+        "params": null,
+        "cases": [
+          {
+            "value": 0,
+            "event": 79
+          },
+          {
+            "value": 1,
+            "event": 81
+          },
+          {
+            "value": 2,
+            "event": 81
+          },
+          {
+            "value": 3,
+            "event": 82
+          },
+          {
+            "value": 4,
+            "event": 80
+          },
+          {
+            "value": 5,
+            "event": 80
+          },
+          {
+            "value": 6,
+            "event": 80
+          },
+          {
+            "value": 7,
+            "event": 80
+          },
+          {
+            "value": 8,
+            "event": 80
+          },
+          {
+            "value": 9,
+            "event": 80
+          }
+        ],
+        "evidence": "[EF]"
+      },
+      {
+        "file": "NNPC_FreeB.bfevfl",
+        "flow": "NNPC_FreeB",
+        "source_sha256": "915d28fe06831a35aacf42c0687c9fe824ad4ba6e6ac481f1201d0a6b466b97a",
+        "event_index": 0,
+        "event_name": "Event23",
+        "kind": "switch",
+        "handler": "EventFlowQueryEnvSpecialWeather",
+        "params": null,
+        "cases": [
+          {
+            "value": 1,
+            "event": 1
+          },
+          {
+            "value": 2,
+            "event": 7
+          },
+          {
+            "value": 3,
+            "event": 6
+          },
+          {
+            "value": 4,
+            "event": 5
+          },
+          {
+            "value": 5,
+            "event": 4
+          },
+          {
+            "value": 6,
+            "event": 3
+          },
+          {
+            "value": 7,
+            "event": 2
+          },
+          {
+            "value": 8,
+            "event": 77
+          },
+          {
+            "value": 9,
+            "event": 78
+          }
+        ],
+        "evidence": "[EF]"
+      },
+      {
+        "file": "SNPC_ows.bfevfl",
+        "flow": "SNPC_ows",
+        "source_sha256": "d9511f3619dbb76b46d02975d3facd98f1c444ba97d67f026c4c642b88219469",
+        "event_index": 8,
+        "event_name": "Event0",
+        "kind": "switch",
+        "handler": "EventFlowQueryEnvSpecialWeather",
+        "params": null,
+        "cases": [
+          {
+            "value": 0,
+            "event": 3
+          },
+          {
+            "value": 1,
+            "event": 3
+          },
+          {
+            "value": 2,
+            "event": 3
+          },
+          {
+            "value": 3,
+            "event": 9
+          },
+          {
+            "value": 4,
+            "event": 3
+          },
+          {
+            "value": 5,
+            "event": 3
+          },
+          {
+            "value": 6,
+            "event": 3
+          },
+          {
+            "value": 7,
+            "event": 3
+          },
+          {
+            "value": 8,
+            "event": 3
+          },
+          {
+            "value": 9,
+            "event": 3
+          }
+        ],
+        "evidence": "[EF]"
+      },
+      {
+        "file": "SNPC_ows.bfevfl",
+        "flow": "SNPC_ows",
+        "source_sha256": "d9511f3619dbb76b46d02975d3facd98f1c444ba97d67f026c4c642b88219469",
+        "event_index": 27,
+        "event_name": "Event27",
+        "kind": "switch",
+        "handler": "EventFlowQueryEnvSpecialWeather",
+        "params": null,
+        "cases": [
+          {
+            "value": 0,
+            "event": 25
+          },
+          {
+            "value": 1,
+            "event": 25
+          },
+          {
+            "value": 2,
+            "event": 25
+          },
+          {
+            "value": 3,
+            "event": 26
+          },
+          {
+            "value": 4,
+            "event": 25
+          },
+          {
+            "value": 5,
+            "event": 25
+          },
+          {
+            "value": 6,
+            "event": 25
+          },
+          {
+            "value": 7,
+            "event": 25
+          },
+          {
+            "value": 8,
+            "event": 25
+          },
+          {
+            "value": 9,
+            "event": 25
+          }
+        ],
+        "evidence": "[EF]"
+      },
+      {
+        "file": "System_GrowUp_WeatherControl.bfevfl",
+        "flow": "System_GrowUp_WeatherControl",
+        "source_sha256": "c17dd3e5d5d503e87577760de2990438bb9bcb0f67afdd4cf8b4031fcff1872c",
+        "event_index": 0,
+        "event_name": "Event0",
+        "kind": "action",
+        "handler": "EventFlowActionSetWeatherPattern",
+        "params": {
+          "PatternName": "EventDay00"
+        },
+        "cases": null,
+        "evidence": "[EF]"
+      },
+      {
+        "file": "System_GrowUp_WeatherControl.bfevfl",
+        "flow": "System_GrowUp_WeatherControl",
+        "source_sha256": "c17dd3e5d5d503e87577760de2990438bb9bcb0f67afdd4cf8b4031fcff1872c",
+        "event_index": 4,
+        "event_name": "Event7",
+        "kind": "action",
+        "handler": "EventFlowActionSetWeatherPattern",
+        "params": {
+          "PatternName": "EventDay00"
+        },
+        "cases": null,
+        "evidence": "[EF]"
+      }
+    ],
+    "dialogue_text_included": false,
+    "scope": "The scan covered all supplied additional-ROMFS EventFlow/*.bfevfl files and retained only EnvSpecialWeather queries and SetWeatherPattern actions."
+  },
+  "handler_registry": {
+    "EventFlowActionSetWeatherPattern": {
+      "factory": "0x454830",
+      "constructor": "0x315dd0",
+      "vtable": "0x3049c80",
+      "execute_slot": "0x315e80",
+      "execute_calls": "0x206f50",
+      "evidence": "[TBL] + [PSEUDO]"
+    },
+    "EventFlowQueryEnvSpecialWeather": {
+      "factory": "0x456770",
+      "constructor": "0x3f6290",
+      "vtable": "0x30559c8",
+      "evaluate_slot": "0x3f62f0",
+      "evidence": "[TBL] + [PSEUDO]"
+    }
+  },
+  "weather_control": {
+    "flow": "System_GrowUp_WeatherControl",
+    "source_sha256": "c17dd3e5d5d503e87577760de2990438bb9bcb0f67afdd4cf8b4031fcff1872c",
+    "entries": {
+      "FirstDay": {
+        "main_event_index": 0
+      },
+      "Root": {
+        "main_event_index": 1
+      }
+    },
+    "pattern_override": "Both SetWeatherPattern actions use PatternName=EventDay00.",
+    "native_route": "0x315e80 -> 0x206f50; 0x206f50 searches the weather-pattern entries by the supplied name and passes the matching index through 0xfdddf0 at manager offset +0x651e8.",
+    "evidence": "[EF] + [TBL] + [PSEUDO]"
+  },
+  "special_weather_enum_vocabulary": {
+    "function": "0x26b9c0",
+    "native_string_ref": "cNotSet, cWildCard, cSeason, cMenu, cFashion, cFineWeather, cCloudWeather, cRainWeather, cHardRainWeather, cSnowWeather, cHardSnowWeather, cBlossomShower, cBeforeMeteor, cMeteorShower, cRainbow, cWRainbow, cBeforeAurora, cAurora, cQuestions01, cQuestions02, cQuestions03, cQuestions04, cQuestions05, cAlways01, cAlways02, cAlways03, cAlways04, cAlways05, cAAlways01, cAAlways02, cAAlways03, cAAlways04, cAAlways05, cBAlways01, cBAlways02, cBAlways03, cBAlways04, cBAlways05, cEvent00, cEvent01, cEvent02",
+    "entries": [
+      {
+        "index": 0,
+        "name": "cNotSet"
+      },
+      {
+        "index": 1,
+        "name": "cWildCard"
+      },
+      {
+        "index": 2,
+        "name": "cSeason"
+      },
+      {
+        "index": 3,
+        "name": "cMenu"
+      },
+      {
+        "index": 4,
+        "name": "cFashion"
+      },
+      {
+        "index": 5,
+        "name": "cFineWeather"
+      },
+      {
+        "index": 6,
+        "name": "cCloudWeather"
+      },
+      {
+        "index": 7,
+        "name": "cRainWeather"
+      },
+      {
+        "index": 8,
+        "name": "cHardRainWeather"
+      },
+      {
+        "index": 9,
+        "name": "cSnowWeather"
+      },
+      {
+        "index": 10,
+        "name": "cHardSnowWeather"
+      },
+      {
+        "index": 11,
+        "name": "cBlossomShower"
+      },
+      {
+        "index": 12,
+        "name": "cBeforeMeteor"
+      },
+      {
+        "index": 13,
+        "name": "cMeteorShower"
+      },
+      {
+        "index": 14,
+        "name": "cRainbow"
+      },
+      {
+        "index": 15,
+        "name": "cWRainbow"
+      },
+      {
+        "index": 16,
+        "name": "cBeforeAurora"
+      },
+      {
+        "index": 17,
+        "name": "cAurora"
+      },
+      {
+        "index": 18,
+        "name": "cQuestions01"
+      },
+      {
+        "index": 19,
+        "name": "cQuestions02"
+      },
+      {
+        "index": 20,
+        "name": "cQuestions03"
+      },
+      {
+        "index": 21,
+        "name": "cQuestions04"
+      },
+      {
+        "index": 22,
+        "name": "cQuestions05"
+      },
+      {
+        "index": 23,
+        "name": "cAlways01"
+      },
+      {
+        "index": 24,
+        "name": "cAlways02"
+      },
+      {
+        "index": 25,
+        "name": "cAlways03"
+      },
+      {
+        "index": 26,
+        "name": "cAlways04"
+      },
+      {
+        "index": 27,
+        "name": "cAlways05"
+      },
+      {
+        "index": 28,
+        "name": "cAAlways01"
+      },
+      {
+        "index": 29,
+        "name": "cAAlways02"
+      },
+      {
+        "index": 30,
+        "name": "cAAlways03"
+      },
+      {
+        "index": 31,
+        "name": "cAAlways04"
+      },
+      {
+        "index": 32,
+        "name": "cAAlways05"
+      },
+      {
+        "index": 33,
+        "name": "cBAlways01"
+      },
+      {
+        "index": 34,
+        "name": "cBAlways02"
+      },
+      {
+        "index": 35,
+        "name": "cBAlways03"
+      },
+      {
+        "index": 36,
+        "name": "cBAlways04"
+      },
+      {
+        "index": 37,
+        "name": "cBAlways05"
+      },
+      {
+        "index": 38,
+        "name": "cEvent00"
+      },
+      {
+        "index": 39,
+        "name": "cEvent01"
+      },
+      {
+        "index": 40,
+        "name": "cEvent02"
+      }
+    ],
+    "sky_related_names": [
+      {
+        "index": 12,
+        "name": "cBeforeMeteor"
+      },
+      {
+        "index": 13,
+        "name": "cMeteorShower"
+      },
+      {
+        "index": 14,
+        "name": "cRainbow"
+      },
+      {
+        "index": 15,
+        "name": "cWRainbow"
+      },
+      {
+        "index": 16,
+        "name": "cBeforeAurora"
+      },
+      {
+        "index": 17,
+        "name": "cAurora"
+      }
+    ],
+    "evidence": "[PSEUDO] native enum-info string list; numeric mapping to EnvSpecialWeather returns is not established."
+  },
+  "actor_registrations": [
+    {
+      "address": "0x64400",
+      "function": "_INIT_178",
+      "strings": [
+        "ActorRainbow",
+        "Rainbow"
+      ],
+      "evidence": "[PSEUDO]"
+    },
+    {
+      "address": "0x68e50",
+      "function": "_INIT_182",
+      "strings": [
+        "ActorShootingStar",
+        "ShootingStar"
+      ],
+      "evidence": "[PSEUDO]"
+    }
+  ],
+  "known_consumers": {
+    "celeste_flow": "SNPC_ows uses EnvSpecialWeather result 3 for a distinct branch in two switches; this audit records the raw branch, not a semantic identity for value 3.",
+    "announcement_flow": "Demo_PublicAnnouncement_40_CmnNoNews and NNPC_FreeB branch on EnvSpecialWeather results 1..9.",
+    "shooting_star_wish": {
+      "function": "0xda58d0",
+      "caller": "0xe28370",
+      "strings": [
+        "WishStarCount",
+        "PrayShootingStar"
+      ],
+      "evidence": "[PSEUDO]",
+      "limit": "wish accounting is not a proof of meteor-shower scheduling"
+    }
+  },
+  "unresolved": [
+    "Meaning of EnvSpecialWeather query results 0..9 and their mapping to the cBeforeMeteor/cMeteorShower/cRainbow/cWRainbow/cBeforeAurora/cAurora names.",
+    "Runtime trigger/schedule and activation path for rainbow, aurora, fog, meteor shower, and shooting-star actors.",
+    "The game-environment manager and parameter object initialization behind 0x202490.",
+    "Main-island insect AppearWeather enforcement; the established 0x957940 draw did not read AppearWeather."
+  ]
+}
