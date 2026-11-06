@@ -11,6 +11,7 @@ DEFAULT_INDEX = Path("/workspace/acnh-re/output/index.sqlite")
 DEFAULT_TABLE_ROOT = Path("/workspace/acnh-re/output")
 DEFAULT_OUTPUT = ROOT / "output/gameplay/catalog_registration_callers.json"
 TARGET = 0xEEBE80
+REGISTRATION_WRAPPER = 0xEFE070
 SPECIAL_ITEMKIND_INDICES = [0x4F, 0x50, 0x51, 0x52]
 
 
@@ -54,25 +55,14 @@ def table_crosswalk(table_root):
     }
 
 
-def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--index-db", type=Path, default=DEFAULT_INDEX)
-    parser.add_argument("--table-root", type=Path, default=DEFAULT_TABLE_ROOT)
-    parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
-    args = parser.parse_args()
-
-    db_uri = f"file:{args.index_db.resolve()}?mode=ro"
-    conn = sqlite3.connect(db_uri, uri=True)
-    calls = conn.execute(
-        "SELECT pc, instruction FROM direct_calls WHERE target_va=? ORDER BY pc",
-        (TARGET,),
-    ).fetchall()
-    if not calls:
-        raise SystemExit(f"no direct-call records for {TARGET:#x} in {args.index_db}")
-
-    callers = {}
+def caller_groups(conn, target):
+    grouped = {}
     unresolved = []
-    for pc, instruction in calls:
+    call_rows = conn.execute(
+        "SELECT pc, instruction FROM direct_calls WHERE target_va=? ORDER BY pc",
+        (target,),
+    ).fetchall()
+    for pc, instruction in call_rows:
         ranges = conn.execute(
             """SELECT va, name, span_end_va, evidence FROM native_functions
                WHERE va<=? AND span_end_va>? ORDER BY (span_end_va-va), va""",
@@ -87,15 +77,14 @@ def main():
         if not ranges:
             unresolved.append({"pc": hex(pc), "instruction": instruction})
             continue
-
         va, name, _end, evidence = ranges[0]
-        rec = callers.setdefault(va, {
+        rec = grouped.setdefault(va, {
             "function_va": hex(va), "name": name, "range_evidence": evidence,
             "call_sites": [],
         })
         rec["call_sites"].append({"pc": hex(pc), "instruction": instruction})
 
-    for va, rec in callers.items():
+    for va, rec in grouped.items():
         path = conn.execute("SELECT path FROM decomp_new WHERE va=?", (va,)).fetchone()
         if path:
             rec["pseudocode"] = path[0]
@@ -106,6 +95,22 @@ def main():
             "SELECT text FROM string_refs WHERE function_va=? ORDER BY text", (va,)
         )]
         rec["direct_call_count"] = len(rec["call_sites"])
+    return call_rows, grouped, unresolved
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--index-db", type=Path, default=DEFAULT_INDEX)
+    parser.add_argument("--table-root", type=Path, default=DEFAULT_TABLE_ROOT)
+    parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
+    args = parser.parse_args()
+
+    db_uri = f"file:{args.index_db.resolve()}?mode=ro"
+    conn = sqlite3.connect(db_uri, uri=True)
+    calls, callers, unresolved = caller_groups(conn, TARGET)
+    if not calls:
+        raise SystemExit(f"no direct-call records for {TARGET:#x} in {args.index_db}")
+    wrapper_calls, wrapper_callers, wrapper_unresolved = caller_groups(conn, REGISTRATION_WRAPPER)
 
     result = {
         "schema": "acnh-re/catalog-registration-callers/1",
@@ -115,6 +120,16 @@ def main():
         "resolved_caller_functions": len(callers),
         "unresolved_call_sites": unresolved,
         "callers": sorted(callers.values(), key=lambda item: int(item["function_va"], 16)),
+        "registration_wrapper_trace": {
+            "wrapper_va": hex(REGISTRATION_WRAPPER),
+            "pseudocode": "binary/analysis_decomp/efe070.c",
+            "wrapper_calls_registrar": True,
+            "direct_call_records": len(wrapper_calls),
+            "resolved_caller_functions": len(wrapper_callers),
+            "unresolved_call_sites": wrapper_unresolved,
+            "callers": sorted(wrapper_callers.values(), key=lambda item: int(item["function_va"], 16)),
+            "interpretation_limit": "A purchase-counter string in a caller does not establish that this is specifically Nook Shopping or that it controls order eligibility/delivery.",
+        },
         "itemkind_caller_crosswalk": table_crosswalk(args.table_root),
         "limitation": (
             "Direct call references identify call sites, not the runtime condition that reaches them. "

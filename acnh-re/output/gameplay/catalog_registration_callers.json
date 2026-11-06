@@ -409,6 +409,85 @@
       "direct_call_count": 1
     }
   ],
+  "registration_wrapper_trace": {
+    "wrapper_va": "0xefe070",
+    "pseudocode": "binary/analysis_decomp/efe070.c",
+    "wrapper_calls_registrar": true,
+    "direct_call_records": 6,
+    "resolved_caller_functions": 4,
+    "unresolved_call_sites": [],
+    "callers": [
+      {
+        "function_va": "0x330f40",
+        "name": "FUN_00430f40",
+        "range_evidence": "new_Ghidra_inventory",
+        "call_sites": [
+          {
+            "pc": "0x330ffc",
+            "instruction": "BL"
+          }
+        ],
+        "pseudocode": null,
+        "string_refs": [],
+        "direct_call_count": 1
+      },
+      {
+        "function_va": "0x11b64d0",
+        "name": "FUN_012b64d0",
+        "range_evidence": "new_Ghidra_inventory",
+        "call_sites": [
+          {
+            "pc": "0x11b6540",
+            "instruction": "B_to_function_entry"
+          }
+        ],
+        "pseudocode": "binary/analysis_decomp/11b64d0.c",
+        "string_refs": [],
+        "direct_call_count": 1
+      },
+      {
+        "function_va": "0x14439c0",
+        "name": "FUN_015439c0",
+        "range_evidence": "new_Ghidra_inventory",
+        "call_sites": [
+          {
+            "pc": "0x1443b70",
+            "instruction": "BL"
+          }
+        ],
+        "pseudocode": "binary/analysis_decomp/14439c0.c",
+        "string_refs": [
+          "BuyItem",
+          "HowmuchBuyItem",
+          "HowmuchBuyItem"
+        ],
+        "direct_call_count": 1
+      },
+      {
+        "function_va": "0x1476e10",
+        "name": "FUN_01576e10",
+        "range_evidence": "new_Ghidra_inventory",
+        "call_sites": [
+          {
+            "pc": "0x1476eb4",
+            "instruction": "BL"
+          },
+          {
+            "pc": "0x1476ee8",
+            "instruction": "BL"
+          },
+          {
+            "pc": "0x1476f14",
+            "instruction": "BL"
+          }
+        ],
+        "pseudocode": "binary/analysis_decomp/1476e10.c",
+        "string_refs": [],
+        "direct_call_count": 3
+      }
+    ],
+    "interpretation_limit": "A purchase-counter string in a caller does not establish that this is specifically Nook Shopping or that it controls order eligibility/delivery."
+  },
   "itemkind_caller_crosswalk": {
     "evidence_level": "TABLE_JOIN_ONLY",
     "join": "CRC32(ItemKind.Label) == ItemParam.ItemKind enum hash; rows retain source order/index",
