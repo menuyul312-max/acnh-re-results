@@ -1,0 +1,323 @@
+{
+  "schema": "acnh.ui_hud_runtime_followup.native_hit_geometry_priority.v1",
+  "source": {
+    "game_build": "ACNH 1.0.0",
+    "module": "ExeFS main",
+    "main_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+    "evidence_kind": "Original AArch64 geometry and tree-walker instructions under controlled in-memory fixtures; no game capture."
+  },
+  "addresses": {
+    "point_bounds": "0x14b7820",
+    "recursive_tree_hit": "0x14b8850",
+    "pane_visibility_chain": "0x14c80d0",
+    "bound_setup": "0x14b87b0"
+  },
+  "visibility_contract": "0x14c80d0 requires visibility bit 0 on the pane and every ancestor. Mode 1 additionally requires the target pane's +0x5a byte and, for ancestors whose +0x58 bit 1 is set, their +0x59 byte.",
+  "visibility_cases": [
+    {
+      "case": "visible_pane_mode_0",
+      "mode": 0,
+      "expected": 1,
+      "actual": 1,
+      "inputs": {
+        "visible": true
+      }
+    },
+    {
+      "case": "hidden_pane_mode_0",
+      "mode": 0,
+      "expected": 0,
+      "actual": 0,
+      "inputs": {
+        "visible": false
+      }
+    },
+    {
+      "case": "mode_1_rejects_inactive_target_pane",
+      "mode": 1,
+      "expected": 0,
+      "actual": 0,
+      "inputs": {
+        "visible": true,
+        "active": false
+      }
+    },
+    {
+      "case": "mode_0_rejects_hidden_ancestor",
+      "mode": 0,
+      "expected": 0,
+      "actual": 0,
+      "inputs": {
+        "visible": true,
+        "parent_visible": false
+      }
+    },
+    {
+      "case": "mode_1_rejects_ancestor_missing_active_flag",
+      "mode": 1,
+      "expected": 0,
+      "actual": 0,
+      "inputs": {
+        "visible": true,
+        "parent_visible": true,
+        "parent_requires_active": true,
+        "parent_active": false
+      }
+    },
+    {
+      "case": "mode_1_accepts_visible_active_ancestor",
+      "mode": 1,
+      "expected": 1,
+      "actual": 1,
+      "inputs": {
+        "visible": true,
+        "parent_visible": true,
+        "parent_requires_active": true,
+        "parent_active": true
+      }
+    }
+  ],
+  "geometry_contract": "The original point test checks the target pane/ancestor visibility chain, normalizes each rectangle's endpoints, and performs an inclusive point-in-rectangle test. When node+0x28 is non-null it intersects the +0x30..+0x3c and +0x40..+0x4c rectangles; when null, it tests only the first rectangle. The setup path copies the parent's +0x28 pointer into a child when child flag 0x40 is set. The second rectangle therefore carries a parent-propagated bound context; the code does not label that context as a render clip.",
+  "geometry_cases": [
+    {
+      "case": "inside_intersection",
+      "rect_a": [
+        0.0,
+        0.0,
+        100.0,
+        100.0
+      ],
+      "rect_b": [
+        50.0,
+        50.0,
+        150.0,
+        150.0
+      ],
+      "secondary_pointer_nonnull": true,
+      "point": [
+        75.0,
+        75.0
+      ],
+      "expected": 1,
+      "actual": 1
+    },
+    {
+      "case": "inside_first_only_is_rejected",
+      "rect_a": [
+        0.0,
+        0.0,
+        100.0,
+        100.0
+      ],
+      "rect_b": [
+        50.0,
+        50.0,
+        150.0,
+        150.0
+      ],
+      "secondary_pointer_nonnull": true,
+      "point": [
+        25.0,
+        25.0
+      ],
+      "expected": 0,
+      "actual": 0
+    },
+    {
+      "case": "intersection_edge_is_inclusive",
+      "rect_a": [
+        0.0,
+        0.0,
+        100.0,
+        100.0
+      ],
+      "rect_b": [
+        50.0,
+        50.0,
+        150.0,
+        150.0
+      ],
+      "secondary_pointer_nonnull": true,
+      "point": [
+        50.0,
+        50.0
+      ],
+      "expected": 1,
+      "actual": 1
+    },
+    {
+      "case": "disjoint_rectangles_reject_all_points",
+      "rect_a": [
+        0.0,
+        0.0,
+        100.0,
+        100.0
+      ],
+      "rect_b": [
+        120.0,
+        120.0,
+        160.0,
+        160.0
+      ],
+      "secondary_pointer_nonnull": true,
+      "point": [
+        130.0,
+        130.0
+      ],
+      "expected": 0,
+      "actual": 0
+    },
+    {
+      "case": "null_secondary_pointer_uses_first_rect",
+      "rect_a": [
+        0.0,
+        0.0,
+        100.0,
+        100.0
+      ],
+      "rect_b": [
+        50.0,
+        50.0,
+        150.0,
+        150.0
+      ],
+      "secondary_pointer_nonnull": false,
+      "point": [
+        25.0,
+        25.0
+      ],
+      "expected": 1,
+      "actual": 1
+    },
+    {
+      "case": "reversed_endpoints_are_normalized",
+      "rect_a": [
+        100.0,
+        100.0,
+        0.0,
+        0.0
+      ],
+      "rect_b": [
+        150.0,
+        150.0,
+        50.0,
+        50.0
+      ],
+      "secondary_pointer_nonnull": true,
+      "point": [
+        75.0,
+        75.0
+      ],
+      "expected": 1,
+      "actual": 1
+    }
+  ],
+  "secondary_bound_inheritance_cases": [
+    {
+      "case": "flag_0x40_inherits_parent_secondary_bound",
+      "child_flags": "0x40",
+      "parent_bound": "0x80000bf0",
+      "before": "0x80000cf0",
+      "after": "0x80000bf0",
+      "expected_after": "0x80000bf0"
+    },
+    {
+      "case": "without_flag_0x40_preserves_existing_secondary_bound",
+      "child_flags": "0x0",
+      "parent_bound": "0x80000bf0",
+      "before": "0x80000cf0",
+      "after": "0x80000cf0",
+      "expected_after": "0x80000cf0"
+    }
+  ],
+  "tree_contract": "For ordinary nodes (flags bit 0 set, bit 1 clear), the native recursive walker tests the node before visiting the first child at +0x8 and following siblings at +0x18. A hit replaces the incoming candidate; later depth-first hits replace earlier candidates. A node with bit 0 clear and bit 0x200 set uses a separate geometry mode and returns immediately when it hits.",
+  "traversal_cases": [
+    {
+      "case": "all_hits_depth_first_last_candidate_wins",
+      "hit_nodes": [
+        "0x80000df0",
+        "0x80000e70",
+        "0x80000ef0",
+        "0x80000f70"
+      ],
+      "visit_order": [
+        "0x80000df0",
+        "0x80000e70",
+        "0x80000ef0",
+        "0x80000f70"
+      ],
+      "selected": "0x80000f70",
+      "expected_selected": "0x80000f70",
+      "geometry_predicate": "stubbed"
+    },
+    {
+      "case": "later_sibling_overwrites_earlier_sibling",
+      "hit_nodes": [
+        "0x80000df0",
+        "0x80000e70",
+        "0x80000ef0"
+      ],
+      "visit_order": [
+        "0x80000df0",
+        "0x80000e70",
+        "0x80000ef0",
+        "0x80000f70"
+      ],
+      "selected": "0x80000ef0",
+      "expected_selected": "0x80000ef0",
+      "geometry_predicate": "stubbed"
+    },
+    {
+      "case": "ancestor_survives_when_children_miss",
+      "hit_nodes": [
+        "0x80000df0"
+      ],
+      "visit_order": [
+        "0x80000df0",
+        "0x80000e70",
+        "0x80000ef0",
+        "0x80000f70"
+      ],
+      "selected": "0x80000df0",
+      "expected_selected": "0x80000df0",
+      "geometry_predicate": "stubbed"
+    },
+    {
+      "case": "special_0x200_node_returns_before_children",
+      "hit_nodes": [
+        "0x80000df0",
+        "0x80000e70"
+      ],
+      "visit_order": [
+        "0x80000df0"
+      ],
+      "selected": "0x80000df0",
+      "expected_selected": "0x80000df0",
+      "geometry_predicate": "stubbed"
+    }
+  ],
+  "comparisons": 18,
+  "mismatches": 0,
+  "dependencies_stubbed": [
+    "0x14b7820 point predicate returns fixture values in recursive-walker tests",
+    "0x14d9aa0 and 0x14d9990 node setup helpers are stubbed in bound inheritance tests"
+  ],
+  "button_pane_lookup": {
+    "constructor_helper": "0x14885b0",
+    "consumer": "0x14888b0",
+    "consumer_caller": "0x148b2b0",
+    "finding": "The helper searches for Cursor/P_BtnFocusKey/C_Cursor and an unnamed pane; if the latter is absent it falls back to B_Hit at control+0x70. If control+0x68 is still null, it copies +0x70 there. 0x14888b0 reads +0x70 then +0x68 and calls 0x14c80d0, which checks pane/ancestor visibility flags. This connects B_Hit to a control-side pane-visibility gate, but not to the hit-node rectangle source.",
+    "evidence_kind": "Static decompiler output; no pane instance pointer identity was recovered."
+  },
+  "parent_bound_static_evidence": {
+    "bounds_update": "0x14b84f0 recursively calls 0x14b8540 for Pane pointers at node+0x20 and node+0x28, writing transformed rectangles at +0x30 and +0x40.",
+    "inheritance": "0x14b87b0 inserts a child node in the parent/sibling list via 0x14d9990 and copies parent+0x28 into child+0x28 when child flag 0x40 is set.",
+    "limit": "This proves propagation of the secondary bound pointer, not that it is the B_Hit pane or a GPU clip rectangle."
+  },
+  "limits": [
+    "The +0x28 field is a parent-propagated bound pointer under child flag 0x40; whether its semantic role is clipping or another interaction constraint remains unresolved.",
+    "The recursive ordering is proven for controlled flags and tree links; real layout z-order meaning is not established.",
+    "The control-side B_Hit pointer reaches a pane-visibility gate, but no recovered def-use connects it to the hit-node pane pointer at +0x20 or the parent-propagated bound at +0x28.",
+    "No BND1-to-hit-node runtime instance trace or synchronized game capture was available."
+  ]
+}
