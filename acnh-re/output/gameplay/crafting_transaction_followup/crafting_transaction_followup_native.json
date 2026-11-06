@@ -1,0 +1,477 @@
+{
+  "scope": "Cold-cache acquisition from reconstructed A/B/C save-member records, followed by the native recipe material getter and native material sufficiency helper for RecipeCraftParam ID 56. This is a focused gameplay slice, not a complete crafting transaction.",
+  "labels": {
+    "RecipeCraftParam ID 56 and ingredient IDs": "[TBL]",
+    "recipe ingredient extraction by 0xedac50": "[NATIVE]",
+    "save member paths and source layouts": "[PSEUDO: reconstructed fixture]",
+    "cold acquisition, native A/B/C loaders/producers and 0xee0be0": "[NATIVE]",
+    "0xedc240 six-slot call mapping": "[PSEUDO]"
+  },
+  "provenance": {
+    "main_nso_path": "/workspace/acnh-parallel/crafting_transaction/acnh-re/inputs/additional_exefs/main",
+    "main_nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+    "analysis_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+    "index_path": "/workspace/acnh-re/output/index.sqlite",
+    "recipe_romfs_path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Bcsv/RecipeCraftParam.bcsv",
+    "recipe_romfs_sha256": "97fe6d73e183dab43dad7358627a0a1a43f5764f0a18fa044a63a9ecf56ba919",
+    "recipe_table_raw_sha256": "97fe6d73e183dab43dad7358627a0a1a43f5764f0a18fa044a63a9ecf56ba919",
+    "itemparam_raw_sha256": "89230e97fc877ff2b2b48ac1c707ef32b3a7760118839c307f19797e2553458c",
+    "itemkind_raw_sha256": "4cac0178cc69519585528b24ceef022ccb1fefa12b23fc9a9e4280e40185ba7b",
+    "native_functions": [
+      "0xedac50",
+      "0xee0be0",
+      "0xeda040",
+      "0xeda160",
+      "0xeda280",
+      "0xee72b0",
+      "0xee7550",
+      "0xee7800"
+    ],
+    "native_function_call_counts": {
+      "0xedac50": 18,
+      "0xee0be0": 18,
+      "0xeda040": 3,
+      "0xeda160": 3,
+      "0xeda280": 3,
+      "0xee72b0": 3,
+      "0xee7550": 3,
+      "0xee7800": 3
+    },
+    "0xedc240_to_0xee0be0_direct_call_sites": [
+      "0xedcca4",
+      "0xedcffc",
+      "0xedd240",
+      "0xedd488",
+      "0xedd6d0",
+      "0xedd914"
+    ],
+    "dependencies_stubbed": [
+      "SDK memset import only; byte-fill behavior is emulated by a memory callback because the SDK NSO was not supplied in this worktree."
+    ]
+  },
+  "recipe": {
+    "recipe_unique_id": 56,
+    "output_item_id": 975,
+    "output_label": "FtrFruitbasket",
+    "materials": [
+      {
+        "slot": 0,
+        "item_id": 2213,
+        "quantity": 1
+      },
+      {
+        "slot": 1,
+        "item_id": 2285,
+        "quantity": 1
+      },
+      {
+        "slot": 2,
+        "item_id": 2287,
+        "quantity": 1
+      },
+      {
+        "slot": 3,
+        "item_id": 2214,
+        "quantity": 1
+      },
+      {
+        "slot": 4,
+        "item_id": 2286,
+        "quantity": 1
+      },
+      {
+        "slot": 5,
+        "item_id": 65534,
+        "quantity": 0
+      }
+    ]
+  },
+  "scenarios": {
+    "cold_cache_all_five_materials_in_A_B_C_with_C_enabled": {
+      "player_handle": 0,
+      "cache_state_before": "cold",
+      "cache_state_after": "ready",
+      "save_source_record_counts_A_B_C": [
+        2,
+        2,
+        1
+      ],
+      "include_C": true,
+      "missing_source_item_id": null,
+      "material_observations": [
+        {
+          "slot": 0,
+          "item_id": 2213,
+          "required": 1,
+          "counter_C_A_B": [
+            0,
+            1,
+            0
+          ],
+          "sufficient_flag_after": 1
+        },
+        {
+          "slot": 1,
+          "item_id": 2285,
+          "required": 1,
+          "counter_C_A_B": [
+            0,
+            1,
+            0
+          ],
+          "sufficient_flag_after": 1
+        },
+        {
+          "slot": 2,
+          "item_id": 2287,
+          "required": 1,
+          "counter_C_A_B": [
+            0,
+            0,
+            1
+          ],
+          "sufficient_flag_after": 1
+        },
+        {
+          "slot": 3,
+          "item_id": 2214,
+          "required": 1,
+          "counter_C_A_B": [
+            0,
+            0,
+            1
+          ],
+          "sufficient_flag_after": 1
+        },
+        {
+          "slot": 4,
+          "item_id": 2286,
+          "required": 1,
+          "counter_C_A_B": [
+            1,
+            0,
+            0
+          ],
+          "sufficient_flag_after": 1
+        },
+        {
+          "slot": 5,
+          "item_id": 65534,
+          "required": 0,
+          "counter_C_A_B": [
+            0,
+            0,
+            0
+          ],
+          "sufficient_flag_after": 1
+        }
+      ],
+      "counters_after_native_producers": {
+        "A": {
+          "2213": 1,
+          "2285": 1,
+          "2287": 0,
+          "2214": 0,
+          "2286": 0
+        },
+        "B": {
+          "2213": 0,
+          "2285": 0,
+          "2287": 1,
+          "2214": 1,
+          "2286": 0
+        },
+        "C": {
+          "2213": 0,
+          "2285": 0,
+          "2287": 0,
+          "2214": 0,
+          "2286": 1
+        }
+      },
+      "counters_unchanged_by_requirement_checks": true,
+      "final_sufficient_flag": 1,
+      "native_memset_calls": [
+        {
+          "bytes": 30000,
+          "value": 0
+        },
+        {
+          "bytes": 30000,
+          "value": 0
+        },
+        {
+          "bytes": 30000,
+          "value": 0
+        }
+      ],
+      "memset_binding": {
+        "name": "memset",
+        "site": "0x32ce7e8",
+        "sentinel": "0x60000100"
+      }
+    },
+    "same_sources_but_C_excluded_by_native_option": {
+      "player_handle": 0,
+      "cache_state_before": "cold",
+      "cache_state_after": "ready",
+      "save_source_record_counts_A_B_C": [
+        2,
+        2,
+        1
+      ],
+      "include_C": false,
+      "missing_source_item_id": null,
+      "material_observations": [
+        {
+          "slot": 0,
+          "item_id": 2213,
+          "required": 1,
+          "counter_C_A_B": [
+            0,
+            1,
+            0
+          ],
+          "sufficient_flag_after": 1
+        },
+        {
+          "slot": 1,
+          "item_id": 2285,
+          "required": 1,
+          "counter_C_A_B": [
+            0,
+            1,
+            0
+          ],
+          "sufficient_flag_after": 1
+        },
+        {
+          "slot": 2,
+          "item_id": 2287,
+          "required": 1,
+          "counter_C_A_B": [
+            0,
+            0,
+            1
+          ],
+          "sufficient_flag_after": 1
+        },
+        {
+          "slot": 3,
+          "item_id": 2214,
+          "required": 1,
+          "counter_C_A_B": [
+            0,
+            0,
+            1
+          ],
+          "sufficient_flag_after": 1
+        },
+        {
+          "slot": 4,
+          "item_id": 2286,
+          "required": 1,
+          "counter_C_A_B": [
+            0,
+            0,
+            0
+          ],
+          "sufficient_flag_after": 0
+        },
+        {
+          "slot": 5,
+          "item_id": 65534,
+          "required": 0,
+          "counter_C_A_B": [
+            0,
+            0,
+            0
+          ],
+          "sufficient_flag_after": 0
+        }
+      ],
+      "counters_after_native_producers": {
+        "A": {
+          "2213": 1,
+          "2285": 1,
+          "2287": 0,
+          "2214": 0,
+          "2286": 0
+        },
+        "B": {
+          "2213": 0,
+          "2285": 0,
+          "2287": 1,
+          "2214": 1,
+          "2286": 0
+        },
+        "C": {
+          "2213": 0,
+          "2285": 0,
+          "2287": 0,
+          "2214": 0,
+          "2286": 1
+        }
+      },
+      "counters_unchanged_by_requirement_checks": true,
+      "final_sufficient_flag": 0,
+      "native_memset_calls": [
+        {
+          "bytes": 30000,
+          "value": 0
+        },
+        {
+          "bytes": 30000,
+          "value": 0
+        },
+        {
+          "bytes": 30000,
+          "value": 0
+        }
+      ],
+      "memset_binding": {
+        "name": "memset",
+        "site": "0x32ce7e8",
+        "sentinel": "0x60000100"
+      }
+    },
+    "cold_cache_one_required_Peach_missing_from_source_C": {
+      "player_handle": 0,
+      "cache_state_before": "cold",
+      "cache_state_after": "ready",
+      "save_source_record_counts_A_B_C": [
+        2,
+        2,
+        0
+      ],
+      "include_C": true,
+      "missing_source_item_id": 2286,
+      "material_observations": [
+        {
+          "slot": 0,
+          "item_id": 2213,
+          "required": 1,
+          "counter_C_A_B": [
+            0,
+            1,
+            0
+          ],
+          "sufficient_flag_after": 1
+        },
+        {
+          "slot": 1,
+          "item_id": 2285,
+          "required": 1,
+          "counter_C_A_B": [
+            0,
+            1,
+            0
+          ],
+          "sufficient_flag_after": 1
+        },
+        {
+          "slot": 2,
+          "item_id": 2287,
+          "required": 1,
+          "counter_C_A_B": [
+            0,
+            0,
+            1
+          ],
+          "sufficient_flag_after": 1
+        },
+        {
+          "slot": 3,
+          "item_id": 2214,
+          "required": 1,
+          "counter_C_A_B": [
+            0,
+            0,
+            1
+          ],
+          "sufficient_flag_after": 1
+        },
+        {
+          "slot": 4,
+          "item_id": 2286,
+          "required": 1,
+          "counter_C_A_B": [
+            0,
+            0,
+            0
+          ],
+          "sufficient_flag_after": 0
+        },
+        {
+          "slot": 5,
+          "item_id": 65534,
+          "required": 0,
+          "counter_C_A_B": [
+            0,
+            0,
+            0
+          ],
+          "sufficient_flag_after": 0
+        }
+      ],
+      "counters_after_native_producers": {
+        "A": {
+          "2213": 1,
+          "2285": 1,
+          "2287": 0,
+          "2214": 0,
+          "2286": 0
+        },
+        "B": {
+          "2213": 0,
+          "2285": 0,
+          "2287": 1,
+          "2214": 1,
+          "2286": 0
+        },
+        "C": {
+          "2213": 0,
+          "2285": 0,
+          "2287": 0,
+          "2214": 0,
+          "2286": 0
+        }
+      },
+      "counters_unchanged_by_requirement_checks": true,
+      "final_sufficient_flag": 0,
+      "native_memset_calls": [
+        {
+          "bytes": 30000,
+          "value": 0
+        },
+        {
+          "bytes": 30000,
+          "value": 0
+        },
+        {
+          "bytes": 30000,
+          "value": 0
+        }
+      ],
+      "memset_binding": {
+        "name": "memset",
+        "site": "0x32ce7e8",
+        "sentinel": "0x60000100"
+      }
+    }
+  },
+  "verified": [
+    "The native recipe getter returns the five one-unit ingredients from table row 56; the sixth slot is empty.",
+    "With cache-ready byte initially zero and player handle 0, 0xee0be0 loads A/B/C save-member fixtures through 0xeda040/0xeda160/0xeda280 and invokes their original producer callbacks.",
+    "The native helper sets the cache-ready byte after the three loaders, then checks materials using the produced counters.",
+    "All five materials pass with C included. Excluding C makes the Peach slot insufficient; omitting Peach from the save fixture also makes that slot insufficient.",
+    "The requirement helper does not subtract ingredients, grant item 975, write learned-recipe state, or roll back."
+  ],
+  "limits": [
+    "No real player save was supplied. Player context and A/B/C member pointers are reconstructed; record contents are fixture data using the source word layout expected by the original loaders.",
+    "Save-member names A/B/C remain unresolved. The run proves the native acquisition path from three member accessors, not which named gameplay inventory each group represents.",
+    "The SDK memset import uses a byte-accurate callback; all game functions listed above execute their original ELF bytes.",
+    "No ingredient consumption, output award, cancel/rollback, learned-recipe query/set path, workbench page interaction, or remake/customization operation is executed."
+  ],
+  "mismatches": []
+}
