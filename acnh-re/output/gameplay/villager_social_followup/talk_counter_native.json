@@ -1,0 +1,123 @@
+{
+  "cases": 3,
+  "mismatches": [],
+  "native_functions": {
+    "talk_counter_wrapper": "0xce9af0",
+    "format_key": "0x47360",
+    "normalize_player_index": "0xda3fc0",
+    "resolve_player_counter": "0xeaa8c0",
+    "save_field_writer_boundary": "0xce9390",
+    "conversation_side_effect_caller": "0xc84240"
+  },
+  "cases_data": [
+    {
+      "resident_slot": 0,
+      "player_index_input": 0,
+      "resolver_value_input": 1,
+      "resolver_calls": [
+        {
+          "player_index_after_native_normalization": 0,
+          "resolver_mode": 2
+        },
+        {
+          "player_index_after_native_normalization": 0,
+          "resolver_mode": 2
+        }
+      ],
+      "writer_calls": [
+        {
+          "key": "TalkNpc0Count",
+          "writer_operation": 1,
+          "value": 1
+        },
+        {
+          "key": "TalkAllNpcCount",
+          "writer_operation": 1,
+          "value": 1
+        }
+      ]
+    },
+    {
+      "resident_slot": 3,
+      "player_index_input": 5,
+      "resolver_value_input": 2,
+      "resolver_calls": [
+        {
+          "player_index_after_native_normalization": 5,
+          "resolver_mode": 2
+        },
+        {
+          "player_index_after_native_normalization": 5,
+          "resolver_mode": 2
+        }
+      ],
+      "writer_calls": [
+        {
+          "key": "TalkNpc3Count",
+          "writer_operation": 1,
+          "value": 2
+        },
+        {
+          "key": "TalkAllNpcCount",
+          "writer_operation": 1,
+          "value": 2
+        }
+      ]
+    },
+    {
+      "resident_slot": 9,
+      "player_index_input": 7,
+      "resolver_value_input": 6,
+      "resolver_calls": [
+        {
+          "player_index_after_native_normalization": 7,
+          "resolver_mode": 2
+        },
+        {
+          "player_index_after_native_normalization": 7,
+          "resolver_mode": 2
+        }
+      ],
+      "writer_calls": [
+        {
+          "key": "TalkNpc9Count",
+          "writer_operation": 1,
+          "value": 6
+        },
+        {
+          "key": "TalkAllNpcCount",
+          "writer_operation": 1,
+          "value": 6
+        }
+      ]
+    }
+  ],
+  "call_chain": [
+    "0xc84240",
+    "0xce9af0",
+    "0x47360",
+    "0xda3fc0",
+    "0xef62f0",
+    "0xeaa8c0",
+    "0xce9390"
+  ],
+  "scope": "Original 0xce9af0, 0x47360, 0xda3fc0 and 0xef62f0 execute. Execution is intercepted at 0xce9390, where its key, operation argument and value are captured.",
+  "dependencies_stubbed": [
+    {
+      "va": "0xeaa8c0",
+      "purpose": "supplies a controlled player-specific counter delta in place of live runtime/save lookup"
+    },
+    {
+      "va": "0xce9390",
+      "purpose": "captures the original wrapper arguments without modifying save state"
+    }
+  ],
+  "limits": [
+    "The player-counter resolver result and actor context are prepared inputs; no live player or villager save was loaded.",
+    "Execution stops before 0xce9390 performs its map/save lookup and update.",
+    "The wrapper proves the two configured keys and forwarded controlled value; it does not establish the game-side semantic name or reset policy of TalkNpc%dCount / TalkAllNpcCount.",
+    "The caller 0xc84240 is not executed in this test; its path to 0xce9af0 and its TalkCountToday gate are static call/pseudocode evidence."
+  ],
+  "elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+  "nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900"
+}
