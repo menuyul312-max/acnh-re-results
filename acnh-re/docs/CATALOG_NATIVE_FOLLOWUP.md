@@ -6,6 +6,8 @@ The native function at `0xeecad0` is the item catalog bit setter. It first calls
 
 Static tracing of `0xab2940` recovers the mapper expression: it reads `ItemParam.RemakeID` through field hash `0xcb5eb33f` (the local schema identifies this as signed 16-bit `RemakeID`), rejects a negative value, then calls `0xf5ab10`. That helper returns `RemakeID * 8 + (byte_from_0xab0f50 & 7)`; if `0xab0f50` returns null, the low three bits are zero. The expression allocates eight possible catalog indices per `RemakeID`, consistent with the setter's 16,000-bit capacity. The meaning of each low-bit variant and the concrete item rows that select it are not established yet.
 
+The resolved 1.0.0 `ItemParam` has 8,208 rows; 1,044 rows have nonnegative `RemakeID` values, across 654 distinct IDs (maximum 901). One striking group is `RemakeID=652`: 391 distinct `Bromide` rows, each with a distinct `UniqueID`, all have `ItemCatalogType=NotSee`. This may explain why they share a coarse mapping, but it does not prove whether the acquisition caller skips these rows or how their catalog state is used. The observed table's raw BCSV SHA-256 is `89230e97fc877ff2b2b48ac1c707ef32b3a7760118839c307f19797e2553458c`.
+
 `tools/catalog_bitset_native.py` runs the original `0xeecad0`, `0xab2940`, and `0xf5ab10` instructions. It exhausts all 16,000 valid `(RemakeID 0..1999, low bits 0..7)` combinations, then checks sentinel/invalid-item, missing variant-byte, and out-of-range cases. Every case checks the return value and all 500 words of the 2,000-byte bitset; 16,011 controlled cases have zero mismatches. Stubs supply item validity, the ItemParam row and field lookup, variant-byte pointer, and save/context wrapper. This proves the native mapper and bitset arithmetic, but it does not exercise actual ItemParam rows or establish the semantic names of the low bits.
 
 Run it with:
@@ -24,4 +26,4 @@ The generated record is `output/gameplay/catalog_bitset_native.json`.
 - `0x118a8a0` writes `BuyItem`, `HowmuchBuyItem`, and `BuyItemCatalog` achievement counters from a purchase-page callback. This proves the page's achievement updates, not delivery or mailbox timing.
 - `0xa1bda0` is reached from the `0xa18db0` initialization chain and references the `MailboxCatalog` key, but the mailbox catalog's save transitions and delivery behavior remain unresolved.
 
-The larger catalog queue item remains open. Concrete item-to-RemakeID/variant values, the meaning of the low three bits, all acquisition triggers, save persistence, Nook Shopping order eligibility, and mailbox delivery require additional tracing and controlled native cases.
+The larger catalog queue item remains open. Concrete item-to-RemakeID/variant mappings for visible entries, the meaning of the low three bits, whether `NotSee` items are gated from registration, all acquisition triggers, save persistence, Nook Shopping order eligibility, and mailbox delivery require additional tracing and controlled native cases.
