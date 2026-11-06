@@ -112,6 +112,58 @@
       ]
     }
   ],
+  "score_total_to_report_bridge": {
+    "evaluator_va": "0x7b1fe0",
+    "item_score_accumulator_va": "0x7b36b0",
+    "item_score_accumulator_call_pc": "0x7b265c",
+    "item_score_helper_va": "0xab9050",
+    "item_score_helper_call_pc": "0x7b37b8",
+    "category_accumulator_offsets": [
+      "0x24",
+      "0x28",
+      "0x2c",
+      "0x30",
+      "0x34",
+      "0x38",
+      "0x3c",
+      "0x40",
+      "0x44",
+      "0x48",
+      "0x4c",
+      "0x50"
+    ],
+    "temporary_total_offset": "0x136c",
+    "per_area_delta_offset": "0xd8",
+    "bucket_va": "0x7b4fc0",
+    "bucket_receiver_va": "0x7b6470",
+    "bucket_area_count_offset": "0x154",
+    "bucket_max_area_index_offset": "0x155",
+    "bucket_min_area_index_offset": "0x156",
+    "bucket_report_index_codes": {
+      "mask_bit_8": {
+        "mask": "0x100",
+        "record_code": "0x33",
+        "index_offset": "0x155"
+      },
+      "mask_bit_9": {
+        "mask": "0x200",
+        "record_code": "0x34",
+        "index_offset": "0x156"
+      }
+    },
+    "decomp_sha256": {
+      "7b1fe0.c": "8cb13dff97c159c991008500e5d6317d69c936bc8bc28071b462edc10c6c57e5",
+      "7b4fc0.c": "de61d5e21e33e7cdf938028124ecbe164650003d941d62a5108d6f1be160db52",
+      "7b6470.c": "3c050b05f6ad0c12e6144e3280672704a5d912224b245d072ae08fd616e75cc2",
+      "ab9050.c": "76da26626a0f94ef493c5c2aa57e3b3ff64f56c8b0a6777a59acaa2dcbe4235b"
+    },
+    "static_trace": "0x7b1fe0 calls item accumulator 0x7b36b0, which calls 0xab9050 for the item score; the native item accumulator adds the returned score to the current category field, then the evaluator recomputes +0x136c as the sum of twelve fields +0x24..+0x50, and stores the change from the previous total at +0xd8 + 4*min(area_index,5). 0x7b4fc0 scans that +0xd8 array up to +0x154, records maximum/minimum indices at +0x155/+0x156, and sets mask bits 0x100/0x200; 0x7b6470 maps those bits to queued record codes 0x33/0x34.",
+    "limits": [
+      "This is a static cross-reference of separate native functions, not an end-to-end native execution.",
+      "The aggregate +0x136c is not itself mapped to a displayed HHA rank or threshold; the proven downstream values are per-area deltas and report-mask details.",
+      "Queued record codes 0x33/0x34 have no proven localization, UI, or mail consumer in the indexed evidence."
+    ]
+  },
   "mail_lookup": {
     "indexed_hha_mail_actions": [
       {
