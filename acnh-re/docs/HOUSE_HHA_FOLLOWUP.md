@@ -78,13 +78,53 @@ Jalankan dari root worktree:
 PYTHONPATH=/workspace/acnh-re/.deps python acnh-re/tools/hha_score_bucket_native.py
 ```
 
+### Pembilang luas +0x150 — footprint objek terbukti terbatas
+
+Di `0x7b1fe0`, ketika jalur item berada pada `iVar24 == 0` dan predicate native `0xaa7f80` lolos, blok `0x7b2694` meminta dua extent dari record objek: `0x52c270` menghasilkan `maxX + 1 - minX` dari offset `+0x10/+0x20`, sedangkan `0x52c290` menghasilkan `maxZ + 1 - minZ` dari `+0x14/+0x24`. Instruksi `MADD/STR` kemudian menambah `width × depth` ke `+0x150` pada record evaluasi pemain. Jadi `+0x150` memiliki produsen langsung berupa jumlah luas bounding-rectangle objek pada jalur tersebut; bukti ini belum menyatakan bahwa overlap antarobjek atau ruang kosong di dalam bounding rectangle dikoreksi.
+
+Native harness menjalankan dua extent helper, `MADD`, dan store asli pada lima pasangan batas koordinat, termasuk koordinat negatif dan accumulator awal nonnol. Hasil: 5 kasus, 0 mismatch. Harness sengaja mulai sesudah eligibility guard dan tidak menjalankan item lookup atau predicate `0xaa7f80`.
+
+Artefak dan reproducer:
+
+- `output/gameplay/house_hha_followup/hha_coverage_accumulator_native.json`
+- `tools/hha_floor_coverage_accumulator_native.py`
+
+### Penyebut luas rumah +0x14c — produsen switch terbukti; selector belum bernama
+
+`0x7b1dd0` memeriksa slot pemain 0–7 melalui `0x1205870(index)` dan meneruskan slot aktif ke evaluator `0x7b1fe0(index)`. Stride `0x160` pada tabel internal adalah record evaluasi per slot pemain/rumah; pemindaian delapan ruang berlangsung di dalam evaluator. Nama field save yang menghasilkan selector luas rumah belum ditemukan.
+
+Di `0x7b1fe0`, setelah lookup state dan setter `HHAGradeMailFlag`, selector 2–8 menjalankan switch native di `0x7b2144–0x7b2248`. Switch menulis denominator `+0x14c` dan count `+0x154` pada record pemain:
+
+| Selector | `+0x14c` | `+0x154` | Interpretasi geometri yang cocok |
+|---:|---:|---:|---|
+| 2 | 36 | 1 | 6×6 |
+| 3 | 64 | 1 | 8×8 |
+| 4 | 100 | 2 | 8×8 + 6×6 |
+| 5 | 136 | 3 | 8×8 + 2×(6×6) |
+| 6 | 172 | 4 | 8×8 + 3×(6×6) |
+| 7 | 232 | 5 | 8×8 + 3×(6×6) + 10×6 |
+| 8 | 292 | 6 | 8×8 + 3×(6×6) + 2×(10×6) |
+
+Pola luas itu cocok dengan pertumbuhan denah rumah, tetapi hubungan selector tersebut ke `PlayerHouseLevel` atau nama field save tertentu masih inferensi, belum cross-reference native yang menyebut nama field. Native harness menjalankan dispatch dan store asli untuk ketujuh selector dengan 0 mismatch; ia mulai setelah lookup/flag-setter dan berhenti sebelum helper `0x7b7c30`.
+
+Artefak dan reproducer:
+
+- `output/gameplay/house_hha_followup/hha_house_area_denominator_native.json`
+- `tools/hha_house_area_denominator_native.py`
+
+Jalankan dari root worktree:
+
+```bash
+PYTHONPATH=/workspace/acnh-re/.deps python acnh-re/tools/hha_house_area_denominator_native.py
+```
+
 ### Skor item menuju akumulator HHA — terbukti terbatas; kait ke bucket masih terbuka
 
-Evaluator `0x7b1fe0` memproses objek rumah dan memanggil `0x7b36b0` untuk item yang lolos pemeriksaan. Instruksi native `0x7b36b0` memanggil helper item `0xab9050` di PC `0x7b37b8`, lalu menambahkan nilai baliknya ke record ruangan `param1 + 0xb10`, offset `+0x24`. Pseudocode helper `0xab9050` mencari hash field `0xd62525d0`; hash ini sama persis dengan kolom `ItemFrom:HHABaseScore` pada schema resolved (offset 6, lebar 2 byte). Reproducer menjalankan instruksi asli `0x7b36b0` dengan nilai balik helper terkontrol 0, 200, dan 499; ketiganya menambahkan nilai yang sama ke `+0x24`, sementara `+0x150` tetap pada sentinel uji. Ada 3 kasus dan 0 mismatch. Identitas sumber skor dibuktikan lewat kesamaan hash schema; harness tidak menjalankan lookup tabel item sebenarnya.
+Evaluator `0x7b1fe0` memproses item untuk satu slot pemain dan memanggil `0x7b36b0` untuk item yang lolos pemeriksaan. Instruksi native `0x7b36b0` memanggil helper item `0xab9050` di PC `0x7b37b8`, lalu menambahkan nilai baliknya ke record evaluasi pemain pada `param1 + 0xb10`, offset `+0x24`. Pseudocode helper `0xab9050` mencari hash field `0xd62525d0`; hash ini sama persis dengan kolom `ItemFrom:HHABaseScore` pada schema resolved (offset 6, lebar 2 byte). Reproducer menjalankan instruksi asli `0x7b36b0` dengan nilai balik helper terkontrol 0, 200, dan 499; ketiganya menambahkan nilai yang sama ke `+0x24`, sementara `+0x150` tetap pada sentinel uji. Ada 3 kasus dan 0 mismatch. Identitas sumber skor dibuktikan lewat kesamaan hash schema; harness tidak menjalankan lookup tabel item sebenarnya.
 
-Di evaluator `0x7b1fe0`, setelah pemindaian, native membentuk `+0x136c` sebagai jumlah 12 akumulator ruangan pada `+0x24` sampai `+0x50`. Cabang bucket `0x7b4fc0` membaca field berbeda: `+0x150` sebagai pembilang dan `+0x14c` sebagai penyebut. Untuk pembilang nonnegatif, ia menggeser `+0x150` empat bit ke kanan, membagi hasilnya dengan `+0x14c`, lalu mengalikan 100. Ambang internal yang terlihat adalah 20 dan 50; konstanta float 100.0 dan 50.0 berada di `0x29d6408` dan `0x29d62ac`. Harness bucket lama menguji scalar `+0x150` langsung dengan instruksi `0x7b4fc0`.
+Di evaluator `0x7b1fe0`, setelah pemindaian, native membentuk `+0x136c` sebagai jumlah 12 akumulator kategori pada `+0x24` sampai `+0x50`. Cabang bucket `0x7b4fc0` membaca field berbeda: `+0x150` sebagai pembilang dan `+0x14c` sebagai penyebut. Untuk pembilang nonnegatif, ia menggeser `+0x150` empat bit ke kanan, membagi hasilnya dengan `+0x14c`, lalu mengalikan 100. Ambang internal yang terlihat adalah 20 dan 50; konstanta float 100.0 dan 50.0 berada di `0x29d6408` dan `0x29d62ac`. Harness bucket lama menguji scalar `+0x150` langsung dengan instruksi `0x7b4fc0`.
 
-Karena akumulator item `+0x24..+0x50`/total `+0x136c` dan pembilang bucket `+0x150` merupakan field berbeda, bukti yang ada belum menghubungkan nilai helper item ke scalar bucket. Semantik penuh `+0x150`, pembobotan tema, ambang grade yang ditampilkan, dan hubungan total `+0x136c` dengan grade tetap **terbuka**.
+Karena akumulator item `+0x24..+0x50`/total `+0x136c` dan pembilang bucket `+0x150` merupakan field berbeda, bukti yang ada belum menghubungkan nilai helper item ke scalar bucket. Penanganan overlap/area kosong pada pembilang bounding-footprint, bobot tema, ambang grade yang ditampilkan, dan hubungan total `+0x136c` dengan grade tetap **terbuka**.
 
 Reproducer dan hasil untuk akumulator item:
 
@@ -101,8 +141,22 @@ PYTHONPATH=/workspace/acnh-re/.deps python acnh-re/tools/hha_item_score_accumula
 
 Skema resolved `ItemParam` memuat `ItemHHATheme`, `ItemHHACategory`, `ItemHHASet`, `ItemHHASituation1/2`, `ItemHHAPart`, `ItemHHASeason`, dan `ItemHHADirection`; `ItemFrom` memuat `HHABaseScore`. Indeks BDLI US English memuat 3 record `STR_HHA_Rank`, 25 `STR_HHA_Theme`, 19 `STR_HHA_Set`, dan 24 `STR_HHA_Situation`. Bukti yang dikumpulkan belum menghubungkan nilai field barang tersebut dengan bobot poin atau mask bucket yang diuji. Flag `cLifeSupportAchievement:GetSRankonHHA` bernama Jepang “mendapat S di HHA” dan direferensikan oleh beberapa fungsi native, tetapi threshold serta kaitnya dengan bit bucket 3/4/5 belum terbukti.
 
+### Jalur report internal — antrean terbukti, UI/surat belum terpetakan
+
+Setelah `0x7b29d0` memanggil bucket `0x7b4fc0`, fungsi itu meneruskan mask ke `0x7b6470`. Fungsi tersebut memetakan bit ke kode record internal (`0x28–0x39`), membentuk record lewat `0xac77a0` (label Ghidra `FUN_00bc77a0`), lalu memanggil helper antrean `0xabf610` (label Ghidra `FUN_00bbf610`). Builder menulis field pada offset `+0x08`, `+0x0c`, `+0x10`, `+0x28`, dan `+0x34–+0x38`; helper antrean memiliki cabang yang menambahkan entri nonnull ke koleksi global. Kedua call ini bukan API pengiriman surat; arti record dan konsumen antrean sesudahnya belum diketahui.
+
+Pola builder+antrean yang sama dipakai cabang HHA lain: `0x7b53b0` (kelompok kode `0x0c`), `0x7b55e0` (`0x0e`), `0x7b5e60` (`0x0d`), dan `0x7b61e0` (`0x0b`, kode `0x46–0x51`). Caller yang terlihat adalah `0x7b52d0`, `0x7b5540`, `0x7b29d0`, dan `0x7b4d00`. Fungsi yang mengonsumsi antrean dan kemungkinan pemetaan record itu ke UI atau surat belum ditemukan; angka/kode tersebut belum dapat dipasangkan ke nama lokalisasi.
+
+Daftar callsite, hash pseudocode, dan pencarian EventFlow terindeks disimpan di `output/gameplay/house_hha_followup/hha_report_queue_static.json`. Regenerator statisnya `tools/hha_report_queue_static.py`:
+
+```bash
+python acnh-re/tools/hha_report_queue_static.py
+```
+
 ### Flag surat grade — syarat setter parsial terbukti; pengiriman terbuka
 
-Flag `cPlayer:HHAGradeMailFlag` memiliki label Jepang “HHA | kirim surat evaluasi ON?” dan tidak memiliki penulis EventFlow yang terindeks. Manager `0x7b1dd0`, yang dipanggil dari `0xf53a70`, mencoba evaluasi indeks ruangan 0–7; bila `0x7b1fe0` berhasil, ia melanjutkan ke `0x7b29d0`. Di awal `0x7b1fe0`, setter `0xf4b0d0` dipanggil sebelum pemindaian furniture bila indeks ruangan bukan nol, nilai field level yang dibaca lebih besar dari 1, dan field state ruangan `+0x158` bukan `-1`. Setter menerima nilai pada field tersebut. Ini membatasi syarat setter, tetapi arti tepat kedua nilai state dan hubungan dengan evaluasi grade sebelumnya belum terpetakan. Karena setter berjalan sebelum pemindaian dan bucket pada pass yang sama, jalur ini tidak menunjukkan pembuatan atau pengiriman surat dan tidak menetapkan grade dari skor yang baru dihitung pada pemanggilan yang sama.
+Flag `cPlayer:HHAGradeMailFlag` memiliki label Jepang “HHA | kirim surat evaluasi ON?” dan tidak memiliki penulis maupun pembaca EventFlow yang terindeks. Manager `0x7b1dd0`, yang dipanggil dari `0xf53a70`, memeriksa slot pemain 0–7 melalui `0x1205870(index)`; bila slot tersedia dan `0x7b1fe0` berhasil, ia melanjutkan ke `0x7b29d0`. Di awal `0x7b1fe0`, setter `0xf4b0d0` berjalan sebelum pemindaian furniture bila indeks pemain bukan nol, selector yang dibaca lebih besar dari 1, dan field state record `+0x158` bukan `-1`. Setter menerima nilai dari field itu. Arti tepat field state, hubungan flag dengan grade pass sebelumnya, dan penerima flag setelah setter belum terpetakan. Karena setter terjadi sebelum scan dan bucket pada pass yang sama, jalur ini tidak menunjukkan pembuatan atau pengiriman surat dan tidak menetapkan grade dari skor yang baru dihitung pada pemanggilan yang sama.
 
-**Batas bukti saat ini:** harness akumulator mengontrol batas helper item; harness bucket mengontrol field `+0x150`, accessor mission, dan menghentikan receiver laporan. Keduanya menjalankan jalur native terpisah. Belum ada reproduksi save yang menghubungkan field item, total, bucket, `HHAGradeMailFlag`, dan jalur pembuatan/pengiriman surat. Karena itu formula HHA lengkap, pemetaan grade, bonus tema, serta syarat dan jadwal surat tetap terbuka.
+Dalam indeks EventFlow lengkap untuk dump yang tersedia, pencarian `HHAGradeMailFlag` menghasilkan nol akses. Pencarian mail dengan `FromType=cHHA` atau `MAIL_SP_HHA` menghasilkan satu action: `SNPC_rco_10_Common_UpgradeMyhome` event 45 mengirim `MAIL_SP_HHA_BuildCelebration` melalui `cFastTomorrow`. Ini surat perayaan pembangunan rumah, bukan hasil evaluasi. Jalur pengiriman grade mail tetap **belum terbukti**; blocker yang tersisa ialah konsumen antrean report native dan titik yang membaca atau mengosongkan `HHAGradeMailFlag`.
+
+**Batas bukti saat ini:** harness item mengontrol nilai balik lookup `HHABaseScore`; harness footprint menguji aritmetika bounding rectangle; harness bucket mengontrol record `+0x150`, accessor mission, dan menghentikan receiver laporan. Ketiganya menjalankan jalur native terpisah. Belum ada reproduksi save yang menghubungkan field item, total `+0x136c`, pembilang/penyebut bucket, `HHAGradeMailFlag`, dan konsumen antrean report. Karena itu formula HHA lengkap, pemetaan grade, bonus tema, serta syarat dan jadwal surat tetap terbuka.
