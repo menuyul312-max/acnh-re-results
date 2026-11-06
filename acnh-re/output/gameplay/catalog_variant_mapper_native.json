@@ -1,0 +1,127 @@
+{
+  "native_elf_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+  "native_functions": {
+    "item_to_catalog_index": "0xab2940",
+    "variant_source": "0xab0f50"
+  },
+  "schema_enum_values": {
+    "ItemKind.ItemRemakeType": {
+      "None": 0,
+      "Ftr": 1,
+      "Tool": 2,
+      "Smartphone": 3
+    }
+  },
+  "scope": "AB2940, AB0F50 and F5AB10 execute original instructions with synthetic ItemParam/ItemKind table rows. Item lookup, RemakeID field access, and Ftr/Tool nested predicates are stubbed. No real table row or live save is loaded.",
+  "cases": 9,
+  "mismatches": 0,
+  "dependencies_stubbed": [
+    "item validity",
+    "A9C290 ItemParam row adapter",
+    "ItemParam.ItemKind row index",
+    "ItemKind row lookup",
+    "RemakeID field accessor",
+    "furniture/tool eligibility predicates"
+  ],
+  "results": [
+    {
+      "name": "furniture-byte-low-three",
+      "remake_id": 83,
+      "item_kind": 5,
+      "item_remake_type": 1,
+      "packed_payload_byte_at_item_offset_4": 174,
+      "expected_low_bits": 6,
+      "mapped_index": 670,
+      "expected_index": 670,
+      "match": true
+    },
+    {
+      "name": "furniture-predicate-null",
+      "remake_id": 83,
+      "item_kind": 5,
+      "item_remake_type": 1,
+      "packed_payload_byte_at_item_offset_4": 174,
+      "expected_low_bits": 0,
+      "mapped_index": 664,
+      "expected_index": 664,
+      "match": true
+    },
+    {
+      "name": "tool-payload-byte",
+      "remake_id": 17,
+      "item_kind": 17,
+      "item_remake_type": 2,
+      "packed_payload_byte_at_item_offset_4": 255,
+      "expected_low_bits": 7,
+      "mapped_index": 143,
+      "expected_index": 143,
+      "match": true
+    },
+    {
+      "name": "tool-predicate-null",
+      "remake_id": 17,
+      "item_kind": 17,
+      "item_remake_type": 2,
+      "packed_payload_byte_at_item_offset_4": 255,
+      "expected_low_bits": 0,
+      "mapped_index": 136,
+      "expected_index": 136,
+      "match": true
+    },
+    {
+      "name": "smartphone-kind-0x6c",
+      "remake_id": 230,
+      "item_kind": 108,
+      "item_remake_type": 3,
+      "packed_payload_byte_at_item_offset_4": 171,
+      "expected_low_bits": 3,
+      "mapped_index": 1843,
+      "expected_index": 1843,
+      "match": true
+    },
+    {
+      "name": "smartphone-kind-0x38",
+      "remake_id": 230,
+      "item_kind": 56,
+      "item_remake_type": 3,
+      "packed_payload_byte_at_item_offset_4": 246,
+      "expected_low_bits": 6,
+      "mapped_index": 1846,
+      "expected_index": 1846,
+      "match": true
+    },
+    {
+      "name": "smartphone-other-kind",
+      "remake_id": 230,
+      "item_kind": 230,
+      "item_remake_type": 3,
+      "packed_payload_byte_at_item_offset_4": 246,
+      "expected_low_bits": 0,
+      "mapped_index": 1840,
+      "expected_index": 1840,
+      "match": true
+    },
+    {
+      "name": "non-remake-kind",
+      "remake_id": 83,
+      "item_kind": 5,
+      "item_remake_type": 0,
+      "packed_payload_byte_at_item_offset_4": 174,
+      "expected_low_bits": 0,
+      "mapped_index": 664,
+      "expected_index": 664,
+      "match": true
+    },
+    {
+      "name": "negative-remake-id-sentinel",
+      "remake_id": -1,
+      "item_kind": 5,
+      "item_remake_type": 1,
+      "packed_payload_byte_at_item_offset_4": 174,
+      "expected_low_bits": null,
+      "mapped_index": 4294967295,
+      "expected_index": 4294967295,
+      "match": true
+    }
+  ]
+}

@@ -8,6 +8,8 @@ Static tracing of `0xab2940` recovers the mapper expression: it reads `ItemParam
 
 The source table join now confirms the layout behind those IDs: all 654 distinct nonnegative `ItemParam.RemakeID` values have an `ItemRemake.UniqueID` row. Of 1,044 ItemParam rows with a remake ID, 654 match that row's `ItemUniqueID`; the other 390 are the additional `Bromide` entries sharing RemakeID 652 and base ItemUniqueID 6426. All 391 rows in that group are `NotSee`. The ItemKind table maps these 1,044 rows to `ItemRemakeType` categories: 1,022 `Ftr`, 20 `Tool`, and 2 `Smartphone`. This is table-level grouping evidence, not proof that the game suppresses those rows from acquisition or registration.
 
+`tools/catalog_variant_mapper_native.py` now runs `0xab2940`, `0xab0f50`, and `0xf5ab10` against controlled synthetic `ItemParam`/`ItemKind` rows. Nine cases match the native mapper: a negative `RemakeID` returns `0xffffffff`; for a nonnegative ID, the resulting index is `RemakeID * 8` plus either the low three bits of the packed byte at item offset `+4` or zero when the relevant type/predicate does not select it. The fixture covers Ftr and Tool predicate-true/false branches, Smartphone kinds `0x6c` and `0x38`, another Smartphone kind, and `ItemRemakeType=None`. Item validity, table-row adapters, RemakeID access, and the Ftr/Tool predicates are stubbed, so the test validates mapper composition and byte masking, not the predicate rules or real per-item variants. Results: `output/gameplay/catalog_variant_mapper_native.json`.
+
 Static tracing of `0xab0f50` shows that it conditionally returns a pointer to the packed item record at `item + 0xc`; `0xab2940` then reads that byte and masks it with `& 7`. The item record is copied by `0xf589b0` as an 8-byte payload, so the selected byte is payload offset `+4`. `ItemKind.ItemRemakeType` and `ItemRemake` pattern fields distinguish furniture, tools, and smartphone paths, but the exact user-visible color/design meaning of each payload value is still unresolved. Reproduce the table joins with `catalog_itemparam_table_audit.py` and inspect `item_remake_crosswalk` in its JSON output.
 
 The resolved 1.0.0 `ItemParam` has 8,208 rows; 1,044 rows have nonnegative `RemakeID` values, across 654 distinct IDs (maximum 901). One striking group is `RemakeID=652`: 391 distinct `Bromide` rows, each with a distinct `UniqueID`, all have `ItemCatalogType=NotSee`. This may explain why they share a coarse mapping, but it does not prove whether the acquisition caller skips these rows or how their catalog state is used. The observed table's raw BCSV SHA-256 is `89230e97fc877ff2b2b48ac1c707ef32b3a7760118839c307f19797e2553458c`.
@@ -22,9 +24,10 @@ Run it with:
 
 ```sh
 PYTHONPATH=/workspace/acnh-re/.deps python acnh-re/tools/catalog_bitset_native.py
+PYTHONPATH=/workspace/acnh-re/.deps python acnh-re/tools/catalog_variant_mapper_native.py
 ```
 
-The generated record is `output/gameplay/catalog_bitset_native.json`.
+The first command writes `output/gameplay/catalog_bitset_native.json`; the second writes `output/gameplay/catalog_variant_mapper_native.json`.
 
 ## Static trigger evidence and open work
 
