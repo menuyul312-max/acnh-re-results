@@ -1,0 +1,1711 @@
+{
+  "schema": "acnh-re/building-placement-proof/1",
+  "game_version": "ACNH 1.0.0",
+  "date": "2026-11-07",
+  "scope": "Reverse-engineering evidence for core-story building/facility placement and build lifecycle. No Godot scene/build or game execution.",
+  "evidence_legend": {
+    "EF": "EventFlow graph/source reference; proves the graph contains the named flow action/query/parameter/flag, not its runtime handler result.",
+    "TBL": "Raw table row/field evidence from B_data BCSV.",
+    "STRUCT": "Parsed source structure evidence from stage or BYML data; does not establish a semantic actor or runtime consumer join by itself.",
+    "PSEUDO": "Static pseudocode/disassembly summary; not a native execution unless explicitly said otherwise.",
+    "NATIVE": "Bounded execution of original native instructions under the recorded fixture; no building-placement lifecycle was run in this workstream.",
+    "CAT": "Name/metadata catalogue candidate only. Never evidence of selected runtime model, mesh, waveform, or collision shape.",
+    "OPEN": "Unresolved source/consumer/placement join."
+  },
+  "provenance": {
+    "manifest_path": "acnh-re/output/manifest.json",
+    "manifest_sha256": "eb8d114129e01e6c3284a7a2613c3f451d649c0708a58a1a08cd757c5f3840a8",
+    "source_inventory_basis": "Raw B_data paths and hashes are from this checkout manifest; source_id is the manifest entry id. BFEVFL/BCSV/BYML resolved output views were read from the existing analysis workspace; raw source hashes are retained here to make the relation reproducible.",
+    "decoders": [
+      {
+        "path": "acnh-re/tools/reference/acnh_rip/formats/bfevfl.py",
+        "role": "BFEVFL structural parser; EventFlow event/actor/parameter references."
+      },
+      {
+        "path": "acnh-re/tools/reference/acnh_rip/exporters/eventflow.py",
+        "role": "Static EventFlow graph export; parser validation is structural, not handler runtime proof."
+      },
+      {
+        "path": "acnh-re/tools/gameplay_flow.py",
+        "role": "Repository gameplay-flow tree/index generation."
+      },
+      {
+        "path": "acnh-re/tools/reference/acnh_rip/formats/bcsv.py",
+        "role": "BCSV rows/fields; preserve row UniqueID and table namespace; unresolved hash columns are not renamed by assumption."
+      },
+      {
+        "path": "acnh-re/tools/reference/acnh_rip/formats/byml.py",
+        "role": "BYML source tree decoder."
+      },
+      {
+        "path": "acnh-re/tools/reference/acnh_rip/exporters/data.py",
+        "role": "BCSV/BYML export; binary BYML blobs stay external and are referenced as blobs."
+      },
+      {
+        "path": "acnh-re/tools/typed_byml.py",
+        "role": "Typed BYML view; retains wire tags/raw values where available."
+      },
+      {
+        "path": "acnh-re/tools/byml_names.py",
+        "role": "Descriptor recovery; @field names are recovered hash-key annotations and the raw hash/key remains the source authority."
+      },
+      {
+        "path": "acnh-re/tools/reference/acnh_rip/exporters/world.py",
+        "role": "Prior field exporter; its assumptions describe terrain preset derivation and retain raw cells; not used as a building placement proof."
+      },
+      {
+        "path": "acnh-re/tools/reference/PROVENANCE.json",
+        "role": "Tracks imported parser code and local changes, including f32 EventFlow precision."
+      }
+    ],
+    "namespace_rule": "Do not compare numeric keys across ItemParam.UniqueID, StructureInfoParam.UniqueID, StructureFacilityModel.UniqueID, StructureBridgeTypeParam.UniqueID, StructureBridgeParam.UniqueID, StructureHouseShapeParam.UniqueID, SettlerType, StructureType, save flags, or grid coordinates. Each value is qualified with its source namespace.",
+    "coordinate_rule": "BYML mUnitX/Z values in StructurePreset are cell indices. No scale/origin/axis/rotation/elevation conversion is claimed. Preset LandMaking cells, stage-local @Pos values and structure placement instance transforms remain distinct until a native consumer and join are proven.",
+    "asset_rule": "Model/audio catalogue rows are CAT only. A table ModelName equal to a catalogue Asset_ID is a candidate lookup, not proof of raw asset availability, selected resource, rendered mesh, audio playback, or collider binding.",
+    "index_note": {
+      "read_only_index": "/workspace/acnh-re/output/index.sqlite",
+      "sha256": "a78c7af27d37b8fd931bba8bc611623dacf7685cb6e8b4f827effa0765340aad",
+      "role": "Read-only cross-reference during analysis. acnh-re/output/index.sqlite inside this checkout is zero bytes and was not used."
+    }
+  },
+  "source_inventory": [
+    {
+      "manifest_id": 664,
+      "source_path": "B_data/EventFlow/Tutorials_Prologue3_Orientation1.bfevfl",
+      "format": "BFEVFL",
+      "size_bytes": 23184,
+      "sha256": "4cb49b510565e06ca896197c41975a326cefe6f3f5224cd346d6082811ea733d",
+      "raw_blob": "blobs/4cb49b510565e06ca896197c41975a326cefe6f3f5224cd346d6082811ea733d.bin"
+    },
+    {
+      "manifest_id": 667,
+      "source_path": "B_data/EventFlow/Tutorials_Prologue4_Orientation2_RcmRct.bfevfl",
+      "format": "BFEVFL",
+      "size_bytes": 7784,
+      "sha256": "bb3e7993195e034254a984361b3d2b0f4900159c6034cb22dfe488ac2dd582c9",
+      "raw_blob": "blobs/bb3e7993195e034254a984361b3d2b0f4900159c6034cb22dfe488ac2dd582c9.bin"
+    },
+    {
+      "manifest_id": 665,
+      "source_path": "B_data/EventFlow/Tutorials_Prologue4_Orientation2_AN.bfevfl",
+      "format": "BFEVFL",
+      "size_bytes": 16432,
+      "sha256": "7ff6650eda5f30d0bcd2251ba0c112a881959becd07f15f338a09366c84433a2",
+      "raw_blob": "blobs/7ff6650eda5f30d0bcd2251ba0c112a881959becd07f15f338a09366c84433a2.bin"
+    },
+    {
+      "manifest_id": 666,
+      "source_path": "B_data/EventFlow/Tutorials_Prologue4_Orientation2_HA.bfevfl",
+      "format": "BFEVFL",
+      "size_bytes": 17080,
+      "sha256": "46725f5022bfb4319cc67ae8290b200aecb320a0d5dc165b0f23cd6a27123ebc",
+      "raw_blob": "blobs/46725f5022bfb4319cc67ae8290b200aecb320a0d5dc165b0f23cd6a27123ebc.bin"
+    },
+    {
+      "manifest_id": 588,
+      "source_path": "B_data/EventFlow/SNPC_rco_01_Tent_1_Entries.bfevfl",
+      "format": "BFEVFL",
+      "size_bytes": 42328,
+      "sha256": "76c70d56a2f2a2d568adf2bbe5776c5e04a8def689a616134a32b637854669f5",
+      "raw_blob": "blobs/76c70d56a2f2a2d568adf2bbe5776c5e04a8def689a616134a32b637854669f5.bin"
+    },
+    {
+      "manifest_id": 585,
+      "source_path": "B_data/EventFlow/SNPC_rco_00_StartMainGame.bfevfl",
+      "format": "BFEVFL",
+      "size_bytes": 18296,
+      "sha256": "3c7837e2f6ee97e73339781c2a4371e8eba3bcd855830f13e84e922dda35dbd8",
+      "raw_blob": "blobs/3c7837e2f6ee97e73339781c2a4371e8eba3bcd855830f13e84e922dda35dbd8.bin"
+    },
+    {
+      "manifest_id": 306,
+      "source_path": "B_data/EventFlow/Ftr_Working.bfevfl",
+      "format": "BFEVFL",
+      "size_bytes": 46616,
+      "sha256": "47f0f918f5f42180dec1faebb8822ac64b33e6009cb0e0164f2a5bfd94a5ef97",
+      "raw_blob": "blobs/47f0f918f5f42180dec1faebb8822ac64b33e6009cb0e0164f2a5bfd94a5ef97.bin"
+    },
+    {
+      "manifest_id": 516,
+      "source_path": "B_data/EventFlow/Player_HousingKit.bfevfl",
+      "format": "BFEVFL",
+      "size_bytes": 50104,
+      "sha256": "6b7e56629772c85053c44b399d9e1a9bdf1d8f147cceb8bb499cc8c8918a0383",
+      "raw_blob": "blobs/6b7e56629772c85053c44b399d9e1a9bdf1d8f147cceb8bb499cc8c8918a0383.bin"
+    },
+    {
+      "manifest_id": 506,
+      "source_path": "B_data/EventFlow/Player_Demo_HousingFinish.bfevfl",
+      "format": "BFEVFL",
+      "size_bytes": 43008,
+      "sha256": "0d985729c46942063a1e57aa33bd47d307ede97c2d195cfcee72f6034a3e8c4d",
+      "raw_blob": "blobs/0d985729c46942063a1e57aa33bd47d307ede97c2d195cfcee72f6034a3e8c4d.bin"
+    },
+    {
+      "manifest_id": 604,
+      "source_path": "B_data/EventFlow/SNPC_rco_53_MigrantsQuest.bfevfl",
+      "format": "BFEVFL",
+      "size_bytes": 46640,
+      "sha256": "1e47270f484207fdbf9adadccb70a3dc32807fae2cdc306d140124cef350ec22",
+      "raw_blob": "blobs/1e47270f484207fdbf9adadccb70a3dc32807fae2cdc306d140124cef350ec22.bin"
+    },
+    {
+      "manifest_id": 499,
+      "source_path": "B_data/EventFlow/Obj_ReservedPlaceBox.bfevfl",
+      "format": "BFEVFL",
+      "size_bytes": 98024,
+      "sha256": "90ae16e996d24bb9d0cffc1288f711c1552b97215ed4134fa9027657c78cd6d9",
+      "raw_blob": "blobs/90ae16e996d24bb9d0cffc1288f711c1552b97215ed4134fa9027657c78cd6d9.bin"
+    },
+    {
+      "manifest_id": 295,
+      "source_path": "B_data/EventFlow/Demo_PublicAnnouncement_Process.bfevfl",
+      "format": "BFEVFL",
+      "size_bytes": 44408,
+      "sha256": "7b921fd4ef4b262169b3f9d445bf74437fcf913294607d20f8b29c6b65bb8077",
+      "raw_blob": "blobs/7b921fd4ef4b262169b3f9d445bf74437fcf913294607d20f8b29c6b65bb8077.bin"
+    },
+    {
+      "manifest_id": 650,
+      "source_path": "B_data/EventFlow/System_MigrantsQuestProcess.bfevfl",
+      "format": "BFEVFL",
+      "size_bytes": 11392,
+      "sha256": "16623f71911d5a79b1c72be57d6087e9086c519e18f056a2a79fb4eb6cfc08d9",
+      "raw_blob": "blobs/16623f71911d5a79b1c72be57d6087e9086c519e18f056a2a79fb4eb6cfc08d9.bin"
+    },
+    {
+      "manifest_id": 284,
+      "source_path": "B_data/EventFlow/Demo_PublicAnnouncement_21_CmnEvChk.bfevfl",
+      "format": "BFEVFL",
+      "size_bytes": 16928,
+      "sha256": "3cbfbdcb99ad589828827f8d78c2fde3c7b63f664b9928f093b48d058d982b0f",
+      "raw_blob": "blobs/3cbfbdcb99ad589828827f8d78c2fde3c7b63f664b9928f093b48d058d982b0f.bin"
+    },
+    {
+      "manifest_id": 281,
+      "source_path": "B_data/EventFlow/Demo_PublicAnnouncement_03_Rco_Once.bfevfl",
+      "format": "BFEVFL",
+      "size_bytes": 21056,
+      "sha256": "17ad3f5d9e39c7ffaa46926851ccc0d63a258296b0f6ad79d0a258424e0ac0e1",
+      "raw_blob": "blobs/17ad3f5d9e39c7ffaa46926851ccc0d63a258296b0f6ad79d0a258424e0ac0e1.bin"
+    },
+    {
+      "manifest_id": 646,
+      "source_path": "B_data/EventFlow/System_GrowUp_GameProcess.bfevfl",
+      "format": "BFEVFL",
+      "size_bytes": 9680,
+      "sha256": "03b729f203a7cd309b5427f6c9a54e1a238fc8818f44ca7b40f5249aa52d7a2e",
+      "raw_blob": "blobs/03b729f203a7cd309b5427f6c9a54e1a238fc8818f44ca7b40f5249aa52d7a2e.bin"
+    },
+    {
+      "manifest_id": 593,
+      "source_path": "B_data/EventFlow/SNPC_rco_05_ChkCeremony.bfevfl",
+      "format": "BFEVFL",
+      "size_bytes": 29808,
+      "sha256": "f67f787d07000f09bd023dc225e810482f12284b419b7a9f118ff017b34363fe",
+      "raw_blob": "blobs/f67f787d07000f09bd023dc225e810482f12284b419b7a9f118ff017b34363fe.bin"
+    },
+    {
+      "manifest_id": 605,
+      "source_path": "B_data/EventFlow/SNPC_rco_54_IslandDevelopment.bfevfl",
+      "format": "BFEVFL",
+      "size_bytes": 38040,
+      "sha256": "6d7e6be11b6781102595328a6d636e7cfdba1fc9a74414d4137025744a570fc8",
+      "raw_blob": "blobs/6d7e6be11b6781102595328a6d636e7cfdba1fc9a74414d4137025744a570fc8.bin"
+    },
+    {
+      "manifest_id": 459,
+      "source_path": "B_data/EventFlow/NNPC_Spot_Camp.bfevfl",
+      "format": "BFEVFL",
+      "size_bytes": 30288,
+      "sha256": "e14f475db1ccdeae628592b167d64a50cec5436634e666ca146f7c9a7210f948",
+      "raw_blob": "blobs/e14f475db1ccdeae628592b167d64a50cec5436634e666ca146f7c9a7210f948.bin"
+    },
+    {
+      "manifest_id": 279,
+      "source_path": "B_data/EventFlow/Demo_PublicAnnouncement.bfevfl",
+      "format": "BFEVFL",
+      "size_bytes": 22208,
+      "sha256": "7ec0d30107a1d40169b4455932f0f6853beb9ef7b7cf69ca2ee2f77958a12602",
+      "raw_blob": "blobs/7ec0d30107a1d40169b4455932f0f6853beb9ef7b7cf69ca2ee2f77958a12602.bin"
+    },
+    {
+      "manifest_id": 282,
+      "source_path": "B_data/EventFlow/Demo_PublicAnnouncement_13_Sza_Once.bfevfl",
+      "format": "BFEVFL",
+      "size_bytes": 2864,
+      "sha256": "b83ce836be4389b9de087fd8f4153917d4e5bd32949581be63b2166b53da4cc2",
+      "raw_blob": "blobs/b83ce836be4389b9de087fd8f4153917d4e5bd32949581be63b2166b53da4cc2.bin"
+    },
+    {
+      "manifest_id": 625,
+      "source_path": "B_data/EventFlow/SNPC_tkk_Live.bfevfl",
+      "format": "BFEVFL",
+      "size_bytes": 33016,
+      "sha256": "d1a9d0253d4ae6c1ed46e87d007f8924f4cba637589a3d0750ca07295794d316",
+      "raw_blob": "blobs/d1a9d0253d4ae6c1ed46e87d007f8924f4cba637589a3d0750ca07295794d316.bin"
+    },
+    {
+      "manifest_id": 72,
+      "source_path": "B_data/Bcsv/ItemParam.bcsv",
+      "format": "BCSV",
+      "size_bytes": 4104780,
+      "sha256": "89230e97fc877ff2b2b48ac1c707ef32b3a7760118839c307f19797e2553458c",
+      "raw_blob": "blobs/89230e97fc877ff2b2b48ac1c707ef32b3a7760118839c307f19797e2553458c.bin"
+    },
+    {
+      "manifest_id": 153,
+      "source_path": "B_data/Bcsv/StructureInfoParam.bcsv",
+      "format": "BCSV",
+      "size_bytes": 896,
+      "sha256": "a16b03ec38869a015faa5dbaddde03ea3865db88c91ea40d32d9c7e2fa6904ef",
+      "raw_blob": "blobs/a16b03ec38869a015faa5dbaddde03ea3865db88c91ea40d32d9c7e2fa6904ef.bin"
+    },
+    {
+      "manifest_id": 148,
+      "source_path": "B_data/Bcsv/StructureFacilityModel.bcsv",
+      "format": "BCSV",
+      "size_bytes": 1540,
+      "sha256": "b29acfe910d54b39b90d2f5f6c04b092ef037706cd9e929656f6104aa8adae9d",
+      "raw_blob": "blobs/b29acfe910d54b39b90d2f5f6c04b092ef037706cd9e929656f6104aa8adae9d.bin"
+    },
+    {
+      "manifest_id": 151,
+      "source_path": "B_data/Bcsv/StructureHouseShapeParam.bcsv",
+      "format": "BCSV",
+      "size_bytes": 1352,
+      "sha256": "46db0f7663f5c57ef45963886881ff366a67d4545baf40ad66666d4d5c9219ba",
+      "raw_blob": "blobs/46db0f7663f5c57ef45963886881ff366a67d4545baf40ad66666d4d5c9219ba.bin"
+    },
+    {
+      "manifest_id": 146,
+      "source_path": "B_data/Bcsv/StructureBridgeTypeParam.bcsv",
+      "format": "BCSV",
+      "size_bytes": 752,
+      "sha256": "684bc72a4499dbcd055aaf1e5c0097eae00b7526471a542d4fd756ec891973da",
+      "raw_blob": "blobs/684bc72a4499dbcd055aaf1e5c0097eae00b7526471a542d4fd756ec891973da.bin"
+    },
+    {
+      "manifest_id": 145,
+      "source_path": "B_data/Bcsv/StructureBridgeParam.bcsv",
+      "format": "BCSV",
+      "size_bytes": 2436,
+      "sha256": "a55822eabae52e11918a9e75c0c4b487bda4f74055f8e046647c64dd5a255531",
+      "raw_blob": "blobs/a55822eabae52e11918a9e75c0c4b487bda4f74055f8e046647c64dd5a255531.bin"
+    },
+    {
+      "manifest_id": 41,
+      "source_path": "B_data/Bcsv/FieldMainFieldParam.bcsv",
+      "format": "BCSV",
+      "size_bytes": 13132,
+      "sha256": "3ebd1057e41b0666aa30c6d8beee9220b52d8fb5280c478e8eb13eaca5d27944",
+      "raw_blob": "blobs/3ebd1057e41b0666aa30c6d8beee9220b52d8fb5280c478e8eb13eaca5d27944.bin"
+    },
+    {
+      "manifest_id": 46,
+      "source_path": "B_data/Bcsv/FieldOutsideTemplate.bcsv",
+      "format": "BCSV",
+      "size_bytes": 5284,
+      "sha256": "1c615f1c8b42d4f690f81fd577261a3daf61f814bb3b1f93354fd1b714c5a314",
+      "raw_blob": "blobs/1c615f1c8b42d4f690f81fd577261a3daf61f814bb3b1f93354fd1b714c5a314.bin"
+    },
+    {
+      "manifest_id": 40,
+      "source_path": "B_data/Bcsv/FieldLandMakingUnitModelParam.bcsv",
+      "format": "BCSV",
+      "size_bytes": 24964,
+      "sha256": "289ad2fb68d511121a0779f24e21dfc5f8c627a6053c6aaf334b6a56481d36fc",
+      "raw_blob": "blobs/289ad2fb68d511121a0779f24e21dfc5f8c627a6053c6aaf334b6a56481d36fc.bin"
+    },
+    {
+      "manifest_id": 2442,
+      "source_path": "B_data/Param/Field/MainFieldPreset/FieldPresetA00_LandMaking.byml",
+      "format": "BYML",
+      "size_bytes": 150608,
+      "sha256": "cba1ab90d21982b443e719e30a19c80fa9aa9ead86f03705f5ecbd3c821d4aca",
+      "raw_blob": "blobs/cba1ab90d21982b443e719e30a19c80fa9aa9ead86f03705f5ecbd3c821d4aca.bin"
+    },
+    {
+      "manifest_id": 2729,
+      "source_path": "B_data/Param/Field/MainFieldPreset/StructurePresetA00.byml",
+      "format": "BYML",
+      "size_bytes": 256,
+      "sha256": "2a0be5f7a0904fe09c5ead536802749696e317bf1261d22327811aafb036436e",
+      "raw_blob": "blobs/2a0be5f7a0904fe09c5ead536802749696e317bf1261d22327811aafb036436e.bin"
+    },
+    {
+      "manifest_id": 2982,
+      "source_path": "B_data/Stage/StageList.byml",
+      "format": "BYML",
+      "size_bytes": 340,
+      "sha256": "9dd2757d7dad92fdf5724df38902a56a6b9445dca87defc06d3ee8e6adee9414",
+      "raw_blob": "blobs/9dd2757d7dad92fdf5724df38902a56a6b9445dca87defc06d3ee8e6adee9414.bin"
+    },
+    {
+      "manifest_id": 2887,
+      "source_path": "B_data/Stage/Game/IdrAirPortDemoDeparture.byml",
+      "format": "BYML",
+      "size_bytes": 1120,
+      "sha256": "2004fd9b04cf7a7216a00fd6f6d410357f510b45adf56ee66b1e7952b5b382e5",
+      "raw_blob": "blobs/2004fd9b04cf7a7216a00fd6f6d410357f510b45adf56ee66b1e7952b5b382e5.bin"
+    },
+    {
+      "manifest_id": 2910,
+      "source_path": "B_data/Stage/Game/MainFieldDemoLanding.byml",
+      "format": "BYML",
+      "size_bytes": 532,
+      "sha256": "f65850ad99eec9bc52861a2a9591f46358ea3ad09bb14273f40ba5751e918143",
+      "raw_blob": "blobs/f65850ad99eec9bc52861a2a9591f46358ea3ad09bb14273f40ba5751e918143.bin"
+    },
+    {
+      "manifest_id": 2908,
+      "source_path": "B_data/Stage/Game/MainFieldDemoCeremony.byml",
+      "format": "BYML",
+      "size_bytes": 288,
+      "sha256": "6c722b2ceec02839c554e84222c5274326abda3f647ffcbdea855324fb423d34",
+      "raw_blob": "blobs/6c722b2ceec02839c554e84222c5274326abda3f647ffcbdea855324fb423d34.bin"
+    },
+    {
+      "manifest_id": 2909,
+      "source_path": "B_data/Stage/Game/MainFieldDemoFirstLive.byml",
+      "format": "BYML",
+      "size_bytes": 420,
+      "sha256": "0cf0898403df0b2eb8a47fae804a373ca6a7dcc8eb9680aac64360847b16bd12",
+      "raw_blob": "blobs/0cf0898403df0b2eb8a47fae804a373ca6a7dcc8eb9680aac64360847b16bd12.bin"
+    }
+  ],
+  "world_and_collision_boundary": {
+    "field_preset_loader": {
+      "status": "PSEUDO+BOUNDED_NATIVE",
+      "source_refs": [
+        {
+          "status": "PSEUDO",
+          "path": "acnh-re/docs/ISLAND_LOADER_FOLLOWUP.md",
+          "key": "0x529910 -> 0x552bb0 -> 0x528bf0 -> 0x558f40",
+          "claim": "Generator/setup/resource chain is statically described; whole generator/resource loader is not executed."
+        },
+        {
+          "status": "STRUCT",
+          "path": "B_data/Bcsv/FieldMainFieldParam.bcsv",
+          "key": "96 rows; UniqueID / FieldData / OutsideTemplateKind",
+          "claim": "Template selector input table; rows name terrain preset/template relationships, not story object placements.",
+          "source_sha256": "3ebd1057e41b0666aa30c6d8beee9220b52d8fb5280c478e8eb13eaca5d27944"
+        },
+        {
+          "status": "STRUCT",
+          "path": "B_data/Bcsv/FieldOutsideTemplate.bcsv",
+          "key": "36 rows",
+          "claim": "Outside template table is available; no story structure slot mapping was found.",
+          "source_sha256": "1c615f1c8b42d4f690f81fd577261a3daf61f814bb3b1f93354fd1b714c5a314"
+        },
+        {
+          "status": "STRUCT",
+          "path": "B_data/Bcsv/FieldLandMakingUnitModelParam.bcsv",
+          "key": "246 rows; UniqueID / Variation",
+          "claim": "Terrain unit/model table; it does not establish house/facility transforms.",
+          "source_sha256": "289ad2fb68d511121a0779f24e21dfc5f8c627a6053c6aaf334b6a56481d36fc"
+        },
+        {
+          "status": "STRUCT",
+          "path": "B_data/Param/Field/MainFieldPreset/FieldPresetA00_LandMaking.byml",
+          "key": "FieldPresetA00_LandMaking; 112x96 grid; 14 bytes/cell in loader report",
+          "claim": "Land-making records map terrain cell data; they are not facility instances.",
+          "source_sha256": "cba1ab90d21982b443e719e30a19c80fa9aa9ead86f03705f5ecbd3c821d4aca"
+        },
+        {
+          "status": "STRUCT",
+          "path": "B_data/Param/Field/MainFieldPreset/StructurePresetA00.byml",
+          "key": "root.@StructurePresetA00.@mSiteList[]; mUnitX/Z.s32",
+          "claim": "This preset has six named-key cell pairs (61,66), (78,77), (49,79), (88,80), (97,84), (69,90). Slot purpose and any story facility/plot assignment are OPEN.",
+          "source_sha256": "2a0be5f7a0904fe09c5ead536802749696e317bf1261d22327811aafb036436e"
+        },
+        {
+          "status": "PSEUDO",
+          "path": "acnh-re/docs/ISLAND_LOADER_FOLLOWUP.md",
+          "key": "LandMaking cell 14-byte transfer vs ground/collision cell stride 52 bytes",
+          "claim": "The examined loader writes the 14-byte LandMaking fields; no proven expansion from each record into the separate 52-byte ground/collision record.",
+          "source_sha256": "cba1ab90d21982b443e719e30a19c80fa9aa9ead86f03705f5ecbd3c821d4aca"
+        }
+      ],
+      "bounded_native_detail": "Existing report verifies four selector/setup call sites and the original RNG helper on fixed seeds; it does not execute 0x529910, 0x528bf0 or resource loading with the live registry/cache.",
+      "world_transform_status": "OPEN",
+      "reason": "No verified transform chain joins StructurePreset mUnitX/Z cells to structure instance origin, world x/z, rotation, elevation, final model, or collider."
+    },
+    "player_collision_boundary": {
+      "status": "PSEUDO/OPEN",
+      "refs": [
+        {
+          "status": "PSEUDO",
+          "path": "acnh-re/docs/PLAYER_COLLIDER_QUERY_REMAINDER_20261107.md",
+          "key": "0x7bccf0 called by player post-motion/vertical paths",
+          "claim": "The movement collider query requires initialized world root/grid/list state; sandbox probe stops at null world root and does not yield a world result."
+        },
+        {
+          "status": "OPEN",
+          "path": "acnh-re/docs/PLAYER_COLLIDER_QUERY_REMAINDER_20261107.md",
+          "key": "no structure-placement consumer or facility shape join",
+          "claim": "This player movement-query boundary does not identify building placement validation, footprint geometry, or the facility PBC consumer."
+        }
+      ],
+      "building_collision": "OPEN"
+    },
+    "structure_site_sample": {
+      "status": "STRUCT",
+      "source_path": "B_data/Param/Field/MainFieldPreset/StructurePresetA00.byml",
+      "source_sha256": "2a0be5f7a0904fe09c5ead536802749696e317bf1261d22327811aafb036436e",
+      "key": "root.@StructurePresetA00.@mSiteList[]; each entry @mUnitX.s32/@mUnitZ.s32",
+      "cell_points_xz": [
+        [
+          61,
+          66
+        ],
+        [
+          78,
+          77
+        ],
+        [
+          49,
+          79
+        ],
+        [
+          88,
+          80
+        ],
+        [
+          97,
+          84
+        ],
+        [
+          69,
+          90
+        ]
+      ],
+      "claim": "Exact cell-coordinate values in one source preset only; role-to-house/shop/office/plot mapping, conversion to world transform, rotation/elevation and collision are OPEN."
+    }
+  },
+  "placement_lifecycles": [
+    {
+      "id": "prologue.player_tent",
+      "title": "Player tent placement and flag handoff",
+      "objects": [
+        {
+          "name": "TutorialTent / HousingKit",
+          "id": 2750,
+          "id_namespace": "ItemParam.UniqueID / flow delivery ID",
+          "status": "EF+TBL"
+        }
+      ],
+      "build_and_lifecycle": [
+        {
+          "status": "EF",
+          "path": "B_data/EventFlow/Tutorials_Prologue3_Orientation1.bfevfl",
+          "key": "Orientation1 delivery; SetDeliveryItemAtRandom ItemUniqueID=2750",
+          "claim": "The prologue gives a tent kit; this does not identify the placed structure instance.",
+          "source_sha256": "4cb49b510565e06ca896197c41975a326cefe6f3f5224cd346d6082811ea733d"
+        },
+        {
+          "status": "EF",
+          "path": "acnh-re/output/gameplay/flow_index.json",
+          "key": "data.Player_HousingKit.entries; cPlayerHouse + StructureBuildPosType=cPlayer; EventFlowQueryCanBuildHere / EventFlowActionStructureStartPreviewGuide",
+          "claim": "Generic player-house placement class and preview are present in EventFlow. Query/preview handler semantics were not run here.",
+          "source_sha256": "6b7e56629772c85053c44b399d9e1a9bdf1d8f147cceb8bb499cc8c8918a0383"
+        },
+        {
+          "status": "EF",
+          "path": "acnh-re/output/gameplay/trees/Player_Demo_HousingFinish.txt",
+          "key": "HousingFinish_PcTent_Built #197; EventFlagSystemOn cLand:Prologue4BuiltPlayer",
+          "claim": "The placement completion route sets the player-tent progress flag.",
+          "source_sha256": "0d985729c46942063a1e57aa33bd47d307ede97c2d195cfcee72f6034a3e8c4d"
+        },
+        {
+          "status": "TBL",
+          "path": "B_data/Bcsv/StructureHouseShapeParam.bcsv",
+          "key": "UniqueID=3; HousePartsType=Player; AppearanceLevel=Tent",
+          "claim": "House-shape row for the player tent; row ID is not a world cell or instance identifier.",
+          "source_sha256": "46db0f7663f5c57ef45963886881ff366a67d4545baf40ad66666d4d5c9219ba"
+        }
+      ],
+      "placement": {
+        "status": "OPEN",
+        "coordinates": null,
+        "reason": "The player-selected cPlayer placement class supplies no island cell, x/z, rotation, elevation, footprint origin, or save-instance join in the cited EventFlow."
+      },
+      "visual_asset": {
+        "status": "OPEN",
+        "reason": "House-shape row has no model/resource path; no direct table-to-mesh consumer join is established."
+      },
+      "collision": {
+        "status": "OPEN",
+        "reason": "Build query presence is EF only; accepted ground, footprint and overlap/collider rules have not been joined or executed."
+      },
+      "notes": [
+        "MainFieldDemoLanding is a cutscene-stage source; it is not evidence for the player tent site."
+      ]
+    },
+    {
+      "id": "prologue.initial_villager_tents",
+      "title": "Initial AN/HA villager tent builds",
+      "objects": [
+        {
+          "name": "NPC tent house-shape row",
+          "id": 4,
+          "id_namespace": "StructureHouseShapeParam.UniqueID",
+          "status": "TBL"
+        }
+      ],
+      "build_and_lifecycle": [
+        {
+          "status": "EF",
+          "path": "acnh-re/output/gameplay/flow_index.json",
+          "key": "data.Player_HousingKit.entries; cNormalNpcHouse + StructureBuildPosType=cPlayer; EventFlowQueryUIResultHousingKitNpcType",
+          "claim": "The normal-NPC-house placement path and a selected NPC-type query exist; direct ownership of the initial AN/HA tent actors remains flow-level.",
+          "source_sha256": "6b7e56629772c85053c44b399d9e1a9bdf1d8f147cceb8bb499cc8c8918a0383"
+        },
+        {
+          "status": "EF",
+          "path": "acnh-re/output/gameplay/trees/Player_Demo_HousingFinish.txt",
+          "key": "HousingFinish_ANTent_Built #4; HousingFinish_HATent_Built #2; Prologue4BuiltNpcAN/HA",
+          "claim": "The two distinct completion entries set corresponding prologue flags.",
+          "source_sha256": "0d985729c46942063a1e57aa33bd47d307ede97c2d195cfcee72f6034a3e8c4d"
+        },
+        {
+          "status": "TBL",
+          "path": "B_data/Bcsv/StructureHouseShapeParam.bcsv",
+          "key": "UniqueID=4; HousePartsType=Npc; AppearanceLevel=Invalid; Name=NPC tent",
+          "claim": "The table distinguishes an NPC tent house-shape row; this is not proof which individual stage uses it.",
+          "source_sha256": "46db0f7663f5c57ef45963886881ff366a67d4545baf40ad66666d4d5c9219ba"
+        }
+      ],
+      "placement": {
+        "status": "OPEN",
+        "coordinates": null,
+        "reason": "No per-villager tent position, rotation, property owner, plaza relationship, or stage-to-instance join is present in these sources."
+      },
+      "visual_asset": {
+        "status": "OPEN",
+        "reason": "No model name exists on StructureHouseShapeParam; actor/house model resource not joined."
+      },
+      "collision": {
+        "status": "OPEN",
+        "reason": "No initial villager-house placement collider or terrain acceptance result established."
+      },
+      "notes": [
+        "EventFlow labels AN and HA as separate completion subjects; it does not expose their spatial coordinates."
+      ]
+    },
+    {
+      "id": "day2.workshop",
+      "title": "Tom Nook tent workshop interaction",
+      "objects": [
+        {
+          "name": "FtrWorkbench table row",
+          "id": 1241,
+          "id_namespace": "ItemParam.UniqueID",
+          "resource_name": "FtrWorkbench",
+          "status": "TBL"
+        },
+        {
+          "name": "Ftr_Working",
+          "id": null,
+          "id_namespace": "EventFlow filename/flow",
+          "status": "EF"
+        }
+      ],
+      "build_and_lifecycle": [
+        {
+          "status": "EF",
+          "path": "B_data/EventFlow/Ftr_Working.bfevfl",
+          "key": "RcoDIYtrialOngoing; Workbench_Cmn_DIYdemo; PlayerWorkbenchMaking / PlayerWorkbenchGetDemo",
+          "claim": "The workbench interaction and DIY tutorial live in this EventFlow; Ftr_Working is a flow name, not a structure type.",
+          "source_sha256": "47f0f918f5f42180dec1faebb8822ac64b33e6009cb0e0164f2a5bfd94a5ef97"
+        },
+        {
+          "status": "EF",
+          "path": "B_data/EventFlow/SNPC_rco_01_Tent_1_Entries.bfevfl",
+          "key": "RcoTentAskDIYtrial",
+          "claim": "Tom Nook calls the DIY tutorial branch from the tent flow.",
+          "source_sha256": "76c70d56a2f2a2d568adf2bbe5776c5e04a8def689a616134a32b637854669f5"
+        },
+        {
+          "status": "TBL",
+          "path": "B_data/Bcsv/ItemParam.bcsv",
+          "key": "UniqueID=1241; ResName=FtrWorkbench",
+          "claim": "A table row has this workbench resource name; the flow-to-instance placement binding is still open.",
+          "source_sha256": "89230e97fc877ff2b2b48ac1c707ef32b3a7760118839c307f19797e2553458c"
+        },
+        {
+          "status": "CAT",
+          "path": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json",
+          "key": "Asset_ID=FtrWorkbench",
+          "claim": "Model catalogue entry only; no raw model or story consumer was verified.",
+          "source_sha256": "89230e97fc877ff2b2b48ac1c707ef32b3a7760118839c307f19797e2553458c"
+        }
+      ],
+      "placement": {
+        "status": "OPEN",
+        "coordinates": null,
+        "reason": "No stage actor transform, item-save placement, or workbench anchor is joined to the tutorial flow."
+      },
+      "visual_asset": {
+        "status": "CAT",
+        "candidate": "FtrWorkbench",
+        "reason": "Catalogue candidate only; table resource-name and catalogue-name match is not a runtime mesh binding."
+      },
+      "collision": {
+        "status": "OPEN",
+        "reason": "No workbench collision or talk-radius geometry join."
+      },
+      "notes": [
+        "The workbench is a furniture interaction, not a StructureType facility in the cited sources."
+      ]
+    },
+    {
+      "id": "museum.tent_to_building",
+      "title": "Blathers tent placement and museum upgrade",
+      "objects": [
+        {
+          "name": "Museum structure logical class",
+          "id": null,
+          "id_namespace": "EventFlow StructureType",
+          "status": "EF",
+          "value": "cMuseum"
+        },
+        {
+          "name": "Museum facility record",
+          "id": 21,
+          "id_namespace": "StructureInfoParam.UniqueID",
+          "status": "TBL"
+        },
+        {
+          "name": "Facility model rows",
+          "ids": [
+            16,
+            13,
+            6,
+            7
+          ],
+          "id_namespace": "StructureFacilityModel.UniqueID",
+          "status": "TBL"
+        }
+      ],
+      "build_and_lifecycle": [
+        {
+          "status": "EF",
+          "path": "acnh-re/output/gameplay/flow_index.json",
+          "key": "Player_HousingKit:OwlTent; StructureType=cMuseum; StructureBuildPosType=cPlayer; CanBuildHere / StartPreviewGuide",
+          "claim": "Blathers tent kit placement uses the cMuseum/cPlayer build class.",
+          "source_sha256": "6b7e56629772c85053c44b399d9e1a9bdf1d8f147cceb8bb499cc8c8918a0383"
+        },
+        {
+          "status": "EF",
+          "path": "acnh-re/output/gameplay/trees/Player_Demo_HousingFinish.txt",
+          "key": "HousingFinish_OwlTent_Built #9/#10/#105; DecidedMuseumTentPlace; Plorogue4BuiltMuseum",
+          "claim": "Tent completion is represented by EventFlow flags.",
+          "source_sha256": "0d985729c46942063a1e57aa33bd47d307ede97c2d195cfcee72f6034a3e8c4d"
+        },
+        {
+          "status": "PSEUDO",
+          "path": "acnh-re/output/gameplay/native_flag_refs.json",
+          "key": "data.day_change_dispatcher_pipeline; 0xf77050",
+          "claim": "Static pseudocode summary: kind 2 presence advances tent state, then donation threshold enables a construction counter and museum-complete state. This is not a native execution or a direct kind-to-table-UID proof.",
+          "source_sha256": "0d985729c46942063a1e57aa33bd47d307ede97c2d195cfcee72f6034a3e8c4d"
+        },
+        {
+          "status": "TBL",
+          "path": "B_data/Bcsv/StructureInfoParam.bcsv",
+          "key": "UniqueID=21; StructureInfoType=Facility",
+          "claim": "Museum facility namespace row.",
+          "source_sha256": "a16b03ec38869a015faa5dbaddde03ea3865db88c91ea40d32d9c7e2fa6904ef"
+        },
+        {
+          "status": "TBL",
+          "path": "B_data/Bcsv/StructureFacilityModel.bcsv",
+          "key": "UID16 StrcMuseumA00Reserve; UID13 StrcMuseumA00Build; UID6 StrcMuseumA00; UID7 StrcMuseumA01",
+          "claim": "Table records enumerate candidate reserve/build/final museum model names.",
+          "source_sha256": "b29acfe910d54b39b90d2f5f6c04b092ef037706cd9e929656f6104aa8adae9d"
+        },
+        {
+          "status": "CAT",
+          "path": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json",
+          "key": "Asset_ID=StrcMuseumA00Reserve/A00Build/A00/A01",
+          "claim": "Catalogue candidates only; no raw model consumer/binding established.",
+          "source_sha256": "b29acfe910d54b39b90d2f5f6c04b092ef037706cd9e929656f6104aa8adae9d"
+        }
+      ],
+      "placement": {
+        "status": "OPEN",
+        "coordinates": null,
+        "reason": "Chosen museum site, entrance, rotation, instance record and stage anchor are absent from the joined evidence."
+      },
+      "visual_asset": {
+        "status": "CAT",
+        "candidates": [
+          "StrcMuseumA00Reserve",
+          "StrcMuseumA00Build",
+          "StrcMuseumA00",
+          "StrcMuseumA01"
+        ],
+        "reason": "Names are TBL resource values and catalogue candidates; no mesh or swap consumer verified."
+      },
+      "collision": {
+        "status": "OPEN",
+        "reason": "cMuseum build-query presence does not expose or prove terrain, overlap, or collider rules."
+      },
+      "notes": [
+        "Internal processor kind 2 and StructureInfoParam UniqueID=21 are separate numeric namespaces; the direct mapping is not proved by this evidence."
+      ]
+    },
+    {
+      "id": "shop.nooks_cranny",
+      "title": "Nook’s Cranny placement and next-day opening",
+      "objects": [
+        {
+          "name": "Logical structure class",
+          "id": null,
+          "id_namespace": "EventFlow StructureType",
+          "status": "EF",
+          "value": "cMarket"
+        },
+        {
+          "name": "Facility record",
+          "id": 19,
+          "id_namespace": "StructureInfoParam.UniqueID",
+          "status": "TBL"
+        },
+        {
+          "name": "Facility model rows",
+          "ids": [
+            0,
+            24,
+            1,
+            2
+          ],
+          "id_namespace": "StructureFacilityModel.UniqueID",
+          "status": "TBL"
+        }
+      ],
+      "build_and_lifecycle": [
+        {
+          "status": "EF",
+          "path": "acnh-re/output/gameplay/flow_index.json",
+          "key": "Player_HousingKit:ShopReserveKit; StructureType=cMarket; StructureBuildPosType=cPlayer; EventFlowQueryCanBuildHere / EventFlowActionStructureStartPreviewGuide",
+          "claim": "The kit uses a player-selected market build class; the specific shop kit ItemUniqueID was not resolved.",
+          "source_sha256": "6b7e56629772c85053c44b399d9e1a9bdf1d8f147cceb8bb499cc8c8918a0383"
+        },
+        {
+          "status": "EF",
+          "path": "acnh-re/output/gameplay/trees/Player_Demo_HousingFinish.txt",
+          "key": "HousingFinish_Shop_Built #15/#17/#18/#104; Prologue4BuiltShop; DecideShopArea",
+          "claim": "Placement completion sets the shop progress flags.",
+          "source_sha256": "0d985729c46942063a1e57aa33bd47d307ede97c2d195cfcee72f6034a3e8c4d"
+        },
+        {
+          "status": "PSEUDO",
+          "path": "acnh-re/output/gameplay/native_flag_refs.json",
+          "key": "data.day_change_dispatcher_pipeline[3]; 0xfc4560",
+          "claim": "Static summary: next-day state checks structure kind 0; success sets MarketBuilt and first-open flags. Not native execution.",
+          "source_sha256": "0d985729c46942063a1e57aa33bd47d307ede97c2d195cfcee72f6034a3e8c4d"
+        },
+        {
+          "status": "EF",
+          "path": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_21_CmnEvChk.txt",
+          "key": "ChkMarket; MarketOpen1stDay1 -> result 13=1",
+          "claim": "First-open condition feeds the public announcement flow.",
+          "source_sha256": "3cbfbdcb99ad589828827f8d78c2fde3c7b63f664b9928f093b48d058d982b0f"
+        },
+        {
+          "status": "EF",
+          "path": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_03_Rco_Once.txt",
+          "key": "TownNews_Rco_HouseBuild event #15; RcmImmQuestOpen",
+          "claim": "Announcement writes the three-house quest unlock flag.",
+          "source_sha256": "17ad3f5d9e39c7ffaa46926851ccc0d63a258296b0f6ad79d0a258424e0ac0e1"
+        },
+        {
+          "status": "TBL",
+          "path": "B_data/Bcsv/StructureInfoParam.bcsv",
+          "key": "UniqueID=19; StructureInfoType=Facility",
+          "claim": "Market facility record.",
+          "source_sha256": "a16b03ec38869a015faa5dbaddde03ea3865db88c91ea40d32d9c7e2fa6904ef"
+        },
+        {
+          "status": "TBL",
+          "path": "B_data/Bcsv/StructureFacilityModel.bcsv",
+          "key": "UID0 StrcMarketA00Reserve; UID24 StrcMarketA00Build; UID1 StrcMarketA01; UID2 StrcMarketA02",
+          "claim": "Table records enumerate reserve/build/market level model names.",
+          "source_sha256": "b29acfe910d54b39b90d2f5f6c04b092ef037706cd9e929656f6104aa8adae9d"
+        },
+        {
+          "status": "CAT",
+          "path": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json",
+          "key": "Asset_ID=StrcMarketA00Reserve/A00Build/A01/A02",
+          "claim": "Catalogue candidates only; no raw mesh or runtime consumer was checked.",
+          "source_sha256": "b29acfe910d54b39b90d2f5f6c04b092ef037706cd9e929656f6104aa8adae9d"
+        }
+      ],
+      "placement": {
+        "status": "OPEN",
+        "coordinates": null,
+        "reason": "Player-selected transform, world cell, rotation, elevation and save instance are not in EventFlow or the structure-model rows."
+      },
+      "visual_asset": {
+        "status": "CAT",
+        "candidates": [
+          "StrcMarketA00Reserve",
+          "StrcMarketA00Build",
+          "StrcMarketA01",
+          "StrcMarketA02"
+        ],
+        "reason": "Catalogue rows match table ModelName values but remain CAT-only."
+      },
+      "collision": {
+        "status": "OPEN",
+        "reason": "The generic build query and preview event have no proved structure footprint/collider or placement-validity implementation in this record."
+      },
+      "notes": [
+        "Required materials are 30 each: IDs 2768, 2767, 2769, 2511; the kit item UID remains unresolved in the inspected flow summary."
+      ]
+    },
+    {
+      "id": "migrants.bridge",
+      "title": "First bridge reservation",
+      "objects": [
+        {
+          "name": "Bridge recipe reference",
+          "id": 7211,
+          "id_namespace": "PlayerSetCraftRecipe ItemUniqueId",
+          "status": "EF"
+        },
+        {
+          "name": "Logical bridge class",
+          "id": null,
+          "id_namespace": "EventFlow StructureType",
+          "status": "EF",
+          "value": "cBridge"
+        },
+        {
+          "name": "StructureInfo row",
+          "id": 26,
+          "id_namespace": "StructureInfoParam.UniqueID",
+          "status": "TBL"
+        },
+        {
+          "name": "Reserved bridge type",
+          "id": 7,
+          "id_namespace": "StructureBridgeTypeParam.UniqueID",
+          "status": "TBL"
+        },
+        {
+          "name": "Reserved model rows",
+          "ids": [
+            26,
+            27,
+            28,
+            29,
+            30,
+            31
+          ],
+          "id_namespace": "StructureBridgeParam.UniqueID",
+          "status": "TBL"
+        }
+      ],
+      "build_and_lifecycle": [
+        {
+          "status": "EF",
+          "path": "acnh-re/output/gameplay/trees/SNPC_rco_53_MigrantsQuest.txt",
+          "key": "FirstIntroduction; PlayerSetCraftRecipe ItemUniqueId=7211",
+          "claim": "The bridge construction-kit recipe is unlocked for the migrant quest.",
+          "source_sha256": "1e47270f484207fdbf9adadccb70a3dc32807fae2cdc306d140124cef350ec22"
+        },
+        {
+          "status": "EF",
+          "path": "acnh-re/output/gameplay/flow_index.json",
+          "key": "Player_HousingKit:BridgeReserveKit; cBridge/cPlayer; CanBuildHere and StructureStartPreviewGuide",
+          "claim": "The player selects a bridge placement and the flow includes a build query and preview action.",
+          "source_sha256": "6b7e56629772c85053c44b399d9e1a9bdf1d8f147cceb8bb499cc8c8918a0383"
+        },
+        {
+          "status": "EF",
+          "path": "acnh-re/output/gameplay/trees/Player_Demo_HousingFinish.txt",
+          "key": "HousingFinish_Bridge #84/#86-#89; UIPocketMenuItemSelected ItemUniqueID=7211; ImmQ_SetBridge",
+          "claim": "Selection of the bridge-kit item sets quest progression flags.",
+          "source_sha256": "0d985729c46942063a1e57aa33bd47d307ede97c2d195cfcee72f6034a3e8c4d"
+        },
+        {
+          "status": "PSEUDO",
+          "path": "acnh-re/output/gameplay/native_flag_refs.json",
+          "key": "data.flags cLand:BridgeBuilt / 0x10c26e0",
+          "claim": "Day-change structure counter reads BridgeBuilt and post-build counters; this does not establish a bridge placement transform or build completion route.",
+          "source_sha256": "0d985729c46942063a1e57aa33bd47d307ede97c2d195cfcee72f6034a3e8c4d"
+        },
+        {
+          "status": "TBL",
+          "path": "B_data/Bcsv/StructureBridgeTypeParam.bcsv",
+          "key": "UniqueID=7; BridgeTypeName=BridgeReserved; ItemNameUniqueID=6903",
+          "claim": "Reserved bridge type row.",
+          "source_sha256": "684bc72a4499dbcd055aaf1e5c0097eae00b7526471a542d4fd756ec891973da"
+        },
+        {
+          "status": "TBL",
+          "path": "B_data/Bcsv/StructureBridgeParam.bcsv",
+          "key": "BridgeTypeUniqueID=7; UniqueID=26..31; ModelName BridgeReserved03/04/05/Diagonal025/030/035",
+          "claim": "Table rows name the reserved bridge variants; IDs are table keys, not island coordinates.",
+          "source_sha256": "a55822eabae52e11918a9e75c0c4b487bda4f74055f8e046647c64dd5a255531"
+        }
+      ],
+      "placement": {
+        "status": "OPEN",
+        "coordinates": null,
+        "reason": "Bridge endpoints, river location, orientation, cell footprint and final structure transform are not joined."
+      },
+      "visual_asset": {
+        "status": "OPEN",
+        "reason": "Table ModelName values are known; an exact model catalogue asset/raw mesh and runtime consumer were not established."
+      },
+      "collision": {
+        "status": "OPEN",
+        "reason": "Riverbank, ground, overlap and bridge collision validation remain unproven."
+      },
+      "notes": [
+        "StructureInfoParam UID 26, BridgeTypeParam UID 7 and StructureBridgeParam UIDs 26..31 are different identifier namespaces."
+      ]
+    },
+    {
+      "id": "migrants.ladder_recipe",
+      "title": "Ladder recipe unlock alongside plots",
+      "objects": [
+        {
+          "name": "Ladder recipe reference",
+          "id": 2615,
+          "id_namespace": "PlayerSetCraftRecipe ItemUniqueId",
+          "status": "EF"
+        }
+      ],
+      "build_and_lifecycle": [
+        {
+          "status": "EF",
+          "path": "acnh-re/output/gameplay/trees/SNPC_rco_53_MigrantsQuest.txt",
+          "key": "GetHousingKit event #105; PlayerSetCraftRecipe ItemUniqueId=2615",
+          "claim": "The recipe is unlocked when the three plot kits are delivered. This source does not identify the produced item instance or its model.",
+          "source_sha256": "1e47270f484207fdbf9adadccb70a3dc32807fae2cdc306d140124cef350ec22"
+        },
+        {
+          "status": "EF",
+          "path": "acnh-re/output/gameplay/flow_index.json",
+          "key": "Player_HousingKit structure classes and preview actions",
+          "claim": "No cLadder StructureType or structure-preview action is exposed in the inspected flow index.",
+          "source_sha256": "6b7e56629772c85053c44b399d9e1a9bdf1d8f147cceb8bb499cc8c8918a0383"
+        }
+      ],
+      "placement": {
+        "status": "OPEN",
+        "coordinates": null,
+        "reason": "No world placement/instance record for a ladder is shown; do not infer a fixed structure site from the recipe unlock."
+      },
+      "visual_asset": {
+        "status": "OPEN",
+        "reason": "Recipe ID does not establish a resulting item ID, model path, or runtime mesh binding."
+      },
+      "collision": {
+        "status": "OPEN",
+        "reason": "Ladder traversal/collision geometry is outside this build-flow evidence."
+      },
+      "notes": [
+        "The evidence establishes a recipe reference only, not the recipe-to-output join."
+      ]
+    },
+    {
+      "id": "migrants.plot_a",
+      "title": "Settler quest plot A and required furniture",
+      "objects": [
+        {
+          "name": "Reserved NPC-house class",
+          "value": "cReserveNpcHouse",
+          "id_namespace": "EventFlow StructureType",
+          "status": "EF"
+        },
+        {
+          "name": "Quest placement selector",
+          "value": "cSettlerQuest",
+          "id_namespace": "EventFlow StructureBuildPosType",
+          "status": "EF"
+        },
+        {
+          "name": "Plot kit",
+          "id": 5827,
+          "id_namespace": "SetItemToPocket ItemUniqueId",
+          "status": "EF"
+        },
+        {
+          "name": "Plot subject",
+          "value": 0,
+          "id_namespace": "SettlerType / A",
+          "status": "EF"
+        }
+      ],
+      "build_and_lifecycle": [
+        {
+          "status": "EF",
+          "path": "acnh-re/output/gameplay/flow_index.json",
+          "key": "Player_HousingKit:MigrateQuestA; EventFlowQueryCanBuildHere #120; EventFlowActionStructureStartPreviewGuide #168; cReserveNpcHouse/cSettlerQuest",
+          "claim": "Plot A uses a quest-controlled reserved-house placement class; no cell ID is exposed.",
+          "source_sha256": "6b7e56629772c85053c44b399d9e1a9bdf1d8f147cceb8bb499cc8c8918a0383"
+        },
+        {
+          "status": "EF",
+          "path": "acnh-re/output/gameplay/trees/SNPC_rco_53_MigrantsQuest.txt",
+          "key": "GetHousingKit; SetItemToPocket ItemUniqueID=5827; ImmQ_A_GetHousing",
+          "claim": "The plot-kit delivery and A progression flag are explicit.",
+          "source_sha256": "1e47270f484207fdbf9adadccb70a3dc32807fae2cdc306d140124cef350ec22"
+        },
+        {
+          "status": "EF",
+          "path": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt",
+          "key": "ChkIndoorFtrA / ChkOutdoorFtrA; SettlerQuest A routing",
+          "claim": "Three indoor materials are handed in at the box; outside-check types 0/1/2 test three required exterior items.",
+          "source_sha256": "90ae16e996d24bb9d0cffc1288f711c1552b97215ed4134fa9027657c78cd6d9"
+        },
+        {
+          "status": "EF",
+          "path": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_Process.txt",
+          "key": "ImmQFtrChkA #52/#49-#51/#61/#114; SettlerType=0",
+          "claim": "All three indoor donation flags plus outside completion type 3 gate CompleteSettlerQuestSubject and DecideSettlerNpc.",
+          "source_sha256": "7b921fd4ef4b262169b3f9d445bf74437fcf913294607d20f8b29c6b65bb8077"
+        },
+        {
+          "status": "TBL",
+          "path": "B_data/Bcsv/StructureHouseShapeParam.bcsv",
+          "key": "UniqueID=5 NPC for-sale land; UniqueID=6 NPC sold land",
+          "claim": "House-shape rows are candidates for reserved/sold states; no plot-specific cell binding.",
+          "source_sha256": "46db0f7663f5c57ef45963886881ff366a67d4545baf40ad66666d4d5c9219ba"
+        },
+        {
+          "status": "TBL",
+          "path": "B_data/Bcsv/StructureInfoParam.bcsv",
+          "key": "HousePartsType=Npc; UniqueID=9..18",
+          "claim": "NPC house structure information rows.",
+          "source_sha256": "a16b03ec38869a015faa5dbaddde03ea3865db88c91ea40d32d9c7e2fa6904ef"
+        }
+      ],
+      "furniture_requirements": {
+        "indoor_slots": {
+          "slot1_and_slot2": "native-fruit-selected alternatives: 4011/4012, 3976/3975, 1263/4546, 4128/4127, or 4134/2596",
+          "slot3": [
+            2559
+          ]
+        },
+        "outdoor_pattern_on": [
+          3675,
+          1170,
+          1266
+        ],
+        "outdoor_pattern_off": [
+          3398,
+          3397,
+          3229
+        ],
+        "evidence_status": "EF",
+        "evidence_key": "Obj_ReservedPlaceBox:ChkIndoorFtrA / ChkOutdoorFtrA; Player_Demo_HousingFinish:RecipeGetA; System_GrowUp_GameProcess:ImmQOutdoorPattern"
+      },
+      "placement": {
+        "status": "OPEN",
+        "coordinates": null,
+        "reason": "No A-site cell, house/furniture transform, rotation, elevation, entrance, or per-island record is joined."
+      },
+      "visual_asset": {
+        "status": "CAT",
+        "reason": "Item/model catalogue candidates are names only; placement/house mesh consumer remains unproved."
+      },
+      "collision": {
+        "status": "OPEN",
+        "reason": "cSettlerQuest query class is present, but its shape, collision, terrain rules and accepted coordinates are not verified."
+      },
+      "notes": [
+        "Indoor items are donated through the reserved-place box; this is not evidence that their physical interior transforms are in the main-field grid."
+      ]
+    },
+    {
+      "id": "migrants.plot_b",
+      "title": "Settler quest plot B and required furniture",
+      "objects": [
+        {
+          "name": "Reserved NPC-house class",
+          "value": "cReserveNpcHouse",
+          "id_namespace": "EventFlow StructureType",
+          "status": "EF"
+        },
+        {
+          "name": "Quest placement selector",
+          "value": "cSettlerQuest",
+          "id_namespace": "EventFlow StructureBuildPosType",
+          "status": "EF"
+        },
+        {
+          "name": "Plot kit",
+          "id": 5828,
+          "id_namespace": "SetItemToPocket ItemUniqueId",
+          "status": "EF"
+        },
+        {
+          "name": "Plot subject",
+          "value": 1,
+          "id_namespace": "SettlerType / B",
+          "status": "EF"
+        }
+      ],
+      "build_and_lifecycle": [
+        {
+          "status": "EF",
+          "path": "acnh-re/output/gameplay/flow_index.json",
+          "key": "Player_HousingKit:MigrateQuestB; EventFlowQueryCanBuildHere #121; EventFlowActionStructureStartPreviewGuide #169; cReserveNpcHouse/cSettlerQuest",
+          "claim": "Plot B uses the quest-controlled reserved-house placement class.",
+          "source_sha256": "6b7e56629772c85053c44b399d9e1a9bdf1d8f147cceb8bb499cc8c8918a0383"
+        },
+        {
+          "status": "EF",
+          "path": "acnh-re/output/gameplay/trees/SNPC_rco_53_MigrantsQuest.txt",
+          "key": "GetHousingKit; SetItemToPocket ItemUniqueID=5828; ImmQ_B_GetHousing",
+          "claim": "The plot-kit delivery and B progression flag are explicit.",
+          "source_sha256": "1e47270f484207fdbf9adadccb70a3dc32807fae2cdc306d140124cef350ec22"
+        },
+        {
+          "status": "EF",
+          "path": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt",
+          "key": "ChkIndoorFtrB / ChkOutdoorFtrB; SettlerQuest B routing",
+          "claim": "Three indoor donations and three outside-check types are evaluated for B.",
+          "source_sha256": "90ae16e996d24bb9d0cffc1288f711c1552b97215ed4134fa9027657c78cd6d9"
+        },
+        {
+          "status": "EF",
+          "path": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_Process.txt",
+          "key": "ImmQFtrChkB #56/#53-#55/#62/#115; SettlerType=1",
+          "claim": "Indoor donation flags plus outside completion type 3 gate B completion and villager selection.",
+          "source_sha256": "7b921fd4ef4b262169b3f9d445bf74437fcf913294607d20f8b29c6b65bb8077"
+        }
+      ],
+      "furniture_requirements": {
+        "indoor_slots": {
+          "slot1": 3205,
+          "slot2": 1565,
+          "slot3": "island-flower-selected wreath: 5467,5641,4293,5468,5437,5436,5670,5466"
+        },
+        "outdoor_pattern_on": [
+          2586,
+          3396,
+          331
+        ],
+        "outdoor_pattern_off": [
+          1626,
+          1627,
+          333
+        ],
+        "evidence_status": "EF",
+        "evidence_key": "Obj_ReservedPlaceBox:ChkIndoorFtrB / ChkOutdoorFtrB; Player_Demo_HousingFinish:RecipeGetB; System_GrowUp_GameProcess:ImmQOutdoorPattern"
+      },
+      "placement": {
+        "status": "OPEN",
+        "coordinates": null,
+        "reason": "No B-site cell, house/furniture transform, rotation, elevation, entrance, or per-island record is joined."
+      },
+      "visual_asset": {
+        "status": "CAT",
+        "reason": "Furniture and house catalogues are candidates only; mesh placement binding remains open."
+      },
+      "collision": {
+        "status": "OPEN",
+        "reason": "cSettlerQuest placement and exterior overlap/ground rules are not tested."
+      },
+      "notes": [
+        "Interior furniture is an item hand-in; exterior checks are EventFlow predicates, not coordinates."
+      ]
+    },
+    {
+      "id": "migrants.plot_c",
+      "title": "Settler quest plot C and required furniture",
+      "objects": [
+        {
+          "name": "Reserved NPC-house class",
+          "value": "cReserveNpcHouse",
+          "id_namespace": "EventFlow StructureType",
+          "status": "EF"
+        },
+        {
+          "name": "Quest placement selector",
+          "value": "cSettlerQuest",
+          "id_namespace": "EventFlow StructureBuildPosType",
+          "status": "EF"
+        },
+        {
+          "name": "Plot kit",
+          "id": 5829,
+          "id_namespace": "SetItemToPocket ItemUniqueId",
+          "status": "EF"
+        },
+        {
+          "name": "Plot subject",
+          "value": 2,
+          "id_namespace": "SettlerType / C",
+          "status": "EF"
+        }
+      ],
+      "build_and_lifecycle": [
+        {
+          "status": "EF",
+          "path": "acnh-re/output/gameplay/flow_index.json",
+          "key": "Player_HousingKit:MigrateQuestC; EventFlowQueryCanBuildHere #122; EventFlowActionStructureStartPreviewGuide #170; cReserveNpcHouse/cSettlerQuest",
+          "claim": "Plot C uses the quest-controlled reserved-house placement class.",
+          "source_sha256": "6b7e56629772c85053c44b399d9e1a9bdf1d8f147cceb8bb499cc8c8918a0383"
+        },
+        {
+          "status": "EF",
+          "path": "acnh-re/output/gameplay/trees/SNPC_rco_53_MigrantsQuest.txt",
+          "key": "GetHousingKit; SetItemToPocket ItemUniqueID=5829; ImmQ_C_GetHousing",
+          "claim": "The plot-kit delivery and C progression flag are explicit.",
+          "source_sha256": "1e47270f484207fdbf9adadccb70a3dc32807fae2cdc306d140124cef350ec22"
+        },
+        {
+          "status": "EF",
+          "path": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt",
+          "key": "ChkIndoorFtrC / ChkOutdoorFtrC; SettlerQuest C routing",
+          "claim": "Three indoor donations and three outside-check types are evaluated for C.",
+          "source_sha256": "90ae16e996d24bb9d0cffc1288f711c1552b97215ed4134fa9027657c78cd6d9"
+        },
+        {
+          "status": "EF",
+          "path": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_Process.txt",
+          "key": "ImmQFtrChkC #60/#57-#59/#63/#116; SettlerType=2",
+          "claim": "Indoor donation flags plus outside completion type 3 gate C completion and villager selection.",
+          "source_sha256": "7b921fd4ef4b262169b3f9d445bf74437fcf913294607d20f8b29c6b65bb8077"
+        }
+      ],
+      "furniture_requirements": {
+        "indoor_slots": [
+          2605,
+          1913,
+          4073
+        ],
+        "outdoor_pattern_on": [
+          4035,
+          4038,
+          2326
+        ],
+        "outdoor_pattern_off": [
+          4040,
+          4042,
+          880
+        ],
+        "evidence_status": "EF",
+        "evidence_key": "Obj_ReservedPlaceBox:ChkIndoorFtrC / ChkOutdoorFtrC; Player_Demo_HousingFinish:RecipeGetC; System_GrowUp_GameProcess:ImmQOutdoorPattern"
+      },
+      "placement": {
+        "status": "OPEN",
+        "coordinates": null,
+        "reason": "No C-site cell, house/furniture transform, rotation, elevation, entrance, or per-island record is joined."
+      },
+      "visual_asset": {
+        "status": "CAT",
+        "reason": "Furniture/house model catalogue candidates do not establish runtime instance binding."
+      },
+      "collision": {
+        "status": "OPEN",
+        "reason": "cSettlerQuest placement and exterior overlap/ground rules are not tested."
+      },
+      "notes": [
+        "The morning announcement processor also has ImmQEndChk; completion of A/B/C sets RcmImmQuestComplete and the next-day clear flag."
+      ]
+    },
+    {
+      "id": "office.resident_services",
+      "title": "Resident Services facility lifecycle and ceremony",
+      "objects": [
+        {
+          "name": "Office facility row",
+          "id": 20,
+          "id_namespace": "StructureInfoParam.UniqueID",
+          "status": "TBL"
+        },
+        {
+          "name": "Office model rows",
+          "ids": [
+            23,
+            5
+          ],
+          "id_namespace": "StructureFacilityModel.UniqueID",
+          "status": "TBL"
+        }
+      ],
+      "build_and_lifecycle": [
+        {
+          "status": "PSEUDO",
+          "path": "acnh-re/output/gameplay/native_flag_refs.json",
+          "key": "data.flags cPlayer:FirstPlayAfterOfficeBuiltFlag; function 0x10c2ad0",
+          "claim": "Static pseudocode says office construction elapsed-day counter and structure kind 1 presence set BuiltTownOffice, GlobalEventReady, EventPlazaBuilt. Office tent-to-building model swap is not traced and this was not run natively.",
+          "source_sha256": "f67f787d07000f09bd023dc225e810482f12284b419b7a9f118ff017b34363fe"
+        },
+        {
+          "status": "TBL",
+          "path": "B_data/Bcsv/StructureInfoParam.bcsv",
+          "key": "UniqueID=20; StructureInfoType=Facility",
+          "claim": "Office facility row.",
+          "source_sha256": "a16b03ec38869a015faa5dbaddde03ea3865db88c91ea40d32d9c7e2fa6904ef"
+        },
+        {
+          "status": "TBL",
+          "path": "B_data/Bcsv/StructureFacilityModel.bcsv",
+          "key": "UID23 StrcOfficeA00Build; UID5 StrcOfficeA01",
+          "claim": "Build/final office model-name records.",
+          "source_sha256": "b29acfe910d54b39b90d2f5f6c04b092ef037706cd9e929656f6104aa8adae9d"
+        },
+        {
+          "status": "CAT",
+          "path": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json",
+          "key": "Asset_ID=StrcOfficeA00Build / StrcOfficeA01",
+          "claim": "Catalogue candidates only; no mesh or stage consumer verified.",
+          "source_sha256": "b29acfe910d54b39b90d2f5f6c04b092ef037706cd9e929656f6104aa8adae9d"
+        },
+        {
+          "status": "EF",
+          "path": "acnh-re/output/gameplay/trees/SNPC_rco_05_ChkCeremony.txt",
+          "key": "ChkCeremonyOffice; Office; TargetStage=cMainFieldCeremonyOffice (#234/#283 via ceremony flow)",
+          "claim": "The ceremony path selects the office ceremony stage.",
+          "source_sha256": "f67f787d07000f09bd023dc225e810482f12284b419b7a9f118ff017b34363fe"
+        },
+        {
+          "status": "STRUCT",
+          "path": "B_data/Stage/Game/MainFieldDemoCeremony.byml",
+          "key": "source_id=2908; root.@ActorList (8 actors)",
+          "claim": "Stage structure contains eight actor records; they are not mapped here to office, NPC, player or camera anchors.",
+          "source_sha256": "6c722b2ceec02839c554e84222c5274326abda3f647ffcbdea855324fb423d34"
+        }
+      ],
+      "placement": {
+        "status": "OPEN",
+        "coordinates": null,
+        "reason": "Facility and office ceremony stages do not identify the office instance cell, entrance, plaza anchor, or global transform."
+      },
+      "visual_asset": {
+        "status": "CAT",
+        "candidates": [
+          "StrcOfficeA00Build",
+          "StrcOfficeA01"
+        ],
+        "reason": "Table resource names match catalogue entries; actual model binding remains CAT-only."
+      },
+      "collision": {
+        "status": "OPEN",
+        "reason": "No office footprint/PBC consumer or placement collider is joined."
+      },
+      "notes": [
+        "Day-change internal kind 1 and StructureInfoParam.UniqueID=20 are distinct namespaces; this evidence does not prove numeric identity."
+      ]
+    },
+    {
+      "id": "campsite.build_and_ceremony",
+      "title": "Campsite kit, completion and first camper gate",
+      "objects": [
+        {
+          "name": "Campsite recipe/output reference",
+          "id": 5166,
+          "id_namespace": "PlayerSetCraftRecipe ItemUniqueId / recipe check",
+          "status": "EF"
+        },
+        {
+          "name": "Campsite facility row",
+          "id": 25,
+          "id_namespace": "StructureInfoParam.UniqueID",
+          "status": "TBL"
+        },
+        {
+          "name": "Campsite model rows",
+          "ids": [
+            29,
+            30,
+            31
+          ],
+          "id_namespace": "StructureFacilityModel.UniqueID",
+          "status": "TBL"
+        }
+      ],
+      "build_and_lifecycle": [
+        {
+          "status": "EF",
+          "path": "acnh-re/output/gameplay/flow_index.json",
+          "key": "Player_HousingKit:CampSite; cCampSite/cPlayer; CanBuildHere and StructureStartPreviewGuide",
+          "claim": "The campsite is a player-selected facility placement class.",
+          "source_sha256": "6b7e56629772c85053c44b399d9e1a9bdf1d8f147cceb8bb499cc8c8918a0383"
+        },
+        {
+          "status": "EF",
+          "path": "acnh-re/output/gameplay/trees/SNPC_rco_54_IslandDevelopment.txt",
+          "key": "CampSiteRequest; PlayerSetCraftRecipe item 5166; RcoBuildCampsiteComplete",
+          "claim": "Tom Nook unlocks the kit recipe and tracks the build quest.",
+          "source_sha256": "6d7e6be11b6781102595328a6d636e7cfdba1fc9a74414d4137025744a570fc8"
+        },
+        {
+          "status": "PSEUDO",
+          "path": "acnh-re/output/gameplay/native_flag_refs.json",
+          "key": "data.day_change_dispatcher_pipeline; 0xf26330",
+          "claim": "Static pseudocode: structure kind 6 presence sets CampSiteBuilt/CampSiteBuiltToday and CeremonyBuildCampSite.",
+          "source_sha256": "6d7e6be11b6781102595328a6d636e7cfdba1fc9a74414d4137025744a570fc8"
+        },
+        {
+          "status": "TBL",
+          "path": "B_data/Bcsv/StructureInfoParam.bcsv",
+          "key": "UniqueID=25; StructureInfoType=Facility",
+          "claim": "Campsite facility record.",
+          "source_sha256": "a16b03ec38869a015faa5dbaddde03ea3865db88c91ea40d32d9c7e2fa6904ef"
+        },
+        {
+          "status": "TBL",
+          "path": "B_data/Bcsv/StructureFacilityModel.bcsv",
+          "key": "UID29 StrcCampsiteReserveA00; UID30 StrcCampsiteA00; UID31 StrcCampsiteTentA00",
+          "claim": "Table rows name reserve and campsite forms.",
+          "source_sha256": "b29acfe910d54b39b90d2f5f6c04b092ef037706cd9e929656f6104aa8adae9d"
+        },
+        {
+          "status": "CAT",
+          "path": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json",
+          "key": "Asset_ID=StrcCampsiteReserveA00/A00/TentA00",
+          "claim": "Catalogue candidates only; no runtime mesh swap consumer was checked.",
+          "source_sha256": "b29acfe910d54b39b90d2f5f6c04b092ef037706cd9e929656f6104aa8adae9d"
+        },
+        {
+          "status": "EF",
+          "path": "acnh-re/output/gameplay/trees/SNPC_rco_05_ChkCeremony.txt",
+          "key": "ChkCeremonyCampsite; CampSite ceremony selection",
+          "claim": "Campsite ceremony is a separate EventFlow path.",
+          "source_sha256": "f67f787d07000f09bd023dc225e810482f12284b419b7a9f118ff017b34363fe"
+        },
+        {
+          "status": "EF",
+          "path": "acnh-re/output/gameplay/trees/System_GrowUp_GameProcess.txt",
+          "key": "FirstCamperCheck; CampSiteBuilt -> RcoMeetFirstVisitorRequest / CampFirstCamperVisit",
+          "claim": "First camper request is gated on campsite built state.",
+          "source_sha256": "03b729f203a7cd309b5427f6c9a54e1a238fc8818f44ca7b40f5249aa52d7a2e"
+        },
+        {
+          "status": "STRUCT",
+          "path": "B_data/Stage/Game/MainFieldDemoCeremony.byml",
+          "key": "source_id=2908; actor list; no campsite role binding",
+          "claim": "Ceremony stage file is present, but the campsite stage-specific actor/prop mapping is open.",
+          "source_sha256": "6c722b2ceec02839c554e84222c5274326abda3f647ffcbdea855324fb423d34"
+        }
+      ],
+      "placement": {
+        "status": "OPEN",
+        "coordinates": null,
+        "reason": "Campsite site, rotation, elevation, entrance and scene actor anchors are not joined."
+      },
+      "visual_asset": {
+        "status": "CAT",
+        "candidates": [
+          "StrcCampsiteReserveA00",
+          "StrcCampsiteA00",
+          "StrcCampsiteTentA00"
+        ],
+        "reason": "Catalogue candidates only; the table model-name fields do not prove runtime selection."
+      },
+      "collision": {
+        "status": "OPEN",
+        "reason": "Campsite footprint and terrain/overlap validation not verified."
+      },
+      "notes": [
+        "The numeric facility kind 6 in the daily processor is not treated as the StructureInfoParam UID 25."
+      ]
+    },
+    {
+      "id": "campsite.first_camper_house",
+      "title": "First camper visit and housing kit",
+      "objects": [
+        {
+          "name": "First visitor housing kit reference",
+          "id": 3349,
+          "id_namespace": "SetItemToPocket ItemUniqueId",
+          "status": "EF"
+        }
+      ],
+      "build_and_lifecycle": [
+        {
+          "status": "EF",
+          "path": "acnh-re/output/gameplay/trees/SNPC_rco_54_IslandDevelopment.txt",
+          "key": "MeetFirstCamperRequest; SetFirstCamperHouseRequest; HousingKit 3349",
+          "claim": "The flow offers a housing-kit progression path after the first visitor; exact scene placement is not stated.",
+          "source_sha256": "6d7e6be11b6781102595328a6d636e7cfdba1fc9a74414d4137025744a570fc8"
+        },
+        {
+          "status": "EF",
+          "path": "acnh-re/output/gameplay/trees/Player_Demo_HousingFinish.txt",
+          "key": "HousingFinish_NnpcNewProperty #97/#100-#102; NpcHouseNum cExist=7; SetHousingKitForFirstCamper",
+          "claim": "The new-property demo can complete the first-camper housing-kit progression.",
+          "source_sha256": "0d985729c46942063a1e57aa33bd47d307ede97c2d195cfcee72f6034a3e8c4d"
+        },
+        {
+          "status": "EF",
+          "path": "acnh-re/output/gameplay/flow_index.json",
+          "key": "Player_HousingKit: cNormalNpcHouse/cPlayer build path",
+          "claim": "Generic NPC-house placement class exists; exact first-camper item to final structure shape is open.",
+          "source_sha256": "6b7e56629772c85053c44b399d9e1a9bdf1d8f147cceb8bb499cc8c8918a0383"
+        },
+        {
+          "status": "EF",
+          "path": "acnh-re/output/gameplay/flow_index.json",
+          "key": "NNPC_Spot_Camp: Flow_FirstCamper* personality variants",
+          "claim": "Camper dialogue has multiple personality entries; no single fixed species/model is established.",
+          "source_sha256": "e14f475db1ccdeae628592b167d64a50cec5436634e666ca146f7c9a7210f948"
+        }
+      ],
+      "placement": {
+        "status": "OPEN",
+        "coordinates": null,
+        "reason": "No camper-house cell or NPC spawn/house-scene transform is joined."
+      },
+      "visual_asset": {
+        "status": "OPEN",
+        "reason": "The kit ID does not identify a unique model; NPC model candidates are catalog-only and no exact join is established."
+      },
+      "collision": {
+        "status": "OPEN",
+        "reason": "No first-camper house placement footprint or collider rule is verified."
+      },
+      "notes": [
+        "No single camper species/model is asserted."
+      ]
+    },
+    {
+      "id": "kk.first_live_stage",
+      "title": "First K.K. performance stage handoff",
+      "objects": [
+        {
+          "name": "Target stage",
+          "value": "cMainFieldFirstLive",
+          "id_namespace": "EventFlow TargetStage",
+          "status": "EF"
+        },
+        {
+          "name": "Stage BYML candidate",
+          "value": "MainFieldDemoFirstLive.byml",
+          "id_namespace": "B_data/Stage/Game",
+          "status": "STRUCT"
+        }
+      ],
+      "build_and_lifecycle": [
+        {
+          "status": "EF",
+          "path": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement.txt",
+          "key": "PAnnounceSza #41; SystemRequestChangeStage TargetStage=cMainFieldFirstLive when TkkFirstLiveReserved",
+          "claim": "The announcement flow explicitly transitions to the first-live stage.",
+          "source_sha256": "7ec0d30107a1d40169b4455932f0f6853beb9ef7b7cf69ca2ee2f77958a12602"
+        },
+        {
+          "status": "PSEUDO",
+          "path": "acnh-re/output/gameplay/native_flag_refs.json",
+          "key": "data.day_change_dispatcher_pipeline / flags TkkFirstLiveEnable, TkkFirstLiveReserved",
+          "claim": "The day-change gate is static pseudocode; full score-to-save-to-stage runtime chain is not executed here.",
+          "source_sha256": "7ec0d30107a1d40169b4455932f0f6853beb9ef7b7cf69ca2ee2f77958a12602"
+        },
+        {
+          "status": "EF",
+          "path": "acnh-re/output/gameplay/trees/SNPC_tkk_Live.txt",
+          "key": "Root; Tkk_LiveDemoEnter/Exit; camera/action and first-live flags",
+          "claim": "EventFlow names live actions and camera context; underlying actor clip, rig, venue and audio playback are not bound.",
+          "source_sha256": "d1a9d0253d4ae6c1ed46e87d007f8924f4cba637589a3d0750ca07295794d316"
+        },
+        {
+          "status": "STRUCT",
+          "path": "B_data/Stage/Game/MainFieldDemoFirstLive.byml",
+          "key": "source_id=2909; root.@ActorList[0].@Pos; 9 actor records",
+          "claim": "One stage actor record contains Pos=(X=444,Z=920,Y=0) with ActorName raw value 229781145; the actor role is unresolved, so this is not assigned to K.K., the player, chair, or stage.",
+          "source_sha256": "0cf0898403df0b2eb8a47fae804a373ca6a7dcc8eb9680aac64360847b16bd12"
+        },
+        {
+          "status": "CAT",
+          "path": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json",
+          "key": "special-NPC/player model categories",
+          "claim": "Model catalogue family only; exact first-live actor model and mesh are open.",
+          "source_sha256": "0cf0898403df0b2eb8a47fae804a373ca6a7dcc8eb9680aac64360847b16bd12"
+        },
+        {
+          "status": "CAT",
+          "path": "/workspace/acnh-re/output/additional_romfs/catalogues/audio.json",
+          "key": "BGM_Live_* catalogue family (98 entries)",
+          "claim": "Audio catalogue only; no exact first-live selection/playback join.",
+          "source_sha256": "d1a9d0253d4ae6c1ed46e87d007f8924f4cba637589a3d0750ca07295794d316"
+        }
+      ],
+      "placement": {
+        "status": "OPEN",
+        "coordinates": null,
+        "reason": "No performer, player, chair, crowd, stage camera or sound-object anchor is joined. The raw stage actor position is unassigned."
+      },
+      "visual_asset": {
+        "status": "CAT",
+        "reason": "Model catalogue candidates only; exact actor-to-mesh binding is open."
+      },
+      "collision": {
+        "status": "OPEN",
+        "reason": "Venue collision/interaction geometry and runtime actor collider are not joined."
+      },
+      "notes": [
+        "The `MainFieldDemoFirstLive.byml` actor coordinate is preserved only as an unassigned stage record; it is not a story placement claim.",
+        "Credits trigger remains outside this stage-to-asset proof."
+      ]
+    }
+  ],
+  "open_joins": [
+    {
+      "id": "story_to_structure_instance",
+      "status": "OPEN",
+      "gap": "For player/NPC tents, workshop, museum, market, bridge, plots, office, campsite, camper house, join EventFlow completion/preview and table IDs to the actual serialized instance/placement record."
+    },
+    {
+      "id": "structure_preset_site_roles",
+      "status": "OPEN",
+      "gap": "StructurePresetA00 mSiteList cells are known but are not assigned to player house, initial NPC houses, facilities, bridges or quest plots."
+    },
+    {
+      "id": "structure_cell_to_world_transform",
+      "status": "OPEN",
+      "gap": "No confirmed origin/scale/axis/rotation/elevation transform from template cell coordinates to runtime world coordinates."
+    },
+    {
+      "id": "facility_kind_to_table_uid",
+      "status": "OPEN",
+      "gap": "Daily processor small kind selectors (shop 0, museum 2, office 1, campsite 6) are reported separately from StructureInfoParam.UniqueID values; the exact mapping is not promoted."
+    },
+    {
+      "id": "preview_handler_semantics",
+      "status": "OPEN",
+      "gap": "EventFlow contains CanBuildHere, HasObstacle and StructureStartPreviewGuide calls. No full handler/native run ties parameters to accepted footprint or placement state."
+    },
+    {
+      "id": "placement_collision",
+      "status": "OPEN",
+      "gap": "No structure footprint, collider, PBC file, terrain collision response or overlap geometry has been joined to these building classes."
+    },
+    {
+      "id": "structure_model_runtime",
+      "status": "OPEN",
+      "gap": "Facility table ModelName and catalog Asset_ID matches remain CAT; raw model bytes and runtime resource consumer are absent from this proof."
+    },
+    {
+      "id": "quest_furniture_save_rows",
+      "status": "OPEN",
+      "gap": "EventFlow gives furniture requirements and donation/check flags, but no saved object instance transform or exact interior/exterior placement cells are linked."
+    },
+    {
+      "id": "kk_stage_actor_roles",
+      "status": "OPEN",
+      "gap": "MainFieldDemoFirstLive has an actor record with a position, but ActorName/model/role/camera/collider bindings remain unresolved."
+    },
+    {
+      "id": "ladder_recipe_output",
+      "status": "OPEN",
+      "gap": "The cited flow unlocks recipe reference 2615; output item, equipment state, traversal handler and collider usage are not joined here."
+    }
+  ],
+  "summary": {
+    "records": 14,
+    "placement_transforms_proved": 0,
+    "structure_preset_cell_sample_count": 6,
+    "raw_model_or_audio_verified": false,
+    "all_unknown_mesh_position_and_collider_joins_marked_open": true
+  }
+}
