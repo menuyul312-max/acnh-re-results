@@ -162,5 +162,53 @@
       ]
     }
   ],
+  "shop_catalog_selector_crosswalk": {
+    "evidence_level": "NATIVE_SELECTOR_VALUES_JOINED_TO_ITEMKIND_ROW_INDEX",
+    "rows": [
+      {
+        "selector_row_index": 0,
+        "count": 2,
+        "item_kind_label_candidate": "Ftr",
+        "item_kind_unique_id": 5
+      },
+      {
+        "selector_row_index": 6,
+        "count": 2,
+        "item_kind_label_candidate": "Tops",
+        "item_kind_unique_id": 6
+      },
+      {
+        "selector_row_index": 9,
+        "count": 1,
+        "item_kind_label_candidate": "Bottoms",
+        "item_kind_unique_id": 9
+      },
+      {
+        "selector_row_index": 12,
+        "count": 1,
+        "item_kind_label_candidate": "Cap",
+        "item_kind_unique_id": 12
+      },
+      {
+        "selector_row_index": 14,
+        "count": 1,
+        "item_kind_label_candidate": "Accessory",
+        "item_kind_unique_id": 13
+      },
+      {
+        "selector_row_index": 11,
+        "count": 1,
+        "item_kind_label_candidate": "Shoes",
+        "item_kind_unique_id": 11
+      },
+      {
+        "selector_row_index": 72,
+        "count": 1,
+        "item_kind_label_candidate": "Music",
+        "item_kind_unique_id": 47
+      }
+    ],
+    "interpretation_limit": "The native initializer passes these integer selector/count pairs to the shop-list builder. ItemKind row-index labels are candidate names; the builder's exact field binding and UI wording are not dynamically verified."
+  },
   "interpretation": "The native catalog accessor requests a 2,000-byte (0x7d0) view, but the selected local save members and complete local vtable-size census contain no exact 0x7d0-byte object. The external key dictionary names SaveItemRemakeCollectBit, but the available structural crosswalk does not bind that name to a local node. SaveShopCatalog candidates are retained separately and must not be conflated with this bitset view. This does not exclude a 0x7d0 slice within a larger serialized object or runtime manager."
 }

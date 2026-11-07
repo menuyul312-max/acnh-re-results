@@ -8,8 +8,10 @@ ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_LAYOUT = ROOT / "output/gameplay/save_layout.json"
 DEFAULT_CROSSWALK = ROOT / "output/gameplay/save_layout_external_crosswalk.json"
 DEFAULT_KEYS = ROOT / "tools/external/CylindricalEarth/save_keys.json"
+DEFAULT_ITEM_KIND = Path("/workspace/acnh-re/output/tables_resolved/ItemKind.json")
 DEFAULT_OUTPUT = ROOT / "output/gameplay/catalog_save_size_audit.json"
 REQUESTED_VIEW_BYTES = 2000
+SHOP_SELECTOR_COUNTS = [(0, 2), (6, 2), (9, 1), (12, 1), (14, 1), (11, 1), (72, 1)]
 
 
 def hex_int(value):
@@ -21,12 +23,15 @@ def main():
     parser.add_argument("--layout", type=Path, default=DEFAULT_LAYOUT)
     parser.add_argument("--crosswalk", type=Path, default=DEFAULT_CROSSWALK)
     parser.add_argument("--keys", type=Path, default=DEFAULT_KEYS)
+    parser.add_argument("--item-kind", type=Path, default=DEFAULT_ITEM_KIND)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     args = parser.parse_args()
 
     layout = json.loads(args.layout.read_text())
     crosswalk = json.loads(args.crosswalk.read_text())
     keys = json.loads(args.keys.read_text())
+    item_kind = json.loads(args.item_kind.read_text())
+    item_kind_columns = {column["name"]: i for i, column in enumerate(item_kind["columns"])}
     members = layout.get("members", [])
     census = layout.get("type_census", [])
     exact_member_sizes = [
@@ -61,6 +66,16 @@ def main():
             if "SaveShopCatalog" in json.dumps(row):
                 shop_catalog_rows.append({"section": section, **row})
 
+    shop_selector_crosswalk = []
+    for row_index, count in SHOP_SELECTOR_COUNTS:
+        row = item_kind["rows"][row_index]
+        shop_selector_crosswalk.append({
+            "selector_row_index": row_index,
+            "count": count,
+            "item_kind_label_candidate": row[item_kind_columns["Label"]],
+            "item_kind_unique_id": row[item_kind_columns["UniqueID"]],
+        })
+
     result = {
         "schema": "acnh-catalog-save-size-audit-v1",
         "evidence_level": "LAYOUT_SIZE_CROSSCHECK",
@@ -80,6 +95,15 @@ def main():
         "external_named_type_matches": named_type_matches,
         "external_save_key_dictionary_hits": key_dictionary_hits,
         "shop_catalog_crosswalk_rows": shop_catalog_rows,
+        "shop_catalog_selector_crosswalk": {
+            "evidence_level": "NATIVE_SELECTOR_VALUES_JOINED_TO_ITEMKIND_ROW_INDEX",
+            "rows": shop_selector_crosswalk,
+            "interpretation_limit": (
+                "The native initializer passes these integer selector/count pairs to the "
+                "shop-list builder. ItemKind row-index labels are candidate names; the "
+                "builder's exact field binding and UI wording are not dynamically verified."
+            ),
+        },
         "interpretation": (
             "The native catalog accessor requests a 2,000-byte (0x7d0) view, but the "
             "selected local save members and complete local vtable-size census contain "
