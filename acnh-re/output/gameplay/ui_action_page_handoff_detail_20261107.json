@@ -1,0 +1,2966 @@
+{
+  "schema": "acnh.ui_action_page_handoff_followup.v1",
+  "generated_date_utc": "2026-11-07",
+  "scope": "ACNH 1.0.0 native UI/EventFlow action→manager/page tracing for UIMapSelectHandling, WorkCraft/Ftr_Working, StructureStartPreviewGuide placement, UIMenuDeviceAppear(cInstall,cConstructLicense), IslandEvaluation, and StaffCredit. This is static reverse engineering only; no Godot implementation, game execution, or raw model/audio extraction.",
+  "source_build": {
+    "game_version": "ACNH 1.0.0",
+    "main_nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+    "main_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+    "main_text_segment_sha256": "9c9b45d8e7a58706ca59e7244b3aebac2325ef98faa205e007974eeeb2f758e9",
+    "text_segment_va": "0x0",
+    "text_segment_bytes": 35723872,
+    "address_convention": "VAs below are the normalized ELF/NSO analysis VAs in the repository indexes; Ghidra pseudocode labels display VA+0x100000. Direct BL PCs were independently decoded from main NSO text bytes."
+  },
+  "source_artifacts": [
+    {
+      "path": "/workspace/acnh-re/inputs/additional_exefs/main",
+      "sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+      "bytes": 24990531
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/elf.json",
+      "sha256": "42bfdc3107b4fde9add2459049ef6febd8bca4d999725eedfd3485bf5be8040d",
+      "bytes": 3972
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/event_handlers_resolved.json",
+      "sha256": "dfc298dfcb1b288b8fda9cd6a49c728fdad903b41f8fc1c9288df7d732ec92a5",
+      "bytes": 1009896
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/function_inventory.json",
+      "sha256": "ef4200433442a15746c700a3980e2573ee790ca6cee898b8786ec1c0fcd0c9ac",
+      "bytes": 20849558
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/code_pointer_arrays.json",
+      "sha256": "64d474068ca289f9146f7f32e6647a16a05e8f5be8e635615a478744b62ef822",
+      "bytes": 11768450
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/154a040.c",
+      "sha256": "71e1b13646937ecbd2db702997669819b1b38e32447f00274e0bd8501af21bb3",
+      "bytes": 77
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/154a070.c",
+      "sha256": "3ab8fb1e4dc8246051c1f8be76828515303b4c72121ed4c768a0dcf53a8f9c22",
+      "bytes": 77
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/15479b0.c",
+      "sha256": "f0c763d3a9cf2a00ddc3f8aca97af06ed98367ce3e9aeb42d5608b815abdfa38",
+      "bytes": 675
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/1547940.c",
+      "sha256": "96bd40af46047af0f95a95d5ec54b9b13a7b37b7c399f32ae15e587e6d8d17e4",
+      "bytes": 390
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/1544dc0.c",
+      "sha256": "31d5690141f776049ff35c5b91fd801b70b7ee631fdf5452b64cf3db6b062751",
+      "bytes": 149
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/decomp/357770.c",
+      "sha256": "0f336cb77faa10b3d2b1358e3bdbe4d2427cd9166f9fa7dbcbab4067cc21221b",
+      "bytes": 2399
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/decomp/356f10.c",
+      "sha256": "869070daeacf75cda3007e080d1eea73b87398ca243a9820228ffd92d6744d38",
+      "bytes": 91
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/344490.c",
+      "sha256": "199535edc5ede4a47f1e2adaa0127688e2d9211e1565c1d36bd62e77c95da25c",
+      "bytes": 1000
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/3445b0.c",
+      "sha256": "eb1fe2e2faa02c30e877096794658ab4918494f9eddd25e229b4fd5ab52365f8",
+      "bytes": 6360
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/decomp/344d20.c",
+      "sha256": "f5e3faa0b7f672786b989b23d205aa721f796a09c8999cc3840bd9e1ed7ee7ba",
+      "bytes": 1403
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/3771d0.c",
+      "sha256": "e142f8e6276bdf59cc349190b12d0b95b001b88d09bca7eb0f8d89b9ae1cafbf",
+      "bytes": 2865
+    },
+    {
+      "path": "/workspace/acnh-re-github/acnh-re/output/ui_hud/page_factory_catalog.json",
+      "sha256": "f9b990db0b9539d5207a751558e2ba02e304c2f5f3ea3dbb86b49bcb57863b70",
+      "bytes": 266395
+    },
+    {
+      "path": "/workspace/acnh-re-github/acnh-re/output/ui_hud/page_layout_method_bindings.json",
+      "sha256": "8b55f0a1dbc810b71573444707bdd1ab2a891d3a9b3577be556c9da74c07716a",
+      "bytes": 141031
+    },
+    {
+      "path": "/workspace/acnh-re-github/acnh-re/output/ui_hud/page_registry_factory_candidates.json",
+      "sha256": "e45940bbaa799cd8ff681bb6a241e06009147f9e1a72ed2bd660fcb177eb2a00",
+      "bytes": 13290
+    },
+    {
+      "path": "/workspace/acnh-re-github/acnh-re/output/ui_hud/native_bindings.json",
+      "sha256": "2884663d3a86109964e738c10cf824d7d44c91f1d2c8b64c7136d902ffb75dab",
+      "bytes": 27507
+    },
+    {
+      "path": "/workspace/acnh-re-github/acnh-re/output/ui_hud/native_ui_traces.json",
+      "sha256": "5cdc4c98a063c6e3f81d368fff0b5681588aa1faae0a4eda746cd56445787936",
+      "bytes": 142172
+    },
+    {
+      "path": "/workspace/acnh-re-github/acnh-re/output/ui_hud/screen_catalog.json",
+      "sha256": "ffd19203af4c7b4d46cfcf9486224f7cdef24754366d00f2f6349823c9cd201a",
+      "bytes": 1778731
+    },
+    {
+      "path": "/workspace/acnh-re-github/acnh-re/output/gameplay/flow_index.json",
+      "sha256": "359f3a21a17a116902b0c8e1110c3892814b6fccbeb50b71d573c8ab3e1c68c5",
+      "bytes": 2119148
+    },
+    {
+      "path": "/workspace/acnh-re-github/acnh-re/output/gameplay/post_prologue_ui_resource_family_followup_20261107.json",
+      "sha256": "6676e9a7e458106b9ffb09f105f25575261105383199a53eb1fde4b0d0225560",
+      "bytes": 1217190
+    },
+    {
+      "path": "/workspace/acnh-re/output/additional_romfs/extracted_manifest.json",
+      "sha256": "5e2327bc81c0a526cbcf878e9d899f47536b5b8f5a9fdf8b4a776413f75b64b8",
+      "bytes": 7781162
+    },
+    {
+      "path": "/workspace/acnh-re/output/additional_romfs/summary.json",
+      "sha256": "533c787731455a0fd57f61c034265adcf5499ed93efab0e4ccc1a1e39772301a",
+      "bytes": 29815
+    }
+  ],
+  "native_event_action_registry": [
+    {
+      "registry_key": "EventFlowSystemActor.EventFlowActionUIMapSelectHandling",
+      "record": {
+        "kind": "actions",
+        "name": "EventFlowActionUIMapSelectHandling",
+        "canonical_name": "EventFlowActionUIMapSelectHandling",
+        "alias_evidence": null,
+        "registration_hash": "1a24f4b5",
+        "event_uses": 1,
+        "parameters": {},
+        "status": "native_factory",
+        "registration_va": "0x3059bd8",
+        "factory": "0x44cb30",
+        "constructor": "0x356e90",
+        "object_size": 192,
+        "vtable": "0x304e3e0",
+        "vtable_evidence": "bounded_constructor_trace; exact outer_object_offset_zero_store",
+        "vptr_stores": [
+          {
+            "pc": "0x356eb0",
+            "vtable": 50652128,
+            "instruction": "str x8, [x19]"
+          }
+        ],
+        "slots": [
+          "0x356f20",
+          "0x357030",
+          "0x34b6e0",
+          "0x356ed0",
+          "0x356f00",
+          "0x238fd0",
+          "0x238fe0",
+          "0x238ff0",
+          "0x34a9b0",
+          "0x34aa20",
+          "0x34b7a0",
+          "0x239010",
+          "0x34b700",
+          "0x34b760",
+          "0x356f10",
+          "0x34af90",
+          "0x34afa0"
+        ],
+        "slots_raw": [
+          "0x356f20",
+          "0x357030",
+          "0x356ec0",
+          "0x356ed0",
+          "0x356f00",
+          "0x238fd0",
+          "0x238fe0",
+          "0x238ff0",
+          "0x34a9b0",
+          "0x34aa20",
+          "0x34b7a0",
+          "0x239010",
+          "0x34b700",
+          "0x34b760",
+          "0x356f10",
+          "0x34af90",
+          "0x34afa0"
+        ],
+        "slot_span_stop": "zero_pointer",
+        "slot_span_evidence": "contiguous code pointers; later class-specific slot roles unresolved"
+      }
+    },
+    {
+      "registry_key": "EventFlowSystemActor.EventFlowActionUIMenuDeviceAppear",
+      "record": {
+        "kind": "actions",
+        "name": "EventFlowActionUIMenuDeviceAppear",
+        "canonical_name": "EventFlowActionUIMenuDeviceAppear",
+        "alias_evidence": null,
+        "registration_hash": "49f7be22",
+        "event_uses": 7,
+        "parameters": {
+          "EventType": "str",
+          "Application": "str"
+        },
+        "status": "native_factory",
+        "registration_va": "0x305a2d8",
+        "factory": "0x44e730",
+        "constructor": "0x357660",
+        "object_size": 296,
+        "vtable": "0x304e580",
+        "vtable_evidence": "bounded_constructor_trace; exact outer_object_offset_zero_store",
+        "vptr_stores": [
+          {
+            "pc": "0x3576a0",
+            "vtable": 50652544,
+            "instruction": "str x8, [x19]"
+          }
+        ],
+        "slots": [
+          "0x357f40",
+          "0x358050",
+          "0x357700",
+          "0x357720",
+          "0x357760",
+          "0x238fd0",
+          "0x238fe0",
+          "0x238ff0",
+          "0x34a9b0",
+          "0x34aa20",
+          "0x34b7a0",
+          "0x239010",
+          "0x34b700",
+          "0x34b760",
+          "0x357770",
+          "0x34af90",
+          "0x34afa0"
+        ],
+        "slots_raw": [
+          "0x357f40",
+          "0x358050",
+          "0x357700",
+          "0x357720",
+          "0x357760",
+          "0x238fd0",
+          "0x238fe0",
+          "0x238ff0",
+          "0x34a9b0",
+          "0x34aa20",
+          "0x34b7a0",
+          "0x239010",
+          "0x34b700",
+          "0x34b760",
+          "0x357770",
+          "0x34af90",
+          "0x34afa0"
+        ],
+        "slot_span_stop": "zero_pointer",
+        "slot_span_evidence": "contiguous code pointers; later class-specific slot roles unresolved"
+      }
+    },
+    {
+      "registry_key": "EventFlowSystemActor.EventFlowActionStructureStartPreviewGuide",
+      "record": {
+        "kind": "actions",
+        "name": "EventFlowActionStructureStartPreviewGuide",
+        "canonical_name": "EventFlowActionStructureStartPreviewGuide",
+        "alias_evidence": null,
+        "registration_hash": "ceec247d",
+        "event_uses": 18,
+        "parameters": {
+          "StructureType": "str",
+          "StructureBuildPosType": "str",
+          "StructureBuildTiming": "arg"
+        },
+        "status": "native_factory",
+        "registration_va": "0x305b5a8",
+        "factory": "0x453270",
+        "constructor": "0x344490",
+        "object_size": 344,
+        "vtable": "0x304cdf8",
+        "vtable_evidence": "bounded_constructor_trace; exact outer_object_offset_zero_store",
+        "vptr_stores": [
+          {
+            "pc": "0x3444d4",
+            "vtable": 50646520,
+            "instruction": "str x8, [x19]"
+          }
+        ],
+        "slots": [
+          "0x344e90",
+          "0x344f30",
+          "0x344570",
+          "0x19679b0",
+          "0x3445a0",
+          "0x238fd0",
+          "0x238fe0",
+          "0x238ff0",
+          "0x3445b0",
+          "0x344d20",
+          "0x344e80",
+          "0x239010"
+        ],
+        "slots_raw": [
+          "0x344e90",
+          "0x344f30",
+          "0x344570",
+          "0x344590",
+          "0x3445a0",
+          "0x238fd0",
+          "0x238fe0",
+          "0x238ff0",
+          "0x3445b0",
+          "0x344d20",
+          "0x344e80",
+          "0x239010"
+        ],
+        "slot_span_stop": "zero_pointer",
+        "slot_span_evidence": "contiguous code pointers; later class-specific slot roles unresolved"
+      }
+    }
+  ],
+  "shared_ui_event_request_channel": {
+    "status": "STATIC_SHARED_REQUEST_RESULT_CHANNEL_PROVEN; ACTION_TO_CONCRETE_PAGE_INSTANCE_OPEN",
+    "writer_wrapper": {
+      "va": "0x154a040",
+      "sequence": [
+        "0x1544dc0",
+        "0x15479b0"
+      ],
+      "source_function_hashes": {
+        "0x154a040": "5490f76ee59cceeb1e919679b11eae85b4e5a18aa19431c2229c2498eb728b79",
+        "0x1544dc0": "6c955f0b9f868a4e066e5ac45901dbfecafd241513be0dede1320667118b5b0a",
+        "0x15479b0": "a66389deab3b654b50a6f0b96df1e8d67aef03981943666f55a10aac1cbbf91b"
+      },
+      "direct_action_callsite": {
+        "pc": "0x357984",
+        "owner_va": "0x357770",
+        "target_va": "0x154a040",
+        "instruction": "0x9447c9af",
+        "bytes_le": "afc94794"
+      },
+      "observed_effect": "0x164a040 obtains the common UI-event manager via 0x1644dc0 and delegates to 0x16479b0; setter copies 16 bits from packet+8 into manager object+0xb038 and 32 bits from packet+0xc into manager+0xb03c. It does not pass a BFLYT path, page factory pointer, or BFLAN tag."
+    },
+    "reader_wrapper": {
+      "va": "0x154a070",
+      "sequence": [
+        "0x1544dc0",
+        "0x1547940"
+      ],
+      "source_function_hashes": {
+        "0x154a070": "ec33b1959947183fac3a872ab5f10edc421f76f10c32f560a311fedd241d5b3e",
+        "0x1544dc0": "6c955f0b9f868a4e066e5ac45901dbfecafd241513be0dede1320667118b5b0a",
+        "0x1547940": "1c5d39107d0e57360e8d51698a09af45652f7f1df3d81713539099be5419e071"
+      },
+      "observed_effect": "0x164a070 obtains the same common manager and calls 0x1647940. The reader points at manager+0xb030, checks the pending byte at +0xb038, invokes the pending item vtable+0x18 if set, clears +0xb038, and writes a status byte at +0xb039."
+    },
+    "page_side_calls": {
+      "function_va": "0x125bcd0",
+      "function_size_bytes": 1588,
+      "function_code_sha256": "a97da8c71c20bb25723109494af3c6700d5779eb1f387e580212549a211e91ac",
+      "class_attribution": "MenuDevicePage code-group candidate only: the function is in the MenuDevice page-code neighborhood and occurs in a 19-pointer static sequence beginning at 0x3308100; that table is not independently typed or proven to be the MenuDevicePage vtable. MenuDevicePage factory/constructor/getter are proven separately.",
+      "reader_calls": [
+        {
+          "pc": "0x125bd4c",
+          "target_va": "0x154a070",
+          "instruction": "0x940bb8c9",
+          "bytes_le": "c9b80b94"
+        },
+        {
+          "pc": "0x125be04",
+          "target_va": "0x154a070",
+          "instruction": "0x940bb89b",
+          "bytes_le": "9bb80b94"
+        }
+      ],
+      "writer_call": {
+        "pc": "0x125c1cc",
+        "target_va": "0x154a040",
+        "instruction": "0x940bb79d",
+        "bytes_le": "9db70b94"
+      },
+      "exact_request_semantics": "OPEN: function pseudocode was not in the source decomp set, the 0x3308100 pointer sequence owner is unresolved, and the MenuDevice factory instance / Application code / layout-animation dispatch are not statically joined to this function."
+    },
+    "shared_manager_identity": {
+      "function_va": "0x1544dc0",
+      "observed": "returns *(global singleton pointer + 0x28); both wrappers immediately use the returned manager address. This is a static call/data path, not runtime execution."
+    },
+    "direct_bl_counts_in_entire_main_text": {
+      "0x164a040": 2,
+      "0x164a070": 2
+    }
+  },
+  "action_page_and_resource_findings": [
+    {
+      "topic": "UIMapSelectHandling / initial island map selection",
+      "story_evidence": {
+        "flow": "Tutorials_Prologue1_Charactermaking",
+        "event_index": 0,
+        "action": "UIMapSelectHandling",
+        "flow_source_id": 661
+      },
+      "native_action": {
+        "function_va": "0x356f10",
+        "function_hash": "60637917b9d8a9a305b224a311dca1854a0b1b1c7beed7d3199efed1dcfdd591",
+        "observed": "callback writes constant 0x2a at action object+0xb8 and returns; it has no direct page factory or shared manager call."
+      },
+      "page_factory": {
+        "class_name": "MapSelectPage",
+        "class_name_string_va": "0x29a2521",
+        "factory_va": "0x1242550",
+        "factory_size_bytes": "0x150",
+        "allocation_size_bytes": 1472,
+        "constructor_va": "0x12406d0",
+        "generic_page_handoff": [
+          {
+            "function_va": "0x1da8210",
+            "callsite_va": "0x1242610"
+          },
+          {
+            "function_va": "0x1144600",
+            "callsite_va": "0x124261c"
+          },
+          {
+            "function_va": "0x1da8220",
+            "callsite_va": "0x1242628"
+          }
+        ],
+        "constructor_vptr_global_pseudo_va": "0x3407b48",
+        "elf_relocation": {
+          "slot_va": "0x3307b48",
+          "type": "R_AARCH64_RELATIVE",
+          "target_va": "0x3110b28",
+          "stored_address_point_va": "0x3110b38"
+        },
+        "vtable_address_point_va": "0x3110b38",
+        "observed_pointer_entry_count": 79,
+        "pointer_sequence_status": "relocated code pointer sequence; not automatically a C++ vtable"
+      },
+      "page_layout_getter": {
+        "page_class": "MapSelectPage",
+        "factory_va": "0x1242550",
+        "constructor_va": "0x12406d0",
+        "constructor_vptr_relocation_slot_va": "0x3307b48",
+        "address_point_va": "0x3110b38",
+        "registry_query_slot_17_target_va": "0x166ec70",
+        "registry_page_slot_30_target_va": "0x1144dc0",
+        "method_slot_index": 46,
+        "method_slot_offset_bytes": "0x170",
+        "method_relocation_slot_va": "0x3110ca8",
+        "method_relocation_type": "R_AARCH64_RELATIVE",
+        "method_va": "0x1241910",
+        "method_body": [
+          "adrp\tx0, #24162304",
+          "add\tx0, x0, #3011",
+          "ret"
+        ],
+        "returned_string_va": "0x294cbc3",
+        "returned_identifier": "CharaMakeMap",
+        "exact_layout_name_match": true,
+        "layout": {
+          "name": "CharaMakeMap",
+          "source": "Layout/CharaMakeMap.Nin_NX_NVN.zs",
+          "member": "CharaMakeMap.arc!blyt/CharaMakeMap.bflyt",
+          "sha256": "b110eb4c09bb23ce89f3f7a32139a68d1cc6b37c615788d75284a113941ca6ea"
+        }
+      },
+      "registry_candidate": {
+        "registry_page_name": "cMapSelect",
+        "registry_helper_va": "0x1549400",
+        "raw_integer_arguments": [
+          19
+        ],
+        "normalization_rule": "remove leading c",
+        "normalized_candidate_class_name": "MapSelectPage",
+        "candidate_factory_va": "0x1242550",
+        "candidate_class_name_string_va": "0x29a2521",
+        "status": "normalized_name_candidate_unproven"
+      },
+      "resource": {
+        "layout": "CharaMakeMap",
+        "static_page_layout_binding": [],
+        "page_runtime_status": "OPEN",
+        "resource_source": {
+          "container": "Layout/CharaMakeMap.Nin_NX_NVN.zs",
+          "BFLYT_member": "CharaMakeMap.arc!blyt/CharaMakeMap.bflyt",
+          "BFLYT_sha256": "b110eb4c09bb23ce89f3f7a32139a68d1cc6b37c615788d75284a113941ca6ea",
+          "supplemental_manifest_status": "new_path (from prior resource audit)",
+          "build_identity": "supplemental layout archive; exact patch/build not inferred"
+        },
+        "selected_bflan_catalog_rows": [
+          {
+            "member": "CharaMakeMap.arc!anim/CharaMakeMap_In.bflan",
+            "tag": "In",
+            "frame_count": 8,
+            "loop_byte": 0,
+            "track_count": 4,
+            "key_count": 9
+          },
+          {
+            "member": "CharaMakeMap.arc!anim/CharaMakeMap_Out.bflan",
+            "tag": "Out",
+            "frame_count": 12,
+            "loop_byte": 0,
+            "track_count": 4,
+            "key_count": 14
+          }
+        ]
+      },
+      "proof_status": {
+        "action_to_page": "OPEN",
+        "page_class_to_layout_identifier": "PSEUDO_EXACT_STRING_GETTER",
+        "page_factory_to_generic_page_framework": "STATIC_FACTORY_SETUP",
+        "layout_archive_identity": "SUPPLEMENTAL_new_path_exact_patch_unproven",
+        "bflan_runtime_trigger": "OPEN"
+      },
+      "boundary": "The MapSelectPage getter returns CharaMakeMap and catalog bytes contain CharaMakeMap BFLYT/BFLAN rows. The action callback itself is only a completion/status callback; registry row uses raw value 19 but no direct action→factory→loader edge was found."
+    },
+    {
+      "topic": "MenuDevice / Island Designer cConstructLicense install",
+      "story_evidence": {
+        "flows": [
+          {
+            "flow": "SNPC_rco_00_StartMainGame",
+            "entry": "Rco_GetSmartPhone",
+            "event_index": 34,
+            "event_type": "cBoot",
+            "application": "cNone"
+          },
+          {
+            "flow": "SNPC_rco_55_TkkFirstLive",
+            "entry": "InvitePlayerHouse",
+            "event_index": 17,
+            "event_type": "cInstall",
+            "application": "cConstructLicense"
+          }
+        ]
+      },
+      "native_action": {
+        "function_va": "0x357770",
+        "function_hash": "afef951773c77b150e178a1c10d1838b037b229238da3743a2072ce817c5dfb1",
+        "registry_key": "EventFlowSystemActor.EventFlowActionUIMenuDeviceAppear",
+        "direct_setter_pc": "0x357984",
+        "return_behavior": "handler validates/categorizes EventType/Application and submits the recognized packet via 0x164a040; result constants are written to action object status fields."
+      },
+      "page_factory": {
+        "class_name": "MenuDevicePage",
+        "class_name_string_va": "0x29bdc4f",
+        "factory_va": "0x125ae40",
+        "factory_size_bytes": "0x150",
+        "allocation_size_bytes": 1568,
+        "constructor_va": "0x1258460",
+        "generic_page_handoff": [
+          {
+            "function_va": "0x1da8210",
+            "callsite_va": "0x125af00"
+          },
+          {
+            "function_va": "0x1144600",
+            "callsite_va": "0x125af0c"
+          },
+          {
+            "function_va": "0x1da8220",
+            "callsite_va": "0x125af18"
+          }
+        ],
+        "constructor_vptr_global_pseudo_va": "0x3408098",
+        "elf_relocation": {
+          "slot_va": "0x3308098",
+          "type": "R_AARCH64_RELATIVE",
+          "target_va": "0x3112a08",
+          "stored_address_point_va": "0x3112a18"
+        },
+        "vtable_address_point_va": "0x3112a18",
+        "observed_pointer_entry_count": 79,
+        "pointer_sequence_status": "relocated code pointer sequence; not automatically a C++ vtable"
+      },
+      "page_layout_getter": {
+        "page_class": "MenuDevicePage",
+        "factory_va": "0x125ae40",
+        "constructor_va": "0x1258460",
+        "constructor_vptr_relocation_slot_va": "0x3308098",
+        "address_point_va": "0x3112a18",
+        "registry_query_slot_17_target_va": "0x166ec70",
+        "registry_page_slot_30_target_va": "0x1144dc0",
+        "method_slot_index": 46,
+        "method_slot_offset_bytes": "0x170",
+        "method_relocation_slot_va": "0x3112b88",
+        "method_relocation_type": "R_AARCH64_RELATIVE",
+        "method_va": "0x12595f0",
+        "method_body": [
+          "adrp\tx0, #24125440",
+          "add\tx0, x0, #4072",
+          "ret"
+        ],
+        "returned_string_va": "0x295bfe8",
+        "returned_identifier": "MenuDevice",
+        "exact_layout_name_match": true,
+        "layout": {
+          "name": "MenuDevice",
+          "source": "Layout/MenuDevice.Nin_NX_NVN.zs",
+          "member": "MenuDevice.arc!blyt/MenuDevice.bflyt",
+          "sha256": "4a241584f43ecc1e0e28449bccce710346eec748cd569c1149276f74bfd11b69"
+        }
+      },
+      "registry_candidate": {
+        "registry_page_name": "MenuDevice",
+        "registry_helper_va": "0x1549400",
+        "raw_integer_arguments": [
+          22
+        ],
+        "normalization_rule": "exact name",
+        "normalized_candidate_class_name": "MenuDevicePage",
+        "candidate_factory_va": "0x125ae40",
+        "candidate_class_name_string_va": "0x29bdc4f",
+        "status": "normalized_name_candidate_unproven"
+      },
+      "resource": {
+        "layout": "MenuDevice",
+        "static_page_layout_binding": [
+          {
+            "page_class": "MenuDevicePage",
+            "method_va": "0x12595f0",
+            "returned_identifier": "MenuDevice",
+            "exact_layout_name_match": true,
+            "status": "PSEUDO"
+          }
+        ],
+        "page_runtime_status": "OPEN",
+        "resource_source": {
+          "container": "Layout/MenuDevice.Nin_NX_NVN.zs",
+          "container_sha256": "eea921b7ba79d20c5d39647d77e89fd7d2257b6875c5d93225a274e1cafbbc03",
+          "container_bytes": 45817,
+          "supplemental_manifest_status": "new_path",
+          "BFLYT_member": "MenuDevice.arc!blyt/MenuDevice.bflyt",
+          "BFLYT_sha256": "4a241584f43ecc1e0e28449bccce710346eec748cd569c1149276f74bfd11b69",
+          "BFLYT_bytes": 12228,
+          "resource_binding_layout_sha256": "4a241584f43ecc1e0e28449bccce710346eec748cd569c1149276f74bfd11b69",
+          "resource_binding_hash_matches_BFLYT": true,
+          "build_identity": "supplemental layout archive; exact patch/build not inferred"
+        },
+        "selected_bflan_catalog_rows": [
+          {
+            "member": "MenuDevice.arc!anim/MenuDevice_Out.bflan",
+            "tag": "Out",
+            "frame_count": 6,
+            "loop_byte": 0,
+            "screen_catalog_track_count": 22,
+            "key_count": 38,
+            "semantics_track_count": 22,
+            "unique_same_archive_target_track_count": 22,
+            "target_samples": [
+              {
+                "target_name": "N_All_00",
+                "target_type": "Pane",
+                "section": "PaneSrt",
+                "property": "pane_translate_y"
+              },
+              {
+                "target_name": "N_All_00",
+                "target_type": "Pane",
+                "section": "PaneSrt",
+                "property": "pane_scale_x"
+              },
+              {
+                "target_name": "N_All_00",
+                "target_type": "Pane",
+                "section": "PaneSrt",
+                "property": "pane_scale_y"
+              },
+              {
+                "target_name": "N_All_00",
+                "target_type": "Pane",
+                "section": "VertexColor",
+                "property": "pane_alpha"
+              },
+              {
+                "target_name": "P_Base_00",
+                "target_type": "Pane",
+                "section": "PaneSrt",
+                "property": "pane_translate_x"
+              }
+            ],
+            "sha256": "91ed742a9557635070f5f2257c6f0df715447055e5270dc51d994932abe247d5",
+            "bytes": 1516,
+            "status": "CONSUMER_JOINED",
+            "runtime_animation_trigger": "OPEN"
+          },
+          {
+            "member": "MenuDevice.arc!anim/MenuDevice_In.bflan",
+            "tag": "In",
+            "frame_count": 8,
+            "loop_byte": 0,
+            "screen_catalog_track_count": 110,
+            "key_count": 322,
+            "semantics_track_count": 110,
+            "unique_same_archive_target_track_count": 110,
+            "target_samples": [
+              {
+                "target_name": "N_All_00",
+                "target_type": "Pane",
+                "section": "PaneSrt",
+                "property": "pane_translate_y"
+              },
+              {
+                "target_name": "N_All_00",
+                "target_type": "Pane",
+                "section": "PaneSrt",
+                "property": "pane_scale_x"
+              },
+              {
+                "target_name": "N_All_00",
+                "target_type": "Pane",
+                "section": "PaneSrt",
+                "property": "pane_scale_y"
+              },
+              {
+                "target_name": "N_All_00",
+                "target_type": "Pane",
+                "section": "VertexColor",
+                "property": "pane_alpha"
+              },
+              {
+                "target_name": "P_Base_00",
+                "target_type": "Pane",
+                "section": "PaneSrt",
+                "property": "pane_translate_x"
+              }
+            ],
+            "sha256": "d09b051098317121bb2739702e7c62df0c60339d393b0043f4c297639ed8c18e",
+            "bytes": 7700,
+            "status": "CONSUMER_JOINED",
+            "runtime_animation_trigger": "OPEN"
+          },
+          {
+            "member": "MenuDevice.arc!anim/MenuDevice_DemoInstall.bflan",
+            "tag": "DemoInstall",
+            "frame_count": 130,
+            "loop_byte": 0,
+            "screen_catalog_track_count": 36,
+            "key_count": 184,
+            "semantics_track_count": 36,
+            "unique_same_archive_target_track_count": 36,
+            "target_samples": [
+              {
+                "target_name": "N_All_00",
+                "target_type": "Pane",
+                "section": "PaneSrt",
+                "property": "pane_translate_y"
+              },
+              {
+                "target_name": "N_All_00",
+                "target_type": "Pane",
+                "section": "PaneSrt",
+                "property": "pane_scale_x"
+              },
+              {
+                "target_name": "N_All_00",
+                "target_type": "Pane",
+                "section": "PaneSrt",
+                "property": "pane_scale_y"
+              },
+              {
+                "target_name": "N_All_00",
+                "target_type": "Pane",
+                "section": "VertexColor",
+                "property": "pane_alpha"
+              },
+              {
+                "target_name": "P_Base_00",
+                "target_type": "Pane",
+                "section": "PaneSrt",
+                "property": "pane_translate_x"
+              }
+            ],
+            "sha256": "c65a41017e1e3945914ba1d8e8a9099419c05e199063d85f847a6171734de58c",
+            "bytes": 3692,
+            "status": "CONSUMER_JOINED",
+            "runtime_animation_trigger": "OPEN"
+          }
+        ]
+      },
+      "proof_status": {
+        "action_to_shared_manager_request": "STATIC_PROVEN",
+        "shared_manager_reader_in_MenuDevice_code_neighborhood": "DIRECT_CALLS_PROVEN; page ownership is candidate",
+        "action_to_specific_MenuDevicePage_instance": "OPEN",
+        "page_class_to_layout_identifier": "PSEUDO_EXACT_STRING_GETTER",
+        "layout_archive_identity": "SUPPLEMENTAL_new_path_exact_patch_unproven",
+        "DemoInstall_BFLAN_trigger": "OPEN"
+      },
+      "boundary": "The action→shared manager request and same-manager reader/writer pair are direct BL/data-flow evidence. Page factory is a separate generic-page-framework registration and its layout getter is a separate ADRP/ADD/RET method. The 0x125bcd0 function strongly resembles a page consumer but exact callback owner and application-to-page instance association are not proven."
+    },
+    {
+      "topic": "WorkCraft / Ftr_Working DIY",
+      "story_evidence": {
+        "flow": "Ftr_Working",
+        "source_id": 306,
+        "relevant_operations": [
+          "PlayerWorkbenchMaking",
+          "PlayerWorkbenchGetDemo",
+          "PlayerWorkbenchPutaway",
+          "SaveSetFromUIResult(cWorkCraft)"
+        ],
+        "story_entry": "SNPC_rco_01_Tent_1_Entries:RcoTentAskDIYtrial"
+      },
+      "page_factories": [
+        {
+          "class_name": "WorkCraftListPage",
+          "class_name_string_va": "0x293bb74",
+          "factory_va": "0x159cbc0",
+          "factory_size_bytes": "0x150",
+          "allocation_size_bytes": 1424,
+          "constructor_va": "0x159ad00",
+          "generic_page_handoff": [
+            {
+              "function_va": "0x1da8210",
+              "callsite_va": "0x159cc80"
+            },
+            {
+              "function_va": "0x1144600",
+              "callsite_va": "0x159cc8c"
+            },
+            {
+              "function_va": "0x1da8220",
+              "callsite_va": "0x159cc98"
+            }
+          ],
+          "constructor_vptr_global_pseudo_va": "0x3410c18",
+          "elf_relocation": {
+            "slot_va": "0x3310c18",
+            "type": "R_AARCH64_RELATIVE",
+            "target_va": "0x31464d0",
+            "stored_address_point_va": "0x31464e0"
+          },
+          "vtable_address_point_va": "0x31464e0",
+          "observed_pointer_entry_count": 79,
+          "pointer_sequence_status": "relocated code pointer sequence; not automatically a C++ vtable"
+        },
+        {
+          "class_name": "WorkCraftInfoPage",
+          "class_name_string_va": "0x295c58f",
+          "factory_va": "0x1597b90",
+          "factory_size_bytes": "0x150",
+          "allocation_size_bytes": 1448,
+          "constructor_va": "0x1596620",
+          "generic_page_handoff": [
+            {
+              "function_va": "0x1da8210",
+              "callsite_va": "0x1597c50"
+            },
+            {
+              "function_va": "0x1144600",
+              "callsite_va": "0x1597c5c"
+            },
+            {
+              "function_va": "0x1da8220",
+              "callsite_va": "0x1597c68"
+            }
+          ],
+          "constructor_vptr_global_pseudo_va": "0x3410b78",
+          "elf_relocation": {
+            "slot_va": "0x3310b78",
+            "type": "R_AARCH64_RELATIVE",
+            "target_va": "0x3145e80",
+            "stored_address_point_va": "0x3145e90"
+          },
+          "vtable_address_point_va": "0x3145e90",
+          "observed_pointer_entry_count": 79,
+          "pointer_sequence_status": "relocated code pointer sequence; not automatically a C++ vtable"
+        },
+        {
+          "class_name": "WorkCraftBgPage",
+          "class_name_string_va": "0x2961535",
+          "factory_va": "0x1596020",
+          "factory_size_bytes": "0x150",
+          "allocation_size_bytes": 1392,
+          "constructor_va": "0x1595940",
+          "generic_page_handoff": [
+            {
+              "function_va": "0x1da8210",
+              "callsite_va": "0x15960e0"
+            },
+            {
+              "function_va": "0x1144600",
+              "callsite_va": "0x15960ec"
+            },
+            {
+              "function_va": "0x1da8220",
+              "callsite_va": "0x15960f8"
+            }
+          ],
+          "constructor_vptr_global_pseudo_va": "0x3410b20",
+          "elf_relocation": {
+            "slot_va": "0x3310b20",
+            "type": "R_AARCH64_RELATIVE",
+            "target_va": "0x31459c0",
+            "stored_address_point_va": "0x31459d0"
+          },
+          "vtable_address_point_va": "0x31459d0",
+          "observed_pointer_entry_count": 79,
+          "pointer_sequence_status": "relocated code pointer sequence; not automatically a C++ vtable"
+        }
+      ],
+      "page_layout_getters": [
+        {
+          "page_class": "WorkCraftListPage",
+          "factory_va": "0x159cbc0",
+          "constructor_va": "0x159ad00",
+          "constructor_vptr_relocation_slot_va": "0x3310c18",
+          "address_point_va": "0x31464e0",
+          "registry_query_slot_17_target_va": "0x166ec70",
+          "registry_page_slot_30_target_va": "0x1144dc0",
+          "method_slot_index": 46,
+          "method_slot_offset_bytes": "0x170",
+          "method_relocation_slot_va": "0x3146650",
+          "method_relocation_type": "R_AARCH64_RELATIVE",
+          "method_va": "0x159b900",
+          "method_body": [
+            "adrp\tx0, #21086208",
+            "add\tx0, x0, #999",
+            "ret"
+          ],
+          "returned_string_va": "0x29b73e7",
+          "returned_identifier": "WorkBench",
+          "exact_layout_name_match": true,
+          "layout": {
+            "name": "WorkBench",
+            "source": "Layout/WorkBench.Nin_NX_NVN.zs",
+            "member": "WorkBench.arc!blyt/WorkBench.bflyt",
+            "sha256": "475188c3996c5ecca9e4d95d32ccee704696e4bdf850916e307590f2e2a1bd0b"
+          }
+        },
+        {
+          "page_class": "WorkCraftInfoPage",
+          "factory_va": "0x1597b90",
+          "constructor_va": "0x1596620",
+          "constructor_vptr_relocation_slot_va": "0x3310b78",
+          "address_point_va": "0x3145e90",
+          "registry_query_slot_17_target_va": "0x166ec70",
+          "registry_page_slot_30_target_va": "0x1144dc0",
+          "method_slot_index": 46,
+          "method_slot_offset_bytes": "0x170",
+          "method_relocation_slot_va": "0x3146000",
+          "method_relocation_type": "R_AARCH64_RELATIVE",
+          "method_va": "0x1597220",
+          "method_body": [
+            "adrp\tx0, #21131264",
+            "add\tx0, x0, #309",
+            "ret"
+          ],
+          "returned_string_va": "0x29be135",
+          "returned_identifier": "WorkBenchInfo",
+          "exact_layout_name_match": true,
+          "layout": {
+            "name": "WorkBenchInfo",
+            "source": "Layout/WorkBenchInfo.Nin_NX_NVN.zs",
+            "member": "WorkBenchInfo.arc!blyt/WorkBenchInfo.bflyt",
+            "sha256": "f8b7af3e4acd855e3ea991d0decaa62fc9fa60911397a8a526e739921cb62735"
+          }
+        },
+        {
+          "page_class": "WorkCraftBgPage",
+          "factory_va": "0x1596020",
+          "constructor_va": "0x1595940",
+          "constructor_vptr_relocation_slot_va": "0x3310b20",
+          "address_point_va": "0x31459d0",
+          "registry_query_slot_17_target_va": "0x166ec70",
+          "registry_page_slot_30_target_va": "0x1144dc0",
+          "method_slot_index": 46,
+          "method_slot_offset_bytes": "0x170",
+          "method_relocation_slot_va": "0x3145b40",
+          "method_relocation_type": "R_AARCH64_RELATIVE",
+          "method_va": "0x1595e70",
+          "method_body": [
+            "adrp\tx0, #20758528",
+            "add\tx0, x0, #1349",
+            "ret"
+          ],
+          "returned_string_va": "0x2961545",
+          "returned_identifier": "WorkBenchBG",
+          "exact_layout_name_match": true,
+          "layout": {
+            "name": "WorkBenchBG",
+            "source": "Layout/WorkBenchBG.Nin_NX_NVN.zs",
+            "member": "WorkBenchBG.arc!blyt/WorkBenchBG.bflyt",
+            "sha256": "74538ae233d2a481c899a890bc677e619fa7af71a2226a5464782ee1f3a01e19"
+          }
+        }
+      ],
+      "registry_candidate": {
+        "registry_page_name": "cWorkCraft",
+        "registry_helper_va": "0x1549750",
+        "raw_integer_arguments": [
+          1,
+          2
+        ],
+        "normalization_rule": "remove leading c",
+        "normalized_candidate_class_name": null,
+        "candidate_factory_va": null,
+        "candidate_class_name_string_va": null,
+        "status": "no_exact_normalized_class_name"
+      },
+      "resources": [
+        {
+          "layout": "WorkBench",
+          "static_page_layout_binding": [
+            {
+              "page_class": "WorkCraftListPage",
+              "method_va": "0x159b900",
+              "returned_identifier": "WorkBench",
+              "exact_layout_name_match": true,
+              "status": "PSEUDO"
+            }
+          ],
+          "page_runtime_status": "OPEN",
+          "resource_source": {
+            "container": "Layout/WorkBench.Nin_NX_NVN.zs",
+            "container_sha256": "fe1139a95803edb8bf8db889c5790a820e4c5331cca54080d609e1b1bef6a571",
+            "container_bytes": 14816,
+            "supplemental_manifest_status": "new_path",
+            "BFLYT_member": "WorkBench.arc!blyt/WorkBench.bflyt",
+            "BFLYT_sha256": "475188c3996c5ecca9e4d95d32ccee704696e4bdf850916e307590f2e2a1bd0b",
+            "BFLYT_bytes": 10572,
+            "resource_binding_layout_sha256": "475188c3996c5ecca9e4d95d32ccee704696e4bdf850916e307590f2e2a1bd0b",
+            "resource_binding_hash_matches_BFLYT": true,
+            "build_identity": "supplemental layout archive; exact patch/build not inferred"
+          },
+          "selected_bflan_catalog_rows": [
+            {
+              "member": "WorkBench.arc!anim/WorkBench_In.bflan",
+              "tag": "In",
+              "frame_count": 14,
+              "loop_byte": 0,
+              "screen_catalog_track_count": 5,
+              "key_count": 10,
+              "semantics_track_count": 5,
+              "unique_same_archive_target_track_count": 5,
+              "target_samples": [
+                {
+                  "target_name": "N_BtnList_00",
+                  "target_type": "Pane",
+                  "section": "PaneSrt",
+                  "property": "pane_translate_y"
+                },
+                {
+                  "target_name": "N_BtnList_00",
+                  "target_type": "Pane",
+                  "section": "Visibility",
+                  "property": "pane_visibility"
+                },
+                {
+                  "target_name": "N_InOut_00",
+                  "target_type": "Pane",
+                  "section": "VertexColor",
+                  "property": "pane_alpha"
+                },
+                {
+                  "target_name": "N_InOut_01",
+                  "target_type": "Pane",
+                  "section": "VertexColor",
+                  "property": "pane_alpha"
+                },
+                {
+                  "target_name": "N_Category_00",
+                  "target_type": "Pane",
+                  "section": "Visibility",
+                  "property": "pane_visibility"
+                }
+              ],
+              "sha256": "aceaa5e89008097f546e702728c58c390aa7115460be000073c76f06eeebe213",
+              "bytes": 508,
+              "status": "CONSUMER_JOINED",
+              "runtime_animation_trigger": "OPEN"
+            },
+            {
+              "member": "WorkBench.arc!anim/WorkBench_Change.bflan",
+              "tag": "Change",
+              "frame_count": 5,
+              "loop_byte": 0,
+              "screen_catalog_track_count": 1,
+              "key_count": 4,
+              "semantics_track_count": 1,
+              "unique_same_archive_target_track_count": 1,
+              "target_samples": [
+                {
+                  "target_name": "N_ChangeList_00",
+                  "target_type": "Pane",
+                  "section": "VertexColor",
+                  "property": "pane_alpha"
+                }
+              ],
+              "sha256": "f5bf01b76df21e1d5eeff7a0f0901a4ab6f18e91d5405480848936f1591091b8",
+              "bytes": 228,
+              "status": "CONSUMER_JOINED",
+              "runtime_animation_trigger": "OPEN"
+            },
+            {
+              "member": "WorkBench.arc!anim/WorkBench_Out.bflan",
+              "tag": "Out",
+              "frame_count": 12,
+              "loop_byte": 0,
+              "screen_catalog_track_count": 2,
+              "key_count": 10,
+              "semantics_track_count": 2,
+              "unique_same_archive_target_track_count": 2,
+              "target_samples": [
+                {
+                  "target_name": "N_InOut_00",
+                  "target_type": "Pane",
+                  "section": "VertexColor",
+                  "property": "pane_alpha"
+                },
+                {
+                  "target_name": "N_InOut_01",
+                  "target_type": "Pane",
+                  "section": "VertexColor",
+                  "property": "pane_alpha"
+                }
+              ],
+              "sha256": "ff6e11613cd33631626a8d651fb46da48e8b90acae4a069fa98947e41fe8df34",
+              "bytes": 360,
+              "status": "CONSUMER_JOINED",
+              "runtime_animation_trigger": "OPEN"
+            }
+          ]
+        },
+        {
+          "layout": "WorkBenchInfo",
+          "static_page_layout_binding": [
+            {
+              "page_class": "WorkCraftInfoPage",
+              "method_va": "0x1597220",
+              "returned_identifier": "WorkBenchInfo",
+              "exact_layout_name_match": true,
+              "status": "PSEUDO"
+            }
+          ],
+          "page_runtime_status": "OPEN",
+          "resource_source": {
+            "container": "Layout/WorkBenchInfo.Nin_NX_NVN.zs",
+            "container_sha256": "04e223dbed85b06cc8ec3da77c96a1fde3fcccc2e4ec24b30207f4a4bdc16899",
+            "container_bytes": 232268,
+            "supplemental_manifest_status": "new_path",
+            "BFLYT_member": "WorkBenchInfo.arc!blyt/WorkBenchInfo.bflyt",
+            "BFLYT_sha256": "f8b7af3e4acd855e3ea991d0decaa62fc9fa60911397a8a526e739921cb62735",
+            "BFLYT_bytes": 29724,
+            "resource_binding_layout_sha256": "f8b7af3e4acd855e3ea991d0decaa62fc9fa60911397a8a526e739921cb62735",
+            "resource_binding_hash_matches_BFLYT": true,
+            "build_identity": "supplemental layout archive; exact patch/build not inferred"
+          },
+          "selected_bflan_catalog_rows": [
+            {
+              "member": "WorkBenchInfo.arc!anim/WorkBenchInfo_EquipIn.bflan",
+              "tag": "EquipIn",
+              "frame_count": 9,
+              "loop_byte": 0,
+              "screen_catalog_track_count": 54,
+              "key_count": 197,
+              "semantics_track_count": 54,
+              "unique_same_archive_target_track_count": 54,
+              "target_samples": [
+                {
+                  "target_name": "N_Equip_00",
+                  "target_type": "Pane",
+                  "section": "PaneSrt",
+                  "property": "pane_scale_x"
+                },
+                {
+                  "target_name": "N_Equip_00",
+                  "target_type": "Pane",
+                  "section": "PaneSrt",
+                  "property": "pane_scale_y"
+                },
+                {
+                  "target_name": "N_Equip_00",
+                  "target_type": "Pane",
+                  "section": "PaneSrt",
+                  "property": "pane_rotate_z"
+                },
+                {
+                  "target_name": "N_Equip_00",
+                  "target_type": "Pane",
+                  "section": "VertexColor",
+                  "property": "pane_alpha"
+                },
+                {
+                  "target_name": "N_null_00",
+                  "target_type": "Pane",
+                  "section": "PaneSrt",
+                  "property": "pane_translate_y"
+                }
+              ],
+              "sha256": "e639da7ace5ec6d3c0d2905670b7a035c0f3c97a7d515d55b7d99fd82fba0b6a",
+              "bytes": 4364,
+              "status": "CONSUMER_JOINED",
+              "runtime_animation_trigger": "OPEN"
+            },
+            {
+              "member": "WorkBenchInfo.arc!anim/WorkBenchInfo_Remake.bflan",
+              "tag": "Remake",
+              "frame_count": 1,
+              "loop_byte": 0,
+              "screen_catalog_track_count": 1,
+              "key_count": 2,
+              "semantics_track_count": 1,
+              "unique_same_archive_target_track_count": 1,
+              "target_samples": [
+                {
+                  "target_name": "N_Remake_00",
+                  "target_type": "Pane",
+                  "section": "Visibility",
+                  "property": "pane_visibility"
+                }
+              ],
+              "sha256": "99e53f8b9548ce6ea96a7c083c4da74df4764d778c486418ad63a37ab2af56de",
+              "bytes": 196,
+              "status": "CONSUMER_JOINED",
+              "runtime_animation_trigger": "OPEN"
+            },
+            {
+              "member": "WorkBenchInfo.arc!anim/WorkBenchInfo_Out.bflan",
+              "tag": "Out",
+              "frame_count": 12,
+              "loop_byte": 0,
+              "screen_catalog_track_count": 2,
+              "key_count": 7,
+              "semantics_track_count": 2,
+              "unique_same_archive_target_track_count": 2,
+              "target_samples": [
+                {
+                  "target_name": "N_InOut_00",
+                  "target_type": "Pane",
+                  "section": "VertexColor",
+                  "property": "pane_alpha"
+                },
+                {
+                  "target_name": "N_InOut_01",
+                  "target_type": "Pane",
+                  "section": "VertexColor",
+                  "property": "pane_alpha"
+                }
+              ],
+              "sha256": "8aeaa37b1ffa913567654f82fffbdf11b8bd18447816f0e68c00acdf65987454",
+              "bytes": 324,
+              "status": "CONSUMER_JOINED",
+              "runtime_animation_trigger": "OPEN"
+            },
+            {
+              "member": "WorkBenchInfo.arc!anim/WorkBenchInfo_In.bflan",
+              "tag": "In",
+              "frame_count": 8,
+              "loop_byte": 0,
+              "screen_catalog_track_count": 2,
+              "key_count": 6,
+              "semantics_track_count": 2,
+              "unique_same_archive_target_track_count": 2,
+              "target_samples": [
+                {
+                  "target_name": "N_InOut_00",
+                  "target_type": "Pane",
+                  "section": "VertexColor",
+                  "property": "pane_alpha"
+                },
+                {
+                  "target_name": "N_InOut_01",
+                  "target_type": "Pane",
+                  "section": "VertexColor",
+                  "property": "pane_alpha"
+                }
+              ],
+              "sha256": "469da197447a1ba57efdce1136b9e760fd6441bc5ca65e3f414b95d614dc6ee6",
+              "bytes": 312,
+              "status": "CONSUMER_JOINED",
+              "runtime_animation_trigger": "OPEN"
+            }
+          ]
+        },
+        {
+          "layout": "WorkBenchBG",
+          "static_page_layout_binding": [
+            {
+              "page_class": "WorkCraftBgPage",
+              "method_va": "0x1595e70",
+              "returned_identifier": "WorkBenchBG",
+              "exact_layout_name_match": true,
+              "status": "PSEUDO"
+            }
+          ],
+          "page_runtime_status": "OPEN",
+          "resource_source": {
+            "container": "Layout/WorkBenchBG.Nin_NX_NVN.zs",
+            "container_sha256": "908a3d098f7352de9333401a99325fa85cee5aa0091d034cc6f124d90ad1301e",
+            "container_bytes": 331792,
+            "supplemental_manifest_status": "new_path",
+            "BFLYT_member": "WorkBenchBG.arc!blyt/WorkBenchBG.bflyt",
+            "BFLYT_sha256": "74538ae233d2a481c899a890bc677e619fa7af71a2226a5464782ee1f3a01e19",
+            "BFLYT_bytes": 2108,
+            "resource_binding_layout_sha256": "74538ae233d2a481c899a890bc677e619fa7af71a2226a5464782ee1f3a01e19",
+            "resource_binding_hash_matches_BFLYT": true,
+            "build_identity": "supplemental layout archive; exact patch/build not inferred"
+          },
+          "selected_bflan_catalog_rows": [
+            {
+              "member": "WorkBenchBG.arc!anim/WorkBenchBG_In.bflan",
+              "tag": "In",
+              "frame_count": 14,
+              "loop_byte": 0,
+              "screen_catalog_track_count": 4,
+              "key_count": 8,
+              "semantics_track_count": 4,
+              "unique_same_archive_target_track_count": 4,
+              "target_samples": [
+                {
+                  "target_name": "N_InOutBG_00",
+                  "target_type": "Pane",
+                  "section": "VertexColor",
+                  "property": "pane_alpha"
+                },
+                {
+                  "target_name": "P_pict_00",
+                  "target_type": "Pane",
+                  "section": "VertexColor",
+                  "property": "pane_alpha"
+                },
+                {
+                  "target_name": "P_BG_00",
+                  "target_type": "Material",
+                  "section": "TextureSrt",
+                  "property": "texture_translate_s"
+                },
+                {
+                  "target_name": "P_BG_00",
+                  "target_type": "Material",
+                  "section": "IndirectSrt",
+                  "property": "indirect_srt_scale_u"
+                }
+              ],
+              "sha256": "e25a1b20967bf254d22bdc9784059c96304cc334c469613b329f3e9c1e38017e",
+              "bytes": 428,
+              "status": "CONSUMER_JOINED",
+              "runtime_animation_trigger": "OPEN"
+            },
+            {
+              "member": "WorkBenchBG.arc!anim/WorkBenchBG_Change.bflan",
+              "tag": "Change",
+              "frame_count": 5,
+              "loop_byte": 0,
+              "screen_catalog_track_count": 3,
+              "key_count": 8,
+              "semantics_track_count": 3,
+              "unique_same_archive_target_track_count": 3,
+              "target_samples": [
+                {
+                  "target_name": "N_Rotate_00",
+                  "target_type": "Pane",
+                  "section": "PaneSrt",
+                  "property": "pane_rotate_z"
+                },
+                {
+                  "target_name": "P_Change_01",
+                  "target_type": "Pane",
+                  "section": "VertexColor",
+                  "property": "pane_alpha"
+                },
+                {
+                  "target_name": "N_Change_00",
+                  "target_type": "Pane",
+                  "section": "Visibility",
+                  "property": "pane_visibility"
+                }
+              ],
+              "sha256": "b2c0d0086a7ce904df07f09690b7cb1d08f2535eeab441cf9b2ce45901dd3a5b",
+              "bytes": 396,
+              "status": "CONSUMER_JOINED",
+              "runtime_animation_trigger": "OPEN"
+            },
+            {
+              "member": "WorkBenchBG.arc!anim/WorkBenchBG_Out.bflan",
+              "tag": "Out",
+              "frame_count": 12,
+              "loop_byte": 0,
+              "screen_catalog_track_count": 2,
+              "key_count": 8,
+              "semantics_track_count": 2,
+              "unique_same_archive_target_track_count": 2,
+              "target_samples": [
+                {
+                  "target_name": "N_InOutBG_00",
+                  "target_type": "Pane",
+                  "section": "VertexColor",
+                  "property": "pane_alpha"
+                },
+                {
+                  "target_name": "P_pict_00",
+                  "target_type": "Pane",
+                  "section": "VertexColor",
+                  "property": "pane_alpha"
+                }
+              ],
+              "sha256": "dc598bc47e2ef80a1bcaefc8e99e8de5b30c9d18049ca852bc4150a00715db43",
+              "bytes": 336,
+              "status": "CONSUMER_JOINED",
+              "runtime_animation_trigger": "OPEN"
+            }
+          ]
+        }
+      ],
+      "proof_status": {
+        "eventflow_craft_transaction": "covered_by_separate_crafting_transaction_report",
+        "page_class_to_layout_identifier": "PSEUDO_EXACT_STRING_GETTERS",
+        "cWorkCraft_to_exact_factory": "OPEN_NO_NORMALIZED_CLASS",
+        "action_to_page_runtime": "OPEN",
+        "animation_trigger": "OPEN",
+        "archive_build": "SUPPLEMENTAL_new_path_exact_patch_unproven"
+      },
+      "boundary": "Do not infer a WorkCraft page open from the SaveType string cWorkCraft or the page getters. Registry helper row cWorkCraft has no exact normalized factory-class match; page/layout and BFLAN rows remain conversion candidates."
+    },
+    {
+      "topic": "StructureStartPreviewGuide placement preview",
+      "story_evidence": {
+        "action": "StructureStartPreviewGuide",
+        "selected_structures": [
+          "cMarket",
+          "cBridge",
+          "cReserveNpcHouse"
+        ],
+        "params": [
+          "StructureType",
+          "StructureBuildPosType",
+          "StructureBuildTiming"
+        ]
+      },
+      "native_handler": {
+        "constructor_va": "0x344490",
+        "handler_functions": [
+          "0x3445b0",
+          "0x344d20"
+        ],
+        "parameter_schema": {
+          "StructureType": "str",
+          "StructureBuildPosType": "str",
+          "StructureBuildTiming": "arg"
+        },
+        "position_helper_va": "0x3771d0",
+        "position_helper_hash": "c9798873625a6b91d213bf6b6fdc89c36dcab2ca1627c6fcbc501e3aebf26bee",
+        "callsite_pc": "0x344730",
+        "observed": "structure type/position/timing inputs reach a helper that builds a world-space position from the active context or selected structure data, branches for position types 0/1/2, and returns a validity bit. A sibling handler function dispatches cBuildStructure/cDefault through a generic action helper."
+      },
+      "relevant_layout_candidates": [
+        {
+          "layout": "ShopBridgeSlope",
+          "static_page_layout_binding": [
+            {
+              "page_class": "ShopBridgeSlopePage",
+              "method_va": "0x1431cd0",
+              "returned_identifier": "ShopBridgeSlope",
+              "exact_layout_name_match": true,
+              "status": "PSEUDO"
+            }
+          ],
+          "page_runtime_status": "OPEN",
+          "resource_source": {
+            "container": "Layout/ShopBridgeSlope.Nin_NX_NVN.zs",
+            "container_sha256": "bd9fc8ff3e944ae9822467e0c0e5675e3849f7e05b5dfc830bf4717d633785a3",
+            "container_bytes": 128739,
+            "supplemental_manifest_status": "new_path",
+            "BFLYT_member": "ShopBridgeSlope.arc!blyt/ShopBridgeSlope.bflyt",
+            "BFLYT_sha256": "85af12e9c3f61ef43dcc8413cf05c179684ef12376e8d67d5723aa1c6d931f2e",
+            "BFLYT_bytes": 2500,
+            "resource_binding_layout_sha256": "85af12e9c3f61ef43dcc8413cf05c179684ef12376e8d67d5723aa1c6d931f2e",
+            "resource_binding_hash_matches_BFLYT": true,
+            "build_identity": "supplemental layout archive; exact patch/build not inferred"
+          },
+          "selected_bflan_catalog_rows": [
+            {
+              "member": "ShopBridgeSlope.arc!anim/ShopBridgeSlope_Out.bflan",
+              "tag": "Out",
+              "frame_count": 6,
+              "loop_byte": 0,
+              "screen_catalog_track_count": 7,
+              "key_count": 14,
+              "semantics_track_count": 7,
+              "unique_same_archive_target_track_count": 7,
+              "target_samples": [
+                {
+                  "target_name": "N_InOut_00",
+                  "target_type": "Pane",
+                  "section": "VertexColor",
+                  "property": "pane_alpha"
+                },
+                {
+                  "target_name": "N_InOut_01",
+                  "target_type": "Pane",
+                  "section": "VertexColor",
+                  "property": "pane_alpha"
+                },
+                {
+                  "target_name": "P_BG_00",
+                  "target_type": "Pane",
+                  "section": "VertexColor",
+                  "property": "pane_alpha"
+                },
+                {
+                  "target_name": "N_3D_00",
+                  "target_type": "Pane",
+                  "section": "Visibility",
+                  "property": "pane_visibility"
+                },
+                {
+                  "target_name": "P_3DTex_00",
+                  "target_type": "Material",
+                  "section": "MaterialColor",
+                  "property": "material_buffer_r"
+                }
+              ],
+              "sha256": "c2090c3b866efb60a761e7f48c0e8be80cfc48bb070cb6cdba87d78408ace28b",
+              "bytes": 624,
+              "status": "CONSUMER_JOINED",
+              "runtime_animation_trigger": "OPEN"
+            },
+            {
+              "member": "ShopBridgeSlope.arc!anim/ShopBridgeSlope_In.bflan",
+              "tag": "In",
+              "frame_count": 8,
+              "loop_byte": 0,
+              "screen_catalog_track_count": 6,
+              "key_count": 9,
+              "semantics_track_count": 6,
+              "unique_same_archive_target_track_count": 6,
+              "target_samples": [
+                {
+                  "target_name": "N_InOut_00",
+                  "target_type": "Pane",
+                  "section": "VertexColor",
+                  "property": "pane_alpha"
+                },
+                {
+                  "target_name": "N_InOut_01",
+                  "target_type": "Pane",
+                  "section": "VertexColor",
+                  "property": "pane_alpha"
+                },
+                {
+                  "target_name": "P_BG_00",
+                  "target_type": "Pane",
+                  "section": "VertexColor",
+                  "property": "pane_alpha"
+                },
+                {
+                  "target_name": "P_3DTex_00",
+                  "target_type": "Material",
+                  "section": "MaterialColor",
+                  "property": "material_buffer_r"
+                },
+                {
+                  "target_name": "P_3DTex_00",
+                  "target_type": "Material",
+                  "section": "MaterialColor",
+                  "property": "material_buffer_g"
+                }
+              ],
+              "sha256": "a4cb7ffa9015f6bae2668833b050dbe1a8f63287904383511f4d467cc0e860df",
+              "bytes": 508,
+              "status": "CONSUMER_JOINED",
+              "runtime_animation_trigger": "OPEN"
+            }
+          ]
+        }
+      ],
+      "proof_status": {
+        "native_placement_position_path": "STATIC_PROVEN",
+        "placement_preview_renderer": "OPEN",
+        "preview_page_or_bflyt": "OPEN",
+        "animation_trigger": "OPEN",
+        "archive_build": "SUPPLEMENTAL_new_path_exact_patch_unproven"
+      },
+      "boundary": "This proves native placement-position/structure command work, not the visible preview renderer or UI page. ShopBridgeSlope is a distinct shop/style layout and is not promoted to placement preview."
+    },
+    {
+      "topic": "IslandEvaluation",
+      "story_evidence": {
+        "flow": "SNPC_sza_50_IslandEvaluation",
+        "source_id": 622,
+        "score_flow": "System_IslandEvaluationCheck",
+        "observed_flow_shape": "score/evaluation query and subflow-choice/message branches; no custom page action is recorded in the flow index."
+      },
+      "resource": {
+        "layout": "CmnDialog",
+        "static_page_layout_binding": [
+          {
+            "page_class": "CommonDialogPage",
+            "method_va": "0x11e62f0",
+            "returned_identifier": "CmnDialog",
+            "exact_layout_name_match": true,
+            "status": "PSEUDO"
+          }
+        ],
+        "page_runtime_status": "OPEN",
+        "resource_source": {
+          "container": "Layout/CmnDialog.Nin_NX_NVN.zs",
+          "container_sha256": "a8dd0c5e7ff3a6253ff729d138514a2689ca167cc01ca15f026bb8a691c2335c",
+          "container_bytes": 32354,
+          "supplemental_manifest_status": "new_path",
+          "BFLYT_member": "CmnDialog.arc!blyt/CmnDialog.bflyt",
+          "BFLYT_sha256": "13032dc728e51e954d5ee85a98965f4807efd6b85cdd86fbbd179fd6d1fde6ee",
+          "BFLYT_bytes": 14436,
+          "resource_binding_layout_sha256": "13032dc728e51e954d5ee85a98965f4807efd6b85cdd86fbbd179fd6d1fde6ee",
+          "resource_binding_hash_matches_BFLYT": true,
+          "build_identity": "supplemental layout archive; exact patch/build not inferred"
+        },
+        "selected_bflan_catalog_rows": [
+          {
+            "member": "CmnDialog.arc!anim/CmnDialog_In.bflan",
+            "tag": "In",
+            "frame_count": 8,
+            "loop_byte": 0,
+            "screen_catalog_track_count": 12,
+            "key_count": 36,
+            "semantics_track_count": 12,
+            "unique_same_archive_target_track_count": 12,
+            "target_samples": [
+              {
+                "target_name": "N_InOut_00",
+                "target_type": "Pane",
+                "section": "PaneSrt",
+                "property": "pane_scale_x"
+              },
+              {
+                "target_name": "N_InOut_00",
+                "target_type": "Pane",
+                "section": "PaneSrt",
+                "property": "pane_scale_y"
+              },
+              {
+                "target_name": "N_InOut_00",
+                "target_type": "Pane",
+                "section": "VertexColor",
+                "property": "pane_alpha"
+              },
+              {
+                "target_name": "N_InOut_01",
+                "target_type": "Pane",
+                "section": "PaneSrt",
+                "property": "pane_scale_x"
+              },
+              {
+                "target_name": "N_InOut_01",
+                "target_type": "Pane",
+                "section": "PaneSrt",
+                "property": "pane_scale_y"
+              }
+            ],
+            "sha256": "698fa76ea19cb4fd21c2b06a4244c17c97ff0d5f115710de04df9ecc606c7067",
+            "bytes": 976,
+            "status": "CONSUMER_JOINED",
+            "runtime_animation_trigger": "OPEN"
+          },
+          {
+            "member": "CmnDialog.arc!anim/CmnDialog_Out.bflan",
+            "tag": "Out",
+            "frame_count": 13,
+            "loop_byte": 0,
+            "screen_catalog_track_count": 12,
+            "key_count": 32,
+            "semantics_track_count": 12,
+            "unique_same_archive_target_track_count": 12,
+            "target_samples": [
+              {
+                "target_name": "N_InOut_00",
+                "target_type": "Pane",
+                "section": "PaneSrt",
+                "property": "pane_scale_x"
+              },
+              {
+                "target_name": "N_InOut_00",
+                "target_type": "Pane",
+                "section": "PaneSrt",
+                "property": "pane_scale_y"
+              },
+              {
+                "target_name": "N_InOut_00",
+                "target_type": "Pane",
+                "section": "VertexColor",
+                "property": "pane_alpha"
+              },
+              {
+                "target_name": "N_InOut_01",
+                "target_type": "Pane",
+                "section": "PaneSrt",
+                "property": "pane_scale_x"
+              },
+              {
+                "target_name": "N_InOut_01",
+                "target_type": "Pane",
+                "section": "PaneSrt",
+                "property": "pane_scale_y"
+              }
+            ],
+            "sha256": "b004a00adcf8ed0f68ab39dd4dcab07ab95e88323bbfff6ad30b3deb3be6b303",
+            "bytes": 928,
+            "status": "CONSUMER_JOINED",
+            "runtime_animation_trigger": "OPEN"
+          },
+          {
+            "member": "CmnDialog.arc!anim/CmnDialog_Type.bflan",
+            "tag": "Type",
+            "frame_count": 3,
+            "loop_byte": 0,
+            "screen_catalog_track_count": 42,
+            "key_count": 138,
+            "semantics_track_count": 42,
+            "unique_same_archive_target_track_count": 42,
+            "target_samples": [
+              {
+                "target_name": "L_BtnL_00",
+                "target_type": "Pane",
+                "section": "PaneSrt",
+                "property": "pane_translate_x"
+              },
+              {
+                "target_name": "L_BtnL_00",
+                "target_type": "Pane",
+                "section": "PaneSrt",
+                "property": "pane_translate_y"
+              },
+              {
+                "target_name": "L_BtnL_00",
+                "target_type": "Pane",
+                "section": "PaneSrt",
+                "property": "pane_scale_x"
+              },
+              {
+                "target_name": "L_BtnL_00",
+                "target_type": "Pane",
+                "section": "PaneSrt",
+                "property": "pane_scale_y"
+              },
+              {
+                "target_name": "L_BtnL_00",
+                "target_type": "Pane",
+                "section": "Visibility",
+                "property": "pane_visibility"
+              }
+            ],
+            "sha256": "fe8137c365bf78208a36800953f3a92e4eac9c8d80e2730bdb36aae06c55b529",
+            "bytes": 3176,
+            "status": "CONSUMER_JOINED",
+            "runtime_animation_trigger": "OPEN"
+          }
+        ]
+      },
+      "proof_status": {
+        "score_and_story_flow": "EVENTFLOW_AND_NATIVE_SCORING_EVIDENCE_EXIST",
+        "dedicated_rating_page": "NOT_FOUND",
+        "generic_dialog_page_runtime_consumer": "OPEN",
+        "animation_trigger": "OPEN"
+      },
+      "boundary": "CmnDialog is a standard dialog candidate; its exact getter and BFLAN catalog exist, but no page open/runtime layout call is tied specifically to the rating sequence."
+    },
+    {
+      "topic": "StaffCredit / first live credits trigger",
+      "story_evidence": {
+        "first_live_flow": "SNPC_tkk_Live",
+        "index_has_staff_credit_action": false,
+        "story_to_credit_trigger": "OPEN"
+      },
+      "native_owner_trace": {
+        "state_callback_va": "0x146f2c0",
+        "callsite_pc": "0x146f34c",
+        "target_va": "0x1470e90",
+        "target_string": "StaffCredit",
+        "page_factory_va": "0x146ee10",
+        "layout_getter": {
+          "page_class": "StaffCreditPage",
+          "factory_va": "0x146ee10",
+          "constructor_va": "0x146d330",
+          "constructor_vptr_relocation_slot_va": "0x330dad0",
+          "address_point_va": "0x3135078",
+          "registry_query_slot_17_target_va": "0x166ec70",
+          "registry_page_slot_30_target_va": "0x1144dc0",
+          "method_slot_index": 46,
+          "method_slot_offset_bytes": "0x170",
+          "method_relocation_slot_va": "0x31351e8",
+          "method_relocation_type": "R_AARCH64_RELATIVE",
+          "method_va": "0x146e000",
+          "method_body": [
+            "adrp\tx0, #22134784",
+            "add\tx0, x0, #757",
+            "ret"
+          ],
+          "returned_string_va": "0x298a2f5",
+          "returned_identifier": "StaffCredit",
+          "exact_layout_name_match": true,
+          "layout": {
+            "name": "StaffCredit",
+            "source": "Layout/StaffCredit.Nin_NX_NVN.zs",
+            "member": "StaffCredit.arc!blyt/StaffCredit.bflyt",
+            "sha256": "6bb0365cdf659e0ae692efde31b9eb3c67893c5f4d0784251b7cea98a79ea369"
+          }
+        }
+      },
+      "resource": {
+        "layout": "StaffCredit",
+        "static_page_layout_binding": [
+          {
+            "page_class": "StaffCreditPage",
+            "method_va": "0x146e000",
+            "returned_identifier": "StaffCredit",
+            "exact_layout_name_match": true,
+            "status": "PSEUDO"
+          }
+        ],
+        "page_runtime_status": "OPEN",
+        "resource_source": {
+          "container": "Layout/StaffCredit.Nin_NX_NVN.zs",
+          "container_sha256": "74a02627d2fa7a19e8c69671eb88aa4f06d52a1246c7eacead572874cbb6bfe1",
+          "container_bytes": 1015,
+          "supplemental_manifest_status": "new_path",
+          "BFLYT_member": "StaffCredit.arc!blyt/StaffCredit.bflyt",
+          "BFLYT_sha256": "6bb0365cdf659e0ae692efde31b9eb3c67893c5f4d0784251b7cea98a79ea369",
+          "BFLYT_bytes": 1708,
+          "resource_binding_layout_sha256": "6bb0365cdf659e0ae692efde31b9eb3c67893c5f4d0784251b7cea98a79ea369",
+          "resource_binding_hash_matches_BFLYT": true,
+          "build_identity": "supplemental layout archive; exact patch/build not inferred"
+        },
+        "selected_bflan_catalog_rows": [
+          {
+            "member": "StaffCredit.arc!anim/StaffCredit_CorporationIn.bflan",
+            "tag": "CorporationIn",
+            "frame_count": 30,
+            "loop_byte": 0,
+            "screen_catalog_track_count": 1,
+            "key_count": 2,
+            "semantics_track_count": 1,
+            "unique_same_archive_target_track_count": 1,
+            "target_samples": [
+              {
+                "target_name": "T_Corporation_00",
+                "target_type": "Pane",
+                "section": "VertexColor",
+                "property": "pane_alpha"
+              }
+            ],
+            "sha256": "f66531e6495dfd5da899914e7dbde92bc2e48ce27d26972f3dfad77324d62e64",
+            "bytes": 212,
+            "status": "CONSUMER_JOINED",
+            "runtime_animation_trigger": "OPEN"
+          }
+        ]
+      },
+      "proof_status": {
+        "generic_State_cPlay_to_StaffCredit_resource_case": "STATIC_CALLBACK_PATH",
+        "first_live_to_StaffCredit": "OPEN",
+        "page_class_to_layout_identifier": "PSEUDO_EXACT_STRING_GETTER",
+        "CorporationIn_BFLAN_trigger": "OPEN"
+      },
+      "boundary": "State::cPlay callback helper has a StaffCredit case and a separate StaffCreditPage getter exists. No direct call joins that callback to the page factory, and no indexed EventFlow trigger links K.K. first live to credits."
+    }
+  ],
+  "page_resource_and_registry_facts": {
+    "page_factory_shared_framework_observation": "The selected page factories each call 0x1da8210, 0x1144600, and 0x1da8220. The shared registration helper writes state 2 and dispatches common slot 5, then links the page object into a manager-like list. This is factory setup, not proof of a story action choosing that page.",
+    "selected_page_records": {
+      "MapSelectPage": {
+        "factory": {
+          "class_name": "MapSelectPage",
+          "class_name_string_va": "0x29a2521",
+          "factory_va": "0x1242550",
+          "factory_size_bytes": "0x150",
+          "allocation_size_bytes": 1472,
+          "constructor_va": "0x12406d0",
+          "generic_page_handoff": [
+            {
+              "function_va": "0x1da8210",
+              "callsite_va": "0x1242610"
+            },
+            {
+              "function_va": "0x1144600",
+              "callsite_va": "0x124261c"
+            },
+            {
+              "function_va": "0x1da8220",
+              "callsite_va": "0x1242628"
+            }
+          ],
+          "constructor_vptr_global_pseudo_va": "0x3407b48",
+          "elf_relocation": {
+            "slot_va": "0x3307b48",
+            "type": "R_AARCH64_RELATIVE",
+            "target_va": "0x3110b28",
+            "stored_address_point_va": "0x3110b38"
+          },
+          "vtable_address_point_va": "0x3110b38",
+          "observed_pointer_entry_count": 79,
+          "pointer_sequence_status": "relocated code pointer sequence; not automatically a C++ vtable"
+        },
+        "layout_method": {
+          "page_class": "MapSelectPage",
+          "factory_va": "0x1242550",
+          "constructor_va": "0x12406d0",
+          "constructor_vptr_relocation_slot_va": "0x3307b48",
+          "address_point_va": "0x3110b38",
+          "registry_query_slot_17_target_va": "0x166ec70",
+          "registry_page_slot_30_target_va": "0x1144dc0",
+          "method_slot_index": 46,
+          "method_slot_offset_bytes": "0x170",
+          "method_relocation_slot_va": "0x3110ca8",
+          "method_relocation_type": "R_AARCH64_RELATIVE",
+          "method_va": "0x1241910",
+          "method_body": [
+            "adrp\tx0, #24162304",
+            "add\tx0, x0, #3011",
+            "ret"
+          ],
+          "returned_string_va": "0x294cbc3",
+          "returned_identifier": "CharaMakeMap",
+          "exact_layout_name_match": true,
+          "layout": {
+            "name": "CharaMakeMap",
+            "source": "Layout/CharaMakeMap.Nin_NX_NVN.zs",
+            "member": "CharaMakeMap.arc!blyt/CharaMakeMap.bflyt",
+            "sha256": "b110eb4c09bb23ce89f3f7a32139a68d1cc6b37c615788d75284a113941ca6ea"
+          }
+        }
+      },
+      "MenuDevicePage": {
+        "factory": {
+          "class_name": "MenuDevicePage",
+          "class_name_string_va": "0x29bdc4f",
+          "factory_va": "0x125ae40",
+          "factory_size_bytes": "0x150",
+          "allocation_size_bytes": 1568,
+          "constructor_va": "0x1258460",
+          "generic_page_handoff": [
+            {
+              "function_va": "0x1da8210",
+              "callsite_va": "0x125af00"
+            },
+            {
+              "function_va": "0x1144600",
+              "callsite_va": "0x125af0c"
+            },
+            {
+              "function_va": "0x1da8220",
+              "callsite_va": "0x125af18"
+            }
+          ],
+          "constructor_vptr_global_pseudo_va": "0x3408098",
+          "elf_relocation": {
+            "slot_va": "0x3308098",
+            "type": "R_AARCH64_RELATIVE",
+            "target_va": "0x3112a08",
+            "stored_address_point_va": "0x3112a18"
+          },
+          "vtable_address_point_va": "0x3112a18",
+          "observed_pointer_entry_count": 79,
+          "pointer_sequence_status": "relocated code pointer sequence; not automatically a C++ vtable"
+        },
+        "layout_method": {
+          "page_class": "MenuDevicePage",
+          "factory_va": "0x125ae40",
+          "constructor_va": "0x1258460",
+          "constructor_vptr_relocation_slot_va": "0x3308098",
+          "address_point_va": "0x3112a18",
+          "registry_query_slot_17_target_va": "0x166ec70",
+          "registry_page_slot_30_target_va": "0x1144dc0",
+          "method_slot_index": 46,
+          "method_slot_offset_bytes": "0x170",
+          "method_relocation_slot_va": "0x3112b88",
+          "method_relocation_type": "R_AARCH64_RELATIVE",
+          "method_va": "0x12595f0",
+          "method_body": [
+            "adrp\tx0, #24125440",
+            "add\tx0, x0, #4072",
+            "ret"
+          ],
+          "returned_string_va": "0x295bfe8",
+          "returned_identifier": "MenuDevice",
+          "exact_layout_name_match": true,
+          "layout": {
+            "name": "MenuDevice",
+            "source": "Layout/MenuDevice.Nin_NX_NVN.zs",
+            "member": "MenuDevice.arc!blyt/MenuDevice.bflyt",
+            "sha256": "4a241584f43ecc1e0e28449bccce710346eec748cd569c1149276f74bfd11b69"
+          }
+        }
+      },
+      "WorkCraftListPage": {
+        "factory": {
+          "class_name": "WorkCraftListPage",
+          "class_name_string_va": "0x293bb74",
+          "factory_va": "0x159cbc0",
+          "factory_size_bytes": "0x150",
+          "allocation_size_bytes": 1424,
+          "constructor_va": "0x159ad00",
+          "generic_page_handoff": [
+            {
+              "function_va": "0x1da8210",
+              "callsite_va": "0x159cc80"
+            },
+            {
+              "function_va": "0x1144600",
+              "callsite_va": "0x159cc8c"
+            },
+            {
+              "function_va": "0x1da8220",
+              "callsite_va": "0x159cc98"
+            }
+          ],
+          "constructor_vptr_global_pseudo_va": "0x3410c18",
+          "elf_relocation": {
+            "slot_va": "0x3310c18",
+            "type": "R_AARCH64_RELATIVE",
+            "target_va": "0x31464d0",
+            "stored_address_point_va": "0x31464e0"
+          },
+          "vtable_address_point_va": "0x31464e0",
+          "observed_pointer_entry_count": 79,
+          "pointer_sequence_status": "relocated code pointer sequence; not automatically a C++ vtable"
+        },
+        "layout_method": {
+          "page_class": "WorkCraftListPage",
+          "factory_va": "0x159cbc0",
+          "constructor_va": "0x159ad00",
+          "constructor_vptr_relocation_slot_va": "0x3310c18",
+          "address_point_va": "0x31464e0",
+          "registry_query_slot_17_target_va": "0x166ec70",
+          "registry_page_slot_30_target_va": "0x1144dc0",
+          "method_slot_index": 46,
+          "method_slot_offset_bytes": "0x170",
+          "method_relocation_slot_va": "0x3146650",
+          "method_relocation_type": "R_AARCH64_RELATIVE",
+          "method_va": "0x159b900",
+          "method_body": [
+            "adrp\tx0, #21086208",
+            "add\tx0, x0, #999",
+            "ret"
+          ],
+          "returned_string_va": "0x29b73e7",
+          "returned_identifier": "WorkBench",
+          "exact_layout_name_match": true,
+          "layout": {
+            "name": "WorkBench",
+            "source": "Layout/WorkBench.Nin_NX_NVN.zs",
+            "member": "WorkBench.arc!blyt/WorkBench.bflyt",
+            "sha256": "475188c3996c5ecca9e4d95d32ccee704696e4bdf850916e307590f2e2a1bd0b"
+          }
+        }
+      },
+      "WorkCraftInfoPage": {
+        "factory": {
+          "class_name": "WorkCraftInfoPage",
+          "class_name_string_va": "0x295c58f",
+          "factory_va": "0x1597b90",
+          "factory_size_bytes": "0x150",
+          "allocation_size_bytes": 1448,
+          "constructor_va": "0x1596620",
+          "generic_page_handoff": [
+            {
+              "function_va": "0x1da8210",
+              "callsite_va": "0x1597c50"
+            },
+            {
+              "function_va": "0x1144600",
+              "callsite_va": "0x1597c5c"
+            },
+            {
+              "function_va": "0x1da8220",
+              "callsite_va": "0x1597c68"
+            }
+          ],
+          "constructor_vptr_global_pseudo_va": "0x3410b78",
+          "elf_relocation": {
+            "slot_va": "0x3310b78",
+            "type": "R_AARCH64_RELATIVE",
+            "target_va": "0x3145e80",
+            "stored_address_point_va": "0x3145e90"
+          },
+          "vtable_address_point_va": "0x3145e90",
+          "observed_pointer_entry_count": 79,
+          "pointer_sequence_status": "relocated code pointer sequence; not automatically a C++ vtable"
+        },
+        "layout_method": {
+          "page_class": "WorkCraftInfoPage",
+          "factory_va": "0x1597b90",
+          "constructor_va": "0x1596620",
+          "constructor_vptr_relocation_slot_va": "0x3310b78",
+          "address_point_va": "0x3145e90",
+          "registry_query_slot_17_target_va": "0x166ec70",
+          "registry_page_slot_30_target_va": "0x1144dc0",
+          "method_slot_index": 46,
+          "method_slot_offset_bytes": "0x170",
+          "method_relocation_slot_va": "0x3146000",
+          "method_relocation_type": "R_AARCH64_RELATIVE",
+          "method_va": "0x1597220",
+          "method_body": [
+            "adrp\tx0, #21131264",
+            "add\tx0, x0, #309",
+            "ret"
+          ],
+          "returned_string_va": "0x29be135",
+          "returned_identifier": "WorkBenchInfo",
+          "exact_layout_name_match": true,
+          "layout": {
+            "name": "WorkBenchInfo",
+            "source": "Layout/WorkBenchInfo.Nin_NX_NVN.zs",
+            "member": "WorkBenchInfo.arc!blyt/WorkBenchInfo.bflyt",
+            "sha256": "f8b7af3e4acd855e3ea991d0decaa62fc9fa60911397a8a526e739921cb62735"
+          }
+        }
+      },
+      "WorkCraftBgPage": {
+        "factory": {
+          "class_name": "WorkCraftBgPage",
+          "class_name_string_va": "0x2961535",
+          "factory_va": "0x1596020",
+          "factory_size_bytes": "0x150",
+          "allocation_size_bytes": 1392,
+          "constructor_va": "0x1595940",
+          "generic_page_handoff": [
+            {
+              "function_va": "0x1da8210",
+              "callsite_va": "0x15960e0"
+            },
+            {
+              "function_va": "0x1144600",
+              "callsite_va": "0x15960ec"
+            },
+            {
+              "function_va": "0x1da8220",
+              "callsite_va": "0x15960f8"
+            }
+          ],
+          "constructor_vptr_global_pseudo_va": "0x3410b20",
+          "elf_relocation": {
+            "slot_va": "0x3310b20",
+            "type": "R_AARCH64_RELATIVE",
+            "target_va": "0x31459c0",
+            "stored_address_point_va": "0x31459d0"
+          },
+          "vtable_address_point_va": "0x31459d0",
+          "observed_pointer_entry_count": 79,
+          "pointer_sequence_status": "relocated code pointer sequence; not automatically a C++ vtable"
+        },
+        "layout_method": {
+          "page_class": "WorkCraftBgPage",
+          "factory_va": "0x1596020",
+          "constructor_va": "0x1595940",
+          "constructor_vptr_relocation_slot_va": "0x3310b20",
+          "address_point_va": "0x31459d0",
+          "registry_query_slot_17_target_va": "0x166ec70",
+          "registry_page_slot_30_target_va": "0x1144dc0",
+          "method_slot_index": 46,
+          "method_slot_offset_bytes": "0x170",
+          "method_relocation_slot_va": "0x3145b40",
+          "method_relocation_type": "R_AARCH64_RELATIVE",
+          "method_va": "0x1595e70",
+          "method_body": [
+            "adrp\tx0, #20758528",
+            "add\tx0, x0, #1349",
+            "ret"
+          ],
+          "returned_string_va": "0x2961545",
+          "returned_identifier": "WorkBenchBG",
+          "exact_layout_name_match": true,
+          "layout": {
+            "name": "WorkBenchBG",
+            "source": "Layout/WorkBenchBG.Nin_NX_NVN.zs",
+            "member": "WorkBenchBG.arc!blyt/WorkBenchBG.bflyt",
+            "sha256": "74538ae233d2a481c899a890bc677e619fa7af71a2226a5464782ee1f3a01e19"
+          }
+        }
+      },
+      "StaffCreditPage": {
+        "factory": {
+          "class_name": "StaffCreditPage",
+          "class_name_string_va": "0x292ff31",
+          "factory_va": "0x146ee10",
+          "factory_size_bytes": "0x150",
+          "allocation_size_bytes": 1416,
+          "constructor_va": "0x146d330",
+          "generic_page_handoff": [
+            {
+              "function_va": "0x1da8210",
+              "callsite_va": "0x146eed0"
+            },
+            {
+              "function_va": "0x1144600",
+              "callsite_va": "0x146eedc"
+            },
+            {
+              "function_va": "0x1da8220",
+              "callsite_va": "0x146eee8"
+            }
+          ],
+          "constructor_vptr_global_pseudo_va": "0x340dad0",
+          "elf_relocation": {
+            "slot_va": "0x330dad0",
+            "type": "R_AARCH64_RELATIVE",
+            "target_va": "0x3135068",
+            "stored_address_point_va": "0x3135078"
+          },
+          "vtable_address_point_va": "0x3135078",
+          "observed_pointer_entry_count": 79,
+          "pointer_sequence_status": "relocated code pointer sequence; not automatically a C++ vtable"
+        },
+        "layout_method": {
+          "page_class": "StaffCreditPage",
+          "factory_va": "0x146ee10",
+          "constructor_va": "0x146d330",
+          "constructor_vptr_relocation_slot_va": "0x330dad0",
+          "address_point_va": "0x3135078",
+          "registry_query_slot_17_target_va": "0x166ec70",
+          "registry_page_slot_30_target_va": "0x1144dc0",
+          "method_slot_index": 46,
+          "method_slot_offset_bytes": "0x170",
+          "method_relocation_slot_va": "0x31351e8",
+          "method_relocation_type": "R_AARCH64_RELATIVE",
+          "method_va": "0x146e000",
+          "method_body": [
+            "adrp\tx0, #22134784",
+            "add\tx0, x0, #757",
+            "ret"
+          ],
+          "returned_string_va": "0x298a2f5",
+          "returned_identifier": "StaffCredit",
+          "exact_layout_name_match": true,
+          "layout": {
+            "name": "StaffCredit",
+            "source": "Layout/StaffCredit.Nin_NX_NVN.zs",
+            "member": "StaffCredit.arc!blyt/StaffCredit.bflyt",
+            "sha256": "6bb0365cdf659e0ae692efde31b9eb3c67893c5f4d0784251b7cea98a79ea369"
+          }
+        }
+      }
+    },
+    "registry_rows": {
+      "cMapSelect": {
+        "registry_page_name": "cMapSelect",
+        "registry_helper_va": "0x1549400",
+        "raw_integer_arguments": [
+          19
+        ],
+        "normalization_rule": "remove leading c",
+        "normalized_candidate_class_name": "MapSelectPage",
+        "candidate_factory_va": "0x1242550",
+        "candidate_class_name_string_va": "0x29a2521",
+        "status": "normalized_name_candidate_unproven"
+      },
+      "MenuDevice": {
+        "registry_page_name": "MenuDevice",
+        "registry_helper_va": "0x1549400",
+        "raw_integer_arguments": [
+          22
+        ],
+        "normalization_rule": "exact name",
+        "normalized_candidate_class_name": "MenuDevicePage",
+        "candidate_factory_va": "0x125ae40",
+        "candidate_class_name_string_va": "0x29bdc4f",
+        "status": "normalized_name_candidate_unproven"
+      },
+      "cWorkCraft": {
+        "registry_page_name": "cWorkCraft",
+        "registry_helper_va": "0x1549750",
+        "raw_integer_arguments": [
+          1,
+          2
+        ],
+        "normalization_rule": "remove leading c",
+        "normalized_candidate_class_name": null,
+        "candidate_factory_va": null,
+        "candidate_class_name_string_va": null,
+        "status": "no_exact_normalized_class_name"
+      }
+    },
+    "relocated_pointer_sequences": {
+      "MenuDevicePage_vptr_sequence": {
+        "start_va": "0x3112a18",
+        "entries": [
+          {
+            "pointer_va": "0x3112a18",
+            "target_va": "0x12593f0"
+          },
+          {
+            "pointer_va": "0x3112a20",
+            "target_va": "0x1259500"
+          },
+          {
+            "pointer_va": "0x3112a28",
+            "target_va": "0x12584f0"
+          },
+          {
+            "pointer_va": "0x3112a30",
+            "target_va": "0x1258500"
+          },
+          {
+            "pointer_va": "0x3112a38",
+            "target_va": "0x1259570"
+          },
+          {
+            "pointer_va": "0x3112a40",
+            "target_va": "0x1da5380"
+          },
+          {
+            "pointer_va": "0x3112a48",
+            "target_va": "0x1da5430"
+          },
+          {
+            "pointer_va": "0x3112a50",
+            "target_va": "0x1da5490"
+          },
+          {
+            "pointer_va": "0x3112a58",
+            "target_va": "0x1da5510"
+          },
+          {
+            "pointer_va": "0x3112a60",
+            "target_va": "0x1da5580"
+          },
+          {
+            "pointer_va": "0x3112a68",
+            "target_va": "0x1da55a0"
+          },
+          {
+            "pointer_va": "0x3112a70",
+            "target_va": "0x1da55c0"
+          },
+          {
+            "pointer_va": "0x3112a78",
+            "target_va": "0x1da5620"
+          },
+          {
+            "pointer_va": "0x3112a80",
+            "target_va": "0x1da5710"
+          },
+          {
+            "pointer_va": "0x3112a88",
+            "target_va": "0x1da5680"
+          },
+          {
+            "pointer_va": "0x3112a90",
+            "target_va": "0x1da5780"
+          },
+          {
+            "pointer_va": "0x3112a98",
+            "target_va": "0x166ec60"
+          },
+          {
+            "pointer_va": "0x3112aa0",
+            "target_va": "0x166ec70"
+          },
+          {
+            "pointer_va": "0x3112aa8",
+            "target_va": "0x166ec80"
+          },
+          {
+            "pointer_va": "0x3112ab0",
+            "target_va": "0x166ec90"
+          },
+          {
+            "pointer_va": "0x3112ab8",
+            "target_va": "0x166eca0"
+          },
+          {
+            "pointer_va": "0x3112ac0",
+            "target_va": "0x166ecf0"
+          },
+          {
+            "pointer_va": "0x3112ac8",
+            "target_va": "0x166ed00"
+          },
+          {
+            "pointer_va": "0x3112ad0",
+            "target_va": "0x166eb30"
+          },
+          {
+            "pointer_va": "0x3112ad8",
+            "target_va": "0x166ebc0"
+          },
+          {
+            "pointer_va": "0x3112ae0",
+            "target_va": "0x12585b0"
+          },
+          {
+            "pointer_va": "0x3112ae8",
+            "target_va": "0x11451b0"
+          },
+          {
+            "pointer_va": "0x3112af0",
+            "target_va": "0x1258c10"
+          },
+          {
+            "pointer_va": "0x3112af8",
+            "target_va": "0x1145100"
+          },
+          {
+            "pointer_va": "0x3112b00",
+            "target_va": "0x1129af0"
+          },
+          {
+            "pointer_va": "0x3112b08",
+            "target_va": "0x1144dc0"
+          },
+          {
+            "pointer_va": "0x3112b10",
+            "target_va": "0x1129b00"
+          },
+          {
+            "pointer_va": "0x3112b18",
+            "target_va": "0x1129b10"
+          },
+          {
+            "pointer_va": "0x3112b20",
+            "target_va": "0x1129b20"
+          },
+          {
+            "pointer_va": "0x3112b28",
+            "target_va": "0x1144e20"
+          },
+          {
+            "pointer_va": "0x3112b30",
+            "target_va": "0x1145260"
+          },
+          {
+            "pointer_va": "0x3112b38",
+            "target_va": "0x11446c0"
+          },
+          {
+            "pointer_va": "0x3112b40",
+            "target_va": "0x1144700"
+          },
+          {
+            "pointer_va": "0x3112b48",
+            "target_va": "0x1129b30"
+          },
+          {
+            "pointer_va": "0x3112b50",
+            "target_va": "0x1144740"
+          },
+          {
+            "pointer_va": "0x3112b58",
+            "target_va": "0x1144760"
+          },
+          {
+            "pointer_va": "0x3112b60",
+            "target_va": "0x1144780"
+          },
+          {
+            "pointer_va": "0x3112b68",
+            "target_va": "0x11447a0"
+          },
+          {
+            "pointer_va": "0x3112b70",
+            "target_va": "0x1129b40"
+          },
+          {
+            "pointer_va": "0x3112b78",
+            "target_va": "0x1129b50"
+          },
+          {
+            "pointer_va": "0x3112b80",
+            "target_va": "0x1129b60"
+          },
+          {
+            "pointer_va": "0x3112b88",
+            "target_va": "0x12595f0"
+          },
+          {
+            "pointer_va": "0x3112b90",
+            "target_va": "0x1129b80"
+          },
+          {
+            "pointer_va": "0x3112b98",
+            "target_va": "0x1129b90"
+          },
+          {
+            "pointer_va": "0x3112ba0",
+            "target_va": "0x1258530"
+          },
+          {
+            "pointer_va": "0x3112ba8",
+            "target_va": "0x1129ba0"
+          },
+          {
+            "pointer_va": "0x3112bb0",
+            "target_va": "0x1129bb0"
+          },
+          {
+            "pointer_va": "0x3112bb8",
+            "target_va": "0x1144e30"
+          },
+          {
+            "pointer_va": "0x3112bc0",
+            "target_va": "0x1129bc0"
+          },
+          {
+            "pointer_va": "0x3112bc8",
+            "target_va": "0x1258ca0"
+          },
+          {
+            "pointer_va": "0x3112bd0",
+            "target_va": "0x166ee70"
+          },
+          {
+            "pointer_va": "0x3112bd8",
+            "target_va": "0x1129bd0"
+          },
+          {
+            "pointer_va": "0x3112be0",
+            "target_va": "0x1129be0"
+          },
+          {
+            "pointer_va": "0x3112be8",
+            "target_va": "0x1145320"
+          },
+          {
+            "pointer_va": "0x3112bf0",
+            "target_va": "0x166eef0"
+          },
+          {
+            "pointer_va": "0x3112bf8",
+            "target_va": "0x1129bf0"
+          },
+          {
+            "pointer_va": "0x3112c00",
+            "target_va": "0x1129c00"
+          },
+          {
+            "pointer_va": "0x3112c08",
+            "target_va": "0x1129c10"
+          },
+          {
+            "pointer_va": "0x3112c10",
+            "target_va": "0x166ef50"
+          },
+          {
+            "pointer_va": "0x3112c18",
+            "target_va": "0x166f390"
+          },
+          {
+            "pointer_va": "0x3112c20",
+            "target_va": "0x166f490"
+          },
+          {
+            "pointer_va": "0x3112c28",
+            "target_va": "0x1129c20"
+          },
+          {
+            "pointer_va": "0x3112c30",
+            "target_va": "0x1129c30"
+          },
+          {
+            "pointer_va": "0x3112c38",
+            "target_va": "0x1129c40"
+          },
+          {
+            "pointer_va": "0x3112c40",
+            "target_va": "0x166f670"
+          },
+          {
+            "pointer_va": "0x3112c48",
+            "target_va": "0x1129c50"
+          },
+          {
+            "pointer_va": "0x3112c50",
+            "target_va": "0x1129c60"
+          },
+          {
+            "pointer_va": "0x3112c58",
+            "target_va": "0x1129c70"
+          },
+          {
+            "pointer_va": "0x3112c60",
+            "target_va": "0x166f960"
+          },
+          {
+            "pointer_va": "0x3112c68",
+            "target_va": "0x11446e0"
+          },
+          {
+            "pointer_va": "0x3112c70",
+            "target_va": "0x1144720"
+          },
+          {
+            "pointer_va": "0x3112c78",
+            "target_va": "0x1129c80"
+          },
+          {
+            "pointer_va": "0x3112c80",
+            "target_va": "0x12593b0"
+          },
+          {
+            "pointer_va": "0x3112c88",
+            "target_va": "0x1129c90"
+          }
+        ],
+        "status": "relocated code pointer sequence; not automatically a C++ vtable"
+      },
+      "nearby_untyped_sequence_0x3308100": {
+        "start_va": "0x3308100",
+        "entries": [
+          {
+            "pointer_va": "0x3308100",
+            "target_va": "0x125bb70"
+          },
+          {
+            "pointer_va": "0x3308108",
+            "target_va": "0x125bb80"
+          },
+          {
+            "pointer_va": "0x3308110",
+            "target_va": "0x125bcc0"
+          },
+          {
+            "pointer_va": "0x3308118",
+            "target_va": "0x125bcd0"
+          },
+          {
+            "pointer_va": "0x3308120",
+            "target_va": "0x125c310"
+          },
+          {
+            "pointer_va": "0x3308128",
+            "target_va": "0x125c390"
+          },
+          {
+            "pointer_va": "0x3308130",
+            "target_va": "0x125c470"
+          },
+          {
+            "pointer_va": "0x3308138",
+            "target_va": "0x125c650"
+          },
+          {
+            "pointer_va": "0x3308140",
+            "target_va": "0x125c6d0"
+          },
+          {
+            "pointer_va": "0x3308148",
+            "target_va": "0x125c6e0"
+          },
+          {
+            "pointer_va": "0x3308150",
+            "target_va": "0x125c7d0"
+          },
+          {
+            "pointer_va": "0x3308158",
+            "target_va": "0x125c7e0"
+          },
+          {
+            "pointer_va": "0x3308160",
+            "target_va": "0x125c8e0"
+          },
+          {
+            "pointer_va": "0x3308168",
+            "target_va": "0x125c8f0"
+          },
+          {
+            "pointer_va": "0x3308170",
+            "target_va": "0x125caf0"
+          },
+          {
+            "pointer_va": "0x3308178",
+            "target_va": "0x125cbf0"
+          },
+          {
+            "pointer_va": "0x3308180",
+            "target_va": "0x125ccf0"
+          },
+          {
+            "pointer_va": "0x3308188",
+            "target_va": "0x125cdf0"
+          },
+          {
+            "pointer_va": "0x3308190",
+            "target_va": "0x125ce20"
+          }
+        ],
+        "status": "relocated code pointer sequence; not automatically a C++ vtable"
+      }
+    },
+    "slot46_getter_direct_call_scan": {
+      "0x1241910": [],
+      "0x12595f0": [],
+      "0x159b900": [],
+      "0x1597220": [],
+      "0x1595e70": [],
+      "0x146e000": []
+    }
+  },
+  "full_text_direct_bl_scan": {
+    "method": "4-byte aligned scan over the full 0x0-0x21ff9a0 main text segment; BL opcode mask 0xfc000000 == 0x94000000; destination decoded as PC + sign_extend(imm26<<2). This detects direct BL only, not B, function-pointer, vtable, or generated/indirect dispatch.",
+    "text_segment_bytes": 35723872,
+    "text_segment_sha256": "9c9b45d8e7a58706ca59e7244b3aebac2325ef98faa205e007974eeeb2f758e9",
+    "call_targets": {
+      "0x154a040": [
+        {
+          "pc": "0x357984",
+          "instruction_word": "0x9447c9af",
+          "instruction_bytes_le": "afc94794"
+        },
+        {
+          "pc": "0x125c1cc",
+          "instruction_word": "0x940bb79d",
+          "instruction_bytes_le": "9db70b94"
+        }
+      ],
+      "0x154a070": [
+        {
+          "pc": "0x125bd4c",
+          "instruction_word": "0x940bb8c9",
+          "instruction_bytes_le": "c9b80b94"
+        },
+        {
+          "pc": "0x125be04",
+          "instruction_word": "0x940bb89b",
+          "instruction_bytes_le": "9bb80b94"
+        }
+      ],
+      "0x154a3a0": [
+        {
+          "pc": "0x3358a0",
+          "instruction_word": "0x944852c0",
+          "instruction_bytes_le": "c0524894"
+        },
+        {
+          "pc": "0x34cd58",
+          "instruction_word": "0x9447f592",
+          "instruction_bytes_le": "92f54794"
+        },
+        {
+          "pc": "0x1190db4",
+          "instruction_word": "0x940ee57b",
+          "instruction_bytes_le": "7be50e94"
+        },
+        {
+          "pc": "0x1190f5c",
+          "instruction_word": "0x940ee511",
+          "instruction_bytes_le": "11e50e94"
+        }
+      ],
+      "0x154a520": [
+        {
+          "pc": "0x3501e8",
+          "instruction_word": "0x9447e8ce",
+          "instruction_bytes_le": "cee84794"
+        },
+        {
+          "pc": "0x11dfb78",
+          "instruction_word": "0x940daa6a",
+          "instruction_bytes_le": "6aaa0d94"
+        },
+        {
+          "pc": "0x11dfe0c",
+          "instruction_word": "0x940da9c5",
+          "instruction_bytes_le": "c5a90d94"
+        }
+      ],
+      "0x154a2e0": [
+        {
+          "pc": "0x282b40",
+          "instruction_word": "0x944b1de8",
+          "instruction_bytes_le": "e81d4b94"
+        },
+        {
+          "pc": "0x31e80c",
+          "instruction_word": "0x9448aeb5",
+          "instruction_bytes_le": "b5ae4894"
+        },
+        {
+          "pc": "0x334f54",
+          "instruction_word": "0x944854e3",
+          "instruction_bytes_le": "e3544894"
+        },
+        {
+          "pc": "0x3354ac",
+          "instruction_word": "0x9448538d",
+          "instruction_bytes_le": "8d534894"
+        },
+        {
+          "pc": "0x363168",
+          "instruction_word": "0x94479c5e",
+          "instruction_bytes_le": "5e9c4794"
+        },
+        {
+          "pc": "0x363a20",
+          "instruction_word": "0x94479a30",
+          "instruction_bytes_le": "309a4794"
+        },
+        {
+          "pc": "0x153bcc8",
+          "instruction_word": "0x94003986",
+          "instruction_bytes_le": "86390094"
+        }
+      ],
+      "0x1242550": [
+        {
+          "pc": "0x124252c",
+          "instruction_word": "0x94000009",
+          "instruction_bytes_le": "09000094"
+        }
+      ],
+      "0x1241910": [],
+      "0x125ae40": [
+        {
+          "pc": "0x125ae24",
+          "instruction_word": "0x94000007",
+          "instruction_bytes_le": "07000094"
+        }
+      ],
+      "0x12595f0": [],
+      "0x159cbc0": [
+        {
+          "pc": "0x159cb94",
+          "instruction_word": "0x9400000b",
+          "instruction_bytes_le": "0b000094"
+        }
+      ],
+      "0x159b900": [],
+      "0x1597b90": [
+        {
+          "pc": "0x1597b68",
+          "instruction_word": "0x9400000a",
+          "instruction_bytes_le": "0a000094"
+        }
+      ],
+      "0x1597220": [],
+      "0x1596020": [
+        {
+          "pc": "0x1596004",
+          "instruction_word": "0x94000007",
+          "instruction_bytes_le": "07000094"
+        }
+      ],
+      "0x1595e70": [],
+      "0x146ee10": [
+        {
+          "pc": "0x146edf4",
+          "instruction_word": "0x94000007",
+          "instruction_bytes_le": "07000094"
+        }
+      ],
+      "0x146e000": []
+    },
+    "callsites": [
+      {
+        "pc": "0x357984",
+        "instruction_word": "0x9447c9af",
+        "instruction_bytes_le": "afc94794",
+        "target_va": "0x154a040",
+        "owner_function_va": "0x357770",
+        "proof": "direct_BL",
+        "observation": "UIMenuDeviceAppear callback sends its accepted EventType/Application packet to the shared UI-event setter."
+      },
+      {
+        "pc": "0x125bd4c",
+        "instruction_word": "0x940bb8c9",
+        "instruction_bytes_le": "c9b80b94",
+        "target_va": "0x154a070",
+        "owner_function_va": "0x125bcd0",
+        "proof": "direct_BL",
+        "observation": "MenuDevice code-group function polls/reads the same shared UI-event record."
+      },
+      {
+        "pc": "0x125be04",
+        "instruction_word": "0x940bb89b",
+        "instruction_bytes_le": "9bb80b94",
+        "target_va": "0x154a070",
+        "owner_function_va": "0x125bcd0",
+        "proof": "direct_BL",
+        "observation": "Second read in the same MenuDevice code-group function; likely another branch/state query."
+      },
+      {
+        "pc": "0x125c1cc",
+        "instruction_word": "0x940bb79d",
+        "instruction_bytes_le": "9db70b94",
+        "target_va": "0x154a040",
+        "owner_function_va": "0x125bcd0",
+        "proof": "direct_BL",
+        "observation": "MenuDevice code-group function writes a UI-event record through the same shared setter."
+      },
+      {
+        "pc": "0x344730",
+        "instruction_word": "0x9400caa8",
+        "instruction_bytes_le": "a8ca0094",
+        "target_va": "0x3771d0",
+        "owner_function_va": "0x3445b0",
+        "proof": "direct_BL",
+        "observation": "StructureStartPreviewGuide delegates parsed structure/build-position inputs to native placement-position helper."
+      },
+      {
+        "pc": "0x344e04",
+        "instruction_word": "0x97f7be17",
+        "instruction_bytes_le": "17bef797",
+        "target_va": "0x134660",
+        "owner_function_va": "0x344d20",
+        "proof": "direct_BL",
+        "observation": "StructureStartPreviewGuide issues the cBuildStructure/cDefault generic actor/event command."
+      },
+      {
+        "pc": "0x344994",
+        "instruction_word": "0x97f7bf33",
+        "instruction_bytes_le": "33bff797",
+        "target_va": "0x134660",
+        "owner_function_va": "0x3445b0",
+        "proof": "direct_BL",
+        "observation": "StructureStartPreviewGuide helper also issues the generic cDefault path in its alternate branch."
+      },
+      {
+        "pc": "0x146f34c",
+        "instruction_word": "0x940006d1",
+        "instruction_bytes_le": "d1060094",
+        "target_va": "0x1470e90",
+        "owner_function_va": "0x146f2c0",
+        "proof": "direct_BL",
+        "observation": "State::cPlay callback reaches generic resource helper containing a StaffCredit branch."
+      }
+    ],
+    "interpretation": "No direct B/BL instruction targets any selected slot-46 layout getter. Factory call sites are generic framework/self-registration neighborhood entries, not story action callsites."
+  },
+  "asset_version_policy": {
+    "supplemental_layout_archive_status": "Selected source archives are marked new_path in extracted_manifest; this does not identify the exact update patch/build and is not treated as an ACNH 1.0.0 asset patch.",
+    "model_audio": "Catalogue-only references per project policy; no raw model/audio extraction, runtime binding, or version claim is made.",
+    "layout_animation": "BFLYT/BFLAN names and hashes identify supplemental bytes and conversion structures only; no runtime trigger is inferred from the matching name/tag."
+  },
+  "open_proof_gaps": [
+    "Determine the owner and exact semantics of function 0x125bcd0 and the static pointer table 0x3308100; resolve its UI-event result payload against MenuDevicePage state and the cInstall/cConstructLicense path.",
+    "Find the page registry/factory dispatch that joins EventFlow UI request classes to a concrete page instance and slot-46 layout getter; no direct consumer of slot-46 getters was found.",
+    "Trace WorkCraft cWorkCraft registry and Ftr_Working page-open path to the WorkBench family, then tie BFLAN tags to native animation calls.",
+    "Resolve StructureStartPreviewGuide placement ghost/highlight/confirmation renderer and any layout/effect resources; position helper is not the visual preview.",
+    "Identify whether IslandEvaluation uses a dedicated rating page or only standard message UI, and tie any runtime request to CmnDialog.",
+    "Find story/stage trigger for StaffCredit and tie State::cPlay resource case to StaffCreditPage open and CorporationIn animation.",
+    "Pin all selected supplemental new_path layout archives to an exact patch/build compatible with baseline EventFlow and main NSO."
+  ],
+  "validation": {
+    "json_schema": "written by deterministic Python JSON encoder",
+    "function_code_hashes": "SHA-256 from exact raw main text function spans",
+    "callsite_instruction_bytes": "re-read from exact NSO text-segment offsets",
+    "full_direct_call_counts": {
+      "0x164a040": 2,
+      "0x164a070": 2,
+      "selected_slot46_getters": 0
+    },
+    "page_layout_matches": "all selected exact layout identifier strings match catalogued names, but are PSEUDO",
+    "supplemental_manifest": "all selected resource containers report new_path; exact update build remains unproven"
+  }
+}
