@@ -24,6 +24,7 @@ Crosswalk utama memuat 28 beat dan 11 keluarga aset di setiap beat. Ada 381 ruju
 - Lifecycle placement bangunan/fasilitas: [BUILDING_PLACEMENT_PROOF_20261107.md](BUILDING_PLACEMENT_PROOF_20261107.md) dan [JSON ledger](../output/gameplay/building_placement_proof_20261107.json).
 - Gerbang progres, pergantian hari, rating, konser, credits, dan Island Designer: [CORE_STORY_PROGRESS_GATES_20261107.md](CORE_STORY_PROGRESS_GATES_20261107.md) dan [JSON graph](../output/gameplay/core_story_progression_gate_proof_20261107.json); native K.K. gate follow-up: [CORE_STORY_POST_RATING_CHAIN_FOLLOWUP_20261107.md](CORE_STORY_POST_RATING_CHAIN_FOLLOWUP_20261107.md) dan [JSON](../output/gameplay/core_story_post_rating_chain_followup_20261107.json).
 - Beat-to-asset crosswalk dan cara konversi: [CORE_GAMEPLAY_STORY_ASSET_PLAN.md](CORE_GAMEPLAY_STORY_ASSET_PLAN.md), [story_asset_crosswalk.json](../output/gameplay/story_asset_crosswalk.json), dan [inventaris aset/konversi](STORY_ASSET_INVENTORY_CROSSWALK_20261107.md).
+- Pemeriksaan rujukan GitHub eksternal: [EXTERNAL_ACNH_RE_REFERENCE_AUDIT_20261107.md](EXTERNAL_ACNH_RE_REFERENCE_AUDIT_20261107.md); hanya cross-check skema/nama, tanpa payload game tambahan.
 
 ## Penggunaan dan konversi aset
 
