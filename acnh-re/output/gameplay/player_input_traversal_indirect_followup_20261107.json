@@ -1,0 +1,197 @@
+{
+  "scope": "ACNH 1.0.0 RE follow-up: controller/HID, scheduler registration, indirect edges, and physical traversal",
+  "overall_status": "OPEN",
+  "source_identity": {
+    "elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+    "additional_exefs_main_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900"
+  },
+  "controller_scheduler": {
+    "system_initializer": {
+      "function_va": "0x1535ad0",
+      "indexed_direct_callers": [],
+      "scheduler_global": "0x340e1e0",
+      "scheduler_constructor": "0x15389f0",
+      "scheduler_setup": "0x15369c0",
+      "controller_manager_global": "0x340e6e0",
+      "controller_manager_constructor": "0x14ceac0",
+      "call_sequence": ["0x15369c0", "0x14cef10", "0x14ced30"],
+      "status": "PSEUDO",
+      "limit": "Initializer path is statically reconstructed; no frame-entry call was identified."
+    },
+    "syscalc_controller_group": {
+      "setup_function": "0x15369c0",
+      "group_object_offset": "scheduler+0x5a0",
+      "name_storage_offset": "scheduler+0x5e8",
+      "resolved_name": "SysCalc_Controller",
+      "group_children_registered_by": "0x1979ff0",
+      "status": "PSEUDO",
+      "limit": "Group setup does not prove dispatch."
+    },
+    "controller_update_task_registration": {
+      "function_va": "0x14cef10",
+      "task_record_offset": "controller_manager+0x288",
+      "task_label": "sys::ControllerManager::update()",
+      "group_list": "scheduler+0x5a0",
+      "registration_helper": "0x1979ff0",
+      "stored_unresolved_global_pointer": "0x340ee90",
+      "indexed_direct_callers": ["0x1535ad0"],
+      "status": "PSEUDO",
+      "limit": "Registration/list linkage and label are known; task callback target and execution are unresolved."
+    },
+    "hid_initialization": {
+      "function_va": "0x14ced30",
+      "calls": ["nn::hid::InitializeNpad", "nn::hid::InitializeTouchScreen", "0x14ced60"],
+      "function_0x14ced60_pseudocode": false,
+      "function_0x14ced60_disassembly_observation": "Allocates/setup an internal record and tail-branches to 0x14cf360; no GetNpadStates call appears in the recovered instructions.",
+      "status": "PSEUDO"
+    },
+    "hid_polling": {
+      "get_npad_states_wrappers": ["0x2210250", "0x2210260", "0x2210270", "0x2210280", "0x2210290"],
+      "indexed_direct_callers_for_wrappers": [],
+      "game_side_sample_call_recovered": false,
+      "status": "OPEN",
+      "limit": "Absence in direct-call index/source search does not exclude an unrecognized indirect import path."
+    },
+    "controller_manager_field_writer": {
+      "function_va": "0x14cf070",
+      "indexed_direct_callers": ["0x14ce8a0"],
+      "queue_record_fields": ["record+0x18", "record+0x1c"],
+      "written_manager_fields": ["manager+0x278", "manager+0x27c"],
+      "empty_queue_fallback": "0x14ce880",
+      "queue_record_producer": "OPEN",
+      "sample_semantics": "OPEN",
+      "status": "PSEUDO"
+    },
+    "frame_dispatch": {
+      "group_registration": "Established by 0x14cef10 → 0x1979ff0.",
+      "task_list_iteration_and_callback_invocation": "OPEN",
+      "resolved_task_vtable_or_callback_for_global_0x340ee90": "OPEN",
+      "status": "OPEN"
+    }
+  },
+  "movement_ground_link": {
+    "prior_functions": {
+      "0xe17cb0": {
+        "reads": ["player+0x1018", "player+0x1022"],
+        "writes": ["player+0x574", "player+0x578", "player+0x57c", "player+0xf58"],
+        "indexed_direct_callers": [],
+        "recognized_code_pointer_array_target": false,
+        "status": "PSEUDO/NATIVE bounded in existing fixture"
+      },
+      "0xdac550": {
+        "consumes": ["movement record +0xf50", "movement record +0xf58"],
+        "updates_actor_position": "actor+0x278",
+        "indexed_direct_callers": [],
+        "status": "PSEUDO/NATIVE bounded in existing fixture"
+      },
+      "0xe42b30": {
+        "ground_query": "0x7bccf0",
+        "writes_motion_fields": ["player+0x574", "player+0xf58"],
+        "indexed_direct_callers": [],
+        "recognized_code_pointer_array_target": false,
+        "status": "PSEUDO"
+      }
+    },
+    "controller_manager_to_player_fields": "OPEN: no data-flow join from manager+0x278/+0x27c to player+0x1018/+0x1022 or player velocity/movement fields.",
+    "hid_to_player_movement": "OPEN",
+    "ground_query_complete_fixture": "OPEN",
+    "status": "OPEN"
+  },
+  "traversal": {
+    "bridge": {
+      "evidence": ["EF bridge preview/placement flow", "TBL bridge and kit identifiers"],
+      "kit_uid": 7211,
+      "bridge_endpoint_transform": "OPEN",
+      "physical_crossing_action_and_result": "OPEN",
+      "status": "EF/TBL/OPEN"
+    },
+    "ladder": {
+      "state_logic": ["0xe40b70", "0xe40ce0", "0xe409c0"],
+      "labels": ["PlayerLadderIsSkew", "PlayerLadderToUp", "PlayerLadderReadyWait", "PlayerLadderAction"],
+      "action_dispatch": "0xdaf680 case 0x10 → 0xe3f100",
+      "spatial_action_checks": "0xe3f100 references 0x7bccf0 and ladder disable/tool-error state labels",
+      "live_update_dispatch": "OPEN",
+      "successful_climb_execution": "OPEN",
+      "status": "PSEUDO/OPEN"
+    },
+    "river": {
+      "terraform_actions": ["0xe49f90: PlayerRiverMakerDig/FallDig", "0xe4a500: PlayerRiverMakerBury/FallBury"],
+      "both_reference_ground_query": true,
+      "river_crossing_action_and_result": "OPEN",
+      "status": "PSEUDO/OPEN"
+    },
+    "water_swim_drift": {
+      "strings": ["State::cSwimRiver", "State::cDriftRiver"],
+      "string_reference_function": "0x585c80",
+      "player_traversal_dispatch": "OPEN",
+      "status": "PSEUDO/OPEN"
+    },
+    "cliff": {
+      "parameter_or_tool_candidates": ["mJumpValleyMaxDist_Cliff", "PlayerCliffMaker actions"],
+      "player_crossing_chain": "OPEN",
+      "status": "TBL/PSEUDO/OPEN"
+    }
+  },
+  "indirect_search": {
+    "source": "output/binary/code_pointer_arrays.json",
+    "filtered_targets_not_found": ["0xe17cb0", "0xe42b30", "0xdac550", "0xdac780", "0x14ced30", "0x14ced60", "0x14cef10", "0xe409c0", "0xe40b70", "0xe40ce0", "0xe3f100", "0xe49f90", "0xe4a500"],
+    "caveat": "Recognized relocated pointer sequences only; runtime-built or unrecognized vtables remain possible.",
+    "ladder_string_initializer_pointer": {
+      "target_va": "0xe41170",
+      "pointer_va": "0x3338170",
+      "containing_section": ".init_array",
+      "section_va": "0x3332298",
+      "section_size": "0xbc30",
+      "resolved_role": "Static initializer with ladder state-name registrations, not a traversal update callback.",
+      "status": "PSEUDO"
+    }
+  },
+  "fixture_limits": {
+    "new_native_execution_attempted": false,
+    "world_root_query_rerun": false,
+    "reason": "No faithful initialized 0xf88 root, loaded grid, readiness byte, populated query candidate list, or candidate vtables. Existing terrain fixtures seed narrower accessors only.",
+    "emulator_fault_classification": "Sandbox context/bootstrap fault at 0x172780; not gameplay evidence.",
+    "controller_frame_fixture": "No HID sample, queue producer, live frame dispatch, or controller-to-player field mapping is supplied.",
+    "status": "OPEN"
+  },
+  "asset_conversion": {
+    "landmaking_cell_bytes": 14,
+    "runtime_ground_record_bytes": 52,
+    "pbc_or_preset_to_live_collision_conversion": "OPEN",
+    "statuses": ["STRUCT", "CAT", "OPEN"]
+  },
+  "evidence_labels_used": ["EF", "TBL", "STRUCT", "PSEUDO", "NATIVE", "CAT", "OPEN"],
+  "new_gameplay_result": false,
+  "references": [
+    "docs/PLAYER_INPUT_TRAVERSAL_INDIRECT_FOLLOWUP_20261107.md",
+    "docs/PLAYER_COLLIDER_QUERY_INIT_FOLLOWUP_20261107.md",
+    "docs/WORLD_TERRAIN_MOVEMENT_PROOF_20261107.md",
+    "output/mechanics/player_collider_query_remainder_20261107/player_7bccf0_boundary_native.json",
+    "output/binary/analysis_decomp/1535ad0.c",
+    "output/binary/analysis_decomp/15369c0.c",
+    "output/binary/analysis_decomp/14cef10.c",
+    "output/binary/analysis_decomp/14ced30.c",
+    "output/binary/analysis_decomp/14cf070.c",
+    "output/binary/analysis_decomp/1979ff0.c",
+    "output/binary/analysis_decomp/197a3a0.c",
+    "output/binary/analysis_decomp/197aa70.c",
+    "output/binary/analysis_decomp/e17cb0.c",
+    "output/binary/analysis_decomp/e3f100.c",
+    "output/binary/analysis_decomp/e409c0.c",
+    "output/binary/analysis_decomp/e41170.c",
+    "output/binary/analysis_decomp/e49f90.c",
+    "output/binary/analysis_decomp/e4a500.c",
+    "output/binary/analysis_decomp/585c80.c",
+    "output/binary/analysis_decomp/daf680.c",
+    "output/binary/code_pointer_arrays.json",
+    "output/binary/elf.json"
+  ],
+  "limitations": [
+    "Controller task registration does not prove callback execution or establish a frame scheduler path.",
+    "No Npad sample call, queued-record producer, or controller-manager-to-player movement field join was recovered.",
+    "Static ladder/river action and state labels are not a successful traversal trace.",
+    "No live bridge, ladder, river, or cliff traversal execution was performed.",
+    "The 0x7bccf0 sandbox fault is not a gameplay result and was not reproduced with a synthetic root.",
+    "Preset 14-byte cells and runtime 52-byte terrain records are not proven conversion products."
+  ]
+}
