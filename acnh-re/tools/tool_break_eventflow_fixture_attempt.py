@@ -14,6 +14,7 @@ DEFAULT_OUTPUT = ROOT / "output/gameplay/tool_mechanics_followup/tool_break_even
 NSO = ROOT / "inputs/additional_exefs/main"
 NATIVE_REPORT = ROOT / "output/gameplay/tool_mechanics_followup/tool_mechanics_followup_native.json"
 RESIDUAL_REPORT = ROOT / "output/gameplay/tool_mechanics_followup/tool_durability_residual_static.json"
+NATIVE_FOLLOWUP = ROOT / "output/gameplay/tool_mechanics_followup/tool_state_callback_native.json"
 
 DURABILITY_TERMS = re.compile(r"ToolDamage|BreakDamage|durability|remaining|use.?count|wear", re.I)
 BREAK_ENTRIES = (
@@ -119,16 +120,39 @@ def build(output: Path) -> dict:
         raise AssertionError("SaveProc mount/open/size/close helper edges are incomplete")
 
     runtime = runtime_probe()
+    native_followup = json.loads(NATIVE_FOLLOWUP.read_text()) if NATIVE_FOLLOWUP.is_file() else None
     runtime["existing_harness_attempt"] = {
-        "command": "python3 acnh-re/tools/tool_break_transition_native.py",
-        "status": "BLOCKED_BEFORE_ENTRYPOINT",
-        "error": "ModuleNotFoundError: No module named 'unicorn'",
+        "commands": [
+            "PYTHONPATH=/workspace/acnh-re/.deps:/workspace/acnh-re-github/acnh-re/tools "
+            "python3 acnh-re/tools/tool_break_action_native.py",
+            "PYTHONPATH=/workspace/acnh-re/.deps:/workspace/acnh-re-github/acnh-re/tools "
+            "python3 acnh-re/tools/tool_break_transition_native.py",
+            "PYTHONPATH=/workspace/acnh-re/.deps:/workspace/acnh-re-github/acnh-re/tools "
+            "python3 acnh-re/tools/tool_state_callback_native.py",
+        ],
+        "status": ("RERUN_PASSED_WITH_SHARED_DEPENDENCY_PATH" if native_followup is not None
+                   else "INITIAL_DEFAULT_PATH_BLOCKED_BEFORE_ENTRYPOINT"),
+        "initial_error": "ModuleNotFoundError: No module named 'unicorn'",
+        "resolved_python_path": "/workspace/acnh-re/.deps",
+        "native_followup_artifact": str(NATIVE_FOLLOWUP) if native_followup is not None else None,
         "note": (
-            "The checked-in harness reached Sandbox construction for 0xe37830, then failed "
-            "before executing ARM64 instructions. The same runtime dependency is required for "
-            "0xe37a50, 0xe37ed0, and SaveProc helpers."
+            "The initial default-path attempt failed before execution. With the shared dependency "
+            "directory on PYTHONPATH, the native callback and file-helper fixtures run with "
+            "controlled object, actor, EventFlow, and filesystem boundaries."
         ),
     }
+    native_followup_summary = None
+    if native_followup is not None:
+        native_followup_summary = {
+            "artifact": str(NATIVE_FOLLOWUP),
+            "schema": native_followup.get("schema"),
+            "player_tool_break_entry_dispatch_count": native_followup[
+                "player_tool_break_update"]["dispatch_count"],
+            "force_break_case_count": native_followup["force_tool_break_demo"]["case_count"],
+            "saveproc_native_entries": native_followup["saveproc_file_helpers"]["native_entries"],
+            "saveproc_dirty_word_unchanged": native_followup["saveproc_file_helpers"][
+                "synthetic_manager"]["slot_word_unchanged"],
+        }
 
     result = {
         "schema": "acnh-re/tool-break-eventflow-fixture-attempt/1",
@@ -186,14 +210,21 @@ def build(output: Path) -> dict:
                 ),
             },
             "runtime_attempt": runtime,
+            "native_followup": native_followup_summary,
             "boundary": (
-                "No zero-filled or guessed object was passed to either callback. That would test "
-                "invalid memory/layout rather than the state branch or six-entry selector."
+                "This static fixture does not execute callbacks. The related native artifact uses "
+                "a controlled object graph and stubs actor/EventFlow boundaries; it is not a live "
+                "player-state trace."
             ),
         },
         "saveproc_synthetic_dirty_slot_attempt": {
-            "status": "BLOCKED_BEFORE_NATIVE_CALL; DIRTY_SLOT_SERIALIZER_ROUTE_UNRESOLVED",
+            "status": (
+                "FILE_HELPERS_EXECUTED_WITH_SYNTHETIC_FILESYSTEM; SLOT_SERIALIZER_ROUTE_UNRESOLVED"
+                if native_followup is not None else
+                "BLOCKED_BEFORE_NATIVE_CALL; DIRTY_SLOT_SERIALIZER_ROUTE_UNRESOLVED"
+            ),
             "runtime_attempt": runtime,
+            "native_followup": native_followup_summary,
             "candidate_worker": {
                 "pointer_array_candidate": candidate["entries_for_fafec0"],
                 "task_helper_targets": helper_targets,
@@ -224,19 +255,18 @@ def build(output: Path) -> dict:
                     "task object or to 0xf214a0/0xf21350."
                 ),
                 "result": (
-                    "A fake dirty-slot manager alone would not reach these path/size helpers or "
-                    "test persistence. Supplying arbitrary object pointers would produce no valid "
-                    "serialization evidence."
+                    "The native successor executes f214a0/f21350 with synthetic mount/path state, "
+                    "but the dirty marker remains an unrelated sentinel. File creation/resize "
+                    "does not demonstrate that this slot word is serialized."
                 ),
             },
         },
         "conclusion": (
             "The static EventFlow fixtures rule out durability-named conditions inside the six "
-            "break presentation entries, but they do not reveal the native entrypoint selector. "
-            "Native callback execution is blocked by the missing Unicorn dependency and missing "
-            "live actor/event object graph. SaveProc file helpers can be mapped to mount/open/size/close "
-            "operations, but a synthetic dirty-slot manager cannot test serialization while the "
-            "dirty-word-to-task/serializer edge is absent."
+            "break presentation entries, but they do not reveal the durability-based selector. "
+            "The Unicorn path issue is resolved for bounded fixtures; their actor and filesystem "
+            "boundaries remain controlled. SaveProc file helpers execute mount/open/size/close "
+            "operations, but the dirty-word-to-task/serializer edge remains absent."
         ),
     }
     output.parent.mkdir(parents=True, exist_ok=True)

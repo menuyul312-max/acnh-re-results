@@ -367,32 +367,64 @@
       "static_result": "The handler is gated through native state/flag helpers, clears ForceToolBreakDemo on the enabled path, and has no direct durability edge."
     },
     "runtime_attempt": {
-      "status": "BLOCKED_SANDBOX_INITIALIZATION",
-      "error_type": "ModuleNotFoundError",
-      "error": "No module named 'unicorn'",
+      "status": "SANDBOX_AVAILABLE_BUT_VALID_CONTEXT_REQUIRED",
       "native_calls_attempted": [],
+      "reason": "The state update handlers are member callbacks with a live player-state object graph, indirect vtable targets, actor/event context, and flag-store state. A zero-filled `this` pointer would be an invalid fixture and could not test tool-family selection.",
       "existing_harness_attempt": {
-        "command": "python3 acnh-re/tools/tool_break_transition_native.py",
-        "status": "BLOCKED_BEFORE_ENTRYPOINT",
-        "error": "ModuleNotFoundError: No module named 'unicorn'",
-        "note": "The checked-in harness reached Sandbox construction for 0xe37830, then failed before executing ARM64 instructions. The same runtime dependency is required for 0xe37a50, 0xe37ed0, and SaveProc helpers."
+        "commands": [
+          "PYTHONPATH=/workspace/acnh-re/.deps:/workspace/acnh-re-github/acnh-re/tools python3 acnh-re/tools/tool_break_action_native.py",
+          "PYTHONPATH=/workspace/acnh-re/.deps:/workspace/acnh-re-github/acnh-re/tools python3 acnh-re/tools/tool_break_transition_native.py",
+          "PYTHONPATH=/workspace/acnh-re/.deps:/workspace/acnh-re-github/acnh-re/tools python3 acnh-re/tools/tool_state_callback_native.py"
+        ],
+        "status": "RERUN_PASSED_WITH_SHARED_DEPENDENCY_PATH",
+        "initial_error": "ModuleNotFoundError: No module named 'unicorn'",
+        "resolved_python_path": "/workspace/acnh-re/.deps",
+        "native_followup_artifact": "/workspace/acnh-re-github/acnh-re/output/gameplay/tool_mechanics_followup/tool_state_callback_native.json",
+        "note": "The initial default-path attempt failed before execution. With the shared dependency directory on PYTHONPATH, the native callback and file-helper fixtures run with controlled object, actor, EventFlow, and filesystem boundaries."
       }
     },
-    "boundary": "No zero-filled or guessed object was passed to either callback. That would test invalid memory/layout rather than the state branch or six-entry selector."
+    "native_followup": {
+      "artifact": "/workspace/acnh-re-github/acnh-re/output/gameplay/tool_mechanics_followup/tool_state_callback_native.json",
+      "schema": "acnh-re/tool-state-callback-native/1",
+      "player_tool_break_entry_dispatch_count": 6,
+      "force_break_case_count": 4,
+      "saveproc_native_entries": [
+        "0xf214a0",
+        "0xf21350"
+      ],
+      "saveproc_dirty_word_unchanged": true
+    },
+    "boundary": "This static fixture does not execute callbacks. The related native artifact uses a controlled object graph and stubs actor/EventFlow boundaries; it is not a live player-state trace."
   },
   "saveproc_synthetic_dirty_slot_attempt": {
-    "status": "BLOCKED_BEFORE_NATIVE_CALL; DIRTY_SLOT_SERIALIZER_ROUTE_UNRESOLVED",
+    "status": "FILE_HELPERS_EXECUTED_WITH_SYNTHETIC_FILESYSTEM; SLOT_SERIALIZER_ROUTE_UNRESOLVED",
     "runtime_attempt": {
-      "status": "BLOCKED_SANDBOX_INITIALIZATION",
-      "error_type": "ModuleNotFoundError",
-      "error": "No module named 'unicorn'",
+      "status": "SANDBOX_AVAILABLE_BUT_VALID_CONTEXT_REQUIRED",
       "native_calls_attempted": [],
+      "reason": "The state update handlers are member callbacks with a live player-state object graph, indirect vtable targets, actor/event context, and flag-store state. A zero-filled `this` pointer would be an invalid fixture and could not test tool-family selection.",
       "existing_harness_attempt": {
-        "command": "python3 acnh-re/tools/tool_break_transition_native.py",
-        "status": "BLOCKED_BEFORE_ENTRYPOINT",
-        "error": "ModuleNotFoundError: No module named 'unicorn'",
-        "note": "The checked-in harness reached Sandbox construction for 0xe37830, then failed before executing ARM64 instructions. The same runtime dependency is required for 0xe37a50, 0xe37ed0, and SaveProc helpers."
+        "commands": [
+          "PYTHONPATH=/workspace/acnh-re/.deps:/workspace/acnh-re-github/acnh-re/tools python3 acnh-re/tools/tool_break_action_native.py",
+          "PYTHONPATH=/workspace/acnh-re/.deps:/workspace/acnh-re-github/acnh-re/tools python3 acnh-re/tools/tool_break_transition_native.py",
+          "PYTHONPATH=/workspace/acnh-re/.deps:/workspace/acnh-re-github/acnh-re/tools python3 acnh-re/tools/tool_state_callback_native.py"
+        ],
+        "status": "RERUN_PASSED_WITH_SHARED_DEPENDENCY_PATH",
+        "initial_error": "ModuleNotFoundError: No module named 'unicorn'",
+        "resolved_python_path": "/workspace/acnh-re/.deps",
+        "native_followup_artifact": "/workspace/acnh-re-github/acnh-re/output/gameplay/tool_mechanics_followup/tool_state_callback_native.json",
+        "note": "The initial default-path attempt failed before execution. With the shared dependency directory on PYTHONPATH, the native callback and file-helper fixtures run with controlled object, actor, EventFlow, and filesystem boundaries."
       }
+    },
+    "native_followup": {
+      "artifact": "/workspace/acnh-re-github/acnh-re/output/gameplay/tool_mechanics_followup/tool_state_callback_native.json",
+      "schema": "acnh-re/tool-state-callback-native/1",
+      "player_tool_break_entry_dispatch_count": 6,
+      "force_break_case_count": 4,
+      "saveproc_native_entries": [
+        "0xf214a0",
+        "0xf21350"
+      ],
+      "saveproc_dirty_word_unchanged": true
     },
     "candidate_worker": {
       "pointer_array_candidate": [
@@ -627,8 +659,8 @@
     "synthetic_manager_contract": {
       "candidate_slot_dirty_word": "player-context+0x204+slot*8 = 0x4000",
       "required_missing_edge": "No resolved callback/serializer connects this manager word to the SaveProc task object or to 0xf214a0/0xf21350.",
-      "result": "A fake dirty-slot manager alone would not reach these path/size helpers or test persistence. Supplying arbitrary object pointers would produce no valid serialization evidence."
+      "result": "The native successor executes f214a0/f21350 with synthetic mount/path state, but the dirty marker remains an unrelated sentinel. File creation/resize does not demonstrate that this slot word is serialized."
     }
   },
-  "conclusion": "The static EventFlow fixtures rule out durability-named conditions inside the six break presentation entries, but they do not reveal the native entrypoint selector. Native callback execution is blocked by the missing Unicorn dependency and missing live actor/event object graph. SaveProc file helpers can be mapped to mount/open/size/close operations, but a synthetic dirty-slot manager cannot test serialization while the dirty-word-to-task/serializer edge is absent."
+  "conclusion": "The static EventFlow fixtures rule out durability-named conditions inside the six break presentation entries, but they do not reveal the durability-based selector. The Unicorn path issue is resolved for bounded fixtures; their actor and filesystem boundaries remain controlled. SaveProc file helpers execute mount/open/size/close operations, but the dirty-word-to-task/serializer edge remains absent."
 }

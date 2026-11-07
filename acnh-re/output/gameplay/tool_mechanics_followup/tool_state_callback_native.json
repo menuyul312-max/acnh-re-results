@@ -1,0 +1,237 @@
+{
+  "schema": "acnh-re/tool-state-callback-native/1",
+  "native_main_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+  "evidence_level": "ORIGINAL_HANDLER_AND_FILE_HELPER_BODY_WITH_CONTROLLED_ENGINE_BOUNDARIES",
+  "player_tool_break_update": {
+    "entry": "0xe37a50",
+    "cases": [
+      {
+        "entrypoint_expected": "ToolBreak_Axe",
+        "item_family_index_supplied_at_A9D0B0_stub": 0,
+        "event_dispatch": {
+          "event_entrypoint": "ToolBreak_Axe",
+          "event_descriptor_va": "0x703feec0",
+          "event_descriptor_prefix_hex": "c0c1010300000000ff729a02000000000000000000000000",
+          "synthetic_item_family_index": 0
+        },
+        "state_counter_0x898_after": 0,
+        "durability_input_supplied": false
+      },
+      {
+        "entrypoint_expected": "ToolBreak_Scoop",
+        "item_family_index_supplied_at_A9D0B0_stub": 1,
+        "event_dispatch": {
+          "event_entrypoint": "ToolBreak_Scoop",
+          "event_descriptor_va": "0x703feec0",
+          "event_descriptor_prefix_hex": "c0c1010300000000ff729a02000000000000000000000000",
+          "synthetic_item_family_index": 1
+        },
+        "state_counter_0x898_after": 0,
+        "durability_input_supplied": false
+      },
+      {
+        "entrypoint_expected": "ToolBreak_Watering",
+        "item_family_index_supplied_at_A9D0B0_stub": 2,
+        "event_dispatch": {
+          "event_entrypoint": "ToolBreak_Watering",
+          "event_descriptor_va": "0x703feec0",
+          "event_descriptor_prefix_hex": "c0c1010300000000ff729a02000000000000000000000000",
+          "synthetic_item_family_index": 2
+        },
+        "state_counter_0x898_after": 0,
+        "durability_input_supplied": false
+      },
+      {
+        "entrypoint_expected": "ToolBreak_Net",
+        "item_family_index_supplied_at_A9D0B0_stub": 3,
+        "event_dispatch": {
+          "event_entrypoint": "ToolBreak_Net",
+          "event_descriptor_va": "0x703feec0",
+          "event_descriptor_prefix_hex": "c0c1010300000000ff729a02000000000000000000000000",
+          "synthetic_item_family_index": 3
+        },
+        "state_counter_0x898_after": 0,
+        "durability_input_supplied": false
+      },
+      {
+        "entrypoint_expected": "ToolBreak_Slingshot",
+        "item_family_index_supplied_at_A9D0B0_stub": 4,
+        "event_dispatch": {
+          "event_entrypoint": "ToolBreak_Slingshot",
+          "event_descriptor_va": "0x703feec0",
+          "event_descriptor_prefix_hex": "c0c1010300000000ff729a02000000000000000000000000",
+          "synthetic_item_family_index": 4
+        },
+        "state_counter_0x898_after": 0,
+        "durability_input_supplied": false
+      },
+      {
+        "entrypoint_expected": "ToolBreak_FishingRod",
+        "item_family_index_supplied_at_A9D0B0_stub": 5,
+        "event_dispatch": {
+          "event_entrypoint": "ToolBreak_FishingRod",
+          "event_descriptor_va": "0x703feec0",
+          "event_descriptor_prefix_hex": "c0c1010300000000ff729a02000000000000000000000000",
+          "synthetic_item_family_index": 5
+        },
+        "state_counter_0x898_after": 0,
+        "durability_input_supplied": false
+      }
+    ],
+    "case_count": 6,
+    "dispatch_count": 6,
+    "proven": [
+      "The original e37a50 body formats and dispatches the Player_ToolBreak entrypoint matching the supplied item-family lookup index for all six family labels.",
+      "The exercised +0x1024=1, +0x89c=0 branch reaches the event-dispatch boundary without changing +0x898.",
+      "No durability value is supplied to this fixture, and e37a50 has no direct ToolDamage/BreakDamage/remaining-helper call edge."
+    ],
+    "limits": [
+      "The A9D0B0 item-family index and 7E30F0 label table are controlled fixtures; actual inventory item-to-family lookup is not executed here.",
+      "The database/EventFlow executor at DB1070 is stubbed at its dispatch boundary; entrypoint internal actions are covered by the separate static EventFlow fixture.",
+      "Animation and actor/vtable context is synthetic; this is not a live player action trace."
+    ]
+  },
+  "force_tool_break_demo": {
+    "entry": "0xe37ed0",
+    "cases": [
+      {
+        "force_flag_gate": false,
+        "counter_gate": false,
+        "flag_write_boundary": [],
+        "counter_path_calls": []
+      },
+      {
+        "force_flag_gate": true,
+        "counter_gate": false,
+        "flag_write_boundary": [
+          {
+            "flag_name": "ForceToolBreakDemo",
+            "value": 0
+          }
+        ],
+        "counter_path_calls": []
+      },
+      {
+        "force_flag_gate": false,
+        "counter_gate": true,
+        "flag_write_boundary": [],
+        "counter_path_calls": [
+          {
+            "descriptor_va": "0x703fefc8",
+            "context_va": "0x800074ac"
+          }
+        ]
+      },
+      {
+        "force_flag_gate": true,
+        "counter_gate": true,
+        "flag_write_boundary": [
+          {
+            "flag_name": "ForceToolBreakDemo",
+            "value": 0
+          }
+        ],
+        "counter_path_calls": [
+          {
+            "descriptor_va": "0x703fefc8",
+            "context_va": "0x800074ac"
+          }
+        ]
+      }
+    ],
+    "case_count": 4,
+    "proven": [
+      "The original handler requests ForceToolBreakDemo=0 only when its controlled DC80A0 state gate is enabled.",
+      "Its independent DA8BA0 gate controls whether it enters the E37950 counter path.",
+      "No durability value or wear writer is used by these branches."
+    ],
+    "limits": [
+      "DC80A0/DA8BA0 flag and state predicates are controlled stubs, not a persisted flag manager.",
+      "F4E990 and E37950 are captured at their mutation/request boundaries; backing flag/save storage is not executed."
+    ]
+  },
+  "saveproc_file_helpers": {
+    "native_entries": [
+      "0xf214a0",
+      "0xf21350"
+    ],
+    "synthetic_manager": {
+      "contract_note": "The first argument is shaped for f214a0's one-byte mount-once flag. The 0x4000 word is only a sentinel placed at the known player-slot offset; this does not establish that the SaveProc object is a player-context/slot-manager object.",
+      "param1_first_byte_initial": 0,
+      "param1_first_byte_after_first_call": 1,
+      "dirty_word_offset": "0x21c",
+      "dirty_word_initial": "0x4000",
+      "dirty_word_after_calls": "0x4000",
+      "slot_word_unchanged": true
+    },
+    "first_call_status": 1,
+    "second_call_status": 1,
+    "first_call_file_ops": [
+      {
+        "api": "MountDeviceSaveData",
+        "name": "ACNH_SAVE"
+      },
+      {
+        "api": "format_path",
+        "format": "%s:/%s",
+        "segments": [
+          "ACNH_SAVE",
+          "PlayerData.bin"
+        ],
+        "result": "ACNH_SAVE:/PlayerData.bin"
+      },
+      {
+        "api": "OpenFile",
+        "path": "ACNH_SAVE:/PlayerData.bin",
+        "mode": 2
+      },
+      {
+        "api": "SetFileSize",
+        "handle": "0x12345678",
+        "size": 16384
+      },
+      {
+        "api": "CloseFile",
+        "handle": "0x12345678"
+      }
+    ],
+    "second_call_file_ops": [
+      {
+        "api": "format_path",
+        "format": "%s:/%s",
+        "segments": [
+          "ACNH_SAVE",
+          "PlayerData.bin"
+        ],
+        "result": "ACNH_SAVE:/PlayerData.bin"
+      },
+      {
+        "api": "OpenFile",
+        "path": "ACNH_SAVE:/PlayerData.bin",
+        "mode": 2
+      },
+      {
+        "api": "SetFileSize",
+        "handle": "0x12345678",
+        "size": 16384
+      },
+      {
+        "api": "CloseFile",
+        "handle": "0x12345678"
+      }
+    ],
+    "operations_not_observed": [
+      "WriteFile",
+      "FlushFile",
+      "slot serialization"
+    ],
+    "worker_queue_executed": false,
+    "bounded_stubs": [
+      "mutex/path string virtual methods",
+      "0x1990780 string setup",
+      "0x1990820 format helper (controlled path formatter)",
+      "MountDeviceSaveData/OpenFile/SetFileSize/CloseFile SDK boundaries"
+    ]
+  },
+  "unknown_imports": {}
+}
