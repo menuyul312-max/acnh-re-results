@@ -1,0 +1,108 @@
+{
+  "schema": "acnh-re/1",
+  "title": "Building-site component vptr and lifecycle boundary",
+  "date": "2026-11-07",
+  "game": "Animal Crossing: New Horizons 1.0.0",
+  "scope": "Static follow-up on the dynamic actor+0x68 component used by the BuildStructure coordinate callback, including constructor/base initialization and the separate outer actor relocation/vptr sequence.",
+  "input_identity": {
+    "main_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+    "main_nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+    "address_convention": "Raw ELF VAs/PCs; Ghidra display function labels add 0x100000."
+  },
+  "evidence_levels": {
+    "EF": "Hash-identified binary, raw AArch64 instruction, or ELF relocation evidence.",
+    "PSEUDO": "Hash-identified static decompilation/direct-call evidence; not a live invocation.",
+    "STRUCT": "Object field, pointer-sequence, or position-like shape from static access patterns.",
+    "OPEN": "Required runtime or semantic join is not proven."
+  },
+  "source_hashes": [
+    {"path": "main.elf", "sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74", "role": "Raw instruction and relocation source"},
+    {"path": "binary/function_inventory.json", "sha256": "ef4200433442a15746c700a3980e2573ee790ca6cee898b8786ec1c0fcd0c9ac", "role": "Function VA/size record for 0xbe5e40"},
+    {"path": "binary/code_pointer_arrays.json", "sha256": "64d474068ca289f9146f7f32e6647a16a05e8f5be8e635615a478744b62ef822", "role": "Relocated pointer-sequence entry mapping for outer actor sequence 0x30d58a0"},
+    {"path": "binary/analysis_decomp/7bbe20.c", "sha256": "5694a55b3ffd21fdad10be045a52f5170d7a1f33c26b422e08261882cb0291ab", "role": "Base initializer dispatch into 0x27c70"},
+    {"path": "binary/analysis_decomp/27c70.c", "sha256": "91af7c66c95663369fb49a154d14f8d065249e888fde5d14d177a48146519846", "role": "Base field initialization including zeroed offsets +0x68/+0x70"},
+    {"path": "binary/analysis_decomp/be6340.c", "sha256": "5817cf57fdb01962c95c5ace9fb5129d2384a1dc60f067ffb4459ab21b34ff40", "role": "Building-site actor component handoff"},
+    {"path": "binary/analysis_decomp/be6480.c", "sha256": "7dc3b77a1564525ca6d0874af403bdd6008a392d97775eea5e7e749e79a9aec9", "role": "BuildStructure actor path into common component handoff"},
+    {"path": "binary/analysis_decomp/2eae0.c", "sha256": "18e9b03e5f60ba9cb6f54e3c863a9056097b585e6598cb345eb326bee4291961", "role": "Dynamic inner component slot +0x128 dispatch"},
+    {"path": "binary/analysis_decomp/be93e0.c", "sha256": "9c9fe08bb3803462f1f15b0914fca883677e0f22cddaf1cefae3e38daf66dc42", "role": "Position-like sibling use; cited as pseudocode observation only"},
+    {"path": "binary/elf.json", "sha256": "42bfdc3107b4fde9add2459049ef6febd8bca4d999725eedfd3485bf5be8040d", "role": "ELF segment identity/layout metadata"}
+  ],
+  "findings": [
+    {
+      "id": "actor_constructor_clears_inner_component_field",
+      "targets": ["0xbe5e40", "0x7bbe20", "0x27c70"],
+      "function_inventory": {"target_va": "0xbe5e40", "display_name": "FUN_00ce5e40", "size_bytes": 284},
+      "call_pcs": [
+        {"pc": "0xbe5e6c", "instruction": "BL 0x7bbe20", "bytes_le": "ed57ef97"},
+        {"pc": "0x7bbe38", "instruction": "BL 0x27c70", "bytes_le": "8eafe197"},
+        {"pc": "0x27d48", "instruction": "STP XZR,XZR,[X22,#0x68]", "bytes_le": "dffe06a9"}
+      ],
+      "behavior": "The constructor passes the owner object through the base initializer. The base initialization writes zero to owner offsets +0x68 and +0x70.",
+      "evidence_level": ["EF", "PSEUDO"],
+      "confidence": "high for constructor-time zeroing; no implication about later runtime attachment",
+      "limits": ["Does not establish that the component remains null after construction", "Does not locate the later runtime field writer/attachment path"]
+    },
+    {
+      "id": "outer_actor_relocation_is_separate_from_inner_component_vptr",
+      "targets": ["0xbe5e40", "0x32f7a18", "0x30d58a0", "0x30d59c8", "0xbe89e0"],
+      "relocation": {"slot_va": "0x32f7a18", "type": "R_AARCH64_RELATIVE", "addend": "0x30d5890", "constructor_addend": "0x10", "stored_outer_pointer": "0x30d58a0"},
+      "sequence_entry": {"pointer_va": "0x30d59c8", "outer_slot_offset": "0x128", "target_va": "0xbe89e0", "index_source": "binary/code_pointer_arrays.json"},
+      "call_pcs": [
+        {"pc": "0xbe5e98", "instruction": "STR X8,[X19]", "bytes_le": "680200f9"}
+      ],
+      "behavior": "The constructor initializes the outer actor offset-zero pointer from the relocation slot plus 0x10. The outer sequence has an entry at +0x128, but it is not the inner object vptr read from actor+0x68.",
+      "evidence_level": ["EF", "STRUCT"],
+      "confidence": "high for relocation, stored pointer, and sequence-entry arithmetic; no join to the inner component",
+      "limits": ["Do not use outer target 0xbe89e0 as the implementation of the actor+0x68 call", "Sequence index alone does not identify component semantics"]
+    },
+    {
+      "id": "placement_component_coordinate_vcall_remains_dynamic",
+      "targets": ["0xbe6340", "0x2eae0"],
+      "call_pcs": [
+        {"pc": "0xbe6370", "instruction": "BL 0x2eae0; X0 is owner+0x68 component and X1 carries coordinate pointer", "bytes_le": "dc21d197"},
+        {"pc": "0x2eb04", "instruction": "LDR X8,[X8,#0x128]", "bytes_le": "089540f9"},
+        {"pc": "0x2eb10", "instruction": "BLR X8 with component and coordinate pointer", "bytes_le": "00013fd6"}
+      ],
+      "behavior": "The common placement path loads the component pointer from owner+0x68. Helper 0x2eae0 reads that object's vptr and invokes slot +0x128 with the coordinate vector.",
+      "evidence_level": ["EF", "PSEUDO"],
+      "confidence": "high for receiver field, coordinate argument, slot offset, and indirect branch; implementation target unresolved",
+      "limits": ["Runtime component writer and vptr/global instance are not identified", "No transform destination or validator meaning is assigned to the slot"]
+    },
+    {
+      "id": "position_like_inner_component_sibling_path",
+      "targets": ["0xbe93e0"],
+      "call_pcs": [],
+      "behavior": "A sibling actor method reads the owner+0x68 object, passes its +0x278 region to a position-like helper, and dispatches a separate inner vtable slot +0x110.",
+      "evidence_level": ["PSEUDO", "STRUCT"],
+      "confidence": "suggestive for position/entity-like data layout; not a join to the placement slot implementation",
+      "limits": ["This is only a static sibling-method observation", "No runtime pointer identity joins this object to the BuildStructure invocation"]
+    }
+  ],
+  "bounded_negatives": [
+    {
+      "id": "constructor_chain_does_not_bind_the_inner_component",
+      "scope": ["0xbe5e40", "0x7bbe20", "0x27c70"],
+      "statement": "Within this constructor/base-initializer chain, owner+0x68 is zeroed and no inner component vptr is assigned afterward.",
+      "evidence_level": ["EF", "PSEUDO"],
+      "not_a_claim_of": ["No runtime writer exists anywhere", "The field stays null after actor construction", "The outer actor sequence supplies the inner component vptr"]
+    }
+  ],
+  "open_items": [
+    {"id": "runtime_component_attachment_and_vptr", "status": "OPEN", "why": "The constructor clears actor+0x68, while the placement call consumes an indirect component vptr from that field; later attachment or replacement is not traced."},
+    {"id": "inner_coordinate_slot_implementation", "status": "OPEN", "why": "The dynamic slot +0x128 is proven but no runtime instance/global vptr maps it to a target function."},
+    {"id": "world_transform_height_rotation_and_origin", "status": "OPEN", "why": "The coordinate argument reaches the inner call, but no final transform write, frame/origin adjustment, terrain height, or yaw is established."},
+    {"id": "footprint_and_placement_validation", "status": "OPEN", "why": "No full footprint, occupancy/overlap, terrain/water/cliff validation or rejection join is proven."},
+    {"id": "preview_model_collider_pbc_and_save_handoff", "status": "OPEN", "why": "No exact preview-to-built actor, model/collider/PBC binding, save serialization, or completion handoff is reached."}
+  ],
+  "crosswalk": {
+    "coordinate_and_field_query_report": "docs/BUILDING_SITE_WORLD_POSITION_TRANSFORM_FOLLOWUP_20261107.md",
+    "native_handler_and_asset_search_report": "docs/BUILDING_PLACEMENT_NATIVE_HANDLER_FOLLOWUP_20261107.md",
+    "prior_blackboard_index_report": "docs/BUILDING_SITE_INDEX_BLACKBOARD_NATIVE_FOLLOWUP_20261107.md"
+  },
+  "report": "docs/BUILDING_SITE_COMPONENT_VPTR_LIFECYCLE_BOUNDARY_20261107.md",
+  "validation": {
+    "method": "Raw PC bytes extracted from hash-identified main.elf; relocation checked with readelf ELF relocation table; static pseudocode and pointer-sequence cross-checks.",
+    "json_schema": "Parsed with Python json.load after writing.",
+    "no_game_or_save_execution": true
+  }
+}
