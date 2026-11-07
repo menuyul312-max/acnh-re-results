@@ -1,0 +1,212 @@
+{
+  "artifact": "world_item_pickup_source_actor_side_effects_followup_20261107",
+  "build": "Animal Crossing: New Horizons 1.0.0",
+  "address_convention": "All address fields are raw ELF virtual addresses/offsets in ExeFS main/0.bin. Decompiled Ghidra labels use an image base +0x100000; e.g. raw 0xe21e40 appears as FUN_00f21e40.",
+  "scope": "Pickup descriptor producer, guarded insertion bridge, post-insertion side effects, source-world-actor deletion/respawn scan, and conditional PickUpFirst property write. Static analysis only.",
+  "source_identity": {
+    "main_segment_0_sha256": "9c9b45d8e7a58706ca59e7244b3aebac2325ef98faa205e007974eeeb2f758e9",
+    "main_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+    "decoded_player_getdemo_sha256": "e937aee95d923bfbdde2e923e1783f5a9001a3d716768e06bde8f1212cd96052"
+  },
+  "findings": [
+    {
+      "id": "pickup_descriptor_producer",
+      "evidence_level": "native-static",
+      "producer_function": "0xe20f00",
+      "producer_paths": [
+        {
+          "call_pc": "0xe21000",
+          "target": "0xe07ae0",
+          "side_effect_pc": "0xe07b1c",
+          "effect": "Copies the supplied item descriptor into state context +0x1c."
+        },
+        {
+          "copy_pc": "0xe211e0",
+          "effect": "Copies the constructed descriptor into state context +0x1c."
+        }
+      ],
+      "descriptor_source": "The PickupWait update copies/parses the player object field at Player+0x1018 with item helpers 0xb9c290 and 0xb9f670, then stores the descriptor in the next state context.",
+      "consumer": {
+        "function": "0xe21e40",
+        "read_pc": "0xe21e68",
+        "insert_prepare_pc": "0xe21e7c",
+        "target": "0xdb0450"
+      },
+      "bounded_claim": "The item descriptor producer is narrowed to a player-side field copied into state context. The source world-item actor ID/handle and authoritative actor-to-descriptor mapping remain unresolved."
+    },
+    {
+      "id": "guarded_inventory_writer_path",
+      "evidence_level": "native-static-reachability",
+      "edges": [
+        {
+          "from": "0xe21490",
+          "call_pc": "0xe21688",
+          "to": "0xe21e40"
+        },
+        {
+          "from": "0xe21e40",
+          "call_pc": "0xe21e7c",
+          "to": "0xdb0450",
+          "guarded": true
+        },
+        {
+          "from": "0xdb0450",
+          "call_pc": "0xdb0608",
+          "to": "0xefab90",
+          "guarded": true
+        },
+        {
+          "from": "0xefab90",
+          "call_pc": "0xefabf8",
+          "to": "0xefac20",
+          "guarded": true
+        },
+        {
+          "from": "0xefac20",
+          "call_pc": "0xefad2c",
+          "to": "0xf987c0"
+        }
+      ],
+      "post_writer_calls": [
+        {
+          "from": "0xefac20",
+          "call_pc": "0xefad5c",
+          "to": "0xeec280",
+          "guarded": true
+        },
+        {
+          "from": "0xefac20",
+          "call_pc": "0xefad7c",
+          "to": "0xefadc0",
+          "conditional_mode": 1
+        },
+        {
+          "from": "0xefac20",
+          "call_pc": "0xefad90",
+          "to": "0xefaf00",
+          "conditional_mode": 2
+        },
+        {
+          "from": "0xefac20",
+          "call_pc": "0xefad98",
+          "to": "0xefb090"
+        },
+        {
+          "from": "0xe21e40",
+          "call_pc": "0xe21f10",
+          "to": "0xefc2f0"
+        },
+        {
+          "from": "0xe21e40",
+          "call_pc": "0xe21f1c",
+          "to": "0xdafee0"
+        }
+      ],
+      "interpretation": "The inspected helper bodies resolve player-side item-view/property components (notably actor+0x70/type 0x17c and actor+0x1a78/type 0x8b8) and update item parameters. The path establishes guarded reachability to a generic writer, not successful pickup."
+    },
+    {
+      "id": "world_actor_removal_respawn_scan",
+      "evidence_level": "bounded-negative",
+      "scanned_functions": [
+        "0xe20f00",
+        "0xe07ae0",
+        "0xe21490",
+        "0xe21e40",
+        "0xdb0450",
+        "0xefab90",
+        "0xefac20",
+        "0xdafee0"
+      ],
+      "candidate_indirect_boundary": {
+        "function": "0xdb0450",
+        "call_pc": "0xdb0540",
+        "manager_helper": "0xeecf60",
+        "component_offset": "0x2d8",
+        "component_type": "0x280",
+        "method": "0xf6a450",
+        "bounded_claim": "The component/method could be an item/world manager path, but it is not identified as the source actor and no deletion/respawn effect is visible in the current static evidence."
+      },
+      "eventflow": {
+        "flow": "Player_GetDemo",
+        "entry_point": "Get_Pickup",
+        "reachable_ui_action": {
+          "event_index": 7,
+          "action": "EventFlowActionUIItemSelectWindowHandling",
+          "params": {
+            "FilterType": "cPickupFull",
+            "ItemUniqueID": 65534,
+            "ItemKindType": "",
+            "ItemFilterType": "",
+            "Mode": "cExchangeByPickup"
+          }
+        },
+        "deletion_or_slot_write_action_found": false
+      },
+      "bounded_claim": "No direct source-world actor destroy/remove/respawn call was identified in the scanned direct graph or reachable Get_Pickup EventFlow. Indirect actor-manager dispatch remains unresolved."
+    },
+    {
+      "id": "conditional_pickup_first_property",
+      "evidence_level": "native-static-key-and-setter",
+      "pickup_update_edge": {
+        "from": "0xe21490",
+        "call_pc": "0xe21a94",
+        "to": "0xda4370"
+      },
+      "neighboring_callers": [
+        {
+          "from": "0xe21fb0",
+          "call_pc": "0xe22054"
+        },
+        {
+          "from": "0xe07c70",
+          "call_pc": "0xe07f6c"
+        },
+        {
+          "from": "0xe082c0",
+          "call_pc": "0xe08370"
+        },
+        {
+          "from": "0xe3ca10",
+          "call_pc": "0xe3cd08"
+        },
+        {
+          "from": "0xe3d0b0",
+          "call_pc": "0xe3d170"
+        }
+      ],
+      "set_call": {
+        "from": "0xda4370",
+        "call_pc": "0xda4454",
+        "to": "0xf4a8f0",
+        "key": "PickUpFirst",
+        "key_string_va": "0x029d183a",
+        "value": 1
+      },
+      "setter_chain": [
+        {
+          "from": "0xf4a8f0",
+          "to": "0xf4a9a0",
+          "property_component_offset": "0x16998",
+          "property_component_type": "0x1000"
+        }
+      ],
+      "bounded_claim": "A conditional in-memory property assignment PickUpFirst=1 is reachable from Pickup. Static evidence does not establish branch selection for ordinary ground-item pickup, a count increment, or durable persistence."
+    }
+  ],
+  "remaining_gaps": [
+    "Resolve the source world-item actor ID/handle and its relationship to Player+0x1018.",
+    "Resolve the 0xeecf60 / component 0x280 / method 0xf6a450 runtime path and any indirect actor-manager dispatch.",
+    "Prove whether successful insertion removes, retains, or schedules respawn of the source world actor.",
+    "Exercise or otherwise prove the PickUpFirst predicate for an ordinary field pickup and identify its durable-save boundary."
+  ],
+  "change_scope": {
+    "new_files_only": [
+      "docs/WORLD_ITEM_PICKUP_SOURCE_ACTOR_SIDE_EFFECTS_FOLLOWUP_20261107.md",
+      "output/gameplay/world_item_pickup_source_actor_side_effects_followup_20261107.json"
+    ],
+    "index_or_crosswalk_modified": false,
+    "ghidra_rebuilt": false,
+    "commit_or_push": false
+  },
+  "report": "acnh-re/docs/WORLD_ITEM_PICKUP_SOURCE_ACTOR_SIDE_EFFECTS_FOLLOWUP_20261107.md"
+}
