@@ -7757,7 +7757,7 @@
     "required_asset_family_count": 11,
     "all_beats_have_all_asset_families": true,
     "full_semantic_coverage_proven": false,
-    "supplemental_proof_count": 33,
+    "supplemental_proof_count": 34,
     "supplemental_proof_files_exist": true
   },
   "full_semantic_coverage_proven": false,
@@ -7992,6 +7992,13 @@
       "data": "acnh-re/output/mechanics/player_collider_query_remainder_20261107/grid_ground_movement_result_followup_20261107.json",
       "scope": "Grid plane-height/attribute callback, ground-query composition and statically traced actor-Y/motion consumers.",
       "status": "grid_to_ground_to_movement_callers_static; live_world_query_and_traversal_specifics_OPEN"
+    },
+    {
+      "id": "registration_terrain_rng_pool_followup",
+      "report": "acnh-re/docs/REGISTRATION_TERRAIN_RNG_POOL_FOLLOWUP_20261107.md",
+      "data": "acnh-re/output/gameplay/registration_terrain_rng_pool_followup_20261107.json",
+      "scope": "Dynamic four-option candidate mask, system-tick-seeded xorshift sampling without replacement, table-ID bounds, and bounded writer search.",
+      "status": "four_distinct_candidate_ids_sampled_from_mask;runtime_bounds_and_map_load_OPEN"
     }
   ]
 }

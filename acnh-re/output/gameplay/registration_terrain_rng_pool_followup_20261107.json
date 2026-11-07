@@ -1,0 +1,279 @@
+{
+  "schema": "acnh.registration-terrain-rng-pool-followup/1",
+  "created_utc_date": "2026-11-07",
+  "scope": "Static ACNH 1.0.0 raw AArch64/data analysis of candidate-ID bitset generation, four-slot RNG sampling, FieldMainFieldParam row eligibility, and bounded search for runtime range/array writers. No game/save execution or modification.",
+  "report": "acnh-re/docs/REGISTRATION_TERRAIN_RNG_POOL_FOLLOWUP_20261107.md",
+  "evidence_labels": {
+    "NATIVE": "Raw AArch64, relocation, or raw function-extent scan evidence.",
+    "TBL": "Decoded local FieldMainFieldParam table evidence.",
+    "OPEN": "Not established by the available static main ELF/table data."
+  },
+  "source_build": {
+    "game": "Animal Crossing: New Horizons",
+    "version_scope": "Supplied A_logic/main.elf labeled 1.0.0 by the existing local analysis.",
+    "main_elf": {
+      "path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/A_logic/main.elf",
+      "sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74"
+    },
+    "raw_executable_segment": {
+      "path": "/workspace/acnh-re/work/exefs_modules/main/0.bin",
+      "va_base": "0x0",
+      "size_bytes": 35723872,
+      "sha256": "9c9b45d8e7a58706ca59e7243b4aebac2325ef98faa205e007974eeeb2f758e9"
+    },
+    "analysis_metadata": {
+      "elf_json_sha256": "42bfdc3107b4fde9add2459049ef6febd8bca4d999725eedfd3485bf5be8040d",
+      "symbols_json_sha256": "6e808e4ccdd59a3b9ba186a853deb33385d0f9dc52d820606c60f93307a8aa1a",
+      "function_inventory_json_sha256": "ef4200433442a15746c700a3980e2573ee790ca6cee898b8786ec1c0fcd0c9ac",
+      "address_convention": "All cited code PCs are raw ELF VAs in the executable segment; generated FUN_006... pseudonames have a +0x1000000 display bias."
+    }
+  },
+  "source_artifacts": [
+    {
+      "path": "output/tables_resolved/FieldMainFieldParam.json",
+      "sha256": "141a6d85166bc8b08eac399389114fbebd5708e0d1c3b54af3be37e116a0e100"
+    },
+    {
+      "path": "output/binary/analysis_decomp/529910.c",
+      "sha256": "60b968019ada35592ce5202d29ec1739be335c57c0a6a9ff6af578565afee324"
+    },
+    {
+      "path": "output/binary/analysis_decomp/54eda0.c",
+      "sha256": "1a2d39fd4e723e9a40530d93021f08e27f87c9a101872e4a0ca9233867317244"
+    },
+    {
+      "path": "output/binary/analysis_decomp/54edf0.c",
+      "sha256": "f59ab14179e98b9ae42a0574a07aece8a6562842f42b4eba3bdf3682a24645e3"
+    },
+    {
+      "path": "output/binary/analysis_decomp/54e930.c",
+      "sha256": "99b19128a8515eb95122f725d10743f61ae98aa88f5081fdd09f420df2af33f4"
+    },
+    {
+      "path": "output/binary/analysis_decomp/54e200.c",
+      "sha256": "80b72adff3191a0676312b61f9712cfdc3b2d87b883588254e10c32c76340a6d"
+    },
+    {
+      "path": "output/binary/analysis_decomp/32ba60.c",
+      "sha256": "e6656993978057e07b35ae59b71f50e6fab77ec97392c984954f911786e001ac"
+    },
+    {
+      "path": "output/binary/analysis_decomp/52a110.c",
+      "sha256": "a1d3fdc57bb059f738d166ec26ee729d83528f9b4aba4cdd971c8d0e8a65f648"
+    },
+    {
+      "path": "output/binary/analysis_decomp/198b590.c",
+      "sha256": "f9f013e27383109523ac96bbc90cedb9ec66b86546a8d6ab421d16350ae4f4f5"
+    },
+    {
+      "path": "output/binary/analysis_decomp/198b630.c",
+      "sha256": "38ee1fa0b5dcdcc33bde27df8f283694c8bfff2e5311938d0e85945b712c4492"
+    },
+    {
+      "path": "output/binary/analysis_decomp/19a9fe0.c",
+      "sha256": "a8572a2713452d8eb48cc6bda83cbf75fc620021bd6b3b2807acdb68599f9ed7"
+    },
+    {
+      "path": "output/binary/analysis_decomp/19aa0e0.c",
+      "sha256": "3a28227ef054c05f683c45b6297cf071562c66b7e091e8eac2e5c102b8a5d5c7"
+    }
+  ],
+  "candidate_generation": {
+    "status": "NATIVE",
+    "mask": {
+      "bits": 512,
+      "storage": "16 x u32, 64 bytes",
+      "initializer": "0x54eda0",
+      "generator_calls": [
+        "0x529938",
+        "0x529940"
+      ],
+      "iterator_wrapper": "0x54edf0",
+      "iterator": "0x54e930",
+      "iterator_callback_pc": "0x54eb10",
+      "callback_function": "0x54ee20",
+      "callback_row_id_helper": "0x54e200",
+      "callback_vtable_relocation": {
+        "va": "0x30648f8",
+        "target_va": "0x54ee20"
+      },
+      "id_guard": "u16(ID) <= 0x1ff"
+    },
+    "runtime_range_fields": {
+      "+0x1108": "u32 span/bound used for pointer-array indexing",
+      "+0x1110": "pointer array of row/resource handles",
+      "+0x1128": "u16 base/start ID",
+      "+0x112a": "u16 terminal ID; iterator's control flow treats the configured terminal as inclusive"
+    },
+    "callback_output_condition": "The distinct callback-returned u16 values below 512 have bits set. 0x54e200 returns zero on null/empty row pointer; 0x54ee20 has no nonzero guard, so a null callback sets/reasserts bit 0. Exact live bitset requires runtime range and pointer-array contents.",
+    "row_lookup": {
+      "field_hash": "0x54706054",
+      "field_name": "UniqueID",
+      "fallback": "BCSV lookup path used by iterator when an indexed pointer is unavailable; exact population/row-hit behavior is not observable statically without the live table-manager state."
+    },
+    "outside_kind_filter": "No OutsideTemplateKind check occurs while populating the mask. The generator reads OutsideTemplateKind later through 0x54e330 after selecting each candidate."
+  },
+  "rng_and_four_slot_sampling": {
+    "status": "NATIVE",
+    "seed_initializer": {
+      "function": "0x19a9fe0",
+      "system_tick_plt_stub": "0x220e420",
+      "plt_relocation_va": "0x32ce7d8",
+      "import": "_ZN2nn2os13GetSystemTickEv",
+      "state_words": 4,
+      "recurrence_multiplier": "0x6c078965",
+      "raw_pc_span": [
+        "0x19a9fe0",
+        "0x19aa03c"
+      ]
+    },
+    "rng_next": {
+      "function": "0x19aa0e0",
+      "algorithm": "four-word xorshift recurrence",
+      "raw_pc_span": [
+        "0x19aa0e0",
+        "0x19aa108"
+      ]
+    },
+    "population_count": {
+      "generator_helper": "0x32ba60",
+      "word_count": 16,
+      "popcount_helper": "0x198b590",
+      "raw_pc_span": [
+        "0x32ba60",
+        "0x32bb38"
+      ]
+    },
+    "ordinal_to_id": {
+      "generator_helper": "0x52a110",
+      "nth_bit_helper": "0x198b630",
+      "ordinal": "1-based",
+      "result": "32 * selected_word_index + selected_bit_index"
+    },
+    "per_slot_selection": {
+      "method": "Multiply a random u32 by current popcount; use high 32 bits + 1 as the ordinal; map ordinal to a set bit; clear that bit before the next slot.",
+      "nth_set_bit_calls": [
+        "0x5299ac",
+        "0x529abc",
+        "0x529bcc",
+        "0x529cdc"
+      ],
+      "first_slot_clear_pc_span": [
+        "0x5299c4",
+        "0x5299e0"
+      ],
+      "entries": 4,
+      "slot_to_id_fixed_map": false
+    }
+  },
+  "table_rows": {
+    "status": "TBL",
+    "source_id": 41,
+    "source": "B_data/Bcsv/FieldMainFieldParam.bcsv",
+    "row_count": 96,
+    "row_size": 136,
+    "unique_id": {
+      "column_hash": "0x54706054",
+      "type": "u16",
+      "offset": 4,
+      "unique_values": 96,
+      "minimum": 0,
+      "maximum": 119,
+      "all_below_mask_cap_512": true,
+      "contiguous_groups": [
+        [
+          0,
+          0
+        ],
+        [
+          8,
+          24
+        ],
+        [
+          28,
+          81
+        ],
+        [
+          89,
+          100
+        ],
+        [
+          108,
+          119
+        ]
+      ],
+      "missing_ids": [
+        [
+          1,
+          7
+        ],
+        [
+          25,
+          27
+        ],
+        [
+          82,
+          88
+        ],
+        [
+          101,
+          107
+        ]
+      ]
+    },
+    "field_data": {
+      "column_hash": "0x6e1ac981",
+      "type": "string32",
+      "offset": 6
+    },
+    "outside_template_kind": {
+      "column_hash": "0x948eb946",
+      "type": "u8",
+      "offset": 38,
+      "counts": {
+        "0": 30,
+        "1": 33,
+        "2": 33
+      },
+      "used_as_candidate_filter": false
+    },
+    "runtime_all_96_eligible": {
+      "status": "OPEN",
+      "conditional": "If runtime range covers 0..119 and all 96 source rows resolve, all 96 table IDs pass the <512 mask cap; holes are not table rows. Static data does not prove runtime bounds or pointer-array residency."
+    }
+  },
+  "producer_search": {
+    "status": "OPEN",
+    "raw_segment_scanned": "main executable segment VA 0x0, 0x2211a60 file-backed bytes",
+    "direct_global_cell": {
+      "va": "0x32d1ba8",
+      "relocated_pointer_slot": "0x345ff98",
+      "exact_adrp_ldr_references": 297,
+      "function_inventory_owner_extents": 264,
+      "direct_field_stores_through_loaded_object": 0,
+      "stores_through_global_pointer_slot_alias": 0
+    },
+    "exact_immediate_store_scan": {
+      "instruction_scope": "aligned raw AArch64 scalar unsigned-immediate load/store encodings whose computed byte offsets equal 0x1108, 0x1110, 0x1128, or 0x112a",
+      "all_load_store_references": 167,
+      "STR_references": 102,
+      "function_inventory_store_owners": 42,
+      "direct_BL_edges_from_global_reference_owners_to_store_owners": 0
+    },
+    "limit": "This does not exclude virtual/helper writes, computed-base stores, indirect caller chains, constructors outside generated function inventory, or initialization in unavailable imported modules. Shared offsets across unrelated large objects make raw offset-only stores ambiguous."
+  },
+  "unresolved": [
+    "Runtime initializer/producer and caller chain for +0x1108, +0x1110, +0x1128, and +0x112a.",
+    "Live range endpoints and which FieldMainFieldParam row/resource pointers are resident during registration.",
+    "Whether null callback cases beyond reasserting row ID 0 occur under the live configuration.",
+    "Deterministic system-tick seed fixture and exact runtime four-ID output.",
+    "Selected ID to durable save commit and map-load/generation consumer."
+  ],
+  "actions": {
+    "game_executed": false,
+    "save_modified": false,
+    "godot_implemented": false,
+    "commit_or_push": false,
+    "prior_reports_or_crosswalks_edited": false
+  }
+}
