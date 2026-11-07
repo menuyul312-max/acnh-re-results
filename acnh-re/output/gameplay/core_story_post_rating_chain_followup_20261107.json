@@ -1,0 +1,696 @@
+{
+  "schema": "acnh-re/core-story-post-rating-chain-followup/1",
+  "game_version": "1.0.0",
+  "audit_date": "2026-11-07",
+  "scope": "Static RE follow-up from IslandEvaluationClearTkkLive through K.K. first-live stage/NPC, post-live Nook standby, credits evidence, and cConstructLicense.",
+  "source_root_relative_to_deliverable_repo": "acnh-re",
+  "source_root_note": "Source hash paths are relative to repository directory acnh-re/; this report and JSON are stored in the same repository.",
+  "report_path": "docs/CORE_STORY_POST_RATING_CHAIN_FOLLOWUP_20261107.md",
+  "evidence_policy": {
+    "EF_LOCAL": "Direct action, condition, call, stage request, or flag mutation in decoded EventFlow. This proves local flow logic, not execution in a specific save.",
+    "STATIC_NATIVE_CONFIRMED": "AArch64 bytes and/or pseudocode resolve a native read, condition, or write. This is not runtime execution.",
+    "OPEN_JOIN": "Adjacent local actions exist, but the available EventFlow/direct-call evidence does not connect them into one automatic path.",
+    "MANIFEST_ONLY": "An asset path exists in the ROMFS inventory; no trigger or rendered use is established."
+  },
+  "source_hashes": [
+    {
+      "path": "inputs/additional_exefs/main",
+      "sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+      "kind": "ExeFS NSO; AArch64 disassembly source"
+    },
+    {
+      "path": "output/index.sqlite",
+      "sha256": "a78c7af27d37b8fd931bba8bc611623dacf7685cb6e8b4f827effa0765340aad",
+      "kind": "string references and direct-call index"
+    },
+    {
+      "path": "output/gameplay/flow_index.json",
+      "sha256": "359f3a21a17a116902b0c8e1110c3892814b6fccbeb50b71d573c8ab3e1c68c5",
+      "kind": "456-flow EventFlow caller/entry/action index"
+    },
+    {
+      "path": "output/gameplay/flag_index.json",
+      "sha256": "0a27bae4ad2f7dbae70f10d8bc460b2e79ba3c7e9a4eabe38feb501321fb79a6",
+      "kind": "named flag sources, readers and writers"
+    },
+    {
+      "path": "output/gameplay/native_flag_refs.json",
+      "sha256": "e7b1f581a342a6ec856cc735326823f0721aa81b587fc54f4300b2ab2b25bedc",
+      "kind": "static native references and pseudocode readings"
+    },
+    {
+      "path": "output/gameplay/save_layout.json",
+      "sha256": "a326c84213faad1921bd7660c3e171a7b3af117ec55e2ca711a871ad637e51dc",
+      "kind": "native-emulated generic save layout"
+    },
+    {
+      "path": "output/binary/analysis_decomp/fd8920.c",
+      "sha256": "0d8b264fa4d0ca8db85be540297d175c5b4467ba92e6c5b315506e44f988902e",
+      "kind": "static pseudocode for 0xfd8920"
+    },
+    {
+      "path": "output/binary/analysis_decomp/f545f0.c",
+      "sha256": "50fb906413876336cc7e894e4e1051f557e4023117dd7ef96fcd2f630b6e0abf",
+      "kind": "static pseudocode for 0xf545f0"
+    },
+    {
+      "path": "output/binary/analysis_decomp/c70da0.c",
+      "sha256": "b2253dd8192f615ce55cb57d7ff4de45a22ae14d4186edf61a4e57bb8f0b5588",
+      "kind": "static stage/AI actor builder evidence"
+    },
+    {
+      "path": "output/binary/analysis_decomp/1470e90.c",
+      "sha256": "c37c9542db23aa8d74105a101da693608282c529acbee2c33ab4bc50da873425",
+      "kind": "generic StaffCredit string-reference function"
+    },
+    {
+      "path": "output/additional_romfs/extracted_manifest.json",
+      "sha256": "5e2327bc81c0a526cbcf878e9d899f47536b5b8f5a9fdf8b4a776413f75b64b8",
+      "kind": "ROMFS path and per-file hash inventory"
+    }
+  ],
+  "eventflow_sources": [
+    {
+      "source_id": 622,
+      "flow": "SNPC_sza_50_IslandEvaluation",
+      "source_path": "B_data/EventFlow/SNPC_sza_50_IslandEvaluation.bfevfl",
+      "source_sha256": "c57c677d2d2f09290c0414f7a43c404bb28e8b8c126b6ce703df61c61ff3281e"
+    },
+    {
+      "source_id": 279,
+      "flow": "Demo_PublicAnnouncement",
+      "source_path": "B_data/EventFlow/Demo_PublicAnnouncement.bfevfl",
+      "source_sha256": "7ec0d30107a1d40169b4455932f0f6853beb9ef7b7cf69ca2ee2f77958a12602"
+    },
+    {
+      "source_id": 282,
+      "flow": "Demo_PublicAnnouncement_13_Sza_Once",
+      "source_path": "B_data/EventFlow/Demo_PublicAnnouncement_13_Sza_Once.bfevfl",
+      "source_sha256": "b83ce836be4389b9de087fd8f4153917d4e5bd32949581be63b2166b53da4cc2"
+    },
+    {
+      "source_id": 295,
+      "flow": "Demo_PublicAnnouncement_Process",
+      "source_path": "B_data/EventFlow/Demo_PublicAnnouncement_Process.bfevfl",
+      "source_sha256": "7b921fd4ef4b262169b3f9d445bf74437fcf913294607d20f8b29c6b65bb8077"
+    },
+    {
+      "source_id": 625,
+      "flow": "SNPC_tkk_Live",
+      "source_path": "B_data/EventFlow/SNPC_tkk_Live.bfevfl",
+      "source_sha256": "d1a9d0253d4ae6c1ed46e87d007f8924f4cba637589a3d0750ca07295794d316"
+    },
+    {
+      "source_id": 606,
+      "flow": "SNPC_rco_55_TkkFirstLive",
+      "source_path": "B_data/EventFlow/SNPC_rco_55_TkkFirstLive.bfevfl",
+      "source_sha256": "b3d6e9d359a19a744561d7b2c7f213b71513c3489ebee2c679b46e1540407905"
+    },
+    {
+      "source_id": 514,
+      "flow": "Player_GetDemo_Once",
+      "source_path": "B_data/EventFlow/Player_GetDemo_Once.bfevfl",
+      "source_sha256": "191b49e0fcb1e2c116068b9e69d40c837031a28b9e579f83f19a1eeca999298b"
+    },
+    {
+      "source_id": 521,
+      "flow": "Player_StartGamePhoneCall",
+      "source_path": "B_data/EventFlow/Player_StartGamePhoneCall.bfevfl",
+      "source_sha256": "f14f415f0eb70050a2c7d731b0f38639d65cbd78fee54f45c666d8691241b842"
+    },
+    {
+      "source_id": 272,
+      "flow": "AI_NPC_Tkk_FirstLive",
+      "source_path": "B_data/EventFlow/AI_NPC_Tkk_FirstLive.bfevfl",
+      "source_sha256": "5f7c36dba971c8c30f434b92085a8bb7e8bd677df39bcd008d0aa8950e02a9f8"
+    },
+    {
+      "source_id": 258,
+      "flow": "AI_NPC_Rco_FirstLiveInvite",
+      "source_path": "B_data/EventFlow/AI_NPC_Rco_FirstLiveInvite.bfevfl",
+      "source_sha256": "f0b576c5d5f8b1877609b4a971f32aebed02a612f7aabad8e8c60cb8cd89da2c"
+    }
+  ],
+  "native_transitions": [
+    {
+      "function_va": "0xfd8920",
+      "status": "STATIC_NATIVE_CONFIRMED",
+      "direct_callers": [
+        {
+          "function_va": "0xf545f0",
+          "call_pc": "0xf54fdc"
+        }
+      ],
+      "instructions": [
+        {
+          "pc": "0xfd8934",
+          "asm": "ldr x8, [x1]",
+          "meaning": "load elapsed-day argument"
+        },
+        {
+          "pc": "0xfd8940",
+          "bytes_le": "1f0500f1",
+          "asm": "cmp x8, #1",
+          "meaning": "compare elapsed days with one"
+        },
+        {
+          "pc": "0xfd8944",
+          "bytes_le": "eb020054",
+          "asm": "b.lt #92",
+          "meaning": "skip below one elapsed day; process at one or more"
+        },
+        {
+          "pc": "0xfd8950",
+          "asm": "adrp x8, #27041792",
+          "string_va": "0x29a2169",
+          "string": "IslandEvaluationClearTkkLive"
+        },
+        {
+          "pc": "0xfd8954",
+          "asm": "add x8, x8, #361",
+          "string_va": "0x29a2169",
+          "string": "IslandEvaluationClearTkkLive"
+        },
+        {
+          "pc": "0xfd8964",
+          "asm": "bl 0xf44d90",
+          "meaning": "read readiness flag"
+        },
+        {
+          "pc": "0xfd8968",
+          "bytes_le": "c0010036",
+          "asm": "tbz w0, #0, #56",
+          "meaning": "skip if readiness flag is OFF"
+        },
+        {
+          "pc": "0xfd896c",
+          "asm": "adrp x8, #27115520",
+          "string_va": "0x29b4f73",
+          "string": "TkkFirstLive"
+        },
+        {
+          "pc": "0xfd8970",
+          "asm": "add x8, x8, #3955",
+          "string_va": "0x29b4f73",
+          "string": "TkkFirstLive"
+        },
+        {
+          "pc": "0xfd897c",
+          "asm": "bl 0xf44d90",
+          "meaning": "read TkkFirstLive"
+        },
+        {
+          "pc": "0xfd8980",
+          "bytes_le": "00010037",
+          "asm": "tbnz w0, #0, #32",
+          "meaning": "skip write if TkkFirstLive is ON"
+        },
+        {
+          "pc": "0xfd8984",
+          "asm": "adrp x8, #27000832",
+          "string_va": "0x29984f3",
+          "string": "TkkFirstLiveEnable"
+        },
+        {
+          "pc": "0xfd8988",
+          "asm": "add x8, x8, #1267",
+          "string_va": "0x29984f3",
+          "string": "TkkFirstLiveEnable"
+        },
+        {
+          "pc": "0xfd8994",
+          "bytes_le": "e1030032",
+          "asm": "mov w1, #1",
+          "meaning": "write flag ON"
+        },
+        {
+          "pc": "0xfd899c",
+          "bytes_le": "35b1fd97",
+          "asm": "bl 0xf44e70",
+          "meaning": "write TkkFirstLiveEnable=1"
+        }
+      ],
+      "result": "elapsed_days >= 1 AND IslandEvaluationClearTkkLive=ON AND TkkFirstLive=OFF -> TkkFirstLiveEnable=ON",
+      "after_gate_calls": [
+        {
+          "pc": "0xfd89a8",
+          "target": "0xfd8a80",
+          "role": "weekly schedule builder"
+        },
+        {
+          "pc": "0xfd89b4",
+          "target": "0xfd9620",
+          "role": "today-entry validator"
+        }
+      ],
+      "runtime_status": "not executed in an integrated story save"
+    },
+    {
+      "function_va": "0xf545f0",
+      "status": "STATIC_NATIVE_CONFIRMED",
+      "direct_callers": [
+        {
+          "function_va": "0xf53a70",
+          "call_pc": "0xf53e4c"
+        }
+      ],
+      "gate_callee": {
+        "function_va": "0xfd8920",
+        "call_pc": "0xf54fdc"
+      },
+      "preconditions_note": "The following block is nested under an earlier scheduler-result bit, a non-null result from 0xf2d310, and nonzero pointed-to context/day value; it is not an unconditional every-day write.",
+      "flag_string_addresses": [
+        {
+          "pc_pair": [
+            "0xf54790",
+            "0xf54794"
+          ],
+          "string_va": "0x2969cbd",
+          "string": "TkkFirstLiveReserved"
+        },
+        {
+          "pc_pair": [
+            "0xf54798",
+            "0xf5479c"
+          ],
+          "string_va": "0x29b4f73",
+          "string": "TkkFirstLive"
+        },
+        {
+          "pc_pair": [
+            "0xf547a0",
+            "0xf547a4"
+          ],
+          "string_va": "0x29984f3",
+          "string": "TkkFirstLiveEnable"
+        },
+        {
+          "pc_pair": [
+            "0xf5477c",
+            "0xf54780"
+          ],
+          "string_va": "0x292e057",
+          "string": "TotakekeLiveCount"
+        }
+      ],
+      "sequence": [
+        {
+          "pc": "0xf54824",
+          "target_flag": "TkkFirstLiveReserved",
+          "value": 0,
+          "call_pc": "0xf54828",
+          "callee": "0xf44e70",
+          "operation": "clear reservation"
+        },
+        {
+          "pc": "0xf5482c",
+          "target_flag": "TotakekeLiveCount",
+          "call_pc": "0xf54838",
+          "callee": "0xf4aff0",
+          "operation": "read player count"
+        },
+        {
+          "pc": "0xf5483c",
+          "bytes_le": "1f040071",
+          "asm": "cmp w0, #1",
+          "operation": "compare count with one"
+        },
+        {
+          "pc": "0xf54840",
+          "bytes_le": "8b010054",
+          "asm": "b.lt #48",
+          "operation": "skip writes for count < 1"
+        },
+        {
+          "pc": "0xf54854",
+          "target_flag": "TkkFirstLive",
+          "value": 1,
+          "call_pc": "0xf5485c",
+          "callee": "0xf44e70",
+          "operation": "set occurred flag"
+        },
+        {
+          "pc": "0xf54864",
+          "target_flag": "TkkFirstLiveEnable",
+          "value": 0,
+          "call_pc": "0xf5486c",
+          "callee": "0xf44e70",
+          "operation": "clear enable flag"
+        }
+      ],
+      "result": "when this block's scheduler/context prerequisites hold: clear TkkFirstLiveReserved, then read TotakekeLiveCount; when count >= 1, set TkkFirstLive=ON and clear TkkFirstLiveEnable",
+      "runtime_status": "not executed in an integrated story save"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "score_gate",
+      "status": "EF_LOCAL",
+      "state": "SNPC_sza_50_IslandEvaluation:ClearTkkFirstLiveScore event #52 writes IslandEvaluationClearTkkLive=ON; #54/#55 complete/clear island-development quest flags.",
+      "refs": [
+        {
+          "source_id": 622,
+          "path": "output/gameplay/trees/SNPC_sza_50_IslandEvaluation.txt",
+          "entry": "ClearTkkFirstLiveScore",
+          "events": [
+            52,
+            54,
+            55
+          ]
+        }
+      ]
+    },
+    {
+      "id": "native_first_live_enable",
+      "status": "STATIC_NATIVE_CONFIRMED",
+      "state": "0xfd8920 checks elapsed>=1, readiness ON, TkkFirstLive OFF, then writes TkkFirstLiveEnable ON.",
+      "refs": [
+        {
+          "source": "native_transitions[0]",
+          "function_va": "0xfd8920"
+        },
+        {
+          "source": "output/gameplay/flag_index.json",
+          "flag": "cLand:TkkFirstLiveEnable",
+          "definition_table": "EventFlagsLandParam",
+          "source_id": 18,
+          "eventflow_writers": []
+        }
+      ]
+    },
+    {
+      "id": "announcement_to_stage",
+      "status": "EF_LOCAL_RUNTIME_JOIN_OPEN",
+      "state": "Announcement init reads enable and sets reservation; PAnnounceSza requests cMainFieldFirstLive at event #41.",
+      "refs": [
+        {
+          "source_id": 279,
+          "entry": "Root_Init",
+          "events": [
+            83
+          ]
+        },
+        {
+          "source_id": 279,
+          "entry": "PAnnounceSza",
+          "events": [
+            41
+          ]
+        }
+      ]
+    },
+    {
+      "id": "stage_to_live_entry",
+      "status": "OPEN_JOIN",
+      "state": "Stage/actor resources and the dedicated first-live talk entry exist, but the indexed graph lacks a direct caller from cMainFieldFirstLive or either AI flow to SNPC_tkk_Live:Tkk_LandFirstLive.",
+      "refs": [
+        {
+          "source_id": 625,
+          "entry": "Tkk_LandFirstLive",
+          "events": [
+            118,
+            92,
+            93,
+            94
+          ],
+          "called_from": []
+        },
+        {
+          "source_id": 272,
+          "entry": "Root",
+          "subflow_call": "AI_NPC_Common:ContinueSpeak",
+          "called_from": []
+        },
+        {
+          "native_function": "0xc70da0",
+          "refs": [
+            "E_FirstLive_NPC_0",
+            "AIF:AI_NPC_Tkk_FirstLive"
+          ],
+          "direct_callers": []
+        }
+      ]
+    },
+    {
+      "id": "live_completion",
+      "status": "EF_LOCAL",
+      "state": "Tkk_LiveAfter_Flag writes StandByRcoVisitMyHomeAfterTkkFirstLive and increments TotakekeLiveCount.",
+      "refs": [
+        {
+          "source_id": 625,
+          "entry": "Tkk_LiveAfter_Flag",
+          "events": [
+            141,
+            142,
+            143,
+            144,
+            145,
+            146
+          ]
+        }
+      ]
+    },
+    {
+      "id": "native_first_live_done",
+      "status": "STATIC_NATIVE_CONFIRMED_RUNTIME_OPEN",
+      "state": "Under the dispatcher's local scheduler/context guards, 0xf545f0 reads TotakekeLiveCount and when count>=1 sets TkkFirstLive=ON and clears TkkFirstLiveEnable.",
+      "refs": [
+        {
+          "source": "native_transitions[1]",
+          "function_va": "0xf545f0"
+        },
+        {
+          "source": "output/gameplay/flag_index.json",
+          "flag": "cPlayer:TotakekeLiveCount",
+          "EventFlow_writer": "SNPC_tkk_Live:Tkk_LiveAfter_Flag"
+        }
+      ]
+    },
+    {
+      "id": "daily_phone_standby",
+      "status": "EF_LOCAL",
+      "state": "Daily processor calls CheckPhoneCallIslandCreater (#158); the entry reads TkkFirstLive/license/visit standby and writes phone standby flags (#163-166).",
+      "refs": [
+        {
+          "source_id": 295,
+          "entry": "ChkStartGamePhoneCall",
+          "events": [
+            158
+          ]
+        },
+        {
+          "source_id": 295,
+          "entry": "CheckPhoneCallIslandCreater",
+          "events": [
+            159,
+            157,
+            169,
+            160,
+            161,
+            163,
+            164,
+            165,
+            166,
+            170,
+            171
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nook_invite_license",
+      "status": "EF_LOCAL_UPSTREAM_OPEN",
+      "state": "InvitePlayerHouse clears visit standby (#31); conditional local branch grants item 4318, writes MainmenuConstructLicense (#16), and installs cConstructLicense (#17). It is not called by the daily processor in the index and does not read the visit standby flag.",
+      "refs": [
+        {
+          "source_id": 606,
+          "entry": "InvitePlayerHouse",
+          "events": [
+            31,
+            9,
+            32,
+            10,
+            16,
+            17
+          ],
+          "called_from": []
+        },
+        {
+          "source": "output/gameplay/flag_index.json",
+          "flag": "cPlayer:MainmenuConstructLicense",
+          "writers": [
+            "SNPC_rco_55_TkkFirstLive:InvitePlayerHouse",
+            "Player_StartGamePhoneCall:IslandCreaterTell",
+            "Player_StartGamePhoneCall:IslandCreaterTell_Continued",
+            "Tutorials_Prologue3_Orientation1:Root"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "phone_call_alternate",
+      "status": "EF_LOCAL_UPSTREAM_OPEN",
+      "state": "Player_StartGamePhoneCall:ChkPhoneCall reads StandByPhoneCallIslandCreater; IslandCreaterTell and _Continued write the same license at #145. The flow has no indexed direct callers, and ChkPhoneCall has no indexed subflow call to Tell.",
+      "refs": [
+        {
+          "source_id": 521,
+          "entries": [
+            "ChkPhoneCall",
+            "IslandCreaterTell",
+            "IslandCreaterTell_Continued"
+          ],
+          "called_from": [],
+          "writers": [
+            145
+          ]
+        }
+      ]
+    },
+    {
+      "id": "credits",
+      "status": "OPEN_JOIN_MANIFEST_ONLY",
+      "state": "StaffCredit layout and STR_StaffList path exist; generic native 0x1470e90 references StaffCredit but has no direct caller; no indexed EventFlow contains a credit token. No trigger is identified.",
+      "refs": [
+        {
+          "manifest_path": "Layout/StaffCredit.Nin_NX_NVN.zs",
+          "sha256": "74a02627d2fa7a19e8c69671eb88aa4f06d52a1246c7eacead572874cbb6bfe1"
+        },
+        {
+          "manifest_path": "BDLI/String/USen/STR_StaffList.bdli.zs",
+          "sha256": "9f1ce78d45d6d2bc04afb225770a644b35c8a8eb7956a811fdb877968df7f405"
+        },
+        {
+          "native_function": "0x1470e90",
+          "string": "StaffCredit",
+          "direct_callers": []
+        },
+        {
+          "flow_index": "456 flows; no StaffCredit/StaffList token"
+        }
+      ]
+    },
+    {
+      "id": "save_flag_offset",
+      "status": "OPEN",
+      "state": "Save layout exposes generic cLand event-flag storage; it does not resolve individual story flag names to offsets/bits.",
+      "refs": [
+        {
+          "path": "output/gameplay/save_layout.json",
+          "node": "0x1575b0",
+          "data": "0x200ff4",
+          "size": "0x800",
+          "name": "land event flags"
+        },
+        {
+          "path": "output/gameplay/flag_index.json",
+          "tables": [
+            {
+              "name": "EventFlagsLandParam",
+              "source_id": 18
+            },
+            {
+              "name": "EventFlagsPlayerParam",
+              "source_id": 26
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "score_gate",
+      "to": "native_first_live_enable",
+      "status": "static_gate_confirmed_runtime_join_open",
+      "evidence": [
+        "EF_LOCAL",
+        "STATIC_NATIVE_CONFIRMED"
+      ],
+      "claim": "Native gate arguments and branch polarity are now exact; still no executed story save joins the EventFlow write to the native day-change read."
+    },
+    {
+      "from": "native_first_live_enable",
+      "to": "announcement_to_stage",
+      "status": "local_transition_confirmed_runtime_join_open",
+      "evidence": [
+        "EF_LOCAL",
+        "STATIC_NATIVE_CONFIRMED"
+      ]
+    },
+    {
+      "from": "announcement_to_stage",
+      "to": "stage_to_live_entry",
+      "status": "OPEN_JOIN",
+      "missing": "No direct stage/AI callsite to SNPC_tkk_Live:Tkk_LandFirstLive."
+    },
+    {
+      "from": "stage_to_live_entry",
+      "to": "live_completion",
+      "status": "OPEN_JOIN_TO_LOCAL_HANDLER",
+      "missing": "The entry exists, but indexed stage/AI invocation into it is absent."
+    },
+    {
+      "from": "live_completion",
+      "to": "daily_phone_standby",
+      "status": "local_eventflow_link_confirmed",
+      "claim": "Live sets standby; daily processor reads it and queues the phone-call flags, subject to its conditions."
+    },
+    {
+      "from": "live_completion",
+      "to": "native_first_live_done",
+      "status": "static_count_lifecycle_confirmed_runtime_open",
+      "claim": "Live count increments in EventFlow; native day-change block reads count>=1, sets TkkFirstLive ON, and clears enable."
+    },
+    {
+      "from": "daily_phone_standby",
+      "to": "nook_invite_license",
+      "status": "OPEN_JOIN",
+      "missing": "Daily entry has no subflow call to InvitePlayerHouse; invite entry does not read StandByRcoVisitMyHomeAfterTkkFirstLive."
+    },
+    {
+      "from": "nook_invite_license",
+      "to": "credits",
+      "status": "OPEN_JOIN",
+      "missing": "No EventFlow or identified native/stage credit trigger."
+    },
+    {
+      "from": "nook_invite_license",
+      "to": "save_flag_offset",
+      "status": "not_applicable",
+      "claim": "Unlock EventFlow logic is named, but individual save offsets are unresolved."
+    }
+  ],
+  "open_joins": [
+    {
+      "id": "first_live_stage_actor_to_talk_entry",
+      "exact_missing_evidence": "No direct caller for SNPC_tkk_Live:Tkk_LandFirstLive or AI_NPC_Tkk_FirstLive in flow_index; native 0xc70da0 builds E_FirstLive_NPC_0 with AI_NPC_Tkk_FirstLive but has no direct caller in index.sqlite and no talk-entry target is identified."
+    },
+    {
+      "id": "first_live_to_credits",
+      "exact_missing_evidence": "No EventFlow credit action/caller in 456 flows; 0x1470e90 references generic StaffCredit and has no direct caller; ROMFS manifest only proves asset path presence."
+    },
+    {
+      "id": "standby_visit_to_nook_invite",
+      "exact_missing_evidence": "Demo_PublicAnnouncement_Process:CheckPhoneCallIslandCreater queues phone standby flags but does not call SNPC_rco_55_TkkFirstLive:InvitePlayerHouse; InvitePlayerHouse clears but does not read the Nook-visit standby flag, and its indexed direct callers are empty."
+    },
+    {
+      "id": "phone_standby_to_phone_license_entry",
+      "exact_missing_evidence": "Player_StartGamePhoneCall:ChkPhoneCall reads the standby flag and IslandCreaterTell writes the license, but the flow's indexed direct callers are empty and ChkPhoneCall has no indexed subflow call to IslandCreaterTell."
+    },
+    {
+      "id": "story_flag_name_to_save_offset",
+      "exact_missing_evidence": "save_layout.json records generic cLand event-flag storage and flag_index records EventFlags tables, but no per-name offset/bit crosswalk is available."
+    },
+    {
+      "id": "integrated_runtime",
+      "exact_missing_evidence": "No new game save was executed from score readiness through K.K., daily Nook scheduling, credits, or license unlock; model/audio/raw scene assets were not used."
+    }
+  ],
+  "absence_and_limits": [
+    "All native transitions are static disassembly/pseudocode, not main-game execution.",
+    "Existing native fixtures test controlled scheduler components only and do not prove the progression graph in one save.",
+    "No credits trigger is inferred from layout/string presence.",
+    "No per-flag save offset is inferred from generic cLand/player flag storage.",
+    "No model, audio, raw stage/scene asset, or rendered UI was used."
+  ]
+}

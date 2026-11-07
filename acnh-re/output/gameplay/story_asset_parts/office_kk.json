@@ -1343,7 +1343,7 @@
           "path": "acnh-re/output/gameplay/native_flag_refs.json",
           "key": "0xfd8920",
           "role": "day-change native",
-          "notes": "TkkFirstLiveEnable is set after IslandEvaluationClearTkkLive and an unresolved second flag condition; likely TkkFirstLive, but decompilation loses the call argument."
+          "notes": "Static AArch64 at 0xfd8920 proves TkkFirstLive is the OFF flag: readiness ON, elapsed days >=1, and TkkFirstLive OFF write TkkFirstLiveEnable=1. This is a static native condition; a story-save runtime trace remains open."
         },
         {
           "status": "EF",
