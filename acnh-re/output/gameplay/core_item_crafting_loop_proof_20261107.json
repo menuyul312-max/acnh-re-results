@@ -1,0 +1,208 @@
+{
+  "schema": "acnh.core_item_crafting_loop_proof.v1",
+  "game_version": "1.0.0",
+  "generated_date_utc": "2026-11-07",
+  "scope": "Evidence synthesis for story-critical item identity, inventory, NPC material delivery, DIY recipe gates, crafting transaction, structure/furniture requirements, and tool durability. No Godot/build work or live-game execution.",
+  "overall_status": "partial_connected_evidence",
+  "full_player_loop_proven": false,
+  "evidence_labels": {
+    "EF": "Decoded EventFlow graph and ordered action/query references.",
+    "TBL": "Resolved 1.0.0 source table row or table join.",
+    "NATIVE": "Original native instructions executed in a bounded synthetic/in-memory fixture.",
+    "NATIVE_STATIC": "Disassembly/decompiler and indexed call-site trace; native behavior not run in the stated context.",
+    "PSEUDO": "Static decompiler/call-graph interpretation.",
+    "CAT": "Catalogue candidate only; no raw source/runtime binding proof."
+  },
+  "provenance": {
+    "main_nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+    "analysis_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+    "itemparam_raw_sha256": "89230e97fc877ff2b2b48ac1c707ef32b3a7760118839c307f19797e2553458c",
+    "itemkind_raw_sha256": "4cac0178cc69519585528b24ceef022ccb1fefa12b23fc9a9e4280e40185ba7b",
+    "recipecraftparam_raw_sha256": "97fe6d73e183dab43dad7358627a0a1a43f5764f0a18fa044a63a9ecf56ba919",
+    "shared_read_only_index": "/workspace/acnh-re/output/index.sqlite",
+    "native_test_fixtures_are_live_save_data": false
+  },
+  "loop_segments": [
+    {
+      "id": "identity_and_inventory_insert",
+      "status": "TBL_plus_bounded_NATIVE",
+      "claims": [
+        "ItemParam.UniqueID is the recipe output and ingredient key; RecipeCraftParam.Item joins all 552 outputs uniquely and all 1020 populated material slots join to ItemParam.UniqueID.",
+        "RecipeCraftParam row 56 outputs item 975 (FtrFruitbasket) and requires one each of item IDs 2213, 2285, 2287, 2214, and 2286.",
+        "The original catch-result insertion path writes an eight-byte item word into a 20-record active inventory view, uses 65534/0xfffe as the empty ID, selects the first empty slot, and on a full view shifts slots 1..19 left before writing at slot 19."
+      ],
+      "evidence": [
+        "acnh-re/output/gameplay/crafting_transaction_followup/crafting_recipe_flow_native.json#recipe_table_and_joins",
+        "acnh-re/output/gameplay/tool_mechanics_followup/tool_catch_inventory_native.json#inventory_shape",
+        "acnh-re/output/gameplay/tool_mechanics_followup/tool_catch_inventory_native.json#cases"
+      ],
+      "bounded_result": {
+        "helper_chain": ["0xefec70", "0xefee80", "0xf57ed0"],
+        "cases": 42,
+        "first_empty_positions_tested": 20,
+        "full_inventory_cases": 2,
+        "mismatches": 0,
+        "samples": ["insect item 582", "fish item 328"]
+      },
+      "limits": [
+        "This is result-to-inventory behavior for catch results, not an ordinary ground pickup trace.",
+        "Owner lookup, view selection, global empty-item word, and optional normalization use controlled or stubbed fixture data; no player save is mutated.",
+        "A/B/C cache groups remain structural labels and are not mapped to named bag/storage save members.",
+        "The cache/count helpers do not establish a complete persistent stack-record schema."
+      ]
+    },
+    {
+      "id": "requirements_and_cache",
+      "status": "bounded_NATIVE",
+      "claims": [
+        "Original inventory-cache producers populate item counters through ItemParam validity/normalization and MultiHoldMaxNum/FreeParam readers.",
+        "The warm-cache requirement reader was run for 2160 cases; selected normal-item counts aggregate A+B narrowed to u16, with source C controlled by a native option.",
+        "Cold-cache recipe-56 checks pass for all five fixture materials with C enabled and fail for the peach material when C is excluded or the peach fixture record is absent."
+      ],
+      "evidence": [
+        "acnh-re/output/mechanics/inventory_cache_native.json",
+        "acnh-re/output/mechanics/inventory_requirements_native.json",
+        "acnh-re/output/gameplay/crafting_transaction_followup/crafting_transaction_followup_native.json"
+      ],
+      "fixture_limits": [
+        "Cache source records and player context are reconstructed; no source player save was supplied.",
+        "The cold-cache run stubs only SDK memset byte-fill; A/B/C source-member names are unresolved.",
+        "Wrapped/remade item branches and the alternative source-count branch remain open."
+      ]
+    },
+    {
+      "id": "story_pickup_and_npc_delivery",
+      "status": "EF_only_for_story_actions",
+      "claims": [
+        "Prologue flow sets PlayerPickupEnable and gates branches/fruits with HasTargetItem followed by DeleteTargetItem and delivery actions.",
+        "TownFruitTypeChk checks and consumes six of the selected native island fruit and then sets HaveTownFruit4CampFire.",
+        "Nook's Cranny material flow checks 30 each of wood 2768, hardwood 2769, softwood 2767, and iron nugget 2511; the matching delete entry is followed by its RcmShopMaterial flag and eventual shop-kit reward."
+      ],
+      "evidence": [
+        "acnh-re/output/gameplay/trees/Tutorials_Prologue_Rco.txt",
+        "acnh-re/output/gameplay/trees/SNPC_rcm_21_MaterialCollecting.txt",
+        "acnh-re/output/gameplay/trees/SNPC_rcm_24_MaterialGiveProcess.txt",
+        "acnh-re/docs/GAMEPLAY_FLOW.md#5-nooks-cranny"
+      ],
+      "limits": [
+        "EventFlow order/parameters are proven; DeleteTargetItem and delivery effects were not executed against a player pocket.",
+        "World-item pickup, collection animation, and pocket writer are not connected by native evidence."
+      ]
+    },
+    {
+      "id": "recipe_unlock_workshop_and_consumption",
+      "status": "EF_TBL_NATIVE_static_and_partial_NATIVE",
+      "claims": [
+        "Day-2 DIY flow requires five branches and teaches DIYtutorial1/DIYtutorial2 before enabling recipe-related progression.",
+        "Recipe 458 has WoodBridge unlock and outputs item 7211; recipe 461 has CampSite unlock and outputs item 5166.",
+        "Ftr_Working routes cWorkCraft through SaveSetFromUIResult before Making/GetDemo; WorkCraftBgPage is an identified UI factory, not proof of a live commit.",
+        "Native recipe-56 getter and material sufficiency path execute on controlled records.",
+        "The original transaction branch can route result 975 into a controlled free pocket slot via 0xf987c0 after explicit actor-resolution controls."
+      ],
+      "evidence": [
+        "acnh-re/output/gameplay/crafting_transaction_followup/crafting_recipe_flow_native.json",
+        "acnh-re/output/gameplay/crafting_transaction_followup/crafting_transaction_followup_native.json",
+        "acnh-re/output/gameplay/crafting_transaction_remainder_20261107/crafting_transaction_branch_native.json",
+        "acnh-re/output/gameplay/crafting_material_removal_remainder_20261107/eff060_apple_probe.json",
+        "acnh-re/docs/CRAFTING_TRANSACTION_FOLLOWUP.md"
+      ],
+      "bounded_results": {
+        "material_removal_attempt": "0xeff060 reached the original 0xaac730/0xf9e840/0xf9e410 gate; the fixture was rejected, Apple count stayed 9, no inventory bytes changed, consumption_verified=false.",
+        "result_insertion_partial_branch": "With explicit no-match registry control, 0xf987c0 inserted output 975 into slot 19 in the 19/20 case and slot 4 after the synthetic full-pocket compaction case.",
+        "transaction_mutators_in_branch_probe": "0xeff060/0xee1060 were stubbed; no material balance is proven."
+      },
+      "limits": [
+        "The Apple wrapper fixture supplies an ItemParam row pointer where the original lookup expects a dense ItemParam index; the native gate rejects it.",
+        "Full UI item selection, learned-recipe wrapper, successful ingredient removal, transaction atomicity/rollback, and live pocket insertion are not proven.",
+        "The result insertion case is a synthetic branch probe and later native fixture execution may fault after pocket mutation; it is not a completed save-backed craft.",
+        "SaveProc serialization/write/flush/reload has not been joined to this transaction."
+      ]
+    },
+    {
+      "id": "structure_and_furnishing_requirements",
+      "status": "EF_TBL_and_static_join",
+      "claims": [
+        "Bridge kit 7211 is gated by recipe 458; placing it sets ImmQ_SetBridge before three housing kits 5827..5829 and further recipe unlocks are issued.",
+        "Each plot A/B/C tracks three interior donation flags and an outside-complete query; the daily completion flow checks all four parts for each plot.",
+        "All three plots are required for RcmImmQuestComplete; house-count gates then feed Resident Services, campsite/first camper, and island-evaluation story progression."
+      ],
+      "evidence": [
+        "acnh-re/output/gameplay/trees/SNPC_rco_53_MigrantsQuest.txt",
+        "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt",
+        "acnh-re/output/gameplay/trees/Player_Demo_HousingFinish.txt",
+        "acnh-re/docs/GAMEPLAY_FLOW.md#7-quest-3-rumah-villager-baru",
+        "acnh-re/output/gameplay/story_asset_parts/shop_plots.json"
+      ],
+      "limits": [
+        "EventFlow identifies the checklist and item IDs; exact outside-furniture acceptance semantics and real placed-object sets are not reproduced.",
+        "Kit-to-world transform, build placement UI and collision instance are not linked in a live world."
+      ]
+    },
+    {
+      "id": "tool_selection_use_and_durability",
+      "status": "bounded_NATIVE_plus_STATIC",
+      "claims": [
+        "All 32 ItemParam tool rows join to ItemOutfitInfo.BreakDamage.",
+        "Packed ToolDamage occupies low 10 bits of the halfword at item-word byte offset +6; increment saturates at 999 and remaining wear is BreakDamage minus ToolDamage.",
+        "0xe895a0 copies wear to a selected player pocket item and sets slot dirty bit 0x4000; it accepts a further increment after threshold and its success value is not a break indication.",
+        "Ring callback indices 0..7 read matching pocket item words in an eight-case native probe; the ring-to-held-hand/equip transition remains open."
+      ],
+      "evidence": [
+        "acnh-re/output/gameplay/tool_mechanics_followup/tool_durability_native.json",
+        "acnh-re/output/gameplay/tool_mechanics_followup/tool_durability_static_audit.json",
+        "acnh-re/output/gameplay/tool_mechanics_followup/tool_ring_inventory_native.json",
+        "acnh-re/output/gameplay/tool_mechanics_remainder_20261107/tool_break_state_selector_static.json",
+        "acnh-re/docs/TOOL_MECHANICS_FOLLOWUP.md",
+        "acnh-re/docs/TOOL_MECHANICS_REMAINDER_20261107.md"
+      ],
+      "thresholds_by_family": {
+        "Axe": {"2100": 100, "3068": 40, "5856": 100, "9617": 200},
+        "Shovel": {"2099": 100, "3082": 40, "8574": 200, "8575": 100, "8576": 100, "8577": 100},
+        "Net": {"2376": 10, "5784": 30, "8176": 30, "8177": 30, "8178": 30, "8179": 90},
+        "FishingRod": {"2377": 30, "3084": 10, "8471": 30, "8472": 30, "8473": 30, "8660": 90},
+        "Slingshot": {"2822": 20, "8578": 60, "8579": 20, "8580": 20},
+        "Watering": {"2379": 60, "3083": 20, "8533": 180, "8534": 60, "8535": 60, "8536": 60}
+      },
+      "fixture_results": {"durability_cases": 96, "durability_mismatches": 0, "ring_item_word_cases": 8, "ring_mismatches": 0},
+      "limits": [
+        "Eligibility, ItemParam index/cache, item-view construction and pocket accessors are supplied through bounded stubs/fixtures.",
+        "Successful-use state does not prove the zero-remaining state transition; family cadence is incomplete.",
+        "No serializer/flush/reload demonstrates durability persistence."
+      ]
+    }
+  ],
+  "story_gates": [
+    {"gate": "shop_material_collection", "requirements": {"wood_2768": 30, "hardwood_2769": 30, "softwood_2767": 30, "iron_nugget_2511": 30}, "result": "four material flags then shop kit; next-day structure processor opens shop", "evidence": "EF", "full_action_execution": false},
+    {"gate": "bridge_and_plot_quest", "requirements": {"bridge_kit_item": 7211, "plot_kits": [5827, 5828, 5829]}, "result": "bridge placement precedes housing kit grant; plot furniture checklist precedes all-three completion", "evidence": "EF+TBL", "full_action_execution": false},
+    {"gate": "recipe_identity", "requirements": {"wood_bridge_recipe_id": 458, "campsite_recipe_id": 461}, "result": "ItemParam output IDs 7211/5166 map back to recipe IDs via DiyRecipeID", "evidence": "TBL+NATIVE_STATIC", "full_wrapper_execution": false}
+  ],
+  "asset_mapping": {
+    "gameplay_data": {"status": "STRUCT/TBL", "references": ["ItemParam", "RecipeCraftParam", "StructureBridgeParam", "StructureFacilityModel", "FieldMainFieldParam"], "conversion": "Preserve source row IDs, raw hashes, descriptors, and exact integer fields in typed JSON."},
+    "ui": {"status": "STRUCT/PSEUDO", "references": ["WorkCraftBgPage factory 0x1596020", "WorkCraftInfoPage -> WorkBenchInfo", "WorkCraftListPage -> WorkBench", "RingMenuToolsPage / RingMenuTools.byml", "LRingMenuTools Inv0..Inv7"], "conversion": "BFLYT to pane-tree JSON; BFLAN to section/raw summary; page-to-flow, input and live focus are still partial."},
+    "animation": {"status": "STRUCT/CAT", "references": ["WorkBenchInfo_EquipIn", "WorkBenchInfo_PressLeft", "WorkBenchBG_In/Change/Out", "StructureSettlerQuestFtrBox.root.asb Open/Close", "Player_ToolBreak flow entries"], "conversion": "ASB to state/transition/condition/event JSON; BFLAN treated separately; actor state/clip-to-action bindings remain open."},
+    "model": {"status": "CAT", "references": ["FtrWorkbench", "BridgeReserved", "HouseObjFtrBoxA/B/C", "quest-furniture ItemParam ResName catalog matches"], "raw_archive_available": false, "conversion_if_source_is_supplied": "Yaz0/SARC to BFRES to GLB plus textures; preserve provenance and note LOD/material fidelity limits."},
+    "audio": {"status": "CAT", "references": ["Player/Pl_LearningRecipe_00", "Npc/Npc_Diy_Hummer_0..3", "UI_WorkCraftInfo decide/invalid cues", "DuringConstruction/Env_FacilityConstruction00"], "raw_archive_available": false, "conversion_if_source_is_supplied": "BARS/AMTA to BWAV offsets to PCM WAV to OGG, retaining rate/channel/sample/loop metadata."},
+    "text": {"status": "EF", "references": ["Tutorials_Prologue_Rco message keys", "SNPC_rcm_21/24 material message keys", "Ftr_Working", "SNPC_rco_53_MigrantsQuest", "Obj_ReservedPlaceBox"], "conversion": "MSBT to JSON preserving archive, label, language, tags and source identity; runtime label selection/substitution and playback are partial."},
+    "world_data": {"status": "TBL/PSEUDO/OPEN", "references": ["StructureBridgeParam reserved IDs 26..31", "StructureFacilityModel rows", "FieldMainFieldParam template mapping"], "limits": "Story-kit transform, specific island instance and placement flow remain open."},
+    "collision": {"status": "CAT/OPEN", "references": ["PBC-suffixed BridgeReserved catalog candidate", "structure/furniture collision bindings"], "raw_phive_available": false, "conversion": "Keep .phive raw until parser and physics semantics are validated; no exact placement validator/owner join exists."}
+  },
+  "open_joins": [
+    "world dropped item -> normal pickup input/action -> saved pocket record and stack count",
+    "NPC HasTargetItem/DeleteTargetItem effects -> native pocket decrement and delivery/reward receipt",
+    "runtime ItemParam dense-index/table-manager graph -> successful 0xeff060 material removal",
+    "UI recipe selection/confirm/cancel -> real SaveSetFromUIResult payload -> atomic consume and result award",
+    "exact-stack behavior, rollback on interrupted craft, SaveProc serializer/write/flush/reload",
+    "outside-furniture query semantics and exact placed-item set for each plot",
+    "tool wear exhaustion -> selected PlayerToolBreak state/EventFlow entry and durable persistence",
+    "tool-ring controller selection -> held-hand transfer/equip/use action",
+    "story world placement transform and collision validation; raw model/audio archive linkage"
+  ],
+  "reproduction_commands": [
+    "PYTHONPATH=/workspace/acnh-re/.deps python3 acnh-re/tools/tool_catch_inventory_native.py",
+    "PYTHONPATH=/workspace/acnh-re/.deps python3 acnh-re/tools/crafting_transaction_followup_native.py",
+    "PYTHONPATH=/workspace/acnh-re/.deps:/workspace/acnh-re-github/acnh-re/tools python3 acnh-re/tools/tool_durability_native.py --research-root /workspace/acnh-re/output",
+    "python3 acnh-re/output/gameplay/crafting_material_removal_remainder_20261107/probe_eff060_apple.py",
+    "python3 acnh-re/output/gameplay/crafting_transaction_remainder_20261107/reproduce_branch_native.py"
+  ],
+  "report": "acnh-re/docs/CORE_ITEM_CRAFTING_LOOP_PROOF_20261107.md"
+}
