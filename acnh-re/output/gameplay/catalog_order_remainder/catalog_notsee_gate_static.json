@@ -10,6 +10,7 @@
     "elf_manifest": "/workspace/acnh-re/output/binary/elf.json",
     "elf_manifest_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
     "decomp_root": "/workspace/acnh-re/output/binary/analysis_decomp",
+    "tables_root": "/workspace/acnh-re/output/tables_resolved",
     "callback_bytes_sha256": "62d2f026356d7bf141645ac1dafd96a8ea732f8d92a95f3e87667c28fa33d779"
   },
   "item_catalog_type": {
@@ -46,6 +47,181 @@
       "span_end_va": "0xa9c39b",
       "name": "FUN_00b9c290",
       "evidence": "new_Ghidra_inventory"
+    }
+  },
+  "item_ui_category": {
+    "field": "ItemParam.ItemUICategory",
+    "field_hash": "0x28297660",
+    "cache_writer": {
+      "va": "0xa25010",
+      "size": 204,
+      "span_end_va": "0xa250db",
+      "name": "FUN_00b25010",
+      "evidence": "new_Ghidra_inventory"
+    },
+    "cache_predicate": "0xa10f00 resolves the item with 0xa9c290 and calls 0xaad2e0, which compares the cached ItemUICategory ordinal to the closure selector.",
+    "enum_order": [
+      "None",
+      "Floor",
+      "Upper",
+      "Wall",
+      "Ceiling_Rug",
+      "Plant",
+      "Creature",
+      "Food",
+      "Material",
+      "Others",
+      "Tool",
+      "RoomFloor",
+      "RoomWall",
+      "Unnecessary",
+      "Clothes"
+    ],
+    "enum_order_source": {
+      "path": "/workspace/acnh-re-github/acnh-re/tools/external/CylindricalEarth/specs_100.py",
+      "sha256": "b5ca15e0d335d5acfee1161def3d141d668f4e298eff862b6cda6c6646a0ab69",
+      "enum_name": "enum_3b7b05ca4a0a_52b2ca6f0581"
+    },
+    "excluded_ordinals": [
+      {
+        "ordinal": 0,
+        "label": "None",
+        "enum_hash": "0xdfa2aff1"
+      },
+      {
+        "ordinal": 13,
+        "label": "Unnecessary",
+        "enum_hash": "0xf9b02ea7"
+      },
+      {
+        "ordinal": 10,
+        "label": "Tool",
+        "enum_hash": "0x80c191ef"
+      }
+    ],
+    "field_hash_references": [
+      {
+        "pc": "0xa2502c",
+        "owner_va": "0xa25010"
+      }
+    ],
+    "cache_reader": {
+      "va": "0xaad2e0",
+      "size": 100,
+      "span_end_va": "0xaad343",
+      "name": "FUN_00bad2e0",
+      "evidence": "new_Ghidra_inventory"
+    },
+    "cache_wrapper_resolver": {
+      "va": "0xa9c290",
+      "size": 268,
+      "span_end_va": "0xa9c39b",
+      "name": "FUN_00b9c290",
+      "evidence": "new_Ghidra_inventory"
+    },
+    "callback_sequence": {
+      "start_va": "0x30c6640",
+      "status": "relocated code pointer sequence; not automatically a C++ vtable",
+      "entries": [
+        {
+          "pointer_va": "0x30c6640",
+          "target_va": "0xa10f00"
+        },
+        {
+          "pointer_va": "0x30c6648",
+          "target_va": "0xa10f40"
+        },
+        {
+          "pointer_va": "0x30c6650",
+          "target_va": "0x277240"
+        }
+      ],
+      "callback_va": "0xa10f00",
+      "callback_function": {
+        "va": "0xa10f00",
+        "size": 60,
+        "span_end_va": "0xa10f3b",
+        "name": "FUN_00b10f00",
+        "evidence": "new_Ghidra_inventory"
+      },
+      "callback_bytes_sha256": "e68304eb86e0300b52e10f4ee58296c4fc0d7afa7a4f7ed3ccaca94544c2ddfa",
+      "callback_disassembly": [
+        {
+          "va": "0xa10f00",
+          "mnemonic": "sub",
+          "operands": "sp, sp, #0x40"
+        },
+        {
+          "va": "0xa10f04",
+          "mnemonic": "str",
+          "operands": "x19, [sp, #0x20]"
+        },
+        {
+          "va": "0xa10f08",
+          "mnemonic": "stp",
+          "operands": "x29, x30, [sp, #0x30]"
+        },
+        {
+          "va": "0xa10f0c",
+          "mnemonic": "add",
+          "operands": "x29, sp, #0x30"
+        },
+        {
+          "va": "0xa10f10",
+          "mnemonic": "mov",
+          "operands": "x19, x0"
+        },
+        {
+          "va": "0xa10f14",
+          "mnemonic": "add",
+          "operands": "x0, sp, #8"
+        },
+        {
+          "va": "0xa10f18",
+          "mnemonic": "bl",
+          "operands": "#0xa9c290"
+        },
+        {
+          "va": "0xa10f1c",
+          "mnemonic": "ldr",
+          "operands": "w1, [x19, #8]"
+        },
+        {
+          "va": "0xa10f20",
+          "mnemonic": "add",
+          "operands": "x0, sp, #8"
+        },
+        {
+          "va": "0xa10f24",
+          "mnemonic": "bl",
+          "operands": "#0xaad2e0"
+        },
+        {
+          "va": "0xa10f28",
+          "mnemonic": "ldp",
+          "operands": "x29, x30, [sp, #0x30]"
+        },
+        {
+          "va": "0xa10f2c",
+          "mnemonic": "ldr",
+          "operands": "x19, [sp, #0x20]"
+        },
+        {
+          "va": "0xa10f30",
+          "mnemonic": "and",
+          "operands": "w0, w0, #1"
+        },
+        {
+          "va": "0xa10f34",
+          "mnemonic": "add",
+          "operands": "sp, sp, #0x40"
+        },
+        {
+          "va": "0xa10f38",
+          "mnemonic": "ret",
+          "operands": ""
+        }
+      ]
     }
   },
   "predicate": {
@@ -163,7 +339,7 @@
     "selector_branches": {
       "1_to_3": "0x11829d0 calls the 0x293cd0 filter with literal 2, then dispatches through 0x118a2e0 before building the final list.",
       "4": "0x11829d0 also calls the same filter with literal 2; afterward it adds up to 64 stored entries and calls 0x1189c70 to collect additional runtime entries.",
-      "0": "The indexed pseudocode has an unresolved jump-table branch; this audit does not claim its output behavior."
+      "0": "The selector-0 branch does not call the 0x293cd0 NotSee gate or run selector-4's UI-category mask. Its separate branch probes a selected record, then conditionally adds the PosterItemID collection or up to 64 records; source values and final composition are still unresolved."
     },
     "bitset_filter": {
       "function": "0x293cd0",
@@ -400,8 +576,267 @@
       },
       "selector_4": {
         "additional_item_scan": "0x40 records are checked and accepted entries are added to the bitset after the category-2 filter.",
-        "runtime_collection": "0x1189c70 adds entries from two runtime collections and a state-flag branch after the category-2 filter.",
-        "limitation": "The category of each post-filter addition and whether it survives later masks is unresolved."
+        "saved_shop_catalog_source": {
+          "native_source": {
+            "function": "0x11829d0",
+            "save_manager_accessor": "0xeecf00",
+            "member_offset": "0x2092f8",
+            "record_count": 64,
+            "record_stride": 8,
+            "record_item_id": "signed 16-bit ID at record offset 0; -2 records are skipped",
+            "consumer": "The selector-4 loop validates each record with 0x1058d00 and appends valid IDs to its candidate bitmap."
+          },
+          "local_save_layout": {
+            "path": "/workspace/acnh-re/output/gameplay/save_layout.json",
+            "node": "0x2092f8",
+            "data_offset": "0x4117fc",
+            "size": "0x200",
+            "parent_node": "0x1f3e98",
+            "parent_data_offset": "0x40ece8",
+            "parent_size": "0x2d98",
+            "annotation": "64-item list, shop block +0x2b14 (0xfc6300 -> 0xfc5d60)"
+          },
+          "external_schema_crosswalk": {
+            "path": "/workspace/acnh-re-github/acnh-re/tools/external/CylindricalEarth/save_keys.json",
+            "field_key": "09ee4739",
+            "field_name": "ShopCatalog",
+            "type_key": "bd29175c",
+            "type_name": "::Game::SaveShopCatalog"
+          },
+          "population": {
+            "builder": "0xfc6300 -> 0xfc5d60",
+            "item_kind_ordinals_and_requested_counts": [
+              {
+                "ordinal": 0,
+                "label": "Ftr",
+                "count": 2
+              },
+              {
+                "ordinal": 6,
+                "label": "Tops",
+                "count": 2
+              },
+              {
+                "ordinal": 9,
+                "label": "Bottoms",
+                "count": 1
+              },
+              {
+                "ordinal": 12,
+                "label": "Cap",
+                "count": 1
+              },
+              {
+                "ordinal": 14,
+                "label": "Accessory",
+                "count": 1
+              },
+              {
+                "ordinal": 11,
+                "label": "Shoes",
+                "count": 1
+              },
+              {
+                "ordinal": 72,
+                "label": "Music",
+                "count": 1
+              }
+            ],
+            "itemparam_catalog_type_counts_by_requested_kind": {
+              "Ftr": {
+                "NotForSale": 383,
+                "Sale": 417,
+                "NotSee": 6
+              },
+              "Tops": {
+                "Sale": 1087,
+                "NotForSale": 28
+              },
+              "Bottoms": {
+                "Sale": 721,
+                "NotForSale": 5
+              },
+              "Cap": {
+                "Sale": 403,
+                "NotForSale": 79,
+                "NotSee": 1
+              },
+              "Accessory": {
+                "Sale": 210,
+                "NotForSale": 12
+              },
+              "Shoes": {
+                "Sale": 441,
+                "NotForSale": 5
+              },
+              "Music": {
+                "Sale": 90,
+                "NotForSale": 5
+              }
+            },
+            "notsee_rows_in_requested_item_kind_domains": [
+              {
+                "unique_id": 5884,
+                "item_kind": "Ftr",
+                "label": "FtrObjChairTkk",
+                "item_ui_category": "Floor"
+              },
+              {
+                "unique_id": 6813,
+                "item_kind": "Ftr",
+                "label": "FtrEventLiveChair",
+                "item_ui_category": "Floor"
+              },
+              {
+                "unique_id": 8772,
+                "item_kind": "Cap",
+                "label": "CapHatHelmetRco",
+                "item_ui_category": "Clothes"
+              },
+              {
+                "unique_id": 12201,
+                "item_kind": "Ftr",
+                "label": "FtrEventNpcBench",
+                "item_ui_category": "Floor"
+              },
+              {
+                "unique_id": 12209,
+                "item_kind": "Ftr",
+                "label": "FtrObjWashtubSpn",
+                "item_ui_category": "Upper"
+              },
+              {
+                "unique_id": 12210,
+                "item_kind": "Ftr",
+                "label": "FtrObjClotheslineSpn",
+                "item_ui_category": "Floor"
+              },
+              {
+                "unique_id": 12229,
+                "item_kind": "Ftr",
+                "label": "FtrObjStoneovenSpn",
+                "item_ui_category": "Floor"
+              }
+            ],
+            "shop_filter_chain": {
+              "native_observation": "0xfc5d60 passes selector 1 to 0xfc5fd0, then applies additional selection helpers before adding records; the selector-1 predicate's ItemParam field binding and the extra helper semantics are unresolved.",
+              "limitation": "The seven NotSee rows are table candidates in the requested ItemKind domains, not proof that any is selected into a daily shop list. These entries are appended after selector 4's explicit NotSee bitmap filter, so the saved records and their full NotSee exclusion must be established from the runtime selection predicates or controlled state."
+            }
+          }
+        },
+        "runtime_collection": "0x1189c70 resolves Label keys against normal/special NPC parameter collections and reads PosterItemID (field hash 0xf640691); a state-flag branch adds UniqueID 0x29f5.",
+        "npc_parameter_field_hashes": {
+          "Label": {
+            "hash": "0x2f1b930d",
+            "tables": [
+              "NmlNpcParam",
+              "SpNpcParam"
+            ]
+          },
+          "PacketId": {
+            "hash": "0x3ce2e8d8",
+            "table": "SpNpcParam"
+          },
+          "PosterItemID": {
+            "hash": "0x0f640691",
+            "tables": [
+              "NmlNpcParam",
+              "SpNpcParam"
+            ]
+          }
+        },
+        "poster_item_table_join": {
+          "source_tables": {
+            "NmlNpcParam": {
+              "rows": 397,
+              "valid_poster_ids": 397,
+              "negative_poster_id_rows": 0
+            },
+            "SpNpcParam": {
+              "rows": 62,
+              "valid_poster_ids": 54,
+              "negative_poster_id_rows": 8
+            }
+          },
+          "unique_poster_item_ids": 451,
+          "joined_item_kind_counts": {
+            "Poster": 451
+          },
+          "joined_item_catalog_type_counts": {
+            "Sale": 451
+          },
+          "joined_item_ui_category_counts": {
+            "Wall": 451
+          },
+          "state_flag_addition": {
+            "unique_id": "0x29f5",
+            "item_kind": "Poster",
+            "item_catalog_type": "Sale",
+            "item_ui_category": "Wall"
+          },
+          "limitation": "This table join identifies eligible PosterItemID values. Runtime collection predicates determine which rows are added in a particular page state."
+        },
+        "post_addition_mask": {
+          "construction": "0xa0ffa0 creates ItemUICategory predicates; 0x1af3a0 constructs the matching 15,000-item bitsets for ordinals 0, 13, and 10. The producer ORs those sets, complements the result, and intersects it with the accumulated list.",
+          "excluded_item_ui_categories": [
+            {
+              "ordinal": 0,
+              "label": "None",
+              "enum_hash": "0xdfa2aff1"
+            },
+            {
+              "ordinal": 13,
+              "label": "Unnecessary",
+              "enum_hash": "0xf9b02ea7"
+            },
+            {
+              "ordinal": 10,
+              "label": "Tool",
+              "enum_hash": "0x80c191ef"
+            }
+          ],
+          "after_mask": "0xb2ecc0 scans 15,000 bits and only clears an item when its handle is invalid or its callback at 0x30ceff8→0xb2eed0 returns false.",
+          "clear_only_disassembly": {
+            "function": {
+              "va": "0xb2ecc0",
+              "size": 236,
+              "span_end_va": "0xb2edab",
+              "name": "FUN_00c2ecc0",
+              "evidence": "new_Ghidra_inventory"
+            },
+            "function_bytes_sha256": "f0df3afd19a93d5d2c25699c0da1ba7105715d037f1d20328c3f194ba137a8e2",
+            "clear_pc": "0xb2ed80",
+            "store_pc": "0xb2ed84",
+            "callback_sequence": {
+              "start_va": "0x30ceff8",
+              "status": "relocated code pointer sequence; not automatically a C++ vtable",
+              "entries": [
+                {
+                  "pointer_va": "0x30ceff8",
+                  "target_va": "0xb2eed0"
+                },
+                {
+                  "pointer_va": "0x30cf000",
+                  "target_va": "0xb2efa0"
+                },
+                {
+                  "pointer_va": "0x30cf008",
+                  "target_va": "0x277240"
+                }
+              ],
+              "callback_va": "0xb2eed0",
+              "callback_function": {
+                "va": "0xb2eed0",
+                "size": 204,
+                "span_end_va": "0xb2ef9b",
+                "name": "FUN_00c2eed0",
+                "evidence": "new_Ghidra_inventory"
+              }
+            }
+          },
+          "runtime_predicate_semantics": "The callback builds a candidate-dependent runtime query, but its field/state meaning is not resolved here. It only removes entries in this caller."
+        },
+        "limitation": "The 451 known NPC poster IDs and state-flag UniqueID 0x29f5 are Sale posters in ItemUICategory=Wall, so they pass the explicit UI-category mask; the later runtime callback may still remove them. The 64-record source is SaveLand.Shop.ShopCatalog, populated by the daily shop builder; its concrete runtime contents and complete NotSee exclusion remain unresolved."
       },
       "common_tail": [
         "0x1189e80",
@@ -411,7 +846,65 @@
       ]
     }
   },
-  "conclusion": "The literal 2 in the catalog bitset filter is proven to mean ItemCatalogType=NotSee, resolving the previous ambiguity. For selectors 1–3, the later selector-specific helpers only clear additional bitmap entries, so those final lists retain the NotSee exclusion. Selector 4 receives post-filter item additions whose category/final mask behavior remains unresolved, and selector 0 follows an unresolved jump-table branch.",
+  "selector_0_branch": {
+    "all_explicit_notsee_filter_call_sites_in_producer": [
+      "0x1182a80",
+      "0x1182b28"
+    ],
+    "calls_on_selector_0_branch": [],
+    "call_site_roles": {
+      "0x1182a80": "selectors 1–3",
+      "0x1182b28": "selector 4"
+    },
+    "branch_table_va": "0x29fdc0d",
+    "branch_table_bytes": "00c7c9cb",
+    "selector_0_target": "0x1182ac8 sets the selected-record offset to 0xb958; 0x1345180 reads the selected element's +0x268 code.",
+    "record_code_crosswalk": {
+      "table": "ItemKind",
+      "row_count": 120,
+      "selector_0_values": [
+        {
+          "ordinal": 13,
+          "label": "Helmet"
+        },
+        {
+          "ordinal": 92,
+          "label": "BdayCupcake"
+        }
+      ],
+      "crosscaller_checks": [
+        {
+          "function": "0x11fc680",
+          "native_compare": "0x46",
+          "ordinal": 70,
+          "item_kind_label": "Fossil"
+        },
+        {
+          "function": "0x12efd60",
+          "native_compares": [
+            "0x41",
+            "0x42"
+          ],
+          "ordinals": [
+            65,
+            66
+          ],
+          "item_kind_labels": [
+            "Fish",
+            "ShellDrift"
+          ]
+        }
+      ],
+      "interpretation": "The 0x1345180 return value is consistent with an ItemKind ordinal: other callers compare 0x41/0x42/0x46, which join to Fish/ShellDrift/Fossil. The selector-0 values therefore map to Helmet (13) and BdayCupcake (92); the local class-field name for the +0x268 source is still unavailable."
+    },
+    "conditional_additions": {
+      "item_kind_13_helmet": "calls 0x1189c70 to add the NPC PosterItemID collection",
+      "item_kind_92_bday_cupcake": "scans up to 64 records and adds valid entries",
+      "other_codes": "skip these additions"
+    },
+    "limitation": "This selector-0 branch bypasses the explicit ItemCatalogType=NotSee filter, the selector-4 ItemUICategory mask, and its trailing 0xb2ecc0 clear-only callback. The selected record's exact class-field descriptor and incoming base-list composition remain unresolved."
+  },
+  "conclusion": "The literal 2 in the catalog bitset filter is proven to mean ItemCatalogType=NotSee. Selectors 1–3 use later clear-only bitmap helpers and retain the exclusion. Selector 4 adds daily shop entries from SaveLand.Shop.ShopCatalog and 451 known Sale posters in ItemUICategory=Wall, then removes ItemUICategory None, Tool, and Unnecessary plus entries rejected by a later clear-only runtime predicate. The concrete shop records and complete NotSee exclusion after those additions remain unresolved. Selector 0 bypasses these explicit filters and conditionally adds posters for ItemKind Helmet or up to 64 records for BdayCupcake, but its base-list composition remains unresolved.",
   "source_pseudocode": {
     "0x11829d0": {
       "path": "/workspace/acnh-re/output/binary/analysis_decomp/11829d0.c",
@@ -455,6 +948,78 @@
       "sha256": "361f4dd9b37fcd0ffaf5d280fc7d5a5f1e1b169b0d4d15f9f06568f90caec088",
       "bytes": 2505
     },
+    "0xc90e90": {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/c90e90.c",
+      "available": true,
+      "sha256": "e571956b7d0dbbdf43e3e9f345d5e0fdfc3d602093c843673283af4baf6e1e29",
+      "bytes": 1685
+    },
+    "0xc90d30": {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/c90d30.c",
+      "available": true,
+      "sha256": "5cba041a2f9f4b8aa73bc47e18183e5249b3eab7ab3bbe2166c34835841fcec4",
+      "bytes": 2065
+    },
+    "0xfd2d50": {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/fd2d50.c",
+      "available": true,
+      "sha256": "20f77a019ad9cc9214658258f78877857911a3c043b8193d16527af712fbc404",
+      "bytes": 2119
+    },
+    "0xd40d20": {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/d40d20.c",
+      "available": true,
+      "sha256": "83fd719c0e214f96a3d1b65044ad60207b8d9e343427cbbf8b188ca943ff6fe9",
+      "bytes": 5177
+    },
+    "0xa25010": {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/a25010.c",
+      "available": true,
+      "sha256": "f3b99dbba0824f919cffe4fa34d0a0207baad728a36840ac42d8635346221f75",
+      "bytes": 811
+    },
+    "0xaad2e0": {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/aad2e0.c",
+      "available": true,
+      "sha256": "fa394034155656c2e58af86d06d7599607088c1e2be5873507f383e518d67f86",
+      "bytes": 441
+    },
+    "0x1af3a0": {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/1af3a0.c",
+      "available": true,
+      "sha256": "e5065182363f5901c7e7c0dc2b337635db880c40a8806f0da97083bf112514cd",
+      "bytes": 1192
+    },
+    "0xb2ecc0": {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/b2ecc0.c",
+      "available": true,
+      "sha256": "9cb46cb9b7d668612654e0eededb4e6fa4962f3faceb6a779d003e57cb1d5eb5",
+      "bytes": 1160
+    },
+    "0xb2eed0": {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/b2eed0.c",
+      "available": true,
+      "sha256": "56c815253585a3f0859480936e3c453f4cbc1ec2c177cae13c6335b6b7febf24",
+      "bytes": 1290
+    },
+    "0x1345180": {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/1345180.c",
+      "available": true,
+      "sha256": "60f30829073e41bdeaeb9c1fa9fbab9c4ce36fd38408328f979882b62c792f6f",
+      "bytes": 436
+    },
+    "0x11fc680": {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/11fc680.c",
+      "available": true,
+      "sha256": "669593c3f285f07e4c0c1bf750c60b0a4a444bdc2ff462ae81f5295e36ec6eac",
+      "bytes": 6819
+    },
+    "0x12efd60": {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/12efd60.c",
+      "available": true,
+      "sha256": "640428a02a616ea2502df2b6beaeaa5a08fa46190837881df798ada66c02e06d",
+      "bytes": 1615
+    },
     "0xa105d0": {
       "path": "/workspace/acnh-re/output/binary/analysis_decomp/a105d0.c",
       "available": false
@@ -465,11 +1030,21 @@
       "sha256": "5a03c1c3b1520c552262d5ec5cf396ae60d9b1c1979ff2973c13030916858ced",
       "bytes": 1269
     },
+    "0xa10f00": {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/a10f00.c",
+      "available": false
+    },
     "0x1189e80": {
       "path": "/workspace/acnh-re/output/binary/analysis_decomp/1189e80.c",
       "available": true,
       "sha256": "bfc7f4fce7edfe7cd4f6527780c8da69cb038207941a0f42d2dc30c8eb48624e",
       "bytes": 5845
+    },
+    "0x11433d0": {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/11433d0.c",
+      "available": true,
+      "sha256": "d7fbe2feefe828718a277e0227f50fc0ff26f6bf6918834235bb648b4e574ea0",
+      "bytes": 2375
     }
   }
 }

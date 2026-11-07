@@ -9,6 +9,7 @@ Paket hasil reverse engineering Animal Crossing: New Horizons versi 1.0.0 (build
 | Dokumen | Isi |
 |---|---|
 | [Handoff untuk sesi berikutnya](acnh-re/docs/HANDOFF.md) | Status singkat, setup data, alat, aturan, log sesi; antrian kerja di [re_queue.json](acnh-re/docs/re_queue.json) |
+| [Rencana build gameplay utama](acnh-re/docs/PLAYABLE_MAIN_GAME_PLAN.md) | Tahapan menuju game single-player yang bisa dimainkan dari New Game sampai konser K.K. dan loop setelah cerita utama; termasuk gap proyek Godot |
 | [Workflow penggunaan data RE](acnh-re/docs/WORKFLOW.md) | Persiapan, ekstrak ZIP, file mana untuk apa, siklus satu tahap RE, verifikasi, kerja multi-agen |
 | [Alur gameplay dari data](acnh-re/docs/GAMEPLAY_FLOW.md) | Alur prolog sampai konser K.K. dan loop setelahnya, dari 456 EventFlow dan 1.555 flag, dengan label bukti per langkah |
 | [Skenario gameplay lengkap](acnh-re/docs/GAMEPLAY_SCENARIO.md) | Satu hari (pipeline pergantian hari native), satu minggu, satu tahun (kalender event, musim), siklus villager, pengunjung khusus, timeline progres dalam pergantian hari |

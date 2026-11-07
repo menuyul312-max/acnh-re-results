@@ -308,6 +308,10 @@ def build_report(index_path: Path, tables_root: Path, catalog_audit_path: Path,
                 "schema": gate_artifact.get("schema"),
                 "input_build_sha256": gate_artifact.get("input_build_sha256"),
                 "conclusion": gate_artifact.get("conclusion"),
+                "selector_0_branch": gate_artifact.get("selector_0_branch"),
+                "selector_4": gate_artifact.get("producer_gate", {}).get(
+                    "post_filter_routes", {}).get("selector_4"),
+                "item_ui_category": gate_artifact.get("item_ui_category"),
             }
         else:
             notsee_gate = None
@@ -362,13 +366,14 @@ def build_report(index_path: Path, tables_root: Path, catalog_audit_path: Path,
                 "native_field_hash_references": item_catalog_refs,
                 "references_from_catalog_app_variant_chain": app_refs,
                 "notsee_gate_audit": notsee_gate,
-                "conclusion": "The 0x118a3d0 -> 0x118a740 -> 0xeecc70 variant-selection chain still does not read ItemCatalogType. A separate gate in the producer at 0x11829d0 applies a literal-2 predicate that is statically bound to ItemCatalogType=NotSee and clears matching base-bitmap entries. Selector-specific helpers for selectors 1-3 only clear more bits, preserving exclusion through item-list construction. Selector 4 receives post-filter additions whose category/final-mask behavior is unresolved.",
+                "conclusion": "The 0x118a3d0 -> 0x118a740 -> 0xeecc70 variant-selection chain still does not read ItemCatalogType. A separate gate in the producer at 0x11829d0 applies a literal-2 predicate that is statically bound to ItemCatalogType=NotSee and clears matching base-bitmap entries. Selector-specific helpers for selectors 1-3 only clear more bits, preserving exclusion through item-list construction. Selector 4 reads up to 64 records from SaveLand.Shop.ShopCatalog (local member 0x2092f8; daily shop builder 0xfc6300 -> 0xfc5d60) and adds 451 known Sale posters in ItemUICategory=Wall, then removes ItemUICategory None, Tool, and Unnecessary plus entries rejected by a later clear-only runtime predicate. The shop-list source is mapped, but its concrete records and complete NotSee composition remain unresolved; seven NotSee rows exist in the requested ItemKind domains (six Ftr and one Cap), though the table does not prove that any are selected for daily stock. Selector 0 bypasses these explicit filters and conditionally adds posters for ItemKind Helmet or up to 64 records for BdayCupcake, but its base-list composition remains unresolved.",
                 "separate_count_path": "0xeec760 is the FillCatalog achievement count path. Its selectors 0 and 1 correspond to Sale and NotForSale; this does not bind the catalog app's incoming list to those categories.",
             },
             "table_candidate_census": item_fixtures(tables_root),
             "mail_insertion_boundaries": mail_evidence(db, catalog_audit_path),
             "open_questions": [
-                "Which selector-4 additions run after the ItemCatalogType=NotSee base-bitmap gate, and whether they can reintroduce NotSee rows into the final visible list.",
+                "Selector 4's concrete saved ShopCatalog records and their ItemCatalogType composition; the source and daily builder are mapped, but these records are appended after the explicit NotSee filter, and the later category/runtime filters do not prove full NotSee exclusion.",
+                "Selector 0's exact +0x268 field descriptor and unfiltered base-list composition.",
                 "Which items are actually orderable, price/quantity limits, and whether the representative variant selected here affects a purchase payload.",
                 "Save serialization and mailbox consumer/arrival timing for both CatalogMailSend and SystemMailSend.",
             ],
