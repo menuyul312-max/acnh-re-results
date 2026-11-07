@@ -1,0 +1,193 @@
+{
+  "schema": "acnh-re/building-preview-runtime-asset-binding-followup/1",
+  "game_version": "1.0.0",
+  "date": "2026-11-07",
+  "title": "Building preview runtime asset binding follow-up",
+  "scope": "Static-only trace of StructureStartPreviewGuide request selector through ActorLoad routing; matching StructureFacilityModel field accessors to the native ModelName/%s_pbc key-builder path; and boundaries to collider/component/final save lifecycle.",
+  "native_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+  "summary": {
+    "structure_start_preview_guide_effective_actorload_selector": 0,
+    "selected_local_actorload_table_slot": 0,
+    "slot0_to_named_actor_class": "OPEN",
+    "structure_facility_model_modelname_accessor_identified_by_schema_hashes": true,
+    "native_modelname_companion_pbc_key_builder": "separate native row/resource setup path; not joined to preview handler",
+    "preview_handler_to_modelname_pbc_builder": "OPEN",
+    "pbc_payload_to_collider_component": "OPEN",
+    "final_structure_instance_or_save_write": "OPEN",
+    "existing_model_catalogue_join": "19/19 ModelName keys and same-name _pbc catalogue entries from prior report; rows not repeated here",
+    "model_or_pbc_payloads_opened": false
+  },
+  "address_convention": {
+    "addresses": "raw ELF VAs",
+    "ghidra_pseudocode_bias": "subtract 0x100000 from displayed function labels to obtain raw ELF VA",
+    "native_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74"
+  },
+  "selector_resolution": {
+    "handler": {
+      "eventflow_action": "EventFlowActionStructureStartPreviewGuide",
+      "handler_function_va": "0x3445b0",
+      "registration": "static handler registry candidate",
+      "actorload_call_pc": "0x344818",
+      "actorload_helper_va": "0x490f0"
+    },
+    "request_fields": {
+      "request_initializer_va": "0x34ad0",
+      "mode_field_offset": "0xc8",
+      "mode_initialized_value": 4,
+      "handler_fallback_source": "uStack_128",
+      "handler_fallback_value": 0,
+      "fallback_setter_va": "0x34d90",
+      "fallback_field_offset": "0x18",
+      "setter_effect": "writes the supplied value into request +0x18"
+    },
+    "dispatch_chain": [
+      {
+        "caller_function_va": "0x3445b0",
+        "callsite_pc": "0x344818",
+        "target_function_va": "0x490f0",
+        "evidence": "direct call in handler pseudocode"
+      },
+      {
+        "caller_function_va": "0x490f0",
+        "callsite_pc": "0x4929c",
+        "target_function_va": "0x49360",
+        "evidence": "indexed direct-call record and pseudocode"
+      },
+      {
+        "caller_function_va": "0x49360",
+        "callsite_pc": "0x493bc",
+        "target_function_va": "0x407e0",
+        "evidence": "indexed direct-call record and pseudocode"
+      }
+    ],
+    "effective_selector": {
+      "mode_value": 4,
+      "mode4_selects_request_offset": "0x18",
+      "request_value_at_0x18": 0,
+      "value_passed_to_0x407e0": 0
+    },
+    "local_actorload_table": {
+      "manager_constructor_va": "0x498c0",
+      "table_initializer_va": "0x40390",
+      "manager_table_offset": "0x1d0",
+      "table_entry_count": 3,
+      "slot0_pointer_offset_from_manager": "0x1d8",
+      "slot0_descriptor_member_offset": "0x20",
+      "selected_slot": 0,
+      "slot0_named_actor_class": "OPEN",
+      "interpretation_limit": "This is a local three-entry ActorLoad routing table. Static table setup does not name slot0 as StructureActor or a preview actor class."
+    },
+    "actor_registry_candidates_not_joined": [
+      {"registry_index": 9, "actor_key": "StructureActor"},
+      {"registry_index": 10, "actor_key": "StructurePreviewSwapActor"},
+      {"registry_index": 56, "actor_key": "StructurePreviewActor"},
+      {"registry_index": 80, "actor_key": "StructurePreviewGuideActor"}
+    ]
+  },
+  "facility_model_to_pbc_name_candidate": {
+    "table_schema_join": {
+      "table": "StructureFacilityModel",
+      "table_source": "B_data/Bcsv/StructureFacilityModel.bcsv; decoded schema: output/tables_resolved/StructureFacilityModel.json",
+      "row_count": 19,
+      "matching_field_hashes": [
+        {"field": "ModelName", "hash": "0x39b5a93d", "offset": 38, "native_getter_va": "0x16b5c0"},
+        {"field": "StructureInfoUniqueID", "hash": "0x00c1577d", "offset": 20, "native_getter_va": "0x10b9480"},
+        {"field": "Construction", "hash": "0x9c8a400b", "offset": 36, "native_getter_va": "0x10b95d0"},
+        {"field": "GrowLevel", "hash": "0x35ac1bb4", "offset": 37, "native_getter_va": "0x10b9340"},
+        {"field": "FloorHeight", "hash": "0x6efc082c", "offset": 8, "native_getter_va": "0x10ba420"}
+      ],
+      "all_five_hashes_cooccur_in_schema_tables": ["StructureFacilityModel"],
+      "native_table_name_literal_present": false,
+      "join_level": "PSEUDO/TBL schema fingerprint; no native literal table-name join"
+    },
+    "native_reader_and_formatter": {
+      "row_accessor_va": "0x16b470",
+      "modelname_accessor_va": "0x16b5c0",
+      "caller_function_va": "0x169b90",
+      "modelname_accessor_call_pc": "0x16a1b0",
+      "formatter_va": "0x12930",
+      "formatter_call_pc": "0x16a1c0",
+      "format_string_va": "0x2a46397",
+      "format_string": "%s_pbc",
+      "resource_list_helper_va": "0x1c9bc0",
+      "evidence": "The row traversal calls the ModelName accessor and the same setup function formats %s_pbc keys for its row/resource list. Decompiled vararg/dataflow is not path-sensitive enough to claim this row list is selected by the placement handler."
+    },
+    "payload_and_component_limits": {
+      "specific_model_key_loaded_by_structure_start_preview_guide": "unproven",
+      "specific_pbc_payload_loaded_by_placement_handler": "unproven",
+      "pbc_resource_bound_to_native_collider_component": "unproven",
+      "payloads_opened": false
+    }
+  },
+  "placement_and_lifecycle_boundary": {
+    "preview_structure_function_va": "0x36e140",
+    "preview_structure_direct_effect": "copies pose/metadata into actor context +0x288; no direct ModelName/PBC resource selection",
+    "build_structure_function_va": "0x369d50",
+    "build_structure_position_consumer_va": "0xbe6480",
+    "actor_context_component_method_va": "0xbe6340",
+    "dynamic_component_owner_offset": "0x68",
+    "coordinate_virtual_slot_offset": "0x128",
+    "component_class_and_attachment": "OPEN; runtime component instance/target remains unresolved",
+    "durable_structure_save_or_reload": "OPEN",
+    "direct_call_boundary": "No direct edge from the inspected ActorLoad slot0 path to 0x169b90 was recovered. The indexed slot dispatch reaches 0x01a83e10; subsequent indirect resource dispatch remains possible."
+  },
+  "prior_reports_considered": [
+    "acnh-re/docs/BUILDING_PREVIEW_ACTOR_ASSET_JOIN_FOLLOWUP_20261107.md",
+    "acnh-re/docs/BUILDING_PLACEMENT_VALIDATOR_CHAIN_FOLLOWUP_20261107.md",
+    "acnh-re/docs/BUILDING_PLACEMENT_STRATEGY_SEMANTICS_FOLLOWUP_20261107.md",
+    "acnh-re/docs/BUILDING_SITE_COMPONENT_VPTR_LIFECYCLE_BOUNDARY_20261107.md"
+  ],
+  "provenance": {
+    "shared_dump_root": "/workspace/acnh-re",
+    "native_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+    "shared_exefs_main_nso": {
+      "path": "inputs/additional_exefs/main",
+      "sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+      "format": "Nintendo Switch NSO; separate from decompressed main.elf identity above"
+    },
+    "analysis_index": {
+      "path": "output/index.sqlite",
+      "sha256": "a78c7af27d37b8fd931bba8bc611623dacf7685cb6e8b4f827effa0765340aad",
+      "elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74"
+    },
+    "data_and_registry_hashes": {
+      "output/binary/event_handlers_resolved.json": "dfc298dfcb1b288b8fda9cd6a49c728fdad903b41f8fc1c9288df7d732ec92a5",
+      "output/stage/actor_type_registry.json": "67439173a460ad49bb6cbc0086047eb192581f0cad36f4c936c4078a39d959be",
+      "output/tables_resolved/StructureFacilityModel.json": "6813cfabbbd674ddd05f309d9ef558dbf7c1a220aefcde4a7bcec123cf3c1f78",
+      "work/re/string_refs.tsv": "d65df09399b7300ebf3ac54ccdd79ca192433421210cd82b22d5dd91dce602cf"
+    },
+    "decompilation_sha256": {
+      "output/binary/analysis_decomp/3445b0.c": "eb1fe2e2faa02c30e877096794658ab4918494f9eddd25e229b4fd5ab52365f8",
+      "output/binary/analysis_decomp/34ad0.c": "4002435427e9cf25fb0a8c97349bcbfc772b973cda7044253496e782501194b3",
+      "output/binary/analysis_decomp/34d90.c": "3126910cea5499f98055874f79b069e393f6e190af8e8776828947a606af4f0c",
+      "output/binary/analysis_decomp/490f0.c": "7c5c1e1dff0b249ea6e1810ed43ee7f71f8351854902415081a15ccabf776b58",
+      "output/binary/analysis_decomp/49360.c": "6408e4b245afdcfd87e45391d5f6df8d8e49e8c76d4c74628b618334923db051",
+      "output/binary/analysis_decomp/407e0.c": "3f14ab7f8dfde0a98ed2d9feb162c4c208282c613773c251d5aeefffa2a43516",
+      "output/binary/analysis_decomp/498c0.c": "4be2ed48c7db4b7ac23eea90026b0ba68921c30e2d2af595a6d5d386dc051b4e",
+      "output/binary/analysis_decomp/40390.c": "a5814a6cfe37b6a0a04942b9b4e1ed5b0406225000eade4976383d39b8634572",
+      "output/binary/analysis_decomp/408b0.c": "aff0ab731a53a814ecd626aaf3a49baf01646f3c3be01187303da62f2cb1bfa2",
+      "output/binary/analysis_decomp/16b470.c": "be2f4a9342d4d4c4bee4ee4e113316ca3813c115663893807f9d2f57c1c875e4",
+      "output/binary/analysis_decomp/16b5c0.c": "f94e538c10cac004b59d86d94835833c51a9474cba01f2a4df77b41100a2f57b",
+      "output/binary/analysis_decomp/10b9300.c": "06ff48da579e54cb3e54b63d61e00b6e124a2560bb79da9121ec6477c48ef506",
+      "output/binary/analysis_decomp/10b9340.c": "9636513ec761773f138e23b03a1fc1b03c429b3aa5790d82a103933fb1f1571a",
+      "output/binary/analysis_decomp/10b9480.c": "08fa3611327b84ed816cf1432e911cbc93f3c552c504559c1088063775679ff8",
+      "output/binary/analysis_decomp/10b95d0.c": "8aafbe6f0ee5810c2c1105ee608adc2668f06442f617be89002ce51af0af8d2f",
+      "output/binary/analysis_decomp/10ba420.c": "fbc72116f08b1ca00b058b08c899038f796fe22ad6ae8657acceadbbf3f50748",
+      "output/binary/analysis_decomp/169b90.c": "81cddf234d5cd58974d33a59839cb60c1cccb729d2ee27cbb8984f53b37971da",
+      "output/binary/analysis_decomp/12930.c": "2dd7b46b3cb5df065a891cfdead8635a5346055da97676ceef59cf1ec45fd9b4",
+      "output/binary/analysis_decomp/369d50.c": "b52478377f3cd7d9d9702bcbc474589b0435e48eb699938c67a08e753cbf11c8",
+      "output/binary/analysis_decomp/36e140.c": "c63e41d955b0175c9aae8363cd20c2ae80b05bd50e0545468fdf7a4e1f5c1604",
+      "output/binary/analysis_decomp/be6340.c": "5817cf57fdb01962c95c5ace9fb5129d2384a1dc60f067ffb4459ab21b34ff40",
+      "output/binary/analysis_decomp/be6480.c": "7dc3b77a1564525ca6d0874af403bdd6008a392d97775eea5e7e749e79a9aec9"
+    }
+  },
+  "validation": {
+    "json_syntax_checked": true,
+    "diff_check_passed": true,
+    "native_game_execution": false,
+    "save_mutation": false,
+    "model_or_pbc_payload_opened": false,
+    "godot_modified": false,
+    "staged_or_committed": false
+  }
+}
