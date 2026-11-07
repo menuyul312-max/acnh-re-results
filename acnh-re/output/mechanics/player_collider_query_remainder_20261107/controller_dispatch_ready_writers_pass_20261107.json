@@ -1,0 +1,223 @@
+{
+  "scope": "ACNH 1.0.0 HID/controller scheduler dispatch and exact world-root readiness writer follow-up",
+  "status": "PARTIAL_STATIC_EDGES_PROVEN_RUNTIME_INPUT_AND_READY_RESULT_OPEN",
+  "source_identity": {
+    "main_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+    "code_pointer_arrays_sha256": "64d474068ca289f9146f7f32e6647a16a05e8f5be8e635615a478744b62ef822",
+    "address_convention": "Raw ELF VAs/PCs; generated decomp labels commonly add 0x100000."
+  },
+  "evidence": {
+    "source": "ACNH 1.0.0 main.elf, function inventory/decompilation, relocation map, code_pointer_arrays.json",
+    "analysis": "raw AArch64 and xref/pointer analysis",
+    "runtime_execution": false,
+    "synthetic_gameplay_claims": false,
+    "save_mutation": false,
+    "godot_work": false
+  },
+  "controller_poll_dispatch": {
+    "npad_poll_method": {
+      "va": "0x1968b80",
+      "object_table_start": "0x31a4020",
+      "method_pointer_va": "0x31a4040",
+      "method_offset": "+0x20",
+      "constructor": "0x1968840",
+      "constructor_vptr_store_pc": "0x196888c",
+      "constructor_vptr_addresspoint": "0x31a4020",
+      "poll_hid_calls": [
+        {
+          "pc": "0x1968bd4",
+          "target": "0x2210240",
+          "name": "GetNpadStyleSet"
+        },
+        {
+          "pc": "0x1968c14",
+          "target": "0x2210250",
+          "state_family": "NpadHandheldState"
+        },
+        {
+          "pc": "0x1968c2c",
+          "target": "0x2210260",
+          "state_family": "NpadJoyDualState"
+        },
+        {
+          "pc": "0x1968c44",
+          "target": "0x2210270",
+          "state_family": "NpadFullKeyState"
+        },
+        {
+          "pc": "0x1968c5c",
+          "target": "0x2210280",
+          "state_family": "NpadJoyLeftState"
+        },
+        {
+          "pc": "0x1968c74",
+          "target": "0x2210290",
+          "state_family": "NpadJoyRightState"
+        }
+      ]
+    },
+    "controller_manager_update": {
+      "va": "0x19a4ab0",
+      "table_start": "0x31a6cc8",
+      "method_pointer_va": "0x31a6d78",
+      "method_offset": "+0xb0",
+      "device_list_virtual_call_pc": "0x19a4af0",
+      "device_list_method_slot": "+0x20",
+      "static_edge": "ControllerMgr update -> listed device vptr+0x20 -> Npad poll 0x1968b80 for Npad objects",
+      "manager_update_top_level_caller": "OPEN"
+    },
+    "raw_immediate_branch_scan": {
+      "segment_va": "0x0",
+      "segment_size": "0x2211a60",
+      "segment_flags": "RX",
+      "method": "scan every 4-byte aligned word for AArch64 B/BL immediate target",
+      "targets_and_hits": {
+        "0x1968b80": [],
+        "0x19a4ab0": [],
+        "0x14ceed0": [],
+        "0x197a1d0": [
+          {
+            "pc": "0x197abe4",
+            "kind": "B"
+          },
+          {
+            "pc": "0x197abf4",
+            "kind": "B"
+          },
+          {
+            "pc": "0x197cb4c",
+            "kind": "BL"
+          }
+        ]
+      },
+      "negative_scope": "Direct B/BL immediate references only in this main.elf executable PT_LOAD segment; indirect calls and omitted modules are outside this negative."
+    }
+  },
+  "scheduler_task_dispatch": {
+    "registration": {
+      "function": "0x14cef10",
+      "task_node_base": "owner+0x288",
+      "node_descriptor_vptr": {
+        "offset": "owner+0x2e0 (node+0x58)",
+        "source_global": "0x330ee98",
+        "addresspoint": "0x313a6e0"
+      },
+      "owner_pointer": {
+        "offset": "owner+0x2e8 (node+0x60)",
+        "value": "owner"
+      },
+      "callback_pointer": {
+        "offset": "owner+0x2f0 (node+0x68)",
+        "source_global": "0x330ee90",
+        "relocated_target": "0x14ceed0"
+      },
+      "callback_context": {
+        "offset": "owner+0x2f8 (node+0x70)",
+        "value": "0"
+      },
+      "group_pointer": "scheduler object +0x5a0",
+      "group_link_pc": "0x14cef94",
+      "group_link_target": "0x1979ff0"
+    },
+    "group_tree_dispatch": {
+      "walker": "0x197a1d0",
+      "walker_to_recursive_node_call_pc": "0x197a1f0",
+      "recursive_node": "0x197a220",
+      "recursive_child_call_pc": "0x197a25c",
+      "descriptor_virtual_call_pc": "0x197a244",
+      "descriptor_method_target": "0x14cf150",
+      "descriptor_method_slot": "+0x0",
+      "descriptor_pointer_va": "0x313a6e0",
+      "adapter_target_behavior": "loads owner from node+0x60 and target/context from node+0x68/+0x70, computes target this pointer, then branches through x1",
+      "adapter_final_branch_pc": "0x14cf178",
+      "callback_target": "0x14ceed0",
+      "callback_invocation_static_path": "PROVEN_CONDITIONAL_ON_GROUP_WALK_AND_NODE_ENABLE_BITS",
+      "top_level_frame_caller_or_cadence": "OPEN"
+    },
+    "callback_body": {
+      "va": "0x14ceed0",
+      "helper_call": {
+        "pc": "0x14ceee4",
+        "target": "0x14cf380",
+        "effect": "copy manager subobject +0x60 to +0xdc"
+      },
+      "state_test_pc": "0x14ceee8",
+      "direct_hid_poll_calls": [],
+      "direct_player_movement_calls": [],
+      "input_translation_join": "OPEN"
+    }
+  },
+  "world_root_readiness": {
+    "root_singleton_global": "0x32d0de8",
+    "root_singleton_storage_slot": "0x33728b0",
+    "root_constructor": "0x197740",
+    "query_context_constructor": "0x156840",
+    "query_context_offset": "root+0x28",
+    "ready_byte_context_offset": "+0xee8",
+    "ready_byte_root_offset": "+0xf10",
+    "constructor_zero_store": {
+      "pc": "0x156938",
+      "instruction": "strb wzr, [x19,#0xee8]"
+    },
+    "predicate": {
+      "function": "0x18ba40",
+      "singleton_load": "0x18ba44",
+      "root_grid_load": "0x18ba50",
+      "ready_byte_read": "0x18ba58",
+      "conditions": [
+        "root != null",
+        "root+0xa0 != null",
+        "byte(root+0xf10) != 0"
+      ]
+    },
+    "grid_initializer": {
+      "function": "0x156e30",
+      "grid_pointer_write": "root+0xa0 via context+0x78 at 0x156e60",
+      "candidate_insert_call_pc": "0x156e94",
+      "candidate_insert_target": "0x1967c40",
+      "writes_ready_byte": false
+    },
+    "candidate_store_receivers_classified_other": [
+      {
+        "function": "0x15ca690",
+        "offset": "+0xf10",
+        "evidence": "called by 0x165dd50 with parent subobject +0x606"
+      },
+      {
+        "function": "0x14ef8f0",
+        "offset": "+0xf10",
+        "evidence": "distinct startup object initialization, not root singleton/context"
+      },
+      {
+        "function": "0x16b4290",
+        "offset": "+0xee8",
+        "evidence": "writes parsed/output record lVar42"
+      },
+      {
+        "function": "0x7b1fe0",
+        "offsets": [
+          "+0xee8",
+          "+0xf10"
+        ],
+        "evidence": "per-record mask storage"
+      }
+    ],
+    "verified_nonzero_writer": null,
+    "negative_scope": "Main-ELF indexed decompilation and explicit references to the known root singleton/context path; indirect setters, omitted modules, and runtime-generated writes remain possible.",
+    "status": "OPEN"
+  },
+  "fixtures": {
+    "live_authentic_acnh_process": false,
+    "fixture_shows_live_hid_to_player_movement": false,
+    "fixture_has_loaded_root_ready_and_authentic_candidate_vtables": false,
+    "fixture_shows_live_query_result": false,
+    "existing_artifacts_are_isolated_native_contract_or_guard_checks": true
+  },
+  "blockers": [
+    "Top-level frame caller/cadence for scheduler group traversal and controller-manager virtual update is unknown.",
+    "No Npad-state-to-player-command or movement data-flow join is proven.",
+    "No nonzero writer for this exact root readiness byte is proven.",
+    "No authentic live root/grid/candidate fixture produces a gameplay query result."
+  ],
+  "report": "acnh-re/docs/PLAYER_INPUT_FRAME_DISPATCH_ROOT_READINESS_PASS_20261107.md"
+}
