@@ -1,0 +1,317 @@
+{
+  "schema": "acnh.registration-terrain-followup2/1",
+  "created_utc_date": "2026-11-07",
+  "scope": "Bounded ACNH 1.0.0 follow-up: callback 0x1242fa0 ownership, UIMapSelectHandling factory/page edge, cVillage result-store, card-to-preset join, and durable-save boundary. No Godot implementation or build.",
+  "status_legend": {
+    "EF": "Decoded EventFlow action/order/result handoff.",
+    "TBL": "Decoded source table/BYML row or exact table-name join.",
+    "STRUCT": "Parsed asset structure; supplemental assets are not assumed to be ACNH 1.0.0.",
+    "PSEUDO": "Static native correspondence or interpreted decompilation with limits stated.",
+    "NATIVE": "Original native registration/function statically resolved from the local 1.0.0 main image or generated index.",
+    "CAT": "Catalogue-only candidate; raw archive/source unavailable.",
+    "OPEN": "Required source/runtime edge remains unresolved."
+  },
+  "source_build": {
+    "main_nso_path": "inputs/additional_exefs/main",
+    "main_nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+    "eventflow": {
+      "source_id": 661,
+      "path": "B_data/EventFlow/Tutorials_Prologue1_Charactermaking.bfevfl",
+      "sha256": "cbf8fc7e4f5df544398f8dfd4b401f558bf386862af1abac72b8ab57c1d8688d"
+    }
+  },
+  "source_artifacts": [
+    {
+      "path": "/workspace/acnh-re/output/index.sqlite",
+      "sha256": "a78c7af27d37b8fd931bba8bc611623dacf7685cb6e8b4f827effa0765340aad",
+      "role": "native function, string-reference, and direct-call index"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/event_handlers_resolved.json",
+      "sha256": "dfc298dfcb1b288b8fda9cd6a49c728fdad903b41f8fc1c9288df7d732ec92a5",
+      "role": "resolved action registration hashes, factories, constructors, vtables, and slots"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/code_pointer_arrays.json",
+      "sha256": "64d474068ca289f9146f7f32e6647a16a05e8f5be8e635615a478744b62ef822",
+      "role": "relocated pointer sequences at 0x3110de0 and 0x3307ba0"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/1242060.c",
+      "sha256": "4af58c9ffef9719e41f1e513c6fe43fe2020b9ba690e7ddc52f062311e6f22f8",
+      "role": "constructor for unnamed object shape and vptr pseudo-global 0x3407b70"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/12406d0.c",
+      "sha256": "595738518c12e33ba9d480d6d5e728ce3c9280c8087d1dc8fe82effeaeb19807",
+      "role": "MapSelectPage constructor"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/1243980.c",
+      "sha256": "2a7adac8e5238348cd7b2cd4bded49f6adeb280f642de1606a3028b76839f28d",
+      "role": "CharaMakeMap layout-loading helper"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/356e90.c",
+      "sha256": "5a1fece4048c5d610dd151b4cc8c0d339b969b114d53b556640a9cf86914fa4a",
+      "role": "UIMapSelectHandling action constructor"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/356f10.c",
+      "sha256": "869070daeacf75cda3007e080d1eea73b87398ca243a9820228ffd92d6744d38",
+      "role": "UIMapSelectHandling method storing literal 42 at object offset 0xb8"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/3345a0.c",
+      "sha256": "0e155740715b4cff88bd56bb912d0bae4e7298cc98aaeee9f48540b7a918e55d",
+      "role": "SaveSetFromUIResult constructor"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/334650.c",
+      "sha256": "4bbf7b4001899e8b2a936db150de77b92b2b24f3c19f5d499c0dd8a1ab339a2e",
+      "role": "SaveType switch and cVillage case 5"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/3362f0.c",
+      "sha256": "67e5795ef2908202a6d60284105261f4544ac7f01cf2fb41df7f69ef2fc1a408",
+      "role": "SaveType string-list helper at 0x29918c3"
+    },
+    {
+      "path": "output/ui_hud/page_factory_catalog.json",
+      "sha256": "f9b990db0b9539d5207a751558e2ba02e304c2f5f3ea3dbb86b49bcb57863b70",
+      "role": "MapSelectPage factory and constructor catalog"
+    },
+    {
+      "path": "output/ui_hud/page_registry_factory_candidates.json",
+      "sha256": "e45940bbaa799cd8ff681bb6a241e06009147f9e1a72ed2bd660fcb177eb2a00",
+      "role": "cMapSelect normalized-name candidate, explicitly unproven"
+    },
+    {
+      "path": "output/ui_hud/native_bindings.json",
+      "sha256": "2884663d3a86109964e738c10cf824d7d44c91f1d2c8b64c7136d902ffb75dab",
+      "role": "page registry and helper flag-offset evidence"
+    },
+    {
+      "path": "output/ui_hud/page_layout_method_bindings.json",
+      "sha256": "8b55f0a1dbc810b71573444707bdd1ab2a891d3a9b3577be556c9da74c07716a",
+      "role": "MapSelectPage CharaMakeMap layout getter"
+    },
+    {
+      "path": "output/mechanics/focus7/native_event_handlers.json",
+      "sha256": "712f56b5649487bffe5d6c7269544d8f78a2242a598fe4733306d480ee8be2dd",
+      "role": "bounded focused action-name search"
+    },
+    {
+      "path": "/workspace/acnh-re/output/gameplay/save_layout.json",
+      "sha256": "a326c84213faad1921bd7660c3e171a7b3af117ec55e2ca711a871ad637e51dc",
+      "role": "emulated save layout, max traversal depth 2"
+    },
+    {
+      "path": "output/gameplay/registration_terrain_followup_20261107.json",
+      "sha256": "e13dd4a152e5ebec06ac2b2cd991017c499d80735be66fcc4683aadb6c853b1a",
+      "role": "previous card-asset and FieldMainFieldParam/LandMaking evidence"
+    }
+  ],
+  "eventflow": {
+    "status": "EF",
+    "entry": "TerrainSelect",
+    "ordered_actions": [
+      {
+        "event_index": 0,
+        "name": "UIMapSelectHandling",
+        "params": {}
+      },
+      {
+        "event_index": 1,
+        "name": "SaveSetFromUIResult",
+        "params": {
+          "SaveType": "cVillage"
+        }
+      }
+    ],
+    "proven": "UIMapSelectHandling precedes the named cVillage UI-result handoff.",
+    "not_proven": "Controller/page, selected-card value, preset, or durable save commit."
+  },
+  "ui_map_select_action": {
+    "status": "NATIVE",
+    "registry_key": "EventFlowSystemActor.EventFlowActionUIMapSelectHandling",
+    "registration_hash": "1a24f4b5",
+    "event_uses": 1,
+    "registration_va": "0x3059bd8",
+    "factory_va": "0x44cb30",
+    "constructor_va": "0x356e90",
+    "object_size_bytes": 192,
+    "vtable_address_point_va": "0x304e3e0",
+    "vtable_method_observation": {
+      "slot_index": 14,
+      "function_va": "0x356f10",
+      "effect": "Stores literal 42 at object offset 0xb8; meaning remains OPEN."
+    },
+    "limit": "Action-object factory is proven; no edge to cMapSelect, MapSelectPage factory 0x1242550, or callback object 0x1242060 is proven."
+  },
+  "callback_1242fa0": {
+    "status": "PSEUDO",
+    "callback_va": "0x1242fa0",
+    "callback_table": {
+      "sequence_start_va": "0x3307ba0",
+      "sequence_index": 3,
+      "pointer_va": "0x3307bb8",
+      "target_va": "0x1242fa0",
+      "sequence_status": "relocated code pointer sequence; not automatically a C++ vtable"
+    },
+    "table_consumer": {
+      "function_va": "0x1242ce0",
+      "sequence_start_va": "0x3110de0",
+      "sequence_slot_index": 59,
+      "sequence_pointer_va": "0x3110fb8",
+      "owner_constructor_va": "0x1242060",
+      "constructor_vptr_pseudo_global": "0x3407b70",
+      "relocation_slot_va": "0x3307b70",
+      "relocation_target_va": "0x3110dd0",
+      "address_point_va": "0x3110de0",
+      "shared_object_offsets": [
+        "0x210",
+        "0x218"
+      ]
+    },
+    "callback_behavior": {
+      "helper_va": "0x1243980",
+      "callsite_pc": "0x1242fc8",
+      "layout_literal": "CharaMakeMap",
+      "child_indices": [0, 1, 2, 3],
+      "interpretation": "Callback registered through 0x1242ce0 on an unnamed object initialized by 0x1242060; reaches CharaMakeMap loading and configures four child slots."
+    },
+    "direct_call_counts": {
+      "incoming_to_0x1242ce0": 0,
+      "incoming_to_0x1242fa0": 0,
+      "incoming_to_0x1242060": 1,
+      "constructor_site_for_0x1242060": "0x15556d0",
+      "constructor_site_owner_recovered": false
+    },
+    "limit": "Unnamed class/caller and connection to UIMapSelectHandling or MapSelectPage remain OPEN."
+  },
+  "page_relation": {
+    "status": "PSEUDO",
+    "registry_name": "cMapSelect",
+    "registry_helper_va": "0x1549400",
+    "raw_integer_arguments": [19],
+    "argument_interpretation": "Observed flag-byte offset, not a proven page ID.",
+    "normalized_candidate_class": "MapSelectPage",
+    "candidate_factory_va": "0x1242550",
+    "candidate_status": "normalized_name_candidate_unproven",
+    "constructor_va": "0x12406d0",
+    "layout_getter_va": "0x1241910",
+    "layout_name": "CharaMakeMap",
+    "layout_string_va": "0x294cbc3",
+    "limit": "Action factory, registry record, candidate page factory, and callback remain unjoined at runtime."
+  },
+  "c_village_result_store": {
+    "status": "PSEUDO",
+    "registry_key": "EventFlowSystemActor.EventFlowActionSaveSetFromUIResult",
+    "registration_hash": "c930dc34",
+    "factory_va": "0x452f30",
+    "constructor_va": "0x3345a0",
+    "object_size_bytes": 240,
+    "vtable_address_point_va": "0x304be70",
+    "switch_method_va": "0x334650",
+    "switch_method_slot_index": 11,
+    "save_type_string_va": "0x29918c3",
+    "save_type_string_helper_va": "0x3362f0",
+    "save_type_order_prefix": [
+      "cPlayerName",
+      "cBirthDay",
+      "cNickname",
+      "cPhrase",
+      "cGreeting",
+      "cVillage"
+    ],
+    "cVillage_case_index": 5,
+    "native_effect": "Case 5 calls 0x0164a130 and stores a 32-bit value at *plRam00000000033d1ba8 + 0x45f0; decomp RHS is *(undefined4 *)(lVar16 + 0xc), with live source unresolved.",
+    "interpretation": "Native cVillage result-branch store is identified; RHS source, target object/field name, and durable serialization are not.",
+    "durable_commit": "OPEN"
+  },
+  "terrain_table_join": {
+    "status": "TBL",
+    "field_main_field_param": {
+      "source_id": 41,
+      "source_path": "B_data/Bcsv/FieldMainFieldParam.bcsv",
+      "sha256": "3ebd1057e41b0666aa30c6d8beee9220b52d8fb5280c478e8eb13eaca5d27944",
+      "row_count": 96,
+      "example_row": {
+        "UniqueID": 0,
+        "FieldData": "FieldPresetA00"
+      }
+    },
+    "landmaking_name_join": {
+      "source_id": 2442,
+      "source_path": "B_data/Param/Field/MainFieldPreset/FieldPresetA00_LandMaking.byml",
+      "sha256": "cba1ab90d21982b443e719e30a19c80fa9aa9ead86f03705f5ecbd3c821d4aca",
+      "basis": "Exact FieldData filename stem."
+    },
+    "card_index_to_c_village": "OPEN",
+    "c_village_to_unique_id_or_field_data": "OPEN",
+    "generator_four_slots_to_ui_cards": "OPEN"
+  },
+  "asset_carry_forward": {
+    "card_layout_status": "STRUCT",
+    "card_count": 4,
+    "card_parts": ["L_Btn_00", "L_Btn_01", "L_Btn_02", "L_Btn_03"],
+    "preview_pane_texture": "Capture^t",
+    "four_named_preview_images_proven": false,
+    "supplemental_exact_version_status": "OPEN",
+    "godot_conversion_note": "Preserve four transforms/nested parts and BNTX channel/compression metadata. Leave Capture^t runtime-fed only after producer identification; no conversion implemented.",
+    "raw_model_sources_present": false,
+    "raw_sound_path_matches": 0,
+    "model_sound_candidate_status": "CAT"
+  },
+  "bounded_negative_searches": [
+    {
+      "source": "/workspace/acnh-re/output/index.sqlite",
+      "query": "string_refs text contains UIMapSelectHandling, EventFlowActionUIMapSelectHandling, or SaveSetFromUIResult",
+      "result_count": 0,
+      "limit": "Action names are mapped by registration hashes; no literal does not rule out indirect dispatch."
+    },
+    {
+      "source": "/workspace/acnh-re/output/index.sqlite",
+      "query": "direct_calls incoming to 0x1242ce0 and 0x1242fa0",
+      "result_counts": {
+        "0x1242ce0": 0,
+        "0x1242fa0": 0
+      },
+      "limit": "Both appear in relocated pointer data and are reached indirectly."
+    },
+    {
+      "source": "/workspace/acnh-re/output/index.sqlite",
+      "query": "direct_calls incoming to constructor 0x1242060",
+      "result_count": 1,
+      "site": "0x15556d0",
+      "owner_va": null
+    },
+    {
+      "source": "output/mechanics/focus7/native_event_handlers.json",
+      "query": "UIMapSelectHandling and EventFlowActionUIMapSelectHandling",
+      "result_count": 0,
+      "limit": "Focused handler index only."
+    },
+    {
+      "source": "output/ui_hud/page_registry_factory_candidates.json",
+      "query": "cMapSelect normalized to MapSelectPage",
+      "result": "Candidate 0x1242550; normalized_name_candidate_unproven."
+    }
+  ],
+  "remaining_open_edges": [
+    "UIMapSelectHandling action -> cMapSelect/MapSelectPage controller and factory.",
+    "Unnamed callback object 0x1242060 -> UIMapSelectHandling or MapSelectPage ownership.",
+    "Four card indices -> selected values -> cVillage result payload.",
+    "cVillage branch store *0x33d1ba8 + 0x45f0 and unresolved RHS -> named persistent field -> durable serialization/first commit.",
+    "Selected card or cVillage value -> FieldMainFieldParam.UniqueID/FieldData -> chosen LandMaking BYML.",
+    "Exact version of supplemental card assets and raw Model/Sound source availability."
+  ],
+  "validation": {
+    "json_tool": "python -m json.tool",
+    "source_hashes_checked": true,
+    "shared_files_edited": false,
+    "godot_or_build_performed": false,
+    "git_commit_or_push": false
+  }
+}
