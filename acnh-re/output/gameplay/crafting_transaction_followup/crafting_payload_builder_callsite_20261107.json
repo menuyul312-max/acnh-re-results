@@ -1,0 +1,301 @@
+{
+  "schema": "acnh.crafting.payload_transaction_followup.v1",
+  "build": "Animal Crossing: New Horizons 1.0.0",
+  "date_utc": "2026-11-07",
+  "scope": "One concrete RecipeCraftParam row traced from requirement-query evidence through the original cWorkCraft caller, transaction branches, and bounded result insertion. This is a bounded static/native evidence join; it is not a successful end-to-end craft or a live save trace.",
+  "address_convention": {
+    "addresses": "All PCs and function VAs below are raw main.elf virtual addresses.",
+    "decompiler_note": "The supplied Ghidra pseudocode prints an image base 0x100000 above raw ELF VAs; e.g. raw 0xee1420 appears as FUN_00fe1420 and raw 0xedf8e0 as FUN_00fdf8e0."
+  },
+  "provenance": {
+    "main_elf": {
+      "path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/A_logic/main.elf",
+      "sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74"
+    },
+    "main_nso": {
+      "path": "inputs/additional_exefs/main",
+      "sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900"
+    },
+    "shared_index": {
+      "path": "/workspace/acnh-re/output/index.sqlite",
+      "sha256": "a78c7af27d37b8fd931bba8bc611623dacf7685cb6e8b4f827effa0765340aad",
+      "access": "read-only"
+    },
+    "tables": {
+      "RecipeCraftParam": {
+        "source": "B_data/Bcsv/RecipeCraftParam.bcsv",
+        "raw_sha256": "97fe6d73e183dab43dad7358627a0a1a43f5764f0a18fa044a63a9ecf56ba919",
+        "resolved_json_sha256": "41efd9393380dd2c0b90e0c99aec9246b7058791bad14335d4e0e7920009cc09"
+      },
+      "ItemParam": {
+        "source": "B_data/Bcsv/ItemParam.bcsv",
+        "raw_sha256": "89230e97fc877ff2b2b48ac1c707ef32b3a7760118839c307f19797e2553458c",
+        "resolved_json_sha256": "2934112d0cede6dc5e73ebafe74afcfbb9630de5c12eb58745e0cdbb5138006b"
+      }
+    },
+    "decomp_artifacts": {
+      "edf8e0.c": "c5cdc458ff359a724202ea2e95eebd887aa9e15dca13ce60daef99aea534f73c",
+      "ee1420.c": "7d408bcfab2ea59d4de502360e3f10b160cc416fe507a00f8b555309f01f77ee",
+      "ee0ed0.c": "3bc992a64e848792cbb99783e2e95734c85533d351e1d84689147279613c0bca",
+      "ee1060.c": "04832c7f689c9530dec5825a5b0ce31b12c3d355d34ca9a1157987780eac72ac"
+    },
+    "prior_evidence_artifacts": {
+      "crafting_transaction_fixture_attempt.json": "39d803c40577718c5811811a4fa4f0773309060c1adb1f8a744b6d86ab168ee9",
+      "crafting_transaction_branch_native.json": "f41f60944fc02543e7bc09011eb73d7898ae93757c0d4ae1a39e3a94ae72313c",
+      "crafting_transaction_manager_followup_20261107.json": "442bd876f072f2dcbe6b7a188318b3bdebf1677382b2dd95ea2c045f504560b9",
+      "crafting_inventory_count_context_trace_20261107.json": "e8caed5c0b36ca8cad97bf6248369ac9617821a5cd03ff5d8a874abeed4d4435"
+    }
+  },
+  "recipe": {
+    "recipe_id": 56,
+    "result": {
+      "item_id": 975,
+      "label": "FtrFruitbasket",
+      "itemparam_diy_recipe_id": 56
+    },
+    "materials": [
+      {
+        "slot": 1,
+        "item_id": 2213,
+        "label": "Apple",
+        "amount": 1
+      },
+      {
+        "slot": 2,
+        "item_id": 2285,
+        "label": "Pear",
+        "amount": 1
+      },
+      {
+        "slot": 3,
+        "item_id": 2287,
+        "label": "Cherry",
+        "amount": 1
+      },
+      {
+        "slot": 4,
+        "item_id": 2214,
+        "label": "Orange",
+        "amount": 1
+      },
+      {
+        "slot": 5,
+        "item_id": 2286,
+        "label": "Peach",
+        "amount": 1
+      },
+      {
+        "slot": 6,
+        "item_id": 65534,
+        "label": "empty sentinel",
+        "amount": 0
+      }
+    ],
+    "join": "RecipeCraftParam.UniqueID=56 -> RecipeCraftParam.Item=975 -> ItemParam.UniqueID=975; ItemParam.DiyRecipeID for output 975 is 56. All five populated MaterialN IDs join to ItemParam labels."
+  },
+  "requirement_query_evidence": {
+    "helper_va": "0xee0be0",
+    "helper_role": "Builds/checks recipe material availability tuple from A/B inventory counters and optionally C when option bit 0 is set; clears sufficiency on shortage. It does not debit materials.",
+    "recipe_56_native_fixture": {
+      "evidence": "NATIVE_WITH_RECONSTRUCTED_MEMBER_AND_PLAYER_FIXTURES",
+      "result": "all_materials_pass_with_C=true; Peach is insufficient when C is excluded or omitted",
+      "source_records_A_B_C": [
+        2,
+        2,
+        1
+      ],
+      "fixture_artifact": "output/gameplay/crafting_transaction_followup/crafting_transaction_followup_native.json",
+      "limitation": "Synthetic source/member/player values; this run does not call 0xee1420, debit materials, or award item 975. A/B/C are structural groups and are not mapped here to named save members."
+    }
+  },
+  "original_craft_callsite": {
+    "handler_va": "0x3358c0",
+    "event": "SaveSetFromUIResult cWorkCraft",
+    "raw_instructions": [
+      {
+        "pc": "0x335a40",
+        "instruction": "add x1, sp, #0x128"
+      },
+      {
+        "pc": "0x335a48",
+        "instruction": "mov x0, x28"
+      },
+      {
+        "pc": "0x335a4c",
+        "instruction": "mov x3, x24"
+      },
+      {
+        "pc": "0x335a54",
+        "instruction": "mov w4, #1"
+      },
+      {
+        "pc": "0x335a5c",
+        "instruction": "ldrh w2, [x19, #0xa]"
+      },
+      {
+        "pc": "0x335a60",
+        "instruction": "bl 0xedf8e0"
+      },
+      {
+        "pc": "0x335a64",
+        "instruction": "tbz w0, #0, 0x335900"
+      },
+      {
+        "pc": "0x335a94",
+        "instruction": "add x1, sp, #0x128"
+      },
+      {
+        "pc": "0x335a98",
+        "instruction": "mov x0, x28"
+      },
+      {
+        "pc": "0x335a9c",
+        "instruction": "mov x2, x24"
+      },
+      {
+        "pc": "0x335aa8",
+        "instruction": "bl 0xee1420"
+      }
+    ],
+    "arguments_at_builder_call": {
+      "x0": "x28 global craft context",
+      "x1": "sp+0x128 temporary recipe payload",
+      "x2": "halfword recipe ID from [x19+0xa] (56 in selected table row)",
+      "x3": "x24 action context",
+      "x4": 1
+    },
+    "gate": "If 0xedf8e0 returns zero at 0x335a64, the handler branches to 0x335900 and does not call 0xee1420. On success it passes the same temporary payload to 0xee1420 at 0x335aa8."
+  },
+  "payload_builder": {
+    "function_va": "0xedf8e0",
+    "static_behavior": [
+      "Checks the supplied mode/context gate and excludes recipe ID 0x4c7b.",
+      "Resolves active player/recipe context and looks up the requested RecipeCraftParam row.",
+      "Builds the result descriptor and copies six material descriptors/amount metadata into the temporary payload.",
+      "Sets byte [x0+8] to zero and returns success only after the lookup/build path completes."
+    ],
+    "evidence_kind": "Raw callsite disassembly plus static native pseudocode/call references; the builder was not executed with a valid original player manager in this follow-up."
+  },
+  "transaction": {
+    "function_va": "0xee1420",
+    "first_gate": "The payload sufficiency byte at +0x25 must be nonzero or the routine returns 0.",
+    "material_route_selector": {
+      "payload_offset": "0x3c",
+      "zero": {
+        "helper": "0xee1060",
+        "callsites": [
+          "0xee15a0",
+          "0xee15c4",
+          "0xee15e8",
+          "0xee160c",
+          "0xee1630",
+          "0xee1654"
+        ],
+        "meaning": "Processes all six material records through the default route."
+      },
+      "nonzero": {
+        "helper": "0xeff060",
+        "callsites": [
+          "0xee14dc",
+          "0xee14fc",
+          "0xee151c",
+          "0xee153c",
+          "0xee155c",
+          "0xee157c"
+        ],
+        "meaning": "Routes marked material records through the alternate signed-delta/pocket-list helper; unmarked rows still use 0xee1060."
+      }
+    },
+    "full_pocket_path": {
+      "trigger": "Bounded branch fixture only: all 20 synthetic pocket slots occupied.",
+      "path": [
+        "0xee1420",
+        "0xee0ed0",
+        "0xefbd30",
+        "0xf99270"
+      ],
+      "observed_temporary_descriptor": {
+        "source": "RecipeCraftParam.Material1",
+        "item_id": 2213,
+        "label": "Apple"
+      },
+      "interpretation": "A conditional material-descriptor pocket insertion/compaction path is proven in the synthetic fixture. The source does not establish its semantic purpose as rollback, recovery, or another gameplay behavior."
+    },
+    "result_award_path": {
+      "calls": [
+        {
+          "caller": "0xee1420",
+          "pc": "0xee17bc",
+          "callee": "0xefab90"
+        },
+        {
+          "caller": "0xefab90",
+          "pc": "0xefabf8",
+          "callee": "0xefac20"
+        },
+        {
+          "caller": "0xefac20",
+          "pc": "0xefad2c",
+          "callee": "0xf987c0"
+        },
+        {
+          "caller": "0xee1420",
+          "pc": "0xee17cc",
+          "callee": "0xee17e0"
+        }
+      ],
+      "bounded_native_result": "With controlled actor resolver and explicit no-match registry response, result item 975 was inserted into a synthetic 19/20 pocket at slot 19. In the synthetic 20/20 case, preceding compaction opened a slot and 975 appeared at slot 4.",
+      "limitation": "The transaction-branch fixture stubbed both material mutators (0xee1060 and 0xeff060), set the entry halfword at payload +0x38 synthetically, and did not use the real 0xedf8e0 payload builder. This proves only the result insertion primitive under the listed controls, not craft success or balanced debit/award."
+    }
+  },
+  "bounded_failures_and_limits": {
+    "failed_full_transaction_fixture": {
+      "artifact": "output/gameplay/crafting_transaction_followup/crafting_transaction_fixture_attempt.json",
+      "entry_va": "0xee1420",
+      "fault_pc": "0xab941c",
+      "fault_path": [
+        "0xee1420",
+        "0xee0ed0",
+        "0xeff060",
+        "0xa9e440",
+        "0xa774c0",
+        "0xab9400"
+      ],
+      "blocker": "Partial fixture left dependency global 0x32f3f78 / cell 0x354ce00 null; original lookup chain dereferenced an invalid pointer at 0xab941c before reaching the material helper/result branch.",
+      "claim_limit": "Fixture-construction limitation only; it is not an in-game recipe rejection, shortage result, rollback result, or transaction failure."
+    },
+    "direct_material_helper_fixture": {
+      "artifact": "output/gameplay/crafting_transaction_manager_followup_20261107.json",
+      "result": "Original 0xee1060 returned 1 for each of the five Recipe-56 fruit rows in its synthetic pocket fixture, with no pocket bytes changed.",
+      "limitation": "A/B/C counters were not installed; the one-word-per-item fixture did not prove true material quantities or consumption."
+    },
+    "apple_signed_update_fixture": {
+      "helper": "0xf9e410 through 0xeff060",
+      "result": "Apple SaveCountMaxNum=0 caused the original helper to return before writes in that particular alternate-path fixture.",
+      "claim_limit": "Does not establish an in-game rejection or explain the default 0xee1060 crafting route."
+    }
+  },
+  "atomicity_and_persistence": {
+    "atomicity": "UNPROVEN. No success/insufficient/cancel/interruption matrix ran with real material mutators and result insertion in one player context. No rollback semantic is assigned to the conditional 20/20 material-descriptor insertion path.",
+    "save_mapping": "No named local SaveLand/player-pocket member is directly identified for the 0x17c result inventory view or 0x140 alternate material view. No named member is assigned by this report.",
+    "durability": "No serializer, file write/flush, reload, or durable craft result is joined to this transaction. SaveProc remains a separate unresolved boundary."
+  },
+  "reproduction_and_open_edges": {
+    "raw_callsite_disassembly": "PYTHONPATH=/workspace/acnh-re/.deps:acnh-re/tools python3 -c \"from native_image import Image; from pathlib import Path; i=Image(Path('/workspace/downloads/ACNH_island_RE/ACNH_island_RE/A_logic/main.elf')); print(i.disasm(0x335a40,0x90))\"",
+    "primary_existing_artifacts": [
+      "docs/CORE_ITEM_CRAFTING_LOOP_PROOF_20261107.md",
+      "docs/CRAFTING_TRANSACTION_MANAGER_FOLLOWUP_20261107.md",
+      "docs/CRAFTING_INVENTORY_COUNT_CONTEXT_TRACE_20261107.md",
+      "docs/CRAFTING_PERSISTENCE_TRANSACTION_BOUNDARY_20261107.md",
+      "output/gameplay/crafting_transaction_followup/crafting_transaction_branch_native.json",
+      "output/gameplay/crafting_transaction_followup/crafting_transaction_fixture_attempt.json"
+    ],
+    "remaining_to_close": [
+      "One source-authentic workbench/player context that runs the actual payload builder after recipe-56 sufficiency is present.",
+      "Run original material debit on a valid accepting item/count path with true counts, then verify each of five IDs and quantities after debit.",
+      "Run result insertion in the same context and establish no duplication/loss across pocket-full, insufficient-material, cancel, and interruption cases.",
+      "Bind inventory/cache views to named 1.0.0 save members and follow mutation through serializer, write/flush, and reload."
+    ]
+  },
+  "report": "acnh-re/docs/CRAFTING_PAYLOAD_BUILDER_CALLSITE_FOLLOWUP_20261107.md"
+}
