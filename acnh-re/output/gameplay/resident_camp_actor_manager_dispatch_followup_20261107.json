@@ -1,0 +1,201 @@
+{
+  "schema": "acnh-re.resident-camp-actor-manager-dispatch-followup/1",
+  "game_version": "1.0.0",
+  "analysis_mode": "static AArch64 disassembly, direct-call index, function extents, actor registry, prior EventFlow/save traces",
+  "report": "acnh-re/docs/RESIDENT_CAMP_ACTOR_MANAGER_DISPATCH_FOLLOWUP_20261107.md",
+  "scope": "NPC save-slot iteration and conditional resident/campsite actor-request builders under the NpcActorMgr method sequence",
+  "status": "MANAGER_METHOD_TO_RESIDENT_AND_CAMP_REQUEST_BUILDERS_STATIC;STAGE_INSTANTIATION_VISIBLE_ACTOR_AND_HOME_TRANSFORM_OPEN",
+  "source_identity": {
+    "main_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+    "main_nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+    "address_convention": "Raw ELF virtual addresses; generated Ghidra display addresses may add 0x100000.",
+    "source_artifacts": [
+      {
+        "path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/A_logic/main.elf",
+        "sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+        "role": "source ELF for raw instruction bytes"
+      },
+      {
+        "path": "/workspace/acnh-re/inputs/additional_exefs/main",
+        "sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+        "role": "supplied ExeFS main NSO identity"
+      },
+      {
+        "path": "/workspace/acnh-re/output/index.sqlite",
+        "sha256": "a78c7af27d37b8fd931bba8bc611623dacf7685cb6e8b4f827effa0765340aad",
+        "role": "read-only direct_calls/native_functions index"
+      },
+      {
+        "path": "/workspace/acnh-re/output/binary/analyzed_functions.tsv",
+        "sha256": "38455b8aaef240037d2f45d53db9b4a1473dfd938cb52d5e6e0087a2ba26b288",
+        "role": "function start/size/end extent for 0xc685a0"
+      },
+      {
+        "path": "/workspace/acnh-re/output/binary/code_pointer_arrays.json",
+        "sha256": "64d474068ca289f9146f7f32e6647a16a05e8f5be8e635615a478744b62ef822",
+        "role": "relocated method sequence and NpcActorMgr slot target"
+      },
+      {
+        "path": "/workspace/acnh-re/output/binary/analysis_decomp/c68f30.c",
+        "sha256": "e8fa3bbe2c39bce3684ea61a7a2ef6b34885c5633a7a88387baf6d6753c7707a",
+        "role": "resident NPC slot scan and actor-request builder pseudocode"
+      },
+      {
+        "path": "/workspace/acnh-re/output/binary/analysis_decomp/c6ce40.c",
+        "sha256": "ad4267f8ada697e70bf09fb5158ea6aa8790c8cd350ffb5532564016e788cf3a",
+        "role": "campsite visitor actor-request builder pseudocode"
+      },
+      {
+        "path": "/workspace/acnh-re/output/binary/analysis_decomp/c6c210.c",
+        "sha256": "baffdee9f089b4f117fcd428f82373155fac3986f5bd74aaf112e2d57f44d089",
+        "role": "shared actor-request submission routine pseudocode"
+      },
+      {
+        "path": "/workspace/acnh-re/output/binary/analysis_decomp/c70da0.c",
+        "sha256": "b2253dd8192f615ce55cb57d7ff4de45a22ae14d4186edf61a4e57bb8f0b5588",
+        "role": "preceding manager method call target"
+      },
+      {
+        "path": "/workspace/acnh-re/output/binary/analysis_decomp/c687f0.c",
+        "sha256": "23fc652be2c4e602930339e3f4924b576242812467e2ca5e43b597591b86ac00",
+        "role": "sibling manager method containing MoveInCompletion read"
+      },
+      {
+        "path": "/workspace/acnh-re/output/binary/analysis_decomp/490f0.c",
+        "sha256": "7c5c1e1dff0b249ea6e1810ed43ee7f71f8351854902415081a15ccabf776b58",
+        "role": "generic request-service callee reached by 0xc6c210"
+      },
+      {
+        "path": "/workspace/acnh-re/output/stage/actor_type_registry.json",
+        "sha256": "67439173a460ad49bb6cbc0086047eb192581f0cad36f4c936c4078a39d959be",
+        "role": "native actor-kind registration crosswalk"
+      },
+      {
+        "path": "acnh-re/output/gameplay/villager_plot_firstlive_continuity_followup_20261107.json",
+        "sha256": "379fddc7194412aaa79c0b6d9b4f8acb52b91489534c27ce3896928bd00d119d",
+        "role": "prior plot, day-change, camper slot-5, and actor-candidate trace"
+      },
+      {
+        "path": "acnh-re/output/gameplay/building_actor_mgr_component_boundary_20261107.json",
+        "sha256": "eea736d81f20e1c23d18eeb050ef7d6986327aa443f35e0e304d8a980d5a6448",
+        "role": "prior NpcActorMgr registration, method sequence, and factory separation"
+      }
+    ]
+  },
+  "manager_dispatch": {
+    "registered_actor": "NpcActorMgr",
+    "registration_initializer": "0xc71bf0",
+    "factory": "0xc67fa0",
+    "constructor": "0xc67ff0",
+    "outer_vptr_addresspoint": "0x30d9a50",
+    "method_sequence_pointer_va": "0x30d9a88",
+    "method_sequence_offset": "+0x38",
+    "method_target": "0xc685a0",
+    "extent": {
+      "start": "0xc685a0",
+      "body_bytes": 584,
+      "end_va_field": "0xc687e7"
+    },
+    "receiver_save": {
+      "pc": "0xc685cc",
+      "instruction": "mov x19, x0",
+      "bytes": "f30300aa"
+    },
+    "conditional_calls": [
+      {
+        "pc": "0xc686ac",
+        "instruction": "bl 0xc70da0",
+        "bytes": "bd210094",
+        "receiver": "x19 (NpcActorMgr this)"
+      },
+      {
+        "pc": "0xc686b0",
+        "instruction": "tbnz w0, #0, 0xc686c4",
+        "bytes": "a0000037",
+        "effect": "if return bit 0 is set, skip 0xc68f30"
+      },
+      {
+        "pc": "0xc686b4",
+        "instruction": "mov x0, x19",
+        "bytes": "e00313aa"
+      },
+      {
+        "pc": "0xc686b8",
+        "instruction": "bl 0xc68f30",
+        "bytes": "1e020094",
+        "receiver": "same NpcActorMgr this; executed when preceding bit test does not branch"
+      }
+    ],
+    "direct_call_index_row_for_0xc68f30": {
+      "pc": "0xc686b8",
+      "owner_va": null,
+      "target_va": "0xc68f30",
+      "interpretation": "owner is absent in index, but raw PC lies within the 0xc685a0 extent recorded above"
+    }
+  },
+  "resident_slot_builder": {
+    "function": "0xc68f30",
+    "slot_count": 10,
+    "slot_stride": "0x12ab0",
+    "field_read": "AbandonedHouse",
+    "actor_request_behavior": [
+      "constructs resident actor name from slot/ID data",
+      "constructs an AIC path from NPC/AI resource data",
+      "submits request through 0xc6c210"
+    ],
+    "request_submitter_calls": [
+      "0xc695cc",
+      "0xc698ac"
+    ],
+    "additional_campsite_builder_call": {
+      "pc": "0xc69838",
+      "target": "0xc6ce40"
+    },
+    "move_in_completion_precision": "The MoveInCompletion read is in sibling manager method 0xc687f0, not established as a read inside 0xc68f30 itself."
+  },
+  "campsite_actor_builder": {
+    "function": "0xc6ce40",
+    "reads_campsite_member_offset": "+0x20d578",
+    "resolves_visitor_with": "0xf7d760",
+    "constructs": [
+      "E_%s_NPC_%02d",
+      "%s/AIC:Camp/AIF:AI_NPC_Camp"
+    ],
+    "request_submitter": "0xc6c210",
+    "request_submitter_pc": "0xc6d128",
+    "role_boundary": "This is the campsite visitor actor request; it is separate from the post-conversation NPC slot-5 resident record."
+  },
+  "shared_request_boundary": {
+    "function": "0xc6c210",
+    "generic_service_call_pc": "0xc6cbe4",
+    "generic_service_target": "0x490f0",
+    "direct_call_index_owner": "0xc6c210",
+    "claim_limit": "The request path is statically entered; no concrete visible actor object/render/collider or house transform is observed."
+  },
+  "save_slot_crosswalk": {
+    "plot_move_in_writes_same_npc_record_family": true,
+    "first_camper_action_writes_npc_slot": 5,
+    "slot_5_offset": "0x5d570",
+    "actor_builder_scans_slot_index_0_through_9": true,
+    "structural_relationship": "Slot 5 falls within the ten-record scan; this is not proof of same-frame spawn or successful actor creation."
+  },
+  "open_edges": [
+    "Stage actor row/type and factory registration to actual NpcActorMgr construction in a live MainField load.",
+    "NpcActorMgr slot dispatch cadence and condition outcomes in a running game.",
+    "0xc6c210 / 0x490f0 request processing to a concrete resident/camper actor object, visible model, and collision instance.",
+    "NPC save slot to house/plot world coordinate, transform, terrain/overlap validation, and completed home placement.",
+    "First camper slot-5 move-in/housing completion to the later visible resident actor.",
+    "Runtime stage and per-frame execution; no game or save was run."
+  ],
+  "bounded_negative_results": [
+    "The direct_calls row for target 0xc68f30 has owner_va NULL; that index field alone misses its caller. The raw instruction PC and function extent resolve it to method 0xc685a0.",
+    "The main-field/commonOutdoor stage actor record is generic NpcActorMgr and carries no plot index or resident save-slot identity.",
+    "The campsite builder uses campsite save data; this does not by itself connect a camp visitor to the later slot-5 household actor.",
+    "No model or audio payload was loaded or converted."
+  ],
+  "execution": {
+    "game_run": false,
+    "save_mutation": false,
+    "godot_change": false
+  }
+}
