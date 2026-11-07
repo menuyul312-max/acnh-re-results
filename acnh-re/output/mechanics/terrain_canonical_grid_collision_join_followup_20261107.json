@@ -1,0 +1,1656 @@
+{
+  "schema": "acnh.re.terrain_canonical_grid_collision_join_followup.v1",
+  "title": "Terrain canonical field-grid and collision join follow-up, ACNH 1.0.0",
+  "date": "2026-11-07",
+  "build": {
+    "game": "Animal Crossing: New Horizons",
+    "version": "1.0.0",
+    "address_convention": "Native ELF virtual addresses (VA); raw callsite bytes are little-endian AArch64."
+  },
+  "scope": {
+    "question": "Do LandMaking source-cell transfer and Island Designer placement/editor mutations reach the runtime field ground/collision grid and an apply/save path?",
+    "method": "Static inspection of main.elf bytes, the existing native_functions/direct_calls SQLite index, relocated code_pointer_arrays.json, indexed BYML/BCSV inventory, save_layout.json, and prior terrain/editor ledgers. No game run, save mutation, index edit, or Godot change.",
+    "conclusion": "One state-gated world-context handler writes directly to the 52-byte base ground grid through 0x163780/0x163760 wrappers. No static edge joins the 14-byte LandMaking loader or Island Designer scratch result to these canonical-grid writers, and no grid apply/save serializer is identified; those joins remain OPEN."
+  },
+  "source_hashes": {
+    "main_elf": {
+      "path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/A_logic/main.elf",
+      "bytes": 53729580,
+      "sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74"
+    },
+    "native_index_sqlite": {
+      "path": "/workspace/acnh-re/output/index.sqlite",
+      "bytes": 63946752,
+      "sha256": "a78c7af27d37b8fd931bba8bc611623dacf7685cb6e8b4f827effa0765340aad"
+    },
+    "relocated_code_pointer_sequences": {
+      "path": "/workspace/acnh-re/output/binary/code_pointer_arrays.json",
+      "bytes": 11768450,
+      "sha256": "64d474068ca289f9146f7f32e6647a16a05e8f5be8e635615a478744b62ef822"
+    },
+    "save_layout_depth2": {
+      "path": "/workspace/acnh-re/output/gameplay/save_layout.json",
+      "bytes": 37317,
+      "sha256": "a326c84213faad1921bd7660c3e171a7b3af117ec55e2ca711a871ad637e51dc"
+    },
+    "/workspace/acnh-re/output/relations/terrain_native.json": {
+      "path": "/workspace/acnh-re/output/relations/terrain_native.json",
+      "bytes": 42298,
+      "sha256": "c91fd4e71831290c0daff1e0e9e4e4f96c449ababb416622de44b27233b692b6"
+    },
+    "preset_loader_native_result": {
+      "path": "/workspace/acnh-re-github/acnh-re/output/ui_island/island_terrain_loader_native.json",
+      "bytes": 26677,
+      "sha256": "a091e416a8713a95cc52565e1e9b4f03ab74b83425e62f0620991525611f61c9"
+    },
+    "pbc_audit_summary_only": {
+      "path": "/workspace/acnh-re-github/acnh-re/output/ui_island/manifests_pbc_audit.json",
+      "bytes": 166760,
+      "sha256": "0245d3353d94685c8be8aae73a38a6353ad901de6fb24f31f019786978f5d161"
+    },
+    "island_designer_actionparam_consumers_ledger": {
+      "path": "/workspace/acnh-re-github/acnh-re/output/ui_island/island_designer_actionparam_error_consumers_followup_20261107.json",
+      "bytes": 18886,
+      "sha256": "1737cbd7de41a8d244b47cf05e960a66fe8e38cfbac58e3c55469940259533ad"
+    },
+    "island_designer_patch_escape_ledger": {
+      "path": "/workspace/acnh-re-github/acnh-re/output/ui_island/island_designer_patch_output_escape_boundary_followup_20261107.json",
+      "bytes": 8038,
+      "sha256": "e0713f5840cbbeee953da13feec7435ea532185501535bf2457910ae3c27b0aa"
+    },
+    "terrain_region_mutation_ledger": {
+      "path": "/workspace/acnh-re-github/acnh-re/output/mechanics/terrain_region_mutation_native.json",
+      "bytes": 2110,
+      "sha256": "e0f9a21baba5fac787810e05b6506b66f43096d19833bcf1923dfa8cfa9e77a3"
+    },
+    "actionparam_bcsv": {
+      "source": "B_data/Bcsv/FieldLandMakingActionParam.bcsv",
+      "bytes": 804,
+      "sha256": "fe3f06ae6fb26c95631e842cd043a52348ba2c7399fc5d6085ff13dcfed0af9a",
+      "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Bcsv/FieldLandMakingActionParam.bcsv",
+      "raw_bytes_verified": true
+    },
+    "error_bcsv": {
+      "source": "B_data/Bcsv/FieldLandMakingError.bcsv",
+      "bytes": 2340,
+      "sha256": "232d276ed81ab7792b0e64fa6c10e7141702a63434c7e273041557cb0751de23",
+      "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Bcsv/FieldLandMakingError.bcsv",
+      "raw_bytes_verified": true
+    },
+    "unit_model_param_bcsv": {
+      "source": "B_data/Bcsv/FieldLandMakingUnitModelParam.bcsv",
+      "bytes": 24964,
+      "sha256": "289ad2fb68d511121a0779f24e21dfc5f8c627a6053c6aaf334b6a56481d36fc",
+      "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Bcsv/FieldLandMakingUnitModelParam.bcsv",
+      "raw_bytes_verified": true
+    }
+  },
+  "landmaking_preset_manifest": {
+    "count": 96,
+    "verified_against_raw_source_count": 96,
+    "manifest_sha256": "d5e83d22ec06d69b3f25af89816efde8952573906750990224f20077a076108c",
+    "digest_method": "SHA256 of compact sorted-key JSON array from files(source,format,size,sha256,raw_path,raw_bytes_verified); rows below preserve each indexed source SHA256.",
+    "sources": [
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetA00_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "cba1ab90d21982b443e719e30a19c80fa9aa9ead86f03705f5ecbd3c821d4aca",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetA00_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetA01_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "41639394b47efec15fe3b90e1a2e1b597372cbb152150b61d6b59f19d32c5406",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetA01_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetA02_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "807921a1fdedafad636be3d145ba66619062bf2fc4886d08a69262d8274eca79",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetA02_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetA03_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "9c73759cb986c4005d8122edd93dd2dba27d033516747d5f4d74b39bac96beff",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetA03_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetA04_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "1841a74df683109f56b8efd6c8c416cab7625ce20730cccc1e1d83a0faf16001",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetA04_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetA05_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "100e56f768a320e8e6f5925dd97439e1c0e5aaaa897ec6a973b7f98fdb114945",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetA05_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetA09_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "1d391c23e4609c64204bb00ac14bd9f75a4e078fc88b55c8ebe174775356ae27",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetA09_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetA10_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "d3c700636296ad25633ee92cb4699ede3d575b07faa41b09613e90090ac98a94",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetA10_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetA11_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "492faae157b08432c3288aabdf301a477ecfdabc34b61ec5a90ca601769d8573",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetA11_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetA12_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "3c6fc2eb594fe7019d3b464d10c944ed4fcb8e5f5ea1562198891737e8a72984",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetA12_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetA13_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "713f109ef968c3e558e0be0f597493d84867fa24eabf510ac8afb5dd2404cc03",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetA13_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetA14_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "4d5523ca67c35a0c98737cc1c9af6886a0566071f066e6f354dc434b9bfb16ac",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetA14_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetA15_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "3d5623418500c74bd40df14c1b4feaeb05b3eaae940f45d3cb9ea4af29db8da0",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetA15_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetA16_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "235de871b7ee7d7837148bb7c7dc0f06ea8019ad45b0db1fc4262f756ca26ab6",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetA16_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetA17_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "9664de2f47efc3f01b9fd7c83e4031c7480705349af925b66bdcd044af4f2602",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetA17_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetA18_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "50a2a7f15950044846aae4a8837f4ad8357181348a8ac73401e5a2fc0165d946",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetA18_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetA19_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "d721af562cebd1fd32311c1bfb4f2d68d9affc543a4aec1d1c2703730de6b372",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetA19_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetA20_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "5cf93ee7a384645638f3b56da91a57726e7b99f17158b77a86eef8b4610bb5ac",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetA20_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetA21_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "2b721c654589d1b4a01f879bd34a05370f8b70356768d4b68ab2b473212d5510",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetA21_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetA22_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "c092b051ec3b037be84fd672fe864164dae06091086217cefb5a0d6eeff25f16",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetA22_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetA23_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "f54523ddaa3b4ac993500b4620ac3fb25298b22ea3fc07c6f246cf58e0799253",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetA23_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetA24_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "dedc981cd5677abff0ef0996f0cab1790c0652d31c9dcb880d8c76ff765488f2",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetA24_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetA25_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "ae425d9438016aadcbc615597a59cad1c3c1feac67d96caec1011edb5a8e03a7",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetA25_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetA26_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "62ab0836082cb2435f1b8ce4ef28d8150fab8491572d8f5d6a72397136052fc9",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetA26_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetA27_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "9df5bf1d27862431814c71481d90ac7f2297212dc26fb24e2874991c8a2810ef",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetA27_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetA28_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "e8014fe48f8ee6bf941735d3ee8887f80405e6cb46a7bbfee5bb8dbeadcf88b0",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetA28_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetA29_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "f7d5d9a46fd903e414f5e9ccc7d8b2776f1e5b40b365e221c574cf1eaad66e55",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetA29_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetA30_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "743db02639c17394b79a010cbd2330da049b466cca72063aeadb1d1384873970",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetA30_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetA31_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "360fb673debc095a4132034ace7b07cc1cfe20a56a3d0089e6d151511ef0bb9c",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetA31_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetA32_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "414de6f056c2bae000b6903b5c5339276dd1fa8dd6b3ba7612bf86b174163b9c",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetA32_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetB00_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "929f949631b995b1f76226536a091d7d3630e12265f6e332a3944d712dedb6fa",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetB00_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetB01_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "07e30e54fef189573bef3608a61b8d68175a5cd398d39d95da425ca0b6588aac",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetB01_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetB02_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "f21349a93f39cb4b91ca728e9195c34d3a14401867018ec54d1401f7a75ac05e",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetB02_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetB03_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "5fddc80dcab88f8c70f07e45f418334fcb041ff6be0929cf2cb26d31ed5c5486",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetB03_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetB04_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "bcbf096aeeae99bc3bf24393102821cb40ec335c3191702a991c815ce5057c23",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetB04_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetB05_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "c9220480e6642ac8034e2c67f400f2c72f80cc277590aa3a76bcf27fe8227e47",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetB05_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetB06_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "f2ed881418214a09266743d76325be438f43a1da745c5dded44dde775933abdd",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetB06_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetB07_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "db0275839ff62fb8691d0731ed56d8d885f29535478379c6fc538ad0bbb863e5",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetB07_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetB08_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "a4c123c218822a27f872a11db7b07230b7172bce0a8aad105cdf7535b70213fe",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetB08_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetB09_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "f2287d83bc587ad84df96a10b3b57230147881cdd89a328032734a1d3ada0277",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetB09_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetB10_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "eae978091203a34a53452385f5586740d39ed888306cdf632ef4bb2b3955a407",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetB10_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetB11_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "ed020d96bd9c24dceaf6f4e688f71c968bcafb88d9fc25351835d84c534f3c4b",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetB11_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetB12_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "de84e7a6204f0abc749300b9f9f17e1ec6dd873571d3a703556c305a15542058",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetB12_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetB13_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "2f705b0aaa0e5cae2304c16ae8b6d20dd12b3e29a888fb14b6223ee4a6d87366",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetB13_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetB14_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "3f78193be0c79971708b3a7244f3557fe4ff7bef76f96307aadac3c37ba60e8b",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetB14_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetB15_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "9e39f05a2ec51b1440096a6b436487142c402eedc5598766dc440ac4c831bb61",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetB15_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetB16_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "bcb40e6cf8781371a9fc3858f277b5017370125c83f83924d58a4d356eafa3fa",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetB16_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetB17_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "9e8c8b71905f8023040cfeea4f4cde5258131e3945bb149c8a41794ca8cd2e94",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetB17_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetB18_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "5b2cff3552b052d21d370f3c4eb54ddb4a1a4a6fe7a2d02b3fe1e02d2b4ae55f",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetB18_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetB19_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "89fbcdd4038087944a5e87c42658321f674a960ed0ae3cd9f3071fe6a72f60f8",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetB19_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetB20_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "354ae27f7e623d96f5fb0282e6433156d04b4ac97d2320a76069ad5a22f872e0",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetB20_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetB21_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "40542a3731f76b7aed17043842f4eb996ca3459362023911d1394ff25df5abd8",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetB21_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetB22_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "43c1a30fb73bc470e31b73f67f6a1ab536e382644446eefe3cffed4ad7d1a474",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetB22_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetB23_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "d8bd7c510ffb7f3d8c94e719cba10d8e6ab05a9811cb4b4afd81327ef60f44c8",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetB23_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetB24_LandMaking.byml",
+        "format": "BYML",
+        "size": 150604,
+        "sha256": "20373027a400e0cd27acbdcbe3ad43222f22b67f1e838ac9d8583e5a47e1cfde",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetB24_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetB25_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "f75e2a1c9b6a66d14bdf91e14790951f0d936569b0344ae6f8b5b3a1c23b5549",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetB25_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetB26_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "4bb0d958e37f0d0abcaed78b0101457cadad731829643d07f9bae4b4109b8bb3",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetB26_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetB27_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "7954fe8826f0e01a956ef8c238d6db4e40504ef9e9cbf7f47d4e0b738b39fffe",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetB27_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetB28_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "2f8a27d624c9b739164a637c7cd873eda173963ff51c2bbee40c0ea53ef02e5c",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetB28_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetB29_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "7c4690d58f41ad6d5dd95409b9208a03b5817913c9098d6e4ef8ad2248fcc362",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetB29_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetB30_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "76a94884afd54d904363217503f5d3e6cc5cd515cedd71e4a19d714685c72c49",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetB30_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetB31_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "f3a11acabe0e46c59912e08fa3a398938c1e21a794d001292b566bdd6d7d015c",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetB31_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetB32_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "531c54435592b8e28242690ce0a0279e51e9cd56bf58154eff0b77afd1a4b271",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetB32_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetC00_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "d69742fe9a12b06950557e65ce918887ad278916435a4b76ef293a130721dce4",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetC00_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetC01_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "aedcae4d265652dc5c4cccb1f5763a8cfb38cb0825100e0527276bfb4ad239b0",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetC01_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetC02_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "3f9168ff64e82476396422b60f845d42636e565b68a77b0c6a9054273b8eb754",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetC02_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetC03_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "ffa3670abc08ca76d70f65f2b34734c5c727d0e413dcb5bcd8f9bbafa92034f1",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetC03_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetC04_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "bcd29859a2c7d9b2ce9d4402fc6efe787e7eb1674a32f13f9867c5dfe5e041ac",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetC04_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetC05_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "cf741f42a1ab1112ebd2b39d0d8543fe0d76d67cbbcf2fa4c2ddc107ade496ac",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetC05_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetC06_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "4b11cfac472d19a16f91acba9fc7073f7f360447a964521e3f24c9e1809e7d68",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetC06_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetC07_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "9b438dd6412fd4c37c3c55363713d5831ad12b906520ac582eb3223c0ccfdfca",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetC07_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetC08_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "a9281002679c0fd96ca3cd53f856574c6a9bdd78e1b735bc04e555269d6706eb",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetC08_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetC09_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "d5f64e71da9bc38918bafd012f0eefbe072f0ce1df749aca3e515c089db7eb6f",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetC09_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetC10_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "4ae6f7d27471007174ebb8caf2702055cad07f0f0c873520d40a9bb2caf0ab91",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetC10_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetC11_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "31dd10fb3c2b28a783c32f62de4c70cc618dc723d7b56381ccf92a954a4b4ef5",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetC11_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetC12_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "f04a289e358163fba66a000559024ecfe805e889f7ea125d1e28520807bcc067",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetC12_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetC13_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "7480166743a8441b9547c1d1cee687b3f518ecdb475e0bec260d78f7f9c72b59",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetC13_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetC14_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "2fb61d03834fe21e1693dafce70bade8cac095eed77e253c0337195f8e33dbdf",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetC14_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetC15_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "c40ba2d7f246ec2a2828fbacc441de26cb67d80f9c327e21bcae08bc34118ec2",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetC15_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetC16_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "214480e4197eda3f3fb6c4147492268b1fcce716ae2d40cbbf23d5f99610ec20",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetC16_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetC17_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "7a1f749d38133ad6a0e2ac25c60eadcd41fb2be71797e8e0e1eed2215ba7ba32",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetC17_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetC18_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "6ad07b8c0910ba695e4416082b15397e73161d28aec2a628ce97749080a31991",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetC18_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetC19_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "26f6545d69043d925399391a5557e9d39526167f36ad80453bd9f1a8f6f0d939",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetC19_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetC20_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "0ef028f61290257868b56bc46d103ae9925edbd118e5cfb8f3b40be6dab81d9f",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetC20_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetC21_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "fae3dc3d8bc9d27333f37a3ac4c4dce08a7c34747c507899b26375f4661c7e4a",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetC21_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetC22_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "0020d6800c4c99111a6651ed45dad1e751e65cae949d81c1ad61abc2d171d370",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetC22_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetC23_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "281b234c8fe2a83ea85adabc73229fbb8d7fa3159a2dfe0e4a707f855c92ab1b",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetC23_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetC24_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "eb3f69a665e9aa346d70f7ca8ddebc822e2df259e8eb9c54e008b4efdae74f75",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetC24_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetC25_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "2def004cb7f757c4d089538621f8c0dc0b524ccbdf042b3a0151a572cb0780c8",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetC25_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetC26_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "af0b22b0ee69db2390275015dd22fb89d3c4690d437287c033687824d769feb9",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetC26_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetC27_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "407bb9458ee6a9fa3cff043622cde02fe0c973c6cc456048c6b3b6b442f09f45",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetC27_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetC28_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "0aabd4589df70dbbc2d7a2ddef6c572fc718a511c51fe72d18867abc79e12f27",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetC28_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetC29_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "061292631632a201ecb38a09931ad93f113b7acb1df2395a28b9b1e9977710aa",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetC29_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetC30_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "d1ef41ddb314e0ab1d711864d64ad9d1eb38e859a908fad134f9d05b249155c1",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetC30_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetC31_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "5579a9feef462dfceeb1ba7b3a4e5c960bd3794553b30b01cfb46289e1b49b24",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetC31_LandMaking.byml",
+        "raw_bytes_verified": true
+      },
+      {
+        "source": "B_data/Param/Field/MainFieldPreset/FieldPresetC32_LandMaking.byml",
+        "format": "BYML",
+        "size": 150608,
+        "sha256": "94668076331940d4166333ffbafad839f84f5ad983a3839130fbcea23e43fb17",
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetC32_LandMaking.byml",
+        "raw_bytes_verified": true
+      }
+    ]
+  },
+  "index_bounds": {
+    "main_text_segment": {
+      "file_offset": "0x888",
+      "virtual_address": "0x0",
+      "file_size": "0x2211a60",
+      "instruction_scan_basis": "existing direct_calls index; aligned immediate AArch64 call/branch-to-entry records"
+    },
+    "counts": {
+      "direct_calls_rows": 663262,
+      "functions_rows": 60515,
+      "native_functions_rows": 149425,
+      "decomp_new_rows": 64466,
+      "pointer_sequences": 18348,
+      "pointer_entries": 192637,
+      "preset_byml_rows": 96,
+      "preset_raw_hashes_verified": 96,
+      "save_layout_member_rows": 88,
+      "save_layout_named_member_rows": 19
+    },
+    "pointer_array_scan": "All entries in the existing relocated-code-pointer sequence corpus; each row carries generic status and is not automatically a C++ vtable.",
+    "save_layout_scan": "Current save_layout.json output is a depth-2 view; name search only bounds that emitted representation."
+  },
+  "function_slices": {
+    "hash_basis": "SHA256 over exact main.elf bytes at native_functions VA and indexed size.",
+    "functions": {
+      "0x8445d0": {
+        "size": 1036,
+        "end_inclusive": "0x8449db",
+        "sha256": "c7e5b0c2bf1672208f4d55c92f4c0ee00027baa23a470783130c87f30f4488d8"
+      },
+      "0x156e30": {
+        "size": 548,
+        "end_inclusive": "0x157053",
+        "sha256": "4f6fe7daba026a7211c0064015da328b9738ded085c5b02b7352c3ed7280e9d2"
+      },
+      "0x1725f0": {
+        "size": 312,
+        "end_inclusive": "0x172727",
+        "sha256": "333526b17a247ccacbc96644d977fcd8cde915c95db85195763b0c0453241f2b"
+      },
+      "0x172280": {
+        "size": 872,
+        "end_inclusive": "0x1725e7",
+        "sha256": "d9e1f1d6e094ef8b8f9c6888972806aaa83527e123c8fbe9d1ec71b63a5e3060"
+      },
+      "0x172740": {
+        "size": 948,
+        "end_inclusive": "0x172af3",
+        "sha256": "56d3c682d1115b79b5f42ed30d458d57e59638dbdc253e32b0de6b3c41a3a61e"
+      },
+      "0x1577a0": {
+        "size": 188,
+        "end_inclusive": "0x15785b",
+        "sha256": "af6c7f1dad7562d34a6735b5a42e346103f82d301c5d1dd2040914c131331385"
+      },
+      "0x157270": {
+        "size": 368,
+        "end_inclusive": "0x1573df",
+        "sha256": "83756acbc062f8f61eb3bd1522d7de396bfff4cd0d48bcf1714f42467a204671"
+      },
+      "0x163760": {
+        "size": 8,
+        "end_inclusive": "0x163767",
+        "sha256": "7459b712ec10233a807c9e02e4342ca6378a0d0615dece816bd317a71d892b68"
+      },
+      "0x163780": {
+        "size": 12,
+        "end_inclusive": "0x16378b",
+        "sha256": "8e9957c8924714da99c55da6bdda62feb2809d92ac4787974fff137f9b08c241"
+      },
+      "0x163790": {
+        "size": 20,
+        "end_inclusive": "0x1637a3",
+        "sha256": "81bce86abf13b9a6bc16cb53059023dd79f2dd52aca578f9f0aa92d560c20368"
+      },
+      "0x1637b0": {
+        "size": 20,
+        "end_inclusive": "0x1637c3",
+        "sha256": "9fa4b14add54876b9b952fec79bcdf50874e5a92861f4c5795182f55e57ca550"
+      },
+      "0x185800": {
+        "size": 340,
+        "end_inclusive": "0x185953",
+        "sha256": "2e59ba4d8814cea2264296eba85457a49a662a112407df1517d40be9fb50b411"
+      },
+      "0x185960": {
+        "size": 336,
+        "end_inclusive": "0x185aaf",
+        "sha256": "29999824180b3af3de9ac5275a9e9b795f5089fed84cbde0aad0f9777c6ef812"
+      },
+      "0x185ab0": {
+        "size": 456,
+        "end_inclusive": "0x185c77",
+        "sha256": "4a7c22e355a3cec23798e05aab4dc56c0a25e15a67ae3d77bed0d5ea755b2096"
+      },
+      "0x185c80": {
+        "size": 492,
+        "end_inclusive": "0x185e6b",
+        "sha256": "a68b61d48aa24d66bb747d9816ac0fe2a52c233cb91c5e77c13cd40dcf703e3a"
+      },
+      "0x52bc00": {
+        "size": 112,
+        "end_inclusive": "0x52bc6f",
+        "sha256": "087098d3492f36046cd5c2df0e8d375a567a75357952962b901aefce31622ce9"
+      },
+      "0x528bf0": {
+        "size": 476,
+        "end_inclusive": "0x528dcb",
+        "sha256": "725d2c3f3ddebcb59103aab321d735e8625155987ca2eff0b71ebc1eaf67feb1"
+      },
+      "0x529910": {
+        "size": 1220,
+        "end_inclusive": "0x529dd3",
+        "sha256": "f0631f8d3e2fa9070cba90e16b4c4d15400672d1f5293118b8a8640f13006862"
+      },
+      "0x558f40": {
+        "size": 1864,
+        "end_inclusive": "0x559687",
+        "sha256": "5ed717c2ac425f3c237c66491cb725d0f92df9028952ce6c893585a074a864fd"
+      },
+      "0x558ef0": {
+        "size": 72,
+        "end_inclusive": "0x558f37",
+        "sha256": "0829730a242d1ab019e2404480faa8cd153b5a88f0f69995d2123647afd4cc87"
+      },
+      "0x565e30": {
+        "size": 1080,
+        "end_inclusive": "0x566267",
+        "sha256": "00871e4ed07453054c1daa66872cbf574b445a6605c23d7e47fd20e0f0d8ca46"
+      },
+      "0x531790": {
+        "size": 324,
+        "end_inclusive": "0x5318d3",
+        "sha256": "2e3cb475929991b83930f9d6a67946da082bfffb17bf6ac84d4b245dd0e778ea"
+      },
+      "0x5318e0": {
+        "size": 496,
+        "end_inclusive": "0x531acf",
+        "sha256": "f8ee25802aa4c9b45059fdb794e237b36e0035129a4101141b0c9056344e3f8c"
+      },
+      "0x531ba0": {
+        "size": 208,
+        "end_inclusive": "0x531c6f",
+        "sha256": "50fba58a728019e647fb04a184eeec5420ec43edfb61947edcd48785623ac923"
+      },
+      "0x531ad0": {
+        "size": 200,
+        "end_inclusive": "0x531b97",
+        "sha256": "5d46cc1a5f5e09ddfcb422681b61f076922f0703bb9f0edd5d82bb8cd48ee928"
+      },
+      "0x53e4f0": {
+        "size": 388,
+        "end_inclusive": "0x53e673",
+        "sha256": "169f8ce32bcb9f4d95be4c847f7c88bd4fdf6846ce074e064913d4240992a811"
+      },
+      "0x54dc70": {
+        "size": 512,
+        "end_inclusive": "0x54de6f",
+        "sha256": "aaf1e0f8b6a5f4e8b453d1624871f129bf2c142b3dc79bada237bcbd6a49e6e3"
+      },
+      "0x540a10": {
+        "size": 132,
+        "end_inclusive": "0x540a93",
+        "sha256": "b40131b6469b7856193921ae1c22e6ed01f218582ee09a330912a7f6acef7f43"
+      },
+      "0x181cd0": {
+        "size": 252,
+        "end_inclusive": "0x181dcb",
+        "sha256": "eca69f0eedf472900544630c5fd852387768b9d60883e73744d449ea3f791e45"
+      },
+      "0x18adf0": {
+        "size": 324,
+        "end_inclusive": "0x18af33",
+        "sha256": "0b7677596b3c6df0f71db8c526a46c83338739f4087023d427dfd74372a160ed"
+      }
+    }
+  },
+  "structures": {
+    "landmaking_source_cell": {
+      "grid": "112x96",
+      "index": "x + 112*z",
+      "stride_bytes": 14,
+      "fields": [
+        {
+          "offset": 0,
+          "size": 2,
+          "role": "layer0.unit_id"
+        },
+        {
+          "offset": 2,
+          "size": 2,
+          "role": "layer0.variation"
+        },
+        {
+          "offset": 4,
+          "size": 1,
+          "role": "layer0.rotation"
+        },
+        {
+          "offset": 6,
+          "size": 2,
+          "role": "layer1.unit_id"
+        },
+        {
+          "offset": 8,
+          "size": 2,
+          "role": "layer1.variation"
+        },
+        {
+          "offset": 10,
+          "size": 1,
+          "role": "layer1.rotation"
+        },
+        {
+          "offset": 12,
+          "size": 1,
+          "role": "height"
+        }
+      ],
+      "native_loader": "0x558f40",
+      "loader_callers": [
+        "0x528bf0@0x528c98",
+        "0x558ef0@0x558f28"
+      ],
+      "destination": "seven fields written through separate LandMaking cell accessor at offsets 0,2,4,6,8,10,12; not the 52-byte ground record"
+    },
+    "runtime_ground_grid": {
+      "object_size_bytes": "0x118",
+      "width_offset": "0x30",
+      "height_offset": "0x34",
+      "base_count_offset": "0x40",
+      "base_records_offset": "0x48",
+      "overlay_count_offset": "0x50",
+      "overlay_records_offset": "0x58",
+      "flags_count_offset": "0x60",
+      "flags_words_offset": "0x68",
+      "index": "x + width*z",
+      "record_stride_bytes": "0x34",
+      "record_fields": [
+        {
+          "range": "0x00..0x2f",
+          "role": "12 float32 plane/height values"
+        },
+        {
+          "range": "0x30..0x33",
+          "role": "4 ground attribute bytes"
+        }
+      ],
+      "query": "0x172740; base/overlay selection depends on mode and overlay attribute sentinel 7"
+    },
+    "grid_identity_boundary": "The handler fetches [loaded context+0xa0] after passing context+0x28 through wrappers that load +0x78. This matches the slot arithmetic of other grid paths; pointer identity with the object constructed by 0x156e30 is not proven."
+  },
+  "edges": [
+    {
+      "from": "0x8445d0",
+      "pc": "0x8446fc",
+      "bytes_le": "217ce497",
+      "to": "0x163780",
+      "kind": "BL",
+      "arguments": "owner = context+0x28; rectangle = sp+8; w2=6",
+      "effect": "Wrapper loads owner+0x78 and branches to base ground attribute writer 0x185960."
+    },
+    {
+      "from": "0x163780",
+      "pc": "0x163788",
+      "bytes_le": "76880014",
+      "to": "0x185960",
+      "kind": "B",
+      "effect": "Tail branch after owner+0x78; 0x185960 writes four base-record attribute bytes."
+    },
+    {
+      "from": "0x8445d0",
+      "pc": "0x844710",
+      "bytes_le": "147ce497",
+      "to": "0x163760",
+      "kind": "BL",
+      "arguments": "owner = context+0x28; rectangle = sp+8; s0=0.0f",
+      "effect": "Wrapper loads owner+0x78 and branches to base ground float writer 0x185800."
+    },
+    {
+      "from": "0x163760",
+      "pc": "0x163764",
+      "bytes_le": "27880014",
+      "to": "0x185800",
+      "kind": "B",
+      "effect": "Tail branch after owner+0x78; 0x185800 writes twelve base-record float fields."
+    },
+    {
+      "from": "0x163790",
+      "pc": "0x16379c",
+      "bytes_le": "c5880014",
+      "to": "0x185ab0",
+      "kind": "B",
+      "effect": "Owner+0x78 overlay wrapper; guarded null pointer; copies base floats to overlay and fills four overlay attributes."
+    },
+    {
+      "from": "0x1637b0",
+      "pc": "0x1637bc",
+      "bytes_le": "31890014",
+      "to": "0x185c80",
+      "kind": "B",
+      "effect": "Owner+0x78 flag-region wrapper; updates region flag bit 2."
+    },
+    {
+      "from": "0x1577a0",
+      "pc": "0x1577f0",
+      "to": "0x172740",
+      "kind": "BL",
+      "effect": "Ground scalar query invokes grid callback in base mode."
+    },
+    {
+      "from": "0x528bf0",
+      "pc": "0x528c98",
+      "to": "0x558f40",
+      "kind": "BL",
+      "effect": "Preset setup passes LandMaking resource and destination cell grid to the 14-byte loader."
+    },
+    {
+      "from": "0x565e30",
+      "pc": "0x566220",
+      "to": "0x558ef0",
+      "kind": "BL",
+      "effect": "Saved preset UID is wrapped and sent to LandMaking preset reload."
+    },
+    {
+      "from": "0x558ef0",
+      "pc": "0x558f28",
+      "to": "0x558f40",
+      "kind": "BL",
+      "effect": "Shared preset loader."
+    },
+    {
+      "from": "0x531ad0",
+      "pc": "0x531b54",
+      "to": "0x54dc70",
+      "kind": "BL",
+      "effect": "Copies 3x3 patch into caller-local stack buffer at sp+0x80; does not pass the buffer onward."
+    }
+  ],
+  "world_context_base_writer": {
+    "handler": {
+      "va": "0x8445d0",
+      "native_span_bytes": 1036,
+      "end_inclusive": "0x8449db",
+      "functions_table_entry": false,
+      "native_functions_entry": true,
+      "guard": {
+        "state_getter_va": "0x878b60",
+        "tested_values": [
+          2,
+          3
+        ],
+        "predicate_va": "0x84fdf0",
+        "predicate_must_pass": true
+      }
+    },
+    "rectangle_setup": {
+      "endpoint_copy_helpers": [
+        "0x851d10",
+        "0x851d20"
+      ],
+      "source_offsets": [
+        "+0x978",
+        "+0x988"
+      ],
+      "bounds_builder_va": "0x52bc00",
+      "effect": "selects componentwise min/max endpoint values into region record"
+    },
+    "world_slot_expression": {
+      "global_slot_va": "0x32d0de8",
+      "owner_argument": "loaded context pointer + 0x28",
+      "wrapper_grid_load": "[owner+0x78]",
+      "combined_offset": "[loaded context pointer+0xa0]",
+      "identity_status": "slot arithmetic is observed; singleton/pointer identity with the 0x156e30-created grid remains OPEN"
+    },
+    "mutations": [
+      {
+        "writer": "0x185960",
+        "wrapper": "0x163780",
+        "write": "argument byte to record +0x30,+0x31,+0x32,+0x33",
+        "direct_call_pc": "0x8446fc",
+        "value": "6"
+      },
+      {
+        "writer": "0x185800",
+        "wrapper": "0x163760",
+        "write": "argument float to record +0x00,+0x04,...,+0x2c (12 fields)",
+        "direct_call_pc": "0x844710",
+        "value": "0.0f"
+      }
+    ],
+    "incoming_direct_calls": 0,
+    "pointer_array_evidence": [
+      {
+        "pointer_va": "0x308ce60",
+        "sequence_start_va": "0x308ce28",
+        "sequence_entries": 31,
+        "status": "relocated code pointer sequence; not automatically a C++ vtable"
+      }
+    ],
+    "pointer_sequence_bytes_sha256": "b3ab6982980fddf460a2f47adb428475ce9afa89092fd034499d017a35993f05",
+    "callsite_index_rows": {
+      "0x8446fc": {
+        "pc": "0x8446fc",
+        "owner_va": null,
+        "instruction": "BL"
+      },
+      "0x844710": {
+        "pc": "0x844710",
+        "owner_va": null,
+        "instruction": "BL"
+      }
+    },
+    "interpretation_limit": "The indexed direct-call rows have owner_va null because 0x8445d0 lacks a functions-table entry; raw bytes establish the local caller body. Pointer sequence membership does not identify dispatcher or prove this state branch ran."
+  },
+  "overlay_collision_path": {
+    "writer": "0x185ab0",
+    "wrapper": "0x163790",
+    "record_effect": "copies 12 base float32 fields to overlay record; writes argument to overlay attr bytes +0x30..+0x33",
+    "wrapper_callers": [
+      {
+        "pc": "0x17130c",
+        "owner_va": "0x1712c0",
+        "instruction": "BL"
+      },
+      {
+        "pc": "0x171388",
+        "owner_va": "0x171350",
+        "instruction": "BL"
+      },
+      {
+        "pc": "0x1713fc",
+        "owner_va": null,
+        "instruction": "BL"
+      },
+      {
+        "pc": "0x1718b8",
+        "owner_va": "0x171670",
+        "instruction": "BL"
+      },
+      {
+        "pc": "0x18bd20",
+        "owner_va": "0x18bd00",
+        "instruction": "B_to_function_entry"
+      }
+    ],
+    "region_flag_writer": {
+      "wrapper": "0x1637b0",
+      "writer": "0x185c80",
+      "effect": "sets/clears cell flag word bit 2",
+      "callers": [
+        {
+          "pc": "0x171320",
+          "owner_va": "0x1712c0",
+          "instruction": "BL"
+        },
+        {
+          "pc": "0x1713a4",
+          "owner_va": "0x171350",
+          "instruction": "B_to_function_entry"
+        },
+        {
+          "pc": "0x171410",
+          "owner_va": null,
+          "instruction": "BL"
+        },
+        {
+          "pc": "0x1718cc",
+          "owner_va": "0x171670",
+          "instruction": "BL"
+        }
+      ]
+    },
+    "query_consumer": "0x172740",
+    "query_selection": "Mode bit0 forces base; otherwise valid overlay record is used when the selected attribute is not sentinel 7.",
+    "island_designer_join": "OPEN; no editor scratch/result path found to these overlay callers."
+  },
+  "ground_query_path": {
+    "callback": "0x172740",
+    "caller": "0x1577a0@0x1577f0",
+    "mode": "1 (base record)",
+    "callback_vtable_pointer_evidence": [
+      {
+        "pointer_va": "0x30376d8",
+        "sequence_start_va": "0x30376a8",
+        "sequence_entries": 12,
+        "status": "relocated code pointer sequence; not automatically a C++ vtable"
+      }
+    ],
+    "candidate_aggregator": "0x157270",
+    "known_consumers": "terrain height/status and candidate-query paths; no direct editor result edge found in the bounded editor call graph."
+  },
+  "island_designer_path": {
+    "actionparam": "FieldLandMakingActionParam BCSV, 17 rows, 40-byte row stride; resolved ActionRange/Layer/SuccessResult/enum fields feed validator and local work builders.",
+    "validator": "0x531790 → 0x5330d0 → 0x5318e0; 1x1 or 3x3 footprint.",
+    "scratch": "0x53e4f0 and descendants use four 12x12 layers, 0x240-byte layer stride, 32-bit cells.",
+    "patch_copy": {
+      "va": "0x54dc70",
+      "caller": "0x531ad0@0x531b54",
+      "record_stride_bytes": 14,
+      "shape": "3x3",
+      "destination": "0x531ad0 stack local at sp+0x80",
+      "escapes_caller": false
+    },
+    "candidate_outer_entry": {
+      "va": "0x540a10",
+      "native_span_bytes": 132,
+      "direct_incoming_count": 0,
+      "code_pointer_array_hit_count": 0,
+      "call_to_validator_pc": "0x540a64",
+      "owner_va_in_index": null
+    },
+    "bounded_graph": {
+      "roots": [
+        "0x531790",
+        "0x5318e0",
+        "0x531ba0",
+        "0x531ad0",
+        "0x53e4f0",
+        "0x53ecd0",
+        "0x53e680",
+        "0x53f100",
+        "0x53f200",
+        "0x53f890"
+      ],
+      "max_direct_hops": 5,
+      "reachable_indexed_owner_nodes": 218,
+      "grid_query_writer_save_targets_checked": [
+        "0x157270",
+        "0x1577a0",
+        "0x163760",
+        "0x163780",
+        "0x163790",
+        "0x1637b0",
+        "0x165240",
+        "0x168140",
+        "0x172740",
+        "0x181cd0",
+        "0x185800",
+        "0x185960",
+        "0x185ab0",
+        "0x185c80",
+        "0x18adf0",
+        "0x529ea0",
+        "0x565e30"
+      ],
+      "hits": []
+    }
+  },
+  "apply_save": {
+    "preset_uid_write": {
+      "consumer": "0x529ea0 (interior path in 0x529e50)",
+      "save_member": "SaveMainField+0xcfa2a",
+      "meaning": "selected FieldMainFieldParam candidate UID; does not encode terrain cell grid"
+    },
+    "preset_uid_reload": "0x565e30 → 0x558ef0 → 0x558f40",
+    "save_layout_scan": {
+      "member_rows": 88,
+      "named_rows": 19,
+      "max_depth": 2,
+      "name_matches": {
+        "LandMakingMap": 0,
+        "CliffLevel": 0,
+        "Terrain": 0,
+        "Ground": 0
+      },
+      "source_sha256": "a326c84213faad1921bd7660c3e171a7b3af117ec55e2ca711a871ad637e51dc"
+    },
+    "main_elf_literal_scan": {
+      "LandMakingMap": {
+        "count": 0,
+        "file_offsets": []
+      },
+      "CliffLevel": {
+        "count": 1,
+        "file_offsets": [
+          "0x2991f97"
+        ]
+      },
+      "SaveFieldLandMakingMapData": {
+        "count": 0,
+        "file_offsets": []
+      },
+      "LandMaking": {
+        "count": 9,
+        "file_offsets": [
+          "0x2924892",
+          "0x292a0a0",
+          "0x294b875",
+          "0x297a59d",
+          "0x2997496",
+          "0x299c32b",
+          "0x29a13ae",
+          "0x29ab0e3",
+          "0x29d04f9"
+        ]
+      }
+    },
+    "indexed_string_reference_counts": {
+      "LandMakingMap": {
+        "exact": 0,
+        "contains": 0
+      },
+      "SaveFieldLandMakingMapData": {
+        "exact": 0,
+        "contains": 0
+      },
+      "LandMaking": {
+        "exact": 2,
+        "contains": 17
+      },
+      "CliffLevel": {
+        "exact": 0,
+        "contains": 2
+      }
+    },
+    "grid_serializer_or_apply_edge": "OPEN"
+  },
+  "search_bounds": {
+    "native_index": {
+      "direct_calls_rows": 663262,
+      "functions_rows": 60515,
+      "native_functions_rows": 149425,
+      "decomp_new_rows": 64466,
+      "queries": "Exact target_va incoming rows for listed functions; direct call/control transfer inventory only."
+    },
+    "pointer_sequences": {
+      "sequence_count": 18348,
+      "entry_count": 192637,
+      "target_hits": {
+        "0x8445d0": [
+          {
+            "pointer_va": "0x308ce60",
+            "sequence_start_va": "0x308ce28",
+            "sequence_entries": 31,
+            "status": "relocated code pointer sequence; not automatically a C++ vtable"
+          }
+        ],
+        "0x172740": [
+          {
+            "pointer_va": "0x30376d8",
+            "sequence_start_va": "0x30376a8",
+            "sequence_entries": 12,
+            "status": "relocated code pointer sequence; not automatically a C++ vtable"
+          }
+        ],
+        "0x540a10": [],
+        "0x531ad0": [],
+        "0x54dc70": [],
+        "0x163760": [],
+        "0x163780": [],
+        "0x163790": [],
+        "0x1637b0": [],
+        "0x185800": [],
+        "0x185960": [],
+        "0x185ab0": [],
+        "0x185c80": []
+      }
+    },
+    "editor_callgraph": {
+      "roots": [
+        "0x531790",
+        "0x5318e0",
+        "0x531ba0",
+        "0x531ad0",
+        "0x53e4f0",
+        "0x53ecd0",
+        "0x53e680",
+        "0x53f100",
+        "0x53f200",
+        "0x53f890"
+      ],
+      "max_hops": 5,
+      "reachable_owner_nodes": 218,
+      "targets": [
+        "0x157270",
+        "0x1577a0",
+        "0x163760",
+        "0x163780",
+        "0x163790",
+        "0x1637b0",
+        "0x165240",
+        "0x168140",
+        "0x172740",
+        "0x181cd0",
+        "0x185800",
+        "0x185960",
+        "0x185ab0",
+        "0x185c80",
+        "0x18adf0",
+        "0x529ea0",
+        "0x565e30"
+      ],
+      "target_edges_found": []
+    },
+    "literal_search": {
+      "subject": "main.elf entire file byte image",
+      "tokens": {
+        "LandMakingMap": {
+          "count": 0,
+          "file_offsets": []
+        },
+        "CliffLevel": {
+          "count": 1,
+          "file_offsets": [
+            "0x2991f97"
+          ]
+        },
+        "SaveFieldLandMakingMapData": {
+          "count": 0,
+          "file_offsets": []
+        },
+        "LandMaking": {
+          "count": 9,
+          "file_offsets": [
+            "0x2924892",
+            "0x292a0a0",
+            "0x294b875",
+            "0x297a59d",
+            "0x2997496",
+            "0x299c32b",
+            "0x29a13ae",
+            "0x29ab0e3",
+            "0x29d04f9"
+          ]
+        }
+      },
+      "limitation": "Names only; fields serialized as hashes/binary data are not excluded."
+    }
+  },
+  "open_joins": [
+    {
+      "from": "LandMaking 14-byte source/accessor grid via 0x558f40",
+      "to": "runtime ground/PBC 52-byte records via 0x1725f0/0x172280/0x172740",
+      "status": "OPEN",
+      "reason": "No conversion function or dataflow edge was identified; local raw PBC payloads are absent, while the saved audit is summary evidence only."
+    },
+    {
+      "from": "Island Designer 12x12 scratch and 3x3 stack patch via 0x53e4f0/0x54dc70",
+      "to": "base/overlay grid writers 0x185800/0x185960/0x185ab0 or field-query refresh",
+      "status": "OPEN",
+      "reason": "The 3x3 buffer is local to 0x531ad0 and no bounded call graph edge reaches writer/query targets."
+    },
+    {
+      "from": "selected preset UID stored at SaveMainField+0xcfa2a",
+      "to": "terrain cell persistence serializer",
+      "status": "OPEN",
+      "reason": "The UID is a preset selector and readback input; no field-grid writer or serializer is identified."
+    },
+    {
+      "from": "state-gated writer candidate 0x8445d0 / pointer entry 0x308ce60",
+      "to": "registered dispatcher/live state or island creation flow",
+      "status": "OPEN",
+      "reason": "No direct-call owner exists; generic pointer sequence is not classified as a vtable and no caller/runtime branch is resolved."
+    },
+    {
+      "from": "Island Designer action success",
+      "to": "apply/commit/undo/mesh-collision refresh",
+      "status": "OPEN",
+      "reason": "No transaction, history consumer, canonical setter, refresh callback, or save serializer is linked."
+    }
+  ],
+  "reviewed_reports": [
+    "acnh-re/docs/ISLAND_LOADER_FOLLOWUP.md",
+    "acnh-re/docs/ISLAND_LOADER_REMAINDER_20261107.md",
+    "acnh-re/docs/REGISTRATION_UID_LANDMAKING_WORLD_BUILDER_FOLLOWUP_20261107.md",
+    "acnh-re/docs/REGISTRATION_TERRAIN_OPTION_SAVE_JOIN_FOLLOWUP_20261107.md",
+    "acnh-re/docs/REGISTRATION_TERRAIN_PROOF_20261107.md",
+    "acnh-re/docs/ISLAND_DESIGNER_EDIT_LOOP.md",
+    "acnh-re/docs/ISLAND_DESIGNER_ACTIONPARAM_ERROR_CONSUMERS_FOLLOWUP_20261107.md",
+    "acnh-re/docs/ISLAND_DESIGNER_PATCH_OUTPUT_ESCAPE_BOUNDARY_FOLLOWUP_20261107.md",
+    "acnh-re/docs/ISLAND_WATER_TERRAFORM_FOLLOWUP.md",
+    "acnh-re/docs/ISLAND_WATER_TERRAFORM_REMAINDER_20261107.md",
+    "acnh-re/docs/PLAYER_GRID_GROUND_MOVEMENT_RESULT_FOLLOWUP_20261107.md",
+    "acnh-re/docs/PLAYER_INPUT_WORLD_INIT_NATIVE_FOLLOWUP_20261107.md",
+    "acnh-re/docs/PLAYER_WORLD_READY_MULTIMODULE_RAW_SCAN_FOLLOWUP_20261107.md",
+    "acnh-re/docs/PROXIMITY_GROUND.md",
+    "acnh-re/docs/TERRAIN_RUNTIME.md",
+    "acnh-re/docs/TERRAIN_REGION_CHECK.md",
+    "acnh-re/docs/TERRAIN_REGION_MUTATION.md",
+    "acnh-re/docs/WORLD_NAV_BRIDGE.md",
+    "acnh-re/docs/WORLD_TERRAIN_MOVEMENT_PROOF_20261107.md",
+    "acnh-re/docs/CORE_GAMEPLAY_PROOF_INDEX_20261107.md"
+  ],
+  "limits": [
+    "Static RE only; no game runtime state or save object was loaded.",
+    "Direct-call and pointer-array negatives are bounded to the supplied index/corpus and do not exclude indirect calls outside that corpus.",
+    "The pointer-array tool labels sequences generically; no C++ vtable claim is made for 0x308ce28.",
+    "The generated save-layout view is depth-limited and name search cannot exclude hashed/binary fields.",
+    "No Godot files, source indexes, or crosswalks were changed."
+  ],
+  "artifact_policy": "Requested documentation and JSON only; no staging, commit, or push."
+}
