@@ -3,6 +3,7 @@
     "EventFlow": "[EF: indexed Ftr_Working events]",
     "bit leaf helpers": "[EXECUTED NATIVE: synthetic byte-array fixture]",
     "handler routes": "[NATIVE STATIC: call index + pseudocode/disassembly available in shared corpus]",
+    "made recipe marker mapping": "[NATIVE STATIC + TBL; bitmap leaf pair executed native]",
     "material delta helper": "[EXECUTED NATIVE: reconstructed pocket fixture; one predicate stub]",
     "save durability and rollback": "[OPEN: no full player/UI/save runtime]",
     "table rows and joins": "[TBL: shared resolved tables]"
@@ -241,6 +242,247 @@
       "selector_stride_bytes": "0x100"
     }
   },
+  "made_recipe_marker": {
+    "eventflow_checks": [
+      {
+        "actor": "EventFlowSystemActor",
+        "flow": "Ftr_Working",
+        "index": 69,
+        "kind": "queries",
+        "name": "EventFlowQueryPlayerIsMadeCraftRecipe",
+        "params": {
+          "CheckMode": "cAND",
+          "MadeItemID0": 7211,
+          "MadeItemID1": 65534,
+          "MadeItemID2": 65534,
+          "MadeItemID3": 65534,
+          "MadeItemID4": 65534,
+          "MadeItemID5": 65534,
+          "MadeItemID6": 65534,
+          "MadeItemID7": 65534
+        }
+      },
+      {
+        "actor": "EventFlowSystemActor",
+        "flow": "Ftr_Working",
+        "index": 74,
+        "kind": "queries",
+        "name": "EventFlowQueryPlayerIsMadeCraftRecipe",
+        "params": {
+          "CheckMode": "cAND",
+          "MadeItemID0": 5166,
+          "MadeItemID1": 65534,
+          "MadeItemID2": 65534,
+          "MadeItemID3": 65534,
+          "MadeItemID4": 65534,
+          "MadeItemID5": 65534,
+          "MadeItemID6": 65534,
+          "MadeItemID7": 65534
+        }
+      }
+    ],
+    "eventflow_coverage": {
+      "populated_item_count": 2,
+      "queries": [
+        {
+          "check_mode": "cAND",
+          "flow": "Ftr_Working",
+          "index": 69,
+          "populated_slots": [
+            {
+              "item_id": 7211,
+              "item_id_exceeds_bitmap_domain": true,
+              "recipe_id": 458,
+              "recipe_in_bitmap_domain": true,
+              "slot": 0
+            }
+          ],
+          "sentinel_slots": 7
+        },
+        {
+          "check_mode": "cAND",
+          "flow": "Ftr_Working",
+          "index": 74,
+          "populated_slots": [
+            {
+              "item_id": 5166,
+              "item_id_exceeds_bitmap_domain": true,
+              "recipe_id": 461,
+              "recipe_in_bitmap_domain": true,
+              "slot": 0
+            }
+          ],
+          "sentinel_slots": 7
+        }
+      ],
+      "query_count": 2,
+      "source": "all indexed EventFlowQueryPlayerIsMadeCraftRecipe calls in the shared corpus"
+    },
+    "handler": {
+      "behavior_va": "0x42d3b0",
+      "constructor": "0x42d1c0",
+      "query_calls_per_item_slot": [
+        {
+          "pc": "0x42d4dc",
+          "target": "0xedbd00"
+        },
+        {
+          "pc": "0x42d554",
+          "target": "0xedbd00"
+        },
+        {
+          "pc": "0x42d5bc",
+          "target": "0xedbd00"
+        },
+        {
+          "pc": "0x42d624",
+          "target": "0xedbd00"
+        },
+        {
+          "pc": "0x42d68c",
+          "target": "0xedbd00"
+        },
+        {
+          "pc": "0x42d6f4",
+          "target": "0xedbd00"
+        },
+        {
+          "pc": "0x42d75c",
+          "target": "0xedbd00"
+        },
+        {
+          "pc": "0x42d7c4",
+          "target": "0xedbd00"
+        }
+      ]
+    },
+    "interpretation": "The 0x800 bound applies to RecipeCraftParam.UniqueID, not ItemParam.UniqueID. The WoodBridge and CampSite EventFlow item IDs 7211 and 5166 map through ItemParam.DiyRecipeID to 458 and 461 before the query reads the marker bit; they therefore use the ordinary in-range marker lane.",
+    "native_leaf_probe": {
+      "cases": [
+        {
+          "after_set_query": 1,
+          "before_set_query": 0,
+          "expected_bit_mask": 1,
+          "expected_bitmap_offset": 263,
+          "nonzero_bytes_after_set": 1,
+          "recipe_id": 56,
+          "valid_domain": true
+        },
+        {
+          "after_set_query": 1,
+          "before_set_query": 0,
+          "expected_bit_mask": 4,
+          "expected_bitmap_offset": 313,
+          "nonzero_bytes_after_set": 2,
+          "recipe_id": 458,
+          "valid_domain": true
+        },
+        {
+          "after_set_query": 1,
+          "before_set_query": 0,
+          "expected_bit_mask": 32,
+          "expected_bitmap_offset": 313,
+          "nonzero_bytes_after_set": 2,
+          "recipe_id": 461,
+          "valid_domain": true
+        },
+        {
+          "after_set_query": 1,
+          "before_set_query": 0,
+          "expected_bit_mask": 128,
+          "expected_bitmap_offset": 511,
+          "nonzero_bytes_after_set": 3,
+          "recipe_id": 2047,
+          "valid_domain": true
+        },
+        {
+          "after_set_query": 0,
+          "before_set_query": 0,
+          "expected_bit_mask": null,
+          "expected_bitmap_offset": null,
+          "nonzero_bytes_after_set": 3,
+          "recipe_id": 2048,
+          "valid_domain": false
+        }
+      ],
+      "fixture": "zeroed 0x200-byte memory; helpers use bitmap lane at base + 0x100; no player/save wrapper",
+      "query_va": "0xf29010",
+      "set_va": "0xf29080",
+      "stubbed_boundaries": []
+    },
+    "query_item_to_recipe_path": {
+      "behavior_va": "0x42d3b0",
+      "bitmap_query_va": "0xf29010",
+      "calls": [
+        {
+          "pc": "0xedbd5c",
+          "target": "0xab4f60"
+        },
+        {
+          "pc": "0xedbd70",
+          "target": "0xab78e0"
+        },
+        {
+          "pc": "0xedbdc8",
+          "target": "0xf29010"
+        }
+      ],
+      "examples": [
+        {
+          "diy_recipe_id": 56,
+          "item_id": 975,
+          "item_kind": "Ftr",
+          "recipe_craft_unlock": "None"
+        },
+        {
+          "diy_recipe_id": 458,
+          "item_id": 7211,
+          "item_kind": "HousingKitBirdge",
+          "recipe_craft_unlock": "WoodBridge"
+        },
+        {
+          "diy_recipe_id": 461,
+          "item_id": 5166,
+          "item_kind": "HousingKit",
+          "recipe_craft_unlock": "CampSite"
+        }
+      ],
+      "field_converter_va": "0xab4f60",
+      "field_hash": "0xbcf5d17a",
+      "field_name": "ItemParam.DiyRecipeID",
+      "generic_recipe_item_id": 5794,
+      "generic_recipe_item_kind": "DIYRecipe",
+      "kind_gate": {
+        "behavior": "the converter returns the row DiyRecipeID as the bitmap key only after validating the typed recipe record",
+        "itemkind_row_index": 85,
+        "itemkind_unique_id": 238,
+        "label": "DIYRecipe"
+      },
+      "per_item_helper_va": "0xedbd00",
+      "recipe_id_accessor_va": "0xab78e0"
+    },
+    "write_path": {
+      "bitmap_lane_offset": "0x100",
+      "marker_bitmap_setter_va": "0xf29080",
+      "marker_writer_calls": [
+        {
+          "pc": "0xee185c",
+          "target": "0xf29080"
+        }
+      ],
+      "marker_writer_va": "0xee17e0",
+      "recipe_payload_builder": "0xfdc240",
+      "result_payload_key": "the first u16 copied from the selected RecipeCraftParam.UniqueID into the cWorkCraft result payload",
+      "save_set_ui_result_builder": "0xedf8e0",
+      "transaction_marker_calls": [
+        {
+          "pc": "0xee17cc",
+          "target": "0xee17e0"
+        }
+      ],
+      "transaction_va": "0xee1420"
+    }
+  },
   "material_and_workbench": {
     "availability": {
       "cold_cache_native_helper": "0xee0be0",
@@ -325,6 +567,46 @@
       "stack_match_gate_va": "0xf9e840",
       "stubbed_boundary": "Each case patches 0xaac730 to return true. Item lookup, pocket slot search, 0xf9e840 control flow, 0xf9e410, and the u16 count writes execute from the original ELF."
     },
+    "craft_full_pocket_precheck": {
+      "capture_conditions_static": [
+        "When the computed stack requirement before consumption is below the current matching-slot count and the caller supplied the temp output, branch 0xee1030 reaches the copy at 0xee104c.",
+        "When the post-consumption stack requirement is below the current matching-slot count but remains positive, branch 0xee1038 falls through to the same copy; a zero remainder does not capture the descriptor.",
+        "The copy is of the current RecipeCraftParam.MaterialN item descriptor, not the recipe output descriptor."
+      ],
+      "initial_free_pocket_test": {
+        "behavior": "reads the player-associated +0x70 pocket member and returns whether its 0x17c-byte view has an empty item slot; a false result routes into 0xee0ed0 and marks the temporary output pointer as present",
+        "helper_va": "0xefa9a0"
+      },
+      "interpretation_limit": "This proves the temporary descriptor source and stack-count conditions. It does not establish whether the insertion compacts a stack, restores a material, or implements rollback; the full transaction was not run.",
+      "material_source": {
+        "identity": "0xee0ed0 scans the six material descriptors, and the live capture branch at 0xee104c copies the current descriptor to its output object",
+        "payload_offset_first_slot": "0x2c",
+        "recipe_56_candidate_item_ids": [
+          2213,
+          2285,
+          2287,
+          2214,
+          2286
+        ],
+        "slot_count": 6,
+        "slot_stride": "0x14"
+      },
+      "post_consumption_gate": {
+        "gate": "after either six-slot processor, the transaction-mode helper and descriptor-validity helper must both return true before 0xefbd30 receives the captured material descriptor",
+        "item_descriptor_validity_helper_va": "0xf58d00",
+        "pocket_add_helper_va": "0xefbd30",
+        "transaction_mode_helper_va": "0xda4020"
+      },
+      "precheck_counts": {
+        "behavior": "counts matching pocket slots and their total units for the current material descriptor",
+        "behavior_detail": "the helper compares the current matching-slot count with the stack-count requirement before and after subtracting the recipe amount",
+        "native_stack_limit_reader_va": "0xaac450",
+        "slot_and_total_counter_va": "0xeda620"
+      },
+      "precheck_helper_va": "0xee0ed0",
+      "status": "NATIVE_STATIC_ASSEMBLY; not dynamically executed",
+      "transaction_helper_va": "0xee1420"
+    },
     "eventflow_order": [
       {
         "actor": "EventFlowSystemActor",
@@ -370,6 +652,47 @@
       }
     ],
     "static_execution_chain": {
+      "conditional_pocket_add": {
+        "call_site": [
+          {
+            "pc": "0xee1688",
+            "target": "0xefbd30"
+          }
+        ],
+        "gate": "The initial 0xefa9a0 pocket-empty test must be false so 0xee0ed0 runs with a temp-output pointer; after slot processing, 0xda4020 on the transaction context and 0xf58d00 on the captured descriptor must both return true before 0xefbd30 is called. This path is after either slot-processing form.",
+        "helper_chain": [
+          {
+            "pc": "0xefbdc8",
+            "target": "0xf99270"
+          },
+          {
+            "pc": "0xefbdd8",
+            "target": "0xefb090"
+          }
+        ],
+        "interpretation": "The temp object is copied from the current RecipeCraftParam.MaterialN descriptor when the precheck stack-count comparison takes a live capture branch. The helper is a shared general pocket insertion path, but why crafting passes this material descriptor into it and whether it represents compaction, restoration, or rollback remain unresolved; transaction atomicity cannot be inferred from this insertion alone.",
+        "inventory_helper": "0xf99270 searches/updates the pocket-like slot arrays and reaches 0xf98650 to place an item record; 0xefb090 follows as the member notification/update helper.",
+        "member_offset": "0x70 on the player-associated record",
+        "member_view_length_parameter": "0x17c",
+        "shared_generic_add_path": {
+          "award_wrapper_calls": [
+            {
+              "pc": "0xefad2c",
+              "target": "0xf987c0"
+            }
+          ],
+          "award_wrapper_va": "0xefac20",
+          "general_inventory_add_calls": [
+            {
+              "pc": "0xf98d3c",
+              "target": "0xf99270"
+            }
+          ],
+          "general_inventory_add_va": "0xf987c0",
+          "interpretation": "The same 0xf99270 slot-placement helper is called by the general item-award insertion path 0xefac20 -> 0xf987c0, so the helper is shared with ordinary pocket item placement."
+        },
+        "transaction_call": "0xee1420 -> 0xefbd30"
+      },
       "inventory_record_mutator": {
         "player_wrapper_member_offset": "0x1c0",
         "save_member_access_calls": [
@@ -401,7 +724,7 @@
         "signed_count_helper": "0xf9e410",
         "va": "0xeff060"
       },
-      "post_add_marker": "0xee17e0 -> 0xf29080; the writer ignores IDs >= 0x800",
+      "post_add_marker": "0xee17e0 -> 0xf29080 writes the recipe ID from transaction-result payload field 0, in the second bitmap lane at save-member +0x100",
       "result_award": "0xee1420 -> 0xefab90 -> 0xefac20 -> 0xf987c0",
       "save_set_calls": [
         {
@@ -950,19 +1273,52 @@
       }
     }
   },
+  "remake_tutorial_type_code": {
+    "cases": [
+      {
+        "item_id": 3436,
+        "item_kind": "Ftr",
+        "itemparam_raw_row_pointer": "0x51089c38",
+        "itemparam_row_index": 1127,
+        "native_row_index_result": 1127,
+        "predicate_result": 0,
+        "predicate_va": "0x15806f0",
+        "type_code": 56
+      },
+      {
+        "item_id": 8760,
+        "item_kind": "CraftPhoneCase",
+        "itemparam_raw_row_pointer": "0x51265980",
+        "itemparam_row_index": 5025,
+        "native_row_index_result": 5025,
+        "predicate_result": 1,
+        "predicate_va": "0x15806f0",
+        "type_code": 56
+      }
+    ],
+    "compared_code": 56,
+    "fixture": "original ItemParam and ItemKind table blobs; native manager/index arrays reconstructed from decoded rows; selected object points at its raw ItemParam row",
+    "itemparam_row_index_helper_va": "0x1665ea0",
+    "kind_resolver_va": "0xa9cb60",
+    "native_kind_ordinal": 56,
+    "positive_control_item_id": 8760,
+    "predicate_wrapper_va": "0x15806f0",
+    "stubbed_boundaries": []
+  },
   "residuals": [
-    "Execute EventFlowActionPlayerSetCraftRecipe, reset, and PlayerHasCraftRecipe against a real save-member fixture; current bit probe tests the native leaf operations only.",
-    "Resolve query return polarity and the exact ItemParam.DiyRecipeID conversion path with a controlled save wrapper.",
-    "Run SaveSetFromUIResult cWorkCraft and 0xee1420 with a complete reconstructed player/UI fixture, including output insertion, interruption, and rollback observations.",
-    "Identify the serializer/flush boundary and determine whether item IDs above 0x7ff use a separate MadeItemID path."
+    "Execute EventFlowActionPlayerSetCraftRecipe, reset, and PlayerHasCraftRecipe against a reconstructed player-save fixture; current bit probe tests the native leaf operations only.",
+    "Execute the PlayerHasCraftRecipe wrapper against a reconstructed player-save fixture to verify return polarity and selector behavior.",
+    "Run SaveSetFromUIResult cWorkCraft and 0xee1420 with a complete reconstructed player/UI fixture; determine effects of the captured RecipeCraftParam.MaterialN descriptor, output insertion, interruption, and rollback behavior.",
+    "Identify the serializer and durable file write/flush after the separate SaveSimpleSave -> SaveProc request path for recipe and made-recipe members.",
+    "Execute the full PlayerIsMadeCraftRecipe wrapper against player-save and eight-item fixtures to verify cAND/cOR polarity and mixed valid/invalid inputs."
   ],
   "save_and_rollback_boundaries": {
-    "made_marker": "0xf29080 uses a second bitmap lane and accepts only IDs below 0x800. EventFlow MadeItemID values 7211 and 5166 exceed that bound; whether the query uses another path is open.",
+    "made_marker": "The key is RecipeCraftParam.UniqueID; high ItemParam.UniqueID inputs are converted through DiyRecipeID before lookup. The two observed tutorial IDs resolve to in-range recipe IDs 458 and 461.",
     "mutation_target": "The six 0xeff060 calls resolve player-wrapper member +0x1c0 and mutate its in-memory count array; result insertion also uses the general item inventory path.",
-    "persistence": "The traced helper mutates a save member in memory; serializer/flush boundary to durable save file was not identified.",
-    "precheck": "0xee1420 consults the transaction material flag before ingredient mutation; insufficient precheck returns before the consumption loop.",
-    "rollback": "No undo/refund branch is visible in the handler after ingredient deltas and result award. Full atomicity, interruption handling, and later manager rollback remain unexecuted."
+    "persistence": "The traced helper mutates a save member in memory. SaveSimpleSave separately queues SaveProc; the craft handler does not directly call that request path. Serializer/flush boundary to durable save file was not identified.",
+    "precheck": "When 0xefa9a0 reports no empty pocket slot, 0xee1420 calls 0xee0ed0 with a temporary descriptor output; the helper counts material slots/units, but its return/status is not used by the caller.",
+    "rollback": "A conditional pocket insertion follows material processing: 0xee1420 -> 0xefbd30 -> 0xf99270 -> 0xefb090. Assembly traces its temporary object to a current RecipeCraftParam.MaterialN descriptor under stack-count conditions; full transaction effects, atomicity, and interruption behavior remain unexecuted."
   },
   "schema": "acnh.crafting_recipe_flow_native.v1",
-  "scope": "Recipe table joins and state consumers, recipe bit leaf helpers, and one signed material inventory helper on controlled fixtures. SaveSetFromUIResult and the UI transaction are static only."
+  "scope": "Recipe table joins and state consumers, learn/made marker bit leaf helpers, and one signed material inventory helper on controlled fixtures. SaveSetFromUIResult and the UI transaction are static only."
 }

@@ -8,7 +8,7 @@
     "save_transaction_executed_with_real_player_data": false,
     "tutorial_displaytype_to_flag_bit4_mapping": "NO_DIRECT_DEPENDENCY_FOUND; bit4 is set from selected-item type predicate 0x38",
     "tutorial_internal_cancel": "UNRESOLVED",
-    "tutorial_item_runtime_bit4": "UNRESOLVED_STATIC_CROSSWALK"
+    "tutorial_item_runtime_bit4": "NATIVE_PREDICATE_FALSE_FOR_ITEM_3436; FULL_UI_STATE_BUILDER_UNEXECUTED"
   },
   "eventflow": {
     "100": {
@@ -62,7 +62,7 @@
   "limits": [
     "Static disassembly, EventFlow and table evidence do not execute a full cWorkRemake interaction.",
     "The table field is u16 in the BCSV schema; the native accessor loads its low byte. All 654 current table values are 1..50, so this build has no truncation case.",
-    "Ftr_Working#100 uses cRemakeSelectTutorial, but bit4 is derived from a selected-item type check; the exact runtime code-to-ItemKind bridge and tutorial cancel behavior remain untested.",
+    "Ftr_Working#100 uses cRemakeSelectTutorial. Predicate 0x15806f0 ran natively on ItemParam row 3436 (false) and positive control 8760 CraftPhoneCase (true); the complete 0x15ad1c0 UI state builder and tutorial cancel behavior remain untested.",
     "Ordinary Remake cancel branches are mapped in EventFlow, but UIResultMenuDecide case-to-button mapping is inferred from the branch shape.",
     "Inventory mutation is shown inside a player-associated save member; the durable save flush boundary and full transaction rollback are not identified."
   ],
@@ -200,8 +200,41 @@
     "DisplayType_direct_dependency": false,
     "RemakeKitNum": 2,
     "bit4_builder": "0x15ad1c0 sets state +0x1c bit 4 from 0x15806f0",
+    "full_ui_state_builder_executed": false,
+    "native_predicate_probe": {
+      "cases": [
+        {
+          "item_id": 3436,
+          "item_kind": "Ftr",
+          "itemparam_raw_row_pointer": "0x51089c38",
+          "itemparam_row_index": 1127,
+          "native_row_index_result": 1127,
+          "predicate_result": 0,
+          "predicate_va": "0x15806f0",
+          "type_code": 56
+        },
+        {
+          "item_id": 8760,
+          "item_kind": "CraftPhoneCase",
+          "itemparam_raw_row_pointer": "0x51265980",
+          "itemparam_row_index": 5025,
+          "native_row_index_result": 5025,
+          "predicate_result": 1,
+          "predicate_va": "0x15806f0",
+          "type_code": 56
+        }
+      ],
+      "compared_code": 56,
+      "fixture": "original ItemParam and ItemKind table blobs; native manager/index arrays reconstructed from decoded rows; selected object points at its raw ItemParam row",
+      "itemparam_row_index_helper_va": "0x1665ea0",
+      "kind_resolver_va": "0xa9cb60",
+      "native_kind_ordinal": 56,
+      "positive_control_item_id": 8760,
+      "predicate_wrapper_va": "0x15806f0",
+      "stubbed_boundaries": []
+    },
     "predicate": "0x15806f0 tail-branches to 0xa9cb60 with code 0x38",
-    "runtime_result_for_target": "UNRESOLVED; code-to-ItemKind crosswalk is a candidate only",
+    "runtime_result_for_target": "0x15806f0 executed on ItemParam row 3436 and returned false; positive control ItemParam 8760 CraftPhoneCase returned true",
     "selected_target": 3436,
     "selected_target_ItemKind": {
       "hash": "7e0e8482",

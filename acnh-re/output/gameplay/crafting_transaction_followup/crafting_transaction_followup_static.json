@@ -579,11 +579,475 @@
               "target": "0xf29080"
             }
           ],
-          "semantic_mapping": "bounded bit marker observed; equivalence to EventFlow MadeItemID was not proved"
+          "semantic_mapping": "writes RecipeCraftParam.UniqueID from result payload; see crafting_recipe_flow_native.json for ItemParam.DiyRecipeID query conversion"
         }
       },
-      "claim": "One conditional native branch contains six per-slot calls that pass negative material quantities to an inventory mutator, followed by a general item-add route and a bounded post-craft bit marker."
+      "conditional_pocket_add": {
+        "calls": [
+          {
+            "pc": "0xee1688",
+            "target": "0xefbd30"
+          }
+        ],
+        "decomp": "/workspace/acnh-re/output/binary/analysis_decomp/efbd30.c",
+        "helper_chain": [
+          {
+            "pc": "0xefbd4c",
+            "target": "0xeaace0"
+          },
+          {
+            "pc": "0xefbd58",
+            "target": "0xeaad80"
+          },
+          {
+            "pc": "0xefbd68",
+            "target": "0xda3fc0"
+          },
+          {
+            "pc": "0xefbd70",
+            "target": "0xef6700"
+          },
+          {
+            "pc": "0xefbd80",
+            "target": "0xf8f400"
+          },
+          {
+            "pc": "0xefbd90",
+            "target": "0xee9350"
+          },
+          {
+            "pc": "0xefbda8",
+            "target": "0xee9490"
+          },
+          {
+            "pc": "0xefbdb8",
+            "target": "0xee94f0"
+          },
+          {
+            "pc": "0xefbdc8",
+            "target": "0xf99270"
+          },
+          {
+            "pc": "0xefbdd0",
+            "target": "0xee93d0"
+          },
+          {
+            "pc": "0xefbdd8",
+            "target": "0xefb090"
+          }
+        ],
+        "inventory_helper_decomp": "/workspace/acnh-re/output/binary/analysis_decomp/f99270.c",
+        "shared_generic_item_add_path": {
+          "award_wrapper_va": "0xefac20",
+          "award_wrapper_calls": [
+            {
+              "pc": "0xefad2c",
+              "target": "0xf987c0"
+            }
+          ],
+          "general_inventory_add_va": "0xf987c0",
+          "general_inventory_add_calls": [
+            {
+              "pc": "0xf98d3c",
+              "target": "0xf99270"
+            }
+          ],
+          "interpretation": "The same 0xf99270 slot-placement helper is called by the generic item-award insertion path 0xefac20 -> 0xf987c0."
+        },
+        "gate": "The initial 0xefa9a0 pocket-empty test is false, so 0xee0ed0 runs with a temp-output pointer; after slot processing, 0xda4020 on the transaction context and 0xf58d00 on the captured descriptor must both return true.",
+        "member_offset": "+0x70 on the player-associated record, pocket view length 0x17c",
+        "claim": "The precheck captures a descriptor from the current RecipeCraftParam.MaterialN when its stack-count comparisons take a live copy branch; the transaction then passes that descriptor into the same pocket slot-placement helper used by generic item awards. Why craft performs this insertion and whether it is compaction, restoration, or rollback remain unresolved."
+      },
+      "claim": "One conditional native branch contains six per-slot negative material deltas; a second slot processor also runs per recipe slot. The path has general item insertion, a conditional precheck-object pocket insertion, and a recipe-ID marker. Transaction atomicity and interruption semantics remain unproved."
     }
+  },
+  "save_flush_boundary": {
+    "explicit_save_event_action_count": 12,
+    "system_save_close_event": {
+      "flow": "System_SaveGameClose",
+      "index": 1,
+      "actor": "EventFlowSystemActor",
+      "kind": "actions",
+      "name": "EventFlowActionSaveSimpleSave",
+      "params": {
+        "Process": "cAll"
+      }
+    },
+    "handler_registration": {
+      "constructor": "0x337e30",
+      "request_stage_va": "0x337f00",
+      "request_stage_decomp": "/workspace/acnh-re/output/binary/analysis_decomp/337f00.c",
+      "process_check_va": "0x338340",
+      "process_dispatch_va": "0x338080",
+      "completion_stage_va": "0x338120"
+    },
+    "native_request_path": {
+      "request_stage_calls": [
+        {
+          "pc": "0x337f18",
+          "target": "0x338340"
+        },
+        {
+          "pc": "0x337fb8",
+          "target": "0xf1da50"
+        },
+        {
+          "pc": "0x337fc0",
+          "target": "0x338340"
+        }
+      ],
+      "tail_dispatch_target": "0x338080 (decompiler control-flow edge; not an indexed direct BL call)",
+      "process_dispatch_calls": [
+        {
+          "pc": "0x338094",
+          "target": "0xf2d1a0"
+        },
+        {
+          "pc": "0x338098",
+          "target": "0xf2f380"
+        },
+        {
+          "pc": "0x3380a4",
+          "target": "0xfb35f0"
+        },
+        {
+          "pc": "0x3380b0",
+          "target": "0xf7bc80"
+        },
+        {
+          "pc": "0x3380cc",
+          "target": "0xfb3560"
+        },
+        {
+          "pc": "0x3380d8",
+          "target": "0xfb35d0"
+        },
+        {
+          "pc": "0x3380f8",
+          "target": "0xfb3160"
+        },
+        {
+          "pc": "0x33810c",
+          "target": "0xf7b970"
+        }
+      ],
+      "saveproc_request_calls": [
+        {
+          "pc": "0xfb3180",
+          "target": "0x19a27d0"
+        },
+        {
+          "pc": "0xfb31c8",
+          "target": "0xfb2c60"
+        },
+        {
+          "pc": "0xfb3228",
+          "target": "0x19904f0"
+        },
+        {
+          "pc": "0xfb3234",
+          "target": "0xfaf180"
+        },
+        {
+          "pc": "0xfb3250",
+          "target": "0x19a2810"
+        }
+      ],
+      "completion_stage_calls": [
+        {
+          "pc": "0x338198",
+          "target": "0xfb3620"
+        },
+        {
+          "pc": "0x3381b4",
+          "target": "0xf50390"
+        },
+        {
+          "pc": "0x3381b8",
+          "target": "0xf1da80"
+        },
+        {
+          "pc": "0x3381c0",
+          "target": "0xfb3630"
+        },
+        {
+          "pc": "0x338204",
+          "target": "0x44bc70"
+        }
+      ],
+      "claim": "The SaveSimpleSave handler stores/processes the Process parameter and tail-dispatches to 0x338080; that dispatcher calls 0xfb3160, which constructs a SaveProc operation and passes it to 0xfaf180. The action update path polls completion via 0xf1da80. The tail edge is from decompiler control flow because the indexed direct-call table omits the terminal branch."
+    },
+    "craft_path_relation": {
+      "cWorkCraft_save_event": {
+        "flow": "Ftr_Working",
+        "index": 212,
+        "actor": "EventFlowSystemActor",
+        "kind": "actions",
+        "name": "EventFlowActionSaveSetFromUIResult",
+        "params": {
+          "SaveType": "cWorkCraft"
+        }
+      },
+      "craft_handler_calls": [
+        {
+          "pc": "0x3358e8",
+          "target": "0x154a6d0"
+        },
+        {
+          "pc": "0x335964",
+          "target": "0xf589b0"
+        },
+        {
+          "pc": "0x3359c4",
+          "target": "0xf589b0"
+        },
+        {
+          "pc": "0x3359dc",
+          "target": "0xf589b0"
+        },
+        {
+          "pc": "0x3359f0",
+          "target": "0xf589b0"
+        },
+        {
+          "pc": "0x335a08",
+          "target": "0xf589b0"
+        },
+        {
+          "pc": "0x335a1c",
+          "target": "0xf589b0"
+        },
+        {
+          "pc": "0x335a34",
+          "target": "0xf589b0"
+        },
+        {
+          "pc": "0x335a60",
+          "target": "0xedf8e0"
+        },
+        {
+          "pc": "0x335aa8",
+          "target": "0xee1420"
+        },
+        {
+          "pc": "0x335abc",
+          "target": "0xda3fc0"
+        },
+        {
+          "pc": "0x335ae0",
+          "target": "0xf589b0"
+        },
+        {
+          "pc": "0x335b28",
+          "target": "0xf589b0"
+        },
+        {
+          "pc": "0x335b40",
+          "target": "0xf589b0"
+        },
+        {
+          "pc": "0x335b54",
+          "target": "0xf589b0"
+        },
+        {
+          "pc": "0x335b70",
+          "target": "0xf589b0"
+        },
+        {
+          "pc": "0x335b84",
+          "target": "0xf589b0"
+        },
+        {
+          "pc": "0x335b9c",
+          "target": "0xf589b0"
+        },
+        {
+          "pc": "0x335bbc",
+          "target": "0xda4020"
+        },
+        {
+          "pc": "0x335be0",
+          "target": "0xf589e0"
+        },
+        {
+          "pc": "0x335c08",
+          "target": "0xf589e0"
+        },
+        {
+          "pc": "0x335c28",
+          "target": "0xf589e0"
+        },
+        {
+          "pc": "0x335c44",
+          "target": "0xf589e0"
+        },
+        {
+          "pc": "0x335c64",
+          "target": "0xf589e0"
+        },
+        {
+          "pc": "0x335c84",
+          "target": "0xf589e0"
+        },
+        {
+          "pc": "0x335ca4",
+          "target": "0xf589e0"
+        },
+        {
+          "pc": "0x335cd8",
+          "target": "0x1576780"
+        },
+        {
+          "pc": "0x335ce0",
+          "target": "0x1540c60"
+        },
+        {
+          "pc": "0x335cfc",
+          "target": "0x154a6a0"
+        }
+      ],
+      "transaction_calls": [
+        {
+          "pc": "0xee1448",
+          "target": "0xf58890"
+        },
+        {
+          "pc": "0xee1450",
+          "target": "0xefa9a0"
+        },
+        {
+          "pc": "0xee1478",
+          "target": "0xee0ed0"
+        },
+        {
+          "pc": "0xee1490",
+          "target": "0xf58a90"
+        },
+        {
+          "pc": "0xee14dc",
+          "target": "0xeff060"
+        },
+        {
+          "pc": "0xee14fc",
+          "target": "0xeff060"
+        },
+        {
+          "pc": "0xee151c",
+          "target": "0xeff060"
+        },
+        {
+          "pc": "0xee153c",
+          "target": "0xeff060"
+        },
+        {
+          "pc": "0xee155c",
+          "target": "0xeff060"
+        },
+        {
+          "pc": "0xee157c",
+          "target": "0xeff060"
+        },
+        {
+          "pc": "0xee15a0",
+          "target": "0xee1060"
+        },
+        {
+          "pc": "0xee15c4",
+          "target": "0xee1060"
+        },
+        {
+          "pc": "0xee15e8",
+          "target": "0xee1060"
+        },
+        {
+          "pc": "0xee160c",
+          "target": "0xee1060"
+        },
+        {
+          "pc": "0xee1630",
+          "target": "0xee1060"
+        },
+        {
+          "pc": "0xee1654",
+          "target": "0xee1060"
+        },
+        {
+          "pc": "0xee1664",
+          "target": "0xf589b0"
+        },
+        {
+          "pc": "0xee166c",
+          "target": "0xda4020"
+        },
+        {
+          "pc": "0xee1678",
+          "target": "0xf58d00"
+        },
+        {
+          "pc": "0xee1688",
+          "target": "0xefbd30"
+        },
+        {
+          "pc": "0xee1690",
+          "target": "0xefa9a0"
+        },
+        {
+          "pc": "0xee16a0",
+          "target": "0xf589b0"
+        },
+        {
+          "pc": "0xee16c8",
+          "target": "0xf631d0"
+        },
+        {
+          "pc": "0xee16d4",
+          "target": "0xa9c290"
+        },
+        {
+          "pc": "0xee16e0",
+          "target": "0xa9cb60"
+        },
+        {
+          "pc": "0xee1720",
+          "target": "0xa9f140"
+        },
+        {
+          "pc": "0xee1744",
+          "target": "0xf62e90"
+        },
+        {
+          "pc": "0xee1764",
+          "target": "0xce9340"
+        },
+        {
+          "pc": "0xee1770",
+          "target": "0xa9f670"
+        },
+        {
+          "pc": "0xee178c",
+          "target": "0xaac6a0"
+        },
+        {
+          "pc": "0xee1798",
+          "target": "0xf589b0"
+        },
+        {
+          "pc": "0xee17a4",
+          "target": "0xf589e0"
+        },
+        {
+          "pc": "0xee17bc",
+          "target": "0xefab90"
+        },
+        {
+          "pc": "0xee17cc",
+          "target": "0xee17e0"
+        }
+      ],
+      "direct_save_request_calls_found": false,
+      "claim": "The cWorkCraft handler and transaction mutate player-associated records but do not directly call the indexed SaveSimpleSave/SaveProc request path."
+    },
+    "durable_flush_status": "OPEN; the SaveSimpleSave -> 338080 -> SaveProc handoff and completion path are mapped, but the serializer and durable file write/flush after SaveProc were not identified."
   },
   "workbench_page_and_remake": {
     "page_refs": {
@@ -941,7 +1405,7 @@
     "ingredient consumption and result add": "PROVEN NATIVE STATIC call chain; not executed end to end",
     "workbench UI page": "PROVEN PAGE INITIALIZER; user interaction not executed",
     "customization/remake": "PROVEN EVENTFLOW + TABLE COST + NATIVE KIT INVENTORY UPDATE; row-to-quantity mapping open",
-    "cancel_or_rollback": "OPEN; no rollback behavior established"
+    "cancel_or_rollback": "OPEN; a conditional pocket insertion from the precheck object is present, but its trigger/identity is unresolved; full rollback behavior is not established"
   },
   "open_limits": [
     "The previous cache fixture is reconstructed; it is not a supplied player save.",
@@ -949,6 +1413,7 @@
     "The native craft call order is visible in decompilation; atomicity and rollback on interruption/failure remain unproved.",
     "The WorkCraftBgPage function is a page initializer, not proof that the page itself commits a transaction.",
     "The remake handler passes a context-derived quantity for item 2513 into an inventory update, but the mapping from ItemRemake.RemakeKitNum=2 for item 3436 to that quantity was not executed in the game.",
-    "The post-craft bitmap helper accepts only keys below 0x800; its relation to EventFlow MadeItemID values such as 7211 was not established."
+    "A conditional pocket insertion follows the material-processing branch through 0xefbd30 -> 0xf99270; the object identity and its refund/rollback purpose are not established.",
+    "The post-craft bitmap helper accepts only recipe keys below 0x800; high EventFlow MadeItemID values are converted through ItemParam.DiyRecipeID before query. See crafting_recipe_flow_native.json."
   ]
 }

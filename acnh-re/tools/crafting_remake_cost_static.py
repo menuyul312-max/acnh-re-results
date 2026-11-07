@@ -76,6 +76,16 @@ def main():
     item_param = table('ItemParam')
     item_remake = table('ItemRemake')
     item_kind = table('ItemKind')
+    native_type_probe_path = (REPO / 'output' / 'gameplay' /
+                              'crafting_transaction_followup' /
+                              'crafting_recipe_flow_native.json')
+    assert native_type_probe_path.is_file(), (
+        'run crafting_recipe_flow_native.py first to produce the native 0x38 predicate probe')
+    native_type_probe = json.loads(native_type_probe_path.read_text())[
+        'remake_tutorial_type_code']
+    type_results = {case['item_id']: case['predicate_result']
+                    for case in native_type_probe['cases']}
+    assert type_results.get(3436) == 0 and type_results.get(8760) == 1
     item = row_by(item_param, 'UniqueID', 3436)
     remake_id = value(item_param, item, 'RemakeID')
     remake = row_by(item_remake, 'UniqueID', remake_id)
@@ -263,7 +273,9 @@ def main():
             'bit4_builder': '0x15ad1c0 sets state +0x1c bit 4 from 0x15806f0',
             'predicate': '0x15806f0 tail-branches to 0xa9cb60 with code 0x38',
             'DisplayType_direct_dependency': False,
-            'runtime_result_for_target': 'UNRESOLVED; code-to-ItemKind crosswalk is a candidate only'},
+            'runtime_result_for_target': '0x15806f0 executed on ItemParam row 3436 and returned false; positive control ItemParam 8760 CraftPhoneCase returned true',
+            'native_predicate_probe': native_type_probe,
+            'full_ui_state_builder_executed': False},
         'ui_preflight_hint': {
             'helper': '0x1580580 returns true for type code 0x38; otherwise compares RemakeKitNum with the supplied count after its state gates.',
             'caller': '0x136d9d0 uses the result to select a UI property value of 1.0 or 2.0.',
@@ -272,7 +284,7 @@ def main():
             'normal_remake_cost_row_to_inventory_quantity': 'PROVEN_STATIC',
             '3436_cost_value_on_flag_bit4_clear_path': '2',
             'tutorial_displaytype_to_flag_bit4_mapping': 'NO_DIRECT_DEPENDENCY_FOUND; bit4 is set from selected-item type predicate 0x38',
-            'tutorial_item_runtime_bit4': 'UNRESOLVED_STATIC_CROSSWALK',
+            'tutorial_item_runtime_bit4': 'NATIVE_PREDICATE_FALSE_FOR_ITEM_3436; FULL_UI_STATE_BUILDER_UNEXECUTED',
             'ordinary_remake_cancel_before_handler': 'PROVEN_EVENTFLOW_BRANCH',
             'tutorial_internal_cancel': 'UNRESOLVED',
             'save_transaction_executed_with_real_player_data': False,
@@ -309,7 +321,7 @@ def main():
         'limits': [
             'Static disassembly, EventFlow and table evidence do not execute a full cWorkRemake interaction.',
             'The table field is u16 in the BCSV schema; the native accessor loads its low byte. All 654 current table values are 1..50, so this build has no truncation case.',
-            'Ftr_Working#100 uses cRemakeSelectTutorial, but bit4 is derived from a selected-item type check; the exact runtime code-to-ItemKind bridge and tutorial cancel behavior remain untested.',
+            'Ftr_Working#100 uses cRemakeSelectTutorial. Predicate 0x15806f0 ran natively on ItemParam row 3436 (false) and positive control 8760 CraftPhoneCase (true); the complete 0x15ad1c0 UI state builder and tutorial cancel behavior remain untested.',
             'Ordinary Remake cancel branches are mapped in EventFlow, but UIResultMenuDecide case-to-button mapping is inferred from the branch shape.',
             'Inventory mutation is shown inside a player-associated save member; the durable save flush boundary and full transaction rollback are not identified.']}
 

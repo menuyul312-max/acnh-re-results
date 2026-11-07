@@ -24,7 +24,10 @@ class CraftingRemakeCostStaticTests(unittest.TestCase):
         self.assertEqual(report['claims']['normal_remake_cost_row_to_inventory_quantity'],
                          'PROVEN_STATIC')
         self.assertEqual(report['claims']['tutorial_displaytype_to_flag_bit4_mapping'],
-                         'UNRESOLVED')
+                         'NO_DIRECT_DEPENDENCY_FOUND; bit4 is set from selected-item type predicate 0x38')
+        self.assertEqual(report['tutorial_bit4']['native_predicate_probe']['cases'][0]['item_id'], 3436)
+        self.assertEqual(report['tutorial_bit4']['native_predicate_probe']['cases'][0]['predicate_result'], 0)
+        self.assertFalse(report['tutorial_bit4']['full_ui_state_builder_executed'])
         self.assertEqual(report['rollback_boundary']['kit_update_call_sites_in_0x335d10'], 1)
         self.assertFalse(report['rollback_boundary']['return_value_checked_immediately_after_call'])
         self.assertEqual(report['rollback_boundary']['explicit_kit_refund_calls_in_handler'], 0)

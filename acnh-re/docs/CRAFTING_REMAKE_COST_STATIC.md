@@ -26,7 +26,7 @@ Reproduksi native helper `0xf99b10` pada pocket fixture yang direkonstruksi meng
 
 **[NATIVE STATIC]** Builder state `0x15ad1c0` mengisi byte flag di `state+0x1c`. Bit 4 ditetapkan oleh hasil `0x15806f0`, yang memanggil `0xa9cb60` pada objek item terpilih dengan kode tipe `0x38`. Jika predikat itu benar, `0x15ae950` menulis kuantitas kit nol dan menyalakan byte hasil `+0x18`; jika salah, ia menyalin `state+0x1928` (nilai `RemakeKitNum`) ke payload `+0x14`. Jadi bit 4 berasal dari klasifikasi item yang dipilih, bukan dari pembacaan langsung string `DisplayType`.
 
-**[EVENTFLOW + TBL]** Jalur tutorial `RcoRemakeTrialOngoing` memberi 50 item kit 2513, membuka pemilih item dengan `Mode=cItemSelectRemakeTutorial` untuk item 3436, lalu menjalankan `UIWorkingHandling DisplayType=cRemakeSelectTutorial` (#100) dan masuk ke `Workbench_Cmn_DIYdemo`. Item 3436 adalah `ItemKind=Ftr`, `RemakeID=168`, dan biayanya 2. Kode tipe native `0x38` sama dengan ordinal 56 pada urutan baris `ItemKind`, yaitu `CraftPhoneCase` (`UniqueID=256`); hubungan antara kode `0xa9cb60` dan ordinal tabel ini masih merupakan crosswalk statik, belum diuji native. Karena itu, untuk target tutorial 3436 bukti yang ada mendukung jalur biaya normal bila klasifikasi tersebut cocok, tetapi belum membuktikan hasil bit 4 pada runtime.
+**[EVENTFLOW + TBL + NATIVE PREDICATE]** Jalur tutorial `RcoRemakeTrialOngoing` memberi 50 item kit 2513, membuka pemilih item dengan `Mode=cItemSelectRemakeTutorial` untuk item 3436, lalu menjalankan `UIWorkingHandling DisplayType=cRemakeSelectTutorial` (#100) dan masuk ke `Workbench_Cmn_DIYdemo`. Item 3436 adalah `ItemKind=Ftr`, `RemakeID=168`, dan biayanya 2. Kode tipe native `0x38` sama dengan ordinal 56 pada urutan baris `ItemKind`, yaitu `CraftPhoneCase` (`UniqueID=256`). Probe native `0x15806f0` pada pointer baris ItemParam asli mengembalikan false untuk item tutorial 3436 dan true untuk kontrol positif 8760 (`ItemKind=CraftPhoneCase`); rincian ada di `crafting_recipe_flow_native.json` bagian `remake_tutorial_type_code`. Ini membuktikan hasil predicate untuk target, tetapi builder penuh `0x15ad1c0` dan transaksi tutorial belum dijalankan.
 
 ### Pembatalan
 
@@ -42,14 +42,15 @@ Ada petunjuk preflight pada halaman workbench: `0x1580580` memakai pengecualian 
 
 **[NATIVE STATIC]** `0xefbdf0` mengambil konteks pemain lewat `0xf8f400`, membuka member di offset `+0x70` pada record terkait pemain lewat accessor `0xee9350`/`0xee9490`/`0xee94f0`, lalu meminta `0xf99b10` mengubah record inventory itu. Ini menunjukkan mutasi record save pemain di memori. Handler tidak memanggil serializer atau flush save yang teridentifikasi; batas durabilitas ke file save masih belum diketahui. Native helper fixture terdahulu hanya menguji record pocket sintetis: permintaan 2 mengurangi stack 50 ke 48, permintaan 2 saat tersedia 1 ditolak tanpa perubahan, sedangkan kasus tepat menghabiskan stack tetap ambigu pada fixture.
 
-Dengan demikian bukti ini menetapkan jalur biaya, cabang batal normal sebelum handler, predikat bit 4, dan batas mutasi record yang terlihat. Ia belum membuktikan rollback penuh setelah dispatch, perilaku cancel internal halaman tutorial, hasil bit 4 runtime untuk item 3436, atau kapan record itu tersimpan permanen.
+Dengan demikian bukti ini menetapkan jalur biaya, cabang batal normal sebelum handler, hasil predicate tipe untuk item tutorial 3436, dan batas mutasi record yang terlihat. Ia belum membuktikan rollback penuh setelah dispatch, perilaku cancel internal halaman tutorial, hasil akhir builder UI penuh, atau kapan record itu tersimpan permanen.
 
 ## Reproduksi
 
 ```sh
+python3 acnh-re/tools/crafting_recipe_flow_native.py --output-root /workspace/acnh-re/output
 python3 acnh-re/tools/crafting_remake_cost_static.py
 python3 acnh-re/tools/crafting_remake_inventory_native.py
 python3 -m unittest -v acnh-re.tests.test_crafting_remake_cost_static
 ```
 
-Runner static membaca ELF, SQLite index, BCSV dan EventFlow; SQLite dibuka read-only. Runner native memasang ItemParam/ItemKind asli ke emulator, tetapi memakai pocket fixture sintetis dan tidak mengubah index bersama. Hasil tersimpan di [crafting_remake_cost_static.json](../output/gameplay/crafting_transaction_remainder/crafting_remake_cost_static.json) dan [crafting_remake_inventory_native.json](../output/gameplay/crafting_transaction_remainder/crafting_remake_inventory_native.json).
+Runner static membaca ELF, SQLite index, BCSV, EventFlow, dan hasil predicate native tahap 3; SQLite dibuka read-only. Runner native memasang ItemParam/ItemKind asli ke emulator, tetapi memakai pocket fixture sintetis dan tidak mengubah index bersama. Hasil tersimpan di [crafting_remake_cost_static.json](../output/gameplay/crafting_transaction_remainder/crafting_remake_cost_static.json), [crafting_remake_inventory_native.json](../output/gameplay/crafting_transaction_remainder/crafting_remake_inventory_native.json), dan probe type code di [crafting_recipe_flow_native.json](../output/gameplay/crafting_transaction_followup/crafting_recipe_flow_native.json).

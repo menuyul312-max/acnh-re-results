@@ -190,6 +190,12 @@ def build_report():
     inventory_decomp_path, inventory_decomp = decomp('f9e410')
     item_add_decomp_path, item_add_decomp = decomp('efac20')
     craft_marker_decomp_path, craft_marker_decomp = decomp('ee17e0')
+    pocket_add_calls = calls_to(db, 0xee1420, 0xefbd30)
+    pocket_add_helper_calls = direct_calls(db, 0xefbd30)
+    generic_item_add_calls = calls_to(db, 0xefac20, 0xf987c0)
+    generic_pocket_add_calls = calls_to(db, 0xf987c0, 0xf99270)
+    pocket_add_decomp_path, pocket_add_decomp = decomp('efbd30')
+    pocket_inventory_decomp_path, pocket_inventory_decomp = decomp('f99270')
     require(any(int(c['target'], 16) == 0xedf8e0 for c in craft_save_calls),
             'cWorkCraft handler no longer prepares UI result through 0xedf8e0')
     require(any(int(c['target'], 16) == 0xee1420 for c in craft_save_calls),
@@ -207,6 +213,48 @@ def build_report():
             'item-add helper no longer routes through inventory insertion routine')
     require('FUN_01029080' in craft_marker_decomp,
             'post-craft marker helper no longer sets its bounded bitmap')
+    require(len(pocket_add_calls) == 1
+            and any(int(c['target'], 16) == 0xf99270 for c in pocket_add_helper_calls)
+            and any(int(c['target'], 16) == 0xefb090 for c in pocket_add_helper_calls)
+            and 'FUN_01098650' in pocket_inventory_decomp
+            and len(generic_item_add_calls) == 1
+            and len(generic_pocket_add_calls) == 1,
+            'conditional pocket insertion path changed or no longer reaches item slot mutation')
+
+    # Separate synchronous inventory mutation from the explicit save-request
+    # system. SaveSimpleSave is an EventFlow path that queues SaveProc and
+    # awaits completion; cWorkCraft does not invoke that path directly.
+    save_simple_handler = handlers['entries']['EventFlowSystemActor.EventFlowActionSaveSimpleSave']
+    require(save_simple_handler['constructor'] == '0x337e30',
+            'SaveSimpleSave handler registration changed')
+    save_simple_events = []
+    for flow, index, actor, kind, name, params_json in db.execute(
+            "SELECT flow,event_index,actor,kind,name,params_json FROM event_calls "
+            "WHERE name='EventFlowActionSaveSimpleSave' ORDER BY flow,event_index"):
+        save_simple_events.append({
+            'flow': flow, 'index': index, 'actor': actor, 'kind': kind,
+            'name': name, 'params': json.loads(params_json)})
+    save_game_close_event = event(db, 'System_SaveGameClose', 1)
+    save_action_start_calls = direct_calls(db, 0x337f00)
+    save_action_start_decomp_path, save_action_start_decomp = decomp('337f00')
+    save_process_dispatch_calls = direct_calls(db, 0x338080)
+    save_action_update_calls = direct_calls(db, 0x338120)
+    saveproc_request_calls = direct_calls(db, 0xfb3160)
+    require(len(save_simple_events) == 12
+            and save_game_close_event['name'] == 'EventFlowActionSaveSimpleSave'
+            and save_game_close_event['params'] == {'Process': 'cAll'},
+            'indexed explicit save-action inventory or close-game request changed')
+    require('FUN_00438080(param_1);' in save_action_start_decomp
+            and any(int(c['target'], 16) == 0xf1da50 for c in save_action_start_calls)
+            and any(int(c['target'], 16) == 0x338340 for c in save_action_start_calls)
+            and any(int(c['target'], 16) == 0xfb3160 for c in save_process_dispatch_calls)
+            and any(int(c['target'], 16) == 0xfaf180 for c in saveproc_request_calls)
+            and any(int(c['target'], 16) == 0xf1da80 for c in save_action_update_calls),
+            'SaveSimpleSave -> SaveProc request/completion path changed')
+    craft_save_request_targets = {'0xf1da50', '0x338080', '0xfb3160', '0xfaf180'}
+    require(not craft_save_request_targets.intersection(
+                c['target'] for c in craft_save_calls + craft_transaction_calls),
+            'cWorkCraft transaction acquired a direct explicit-save request call')
 
     remake_item_table = table('ItemParam')
     remake_table = table('ItemRemake')
@@ -332,11 +380,49 @@ def build_report():
                     'post_add_marker': {'va': '0xee17e0', 'decomp': str(craft_marker_decomp_path),
                                         'calls': [c for c in direct_calls(db, 0xee17e0)
                                                   if int(c['target'], 16) == 0xf29080],
-                                        'semantic_mapping': 'bounded bit marker observed; equivalence to EventFlow MadeItemID was not proved'}
+                                        'semantic_mapping': 'writes RecipeCraftParam.UniqueID from result payload; see crafting_recipe_flow_native.json for ItemParam.DiyRecipeID query conversion'}
                 },
-            'claim': 'One conditional native branch contains six per-slot calls that pass negative material quantities to an inventory mutator, followed by a general item-add route and a bounded post-craft bit marker.'
+                'conditional_pocket_add': {
+                    'calls': pocket_add_calls,
+                    'decomp': str(pocket_add_decomp_path),
+                    'helper_chain': pocket_add_helper_calls,
+                    'inventory_helper_decomp': str(pocket_inventory_decomp_path),
+                    'shared_generic_item_add_path': {
+                        'award_wrapper_va': '0xefac20',
+                        'award_wrapper_calls': generic_item_add_calls,
+                        'general_inventory_add_va': '0xf987c0',
+                        'general_inventory_add_calls': generic_pocket_add_calls,
+                        'interpretation': 'The same 0xf99270 slot-placement helper is called by the generic item-award insertion path 0xefac20 -> 0xf987c0.'},
+                    'gate': 'The initial 0xefa9a0 pocket-empty test is false, so 0xee0ed0 runs with a temp-output pointer; after slot processing, 0xda4020 on the transaction context and 0xf58d00 on the captured descriptor must both return true.',
+                    'member_offset': '+0x70 on the player-associated record, pocket view length 0x17c',
+                    'claim': 'The precheck captures a descriptor from the current RecipeCraftParam.MaterialN when its stack-count comparisons take a live copy branch; the transaction then passes that descriptor into the same pocket slot-placement helper used by generic item awards. Why craft performs this insertion and whether it is compaction, restoration, or rollback remain unresolved.'},
+            'claim': 'One conditional native branch contains six per-slot negative material deltas; a second slot processor also runs per recipe slot. The path has general item insertion, a conditional precheck-object pocket insertion, and a recipe-ID marker. Transaction atomicity and interruption semantics remain unproved.'
             }
         },
+        'save_flush_boundary': {
+            'explicit_save_event_action_count': len(save_simple_events),
+            'system_save_close_event': save_game_close_event,
+            'handler_registration': {
+                'constructor': save_simple_handler['constructor'],
+                'request_stage_va': '0x337f00',
+                'request_stage_decomp': str(save_action_start_decomp_path),
+                'process_check_va': '0x338340',
+                'process_dispatch_va': '0x338080',
+                'completion_stage_va': '0x338120'},
+            'native_request_path': {
+                'request_stage_calls': save_action_start_calls,
+                'tail_dispatch_target': '0x338080 (decompiler control-flow edge; not an indexed direct BL call)',
+                'process_dispatch_calls': save_process_dispatch_calls,
+                'saveproc_request_calls': saveproc_request_calls,
+                'completion_stage_calls': save_action_update_calls,
+                'claim': 'The SaveSimpleSave handler stores/processes the Process parameter and tail-dispatches to 0x338080; that dispatcher calls 0xfb3160, which constructs a SaveProc operation and passes it to 0xfaf180. The action update path polls completion via 0xf1da80. The tail edge is from decompiler control flow because the indexed direct-call table omits the terminal branch.'},
+            'craft_path_relation': {
+                'cWorkCraft_save_event': craft_events[2],
+                'craft_handler_calls': craft_save_calls,
+                'transaction_calls': craft_transaction_calls,
+                'direct_save_request_calls_found': False,
+                'claim': 'The cWorkCraft handler and transaction mutate player-associated records but do not directly call the indexed SaveSimpleSave/SaveProc request path.'},
+            'durable_flush_status': 'OPEN; the SaveSimpleSave -> 338080 -> SaveProc handoff and completion path are mapped, but the serializer and durable file write/flush after SaveProc were not identified.'},
         'workbench_page_and_remake': {
             'page_refs': {name: f'0x{va:x}' for name, va in page_functions.items()},
             'workcraft_bg_page': {
@@ -373,7 +459,7 @@ def build_report():
             'ingredient consumption and result add': 'PROVEN NATIVE STATIC call chain; not executed end to end',
             'workbench UI page': 'PROVEN PAGE INITIALIZER; user interaction not executed',
             'customization/remake': 'PROVEN EVENTFLOW + TABLE COST + NATIVE KIT INVENTORY UPDATE; row-to-quantity mapping open',
-            'cancel_or_rollback': 'OPEN; no rollback behavior established'
+            'cancel_or_rollback': 'OPEN; a conditional pocket insertion from the precheck object is present, but its trigger/identity is unresolved; full rollback behavior is not established'
         },
         'open_limits': [
             'The previous cache fixture is reconstructed; it is not a supplied player save.',
@@ -381,7 +467,8 @@ def build_report():
             'The native craft call order is visible in decompilation; atomicity and rollback on interruption/failure remain unproved.',
             'The WorkCraftBgPage function is a page initializer, not proof that the page itself commits a transaction.',
             'The remake handler passes a context-derived quantity for item 2513 into an inventory update, but the mapping from ItemRemake.RemakeKitNum=2 for item 3436 to that quantity was not executed in the game.',
-            'The post-craft bitmap helper accepts only keys below 0x800; its relation to EventFlow MadeItemID values such as 7211 was not established.'
+            'A conditional pocket insertion follows the material-processing branch through 0xefbd30 -> 0xf99270; the object identity and its refund/rollback purpose are not established.',
+            'The post-craft bitmap helper accepts only recipe keys below 0x800; high EventFlow MadeItemID values are converted through ItemParam.DiyRecipeID before query. See crafting_recipe_flow_native.json.'
         ]
     }
     db.close()
