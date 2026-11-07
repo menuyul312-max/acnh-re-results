@@ -789,6 +789,16 @@
       "worker_registration_strings": [
         "SaveProc"
       ],
+      "worker_registration_disassembly": {
+        "0x970e0": "ldr x8, [x8, #0xd70]",
+        "0x970e4": "ldr x0, [x8]",
+        "0x970e8": "ldr x1, [x19, #0x518]",
+        "0x970ec": "bl #0xfb4150",
+        "0xfb419c": "stp x8, x10, [sp, #8]",
+        "0xfb41a0": "bl #0x19904f0",
+        "0xfb41a8": "mov x0, x19",
+        "0xfb41ac": "bl #0xd4240"
+      },
       "worker_registration_calls_to_thread_factory": [
         {
           "pc": "0xfb41a0",
@@ -800,6 +810,32 @@
         }
       ],
       "thread_factory_va": "0xd4240",
+      "worker_callback_factory_audit": {
+        "runtime_registry_global": "0x32d08a0 (decompiler symbol 0x33d08a0)",
+        "registry_vtable_dispatch_va": "0xd4538",
+        "registry_dispatch_disassembly": {
+          "0xd4518": "adrp x8, #0x32d0000",
+          "0xd451c": "ldr x8, [x8, #0x8a0]",
+          "0xd4520": "ldr x0, [x8]",
+          "0xd4528": "ldr x8, [x0]",
+          "0xd452c": "ldr x8, [x8, #0x10]",
+          "0xd4530": "add x1, sp, #0x50",
+          "0xd4538": "blr x8",
+          "0xd4540": "ldr x1, [x19]",
+          "0xd4558": "str x21, [x20, #0x20]",
+          "0xd4588": "bl #0x2201d30",
+          "0xd45c0": "ldr x8, [x0, #0x20]",
+          "0xd4664": "ldr x0, [x19, #0x20]",
+          "0xd466c": "bl #0x2201820",
+          "0x22018e8": "blr x8"
+        },
+        "worker_object_callback_member_offset": "0x20",
+        "worker_task_dispatcher_va": "0xd45c0",
+        "generic_executor_va": "0x2201820",
+        "generic_executor_callback_indirect_va": "0x22018e8",
+        "direct_serializer_or_filesystem_callback_target_found": false,
+        "claim": "0xfb4150 packages the SaveProc name and runtime object into the generic worker factory at 0xd4240; it does not statically bind a serializer function. The factory checks the runtime registry at global 0x33d08a0 through its vtable +0x10 call at 0xd4538 and, when accepted, constructs a callback/task object at worker +0x20. 0xd45c0 passes that object to the generic executor 0x2201820, which makes a further indirect callback at 0x22018e8. The registry object, returned callback object, and serializer target are runtime-dependent and unresolved by this static image."
+      },
       "worker_queue_enqueue_va": "0xfaf180",
       "worker_queue_enqueue_calls": [
         {
@@ -1555,7 +1591,8 @@
     "The WorkCraftBgPage function is a page initializer, not proof that the page itself commits a transaction.",
     "The remake handler passes a context-derived quantity for item 2513 into an inventory update, but the mapping from ItemRemake.RemakeKitNum=2 for item 3436 to that quantity was not executed in the game.",
     "A conditional pocket insertion follows the material-processing branch through 0xefbd30 -> 0xf99270; the object identity and its refund/rollback purpose are not established.",
-    "The SaveProc queue worker resolves an indirect callback from task-object fields; no indexed call edge identifies its serializer or durable write operation.",
+    "SaveProc registration at 0xfb4150 passes a name/context to the generic 0xd4240 factory; the runtime registry at 0x33d08a0 supplies a virtual callback object at worker+0x20, so the serializer target is not statically bound.",
+    "The SaveProc callback factory and generic executor use indirect virtual dispatch; no indexed call edge identifies the serializer or durable write operation.",
     "OpenFile/WriteFile/FlushFile/Commit imports resolve to the separate sdk module, but current main-only native fixtures do not load SDK/system-service implementations.",
     "The post-craft bitmap helper accepts only recipe keys below 0x800; high EventFlow MadeItemID values are converted through ItemParam.DiyRecipeID before query. See crafting_recipe_flow_native.json."
   ]

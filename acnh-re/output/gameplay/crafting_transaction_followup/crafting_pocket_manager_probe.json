@@ -1,0 +1,631 @@
+{
+  "schema": "acnh.crafting.pocket_manager_probe.v1",
+  "scope": "Original 0xefbd30 and 0xf99270 execute against a partial manager/view fixture. The target item insertion/content outcome remains a bounded leaf result, not a full craft transaction.",
+  "provenance": {
+    "analysis_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+    "main_nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+    "recipe_craft_param_path": "output/tables_resolved/RecipeCraftParam.json",
+    "recipe_id": 56,
+    "result_item_id": 975,
+    "material_slots": [
+      {
+        "slot": 0,
+        "item_id": 2213,
+        "amount": 1
+      },
+      {
+        "slot": 1,
+        "item_id": 2285,
+        "amount": 1
+      },
+      {
+        "slot": 2,
+        "item_id": 2287,
+        "amount": 1
+      },
+      {
+        "slot": 3,
+        "item_id": 2214,
+        "amount": 1
+      },
+      {
+        "slot": 4,
+        "item_id": 2286,
+        "amount": 1
+      },
+      {
+        "slot": 5,
+        "item_id": 65534,
+        "amount": 0
+      }
+    ]
+  },
+  "fixture_contract": {
+    "world_player_manager_global": "0x33d3d78 (GOT 0x32d3d78)",
+    "world_player_manager_contract": {
+      "count_member_offset": "0xe8",
+      "member_array_pointer_offset": "0xf0",
+      "member_stride": "0x3ce50",
+      "active_view_pointer_offset": "0x118"
+    },
+    "pocket_member_view_contract": {
+      "member_offset": "+0x70",
+      "base_pointer_offset": "+0x8",
+      "view_offset": "+0x10",
+      "service_proxy_offset": "+0x28",
+      "pocket_record_size": "0x17c",
+      "item_records_offset": "0xb8",
+      "active_slot_count_offset": "0x158",
+      "dirty_slot_markers_offset": "0x15c"
+    },
+    "virtual_methods_stubbed": [
+      {
+        "edge": "0xee9350 validity query via member+0x28/+0x10",
+        "return_value": 1
+      },
+      {
+        "edge": "0xee94f0 view access via member+0x28/+0x20",
+        "return_value": 1
+      }
+    ],
+    "native_functions_not_stubbed": [
+      "0xefbd30",
+      "0xeab1f0",
+      "0xe670b0",
+      "0xf2d640",
+      "0xf8f400",
+      "0xee9350",
+      "0xee94f0",
+      "0xf99270"
+    ]
+  },
+  "probes": {
+    "material": {
+      "case": "recipe_56_material_descriptor_existing_stack",
+      "entry_va": "0xefbd30",
+      "descriptor_item_id": 2213,
+      "fixture": {
+        "save_records_va": "0x50120000",
+        "save_player_record_state": {
+          "slot_index": 0,
+          "state_u32_at_plus_0xb08": 1,
+          "active_flag_at_plus_0xb0c": 1,
+          "resolver_subindex_at_plus_0xb0d": 0
+        },
+        "manager_global": {
+          "got_va": "0x32d3d78",
+          "cell_va": "0x35e7430",
+          "fixture_value": "0x50180000"
+        },
+        "world_player_manager_va": "0x50180000",
+        "manager_count_member": {
+          "offset": "0xe8",
+          "value": 1
+        },
+        "manager_array_member": {
+          "offset": "0xf0",
+          "value_va": "0x50140000",
+          "element_stride": "0x3ce50"
+        },
+        "active_view_member": {
+          "manager_offset": "0x118",
+          "value_va": "0x50190000"
+        },
+        "pocket_record_va": "0x501a0000",
+        "pocket_record_size": "0x17c",
+        "pocket_layout": {
+          "active_slot_count_offset": "0x158",
+          "secondary_slot_count_offset": "0xa0",
+          "slot_records_offset": "0xb8",
+          "slot_record_stride": 8,
+          "dirty_slot_markers_offset": "0x15c",
+          "category_byte_offset": "0x178"
+        },
+        "pocket_slot0_before": [
+          2213,
+          0,
+          0
+        ],
+        "pocket_slot0_fixture_item_id": 2213,
+        "item_descriptor_va": "0x50020000",
+        "item_descriptor_bytes": "a508000000000000",
+        "view_proxy_fields": {
+          "player_plus_0x70_plus_8_base_pointer": "0x501a0000",
+          "player_plus_0x70_plus_0x10_offset": 0,
+          "player_plus_0x70_plus_0x28_proxy": "0x501b0000",
+          "validity_virtual_method_stub_va": "0x501b5000",
+          "access_virtual_method_stub_va": "0x501b5010",
+          "stub_instruction_bytes": "20008052c0035fd6"
+        },
+        "limits": [
+          "The 0x33d3d78 member array and +0x118 active view are synthetic records sized to fields read by this path.",
+          "The two view-service virtual methods return success from synthetic code; their actual runtime implementations remain unknown.",
+          "The full 0x3ce50-byte player member and unrelated runtime managers are not reconstructed."
+        ]
+      },
+      "executed_native_vas": [
+        "0xefbd30",
+        "0xef6700",
+        "0xeab1f0",
+        "0xe670b0",
+        "0xf2d640",
+        "0xf8f400",
+        "0xee9350",
+        "0x501b5000",
+        "0xee94f0",
+        "0x501b5010",
+        "0xf99270",
+        "0xf98650",
+        "0xf98650",
+        "0xefb090",
+        "0xee9350"
+      ],
+      "native_entries": [
+        {
+          "va": "0xefbd30",
+          "x0_x3": [
+            "0x50010000",
+            "0x50020000",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xef6700",
+          "x0_x3": [
+            "0x401fefd8",
+            "0x50010000",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xeab1f0",
+          "x0_x3": [
+            "0x401fefd8",
+            "0x50010000",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xe670b0",
+          "x0_x3": [
+            "0x50120000",
+            "0x0",
+            "0x1",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xf2d640",
+          "x0_x3": [
+            "0x50180000",
+            "0x0",
+            "0x1",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xf8f400",
+          "x0_x3": [
+            "0x50140000",
+            "0x0",
+            "0x1",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee9350",
+          "x0_x3": [
+            "0x401fefb8",
+            "0x50190070",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0x501b5000",
+          "x0_x3": [
+            "0x501b1000",
+            "0x50190070",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee94f0",
+          "x0_x3": [
+            "0x50190070",
+            "0x17c",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0x501b5010",
+          "x0_x3": [
+            "0x501b3000",
+            "0x401fef88",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xf99270",
+          "x0_x3": [
+            "0x501a0000",
+            "0x50020000",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xf98650",
+          "x0_x3": [
+            "0x501a0000",
+            "0x0",
+            "0x501b6000",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xf98650",
+          "x0_x3": [
+            "0x501a0000",
+            "0x0",
+            "0x401fef08",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xefb090",
+          "x0_x3": [
+            "0x50140000",
+            "0x401fee58",
+            "0xf9c360",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee9350",
+          "x0_x3": [
+            "0x401fef50",
+            "0x50141a78",
+            "0x1",
+            "0x0"
+          ]
+        }
+      ],
+      "slot_mutator_calls": [
+        {
+          "slot_index": 0,
+          "source_descriptor_va": "0x501b6000",
+          "source_descriptor_bytes": "feff000000000000"
+        },
+        {
+          "slot_index": 0,
+          "source_descriptor_va": "0x401fef08",
+          "source_descriptor_bytes": "a508000000000000"
+        }
+      ],
+      "pocket_write_events": [
+        {
+          "pc": "0xf589e4",
+          "offset": "0xb8",
+          "size": 2,
+          "value": "0xfffe"
+        },
+        {
+          "pc": "0xf589ec",
+          "offset": "0xba",
+          "size": 1,
+          "value": "0x0"
+        },
+        {
+          "pc": "0xf589f4",
+          "offset": "0xbb",
+          "size": 1,
+          "value": "0x0"
+        },
+        {
+          "pc": "0xf589fc",
+          "offset": "0xbc",
+          "size": 4,
+          "value": "0x0"
+        },
+        {
+          "pc": "0xf98794",
+          "offset": "0x15c",
+          "size": 1,
+          "value": "0xff"
+        },
+        {
+          "pc": "0xf589e4",
+          "offset": "0xb8",
+          "size": 2,
+          "value": "0x8a5"
+        },
+        {
+          "pc": "0xf589ec",
+          "offset": "0xba",
+          "size": 1,
+          "value": "0x0"
+        },
+        {
+          "pc": "0xf589f4",
+          "offset": "0xbb",
+          "size": 1,
+          "value": "0x0"
+        },
+        {
+          "pc": "0xf589fc",
+          "offset": "0xbc",
+          "size": 4,
+          "value": "0x0"
+        },
+        {
+          "pc": "0xf98794",
+          "offset": "0x15c",
+          "size": 1,
+          "value": "0xff"
+        }
+      ],
+      "pocket_changed_offsets": [
+        "0x15c"
+      ],
+      "slot0_before": [
+        2213,
+        0,
+        0
+      ],
+      "slot0_after": [
+        2213,
+        0,
+        0
+      ],
+      "dirty_slot0_before": 0,
+      "dirty_slot0_after": 255,
+      "active_slot_count_before_after": [
+        1,
+        1
+      ],
+      "native_error": null,
+      "first_unmapped_access": null,
+      "item_table_sources": {
+        "ItemParam_raw_sha256": "89230e97fc877ff2b2b48ac1c707ef32b3a7760118839c307f19797e2553458c",
+        "ItemKind_raw_sha256": "4cac0178cc69519585528b24ceef022ccb1fefa12b23fc9a9e4280e40185ba7b"
+      }
+    },
+    "result_descriptor_control": {
+      "case": "recipe_56_result_descriptor_control",
+      "entry_va": "0xefbd30",
+      "descriptor_item_id": 975,
+      "fixture": {
+        "save_records_va": "0x50120000",
+        "save_player_record_state": {
+          "slot_index": 0,
+          "state_u32_at_plus_0xb08": 1,
+          "active_flag_at_plus_0xb0c": 1,
+          "resolver_subindex_at_plus_0xb0d": 0
+        },
+        "manager_global": {
+          "got_va": "0x32d3d78",
+          "cell_va": "0x35e7430",
+          "fixture_value": "0x50180000"
+        },
+        "world_player_manager_va": "0x50180000",
+        "manager_count_member": {
+          "offset": "0xe8",
+          "value": 1
+        },
+        "manager_array_member": {
+          "offset": "0xf0",
+          "value_va": "0x50140000",
+          "element_stride": "0x3ce50"
+        },
+        "active_view_member": {
+          "manager_offset": "0x118",
+          "value_va": "0x50190000"
+        },
+        "pocket_record_va": "0x501a0000",
+        "pocket_record_size": "0x17c",
+        "pocket_layout": {
+          "active_slot_count_offset": "0x158",
+          "secondary_slot_count_offset": "0xa0",
+          "slot_records_offset": "0xb8",
+          "slot_record_stride": 8,
+          "dirty_slot_markers_offset": "0x15c",
+          "category_byte_offset": "0x178"
+        },
+        "pocket_slot0_before": [
+          975,
+          0,
+          0
+        ],
+        "pocket_slot0_fixture_item_id": 975,
+        "item_descriptor_va": "0x50020000",
+        "item_descriptor_bytes": "cf03000000000000",
+        "view_proxy_fields": {
+          "player_plus_0x70_plus_8_base_pointer": "0x501a0000",
+          "player_plus_0x70_plus_0x10_offset": 0,
+          "player_plus_0x70_plus_0x28_proxy": "0x501b0000",
+          "validity_virtual_method_stub_va": "0x501b5000",
+          "access_virtual_method_stub_va": "0x501b5010",
+          "stub_instruction_bytes": "20008052c0035fd6"
+        },
+        "limits": [
+          "The 0x33d3d78 member array and +0x118 active view are synthetic records sized to fields read by this path.",
+          "The two view-service virtual methods return success from synthetic code; their actual runtime implementations remain unknown.",
+          "The full 0x3ce50-byte player member and unrelated runtime managers are not reconstructed."
+        ]
+      },
+      "executed_native_vas": [
+        "0xefbd30",
+        "0xef6700",
+        "0xeab1f0",
+        "0xe670b0",
+        "0xf2d640",
+        "0xf8f400",
+        "0xee9350",
+        "0x501b5000",
+        "0xee94f0",
+        "0x501b5010",
+        "0xf99270",
+        "0xefb090",
+        "0xee9350"
+      ],
+      "native_entries": [
+        {
+          "va": "0xefbd30",
+          "x0_x3": [
+            "0x50010000",
+            "0x50020000",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xef6700",
+          "x0_x3": [
+            "0x401fefd8",
+            "0x50010000",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xeab1f0",
+          "x0_x3": [
+            "0x401fefd8",
+            "0x50010000",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xe670b0",
+          "x0_x3": [
+            "0x50120000",
+            "0x0",
+            "0x1",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xf2d640",
+          "x0_x3": [
+            "0x50180000",
+            "0x0",
+            "0x1",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xf8f400",
+          "x0_x3": [
+            "0x50140000",
+            "0x0",
+            "0x1",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee9350",
+          "x0_x3": [
+            "0x401fefb8",
+            "0x50190070",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0x501b5000",
+          "x0_x3": [
+            "0x501b1000",
+            "0x50190070",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee94f0",
+          "x0_x3": [
+            "0x50190070",
+            "0x17c",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0x501b5010",
+          "x0_x3": [
+            "0x501b3000",
+            "0x401fef88",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xf99270",
+          "x0_x3": [
+            "0x501a0000",
+            "0x50020000",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xefb090",
+          "x0_x3": [
+            "0x50140000",
+            "0x0",
+            "0xcb5eb33f",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee9350",
+          "x0_x3": [
+            "0x401fef50",
+            "0x50141a78",
+            "0x1",
+            "0x0"
+          ]
+        }
+      ],
+      "slot_mutator_calls": [],
+      "pocket_write_events": [],
+      "pocket_changed_offsets": [],
+      "slot0_before": [
+        975,
+        0,
+        0
+      ],
+      "slot0_after": [
+        975,
+        0,
+        0
+      ],
+      "dirty_slot0_before": 0,
+      "dirty_slot0_after": 0,
+      "active_slot_count_before_after": [
+        1,
+        1
+      ],
+      "native_error": null,
+      "first_unmapped_access": null,
+      "item_table_sources": {
+        "ItemParam_raw_sha256": "89230e97fc877ff2b2b48ac1c707ef32b3a7760118839c307f19797e2553458c",
+        "ItemKind_raw_sha256": "4cac0178cc69519585528b24ceef022ccb1fefa12b23fc9a9e4280e40185ba7b"
+      }
+    }
+  },
+  "claims": {
+    "material_descriptor_reaches_native_slot_helper": "PROVEN ON PARTIAL MANAGER/VIEW FIXTURE",
+    "material_helper_calls_and_dirty_marker": "PROVEN ON PARTIAL FIXTURE",
+    "result_descriptor_effect_in_f99270": "NATIVE HELPER REACHED; no f98650 call, slot write, or dirty-byte write",
+    "full_save_member_dirty_state_and_durable_flush": "OPEN",
+    "full_player_manager_runtime_layout": "OPEN; only fields read by this path are reconstructed"
+  }
+}

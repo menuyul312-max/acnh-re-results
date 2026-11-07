@@ -248,6 +248,14 @@ def build_report():
     saveproc_worker_dispatch_calls = direct_calls(db, 0xd45c0)
     task_state_dispatch_calls = direct_calls(db, 0xfaf360)
     saveproc_worker_init_parent_calls = calls_to(db, 0x96ef0, 0xfb4150)
+    saveproc_registration_disasm = disassemble(
+        analysis_elf, (0x970e0, 0x970e4, 0x970e8, 0x970ec,
+                       0xfb419c, 0xfb41a0, 0xfb41a8, 0xfb41ac))
+    worker_factory_disasm = disassemble(
+        analysis_elf, (0xd4518, 0xd451c, 0xd4520, 0xd4528,
+                       0xd452c, 0xd4530, 0xd4538, 0xd4540,
+                       0xd4558, 0xd4588, 0xd45c0, 0xd4664,
+                       0xd466c, 0x22018e8))
     task_callback_disasm = disassemble(
         analysis_elf, (0xfaf388, 0xfaf38c, 0xfaf390,
                        0xfaf3a8, 0xfaf3ac, 0xfaf3b0))
@@ -459,8 +467,19 @@ def build_report():
                 'worker_registration_calls': saveproc_worker_init_parent_calls,
                 'worker_registration_va': '0xfb4150',
                 'worker_registration_strings': [string_for_function(db, 0xfb4150, 'SaveProc')],
+                'worker_registration_disassembly': saveproc_registration_disasm,
                 'worker_registration_calls_to_thread_factory': saveproc_worker_init_calls,
                 'thread_factory_va': '0xd4240',
+                'worker_callback_factory_audit': {
+                    'runtime_registry_global': '0x32d08a0 (decompiler symbol 0x33d08a0)',
+                    'registry_vtable_dispatch_va': '0xd4538',
+                    'registry_dispatch_disassembly': worker_factory_disasm,
+                    'worker_object_callback_member_offset': '0x20',
+                    'worker_task_dispatcher_va': '0xd45c0',
+                    'generic_executor_va': '0x2201820',
+                    'generic_executor_callback_indirect_va': '0x22018e8',
+                    'direct_serializer_or_filesystem_callback_target_found': False,
+                    'claim': '0xfb4150 packages the SaveProc name and runtime object into the generic worker factory at 0xd4240; it does not statically bind a serializer function. The factory checks the runtime registry at global 0x33d08a0 through its vtable +0x10 call at 0xd4538 and, when accepted, constructs a callback/task object at worker +0x20. 0xd45c0 passes that object to the generic executor 0x2201820, which makes a further indirect callback at 0x22018e8. The registry object, returned callback object, and serializer target are runtime-dependent and unresolved by this static image.'},
                 'worker_queue_enqueue_va': '0xfaf180',
                 'worker_queue_enqueue_calls': saveproc_queue_calls,
                 'worker_queue_poll_va': '0xfaf210',
@@ -531,7 +550,8 @@ def build_report():
             'The WorkCraftBgPage function is a page initializer, not proof that the page itself commits a transaction.',
             'The remake handler passes a context-derived quantity for item 2513 into an inventory update, but the mapping from ItemRemake.RemakeKitNum=2 for item 3436 to that quantity was not executed in the game.',
             'A conditional pocket insertion follows the material-processing branch through 0xefbd30 -> 0xf99270; the object identity and its refund/rollback purpose are not established.',
-            'The SaveProc queue worker resolves an indirect callback from task-object fields; no indexed call edge identifies its serializer or durable write operation.',
+            'SaveProc registration at 0xfb4150 passes a name/context to the generic 0xd4240 factory; the runtime registry at 0x33d08a0 supplies a virtual callback object at worker+0x20, so the serializer target is not statically bound.',
+            'The SaveProc callback factory and generic executor use indirect virtual dispatch; no indexed call edge identifies the serializer or durable write operation.',
             'OpenFile/WriteFile/FlushFile/Commit imports resolve to the separate sdk module, but current main-only native fixtures do not load SDK/system-service implementations.',
             'The post-craft bitmap helper accepts only recipe keys below 0x800; high EventFlow MadeItemID values are converted through ItemParam.DiyRecipeID before query. See crafting_recipe_flow_native.json.'
         ]

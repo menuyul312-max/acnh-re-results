@@ -77,6 +77,15 @@ class CraftingTransactionFollowupStaticTests(unittest.TestCase):
         self.assertEqual(callback_slots['0xfaf3b0'], 'blr x8')
         self.assertIn('callback identity', worker['claim'])
 
+        factory = worker['worker_callback_factory_audit']
+        self.assertEqual(factory['runtime_registry_global'],
+                         '0x32d08a0 (decompiler symbol 0x33d08a0)')
+        self.assertEqual(factory['registry_vtable_dispatch_va'], '0xd4538')
+        self.assertEqual(factory['worker_object_callback_member_offset'], '0x20')
+        self.assertEqual(factory['generic_executor_callback_indirect_va'], '0x22018e8')
+        self.assertFalse(factory['direct_serializer_or_filesystem_callback_target_found'])
+        self.assertIn('runtime-dependent', factory['claim'])
+
         fs = save['filesystem_import_audit']
         self.assertFalse(fs['main_only_sandbox_executed_sdk'])
         self.assertEqual(fs['direct_fs_wrapper_calls_in_indexed_worker_functions'], [])
