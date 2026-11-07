@@ -1,0 +1,379 @@
+{
+  "schema": "acnh-re/core-story-stage-credits-join-check/1",
+  "game_version": "1.0.0",
+  "audit_date": "2026-11-07",
+  "source_root_relative_to_deliverable_repo": "../../acnh-re",
+  "source_root_note": "All source_hashes paths are relative to the sibling analysis dataset /workspace/acnh-re; this report and JSON are delivered in /workspace/acnh-re-github/acnh-re.",
+  "report_path": "docs/CORE_STORY_STAGE_CREDITS_JOIN_CHECK_20261107.md",
+  "scope": "One focused follow-up on native stage/AI actor construction, pointer registration, native caller indexing, TkkFirstLiveInviteRco key registration, and StaffCredit caller chain.",
+  "source_hashes": [
+    {
+      "path": "inputs/additional_exefs/main",
+      "sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+      "kind": "NSO source for static AArch64"
+    },
+    {
+      "path": "output/index.sqlite",
+      "sha256": "a78c7af27d37b8fd931bba8bc611623dacf7685cb6e8b4f827effa0765340aad",
+      "kind": "direct_calls, native_functions, string_refs"
+    },
+    {
+      "path": "output/gameplay/flow_index.json",
+      "sha256": "359f3a21a17a116902b0c8e1110c3892814b6fccbeb50b71d573c8ab3e1c68c5",
+      "kind": "456-flow EventFlow entry/caller index"
+    },
+    {
+      "path": "output/stage/by_source/02909.json",
+      "sha256": "2b003d9744649e7668585ff93df4dd17d0844e92ce86e5a06f7b094f1428bd28",
+      "kind": "decoded native stage-resource projection"
+    },
+    {
+      "path": "output/stage/actor_type_registry.json",
+      "sha256": "67439173a460ad49bb6cbc0086047eb192581f0cad36f4c936c4078a39d959be",
+      "kind": "stage actor-kind registry"
+    },
+    {
+      "path": "output/stage/native_summary.json",
+      "sha256": "396383658321f378b256acdfb80a20faac22b4f84a6faad45dd23db45b3ce4f7",
+      "kind": "native stage registry and actor summary"
+    },
+    {
+      "path": "output/binary/analysis_decomp/c70da0.c",
+      "sha256": "b2253dd8192f615ce55cb57d7ff4de45a22ae14d4186edf61a4e57bb8f0b5588",
+      "kind": "dynamic first-live actor builder pseudocode"
+    },
+    {
+      "path": "output/binary/analysis_decomp/cec550.c",
+      "sha256": "e63314596b25521adbfb5bf71dec074dcbcd37d19de67eadbefa9680f0147290",
+      "kind": "static NNPC talk-sequence key initializer pseudocode"
+    },
+    {
+      "path": "output/binary/analysis_decomp/1470e90.c",
+      "sha256": "c37c9542db23aa8d74105a101da693608282c529acbee2c33ab4bc50da873425",
+      "kind": "StaffCredit generic resource case pseudocode"
+    },
+    {
+      "path": "output/additional_romfs/extracted_manifest.json",
+      "sha256": "5e2327bc81c0a526cbcf878e9d899f47536b5b8f5a9fdf8b4a776413f75b64b8",
+      "kind": "ROMFS file inventory and per-file hashes"
+    },
+    {
+      "path": "output/binary/code_pointer_arrays.json",
+      "sha256": "64d474068ca289f9146f7f32e6647a16a05e8f5be8e635615a478744b62ef822",
+      "kind": "static relocated-code-pointer sequence inventory; pointer ownership/dispatch is not inferred"
+    }
+  ],
+  "raw_source_hashes": [
+    {
+      "source_id": 2909,
+      "source": "B_data/Stage/Game/MainFieldDemoFirstLive.byml",
+      "sha256": "0cf0898403df0b2eb8a47fae804a373ca6a7dcc8eb9680aac64360847b16bd12"
+    },
+    {
+      "source_id": 279,
+      "source": "B_data/EventFlow/Demo_PublicAnnouncement.bfevfl",
+      "sha256": "7ec0d30107a1d40169b4455932f0f6853beb9ef7b7cf69ca2ee2f77958a12602"
+    },
+    {
+      "source_id": 625,
+      "source": "B_data/EventFlow/SNPC_tkk_Live.bfevfl",
+      "sha256": "d1a9d0253d4ae6c1ed46e87d007f8924f4cba637589a3d0750ca07295794d316"
+    },
+    {
+      "source_id": 272,
+      "source": "B_data/EventFlow/AI_NPC_Tkk_FirstLive.bfevfl",
+      "sha256": "5f7c36dba971c8c30f434b92085a8bb7e8bd677df39bcd008d0aa8950e02a9f8"
+    },
+    {
+      "source_id": 258,
+      "source": "B_data/EventFlow/AI_NPC_Rco_FirstLiveInvite.bfevfl",
+      "sha256": "f0b576c5d5f8b1877609b4a971f32aebed02a612f7aabad8e8c60cb8cd89da2c"
+    },
+    {
+      "source_id": 606,
+      "source": "B_data/EventFlow/SNPC_rco_55_TkkFirstLive.bfevfl",
+      "sha256": "b3d6e9d359a19a744561d7b2c7f213b71513c3489ebee2c679b46e1540407905"
+    }
+  ],
+  "stage_path": {
+    "status": "PARTIAL_NATIVE_ACTOR_PATH; stage-to-helper and actor-to-talk joins OPEN",
+    "eventflow_request": {
+      "source_id": 279,
+      "flow": "Demo_PublicAnnouncement",
+      "entry": "PAnnounceSza",
+      "event": 41,
+      "target_stage": "cMainFieldFirstLive"
+    },
+    "candidate_stage_resource": {
+      "source_id": 2909,
+      "path": "B_data/Stage/Game/MainFieldDemoFirstLive.byml",
+      "raw_sha256": "0cf0898403df0b2eb8a47fae804a373ca6a7dcc8eb9680aac64360847b16bd12",
+      "projected_actor_count": 9,
+      "actor_names": [
+        "PlayerActorMgr",
+        "InsectFieldActorMgr",
+        "FishFieldActorMgr",
+        "ObjectSnowBallActorMgr",
+        "ShellfishFieldActorMgr",
+        "WaterFall",
+        "ObjectBalloonActorMgr",
+        "ActorEventStartDemo"
+      ],
+      "unresolved_actor": {
+        "source_pointer": "/3cbaa541/4",
+        "actor_kind_hash": "0x0f86a73c",
+        "native_registration_status": "unregistered; 0xfeb390 skips this kind"
+      },
+      "interpretation_limit": "The stage name is a candidate matching the EventFlow target by label; no explicit mapping from cMainFieldFirstLive to this BYML or to the helper caller is indexed."
+    },
+    "native_caller_index": {
+      "direct_call": {
+        "pc": "0xc686ac",
+        "bytes_le": "bd210094",
+        "target": "0xc70da0",
+        "owner_va_in_direct_calls": null,
+        "asm": "BL #0xc70da0"
+      },
+      "recovered_static_caller": {
+        "function_va": "0xc685a0",
+        "name": "FUN_00d685a0",
+        "size": "0x248",
+        "evidence": "direct_calls owner_va is null; the native_functions span inventory contains PC 0xc686ac in this function"
+      },
+      "caller_of_0xc685a0": {
+        "direct_call_rows": [],
+        "data_pointer_slot": {
+          "address_va": "0x2479bf0",
+          "value": "0xc685a0",
+          "neighboring_record_values": [
+            "0x30d9a90",
+            "0x403"
+          ],
+          "meaning": "static pointer occurrence found; owning registry/dispatcher not identified"
+        },
+        "function_pointer_sequence": {
+          "sequence_start_va": "0x30d9a50",
+          "pointer_va": "0x30d9a88",
+          "sequence_targets_near_slot": [
+            "0xc74be0",
+            "0xc74c90",
+            "0xc74d50",
+            "0xc74d60",
+            "0xc74d70",
+            "0xc74e70",
+            "0x29350",
+            "0xc685a0",
+            "0xc72f50"
+          ],
+          "inventory_status": "relocated code pointer sequence; not automatically a C++ vtable",
+          "owner_or_dispatch": "unresolved"
+        }
+      }
+    },
+    "native_actor_builder": {
+      "function_va": "0xc70da0",
+      "static_callers_in_index": [
+        {
+          "pc": "0xc686ac",
+          "owner_native_function": "0xc685a0"
+        }
+      ],
+      "entry_predicate": {
+        "callee": "0xffbc90",
+        "reading": "builder proceeds only when its native predicate returns bit 0 set; predicate's stage mapping is not resolved here"
+      },
+      "constructed_actor": {
+        "pc_pair": [
+          "0xc70e48",
+          "0xc70e4c"
+        ],
+        "string_va": "0x2992dbb",
+        "name": "E_FirstLive_NPC_0"
+      },
+      "ai_resource": {
+        "pc_pair": [
+          "0xc70fb8",
+          "0xc70fbc"
+        ],
+        "string_va": "0x298de83",
+        "name": "%s/AIC:Special/AIF:AI_NPC_Tkk_FirstLive"
+      },
+      "submit_actor_call": {
+        "pc": "0xc70ff4",
+        "target": "0xc6c210"
+      }
+    },
+    "eventflow_talk_link": {
+      "target_flow": {
+        "source_id": 625,
+        "entry": "Tkk_LandFirstLive",
+        "called_from": [],
+        "events": [
+          118,
+          92,
+          93,
+          94
+        ]
+      },
+      "ai_flow": {
+        "source_id": 272,
+        "entry": "Root",
+        "subflow_call": "AI_NPC_Common:ContinueSpeak",
+        "called_from": []
+      },
+      "status": "OPEN_JOIN: dynamic actor construction is shown, but no indexed mapping/call from its AI resource into SNPC_tkk_Live:Tkk_LandFirstLive is present"
+    }
+  },
+  "nook_key_registration": {
+    "status": "KEY_HASH_REGISTERED; EVENTFLOW_TARGET_OPEN",
+    "initializer": {
+      "function_va": "0xcec550",
+      "name": "_INIT_2865",
+      "direct_call_rows": [],
+      "data_pointer_slot": {
+        "address_va": "0x2486058",
+        "value": "0xcec550",
+        "meaning": "static pointer occurrence; init dispatcher not identified"
+      }
+    },
+    "sequence_group": {
+      "string_va": "0x29913f9",
+      "name": "NNPC_Talk_Sequence",
+      "registration_table_record_offset": "0x140"
+    },
+    "key": {
+      "string_va": "0x2925c66",
+      "name": "TkkFirstLiveInviteRco",
+      "string_pair_pc": [
+        "0xcec95c",
+        "0xcec960"
+      ],
+      "record_store_pc": "0xcec96c",
+      "hash_call": {
+        "pc": "0xcec970",
+        "target": "0x1bf0"
+      },
+      "hash_result_store_pc": "0xcec974"
+    },
+    "flow_evidence": [
+      {
+        "source_id": 258,
+        "flow": "AI_NPC_Rco_FirstLiveInvite",
+        "called_from": [],
+        "entries": {
+          "Root": "AI_NPC_Common:VisitSpeak",
+          "Init": "AI_NPC_Common:VisitSpeakInit"
+        }
+      },
+      {
+        "source_id": 606,
+        "flow": "SNPC_rco_55_TkkFirstLive",
+        "entry": "InvitePlayerHouse",
+        "called_from": [],
+        "writes": [
+          {
+            "flag": "cPlayer:MainmenuConstructLicense",
+            "event": 16
+          },
+          {
+            "action": "UIMenuDeviceAppear(cConstructLicense)",
+            "event": 17
+          }
+        ]
+      }
+    ],
+    "limit": "The constructor stores and hashes the special name key; no key-to-AI-flow or key-to-SNPC EventFlow entry pointer/dispatch record is resolved."
+  },
+  "credits_path": {
+    "status": "GENERIC_NATIVE_ASSET_CALL_FOUND; STORY_TRIGGER_OPEN",
+    "assets": [
+      {
+        "path": "Layout/StaffCredit.Nin_NX_NVN.zs",
+        "sha256": "74a02627d2fa7a19e8c69671eb88aa4f06d52a1246c7eacead572874cbb6bfe1"
+      },
+      {
+        "path": "BDLI/String/USen/STR_StaffList.bdli.zs",
+        "sha256": "9f1ce78d45d6d2bc04afb225770a644b35c8a8eb7956a811fdb877968df7f405"
+      }
+    ],
+    "generic_resource_function": {
+      "function_va": "0x1470e90",
+      "string_va": "0x298a2f5",
+      "string": "StaffCredit",
+      "switch_case": 8,
+      "behavior": "passes the category/name to generic layout-asset helpers"
+    },
+    "native_caller_index": {
+      "direct_call": {
+        "pc": "0x146f34c",
+        "bytes_le": "d1060094",
+        "target": "0x1470e90",
+        "owner_va_in_direct_calls": null,
+        "asm": "BL #0x1470e90"
+      },
+      "recovered_static_caller": {
+        "function_va": "0x146f2c0",
+        "name": "FUN_0156f2c0",
+        "size": "0xb8",
+        "evidence": "direct_calls owner_va is null; the native_functions span inventory contains PC 0x146f34c in this function"
+      },
+      "caller_of_0x146f2c0": {
+        "direct_call_rows": [],
+        "data_pointer_slot": {
+          "address_va": "0x25a3fe8",
+          "value": "0x146f2c0",
+          "meaning": "static pointer occurrence; owning registry/dispatcher not identified"
+        },
+        "function_pointer_sequence": {
+          "sequence_start_va": "0x330db08",
+          "pointer_va": "0x330db20",
+          "sequence_targets_near_slot": [
+            "0x146f270",
+            "0x146f280",
+            "0x146f2b0",
+            "0x146f2c0",
+            "0x146f380",
+            "0x146f3e0",
+            "0x146f430",
+            "0x146f520",
+            "0x146f610",
+            "0x146f740",
+            "0x146f750"
+          ],
+          "inventory_status": "relocated code pointer sequence; not automatically a C++ vtable",
+          "owner_or_dispatch": "unresolved"
+        }
+      }
+    },
+    "eventflow_search": {
+      "flow_count": 456,
+      "matches": [],
+      "limit": "No StaffCredit/StaffList event token and no direct first-live event is indexed; the generic caller chain stops at 0x146f2c0."
+    },
+    "limit": "Layout and string paths plus the generic resource case do not prove the first-live stage triggers credits."
+  },
+  "open_joins": [
+    {
+      "id": "cMainFieldFirstLive_to_native_stage_helper",
+      "exact_missing_evidence": "No direct caller/dispatch mapping into 0xc685a0; its static pointer slot at 0x2479bf0 has no resolved owner, and the stage-name-to-BYML mapping is not in the index."
+    },
+    {
+      "id": "dynamic_first_live_ai_to_talk_entry",
+      "exact_missing_evidence": "AI_NPC_Tkk_FirstLive:Root only calls AI_NPC_Common:ContinueSpeak; no indexed call or mapping reaches SNPC_tkk_Live:Tkk_LandFirstLive."
+    },
+    {
+      "id": "nook_special_key_to_invite_flow",
+      "exact_missing_evidence": "TkkFirstLiveInviteRco name/hash is stored by _INIT_2865, but no resolved key pointer/dispatch maps it to AI_NPC_Rco_FirstLiveInvite or SNPC_rco_55_TkkFirstLive:InvitePlayerHouse."
+    },
+    {
+      "id": "first_live_to_staff_credits",
+      "exact_missing_evidence": "0x1470e90 has generic caller 0x146f2c0, but no incoming caller to that function is indexed; no EventFlow event links first live or stage to the generic StaffCredit resource case."
+    }
+  ],
+  "absence_and_limits": [
+    "`direct_calls.owner_va` is null for the native call rows because the relevant caller functions are not in the Ghidra functions table; the supplemental `native_functions` spans recover the enclosing function bodies but not their callers.",
+    "Static data pointer slots were found for 0xc685a0, 0xcec550, and 0x146f2c0, but the owning registry or dispatcher was not identified.",
+    "Native code was not executed in a progressed save; no model, audio, movie, or rendered stage was used.",
+    "The code-pointer sequence inventory contains static entries for 0xc685a0 and 0x146f2c0, but their table owners and indirect-dispatch use are unresolved; the direct_calls table does not establish indirect callers."
+  ]
+}
