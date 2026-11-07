@@ -1,0 +1,327 @@
+{
+  "schema": "acnh.crafting_persistence_transaction_boundary.v1",
+  "game_version": "ACNH 1.0.0",
+  "evidence_status": "STATIC_CALLGRAPH_SAVE_LAYOUT_AUDIT_WITH_PRIOR_BOUNDED_FILE_HELPER_FIXTURE",
+  "scope": "Trace crafting pocket mutations and result insertion to local save layout, then map SaveSimpleSave/SaveProc and the furthest known file boundary. No live save or new native execution.",
+  "provenance": {
+    "main_nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+    "analysis_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+    "existing_artifact_sha256": {
+      "crafting_transaction_followup_static_json": "eb6f266497d967b07051fab8e37438071b94a159fe1a183fbee06968ed1a9769",
+      "save_layout_json": "a326c84213faad1921bd7660c3e171a7b3af117ec55e2ca711a871ad637e51dc",
+      "save_layout_external_crosswalk_json": "2fea2dfb23c286c08d6a33f93e944cfccec4cd606bf43cab08c6eee96f7e0604",
+      "tool_durability_residual_static_json": "2ff67c72cb25ce800857c81e1fb9c2e5f3a362cf200909c204a8ca0087144640",
+      "tool_durability_producer_dispatch_static_json": "917cd3fcc3a4e38dd9d2e8f926012dd8b7e67b4801e6f6ec9fb361c0870e3b64",
+      "tool_state_callback_native_json": "0947434e8382494df17130072c862eb93ff7acd8e1b8aa374497a102deaedc43"
+    },
+    "source_corpora": [
+      "output/binary/analysis_decomp/ee1420.c",
+      "output/binary/analysis_decomp/eff060.c",
+      "output/binary/analysis_decomp/ee1060.c",
+      "output/binary/analysis_decomp/efab90.c",
+      "output/binary/analysis_decomp/efac20.c",
+      "output/binary/analysis_decomp/f987c0.c",
+      "output/binary/analysis_decomp/337f00.c",
+      "output/binary/analysis_decomp/fb3160.c",
+      "output/binary/analysis_decomp/faf180.c",
+      "output/binary/analysis_decomp/faf210.c",
+      "output/binary/analysis_decomp/faf360.c",
+      "output/binary/analysis_decomp/fb4150.c",
+      "output/binary/analysis_decomp/d45c0.c",
+      "output/binary/analysis_decomp/f214a0.c",
+      "output/binary/analysis_decomp/f21350.c",
+      "output/binary/analysis_decomp/e895a0.c",
+      "output/binary/analysis_decomp/e767b0.c"
+    ],
+    "existing_artifacts": [
+      "output/gameplay/crafting_transaction_followup/crafting_transaction_followup_static.json",
+      "output/gameplay/save_layout.json",
+      "output/gameplay/save_layout_external_crosswalk.json",
+      "output/gameplay/tool_mechanics_followup/tool_durability_residual_static.json",
+      "output/gameplay/tool_mechanics_followup/tool_durability_producer_dispatch_static.json",
+      "output/gameplay/tool_mechanics_followup/tool_state_callback_native.json"
+    ]
+  },
+  "crafting_mutation": {
+    "event_flow": {
+      "flow": "Ftr_Working",
+      "event_index": 212,
+      "action": "EventFlowActionSaveSetFromUIResult",
+      "params": {
+        "SaveType": "cWorkCraft"
+      }
+    },
+    "handler": {
+      "behavior_va": "0x334650",
+      "cWorkCraft_case": 9,
+      "helper_va": "0x3358c0",
+      "transaction_callsite": {
+        "pc": "0x335aa8",
+        "target": "0xee1420"
+      },
+      "transaction_va": "0xee1420",
+      "material_paths": {
+        "signed_alternate": {
+          "call_sites": [
+            "0xee14dc",
+            "0xee14fc",
+            "0xee151c",
+            "0xee153c",
+            "0xee155c",
+            "0xee157c"
+          ],
+          "target": "0xeff060",
+          "pocket_update_callsite": {
+            "pc": "0xeff0e4",
+            "target": "0xf9e410"
+          },
+          "accessors": {
+            "get_player_context_callsite": {
+              "pc": "0xeff098",
+              "target": "0xf8f400"
+            },
+            "view_offset_from_resolved_context": "0x1c0",
+            "view_length": "0x140",
+            "note": "Runtime accessor/view shape only; not yet joined to a named save member."
+          }
+        },
+        "default_material_path": {
+          "call_sites": [
+            "0xee15a0",
+            "0xee15c4",
+            "0xee15e8",
+            "0xee160c",
+            "0xee1630",
+            "0xee1654"
+          ],
+          "target": "0xee1060",
+          "behavior_status": "Static material-removal helpers found; no faithful transaction fixture or save-member identity."
+        }
+      },
+      "result_award": {
+        "transaction_callsite": {
+          "pc": "0xee17bc",
+          "target": "0xefab90"
+        },
+        "generic_wrapper_callsite": {
+          "pc": "0xefabf8",
+          "target": "0xefac20"
+        },
+        "inventory_insert_callsite": {
+          "pc": "0xefad2c",
+          "target": "0xf987c0"
+        },
+        "accessor_offset": "0x70",
+        "pocket_view_length": "0x17c",
+        "post_add_marker_callsite": {
+          "pc": "0xee185c",
+          "target": "0xf29080"
+        },
+        "claim_scope": "In-memory result insertion path in native pseudocode/index; no serialization or reload proof."
+      },
+      "direct_save_request_calls_found": false
+    }
+  },
+  "save_layout_and_crosswalk": {
+    "save_layout": {
+      "artifact": "output/gameplay/save_layout.json",
+      "generation": "native emulation of 0xf32fa0 from supplied main NSO",
+      "root_size": "0x4fa0d8",
+      "root_vtable": "0x30e8470",
+      "player_record_constructor": "0xf8f580",
+      "player_record_size": "0x35ac8",
+      "player_record_members_of_interest": [
+        {
+          "node_offset": "0x70",
+          "data_offset": "0x4",
+          "size": "0x1",
+          "name": null
+        },
+        {
+          "node_offset": "0xa8",
+          "data_offset": "0x8",
+          "size": "0xaf90",
+          "name": null
+        }
+      ],
+      "offset_semantics": "node is accessor-node offset in layout object; data is offset in serialized save bytes."
+    },
+    "external_crosswalk": {
+      "artifact": "output/gameplay/save_layout_external_crosswalk.json",
+      "local_layout_sha256": "a326c84213faad1921bd7660c3e171a7b3af117ec55e2ca711a871ad637e51dc",
+      "external_schema_root": "SaveLand",
+      "external_schema_version_note": "save_schema_111_103 external schema compared with local 1.0.0 executable",
+      "root_size_matches": true,
+      "sampled_member_count": 88,
+      "depth_aligned_exact_paths": 85,
+      "mapping_method": "Vtable sample_data/size plus selected member data offset/size and tree-depth alignment; names remain cross-version candidates, not local RTTI.",
+      "pocket_view_size_0x17c_matches": 0,
+      "local_named_pocket_member_found": false
+    },
+    "identity_verdict": "Current layout/crosswalk data cannot name the crafting views at resolved-context+0x1c0 length 0x140 or context+0x70 length 0x17c. The equal +0x70 node offset is insufficient because the local player-record node at +0x70 has serialized data offset +0x4, size 1, and no name; wrapper-root equivalence is unproved."
+  },
+  "save_simple_save_and_saveproc": {
+    "eventflow_save_simple_save_action_count": 12,
+    "system_save_close_event": {
+      "flow": "System_SaveGameClose",
+      "event_index": 1,
+      "action": "EventFlowActionSaveSimpleSave",
+      "params": {
+        "Process": "cAll"
+      }
+    },
+    "registration": {
+      "constructor": "0x337e30",
+      "request_stage": "0x337f00",
+      "process_check": "0x338340",
+      "process_dispatch": "0x338080",
+      "completion_stage": "0x338120"
+    },
+    "request_callsites": [
+      {
+        "caller": "0x337f00",
+        "pc": "0x337fb8",
+        "target": "0xf1da50"
+      },
+      {
+        "caller": "0x338080",
+        "pc": "0x3380f8",
+        "target": "0xfb3160"
+      },
+      {
+        "caller": "0xfb3160",
+        "pc": "0xfb3234",
+        "target": "0xfaf180"
+      },
+      {
+        "caller": "0x338120",
+        "pc": "0x3381b8",
+        "target": "0xf1da80"
+      }
+    ],
+    "control_flow_note": "0x337f00 tail-dispatch to 0x338080 is decompiler control flow, not an indexed direct BL edge.",
+    "worker_dispatch": {
+      "registration_va": "0xfb4150",
+      "generic_factory_va": "0xd4240",
+      "registry_global": "0x33d08a0",
+      "registry_vtable_callsite": "0xd4538",
+      "queue_record_size": "0x38",
+      "queue_enqueue": "0xfaf180",
+      "queue_worker": "0xfaf210",
+      "task_dispatch": "0xfaf360",
+      "worker_task_executor": "0xd45c0",
+      "generic_executor": "0x2201820",
+      "indirect_callback_site": "0x22018e8",
+      "serializer_binding": "OPEN: runtime registry and callback object determine the target."
+    },
+    "craft_path_relation": {
+      "direct_calls_to_SaveSimpleSave_or_SaveProc_request": false,
+      "meaning": "Crafting synchronously mutates in-memory views; the indexed craft handler does not directly invoke the generic save request path."
+    }
+  },
+  "dirty_state_and_candidate_file_boundary": {
+    "tool_slot_dirty_markers": [
+      {
+        "va": "0xe895a0",
+        "operation": "set bit 0x4000",
+        "decomp_line": 47
+      },
+      {
+        "va": "0xe767b0",
+        "operation": "clear mask 0xffffbfff",
+        "decomp_line": 42
+      },
+      {
+        "slot_word_address": "player context +0x204 + slot*8",
+        "status": "tool-wear state only; not proven to be set or serialized by the crafting path"
+      }
+    ],
+    "saveproc_node_scan": {
+      "snapshot_functions": 64466,
+      "saveproc_nodes_checked": [
+        "0x337f00",
+        "0x338080",
+        "0xfb3160",
+        "0xfaf180",
+        "0xf1da80"
+      ],
+      "exact_slot_marker_access_in_available_nodes": false,
+      "caveat": "0x338080 has no indexed decomp snapshot; indirect callbacks may access omitted code."
+    },
+    "candidate_callback_pointer": {
+      "array_va": "0x32ff8d8",
+      "candidate_target": "0xfafec0",
+      "evidence_status": "Candidate only; array is not proven as SaveProc vtable or task binding.",
+      "candidate_task_helpers": [
+        "0xfb1e10",
+        "0xfb1ff0",
+        "0xfb2200",
+        "0xfb23e0",
+        "0xfb25e0"
+      ],
+      "helper_file_calls": [
+        "0xf214a0",
+        "0xf21350"
+      ]
+    },
+    "prior_native_file_helper_fixture": {
+      "artifact": "output/gameplay/tool_mechanics_followup/tool_state_callback_native.json",
+      "direct_entries_called": [
+        "0xf214a0",
+        "0xf21350"
+      ],
+      "worker_queue_executed": false,
+      "observed_ops": [
+        {
+          "api": "MountDeviceSaveData",
+          "name": "ACNH_SAVE"
+        },
+        {
+          "api": "OpenFile",
+          "path": "ACNH_SAVE:/PlayerData.bin",
+          "mode": 2
+        },
+        {
+          "api": "SetFileSize",
+          "size": "0x4000"
+        },
+        {
+          "api": "CloseFile"
+        }
+      ],
+      "not_observed": [
+        "WriteFile",
+        "FlushFile",
+        "slot serialization"
+      ],
+      "stubbed_boundaries": [
+        "mutex/path string virtual methods",
+        "string setup/formatter",
+        "SDK Mount/Open/SetSize/Close"
+      ],
+      "scope": "Direct bounded helper execution only; does not execute the SaveProc worker queue or prove SaveProc callback identity."
+    },
+    "filesystem_api_resolution": {
+      "wrapper_vas": {
+        "MountDeviceSaveData": "0x220ee60",
+        "OpenFile": "0x220ee80",
+        "SetFileSize": "0x220ee90",
+        "CloseFile": "0x220eea0",
+        "WriteFile": "0x22103c0",
+        "FlushFile": "0x22103a0"
+      },
+      "export_module": "sdk/nnSdk",
+      "saveproc_request_or_candidate_helper_direct_write_flush_edge": false,
+      "commit_callsite_from_saveproc": null
+    },
+    "reload_evidence": "None: no file reload or byte comparison."
+  },
+  "open": [
+    "Resolve the runtime player/view roots and map +0x1c0/0x140 and +0x70/0x17c to a named 1.0.0 save member.",
+    "Bind the SaveProc runtime registry callback and queued object to a serializer that reads the craft-updated bytes.",
+    "Establish a direct WriteFile and FlushFile/Commit edge from the bound callback; candidate file setup calls are insufficient.",
+    "Reload PlayerData.bin after that write and compare pocket/result bytes.",
+    "Prove cancellation, rollback, and transaction durability; no save or success-path material/result balance was executed."
+  ],
+  "conclusion": "The evidence reaches source-backed in-memory material/result mutation paths and a generic SaveSimpleSave -> SaveProc request/queue/completion boundary. The layout/crosswalk do not name the pocket views. Existing file-helper execution only mounts, opens, sizes, and closes PlayerData.bin; it does not serialize, write, flush, or reload. Durable craft persistence remains OPEN."
+}
