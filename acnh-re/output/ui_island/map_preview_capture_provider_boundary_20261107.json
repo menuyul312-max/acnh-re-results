@@ -1,0 +1,1154 @@
+{
+  "schema": "acnh.registration-map-preview-capture-provider-boundary/1",
+  "created_utc_date": "2026-11-07",
+  "game_version_scope": {
+    "native": "ACNH 1.0.0 main.elf / main NSO",
+    "layout_archives": "supplemental archive set; exact release/build unknown"
+  },
+  "scope": "Static trace of the CharaMakeMap card texture source, generic dynamic UI capture routines, and bounded search for a native join to MapSelectPage/cVillage.",
+  "status": "STATIC_GENERIC_CAPTURE_SUBSYSTEM_FOUND;MAP_PREVIEW_PROVIDER_AND_CARD_UID_JOIN_OPEN",
+  "asset_chain": {
+    "parent_layout": {
+      "archive": "CharaMakeMap.Nin_NX_NVN.zs",
+      "layout_member": "CharaMakeMap.arc!blyt/CharaMakeMap.bflyt",
+      "card_panes": [
+        {
+          "name": "L_Btn_00",
+          "size": [
+            562,
+            438
+          ],
+          "part_layout": "LCharaMakeMapBtn"
+        },
+        {
+          "name": "L_Btn_01",
+          "size": [
+            562,
+            438
+          ],
+          "part_layout": "LCharaMakeMapBtn"
+        },
+        {
+          "name": "L_Btn_02",
+          "size": [
+            562,
+            438
+          ],
+          "part_layout": "LCharaMakeMapBtn"
+        },
+        {
+          "name": "L_Btn_03",
+          "size": [
+            562,
+            438
+          ],
+          "part_layout": "LCharaMakeMapBtn"
+        }
+      ],
+      "source_build_status": "unknown supplemental build"
+    },
+    "child_layout": {
+      "archive": "LCharaMakeMapBtn.Nin_NX_NVN.zs",
+      "layout_member": "LCharaMakeMapBtn.arc!blyt/LCharaMakeMapBtn.bflyt",
+      "capture_node": "N_Capture_00",
+      "nested_part": {
+        "pane": "L_MapChoice_00",
+        "part_layout": "LMapChoice"
+      },
+      "decorative_capture_picture": {
+        "pane": "P_Capture_00",
+        "size": [
+          418,
+          418
+        ],
+        "material_index": 20,
+        "texture_inputs": [
+          "Black_00^r",
+          "Noise+r"
+        ],
+        "interpretation": "mask/noise inputs; not a source-image join"
+      }
+    },
+    "map_choice_layout": {
+      "archive": "LMapChoice.Nin_NX_NVN.zs",
+      "layout_member": "LMapChoice.arc!blyt/LMapChoice.bflyt",
+      "map_picture": {
+        "pane": "P_Map_00",
+        "size": [
+          380,
+          380
+        ],
+        "material_index": 0,
+        "texture_index": 0,
+        "texture_name": "Capture^t"
+      },
+      "overlay": {
+        "pane": "P_Material_00",
+        "material_index": 1,
+        "texture_name": "Noise^r"
+      }
+    },
+    "capture_texture": {
+      "name": "Capture^t",
+      "bntx_member_sha256": "6cc500513685c399c42dc3ec3cdf8f68c8a2611aa76af3afeb3bd203da2648b9",
+      "format": "BC5_UNORM",
+      "width": 8,
+      "height": 8,
+      "mips": 1,
+      "array_layers": 1,
+      "decoded_png_sha256": "58014df8c2e6a72b5323bfbb0a565ffb403ce1008215afbda789624c5b0f9ea7",
+      "decoded_unique_rgba_values": [
+        [
+          255,
+          255,
+          255,
+          0
+        ]
+      ],
+      "classification": "fully transparent 8x8 placeholder in supplied archive; runtime replacement not observed"
+    },
+    "relevant_archive_hashes": [
+      {
+        "name": "CharaMakeMap",
+        "source": {
+          "path": "downloads/acnh_additional_romfs_2026-11-02/romfs/Layout/CharaMakeMap.Nin_NX_NVN.zs",
+          "bytes": 53194,
+          "sha256": "873d26ca41ba4b982cc96b55daf68adcdc657099be50626266615b3a9f2b6700"
+        },
+        "members": [
+          {
+            "name": "blyt/CharaMakeMap.bflyt",
+            "sha256": "b110eb4c09bb23ce89f3f7a32139a68d1cc6b37c615788d75284a113941ca6ea",
+            "bytes": 4932
+          },
+          {
+            "name": "timg/__Combined.bntx",
+            "sha256": "5d0bae0edd0ed336c6bdb88318ca58b788738c52532a25efd2f67a731a00bb93",
+            "bytes": 135296
+          }
+        ]
+      },
+      {
+        "name": "LCharaMakeMapBtn",
+        "source": {
+          "path": "downloads/acnh_additional_romfs_2026-11-02/romfs/Layout/LCharaMakeMapBtn.Nin_NX_NVN.zs",
+          "bytes": 43866,
+          "sha256": "04bb82e3cbd7c02109af61f3d76731b1188d32e6d748a044ccb78c5ce397fb34"
+        },
+        "members": [
+          {
+            "name": "timg/__Combined.bntx",
+            "sha256": "70a859c80fa60ccd45647f4ee4d2e7d952ba25156a721bf592c242cd76808803",
+            "bytes": 53376
+          },
+          {
+            "name": "blyt/LCharaMakeMapBtn.bflyt",
+            "sha256": "cc947b0e738ed7fbbbb340e2a585f9fdb135825398a515052fda4ca9611b0f74",
+            "bytes": 9008
+          }
+        ]
+      },
+      {
+        "name": "LMapChoice",
+        "source": {
+          "path": "downloads/acnh_additional_romfs_2026-11-02/romfs/Layout/LMapChoice.Nin_NX_NVN.zs",
+          "bytes": 3210,
+          "sha256": "d53a3adecc2b6a30586f46fa62b3a59dee533110d70e9ccf3c69b68cb6108cc1"
+        },
+        "members": [
+          {
+            "name": "timg/__Combined.bntx",
+            "sha256": "6cc500513685c399c42dc3ec3cdf8f68c8a2611aa76af3afeb3bd203da2648b9",
+            "bytes": 8312
+          },
+          {
+            "name": "blyt/LMapChoice.bflyt",
+            "sha256": "a4fe91a4abcc2d3bb84e7d88cf3753d14f8bd444be7435ab8bf61b0326a099aa",
+            "bytes": 2496
+          }
+        ]
+      }
+    ]
+  },
+  "generic_capture_subsystem": {
+    "string_xrefs": [
+      {
+        "string_va": "0x2a4cbc3",
+        "analysis_function_va": "0x1343980",
+        "raw_function_va": "0x1243980",
+        "name": "CharaMakeMap"
+      },
+      {
+        "string_va": "0x2a4e6ee",
+        "analysis_function_va": "0x1c625b0",
+        "raw_function_va": "0x1b625b0",
+        "name": "CaptureScale"
+      },
+      {
+        "string_va": "0x2a4e6ee",
+        "analysis_function_va": "0x1c60a80",
+        "raw_function_va": "0x1b60a80",
+        "name": "CaptureScale"
+      },
+      {
+        "string_va": "0x2a53bdf",
+        "analysis_function_va": "0x1c619a0",
+        "raw_function_va": "0x1b619a0",
+        "name": "CapturePaneWork"
+      },
+      {
+        "string_va": "0x2a58b94",
+        "analysis_function_va": "0x1c5d4d0",
+        "raw_function_va": "0x1b5d4d0",
+        "name": "CaptureUseIndex"
+      },
+      {
+        "string_va": "0x2a5de25",
+        "analysis_function_va": "0x1c60a80",
+        "raw_function_va": "0x1b60a80",
+        "name": "CaptureApplyScale"
+      },
+      {
+        "string_va": "0x2a5de25",
+        "analysis_function_va": "0x1c60a40",
+        "raw_function_va": "0x1b60a40",
+        "name": "CaptureApplyScale"
+      },
+      {
+        "string_va": "0x2a5de25",
+        "analysis_function_va": "0x1c60670",
+        "raw_function_va": "0x1b60670",
+        "name": "CaptureApplyScale"
+      },
+      {
+        "string_va": "0x2a5de37",
+        "analysis_function_va": "0x1c620b0",
+        "raw_function_va": "0x1b620b0",
+        "name": "DynamicCaptureOn"
+      },
+      {
+        "string_va": "0x2a62714",
+        "analysis_function_va": "0x1c5dad0",
+        "raw_function_va": "0x1b5dad0",
+        "name": "DynamicCaptureUseIndex"
+      },
+      {
+        "string_va": "0x2a688cf",
+        "analysis_function_va": "0x1eb7e30",
+        "raw_function_va": "0x1db7e30",
+        "name": "*CaptureTarget"
+      },
+      {
+        "string_va": "0x2a89e10",
+        "analysis_function_va": "0x12949a0",
+        "raw_function_va": "0x11949a0",
+        "name": "N_Capture_00"
+      },
+      {
+        "string_va": "0x2a89e10",
+        "analysis_function_va": "0x1447d20",
+        "raw_function_va": "0x1347d20",
+        "name": "N_Capture_00"
+      },
+      {
+        "string_va": "0x2a9588f",
+        "analysis_function_va": "0x1c5dad0",
+        "raw_function_va": "0x1b5dad0",
+        "name": "DynamicCaptureUseName"
+      },
+      {
+        "string_va": "0x2aa2521",
+        "analysis_function_va": "0x1342550",
+        "raw_function_va": "0x1242550",
+        "name": "MapSelectPage"
+      },
+      {
+        "string_va": "0x2aa2521",
+        "analysis_function_va": "0x1342550",
+        "raw_function_va": "0x1242550",
+        "name": "MapSelectPage"
+      },
+      {
+        "string_va": "0x2aa412e",
+        "analysis_function_va": "0x1c5d4d0",
+        "raw_function_va": "0x1b5d4d0",
+        "name": "CaptureUseName"
+      },
+      {
+        "string_va": "0x2aad814",
+        "analysis_function_va": "0x1c625b0",
+        "raw_function_va": "0x1b625b0",
+        "name": "DynamicCaptureScaled"
+      }
+    ],
+    "call_edges": [
+      {
+        "from_va": "0x1b5f810",
+        "pc_va": "0x1b5f830",
+        "target_va": "0x1b5d4d0",
+        "kind": "BL"
+      },
+      {
+        "from_va": "0x1b5f810",
+        "pc_va": "0x1b5f844",
+        "target_va": "0x1b5dad0",
+        "kind": "B"
+      },
+      {
+        "from_va": "0x1cf0fa0",
+        "pc_va": "0x1cf103c",
+        "target_va": "0x1b5d4d0",
+        "kind": "BL"
+      },
+      {
+        "from_va": "0x1cf0fa0",
+        "pc_va": "0x1cf1048",
+        "target_va": "0x1b5dad0",
+        "kind": "BL"
+      },
+      {
+        "from_va": "0x1b625b0",
+        "pc_va": "0x1b6261c",
+        "target_va": "0x1b619a0",
+        "kind": "BL"
+      },
+      {
+        "from_va": "0x1b625b0",
+        "pc_va": "0x1b627ec",
+        "target_va": "0x1b62050",
+        "kind": "BL"
+      }
+    ],
+    "routine_notes": [
+      {
+        "raw_va": "0x1b5f810",
+        "analysis_name": "FUN_01c5f810",
+        "effect": "calls capture-use name/index handler and tail-branches to dynamic capture name/index handler"
+      },
+      {
+        "raw_va": "0x1cf0fa0",
+        "analysis_name": "FUN_01df0fa0",
+        "effect": "recursive pane walker calls both capture-use handlers for visited layout nodes"
+      },
+      {
+        "raw_va": "0x1b620b0",
+        "analysis_name": "FUN_01c620b0",
+        "effect": "constructs capture-work state; string xref DynamicCaptureOn; delegates parsed state to 0x1b62130"
+      },
+      {
+        "raw_va": "0x1b625b0",
+        "analysis_name": "FUN_01c625b0",
+        "effect": "capture-work routine; gated call to 0x1b619a0 and capture-work list update"
+      },
+      {
+        "raw_va": "0x1b619a0",
+        "analysis_name": "FUN_01c619a0",
+        "effect": "CapturePaneWork routine computes output/viewport dimensions and calls generic render/texture helpers"
+      },
+      {
+        "raw_va": "0x1db7e30",
+        "analysis_name": "FUN_01eb7e30",
+        "effect": "graphics object constructor references *CaptureTarget; no page or BFLYT texture join"
+      },
+      {
+        "raw_va": "0x11949a0",
+        "analysis_name": "FUN_012949a0",
+        "effect": "generic helper references pane name N_Capture_00"
+      },
+      {
+        "raw_va": "0x1347d20",
+        "analysis_name": "FUN_01447d20",
+        "effect": "generic helper references pane name N_Capture_00"
+      }
+    ],
+    "semantic_limit": "Names and raw routine edges establish generic capture infrastructure; no output of this subsystem is identified as the CharaMakeMap P_Map_00 texture."
+  },
+  "map_select_page_candidate": {
+    "factory_va": "0x1242550",
+    "constructor_va": "0x12406d0",
+    "vtable_relocation_slot_va": "0x3307b48",
+    "vtable_addresspoint_va": "0x3110b38",
+    "vtable_pointer_entry_count": 79,
+    "layout_getter": {
+      "slot_index": 46,
+      "function_va": "0x1241910",
+      "returned_identifier": "CharaMakeMap"
+    },
+    "layout_consumer": {
+      "function_va": "0x1243980",
+      "string": "CharaMakeMap",
+      "resource_helper_call_va": "0x1243a0c",
+      "resource_helper_target_va": "0xb1aa20"
+    },
+    "request_chain": "UIMapSelectHandling request ID 42/shared singleton state remains separate from this page candidate; see related proof report.",
+    "page_vtable_targets_scanned": [
+      {
+        "va": "0x1241710",
+        "size_bytes": 272,
+        "end_va": "0x124181f",
+        "name": "FUN_01341710"
+      },
+      {
+        "va": "0x1241820",
+        "size_bytes": 108,
+        "end_va": "0x124188b",
+        "name": "FUN_01341820"
+      },
+      {
+        "va": "0x1240730",
+        "size_bytes": 4,
+        "end_va": "0x1240733",
+        "name": "thunk_FUN_0176deb0"
+      },
+      {
+        "va": "0x1240740",
+        "size_bytes": 36,
+        "end_va": "0x1240763",
+        "name": "FUN_01340740"
+      },
+      {
+        "va": "0x1241890",
+        "size_bytes": 116,
+        "end_va": "0x1241903",
+        "name": "FUN_01341890"
+      },
+      {
+        "va": "0x1da5380",
+        "size_bytes": 164,
+        "end_va": "0x1da5423",
+        "name": "FUN_01ea5380"
+      },
+      {
+        "va": "0x1da5430",
+        "size_bytes": 92,
+        "end_va": "0x1da548b",
+        "name": "FUN_01ea5430"
+      },
+      {
+        "va": "0x1da5490",
+        "size_bytes": 128,
+        "end_va": "0x1da550f",
+        "name": "FUN_01ea5490"
+      },
+      {
+        "va": "0x1da5510",
+        "size_bytes": 104,
+        "end_va": "0x1da5577",
+        "name": "FUN_01ea5510"
+      },
+      {
+        "va": "0x1da5580",
+        "size_bytes": 20,
+        "end_va": "0x1da5593",
+        "name": "FUN_01ea5580"
+      },
+      {
+        "va": "0x1da55a0",
+        "size_bytes": 20,
+        "end_va": "0x1da55b3",
+        "name": "FUN_01ea55a0"
+      },
+      {
+        "va": "0x1da55c0",
+        "size_bytes": 92,
+        "end_va": "0x1da561b",
+        "name": "FUN_01ea55c0"
+      },
+      {
+        "va": "0x1da5620",
+        "size_bytes": 88,
+        "end_va": "0x1da5677",
+        "name": "FUN_01ea5620"
+      },
+      {
+        "va": "0x1da5710",
+        "size_bytes": 92,
+        "end_va": "0x1da576b",
+        "name": "FUN_01ea5710"
+      },
+      {
+        "va": "0x1da5680",
+        "size_bytes": 132,
+        "end_va": "0x1da5703",
+        "name": "FUN_01ea5680"
+      },
+      {
+        "va": "0x1da5780",
+        "size_bytes": 220,
+        "end_va": "0x1da585b",
+        "name": "FUN_01ea5780"
+      },
+      {
+        "va": "0x166ec60",
+        "size_bytes": 12,
+        "end_va": "0x166ec6b",
+        "name": "FUN_0176ec60"
+      },
+      {
+        "va": "0x166ec70",
+        "size_bytes": 12,
+        "end_va": "0x166ec7b",
+        "name": "FUN_0176ec70"
+      },
+      {
+        "va": "0x166ec80",
+        "size_bytes": 12,
+        "end_va": "0x166ec8b",
+        "name": "FUN_0176ec80"
+      },
+      {
+        "va": "0x166ec90",
+        "size_bytes": 12,
+        "end_va": "0x166ec9b",
+        "name": "FUN_0176ec90"
+      },
+      {
+        "va": "0x166eca0",
+        "size_bytes": 76,
+        "end_va": "0x166eceb",
+        "name": "FUN_0176eca0"
+      },
+      {
+        "va": "0x166ecf0",
+        "size_bytes": 12,
+        "end_va": "0x166ecfb",
+        "name": "FUN_0176ecf0"
+      },
+      {
+        "va": "0x166ed00",
+        "size_bytes": 12,
+        "end_va": "0x166ed0b",
+        "name": "FUN_0176ed00"
+      },
+      {
+        "va": "0x166eb30",
+        "size_bytes": 144,
+        "end_va": "0x166ebbf",
+        "name": "FUN_0176eb30"
+      },
+      {
+        "va": "0x166ebc0",
+        "size_bytes": 148,
+        "end_va": "0x166ec53",
+        "name": "FUN_0176ebc0"
+      },
+      {
+        "va": "0x1240810",
+        "size_bytes": 1240,
+        "end_va": "0x1240ce7",
+        "name": "FUN_01340810"
+      },
+      {
+        "va": "0x11451b0",
+        "size_bytes": 172,
+        "end_va": "0x114525b",
+        "name": "FUN_012451b0"
+      },
+      {
+        "va": "0x1145020",
+        "size_bytes": 212,
+        "end_va": "0x11450f3",
+        "name": "FUN_01245020"
+      },
+      {
+        "va": "0x1145100",
+        "size_bytes": 168,
+        "end_va": "0x11451a7",
+        "name": "FUN_01245100"
+      },
+      {
+        "va": "0x1129af0",
+        "size_bytes": 4,
+        "end_va": "0x1129af3",
+        "name": "FUN_01229af0"
+      },
+      {
+        "va": "0x1144dc0",
+        "size_bytes": 88,
+        "end_va": "0x1144e17",
+        "name": "FUN_01244dc0"
+      },
+      {
+        "va": "0x1129b00",
+        "size_bytes": 4,
+        "end_va": "0x1129b03",
+        "name": "FUN_01229b00"
+      },
+      {
+        "va": "0x1129b10",
+        "size_bytes": 4,
+        "end_va": "0x1129b13",
+        "name": "FUN_01229b10"
+      },
+      {
+        "va": "0x1129b20",
+        "size_bytes": 4,
+        "end_va": "0x1129b23",
+        "name": "FUN_01229b20"
+      },
+      {
+        "va": "0x1144e20",
+        "size_bytes": 4,
+        "end_va": "0x1144e23",
+        "name": "FUN_01244e20"
+      },
+      {
+        "va": "0x1145260",
+        "size_bytes": 160,
+        "end_va": "0x11452ff",
+        "name": "FUN_01245260"
+      },
+      {
+        "va": "0x11446c0",
+        "size_bytes": 32,
+        "end_va": "0x11446df",
+        "name": "FUN_012446c0"
+      },
+      {
+        "va": "0x1144700",
+        "size_bytes": 32,
+        "end_va": "0x114471f",
+        "name": "FUN_01244700"
+      },
+      {
+        "va": "0x1129b30",
+        "size_bytes": 4,
+        "end_va": "0x1129b33",
+        "name": "FUN_01229b30"
+      },
+      {
+        "va": "0x1144740",
+        "size_bytes": 28,
+        "end_va": "0x114475b",
+        "name": "FUN_01244740"
+      },
+      {
+        "va": "0x1144760",
+        "size_bytes": 28,
+        "end_va": "0x114477b",
+        "name": "FUN_01244760"
+      },
+      {
+        "va": "0x1144780",
+        "size_bytes": 28,
+        "end_va": "0x114479b",
+        "name": "FUN_01244780"
+      },
+      {
+        "va": "0x11447a0",
+        "size_bytes": 28,
+        "end_va": "0x11447bb",
+        "name": "FUN_012447a0"
+      },
+      {
+        "va": "0x1129b40",
+        "size_bytes": 8,
+        "end_va": "0x1129b47",
+        "name": "FUN_01229b40"
+      },
+      {
+        "va": "0x1129b50",
+        "size_bytes": 8,
+        "end_va": "0x1129b57",
+        "name": "FUN_01229b50"
+      },
+      {
+        "va": "0x1129b60",
+        "size_bytes": 12,
+        "end_va": "0x1129b6b",
+        "name": "FUN_01229b60"
+      },
+      {
+        "va": "0x1241910",
+        "size_bytes": 12,
+        "end_va": "0x124191b",
+        "name": "FUN_01341910"
+      },
+      {
+        "va": "0x1129b80",
+        "size_bytes": 8,
+        "end_va": "0x1129b87",
+        "name": "FUN_01229b80"
+      },
+      {
+        "va": "0x1129b90",
+        "size_bytes": 8,
+        "end_va": "0x1129b97",
+        "name": "FUN_01229b90"
+      },
+      {
+        "va": "0x1136250",
+        "size_bytes": 8,
+        "end_va": "0x1136257",
+        "name": "FUN_01236250"
+      },
+      {
+        "va": "0x1129ba0",
+        "size_bytes": 8,
+        "end_va": "0x1129ba7",
+        "name": "FUN_01229ba0"
+      },
+      {
+        "va": "0x1129bb0",
+        "size_bytes": 8,
+        "end_va": "0x1129bb7",
+        "name": "FUN_01229bb0"
+      },
+      {
+        "va": "0x1144e30",
+        "size_bytes": 496,
+        "end_va": "0x114501f",
+        "name": "FUN_01244e30"
+      },
+      {
+        "va": "0x1129bc0",
+        "size_bytes": 8,
+        "end_va": "0x1129bc7",
+        "name": "FUN_01229bc0"
+      },
+      {
+        "va": "0x1136260",
+        "size_bytes": 8,
+        "end_va": "0x1136267",
+        "name": "FUN_01236260"
+      },
+      {
+        "va": "0x166ee70",
+        "size_bytes": 116,
+        "end_va": "0x166eee3",
+        "name": "FUN_0176ee70"
+      },
+      {
+        "va": "0x1129bd0",
+        "size_bytes": 4,
+        "end_va": "0x1129bd3",
+        "name": "FUN_01229bd0"
+      },
+      {
+        "va": "0x1129be0",
+        "size_bytes": 8,
+        "end_va": "0x1129be7",
+        "name": "FUN_01229be0"
+      },
+      {
+        "va": "0x1145320",
+        "size_bytes": 48,
+        "end_va": "0x114534f",
+        "name": "FUN_01245320"
+      },
+      {
+        "va": "0x166eef0",
+        "size_bytes": 88,
+        "end_va": "0x166ef47",
+        "name": "FUN_0176eef0"
+      },
+      {
+        "va": "0x1129bf0",
+        "size_bytes": 4,
+        "end_va": "0x1129bf3",
+        "name": "FUN_01229bf0"
+      },
+      {
+        "va": "0x1129c00",
+        "size_bytes": 8,
+        "end_va": "0x1129c07",
+        "name": "FUN_01229c00"
+      },
+      {
+        "va": "0x1129c10",
+        "size_bytes": 4,
+        "end_va": "0x1129c13",
+        "name": "FUN_01229c10"
+      },
+      {
+        "va": "0x166ef50",
+        "size_bytes": 44,
+        "end_va": "0x166ef7b",
+        "name": "FUN_0176ef50"
+      },
+      {
+        "va": "0x166f390",
+        "size_bytes": 44,
+        "end_va": "0x166f3bb",
+        "name": "FUN_0176f390"
+      },
+      {
+        "va": "0x166f490",
+        "size_bytes": 8,
+        "end_va": "0x166f497",
+        "name": "FUN_0176f490"
+      },
+      {
+        "va": "0x1129c20",
+        "size_bytes": 4,
+        "end_va": "0x1129c23",
+        "name": "FUN_01229c20"
+      },
+      {
+        "va": "0x1129c30",
+        "size_bytes": 8,
+        "end_va": "0x1129c37",
+        "name": "FUN_01229c30"
+      },
+      {
+        "va": "0x1129c40",
+        "size_bytes": 4,
+        "end_va": "0x1129c43",
+        "name": "FUN_01229c40"
+      },
+      {
+        "va": "0x166f670",
+        "size_bytes": 40,
+        "end_va": "0x166f697",
+        "name": "FUN_0176f670"
+      },
+      {
+        "va": "0x1129c50",
+        "size_bytes": 4,
+        "end_va": "0x1129c53",
+        "name": "FUN_01229c50"
+      },
+      {
+        "va": "0x1129c60",
+        "size_bytes": 8,
+        "end_va": "0x1129c67",
+        "name": "FUN_01229c60"
+      },
+      {
+        "va": "0x1129c70",
+        "size_bytes": 4,
+        "end_va": "0x1129c73",
+        "name": "FUN_01229c70"
+      },
+      {
+        "va": "0x166f960",
+        "size_bytes": 208,
+        "end_va": "0x166fa2f",
+        "name": "FUN_0176f960"
+      },
+      {
+        "va": "0x11446e0",
+        "size_bytes": 32,
+        "end_va": "0x11446ff",
+        "name": "FUN_012446e0"
+      },
+      {
+        "va": "0x1144720",
+        "size_bytes": 32,
+        "end_va": "0x114473f",
+        "name": "FUN_01244720"
+      },
+      {
+        "va": "0x1129c80",
+        "size_bytes": 8,
+        "end_va": "0x1129c87",
+        "name": "FUN_01229c80"
+      },
+      {
+        "va": "0x12416d0",
+        "size_bytes": 52,
+        "end_va": "0x1241703",
+        "name": "FUN_013416d0"
+      },
+      {
+        "va": "0x1129c90",
+        "size_bytes": 8,
+        "end_va": "0x1129c97",
+        "name": "FUN_01229c90"
+      }
+    ],
+    "layout_identity_is_not_runtime_open_proof": true
+  },
+  "bounded_direct_branch_scan": {
+    "code_segment": {
+      "path": "acnh-re/work/exefs_modules/main/0.bin",
+      "va_base": "0x0",
+      "sha256": "9c9b45d8e7a58706ca59e7244b3aebac2325ef98faa205e007974eeeb2f758e9",
+      "bytes": 35723872
+    },
+    "decoder": "For each aligned 32-bit word in the exact indexed function extent, accept AArch64 B/BL immediate opcode ((word & 0x7c000000) == 0x14000000), sign-extend imm26 and compute PC + (imm26 << 2).",
+    "page_side": {
+      "function_count": 82,
+      "basis": "all 79 MapSelectPage pointer-sequence targets with raw extents, plus factory 0x1242550, constructor 0x12406d0, layout consumer 0x1243980",
+      "capture_targets_checked": [
+        "0x1b5d4d0",
+        "0x1b5dad0",
+        "0x1b5f810",
+        "0x1b61590",
+        "0x1b619a0",
+        "0x1b620b0",
+        "0x1b625b0",
+        "0x1cf0fa0",
+        "0x1db7e30"
+      ],
+      "direct_branch_hits": []
+    },
+    "reverse_side": {
+      "capture_function_count": 9,
+      "capture_functions": [
+        {
+          "va": "0x1b5f810",
+          "size_bytes": 56,
+          "end_va": "0x1b5f847",
+          "name": "FUN_01c5f810"
+        },
+        {
+          "va": "0x1b5d4d0",
+          "size_bytes": 520,
+          "end_va": "0x1b5d6d7",
+          "name": "FUN_01c5d4d0"
+        },
+        {
+          "va": "0x1b5dad0",
+          "size_bytes": 660,
+          "end_va": "0x1b5dd63",
+          "name": "FUN_01c5dad0"
+        },
+        {
+          "va": "0x1b619a0",
+          "size_bytes": 1424,
+          "end_va": "0x1b61f2f",
+          "name": "FUN_01c619a0"
+        },
+        {
+          "va": "0x1b620b0",
+          "size_bytes": 120,
+          "end_va": "0x1b62127",
+          "name": "FUN_01c620b0"
+        },
+        {
+          "va": "0x1b625b0",
+          "size_bytes": 620,
+          "end_va": "0x1b6281b",
+          "name": "FUN_01c625b0"
+        },
+        {
+          "va": "0x1cf0fa0",
+          "size_bytes": 448,
+          "end_va": "0x1cf115f",
+          "name": "FUN_01df0fa0"
+        },
+        {
+          "va": "0x1db7e30",
+          "size_bytes": 488,
+          "end_va": "0x1db8017",
+          "name": "FUN_01eb7e30"
+        },
+        {
+          "va": "0x1b61590",
+          "size_bytes": 1032,
+          "end_va": "0x1b61997",
+          "name": "FUN_01c61590"
+        }
+      ],
+      "map_page_targets_checked": 82,
+      "direct_branch_hits": []
+    },
+    "negative_scope": "Direct B/BL immediate branches within indexed main.elf function extents only. This does not exclude virtual dispatch, runtime registry/state, data-driven selection, common UI traversal, omitted modules, or a live render path."
+  },
+  "selection_join": {
+    "proven_prior_edges": [
+      "four card panes share the same child layout",
+      "registration candidate IDs are dynamically sampled without replacement",
+      "selected option result is consumed by cVillage and stores MainFieldParamUniqueID in in-memory SaveMainField"
+    ],
+    "open_edges": [
+      "MapSelectPage request-state producer/instance join",
+      "card pane index to a particular sampled UniqueID",
+      "DynamicCaptureOn/UseName/UseIndex/CaptureTarget state to P_Map_00 Capture^t",
+      "runtime capture content/pixels",
+      "selected UID to preset/seed/world initialization and durable save"
+    ]
+  },
+  "conversion_recipe": {
+    "layout": "Decompress .zs -> parse outer SARC -> parse nested SARC -> parse BFLYT -> preserve pane/part/material/texture references, size, alpha and order.",
+    "texture": "Parse embedded BNTX -> decode mip 0/layer 0 with recorded channel mapping -> PNG; retain original .zs/BNTX hashes, texture format/dimensions and PNG hash.",
+    "asset_policy": "Model/audio are catalogue-only per user instruction; this trace covers only the registration UI texture/layout source."
+  },
+  "related_reports": [
+    {
+      "path": "acnh-re/docs/REGISTRATION_CHARAMAKEMAP_CARD_ASSET_TRACE_20261107.md",
+      "status": "static card structure and conversion provenance; source archives unversioned"
+    },
+    {
+      "path": "acnh-re/docs/MAP_SELECT_PAGE_BINDING_NATIVE_20261107.md",
+      "status": "request ID 42 and separate MapSelectPage/CharaMakeMap candidate"
+    },
+    {
+      "path": "acnh-re/docs/REGISTRATION_TERRAIN_OPTION_SAVE_JOIN_FOLLOWUP_20261107.md",
+      "status": "selected cVillage result to in-memory SaveMainField UID; card mapping open"
+    },
+    {
+      "path": "acnh-re/docs/REGISTRATION_TERRAIN_RNG_POOL_FOLLOWUP_20261107.md",
+      "status": "four candidate UID sampling logic; runtime pool and page-card identity open"
+    }
+  ],
+  "evidence_files": [
+    {
+      "workspace_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/A_logic/main.elf",
+      "sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+      "bytes": 53729580
+    },
+    {
+      "workspace_path": "/workspace/acnh-re/inputs/additional_exefs/main",
+      "sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+      "bytes": 24990531
+    },
+    {
+      "workspace_path": "/workspace/acnh-re/work/exefs_modules/main/0.bin",
+      "sha256": "9c9b45d8e7a58706ca59e7244b3aebac2325ef98faa205e007974eeeb2f758e9",
+      "bytes": 35723872
+    },
+    {
+      "workspace_path": "/workspace/acnh-re/output/binary/analyzed_functions.tsv",
+      "sha256": "38455b8aaef240037d2f45d53db9b4a1473dfd938cb52d5e6e0087a2ba26b288",
+      "bytes": 6138583
+    },
+    {
+      "workspace_path": "/workspace/acnh-re/output/binary/code_pointer_arrays.json",
+      "sha256": "64d474068ca289f9146f7f32e6647a16a05e8f5be8e635615a478744b62ef822",
+      "bytes": 11768450
+    },
+    {
+      "workspace_path": "/workspace/analysis/acnh/project/generated/re/string_refs.tsv",
+      "sha256": "d65df09399b7300ebf3ac54ccdd79ca192433421210cd82b22d5dd91dce602cf",
+      "bytes": 1325528
+    },
+    {
+      "workspace_path": "/workspace/acnh-re/output/binary/analysis_decomp/1b5f810.c",
+      "sha256": "03f3abe8cda561ecc31e8d7b5ed34c5f21666d5bfb13470730e8335ca867b93f",
+      "bytes": 158
+    },
+    {
+      "workspace_path": "/workspace/acnh-re/output/binary/analysis_decomp/1b5d4d0.c",
+      "sha256": "a49bc6f2ec7608ee4b00ace6c567525f3f07055930a6f28181e8d07a316aaad5",
+      "bytes": 2276
+    },
+    {
+      "workspace_path": "/workspace/acnh-re/output/binary/analysis_decomp/1b5dad0.c",
+      "sha256": "d58431e2de13cd2ec3e164a450784b9956f1b17b2a277e51aaf843fdf45100e7",
+      "bytes": 2870
+    },
+    {
+      "workspace_path": "/workspace/acnh-re/output/binary/analysis_decomp/1b61590.c",
+      "sha256": "c4cbcc7c222b0e119b71443185da514e442bcc97d26f1066f6d3c79fa49b589c",
+      "bytes": 6482
+    },
+    {
+      "workspace_path": "/workspace/acnh-re/output/binary/analysis_decomp/1b619a0.c",
+      "sha256": "bc4c764a8e3487eded24ba349db84d0290d33c1706c0449847e62ad5dde6dd00",
+      "bytes": 8163
+    },
+    {
+      "workspace_path": "/workspace/acnh-re/output/binary/analysis_decomp/1b620b0.c",
+      "sha256": "ec29ffea49a1a315714f4678dd2b9f0f992da1246d93ee25076464ade430db55",
+      "bytes": 608
+    },
+    {
+      "workspace_path": "/workspace/acnh-re/output/binary/analysis_decomp/1b625b0.c",
+      "sha256": "04789b072d93de5e620ad3bf107dcde23115ac5ef27e33582c909a2f95cbc3cb",
+      "bytes": 3699
+    },
+    {
+      "workspace_path": "/workspace/acnh-re/output/binary/analysis_decomp/1cf0fa0.c",
+      "sha256": "17fbb63f56a97f735951924b6549bfae55979ebb74a1d542a1a8ac3ea3a3b51f",
+      "bytes": 1567
+    },
+    {
+      "workspace_path": "/workspace/acnh-re/output/binary/analysis_decomp/1db7e30.c",
+      "sha256": "bd542257cbdff7592ebff242cc777adc836755aeb1ce847db082105d0e539237",
+      "bytes": 2706
+    },
+    {
+      "workspace_path": "/workspace/acnh-re/output/binary/analysis_decomp/1242550.c",
+      "sha256": "cfa5349e8b02a96d0877e528f08f15601ddca4eab735ddb1ffaa37332c16c8f9",
+      "bytes": 955
+    },
+    {
+      "workspace_path": "/workspace/acnh-re/output/binary/analysis_decomp/12406d0.c",
+      "sha256": "595738518c12e33ba9d480d6d5e728ce3c9280c8087d1dc8fe82effeaeb19807",
+      "bytes": 354
+    },
+    {
+      "workspace_path": "/workspace/acnh-re/output/binary/analysis_decomp/1243980.c",
+      "sha256": "2a7adac8e5238348cd7b2cd4bded49f6adeb280f642de1606a3028b76839f28d",
+      "bytes": 950
+    },
+    {
+      "workspace_path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Layout/CharaMakeMap.Nin_NX_NVN.zs",
+      "sha256": "873d26ca41ba4b982cc96b55daf68adcdc657099be50626266615b3a9f2b6700",
+      "bytes": 53194
+    },
+    {
+      "workspace_path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Layout/LCharaMakeMapBtn.Nin_NX_NVN.zs",
+      "sha256": "04bb82e3cbd7c02109af61f3d76731b1188d32e6d748a044ccb78c5ce397fb34",
+      "bytes": 43866
+    },
+    {
+      "workspace_path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Layout/LMapChoice.Nin_NX_NVN.zs",
+      "sha256": "d53a3adecc2b6a30586f46fa62b3a59dee533110d70e9ccf3c69b68cb6108cc1",
+      "bytes": 3210
+    },
+    {
+      "workspace_path": "/workspace/analysis/acnh/CharaMakeMap_asset_trace/converted_layouts/CharaMakeMap/CharaMakeMap.json",
+      "sha256": "3dd2227c8f388b95536e32243dd427a1054d1a606630eddea0af828bf39a2b6e",
+      "bytes": 7651
+    },
+    {
+      "workspace_path": "/workspace/analysis/acnh/CharaMakeMap_asset_trace/converted_layouts/LCharaMakeMapBtn/LCharaMakeMapBtn.json",
+      "sha256": "70064f61470b74b4ae7c1bfc9264b91773d4e8076940c0050f874145edd30d05",
+      "bytes": 8054
+    },
+    {
+      "workspace_path": "/workspace/analysis/acnh/CharaMakeMap_asset_trace/converted_layouts/LMapChoice/LMapChoice.json",
+      "sha256": "08fc60a5f16943f51a37c391130209ea8844d800627ed95b5f2b23bae68a0a60",
+      "bytes": 2688
+    },
+    {
+      "workspace_path": "/workspace/analysis/acnh/CharaMakeMap_asset_trace/converted_textures/LMapChoice/Capture^t.png",
+      "sha256": "58014df8c2e6a72b5323bfbb0a565ffb403ce1008215afbda789624c5b0f9ea7",
+      "bytes": 78
+    },
+    {
+      "workspace_path": "/workspace/acnh-re-github/acnh-re/docs/REGISTRATION_CHARAMAKEMAP_CARD_ASSET_TRACE_20261107.md",
+      "sha256": "1f7644a26b580f6e233ae57262e7f0bca12592afe1a5c447360545b5307a9013",
+      "bytes": 12085
+    },
+    {
+      "workspace_path": "/workspace/acnh-re-github/acnh-re/output/gameplay/registration_charamakemap_card_asset_trace_20261107.json",
+      "sha256": "0403a258a7db8e9414486895e1afdce7df46649e35556c92726bab9d58ed46c8",
+      "bytes": 122909
+    },
+    {
+      "workspace_path": "/workspace/acnh-re-github/acnh-re/docs/MAP_SELECT_PAGE_BINDING_NATIVE_20261107.md",
+      "sha256": "317aa1a129e3215d6fc5de8c28f1e3bfd8f77ede3380608bd93342cc30ac27c8",
+      "bytes": 8095
+    },
+    {
+      "workspace_path": "/workspace/acnh-re-github/acnh-re/output/ui_island/map_select_page_binding_native_20261107.json",
+      "sha256": "5f5b38f2ab56d65c0473d17ed730cbf76e0d2c669ca28cfb75d03b51ea105b13",
+      "bytes": 12119
+    },
+    {
+      "workspace_path": "/workspace/acnh-re-github/acnh-re/docs/REGISTRATION_TERRAIN_OPTION_SAVE_JOIN_FOLLOWUP_20261107.md",
+      "sha256": "a5ce879db21c2da002a9ec24a79f9b94ea12c1b67aa62ee5713dd30514898b23",
+      "bytes": 9822
+    },
+    {
+      "workspace_path": "/workspace/acnh-re-github/acnh-re/output/gameplay/registration_terrain_option_save_join_followup_20261107.json",
+      "sha256": "a41a0f45afba4e65874a81cc454ec9aede89c6a4e0ca372c472ed8270a4fa59d",
+      "bytes": 12426
+    },
+    {
+      "workspace_path": "/workspace/acnh-re-github/acnh-re/docs/REGISTRATION_TERRAIN_RNG_POOL_FOLLOWUP_20261107.md",
+      "sha256": "7e43254e990a22a79b0f0f7723f9122664f8f0225f5918b4d62aeb5c04298a7f",
+      "bytes": 8224
+    },
+    {
+      "workspace_path": "/workspace/acnh-re-github/acnh-re/output/gameplay/registration_terrain_rng_pool_followup_20261107.json",
+      "sha256": "1ca73cb509ea4dad94a03703b10f849cd8699c150f80c1e5b6f5e3ffa6631da2",
+      "bytes": 9996
+    }
+  ],
+  "report": "acnh-re/docs/MAP_PREVIEW_CAPTURE_PROVIDER_BOUNDARY_FOLLOWUP_20261107.md"
+}
