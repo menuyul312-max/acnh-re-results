@@ -1,0 +1,1993 @@
+{
+  "schema": "acnh-island-designer-edit-loop/1",
+  "title": "Island Designer edit/apply path, ACNH 1.0.0",
+  "scope": {
+    "question": "Trace post-unlock FieldMakeToolKit into edit validation, grid mutation, cancel/undo/apply, and save/day state.",
+    "method": "Bounded static analysis of supplied 1.0.0 ELF/NSO, parsed EventFlow, existing native analysis artifacts, and ROMFS BCSV/asset evidence. No game execution, save execution/mutation, or Godot changes.",
+    "conclusion": "EventFlow and action/error metadata are proven through tool selection. The current-binary join from tool/input state to a LandMaking cell writer and current save serializer remains open; the dump does not support a native edit/apply fixture."
+  },
+  "evidence_files": [
+    {
+      "path": "downloads/ACNH_island_RE/ACNH_island_RE/A_logic/main.elf",
+      "sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74"
+    },
+    {
+      "path": "acnh-re/inputs/additional_exefs/main",
+      "sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900"
+    },
+    {
+      "path": "downloads/ACNH_island_RE/ACNH_island_RE/B_data/EventFlow/Player_ConstructionLicenseApp.bfevfl",
+      "sha256": "d0edd2da56e0d462137601fddf1b09a69305ac58cbf3232d348dabd37db798b4"
+    },
+    {
+      "path": "analysis/acnh/project/generated/eventflow/Player_ConstructionLicenseApp.json",
+      "sha256": "53676c86bccde562fbeb492b3c3d7c3448820a26e91c9c2acaf79c57f21d7288"
+    },
+    {
+      "path": "analysis/acnh/project/generated/re/evfl_vtables.json",
+      "sha256": "f734a9d886d1e004c1abe41f50b3b620380d62eb7b34177008434a1c8cfe472b"
+    },
+    {
+      "path": "analysis/acnh/project/generated/re/string_refs.tsv",
+      "sha256": "d65df09399b7300ebf3ac54ccdd79ca192433421210cd82b22d5dd91dce602cf"
+    },
+    {
+      "path": "analysis/acnh/project/generated/re/bcsv_readers.json",
+      "sha256": "a091f73e97af8c8ee6f03cc77f231de4269dcb17bcf09d09ab85f2f947fc6069"
+    },
+    {
+      "path": "downloads/ACNH_island_RE/ACNH_island_RE/B_data/Bcsv/FieldLandMakingActionParam.bcsv",
+      "sha256": "fe3f06ae6fb26c95631e842cd043a52348ba2c7399fc5d6085ff13dcfed0af9a"
+    },
+    {
+      "path": "acnh-re/output/tables_resolved/FieldLandMakingActionParam.json",
+      "sha256": "7160aa79ddaedb2a4b9012b5f5a99c49a22d4d3aea7bda8b953e733ae5a66a9f"
+    },
+    {
+      "path": "downloads/ACNH_island_RE/ACNH_island_RE/B_data/Bcsv/FieldLandMakingError.bcsv",
+      "sha256": "232d276ed81ab7792b0e64fa6c10e7141702a63434c7e273041557cb0751de23"
+    },
+    {
+      "path": "acnh-re/output/tables_resolved/FieldLandMakingError.json",
+      "sha256": "cc7ec2edc1ec12907c3d633111f5ea826e25ebfa82ce68f377803a54eddf93ec"
+    },
+    {
+      "path": "downloads/ACNH_island_RE/ACNH_island_RE/B_data/Bcsv/EventFlagsPlayerParam.bcsv",
+      "sha256": "9d14ab9d9f78bd72c7b4d43a0db2cc3ff98a4608d3763d9b6f403b0815f5603e"
+    },
+    {
+      "path": "acnh-re/output/tables_resolved/EventFlagsPlayerParam.json",
+      "sha256": "964aad3dead62ffc74b8a8c8667f85cb70fa00706acf909892bbbbb85e1c1a3c"
+    },
+    {
+      "path": "acnh-re/output/gameplay/flow_index.json",
+      "sha256": "359f3a21a17a116902b0c8e1110c3892814b6fccbeb50b71d573c8ab3e1c68c5"
+    },
+    {
+      "path": "acnh-re/output/mechanics/terrain_native.json",
+      "sha256": "5455972cdd105edb69b435aa8199124f9781c4b0cb0eaa32044029d6f0b10cd6"
+    },
+    {
+      "path": "acnh-re/output/mechanics/terrain_region_check_native.json",
+      "sha256": "38dfb5984bdcdd15edd8d0c4fd890ed18ff40c541f3228a0a27adf90f838d1b9"
+    },
+    {
+      "path": "acnh-re/output/mechanics/terrain_region_mutation_native.json",
+      "sha256": "e0f9a21baba5fac787810e05b6506b66f43096d19833bcf1923dfa8cfa9e77a3"
+    },
+    {
+      "path": "acnh-re/output/gameplay/save_layout.json",
+      "sha256": "a326c84213faad1921bd7660c3e171a7b3af117ec55e2ca711a871ad637e51dc"
+    },
+    {
+      "path": "acnh-re/tools/external/CylindricalEarth/save_keys.json",
+      "sha256": "3f2ab3880074cbe416f2ea87c0a697d319c2346497651ca168885ae2d0b11ddc"
+    },
+    {
+      "path": "acnh-re/output/ui_island/island_template_selector_native.json",
+      "sha256": "aa0278ccc87b010d0205b0766c7911ae4c6ee9b8d2a42552eedbab0c382c02c1"
+    },
+    {
+      "path": "acnh-parallel/water_terrain/acnh-re/output/ui_island/manifests_pbc_audit.json",
+      "sha256": "0245d3353d94685c8be8aae73a38a6353ad901de6fb24f31f019786978f5d161"
+    },
+    {
+      "path": "acnh-parallel/water_terrain/acnh-re/docs/ISLAND_WATER_TERRAFORM_FOLLOWUP.md",
+      "sha256": "72387e9f66987745b29c2e8062b65b7a0b2203eec251ea7c403343445dfcf7b1"
+    },
+    {
+      "path": "acnh-parallel/water_terrain/acnh-re/docs/re_queue.json",
+      "sha256": "b37c013fe9e2b996480c9eb6c0d1ec9a82c563abab38951031cb597594f5a94f"
+    }
+  ],
+  "eventflow": {
+    "source_asset": "downloads/ACNH_island_RE/ACNH_island_RE/B_data/EventFlow/Player_ConstructionLicenseApp.bfevfl",
+    "source_sha256": "d0edd2da56e0d462137601fddf1b09a69305ac58cbf3232d348dabd37db798b4",
+    "parsed_flow_sha256": "53676c86bccde562fbeb492b3c3d7c3448820a26e91c9c2acaf79c57f21d7288",
+    "app_entry_edges": [
+      {
+        "from": "Root",
+        "event": 30,
+        "to": "Start_Construction",
+        "status": "proven_static",
+        "evidence": "flow_index.json subflow call"
+      },
+      {
+        "from": "Root",
+        "event": 29,
+        "to": "End_Construction",
+        "status": "proven_static",
+        "evidence": "flow_index.json subflow call"
+      },
+      {
+        "from": "Root",
+        "event": 93,
+        "to": "SaveEquipLicense",
+        "status": "proven_static",
+        "evidence": "flow_index.json subflow call"
+      },
+      {
+        "from": "Restart",
+        "events": [
+          29,
+          30,
+          53,
+          54,
+          93,
+          125,
+          126
+        ],
+        "to": [
+          "End_Construction",
+          "Start_Construction",
+          "Construction_Manual",
+          "SaveEquipLicense",
+          "CleanService"
+        ],
+        "status": "proven_static",
+        "evidence": "flow_index.json subflow calls; app navigation only"
+      }
+    ],
+    "start_gate": {
+      "queries": [
+        "EventFlowQuerySystemCheckNowStage(CheckStage=cField)",
+        "EventFlowQueryEventFlagSystemBool(cPlayer:ConstructionWorkToday)",
+        "EventFlowQueryIsSoloPlayController"
+      ],
+      "result": "Start_Construction uses stage/controller and ConstructionWorkToday branches; it sets ConstructionWorkToday and EquipLicenseHelmet on.",
+      "caveat": "ConstructionWorkToday is an app gate. Table reset-policy fields are unresolved and no day-boundary reset writer is joined."
+    },
+    "toolkit_action": {
+      "actor_action": "Player.EventFlowActionPlayerOutfitFieldMakeToolKit",
+      "factory_va": "0x452fb0",
+      "constructor_va": "0x2de340",
+      "vtable_va": "0x3045be8",
+      "vtable_slots": {
+        "enter": "0x2de3f0",
+        "update": "0x2de870",
+        "exit": "0x2de8c0"
+      },
+      "toolkit_selector_events": [
+        {
+          "event": "Event9",
+          "event_index": 9,
+          "parameter": "cOff",
+          "edge_status": "proven_eventflow_action"
+        },
+        {
+          "event": "Event8",
+          "event_index": 8,
+          "parameter": "cCliff",
+          "edge_status": "proven_eventflow_action"
+        },
+        {
+          "event": "Event110",
+          "event_index": 110,
+          "parameter": "cRiver",
+          "edge_status": "proven_eventflow_action"
+        },
+        {
+          "event": "Event112",
+          "event_index": 112,
+          "parameter": "cGround",
+          "edge_status": "proven_eventflow_action"
+        }
+      ],
+      "scope": "Selects cGround/cRiver/cCliff and cOff. The action lifecycle is identified but not joined to a LandMaking cell setter or apply transaction."
+    },
+    "flags": {
+      "Start_Construction_writes": [
+        "cPlayer:EquipLicenseHelmet=1",
+        "cPlayer:ConstructionWorkToday=1",
+        "cPlayer:NoticeAboutLicenseCliff=1 (conditional)",
+        "cPlayer:NoticeAboutLicenseRiver=1 (conditional)"
+      ],
+      "End_Construction_writes": [
+        "cPlayer:EquipLicenseHelmet=0"
+      ],
+      "SaveEquipLicense_writes": [
+        "cPlayer:LastUseLicense=0,1,2,3"
+      ],
+      "ConstructionWorkToday_table_row": {
+        "DefaultValue": 0,
+        "MaxValue": 1,
+        "UniqueID": 523,
+        "FlagsFlowAccess": 2,
+        "Name": "工事ライセンス|説明を見た",
+        "Key": "ConstructionWorkToday",
+        "h_5140e4b4": 0,
+        "h_bed25a86": 1,
+        "SendPlayReport": 1
+      }
+    },
+    "eventflow_negative": "Parsed Player_ConstructionLicenseApp has no dedicated Apply, Commit, Undo, or Cancel entry. It has Restart and End_Construction; these govern app/toolkit flow and do not establish map rollback or commit."
+  },
+  "native_edges": {
+    "string_xrefs": [
+      {
+        "string_va": "0x2a260e8",
+        "xref_function_va": "0xf4a500",
+        "literal": "PlayerRiverMakerFallBury",
+        "edge_status": "string_xref_only"
+      },
+      {
+        "string_va": "0x2a2f53f",
+        "xref_function_va": "0xed9a60",
+        "literal": "State::cRiverMakerBury",
+        "edge_status": "string_xref_only"
+      },
+      {
+        "string_va": "0x2a2f640",
+        "xref_function_va": "0xf3b130",
+        "literal": "PlayerCliffMakerActionDelete",
+        "edge_status": "string_xref_only"
+      },
+      {
+        "string_va": "0x2a2f65d",
+        "xref_function_va": "0xf4a500",
+        "literal": "RiverMakerBuryFromSwing",
+        "edge_status": "string_xref_only"
+      },
+      {
+        "string_va": "0x2a427a1",
+        "xref_function_va": "0xed9a60",
+        "literal": "State::cRiverMakerReadyWait",
+        "edge_status": "string_xref_only"
+      },
+      {
+        "string_va": "0x2a4289a",
+        "xref_function_va": "0xf4a500",
+        "literal": "PlayerRiverMakerBury",
+        "edge_status": "string_xref_only"
+      },
+      {
+        "string_va": "0x2a4c628",
+        "xref_function_va": "0xf49b10",
+        "literal": "PlayerRiverMakerDigReadyWait",
+        "edge_status": "string_xref_only"
+      },
+      {
+        "string_va": "0x2a4c628",
+        "xref_function_va": "0xf49530",
+        "literal": "PlayerRiverMakerDigReadyWait",
+        "edge_status": "string_xref_only"
+      },
+      {
+        "string_va": "0x2a56dc4",
+        "xref_function_va": "0xed9a60",
+        "literal": "State::cRiverMakerDig",
+        "edge_status": "string_xref_only"
+      },
+      {
+        "string_va": "0x2a659ea",
+        "xref_function_va": "0xed9a60",
+        "literal": "State::cCliffMakerReady",
+        "edge_status": "string_xref_only"
+      },
+      {
+        "string_va": "0x2a65ab2",
+        "xref_function_va": "0xf39950",
+        "literal": "PlayerCliffMakerNGReady",
+        "edge_status": "string_xref_only"
+      },
+      {
+        "string_va": "0x2a65adb",
+        "xref_function_va": "0xf48e80",
+        "literal": "PlayerRiverMakerNGReady",
+        "edge_status": "string_xref_only"
+      }
+    ],
+    "string_xref_caveat": "Literals/xref PCs show RiverMaker/CliffMaker state/action vocabulary. Xrefs alone do not prove live control flow, row selection, grid write, undo snapshot, or save transaction.",
+    "field_action_parameter_readers": {
+      "h_59485fad": [
+        "0x4f3880"
+      ],
+      "h_ef79de0f": [
+        "0x4f3a40"
+      ],
+      "h_4932f93e": [
+        "0x4f3c00"
+      ],
+      "h_75fee4b0": [
+        "0x4f3dc0"
+      ],
+      "h_0bcf172f": [
+        "0x4f3f80"
+      ],
+      "h_e421a842": [
+        "0x4f4140"
+      ],
+      "h_281f90a8": [
+        "0x4f4300"
+      ],
+      "h_7674c4d6": [
+        "0x4f44c0"
+      ],
+      "h_926d7dd8": [
+        "0x533120"
+      ],
+      "h_f9a37bdc": [
+        "0x533260"
+      ],
+      "h_31450aa2": [
+        "0x532f40"
+      ],
+      "h_7c8e7f81": [
+        "0x532de0"
+      ]
+    },
+    "field_error_threshold_reader": {
+      "table": "FieldLandMakingError",
+      "column_hash": "0b3be609",
+      "inferred_type": "s8",
+      "reader_va": "0xe323e0",
+      "value_load_pc": "0xe325a4",
+      "instruction": "ldrsb",
+      "meaning_bound": "Signed byte used as an error-counter comparison threshold; table values are zero. Does not recover placement error dispatch or geometric checks."
+    },
+    "generic_grid_readers": {
+      "record_stride": 52,
+      "index_rule": "x + width*z",
+      "aggregators": [
+        {
+          "function": "0x187420",
+          "field": "WaterCheck",
+          "rule": "all",
+          "true_source_row": 1,
+          "false_source_row": 0
+        },
+        {
+          "function": "0x1874f0",
+          "field": "PlayerNoEntry",
+          "rule": "any",
+          "true_source_row": 1,
+          "false_source_row": 0
+        },
+        {
+          "function": "0x187610",
+          "field": "WaterCheck",
+          "rule": "exactly_two",
+          "true_source_row": 1,
+          "false_source_row": 0
+        }
+      ],
+      "notes": [
+        "These read reconstructed 52-byte runtime ground records.",
+        "Conversion from 14-byte preset records to runtime records remains open.",
+        "No LandMaking cell writer appears in this proven edge set."
+      ]
+    },
+    "region_helpers": {
+      "predicate_pc": "0x181fa0",
+      "predicate_native_functions": [
+        "0x181fa0",
+        "0x52c950",
+        "0x52c970",
+        "0x52c9b0",
+        "0x52c9e0"
+      ],
+      "mutation_pcs": {
+        "word_bit6_region": "0x181ae0",
+        "word_bit2_region": "0x185c80",
+        "guarded_world_mutator": "0x1637b0",
+        "height_forwarders": [
+          "0x163740",
+          "0x164e90"
+        ],
+        "word_decoder": "0x185e70"
+      },
+      "tested_cases": {
+        "predicate": 216,
+        "mutation": 164,
+        "mismatches": 0
+      },
+      "semantic_bound": "Region predicates/bit mutators and generic world wrappers are not linked to a live editor action or terrain-cell commit."
+    }
+  },
+  "romfs_data": {
+    "FieldLandMakingActionParam": {
+      "romfs_asset": "B_data/Bcsv/FieldLandMakingActionParam.bcsv",
+      "sha256": "fe3f06ae6fb26c95631e842cd043a52348ba2c7399fc5d6085ff13dcfed0af9a",
+      "decoded_asset": "acnh-re/output/tables_resolved/FieldLandMakingActionParam.json",
+      "sha256_decoded": "7160aa79ddaedb2a4b9012b5f5a99c49a22d4d3aea7bda8b953e733ae5a66a9f",
+      "row_count": 17,
+      "row_size": 40,
+      "columns": [
+        {
+          "hash": "59485fad",
+          "offset": 4,
+          "width": 4,
+          "name": "ActionRange",
+          "name_evidence": "crc32_exact_descriptor_and_local_schema",
+          "type": "enum_crc32",
+          "type_evidence": "crc32_exact_descriptor",
+          "reference_enum_hash": true,
+          "descriptor": "ActionRange.hshCstringRef",
+          "reference_type": "Enum",
+          "reference_line": 4740,
+          "enum_values": {
+            "6cd0a571": [
+              "1x1",
+              "1x1"
+            ],
+            "815a1033": [
+              "3x3",
+              "3x3"
+            ]
+          },
+          "name_reference": "CylindricalEarth/build_specs.py:preset_names"
+        },
+        {
+          "hash": "ef79de0f",
+          "offset": 8,
+          "width": 4,
+          "name": "Layer",
+          "name_evidence": "crc32_exact_descriptor_and_local_schema",
+          "type": "enum_crc32",
+          "type_evidence": "crc32_exact_descriptor",
+          "reference_enum_hash": false,
+          "descriptor": "Layer.hshCstringRef",
+          "reference_type": "Enum",
+          "reference_line": 4741,
+          "enum_values": {
+            "41f93e1c": [
+              "No0",
+              "レイヤ0"
+            ],
+            "36fe0e8a": [
+              "No1",
+              "レイヤ1"
+            ]
+          },
+          "name_reference": "CylindricalEarth/build_specs.py:preset_names"
+        },
+        {
+          "hash": "4932f93e",
+          "offset": 12,
+          "width": 4,
+          "name": "SuccessResult",
+          "name_evidence": "crc32_exact_descriptor_and_local_schema",
+          "type": "enum_crc32",
+          "type_evidence": "crc32_exact_descriptor",
+          "reference_enum_hash": true,
+          "descriptor": "SuccessResult.hshCstringRef",
+          "reference_type": "Enum",
+          "reference_line": 4742,
+          "enum_values": {
+            "bafed950": [
+              "Make",
+              "Make"
+            ],
+            "cdbd7fde": [
+              "Break",
+              "Break"
+            ]
+          },
+          "name_reference": "CylindricalEarth/build_specs.py:preset_names"
+        },
+        {
+          "hash": "75fee4b0",
+          "offset": 16,
+          "width": 4,
+          "name": "h_75fee4b0",
+          "name_evidence": "unresolved",
+          "type": "enum_crc32",
+          "type_evidence": "reference_inference",
+          "reference_enum_hash": true,
+          "descriptor": null,
+          "reference_type": "Enum",
+          "reference_line": 4743,
+          "enum_values": {
+            "d2f2690f": [
+              "NoChange",
+              "変更なし"
+            ],
+            "0f8a4870": [
+              "AddCliffLevel",
+              "崖レベル加算"
+            ],
+            "0326d94b": [
+              "RemoveHistory",
+              "最終履歴削除"
+            ]
+          }
+        },
+        {
+          "hash": "0bcf172f",
+          "offset": 20,
+          "width": 4,
+          "name": "MeshEdgeDirType",
+          "name_evidence": "crc32_exact_descriptor_and_local_schema",
+          "type": "enum_crc32",
+          "type_evidence": "crc32_exact_descriptor",
+          "reference_enum_hash": true,
+          "descriptor": "MeshEdgeDirType.hshCstringRef",
+          "reference_type": "Enum",
+          "reference_line": 4744,
+          "enum_values": {
+            "b9eed60e": [
+              "RightToSlant",
+              "直角 -> 斜め"
+            ],
+            "75713d58": [
+              "SlantToRight",
+              "斜め -> 直角"
+            ]
+          },
+          "name_reference": "CylindricalEarth/build_specs.py:preset_names"
+        },
+        {
+          "hash": "e421a842",
+          "offset": 24,
+          "width": 4,
+          "name": "PlaneChangeType",
+          "name_evidence": "crc32_exact_descriptor_and_local_schema",
+          "type": "enum_crc32",
+          "type_evidence": "crc32_exact_descriptor",
+          "reference_enum_hash": true,
+          "descriptor": "PlaneChangeType.hshCstringRef",
+          "reference_type": "Enum",
+          "reference_line": 4745,
+          "enum_values": {
+            "d2f2690f": [
+              "NoChange",
+              "変更なし"
+            ],
+            "55f6a679": [
+              "CliffAll",
+              "平地 -> 崖平地"
+            ]
+          },
+          "name_reference": "CylindricalEarth/build_specs.py:preset_names"
+        },
+        {
+          "hash": "281f90a8",
+          "offset": 28,
+          "width": 4,
+          "name": "FallActionType",
+          "name_evidence": "crc32_exact_descriptor_and_local_schema",
+          "type": "enum_crc32",
+          "type_evidence": "crc32_exact_descriptor",
+          "reference_enum_hash": true,
+          "descriptor": "FallActionType.hshCstringRef",
+          "reference_type": "Enum",
+          "reference_line": 4746,
+          "enum_values": {
+            "dfa2aff1": [
+              "None",
+              "なし"
+            ],
+            "b3bce78e": [
+              "MakeFall",
+              "崖 -> 滝"
+            ],
+            "76faff0d": [
+              "BreakFall",
+              "滝 -> 崖"
+            ]
+          },
+          "name_reference": "CylindricalEarth/build_specs.py:preset_names"
+        },
+        {
+          "hash": "7674c4d6",
+          "offset": 32,
+          "width": 4,
+          "name": "h_7674c4d6",
+          "name_evidence": "unresolved",
+          "type": "enum_crc32",
+          "type_evidence": "reference_inference",
+          "reference_enum_hash": true,
+          "descriptor": null,
+          "reference_type": "Enum",
+          "reference_line": 4747,
+          "enum_values": {
+            "dfa2aff1": [
+              "None",
+              "なし"
+            ],
+            "6cd0a571": [
+              "1x1",
+              "1x1"
+            ],
+            "815a1033": [
+              "3x3",
+              "3x3"
+            ]
+          }
+        },
+        {
+          "hash": "926d7dd8",
+          "offset": 36,
+          "width": 1,
+          "name": "UpdateParts",
+          "name_evidence": "crc32_exact_descriptor_and_local_schema",
+          "type": "u8",
+          "type_evidence": "crc32_exact_descriptor",
+          "reference_enum_hash": false,
+          "descriptor": "UpdateParts u8",
+          "reference_type": "U8",
+          "reference_line": 4748,
+          "enum_values": null,
+          "name_reference": "CylindricalEarth/build_specs.py:preset_names"
+        },
+        {
+          "hash": "f9a37bdc",
+          "offset": 37,
+          "width": 1,
+          "name": "FallToRiver",
+          "name_evidence": "crc32_exact_descriptor_and_local_schema",
+          "type": "u8",
+          "type_evidence": "crc32_exact_descriptor",
+          "reference_enum_hash": false,
+          "descriptor": "FallToRiver u8",
+          "reference_type": "U8",
+          "reference_line": 4749,
+          "enum_values": null,
+          "name_reference": "CylindricalEarth/build_specs.py:preset_names"
+        },
+        {
+          "hash": "31450aa2",
+          "offset": 38,
+          "width": 1,
+          "name": "MainType",
+          "name_evidence": "crc32_exact_descriptor_and_local_schema",
+          "type": "u8",
+          "type_evidence": "crc32_exact_descriptor",
+          "reference_enum_hash": false,
+          "descriptor": "MainType u8",
+          "reference_type": "U8",
+          "reference_line": 4750,
+          "enum_values": null,
+          "name_reference": "CylindricalEarth/build_specs.py:preset_names"
+        },
+        {
+          "hash": "7c8e7f81",
+          "offset": 39,
+          "width": 1,
+          "name": "ActionLockRange",
+          "name_evidence": "crc32_exact_descriptor_and_local_schema",
+          "type": "u8",
+          "type_evidence": "crc32_exact_descriptor",
+          "reference_enum_hash": false,
+          "descriptor": "ActionLockRange u8",
+          "reference_type": "U8",
+          "reference_line": 4751,
+          "enum_values": null,
+          "name_reference": "CylindricalEarth/build_specs.py:preset_names"
+        }
+      ],
+      "rows": [
+        {
+          "ActionRange": {
+            "crc32": "6cd0a571",
+            "labels": [
+              "1x1",
+              "1x1"
+            ]
+          },
+          "Layer": {
+            "crc32": "41f93e1c",
+            "labels": [
+              "No0",
+              "レイヤ0"
+            ]
+          },
+          "SuccessResult": {
+            "crc32": "bafed950",
+            "labels": [
+              "Make",
+              "Make"
+            ]
+          },
+          "h_75fee4b0": {
+            "crc32": "d2f2690f",
+            "labels": [
+              "NoChange",
+              "変更なし"
+            ]
+          },
+          "MeshEdgeDirType": {
+            "crc32": "b9eed60e",
+            "labels": [
+              "RightToSlant",
+              "直角 -> 斜め"
+            ]
+          },
+          "PlaneChangeType": {
+            "crc32": "d2f2690f",
+            "labels": [
+              "NoChange",
+              "変更なし"
+            ]
+          },
+          "FallActionType": {
+            "crc32": "dfa2aff1",
+            "labels": [
+              "None",
+              "なし"
+            ]
+          },
+          "h_7674c4d6": {
+            "crc32": "dfa2aff1",
+            "labels": [
+              "None",
+              "なし"
+            ]
+          },
+          "UpdateParts": 0,
+          "FallToRiver": 0,
+          "MainType": 5,
+          "ActionLockRange": 0
+        },
+        {
+          "ActionRange": {
+            "crc32": "815a1033",
+            "labels": [
+              "3x3",
+              "3x3"
+            ]
+          },
+          "Layer": {
+            "crc32": "41f93e1c",
+            "labels": [
+              "No0",
+              "レイヤ0"
+            ]
+          },
+          "SuccessResult": {
+            "crc32": "cdbd7fde",
+            "labels": [
+              "Break",
+              "Break"
+            ]
+          },
+          "h_75fee4b0": {
+            "crc32": "d2f2690f",
+            "labels": [
+              "NoChange",
+              "変更なし"
+            ]
+          },
+          "MeshEdgeDirType": {
+            "crc32": "b9eed60e",
+            "labels": [
+              "RightToSlant",
+              "直角 -> 斜め"
+            ]
+          },
+          "PlaneChangeType": {
+            "crc32": "d2f2690f",
+            "labels": [
+              "NoChange",
+              "変更なし"
+            ]
+          },
+          "FallActionType": {
+            "crc32": "dfa2aff1",
+            "labels": [
+              "None",
+              "なし"
+            ]
+          },
+          "h_7674c4d6": {
+            "crc32": "dfa2aff1",
+            "labels": [
+              "None",
+              "なし"
+            ]
+          },
+          "UpdateParts": 0,
+          "FallToRiver": 1,
+          "MainType": 0,
+          "ActionLockRange": 1
+        },
+        {
+          "ActionRange": {
+            "crc32": "815a1033",
+            "labels": [
+              "3x3",
+              "3x3"
+            ]
+          },
+          "Layer": {
+            "crc32": "41f93e1c",
+            "labels": [
+              "No0",
+              "レイヤ0"
+            ]
+          },
+          "SuccessResult": {
+            "crc32": "bafed950",
+            "labels": [
+              "Make",
+              "Make"
+            ]
+          },
+          "h_75fee4b0": {
+            "crc32": "d2f2690f",
+            "labels": [
+              "NoChange",
+              "変更なし"
+            ]
+          },
+          "MeshEdgeDirType": {
+            "crc32": "b9eed60e",
+            "labels": [
+              "RightToSlant",
+              "直角 -> 斜め"
+            ]
+          },
+          "PlaneChangeType": {
+            "crc32": "d2f2690f",
+            "labels": [
+              "NoChange",
+              "変更なし"
+            ]
+          },
+          "FallActionType": {
+            "crc32": "dfa2aff1",
+            "labels": [
+              "None",
+              "なし"
+            ]
+          },
+          "h_7674c4d6": {
+            "crc32": "6cd0a571",
+            "labels": [
+              "1x1",
+              "1x1"
+            ]
+          },
+          "UpdateParts": 0,
+          "FallToRiver": 1,
+          "MainType": 1,
+          "ActionLockRange": 1
+        },
+        {
+          "ActionRange": {
+            "crc32": "815a1033",
+            "labels": [
+              "3x3",
+              "3x3"
+            ]
+          },
+          "Layer": {
+            "crc32": "36fe0e8a",
+            "labels": [
+              "No1",
+              "レイヤ1"
+            ]
+          },
+          "SuccessResult": {
+            "crc32": "bafed950",
+            "labels": [
+              "Make",
+              "Make"
+            ]
+          },
+          "h_75fee4b0": {
+            "crc32": "d2f2690f",
+            "labels": [
+              "NoChange",
+              "変更なし"
+            ]
+          },
+          "MeshEdgeDirType": {
+            "crc32": "b9eed60e",
+            "labels": [
+              "RightToSlant",
+              "直角 -> 斜め"
+            ]
+          },
+          "PlaneChangeType": {
+            "crc32": "d2f2690f",
+            "labels": [
+              "NoChange",
+              "変更なし"
+            ]
+          },
+          "FallActionType": {
+            "crc32": "dfa2aff1",
+            "labels": [
+              "None",
+              "なし"
+            ]
+          },
+          "h_7674c4d6": {
+            "crc32": "dfa2aff1",
+            "labels": [
+              "None",
+              "なし"
+            ]
+          },
+          "UpdateParts": 0,
+          "FallToRiver": 0,
+          "MainType": 6,
+          "ActionLockRange": 1
+        },
+        {
+          "ActionRange": {
+            "crc32": "815a1033",
+            "labels": [
+              "3x3",
+              "3x3"
+            ]
+          },
+          "Layer": {
+            "crc32": "36fe0e8a",
+            "labels": [
+              "No1",
+              "レイヤ1"
+            ]
+          },
+          "SuccessResult": {
+            "crc32": "bafed950",
+            "labels": [
+              "Make",
+              "Make"
+            ]
+          },
+          "h_75fee4b0": {
+            "crc32": "d2f2690f",
+            "labels": [
+              "NoChange",
+              "変更なし"
+            ]
+          },
+          "MeshEdgeDirType": {
+            "crc32": "b9eed60e",
+            "labels": [
+              "RightToSlant",
+              "直角 -> 斜め"
+            ]
+          },
+          "PlaneChangeType": {
+            "crc32": "d2f2690f",
+            "labels": [
+              "NoChange",
+              "変更なし"
+            ]
+          },
+          "FallActionType": {
+            "crc32": "dfa2aff1",
+            "labels": [
+              "None",
+              "なし"
+            ]
+          },
+          "h_7674c4d6": {
+            "crc32": "6cd0a571",
+            "labels": [
+              "1x1",
+              "1x1"
+            ]
+          },
+          "UpdateParts": 0,
+          "FallToRiver": 0,
+          "MainType": 6,
+          "ActionLockRange": 1
+        },
+        {
+          "ActionRange": {
+            "crc32": "815a1033",
+            "labels": [
+              "3x3",
+              "3x3"
+            ]
+          },
+          "Layer": {
+            "crc32": "36fe0e8a",
+            "labels": [
+              "No1",
+              "レイヤ1"
+            ]
+          },
+          "SuccessResult": {
+            "crc32": "cdbd7fde",
+            "labels": [
+              "Break",
+              "Break"
+            ]
+          },
+          "h_75fee4b0": {
+            "crc32": "d2f2690f",
+            "labels": [
+              "NoChange",
+              "変更なし"
+            ]
+          },
+          "MeshEdgeDirType": {
+            "crc32": "b9eed60e",
+            "labels": [
+              "RightToSlant",
+              "直角 -> 斜め"
+            ]
+          },
+          "PlaneChangeType": {
+            "crc32": "d2f2690f",
+            "labels": [
+              "NoChange",
+              "変更なし"
+            ]
+          },
+          "FallActionType": {
+            "crc32": "dfa2aff1",
+            "labels": [
+              "None",
+              "なし"
+            ]
+          },
+          "h_7674c4d6": {
+            "crc32": "dfa2aff1",
+            "labels": [
+              "None",
+              "なし"
+            ]
+          },
+          "UpdateParts": 0,
+          "FallToRiver": 0,
+          "MainType": 0,
+          "ActionLockRange": 1
+        },
+        {
+          "ActionRange": {
+            "crc32": "815a1033",
+            "labels": [
+              "3x3",
+              "3x3"
+            ]
+          },
+          "Layer": {
+            "crc32": "41f93e1c",
+            "labels": [
+              "No0",
+              "レイヤ0"
+            ]
+          },
+          "SuccessResult": {
+            "crc32": "bafed950",
+            "labels": [
+              "Make",
+              "Make"
+            ]
+          },
+          "h_75fee4b0": {
+            "crc32": "0f8a4870",
+            "labels": [
+              "AddCliffLevel",
+              "崖レベル加算"
+            ]
+          },
+          "MeshEdgeDirType": {
+            "crc32": "b9eed60e",
+            "labels": [
+              "RightToSlant",
+              "直角 -> 斜め"
+            ]
+          },
+          "PlaneChangeType": {
+            "crc32": "55f6a679",
+            "labels": [
+              "CliffAll",
+              "平地 -> 崖平地"
+            ]
+          },
+          "FallActionType": {
+            "crc32": "dfa2aff1",
+            "labels": [
+              "None",
+              "なし"
+            ]
+          },
+          "h_7674c4d6": {
+            "crc32": "6cd0a571",
+            "labels": [
+              "1x1",
+              "1x1"
+            ]
+          },
+          "UpdateParts": 0,
+          "FallToRiver": 0,
+          "MainType": 3,
+          "ActionLockRange": 1
+        },
+        {
+          "ActionRange": {
+            "crc32": "815a1033",
+            "labels": [
+              "3x3",
+              "3x3"
+            ]
+          },
+          "Layer": {
+            "crc32": "41f93e1c",
+            "labels": [
+              "No0",
+              "レイヤ0"
+            ]
+          },
+          "SuccessResult": {
+            "crc32": "cdbd7fde",
+            "labels": [
+              "Break",
+              "Break"
+            ]
+          },
+          "h_75fee4b0": {
+            "crc32": "0326d94b",
+            "labels": [
+              "RemoveHistory",
+              "最終履歴削除"
+            ]
+          },
+          "MeshEdgeDirType": {
+            "crc32": "b9eed60e",
+            "labels": [
+              "RightToSlant",
+              "直角 -> 斜め"
+            ]
+          },
+          "PlaneChangeType": {
+            "crc32": "55f6a679",
+            "labels": [
+              "CliffAll",
+              "平地 -> 崖平地"
+            ]
+          },
+          "FallActionType": {
+            "crc32": "dfa2aff1",
+            "labels": [
+              "None",
+              "なし"
+            ]
+          },
+          "h_7674c4d6": {
+            "crc32": "6cd0a571",
+            "labels": [
+              "1x1",
+              "1x1"
+            ]
+          },
+          "UpdateParts": 0,
+          "FallToRiver": 0,
+          "MainType": 0,
+          "ActionLockRange": 1
+        },
+        {
+          "ActionRange": {
+            "crc32": "815a1033",
+            "labels": [
+              "3x3",
+              "3x3"
+            ]
+          },
+          "Layer": {
+            "crc32": "41f93e1c",
+            "labels": [
+              "No0",
+              "レイヤ0"
+            ]
+          },
+          "SuccessResult": {
+            "crc32": "cdbd7fde",
+            "labels": [
+              "Break",
+              "Break"
+            ]
+          },
+          "h_75fee4b0": {
+            "crc32": "0326d94b",
+            "labels": [
+              "RemoveHistory",
+              "最終履歴削除"
+            ]
+          },
+          "MeshEdgeDirType": {
+            "crc32": "b9eed60e",
+            "labels": [
+              "RightToSlant",
+              "直角 -> 斜め"
+            ]
+          },
+          "PlaneChangeType": {
+            "crc32": "55f6a679",
+            "labels": [
+              "CliffAll",
+              "平地 -> 崖平地"
+            ]
+          },
+          "FallActionType": {
+            "crc32": "dfa2aff1",
+            "labels": [
+              "None",
+              "なし"
+            ]
+          },
+          "h_7674c4d6": {
+            "crc32": "6cd0a571",
+            "labels": [
+              "1x1",
+              "1x1"
+            ]
+          },
+          "UpdateParts": 0,
+          "FallToRiver": 0,
+          "MainType": 0,
+          "ActionLockRange": 1
+        },
+        {
+          "ActionRange": {
+            "crc32": "815a1033",
+            "labels": [
+              "3x3",
+              "3x3"
+            ]
+          },
+          "Layer": {
+            "crc32": "41f93e1c",
+            "labels": [
+              "No0",
+              "レイヤ0"
+            ]
+          },
+          "SuccessResult": {
+            "crc32": "bafed950",
+            "labels": [
+              "Make",
+              "Make"
+            ]
+          },
+          "h_75fee4b0": {
+            "crc32": "d2f2690f",
+            "labels": [
+              "NoChange",
+              "変更なし"
+            ]
+          },
+          "MeshEdgeDirType": {
+            "crc32": "b9eed60e",
+            "labels": [
+              "RightToSlant",
+              "直角 -> 斜め"
+            ]
+          },
+          "PlaneChangeType": {
+            "crc32": "d2f2690f",
+            "labels": [
+              "NoChange",
+              "変更なし"
+            ]
+          },
+          "FallActionType": {
+            "crc32": "b3bce78e",
+            "labels": [
+              "MakeFall",
+              "崖 -> 滝"
+            ]
+          },
+          "h_7674c4d6": {
+            "crc32": "6cd0a571",
+            "labels": [
+              "1x1",
+              "1x1"
+            ]
+          },
+          "UpdateParts": 0,
+          "FallToRiver": 0,
+          "MainType": 1,
+          "ActionLockRange": 1
+        },
+        {
+          "ActionRange": {
+            "crc32": "815a1033",
+            "labels": [
+              "3x3",
+              "3x3"
+            ]
+          },
+          "Layer": {
+            "crc32": "41f93e1c",
+            "labels": [
+              "No0",
+              "レイヤ0"
+            ]
+          },
+          "SuccessResult": {
+            "crc32": "cdbd7fde",
+            "labels": [
+              "Break",
+              "Break"
+            ]
+          },
+          "h_75fee4b0": {
+            "crc32": "d2f2690f",
+            "labels": [
+              "NoChange",
+              "変更なし"
+            ]
+          },
+          "MeshEdgeDirType": {
+            "crc32": "b9eed60e",
+            "labels": [
+              "RightToSlant",
+              "直角 -> 斜め"
+            ]
+          },
+          "PlaneChangeType": {
+            "crc32": "d2f2690f",
+            "labels": [
+              "NoChange",
+              "変更なし"
+            ]
+          },
+          "FallActionType": {
+            "crc32": "76faff0d",
+            "labels": [
+              "BreakFall",
+              "滝 -> 崖"
+            ]
+          },
+          "h_7674c4d6": {
+            "crc32": "dfa2aff1",
+            "labels": [
+              "None",
+              "なし"
+            ]
+          },
+          "UpdateParts": 0,
+          "FallToRiver": 1,
+          "MainType": 3,
+          "ActionLockRange": 1
+        },
+        {
+          "ActionRange": {
+            "crc32": "815a1033",
+            "labels": [
+              "3x3",
+              "3x3"
+            ]
+          },
+          "Layer": {
+            "crc32": "41f93e1c",
+            "labels": [
+              "No0",
+              "レイヤ0"
+            ]
+          },
+          "SuccessResult": {
+            "crc32": "cdbd7fde",
+            "labels": [
+              "Break",
+              "Break"
+            ]
+          },
+          "h_75fee4b0": {
+            "crc32": "d2f2690f",
+            "labels": [
+              "NoChange",
+              "変更なし"
+            ]
+          },
+          "MeshEdgeDirType": {
+            "crc32": "b9eed60e",
+            "labels": [
+              "RightToSlant",
+              "直角 -> 斜め"
+            ]
+          },
+          "PlaneChangeType": {
+            "crc32": "d2f2690f",
+            "labels": [
+              "NoChange",
+              "変更なし"
+            ]
+          },
+          "FallActionType": {
+            "crc32": "dfa2aff1",
+            "labels": [
+              "None",
+              "なし"
+            ]
+          },
+          "h_7674c4d6": {
+            "crc32": "6cd0a571",
+            "labels": [
+              "1x1",
+              "1x1"
+            ]
+          },
+          "UpdateParts": 1,
+          "FallToRiver": 0,
+          "MainType": 0,
+          "ActionLockRange": 1
+        },
+        {
+          "ActionRange": {
+            "crc32": "815a1033",
+            "labels": [
+              "3x3",
+              "3x3"
+            ]
+          },
+          "Layer": {
+            "crc32": "41f93e1c",
+            "labels": [
+              "No0",
+              "レイヤ0"
+            ]
+          },
+          "SuccessResult": {
+            "crc32": "cdbd7fde",
+            "labels": [
+              "Break",
+              "Break"
+            ]
+          },
+          "h_75fee4b0": {
+            "crc32": "d2f2690f",
+            "labels": [
+              "NoChange",
+              "変更なし"
+            ]
+          },
+          "MeshEdgeDirType": {
+            "crc32": "75713d58",
+            "labels": [
+              "SlantToRight",
+              "斜め -> 直角"
+            ]
+          },
+          "PlaneChangeType": {
+            "crc32": "d2f2690f",
+            "labels": [
+              "NoChange",
+              "変更なし"
+            ]
+          },
+          "FallActionType": {
+            "crc32": "dfa2aff1",
+            "labels": [
+              "None",
+              "なし"
+            ]
+          },
+          "h_7674c4d6": {
+            "crc32": "6cd0a571",
+            "labels": [
+              "1x1",
+              "1x1"
+            ]
+          },
+          "UpdateParts": 1,
+          "FallToRiver": 0,
+          "MainType": 0,
+          "ActionLockRange": 1
+        },
+        {
+          "ActionRange": {
+            "crc32": "815a1033",
+            "labels": [
+              "3x3",
+              "3x3"
+            ]
+          },
+          "Layer": {
+            "crc32": "41f93e1c",
+            "labels": [
+              "No0",
+              "レイヤ0"
+            ]
+          },
+          "SuccessResult": {
+            "crc32": "bafed950",
+            "labels": [
+              "Make",
+              "Make"
+            ]
+          },
+          "h_75fee4b0": {
+            "crc32": "d2f2690f",
+            "labels": [
+              "NoChange",
+              "変更なし"
+            ]
+          },
+          "MeshEdgeDirType": {
+            "crc32": "b9eed60e",
+            "labels": [
+              "RightToSlant",
+              "直角 -> 斜め"
+            ]
+          },
+          "PlaneChangeType": {
+            "crc32": "d2f2690f",
+            "labels": [
+              "NoChange",
+              "変更なし"
+            ]
+          },
+          "FallActionType": {
+            "crc32": "dfa2aff1",
+            "labels": [
+              "None",
+              "なし"
+            ]
+          },
+          "h_7674c4d6": {
+            "crc32": "6cd0a571",
+            "labels": [
+              "1x1",
+              "1x1"
+            ]
+          },
+          "UpdateParts": 1,
+          "FallToRiver": 0,
+          "MainType": 0,
+          "ActionLockRange": 1
+        },
+        {
+          "ActionRange": {
+            "crc32": "815a1033",
+            "labels": [
+              "3x3",
+              "3x3"
+            ]
+          },
+          "Layer": {
+            "crc32": "41f93e1c",
+            "labels": [
+              "No0",
+              "レイヤ0"
+            ]
+          },
+          "SuccessResult": {
+            "crc32": "bafed950",
+            "labels": [
+              "Make",
+              "Make"
+            ]
+          },
+          "h_75fee4b0": {
+            "crc32": "d2f2690f",
+            "labels": [
+              "NoChange",
+              "変更なし"
+            ]
+          },
+          "MeshEdgeDirType": {
+            "crc32": "75713d58",
+            "labels": [
+              "SlantToRight",
+              "斜め -> 直角"
+            ]
+          },
+          "PlaneChangeType": {
+            "crc32": "d2f2690f",
+            "labels": [
+              "NoChange",
+              "変更なし"
+            ]
+          },
+          "FallActionType": {
+            "crc32": "dfa2aff1",
+            "labels": [
+              "None",
+              "なし"
+            ]
+          },
+          "h_7674c4d6": {
+            "crc32": "6cd0a571",
+            "labels": [
+              "1x1",
+              "1x1"
+            ]
+          },
+          "UpdateParts": 1,
+          "FallToRiver": 0,
+          "MainType": 0,
+          "ActionLockRange": 1
+        },
+        {
+          "ActionRange": {
+            "crc32": "815a1033",
+            "labels": [
+              "3x3",
+              "3x3"
+            ]
+          },
+          "Layer": {
+            "crc32": "36fe0e8a",
+            "labels": [
+              "No1",
+              "レイヤ1"
+            ]
+          },
+          "SuccessResult": {
+            "crc32": "cdbd7fde",
+            "labels": [
+              "Break",
+              "Break"
+            ]
+          },
+          "h_75fee4b0": {
+            "crc32": "d2f2690f",
+            "labels": [
+              "NoChange",
+              "変更なし"
+            ]
+          },
+          "MeshEdgeDirType": {
+            "crc32": "b9eed60e",
+            "labels": [
+              "RightToSlant",
+              "直角 -> 斜め"
+            ]
+          },
+          "PlaneChangeType": {
+            "crc32": "d2f2690f",
+            "labels": [
+              "NoChange",
+              "変更なし"
+            ]
+          },
+          "FallActionType": {
+            "crc32": "dfa2aff1",
+            "labels": [
+              "None",
+              "なし"
+            ]
+          },
+          "h_7674c4d6": {
+            "crc32": "dfa2aff1",
+            "labels": [
+              "None",
+              "なし"
+            ]
+          },
+          "UpdateParts": 1,
+          "FallToRiver": 0,
+          "MainType": 0,
+          "ActionLockRange": 1
+        },
+        {
+          "ActionRange": {
+            "crc32": "815a1033",
+            "labels": [
+              "3x3",
+              "3x3"
+            ]
+          },
+          "Layer": {
+            "crc32": "36fe0e8a",
+            "labels": [
+              "No1",
+              "レイヤ1"
+            ]
+          },
+          "SuccessResult": {
+            "crc32": "cdbd7fde",
+            "labels": [
+              "Break",
+              "Break"
+            ]
+          },
+          "h_75fee4b0": {
+            "crc32": "d2f2690f",
+            "labels": [
+              "NoChange",
+              "変更なし"
+            ]
+          },
+          "MeshEdgeDirType": {
+            "crc32": "75713d58",
+            "labels": [
+              "SlantToRight",
+              "斜め -> 直角"
+            ]
+          },
+          "PlaneChangeType": {
+            "crc32": "d2f2690f",
+            "labels": [
+              "NoChange",
+              "変更なし"
+            ]
+          },
+          "FallActionType": {
+            "crc32": "dfa2aff1",
+            "labels": [
+              "None",
+              "なし"
+            ]
+          },
+          "h_7674c4d6": {
+            "crc32": "dfa2aff1",
+            "labels": [
+              "None",
+              "なし"
+            ]
+          },
+          "UpdateParts": 1,
+          "FallToRiver": 0,
+          "MainType": 0,
+          "ActionLockRange": 1
+        }
+      ],
+      "interpretation": "Metadata enumerates Make/Break, 1x1/3x3, layers, cliff/fall/edge transitions and lock/update bytes. h_75fee4b0 and h_7674c4d6 are unresolved names. RemoveHistory in h_75fee4b0 does not prove user undo."
+    },
+    "FieldLandMakingError": {
+      "romfs_asset": "B_data/Bcsv/FieldLandMakingError.bcsv",
+      "sha256": "232d276ed81ab7792b0e64fa6c10e7141702a63434c7e273041557cb0751de23",
+      "decoded_asset": "acnh-re/output/tables_resolved/FieldLandMakingError.json",
+      "sha256_decoded": "cc7ec2edc1ec12907c3d633111f5ea826e25ebfa82ce68f377803a54eddf93ec",
+      "row_count": 12,
+      "rows": [
+        {
+          "UniqueID": 7,
+          "h_0b3be609": 0,
+          "Label": "CliffExistOnItem",
+          "Name": "崖造成：崖上にアイテムがあります。",
+          "CliffCreate": 0,
+          "AsCommand": "PlayerToolNG",
+          "EventFlowEntryName": "ErrorCliffMakeBreak_CliffExistOnItem"
+        },
+        {
+          "UniqueID": 8,
+          "h_0b3be609": 0,
+          "Label": "SystemError",
+          "Name": "システムエラー",
+          "CliffCreate": 0,
+          "AsCommand": "",
+          "EventFlowEntryName": ""
+        },
+        {
+          "UniqueID": 9,
+          "h_0b3be609": 0,
+          "Label": "CliffCreateExistStructure",
+          "Name": "崖造成(Create)：建物があります。",
+          "CliffCreate": 1,
+          "AsCommand": "PlayerToolNG",
+          "EventFlowEntryName": "ErrorCliffMakeCreate_ExistStructure"
+        },
+        {
+          "UniqueID": 10,
+          "h_0b3be609": 0,
+          "Label": "CliffCreateExistNearTree",
+          "Name": "崖造成(Create)：近くに木があります。",
+          "CliffCreate": 1,
+          "AsCommand": "PlayerToolNG",
+          "EventFlowEntryName": "ErrorCliffMakeCreate_ExistNearTree"
+        },
+        {
+          "UniqueID": 11,
+          "h_0b3be609": 0,
+          "Label": "CliffBreakExistNearWater",
+          "Name": "崖造成(Break)：崖上に水場があります。",
+          "CliffCreate": 0,
+          "AsCommand": "PlayerToolNG",
+          "EventFlowEntryName": "ErrorCliffMakeBreak_ExistNearWater"
+        },
+        {
+          "UniqueID": 12,
+          "h_0b3be609": 0,
+          "Label": "CliffBreakExistNearTree",
+          "Name": "崖造成(Break)：崖上に木があります。",
+          "CliffCreate": 0,
+          "AsCommand": "PlayerToolNG",
+          "EventFlowEntryName": "ErrorCliffMakeBreak_ExistNearTree"
+        },
+        {
+          "UniqueID": 13,
+          "h_0b3be609": 0,
+          "Label": "RiverExistNearTree",
+          "Name": "川造成：近くに木があります。",
+          "CliffCreate": 0,
+          "AsCommand": "PlayerToolNG",
+          "EventFlowEntryName": "ErrorRiverMake_ExistNearTree"
+        },
+        {
+          "UniqueID": 14,
+          "h_0b3be609": 0,
+          "Label": "CliffBreakExistStructure",
+          "Name": "崖造成(Break)：崖上に建物があります。",
+          "CliffCreate": 0,
+          "AsCommand": "PlayerToolNG",
+          "EventFlowEntryName": "ErrorCliffMakeBreak_ExistStructure"
+        },
+        {
+          "UniqueID": 15,
+          "h_0b3be609": 0,
+          "Label": "CliffBreakExistNearOnCliff",
+          "Name": "崖造成(Break)：崖上付近に崖があります。",
+          "CliffCreate": 0,
+          "AsCommand": "PlayerToolNG",
+          "EventFlowEntryName": "ErrorCliffMakeBreak_ExistNextCliff"
+        },
+        {
+          "UniqueID": 28,
+          "h_0b3be609": 0,
+          "Label": "RiverExistBackFaceFall",
+          "Name": "川造成：背面に滝があります。",
+          "CliffCreate": 0,
+          "AsCommand": "PlayerToolNG",
+          "EventFlowEntryName": "ErrorRiverMake_ExistBackFaceFall"
+        },
+        {
+          "UniqueID": 29,
+          "h_0b3be609": 0,
+          "Label": "CliffCreateExistFrontFall",
+          "Name": "崖造成(Create)：滝正面に崖生成してます。",
+          "CliffCreate": 0,
+          "AsCommand": "PlayerToolNG",
+          "EventFlowEntryName": "ErrorCliffMakeCreate_ExistFrontFall"
+        },
+        {
+          "UniqueID": 30,
+          "h_0b3be609": 0,
+          "Label": "RiverExistStructure",
+          "Name": "川造成：建物があります。",
+          "CliffCreate": 0,
+          "AsCommand": "PlayerToolNG",
+          "EventFlowEntryName": "ErrorRiverMake_ExistStructure"
+        }
+      ]
+    },
+    "conversion_assets": {
+      "preset_assets": "B_data/FieldPreset*_LandMaking.byml (96 preset variants)",
+      "preset_contract": {
+        "dimensions": [
+          112,
+          96
+        ],
+        "bytes_per_cell": 14,
+        "layer1_nonzero_cells": 0
+      },
+      "evidence": "Prior preset/PBC audit establishes static geometry/model references, not edit transaction behavior.",
+      "pbc_audit_path": "acnh-parallel/water_terrain/acnh-re/output/ui_island/manifests_pbc_audit.json",
+      "pbc_audit_sha256": "0245d3353d94685c8be8aae73a38a6353ad901de6fb24f31f019786978f5d161",
+      "manifest_archive_sha256": "8995d65b09a5cb84b181907c78991806f6da325bc82d35ea24ae6ecf1e263f3a",
+      "prior_findings": "Audit matched 96 preset grids (1,032,192 cells, zero mismatches) and references River/Fall PBC/model assets. Runtime conversion into 52-byte records remains open."
+    }
+  },
+  "persistence": {
+    "native_save_layout_path": "acnh-re/output/gameplay/save_layout.json",
+    "native_save_layout_sha256": "a326c84213faad1921bd7660c3e171a7b3af117ec55e2ca711a871ad637e51dc",
+    "native_save_layout_depth": 2,
+    "current_binary_join": "No named LandMakingMap field or writer-to-serializer edge was recovered from the current native save-layout artifact.",
+    "external_schema_names": [
+      {
+        "key": "7746982c",
+        "value": "CliffLevel"
+      },
+      {
+        "key": "b0753244",
+        "value": "LandMakingMap"
+      },
+      {
+        "key": "f9023ea9",
+        "value": "::Game::SaveFieldLandMakingMapData"
+      }
+    ],
+    "external_schema_bound": "CylindricalEarth save_keys.json is an external/cross-version label reference, not a current 1.0.0 write-path proof.",
+    "day_flag": {
+      "key": "ConstructionWorkToday",
+      "unique_id": 523,
+      "flow_behavior": "checked as a gate and set on by Start_Construction",
+      "raw_table_policy_fields": {
+        "h_5140e4b4": 0,
+        "h_bed25a86": 1
+      },
+      "reset_semantics": "unresolved; no day-transition reset edge evidenced"
+    },
+    "native_fixture_supported": false,
+    "fixture_reason": "Existing native fixtures cover generic region predicates/bit mutations and terrain reads, not live Island Designer placement, validation, undo/cancel/apply, or save write."
+  },
+  "edges": [
+    {
+      "from": "Player_ConstructionLicenseApp.Root",
+      "to": "Start_Construction",
+      "status": "proven_static",
+      "pc": null,
+      "evidence": "EventFlow subflow event 30"
+    },
+    {
+      "from": "Start_Construction",
+      "to": "Player.EventFlowActionPlayerOutfitFieldMakeToolKit",
+      "status": "proven_static_action_dispatch",
+      "pc": "0x2de3f0 / vtable 0x3045be8",
+      "evidence": "toolkit selector events and action vtable enter slot"
+    },
+    {
+      "from": "EventFlowActionPlayerOutfitFieldMakeToolKit",
+      "to": "RiverMaker/CliffMaker state vocabulary",
+      "status": "candidate_string_xrefs_only",
+      "pc": "0xed9a60,0xf39950,0xf48e80,0xf4a500",
+      "evidence": "string_refs.tsv only; no complete call/dispatch chain"
+    },
+    {
+      "from": "RiverMaker/CliffMaker state vocabulary",
+      "to": "FieldLandMakingActionParam readers",
+      "status": "open",
+      "pc": "0x4f3880-0x4f44c0,0x532de0-0x533260",
+      "evidence": "BCSV reader xrefs exist; no proven caller from those state/action refs"
+    },
+    {
+      "from": "FieldLandMakingError table",
+      "to": "error-counter threshold read",
+      "status": "proven_static_read",
+      "pc": "0xe323e0; load 0xe325a4",
+      "evidence": "native read view of s8 column h_0b3be609"
+    },
+    {
+      "from": "tool action/ActionParam",
+      "to": "LandMaking cell mutation",
+      "status": "open",
+      "pc": null,
+      "evidence": "No setter path joined; prior region mutators update separate region bits"
+    },
+    {
+      "from": "LandMaking cell mutation",
+      "to": "mesh/collision/world refresh",
+      "status": "open",
+      "pc": null,
+      "evidence": "No edit publication chain recovered"
+    },
+    {
+      "from": "LandMaking cell mutation",
+      "to": "SaveFieldLandMakingMapData serialization",
+      "status": "open",
+      "pc": null,
+      "evidence": "Current save writer join unavailable; external schema label is cross-version only"
+    },
+    {
+      "from": "ConstructionWorkToday flag",
+      "to": "day reset",
+      "status": "open",
+      "pc": null,
+      "evidence": "Flow gate/on-write proven; raw table policy semantics unresolved; no day-boundary writer found"
+    }
+  ],
+  "bounded_negatives": [
+    {
+      "claim": "No explicit undo/apply/commit/cancel entry was found in Player_ConstructionLicenseApp.",
+      "scope": "This EventFlow only; does not rule out native in-tool undo or another flow."
+    },
+    {
+      "claim": "RemoveHistory in the parameter table does not identify an undo UI/API.",
+      "scope": "Column h_75fee4b0 has unresolved name; no dispatch/caller edge is linked."
+    },
+    {
+      "claim": "No 14-byte preset to 52-byte runtime conversion writer or LandMaking cell setter was proven.",
+      "scope": "Existing native evidence proves terrain reads and separate region flag mutations only."
+    },
+    {
+      "claim": "No current-binary terrain-map-to-save serialization or daily reset edge was proven.",
+      "scope": "Native save layout is shallow; external schema labels are not current-binary path evidence."
+    }
+  ],
+  "next_exact_join_needed": [
+    "Live caller from toolkit action/state dispatch into FieldLandMakingActionParam lookup and FieldLandMakingError validation.",
+    "Native cell mutation/footprint loop, including rollback or per-action undo snapshot if present.",
+    "Post-write world/mesh/collision refresh and save serializer path to the field map member.",
+    "Day-transition reset semantics for cPlayer:ConstructionWorkToday."
+  ]
+}
