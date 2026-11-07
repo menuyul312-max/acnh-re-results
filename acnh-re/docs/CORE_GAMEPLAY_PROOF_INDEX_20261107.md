@@ -1,0 +1,36 @@
+# Bukti terpadu gameplay inti ACNH
+
+**Cakupan:** ACNH 1.0.0 dari boot/registrasi pemain sampai konser K.K. pertama dan pembukaan Island Designer. Ini indeks bukti reverse engineering untuk kebutuhan gameplay; bukan implementasi Godot atau bukti bahwa satu save sudah dimainkan dari awal sampai akhir.
+
+Crosswalk utama memuat 28 beat dan 11 keluarga aset di setiap beat. Ada 381 rujukan untuk 308 slot wajib: 244 `OPEN`, 73 `CAT`, dan 64 `EF/PSEUDO/STRUCT/TBL`. Status itu berarti kategori sudah diperiksa pada setiap beat, bukan seluruh consumer runtime telah ditemukan. Model dan audio tetap memakai katalog sebagai referensi karena arsip sumber mentah tidak tersedia.
+
+## Rantai gameplay dan bukti saat ini
+
+| Tahap | Bukti yang sudah terpetakan | Yang belum terbukti untuk loop utuh |
+|---|---|---|
+| Boot, registrasi, karakter, dan pilihan pulau | `System_BootSequence`, `System_Title`, name/birthday/avatar, pilihan weather-area, `UIMapSelectHandling → cVillage`, `System_GrowUp:NewGame`, dan landing. Layout `Title`, `CharaMake`, `DateInput`, `CharaMakeMap`, serta `WipePrologue` punya binding statis dan struktur BFLYT/BFLAN/BNTX yang tercatat. | Handoff `cCharacterOrder`, page handler → instance/layout, sumber empat gambar preview, `cVillage` → preset/seed, player spawn, dan save durable masih `OPEN`. |
+| Kedatangan, orientasi, NPC, dan adegan cerita | Stage/flow memberi kode NPC; `SpNpcParam` menghubungkan kode ke `ResName` kandidat model. Campfire `MusicName=4318` tersambung pada tingkat tabel ke `SoundAudioMusic` id 95 dan item `mjk_MainTheme`. Flow mengatur flag, item, kamera/action requests, dan stage requests. | Raw model/audio tidak tersedia; nama model bukan bukti mesh terpasang. Actor ke ASB clip, UI action ke BFLYT, sebagian pesan ke MSBT, trigger credits, dan target kembali dari mimpi belum tersambung. |
+| Gerak, ground, terrain, dan traversal | Posisi pemain, fragmen gerak vertikal, koreksi Y, sampling ground pada grid rekonstruksi, navigasi NPC, pemeriksaan/mutasi region, dan 96×112 preset cells telah diuji/dibaca pada batas yang tercatat. | Kontrol/HID → field gerak → frame scheduler → collider query → hasil ground/collision → traversal pemain belum menjadi satu jalur. Query `0x7bccf0` berhenti pada fixture karena world-root null; ini bukan perilaku game. Jembatan/ladder dan editor terrain belum terbukti dapat dilalui/dijalankan. |
+| Pickup, inventory, DIY, dan alat | Item/resep/bahan terhubung lewat ID tabel; flow prolog dan toko meminta/menghapus item; hasil dapat dimasukkan oleh helper native terbatas; recipe bridge/campsite, gate furnishing, tool wear, dan beberapa pocket boundary dipetakan. | Pickup benda dari tanah, pocket/save identity, pengurangan bahan yang sukses, transaksi craft atomik, rollback, durable save, dan break action pada wear nol belum terbukti. Probe konsumsi Apple ditolak fixture karena bentuk manager/index tidak cocok; jumlah item tetap, sehingga hasil itu tidak dipakai sebagai klaim gameplay. |
+| Tenda, toko, bridge, ladder, plot, museum, kantor, campsite | EventFlow mengidentifikasi placement class, kit/recipe IDs, requirement furnishing, flag penyelesaian, serta gate pergantian hari. Empat belas lifecycle objek dan enam cell contoh `StructurePresetA00` dicatat dengan hash sumber yang cocok. | Enam cell belum memiliki role cerita; tidak ada transform placement yang terbukti. Site selector, origin/rotasi/footprint, model consumer, PBC/collider, route navigasi, perubahan instance, dan save commit tetap `OPEN`. |
+| Penduduk, rating, K.K., dan Island Designer | EventFlow menunjukkan gate rumah/plot, campsite/camper, evaluasi, request stage konser, lagu/actor actions, dan request `cConstructLicense`. Beberapa scheduler/leaf score menjalankan fixture native, sedangkan ranking dan urutan hari terbaca dari flow/pseudocode. | Penyelesaian native plot → pemilihan/kedatangan villager → save/day-change belum satu trace. `TkkFirstLive` readiness/off argument, panggilan live entry dari stage, credits trigger, kunjungan Nook setelah konser, dan edit/apply/save Island Designer masih memiliki join terbuka. |
+
+## Indeks bukti per area
+
+- Registrasi dan pemilihan terrain: [REGISTRATION_TERRAIN_PROOF_20261107.md](REGISTRATION_TERRAIN_PROOF_20261107.md) dan [JSON ledger](../output/gameplay/registration_terrain_proof_20261107.json).
+- Story actor, UI, text, dan audio source joins: [STORY_ACTOR_ASSET_PROOF_20261107.md](STORY_ACTOR_ASSET_PROOF_20261107.md) dan [JSON ledger](../output/gameplay/story_actor_asset_proof_20261107.json).
+- Gerak, terrain, collision, traversal, dan progression placement: [WORLD_TERRAIN_MOVEMENT_PROOF_20261107.md](WORLD_TERRAIN_MOVEMENT_PROOF_20261107.md) dan [JSON ledger](../output/gameplay/world_terrain_movement_proof_20261107.json).
+- Pickup, bahan, DIY, furnishing, dan durability: [CORE_ITEM_CRAFTING_LOOP_PROOF_20261107.md](CORE_ITEM_CRAFTING_LOOP_PROOF_20261107.md) dan [JSON ledger](../output/gameplay/core_item_crafting_loop_proof_20261107.json).
+- Lifecycle placement bangunan/fasilitas: [BUILDING_PLACEMENT_PROOF_20261107.md](BUILDING_PLACEMENT_PROOF_20261107.md) dan [JSON ledger](../output/gameplay/building_placement_proof_20261107.json).
+- Gerbang progres, pergantian hari, rating, konser, credits, dan Island Designer: [CORE_STORY_PROGRESS_GATES_20261107.md](CORE_STORY_PROGRESS_GATES_20261107.md) dan [JSON graph](../output/gameplay/core_story_progression_gate_proof_20261107.json).
+- Beat-to-asset crosswalk dan cara konversi: [CORE_GAMEPLAY_STORY_ASSET_PLAN.md](CORE_GAMEPLAY_STORY_ASSET_PLAN.md), [story_asset_crosswalk.json](../output/gameplay/story_asset_crosswalk.json), dan [inventaris aset/konversi](STORY_ASSET_INVENTORY_CROSSWALK_20261107.md).
+
+## Penggunaan dan konversi aset
+
+Semua 11 keluarga aset diwajibkan oleh schema pada setiap beat: UI, animasi, model, audio, teks, tekstur, material/shader, efek, font, data dunia, dan collision. Bukti yang sudah ada ditautkan pada sumbernya; hubungan tanpa consumer atau payload diberi `OPEN`/`CAT`, tidak diganti nama kandidat.
+
+Data gameplay BCSV/BYML/AAMP/EventFlow dipertahankan sebagai JSON bertipe dengan source ID, enum, unknown field, dan hash. MSBT/BDLI disimpan sebagai label/language/tag JSON; BFLYT sebagai pane tree; BFLAN sebagai track/section; BNTX sebagai PNG/HDR; ASB sebagai state/transition/condition/event graph. Untuk model, jika sumber tersedia kelak, jalurnya Yaz0/SARC → BFRES → GLB dengan catatan LOD/material dan `.phive` tetap raw sampai semantik collision tervalidasi. Untuk audio: BARS/AMTA → BWAV → PCM WAV → OGG sambil menyimpan rate, channel, sample, dan loop. Katalog GLB/OGG tidak dianggap file hasil konversi.
+
+## Gerbang selesai RE inti
+
+Gameplay inti baru dapat disebut terpetakan sampai tuntas ketika bukti menghubungkan: (1) hasil pendaftaran/peta ke field preset dan save; (2) kontrol pemain ke update posisi, ground/collision, dan traversal; (3) pickup/inventory ke konsumsi craft dan hasil yang tersimpan; (4) placement kit ke transform, validasi, instance model/collider, perubahan hari, dan flag; serta (5) gate plot/NPC/rating ke konser pertama dan unlock aplikasi. Artefak saat ini menutup banyak node dan tabel, tetapi belum memenuhi trace sambungan tersebut. Celah utama yang tersisa ditulis per sumber pada keenam laporan di atas dan tetap menjadi pekerjaan lanjutan.

@@ -6,6 +6,8 @@ Manifest gabungan ada di [`output/gameplay/story_asset_crosswalk.json`](../outpu
 
 Inventaris jumlah sumber, kelas aset, importer, dan batas konversi ada di [STORY_ASSET_INVENTORY_CROSSWALK_20261107.md](STORY_ASSET_INVENTORY_CROSSWALK_20261107.md).
 
+Temuan dari proof lanjutan per loop dirangkum pada [CORE_GAMEPLAY_PROOF_INDEX_20261107.md](CORE_GAMEPLAY_PROOF_INDEX_20261107.md); tiap ledger terpisah menjaga detail source/hash dan gap native/UI/world tanpa mengubah status kandidat menjadi klaim runtime.
+
 ## Sasaran dan batas bukti
 
 Jalur prioritas dimulai dari boot/New Game, prolog kedatangan, api unggun dan mimpi K.K., tutorial hari kedua, biaya pindah dan rumah, Nook's Cranny, quest tiga plot, Resident Services, campsite/camper pertama, rating pulau, konser K.K. pertama, lalu pembukaan Island Designer. Ini mengikuti urutan yang tercatat di [GAMEPLAY_FLOW.md](GAMEPLAY_FLOW.md) §§0–11. Fasilitas dan sistem sampingan dimasukkan hanya bila menjadi prasyarat atau memengaruhi gate cerita.

@@ -2,7 +2,7 @@
 
 Baca file ini dulu; tidak perlu membaca seluruh repo. Antrian kerja yang bisa dibaca mesin ada di [`re_queue.json`](re_queue.json). Item `open` diurutkan menurut prioritas pemilik; sisa kecil yang belum terjawab ada di `left_open` tiap entri `done` (diaudit 6 November 2026, lihat `done_audit`).
 
-Untuk batas target gameplay utama, bukti per bab cerita/sistem, serta pemetaan penggunaan dan konversi aset, mulai dari [PLAYABLE_GAME_RE_COVERAGE.md](PLAYABLE_GAME_RE_COVERAGE.md). Dokumen tersebut mencakup RE saja; implementasi Godot bukan cakupan.
+Untuk bukti terpadu registrasi sampai Island Designer, mulai dari [CORE_GAMEPLAY_PROOF_INDEX_20261107.md](CORE_GAMEPLAY_PROOF_INDEX_20261107.md). Batas target gameplay, bukti per bab cerita/sistem, serta pemetaan penggunaan dan konversi aset ada di [PLAYABLE_GAME_RE_COVERAGE.md](PLAYABLE_GAME_RE_COVERAGE.md). Dokumen tersebut mencakup RE saja; implementasi Godot bukan cakupan.
 
 Untuk pekerjaan berikutnya yang mengikat setiap beat cerita ke lokasi, interaksi, UI, animasi, model, teks, dan audio, ikuti [CORE_GAMEPLAY_STORY_ASSET_PLAN.md](CORE_GAMEPLAY_STORY_ASSET_PLAN.md). Urutannya mulai dari prolog, lalu jalur utama sampai konser K.K.; rencana menyimpan aset model/audio sebagai referensi katalog dan menandai relasi tanpa bukti sebagai `OPEN`.
 

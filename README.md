@@ -10,6 +10,7 @@ Paket hasil reverse engineering Animal Crossing: New Horizons versi 1.0.0 (build
 |---|---|
 | [Handoff untuk sesi berikutnya](acnh-re/docs/HANDOFF.md) | Status singkat, setup data, alat, aturan, log sesi; antrian kerja di [re_queue.json](acnh-re/docs/re_queue.json) |
 | [Peta RE gameplay utama dan konversi aset](acnh-re/docs/PLAYABLE_GAME_RE_COVERAGE.md) | Bukti dan gap RE per bab cerita/sistem, pemetaan penggunaan dan konversi aset, serta antrean yang masih terbuka; tidak mengimplementasikan Godot |
+| [Indeks bukti terpadu gameplay inti](acnh-re/docs/CORE_GAMEPLAY_PROOF_INDEX_20261107.md) | Status terintegrasi registrasi, gerak/terrain, item/crafting, bangunan, NPC, rating, konser K.K., asset families, dan batas yang masih terbuka |
 | [Rencana crosswalk cerita→aset gameplay inti](acnh-re/docs/CORE_GAMEPLAY_STORY_ASSET_PLAN.md) | Urutan pemetaan prolog sampai K.K.: flow, penempatan dunia, interaksi, UI, animasi, model/audio, metode konversi, dan kriteria selesai RE |
 | [Manifest crosswalk cerita→aset](acnh-re/output/gameplay/story_asset_crosswalk.json) | 28 beat, 11 kelas aset per beat, daftar part dan status bukti (`EF/TBL/NATIVE/PSEUDO/CAT/OPEN`) |
 | [Inventaris sumber dan konversi aset cerita](acnh-re/docs/STORY_ASSET_INVENTORY_CROSSWALK_20261107.md) | Cakupan data/UI/teks/animasi/model/audio/world/collision, pipeline yang tersedia, dan kelas sumber yang hilang |

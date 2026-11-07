@@ -4,6 +4,8 @@
 
 Target cerita adalah ACNH dasar yang direpresentasikan oleh input lokal, terutama alur New Game sampai konser K.K. pertama, lalu membuka loop pulau. Pekerjaan sampingan dapat menyusul. Pemetaan struktural data yang tersedia luas, tetapi semantik game masih parsial: `output/coverage.json` secara eksplisit mencatat `full_user_goal_completed=false`. Kesimpulan di sini dibatasi pada dump, modul native, dan referensi yang tercatat di repo.
 
+Indeks bukti terbaru untuk tiap rantai gameplay inti ada di [CORE_GAMEPLAY_PROOF_INDEX_20261107.md](CORE_GAMEPLAY_PROOF_INDEX_20261107.md), dengan enam ledger tambahan untuk registrasi/peta, actor-aset, gerak/terrain, item-crafting, placement bangunan, dan gate progres cerita. Indeks tersebut memisahkan apa yang sudah source-backed dari sambungan runtime yang masih terbuka.
+
 Rencana rinci untuk menghubungkan tiap beat cerita ke actor, penempatan dunia, UI, animasi, model, teks, audio, dan bukti konversinya ada di [CORE_GAMEPLAY_STORY_ASSET_PLAN.md](CORE_GAMEPLAY_STORY_ASSET_PLAN.md). Dokumen itu menetapkan urutan berikutnya dari prolog dahulu lalu hari kedua sampai K.K.; model/audio tetap berupa referensi katalog selama arsip sumber tidak tersedia.
 
 Ketersediaan sumber dan pipeline konversi per kelas dirinci di [STORY_ASSET_INVENTORY_CROSSWALK_20261107.md](STORY_ASSET_INVENTORY_CROSSWALK_20261107.md); manifest gabungan beat dan part ada di [`output/gameplay/story_asset_crosswalk.json`](../output/gameplay/story_asset_crosswalk.json).

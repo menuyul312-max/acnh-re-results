@@ -7709,7 +7709,53 @@
     },
     "required_asset_family_count": 11,
     "all_beats_have_all_asset_families": true,
-    "full_semantic_coverage_proven": false
+    "full_semantic_coverage_proven": false,
+    "supplemental_proof_count": 6,
+    "supplemental_proof_files_exist": true
   },
-  "full_semantic_coverage_proven": false
+  "full_semantic_coverage_proven": false,
+  "supplemental_proofs": [
+    {
+      "id": "registration_terrain",
+      "report": "acnh-re/docs/REGISTRATION_TERRAIN_PROOF_20261107.md",
+      "data": "acnh-re/output/gameplay/registration_terrain_proof_20261107.json",
+      "scope": "Boot/title, player registration, weather-area and island-card selection, NewGame and landing; UI/table/world asset joins.",
+      "status": "route_mapped_with_open_page_save_map_preset_joins"
+    },
+    {
+      "id": "story_actor_assets",
+      "report": "acnh-re/docs/STORY_ACTOR_ASSET_PROOF_20261107.md",
+      "data": "acnh-re/output/gameplay/story_actor_asset_proof_20261107.json",
+      "scope": "Arrival through Island Designer; stage/NPC resource-name, UI/text/audio and scene boundaries.",
+      "status": "source_joins_partial; raw_model_audio_and_runtime_consumers_open_or_cat"
+    },
+    {
+      "id": "world_terrain_movement",
+      "report": "acnh-re/docs/WORLD_TERRAIN_MOVEMENT_PROOF_20261107.md",
+      "data": "acnh-re/output/gameplay/world_terrain_movement_proof_20261107.json",
+      "scope": "Player position, vertical motion, ground, terrain, collision query, placement order, traversal and editor actions.",
+      "status": "OPEN_end_to_end_player_collision_traversal_placement"
+    },
+    {
+      "id": "item_crafting_loop",
+      "report": "acnh-re/docs/CORE_ITEM_CRAFTING_LOOP_PROOF_20261107.md",
+      "data": "acnh-re/output/gameplay/core_item_crafting_loop_proof_20261107.json",
+      "scope": "Item identity, pickup/delivery, DIY recipe checks, result insertion, materials, furnishing and tool durability.",
+      "status": "partial_connected_evidence; successful_material_consumption_and_durable_save_open"
+    },
+    {
+      "id": "building_placement",
+      "report": "acnh-re/docs/BUILDING_PLACEMENT_PROOF_20261107.md",
+      "data": "acnh-re/output/gameplay/building_placement_proof_20261107.json",
+      "scope": "Fourteen story building/facility lifecycle subjects and sample StructurePreset site cells.",
+      "status": "14_lifecycles; 0_proven_transforms; mesh_and_collider_joins_open"
+    },
+    {
+      "id": "story_progression_gates",
+      "report": "acnh-re/docs/CORE_STORY_PROGRESS_GATES_20261107.md",
+      "data": "acnh-re/output/gameplay/core_story_progression_gate_proof_20261107.json",
+      "scope": "NewGame and day-change through facilities/plots, rating, first K.K. live, credits boundary and Island Designer.",
+      "status": "18_nodes_17_edges; full_save_chain_credits_and_post_live_call_open"
+    }
+  ]
 }
