@@ -14,13 +14,25 @@ from nso_sandbox import NSO_SHA256, Sandbox  # noqa: E402
 
 NSO = ROOT / "inputs/additional_exefs/main"
 OUT = ROOT / "output/gameplay/tool_mechanics_followup/tool_state_callback_native.json"
-EVENTFLOW_ENTRYPOINTS = {
-    0: "ToolBreak_Axe",
-    1: "ToolBreak_Scoop",
-    2: "ToolBreak_Watering",
-    3: "ToolBreak_Net",
-    4: "ToolBreak_Slingshot",
-    5: "ToolBreak_FishingRod",
+RESEARCH_ROOT = Path("/workspace/acnh-re/output")
+ITEM_PARAM = RESEARCH_ROOT / "tables_resolved/ItemParam.json"
+ITEM_OUTFIT_INFO = RESEARCH_ROOT / "tables_resolved/ItemOutfitInfo.json"
+ITEM_OUTFIT_CATEGORY = RESEARCH_ROOT / "tables_resolved/ItemOutfitCategory.json"
+TOOL_CATEGORY_TO_ENTRY = {
+    "Axe": "ToolBreak_Axe",
+    "Scoop": "ToolBreak_Scoop",
+    "Watering": "ToolBreak_Watering",
+    "Net": "ToolBreak_Net",
+    "Slingshot": "ToolBreak_Slingshot",
+    "FishingRod": "ToolBreak_FishingRod",
+}
+TOOL_ITEM_KIND_TO_CATEGORY = {
+    "Axe": "Axe",
+    "Shovel": "Scoop",
+    "Watering": "Watering",
+    "Net": "Net",
+    "Slingshot": "Slingshot",
+    "FishingRod": "FishingRod",
 }
 
 
@@ -28,7 +40,73 @@ def qword(sb: Sandbox, address: int, value: int) -> None:
     sb.uc.mem_write(address, struct.pack("<Q", value))
 
 
-def make_handler_context(sb: Sandbox) -> dict:
+def item_category_fixture() -> dict:
+    """Join real table rows to the category ordinals read by e37a50."""
+    item_param = json.loads(ITEM_PARAM.read_text())
+    outfit_info = json.loads(ITEM_OUTFIT_INFO.read_text())
+    outfit_category = json.loads(ITEM_OUTFIT_CATEGORY.read_text())
+    if len(outfit_category["rows"]) != 0x41:
+        raise AssertionError("ItemOutfitCategory must have the 65 entries indexed by e37a50")
+
+    outfit_info_by_label = {
+        row[13]: (index, row)
+        for index, row in enumerate(outfit_info["rows"])
+        if isinstance(row[13], str)
+    }
+    category_index_by_label = {
+        row[2]: index for index, row in enumerate(outfit_category["rows"])
+    }
+    selector_rows = []
+    for row_index, row in enumerate(item_param["rows"]):
+        item_kind = row[3].get("labels", [None])[0] if isinstance(row[3], dict) else None
+        ui_category = row[0].get("labels", [None])[0] if isinstance(row[0], dict) else None
+        outfit_label = row[13].get("labels", [None])[0] if isinstance(row[13], dict) else None
+        if ui_category != "Tool" or item_kind not in TOOL_ITEM_KIND_TO_CATEGORY or not outfit_label:
+            continue
+        joined = outfit_info_by_label.get(outfit_label)
+        if joined is None:
+            raise AssertionError({"item_row": row_index, "outfit_info": outfit_label})
+        outfit_info_index, outfit_row = joined
+        category_label = outfit_row[4].get("labels", [None])[0]
+        if category_label != TOOL_ITEM_KIND_TO_CATEGORY[item_kind]:
+            raise AssertionError({"item_row": row_index, "category": category_label})
+        selector = category_index_by_label[category_label]
+        selector_rows.append({
+            "itemparam_row": row_index,
+            "item_unique_id": row[69],
+            "item_kind": item_kind,
+            "item_outfit_info": outfit_label,
+            "item_outfit_info_row": outfit_info_index,
+            "outfit_category": category_label,
+            "selector_index": selector,
+            "item_outfit_category_unique_id": outfit_category["rows"][selector][0],
+        })
+
+    category_selector = {}
+    for row in selector_rows:
+        existing = category_selector.setdefault(row["outfit_category"], row["selector_index"])
+        if existing != row["selector_index"]:
+            raise AssertionError("inconsistent selector for one category")
+    expected = {"Axe": 8, "Scoop": 7, "Watering": 13,
+                "Net": 10, "Slingshot": 19, "FishingRod": 9}
+    if category_selector != expected or len(selector_rows) != 32:
+        raise AssertionError({"category_selector": category_selector,
+                              "player_tool_rows": len(selector_rows)})
+
+    return {
+        "category_rows": outfit_category["rows"],
+        "category_selector": category_selector,
+        "player_tool_rows": sorted(selector_rows,
+                                   key=lambda row: (row["selector_index"], row["item_unique_id"])),
+        "source_sha256": {
+            "ItemParam": item_param["raw"]["sha256"],
+            "ItemOutfitInfo": outfit_info["raw"]["sha256"],
+            "ItemOutfitCategory": outfit_category["raw"]["sha256"],
+        },
+    }
+
+
+def make_handler_context(sb: Sandbox, category_rows: list[list]) -> dict:
     state = sb.alloc(0x3000)
     actor = sb.alloc(0x3000)
     vfloats = [sb.alloc(4), sb.alloc(4)]
@@ -40,7 +118,9 @@ def make_handler_context(sb: Sandbox) -> dict:
         qword(sb, actor + subobject_offset, vtable)
         qword(sb, vtable + 0xF0, method)
 
-    labels = ("Axe", "Scoop", "Watering", "Net", "Slingshot", "FishingRod")
+    labels = [row[2] for row in category_rows]
+    if len(labels) != 0x41:
+        raise AssertionError("selector label array must match ItemOutfitCategory row count")
     label_ptrs = []
     for label in labels:
         ptr = sb.alloc(len(label) + 1)
@@ -57,7 +137,7 @@ def make_handler_context(sb: Sandbox) -> dict:
     }
 
 
-def run_player_tool_break_update(sb: Sandbox, context: dict) -> list[dict]:
+def run_player_tool_break_update(sb: Sandbox, context: dict, category_fixture: dict) -> list[dict]:
     state, actor = context["state"], context["actor"]
     index = {"value": 0}
     dispatched = []
@@ -105,7 +185,8 @@ def run_player_tool_break_update(sb: Sandbox, context: dict) -> list[dict]:
     sb.stub(0xDB1070, event_dispatch)
 
     cases = []
-    for family_index, entrypoint in EVENTFLOW_ENTRYPOINTS.items():
+    for category_label, family_index in category_fixture["category_selector"].items():
+        entrypoint = TOOL_CATEGORY_TO_ENTRY[category_label]
         index["value"] = family_index
         for offset, data in (
             (0x1024, b"\x01"), (0x89C, b"\0"),
@@ -119,8 +200,9 @@ def run_player_tool_break_update(sb: Sandbox, context: dict) -> list[dict]:
             raise AssertionError({"family_index": family_index, "expected": entrypoint,
                                   "events": events})
         cases.append({
+            "outfit_category": category_label,
             "entrypoint_expected": entrypoint,
-            "item_family_index_supplied_at_A9D0B0_stub": family_index,
+            "item_outfit_category_row_index_supplied_at_A9D0B0_stub": family_index,
             "event_dispatch": events[0],
             "state_counter_0x898_after": sb.u32(state + 0x898),
             "durability_input_supplied": False,
@@ -309,27 +391,37 @@ def run_save_path_helper(sb: Sandbox) -> dict:
 def run() -> dict:
     if hashlib.sha256(NSO.read_bytes()).hexdigest() != NSO_SHA256:
         raise ValueError("main NSO checksum does not match the bounded helper map")
+    category_fixture = item_category_fixture()
     sb = Sandbox(NSO)
-    context = make_handler_context(sb)
-    player_update_cases = run_player_tool_break_update(sb, context)
+    context = make_handler_context(sb, category_fixture["category_rows"])
+    player_update_cases = run_player_tool_break_update(sb, context, category_fixture)
     force_break_cases = run_force_break_handler(sb)
     save_path = run_save_path_helper(sb)
     result = {
         "schema": "acnh-re/tool-state-callback-native/1",
         "native_main_sha256": NSO_SHA256,
-        "evidence_level": "ORIGINAL_HANDLER_AND_FILE_HELPER_BODY_WITH_CONTROLLED_ENGINE_BOUNDARIES",
+        "evidence_level": "ORIGINAL_HANDLER_AND_FILE_HELPER_BODY_WITH_REAL_TABLE_FIXTURE_AND_CONTROLLED_ENGINE_BOUNDARIES",
+        "item_outfit_category_selector_fixture": {
+            "source_tables": category_fixture["source_sha256"],
+            "player_tool_row_count": len(category_fixture["player_tool_rows"]),
+            "player_tool_rows": category_fixture["player_tool_rows"],
+            "selectors_are_zero_based_item_outfit_category_row_ordinals": True,
+            "table_rows_feed_the_native_7e30f0_indexed_label_read": True,
+            "original_a9d0b0_itemparam_to_category_lookup_executed": False,
+        },
         "player_tool_break_update": {
             "entry": "0xe37a50",
             "cases": player_update_cases,
             "case_count": len(player_update_cases),
             "dispatch_count": len(player_update_cases),
             "proven": [
-                "The original e37a50 body formats and dispatches the Player_ToolBreak entrypoint matching the supplied item-family lookup index for all six family labels.",
+                "The original e37a50 body formats and dispatches all six Player_ToolBreak entrypoints when A9D0B0 is supplied the zero-based category-row selector joined from ItemParam -> ItemOutfitInfo -> ItemOutfitCategory.",
+                "The native 7e30f0 indexed label read uses a 65-entry label array built from the actual ItemOutfitCategory rows; selectors for Axe/Scoop/Watering/Net/Slingshot/FishingRod are 8/7/13/10/19/9.",
                 "The exercised +0x1024=1, +0x89c=0 branch reaches the event-dispatch boundary without changing +0x898.",
                 "No durability value is supplied to this fixture, and e37a50 has no direct ToolDamage/BreakDamage/remaining-helper call edge.",
             ],
             "limits": [
-                "The A9D0B0 item-family index and 7E30F0 label table are controlled fixtures; actual inventory item-to-family lookup is not executed here.",
+                "A9D0B0 itself is stubbed with the selector derived from the supplied ItemParam/ItemOutfitInfo/ItemOutfitCategory rows; the runtime BCSV/global-table lookup is not executed.",
                 "The database/EventFlow executor at DB1070 is stubbed at its dispatch boundary; entrypoint internal actions are covered by the separate static EventFlow fixture.",
                 "Animation and actor/vtable context is synthetic; this is not a live player action trace.",
             ],
