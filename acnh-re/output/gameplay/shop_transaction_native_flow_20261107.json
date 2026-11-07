@@ -1,0 +1,197 @@
+{
+  "report_id": "shop_transaction_native_flow_20261107",
+  "build": "Animal Crossing: New Horizons 1.0.0",
+  "scope": "Nook tent/Cranny buy and sell EventFlow, price/item manager mutations, and visible progression effects",
+  "method": "Static decoded EventFlow plus native decomp/call-site tracing. No live game or save was executed.",
+  "status": {
+    "static_trace_complete_for_bounded_paths": true,
+    "blocked_by_missing_runtime_module": false,
+    "durable_save_boundary_proven": false
+  },
+  "menu_routing": {
+    "source": "SNPC_rcm_01_Tent_1_Entries:Root",
+    "choices": {
+      "0": "SNPC_rcm_21_MaterialCollecting:Root",
+      "1": "SNPC_rcm_00_Common_Sell:Root",
+      "2": "SNPC_rcm_00_Common:Rcm_Common_Buy",
+      "3": "end"
+    },
+    "status": "proven_by_decoded_eventflow"
+  },
+  "purchase": {
+    "flow": "SNPC_rcm_00_Common:Rcm_Common_Buy -> Rcm_Common_BuyCheckUI",
+    "ui": {
+      "selected_price_tag": "cItemPrice",
+      "selected_name_tag": "cItemName",
+      "checks": [
+        "ShopHasBellCount Rate=1.0 or 5.0",
+        "ShoppingCapacity ItemUniqueId=65534",
+        "SystemHasBaggageSpace CheckNum=1 CheckTarget=cPocketBag"
+      ],
+      "completion_actions": [
+        "ShopBuyDone UseTailorTicket=false Set5=false",
+        "ShopBuyDone UseTailorTicket=false Set5=true"
+      ]
+    },
+    "native": {
+      "action": "MainNpc.EventFlowActionShopBuyDone",
+      "vtable_slot": 11,
+      "raw_pc": "0x2c8d10",
+      "price_helper": {
+        "raw_pc": "0x00baaa80",
+        "field": "ItemParam.Price",
+        "bcsv_hash": "0x718b024d",
+        "behavior": "Price times selected quantity; Set5 multiplies selected quantity by five. A separate discount condition exists but its full category predicate is unresolved."
+      },
+      "debit_path": [
+        "ShopBuyDone",
+        "FUN_00ffd440",
+        "FUN_0109ab70"
+      ],
+      "ordinary_item_add_path": [
+        "ShopBuyDone",
+        "FUN_00ffab90",
+        "FUN_00ffac20",
+        "FUN_010987c0"
+      ],
+      "money_item_id": 2212,
+      "money_item_label": "99000Bell",
+      "status": "static_call_path_proven; actual saved inventory object and live execution unproven"
+    },
+    "specific_product_example": {
+      "flow": "SNPC_rcm_11_BuyDIYbook",
+      "item_ids": [
+        {
+          "id": 5603,
+          "label": "DIYbook1",
+          "itemparam_price": 480
+        },
+        {
+          "id": 5604,
+          "label": "DIYbook2",
+          "itemparam_price": 2680
+        }
+      ],
+      "progression_actions": [
+        "PlayerSetCraftRecipe UnlockType=DIYbook1",
+        "PlayerSetCraftRecipe UnlockType=DIYbook2",
+        "PlayerSetCraftRecipe UnlockType=DIYbook3"
+      ],
+      "status": "item selection, shared BuyCheckUI call, table prices, and recipe-unlock actions are present; post-purchase book retention/consumption is unresolved; optional shop feature"
+    },
+    "eventflow_effects": [
+      {
+        "flag": "cPlayerTemp:RcmBoughtGrocery",
+        "operation": "on",
+        "meaning": "shop-local temporary branch state; durable persistence not proven"
+      },
+      {
+        "flag": "cLifeSupportAchievement:BuyItemRcm",
+        "operation": "add",
+        "values": [
+          1,
+          5
+        ]
+      }
+    ]
+  },
+  "sale": {
+    "flow": "SNPC_rcm_00_Common_Sell:Root",
+    "ui": {
+      "selection": {
+        "action": "UIItemSelectWindowHandling",
+        "filter": "cSell",
+        "mode": "cItemSelect",
+        "sentinel_item_id": 65534
+      },
+      "calculation": "ShopSellCalc Rate=1.0 IsBox=false writes SellTotal",
+      "display_tag": "cFlow:cMoney",
+      "confirmation_gate": "MoneyCapacity AddMoney=SellTotal SellType=cShop",
+      "completion_action": "ShopSellDone Rate=1.0 IsBox=false"
+    },
+    "native": {
+      "calc_action": {
+        "action": "MainNpc.EventFlowActionShopSellCalc",
+        "vtable_slot": 11,
+        "raw_pc": "0x2cb1b0",
+        "behavior": "Walk selected-item bitset, read ItemParam.Price through FUN_00bab8c0, apply action rate and accumulate SellTotal"
+      },
+      "done_action": {
+        "action": "MainNpc.EventFlowActionShopSellDone",
+        "vtable_slot": 11,
+        "raw_pc": "0x2cbb10",
+        "selected_slot_mutation_path": [
+          "FUN_00ffbad0",
+          "FUN_00ffb1f0",
+          "FUN_01098650"
+        ],
+        "wallet_credit_path": [
+          "FUN_00ffd2f0",
+          "FUN_00ffd350",
+          "FUN_0109a5a0"
+        ],
+        "wallet_capacity_overflow_path": {
+          "helper": "FUN_00fff3d0",
+          "target_member_offset": "0x3288",
+          "cap": 999999999,
+          "interpretation": "Separate savings/bank balance is a candidate label, not independently schema-resolved"
+        },
+        "is_box_alternate_path": "FUN_00fff5a0 (not traced here)"
+      },
+      "status": "static call path proven; item identity is runtime UI selection; durable save boundary unproven"
+    },
+    "eventflow_effects": [
+      {
+        "flag": "cLifeSupportAchievement:SellItemRcm",
+        "operation": "add",
+        "value": 1
+      }
+    ]
+  },
+  "main_story_relationship": {
+    "material_ids": [
+      2767,
+      2768,
+      2769,
+      2511
+    ],
+    "required_count_each": 30,
+    "handling": "Separate material-delivery flow awards/builds the shop; not routed through ShopBuyDone or ShopSellDone.",
+    "status": "proven_by_existing_story_flow_mapping"
+  },
+  "open_edges": [
+    "The exact durable player inventory/save object behind manager offset +0x17c is not identified.",
+    "The +0x3288 proceeds member looks like a savings/bank balance but its schema/name is not independently resolved.",
+    "No serializer, flush, or reload boundary is joined to these transaction mutations or EventFlow flags.",
+    "No live confirmation/cancel or special product-category transaction was executed.",
+    "The generic selected item is runtime UI data; there is no one fixed product ID for the common buy/sell path."
+  ],
+  "source_sha256": {
+    "SNPC_rcm_01_Tent_1_Entries.json": "8bf1ce134219207dadedd92be11ce016a592071f2902f9e9fb498a8403a258cc",
+    "SNPC_rcm_11_BuyDIYbook.json": "1790406a6b635429306a48f83b894dfb95d750f72a37dbedfaf4375fc20ccb8e",
+    "SNPC_rcm_00_Common.json": "a65059d5679f92eb4d7fbc6e25038c9a1e0bce05f0d5551a748f0a3ec67de78b",
+    "SNPC_rcm_00_Common_Sell.json": "c72155daa5e1d4f80f9f13dacf8b39937360e622e113af66beec54d73743964d",
+    "evfl_vtables.json": "f734a9d886d1e004c1abe41f50b3b620380d62eb7b34177008434a1c8cfe472b",
+    "ItemParam.json": "2934112d0cede6dc5e73ebafe74afcfbb9630de5c12eb58745e0cdbb5138006b"
+  },
+  "evidence_artifacts": [
+    "/workspace/analysis/acnh/project/generated/eventflow/SNPC_rcm_01_Tent_1_Entries.json",
+    "/workspace/analysis/acnh/project/generated/eventflow/SNPC_rcm_00_Common.json",
+    "/workspace/analysis/acnh/project/generated/eventflow/SNPC_rcm_00_Common_Sell.json",
+    "/workspace/analysis/acnh/project/generated/eventflow/SNPC_rcm_11_BuyDIYbook.json",
+    "/workspace/analysis/acnh/project/generated/re/evfl_vtables.json",
+    "/workspace/analysis/acnh/project/generated/re/decomp/2c8d10.c",
+    "/workspace/analysis/acnh/project/generated/re/decomp/2cb1b0.c",
+    "/workspace/analysis/acnh/project/generated/re/decomp/2cbb10.c",
+    "/workspace/acnh-re/output/tables_resolved/ItemParam.json",
+    "/workspace/acnh-re/output/binary/analysis_decomp/aaaa80.c",
+    "/workspace/acnh-re/output/binary/analysis_decomp/efd440.c",
+    "/workspace/acnh-re/output/binary/analysis_decomp/efac20.c",
+    "/workspace/acnh-re/output/binary/analysis_decomp/f987c0.c",
+    "/workspace/acnh-re/output/binary/analysis_decomp/efb1f0.c",
+    "/workspace/acnh-re/output/binary/analysis_decomp/eff3d0.c",
+    "/workspace/acnh-re/output/binary/analysis_decomp/efd350.c",
+    "/workspace/acnh-re/output/binary/analysis_decomp/f9a5a0.c"
+  ],
+  "report": "acnh-re/docs/SHOP_TRANSACTION_NATIVE_FLOW_20261107.md"
+}
