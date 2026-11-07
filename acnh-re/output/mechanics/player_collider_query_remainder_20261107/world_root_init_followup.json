@@ -1,0 +1,151 @@
+{
+  "scope": "ACNH 1.0.0 RE follow-up: world-root initialization, 0x7bccf0 accessors, and movement/scheduler linkage",
+  "status": "OPEN",
+  "source_identity": {
+    "elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+    "additional_exefs_main_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900"
+  },
+  "world_root": {
+    "global_va": "0x32d0de8",
+    "relocated_slot_va": "0x33728b0",
+    "fresh_sandbox_slot_value": "0x0",
+    "constructor_va": "0x197740",
+    "constructor_direct_callers": ["0x96ef0"],
+    "allocated_size": "0xf88",
+    "subobjects": [
+      {"offset": "0x8", "constructor": "0x18d820"},
+      {"offset": "0x28", "constructor": "0x156840"},
+      {"offset": "0xf68", "constructor": "0x1983c30"}
+    ],
+    "constructor_defaults": {
+      "root_plus_0xa0_grid_pointer": "0x0",
+      "root_plus_0xf10_ready_byte": "0x0",
+      "root_plus_0xf60_disabled_byte": "0x0",
+      "query_context_plus_0x8_lock": "initialized by 0x1aa29c0",
+      "query_context_plus_0x48_sentinel": "self pointer",
+      "query_context_plus_0x50_first_link": "same sentinel",
+      "query_context_plus_0x5c_link_bias_s32": 8,
+      "separate_registration_list_context_plus_0xef0": "initialized separately from the query list"
+    },
+    "live_grid_installer": "OPEN: no source path from world startup/loader to a non-null root+0xa0 pointer was recovered"
+  },
+  "constructor_probe": {
+    "attempted_original_function": "0x197740",
+    "completed": false,
+    "sandbox_allocator_global_0x33d08a8": "0x0",
+    "fallback_path": ["0x1967780", "0x18f9c50", "0x220f4a0", "0x220e3a0", "0x220e3a8", "0x220e3b0"],
+    "unresolved_indirect_target": {
+      "load_instruction_va": "0x220e3a8",
+      "branch_instruction_va": "0x220e3b0",
+      "target_register_value": "0x0",
+      "got_slot_va": "0x32ce7a0",
+      "got_slot_value": "0x0"
+    },
+    "exception": "UcError: Unhandled CPU exception (UC_ERR_EXCEPTION)",
+    "root_slot_after": "0x0",
+    "invalid_memory_hook_events": 0,
+    "classification": "Sandbox allocator/import bootstrap failure; not a gameplay fault"
+  },
+  "query_access_contract": {
+    "caller": "0x7bccf0",
+    "context": "root+0x28",
+    "first_query": {"function": "0x1577a0", "grid_pointer_field": "context+0x78 = root+0xa0", "grid_query": "0x172740"},
+    "readiness": {"function": "0x18ba40", "requires": ["root != 0", "root+0xa0 != 0", "byte(root+0xf10) != 0"]},
+    "grid": {
+      "world_to_index": "0x52b280",
+      "width_u32": "grid+0x30",
+      "height_u32": "grid+0x34",
+      "float_fields_consumed": ["grid+0x20", "grid+0x24"],
+      "base_records_pointer": "grid+0x48",
+      "overlay_count_u32": "grid+0x50",
+      "overlay_records_pointer": "grid+0x58",
+      "index": "x + width*z",
+      "record_stride": 52,
+      "attribute_bytes": [48, 49, 50, 51],
+      "overlay_fallback": "base record when overlay missing/out of count, selected overlay byte is 7, or flag bit 0 is set"
+    },
+    "candidate_list": {
+      "function": "0x157270",
+      "lock": "context+0x8",
+      "sentinel": "context+0x48",
+      "first_link": "context+0x50",
+      "bias_s32": "context+0x5c",
+      "candidate_vtable_slot": "+0x30",
+      "next_link": "candidate+bias+8",
+      "live_candidate_population_and_object_vtables": "OPEN",
+      "separate_registration_list": "context+0xef0; updated by 0x1651b0 and not traversed by 0x157270"
+    },
+    "original_0x7bccf0_rerun": {
+      "attempted": false,
+      "reason": "No faithful initialized root, loaded grid, readiness state, and query-candidate vtables/list could be reconstructed. Existing 0x172740 terrain fixtures do not satisfy the full query fixture contract."
+    }
+  },
+  "movement_linkage": {
+    "ground_query_callers": ["0xe42b30", "0xdac780", "0xda86b0"],
+    "noted_direct_callers": {"0xda86b0": ["0xdac780"]},
+    "stored_movement_components_consumed_by": {
+      "function": "0xdac550",
+      "fields": ["param_2+0xf50", "param_2+0xf58"],
+      "actor_position": "*(param_2+0x68)+0x278"
+    },
+    "field_producer_fragment": {
+      "function": "0xe17cb0",
+      "reads": ["player+0x1018", "player+0x1022"],
+      "writes": ["player+0x574", "player+0xf58"],
+      "direct_callers": []
+    },
+    "direct_callers_in_index": {
+      "0xdac550": [],
+      "0xdac780": [],
+      "0xe17cb0": [],
+      "0xe42b30": []
+    },
+    "recognized_code_pointer_array_targets": {
+      "0xe17cb0": false,
+      "0xe42b30": false
+    },
+    "hid_controller_to_frame_schedule": "OPEN: indirect dispatch may exist; no controller sample, producer, or frame-scheduler edge was established",
+    "player_bridge_ladder_river_cliff_traversal": "OPEN: no physical crossing/climb/traversal execution is present in these fixtures"
+  },
+  "fixture_comparison": [
+    {"artifact": "tools/terrain_native.py", "shape": "direct singleton->world and world+0xa0->grid; terrain/ground aggregators", "limit": "does not construct the 0xf88 root or query-candidate list"},
+    {"artifact": "tools/ground_context_gate_native.py", "shape": "direct singleton with synthetic world+0xa0 pointer and stage gate inputs", "limit": "empty-item selector branch; not a loaded grid"},
+    {"artifact": "tools/world_registry_release_native.py", "shape": "singleton slot points to owner-0x28 for release wrapper", "limit": "registry-release contract only; not the full world-root layout"}
+  ],
+  "asset_conversion": {
+    "runtime_grid_record_bytes": 52,
+    "landmaking_preset_cell_bytes": 14,
+    "pbc_conversion_to_runtime_grid_or_collision_records": "OPEN",
+    "classification": ["STRUCT", "CAT", "OPEN"]
+  },
+  "evidence_labels": ["EF", "TBL", "STRUCT", "PSEUDO", "NATIVE", "CAT", "OPEN"],
+  "gameplay_query_result_produced": false,
+  "references": [
+    "docs/WORLD_TERRAIN_MOVEMENT_PROOF_20261107.md",
+    "output/mechanics/player_collider_query_remainder_20261107/player_7bccf0_boundary_native.json",
+    "output/mechanics/terrain_native.json",
+    "output/mechanics/ground_context_gate_native.json",
+    "output/mechanics/world_registry_release_native.json",
+    "output/binary/analysis_decomp/96ef0.c",
+    "output/binary/analysis_decomp/197740.c",
+    "output/binary/analysis_decomp/156840.c",
+    "output/binary/analysis_decomp/1967780.c",
+    "output/binary/analysis_decomp/1577a0.c",
+    "output/binary/analysis_decomp/157270.c",
+    "output/binary/analysis_decomp/172740.c",
+    "output/binary/analysis_decomp/18ba40.c",
+    "output/binary/analysis_decomp/dac550.c",
+    "output/binary/analysis_decomp/dac780.c",
+    "output/binary/analysis_decomp/da86b0.c",
+    "output/binary/analysis_decomp/e17cb0.c",
+    "output/binary/analysis_decomp/e42b30.c",
+    "output/binary/code_pointer_arrays.json"
+  ],
+  "limitations": [
+    "Constructor fault comes from Sandbox allocator/import setup and cannot be interpreted as an ACNH runtime failure.",
+    "Static field offsets do not provide live island-specific grid data or collision candidate objects.",
+    "The existing terrain fixture proves the isolated grid accessors, not the complete 0x7bccf0 result.",
+    "No controller/HID-to-frame schedule chain is proven.",
+    "Preset 14-byte cells and runtime 52-byte records are not shown to be a conversion pair."
+  ]
+}
