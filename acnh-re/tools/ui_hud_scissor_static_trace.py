@@ -18,10 +18,13 @@ RESOLVER = 0x18FB3F0
 SCISSOR_SETUP = 0x14C8FE0
 SCISSOR_RESTORE = 0x14C9250
 SCISSOR_APPLY = 0x14C90E0
+SCISSOR_ARRAY_DISPATCH = 0x18FAF70
+SCR1_RENDER = 0x19372B0
 VIEWPORT_RECT_APPLY = 0x19A9960
 SCISSOR_ONLY_APPLY = 0x19A9D50
 VIEWPORT_ONLY_APPLY = 0x19A9C60
-API_NAMES = ("nvnCommandBufferSetScissor", "nvnCommandBufferSetViewport")
+API_NAMES = ("nvnCommandBufferSetScissors", "nvnCommandBufferSetScissor",
+             "nvnCommandBufferSetViewport")
 
 
 def function_size(db: sqlite3.Connection, va: int) -> int:
@@ -101,7 +104,8 @@ def main() -> None:
             raise ValueError(f"expected one {api_name} reference in resolver, got {len(string_rows)}")
         string_va = string_rows[0][0]
         resolver_callsite, resolver_cell = find_resolver_cell(md, resolver_instructions, string_va)
-        target_functions = ({"nvnCommandBufferSetScissor": (VIEWPORT_RECT_APPLY, SCISSOR_ONLY_APPLY),
+        target_functions = ({"nvnCommandBufferSetScissors": (SCISSOR_ARRAY_DISPATCH,),
+                             "nvnCommandBufferSetScissor": (VIEWPORT_RECT_APPLY, SCISSOR_ONLY_APPLY),
                              "nvnCommandBufferSetViewport": (VIEWPORT_RECT_APPLY, VIEWPORT_ONLY_APPLY)}[api_name])
         calls = []
         for target_function in target_functions:
@@ -144,7 +148,19 @@ def main() -> None:
                                                  "0x19a9d50": "sets NVN scissor"}},
             "limits": ["The ScissorPane render callback 0x14c8d30 calls 0x14c8fe0, and its auxiliary object's vtable hook reaches 0x14c9250; see scissorpane_restore_native.json for the native instance-path trace.",
                        "The synthetic stack fixture does not exercise balanced traversal beyond six saved entries.",
-                       "This artifact follows static helper/API calls and does not establish active flags on a live BFLYT instance or rendered pixel coverage."]},
+                       "This artifact follows static helper/API calls and does not establish active flags on a live BFLYT instance or rendered pixel coverage."],
+            "array_dispatch": {
+                "wrapper": hex(SCISSOR_ARRAY_DISPATCH),
+                "api": "nvnCommandBufferSetScissors",
+                "api_resolver_cell": api_paths["nvnCommandBufferSetScissors"]["resolver_got_cell"],
+                "indirect_callsite": api_paths["nvnCommandBufferSetScissors"]["indirect_calls"][0]["callsite"],
+                "input_flow": "The wrapper reads the command-buffer/context pointer from incoming object +0xb8, copies the first four 32-bit values from each source rectangle into a tightly packed 16-byte stack record (source stride 0x20), and passes the original x1, rectangle count x2, and packed array x3 to the resolved function pointer.",
+                "scr1_call_sites": [
+                    {"caller": hex(SCR1_RENDER), "callsite": "0x1937494"},
+                    {"caller": hex(SCR1_RENDER), "callsite": "0x19374c8"}
+                ],
+                "observation": "The formerly indirect context dispatch is resolved through the exact native string and resolver store to NVN SetScissors. The two SCR1 renderer calls bracket generic Pane rendering; this proves API submission, not visible pixel coverage or live argument values."
+            }},
         "nvn_state_apis": {
             "apis": api_paths,
             "coordinate_conversion": {
@@ -155,7 +171,7 @@ def main() -> None:
         },
         "call_edges": {hex(caller): [hex(target) for target in sorted(targets)]
                        for caller, targets in required_edges.items()},
-        "open": ["Determine framebuffer origin and GPU coverage semantics for the statically observed empty-stack zero rectangle.",
+        "open": ["Capture the live command-buffer pointer, first-index/count arguments, transformed scissor arrays, viewport/pixel bounds, framebuffer origin, and resulting GPU coverage.",
                  "Verify rendered clipping and nested pane behavior against a synchronized game capture."]
     }
     destination = ROOT / "output/ui_hud/runtime_followup/scissor_static_path.json"

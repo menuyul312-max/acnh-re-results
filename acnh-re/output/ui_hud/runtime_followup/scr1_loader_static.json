@@ -1,0 +1,312 @@
+{
+  "schema": "acnh.ui_hud_runtime_followup.scr1_loader_static.v1",
+  "source": {
+    "game_build": "ACNH 1.0.0",
+    "module": "ExeFS main",
+    "main_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+    "evidence_kind": "AArch64 disassembly, relative relocations, read-only function/call index, code-pointer inventory, and committed BFLYT catalogue. No synchronized live capture."
+  },
+  "layout_pane_factory": {
+    "type_name": "N2nn4ui2d17LayoutPaneFactoryE",
+    "vtable_cell": "0x31a2208",
+    "resolved_address_point": "0x31a2690",
+    "address_point_slots": [
+      {
+        "index": 0,
+        "target": "0x19194f0"
+      },
+      {
+        "index": 1,
+        "target": "0x1922280"
+      },
+      {
+        "index": 2,
+        "target": "0x19212e0"
+      },
+      {
+        "index": 3,
+        "target": "0x1921e30"
+      },
+      {
+        "index": 4,
+        "target": "0x1921ed0"
+      },
+      {
+        "index": 5,
+        "target": "0x19215b0"
+      }
+    ],
+    "observations": [
+      "The typeinfo string identifies the six-entry relocated code-pointer sequence as nn::ui2d::LayoutPaneFactory.",
+      "Slot 2 is the BFLYT pane-type dispatcher 0x19212e0; slot 4 is 0x1921ed0; slot 5 is 0x19215b0.",
+      "No indexed direct B/BL caller reaches 0x19212e0. The address point occurs in the pointer inventory, but this main image has no ADRP+ADD/LDR code reference to its vtable cell or address point. The scan is limited to direct page-relative address materialization patterns; it cannot exclude runtime-filled references or use by another module."
+    ],
+    "slot4_indirect_candidate": {
+      "method": "0x1921ed0",
+      "callsite": {
+        "address": "0x1921f20",
+        "mnemonic": "blr",
+        "operands": "x8"
+      },
+      "receiver_register": "x22, copied from incoming argument x1",
+      "dispatch_offset_bytes": "0x10",
+      "receiver_note": "The method also traverses the x22 list at +0x20/+0x28 after this call. Static input flow does not establish that x22 has LayoutPaneFactory type or that this slot-2 call resolves to 0x19212e0."
+    }
+  },
+  "scr1_type_switch": {
+    "dispatcher": "0x19212e0",
+    "tag_bytes": "scr1",
+    "allocation_size_bytes": "0xe0",
+    "constructor": "0x1937280",
+    "constructor_callsite": "0x1921454",
+    "constructor_calls": [
+      {
+        "address": "0x1921454",
+        "mnemonic": "bl",
+        "operands": "#0x1937280"
+      },
+      {
+        "address": "0x1937290",
+        "mnemonic": "bl",
+        "operands": "#0x192d450"
+      }
+    ],
+    "pane_parser": {
+      "wrapper": "0x192d450",
+      "parser": "0x192d490",
+      "wrapper_tail_branch": {
+        "address": "0x192d480",
+        "mnemonic": "b",
+        "operands": "#0x192d490"
+      }
+    },
+    "vptr": {
+      "global_cell": "0x3318e10",
+      "relocated_vtable_start": "0x31a2fe8",
+      "address_point": "0x31a2ff8",
+      "slots": {
+        "19_update": "0x192edc0",
+        "20_render": "0x19372b0",
+        "21": "0x192fc90"
+      },
+      "slot19_target": "0x192edc0",
+      "slot19_context_flow": {
+        "function_argument_x1": "Copied unchanged to x20 and forwarded to child slot-19 calls; the function does not dereference/name this argument.",
+        "function_argument_x2": "Copied to x21 and read at byte offsets +0x1d, +0x1f and float offset +0x18; native field semantics remain unnamed.",
+        "recursive_virtual_calls": [
+          {
+            "address": "0x192eed8",
+            "mnemonic": "ldr",
+            "operands": "x8, [x8, #0x98]"
+          },
+          {
+            "address": "0x192eeec",
+            "mnemonic": "blr",
+            "operands": "x8"
+          },
+          {
+            "address": "0x192efb0",
+            "mnemonic": "ldr",
+            "operands": "x8, [x8, #0x98]"
+          },
+          {
+            "address": "0x192efc4",
+            "mnemonic": "blr",
+            "operands": "x8"
+          }
+        ],
+        "recursive_observation": "Slot 19 walks pane child links and dispatches child vtable +0x98, preserving x1/x2 and forwarding the normalized update flag. No separate context callback target is resolved inside this method."
+      }
+    },
+    "slot19_pointer_inventory": {
+      "sequence_count": 27,
+      "memberships": [
+        {
+          "address_point": "0x3139e98",
+          "typeinfo_name": null
+        },
+        {
+          "address_point": "0x313a398",
+          "typeinfo_name": null
+        },
+        {
+          "address_point": "0x313a488",
+          "typeinfo_name": null
+        },
+        {
+          "address_point": "0x31a26e0",
+          "typeinfo_name": "N2nn4ui2d8BoundingE"
+        },
+        {
+          "address_point": "0x31a2ba0",
+          "typeinfo_name": "N2nn4ui2d4PaneE"
+        },
+        {
+          "address_point": "0x31a2cb8",
+          "typeinfo_name": "N2nn4ui2d5PartsE"
+        },
+        {
+          "address_point": "0x31a2ff8",
+          "typeinfo_name": "N2nn4ui2d7ScissorE"
+        },
+        {
+          "address_point": "0x31b6e50",
+          "typeinfo_name": null
+        },
+        {
+          "address_point": "0x31b7120",
+          "typeinfo_name": null
+        },
+        {
+          "address_point": "0x31b78e0",
+          "typeinfo_name": null
+        },
+        {
+          "address_point": "0x31b9470",
+          "typeinfo_name": null
+        },
+        {
+          "address_point": "0x31b9560",
+          "typeinfo_name": null
+        },
+        {
+          "address_point": "0x31ce110",
+          "typeinfo_name": null
+        },
+        {
+          "address_point": "0x31ce278",
+          "typeinfo_name": null
+        },
+        {
+          "address_point": "0x31d04e8",
+          "typeinfo_name": null
+        },
+        {
+          "address_point": "0x31d0658",
+          "typeinfo_name": null
+        },
+        {
+          "address_point": "0x31d1058",
+          "typeinfo_name": null
+        },
+        {
+          "address_point": "0x31d11d0",
+          "typeinfo_name": null
+        },
+        {
+          "address_point": "0x31d1338",
+          "typeinfo_name": null
+        },
+        {
+          "address_point": "0x31d1498",
+          "typeinfo_name": null
+        },
+        {
+          "address_point": "0x31d1600",
+          "typeinfo_name": null
+        },
+        {
+          "address_point": "0x31d1888",
+          "typeinfo_name": null
+        },
+        {
+          "address_point": "0x31d1c90",
+          "typeinfo_name": null
+        },
+        {
+          "address_point": "0x31d1f40",
+          "typeinfo_name": null
+        },
+        {
+          "address_point": "0x31d31b8",
+          "typeinfo_name": null
+        },
+        {
+          "address_point": "0x31dc1d8",
+          "typeinfo_name": null
+        },
+        {
+          "address_point": "0x31dc348",
+          "typeinfo_name": null
+        }
+      ],
+      "observation": "The common update target occurs in slot 19 in multiple relocated code-pointer sequences. Four sequences carry recoverable RTTI names; unnamed sequences remain classified only by pointer membership."
+    },
+    "catalogued_instances": [
+      {
+        "archive": "LMyDesignEditCanvas.Nin_NX_NVN.zs",
+        "layout_member": "blyt/LMyDesignEditCanvas.bflyt",
+        "layout": "LMyDesignEditCanvas",
+        "pane_name": "S_Scissor_01",
+        "section_offset": 14764,
+        "serialized_visible": true,
+        "serialized_translate": [
+          0.0,
+          -10.0,
+          0.0
+        ],
+        "serialized_size": [
+          650.0,
+          650.0
+        ]
+      },
+      {
+        "archive": "LMyDesignEditCanvas.Nin_NX_NVN.zs",
+        "layout_member": "blyt/LMyDesignEditCanvas.bflyt",
+        "layout": "LMyDesignEditCanvas",
+        "pane_name": "S_Scissor_00",
+        "section_offset": 15500,
+        "serialized_visible": true,
+        "serialized_translate": [
+          0.0,
+          -10.0,
+          0.0
+        ],
+        "serialized_size": [
+          650.0,
+          650.0
+        ]
+      }
+    ],
+    "raw_resource": {
+      "relative_path": "Layout/LMyDesignEditCanvas.Nin_NX_NVN.zs",
+      "sha256": "827972ffffd7de9f5a6c02e88590d60e5631c2015f1aca0e0c943972115fb956",
+      "bytes": 11604,
+      "container_signature": "28b52ffd",
+      "compression": "Zstandard .zs resource; decoded BFLYT records are represented in the asset catalogue."
+    }
+  },
+  "resolved_scissor_submission": {
+    "wrapper": "0x18faf70",
+    "resolver": "0x18fb3f0",
+    "exact_api_name": "nvnCommandBufferSetScissors",
+    "api_name_string_va": "0x296d0e2",
+    "resolver_callsite": "0x18fe1e0",
+    "got_cell": "0x3317bf8",
+    "wrapper_indirect_callsite": "0x18fafd8",
+    "scr1_renderer_calls": [
+      "0x1937494",
+      "0x19374c8"
+    ],
+    "observation": "The SCR1 renderer submits/restores scissor rectangles through NVN SetScissors around generic Pane rendering. Static submission is proven; live context pointer, first index, rectangle count/data, viewport origin, and pixel coverage are not."
+  },
+  "remaining_static_boundary": {
+    "outer_resource_loader": "The main-image evidence proves the scr1 type-switch arm, constructor, parser, installed slot-19 method, and catalogued LMyDesignEditCanvas records. It does not identify the resource-loader callsite/object that invokes the LayoutPaneFactory virtual dispatcher or prove which archive instance is active.",
+    "precalc_scheduler": "UIMgr::PreCalc callback 0x1dd3e70 is registered by 0x1dd3bd0 and calls RootPage processing, but it has no indexed direct caller; external cadence and order relative to draw events are unresolved.",
+    "runtime_blocker": "The raw layout resource and both SCR1 records are present and catalogued. The static evidence does not identify which resource-loader object invokes LayoutPaneFactory at runtime or capture a live rendered frame.",
+    "capture_needed": [
+      "On ACNH 1.0.0, load LMyDesignEditCanvas and capture the archive/layout key, loader call stack, LayoutPaneFactory object address/vptr, and the actual indirect target at 0x1921f20 or equivalent callsite.",
+      "At 0x19212e0 record w3 tag and x0-x6; on the scr1 branch record allocated object, source bytes, and returned object pointer; then record the same instance at slot 19 (x0-x3), including children and parent pointers.",
+      "For the frame that renders S_Scissor_00/01, capture PreCalc and draw callback timestamps/order, pane flags/transforms, 0x18faf70 x0-x3 arguments, resolved NVN SetScissors rectangle array, logical viewport dimensions, target pixel bounds, framebuffer origin, and a matching GPU/frame capture."
+    ]
+  },
+  "scanner_control": {
+    "known_scr1_vptr_cell_code_refs": [
+      "0x1921a24",
+      "0x1937298"
+    ],
+    "layout_factory_cell_code_refs": [],
+    "layout_factory_address_point_code_refs": [],
+    "scope": "ADRP followed within three instructions by ADD or 64-bit LDR in the executable main segment."
+  }
+}
