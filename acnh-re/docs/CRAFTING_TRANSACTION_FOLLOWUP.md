@@ -143,3 +143,22 @@ Reproduksi tahap 3 (argumen `--output-root` menunjuk ke index/tabel bersama yang
 ```sh
 python3 acnh-re/tools/crafting_recipe_flow_native.py --output-root /workspace/acnh-re/output
 ```
+
+## Tahap 4: cabang transaksi penuh-pocket dan batas dirty-marker save
+
+Probe baru di [crafting_transaction_branch_native.json](../output/gameplay/crafting_transaction_followup/crafting_transaction_branch_native.json) menjalankan kode ELF asli `0xee1420`, `0xee0ed0`, `0xefbd30`, `0xf99270`, `0xf98650`, `0xefab90`, dan `0xefac20` pada fixture pocket sintetis. Kontrol pocket berisi 19 dari 20 slot membuktikan gate: `0xee1420` melewati `0xee0ed0` dan `0xefbd30` saat satu slot kosong. Dengan 20 slot terisi, precheck berjalan dan descriptor sementara yang disalinnya adalah Material1 item 2213 (`a5 08 00 00 00 00 00 00`); descriptor yang sama diteruskan ke `0xefbd30`. Inilah alasan 2213 mencapai helper itu: sumbernya adalah hasil precheck bahan pada pocket penuh, bukan descriptor hasil craft.
+
+Descriptor hasil resep berada terpisah di payload `param2+8`. Pada fixture penuh, descriptor 975 (`cf 03 00 00 00 00 00 00`) sampai ke `0xefab90` lalu `0xefac20`. `0xf987c0` tidak tercapai dengan player/session manager parsial yang tersedia, jadi penambahan hasil ke inventory belum terbukti. Agar menghindari dispatcher UI/event yang terikat runtime, fixture menyalin delapan byte dari `x22`—sumber `param2+8` yang juga dipakai instruksi asli di `0xee1698`—lalu melanjutkan pada `0xee17a8`. Ini mempertahankan identitas input ke jalur award, tetapi bukan uji keseluruhan dispatcher.
+
+Field pada `MaterialN` dengan offset `+0x10` dari awal record memilih mutator per-material. Saat marker Material1 (`param2+0x3c`) nol, enam slot melewati `0xee1060`. Saat nilainya satu, Material1 melewati `0xeff060` dengan delta negatif dan lima slot yang tak bertanda tetap melalui `0xee1060`. `+0x38` disetel menjadi satu secara sintetis agar guard payload lolos; payload ini tidak dibentuk melalui UI builder `0xedf8e0`. Kedua mutator bahan adalah stub tanpa efek, sehingga probe menetapkan routing cabang, bukan pengurangan bahan.
+
+Kompaksi native `0xf99270` pada 20 record fixture `[2213, 0, 1]` memanggil `0xf98650` untuk slot 0–19, lalu untuk slot 0–3 saat menulis kembali. Semua 20 byte pada pocket `+0x15c..+0x16f` menjadi `0xff`. Empat record awal berubah menjadi `[2213,0,9]` dan sisanya menjadi sentinel `[65534,0,0]`; angka `u32` itu dicatat sebagai byte mentah fixture dan tidak ditafsirkan sebagai jumlah gameplay. Helper `0xf98650` memang menandai slot `0xff`; `0xf98fc0` membaca marker, `0xf9a060` menulis byte yang diberikan, dan `0xf9a0c0` mencari state marker.
+
+Audit snapshot memeriksa dekompilasi fungsi request/queue/dispatch SaveProc yang terindeks (`0x96ef0`, `0xfb3160`, `0xfaf180`, `0xfaf210`, `0xfb4150`, `0xd4240`, `0xd45c0`, `0xfaf360`, `0xfaf4e0`, `0x2201820`, dan handler permintaan SaveSimpleSave). Tidak ditemukan akses langsung ke offset `+0x15c` atau panggilan langsung ke helper dirty-marker dari kelompok itu. Namun factory dan executor memakai callback virtual runtime yang identitasnya belum terikat; karena itu temuan ini hanya menunjukkan **belum ada edge statik langsung** dari frame SaveProc yang diketahui, bukan membuktikan marker dikecualikan dari snapshot. Kaitan ke serializer dan flush durable tetap terbuka.
+
+Tidak ada pembatalan/interupsi yang disuntik saat instruksi transaksi berjalan. `0xee17e0` juga distub, sebagaimana mutator bahan dan bagian event/log; atomicity, rollback/refund, serta persistensi hasil tetap belum terbukti. Reproduksi:
+
+```sh
+python3 acnh-re/tools/crafting_transaction_branch_native.py
+python3 -m unittest discover -s acnh-re/tests -p 'test_crafting_transaction_branch_native.py' -v
+```
