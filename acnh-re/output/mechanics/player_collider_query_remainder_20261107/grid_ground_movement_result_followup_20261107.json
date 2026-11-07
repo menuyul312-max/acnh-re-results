@@ -1,0 +1,77 @@
+{
+  "scope": "ACNH 1.0.0 spatial-index grid result, ground-query combination, and movement outputs",
+  "status": "OPEN",
+  "source_identity": {
+    "elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+    "additional_exefs_main_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900"
+  },
+  "grid_callback": {
+    "function": "0x172740",
+    "spatial_index_constructor": "0x172090",
+    "slot_0x30_target": "0x172740",
+    "arguments": {"x0": "grid/index", "x1": "position", "x2": "selected attribute output", "x3_bit0": "set forces base; clear permits overlay"},
+    "coordinates": {"world_to_cell": "0x52b280", "width": "grid+0x30", "height": "grid+0x34", "cell_origin": "0x52b4c0", "bounds": "nonnegative x/z less than width/height"},
+    "record_contract": {
+      "stride": 52,
+      "base_pointer": "grid+0x48",
+      "overlay_count": "grid+0x50",
+      "overlay_pointer": "grid+0x58",
+      "plane_triplets": ["record+0x00", "record+0x0c", "record+0x18", "record+0x24"],
+      "attribute_bytes": ["record+0x30", "record+0x31", "record+0x32", "record+0x33"],
+      "selection": "Cell position chooses one triplet and corresponding byte.",
+      "height": "0x172b00 constructs plane; 0x1a480 evaluates at local X/Z and returns s0.",
+      "overlay": "With bit0 clear, use in-range overlay when selected attr is not 7; else base."
+    },
+    "invalid_cell_fallback": {"readiness": "0x18ba40", "ready": 0.0, "not_ready": 100.0, "not_ready_source": "0x32d7198 -> 0x29ee410", "attribute_written": false}
+  },
+  "direct_grid_wrapper": {
+    "function": "0x1577a0",
+    "context_grid_field": "context+0x78",
+    "mode_passed": 1,
+    "missing_grid_scalar": -500.0,
+    "readiness_status": "0 if ready, else 7",
+    "valid_status": "selected attr, optionally replaced by guarded 0x18b570/0x157ab0 result",
+    "return": "base-mode callback scalar when grid exists"
+  },
+  "query_list_wrapper": {
+    "function": "0x157270",
+    "candidate_call": "candidate vtable+0x30(candidate, position, status, 0)",
+    "initial_scalar": -500.0,
+    "aggregate": "maximum callback scalar; status changes only when scalar exceeds current value",
+    "spatial_index": "0x172740 in overlay-aware mode",
+    "volume_callbacks": {"0x171450": -500.0, "0x171d40": -500.0},
+    "optional_classifiers": ["0x18b570", "0x18b5e0"]
+  },
+  "ground_query": {
+    "function": "0x7bccf0",
+    "machine_args": {"x0": "position", "x1": "optional status pointer", "w2": "mode flags", "q0": "input baseline"},
+    "subqueries": ["0x1577a0 direct base grid", "0x157270 overlay-aware list"],
+    "additional_processing": ["status-dependent comparisons incl. candidate status 8", "threshold from context+0x330 via vtable+0xf0", "position/environment gates"],
+    "return": "adjusted scalar s0/q0, not necessarily raw grid height",
+    "status": "optional; traced movement callers pass null"
+  },
+  "movement_paths": [
+    {"path": ["0x7c5570", "0x7bccf0", "0x7bccf0"], "flags": 1, "status": null, "use": "two queried heights and crossing test; conditional 0x1eff3d0 smoothing", "smoothing": {"gain": 0.35, "max_step": 5.0, "snap_threshold": 0.25}, "caller": "0xdac780"},
+    {"path": ["0xdac780", "0x7c5570"], "write": "actor vtable+0xf8 then returned scalar stored at transform+4 (Y)"},
+    {"path": ["0xdac780", "0x7bccf0"], "flags": 0, "status": null, "use": "compare/clamp against actor Y actor+0x27c; write selected value through vtable+0xf8 to transform+4"},
+    {"path": ["0xdac780", "0xda86b0", "0x7bccf0"], "status": null, "use": "compare with actor Y; lower current Y calls actor vtable+0x110", "slot_semantics": "OPEN"},
+    {"path": ["0xe42b30", "0x7bccf0"], "status": null, "use": "returned scalar overwrites temporary movement vector Y", "direct_callers": [], "scheduler": "OPEN"}
+  ],
+  "fixtures_assets": {
+    "terrain_fixture": "tools/terrain_native.py; output/mechanics/terrain_native.json",
+    "cases": 1791,
+    "verified": "isolated coordinate/grid/ground helpers only",
+    "full_query_executed": false,
+    "table": "output/tables_resolved/ColGroundAttributeParam.json",
+    "runtime_record_bytes": 52,
+    "landmaking_preset_bytes": 14,
+    "conversion": "OPEN",
+    "old_emulator_fault": "missing sandbox root/grid at 0x172780; not gameplay evidence"
+  },
+  "runtime_prerequisites": ["root singleton 0x32d0de8, grid at root+0xa0 and backing arrays", "root+0xf10 readiness and stage/world state", "indirect invocation of 0x1978a0 and populated query list", "island-derived records and actual candidate vtables", "actor mode and movement frame state"],
+  "execution": {"query_run": false, "synthetic_fixture": false, "Godot_or_build": false, "live_result_claimed": false},
+  "evidence_labels": ["EF", "TBL", "STRUCT", "PSEUDO", "NATIVE", "CAT", "OPEN"],
+  "source_refs": ["output/binary/analysis_decomp/172740.c", "output/binary/analysis_decomp/172b00.c", "output/binary/analysis_decomp/1a480.c", "output/binary/analysis_decomp/1577a0.c", "output/binary/analysis_decomp/157270.c", "output/binary/analysis_decomp/7bccf0.c", "output/binary/analysis_decomp/7c5570.c", "output/binary/analysis_decomp/1eff3d0.c", "output/binary/analysis_decomp/dac780.c", "output/binary/analysis_decomp/da86b0.c", "output/binary/analysis_decomp/e42b30.c"],
+  "references": ["docs/PLAYER_COLLIDER_VTABLE_CALLBACK_FOLLOWUP_20261107.md", "docs/PLAYER_COLLIDER_QUERY_CANDIDATE_PRODUCER_FOLLOWUP_20261107.md", "docs/PLAYER_COLLIDER_QUERY_INIT_FOLLOWUP_20261107.md", "output/mechanics/terrain_native.json", "output/mechanics/player_collider_query_remainder_20261107/player_7bccf0_boundary_native.json", "output/tables_resolved/ColGroundAttributeParam.json"],
+  "limitations": ["Static scalar/status contracts are traced; no live island query exists.", "0x7bccf0 applies further status/mode/environment policy, so return need not equal raw grid height.", "Movement callers pass null status; runtime branch selection remains open.", "No bridge, ladder, cliff, river crossing or traversal execution is established.", "The terrain fixture does not execute the player query or movement update.", "0x172780 sandbox fault is setup boundary, not gameplay evidence."]
+}
