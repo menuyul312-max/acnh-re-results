@@ -1,0 +1,167 @@
+{
+  "schema": "acnh-ui-map-select-pending-dispatch-callback-followup/1",
+  "title": "ACNH 1.0.0 ID-42 pending/result dispatch and MapSelectPage callback-registration follow-up",
+  "scope": {
+    "incremental_to": "MAP_SELECT_PAGE_BINDING_NATIVE_20261107.md and map_select_page_binding_native_20261107.json",
+    "address_kind": "ELF virtual address (VA), unless explicitly labeled Ghidra analysis address",
+    "binary": "A_logic/main.elf",
+    "analysis_artifact_root": "workspace source analysis tree; raw/code analysis artifacts are not bundled in this repository",
+    "purpose": "Trace the ID-42 pending request beyond submission and identify the runtime consumer of callback cell 0x3307bb8; preserve the independent CharaMakeMap, map-card asset, and cVillage boundaries."
+  },
+  "sources": [
+    {
+      "path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/A_logic/main.elf",
+      "project_relative_path": "A_logic/main.elf",
+      "kind": "source executable",
+      "bytes": 53729580,
+      "sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74"
+    },
+    {
+      "path": "output/binary/code_pointer_arrays.json",
+      "kind": "derived relocated-code-pointer analysis",
+      "sha256": "64d474068ca289f9146f7f32e6647a16a05e8f5be8e635615a478744b62ef822"
+    },
+    {
+      "path": "output/binary/analysis_decomp/11ee260.c",
+      "kind": "derived decompilation of ID equivalence table initializer",
+      "sha256": "c6517db532fd663b0f310a816e92ee1776a18f0d0503271232cbb32d25629b5e"
+    },
+    {
+      "path": "output/binary/analysis_decomp/11ed010.c",
+      "kind": "derived decompilation of result matcher",
+      "sha256": "b24e890de7490c702fa0ca98aeb0de829d904fed8a60da460caad4eca50a68b7"
+    },
+    {
+      "path": "output/binary/analysis_decomp/1590180.c",
+      "kind": "derived decompilation of singleton-index-8 poll helper",
+      "sha256": "3db2118ec5e4d445969bb39a3bf2963593da2df557ffb28d2bda7c03f8cee34a"
+    },
+    {
+      "path": "output/binary/analysis_decomp/1590250.c",
+      "kind": "derived decompilation of singleton-index-8 result getter wrapper",
+      "sha256": "ebb9efc5b88ed572250a582972689c84108ef646f4a2d01546d27245889320a9"
+    },
+    {
+      "path": "output/binary/analysis_decomp/1242550.c",
+      "kind": "derived decompilation of page creator candidate",
+      "sha256": "cfa5349e8b02a96d0877e528f08f15601ddca4eab735ddb1ffaa37332c16c8f9"
+    },
+    {
+      "path": "output/binary/analysis_decomp/1243980.c",
+      "kind": "derived decompilation of CharaMakeMap consumer candidate",
+      "sha256": "2a7adac8e5238348cd7b2cd4bded49f6adeb280f642de1606a3028b76839f28d"
+    }
+  ],
+  "proved_edges": [
+    {
+      "from": "UIMapSelectHandling callback 0x34b700; action self+0xb8 contains 42",
+      "to": "0x158ff60 -> singleton getter 0x15411b0(8) -> 0x11eca30",
+      "evidence": "Raw call/argument setup in main.elf; callback ID read from action +0xb8 and passed with context.",
+      "meaning": "The exact action submits ID 42 to the index-8 manager candidate."
+    },
+    {
+      "from": "0x11eca30",
+      "to": "manager candidate +0x21c, +0x220, +0x224",
+      "evidence": "The method rejects a nonempty +0x21c slot; on acceptance it stores the ID at +0x21c, writes status at +0x220 and clears +0x224.",
+      "meaning": "ID 42 is proved in a pending request slot. No store to manager +0x210 or +0x228 is in this setter path."
+    },
+    {
+      "from": "action poller 0x34b760",
+      "to": "0x1590180 -> singleton getter index 8 -> 0x11ecbd0",
+      "evidence": "Poll wrapper obtains index 8 and calls 0x11ecbd0; predicate is true when +0x21c != -1 or +0x228 != -1.",
+      "meaning": "The action observes pending/result state through the shared singleton path; this does not dispatch a page."
+    },
+    {
+      "from": "0x11ee260 table initializer at Ghidra analysis address 0x3731310 (ELF VA BSS 0x3631310)",
+      "to": "table entry 42 = 41",
+      "evidence": "Packed qword at analysis address 0x37313b8 is 0x0000000d00000029; low 32-bit word at index 42 is 0x29 (41).",
+      "meaning": "Result ID 42 can alias-match current ID 41 in result routines that consult this table. This is an ID equivalence rule, not evidence that the action's pending slot is consumed."
+    },
+    {
+      "from": "manager candidate current ID +0x210 and result ID +0x228",
+      "to": "0x11ed010 matcher -> 0x154e5d0(current ID, registry) -> returned object's first vtable entry/predicate",
+      "evidence": "Matcher checks result ID through the equivalence table against current ID, then obtains and checks an object/service for current ID.",
+      "meaning": "A separate result-to-object dispatch path exists; no pending +0x21c to current +0x210/result +0x228 transition was established."
+    },
+    {
+      "from": "0x11ed010",
+      "to": "result-processing callers 0x11eceb0, 0x11ed710, 0x11ed890, and 0x11eda50",
+      "evidence": "Direct call PCs: 0x11ecfb8, 0x11ed724, 0x11ed9a8, and 0x11eda68.",
+      "meaning": "The matcher participates in distinct result/state processing functions; their public operation names are unresolved."
+    },
+    {
+      "from": "0x1590250 singleton-index-8 wrapper",
+      "to": "0x11ecc00 result getter",
+      "evidence": "Getter compares manager +0x228 with input ID and checks result byte +0x22c before looking up a service object by current ID +0x210. The only indexed direct caller found is 0x2f48b0, passing 0x30 (48).",
+      "meaning": "No ID-42 invocation of this exact result getter was found; known UIMapSelectHandling poll uses 0x1590180."
+    },
+    {
+      "from": "callback cell 0x3307bb8, relocated target 0x1242fa0",
+      "to": "state registration function 0x1242ce0, State::cPlay index 3 callback record",
+      "evidence": "PC 0x1242dec loads cell 0x3307bb8 and PC 0x1242df4 loads paired cell 0x3307bc0 (target 0x1243110); the function stores them in the state record and calls registrar 0x1f064b0 at PC 0x1242e1c with name State::cPlay and index 3.",
+      "meaning": "The pointer-cell consumer is identified as page-local callback registration, not the singleton manager's ID dispatch table."
+    },
+    {
+      "from": "registered State::cPlay callback 0x1242fa0",
+      "to": "0x1243980 -> helper 0xb1aa20 with string CharaMakeMap",
+      "evidence": "0x1242fa0 calls 0x1243980 at PC 0x1242fc8; 0x1243980 passes string VA 0x294cbc3 to 0xb1aa20 at PC 0x1243a0c.",
+      "meaning": "The state callback reaches a CharaMakeMap layout/resource consumer candidate. No edge from the ID-42 singleton path to this callback was found."
+    },
+    {
+      "from": "controller constructor 0x12421a0, pointer cell 0x3307b70 -> table base 0x3110dd0",
+      "to": "object-stored address point 0x3110de0; slot 25 pointer 0x3110ea8 -> 0x12424c0",
+      "evidence": "Constructor adds 0x10 and stores the address point as vptr. The relocated pointer sequence has slot 3 -> constructor 0x12421a0 and slot 25 -> 0x12424c0.",
+      "meaning": "An object-associated dispatch table candidate contains the MapSelectPage creator candidate, but its indirect slot-25 call site is unresolved."
+    },
+    {
+      "from": "0x12424c0",
+      "to": "0x1242550 MapSelectPage creator candidate; result stored at caller +0x210",
+      "evidence": "Function materializes MapSelectPage, calls 0x1242550, whose creator allocates 0x5c0 bytes and invokes constructor/attachment helpers.",
+      "meaning": "This candidate page-object path is separate from manager +0x210 because the fields belong to different objects."
+    }
+  ],
+  "unresolved_edges": [
+    {
+      "from": "singleton manager pending ID 42 at +0x21c",
+      "to": "manager current ID +0x210 or result ID +0x228",
+      "status": "not proved",
+      "reason": "The traced setter writes +0x21c only; no transfer or producer for +0x210/+0x228 connected to this pending value was identified."
+    },
+    {
+      "from": "singleton-index-8 request/result manager",
+      "to": "MapSelectPage creator 0x12424c0/0x1242550 or State::cPlay callback record",
+      "status": "not proved",
+      "reason": "No direct call, pointer relocation, or examined state-field dataflow connects the manager request path to the page controller/callback chain. The static trace cannot exclude a dynamic/indirect relation elsewhere."
+    },
+    {
+      "from": "MapSelectPage controller dispatch table slot 25",
+      "to": "indirect call site invoking 0x12424c0",
+      "status": "not identified",
+      "reason": "The constructor stores the table address point and the table contains the target, but no runtime slot-selection site was traced."
+    },
+    {
+      "from": "Capture^t BNTX texture binding",
+      "to": "runtime map-card thumbnail source/update/render operation",
+      "status": "not proved",
+      "reason": "The resource binding and 8x8 BC5_UNORM texture metadata are established by the base layout/asset report; no dynamic texture producer was traced here."
+    },
+    {
+      "from": "SaveSetFromUIResult {SaveType:cVillage}",
+      "to": "selected terrain preset or world-generation routine",
+      "status": "not proved",
+      "reason": "The EventFlow operation records a UI result type; it does not establish a terrain preset, generator, or map-card data path."
+    }
+  ],
+  "separation_boundaries": {
+    "request_vs_page": "ID 42 is proved only in singleton pending field +0x21c and its poll path. The page-local State::cPlay callback registration is independently proved; no join between them is established.",
+    "page_vs_layout": "State::cPlay callback 0x1242fa0 reaches the CharaMakeMap resource/layout consumer candidate 0x1243980. Runtime construction/lifecycle binding to the EventFlow action remains unresolved.",
+    "layout_vs_dynamic_card": "CharaMakeMap/LCharaMakeMapBtn/LMapChoice structure and Capture^t binding are static asset evidence. The texture's runtime population/render provenance is unresolved.",
+    "result_save_vs_terrain": "cVillage is the SaveType of the later EventFlow result-save operation, not proof of the terrain choice or generation algorithm.",
+    "same_offset_caution": "Manager +0x210 (current request ID) and page-controller +0x210 (stored page object) are fields on different objects."
+  },
+  "validation": {
+    "json": "Validated with python3 -m json.tool after writing.",
+    "source_hashes": "Main ELF and listed derived analysis artifacts were checked against on-disk SHA256 values.",
+    "mutation_scope": "Only this new report and JSON are added; prior reports were not edited; no commit or push was made."
+  }
+}
