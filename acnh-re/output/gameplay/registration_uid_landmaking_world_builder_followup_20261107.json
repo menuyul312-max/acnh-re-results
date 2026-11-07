@@ -1,0 +1,638 @@
+{
+  "schema": "acnh.registration-uid-landmaking-world-builder-followup/1",
+  "created_utc_date": "2026-11-07",
+  "report": "acnh-re/docs/REGISTRATION_UID_LANDMAKING_WORLD_BUILDER_FOLLOWUP_20261107.md",
+  "scope": "Static ACNH 1.0.0 trace from registration FieldMainFieldParam UniqueID through LandMaking/EventPlaza resource loading and saved-ID world setup; no runtime execution or save mutation.",
+  "status": "UID_TO_LANDMAKING_RESOURCE_AND_CELL_TRANSFER_STATIC;C_VILLAGE_TO_WORLD_INIT_HANDOFF_AND_PLAYER_SPAWN_OPEN",
+  "evidence_labels": {
+    "NATIVE": "Raw main-ELF direct-call and generated-decompilation evidence, cross-checked with the existing read-only call index.",
+    "TBL": "Decoded FieldMainFieldParam metadata and extracted asset/file-stem membership.",
+    "EF": "Decoded EventFlow sequence only; no claim that the native runtime call occurred.",
+    "OPEN": "Not joined by available static evidence."
+  },
+  "source_build": {
+    "game": "Animal Crossing: New Horizons",
+    "version_scope": "Supplied main NSO and RomFS labelled 1.0.0 by the existing local analysis.",
+    "main_nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+    "raw_main_segment": {
+      "path": "/workspace/acnh-re/work/exefs_modules/main/0.bin",
+      "va_base": "0x0",
+      "size_bytes": 35723872,
+      "sha256": "9c9b45d8e7a58706ca59e7244b3aebac2325ef98faa205e007974eeeb2f758e9"
+    },
+    "address_convention": "All PCs and VAs are raw ELF VAs; generated FUN_006... pseudonames add the 0x100000 display bias."
+  },
+  "source_artifacts": [
+    {
+      "path": "/workspace/acnh-re/output/index.sqlite",
+      "sha256": "a78c7af27d37b8fd931bba8bc611623dacf7685cb6e8b4f827effa0765340aad",
+      "role": "Read-only native direct-call, function, and string-reference index."
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/529910.c",
+      "sha256": "60b968019ada35592ce5202d29ec1739be335c57c0a6a9ff6af578565afee324",
+      "role": "Four-slot candidate generator."
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/528bf0.c",
+      "sha256": "cbc4ab8241ef929df5eae3294d136cc7e6bf3fb4c3ec4bfb86fb90263ae7cb45",
+      "role": "Per-candidate option builder."
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/54e190.c",
+      "sha256": "69a6433e7e5ee19d9bd3388768419e102b26602faad2da2ac8066ce357c42593",
+      "role": "UniqueID-indexed row accessor."
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/54e7f0.c",
+      "sha256": "2e590be67a833ed248587812d5ee018f0694c1f9df789f4650f4f178bf90e198",
+      "role": "FieldData-to-LandMaking name getter."
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/54e840.c",
+      "sha256": "20f187b09688468940e1e048b098f93277a58931df4481b0c098819eba2b0c46",
+      "role": "FieldData-to-EventPlaza name getter."
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/558ea0.c",
+      "sha256": "b75533a2ded371c0254e70cd832a811defc7dc0502c27e78f495594af1722cb3",
+      "role": "Preset-ID wrapper initialization."
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/558ef0.c",
+      "sha256": "22cf7985c9ee2e1f01959f10dfde252d99c0095efa823a1872e1005534589dd0",
+      "role": "LandMaking loader forwarder."
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/558f40.c",
+      "sha256": "97b470a1a21ce6f1cdf66b06dd6deda51a0a444896aa1002abd9ddc8a6a955d8",
+      "role": "UID-keyed LandMaking resource and cell-transfer loader."
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/5598c0.c",
+      "sha256": "ceda098c5d2f01cb0f23b03ba9ee8ee72f5275d9d372ac41476eed1c4ade1b2c",
+      "role": "UID-keyed EventPlaza resource and save-field writer."
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/559b80.c",
+      "sha256": "af4e0eccc9204f617a48f3b64ceda137c6d87ed504a22ec79e68cb6704d13924",
+      "role": "Additional LandMaking-heap consumer."
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/565e30.c",
+      "sha256": "db88767b45c145cb4e69733121d459e72cccba7e6e52027a8e71d336673a1839",
+      "role": "Saved MainFieldParamUniqueID reader and world-data setup."
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/5662e0.c",
+      "sha256": "5a4a1f6366d57e7d9ef94f5c130c57639f0dc88365c8d05fb0335c1d7da2f4e3",
+      "role": "Separate randomized creator that writes MainFieldParamUniqueID then calls 565e30."
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/f74c30.c",
+      "sha256": "76e9ca347f21290768141e59adf64c3381154ed7220df32eb8f8251426849dc0",
+      "role": "Reader for two saved EventPlaza parameter words."
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/f74c50.c",
+      "sha256": "7d7d5cf564c66c694725a73e7dd30fb070825c9c8a8d4e0f2c28ecd478255d2a",
+      "role": "Writer for two saved EventPlaza parameter words."
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/47c1e0.c",
+      "sha256": "792fa161ace80cbc74e777b6ca1b48c3a3bb8875dfea88de1415457929eadf1b",
+      "role": "EventPlaza coordinate-pair consumer and bounded region update."
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/ccd40.c",
+      "sha256": "49b0f43cd27bcf041bcf00fec8df54f55222f297290236ed2c5029757acd571b",
+      "role": "ValidateVillageSave-associated handler context."
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/cd270.c",
+      "sha256": "eae0b0ea41b7797e9dd7f40edc45ccec8bc930f67294ea426ebd76e366efc837",
+      "role": "Conditional direct caller of 565e30."
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/fc3b00.c",
+      "sha256": "75d6723e03f35eb83117b7c1c200d77f7ec8582a587b18cdd00ebfee200bbeb5",
+      "role": "Direct caller of randomized creator 5662e0."
+    },
+    {
+      "path": "/workspace/acnh-re/output/tables_resolved/FieldMainFieldParam.json",
+      "sha256": "141a6d85166bc8b08eac399389114fbebd5708e0d1c3b54af3be37e116a0e100",
+      "role": "Resolved table metadata and rows."
+    },
+    {
+      "path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Bcsv/FieldMainFieldParam.bcsv",
+      "sha256": "3ebd1057e41b0666aa30c6d8beee9220b52d8fb5280c478e8eb13eaca5d27944",
+      "role": "Source row table."
+    },
+    {
+      "path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetA00_LandMaking.byml",
+      "sha256": "cba1ab90d21982b443e719e30a19c80fa9aa9ead86f03705f5ecbd3c821d4aca",
+      "role": "Example LandMaking preset source."
+    },
+    {
+      "path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Param/Field/MainFieldPreset/FieldPresetA00_EventPlaza.byml",
+      "sha256": "23b9033d3134688730aa6db02e53d11ce47d280d43d77b900097902cb3dfebaf",
+      "role": "Example EventPlaza preset source."
+    },
+    {
+      "path": "/workspace/analysis/acnh/project/generated/eventflow/Tutorials_Prologue1_Charactermaking.json",
+      "sha256": "832419232fe8c3730000ac3ff815077af9ed96d12092a78feccb65e1d46659dc",
+      "role": "TerrainSelect EventFlow entry."
+    },
+    {
+      "path": "acnh-re/output/gameplay/save_layout.json",
+      "sha256": "a326c84213faad1921bd7660c3e171a7b3af117ec55e2ca711a871ad637e51dc",
+      "role": "Local shallow save-offset view."
+    },
+    {
+      "path": "acnh-re/docs/ISLAND_LOADER_FOLLOWUP.md",
+      "sha256": "8e52338ba2829d7baa91771c38a07748596e55be3d6d4c4f33ed6238e214b5aa",
+      "role": "Existing 14-byte cell transfer and grid-boundary audit."
+    },
+    {
+      "path": "acnh-re/docs/DATA_CONTRACT.md",
+      "sha256": "4f1191e4ece8c1d1ba759a588e11d5abc4aa746a7b2ac2b797010395930318c2",
+      "role": "Existing LandMaking cell field layout."
+    },
+    {
+      "path": "/workspace/analysis/acnh/project/generated/re/string_refs.tsv",
+      "sha256": "d65df09399b7300ebf3ac54ccdd79ca192433421210cd82b22d5dd91dce602cf",
+      "role": "Resource format/heap-name string evidence."
+    },
+    {
+      "path": "acnh-re/docs/REGISTRATION_TERRAIN_OPTION_SAVE_JOIN_FOLLOWUP_20261107.md",
+      "sha256": "a5ce879db21c2da002a9ec24a79f9b94ea12c1b67aa62ee5713dd30514898b23",
+      "role": "Prior native option-to-save follow-up: interior entry 0x529ea0, tail-branch PC and raw bytes at selected-ID load/write PCs."
+    },
+    {
+      "path": "acnh-re/output/gameplay/registration_terrain_option_save_join_followup_20261107.json",
+      "sha256": "a41a0f45afba4e65874a81cc454ec9aede89c6a4e0ca372c472ed8270a4fa59d",
+      "role": "Machine-readable evidence ledger for the selected-entry writer and bounded registration trace."
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/529e50.c",
+      "sha256": "7a457af49d5983e4de577dea448edf42c78f5f82cd383c57be263c1c92622165",
+      "role": "Indexed container/cleanup caller showing branch to selected-entry interior code 0x529ea0."
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/565300.c",
+      "sha256": "4771e0d151246e2cc483f60fc01e06d7ef68a6738bb22cde4553c03e727aad39",
+      "role": "Caller chain into registration-result cleanup and selected-entry processing."
+    },
+    {
+      "path": "acnh-re/output/gameplay/save_layout_external_crosswalk.json",
+      "sha256": "2fea2dfb23c286c08d6a33f93e944cfccec4cd606bf43cab08c6eee96f7e0604",
+      "role": "Versioned external save-schema crosswalk; used only to corroborate the label at native offset +0xcfa2a."
+    }
+  ],
+  "table_and_asset_inventory": {
+    "field_main_field_param": {
+      "source_id": 41,
+      "source_path": "B_data/Bcsv/FieldMainFieldParam.bcsv",
+      "rows": 96,
+      "unique_ids": 96,
+      "fields": [
+        {
+          "name": "UniqueID",
+          "hash": "0x54706054",
+          "type": "u16",
+          "row_offset": 4
+        },
+        {
+          "name": "FieldData",
+          "hash": "0x6e1ac981",
+          "type": "string32",
+          "row_offset": 6
+        },
+        {
+          "name": "OutsideTemplateKind",
+          "hash": "0x948eb946",
+          "type": "u8",
+          "row_offset": 38
+        }
+      ]
+    },
+    "fielddata_asset_pairs": {
+      "rows_checked": 96,
+      "landmaking_files": 96,
+      "event_plaza_files": 96,
+      "missing": 0,
+      "verification": "Exact filename-stem membership using each row FieldData value; not a native consumer claim by itself."
+    },
+    "sample_row_and_assets": {
+      "UniqueID": 0,
+      "FieldData": "FieldPresetA00",
+      "landmaking": "B_data/Param/Field/MainFieldPreset/FieldPresetA00_LandMaking.byml",
+      "landmaking_sha256": "cba1ab90d21982b443e719e30a19c80fa9aa9ead86f03705f5ecbd3c821d4aca",
+      "event_plaza": "B_data/Param/Field/MainFieldPreset/FieldPresetA00_EventPlaza.byml",
+      "event_plaza_sha256": "23b9033d3134688730aa6db02e53d11ce47d280d43d77b900097902cb3dfebaf",
+      "event_plaza_raw_values": {
+        "h_035daede": 77,
+        "h_799dfdbe": 65
+      }
+    },
+    "landmaking_cell_layout": {
+      "grid": "112x96",
+      "source_stride_bytes": 14,
+      "meaningful_offsets": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        12
+      ],
+      "fields": "two terrain layers (unit, variation, rotation) plus height; three padding bytes preserved by the source decoder but not consumed by the native transfer.",
+      "runtime_ground_collision_stride_bytes": 52,
+      "conversion_boundary": "The 14-byte source cell is not proven to expand into the 52-byte runtime ground/collision record."
+    }
+  },
+  "registration_candidate_pipeline": {
+    "generator_va": "0x529910",
+    "candidate_count": 4,
+    "builder_call_sites": [
+      {
+        "pc": "0x529a80",
+        "target": "0x528bf0",
+        "slot": 0
+      },
+      {
+        "pc": "0x529b90",
+        "target": "0x528bf0",
+        "slot": 1
+      },
+      {
+        "pc": "0x529ca0",
+        "target": "0x528bf0",
+        "slot": 2
+      },
+      {
+        "pc": "0x529db0",
+        "target": "0x528bf0",
+        "slot": 3
+      }
+    ],
+    "entry_fields": {
+      "candidate_unique_id": "+0x0c u16",
+      "outside_template_unique_id": "+0x0e u16",
+      "slot_ordinal": "+0xb8"
+    },
+    "builder_id_wrapper": {
+      "pc": "0x528c78",
+      "target": "0x558ea0",
+      "value_source": "entry+0x0c"
+    },
+    "preset_load": {
+      "pc": "0x528c98",
+      "target": "0x558f40",
+      "candidate_specific": true
+    },
+    "event_plaza_load": {
+      "pc": "0x528ca8",
+      "target": "0x5598c0",
+      "candidate_specific": true
+    },
+    "status": "NATIVE_CANDIDATE_ID_TO_PRESET_DATA_ASSEMBLY;CARD_CAPTURE_OR_THUMBNAIL_DRAW_OPEN"
+  },
+  "landmaking_loader": {
+    "entry_va": "0x558f40",
+    "direct_callers": [
+      {
+        "pc": "0x528c98",
+        "owner": "0x528bf0"
+      },
+      {
+        "pc": "0x558f28",
+        "owner": "0x558ef0"
+      }
+    ],
+    "row_lookup": {
+      "pc": "0x558f84",
+      "target": "0x54e190",
+      "key_hash": "0x54706054",
+      "meaning": "FieldMainFieldParam.UniqueID"
+    },
+    "fielddata_resource_name": {
+      "pc": "0x558ff4",
+      "target": "0x54e7f0",
+      "field_hash": "0x6e1ac981",
+      "format": "%s_LandMaking",
+      "heap_name": "FieldPresetParamsLandMakingHeap"
+    },
+    "resource_request_and_transfer": {
+      "resource_wrapper_call": "0x559028 -> 0x1983e00",
+      "resource_arrangement_call": "0x559070 -> 0x559690",
+      "loops": "96 outer x 112 inner iterations; logical grid 112 x 96",
+      "source_indexing": "cell ordinal * 0x0e bytes",
+      "meaningful_transfer": "two layers and height into destination 14-byte-compatible cell accessors, per existing loader audit.",
+      "visual_asset_application": "Model/material/Capture^t binding not established by this function."
+    },
+    "status": "STATIC_ID_TO_FIELD_DATA_TO_LANDMAKING_RESOURCE_AND_CELL_TRANSFER"
+  },
+  "event_plaza_loader": {
+    "entry_va": "0x5598c0",
+    "row_lookup": {
+      "pc": "0x5598f0",
+      "target": "0x54e190"
+    },
+    "fielddata_resource_name": {
+      "pc": "0x559950",
+      "target": "0x54e840",
+      "format": "%s_EventPlaza",
+      "heap_name": "FieldPresetParamsEventPlazaHeap"
+    },
+    "save_write": {
+      "pc": "0x559ad4",
+      "target": "0xf74c50",
+      "destination_offsets": [
+        "+0xcfa2c",
+        "+0xcfa30"
+      ],
+      "bytes_per_value": 4
+    },
+    "position_consumer": {
+      "loader_call_pc": "0x559b08",
+      "target": "0x47c1e0",
+      "saved_pair_reader": "0xf74c30",
+      "subsequent_helpers": [
+        "0x52bcf0",
+        "0x52c5f0",
+        "0x52bbd0"
+      ],
+      "interpretation_limit": "The code consumes a saved coordinate pair and updates a bounded spatial region; exact parameter hash names, coordinate units, and player-spawn relationship are OPEN."
+    },
+    "sample_byml_raw_hash_values": {
+      "h_035daede": 77,
+      "h_799dfdbe": 65
+    },
+    "status": "STATIC_FIELD_DATA_TO_EVENTPLAZA_RESOURCE_AND_SAVED_SPATIAL_PAIR;PLAYER_SPAWN_OPEN"
+  },
+  "saved_uid_world_setup": {
+    "reader_va": "0x565e30",
+    "save_field_offset": "SaveMainField-relative +0xcfa2a (u16; external schema label MainFieldParamUniqueID aligned to this native offset)",
+    "read_then_wrap": {
+      "save_read": "0x565e30 body reads +0xcfa2a",
+      "wrapper_call_pc": "0x56620c",
+      "wrapper_target": "0x558ea0",
+      "wrapper_value": "saved u16"
+    },
+    "downstream_calls": [
+      {
+        "pc": "0x566220",
+        "target": "0x558ef0",
+        "effect": "same LandMaking loader 0x558f40"
+      },
+      {
+        "pc": "0x566230",
+        "target": "0x5598c0",
+        "effect": "EventPlaza preset loader and coordinate pair writer"
+      },
+      {
+        "pc": "0x56623c",
+        "target": "0x559b80",
+        "effect": "additional LandMaking-heap consumer"
+      }
+    ],
+    "direct_callers": [
+      {
+        "pc": "0x5665c4",
+        "owner": "0x5662e0",
+        "context": "separate randomized creator writes MainFieldParamUniqueID before calling saved-ID setup"
+      },
+      {
+        "pc": "0xcd2c0",
+        "owner": "0xcd270",
+        "context": "ValidateVillageSave-associated handler; precise UI/cVillage lifecycle relation is OPEN"
+      }
+    ],
+    "separate_randomized_creator": {
+      "va": "0x5662e0",
+      "caller": {
+        "pc": "0xfc3b08",
+        "owner": "0xfc3b00"
+      },
+      "creator_dispatch_site": {
+        "pc": "0xcd084",
+        "owner_function": "0xccd40",
+        "string_association": "ValidateVillageSave"
+      },
+      "note": "This path samples a candidate and writes a UID itself; it is not evidence that the cVillage card selection reaches this creator."
+    },
+    "c_village_selected_entry_writer": {
+      "selected_id_load_pc": "0x529f34",
+      "save_write_pc": "0x529f44",
+      "save_offset": "+0xcfa2a",
+      "direct_lifecycle_edge_to_reader_0x565e30": false,
+      "container_function_va": "0x529e50",
+      "tail_branch_pc": "0x529e94",
+      "selected_id_load_instruction_bytes_le_hex": "a91a4079",
+      "save_write_instruction_bytes_le_hex": "09692a78",
+      "pc_provenance": "acnh-re/docs/REGISTRATION_TERRAIN_OPTION_SAVE_JOIN_FOLLOWUP_20261107.md",
+      "entry_va": "0x529ea0",
+      "boundary_note": "0x529ea0 is reached from 0x529e50 by a tail branch at 0x529e94. The generated functions table spans 0x529e50..0x529fb4, while native_functions splits records at 0x529e50 and 0x529ea0. Call/control flow is proven; the boundary convention differs across index snapshots."
+    },
+    "status": "SAVED_UID_READ_AND_USED_BY_WORLD_SETUP_STATIC;C_VILLAGE_WRITER_TO_WORLD_SETUP_INVOCATION_OPEN",
+    "read_pc_precision": {
+      "save_field_load_pc": "NOT_RECOVERED_AS_AN_INSTRUCTION_PC_IN_THIS_PASS",
+      "function_va": "0x565e30",
+      "evidence": "Existing native decomp identifies a u16 load from SaveMainField-relative +0xcfa2a; the exact load instruction PC is not separately listed in the current direct-call/index artifacts. Downstream wrapper and loader call PCs are recorded exactly."
+    }
+  },
+  "prologue_flow": {
+    "flow": "Tutorials_Prologue1_Charactermaking",
+    "entry": "TerrainSelect",
+    "sequence": [
+      "UIMapSelectHandling",
+      "SaveSetFromUIResult(SaveType=cVillage)"
+    ],
+    "separate_spawn_action": "Tutorials_Prologue2_Arrival SetupActorPosition(Type=3)",
+    "flow_to_native_player_spawn_join": "OPEN"
+  },
+  "spawn": {
+    "player_spawn_position_proven": false,
+    "event_plaza_data_loaded": true,
+    "reason": "The found saved EventPlaza pair is consumed by a spatial-region helper. No player-position setter or spawn callsite tied to the selected preset UID was recovered."
+  },
+  "native_call_edges": [
+    {
+      "from": "0x529910",
+      "to": "0x528bf0",
+      "pcs": [
+        "0x529a80",
+        "0x529b90",
+        "0x529ca0",
+        "0x529db0"
+      ],
+      "status": "PROVEN_DIRECT"
+    },
+    {
+      "from": "0x528bf0",
+      "to": "0x558ea0",
+      "pc": "0x528c78",
+      "status": "PROVEN_DIRECT"
+    },
+    {
+      "from": "0x528bf0",
+      "to": "0x558f40",
+      "pc": "0x528c98",
+      "status": "PROVEN_DIRECT"
+    },
+    {
+      "from": "0x528bf0",
+      "to": "0x5598c0",
+      "pc": "0x528ca8",
+      "status": "PROVEN_DIRECT"
+    },
+    {
+      "from": "0x558f40",
+      "to": "0x54e190",
+      "pc": "0x558f84",
+      "status": "PROVEN_DIRECT"
+    },
+    {
+      "from": "0x558f40",
+      "to": "0x54e7f0",
+      "pc": "0x558ff4",
+      "status": "PROVEN_DIRECT"
+    },
+    {
+      "from": "0x5598c0",
+      "to": "0x54e190",
+      "pc": "0x5598f0",
+      "status": "PROVEN_DIRECT"
+    },
+    {
+      "from": "0x5598c0",
+      "to": "0x54e840",
+      "pc": "0x559950",
+      "status": "PROVEN_DIRECT"
+    },
+    {
+      "from": "0x5598c0",
+      "to": "0xf74c50",
+      "pc": "0x559ad4",
+      "status": "PROVEN_DIRECT"
+    },
+    {
+      "from": "0x5598c0",
+      "to": "0x47c1e0",
+      "pc": "0x559b08",
+      "status": "PROVEN_DIRECT"
+    },
+    {
+      "from": "0x565e30",
+      "to": "0x558ef0",
+      "pc": "0x566220",
+      "status": "PROVEN_DIRECT"
+    },
+    {
+      "from": "0x558ef0",
+      "to": "0x558f40",
+      "pc": "0x558f28",
+      "status": "PROVEN_DIRECT"
+    },
+    {
+      "from": "0x565e30",
+      "to": "0x5598c0",
+      "pc": "0x566230",
+      "status": "PROVEN_DIRECT"
+    },
+    {
+      "from": "0x565e30",
+      "to": "0x559b80",
+      "pc": "0x56623c",
+      "status": "PROVEN_DIRECT"
+    },
+    {
+      "from": "0x565e30",
+      "to": "0x558ea0",
+      "pc": "0x56620c",
+      "status": "PROVEN_DIRECT"
+    },
+    {
+      "from": "0x5662e0",
+      "to": "0x565e30",
+      "pc": "0x5665c4",
+      "status": "PROVEN_DIRECT"
+    },
+    {
+      "from": "0xcd270",
+      "to": "0x565e30",
+      "pc": "0xcd2c0",
+      "status": "PROVEN_DIRECT"
+    }
+  ],
+  "bounded_search": {
+    "direct_call_index": "Read-only SQLite `direct_calls` table in `/workspace/acnh-re/output/index.sqlite`.",
+    "target_0x565e30_direct_call_count": 2,
+    "target_0x558f40_direct_callers": [
+      "0x528bf0",
+      "0x558ef0"
+    ],
+    "candidate_id_readers_0x54e190_call_count": 9,
+    "scope": "Direct-call records and source function extents in the available main-ELF index; generated decompilation lines; decoded local table and extracted data assets.",
+    "limits": [
+      "Indirect/runtime calls outside the recovered call table are not ruled out.",
+      "No executable game process or authentic player spawn fixture was available.",
+      "Missing ExeFS modules and runtime resource/cache state are outside this join."
+    ],
+    "function_extent_bounds": {
+      "saved_uid_world_setup_0x565e30": {
+        "functions_table": {
+          "start_va": "0x565e30",
+          "size_bytes": 1080,
+          "end_exclusive_va": "0x566268"
+        },
+        "native_functions_inventory": {
+          "start_va": "0x565e30",
+          "size_bytes": 1080,
+          "end_exclusive_va": "0x566268"
+        }
+      },
+      "selected_entry_control_flow_0x529e50_to_0x529ea0": {
+        "functions_table_extent": {
+          "start_va": "0x529e50",
+          "size_bytes": 356,
+          "end_exclusive_va": "0x529fb4"
+        },
+        "native_functions_records": [
+          {
+            "start_va": "0x529e50",
+            "size_bytes": 72,
+            "end_exclusive_va": "0x529e98"
+          },
+          {
+            "start_va": "0x529ea0",
+            "size_bytes": 284,
+            "end_exclusive_va": "0x529fbc"
+          }
+        ],
+        "tail_branch_pc": "0x529e94",
+        "boundary_note": "The index snapshots differ on whether 0x529ea0 is a function split or an interior block. The branch and save write bytes are separately recorded in the prior option-to-save report."
+      },
+      "note": "Extents are read from existing SQLite functions and native_functions inventories; no Ghidra project was rebuilt or opened. The direct_calls search covers recorded direct calls, not all indirect runtime dispatch."
+    }
+  },
+  "unresolved_edges": [
+    "Configured candidate ID range/pointer array and actual four runtime IDs for a specific playthrough.",
+    "cVillage result consumer 0x529ea0 to the lifecycle that invokes the saved-ID world setup 0x565e30.",
+    "Per-preset EventPlaza parameter hash names and coordinate-unit/origin/rotation semantics.",
+    "Selected UID and preset to airport/player spawn transform and initial control handoff.",
+    "LandMaking cell transfer to live 52-byte collision/ground generation, PBC, terrain mesh, and model/material instances.",
+    "Whether any persistent seed field is used beyond RNG-selected preset/outside-template IDs.",
+    "SaveProc serialization, durable commit, and reload proving persistence of the selected UID and map."
+  ],
+  "validation": {
+    "source_hashes_checked": true,
+    "all_96_fielddata_landmaking_eventplaza_pairs_exist": true,
+    "local_output_json_parse_checked": true,
+    "game_or_save_executed": false,
+    "save_mutated": false,
+    "selected_writer_pc_provenance_added": true
+  }
+}
