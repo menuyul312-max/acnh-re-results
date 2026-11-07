@@ -25,6 +25,8 @@ Struktur crosswalk sudah mencakup 28 beat dan 11 keluarga aset dengan 381 rujuka
 
 Empat keluarga terakhir—tekstur, material/shader, efek, dan font—masing-masing seluruhnya `OPEN` di tiap beat. Ini terutama **kekosongan relasi beat→consumer**, bukan bukti bahwa arsipnya tidak ada: inventaris global mencatat 431 kontainer BNTX, dua arsip BFSHA, dua VFXB/PTCL, serta importer font. Karena itu, angka slot wajib yang terisi sebaiknya dibaca sebagai disiplin pencatatan kategori, bukan cakupan semantik.
 
+Follow-up khusus lima layar prolog dan 12 layout pendukung menemukan 195 entri texture-list dengan kandidat BNTX exact-name dalam archive yang sama, 193 jalur pane→material→texture→BNTX, deklarasi font `SystemB_00`/`Normal_00` ke index FCPX, dan enam material→GLSL bernama. Dua PTCL dan link database efek ditemukan secara global, tetapi belum ada event/actor prolog yang terhubung ke effect key. Ini adalah bukti `CONSUMER_JOINED` di struktur archive UI supplemental, bukan bukti seluruh 28 beat membuka halaman itu: archive bertanda `new_path`, trigger runtime/page handoff belum tersambung, dan gambar empat map-card `P_Capture_00` masih belum memiliki producer.
+
 ## Jalur aset yang sudah memiliki bukti terkuat
 
 **Pendaftaran/UI.** `REGISTRATION_TERRAIN_PROOF_20261107.md` dan flow source 661 (`Tutorials_Prologue1_Charactermaking.bfevfl`, SHA-256 `cbf8fc7e4f5df544398f8dfd4b401f558bf386862af1abac72b8ab57c1d8688d`) mengikat name, birthday, avatar, weather-area, dan `UIMapSelectHandling → cVillage`. Analisis NSO statis di `page_layout_method_bindings.json` mengembalikan string layout yang tepat dari method slot 46 untuk `TitlePage` VA `0x156cde0`→`Title`, `CharaMakePage` `0x11959c0`→`CharaMake`, `DateInputPage` `0x11e1cc0`→`DateInput`, `MapSelectPage` `0x1241910`→`CharaMakeMap`, dan `PrologueBGPage` `0x140efd0`→`WipePrologue`. Hash BFLYT serta child `arc!blyt/...` ada di ledger.
@@ -44,7 +46,7 @@ Ini membuktikan kecocokan identifier/layout dalam data supplemental, **bukan** b
 3. **Animasi actor:** internal native state index untuk `ActionIdx` 1–3 sudah ditemukan; join index 26/27/19 ke resource, clip/ASB state, rig, waktu, dan perubahan stage tetap belum terbukti. Nama command ke node ASB saja belum menyelesaikan ini.
 4. **Instance dunia:** keenam site-cell ke jenis bangunan/plot; cell-to-world origin/axis/unit/rotation/height; validator; model dan collider yang dimuat; mutasi instance dan save/day-change.
 5. **Model/audio sebagai katalog:** kandidat harus dihubungkan secara ID ke actor/parameter/consumer per beat. Sesuai kebijakan proyek, katalog cukup menjadi referensi; tanpa raw payload tidak boleh dinaikkan menjadi hasil konversi atau bukti pemutaran.
-6. **Tekstur, shader, efek dan font:** inventaris global bukan peta per beat. Perlu join dari BFLYT/BNTX/BFSHA/PTCL/font entry ke pane, material, actor, effect trigger dan flow tertentu; atau nyatakan kategori tidak berlaku untuk beat bila memang tidak dipakai.
+6. **Tekstur, shader, efek dan font:** beberapa layar prolog kini memiliki join deklaratif pane→BNTX, font alias→FCPX, dan material→GLSL; sisa pekerjaan adalah mengikat page tersebut ke handler/instance runtime, melacak effect key ke actor/flow, serta mengulang peta per beat pada seluruh cerita atau menandai `not_applicable` bila kategori memang tidak dipakai.
 7. **Alur end-to-end:** belum ada satu rantai yang membuktikan input pemain → world query/interaksi → inventory/craft atau placement → save/day-change → gate cerita → UI/actor/stage berikutnya.
 
 ## Urutan pemeriksaan yang paling memperkecil gap
