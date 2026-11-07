@@ -1,0 +1,176 @@
+{
+  "scope": "ACNH 1.0.0 relocation trace for query candidate vtable slot +0x30",
+  "status": "PARTIALLY_RESOLVED",
+  "source_identity": {
+    "elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+    "additional_exefs_main_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+    "main_module_base": "0x0"
+  },
+  "relocation_method": {
+    "elf_section": ".rela.dyn",
+    "section_va": "0x2212040",
+    "entry_size": 24,
+    "r_info": "0x403",
+    "relocation_type_decimal": 1027,
+    "relocation_name": "R_AARCH64_RELATIVE",
+    "effective_pointer_rule": "main module base + r_addend",
+    "raw_pointer_word_note": "Relocated pointer words are zero in the packed NSO file; loader relocations supply their effective values."
+  },
+  "vtable_slot_30_targets": [
+    {
+      "candidate_constructor": "0x1711d0",
+      "constructor_callers": ["0x56e830", "0x5fb520", "0xc74610", "0xc74970"],
+      "constructor_global_load": "0x32d7148",
+      "global_slot_raw_word_hex": "0000000000000000",
+      "global_slot_relocation": {
+        "type": 1027,
+        "r_addend": "0x30375a0"
+      },
+      "vtable_base": "0x30375a0",
+      "constructor_vptr_adjustment": "vtable_base + 0x10",
+      "object_vptr": "0x30375b0",
+      "virtual_slot_offset": "0x30",
+      "callback_word_va": "0x30375e0",
+      "callback_word_raw_hex": "0000000000000000",
+      "callback_word_relocation": {
+        "r_info": "0x403",
+        "type": 1027,
+        "r_addend": "0x171450"
+      },
+      "exact_pointer_target": "0x171450",
+      "function_inventory_size_bytes": 16,
+      "function_sha256": "a7299285992dd56bbad73ee08e60fb5cd530b45ea8cbeab4214f974a3ca0820a",
+      "function_bytes_hex": "288b01b008b946f9000140bdc0035fd6",
+      "disassembly": [
+        "adrp x8, #0x32d6000",
+        "ldr x8, [x8, #0xd70]",
+        "ldr s0, [x8]",
+        "ret"
+      ],
+      "direct_callers": [],
+      "string_references": [],
+      "effect_supported_by_instructions": "Loads f32 from *(u64*)0x32d6d70 into s0 and returns; does not read the candidate or arguments.",
+      "semantic_label": "CAT: no-hit/default query scalar in the 0x157270 caller; no source name proves the label."
+    },
+    {
+      "candidate_constructor": "0x171bc0",
+      "constructor_callers": ["0x56e830", "0xd57470"],
+      "constructor_global_load": "0x32d7168",
+      "global_slot_raw_word_hex": "0000000000000000",
+      "global_slot_relocation": {
+        "type": 1027,
+        "r_addend": "0x3037628"
+      },
+      "vtable_base": "0x3037628",
+      "constructor_vptr_adjustment": "vtable_base + 0x10",
+      "object_vptr": "0x3037638",
+      "virtual_slot_offset": "0x30",
+      "callback_word_va": "0x3037668",
+      "callback_word_raw_hex": "0000000000000000",
+      "callback_word_relocation": {
+        "r_info": "0x403",
+        "type": 1027,
+        "r_addend": "0x171d40"
+      },
+      "exact_pointer_target": "0x171d40",
+      "function_inventory_size_bytes": 16,
+      "function_sha256": "a7299285992dd56bbad73ee08e60fb5cd530b45ea8cbeab4214f974a3ca0820a",
+      "function_bytes_hex": "288b01b008b946f9000140bdc0035fd6",
+      "disassembly": [
+        "adrp x8, #0x32d6000",
+        "ldr x8, [x8, #0xd70]",
+        "ldr s0, [x8]",
+        "ret"
+      ],
+      "direct_callers": [],
+      "string_references": [],
+      "effect_supported_by_instructions": "Loads f32 from *(u64*)0x32d6d70 into s0 and returns; does not read the candidate or arguments.",
+      "semantic_label": "CAT: no-hit/default query scalar in the 0x157270 caller; no source name proves the label."
+    },
+    {
+      "candidate_constructor": "0x172090",
+      "constructor_callers": ["0x156d70", "0x156e30", "0x162a30"],
+      "constructor_global_load": "0x32d7180",
+      "global_slot_raw_word_hex": "0000000000000000",
+      "global_slot_relocation": {
+        "type": 1027,
+        "r_addend": "0x3037698"
+      },
+      "vtable_base": "0x3037698",
+      "constructor_vptr_adjustment": "vtable_base + 0x10",
+      "object_vptr": "0x30376a8",
+      "virtual_slot_offset": "0x30",
+      "callback_word_va": "0x30376d8",
+      "callback_word_raw_hex": "0000000000000000",
+      "callback_word_relocation": {
+        "r_info": "0x403",
+        "type": 1027,
+        "r_addend": "0x172740"
+      },
+      "exact_pointer_target": "0x172740",
+      "target_role": "Grid accessor; direct callers include 0x1577a0, 0x164ed0 and 0x164fa0."
+    }
+  ],
+  "shared_scalar_source": {
+    "global_pointer_slot": "0x32d6d70",
+    "slot_raw_word_hex": "0000000000000000",
+    "slot_relocation": {
+      "r_info": "0x403",
+      "type": 1027,
+      "r_addend": "0x29ee40c"
+    },
+    "constant_va": "0x29ee40c",
+    "first_16_bytes_hex": "0000fac30000c842ae47e13d00002041",
+    "first_four_f32_values": [-500.0, 100.0, 0.10999999940395355, 10.0],
+    "callback_return_value": -500.0
+  },
+  "iterator_effect": {
+    "function": "0x157270",
+    "initial_accumulator_va": "0x29d5cd4",
+    "initial_accumulator_f32": -500.0,
+    "callback_compare": "fcmp current_s8, candidate_s0; b.pl keeps current, otherwise stores candidate status and candidate_s0",
+    "aggregate": "maximum of the initial -500.0 value and candidate f32 returns",
+    "effect_of_0x171450_and_0x171d40": "Each returns -500.0, equal to the initial accumulator; these entries leave both accumulator and status unchanged in this iterator path."
+  },
+  "relocation_cross_checks": {
+    "code_pointer_array_artifact": "output/binary/code_pointer_arrays.json",
+    "constructor_metadata_sources": ["0x1711d0", "0x171bc0", "0x172090"],
+    "candidate_add_path": "0x1868c0 -> 0x157060",
+    "candidate_iterator": "0x157270",
+    "function_symbols": {
+      "0x171450": {"size": 16, "direct_callers": [], "string_refs": 0},
+      "0x171d40": {"size": 16, "direct_callers": [], "string_refs": 0}
+    }
+  },
+  "runtime_status": {
+    "exact_slot_targets_resolved": true,
+    "callback_body_behavior_resolved": true,
+    "no_hit_semantic_name": "inferred from the caller's -500 initialization and greater-than update rule",
+    "full_world_query": "OPEN: live root/grid/query list/candidate population and runtime lifecycle remain unavailable",
+    "native_execution_performed": false,
+    "synthetic_fixture_used": false,
+    "emulator_fault_claimed_as_gameplay": false
+  },
+  "evidence_labels": ["EF", "TBL", "STRUCT", "PSEUDO", "NATIVE", "CAT", "OPEN"],
+  "references": [
+    "docs/PLAYER_COLLIDER_QUERY_CANDIDATE_PRODUCER_FOLLOWUP_20261107.md",
+    "docs/PLAYER_COLLIDER_QUERY_INIT_FOLLOWUP_20261107.md",
+    "output/binary/analysis_decomp/157270.c",
+    "output/binary/analysis_decomp/1711d0.c",
+    "output/binary/analysis_decomp/171bc0.c",
+    "output/binary/analysis_decomp/172090.c",
+    "output/binary/analysis_decomp/172740.c",
+    "output/binary/elf.json",
+    "output/binary/function_inventory.json",
+    "output/binary/code_pointer_arrays.json",
+    "output/native_modules/relocation_verification.json",
+    "inputs/additional_exefs/main"
+  ],
+  "limitations": [
+    "The exact callback pointer targets and machine behavior are static findings; no live query was run.",
+    "The no-hit label is an interpretation of this caller's accumulator semantics, not a source string or recovered class name.",
+    "Direct caller analysis cannot name a vtable-only callback caller; there are no direct call instructions to either target.",
+    "The complete query still lacks live world initialization, grid data, readiness, and actual candidate population.",
+    "The independent prior sandbox fault at 0x172780 remains an emulator bootstrap/setup boundary, not evidence of a game fault."
+  ]
+}
