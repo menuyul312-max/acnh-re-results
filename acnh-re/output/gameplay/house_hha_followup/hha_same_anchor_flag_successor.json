@@ -1,0 +1,2228 @@
+{
+  "schema": "acnh-re/hha-same-anchor-flag-successor/1",
+  "scope": "Static follow-up for HHA room-grid same-anchor overwrite policy and HHAGradeMailFlag reader/clearer discovery. It stops before claiming a particular save object's winner or any runtime mail delivery.",
+  "source": {
+    "main_nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+    "indexed_build_match": true,
+    "index_database": "/workspace/acnh-re/output/index.sqlite"
+  },
+  "same_anchor": {
+    "hha_read_route": [
+      "0x7b1fe0",
+      "0xa13fe0",
+      "0x52f220",
+      "0x52d640"
+    ],
+    "cell_value": "one signed short; no owner list or all-items enumeration is returned",
+    "room_grid_writer_routes": {
+      "insert_replace": {
+        "room_context_wrapper": "0xa14320",
+        "wrapper_target": "0x52f270",
+        "implementation": "0x52d980",
+        "anchor_write": "0x52d980 calls 0x52df00 with incoming descriptor at the anchor after validating the incoming descriptor; anchor path does not inspect or compare the prior cell value.",
+        "winner_rule": "Among accepted writes that target the same anchor through this route, the last 0x52df00 assignment wins."
+      },
+      "occupied_cell_update": {
+        "room_context_wrapper": "0xa144b0 / 0x63ca90",
+        "wrapper_target": "0x52f280",
+        "implementation": "0x52e0a0 -> 0x52e360 -> 0x52df00",
+        "gate": "Skips a cell whose current value is -2. For a non--2 cell, if 0xf58e20 recognizes the existing descriptor it updates the rectangle; otherwise only -3 enters the alternate-grid fallback, and other values skip.",
+        "winner_rule": "An accepted update also overwrites the target cell, but this is a guarded update path rather than proof of initial room population order."
+      }
+    },
+    "setter_inventory": {
+      "0x52f220": [
+        {
+          "call_pc": "0xa14074",
+          "owner_va": "0xa13fe0",
+          "owner_name": "FUN_00b13fe0",
+          "instruction": "BL"
+        }
+      ],
+      "0x52d640": [
+        {
+          "call_pc": "0x4dbc54",
+          "owner_va": "0x4dba80",
+          "owner_name": "FUN_005dba80",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x52eb80",
+          "owner_va": "0x52eb40",
+          "owner_name": "FUN_0062eb40",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x52ec28",
+          "owner_va": "0x52ebf0",
+          "owner_name": "FUN_0062ebf0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x52ed68",
+          "owner_va": "0x52ed30",
+          "owner_name": "FUN_0062ed30",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x52f1e4",
+          "owner_va": "0x52f1a0",
+          "owner_name": "FUN_0062f1a0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x52f248",
+          "owner_va": "0x52f220",
+          "owner_name": "FUN_0062f220",
+          "instruction": "BL"
+        }
+      ],
+      "0x52f270": [
+        {
+          "call_pc": "0x55440c",
+          "owner_va": "0x554300",
+          "owner_name": "FUN_00654300",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x55c33c",
+          "owner_va": "0x55c230",
+          "owner_name": "FUN_0065c230",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x55cd98",
+          "owner_va": "0x55cc60",
+          "owner_name": "FUN_0065cc60",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xa143c8",
+          "owner_va": "0xa14320",
+          "owner_name": "FUN_00b14320",
+          "instruction": "B_to_function_entry"
+        },
+        {
+          "call_pc": "0xd9f66c",
+          "owner_va": "0xd9f5a0",
+          "owner_name": "FUN_00e9f5a0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xd9f838",
+          "owner_va": "0xd9f770",
+          "owner_name": "FUN_00e9f770",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xd9fa1c",
+          "owner_va": "0xd9f970",
+          "owner_name": "FUN_00e9f970",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xda0054",
+          "owner_va": "0xd9ff60",
+          "owner_name": "FUN_00e9ff60",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xda0210",
+          "owner_va": "0xda0100",
+          "owner_name": "FUN_00ea0100",
+          "instruction": "BL"
+        }
+      ],
+      "0x52f280": [
+        {
+          "call_pc": "0x63caf8",
+          "owner_va": "0x63ca90",
+          "owner_name": "FUN_0073ca90",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xa1451c",
+          "owner_va": "0xa144b0",
+          "owner_name": "FUN_00b144b0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xd95010",
+          "owner_va": "0xd94f40",
+          "owner_name": "FUN_00e94f40",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xd9f63c",
+          "owner_va": "0xd9f5a0",
+          "owner_name": "FUN_00e9f5a0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xd9f808",
+          "owner_va": "0xd9f770",
+          "owner_name": "FUN_00e9f770",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xd9fa04",
+          "owner_va": "0xd9f970",
+          "owner_name": "FUN_00e9f970",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xd9fb8c",
+          "owner_va": "0xd9faf0",
+          "owner_name": "FUN_00e9faf0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xda0024",
+          "owner_va": "0xd9ff60",
+          "owner_name": "FUN_00e9ff60",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xda01e0",
+          "owner_va": "0xda0100",
+          "owner_name": "FUN_00ea0100",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x10e1488",
+          "owner_va": "0x10e1320",
+          "owner_name": "FUN_011e1320",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x10e14cc",
+          "owner_va": "0x10e1320",
+          "owner_name": "FUN_011e1320",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x10e1564",
+          "owner_va": "0x10e1320",
+          "owner_name": "FUN_011e1320",
+          "instruction": "BL"
+        }
+      ],
+      "0x52d980": [
+        {
+          "call_pc": "0x52f278",
+          "owner_va": "0x52f270",
+          "owner_name": "FUN_0062f270",
+          "instruction": "B_to_function_entry"
+        }
+      ],
+      "0x52e0a0": [
+        {
+          "call_pc": "0x52f288",
+          "owner_va": "0x52f280",
+          "owner_name": "FUN_0062f280",
+          "instruction": "B_to_function_entry"
+        }
+      ],
+      "0x52e360": [
+        {
+          "call_pc": "0x52e208",
+          "owner_va": "0x52e0a0",
+          "owner_name": "FUN_0062e0a0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x52e320",
+          "owner_va": "0x52e0a0",
+          "owner_name": "FUN_0062e0a0",
+          "instruction": "BL"
+        }
+      ],
+      "0x52df00": [
+        {
+          "call_pc": "0x52daf4",
+          "owner_va": "0x52d980",
+          "owner_name": "FUN_0062d980",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x52db54",
+          "owner_va": "0x52d980",
+          "owner_name": "FUN_0062d980",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x52e540",
+          "owner_va": "0x52e360",
+          "owner_name": "FUN_0062e360",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x52e5f0",
+          "owner_va": "0x52e360",
+          "owner_name": "FUN_0062e360",
+          "instruction": "BL"
+        }
+      ],
+      "0xa14320": [
+        {
+          "call_pc": "0x4ad400",
+          "owner_va": "0x4ad3b0",
+          "owner_name": "FUN_005ad3b0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x4b3b4c",
+          "owner_va": "0x4b3490",
+          "owner_name": "FUN_005b3490",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x4b43d4",
+          "owner_va": "0x4b3490",
+          "owner_name": "FUN_005b3490",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x4b4bbc",
+          "owner_va": "0x4b3490",
+          "owner_name": "FUN_005b3490",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x4b4cc8",
+          "owner_va": "0x4b3490",
+          "owner_name": "FUN_005b3490",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x4b4ee0",
+          "owner_va": "0x4b3490",
+          "owner_name": "FUN_005b3490",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x55dc2c",
+          "owner_va": "0x55db00",
+          "owner_name": "FUN_0065db00",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x5603f8",
+          "owner_va": "0x5602a0",
+          "owner_name": "FUN_006602a0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x562004",
+          "owner_va": "0x5618e0",
+          "owner_name": "FUN_006618e0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x61f7cc",
+          "owner_va": "0x61f470",
+          "owner_name": "FUN_0071f470",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x621218",
+          "owner_va": "0x6210f0",
+          "owner_name": "FUN_007210f0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x63c8f4",
+          "owner_va": "0x63c8f0",
+          "owner_name": "FUN_0073c8f0",
+          "instruction": "B_to_function_entry"
+        },
+        {
+          "call_pc": "0x63c970",
+          "owner_va": "0x63c900",
+          "owner_name": "FUN_0073c900",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x63d6c4",
+          "owner_va": "0x63d670",
+          "owner_name": "FUN_0073d670",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xa14488",
+          "owner_va": "0xa143f0",
+          "owner_name": "FUN_00b143f0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xd7133c",
+          "owner_va": "0xd71170",
+          "owner_name": "FUN_00e71170",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xda11dc",
+          "owner_va": "0xda1150",
+          "owner_name": "FUN_00ea1150",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xf95eec",
+          "owner_va": "0xf95e60",
+          "owner_name": "FUN_01095e60",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xfccc50",
+          "owner_va": "0xfccbb0",
+          "owner_name": "FUN_010ccbb0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xfcd468",
+          "owner_va": "0xfcd180",
+          "owner_name": "FUN_010cd180",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xfd13cc",
+          "owner_va": "0xfd11d0",
+          "owner_name": "FUN_010d11d0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xfd1508",
+          "owner_va": "0xfd11d0",
+          "owner_name": "FUN_010d11d0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xfd1590",
+          "owner_va": "0xfd11d0",
+          "owner_name": "FUN_010d11d0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x10c3b04",
+          "owner_va": "0x10c38e0",
+          "owner_name": "FUN_011c38e0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x10e2b64",
+          "owner_va": "0x10e2ae0",
+          "owner_name": "FUN_011e2ae0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x10e3f28",
+          "owner_va": "0x10e3e40",
+          "owner_name": "FUN_011e3e40",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x10e3fc0",
+          "owner_va": "0x10e3e40",
+          "owner_name": "FUN_011e3e40",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x10e40d8",
+          "owner_va": "0x10e3ff0",
+          "owner_name": "FUN_011e3ff0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x10e4170",
+          "owner_va": "0x10e3ff0",
+          "owner_name": "FUN_011e3ff0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x10e41f4",
+          "owner_va": "0x10e3ff0",
+          "owner_name": "FUN_011e3ff0",
+          "instruction": "BL"
+        }
+      ],
+      "0xa144b0": [
+        {
+          "call_pc": "0x489760",
+          "owner_va": "0x4896e0",
+          "owner_name": "FUN_005896e0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x4ad308",
+          "owner_va": "0x4ad290",
+          "owner_name": "FUN_005ad290",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x4aea10",
+          "owner_va": "0x4ae640",
+          "owner_name": "FUN_005ae640",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x4aebc4",
+          "owner_va": "0x4ae640",
+          "owner_name": "FUN_005ae640",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x4afca8",
+          "owner_va": "0x4ae640",
+          "owner_name": "FUN_005ae640",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x4afd48",
+          "owner_va": "0x4ae640",
+          "owner_name": "FUN_005ae640",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x4afdf0",
+          "owner_va": "0x4ae640",
+          "owner_name": "FUN_005ae640",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x4b07d4",
+          "owner_va": "0x4ae640",
+          "owner_name": "FUN_005ae640",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x4b4ec4",
+          "owner_va": "0x4b3490",
+          "owner_name": "FUN_005b3490",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x4b4fc0",
+          "owner_va": "0x4b3490",
+          "owner_name": "FUN_005b3490",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x4b53ac",
+          "owner_va": "0x4b5280",
+          "owner_name": "FUN_005b5280",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x4b54ec",
+          "owner_va": "0x4b5400",
+          "owner_name": "FUN_005b5400",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x530db0",
+          "owner_va": "0x530a40",
+          "owner_name": "FUN_00630a40",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x5fd520",
+          "owner_va": "0x5fd370",
+          "owner_name": "FUN_006fd370",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x5fd73c",
+          "owner_va": "0x5fd5f0",
+          "owner_name": "FUN_006fd5f0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x5fd8e4",
+          "owner_va": "0x5fd5f0",
+          "owner_name": "FUN_006fd5f0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x5fd994",
+          "owner_va": "0x5fd5f0",
+          "owner_name": "FUN_006fd5f0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x5fda7c",
+          "owner_va": "0x5fda00",
+          "owner_name": "FUN_006fda00",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x5fe7e4",
+          "owner_va": "0x5fe690",
+          "owner_name": "FUN_006fe690",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x5fe894",
+          "owner_va": "0x5fe690",
+          "owner_name": "FUN_006fe690",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x5fe8f4",
+          "owner_va": "0x5fe690",
+          "owner_name": "FUN_006fe690",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x5ffd68",
+          "owner_va": "0x5ff7f0",
+          "owner_name": "FUN_006ff7f0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x6000f8",
+          "owner_va": "0x5ff7f0",
+          "owner_name": "FUN_006ff7f0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x6007b8",
+          "owner_va": "0x5ff7f0",
+          "owner_name": "FUN_006ff7f0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x61f064",
+          "owner_va": "0x61eda0",
+          "owner_name": "FUN_0071eda0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x621068",
+          "owner_va": "0x620f10",
+          "owner_name": "FUN_00720f10",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x64114c",
+          "owner_va": "0x641080",
+          "owner_name": "FUN_00741080",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x648b1c",
+          "owner_va": "0x648980",
+          "owner_name": "FUN_00748980",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x648bc4",
+          "owner_va": "0x648980",
+          "owner_name": "FUN_00748980",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x65bf6c",
+          "owner_va": "0x65bdc0",
+          "owner_name": "FUN_0075bdc0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x65bfdc",
+          "owner_va": "0x65bdc0",
+          "owner_name": "FUN_0075bdc0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x65c04c",
+          "owner_va": "0x65bdc0",
+          "owner_name": "FUN_0075bdc0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x65c0bc",
+          "owner_va": "0x65bdc0",
+          "owner_name": "FUN_0075bdc0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x65c12c",
+          "owner_va": "0x65bdc0",
+          "owner_name": "FUN_0075bdc0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x65c19c",
+          "owner_va": "0x65bdc0",
+          "owner_name": "FUN_0075bdc0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x65c20c",
+          "owner_va": "0x65bdc0",
+          "owner_name": "FUN_0075bdc0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x65c2b8",
+          "owner_va": "0x65bdc0",
+          "owner_name": "FUN_0075bdc0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x65c32c",
+          "owner_va": "0x65bdc0",
+          "owner_name": "FUN_0075bdc0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x65c370",
+          "owner_va": "0x65bdc0",
+          "owner_name": "FUN_0075bdc0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x65c78c",
+          "owner_va": "0x65c510",
+          "owner_name": "FUN_0075c510",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x65c8e0",
+          "owner_va": "0x65c510",
+          "owner_name": "FUN_0075c510",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x65ca24",
+          "owner_va": "0x65c510",
+          "owner_name": "FUN_0075c510",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x7adfe0",
+          "owner_va": "0x7adc80",
+          "owner_name": "FUN_008adc80",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xd712e8",
+          "owner_va": "0xd71170",
+          "owner_name": "FUN_00e71170",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xd71c98",
+          "owner_va": "0xd71b80",
+          "owner_name": "FUN_00e71b80",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xd73260",
+          "owner_va": "0xd73040",
+          "owner_name": "FUN_00e73040",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xd905cc",
+          "owner_va": "0xd90490",
+          "owner_name": "FUN_00e90490",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xd906d4",
+          "owner_va": "0xd90640",
+          "owner_name": "FUN_00e90640",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xd91328",
+          "owner_va": "0xd91170",
+          "owner_name": "FUN_00e91170",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xd91380",
+          "owner_va": "0xd91170",
+          "owner_name": "FUN_00e91170",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xd91d58",
+          "owner_va": "0xd91ba0",
+          "owner_name": "FUN_00e91ba0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xd91db0",
+          "owner_va": "0xd91ba0",
+          "owner_name": "FUN_00e91ba0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xd92d08",
+          "owner_va": "0xd92b50",
+          "owner_name": "FUN_00e92b50",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xd92d60",
+          "owner_va": "0xd92b50",
+          "owner_name": "FUN_00e92b50",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xda11ac",
+          "owner_va": "0xda1150",
+          "owner_name": "FUN_00ea1150",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xda2ccc",
+          "owner_va": "0xda2c30",
+          "owner_name": "FUN_00ea2c30",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xee884c",
+          "owner_va": "0xee8640",
+          "owner_name": "FUN_00fe8640",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xf95ed0",
+          "owner_va": "0xf95e60",
+          "owner_name": "FUN_01095e60",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xfbc0c8",
+          "owner_va": "0xfbc020",
+          "owner_name": "FUN_010bc020",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xfbc3b0",
+          "owner_va": "0xfbc320",
+          "owner_name": "FUN_010bc320",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x10c3bec",
+          "owner_va": "0x10c3b80",
+          "owner_name": "FUN_011c3b80",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x1104970",
+          "owner_va": "0x1104920",
+          "owner_name": "FUN_01204920",
+          "instruction": "BL"
+        }
+      ],
+      "0x63ca90": [
+        {
+          "call_pc": "0x600188",
+          "owner_va": "0x5ff7f0",
+          "owner_name": "FUN_006ff7f0",
+          "instruction": "BL"
+        }
+      ]
+    },
+    "observed_room_update_loop": {
+      "native_function_va": "0x5ff7f0",
+      "direct_call_pc": "0x600188",
+      "call_target": "0x63ca90",
+      "call_site_setup": [
+        "x1 is the immediate room index 1",
+        "x2 is a pointer to the current generated 0x38-byte spatial row + 8",
+        "the enclosing loop increments its row counter and stops at a generated count"
+      ],
+      "direct_callers_of_loop": [
+        "0x600f30",
+        "0x6010b0",
+        "0x601230"
+      ],
+      "limit": "This proves a room-grid update path over generated spatial rows, not the order in which saved furniture objects are initially loaded into a room grid."
+    },
+    "resolved": "The cell is last-accepted-writer-wins on the traced setter paths when their gates pass; the data structure has no intrinsic score/priority comparison at the anchor.",
+    "unresolved": "Static evidence does not establish which saved furniture object is inserted last during room initialization. The 0x5ff7f0 loop writes generated spatial rows but is not tied to the initial saved-furniture loader sequence."
+  },
+  "saved_byte_descriptor_aliases": {
+    "field": "SavePlayerHouse +0x263d0",
+    "save_record": {
+      "local_node": "0x17cd48",
+      "local_data": "0x2dbaa0",
+      "size": "0x26400",
+      "external_matches": [
+        {
+          "path": "SaveLand.PlayerHouseList.HouseList[0]",
+          "type": "::Game::SavePlayerHouse",
+          "kind": "struct_size"
+        }
+      ]
+    },
+    "one_byte_descriptor": {
+      "vtable": "0x30e44a0",
+      "sample_node": "0x18b058",
+      "sample_data": "0x301e70",
+      "sample_offset_in_save_record": "0x263d0",
+      "size": "0x1",
+      "instances": 16,
+      "external_match_status": "no_exact_path",
+      "external_matches": []
+    },
+    "overlapping_two_byte_descriptor": {
+      "vtable": "0x30e98d0",
+      "sample_node": "0x18b020",
+      "sample_data": "0x301e70",
+      "size": "0x2",
+      "instances": 8,
+      "external_match_status": "field_only_candidate",
+      "external_matches": [
+        {
+          "path": "SaveLand.PlayerHouseList.HouseList[0].PlayerList[0]",
+          "type": "primitive",
+          "kind": "field_size"
+        }
+      ],
+      "candidate_alias": "SaveLand.PlayerHouseList.HouseList[0].PlayerList[0]",
+      "confidence": "Cross-version primitive field-size match only. The local one-byte descriptor itself remains unnamed; this does not prove PlayerList semantics for the byte."
+    },
+    "native_uses": {
+      "0xf95610": "signed char read at +0x263d0",
+      "0xf949c0": "uses signed char at +0x263d0 during house-level update",
+      "0xf95ba0": "compares a candidate against signed chars at +0x263d0 and +0x263d1",
+      "0xf95ca0": "serializes +0x263d0 and +0x263d1 separately when non--1"
+    },
+    "semantic_alias_proven": false
+  },
+  "grade_flag_accessor_coverage": {
+    "key": "cPlayer:HHAGradeMailFlag",
+    "exact_string_xrefs": [
+      {
+        "string_va": "0x292e423",
+        "function_va": "0x7b1fe0"
+      }
+    ],
+    "native_flag_index": {
+      "referencing_functions": [
+        "0x7b1fe0"
+      ],
+      "pseudocode_readings": {}
+    },
+    "eventflow_index": {
+      "readers": [],
+      "writers": [],
+      "actions_mentioning_key": []
+    },
+    "generic_flag_accessors": {
+      "0xf4aff0": {
+        "direct_callsites": [
+          {
+            "call_pc": "0xf12cc",
+            "owner_va": "0xf11b0",
+            "owner_name": "FUN_001f11b0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x40ed70",
+            "owner_va": "0x40eb80",
+            "owner_name": "FUN_0050eb80",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x42e220",
+            "owner_va": "0x42e1d0",
+            "owner_name": "FUN_0052e1d0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x4b025c",
+            "owner_va": "0x4ae640",
+            "owner_name": "FUN_005ae640",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x4b02e0",
+            "owner_va": "0x4ae640",
+            "owner_name": "FUN_005ae640",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x4b0364",
+            "owner_va": "0x4ae640",
+            "owner_name": "FUN_005ae640",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x4b03e8",
+            "owner_va": "0x4ae640",
+            "owner_name": "FUN_005ae640",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x4b046c",
+            "owner_va": "0x4ae640",
+            "owner_name": "FUN_005ae640",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x4b04ec",
+            "owner_va": "0x4ae640",
+            "owner_name": "FUN_005ae640",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x4b0570",
+            "owner_va": "0x4ae640",
+            "owner_name": "FUN_005ae640",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x4b05f4",
+            "owner_va": "0x4ae640",
+            "owner_name": "FUN_005ae640",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x4b1a1c",
+            "owner_va": "0x4ae640",
+            "owner_name": "FUN_005ae640",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x4b2980",
+            "owner_va": "0x4b25c0",
+            "owner_name": "FUN_005b25c0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x7b4378",
+            "owner_va": "0x7b4330",
+            "owner_name": "FUN_008b4330",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x7b43ac",
+            "owner_va": "0x7b4330",
+            "owner_name": "FUN_008b4330",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x7b43e0",
+            "owner_va": "0x7b4330",
+            "owner_name": "FUN_008b4330",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x7b4414",
+            "owner_va": "0x7b4330",
+            "owner_name": "FUN_008b4330",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x7b4448",
+            "owner_va": "0x7b4330",
+            "owner_name": "FUN_008b4330",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x7b447c",
+            "owner_va": "0x7b4330",
+            "owner_name": "FUN_008b4330",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x7b5108",
+            "owner_va": "0x7b4fc0",
+            "owner_name": "FUN_008b4fc0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x7b5ed8",
+            "owner_va": "0x7b5e60",
+            "owner_name": "FUN_008b5e60",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x7b5f14",
+            "owner_va": "0x7b5e60",
+            "owner_name": "FUN_008b5e60",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x7b5f54",
+            "owner_va": "0x7b5e60",
+            "owner_name": "FUN_008b5e60",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x7b5f90",
+            "owner_va": "0x7b5e60",
+            "owner_name": "FUN_008b5e60",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x7b5fcc",
+            "owner_va": "0x7b5e60",
+            "owner_name": "FUN_008b5e60",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xca6a5c",
+            "owner_va": "0xca67a0",
+            "owner_name": "FUN_00da67a0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xcf73f0",
+            "owner_va": "0xcf71e0",
+            "owner_name": "FUN_00df71e0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf4b0b8",
+            "owner_va": "0xf4b0b0",
+            "owner_name": "FUN_0104b0b0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf54838",
+            "owner_va": "0xf545f0",
+            "owner_name": "FUN_010545f0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf5578c",
+            "owner_va": "0xf545f0",
+            "owner_name": "FUN_010545f0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf557a0",
+            "owner_va": "0xf545f0",
+            "owner_name": "FUN_010545f0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf557f4",
+            "owner_va": "0xf545f0",
+            "owner_name": "FUN_010545f0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf55808",
+            "owner_va": "0xf545f0",
+            "owner_name": "FUN_010545f0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf55860",
+            "owner_va": "0xf545f0",
+            "owner_name": "FUN_010545f0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf55874",
+            "owner_va": "0xf545f0",
+            "owner_name": "FUN_010545f0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf558cc",
+            "owner_va": "0xf545f0",
+            "owner_name": "FUN_010545f0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf558e0",
+            "owner_va": "0xf545f0",
+            "owner_name": "FUN_010545f0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf55938",
+            "owner_va": "0xf545f0",
+            "owner_name": "FUN_010545f0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf5594c",
+            "owner_va": "0xf545f0",
+            "owner_name": "FUN_010545f0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf559a0",
+            "owner_va": "0xf545f0",
+            "owner_name": "FUN_010545f0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf559b4",
+            "owner_va": "0xf545f0",
+            "owner_name": "FUN_010545f0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf55a0c",
+            "owner_va": "0xf545f0",
+            "owner_name": "FUN_010545f0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf55a20",
+            "owner_va": "0xf545f0",
+            "owner_name": "FUN_010545f0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf55a78",
+            "owner_va": "0xf545f0",
+            "owner_name": "FUN_010545f0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf55a8c",
+            "owner_va": "0xf545f0",
+            "owner_name": "FUN_010545f0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf68654",
+            "owner_va": "0xf68560",
+            "owner_name": "FUN_01068560",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xfa61a0",
+            "owner_va": "0xfa60c0",
+            "owner_name": "FUN_010a60c0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xfa6234",
+            "owner_va": "0xfa60c0",
+            "owner_name": "FUN_010a60c0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xfa7248",
+            "owner_va": "0xfa7110",
+            "owner_name": "FUN_010a7110",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xfa7478",
+            "owner_va": "0xfa7340",
+            "owner_name": "FUN_010a7340",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xfa7ffc",
+            "owner_va": "0xfa7f70",
+            "owner_name": "FUN_010a7f70",
+            "instruction": "BL"
+          }
+        ],
+        "indexed_code_pointer_array_hits": []
+      },
+      "0xf4b0d0": {
+        "direct_callsites": [
+          {
+            "call_pc": "0x2bb63c",
+            "owner_va": "0x2bb5b0",
+            "owner_name": "FUN_003bb5b0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x2bb690",
+            "owner_va": "0x2bb5b0",
+            "owner_name": "FUN_003bb5b0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x2bb6e4",
+            "owner_va": "0x2bb5b0",
+            "owner_name": "FUN_003bb5b0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x2bb738",
+            "owner_va": "0x2bb5b0",
+            "owner_name": "FUN_003bb5b0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x2bb78c",
+            "owner_va": "0x2bb5b0",
+            "owner_name": "FUN_003bb5b0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x2bb7dc",
+            "owner_va": "0x2bb5b0",
+            "owner_name": "FUN_003bb5b0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x2bb830",
+            "owner_va": "0x2bb5b0",
+            "owner_name": "FUN_003bb5b0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x2bb884",
+            "owner_va": "0x2bb5b0",
+            "owner_name": "FUN_003bb5b0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x2f7328",
+            "owner_va": "0x2f7280",
+            "owner_name": "FUN_003f7280",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x2fa280",
+            "owner_va": "0x2fa100",
+            "owner_name": "FUN_003fa100",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x2fa29c",
+            "owner_va": "0x2fa100",
+            "owner_name": "FUN_003fa100",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x2fa2b8",
+            "owner_va": "0x2fa100",
+            "owner_name": "FUN_003fa100",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x2fa2d4",
+            "owner_va": "0x2fa100",
+            "owner_name": "FUN_003fa100",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x2fa2f0",
+            "owner_va": "0x2fa100",
+            "owner_name": "FUN_003fa100",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x2fa32c",
+            "owner_va": "0x2fa100",
+            "owner_name": "FUN_003fa100",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x2fa348",
+            "owner_va": "0x2fa100",
+            "owner_name": "FUN_003fa100",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x2fa364",
+            "owner_va": "0x2fa100",
+            "owner_name": "FUN_003fa100",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x2fa380",
+            "owner_va": "0x2fa100",
+            "owner_name": "FUN_003fa100",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x2fa39c",
+            "owner_va": "0x2fa100",
+            "owner_name": "FUN_003fa100",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x2fa3d8",
+            "owner_va": "0x2fa100",
+            "owner_name": "FUN_003fa100",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x2fa3f4",
+            "owner_va": "0x2fa100",
+            "owner_name": "FUN_003fa100",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x2fa410",
+            "owner_va": "0x2fa100",
+            "owner_name": "FUN_003fa100",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x2fa42c",
+            "owner_va": "0x2fa100",
+            "owner_name": "FUN_003fa100",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x2fa448",
+            "owner_va": "0x2fa100",
+            "owner_name": "FUN_003fa100",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x2fa484",
+            "owner_va": "0x2fa100",
+            "owner_name": "FUN_003fa100",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x2fa4a0",
+            "owner_va": "0x2fa100",
+            "owner_name": "FUN_003fa100",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x2fa4bc",
+            "owner_va": "0x2fa100",
+            "owner_name": "FUN_003fa100",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x2fa4d8",
+            "owner_va": "0x2fa100",
+            "owner_name": "FUN_003fa100",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x2fa4f4",
+            "owner_va": "0x2fa100",
+            "owner_name": "FUN_003fa100",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x2fa530",
+            "owner_va": "0x2fa100",
+            "owner_name": "FUN_003fa100",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x2fa54c",
+            "owner_va": "0x2fa100",
+            "owner_name": "FUN_003fa100",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x2fa568",
+            "owner_va": "0x2fa100",
+            "owner_name": "FUN_003fa100",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x2fa584",
+            "owner_va": "0x2fa100",
+            "owner_name": "FUN_003fa100",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x2fa5a0",
+            "owner_va": "0x2fa100",
+            "owner_name": "FUN_003fa100",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x2fa5d8",
+            "owner_va": "0x2fa100",
+            "owner_name": "FUN_003fa100",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x2fa5f4",
+            "owner_va": "0x2fa100",
+            "owner_name": "FUN_003fa100",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x2fa610",
+            "owner_va": "0x2fa100",
+            "owner_name": "FUN_003fa100",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x2fa62c",
+            "owner_va": "0x2fa100",
+            "owner_name": "FUN_003fa100",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x2fa648",
+            "owner_va": "0x2fa100",
+            "owner_name": "FUN_003fa100",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x2fa684",
+            "owner_va": "0x2fa100",
+            "owner_name": "FUN_003fa100",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x2fa6a0",
+            "owner_va": "0x2fa100",
+            "owner_name": "FUN_003fa100",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x2fa6bc",
+            "owner_va": "0x2fa100",
+            "owner_name": "FUN_003fa100",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x2fa6d8",
+            "owner_va": "0x2fa100",
+            "owner_name": "FUN_003fa100",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x2fa6f4",
+            "owner_va": "0x2fa100",
+            "owner_name": "FUN_003fa100",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x2fa730",
+            "owner_va": "0x2fa100",
+            "owner_name": "FUN_003fa100",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x2fa74c",
+            "owner_va": "0x2fa100",
+            "owner_name": "FUN_003fa100",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x2fa768",
+            "owner_va": "0x2fa100",
+            "owner_name": "FUN_003fa100",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x2fa784",
+            "owner_va": "0x2fa100",
+            "owner_name": "FUN_003fa100",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x2fa7a0",
+            "owner_va": "0x2fa100",
+            "owner_name": "FUN_003fa100",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x4b0284",
+            "owner_va": "0x4ae640",
+            "owner_name": "FUN_005ae640",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x4b02a4",
+            "owner_va": "0x4ae640",
+            "owner_name": "FUN_005ae640",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x4b0308",
+            "owner_va": "0x4ae640",
+            "owner_name": "FUN_005ae640",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x4b0328",
+            "owner_va": "0x4ae640",
+            "owner_name": "FUN_005ae640",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x4b038c",
+            "owner_va": "0x4ae640",
+            "owner_name": "FUN_005ae640",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x4b03ac",
+            "owner_va": "0x4ae640",
+            "owner_name": "FUN_005ae640",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x4b0410",
+            "owner_va": "0x4ae640",
+            "owner_name": "FUN_005ae640",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x4b0430",
+            "owner_va": "0x4ae640",
+            "owner_name": "FUN_005ae640",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x4b0494",
+            "owner_va": "0x4ae640",
+            "owner_name": "FUN_005ae640",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x4b04b4",
+            "owner_va": "0x4ae640",
+            "owner_name": "FUN_005ae640",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x4b0514",
+            "owner_va": "0x4ae640",
+            "owner_name": "FUN_005ae640",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x4b0534",
+            "owner_va": "0x4ae640",
+            "owner_name": "FUN_005ae640",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x4b0598",
+            "owner_va": "0x4ae640",
+            "owner_name": "FUN_005ae640",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x4b05b8",
+            "owner_va": "0x4ae640",
+            "owner_name": "FUN_005ae640",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x4b061c",
+            "owner_va": "0x4ae640",
+            "owner_name": "FUN_005ae640",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x4b063c",
+            "owner_va": "0x4ae640",
+            "owner_name": "FUN_005ae640",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x4ba374",
+            "owner_va": "0x4ba330",
+            "owner_name": "FUN_005ba330",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x4ba390",
+            "owner_va": "0x4ba330",
+            "owner_name": "FUN_005ba330",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x4ba3cc",
+            "owner_va": "0x4ba330",
+            "owner_name": "FUN_005ba330",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x4ba3e8",
+            "owner_va": "0x4ba330",
+            "owner_name": "FUN_005ba330",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x4ba424",
+            "owner_va": "0x4ba330",
+            "owner_name": "FUN_005ba330",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x4ba440",
+            "owner_va": "0x4ba330",
+            "owner_name": "FUN_005ba330",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x4ba47c",
+            "owner_va": "0x4ba330",
+            "owner_name": "FUN_005ba330",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x4ba498",
+            "owner_va": "0x4ba330",
+            "owner_name": "FUN_005ba330",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x4ba4d4",
+            "owner_va": "0x4ba330",
+            "owner_name": "FUN_005ba330",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x4ba4f0",
+            "owner_va": "0x4ba330",
+            "owner_name": "FUN_005ba330",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x4ba528",
+            "owner_va": "0x4ba330",
+            "owner_name": "FUN_005ba330",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x4ba544",
+            "owner_va": "0x4ba330",
+            "owner_name": "FUN_005ba330",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x4ba580",
+            "owner_va": "0x4ba330",
+            "owner_name": "FUN_005ba330",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x4ba59c",
+            "owner_va": "0x4ba330",
+            "owner_name": "FUN_005ba330",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x4ba5d8",
+            "owner_va": "0x4ba330",
+            "owner_name": "FUN_005ba330",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x4ba5f4",
+            "owner_va": "0x4ba330",
+            "owner_name": "FUN_005ba330",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x7b2140",
+            "owner_va": "0x7b1fe0",
+            "owner_name": "FUN_008b1fe0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x7b44e8",
+            "owner_va": "0x7b4330",
+            "owner_name": "FUN_008b4330",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xbe039c",
+            "owner_va": "0xbdfd40",
+            "owner_name": "FUN_00cdfd40",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xeec170",
+            "owner_va": "0xeec0b0",
+            "owner_name": "FUN_00fec0b0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xeec348",
+            "owner_va": "0xeec280",
+            "owner_name": "FUN_00fec280",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf536a0",
+            "owner_va": "0xf535e0",
+            "owner_name": "FUN_010535e0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf53720",
+            "owner_va": "0xf535e0",
+            "owner_name": "FUN_010535e0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf537a4",
+            "owner_va": "0xf535e0",
+            "owner_name": "FUN_010535e0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf53828",
+            "owner_va": "0xf535e0",
+            "owner_name": "FUN_010535e0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf538ac",
+            "owner_va": "0xf535e0",
+            "owner_name": "FUN_010535e0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf5392c",
+            "owner_va": "0xf535e0",
+            "owner_name": "FUN_010535e0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf539b0",
+            "owner_va": "0xf535e0",
+            "owner_name": "FUN_010535e0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf53a34",
+            "owner_va": "0xf535e0",
+            "owner_name": "FUN_010535e0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf548b8",
+            "owner_va": "0xf545f0",
+            "owner_name": "FUN_010545f0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf548d4",
+            "owner_va": "0xf545f0",
+            "owner_name": "FUN_010545f0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf548f0",
+            "owner_va": "0xf545f0",
+            "owner_name": "FUN_010545f0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf5490c",
+            "owner_va": "0xf545f0",
+            "owner_name": "FUN_010545f0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf54928",
+            "owner_va": "0xf545f0",
+            "owner_name": "FUN_010545f0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf54944",
+            "owner_va": "0xf545f0",
+            "owner_name": "FUN_010545f0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf54960",
+            "owner_va": "0xf545f0",
+            "owner_name": "FUN_010545f0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf55198",
+            "owner_va": "0xf545f0",
+            "owner_name": "FUN_010545f0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf551cc",
+            "owner_va": "0xf545f0",
+            "owner_name": "FUN_010545f0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf552e0",
+            "owner_va": "0xf545f0",
+            "owner_name": "FUN_010545f0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf557b4",
+            "owner_va": "0xf545f0",
+            "owner_name": "FUN_010545f0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf557c4",
+            "owner_va": "0xf545f0",
+            "owner_name": "FUN_010545f0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf5581c",
+            "owner_va": "0xf545f0",
+            "owner_name": "FUN_010545f0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf5582c",
+            "owner_va": "0xf545f0",
+            "owner_name": "FUN_010545f0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf55888",
+            "owner_va": "0xf545f0",
+            "owner_name": "FUN_010545f0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf55898",
+            "owner_va": "0xf545f0",
+            "owner_name": "FUN_010545f0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf558f4",
+            "owner_va": "0xf545f0",
+            "owner_name": "FUN_010545f0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf55904",
+            "owner_va": "0xf545f0",
+            "owner_name": "FUN_010545f0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf55960",
+            "owner_va": "0xf545f0",
+            "owner_name": "FUN_010545f0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf55970",
+            "owner_va": "0xf545f0",
+            "owner_name": "FUN_010545f0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf559c8",
+            "owner_va": "0xf545f0",
+            "owner_name": "FUN_010545f0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf559d8",
+            "owner_va": "0xf545f0",
+            "owner_name": "FUN_010545f0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf55a34",
+            "owner_va": "0xf545f0",
+            "owner_name": "FUN_010545f0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf55a44",
+            "owner_va": "0xf545f0",
+            "owner_name": "FUN_010545f0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf55aa0",
+            "owner_va": "0xf545f0",
+            "owner_name": "FUN_010545f0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf55ab0",
+            "owner_va": "0xf545f0",
+            "owner_name": "FUN_010545f0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf55db0",
+            "owner_va": "0xf545f0",
+            "owner_name": "FUN_010545f0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf55ea8",
+            "owner_va": "0xf545f0",
+            "owner_name": "FUN_010545f0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf91d90",
+            "owner_va": "0xf91b90",
+            "owner_name": "FUN_01091b90",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf91e88",
+            "owner_va": "0xf91b90",
+            "owner_name": "FUN_01091b90",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf91ee4",
+            "owner_va": "0xf91b90",
+            "owner_name": "FUN_01091b90",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf91efc",
+            "owner_va": "0xf91b90",
+            "owner_name": "FUN_01091b90",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf91f24",
+            "owner_va": "0xf91b90",
+            "owner_name": "FUN_01091b90",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf9203c",
+            "owner_va": "0xf91b90",
+            "owner_name": "FUN_01091b90",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf92070",
+            "owner_va": "0xf91b90",
+            "owner_name": "FUN_01091b90",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf9208c",
+            "owner_va": "0xf91b90",
+            "owner_name": "FUN_01091b90",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf920a8",
+            "owner_va": "0xf91b90",
+            "owner_name": "FUN_01091b90",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf9238c",
+            "owner_va": "0xf920f0",
+            "owner_name": "FUN_010920f0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf923c8",
+            "owner_va": "0xf920f0",
+            "owner_name": "FUN_010920f0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf923f0",
+            "owner_va": "0xf920f0",
+            "owner_name": "FUN_010920f0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf9240c",
+            "owner_va": "0xf920f0",
+            "owner_name": "FUN_010920f0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf92458",
+            "owner_va": "0xf920f0",
+            "owner_name": "FUN_010920f0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf94b2c",
+            "owner_va": "0xf949c0",
+            "owner_name": "FUN_010949c0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf95788",
+            "owner_va": "0xf95620",
+            "owner_name": "FUN_01095620",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf9d680",
+            "owner_va": "0xf9d600",
+            "owner_name": "FUN_0109d600",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xfa2828",
+            "owner_va": "0xfa2760",
+            "owner_name": "FUN_010a2760",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xfa5674",
+            "owner_va": "0xfa54c0",
+            "owner_name": "FUN_010a54c0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xfa723c",
+            "owner_va": "0xfa7110",
+            "owner_name": "FUN_010a7110",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xfa72f4",
+            "owner_va": "0xfa7110",
+            "owner_name": "FUN_010a7110",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xfa746c",
+            "owner_va": "0xfa7340",
+            "owner_name": "FUN_010a7340",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xfa7524",
+            "owner_va": "0xfa7340",
+            "owner_name": "FUN_010a7340",
+            "instruction": "BL"
+          }
+        ],
+        "indexed_code_pointer_array_hits": []
+      },
+      "0xf4b170": {
+        "direct_callsites": [
+          {
+            "call_pc": "0xf4b150",
+            "owner_va": "0xf4b0d0",
+            "owner_name": "FUN_0104b0d0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf4b730",
+            "owner_va": "0xf4b680",
+            "owner_name": "FUN_0104b680",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf4b7b8",
+            "owner_va": "0xf4b750",
+            "owner_name": "FUN_0104b750",
+            "instruction": "B_to_function_entry"
+          },
+          {
+            "call_pc": "0xf4b848",
+            "owner_va": "0xf4b7c0",
+            "owner_name": "FUN_0104b7c0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf4b8f0",
+            "owner_va": "0xf4b870",
+            "owner_name": "FUN_0104b870",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf4b964",
+            "owner_va": "0xf4b870",
+            "owner_name": "FUN_0104b870",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf4b9d8",
+            "owner_va": "0xf4b870",
+            "owner_name": "FUN_0104b870",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf4ba4c",
+            "owner_va": "0xf4b870",
+            "owner_name": "FUN_0104b870",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf4bac0",
+            "owner_va": "0xf4b870",
+            "owner_name": "FUN_0104b870",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf4bb30",
+            "owner_va": "0xf4b870",
+            "owner_name": "FUN_0104b870",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf4bba4",
+            "owner_va": "0xf4b870",
+            "owner_name": "FUN_0104b870",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf4bc18",
+            "owner_va": "0xf4b870",
+            "owner_name": "FUN_0104b870",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf91cf4",
+            "owner_va": "0xf91b90",
+            "owner_name": "FUN_01091b90",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf91df8",
+            "owner_va": "0xf91b90",
+            "owner_name": "FUN_01091b90",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xf91e60",
+            "owner_va": "0xf91b90",
+            "owner_name": "FUN_01091b90",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0xfa96f8",
+            "owner_va": "0xfa9600",
+            "owner_name": "FUN_010a9600",
+            "instruction": "BL"
+          }
+        ],
+        "indexed_code_pointer_array_hits": []
+      }
+    },
+    "crc32_xrefs": {
+      "HHAGradeMailFlag": {
+        "crc32": "0x83dded17",
+        "refs": []
+      },
+      "cPlayer:HHAGradeMailFlag": {
+        "crc32": "0xb6d19b15",
+        "refs": []
+      }
+    },
+    "conclusion": "The exact-name indexed native reference remains only the setter call in 0x7b1fe0. The indexed EventFlow reader/writer lists and action-parameter search are empty, and the checked CRC32 values have no indexed references. Generic native get/set APIs exist and have many unrelated callers; the static corpus does not identify an indirect/dynamic caller that reads or clears this key.",
+    "runtime_needed": "Trace generic flag getter/setter calls with their resolved key and value during one HHA evaluation on the matching build; record before/after state for the same player slot."
+  },
+  "exact_synchronized_capture_needed": {
+    "build": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+    "save_scope": "Same SaveLand/player slot and SavePlayerHouse record before and after a single HHA pass; include bytes +0x263d0 and +0x263d1.",
+    "room_grid": "Capture room index, saved furniture record IDs and coordinates in loader order, then each write to the selected occupancy grid including writer VA, anchor, incoming short descriptor, prior cell value, and resulting cell value; capture the value returned by 0xa13fe0 for that same anchor.",
+    "same_anchor_fixture": "Two recognized furniture descriptors at one anchor, repeated with insertion order reversed while all other save state is fixed. This isolates whether scene/load ordering or item ownership influences the last accepted write.",
+    "flag_and_mail": "In the same timestamped pass, capture resolved HHAGradeMailFlag getter/setter keys and values, raw +0x263d0/+0x263d1 bytes, HHA report queue records, save-backed mail collection counts/slots, and inbox state before and after. Separate mail captures cannot prove a flag-to-mail edge.",
+    "runtime_status": "No synchronized room-grid/save/flag/mail capture is present in the static corpus; no runtime behavior is claimed."
+  }
+}
