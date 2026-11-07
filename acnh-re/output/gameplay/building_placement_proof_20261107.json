@@ -479,7 +479,7 @@
           90
         ]
       ],
-      "claim": "Exact cell-coordinate values in one source preset. Native BuildStructure statically selects a six-list index, stores it as BuildingSiteIndex, and hands the parsed pair into actor-context code. Runtime identity as this StructurePresetA00 instance, story role per index, conversion to world transform/rotation/elevation, and collision remain OPEN; see BUILDING_SITE_INDEX_BLACKBOARD_NATIVE_FOLLOWUP_20261107.md."
+      "claim": "Exact cell-coordinate values in one source preset. Native BuildStructure statically selects a six-list index, stores it as BuildingSiteIndex, and hands the parsed pair into actor-context code. A separate trace proves partial parser conversion to X/Z lanes using 10*n+5 and downstream five-unit grid lookup; runtime identity as this StructurePresetA00 instance, story role per index, global world frame/final transform, and collision remain OPEN; see BUILDING_SITE_INDEX_BLACKBOARD_NATIVE_FOLLOWUP_20261107.md and BUILDING_SITE_WORLD_POSITION_TRANSFORM_FOLLOWUP_20261107.md."
     }
   },
   "placement_lifecycles": [
@@ -1663,7 +1663,7 @@
     {
       "id": "structure_cell_to_world_transform",
       "status": "OPEN",
-      "gap": "No confirmed origin/scale/axis/rotation/elevation transform from template cell coordinates to runtime world coordinates."
+      "gap": "Parser conversion is partly known (adjusted pair to X/Z lanes using 10*n+5, then a five-unit horizontal grid lookup), but no confirmed global origin/frame, physical scale, rotation, elevation, footprint anchor, dynamic vcall target, or final runtime transform from template cells."
     },
     {
       "id": "facility_kind_to_table_uid",
@@ -1706,6 +1706,7 @@
     "placement_transforms_proved": 0,
     "structure_preset_cell_sample_count": 6,
     "raw_model_or_audio_verified": false,
-    "all_unknown_mesh_position_and_collider_joins_marked_open": true
+    "all_unknown_mesh_position_and_collider_joins_marked_open": true,
+    "partial_cell_to_xz_conversion_proved": true
   }
 }

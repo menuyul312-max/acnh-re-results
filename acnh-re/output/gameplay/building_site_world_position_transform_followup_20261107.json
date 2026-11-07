@@ -1,0 +1,111 @@
+{
+  "schema": "acnh-re/1",
+  "title": "Building-site coordinate conversion and actor handoff follow-up",
+  "date": "2026-11-07",
+  "game": "Animal Crossing: New Horizons 1.0.0",
+  "scope": "Static RE of selected BuildStructure site pair through conversion, field-query branches, and component vtable handoff. No game/save/Godot/build execution or mutation.",
+  "input_identity": {
+    "main_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+    "main_nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+    "address_convention": "Raw ELF VAs and PCs are recorded; Ghidra display function labels add 0x100000."
+  },
+  "evidence_levels": {
+    "EF": "Input binary identity and/or raw AArch64 instruction evidence.",
+    "PSEUDO": "Static native decompilation or direct-call flow; not a live gameplay invocation.",
+    "STRUCT": "Argument, field, vector-lane, or grid record shape established from native access patterns.",
+    "OPEN": "Required semantic or runtime join not proven by this trace."
+  },
+  "decompilation_sources": [
+    {"target_va": "0x369d50", "path": "binary/analysis_decomp/369d50.c", "sha256": "b52478377f3cd7d9d9702bcbc474589b0435e48eb699938c67a08e753cbf11c8", "role": "BuildStructure selected-record caller"},
+    {"target_va": "0x4e1670", "path": "binary/analysis_decomp/4e1670.c", "sha256": "d3e36c3b8787af81268fd26e1bc9da826805969b9acb2882355c03591445ebe4", "role": "Selected pair parser and offset adjustment"},
+    {"target_va": "0x568360", "path": "binary/analysis_decomp/568360.c", "sha256": "3f687ca028bf6ad8befe98fdf25b76f2ced88c6da54b6a1344a3e2a22ab57f80", "role": "s32 pair to float vector conversion"},
+    {"target_va": "0xbe6480", "path": "binary/analysis_decomp/be6480.c", "sha256": "7dc3b77a1564525ca6d0874af403bdd6008a392d97775eea5e7e749e79a9aec9", "role": "Actor flag branch and coordinate helpers"},
+    {"target_va": "0xbe6340", "path": "binary/analysis_decomp/be6340.c", "sha256": "5817cf57fdb01962c95c5ace9fb5129d2384a1dc60f067ffb4459ab21b34ff40", "role": "Common actor component handoff"},
+    {"target_va": "0x2eae0", "path": "binary/analysis_decomp/2eae0.c", "sha256": "18e9b03e5f60ba9cb6f54e3c863a9056097b585e6598cb345eb326bee4291961", "role": "Dynamic component virtual dispatch"},
+    {"target_va": "0xd3fd30", "path": "binary/analysis_decomp/d3fd30.c", "sha256": "ed734059234c6d0b9e7080ac6e8edc3866caf189c71e2a39d8dbc78ae72a75a9", "role": "Coordinate-dependent field-state predicate branch A"},
+    {"target_va": "0xd40840", "path": "binary/analysis_decomp/d40840.c", "sha256": "3ef8959a973590d62314695959181f1395b247724932b13bd360372224cf44bd", "role": "Coordinate-dependent field-state predicate branch B"},
+    {"target_va": "0x52b280", "path": "binary/analysis_decomp/52b280.c", "sha256": "1ac2c91fcd033922414c0ac4e51295dbce92a61d809c79931233a142a739744e", "role": "Coordinate to 5-unit X/Z grid index"},
+    {"target_va": "0x52f2d0", "path": "binary/analysis_decomp/52f2d0.c", "sha256": "d6e73301bdbc444f6fef07d7991fd73173024101b160dea6c475177ce89e81cd", "role": "Grid/field record resolver"},
+    {"target_va": "0xf58d00", "path": "binary/analysis_decomp/f58d00.c", "sha256": "5c6affb641dcd3183b89148a6395e9b9464db1cdc6f7808773dcebeb19c278a7", "role": "Field-record type/state helper"},
+    {"target_va": "0xf59370", "path": "binary/analysis_decomp/f59370.c", "sha256": "93cd68113489202dc566025f801dafeedaa0bc780574bc86c5a100bc14d710cb", "role": "Field-record predicate helper"},
+    {"target_va": "0x7ba460", "path": "binary/analysis_decomp/7ba460.c", "sha256": "53bcd195bb40bd3f0c8bccd4970b34efcfed70c8582376c514b89aa969ada5ba", "role": "Additional state predicate helper"},
+    {"target_va": "0xaa9ac0", "path": "binary/analysis_decomp/aa9ac0.c", "sha256": "ec3fec92d7d3768a762d487f9a50b634704339543148aea958db04dd74cab385", "role": "Index-category predicate used by branch B"}
+  ],
+  "findings": [
+    {
+      "id": "selected_site_pair_parser",
+      "targets": ["0x369d50", "0x4e1670", "0x568360"],
+      "call_pcs": [
+        {"pc": "0x36a37c", "instruction": "BL 0x4e1670", "bytes_le": "bddc0594"},
+        {"pc": "0x4e1758", "instruction": "BL 0x568360", "bytes_le": "021b0294"}
+      ],
+      "behavior": {
+        "first": "s32 at parser source +0x8 is converted to float and emitted at vector lane +0x0 as value*10+5",
+        "second": "s32 at parser source +0xc is converted to float and emitted at vector lane +0x8 as value*10+5",
+        "middle_lane": "vector lane +0x4 is not written by 0x568360",
+        "pre_adjustment": "0x4e1670 prepares an adjusted pair using one value + (another >> 1) and the other value +1 before calling 0x568360"
+      },
+      "evidence_level": ["PSEUDO", "EF"],
+      "confidence": "high for arithmetic and call chain; conditional for naming source members mUnitX/mUnitZ because runtime list instance is not bound to StructurePresetA00",
+      "limits": ["No global/local origin is established", "No axis swap or sign conversion is present in this helper", "No Y, rotation, terrain-height, or footprint transform is produced here"]
+    },
+    {
+      "id": "five_unit_horizontal_grid_quantization",
+      "targets": ["0x52b280", "0x52f2d0", "0xd3fd30", "0xd40840"],
+      "call_pcs": [
+        {"pc": "0xd3fd74", "instruction": "BL 0x52b280", "bytes_le": "43addf97"},
+        {"pc": "0xd3fd94", "instruction": "BL 0x52f2d0", "bytes_le": "4fbddf97"},
+        {"pc": "0xd4087c", "instruction": "BL 0x52b280", "bytes_le": "81aadf97"},
+        {"pc": "0xd4089c", "instruction": "BL 0x52f2d0", "bytes_le": "8dbadf97"}
+      ],
+      "behavior": "0x52b280 maps vector lanes 0 and 2 to floor(coord/5) indices; both helpers resolve a field/grid record and inspect type/state predicates.",
+      "evidence_level": ["PSEUDO", "STRUCT", "EF"],
+      "confidence": "high for coordinate quantization and record-query call path; low/unassigned for gameplay semantics of the predicates",
+      "limits": ["Not proven to be a structure collision/overlap validator", "Does not establish whole-footprint scanning", "The fact that emitted site centers fall on odd five-unit grid indices does not establish a global origin"]
+    },
+    {
+      "id": "coordinate_bearing_dynamic_component_virtual_call",
+      "targets": ["0xbe6480", "0xbe6340", "0x2eae0"],
+      "call_pcs": [
+        {"pc": "0x36a3ac", "instruction": "BL 0xbe6480", "bytes_le": "35f02194"},
+        {"pc": "0xbe64c4", "instruction": "BL 0xbe6340", "bytes_le": "9fffff97"},
+        {"pc": "0xbe6370", "instruction": "BL 0x2eae0", "bytes_le": "dc21d197"},
+        {"pc": "0x2eb04", "instruction": "LDR X8,[X8,#0x128]", "bytes_le": "089540f9"},
+        {"pc": "0x2eb10", "instruction": "BLR X8 with X0=component and X1=pair", "bytes_le": "00013fd6"},
+        {"pc": "0xbe6384", "instruction": "BLR X8 after loading component vtable +0x158", "bytes_le": "00013fd6"}
+      ],
+      "behavior": "The selected pair is passed in X1 through the 0xbe6340 call to 0x2eae0. That routine calls the dynamic component vtable slot +0x128 with the pair. The common caller later dispatches a separate scalar pointer through actor-component slot +0x158 and stores a selected scalar at actor +0x610.",
+      "evidence_level": ["PSEUDO", "EF"],
+      "confidence": "high for runtime argument and slot offsets; unresolved for destination method implementation",
+      "limits": ["Object at actor +0x68 has no resolved static vtable instance in this call chain", "The +0x128 target cannot be named from this indirect callsite", "No final transform store is shown in the statically recovered call chain"]
+    },
+    {
+      "id": "special_branch_scope",
+      "targets": ["0xbe6480", "0xd3fd30", "0xd40840"],
+      "call_pcs": [
+        {"pc": "0xbe64e4", "instruction": "BL 0xd3fd30", "bytes_le": "13660594"},
+        {"pc": "0xbe653c", "instruction": "BL 0xd40840", "bytes_le": "c1680594"}
+      ],
+      "behavior": "Actor byte +0x5ad bit 1 selects coordinate-dependent branches. Each helper converts horizontal coordinates to the five-unit grid and resolves a field record. The first also queries record type/state helpers; the second checks an index-category predicate. On success, component and scalar callbacks run.",
+      "evidence_level": ["PSEUDO", "EF"],
+      "confidence": "high for branch gates and subcalls; insufficient to assign placement-validation meaning",
+      "limits": ["No collision geometry or footprint scan is recovered", "Predicate return values are not joined to preview feedback or placement rejection messaging"]
+    }
+  ],
+  "open_items": [
+    {"id": "global_world_frame_origin", "status": "OPEN", "why": "No island/world origin or frame conversion is visible on the proven parser-to-query path; the dynamic +0x128 implementation is unknown."},
+    {"id": "vertical_placement_height", "status": "OPEN", "why": "Parser leaves vector lane 1 untouched; no ground-height result is traced into final structure Y."},
+    {"id": "rotation_and_footprint_anchor", "status": "OPEN", "why": "No rotation, pivot, footprint expansion, or per-cell iteration is proven in this call chain."},
+    {"id": "terrain_and_overlap_validator", "status": "OPEN", "why": "Field-grid type/state predicates are proven, but not their mapping to can-place, occupancy, collision, water/cliff restrictions, or complete building footprints."},
+    {"id": "component_vtable_target", "status": "OPEN", "why": "The virtual method at object vtable +0x128 is called with the coordinate pair, but the object's runtime vptr at actor +0x68 is not resolved."},
+    {"id": "preview_build_model_collider_save", "status": "OPEN", "why": "No resolved transition to preview finalization, model/resource binding, collider/PBC consumer, serialized building instance, durable save, or day-change completion."},
+    {"id": "story_slot_identity", "status": "OPEN", "why": "The six-entry selector is proven, but no selected index is tied to player home, bridge, villager plot, or facility; do not infer by matching counts or geometry."}
+  ],
+  "report": "docs/BUILDING_SITE_WORLD_POSITION_TRANSFORM_FOLLOWUP_20261107.md",
+  "prior_context": "docs/BUILDING_SITE_INDEX_BLACKBOARD_NATIVE_FOLLOWUP_20261107.md",
+  "validation": {
+    "method": "Read-only SQLite direct-call index, pseudocode hash verification, and raw AArch64 disassembly from the hash-identified main.elf.",
+    "json_schema": "JSON parsed with Python json.load.",
+    "no_game_or_save_execution": true
+  }
+}

@@ -239,7 +239,7 @@
     {"id": "eventflow_runtime_dispatch", "status": "OPEN", "why": "Factory, constructor, and vtable candidate are resolved statically; a live EventFlow invocation has not been traced."},
     {"id": "story_structure_to_site_index", "status": "OPEN", "why": "No mapping assigns player house, bridge, museum, market, plot A/B/C, slope, or campsite to a particular mSiteList index."},
     {"id": "runtime_list_to_structurepreset_instance", "status": "OPEN", "why": "The six-entry native list and StructurePresetA00.mSiteList share shape and count; runtime identity and selected preset instance remain unproven."},
-    {"id": "pair_to_world_transform", "status": "OPEN", "why": "No proved cell-to-world axes/units/origin/elevation/orientation/footprint conversion or final transform write."},
+    {"id": "pair_to_world_transform", "status": "OPEN", "why": "The adjusted pair is partially traced into X/Z lanes as 10*n+5, followed by a horizontal 5-unit grid lookup. The global origin/frame, physical units, untouched Y/elevation, orientation, footprint, dynamic vcall target, and final transform write remain unresolved."},
     {"id": "placement_validation", "status": "OPEN", "why": "The query handler's full overlap, terrain, footprint, endpoint, and collider validation chain is unresolved."},
     {"id": "model_and_collision_consumer", "status": "OPEN", "why": "No model resource or PBC/collider instance is joined to the selected site pair; model catalogue entries remain CAT."},
     {"id": "durable_structure_save", "status": "OPEN", "why": "No structure-instance serialization, file write/flush/reload, or story day-change completion boundary is traced here."}

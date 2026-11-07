@@ -123,7 +123,7 @@
     {"id":"StructurePresetA00_instance_to_runtime_member","status":"OPEN","why":"Loader and consumer share +0x3a50/+0x3a58/+0x3a60 layout, but exact global object identity and selected preset instance are not proven."},
     {"id":"story_structure_to_site_index","status":"OPEN","why":"No mapping from cPlayerHouse/cBridge/cReserveNpcHouse or plot A/B/C to one of indices 0..5."},
     {"id":"cell_pair_to_pose_helper","status":"OPEN","why":"BuildStructure reads/adjusts a selected list record, while the shared pose helper separately uses player/NPC/quest actor transforms; no exact argument carries the selected pair into the helper."},
-    {"id":"cell_pair_to_world_coordinates","status":"OPEN","why":"No source establishes coordinate units, axes, origin, elevation, scale, final rotation, or whether the pair adjustment is a footprint-center offset."},
+    {"id":"cell_pair_to_world_coordinates","status":"OPEN","why":"The parser-to-vector conversion is partially proven: the adjusted pair becomes X/Z lanes using 10*n+5, and a downstream horizontal lookup quantizes coordinates to five-unit cells. Global origin/frame, physical unit meaning, untouched Y/elevation, rotation, footprint anchor, and final transform write remain unresolved."},
     {"id":"query_validation_geometry","status":"OPEN","why":"Query method candidate calls shared pose helper, but overlap/terrain/footprint validators are delegated through unresolved helpers and indirect calls."},
     {"id":"model_mesh_and_pbc_collider","status":"OPEN","why":"No named model or PBC resource is joined to the registered action methods, preview actor class, or selected list record."}
   ],

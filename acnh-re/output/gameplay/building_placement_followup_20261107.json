@@ -545,15 +545,20 @@
     },
     {
       "step": "Cell to world",
-      "status": "OPEN",
+      "status": "PARTIAL_NATIVE_COORDINATE_CONVERSION_PROVEN",
       "open": [
-        "grid units",
-        "world axes/origin",
-        "height",
-        "scale",
+        "global grid/world origin and frame",
+        "physical unit meaning",
+        "height/elevation",
         "rotation",
-        "footprint origin",
+        "footprint anchor",
+        "dynamic component vcall target",
+        "final transform write",
         "terrain/overlap checks"
+      ],
+      "known": [
+        "adjusted site pair becomes X/Z lanes using 10*n+5",
+        "downstream horizontal field lookup quantizes to five-unit cells"
       ]
     },
     {
@@ -588,7 +593,8 @@
     },
     {
       "id": "site_index_to_world_transform",
-      "status": "OPEN"
+      "status": "OPEN",
+      "why": "A partial parser-to-X/Z conversion (10*n+5) and downstream five-unit horizontal grid lookup are proven; global world origin/frame, physical units, height, yaw, footprint anchor, vcall target, final transform, and validation remain OPEN."
     },
     {
       "id": "structure_type_to_table_uid",

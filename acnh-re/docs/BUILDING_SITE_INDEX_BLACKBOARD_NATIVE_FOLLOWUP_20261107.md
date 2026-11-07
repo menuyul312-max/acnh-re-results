@@ -7,7 +7,7 @@
 
 The previous report left `UNK_02a80082` unresolved because the displayed pseudocode address was searched as though it were an ELF virtual address. The decompiler display adds `0x100000` to database ELF VAs. After normalizing that display bias, the exact string at ELF VA `0x2980082` is `BuildingSiteIndex\0`. The native `BuildStructure` method writes its selected site index under that key in the actor's hash-backed AI blackboard. The registered EventFlow `NpcQueryBlackBoard` handler reads from the same actor member and hash-table layout, so the native assignment and EventFlow query are joined by key and storage shape.
 
-The code also builds a six-entry availability bitset from a structure-like site list, chooses one available index, parses that entry into a two-component pair, stores the index, and passes the parsed pair into native actor-context handling. This closes the key and selected-list-index links, but it does **not** prove which story building receives a given index, which runtime preset instance supplied the list, how the pair becomes world coordinates or a final transform, or how a completed structure is durably saved.
+The code also builds a six-entry availability bitset from a structure-like site list, chooses one available index, parses that entry into a two-component pair, stores the index, and passes the parsed pair into native actor-context handling. The follow-up [coordinate conversion trace](BUILDING_SITE_WORLD_POSITION_TRANSFORM_FOLLOWUP_20261107.md) now proves the pair becomes an X/Z vector using `10*n+5` before a dynamic component vcall; the final world frame/transform and durable save remain open. The story building for each index and the runtime preset instance are also unresolved.
 
 ## Address correction and raw string evidence
 
@@ -49,7 +49,7 @@ The paired list record therefore reaches a concrete native actor-context branch,
 
 - `cPlayerHouse`, `cBridge`, `cReserveNpcHouse` / plot A/B/C, and other story structure selectors are not mapped to particular indices 0–5.
 - The six-cell `StructurePresetA00` source matches the native six-entry loader shape, but the runtime list instance and preset selection are not proven to be that exact asset instance.
-- The parsed pair's cell-to-world conversion, axes, unit scale, height, orientation, footprint, and final model transform remain **OPEN**. The preview/build query's full footprint and terrain validators remain **OPEN**.
+- The selected adjusted pair's X/Z conversion is partially resolved as `10*n+5`, with downstream 5-unit field-grid indexing. Global origin/frame, untouched Y, orientation, footprint, and final model transform remain **OPEN**. The preview/build query's full footprint and terrain validators remain **OPEN**.
 - The exact scalar copied by `0xbf9520`, selected model resource, `.phive`/PBC consumer, and collision instance remain **OPEN** or **CAT** where only catalog names exist.
 - No serialized structure-instance record, durable save write/flush/reload, or day-change completion boundary was traced here.
 
