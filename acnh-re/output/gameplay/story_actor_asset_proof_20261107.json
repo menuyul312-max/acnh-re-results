@@ -88,7 +88,7 @@
             "Tutorials/Tutorials_Prologue2_Arrival:001",
             "Tutorials/Tutorials_Prologue2_Arrival:003"
           ],
-          "message_binding": "additional_romfs/eventflow_message_bindings.json classifies all four Arrival refs as message_archive_not_supplied."
+          "message_binding": "The initial resolver status is an inherited false negative: follow-up exact MSBT and BDLI label/index checks pass for these refs in 14 supplied locales; archive build/version remains unproven. See STORY_MESSAGE_CUE_FOLLOWUP_20261107.md."
         }
       ]
     },
@@ -116,7 +116,7 @@
             "Tutorials/Tutorials_Prologue3_Orientation1:007",
             "TalkSNpc/rco/SP_rco_01_StartingMaingame:013_01"
           ],
-          "message_binding": "additional_romfs/eventflow_message_bindings.json classifies all 30 Orientation1 refs as message_archive_not_supplied."
+          "message_binding": "The initial resolver status is an inherited false negative: follow-up exact MSBT and BDLI label/index checks pass for the selected refs in 14 supplied locales; archive build/version remains unproven. See STORY_MESSAGE_CUE_FOLLOWUP_20261107.md."
         },
         {
           "claim": "The Rco_GetSmartPhone entry delivers item 3076 and issues SmartPhone and UIMenuDeviceAppear actions; it does not identify a specific BFLYT resource.",
@@ -168,7 +168,7 @@
             "Tutorials/Tutorials_Prologue4_Orientation3:041_01",
             "Tutorials/Tutorials_Prologue4_Orientation3:045_04_02"
           ],
-          "message_binding": "All 30 Campfire refs tested in eventflow_message_bindings.json resolve as message_archive_not_supplied.",
+          "message_binding": "The initial resolver status is an inherited false negative: follow-up exact MSBT and BDLI label/index checks pass for the selected refs in 14 supplied locales; archive build/version remains unproven. See STORY_MESSAGE_CUE_FOLLOWUP_20261107.md.",
           "audio_note": "The event argument is a consumer-side numeric reference; SoundAudioMusic and ItemParam provide a source table join for 4318 below. The raw Sound/Resource payload is absent."
         },
         {
@@ -203,7 +203,7 @@
             ]
           },
           "stage_exit": "ReturnStage has no explicit TargetStage; exact return-stage selection is not claimed.",
-          "message_binding": "All seven dream message refs resolve as message_archive_not_supplied."
+          "message_binding": "The initial resolver status is an inherited false negative: follow-up exact MSBT and BDLI label/index checks pass for the selected refs in 14 supplied locales; archive build/version remains unproven. See STORY_MESSAGE_CUE_FOLLOWUP_20261107.md."
         },
         {
           "claim": "Dream_Tkk.byml defines a registered Npc actor with the argument tkkA/AIC:Demo/AIF:AI_NPC_Tkk_Dream/DMF:Tutorials_Prologue_Tkk, plus a Root camera tag and FtrViewerActor.",
@@ -297,7 +297,7 @@
           ],
           "ui_action": "UIItemSelectWindowHandling",
           "message_example": "TalkSNpc/owl/SP_owl_00_Common:104",
-          "message_binding": "The additional message binding result is message_archive_not_supplied for the cited TalkSNpc refs."
+          "message_binding": "The initial resolver status is an inherited false negative: follow-up exact MSBT and BDLI label/index checks pass for the selected TalkSNpc refs in 14 supplied locales; archive build/version remains unproven. See STORY_MESSAGE_CUE_FOLLOWUP_20261107.md."
         },
         {
           "claim": "Museum tent placement is recorded through the player housing-finish flow; the original gameplay crosswalk documents the day-growth completion and museum upgrade sequence as a mix of EventFlow and native pseudocode.",
@@ -361,7 +361,7 @@
               ]
             }
           ],
-          "message_binding": "The cited rcm tent request reference resolves as message_archive_not_supplied."
+          "message_binding": "The initial resolver status is an inherited false negative: follow-up exact MSBT and BDLI label/index checks pass for the selected ref in 14 supplied locales; archive build/version remains unproven. See STORY_MESSAGE_CUE_FOLLOWUP_20261107.md."
         },
         {
           "claim": "The shop-opening announcement sets RcmImmQuestOpen, which is the gate read by the migrants/three-housing-kit quest; the flow then grants three housing items (5827, 5828, 5829) and checks the three-house existence condition.",
@@ -555,7 +555,7 @@
             "Application=cConstructLicense"
           ],
           "message_example": "TalkSNpc/rco/SP_rco_11_TkkFirstLive:001",
-          "message_binding": "All 14 refs in this flow resolve as message_archive_not_supplied."
+          "message_binding": "The initial resolver status is an inherited false negative: follow-up exact MSBT and BDLI label/index checks pass for the selected refs in 14 supplied locales; archive build/version remains unproven. See STORY_MESSAGE_CUE_FOLLOWUP_20261107.md."
         },
         {
           "claim": "StaffCredit layouts and STR_StaffList BDLI/string data are present in the supplied additional RomFS outputs, but the existing EventFlow crosswalk found no EventFlow action that invokes them; stage/native trigger remains unresolved.",
@@ -715,7 +715,7 @@
           "UniqueID": 4318,
           "ItemKind": "Music",
           "ItemFrom": "TkkFirst",
-          "ResName": "mjk_MainTheme",
+          "ResName": "FtrMjkMainTheme",
           "ItemName": "みんなあつまれ"
         }
       },
@@ -1065,7 +1065,7 @@
     },
     {
       "gap": "Story localized message archives",
-      "evidence": "/workspace/acnh-re/output/additional_romfs/eventflow_message_bindings.json classifies all tested arrival, orientation, campfire, dream, museum, shop, development, and first-live refs cited above as message_archive_not_supplied.",
+      "evidence": "The follow-up exact-checks selected story refs across 17 EventFlow files, 425 unique keys, and 14 locales: 6,440 MSBT and 6,440 BDLI label/index checks pass. Supplemental archive build/version is unproven; dialogue bodies are not included. See STORY_MESSAGE_CUE_FOLLOWUP_20261107.md.",
       "consequence": "This report cites message resource paths and labels only; it does not quote untranslated or unresolved story text."
     },
     {
