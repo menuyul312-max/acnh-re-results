@@ -1,0 +1,446 @@
+{
+  "schema": "acnh-island-designer-actionparam-error-consumers-followup/1",
+  "title": "Island Designer action-parameter and error consumers, ACNH 1.0.0",
+  "scope": {
+    "question": "Follow FieldLandMakingActionParam and FieldLandMakingError from BCSV getters into native state/action consumers; bound the evidence for validation footprints, local grid writes, output copy, refresh, undo/apply, and ExeFS helper modules.",
+    "method": "Static analysis of the supplied main.elf, existing decompilation and BCSV-reader indexes, resolved BCSV tables, parsed EventFlow, and the available rtld/subsdk0/sdk ExeFS module images. Direct-call scan covers aligned AArch64 BL instructions throughout main.elf PT_LOAD RX (p_offset=0x888, p_vaddr=0, p_filesz=0x2211a60). No game execution, save mutation, Ghidra project rebuild, Godot work, index edit, or repository publication.",
+    "conclusion": "The ActionParam table is now joined to a native range validator and a separate temporary 12x12 work-grid/3x3-output path. This proves action-param-driven spatial checks and local scratch-buffer mutation. The trace does not prove that this buffer is the canonical 112x96 island map, that the 3x3 output is committed to world state, or that it is saved/refreshed as persistent terrain. Error counters and generic EventFlow error dispatch are also joined to cliff/river/linecar state functions. Preview/apply/undo and save semantics remain open."
+  },
+  "evidence_files": [
+    {
+      "path": "downloads/ACNH_island_RE/ACNH_island_RE/A_logic/main.elf",
+      "sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74"
+    },
+    {
+      "path": "acnh-re/inputs/additional_exefs/main",
+      "sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900"
+    },
+    {
+      "path": "acnh-re/output/binary/analyzed_functions.tsv",
+      "sha256": "38455b8aaef240037d2f45d53db9b4a1473dfd938cb52d5e6e0087a2ba26b288"
+    },
+    {
+      "path": "acnh-re/output/binary/code_pointer_arrays.json",
+      "sha256": "64d474068ca289f9146f7f32e6647a16a05e8f5be8e635615a478744b62ef822"
+    },
+    {
+      "path": "analysis/acnh/project/generated/re/bcsv_readers.json",
+      "sha256": "a091f73e97af8c8ee6f03cc77f231de4269dcb17bcf09d09ab85f2f947fc6069"
+    },
+    {
+      "path": "acnh-re/output/tables_resolved/FieldLandMakingActionParam.json",
+      "sha256": "7160aa79ddaedb2a4b9012b5f5a99c49a22d4d3aea7bda8b953e733ae5a66a9f"
+    },
+    {
+      "path": "acnh-re/output/tables_resolved/FieldLandMakingError.json",
+      "sha256": "cc7ec2edc1ec12907c3d633111f5ea826e25ebfa82ce68f377803a54eddf93ec"
+    },
+    {
+      "path": "downloads/ACNH_island_RE/ACNH_island_RE/B_data/Bcsv/FieldLandMakingActionParam.bcsv",
+      "sha256": "fe3f06ae6fb26c95631e842cd043a52348ba2c7399fc5d6085ff13dcfed0af9a"
+    },
+    {
+      "path": "downloads/ACNH_island_RE/ACNH_island_RE/B_data/Bcsv/FieldLandMakingError.bcsv",
+      "sha256": "232d276ed81ab7792b0e64fa6c10e7141702a63434c7e273041557cb0751de23"
+    },
+    {
+      "path": "downloads/ACNH_island_RE/ACNH_island_RE/B_data/EventFlow/Player_ConstructionLicenseApp.bfevfl",
+      "sha256": "d0edd2da56e0d462137601fddf1b09a69305ac58cbf3232d348dabd37db798b4"
+    },
+    {
+      "path": "downloads/ACNH_island_RE/ACNH_island_RE/B_data/EventFlow/SNPC_dod_AirPort.bfevfl",
+      "sha256": "10ff7c84c61a19926bc6e50c5348a52bfcb5223c4d5f7ddf30ebdc23b151b4b5"
+    },
+    {
+      "path": "downloads/ACNH_island_RE/ACNH_island_RE/B_data/EventFlow/SNPC_hgh_20_FittingRoom.bfevfl",
+      "sha256": "3dadcfd7dd567f3393c88fbc65251bc868ad76ccad53b34f043c7c9de32f1313"
+    },
+    {
+      "path": "acnh-re/work/eventflow/Player_ConstructionLicenseApp.json",
+      "sha256": "42d271b4a39e7d45b0219da8eb4d7006ed53ae452e89b3e0f9bd4f230e4b5abc"
+    },
+    {
+      "path": "acnh-re/work/eventflow/SNPC_dod_AirPort.json",
+      "sha256": "6f2abfc2354a0afe064637148fd8309794b9d831a33511cf1611e135b6059971"
+    },
+    {
+      "path": "acnh-re/work/eventflow/SNPC_hgh_20_FittingRoom.json",
+      "sha256": "fb9fa66f544841ebc4806ec5923976e87addc6955d3ed8ce40dace9bcbc74709"
+    }
+  ],
+  "native_call_scan": {
+    "binary": "main.elf",
+    "rx_segment": {
+      "file_offset": "0x888",
+      "virtual_address": "0x0",
+      "file_size": "0x2211a60"
+    },
+    "instruction_filter": "4-byte-aligned AArch64 BL immediate (opcode mask 0xfc000000 == 0x94000000); sign-extended imm26 target.",
+    "actionparam_parser": {
+      "parser_va": "0x4f2340",
+      "parser_direct_callers": [],
+      "parser_pointer_evidence": {
+        "pointer_va": "0x3062268",
+        "sequence_start_va": "0x3062228",
+        "sequence_targets": [
+          "0x4f1d70",
+          "0x4f1e70",
+          "0x4e52f0",
+          "0x4f1ee0",
+          "0x4f1f90",
+          "0x4f2220",
+          "0x4f22a0",
+          "0x4f22b0",
+          "0x4f2340"
+        ],
+        "classification": "relocated code-pointer sequence; owner and C++ vtable status unresolved"
+      },
+      "row_reader_va": "0x4f3630",
+      "row_reader_callers": [
+        "0x4f24b4",
+        "0x4f2514"
+      ],
+      "field_getter_callers": {
+        "0x4f3880": [
+          "0x4f36c4"
+        ],
+        "0x4f3a40": [
+          "0x4f36cc"
+        ],
+        "0x4f3c00": [
+          "0x4f36d4"
+        ],
+        "0x4f3dc0": [
+          "0x4f36dc"
+        ],
+        "0x4f3f80": [
+          "0x4f36e4"
+        ],
+        "0x4f4140": [
+          "0x4f36ec"
+        ],
+        "0x4f4300": [
+          "0x4f36f4"
+        ],
+        "0x4f44c0": [
+          "0x4f36fc"
+        ]
+      },
+      "interpretation": "The 8 early-column getters are reached through the table-row parser. Additional late-column consumers below use cached row views and do not depend on an identified direct call to parser 0x4f2340."
+    },
+    "actionparam_consumers": {
+      "table_view_constructor": {
+        "va": "0x532c30",
+        "behavior": "selects a row through global table context at global+0x3d0"
+      },
+      "footprint_field_getter": {
+        "va": "0x5330d0",
+        "cache_global": "0x33e3210",
+        "field_hash": "0x7674c4d6",
+        "clamp": "returns 0 when cached enum exceeds 2"
+      },
+      "aggregate_row_reader": {
+        "va": "0x533400",
+        "direct_callers": [
+          "0x5317f0",
+          "0x5318a4",
+          "0x531940",
+          "0x531a40",
+          "0x531be4",
+          "0x531c30",
+          "0x53e718",
+          "0x53e774",
+          "0x53f148"
+        ]
+      },
+      "validation_function": {
+        "va": "0x531790",
+        "direct_callers": [
+          "0x540a64"
+        ],
+        "path": [
+          "0x531790",
+          "0x5330d0",
+          "0x5318e0"
+        ],
+        "h_7674c4d6_use": "passes cached value into 0x5318e0; value 2 builds coordinate bounds x/z \u00b11 and iterates the 3x3 area; value 1 takes a single-point check; other values skip this range branch. Column name remains unresolved; behavior supports a validation-footprint-range alias only."
+      },
+      "temporary_result_builder": {
+        "va": "0x531ad0",
+        "direct_callers": [
+          "0x531830",
+          "0x5318b4",
+          "0x531950",
+          "0x531a50",
+          "0x531bf4",
+          "0x531c40"
+        ],
+        "steps": [
+          "constructs temporary records with 0x53b130/0x53b300",
+          "initializes and seeds paired scratch contexts with 0x53e1b0/0x53e2b0",
+          "calls 4-byte thunk 0x53e4e0 which branches to 0x53e4f0 with decoded action-param struct",
+          "on successful return calls 0x54dc70 to copy a 3x3 output block into the caller-provided output object"
+        ]
+      },
+      "local_work_grid": {
+        "decoded_param_consumer": "0x53e4f0",
+        "downstream": [
+          "0x53ecd0",
+          "0x53f200",
+          "0x53cb00",
+          "0x53db10",
+          "0x53f890",
+          "0x53e7b0",
+          "0x53e9e0",
+          "0x540610"
+        ],
+        "storage_layout": {
+          "base_within_nested_context": "+0x30",
+          "layer_count": 4,
+          "layer_stride": "0x240 bytes",
+          "cells_per_layer": "12x12 signed/unsigned 32-bit values (144 entries)",
+          "cell_address_expression": "base + layer*0x240 + (z*12+x)*4",
+          "bounds": "x,z < 12; layers above 3 fall back to layer 0"
+        },
+        "writer_evidence": "0x53ced0 stores one 32-bit value into this local array; 0x53db10 stamps a small pattern into the same array and skips value 5. 0x53d280 reads from it and returns 5 for out-of-range cells. This proves a local work-grid write, not a write to the canonical field map.",
+        "footprint_evidence": "0x53ecd0 constructs layer/type masks and invokes the loop in 0x53f200; 0x53f200 traverses candidate neighbors and updates the local grid through 0x53cb00/0x53db10. 0x53f890 separately records a bounded 3x3 affected-position mask.",
+        "postprocessing": "0x53e7b0 and 0x53e9e0 build/update local derived records and call 0x540610; these routines operate on the nested context passed to the builder. No proven edge from them to the canonical 112x96 world array or save serializer.",
+        "output_copy": {
+          "va": "0x54dc70",
+          "direct_callers": [
+            "0x531b54"
+          ],
+          "record_stride": "0x0e",
+          "block": "3x3 entries",
+          "copy": "for each in-bounds coordinate, FUN_00643000 copies 11 payload bytes (offsets 0-4, 6-10, and 12) from source record +0x0c to destination record +0x0c; index=(z-origin_z)*3+(x-origin_x)"
+        },
+        "status": "proven action-param-driven local spatial processing and patch-like output; actual preview-vs-commit meaning and connection to live world terrain remain unresolved"
+      },
+      "outer_entry": {
+        "va": "0x540a10",
+        "direct_callers_found": [],
+        "known_callsite": "0x540a64 calls 0x531790",
+        "note": "No incoming direct BL or code-pointer-array target was found for 0x540a10 in these bounded artifacts; it may be called through an unrecognized indirect path."
+      }
+    },
+    "error_consumers": {
+      "threshold_getter": {
+        "va": "0xe323e0",
+        "field_hash": "0x0b3be609",
+        "table_offset": "0x06",
+        "type": "signed byte",
+        "load_pc": "0xe325a4",
+        "instruction": "ldrsb",
+        "direct_callers": {
+          "0xe39950": [
+            "0xe39f7c"
+          ],
+          "0xe3dd80": [
+            "0xe3e004"
+          ],
+          "0xe48e80": [
+            "0xe493f4"
+          ]
+        },
+        "string_refs": {
+          "0xe39950": [
+            "PlayerCliffMakerNGReady"
+          ],
+          "0xe3dd80": [
+            "PlayerLinecarReady",
+            "PlayerLinecarDeleteReady"
+          ],
+          "0xe48e80": [
+            "PlayerRiverMakerNGReady"
+          ]
+        },
+        "interpretation": "These state-bearing functions use the table value as an error-counter comparison threshold and may increment a state counter. The counter path does not identify the geometric cause of each error."
+      },
+      "error_row_dispatch": {
+        "row_lookup": "0x600cf0(global+0x780,error_id)",
+        "field_getters": {
+          "AsCommand": {
+            "va": "0xe3a750",
+            "direct_callers": [
+              "0xe3a2e0",
+              "0xe3e344",
+              "0xe49794"
+            ]
+          },
+          "EventFlowEntryName": {
+            "va": "0xe3a890",
+            "direct_callers": [
+              "0xe3a2f8",
+              "0xe3e350",
+              "0xe497a0"
+            ]
+          }
+        },
+        "owner_handlers": {
+          "0xe3a0a0": [
+            "0xe3a2e0",
+            "0xe3a2f8"
+          ],
+          "0xe3e110": [
+            "0xe3e344",
+            "0xe3e350"
+          ],
+          "0xe49530": [
+            "0xe49794",
+            "0xe497a0"
+          ]
+        },
+        "dispatch": "handlers build a generic record and call a dynamic method at record/context +0x18",
+        "status": "proven generic dynamic error-dispatch data path; exact EventFlow entry resolution and runtime message invocation remain open"
+      },
+      "other_reader": {
+        "field": "CliffCreate",
+        "getter_va": "0xe3a0a0",
+        "direct_caller": "0xdef5d8 in 0xdef5a0",
+        "meaning": "caller and purpose unresolved"
+      }
+    },
+    "function_slices_sha256": {
+      "0x531790": "2e3cb475929991b83930f9d6a67946da082bfffb17bf6ac84d4b245dd0e778ea",
+      "0x5318e0": "f8ee25802aa4c9b45059fdb794e237b36e0035129a4101141b0c9056344e3f8c",
+      "0x531ad0": "5d46cc1a5f5e09ddfcb422681b61f076922f0703bb9f0edd5d82bb8cd48ee928",
+      "0x5330d0": "57131e5e1491563684784e1f7d9417b4f6c7df61d598496e366616fa63d481fe",
+      "0x533400": "442de96921c3ba895c44a7187cc19d3872c8cd82bd399da9f036974bd2adbfc6",
+      "0x53e4e0": "e8a9277091f953f3e476722e176679dad3d12c9bd8fa2303b22aa4f159200821",
+      "0x53e4f0": "169f8ce32bcb9f4d95be4c847f7c88bd4fdf6846ce074e064913d4240992a811",
+      "0x53ecd0": "1868f00783a18902d662401fecaea3a17bc25699c9680eed4f5ad596ee48bc2a",
+      "0x53f200": "244741f40c71fc48c2821dabb42a0dbdeb11b60bf3b2c3e1f689f21d4dae964e",
+      "0x53f890": "7171ce8c23de3024cf1e0d7d01f7e627c40c2421dbc9d1eb80ed2251782de3ea",
+      "0x53db10": "5aedaa7ff9320df79bce3afd6f30149645333cc2afc47d49df7a9de1368d2faf",
+      "0x53ced0": "d16e07fb558fce67abbc848cf8ed194c73006d39bc3b3a97d10a3de5ff93a9fc",
+      "0x540610": "26d1966490217080d1e50e8460d976fafe64473fde9eb0c3a456dd4d2a4c291d",
+      "0x54dc70": "aaf1e0f8b6a5f4e8b453d1624871f129bf2c142b3dc79bada237bcbd6a49e6e3",
+      "0xe323e0": "ccb0d5091062f985950b54b4e74fc51e6a9552079ab9163aac3defefbf4c5ab3",
+      "0xe3a750": "399f576911c0d1fe23abc123be058c02e2a67e6d74485a93d876c75b97ea45a2",
+      "0xe3a890": "7d7fa18f1cd7cbdef35324ceb8ff38cf60ef1f47844f1120ddb2747ec8261487"
+    }
+  },
+  "eventflow": {
+    "toolkit_action": "Player.EventFlowActionPlayerOutfitFieldMakeToolKit",
+    "instances": [
+      {
+        "file": "Player_ConstructionLicenseApp",
+        "event_index": 15,
+        "event": "Event9",
+        "value": "cOff"
+      },
+      {
+        "file": "Player_ConstructionLicenseApp",
+        "event_index": 100,
+        "event": "Event8",
+        "value": "cCliff"
+      },
+      {
+        "file": "Player_ConstructionLicenseApp",
+        "event_index": 103,
+        "event": "Event110",
+        "value": "cRiver"
+      },
+      {
+        "file": "Player_ConstructionLicenseApp",
+        "event_index": 105,
+        "event": "Event112",
+        "value": "cGround"
+      },
+      {
+        "file": "SNPC_dod_AirPort",
+        "event_index": 122,
+        "event": "Event94",
+        "value": "cOff"
+      },
+      {
+        "file": "SNPC_hgh_20_FittingRoom",
+        "event_index": 42,
+        "event": "Event19",
+        "value": "cOff"
+      }
+    ],
+    "landmaking_remove_entries": {
+      "flow": "SNPC_dod_AirPort",
+      "entry_points": [
+        "LandMakingRemove_Host",
+        "LandMakingRemove_Visitor",
+        "LandMakingRemove_Soloplay"
+      ],
+      "main_event_index": 134,
+      "path_cases": [
+        {
+          "indices": [
+            134,
+            135,
+            121,
+            122
+          ],
+          "branch": "DodHeardAboutIslandCreator == 0"
+        },
+        {
+          "indices": [
+            134,
+            123,
+            121,
+            122
+          ],
+          "branch": "DodHeardAboutIslandCreator == 1"
+        }
+      ],
+      "terminal_action": "Event94 sets FieldMakeToolKit=cOff",
+      "interpretation": "This is toolkit deselection/cleanup. It does not establish terrain removal, rollback, or undo."
+    },
+    "flow_scope": "The four construction-app actions select cGround/cRiver/cCliff or cOff; the two external cOff actions and three Airport cleanup entry points add lifecycle cleanup references, not apply/commit behavior."
+  },
+  "other_exefs_modules": {
+    "available_images": [
+      {
+        "module": "rtld",
+        "path": "acnh-re/work/exefs_modules/rtld/0.bin",
+        "size": 5728,
+        "sha256": "d87463d3fec1e568a80b86ed835e29a078e781644fd8a6802228e773aedd6820"
+      },
+      {
+        "module": "subsdk0",
+        "path": "acnh-re/work/exefs_modules/subsdk0/0.bin",
+        "size": 3582656,
+        "sha256": "48d136465dc1a9e38f967b87d812c37bc1170afb637271aeab27dcb57f59ff0a"
+      },
+      {
+        "module": "sdk",
+        "path": "acnh-re/work/exefs_modules/sdk/0.bin",
+        "size": 5503424,
+        "sha256": "6bdef3d1e640f5d75e01c00453940a65bd61db747c8e6026cf95916e0f9d4169"
+      }
+    ],
+    "ascii_tokens_checked": [
+      "LandMaking",
+      "FieldLandMaking",
+      "CliffMaker",
+      "RiverMaker",
+      "ConstructionLicense",
+      "LandMakingMap"
+    ],
+    "literal_matches": 0,
+    "exported_symbol_and_import_resolution_matches": 0,
+    "interpretation": "No literal/export-name evidence indicates these modules contain the missing path. This cannot exclude stripped or indirectly named code. No nnSdk.nss or multimedia.nss image is present in the available extracted module set."
+  },
+  "bounded_negative_results": [
+    "No native path was found from the toolkit action lifecycle 0x2de340/0x2de3f0/0x2de870/0x2de8c0 to the 0x540a10/0x531790 consumer root.",
+    "No direct incoming BL or detected code-pointer-array target was found for 0x540a10; its upstream invocation remains unresolved.",
+    "The local 12x12 work-grid writes and 3x3 output copy have no proven edge to the canonical 112x96 island map, collision/world refresh, undo snapshot, apply/commit transaction, or save serializer.",
+    "The FieldLandMakingActionParam h_75fee4b0 getter 0x4f3dc0 is called from the table parser; the row value RemoveHistory has no proven undo/action caller. Its string registration site 0x4f8930 is not an undo implementation.",
+    "Player_ConstructionLicenseApp has no dedicated Apply, Commit, Undo, or Cancel entry; airport LandMakingRemove_* entries select cOff and do not prove map rollback."
+  ],
+  "open_joins": [
+    "Input/UI/tool action dispatch into 0x540a10 and whether this is the active Island Designer route.",
+    "The semantic identity and table source of the local four-layer 12x12 workspace, and its relation to map preset cells.",
+    "Whether 0x54dc70 output is an intermediate preview/result buffer or feeds a live world terrain writer.",
+    "The canonical island-cell setter, collision/mesh/navigation refresh after a successful edit, and save layout/member serializer.",
+    "Undo/rollback behavior and whether the table token RemoveHistory is consumed by a different runtime path.",
+    "Runtime resolution of error-row EventFlowEntryName and the exact handler-to-event-flow edge."
+  ],
+  "artifact_policy": "This is a distinct follow-up report/ledger. It does not modify the index, crosswalk, re-queue, or prior Island Designer report, and it is not committed or pushed.",
+  "report": "acnh-re/docs/ISLAND_DESIGNER_ACTIONPARAM_ERROR_CONSUMERS_FOLLOWUP_20261107.md"
+}
