@@ -63,6 +63,35 @@ class CraftingTransactionBranchTests(unittest.TestCase):
                             for row in audit['saveproc_static_functions_checked']))
         self.assertIn('UNRESOLVED', audit['serializer_or_flush_relation'])
 
+    def test_result_insert_requires_actor_registry_no_match_and_reaches_leaf(self):
+        baseline = self.report['cases']['full_pocket_marker_zero']
+        self.assertFalse(baseline['result_route_reached']['0xf987c0'])
+        diagnostic = baseline['result_route_diagnostic']
+        self.assertTrue(diagnostic['compare_x0_equals_x19'])
+        self.assertEqual(diagnostic['compare_at_0xefac98']['x0_x4'][0],
+                         diagnostic['compare_at_0xefac98']['x19_x22'][0])
+        self.assertEqual(diagnostic['result_item_slots_after'], [])
+
+        free_slot = self.report['cases']['one_free_slot_actor_resolver_stub']
+        self.assertTrue(free_slot['result_route_reached']['0xf987c0'])
+        self.assertEqual(free_slot['result_item_slots_after'], [
+            {'slot_index': 19, 'raw_record': [975, 0, 0]}])
+        self.assertEqual(free_slot['dirty_slot_bytes_after'][-1], 255)
+        self.assertEqual(free_slot['native_f98650_calls'], 0)
+        self.assertIsNotNone(free_slot['native_error'])
+        self.assertEqual(free_slot['first_unmapped_accesses'][0]['pc'], '0x1665ea0')
+
+        full = self.report['cases']['full_pocket_actor_resolver_stub']
+        self.assertEqual(full['result_item_slots_after'], [
+            {'slot_index': 4, 'raw_record': [975, 0, 0]}])
+        self.assertTrue(full['result_route_reached']['0xf987c0'])
+
+        static = self.report['branch_findings']['result_insert_static_route']
+        self.assertEqual([row['callee'] for row in
+                          static['recipe_entry_result_path_direct_edges']],
+                         ['0xefab90', '0xefac20', '0xf987c0'])
+        self.assertIn('no alternate result-specific handler', static['interpretation'])
+
 
 if __name__ == '__main__':
     unittest.main()
