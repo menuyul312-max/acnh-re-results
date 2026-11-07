@@ -456,7 +456,7 @@ def load_static_evidence():
         },
         'queue_and_mail_scope': {
             'hha_grade_record_formatter': '0xac7a00 formats a record through the localized text builder; type-3 dispatch then stores formatted output in a save-backed 100-slot or 40-slot message collection through 0xac8840/0xac87c0.',
-            'system_mail_comparison': 'The EventFlow SystemMailSend action method 0x345890 uses the same 0xac77a0 record builder and route-dispatch helper 0x346a50, which can call shared handler 0xac1ff0. HHA grade output is a separate native producer/queue path, not an indexed EventFlow SystemMailSend action.',
+            'system_mail_comparison': 'The EventFlow SystemMailSend action method 0x345890 uses record builder 0xac77a0 and route dispatcher 0x346a50. Its cFastToday/cFastTomorrow branches dispatch through record virtual slot +0x30 to 0xac7070 and write to route-specific save-side record arrays; only the cSlowRetry TagType=cNone branch attempts the shared handler 0xac1ff0 before its fallback. HHA grade output is a separate native producer/queue path, not an indexed EventFlow SystemMailSend action.',
             'grade_mail_flag': 'The indexed literal flag reference remains only in 0x7b1fe0, with no EventFlow readers/writers; no reader/clear or delivery timing was found.',
             'scope': 'The save-backed message-list insertion path is statically resolved, but visible mailbox arrival, HHA flag consumption, and delivery timing still require runtime capture.',
         },
