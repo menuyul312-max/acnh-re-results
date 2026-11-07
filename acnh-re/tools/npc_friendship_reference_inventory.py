@@ -6,6 +6,7 @@ what the existing static/native traces establish about Friendship sources and
 keeps candidate source attribution separate from verified native execution.
 """
 import argparse
+from collections import defaultdict, deque
 import hashlib
 import json
 import re
@@ -45,6 +46,23 @@ def main():
     def calls(va):
         return list(dict.fromkeys(row[0] for row in db.execute(
             'SELECT target_va FROM direct_calls WHERE owner_va=? ORDER BY pc', (va,))))
+
+    def direct_callee_closure(start_va):
+        """Return the indexed direct-call closure for one native function."""
+        graph = defaultdict(list)
+        for owner_va, target_va in db.execute(
+                'SELECT owner_va,target_va FROM direct_calls '
+                'WHERE owner_va IS NOT NULL ORDER BY pc'):
+            graph[owner_va].append(target_va)
+        seen = {start_va}
+        pending = deque([start_va])
+        while pending:
+            owner_va = pending.popleft()
+            for target_va in graph.get(owner_va, ()):
+                if target_va not in seen:
+                    seen.add(target_va)
+                    pending.append(target_va)
+        return seen
 
     def unowned_direct_call_sites(target_va):
         """Resolve call-site owners omitted by the decomp-only direct-call index."""
@@ -90,6 +108,60 @@ def main():
     friendship_row = next(row for row in table['rows']
                           if len(row) > 4 and row[4] == 'Friendship')
     friendship = dict(zip(columns, friendship_row))
+
+    # The six negative-result constants in FUN_00bb9dc0 are ItemKind enum
+    # ordinals. FUN_00b25280 reads ItemParam.ItemKind and writes its converted
+    # ordinal into a u16 map; FUN_00b9cb60 reads that map with the item ID at
+    # descriptor+0x10.
+    item_param = json.loads((analysis/'tables_resolved/ItemParam.json').read_text())
+    item_kind_table = json.loads((analysis/'tables_resolved/ItemKind.json').read_text())
+    item_kind_col = next(c for c in item_param['columns'] if c['name'] == 'ItemKind')
+    item_kind_columns = [c['name'] for c in item_kind_table['columns']]
+    minus_three_kind_codes = [0x3a, 0x62, 0x65, 0x5f, 0x31, 0x2a]
+    item_kind_category_crosswalk = []
+    for code in minus_three_kind_codes:
+        fields = dict(zip(item_kind_columns, item_kind_table['rows'][code]))
+        item_kind_category_crosswalk.append({
+            'comparison_code_hex': hex(code),
+            'comparison_code_decimal': code,
+            'ItemParam_ItemKind_ordinal': code,
+            'ItemKind_bcsv_row_index': code,
+            'ItemKind_Label': fields['Label'],
+            'ItemKind_Name': fields['Name'],
+            'ItemKind_UniqueID': fields['UniqueID'],
+            'CanGift': fields['CanGift'],
+            'CanNpcPresent': fields['CanNpcPresent'],
+            'CanNpcBirthdayPresent': fields['CanNpcBirthdayPresent'],
+        })
+    if any(row['ItemKind_UniqueID'] == row['comparison_code_decimal']
+           for row in item_kind_category_crosswalk):
+        raise ValueError('ItemKind row UniqueID unexpectedly equals a -3 category ordinal')
+    item_kind_mapping_evidence = {
+        'itemparam_source': item_param['source'],
+        'itemparam_row_count': item_param['row_count'],
+        'itemparam_itemkind_field': {
+            'hash': item_kind_col['hash'],
+            'offset': item_kind_col['offset'],
+            'descriptor': item_kind_col.get('descriptor'),
+            'reference': item_kind_col.get('name_reference'),
+        },
+        'itemkind_table_source': item_kind_table['source'],
+        'itemkind_row_count': item_kind_table['row_count'],
+        'native_mapping': [
+            'FUN_00b25280 reads ItemParam field hash 0x5270eb75 (ItemKind), converts the enum value to an ordinal 0..0x77, and writes the u16 ordinal into the item-ID category map.',
+            'FUN_00b9cb60 reads descriptor+0x10 as the item lookup key, loads that category-map entry, and compares the resulting ordinal to the supplied code.',
+        ],
+        'crosswalk_basis': 'The resolved ItemKind.bcsv row at index N supplies the English Label, Japanese Name, UniqueID, and NPC-present/gift flag values for ItemParam.ItemKind ordinal N. ItemKind ordinal and ItemKind UniqueID are separate domains.',
+        'categories': item_kind_category_crosswalk,
+        'public_schema_crosscheck': {
+            'repository': 'Treeki/CylindricalEarth',
+            'commit': 'bb09c0ee71a4aa6011de088b88ea55fdee0bf6e9',
+            'source_file': 'specs_100.py:4027-4130, enum_f5a85f4bb42c_b173422234a3',
+            'url': 'https://github.com/Treeki/CylindricalEarth/blob/bb09c0ee71a4aa6011de088b88ea55fdee0bf6e9/specs_100.py#L4027',
+            'finding': 'The public 1.0.0 enum sequence agrees with the local ItemKind.bcsv row labels at all six ordinals.',
+            'scope_limit': 'Schema corroboration only; it does not establish runtime occurrence of either -3 guard.',
+        },
+    }
 
     flow = json.loads(EVENTFLOW_ARTIFACT.read_text())
     gift_flows = {}
@@ -247,6 +319,27 @@ def main():
     }
     mailbox_receive_action = native_handlers[
         'EventFlowSystemActor.EventFlowActionUIWaitReceivingMailAppear']
+    mailbox_helper_closure = direct_callee_closure(0x367c20)
+    friendship_literal_functions = set(refs('Friendship'))
+    mailbox_friendship_literal_functions = sorted(
+        mailbox_helper_closure & friendship_literal_functions)
+    mailbox_flow_meta = flow_index['Ftr_MailBox']
+    mailbox_flow_decoded = json.loads(
+        (analysis/'decoded'/f"{mailbox_flow_meta['source_id']:05d}.json").read_text())
+    mailbox_flowchart = next(
+        fc for fc in mailbox_flow_decoded['data']['flowcharts']
+        if fc['name'] == 'Ftr_MailBox')
+    mailbox_flow_nodes = flow_nodes('Ftr_MailBox', {
+        'EventFlowActionUIWaitReceivingMailAppear',
+        'EventFlowActionUIPostHandling',
+        'EventFlowActionCheckFreeCommunication',
+        'EventFlowActionUIPostCreate',
+        'EventFlowQueryUIResultMenuDecide',
+        'EventFlowQueryIsMyVillage',
+        'EventFlowQueryIsMyPost',
+        'EventFlowActionNetFriendMailCheck',
+        'EventFlowActionOpenMessageWindow',
+    })
     mailbox_native_action_trace = {
         'registration_va': mailbox_receive_action.get('registration_va'),
         'factory': mailbox_receive_action.get('factory'),
@@ -260,7 +353,16 @@ def main():
             'calls_f48840': 0xf48840 in calls(0x367c20),
             'calls_ef2c70': 0xef2c70 in calls(0x367c20),
         },
-        'limit': 'The EventFlow slot roles are not fully named; the native trace reaches a receive-mail UI wait/status path and does not expose a recipient Friendship write. An indirect or later save callback remains possible.',
+        'specific_method_direct_callee_closure_count': len(mailbox_helper_closure),
+        'specific_method_closure_writer_edges': {
+            'reaches_f486c0': 0xf486c0 in mailbox_helper_closure,
+            'reaches_ef2c70': 0xef2c70 in mailbox_helper_closure,
+            'reaches_f48840': 0xf48840 in mailbox_helper_closure,
+            'reaches_friendship_literal_functions': [
+                hex(x) for x in mailbox_friendship_literal_functions],
+        },
+        'execution_method_pseudocode': 'Action method 0x367bd0 calls helper 0x367c20, returns while helper-context state at +0xc8 is nonzero, otherwise writes completion state 1 to action object+0xb0. The helper manages an indexed UI/message queue and calls generic UI services; its 212-function owner-resolved direct-call closure has no Friendship literal, getter, generic-key writer, or field-writer edge.',
+        'limit': 'This is a negative result for the indexed direct-call closure of the UI wait action. It cannot exclude virtual callbacks, deferred save processing, another unindexed module, or later recipient/attachment handlers.',
     }
     mail_processor_edges = {
         '0xf53a70': [hex(x) for x in calls(0xf53a70)
@@ -294,20 +396,30 @@ def main():
     # Exact actor-context counter access scan. The native code writes this
     # field through a pointer-array index (0x1595 * 8 == 0xaca8), so scan both
     # the explicit offset and the decompiler's indexed form.
-    analysis_decomp = analysis/'binary/analysis_decomp'
+    binary_root = analysis/'binary'
     context_counter_accesses = []
-    decomp_file_count = 0
+    counter_corpus_counts = {}
     counter_access_pattern = re.compile(
         r'0xaca8\b|(?:\[|\+)\s*0x1595\b')
-    for source_path in analysis_decomp.glob('*.c'):
-        decomp_file_count += 1
-        for line_number, line in enumerate(source_path.read_text(errors='ignore').splitlines(), 1):
-            if counter_access_pattern.search(line.lower()):
-                context_counter_accesses.append({
-                    'file': source_path.name,
-                    'line': line_number,
-                    'text': line.strip(),
-                })
+    for corpus_name, suffix in (
+            ('analysis_decomp', '.c'), ('decomp', '.c'),
+            ('new_decomp', '.c'), ('disassembly_fallback', '.asm')):
+        corpus_path = binary_root/corpus_name
+        source_paths = sorted(corpus_path.glob(f'*{suffix}'))
+        counter_corpus_counts[corpus_name] = {
+            'files_scanned': len(source_paths),
+            'extension': suffix,
+        }
+        for source_path in source_paths:
+            for line_number, line in enumerate(
+                    source_path.read_text(errors='ignore').splitlines(), 1):
+                if counter_access_pattern.search(line.lower()):
+                    context_counter_accesses.append({
+                        'corpus': corpus_name,
+                        'file': source_path.name,
+                        'line': line_number,
+                        'text': line.strip(),
+                    })
 
     timer_call_sites = unowned_direct_call_sites(0xc1e2e0)
     pointer_arrays_path = analysis/'binary/code_pointer_arrays.json'
@@ -474,10 +586,21 @@ def main():
                 'flows': mail_related_flow_inventory,
                 'receiver_paths': {
                     'Ftr_MailBox': {
-                        'finding': 'One EventFlowActionUIWaitReceivingMailAppear node and Ftr.IsMyPost query; no NpcAddFriendship action in the flow.',
+                        'source': flow_index['Ftr_MailBox']['source'],
+                        'entrypoint_root_event_index': mailbox_flowchart['entry_points']['Root']['main_event'],
+                        'nodes': mailbox_flow_nodes,
+                        'finding': 'In this local 1.0.0 flow, Root branches on Ftr.IsMyPost; the post-office UI path runs CheckFreeCommunication -> UIWaitReceivingMailAppear -> UIPostHandling -> UIResultMenuDecide. The flow has no NpcAddFriendship action. The wait action is UI handling, not proof of recipient mail deserialization.',
                         'native_handler': mailbox_native_action_trace,
                     },
-                    'System_GrowUp': 'Four EventFlowActionNetReceiveMail nodes are in the online/network startup flow, not the player-to-villager letter delivery path; no NpcAddFriendship action in the flow.',
+                    'System_GrowUp': {
+                        'event_indices': [event_index for flow_name, event_index, name, params
+                                          in db.execute(
+                                              "SELECT flow,event_index,name,params_json "
+                                              "FROM event_calls WHERE flow='System_GrowUp' "
+                                              "AND name='EventFlowActionNetReceiveMail' "
+                                              "ORDER BY event_index")],
+                        'finding': 'Four EventFlowActionNetReceiveMail nodes occur in the online/network startup flow, separate from player-to-villager post-office delivery; no NpcAddFriendship action appears in these flow nodes.',
+                    },
                     'Obj_MessageCardRack_02_SendFuture': 'Only future-mail reservation/edit/delete/return-present actions and queries; it is not a recipient delivery flow and has no NpcAddFriendship action.',
                 },
                 'same_flow_caveat': 'Some villager-to-player outgoing mail EventFlows also contain friendship actions for gifts or quests. Co-location in a flow does not show that sending or receiving mail caused those separate deltas.',
@@ -489,6 +612,58 @@ def main():
                 'interpretation': 'These NNPC EventFlows send mail from a villager to the player (birthday, quest, life-start, and overflow paths); they are separate from player-to-villager post-office letters. Their action configurations do not add Friendship by themselves.',
             },
             'finding': 'The recipient-side daily mail processor reads Friendship to choose reply mail, but the visible processor has no direct Friendship writer edge. This does not rule out effects inside untraced mail UI/action handlers or attached-present handling.',
+        },
+        'minus_three_guard_category_mapping': item_kind_mapping_evidence,
+        'public_source_review': {
+            'CylindricalEarth_ItemKind': item_kind_mapping_evidence['public_schema_crosscheck'],
+            'ACNH_Resources_Ftr_MailBox': {
+                'url': 'https://github.com/969981/ACNH_Resources/blob/3.0.3_Unpack/UnPack/1/EventFlow/Ftr_MailBox.json',
+                'finding': 'The public newer-build flow confirms the mailbox UI wait and post handling sequence, and adds NetFriendMailCheck and movement/tutorial gates absent from the local 1.0.0 graph. It has no native Friendship writer information.',
+                'version_limit': 'Newer public EventFlow reference; used only to compare flow structure, not to prove local 1.0.0 runtime behavior.',
+            },
+            'Rafacasari_acnh_eventflows': {
+                'url': 'https://github.com/Rafacasari/acnh-eventflows/blob/78cbc66da4cfb7cb365be77651ed6acdc0b799e4/Ftr_MailBox.evfl.txt',
+                'finding': 'Readable EventFlow rendering likewise shows mailbox/post-office UI and message branches, not a Friendship writer.',
+                'version_limit': 'Public flow text does not identify native action implementations or save effects.',
+            },
+            'ACNHRecomp': {
+                'url': 'https://github.com/Nycolazs/ACNHRecomp',
+                'searches': ['NpcHitNum', 'ItemKind', 'Ftr_MailBox'],
+                'finding': 'GitHub code searches exposed no matching game-native function bodies for NpcHitNum, ItemKind, or Ftr_MailBox. A separate Friendship search request failed and is not counted as a negative result.',
+                'limit': 'A public-repository search is not a proof of absence; this project does not provide a matching 1.0.0 native body for the unresolved call edges.',
+            },
+        },
+        'static_source_coverage_and_live_capture': {
+            'indexed_binary': {
+                'module': 'ExeFS main NSO',
+                'sha256': NSO_SHA256,
+                'analysis_decomp_c_files': counter_corpus_counts['analysis_decomp']['files_scanned'],
+                'decomp_c_files': counter_corpus_counts['decomp']['files_scanned'],
+                'new_decomp_c_files': counter_corpus_counts['new_decomp']['files_scanned'],
+                'disassembly_fallback_asm_files': counter_corpus_counts['disassembly_fallback']['files_scanned'],
+                'module_boundary': 'The current index and native call graph are for main NSO. Other supplied ExeFS modules rtld, sdk, and subsdk0 are present as inputs but are not represented in this indexed direct-call graph.',
+            },
+            'eventflow_scope': {
+                'source': 'Decoded local-build BFEVFL corpus and event_calls table',
+                'mail_present_receive_action_query_uses': sum(mail_related_usage.values()),
+                'distinct_flows': len(mail_related_flow_inventory),
+                'Ftr_MailBox_local_flow_node_count': len(mailbox_flow_nodes),
+                'System_GrowUp_NetReceiveMail_event_count': 4,
+                'limit': 'No live EventFlow execution was recorded; direct-call closures do not include virtual callback semantics or later persistence processors.',
+            },
+            'source_table_scope': {
+                'ItemParam_rows': item_param['row_count'],
+                'ItemKind_rows': item_kind_table['row_count'],
+                'Friendship_descriptor_table': table['source'],
+            },
+            'live_capture_blocker': 'The indexed 1.0.0 static corpus and public references reviewed add no further evidence for these specific questions. Remaining proof requires an instrumented process running the matching 1.0.0 build plus a cloned save with real runtime table/save managers; no game process or live save was supplied.',
+            'capture_plan': [
+                'At 0xab9dc0 entry/return, log caller/backtrace, ushort item ID, descriptor+0x10 key, mapped ItemParam.ItemKind ordinal, async wrapper status at +0x50, result at +0x20, and output delta. Observe calls from both 0xabff90 and 0xabfcf0 on an ordinary day and after day-change; compare -2, ordinary category, and one item per six mapped categories.',
+                'At 0xac0200 and 0xf48840, snapshot Friendship before/after each candidate to establish whether either -3 guard is reached and written during normal play.',
+                'Place a write watchpoint on NPC actor+0xaca8 and log every write PC/backtrace/object base; hook clear 0x258b10 and read 0x388660. Count calls to 0xc1e2e0 and its owner 0xbec1f0 callsite 0xbec314 against elapsed frames/time; this identifies the incrementer and actual update cadence.',
+                'On a cloned save, send and receive controlled player letters with no attachment, an ordinary attachment, and representative attachments from each mapped ItemKind. Trace mailbox UI wait, network receipt, recipient handlers, Friendship getter/writer sites, and saved-state diff. This separates the Ftr_MailBox UI action from any deferred present effect.',
+                'During local and network Friendship writes, capture the live Key="Friendship" descriptor returned through 0xdc5e20, its UniqueID/MaxValue, typed view address selected by 0xef2c70, save root, and resulting raw bytes. Compare with local formula save_base+resident*0x10798+player*0xa8+0x39f8 and network formula save_base+resident*0x10798+player*0x700+0x1c0; then observe save flush/persistence.',
+            ],
         },
         'save_and_runtime_descriptor': {
             'table_row': friendship,
@@ -578,24 +753,30 @@ def main():
                     'countdown_method': {
                         'indexed_va': '0xc1e2e0',
                         'decompiler_symbol': '0xd1e2e0',
-                        'operation': 'Pseudocode decrements +0xacac once when this actor-update method reaches its timer branch; one call is one decrement, independent of Timer parameter scaling.',
+                        'operation': 'Pseudocode decrements +0xabe8 once when positive near method entry, then decrements the separate +0xacac timer once only if the later state guards allow the timer branch. Each decrement is per method invocation, independent of Timer parameter scaling.',
                         'invocation_frequency': 'Not established: runtime dispatch cadence/frame interval is absent from the available static call/pointer-array evidence.',
                     },
                     'flag_offset_caveat': 'NpcIsHitByNet 0x389c50 reads byte +0xacb0; NpcClearHitParam clears adjacent byte +0xacb1. These are distinct offsets and the evidence does not equate them.',
-                    'counter_increment_search': 'The available decomp and analysis_decomp corpus exposes the +0xaca8 clear and NpcHitNum read, but no counter increment write. This bounded corpus search is not proof that no indirect or un-decompiled writer exists.',
+                    'counter_increment_search': 'Exact +0xaca8 / indexed +0x1595 search over analysis_decomp, decomp, new_decomp, and selected disassembly_fallback snippets finds the generic subobject setup, clear, and read only; there is no increment in those scanned sources. Computed-pointer writes or unindexed code remain possible.',
                     'counter_access_scan': {
-                        'analysis_decomp_c_files_scanned': decomp_file_count,
+                        'analysis_decomp_c_files_scanned': counter_corpus_counts['analysis_decomp']['files_scanned'],
+                        'corpora_scanned': counter_corpus_counts,
                         'offset_equivalence': '0xaca8 == 0x1595 * sizeof(u64); scan covers both explicit offset and pointer-array-index forms.',
                         'accesses': context_counter_accesses,
-                        'finding': 'The only exact field accesses in the available analysis_decomp are generic subobject construction, NpcClearHitParam zeroing the field, and NpcHitNum reading it; no increment or other nonzero writer is present in this corpus.',
+                        'finding': 'The only exact source hits are generic subobject construction, NpcClearHitParam zeroing the field, and NpcHitNum reading it; the second decomp tree repeats the clear/read, while new_decomp and the selected fallback assembly snippets have no exact hit. No increment or other nonzero writer appears in these scanned corpora.',
                     },
                     'timer_update_call_owner': {
                         'decrementer_method': '0xc1e2e0',
                         'direct_call_sites': timer_call_sites,
                         'pointer_sequence_membership': timer_owner_array,
-                        'interpretation': 'The decrementer is called from the unlabelled native function at 0xbec1f0, present in slot 13 of an untyped relocated-code-pointer sequence. The sequence has no indexed caller/xref evidence proving that it is a vtable or exposing the runtime dispatcher and cadence.',
+                        'owner_disassembly': {
+                            'source': 'Raw local main NSO AArch64 disassembly, same SHA-256 as evidence_basis.nso_sha256; owner C body is absent from both decomp trees.',
+                            'callsite': '0xbec314',
+                            'call_condition': 'Owner loads pointer from owner_object+0x2f8 at 0xbec30c, branches around the call if it is null at 0xbec310, and calls 0xc1e2e0 at 0xbec314 otherwise.',
+                        },
+                        'interpretation': 'The decrementer is called from the unlabelled native function at 0xbec1f0, present in slot 13 of an untyped relocated-code-pointer sequence. Static evidence now identifies the immediate call condition, but the sequence has no indexed xref/caller evidence proving its type or exposing the runtime dispatcher and cadence.',
                     },
-                    'limit': 'The native test proves Timer*30 storage in a synthetic context; static update pseudocode bounds countdown to one unit per eligible method invocation. The real update dispatch rate and the hit-counter incrementer remain unknown, so exact seconds, hits-per-window, and hits-per-day are not established.',
+                    'limit': 'The native test proves Timer*30 storage in a synthetic context; static update pseudocode bounds the +0xacac countdown to one unit per eligible method invocation. The real update dispatch rate and +0xaca8 hit-counter incrementer remain unknown, so exact seconds, hits-per-window, and hits-per-day are not established.',
                 },
                 'hit_entry_friendship_action_event_indices': hit_entry_event_indices,
                 'hit_entry_friendship_action_values': [x['AddValue'] for x in hit_entry_samples],
@@ -624,16 +805,16 @@ def main():
                     },
                     'calc_minus_three_branches': [
                         'First conditional return stores -3 when an async task result is greater than 2. The task result lives at wrapper+0x20 and is read only once its status at +0x50 equals 2; the task/worker result enum is not named.',
-                        'Second conditional return stores -3 when any of six descriptor category checks matches 0x3a, 0x62, 0x65, 0x5f, 0x31, or 0x2a. Helper 0xb9cb60 maps descriptor+0x10 through a runtime u16 category map before comparison; these constants are category codes, not proven EventFlags UniqueIDs.',
+                        'Second conditional return stores -3 when any of six descriptor category checks matches ItemKind ordinal codes 0x3a=Trash, 0x62=LostQuestDust, 0x65=TreasureQuestDust, 0x5f=JohnnyQuestDust, 0x31=TurnipExpired, or 0x2a=Weed. Helper 0xb9cb60 maps descriptor+0x10 through the ItemParam.ItemKind u16 category map before comparison; these codes are not ItemKind row UniqueIDs or EventFlags UniqueIDs.',
                     ],
                     'other_caller_caveat': '0xac0200 also has direct caller 0xabfcf0; that function has no indexed direct caller, so the writer is not proven to be day-change-exclusive.',
                     'bounded_native_run_attempt': {
                         'status': 'blocked_before_candidate_branch',
                         'setup': 'Executed 0xab9dc0 from the matching main.nso with synthetic output/input buffers and controlled date conversion/range helpers.',
                         'stop': 'The path reached an uninitialized task/manager object access at PC 0x22019d8 before the async result or six category comparisons could be controlled.',
-                        'interpretation': 'No candidate branch was exercised; static helpers name the first guard as async result>2 and the second as mapped-category membership, but neither runtime condition nor normal-day occurrence is verified.',
+                        'interpretation': 'No candidate branch was exercised; static mapping now names the second guard categories, but neither runtime condition nor normal-day occurrence is verified and the async worker result remains unnamed.',
                     },
-                    'status': 'Static candidate only. No controlled execution with live manager/save/table dependencies and no ordinary-day occurrence evidence.',
+                    'status': 'Static candidate only. The six item-category ordinals are mapped, but there is no controlled execution with live manager/save/table dependencies and no ordinary-day occurrence evidence.',
                     'finding': 'This candidate is separate from the net-hit EventFlow and quest-timeout penalties; it cannot yet be labelled normal daily decay.',
                 },
                 'aggregate_cap_evidence': 'The full indexed EventFlow action inventory contains 72 configured AddFriendship values, all forwarded unchanged at 0xd34cb0; the generic writer clamps an individual value against its supplied descriptor but has no visible daily accumulator/gate. The Friendship table row sets DefaultValue=25 and MaxValue=255. No aggregate day-total field or writer-side daily cap is identified in this direct-call/string-reference inventory.',
@@ -641,7 +822,7 @@ def main():
             }
         },
         'open': [
-            'Run the day-change 0xab9dc0 -3 candidate with the real task/manager/save/table dependencies and establish ordinary-day reachability; async worker result and category-code names remain unresolved.',
+            'Run the day-change 0xab9dc0 -3 candidate with the real task/manager/save/table dependencies and establish ordinary-day reachability; the six category names are mapped, but the async worker result and guard occurrence remain unresolved.',
             'Trace delivery/receipt of cToNpc mail and its attached-present handler through a Friendship write; sender-side item serialization and return-to-baggage paths are now mapped, but recipient effect is unproved.',
             'Execute with the real runtime save root and Friendship descriptor table; current setter fixtures control both descriptor lookup and field offset.',
             'Find the +0xaca8 hit-counter incrementer and runtime dispatch rate of indexed actor-update method 0xc1e2e0 to establish exact net-hit cadence.',

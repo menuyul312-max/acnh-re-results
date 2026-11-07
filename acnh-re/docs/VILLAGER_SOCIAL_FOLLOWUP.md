@@ -227,20 +227,31 @@ tersimpan di [`friendship_reference_inventory.json`](../output/gameplay/villager
 
 **[EF inventory lengkap]** Pemindaian semua action/query EventFlow yang namanya
 mencakup mail, letter, present, attachment, atau receive mencatat 125 pemakaian
-di 35 flow. `Ftr_MailBox` hanya menunggu UI receiving-mail dan memeriksa apakah
-furnitur adalah mailbox pemain; flow itu tidak mengonfigurasi
-`NpcAddFriendship`. Empat aksi `NetReceiveMail` ada di `System_GrowUp` untuk
-jalur network, bukan kiriman pemain ke villager. `Obj_MessageCardRack_02_SendFuture`
+di 35 flow. Pada flow lokal 1.0.0, `Ftr_MailBox` mulai dari query
+`Ftr.IsMyPost`; jalur UI post menjalankan `CheckFreeCommunication`,
+`UIWaitReceivingMailAppear`, `UIPostHandling`, lalu `UIResultMenuDecide`.
+Flow ini tidak mengonfigurasi `NpcAddFriendship` dan aksi wait-nya bukan decoder
+surat penerima. Empat aksi `NetReceiveMail` ada di `System_GrowUp` untuk jalur
+network, bukan kiriman pemain ke villager. `Obj_MessageCardRack_02_SendFuture`
 hanya mengelola surat terjadwal dan hadiah yang dapat dikembalikan ke pocket.
 Sejumlah flow villager-to-player seperti birthday dan quest juga memuat aksi
 Friendship, tetapi kedekatan event dalam satu flow tidak membuktikan bahwa
 pengiriman atau penerimaan surat menyebabkan delta tersebut.
 
 Jalur native `EventFlowActionUIWaitReceivingMailAppear` terdaftar pada
-`0x305b978`; code path per-object `0x367bd0` memanggil helper `0x367c20` untuk
-status/pengantrian UI. Direct-call set helper itu tidak mencakup
-`0xf48840` atau `0xef2c70`. Ini mempersempit aksi mailbox yang tersedia menjadi
-jalur UI, tetapi receiver effect setelah mail dibuka masih belum terbukti.
+`0x305b978`; method per-object `0x367bd0` memanggil helper `0x367c20` untuk
+status/pengantrian UI. Penelusuran direct-call closure helper mencapai 212
+fungsi dan tidak menemukan literal `Friendship`, getter `0xf486c0`, generic
+writer `0xef2c70`, atau field writer `0xf48840`. Jadi action yang dipakai
+`Ftr_MailBox` sendiri adalah jalur UI. Efek setelah penerimaan/pembukaan mail
+atau handler item terlampir masih belum terbukti.
+
+Cross-check publik `ACNH_Resources` dan `acnh-eventflows` menemukan struktur
+`Ftr_MailBox` yang sama, tetapi mirror `ACNH_Resources` yang diperiksa berasal
+dari build lebih baru dan menambah `NetFriendMailCheck` serta gate tutorial.
+Keduanya hanya memberi EventFlow; tidak membuktikan aksi native atau write save.
+Pemetaan node serta call closure tersimpan di
+[`friendship_reference_inventory.json`](../output/gameplay/villager_social_followup/friendship_reference_inventory.json).
 
 Fungsi proses mail hari-ganti mengikuti
 `0xf53a70 → 0xaba970 → 0xaba9d0 → 0xabb250 → 0xabbf00`. `0xabbf00` membaca
@@ -287,18 +298,21 @@ offset konteks `+0xacac`. Emulasi callback asli dengan konteks sintetis
 mengonfirmasi `Timer=0,1,30,60,90` menulis `0,30,900,1800,2700`; jadi Timer 60
 menjadi 1.800 unit penyimpanan native, bukan bukti langsung durasi 60 detik.
 Pseudocode actor-update method pada index VA `0xc1e2e0` (simbol Ghidra
-`0xd1e2e0`) mengurangi `+0xacac` satu unit ketika cabang countdown tercapai.
-Karena itu unit tersebut menghitung invocation method yang memenuhi guard;
+`0xd1e2e0`) mengurangi `+0xacac` satu unit saat cabang countdown memenuhi
+guard. Method yang sama juga mengurangi field terpisah `+0xabe8` jika nilainya
+positif. Jadi countdown `+0xacac` menghitung invocation yang lolos guard;
 frekuensi dispatch per frame/detik belum terbukti.
 
 Handler `NpcClearHitParam` `0x258b10` mengosongkan counter u32 `+0xaca8` dan byte
 `+0xacb1`; `NpcHitNum` membaca counter tersebut. Query `NpcIsHitByNet`
 `0x389c50` membaca byte berbeda, `+0xacb0`, jadi kedua byte tidak disamakan.
-Pemindaian 64.475 file `analysis_decomp` menemukan akses field melalui
-`puVar[0x1595]` (sama dengan byte offset `+0xaca8`): constructor umum
-`0x1025080` membangun subobject di alamat itu, `NpcClearHitParam` menulis nol,
-dan `NpcHitNum` membaca u32. Tidak ada writer increment eksplisit di corpus
-terdekompilasi; penambah counter masih belum ditemukan. Ini bukti
+Pemindaian akses exact di 64.475 file `analysis_decomp`, 6.402 file `decomp`,
+25 file `new_decomp`, dan 9 snippet fallback assembly menemukan tiga lokasi
+semantik: constructor umum `0x1025080` membangun subobject di alamat itu,
+`NpcClearHitParam` menulis nol, dan `NpcHitNum` membaca u32. Dua pohon decomp
+memuat duplikat clear/read; dua corpus lainnya tidak memiliki hit. Tidak ada
+writer increment eksplisit pada pencarian offset/index ini; penambah counter
+masih belum ditemukan. Ini bukti
 pukulan jaring dapat memulai penalti bersyarat, bukan bahwa setiap pukulan
 langsung mengurangi poin. Callback aksi meneruskan nilai EventFlow 72/72; query
 dan transisi AI masih bukti pseudocode. Empat aksi
@@ -310,10 +324,12 @@ dan [`npc_hit_timer_native.py`](../tools/npc_hit_timer_native.py).
 Pemanggil langsung decrementer `0xc1e2e0` juga sudah dipersempit: callsite
 `0xbec314` berada di dalam fungsi native `0xbec1f0` (`FUN_00cec1f0`, ukuran
 `0x2b8`), yang menjadi slot 13 pada relocated pointer sequence `0x30d58a0`
-(entry `0x30d5908`). Badan fungsi pemilik itu tidak tersedia di decomp. Sequence
-ditandai sebagai code-pointer array yang belum terklasifikasi, jadi ia belum
-membuktikan nama kelas, scheduler, atau interval per frame. Yang terbukti hanya
-satu call owner langsung; frekuensi dispatch timer tetap runtime blocker.
+(entry `0x30d5908`). Raw disassembly menunjukkan owner memanggilnya hanya jika
+pointer pada `owner_object+0x2f8` non-null. Badan fungsi pemilik tidak tersedia
+di pohon decomp. Sequence ditandai sebagai code-pointer array yang belum
+terklasifikasi, jadi ia belum membuktikan nama kelas, scheduler, atau interval
+per frame. Yang terbukti hanya satu call owner langsung dan guard pointer itu;
+frekuensi dispatch timer tetap runtime blocker.
 
 **[PSEUDO]** percakapan pertama per villager pada hari itu memberi
 `min(ContinuousTalkDays, 3)`, jadi bonus talk harian berhenti naik setelah +3.
@@ -447,12 +463,28 @@ pada manager global yang tidak tersedia di harness.
 
 Guard kedua hanya berlaku bila input ushort bukan sentinel `-2`. Fungsi
 `0xb9c290` membentuk descriptor dari input tersebut; `0xb9cb60` membaca
-descriptor `+0x10`, memetakan indeks lewat tabel kategori u16 runtime, lalu
-membandingkan hasilnya dengan enam kode `0x3a`, `0x62`, `0x65`, `0x5f`, `0x31`,
-dan `0x2a`. Satu kecocokan mana pun menulis -3. Nama kategori dan tabel runtime
-belum ada di dump. Kode tersebut bukan `UniqueID` dari
-`EventFlagsNpcMemoryParam`; kecocokan angka dengan flag table tidak memberi
-semantik tanpa jalur lookup yang sama.
+descriptor `+0x10`, memetakan item ID melalui tabel kategori u16, lalu
+membandingkan hasilnya dengan enam ordinal `ItemParam.ItemKind`. Pseudocode
+`0xb25280` membaca field ItemKind dari ItemParam, mengubah enum menjadi ordinal
+0–119, dan menyimpan ordinal itu pada map; `0xb9cb60` membacanya kembali. Jadi
+enam kode itu kini dapat diberi nama lewat baris `ItemKind.bcsv` yang ordinalnya
+sama:
+
+| Kode / ordinal | ItemKind | UniqueID baris ItemKind | CanGift | CanNpcPresent |
+|---:|---|---:|---:|---:|
+| `0x3a` / 58 | `Trash` (ゴミ) | 61 | 1 | 1 |
+| `0x62` / 98 | `LostQuestDust` (おとしものゴミ) | 79 | 0 | 0 |
+| `0x65` / 101 | `TreasureQuestDust` (宝探しカプセルごみ) | 179 | 0 | 0 |
+| `0x5f` / 95 | `JohnnyQuestDust` (ジョニークエストごみ) | 150 | 0 | 0 |
+| `0x31` / 49 | `TurnipExpired` (カブ（くさったカブ）) | 168 | 0 | 1 |
+| `0x2a` / 42 | `Weed` (植物：雑草) | 187 | 0 | 1 |
+
+`UniqueID` is a different table field and differs from each compared ordinal.
+The gift/present flags above are table metadata; they do not identify
+which gameplay action supplied the item or prove why a category match returns
+-3. The 1.0.0 `ItemKind.bcsv` rows agree at these ordinals with the public
+`CylindricalEarth/specs_100.py` enum tuple. This resolves category names, not
+runtime reachability.
 
 Jalur `0xf53a70 → 0xabff90 → 0xac0200` memberi caller statik dari siklus
 perubahan hari, tetapi tidak membuktikan kedua guard terpenuhi pada hari normal.
@@ -462,10 +494,10 @@ itu belum terbukti khusus dipanggil saat day-change.
 
 Eksekusi bounded kalkulator dengan helper tanggal terkontrol masih berhenti di
 akses object task/manager global pada PC `0x22019d8`, sebelum task result atau
-enam category check bisa dikendalikan. Tidak ada fixture native untuk dua
+item category check bisa dikendalikan. Tidak ada fixture native untuk dua
 cabang -3 dan belum ada pengamatan hari normal. Ini jalur kandidat yang dapat
-mengurangi field, belum cukup untuk menyebutnya decay normal. Rute, xref, dan
-batasnya tercatat di
+mengurangi field, belum cukup untuk menyebutnya decay normal. Rute, crosswalk,
+xref, dan batasnya tercatat di
 [`friendship_reference_inventory.json`](../output/gameplay/villager_social_followup/friendship_reference_inventory.json).
 
 `0xd26b70` juga memanggil `0xd34c20`, tetapi helper `0xf48740` yang dipanggilnya
@@ -474,11 +506,45 @@ tidak menghitungnya sebagai writer tambahan. Daftar pembaca/penulis dan rantai
 candidate disimpan di
 [`friendship_source_candidates.json`](../output/gameplay/villager_social_followup/friendship_source_candidates.json).
 
-**Terbuka:** worker result apa yang memicu guard pertama, nama kategori runtime
-yang dibandingkan oleh guard kedua, dan apakah salah satunya terjadi pada hari
-normal; efek penerimaan surat/present terlampir pada Friendship; table-manager
-lookup serta offset absolut Friendship pada save runtime; penambah counter dan
-frekuensi dispatch timer net-hit.
+### Cakupan statik dan kebutuhan capture
+
+Audit ini mencakup main NSO 1.0.0 yang tercatat di inventory, 64.475 file
+`analysis_decomp`, 6.402 file `decomp`, 25 file `new_decomp`, 9 snippet fallback
+assembly, BFEVFL lokal yang telah didecode, tabel `ItemParam` (8.208 baris) dan
+`ItemKind` (120 baris), serta cross-check publik `CylindricalEarth` dan dua
+mirror EventFlow. `rtld`, `sdk`, dan `subsdk0` tersedia sebagai input ExeFS,
+tetapi tidak masuk ke call graph native yang dipakai di sini. Tidak ada proses
+game aktif atau save pemain untuk menguji descriptor, worker task, network mail,
+atau waktu dispatch. Pencarian +0xaca8 tidak menemukan increment eksplisit pada
+offset/index yang dicari; pointer alias atau write generik masih memerlukan
+capture runtime.
+
+Capture yang menyelesaikan blocker perlu menjalankan build yang checksum-nya
+cocok dan save uji salinan. Pasang hook di `0xab9dc0` untuk merekam pemanggil,
+input item, `descriptor+0x10`, ItemKind terpetakan, wrapper status `+0x50`, task
+result `+0x20`, dan delta; bandingkan panggilan dari `0xabff90` dan `0xabfcf0`
+pada hari biasa serta day-change, dengan item dari enam kategori dan kategori
+kontrol. Ikuti ke `0xac0200`/`0xf48840` dan ambil nilai Friendship sebelum dan
+sesudah untuk membuktikan guard berjalan.
+
+Untuk net-hit, pasang write watchpoint di actor `+0xaca8` dan catat setiap PC,
+backtrace, serta alamat object; hook clear `0x258b10`, query `0x388660`, method
+`0xc1e2e0`, dan owner `0xbec1f0` pada callsite `0xbec314`. Bandingkan jumlah
+invocation dan waktu nyata/frame untuk mengenali incrementer serta cadence
+dispatcher.
+
+Untuk surat, gunakan save salinan dan kirim ke villager yang sama tanpa item,
+dengan item biasa, dan dengan item dari enam kategori. Rekam UI wait mailbox,
+network receipt, handler penerima, semua pemanggilan `0xef2c70`/`0xf48840`, dan
+diff save sebelum/sesudah. Untuk descriptor, hook lookup key `Friendship` di
+`0xdc5e20`, catat pointer, `UniqueID`/`MaxValue`, view dari `0xef2c70`, root save,
+dan bytes sesudah flush; lakukan pada record lokal dan network menggunakan dua
+rumus record yang didokumentasikan di atas.
+
+Jadi yang masih terbuka ialah worker result dan reachability normal-day untuk
+dua guard -3; efek receipt surat/present; descriptor manager dan offset absolut
+Friendship pada save nyata; incrementer +0xaca8; serta cadence runtime method
+`0xc1e2e0`.
 Penurunan -3 dari net-hit dan timeout quest adalah aksi bersyarat yang
 dikonfigurasi, bukan bukti decay pasif. Batas total Friendship harian juga belum
 terbukti; tidak ada cap agregat di bukti writer/EventFlow yang terindeks.
