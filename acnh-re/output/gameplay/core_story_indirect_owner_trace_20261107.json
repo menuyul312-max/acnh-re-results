@@ -1,0 +1,280 @@
+{
+  "schema": "acnh-re/core-story-indirect-owner-trace/1",
+  "game_version": "1.0.0",
+  "analysis_date": "2026-11-07",
+  "analysis_mode": "static reverse engineering; no native execution",
+  "report": "docs/CORE_STORY_INDIRECT_OWNER_TRACE_20261107.md",
+  "analysis_outputs_relative_to_delivery_repo": "../../../acnh-re",
+  "manifest_source_root": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE",
+  "owner_resolution": {
+    "first_live_actor_builder_pointer": {
+      "target_va": "0xc685a0",
+      "classification": "NpcActorMgr function-pointer-table method",
+      "status": "STATIC_CONFIRMED",
+      "proof_graph": [
+        {
+          "from": "_INIT_2810@0xc71bf0",
+          "to": "registration helper@0x61ab0",
+          "edge": "direct BL at 0xc7236c",
+          "instruction_bytes_le": "d1bdcf97",
+          "meaning": "register class record with factory 0xc67fa0, size 0x10780, and NpcActorMgr name strings",
+          "execution_kind": "static binary evidence; initializer not executed"
+        },
+        {
+          "from": "relocated factory slot@0x32f91a8",
+          "to": "factory@0xc67fa0",
+          "edge": "R_AARCH64_RELATIVE relocation",
+          "relocation_row_va": "0x2479aa8"
+        },
+        {
+          "from": "factory@0xc67fa0",
+          "to": "constructor@0xc67ff0",
+          "edge": "direct BL at 0xc67fd0",
+          "instruction_bytes_le": "08000094",
+          "allocation_size": "0x10780"
+        },
+        {
+          "from": "constructor@0xc67ff0",
+          "to": "function-pointer table base@0x30d9a50",
+          "edge": "load relocated table pointer 0x32f9148 -> 0x30d9a40, add 0x10, store object vptr",
+          "instruction_sites": [
+            {"va": "0xc68020", "bytes_le": "883401b0", "text": "adrp x8, #0x32f9000"},
+            {"va": "0xc68024", "bytes_le": "08a540f9", "text": "ldr x8, [x8, #0x148]"},
+            {"va": "0xc68028", "bytes_le": "08410091", "text": "add x8, x8, #0x10"},
+            {"va": "0xc68030", "bytes_le": "880200f9", "text": "str x8, [x20]"}
+          ]
+        },
+        {
+          "from": "function-pointer slot@0x30d9a88",
+          "to": "method@0xc685a0",
+          "edge": "R_AARCH64_RELATIVE relocation; slot is table base + 0x38"
+        },
+        {
+          "from": "method@0xc685a0",
+          "to": "first-live actor builder@0xc70da0",
+          "edge": "direct BL at 0xc686ac",
+          "instruction_bytes_le": "bd210094"
+        }
+      ],
+      "actor_builder_strings": [
+        {"va": "0x2992dbb", "value": "E_FirstLive_NPC_0"},
+        {"va": "0x298de83", "value": "%s/AIC:Special/AIF:AI_NPC_Tkk_FirstLive"}
+      ],
+      "unproven_runtime_edge": "No stage/EventFlow/native indirect-dispatch caller was recovered for method 0xc685a0."
+    },
+    "staff_credit_callback_pointer": {
+      "target_va": "0x146f2c0",
+      "classification": "callback read by State::cPlay setup; target calls generic StaffCredit helper path",
+      "status": "STATIC_CONFIRMED",
+      "proof_graph": [
+        {
+          "from": "constructor@0x146e010",
+          "to": "neighbor function table base@0x3135380",
+          "edge": "load relocated pointer 0x330daf8 -> 0x3135370, add 0x10, store object vptr",
+          "instruction_sites": [
+            {"va": "0x146e024", "bytes_le": "e8f400f0", "text": "adrp x8, #0x330d000"},
+            {"va": "0x146e028", "bytes_le": "087d45f9", "text": "ldr x8, [x8, #0xaf8]"},
+            {"va": "0x146e030", "bytes_le": "08410091", "text": "add x8, x8, #0x10"},
+            {"va": "0x146e038", "bytes_le": "680200f9", "text": "str x8, [x19]"}
+          ]
+        },
+        {
+          "from": "neighbor table slot@0x3135558",
+          "to": "state setup method@0x146f040",
+          "edge": "relocated function pointer at table base + 0x1d8"
+        },
+        {
+          "from": "state setup method@0x146f040",
+          "to": "callback@0x146f2c0",
+          "edge": "load function pointer from 0x330db20",
+          "instruction_sites": [
+            {"va": "0x146f144", "bytes_le": "e9f400d0", "text": "adrp x9, #0x330d000"},
+            {"va": "0x146f14c", "bytes_le": "299145f9", "text": "ldr x9, [x9, #0xb20]"}
+          ]
+        },
+        {
+          "from": "state setup method@0x146f040",
+          "to": "State::cPlay registry helper@0x1f064b0",
+          "edge": "construct State::cPlay string at 0x29570e1, set argument 3, direct BL at 0x146f17c",
+          "instruction_sites": [
+            {"va": "0x146f168", "bytes_le": "49a70090", "text": "adrp x9, #0x2957000"},
+            {"va": "0x146f16c", "bytes_le": "29850391", "text": "add x9, x9, #0xe1"},
+            {"va": "0x146f170", "bytes_le": "e1070032", "text": "mov w1, #3"},
+            {"va": "0x146f17c", "bytes_le": "cd5c2a94", "text": "bl #0x1f064b0"}
+          ]
+        },
+        {
+          "from": "callback@0x146f2c0",
+          "to": "generic helper@0x1470e90",
+          "edge": "direct BL at 0x146f34c",
+          "instruction_bytes_le": "d1060094",
+          "helper_string": {"va": "0x298a2f5", "value": "StaffCredit"}
+        }
+      ],
+      "owner_limit": "The containing object's semantic class name and the dynamic caller/dispatcher for 0x146f040 were not recovered.",
+      "unproven_story_edge": "No first-live, K.K., or credits EventFlow/native caller was recovered for the State::cPlay -> StaffCredit path."
+    }
+  },
+  "relocation_records": [
+    {
+      "row_va": "0x2479be0",
+      "file_offset": "0x2479ec8",
+      "r_offset": "0x30d9a88",
+      "r_info": "0x403",
+      "r_type": "R_AARCH64_RELATIVE (1027)",
+      "r_sym": 0,
+      "r_addend": "0xc685a0",
+      "raw_row_bytes": "889a0d03000000000304000000000000a085c60000000000"
+    },
+    {
+      "row_va": "0x2479988",
+      "file_offset": "0x2479c70",
+      "r_offset": "0x32f9148",
+      "r_info": "0x403",
+      "r_type": "R_AARCH64_RELATIVE (1027)",
+      "r_sym": 0,
+      "r_addend": "0x30d9a40",
+      "raw_row_bytes": "48912f03000000000304000000000000409a0d0300000000"
+    },
+    {
+      "row_va": "0x2479aa8",
+      "file_offset": "0x2479d90",
+      "r_offset": "0x32f91a8",
+      "r_info": "0x403",
+      "r_type": "R_AARCH64_RELATIVE (1027)",
+      "r_sym": 0,
+      "r_addend": "0xc67fa0",
+      "raw_row_bytes": "a8912f03000000000304000000000000a07fc60000000000"
+    },
+    {
+      "row_va": "0x25a3f60",
+      "file_offset": "0x25a4248",
+      "r_offset": "0x330daf8",
+      "r_info": "0x403",
+      "r_type": "R_AARCH64_RELATIVE (1027)",
+      "r_sym": 0,
+      "r_addend": "0x3135370",
+      "raw_row_bytes": "f8da30030000000003040000000000007053130300000000"
+    },
+    {
+      "row_va": "0x25a3f78",
+      "file_offset": "0x25a4260",
+      "r_offset": "0x330db00",
+      "r_info": "0x403",
+      "r_type": "R_AARCH64_RELATIVE (1027)",
+      "r_sym": 0,
+      "r_addend": "0x3135580",
+      "raw_row_bytes": "00db30030000000003040000000000008055130300000000"
+    },
+    {
+      "row_va": "0x25a3fd8",
+      "file_offset": "0x25a42c0",
+      "r_offset": "0x330db20",
+      "r_info": "0x403",
+      "r_type": "R_AARCH64_RELATIVE (1027)",
+      "r_sym": 0,
+      "r_addend": "0x146f2c0",
+      "raw_row_bytes": "20db3003000000000304000000000000c0f2460100000000"
+    }
+  ],
+  "story_bridge": {
+    "confirmed_flow_edge": {
+      "source_id": 279,
+      "flow": "Demo_PublicAnnouncement",
+      "entry": "PAnnounceSza",
+      "event": 41,
+      "action": "SystemRequestChangeStage",
+      "target_stage": "cMainFieldFirstLive",
+      "source_sha256": "7ec0d30107a1d40169b4455932f0f6853beb9ef7b7cf69ca2ee2f77958a12602"
+    },
+    "stage_projection": {
+      "source_id": 2909,
+      "source": "B_data/Stage/Game/MainFieldDemoFirstLive.byml",
+      "actor_count": 9,
+      "npc_actor_mgr_actor_rows": 0,
+      "source_sha256": "0cf0898403df0b2eb8a47fae804a373ca6a7dcc8eb9680aac64360847b16bd12",
+      "projection_sha256": "2b003d9744649e7668585ff93df4dd17d0844e92ce86e5a06f7b094f1428bd28"
+    },
+    "global_actor_registry": {
+      "name": "NpcActorMgr",
+      "index": 5,
+      "hash_u32": 3262127627,
+      "status": "registered",
+      "registry_sha256": "67439173a460ad49bb6cbc0086047eb192581f0cad36f4c936c4078a39d959be"
+    },
+    "potential_eventflow_endpoints": [
+      {
+        "source_id": 625,
+        "flow": "SNPC_tkk_Live",
+        "entry": "Tkk_LandFirstLive",
+        "called_from": [],
+        "source_sha256": "d1a9d0253d4ae6c1ed46e87d007f8924f4cba637589a3d0750ca07295794d316"
+      },
+      {
+        "source_id": 272,
+        "flow": "AI_NPC_Tkk_FirstLive",
+        "entry": "Root",
+        "called_from": [],
+        "source_sha256": "5f7c36dba971c8c30f434b92085a8bb7e8bd677df39bcd008d0aa8950e02a9f8"
+      }
+    ],
+    "unconnected_joins": [
+      {
+        "join": "cMainFieldFirstLive stage load -> NpcActorMgr instantiation / 0xc685a0 dispatch",
+        "status": "OPEN",
+        "missing_evidence": "Stage projection has no NpcActorMgr actor; native direct-call index has no caller for 0xc685a0 and no indirect dispatch site is assigned to this stage."
+      },
+      {
+        "join": "0xc70da0 / AI_NPC_Tkk_FirstLive -> SNPC_tkk_Live:Tkk_LandFirstLive",
+        "status": "OPEN",
+        "missing_evidence": "Flow index records no incoming caller for either endpoint and no stage-entry-to-EventFlow bridge."
+      },
+      {
+        "join": "K.K. first live / post-show credits -> State::cPlay -> StaffCredit",
+        "status": "OPEN",
+        "missing_evidence": "The static state callback path is present, but no indexed EventFlow or native caller connects it to the first-live chain."
+      }
+    ],
+    "negative_index_searches": {
+      "flow_count": 456,
+      "searched_tokens": ["StaffCredit", "StaffRoll", "cStaffRoll"],
+      "matches": [],
+      "limit": "flow_index metadata says dialogue message text is excluded"
+    }
+  },
+  "direct_call_index_results": {
+    "index_sha256": "a78c7af27d37b8fd931bba8bc611623dacf7685cb6e8b4f827effa0765340aad",
+    "target_0xc685a0_direct_callers": 0,
+    "target_0x146f2c0_direct_callers": 0,
+    "target_0x146f040_direct_callers": 0,
+    "interpretation": "The index records direct BL/B calls. These zero counts do not negate relocated function-pointer/callback evidence; they leave the runtime indirect caller unresolved."
+  },
+  "source_hashes": [
+    {"path": "inputs/additional_exefs/main", "kind": "NSO input", "sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900"},
+    {"path": "A_logic/main.elf", "kind": "analysis ELF", "sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74"},
+    {"path": "output/binary/code_pointer_arrays.json", "sha256": "64d474068ca289f9146f7f32e6647a16a05e8f5be8e635615a478744b62ef822"},
+    {"path": "output/binary/analysis_decomp/c71bf0.c", "sha256": "df0143f8def558ee26a80fdba2ec7f81be9787bb62833f43d0502ec00687272a"},
+    {"path": "output/binary/analysis_decomp/61ab0.c", "sha256": "b17784caa07cb61a87c2dc004a1ea3c217bf572a7edc533a109fb3d82179f9ae"},
+    {"path": "output/binary/analysis_decomp/c67ff0.c", "sha256": "14c396b819c682273f129d53aeaa09f12fc40f5412ab1230a0187f82a106b6ef"},
+    {"path": "output/binary/analysis_decomp/c70da0.c", "sha256": "b2253dd8192f615ce55cb57d7ff4de45a22ae14d4186edf61a4e57bb8f0b5588"},
+    {"path": "output/binary/analysis_decomp/1470e90.c", "sha256": "c37c9542db23aa8d74105a101da693608282c529acbee2c33ab4bc50da873425"},
+    {"path": "output/binary/analysis_decomp/146ee10.c", "sha256": "6daa5f72fbd20df37941db811b316e9ff7046f58878a244903591b7e6fa3c3b6"},
+    {"path": "output/binary/analysis_decomp/1f064b0.c", "sha256": "64acfe2527e8e11d1201a313cdf1c65ebcd87413a2a992146d54eb767c8a9a75"},
+    {"path": "output/gameplay/flow_index.json", "sha256": "359f3a21a17a116902b0c8e1110c3892814b6fccbeb50b71d573c8ab3e1c68c5"},
+    {"path": "output/stage/by_source/02909.json", "sha256": "2b003d9744649e7668585ff93df4dd17d0844e92ce86e5a06f7b094f1428bd28"},
+    {"path": "output/stage/actor_type_registry.json", "sha256": "67439173a460ad49bb6cbc0086047eb192581f0cad36f4c936c4078a39d959be"},
+    {"path": "B_data/EventFlow/Demo_PublicAnnouncement.bfevfl", "source_id": 279, "sha256": "7ec0d30107a1d40169b4455932f0f6853beb9ef7b7cf69ca2ee2f77958a12602"},
+    {"path": "B_data/EventFlow/AI_NPC_Tkk_FirstLive.bfevfl", "source_id": 272, "sha256": "5f7c36dba971c8c30f434b92085a8bb7e8bd677df39bcd008d0aa8950e02a9f8"},
+    {"path": "B_data/EventFlow/SNPC_tkk_Live.bfevfl", "source_id": 625, "sha256": "d1a9d0253d4ae6c1ed46e87d007f8924f4cba637589a3d0750ca07295794d316"},
+    {"path": "B_data/Stage/Game/MainFieldDemoFirstLive.byml", "source_id": 2909, "sha256": "0cf0898403df0b2eb8a47fae804a373ca6a7dcc8eb9680aac64360847b16bd12"},
+    {"path": "output/manifest.json", "sha256": "eb8d114129e01e6c3284a7a2613c3f451d649c0708a58a1a08cd757c5f3840a8"},
+    {"path": "output/index.sqlite", "sha256": "a78c7af27d37b8fd931bba8bc611623dacf7685cb6e8b4f827effa0765340aad"}
+  ],
+  "limits": {
+    "native_execution": false,
+    "stage_dispatch_runtime_verified": false,
+    "eventflow_runtime_verified": false,
+    "model_audio_or_rendered_cutscene_evidence_used": false,
+    "message_text_indexed": false
+  }
+}
