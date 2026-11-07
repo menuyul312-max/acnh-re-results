@@ -1,0 +1,583 @@
+{
+  "schema_version": 1,
+  "title": "Building preview actor and asset join follow-up",
+  "date": "2026-11-07",
+  "native_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+  "conclusion": {
+    "generic_actor_load_chain_proven": true,
+    "concrete_actor_type_selected": "unresolved",
+    "actor_factory_selected_index": "unresolved; request +0xc8 uses +0x18 when selector is 4",
+    "native_model_resource_key_for_handler": "unresolved",
+    "pbc_or_collision_component_binding": "unresolved",
+    "final_structure_instance_and_save": "unresolved",
+    "facility_model_table_to_catalogue_join": "19/19 exact ModelName keys found with same-name _pbc catalogue entries",
+    "catalogue_payloads_opened": false
+  },
+  "native_chain": [
+    {
+      "action": "EventFlowActionStructureStartPreviewGuide",
+      "factory_va": "0x453270",
+      "constructor_va": "0x344490",
+      "registered_slot_candidate_va": "0x3445b0",
+      "registration_status": "static candidate from resolved handler registry"
+    },
+    {
+      "caller_function_va": "0x3445b0",
+      "callsite_pc": "0x344818",
+      "target_function_va": "0x490f0",
+      "evidence": "decompiled direct call; helper is referenced as ActorLoad in string_refs.tsv"
+    },
+    {
+      "caller_function_va": "0x490f0",
+      "target_function_va": "0x49360",
+      "callsite_pc": null,
+      "evidence": "decompiled direct call after request descriptor normalization; exact instruction PC not retained in this export"
+    },
+    {
+      "caller_function_va": "0x49360",
+      "target_function_va": "0x407e0",
+      "callsite_pc": null,
+      "evidence": "decompiled direct call with a selector derived from request offsets +0xc8 / +0x18"
+    },
+    {
+      "function_va": "0x407e0",
+      "behavior": "indexes the manager factory table from the supplied type selector and enters an allocator/object-construction path",
+      "chosen_slot": "unresolved for this action"
+    },
+    {
+      "handler_function_va": "0x3445b0",
+      "post_load_behavior": {
+        "state_field_offset": "0x150",
+        "manager_lookup_helper_va": "0x3fa40",
+        "manager_lookup_child_va": "0x62e50",
+        "object_position_like_offsets": [
+          "0x274",
+          "0x27c",
+          "0x284",
+          "0x28c"
+        ],
+        "interpretation": "a manager-backed object/context is resolved and position-like fields are written; exact actor class and lifecycle role remain unresolved"
+      }
+    },
+    {
+      "action": "PreviewStructure",
+      "function_va": "0x36e140",
+      "behavior": "copies pose/metadata into actor context at +0x288; no named actor/model/PBC load is present in this direct body"
+    },
+    {
+      "action": "BuildStructure",
+      "function_va": "0x369d50",
+      "behavior": "reads the selected saved site record and BuildingSiteIndex, then reaches the unresolved actor-component coordinate vcall; no final persistent instance identified"
+    }
+  ],
+  "named_actor_candidates_from_registry_only": [
+    {
+      "registry_index": 9,
+      "actor_key": "StructureActor",
+      "murmur_hash_u32": 1515884610,
+      "name_object_va": "0x3346f10",
+      "name_string_va": "0x2929658",
+      "selection_by_structure_start_preview_guide": "unproven"
+    },
+    {
+      "registry_index": 10,
+      "actor_key": "StructurePreviewSwapActor",
+      "murmur_hash_u32": 2060124920,
+      "name_object_va": "0x3346f20",
+      "name_string_va": "0x2963ec2",
+      "selection_by_structure_start_preview_guide": "unproven"
+    },
+    {
+      "registry_index": 56,
+      "actor_key": "StructurePreviewActor",
+      "murmur_hash_u32": 2115111211,
+      "name_object_va": "0x3347200",
+      "name_string_va": "0x29a5af5",
+      "selection_by_structure_start_preview_guide": "unproven"
+    },
+    {
+      "registry_index": 80,
+      "actor_key": "StructurePreviewGuideActor",
+      "murmur_hash_u32": 586259887,
+      "name_object_va": "0x3347380",
+      "name_string_va": "0x296ee49",
+      "selection_by_structure_start_preview_guide": "unproven"
+    }
+  ],
+  "string_reference": {
+    "string_va": "0x2a69b55",
+    "string": "ActorLoad",
+    "exporter_function_column_addresses": ["0x1490f0", "0x1031a90"],
+    "normalized_raw_function_vas": ["0x490f0", "0x31a90"],
+    "normalization": "subtract 0x100000 from Ghidra display/function-column addresses",
+    "source": "generated/re/string_refs.tsv"
+  },
+  "facility_model_catalogue_join": {
+    "join_description": "StructureFacilityModel.StructureInfoUniqueID to StructureInfoParam.UniqueID, then ModelName to model catalogue Asset_ID; same-name ModelName + _pbc is separately catalogued",
+    "rows": [
+      {
+        "structure_facility_model_unique_id": 0,
+        "structure_info_unique_id": 19,
+        "model_name_key": "StrcMarketA00Reserve",
+        "construction_state": 0,
+        "grow_level": 0,
+        "floor_height": 0.0,
+        "catalog_model": {
+          "asset_id": "StrcMarketA00Reserve",
+          "category": "Struktur Bangunan (Structures)",
+          "has_model_3d": "Ya (GLB)",
+          "format": "GLB + PNG",
+          "path": "acnh_godot/generated/models/StrcMarketA00Reserve/StrcMarketA00Reserve.glb"
+        },
+        "catalog_pbc_name_candidate": {
+          "asset_id": "StrcMarketA00Reserve_pbc",
+          "category": "Struktur Bangunan (Structures)",
+          "has_model_3d": "Tidak (Tekstur UI/Variasi)",
+          "format": "PNG",
+          "path": "acnh_godot/generated/models/StrcMarketA00Reserve_pbc"
+        },
+        "native_handler_binding": "unproven"
+      },
+      {
+        "structure_facility_model_unique_id": 1,
+        "structure_info_unique_id": 19,
+        "model_name_key": "StrcMarketA01",
+        "construction_state": 0,
+        "grow_level": 1,
+        "floor_height": 8.0,
+        "catalog_model": {
+          "asset_id": "StrcMarketA01",
+          "category": "Struktur Bangunan (Structures)",
+          "has_model_3d": "Ya (GLB)",
+          "format": "GLB + PNG",
+          "path": "acnh_godot/generated/models/StrcMarketA01/StrcMarketA01.glb"
+        },
+        "catalog_pbc_name_candidate": {
+          "asset_id": "StrcMarketA01_pbc",
+          "category": "Struktur Bangunan (Structures)",
+          "has_model_3d": "Tidak (Tekstur UI/Variasi)",
+          "format": "PNG",
+          "path": "acnh_godot/generated/models/StrcMarketA01_pbc"
+        },
+        "native_handler_binding": "unproven"
+      },
+      {
+        "structure_facility_model_unique_id": 2,
+        "structure_info_unique_id": 19,
+        "model_name_key": "StrcMarketA02",
+        "construction_state": 0,
+        "grow_level": 2,
+        "floor_height": 7.5,
+        "catalog_model": {
+          "asset_id": "StrcMarketA02",
+          "category": "Struktur Bangunan (Structures)",
+          "has_model_3d": "Ya (GLB)",
+          "format": "GLB + PNG",
+          "path": "acnh_godot/generated/models/StrcMarketA02/StrcMarketA02.glb"
+        },
+        "catalog_pbc_name_candidate": {
+          "asset_id": "StrcMarketA02_pbc",
+          "category": "Struktur Bangunan (Structures)",
+          "has_model_3d": "Tidak (Tekstur UI/Variasi)",
+          "format": "PNG",
+          "path": "acnh_godot/generated/models/StrcMarketA02_pbc"
+        },
+        "native_handler_binding": "unproven"
+      },
+      {
+        "structure_facility_model_unique_id": 5,
+        "structure_info_unique_id": 20,
+        "model_name_key": "StrcOfficeA01",
+        "construction_state": 0,
+        "grow_level": 1,
+        "floor_height": 20.0,
+        "catalog_model": {
+          "asset_id": "StrcOfficeA01",
+          "category": "Struktur Bangunan (Structures)",
+          "has_model_3d": "Ya (GLB)",
+          "format": "GLB + PNG",
+          "path": "acnh_godot/generated/models/StrcOfficeA01/StrcOfficeA01.glb"
+        },
+        "catalog_pbc_name_candidate": {
+          "asset_id": "StrcOfficeA01_pbc",
+          "category": "Struktur Bangunan (Structures)",
+          "has_model_3d": "Tidak (Tekstur UI/Variasi)",
+          "format": "PNG",
+          "path": "acnh_godot/generated/models/StrcOfficeA01_pbc"
+        },
+        "native_handler_binding": "unproven"
+      },
+      {
+        "structure_facility_model_unique_id": 6,
+        "structure_info_unique_id": 21,
+        "model_name_key": "StrcMuseumA00",
+        "construction_state": 0,
+        "grow_level": 1,
+        "floor_height": 17.0,
+        "catalog_model": {
+          "asset_id": "StrcMuseumA00",
+          "category": "Struktur Bangunan (Structures)",
+          "has_model_3d": "Ya (GLB)",
+          "format": "GLB + PNG",
+          "path": "acnh_godot/generated/models/StrcMuseumA00/StrcMuseumA00.glb"
+        },
+        "catalog_pbc_name_candidate": {
+          "asset_id": "StrcMuseumA00_pbc",
+          "category": "Struktur Bangunan (Structures)",
+          "has_model_3d": "Tidak (Tekstur UI/Variasi)",
+          "format": "PNG",
+          "path": "acnh_godot/generated/models/StrcMuseumA00_pbc"
+        },
+        "native_handler_binding": "unproven"
+      },
+      {
+        "structure_facility_model_unique_id": 7,
+        "structure_info_unique_id": 21,
+        "model_name_key": "StrcMuseumA01",
+        "construction_state": 0,
+        "grow_level": 2,
+        "floor_height": 20.0,
+        "catalog_model": {
+          "asset_id": "StrcMuseumA01",
+          "category": "Struktur Bangunan (Structures)",
+          "has_model_3d": "Ya (GLB)",
+          "format": "GLB + PNG",
+          "path": "acnh_godot/generated/models/StrcMuseumA01/StrcMuseumA01.glb"
+        },
+        "catalog_pbc_name_candidate": {
+          "asset_id": "StrcMuseumA01_pbc",
+          "category": "Struktur Bangunan (Structures)",
+          "has_model_3d": "Tidak (Tekstur UI/Variasi)",
+          "format": "PNG",
+          "path": "acnh_godot/generated/models/StrcMuseumA01_pbc"
+        },
+        "native_handler_binding": "unproven"
+      },
+      {
+        "structure_facility_model_unique_id": 10,
+        "structure_info_unique_id": 22,
+        "model_name_key": "StrcAirPortA00",
+        "construction_state": 0,
+        "grow_level": 0,
+        "floor_height": 362.0,
+        "catalog_model": {
+          "asset_id": "StrcAirPortA00",
+          "category": "Struktur Bangunan (Structures)",
+          "has_model_3d": "Ya (GLB)",
+          "format": "GLB + PNG",
+          "path": "acnh_godot/generated/models/StrcAirPortA00/StrcAirPortA00.glb"
+        },
+        "catalog_pbc_name_candidate": {
+          "asset_id": "StrcAirPortA00_pbc",
+          "category": "Struktur Bangunan (Structures)",
+          "has_model_3d": "Tidak (Tekstur UI/Variasi)",
+          "format": "PNG",
+          "path": "acnh_godot/generated/models/StrcAirPortA00_pbc"
+        },
+        "native_handler_binding": "unproven"
+      },
+      {
+        "structure_facility_model_unique_id": 12,
+        "structure_info_unique_id": 23,
+        "model_name_key": "StrcTanukichiA00",
+        "construction_state": 0,
+        "grow_level": 0,
+        "floor_height": 17.0,
+        "catalog_model": {
+          "asset_id": "StrcTanukichiA00",
+          "category": "Struktur Bangunan (Structures)",
+          "has_model_3d": "Ya (GLB)",
+          "format": "GLB + PNG",
+          "path": "acnh_godot/generated/models/StrcTanukichiA00/StrcTanukichiA00.glb"
+        },
+        "catalog_pbc_name_candidate": {
+          "asset_id": "StrcTanukichiA00_pbc",
+          "category": "Struktur Bangunan (Structures)",
+          "has_model_3d": "Tidak (Tekstur UI/Variasi)",
+          "format": "PNG",
+          "path": "acnh_godot/generated/models/StrcTanukichiA00_pbc"
+        },
+        "native_handler_binding": "unproven"
+      },
+      {
+        "structure_facility_model_unique_id": 13,
+        "structure_info_unique_id": 21,
+        "model_name_key": "StrcMuseumA00Build",
+        "construction_state": 1,
+        "grow_level": 0,
+        "floor_height": 0.0,
+        "catalog_model": {
+          "asset_id": "StrcMuseumA00Build",
+          "category": "Struktur Bangunan (Structures)",
+          "has_model_3d": "Ya (GLB)",
+          "format": "GLB + PNG",
+          "path": "acnh_godot/generated/models/StrcMuseumA00Build/StrcMuseumA00Build.glb"
+        },
+        "catalog_pbc_name_candidate": {
+          "asset_id": "StrcMuseumA00Build_pbc",
+          "category": "Struktur Bangunan (Structures)",
+          "has_model_3d": "Tidak (Tekstur UI/Variasi)",
+          "format": "PNG",
+          "path": "acnh_godot/generated/models/StrcMuseumA00Build_pbc"
+        },
+        "native_handler_binding": "unproven"
+      },
+      {
+        "structure_facility_model_unique_id": 16,
+        "structure_info_unique_id": 21,
+        "model_name_key": "StrcMuseumA00Reserve",
+        "construction_state": 0,
+        "grow_level": 0,
+        "floor_height": 0.0,
+        "catalog_model": {
+          "asset_id": "StrcMuseumA00Reserve",
+          "category": "Struktur Bangunan (Structures)",
+          "has_model_3d": "Ya (GLB)",
+          "format": "GLB + PNG",
+          "path": "acnh_godot/generated/models/StrcMuseumA00Reserve/StrcMuseumA00Reserve.glb"
+        },
+        "catalog_pbc_name_candidate": {
+          "asset_id": "StrcMuseumA00Reserve_pbc",
+          "category": "Struktur Bangunan (Structures)",
+          "has_model_3d": "Tidak (Tekstur UI/Variasi)",
+          "format": "PNG",
+          "path": "acnh_godot/generated/models/StrcMuseumA00Reserve_pbc"
+        },
+        "native_handler_binding": "unproven"
+      },
+      {
+        "structure_facility_model_unique_id": 18,
+        "structure_info_unique_id": 24,
+        "model_name_key": "StrcTailorA00Reserve",
+        "construction_state": 0,
+        "grow_level": 0,
+        "floor_height": 0.0,
+        "catalog_model": {
+          "asset_id": "StrcTailorA00Reserve",
+          "category": "Struktur Bangunan (Structures)",
+          "has_model_3d": "Ya (GLB)",
+          "format": "GLB + PNG",
+          "path": "acnh_godot/generated/models/StrcTailorA00Reserve/StrcTailorA00Reserve.glb"
+        },
+        "catalog_pbc_name_candidate": {
+          "asset_id": "StrcTailorA00Reserve_pbc",
+          "category": "Struktur Bangunan (Structures)",
+          "has_model_3d": "Tidak (Tekstur UI/Variasi)",
+          "format": "PNG",
+          "path": "acnh_godot/generated/models/StrcTailorA00Reserve_pbc"
+        },
+        "native_handler_binding": "unproven"
+      },
+      {
+        "structure_facility_model_unique_id": 19,
+        "structure_info_unique_id": 24,
+        "model_name_key": "StrcTailorA00",
+        "construction_state": 0,
+        "grow_level": 1,
+        "floor_height": 20.0,
+        "catalog_model": {
+          "asset_id": "StrcTailorA00",
+          "category": "Struktur Bangunan (Structures)",
+          "has_model_3d": "Ya (GLB)",
+          "format": "GLB + PNG",
+          "path": "acnh_godot/generated/models/StrcTailorA00/StrcTailorA00.glb"
+        },
+        "catalog_pbc_name_candidate": {
+          "asset_id": "StrcTailorA00_pbc",
+          "category": "Struktur Bangunan (Structures)",
+          "has_model_3d": "Tidak (Tekstur UI/Variasi)",
+          "format": "PNG",
+          "path": "acnh_godot/generated/models/StrcTailorA00_pbc"
+        },
+        "native_handler_binding": "unproven"
+      },
+      {
+        "structure_facility_model_unique_id": 22,
+        "structure_info_unique_id": 24,
+        "model_name_key": "StrcTailorA00Build",
+        "construction_state": 1,
+        "grow_level": 0,
+        "floor_height": 0.0,
+        "catalog_model": {
+          "asset_id": "StrcTailorA00Build",
+          "category": "Struktur Bangunan (Structures)",
+          "has_model_3d": "Ya (GLB)",
+          "format": "GLB + PNG",
+          "path": "acnh_godot/generated/models/StrcTailorA00Build/StrcTailorA00Build.glb"
+        },
+        "catalog_pbc_name_candidate": {
+          "asset_id": "StrcTailorA00Build_pbc",
+          "category": "Struktur Bangunan (Structures)",
+          "has_model_3d": "Tidak (Tekstur UI/Variasi)",
+          "format": "PNG",
+          "path": "acnh_godot/generated/models/StrcTailorA00Build_pbc"
+        },
+        "native_handler_binding": "unproven"
+      },
+      {
+        "structure_facility_model_unique_id": 23,
+        "structure_info_unique_id": 20,
+        "model_name_key": "StrcOfficeA00Build",
+        "construction_state": 1,
+        "grow_level": 0,
+        "floor_height": 0.0,
+        "catalog_model": {
+          "asset_id": "StrcOfficeA00Build",
+          "category": "Struktur Bangunan (Structures)",
+          "has_model_3d": "Ya (GLB)",
+          "format": "GLB + PNG",
+          "path": "acnh_godot/generated/models/StrcOfficeA00Build/StrcOfficeA00Build.glb"
+        },
+        "catalog_pbc_name_candidate": {
+          "asset_id": "StrcOfficeA00Build_pbc",
+          "category": "Struktur Bangunan (Structures)",
+          "has_model_3d": "Tidak (Tekstur UI/Variasi)",
+          "format": "PNG",
+          "path": "acnh_godot/generated/models/StrcOfficeA00Build_pbc"
+        },
+        "native_handler_binding": "unproven"
+      },
+      {
+        "structure_facility_model_unique_id": 24,
+        "structure_info_unique_id": 19,
+        "model_name_key": "StrcMarketA00Build",
+        "construction_state": 1,
+        "grow_level": 0,
+        "floor_height": 0.0,
+        "catalog_model": {
+          "asset_id": "StrcMarketA00Build",
+          "category": "Struktur Bangunan (Structures)",
+          "has_model_3d": "Ya (GLB)",
+          "format": "GLB + PNG",
+          "path": "acnh_godot/generated/models/StrcMarketA00Build/StrcMarketA00Build.glb"
+        },
+        "catalog_pbc_name_candidate": {
+          "asset_id": "StrcMarketA00Build_pbc",
+          "category": "Struktur Bangunan (Structures)",
+          "has_model_3d": "Tidak (Tekstur UI/Variasi)",
+          "format": "PNG",
+          "path": "acnh_godot/generated/models/StrcMarketA00Build_pbc"
+        },
+        "native_handler_binding": "unproven"
+      },
+      {
+        "structure_facility_model_unique_id": 29,
+        "structure_info_unique_id": 25,
+        "model_name_key": "StrcCampsiteReserveA00",
+        "construction_state": 0,
+        "grow_level": 0,
+        "floor_height": 0.0,
+        "catalog_model": {
+          "asset_id": "StrcCampsiteReserveA00",
+          "category": "Struktur Bangunan (Structures)",
+          "has_model_3d": "Ya (GLB)",
+          "format": "GLB + PNG",
+          "path": "acnh_godot/generated/models/StrcCampsiteReserveA00/StrcCampsiteReserveA00.glb"
+        },
+        "catalog_pbc_name_candidate": {
+          "asset_id": "StrcCampsiteReserveA00_pbc",
+          "category": "Struktur Bangunan (Structures)",
+          "has_model_3d": "Tidak (Tekstur UI/Variasi)",
+          "format": "PNG",
+          "path": "acnh_godot/generated/models/StrcCampsiteReserveA00_pbc"
+        },
+        "native_handler_binding": "unproven"
+      },
+      {
+        "structure_facility_model_unique_id": 30,
+        "structure_info_unique_id": 25,
+        "model_name_key": "StrcCampsiteA00",
+        "construction_state": 0,
+        "grow_level": 1,
+        "floor_height": 0.0,
+        "catalog_model": {
+          "asset_id": "StrcCampsiteA00",
+          "category": "Struktur Bangunan (Structures)",
+          "has_model_3d": "Ya (GLB)",
+          "format": "GLB + PNG",
+          "path": "acnh_godot/generated/models/StrcCampsiteA00/StrcCampsiteA00.glb"
+        },
+        "catalog_pbc_name_candidate": {
+          "asset_id": "StrcCampsiteA00_pbc",
+          "category": "Struktur Bangunan (Structures)",
+          "has_model_3d": "Tidak (Tekstur UI/Variasi)",
+          "format": "PNG",
+          "path": "acnh_godot/generated/models/StrcCampsiteA00_pbc"
+        },
+        "native_handler_binding": "unproven"
+      },
+      {
+        "structure_facility_model_unique_id": 31,
+        "structure_info_unique_id": 25,
+        "model_name_key": "StrcCampsiteTentA00",
+        "construction_state": 0,
+        "grow_level": 2,
+        "floor_height": 28.799999237060547,
+        "catalog_model": {
+          "asset_id": "StrcCampsiteTentA00",
+          "category": "Struktur Bangunan (Structures)",
+          "has_model_3d": "Ya (GLB)",
+          "format": "GLB + PNG",
+          "path": "acnh_godot/generated/models/StrcCampsiteTentA00/StrcCampsiteTentA00.glb"
+        },
+        "catalog_pbc_name_candidate": {
+          "asset_id": "StrcCampsiteTentA00_pbc",
+          "category": "Struktur Bangunan (Structures)",
+          "has_model_3d": "Tidak (Tekstur UI/Variasi)",
+          "format": "PNG",
+          "path": "acnh_godot/generated/models/StrcCampsiteTentA00_pbc"
+        },
+        "native_handler_binding": "unproven"
+      },
+      {
+        "structure_facility_model_unique_id": 32,
+        "structure_info_unique_id": 29,
+        "model_name_key": "StrcStudioA00",
+        "construction_state": 0,
+        "grow_level": 0,
+        "floor_height": 20.0,
+        "catalog_model": {
+          "asset_id": "StrcStudioA00",
+          "category": "Struktur Bangunan (Structures)",
+          "has_model_3d": "Ya (GLB)",
+          "format": "GLB + PNG",
+          "path": "acnh_godot/generated/models/StrcStudioA00/StrcStudioA00.glb"
+        },
+        "catalog_pbc_name_candidate": {
+          "asset_id": "StrcStudioA00_pbc",
+          "category": "Struktur Bangunan (Structures)",
+          "has_model_3d": "Tidak (Tekstur UI/Variasi)",
+          "format": "PNG",
+          "path": "acnh_godot/generated/models/StrcStudioA00_pbc"
+        },
+        "native_handler_binding": "unproven"
+      }
+    ],
+    "warning": "This data/catalogue join does not prove that the traced preview/build handler selects any particular table row or loads its model/PBC entry."
+  },
+  "bounded_negative": [
+    "No traced static value selected the StructureActor/StructurePreviewSwapActor/StructurePreviewActor/StructurePreviewGuideActor registry index for StructureStartPreviewGuide.",
+    "No direct native ModelName, model-resource, PBC, or collision-component reference was joined from the checked preview/build handler chain.",
+    "No final building instance persistence/save call was identified on the checked path.",
+    "Indirect actor/resource dispatch and runtime component attachment remain possible."
+  ],
+  "sha256": {
+    "main_elf": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+    "binary/event_handlers_resolved.json": "dfc298dfcb1b288b8fda9cd6a49c728fdad903b41f8fc1c9288df7d732ec92a5",
+    "stage/actor_type_registry.json": "67439173a460ad49bb6cbc0086047eb192581f0cad36f4c936c4078a39d959be",
+    "tables_resolved/StructureFacilityModel.json": "6813cfabbbd674ddd05f309d9ef558dbf7c1a220aefcde4a7bcec123cf3c1f78",
+    "tables_resolved/StructureInfoParam.json": "c57c63a25e79275f89b458c25123935c09f1320521ac55aa85dcc9d68602124f",
+    "additional_romfs/catalogues/model.json": "0edc947a789aef97eb55b01b062c1658a7d6df132ab541893db4e6214439b48e",
+    "generated/re/string_refs.tsv": "d65df09399b7300ebf3ac54ccdd79ca192433421210cd82b22d5dd91dce602cf"
+  },
+  "decompilation_sha256": {
+    "binary/analysis_decomp/3445b0.c": "eb1fe2e2faa02c30e877096794658ab4918494f9eddd25e229b4fd5ab52365f8",
+    "binary/analysis_decomp/344a50.c": "01720ad4c2771d5c44557df5227d40905c89c9bde9e7751be97ba58ab899d68a",
+    "binary/analysis_decomp/490f0.c": "7c5c1e1dff0b249ea6e1810ed43ee7f71f8351854902415081a15ccabf776b58",
+    "binary/analysis_decomp/49360.c": "6408e4b245afdcfd87e45391d5f6df8d8e49e8c76d4c74628b618334923db051",
+    "binary/analysis_decomp/407e0.c": "3f14ab7f8dfde0a98ed2d9feb162c4c208282c613773c251d5aeefffa2a43516",
+    "binary/analysis_decomp/36e140.c": "c63e41d955b0175c9aae8363cd20c2ae80b05bd50e0545468fdf7a4e1f5c1604",
+    "binary/analysis_decomp/369d50.c": "b52478377f3cd7d9d9702bcbc474589b0435e48eb699938c67a08e753cbf11c8",
+    "binary/analysis_decomp/3fa40.c": "e41c41cf594be41f099cf835241cdae9d1a010894d9f4d3766181a54fde33cb9"
+  }
+}

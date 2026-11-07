@@ -1,0 +1,174 @@
+{
+  "schema": "acnh.player-input-command-movement-callchain-followup/1",
+  "created_utc_date": "2026-11-07",
+  "game_version_scope": "ACNH 1.0.0 supplied main ELF and ExeFS modules",
+  "scope": "Follow Npad state sampling through static controller-manager virtual dispatch and scheduler/task update path; search for a player command/action and movement/ground-query consumer; do not rebuild Ghidra.",
+  "status": "SCHEDULER_TASK_TREE_ROUTE_MAPPED; CONTROLLERMGR_POLL_INVOCATION_OPEN; NPad_TO_PLAYER_COMMAND_OPEN; MOVEMENT_TO_LIVE_GROUND_RESULT_OPEN",
+  "evidence_policy": {
+    "address_contract": "Main-module PCs and VAs use the supplied main ELF/module VA space. SDK export VAs are separate SDK-module offsets.",
+    "code_pointer_arrays": "Relocated code-pointer sequences are evidence of pointer contents only; no sequence is automatically labelled a C++ vtable.",
+    "runtime_execution": false,
+    "native_fixture_run": false,
+    "ghidra_rebuild": false,
+    "godot_work": false
+  },
+  "source_artifacts": [
+    {
+      "id": "main_elf_inventory_identity",
+      "path": "output/binary/elf.json",
+      "sha256_of_main_elf": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74"
+    },
+    {
+      "id": "main_nso",
+      "path": "inputs/additional_exefs/main",
+      "sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+      "text_segment_sha256": "9c9b45d8e7a58706ca59e7244b3aebac2325ef98faa205e007974eeeb2f758e9"
+    },
+    {
+      "id": "rtld_nso",
+      "path": "inputs/additional_exefs/rtld",
+      "sha256": "a71c5118f08ec8707a6c68754607ad069f5be50fa60cea6d805e0bc2ad4655a5"
+    },
+    {
+      "id": "subsdk0_nso",
+      "path": "inputs/additional_exefs/subsdk0",
+      "sha256": "16f53a607b788aadb95019914a2754206771f74991458bf06a0cff69d53ad83a"
+    },
+    {
+      "id": "sdk_nso",
+      "path": "inputs/additional_exefs/sdk",
+      "sha256": "31ce67e8701584ba812dceeae9b590d7a6ad642bcb5aa74d2fe3ea5c5474250d"
+    },
+    {
+      "id": "import_resolution",
+      "path": "output/native_modules/import_resolution.json",
+      "sha256": "8bdee18ea6946a3097cd8c523dfd7ac70b5e52724bcd6b72c5943ce9a8fc0994"
+    },
+    {
+      "id": "code_pointer_arrays",
+      "path": "output/binary/code_pointer_arrays.json",
+      "sha256": "64d474068ca289f9146f7f32e6647a16a05e8f5be8e635615a478744b62ef822"
+    },
+    {
+      "id": "native_index",
+      "path": "output/index.sqlite",
+      "sha256": "a78c7af27d37b8fd931bba8bc611623dacf7685cb6e8b4f827effa0765340aad"
+    }
+  ],
+  "npad_sampling": {
+    "poll_method_va": "0x1968b80",
+    "poll_method_native_function_size": 628,
+    "direct_call_index_callers": 0,
+    "vptr_sequence": {
+      "sequence_start": "0x31a4020",
+      "poll_pointer_va": "0x31a4040",
+      "sequence_offset": "0x20",
+      "target_va": "0x1968b80",
+      "constructor": "0x1968a60",
+      "caveat": "Static pointer sequence and constructor vptr setup do not independently prove runtime object membership or virtual call execution."
+    },
+    "samples": [
+      {"call_pc": "0x1968c14", "state": "NpadHandheldState", "sdk_export": "0x3570e0", "import_cell": "0x32cf6f0"},
+      {"call_pc": "0x1968c2c", "state": "NpadJoyDualState", "sdk_export": "0x357a30", "import_cell": "0x32cf6f8"},
+      {"call_pc": "0x1968c44", "state": "NpadFullKeyState", "sdk_export": "0x356fc0", "import_cell": "0x32cf700"},
+      {"call_pc": "0x1968c5c", "state": "NpadJoyLeftState", "sdk_export": "0x357b50", "import_cell": "0x32cf708"},
+      {"call_pc": "0x1968c74", "state": "NpadJoyRightState", "sdk_export": "0x357c70", "import_cell": "0x32cf710"}
+    ],
+    "record_address_rule": "Output buffer is device + 0xe98 * controller_id + 0x58 for IDs below 9; sentinel/handheld path uses device + 0x58.",
+    "additional_poll_writes": ["record+0x280/0x284 sensor counts", "record+0x288 six-axis state buffer", "record+0xe90 vibration handles", "manager controller-index arrays at +0x30 through +0x40"]
+  },
+  "controller_manager_virtual_path": {
+    "manager_update_va": "0x19a4ab0",
+    "direct_call_index_callers": 0,
+    "manager_update_vptr_sequence": {
+      "sequence_start": "0x31a6cc8",
+      "pointer_va": "0x31a6d78",
+      "slot_offset": "0xb0",
+      "target_va": "0x19a4ab0"
+    },
+    "device_dispatch": {
+      "list_fields": ["manager+0x170", "manager+0x178"],
+      "vptr_slot_offset": "0x20",
+      "indirect_call_pc": "0x19a4af0"
+    },
+    "potential_join": "Npad poll target 0x1968b80 also appears at device sequence slot +0x20 (0x31a4040), so the virtual signature is compatible.",
+    "unresolved": ["runtime caller/cadence of 0x19a4ab0", "runtime membership of the Npad instance in the traversed list", "any consumer that interprets the resulting sample records"]
+  },
+  "scheduler_dispatch": {
+    "startup_va": "0x1535ad0",
+    "scheduler_setup_call": {"pc": "0x1535e90", "target": "0x15369c0"},
+    "controller_task_registration_call": {"pc": "0x1535eec", "target": "0x14cef10"},
+    "hid_initialization_call": {"pc": "0x1535f10", "target": "0x14ced30"},
+    "controller_group": "SysCalc_Controller",
+    "registered_callback": {
+      "task_label": "sys::ControllerManager::update()",
+      "registration_va": "0x14cef10",
+      "callback_va": "0x14ceed0",
+      "callback_direct_call_index_callers": 0,
+      "callback_behavior": "Loads object at owner+0x210, copies subobject field +0x60 to +0xdc via 0x14cf380, checks owner byte +0x208, then returns through 0x14cf390. No Npad reader, ControllerMgr::update, or mapped player movement/query helper call appears in this body."
+    },
+    "task_tree_route": [
+      {"from": "0x1c70310", "pc": "0x1c7034c", "to": "0x1977840", "meaning": "static update-like method call; 0x1c70310 has pointer entry at 0x31c27c8"},
+      {"from": "0x1977840", "pc": "0x197789c", "to": "0x197ce80", "meaning": "calls thunk; 0x1977840 has pointer entry at 0x31a4eb8"},
+      {"from": "0x197ce80", "instruction": "B", "to": "0x197cb30", "meaning": "tail thunk"},
+      {"from": "0x197cb30", "pc": "0x197cb4c", "to": "0x197a1d0", "meaning": "passes embedded scheduler group at object+0x208"},
+      {"from": "0x197a1d0", "pc": "0x197a1f0", "to": "0x197a220", "meaning": "recursive enabled-node traversal"},
+      {"from": "0x197a220", "pc": "0x197a244", "to": "node vptr first method", "meaning": "indirect callback dispatch"},
+      {"from": "0x14cf150", "pc": "0x14cf178", "to": "descriptor callback pointer", "meaning": "BR x1; stored controller callback is 0x14ceed0"}
+    ],
+    "frame_cadence": "OPEN: 0x1c70310 is a pointer-table target and calls the task-manager update route, but its own runtime caller/cadence is not identified.",
+    "controller_poll_dispatch": "OPEN: the scheduler's registered 0x14ceed0 callback does not reach 0x19a4ab0 or 0x1968b80."
+  },
+  "player_action_and_motion": {
+    "status": "OPEN_INPUT_PRODUCER",
+    "candidate_name_refs_only": [
+      {"name": "StickInputRate", "function_va": "0xdb1e20"},
+      {"name": "StickInputGapDegree", "function_va": "0xdb1e20"},
+      {"name": "PlayerMoveTurn", "function_va": "0xe1b580"},
+      {"name": "PlayerMoveSpeed", "function_va": "0xe1b870"},
+      {"name": "cMove/cTurn", "meaning": "player state labels; label strings alone do not prove state transition/input wiring"}
+    ],
+    "movement_fragments": [
+      {"va": "0xe17cb0", "effect": "writes velocity player+0x574 and motion components player+0xf58 from supplied timing/target values"},
+      {"va": "0xdac550", "effect": "consumes motion components and updates actor position at +0x278"},
+      {"va": "0xe42b30", "effect": "reaches ground-query helper on selected branches"},
+      {"va": "0xdac780", "effect": "selected post-motion branches reach ground query"},
+      {"va": "0xda86b0", "effect": "selected correction branches read supplied state and may query ground"},
+      {"va": "0x7bccf0", "effect": "ground/collider candidate query; no authentic live result is available"}
+    ],
+    "input_to_movement_join": "OPEN: no state-record reader/decode, command writer, or scheduled movement call tied to the sampled Npad buffer has been proven.",
+    "movement_to_ground_join": "PARTIALLY_MAPPED: helper calls and bounded prepared-state checks exist, but a live initialized-world query/landing result remains open."
+  },
+  "bounded_searches": {
+    "native_direct_call_index": {
+      "index_sha256": "a78c7af27d37b8fd931bba8bc611623dacf7685cb6e8b4f827effa0765340aad",
+      "target_caller_counts": {
+        "0x1968b80": 0,
+        "0x19a4ab0": 0,
+        "0x14ceed0": 0,
+        "0x1c70310": 0
+      },
+      "limit": "An indexed direct-call negative does not exclude virtual/indirect dispatch, runtime-built tables, computed pointers, or missing module code."
+    },
+    "pointer_sequence_index": {
+      "sha256": "64d474068ca289f9146f7f32e6647a16a05e8f5be8e635615a478744b62ef822",
+      "examined_targets": ["0x1968b80", "0x19a4ab0", "0x1c70310", "0x1977840"],
+      "result": "Poller, manager update, and update-like method pointer entries found at the slots listed above; no pointer sequence alone proves runtime object type or invocation."
+    },
+    "cross_module_import_scan": {
+      "modules": ["main", "rtld", "subsdk0", "sdk"],
+      "result": "All five GetNpadStates symbols and GetNpadStyleSet uniquely resolve to supplied sdk exports; full-module immediate-store/import evidence is in PLAYER_WORLD_READY_MULTIMODULE_RAW_SCAN_FOLLOWUP_20261107.md."
+    },
+    "name_scan": {
+      "candidate_names": ["StickInputRate", "StickInputGapDegree", "PlayerMoveTurn", "PlayerMoveSpeed", "cMove", "cTurn"],
+      "interpretation": "Names/parameter references are candidates only, not proof of sampled-state dataflow."
+    }
+  },
+  "remaining_evidence": [
+    "Runtime call of ControllerMgr update and proof the Npad instance is in its device list.",
+    "Reader/decoder of per-controller sample bytes into game-side button/stick commands.",
+    "Producer of movement inputs/time/targets and its scheduled call into player motion helpers.",
+    "Authentic initialized-world ground/collision query result driven by player motion."
+  ],
+  "report": "acnh-re/docs/PLAYER_INPUT_COMMAND_MOVEMENT_CALLCHAIN_FOLLOWUP_20261107.md"
+}
