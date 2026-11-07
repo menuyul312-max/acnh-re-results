@@ -2,7 +2,7 @@
 
 **Tanggal: 7 November 2026.** Dokumen ini merencanakan RE yang menghubungkan alur cerita utama ACNH 1.0.0 dengan actor, interaksi, posisi di pulau, UI, animasi, model, teks, dan audio. Targetnya adalah spesifikasi yang cukup lengkap untuk kelak menjadi dasar gameplay; dokumen ini tidak membangun game atau mengubah proyek Godot.
 
-Manifest gabungan ada di [`output/gameplay/story_asset_crosswalk.json`](../output/gameplay/story_asset_crosswalk.json): 28 beat dari prolog sampai Island Designer sudah digabung dari empat part cerita dan satu inventaris aset. Pass struktural valid; 381 rujukan aset mengisi 308 slot minimum untuk 11 keluarga per beat. Rinciannya 244 `OPEN`, 73 `CAT`, dan 64 `EF/PSEUDO/STRUCT/TBL`. Jadi setiap kategori sudah tercakup, tetapi hubungan visual/runtime belum tuntas. Model/audio hanya kandidat katalog karena arsip sumber mentahnya tidak tersedia.
+Manifest gabungan ada di [`output/gameplay/story_asset_crosswalk.json`](../output/gameplay/story_asset_crosswalk.json): 28 beat dari prolog sampai Island Designer sudah digabung dari empat part cerita dan satu inventaris aset. Pass struktural valid; 381 rujukan aset mengisi 308 slot minimum untuk 11 keluarga per beat. Rinciannya 235 `OPEN`, 73 `CAT`, dan 73 `EF/PSEUDO/STRUCT/TBL` (35 `EF`, 13 `PSEUDO`, 18 `STRUCT`, 7 `TBL`). Jadi setiap kategori sudah tercakup, tetapi hubungan visual/runtime belum tuntas. Model/audio hanya kandidat katalog karena arsip sumber mentahnya tidak tersedia.
 
 Inventaris jumlah sumber, kelas aset, importer, dan batas konversi ada di [STORY_ASSET_INVENTORY_CROSSWALK_20261107.md](STORY_ASSET_INVENTORY_CROSSWALK_20261107.md).
 
