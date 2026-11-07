@@ -1,0 +1,486 @@
+{
+  "schema": "acnh.player-world-ready-multimodule-raw-scan/1",
+  "created_utc_date": "2026-11-07",
+  "game_version_scope": "ACNH 1.0.0 supplied main ELF and ExeFS modules",
+  "scope": "Raw AArch64 immediate-store scan for root/query readiness offsets across all available ExeFS text segments; trace of a nonzero receiver+0xee8 candidate to its only indexed direct caller; nearest HID import mapping and still-open player movement join.",
+  "status": "NONZERO_RECEIVER_EE8_CANDIDATE_FOUND_BUT_ROOT_RECEIVER_UNJOINED; HID_IMPORTS_RESOLVED_TO_SDK; INPUT_TO_PLAYER_MOVEMENT_OPEN",
+  "evidence_policy": {
+    "raw_store_scan": "Four-byte aligned words from decompressed text segment only; STRB/STRH/STR W/STR X unsigned-immediate encodings, scaled displacement exactly 0xee8 or 0xf10.",
+    "direct_branches": "AArch64 immediate B/BL scan over main text segment; indirect calls are outside this scan.",
+    "runtime_execution": false,
+    "save_mutation": false,
+    "godot_work": false
+  },
+  "source_artifacts": [
+    {
+      "id": "main_elf",
+      "path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/A_logic/main.elf",
+      "bytes": 53729580,
+      "sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74"
+    },
+    {
+      "id": "main_nso",
+      "path": "/workspace/acnh-re/inputs/additional_exefs/main",
+      "bytes": 24990531,
+      "sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900"
+    },
+    {
+      "id": "rtld_nso",
+      "path": "/workspace/acnh-re/inputs/additional_exefs/rtld",
+      "bytes": 6790,
+      "sha256": "a71c5118f08ec8707a6c68754607ad069f5be50fa60cea6d805e0bc2ad4655a5"
+    },
+    {
+      "id": "subsdk0_nso",
+      "path": "/workspace/acnh-re/inputs/additional_exefs/subsdk0",
+      "bytes": 3522324,
+      "sha256": "16f53a607b788aadb95019914a2754206771f74991458bf06a0cff69d53ad83a"
+    },
+    {
+      "id": "sdk_nso",
+      "path": "/workspace/acnh-re/inputs/additional_exefs/sdk",
+      "bytes": 5372559,
+      "sha256": "31ce67e8701584ba812dceeae9b590d7a6ad642bcb5aa74d2fe3ea5c5474250d"
+    },
+    {
+      "id": "import_resolution",
+      "path": "/workspace/acnh-re/output/native_modules/import_resolution.json",
+      "bytes": 1145576,
+      "sha256": "8bdee18ea6946a3097cd8c523dfd7ac70b5e52724bcd6b72c5943ce9a8fc0994"
+    },
+    {
+      "id": "code_pointer_arrays",
+      "path": "/workspace/acnh-re/output/binary/code_pointer_arrays.json",
+      "bytes": 11768450,
+      "sha256": "64d474068ca289f9146f7f32e6647a16a05e8f5be8e635615a478744b62ef822"
+    },
+    {
+      "id": "analyzed_functions",
+      "path": "/workspace/acnh-re/output/binary/analyzed_functions.tsv",
+      "bytes": 6138583,
+      "sha256": "38455b8aaef240037d2f45d53db9b4a1473dfd938cb52d5e6e0087a2ba26b288"
+    },
+    {
+      "id": "prior_controller_report",
+      "path": "/workspace/acnh-re-github/acnh-re/docs/PLAYER_INPUT_FRAME_DISPATCH_ROOT_READINESS_PASS_20261107.md",
+      "bytes": 6997,
+      "sha256": "267bdbced1a17b958438ff4ce77ce9b239fde80ca3d8fcd84937aca463dedf4a"
+    },
+    {
+      "id": "prior_controller_json",
+      "path": "/workspace/acnh-re-github/acnh-re/output/mechanics/player_collider_query_remainder_20261107/controller_dispatch_ready_writers_pass_20261107.json",
+      "bytes": 7754,
+      "sha256": "5fe429f021e528145b918afc66f0bf313c74c091ccc4366391c56f68b1862a1a"
+    },
+    {
+      "id": "prior_grid_movement_report",
+      "path": "/workspace/acnh-re-github/acnh-re/docs/PLAYER_GRID_GROUND_MOVEMENT_RESULT_FOLLOWUP_20261107.md",
+      "bytes": 6532,
+      "sha256": "c229e1ee5ce93ae3ef0de4d4970f62d69e33c8b6f8a8a7707afb2bf5c282106d"
+    },
+    {
+      "id": "string_reference_index",
+      "path": "/workspace/analysis/acnh/project/generated/re/string_refs.tsv",
+      "bytes": 1325528,
+      "sha256": "d65df09399b7300ebf3ac54ccdd79ca192433421210cd82b22d5dd91dce602cf"
+    }
+  ],
+  "module_scan": {
+    "text_va_base": 0,
+    "displacements": [
+      "0xee8",
+      "0xf10"
+    ],
+    "module_results": [
+      {
+        "module": "main",
+        "module_va_contract": "separate NSO module VA, text begins at 0",
+        "build_id": "7fc1baff976aeca414520cb89f4616cb00000000000000000000000000000000",
+        "soname": null,
+        "input_nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+        "text_segment": {
+          "bytes": 35723872,
+          "sha256": "9c9b45d8e7a58706ca59e7244b3aebac2325ef98faa205e007974eeeb2f758e9",
+          "decompressed_file": "/workspace/acnh-re/work/exefs_modules/main/0.bin"
+        },
+        "store_counts_by_width": {
+          "1": 4,
+          "2": 0,
+          "4": 61,
+          "8": 56
+        },
+        "store_counts_by_offset_and_width": {
+          "0xf10/width8": 34,
+          "0xee8/width1": 4,
+          "0xee8/width4": 53,
+          "0xee8/width8": 22,
+          "0xf10/width4": 8
+        },
+        "direct_strb_hits": [
+          {
+            "text_offset_va": "0x156938",
+            "instruction_word": "0x393ba27f",
+            "destination_base_register": "x19",
+            "source_register": "wzr",
+            "displacement": "0xee8",
+            "meaning": "clear"
+          },
+          {
+            "text_offset_va": "0x110c58c",
+            "instruction_word": "0x393ba27f",
+            "destination_base_register": "x19",
+            "source_register": "wzr",
+            "displacement": "0xee8",
+            "meaning": "clear"
+          },
+          {
+            "text_offset_va": "0x11196bc",
+            "instruction_word": "0x393ba268",
+            "destination_base_register": "x19",
+            "source_register": "w8",
+            "displacement": "0xee8",
+            "meaning": "nonzero_or_runtime_source"
+          },
+          {
+            "text_offset_va": "0x1c7e4cc",
+            "instruction_word": "0x393ba27f",
+            "destination_base_register": "x19",
+            "source_register": "wzr",
+            "displacement": "0xee8",
+            "meaning": "clear"
+          }
+        ]
+      },
+      {
+        "module": "rtld",
+        "module_va_contract": "separate NSO module VA, text begins at 0",
+        "build_id": "31a2773ea6928ffe3d32b17b3ad08f54826da39f000000000000000000000000",
+        "soname": null,
+        "input_nso_sha256": "a71c5118f08ec8707a6c68754607ad069f5be50fa60cea6d805e0bc2ad4655a5",
+        "text_segment": {
+          "bytes": 5728,
+          "sha256": "d87463d3fec1e568a80b86ed835e29a078e781644fd8a6802228e773aedd6820",
+          "decompressed_file": "/workspace/acnh-re/work/exefs_modules/rtld/0.bin"
+        },
+        "store_counts_by_width": {
+          "1": 0,
+          "2": 0,
+          "4": 0,
+          "8": 0
+        },
+        "store_counts_by_offset_and_width": {},
+        "direct_strb_hits": []
+      },
+      {
+        "module": "subsdk0",
+        "module_va_contract": "separate NSO module VA, text begins at 0",
+        "build_id": "5a7ada8dd7447c10aa244944f64d0aff17c50539000000000000000000000000",
+        "soname": null,
+        "input_nso_sha256": "16f53a607b788aadb95019914a2754206771f74991458bf06a0cff69d53ad83a",
+        "text_segment": {
+          "bytes": 3582656,
+          "sha256": "48d136465dc1a9e38f967b87d812c37bc1170afb637271aeab27dcb57f59ff0a",
+          "decompressed_file": "/workspace/acnh-re/work/exefs_modules/subsdk0/0.bin"
+        },
+        "store_counts_by_width": {
+          "1": 0,
+          "2": 0,
+          "4": 3,
+          "8": 2
+        },
+        "store_counts_by_offset_and_width": {
+          "0xee8/width8": 1,
+          "0xf10/width4": 2,
+          "0xf10/width8": 1,
+          "0xee8/width4": 1
+        },
+        "direct_strb_hits": []
+      },
+      {
+        "module": "sdk",
+        "module_va_contract": "separate NSO module VA, text begins at 0",
+        "build_id": "ad3fdfbd62a5f4b082d385ffe420d4400abb831d000000000000000000000000",
+        "soname": "nnSdk.nss",
+        "input_nso_sha256": "31ce67e8701584ba812dceeae9b590d7a6ad642bcb5aa74d2fe3ea5c5474250d",
+        "text_segment": {
+          "bytes": 5503424,
+          "sha256": "6bdef3d1e640f5d75e01c00453940a65bd61db747c8e6026cf95916e0f9d4169",
+          "decompressed_file": "/workspace/acnh-re/work/exefs_modules/sdk/0.bin"
+        },
+        "store_counts_by_width": {
+          "1": 0,
+          "2": 0,
+          "4": 7,
+          "8": 5
+        },
+        "store_counts_by_offset_and_width": {
+          "0xf10/width4": 3,
+          "0xf10/width8": 2,
+          "0xee8/width8": 3,
+          "0xee8/width4": 4
+        },
+        "direct_strb_hits": []
+      }
+    ],
+    "main_direct_byte_stores": [
+      {
+        "module": "main",
+        "text_offset_va": "0x156938",
+        "instruction_word": "0x393ba27f",
+        "destination_base_register": "x19",
+        "source_register": "wzr",
+        "displacement": "0xee8",
+        "meaning": "clear"
+      },
+      {
+        "module": "main",
+        "text_offset_va": "0x110c58c",
+        "instruction_word": "0x393ba27f",
+        "destination_base_register": "x19",
+        "source_register": "wzr",
+        "displacement": "0xee8",
+        "meaning": "clear"
+      },
+      {
+        "module": "main",
+        "text_offset_va": "0x11196bc",
+        "instruction_word": "0x393ba268",
+        "destination_base_register": "x19",
+        "source_register": "w8",
+        "displacement": "0xee8",
+        "meaning": "nonzero_or_runtime_source"
+      },
+      {
+        "module": "main",
+        "text_offset_va": "0x1c7e4cc",
+        "instruction_word": "0x393ba27f",
+        "destination_base_register": "x19",
+        "source_register": "wzr",
+        "displacement": "0xee8",
+        "meaning": "clear"
+      }
+    ],
+    "counts_note": "W/X stores can overlap the byte offsets; direct-store receiver identities were not exhaustively recovered from raw opcodes."
+  },
+  "candidate_writer": {
+    "function_va": "0x1119610",
+    "receiver_register": "x19 copies incoming x0 at 0x1119624",
+    "subobject_add": "x20=x0+0xec8 at 0x1119620",
+    "ready_byte_test": {
+      "function_va": "0x1119510",
+      "load_pc": "0x1119520",
+      "word": "0x397ba008",
+      "operation": "LDRB W8,[X0,#0xee8]",
+      "zero_branch_pc": "0x1119528",
+      "branch_target": "0x11195f8",
+      "description": "If the byte is zero, the code takes an epilogue/tail branch at 0x1119608 into 0x1119610."
+    },
+    "set_byte": {
+      "value_pc": "0x11196b8",
+      "value_word": "0x320003e8",
+      "decoded_value": "W8=1",
+      "store_pc": "0x11196bc",
+      "store_word": "0x393ba268",
+      "operation": "STRB W8,[X19,#0xee8]"
+    },
+    "direct_call_bounds": {
+      "0x1119510": [
+        {
+          "pc": "0x969f8",
+          "word": "0x94420ac6",
+          "kind": "BL"
+        }
+      ],
+      "0x1119610": [
+        {
+          "pc": "0x1119608",
+          "word": "0x14000002",
+          "kind": "B"
+        }
+      ]
+    },
+    "code_pointer_array_targets": {
+      "0x1119510": [],
+      "0x1119610": []
+    },
+    "only_direct_caller_setup": {
+      "caller_function_va": "0x967e0",
+      "caller_instruction_pc": "0x969f8",
+      "caller_instruction": "BL 0x1119510",
+      "init_array_entry_pointer_va": "0x32d3c60",
+      "global_address_setup": {
+        "adrp_pc": "0x969ec",
+        "adrp_word": "0x900191e8",
+        "target_page": "0x32d2000",
+        "load_global_pc": "0x969f0",
+        "load_global_word": "0xf944f908",
+        "global_cell": "0x32d29f0",
+        "load_object_pc": "0x969f4",
+        "load_object_word": "0xf9400100",
+        "passed_to_x0": true
+      }
+    },
+    "relocation_bases": [
+      {
+        "cell_va": "0x32d29f0",
+        "type": "R_AARCH64_RELATIVE",
+        "addend": "0x361a5f8",
+        "meaning": "BSS location whose first runtime word is passed as receiver; word content/type unresolved."
+      },
+      {
+        "cell_va": "0x32d0de8",
+        "type": "R_AARCH64_RELATIVE",
+        "addend": "0x33728b0",
+        "meaning": "Known root-query singleton storage slot from prior readiness predicate trace."
+      }
+    ],
+    "root_join": "OPEN: the only direct caller loads its receiver through a separate relocation cell and a BSS slot; no proven equality, constructor, or def-use link to root context at root+0x28 was recovered. This does not disprove an indirect/runtime relationship."
+  },
+  "input_to_movement": {
+    "known_main_poll_method_va": "0x1968b80",
+    "known_controller_manager_update_va": "0x19a4ab0",
+    "poll_imports": [
+      {
+        "symbol": "_ZN2nn3hid13GetNpadStatesEPNS0_16NpadFullKeyStateEiRKj",
+        "status": "unique_export_match",
+        "export_candidates": [
+          {
+            "module": "sdk",
+            "va": "0x356fc0"
+          }
+        ],
+        "relocations": [
+          {
+            "site": "0x32cf700",
+            "type": 1026,
+            "addend": 0
+          }
+        ]
+      },
+      {
+        "symbol": "_ZN2nn3hid13GetNpadStatesEPNS0_16NpadJoyDualStateEiRKj",
+        "status": "unique_export_match",
+        "export_candidates": [
+          {
+            "module": "sdk",
+            "va": "0x357a30"
+          }
+        ],
+        "relocations": [
+          {
+            "site": "0x32cf6f8",
+            "type": 1026,
+            "addend": 0
+          }
+        ]
+      },
+      {
+        "symbol": "_ZN2nn3hid13GetNpadStatesEPNS0_16NpadJoyLeftStateEiRKj",
+        "status": "unique_export_match",
+        "export_candidates": [
+          {
+            "module": "sdk",
+            "va": "0x357b50"
+          }
+        ],
+        "relocations": [
+          {
+            "site": "0x32cf708",
+            "type": 1026,
+            "addend": 0
+          }
+        ]
+      },
+      {
+        "symbol": "_ZN2nn3hid13GetNpadStatesEPNS0_17NpadHandheldStateEiRKj",
+        "status": "unique_export_match",
+        "export_candidates": [
+          {
+            "module": "sdk",
+            "va": "0x3570e0"
+          }
+        ],
+        "relocations": [
+          {
+            "site": "0x32cf6f0",
+            "type": 1026,
+            "addend": 0
+          }
+        ]
+      },
+      {
+        "symbol": "_ZN2nn3hid13GetNpadStatesEPNS0_17NpadJoyRightStateEiRKj",
+        "status": "unique_export_match",
+        "export_candidates": [
+          {
+            "module": "sdk",
+            "va": "0x357c70"
+          }
+        ],
+        "relocations": [
+          {
+            "site": "0x32cf710",
+            "type": 1026,
+            "addend": 0
+          }
+        ]
+      },
+      {
+        "symbol": "_ZN2nn3hid15GetNpadStyleSetERKj",
+        "status": "unique_export_match",
+        "export_candidates": [
+          {
+            "module": "sdk",
+            "va": "0x355970"
+          }
+        ],
+        "relocations": [
+          {
+            "site": "0x32cf6e8",
+            "type": 1026,
+            "addend": 0
+          }
+        ]
+      }
+    ],
+    "raw_call_sites": [
+      {
+        "pc": "0x1968bd4",
+        "type": "GetNpadStyleSet"
+      },
+      {
+        "pc": "0x1968c14",
+        "type": "NpadHandheldState"
+      },
+      {
+        "pc": "0x1968c2c",
+        "type": "NpadJoyDualState"
+      },
+      {
+        "pc": "0x1968c44",
+        "type": "NpadFullKeyState"
+      },
+      {
+        "pc": "0x1968c5c",
+        "type": "NpadJoyLeftState"
+      },
+      {
+        "pc": "0x1968c74",
+        "type": "NpadJoyRightState"
+      }
+    ],
+    "nearest_static_edge": "ControllerMgr vtable update slot 0xb0 -> per-device vptr slot +0x20 -> Npad poll method -> SDK HID service imports.",
+    "unresolved": [
+      "top-level frame cadence and scheduler callback-to-ControllerMgr update",
+      "sampled Npad state to player command/state mapping",
+      "input-driven player position/movement to existing ground/collision query and traversal result"
+    ]
+  },
+  "remaining_limits": [
+    "The nonzero receiver+0xee8 store is not proven to be root+0xf10.",
+    "STR W/X immediate hits at the same offsets may overlap a byte, and all receivers are not classified by opcode scan.",
+    "Computed-address/atomic/indirect writes and runtime-only stores are not excluded.",
+    "No authentic running game, root/grid object, or gameplay query fixture was available."
+  ],
+  "report": "acnh-re/docs/PLAYER_WORLD_READY_MULTIMODULE_RAW_SCAN_FOLLOWUP_20261107.md"
+}
