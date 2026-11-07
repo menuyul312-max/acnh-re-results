@@ -1,0 +1,985 @@
+{
+  "schema": "acnh-re/tool-durability-residual-static/1",
+  "evidence_level": "INDEXED_NATIVE_CALLS_EVENTFLOW_AND_EXISTING_BOUNDED_PROBES",
+  "game_version": "1.0.0",
+  "zero_remaining_to_break_state": {
+    "remaining_damage_helper": {
+      "function_va": "0xaa7ce0",
+      "name": "FUN_00ba7ce0",
+      "size_bytes": 292,
+      "span_end_va": "0xaa7e03",
+      "string_refs": [],
+      "direct_calls": [
+        {
+          "pc": "0xaa7cfc",
+          "target_va": "0x1665ea0"
+        },
+        {
+          "pc": "0xaa7d28",
+          "target_va": "0xaa7a30"
+        },
+        {
+          "pc": "0xaa7d38",
+          "target_va": "0x1665ea0"
+        },
+        {
+          "pc": "0xaa7d5c",
+          "target_va": "0xaa7b90"
+        },
+        {
+          "pc": "0xaa7d68",
+          "target_va": "0xaa7880"
+        },
+        {
+          "pc": "0xaa7d7c",
+          "target_va": "0x1665ea0"
+        },
+        {
+          "pc": "0xaa7da0",
+          "target_va": "0xaa7a30"
+        },
+        {
+          "pc": "0xaa7de4",
+          "target_va": "0xaa7880"
+        }
+      ],
+      "direct_callers": [
+        {
+          "pc": "0xee1198",
+          "owner_va": "0xee1060",
+          "target_va": "0xaa7ce0"
+        }
+      ]
+    },
+    "remaining_helper_direct_callers": [
+      {
+        "pc": "0xee1198",
+        "owner_va": "0xee1060",
+        "target_va": "0xaa7ce0"
+      }
+    ],
+    "only_indexed_consumer": {
+      "function_va": "0xee1060",
+      "name": "FUN_00fe1060",
+      "size_bytes": 956,
+      "span_end_va": "0xee141b",
+      "string_refs": [],
+      "direct_calls": [
+        {
+          "pc": "0xee10e0",
+          "target_va": "0xa9c290"
+        },
+        {
+          "pc": "0xee10e8",
+          "target_va": "0xe89170"
+        },
+        {
+          "pc": "0xee10f8",
+          "target_va": "0xa9f140"
+        },
+        {
+          "pc": "0xee1148",
+          "target_va": "0xf97da0"
+        },
+        {
+          "pc": "0xee1168",
+          "target_va": "0xefc2f0"
+        },
+        {
+          "pc": "0xee1174",
+          "target_va": "0xf589b0"
+        },
+        {
+          "pc": "0xee1180",
+          "target_va": "0xf58af0"
+        },
+        {
+          "pc": "0xee1190",
+          "target_va": "0xa9c290"
+        },
+        {
+          "pc": "0xee1198",
+          "target_va": "0xaa7ce0"
+        },
+        {
+          "pc": "0xee1204",
+          "target_va": "0xee1880"
+        },
+        {
+          "pc": "0xee1250",
+          "target_va": "0xeda900"
+        },
+        {
+          "pc": "0xee1264",
+          "target_va": "0xf97d50"
+        },
+        {
+          "pc": "0xee1284",
+          "target_va": "0xefbf80"
+        },
+        {
+          "pc": "0xee1298",
+          "target_va": "0xf97d60"
+        },
+        {
+          "pc": "0xee12c0",
+          "target_va": "0xefbec0"
+        },
+        {
+          "pc": "0xee1314",
+          "target_va": "0xf97d60"
+        },
+        {
+          "pc": "0xee1338",
+          "target_va": "0xeda900"
+        },
+        {
+          "pc": "0xee134c",
+          "target_va": "0xf97d50"
+        },
+        {
+          "pc": "0xee136c",
+          "target_va": "0xefbf80"
+        },
+        {
+          "pc": "0xee13ac",
+          "target_va": "0xefbec0"
+        },
+        {
+          "pc": "0xee13dc",
+          "target_va": "0xefe340"
+        }
+      ],
+      "direct_callers": [
+        {
+          "pc": "0xee15a0",
+          "owner_va": "0xee1420",
+          "target_va": "0xee1060"
+        },
+        {
+          "pc": "0xee15c4",
+          "owner_va": "0xee1420",
+          "target_va": "0xee1060"
+        },
+        {
+          "pc": "0xee15e8",
+          "owner_va": "0xee1420",
+          "target_va": "0xee1060"
+        },
+        {
+          "pc": "0xee160c",
+          "owner_va": "0xee1420",
+          "target_va": "0xee1060"
+        },
+        {
+          "pc": "0xee1630",
+          "owner_va": "0xee1420",
+          "target_va": "0xee1060"
+        },
+        {
+          "pc": "0xee1654",
+          "owner_va": "0xee1420",
+          "target_va": "0xee1060"
+        }
+      ],
+      "parent_string_refs": []
+    },
+    "break_state_lifecycle_edges": [
+      {
+        "pc": "0xdf6584",
+        "owner_va": null,
+        "target_va": "0xe37830"
+      },
+      {
+        "pc": "0xdf65d8",
+        "owner_va": null,
+        "target_va": "0xe37a50"
+      },
+      {
+        "pc": "0xdf6654",
+        "owner_va": null,
+        "target_va": "0xe37ed0"
+      }
+    ],
+    "player_tool_break_eventflow": [
+      {
+        "index": 0,
+        "actor": "EventFlowSystemActor",
+        "kind": "actions",
+        "name": "EventFlowActionSetTagFromSystem",
+        "params": {
+          "TagType": "cPlayerGetItemName",
+          "SetTagType": "cDegit",
+          "TagID": 0,
+          "Value": 0,
+          "AccessKey": ""
+        }
+      },
+      {
+        "index": 1,
+        "actor": "Player",
+        "kind": "actions",
+        "name": "EventFlowActionOpenMessageWindow",
+        "params": {
+          "IsCloseMessageWindow": false,
+          "MessageID": "TalkSys/SYS_Player:290"
+        }
+      },
+      {
+        "index": 2,
+        "actor": "EventFlowSystemActor",
+        "kind": "actions",
+        "name": "EventFlowActionSetTagFromSystem",
+        "params": {
+          "TagType": "cPlayerGetItemName",
+          "SetTagType": "cDegit",
+          "TagID": 0,
+          "Value": 0,
+          "AccessKey": ""
+        }
+      },
+      {
+        "index": 3,
+        "actor": "Player",
+        "kind": "actions",
+        "name": "EventFlowActionOpenMessageWindow",
+        "params": {
+          "IsCloseMessageWindow": false,
+          "MessageID": "TalkSys/SYS_Player:290"
+        }
+      },
+      {
+        "index": 4,
+        "actor": "EventFlowSystemActor",
+        "kind": "queries",
+        "name": "EventFlowQueryPlayerHasCraftRecipe",
+        "params": {
+          "ItemUniqueId": 9617,
+          "UnlockType": ""
+        }
+      },
+      {
+        "index": 5,
+        "actor": "EventFlowSystemActor",
+        "kind": "queries",
+        "name": "EventFlowQueryEventFlagSystemBool",
+        "params": {
+          "AccessKey": "cPlayer:MainmenuRecipe"
+        }
+      },
+      {
+        "index": 6,
+        "actor": "EventFlowSystemActor",
+        "kind": "queries",
+        "name": "EventFlowQueryEventFlagSystemInt",
+        "params": {
+          "AccessKey": "cPlayer:GoldenAxeLearningCount",
+          "FlagCheckType": 3,
+          "Border": 99
+        }
+      },
+      {
+        "index": 7,
+        "actor": "EventFlowSystemActor",
+        "kind": "actions",
+        "name": "EventFlowActionEventFlagSystemAdd",
+        "params": {
+          "AccessKey": "cPlayer:GoldenAxeLearningCount",
+          "AddNum": 1
+        }
+      },
+      {
+        "index": 8,
+        "actor": "EventFlowSystemActor",
+        "kind": "actions",
+        "name": "EventFlowActionReservePlayerMutterDemo",
+        "params": {
+          "IsResistNpcCast": false,
+          "MutterStartTiming": "cNextDemoEnd_Simple",
+          "EventFileName": "Player_GetDemo_Recipe_DIY",
+          "EntryPointName": "GetRecipe_GoldenAxe"
+        }
+      }
+    ],
+    "finding": "The only indexed direct call to 0xaa7ce0 is 0xee1198 from 0xee1060. That consumer is called six times by 0xee1420, whose string refs are DiyCount/DIYFurniture/DIYItem/DIYTool, so the remaining-value helper is currently evidenced as a workbench/list display input. Indexed code also shows state lifecycle edges at 0xdf6584->0xe37830, 0xdf65d8->0xe37a50, and 0xdf6654->0xe37ed0. These show BreakTool/PlayerToolBreak/force-break handlers are dispatched, but no threshold comparison or call edge from the remaining-value consumer into that lifecycle is present in the index.",
+    "bound": "The packed damage arithmetic and BreakDamage threshold are executed in the existing bounded helper probe; end-to-end action-state selection at zero remaining requires a live game state or the omitted indirect transition producer."
+  },
+  "action_cadence_and_wear_commit": {
+    "wear_chain_functions": {
+      "0xe893c0": {
+        "function_va": "0xe893c0",
+        "name": "FUN_00f893c0",
+        "size_bytes": 476,
+        "span_end_va": "0xe8959b",
+        "string_refs": [],
+        "direct_calls": [
+          {
+            "pc": "0xe893f0",
+            "target_va": "0xe31e40"
+          },
+          {
+            "pc": "0xe893f8",
+            "target_va": "0xf58d00"
+          },
+          {
+            "pc": "0xe89408",
+            "target_va": "0xa9c290"
+          },
+          {
+            "pc": "0xe89414",
+            "target_va": "0xa9f140"
+          },
+          {
+            "pc": "0xe89428",
+            "target_va": "0xe895a0"
+          },
+          {
+            "pc": "0xe89438",
+            "target_va": "0xda3fc0"
+          },
+          {
+            "pc": "0xe89440",
+            "target_va": "0xef6700"
+          },
+          {
+            "pc": "0xe8945c",
+            "target_va": "0xee9350"
+          },
+          {
+            "pc": "0xe8948c",
+            "target_va": "0xee93d0"
+          },
+          {
+            "pc": "0xe8949c",
+            "target_va": "0xee9350"
+          },
+          {
+            "pc": "0xe894b8",
+            "target_va": "0xee93d0"
+          },
+          {
+            "pc": "0xe894c8",
+            "target_va": "0xee9350"
+          },
+          {
+            "pc": "0xe894d4",
+            "target_va": "0xee9490"
+          },
+          {
+            "pc": "0xe894e4",
+            "target_va": "0xee94f0"
+          },
+          {
+            "pc": "0xe894fc",
+            "target_va": "0xfa31f0"
+          },
+          {
+            "pc": "0xe89504",
+            "target_va": "0xee93d0"
+          },
+          {
+            "pc": "0xe89514",
+            "target_va": "0xee9350"
+          },
+          {
+            "pc": "0xe89528",
+            "target_va": "0xfa32c0"
+          },
+          {
+            "pc": "0xe89534",
+            "target_va": "0xee93d0"
+          },
+          {
+            "pc": "0xe8953c",
+            "target_va": "0xf97d50"
+          },
+          {
+            "pc": "0xe89548",
+            "target_va": "0xf97d60"
+          },
+          {
+            "pc": "0xe89564",
+            "target_va": "0xefb1f0"
+          },
+          {
+            "pc": "0xe8957c",
+            "target_va": "0xf589b0"
+          }
+        ],
+        "direct_callers": [
+          {
+            "pc": "0x4c0258",
+            "owner_va": "0x4c0190",
+            "target_va": "0xe893c0"
+          },
+          {
+            "pc": "0xda4598",
+            "owner_va": "0xda4560",
+            "target_va": "0xe893c0"
+          },
+          {
+            "pc": "0xdb0168",
+            "owner_va": "0xdb0140",
+            "target_va": "0xe893c0"
+          }
+        ]
+      },
+      "0xe895a0": {
+        "function_va": "0xe895a0",
+        "name": "FUN_00f895a0",
+        "size_bytes": 332,
+        "span_end_va": "0xe896eb",
+        "string_refs": [],
+        "direct_calls": [
+          {
+            "pc": "0xe895c8",
+            "target_va": "0xf589b0"
+          },
+          {
+            "pc": "0xe895d0",
+            "target_va": "0xf58d00"
+          },
+          {
+            "pc": "0xe895e4",
+            "target_va": "0xa9c290"
+          },
+          {
+            "pc": "0xe895f0",
+            "target_va": "0xaa77d0"
+          },
+          {
+            "pc": "0xe89600",
+            "target_va": "0xf589b0"
+          },
+          {
+            "pc": "0xe8960c",
+            "target_va": "0xf589e0"
+          },
+          {
+            "pc": "0xe89624",
+            "target_va": "0xda4020"
+          },
+          {
+            "pc": "0xe89640",
+            "target_va": "0xda4020"
+          },
+          {
+            "pc": "0xe896d4",
+            "target_va": "0x220e3e0"
+          },
+          {
+            "pc": "0xe896e4",
+            "target_va": "0x220e3f0"
+          }
+        ],
+        "direct_callers": [
+          {
+            "pc": "0xdb0104",
+            "owner_va": "0xdb00f0",
+            "target_va": "0xe895a0"
+          },
+          {
+            "pc": "0xe89428",
+            "owner_va": "0xe893c0",
+            "target_va": "0xe895a0"
+          }
+        ]
+      },
+      "0xdb00f0": {
+        "function_va": "0xdb00f0",
+        "name": "FUN_00eb00f0",
+        "size_bytes": 72,
+        "span_end_va": "0xdb0137",
+        "string_refs": [],
+        "direct_calls": [
+          {
+            "pc": "0xdb0104",
+            "target_va": "0xe895a0"
+          },
+          {
+            "pc": "0xdb0114",
+            "target_va": "0xdafee0"
+          }
+        ],
+        "direct_callers": [
+          {
+            "pc": "0xe45cbc",
+            "owner_va": "0xe45b80",
+            "target_va": "0xdb00f0"
+          },
+          {
+            "pc": "0xe4ea70",
+            "owner_va": "0xe4e730",
+            "target_va": "0xdb00f0"
+          },
+          {
+            "pc": "0xe89ac0",
+            "owner_va": "0xe899b0",
+            "target_va": "0xdb00f0"
+          }
+        ]
+      }
+    },
+    "known_shovel_action_sites": [
+      {
+        "pc": "0xe524cc",
+        "owner_va": "0xe52390",
+        "target_va": "0xdb0140"
+      },
+      {
+        "pc": "0xe53068",
+        "owner_va": "0xe52ee0",
+        "target_va": "0xdb0140"
+      },
+      {
+        "pc": "0xe54228",
+        "owner_va": "0xe541a0",
+        "target_va": "0xdb0140"
+      }
+    ],
+    "finding": "e895a0 is reached through e893c0 (which passes wear amount 1) and db00f0 (used by the net/rod result states and a generic indirect caller). The indexed call graph identifies shovel action sites through db0140. The remaining tools/families do not all converge on one statically indexed wear wrapper; no complete per-family use cadence is claimed."
+  },
+  "ring_selection_and_held_item_boundary": {
+    "callback_va": "0x1417f70",
+    "relevant_direct_calls": [
+      {
+        "pc": "0x1418008",
+        "owner_va": "0x1417f70",
+        "target_va": "0x11b7210"
+      },
+      {
+        "pc": "0x1418064",
+        "owner_va": "0x1417f70",
+        "target_va": "0x157e140"
+      },
+      {
+        "pc": "0x1418094",
+        "owner_va": "0x1417f70",
+        "target_va": "0x1591c00"
+      },
+      {
+        "pc": "0x141827c",
+        "owner_va": "0x1417f70",
+        "target_va": "0xf589e0"
+      },
+      {
+        "pc": "0x14182e0",
+        "owner_va": "0x1417f70",
+        "target_va": "0xf589e0"
+      }
+    ],
+    "callback_direct_wear_edges": [],
+    "selected_item_reader": {
+      "function_va": "0x11b7210",
+      "name": "FUN_012b7210",
+      "size_bytes": 176,
+      "span_end_va": "0x11b72bf",
+      "string_refs": [],
+      "direct_calls": [
+        {
+          "pc": "0x11b7238",
+          "target_va": "0xf589e0"
+        },
+        {
+          "pc": "0x11b7240",
+          "target_va": "0xda4020"
+        },
+        {
+          "pc": "0x11b7258",
+          "target_va": "0xda3fc0"
+        },
+        {
+          "pc": "0x11b7264",
+          "target_va": "0xef7260"
+        },
+        {
+          "pc": "0x11b727c",
+          "target_va": "0xee9350"
+        },
+        {
+          "pc": "0x11b72a0",
+          "target_va": "0xf589e0"
+        },
+        {
+          "pc": "0x11b72a8",
+          "target_va": "0xee93d0"
+        }
+      ],
+      "direct_callers": [
+        {
+          "pc": "0x11ca520",
+          "owner_va": null,
+          "target_va": "0x11b7210"
+        },
+        {
+          "pc": "0x1418008",
+          "owner_va": "0x1417f70",
+          "target_va": "0x11b7210"
+        }
+      ]
+    },
+    "finding": "The ring callback reads an indexed pocket item descriptor and then invokes the UI item-pool manager and selection-state updater. No direct callback edge reaches e893c0/e895a0/db00f0 or a known held-hand writer. The existing bounded ring probe now tests distinct nonzero ToolDamage values 1..8 and preserves both the low 10 wear bits and upper reserved bits in the copied word.",
+    "held_item_transfer_status": "OPEN; ring-to-held-hand transition is not established"
+  },
+  "dirty_slot_and_saveproc_boundary": {
+    "wear_writer": {
+      "function_va": "0xe895a0",
+      "name": "FUN_00f895a0",
+      "size_bytes": 332,
+      "span_end_va": "0xe896eb",
+      "string_refs": [],
+      "direct_calls": [
+        {
+          "pc": "0xe895c8",
+          "target_va": "0xf589b0"
+        },
+        {
+          "pc": "0xe895d0",
+          "target_va": "0xf58d00"
+        },
+        {
+          "pc": "0xe895e4",
+          "target_va": "0xa9c290"
+        },
+        {
+          "pc": "0xe895f0",
+          "target_va": "0xaa77d0"
+        },
+        {
+          "pc": "0xe89600",
+          "target_va": "0xf589b0"
+        },
+        {
+          "pc": "0xe8960c",
+          "target_va": "0xf589e0"
+        },
+        {
+          "pc": "0xe89624",
+          "target_va": "0xda4020"
+        },
+        {
+          "pc": "0xe89640",
+          "target_va": "0xda4020"
+        },
+        {
+          "pc": "0xe896d4",
+          "target_va": "0x220e3e0"
+        },
+        {
+          "pc": "0xe896e4",
+          "target_va": "0x220e3f0"
+        }
+      ],
+      "direct_callers": [
+        {
+          "pc": "0xdb0104",
+          "owner_va": "0xdb00f0",
+          "target_va": "0xe895a0"
+        },
+        {
+          "pc": "0xe89428",
+          "owner_va": "0xe893c0",
+          "target_va": "0xe895a0"
+        }
+      ]
+    },
+    "slot_flag_clearer": {
+      "function_va": "0xe767b0",
+      "name": "FUN_00f767b0",
+      "size_bytes": 1304,
+      "span_end_va": "0xe76cc7",
+      "string_refs": [
+        "ForceToolBreakDemo"
+      ],
+      "direct_calls": [
+        {
+          "pc": "0xe767dc",
+          "target_va": "0xda4020"
+        },
+        {
+          "pc": "0xe767f8",
+          "target_va": "0xda4020"
+        },
+        {
+          "pc": "0xe76878",
+          "target_va": "0xda4020"
+        },
+        {
+          "pc": "0xe76894",
+          "target_va": "0xda4020"
+        },
+        {
+          "pc": "0xe76914",
+          "target_va": "0xda4020"
+        },
+        {
+          "pc": "0xe76930",
+          "target_va": "0xda4020"
+        },
+        {
+          "pc": "0xe769b0",
+          "target_va": "0xda4020"
+        },
+        {
+          "pc": "0xe769cc",
+          "target_va": "0xda4020"
+        },
+        {
+          "pc": "0xe76a4c",
+          "target_va": "0xda4020"
+        },
+        {
+          "pc": "0xe76a68",
+          "target_va": "0xda4020"
+        },
+        {
+          "pc": "0xe76b00",
+          "target_va": "0xf4e990"
+        },
+        {
+          "pc": "0xe76b0c",
+          "target_va": "0xda3fc0"
+        },
+        {
+          "pc": "0xe76b14",
+          "target_va": "0xda4020"
+        },
+        {
+          "pc": "0xe76b40",
+          "target_va": "0xda4020"
+        },
+        {
+          "pc": "0xe76b88",
+          "target_va": "0x3fb30"
+        },
+        {
+          "pc": "0xe76c00",
+          "target_va": "0x3fcc0"
+        },
+        {
+          "pc": "0xe76c20",
+          "target_va": "0x220e3e0"
+        },
+        {
+          "pc": "0xe76c48",
+          "target_va": "0x220e3f0"
+        },
+        {
+          "pc": "0xe76c50",
+          "target_va": "0x220e3e0"
+        },
+        {
+          "pc": "0xe76c60",
+          "target_va": "0x220e3f0"
+        },
+        {
+          "pc": "0xe76c68",
+          "target_va": "0x220e3e0"
+        },
+        {
+          "pc": "0xe76c78",
+          "target_va": "0x220e3f0"
+        },
+        {
+          "pc": "0xe76c80",
+          "target_va": "0x220e3e0"
+        },
+        {
+          "pc": "0xe76c90",
+          "target_va": "0x220e3f0"
+        },
+        {
+          "pc": "0xe76c98",
+          "target_va": "0x220e3e0"
+        },
+        {
+          "pc": "0xe76ca8",
+          "target_va": "0x220e3f0"
+        },
+        {
+          "pc": "0xe76cb0",
+          "target_va": "0x220e3e0"
+        },
+        {
+          "pc": "0xe76cc0",
+          "target_va": "0x220e3f0"
+        }
+      ],
+      "direct_callers": [
+        {
+          "pc": "0xdaf718",
+          "owner_va": "0xdaf680",
+          "target_va": "0xe767b0"
+        },
+        {
+          "pc": "0xdd35e4",
+          "owner_va": "0xdd3540",
+          "target_va": "0xe767b0"
+        },
+        {
+          "pc": "0xe1abf0",
+          "owner_va": "0xe1aab0",
+          "target_va": "0xe767b0"
+        },
+        {
+          "pc": "0xe85a8c",
+          "owner_va": "0xe85920",
+          "target_va": "0xe767b0"
+        }
+      ]
+    },
+    "slot_flag_clearer_callers": [
+      {
+        "pc": "0xdaf718",
+        "owner_va": "0xdaf680",
+        "target_va": "0xe767b0"
+      },
+      {
+        "pc": "0xdd35e4",
+        "owner_va": "0xdd3540",
+        "target_va": "0xe767b0"
+      },
+      {
+        "pc": "0xe1abf0",
+        "owner_va": "0xe1aab0",
+        "target_va": "0xe767b0"
+      },
+      {
+        "pc": "0xe85a8c",
+        "owner_va": "0xe85920",
+        "target_va": "0xe767b0"
+      }
+    ],
+    "tool_break_save_eventflow": [
+      {
+        "flow": "System_SaveGameClose",
+        "event_index": 1,
+        "actor": "EventFlowSystemActor",
+        "kind": "actions",
+        "name": "EventFlowActionSaveSimpleSave",
+        "params": {
+          "Process": "cAll"
+        }
+      }
+    ],
+    "generic_saveproc_trace": {
+      "source_artifact": "/workspace/acnh-re-github/acnh-re/output/gameplay/crafting_transaction_followup/crafting_transaction_followup_static.json",
+      "explicit_save_event_action_count": 12,
+      "system_save_close_event": {
+        "flow": "System_SaveGameClose",
+        "index": 1,
+        "actor": "EventFlowSystemActor",
+        "kind": "actions",
+        "name": "EventFlowActionSaveSimpleSave",
+        "params": {
+          "Process": "cAll"
+        }
+      },
+      "native_request_path": {
+        "request_stage_calls": [
+          {
+            "pc": "0x337f18",
+            "target": "0x338340"
+          },
+          {
+            "pc": "0x337fb8",
+            "target": "0xf1da50"
+          },
+          {
+            "pc": "0x337fc0",
+            "target": "0x338340"
+          }
+        ],
+        "tail_dispatch_target": "0x338080 (decompiler control-flow edge; not an indexed direct BL call)",
+        "process_dispatch_calls": [
+          {
+            "pc": "0x338094",
+            "target": "0xf2d1a0"
+          },
+          {
+            "pc": "0x338098",
+            "target": "0xf2f380"
+          },
+          {
+            "pc": "0x3380a4",
+            "target": "0xfb35f0"
+          },
+          {
+            "pc": "0x3380b0",
+            "target": "0xf7bc80"
+          },
+          {
+            "pc": "0x3380cc",
+            "target": "0xfb3560"
+          },
+          {
+            "pc": "0x3380d8",
+            "target": "0xfb35d0"
+          },
+          {
+            "pc": "0x3380f8",
+            "target": "0xfb3160"
+          },
+          {
+            "pc": "0x33810c",
+            "target": "0xf7b970"
+          }
+        ],
+        "saveproc_request_calls": [
+          {
+            "pc": "0xfb3180",
+            "target": "0x19a27d0"
+          },
+          {
+            "pc": "0xfb31c8",
+            "target": "0xfb2c60"
+          },
+          {
+            "pc": "0xfb3228",
+            "target": "0x19904f0"
+          },
+          {
+            "pc": "0xfb3234",
+            "target": "0xfaf180"
+          },
+          {
+            "pc": "0xfb3250",
+            "target": "0x19a2810"
+          }
+        ],
+        "completion_stage_calls": [
+          {
+            "pc": "0x338198",
+            "target": "0xfb3620"
+          },
+          {
+            "pc": "0x3381b4",
+            "target": "0xf50390"
+          },
+          {
+            "pc": "0x3381b8",
+            "target": "0xf1da80"
+          },
+          {
+            "pc": "0x3381c0",
+            "target": "0xfb3630"
+          },
+          {
+            "pc": "0x338204",
+            "target": "0x44bc70"
+          }
+        ],
+        "claim": "The SaveSimpleSave handler stores/processes the Process parameter and tail-dispatches to 0x338080; that dispatcher calls 0xfb3160, which constructs a SaveProc operation and passes it to 0xfaf180. The action update path polls completion via 0xf1da80. The tail edge is from decompiler control flow because the indexed direct-call table omits the terminal branch."
+      },
+      "durable_flush_status": "OPEN; the SaveSimpleSave -> 338080 -> SaveProc handoff and completion path are mapped, but the serializer and durable file write/flush after SaveProc were not identified.",
+      "scope_limit": "This is the generic SaveSimpleSave -> SaveProc request/completion trace. It does not connect the tool-slot dirty bit to a serialized field or prove a disk flush."
+    },
+    "finding": "The bounded e895a0 probe confirms in-memory packed-word copy-back and bit 0x4000 on the selected player-item slot. e767b0 contains a matching clear for that bit as part of broader slot-state cleanup. EventFlow has an explicit SaveSimpleSave request at System_SaveGameClose, and the separate indexed SaveProc trace reaches its request/completion boundary. No indexed edge ties this tool dirty bit to a particular serialized save member or durable file flush."
+  },
+  "remaining_blockers": [
+    "The indirect producer that selects PlayerToolBreak when an item's remaining value reaches zero is not identified.",
+    "The ring callback's eventual transfer to the held-hand object and resulting ToolChange/ToolPullout action are not identified.",
+    "ToolDamage's slot dirty-bit clear is visible, but the exact serializer mapping and durable write/flush remain open.",
+    "Per-family cadence is only bounded at the indexed caller sites; a live player action sequence is unavailable."
+  ]
+}

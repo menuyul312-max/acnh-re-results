@@ -83,8 +83,13 @@
       "item_label": "ToolAxe",
       "item_kind": "Axe",
       "source_record_offset_from_pocket_base": "0x6318",
-      "packed_word_hex": "34080000000000a5",
-      "exact_word_copied": true
+      "packed_word_hex": "34080000000001a4",
+      "exact_word_copied": true,
+      "tool_damage_source": 1,
+      "tool_damage_after_copy": 1,
+      "reserved_damage_bits_source_hex": "0xa400",
+      "reserved_damage_bits_after_copy_hex": "0xa400",
+      "tool_damage_preserved": true
     },
     {
       "ring_selection_index": 1,
@@ -93,8 +98,13 @@
       "item_label": "ToolScoop",
       "item_kind": "Shovel",
       "source_record_offset_from_pocket_base": "0x8768",
-      "packed_word_hex": "33080100010000a5",
-      "exact_word_copied": true
+      "packed_word_hex": "33080100000002a4",
+      "exact_word_copied": true,
+      "tool_damage_source": 2,
+      "tool_damage_after_copy": 2,
+      "reserved_damage_bits_source_hex": "0xa400",
+      "reserved_damage_bits_after_copy_hex": "0xa400",
+      "tool_damage_preserved": true
     },
     {
       "ring_selection_index": 2,
@@ -103,8 +113,13 @@
       "item_label": "ToolNet",
       "item_kind": "Net",
       "source_record_offset_from_pocket_base": "0xabb8",
-      "packed_word_hex": "48090200020000a5",
-      "exact_word_copied": true
+      "packed_word_hex": "48090200000003a4",
+      "exact_word_copied": true,
+      "tool_damage_source": 3,
+      "tool_damage_after_copy": 3,
+      "reserved_damage_bits_source_hex": "0xa400",
+      "reserved_damage_bits_after_copy_hex": "0xa400",
+      "tool_damage_preserved": true
     },
     {
       "ring_selection_index": 3,
@@ -113,8 +128,13 @@
       "item_label": "ToolAngling",
       "item_kind": "FishingRod",
       "source_record_offset_from_pocket_base": "0xd008",
-      "packed_word_hex": "49090300030000a5",
-      "exact_word_copied": true
+      "packed_word_hex": "49090300000004a4",
+      "exact_word_copied": true,
+      "tool_damage_source": 4,
+      "tool_damage_after_copy": 4,
+      "reserved_damage_bits_source_hex": "0xa400",
+      "reserved_damage_bits_after_copy_hex": "0xa400",
+      "tool_damage_preserved": true
     },
     {
       "ring_selection_index": 4,
@@ -123,8 +143,13 @@
       "item_label": "ToolSlingshot",
       "item_kind": "Slingshot",
       "source_record_offset_from_pocket_base": "0xf458",
-      "packed_word_hex": "060b0400040000a5",
-      "exact_word_copied": true
+      "packed_word_hex": "060b0400000005a4",
+      "exact_word_copied": true,
+      "tool_damage_source": 5,
+      "tool_damage_after_copy": 5,
+      "reserved_damage_bits_source_hex": "0xa400",
+      "reserved_damage_bits_after_copy_hex": "0xa400",
+      "tool_damage_preserved": true
     },
     {
       "ring_selection_index": 5,
@@ -133,8 +158,13 @@
       "item_label": "ToolWatering",
       "item_kind": "Watering",
       "source_record_offset_from_pocket_base": "0x118a8",
-      "packed_word_hex": "4b090500050000a5",
-      "exact_word_copied": true
+      "packed_word_hex": "4b090500000006a4",
+      "exact_word_copied": true,
+      "tool_damage_source": 6,
+      "tool_damage_after_copy": 6,
+      "reserved_damage_bits_source_hex": "0xa400",
+      "reserved_damage_bits_after_copy_hex": "0xa400",
+      "tool_damage_preserved": true
     },
     {
       "ring_selection_index": 6,
@@ -143,8 +173,13 @@
       "item_label": "ToolAxeGold",
       "item_kind": "Axe",
       "source_record_offset_from_pocket_base": "0x13cf8",
-      "packed_word_hex": "91250600060000a5",
-      "exact_word_copied": true
+      "packed_word_hex": "91250600000007a4",
+      "exact_word_copied": true,
+      "tool_damage_source": 7,
+      "tool_damage_after_copy": 7,
+      "reserved_damage_bits_source_hex": "0xa400",
+      "reserved_damage_bits_after_copy_hex": "0xa400",
+      "tool_damage_preserved": true
     },
     {
       "ring_selection_index": 7,
@@ -153,8 +188,13 @@
       "item_label": "ToolNetGold",
       "item_kind": "Net",
       "source_record_offset_from_pocket_base": "0x16148",
-      "packed_word_hex": "f31f0700070000a5",
-      "exact_word_copied": true
+      "packed_word_hex": "f31f0700000008a4",
+      "exact_word_copied": true,
+      "tool_damage_source": 8,
+      "tool_damage_after_copy": 8,
+      "reserved_damage_bits_source_hex": "0xa400",
+      "reserved_damage_bits_after_copy_hex": "0xa400",
+      "tool_damage_preserved": true
     }
   ],
   "case_count": 8,
@@ -163,7 +203,8 @@
   "proven": [
     "The RingMenuTools selection callback passes its stored index directly as the selected pocket-slot argument to 0x11b7210.",
     "The original 0x11b7210 and 0xef7260 use that index to read pocket storage at base+0x3f00+index*0x2450+0x2418, then the original 0xf589e0 copies the packed word to the callback's output.",
-    "Native reproduction confirms exact selection-index-to-record mapping for indices 0 through 7 using eight valid source ItemParam tool variants from all six tool families."
+    "Native reproduction confirms exact selection-index-to-record mapping for indices 0 through 7 using eight valid source ItemParam tool variants from all six tool families.",
+    "The bounded source descriptors carry distinct nonzero ToolDamage values 1 through 8; original copy-back preserves those low 10 wear bits and the reserved high six bits exactly."
   ],
   "limits": [
     "The synthetic item reader runs the helper, not the full ring menu, controller input, UI animation, or save-backed pocket object.",

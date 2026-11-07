@@ -133,8 +133,10 @@ def run(research_output: Path, nso_path: Path, output: Path) -> dict:
 
     cases = []
     for slot, item in enumerate(samples):
-        source = struct.pack("<HBBI", item["unique_id"], slot, 0,
-                             0xA5000000 | slot)
+        tool_damage = slot + 1
+        reserved_damage_bits = 0xA400
+        source = struct.pack("<HBB2xH", item["unique_id"], slot, 0,
+                             reserved_damage_bits | tool_damage)
         source_address = pocket_storage + 0x3F00 + slot * 0x2450 + 0x2418
         sandbox.uc.mem_write(source_address, source)
         sandbox.uc.mem_write(out, bytes(8))
@@ -143,6 +145,13 @@ def run(research_output: Path, nso_path: Path, output: Path) -> dict:
         if copied != source:
             raise AssertionError({"slot": slot, "item": item,
                                   "source": source.hex(), "copied": copied.hex()})
+        wear_word = struct.unpack_from("<H", copied, 6)[0]
+        copied_damage = wear_word & 0x03FF
+        copied_reserved = wear_word & 0xFC00
+        if (copied_damage, copied_reserved) != (tool_damage, reserved_damage_bits):
+            raise AssertionError({"slot": slot, "item": item,
+                                  "tool_damage": copied_damage,
+                                  "reserved_damage_bits": hex(copied_reserved)})
         cases.append({
             "ring_selection_index": slot,
             "pocket_inventory_slot": slot,
@@ -152,6 +161,11 @@ def run(research_output: Path, nso_path: Path, output: Path) -> dict:
             "source_record_offset_from_pocket_base": hex(0x3F00 + slot * 0x2450 + 0x2418),
             "packed_word_hex": copied.hex(),
             "exact_word_copied": True,
+            "tool_damage_source": tool_damage,
+            "tool_damage_after_copy": copied_damage,
+            "reserved_damage_bits_source_hex": hex(reserved_damage_bits),
+            "reserved_damage_bits_after_copy_hex": hex(copied_reserved),
+            "tool_damage_preserved": copied_damage == tool_damage,
         })
 
     if sandbox.unknown_imports:
@@ -197,6 +211,7 @@ def run(research_output: Path, nso_path: Path, output: Path) -> dict:
             "The RingMenuTools selection callback passes its stored index directly as the selected pocket-slot argument to 0x11b7210.",
             "The original 0x11b7210 and 0xef7260 use that index to read pocket storage at base+0x3f00+index*0x2450+0x2418, then the original 0xf589e0 copies the packed word to the callback's output.",
             "Native reproduction confirms exact selection-index-to-record mapping for indices 0 through 7 using eight valid source ItemParam tool variants from all six tool families.",
+            "The bounded source descriptors carry distinct nonzero ToolDamage values 1 through 8; original copy-back preserves those low 10 wear bits and the reserved high six bits exactly.",
         ],
         "limits": [
             "The synthetic item reader runs the helper, not the full ring menu, controller input, UI animation, or save-backed pocket object.",

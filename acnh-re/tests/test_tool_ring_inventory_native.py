@@ -49,6 +49,11 @@ class ToolRingInventoryNativeTest(unittest.TestCase):
             and case["source_record_offset_from_pocket_base"] ==
             hex(0x3F00 + case["ring_selection_index"] * 0x2450 + 0x2418)
             and case["exact_word_copied"]
+            and case["tool_damage_source"] == case["ring_selection_index"] + 1
+            and case["tool_damage_after_copy"] == case["tool_damage_source"]
+            and case["tool_damage_preserved"]
+            and case["reserved_damage_bits_source_hex"] == "0xa400"
+            and case["reserved_damage_bits_after_copy_hex"] == "0xa400"
             for case in result["cases"]
         ))
         argument = result["callback_index_argument"]

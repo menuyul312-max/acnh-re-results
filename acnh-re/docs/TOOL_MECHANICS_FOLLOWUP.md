@@ -1,6 +1,6 @@
 # Tool mechanics follow-up
 
-Scope: the native `PlayerToolBreak` path, the ItemParam identity lookup it calls, and the available action-state evidence for axe, shovel, net, fishing rod, slingshot, watering can, and tool ring. The work uses the game 1.0.0 main NSO and the indexed source tables/EventFlow. A follow-up has now identified the packed current-wear field, its increment/reset helpers, and all 32 tool-row `BreakDamage` limits; the exact threshold-to-break state dispatch and durable save flush remain open.
+Scope: the native `PlayerToolBreak` path, the ItemParam identity lookup it calls, and the available action-state evidence for axe, shovel, net, fishing rod, slingshot, watering can, and tool ring. The work uses the game 1.0.0 main NSO and the indexed source tables/EventFlow. A follow-up has now identified the packed current-wear field, its increment/reset helpers, all 32 tool-row `BreakDamage` limits, and the break-state lifecycle dispatch sites. The condition that selects the break state at zero remaining and the durable save flush remain open.
 
 ## Break path and counters
 
@@ -64,7 +64,7 @@ Both get-demo callers also reach `0xdb00f0` before inventory insertion (`0xe45cb
 
 ## Tool-ring selected-item slot read
 
-In `0x1417f70`, native instructions form the stored index address at `page + 0x1b9f8`, load that value into `w2`, then call `0x11b7210`. The runner checks those instructions and the indexed direct-call chain. It executes the original `0x11b7210 -> 0xef7260 -> 0xf589e0` read/copy path with eight valid ItemParam tool words. For indices `0..7`, `0xef7260` computes `pocket_base + 0x3f00 + index*0x2450`, and `0x11b7210` reads the packed item word at record offset `0x2418`; all eight copied words match their source records. Output: `output/gameplay/tool_mechanics_followup/tool_ring_inventory_native.json`.
+In `0x1417f70`, native instructions form the stored index address at `page + 0x1b9f8`, load that value into `w2`, then call `0x11b7210`. The runner checks those instructions and the indexed direct-call chain. It executes the original `0x11b7210 -> 0xef7260 -> 0xf589e0` read/copy path with eight valid ItemParam tool words. For indices `0..7`, `0xef7260` computes `pocket_base + 0x3f00 + index*0x2450`, and `0x11b7210` reads the packed item word at record offset `0x2418`; all eight copied words match their source records. The bounded descriptors carry distinct nonzero wear values `1..8`, and the copy preserves both `ToolDamage` and reserved bits. Output: `output/gameplay/tool_mechanics_followup/tool_ring_inventory_native.json`.
 
 One ring-page refresh path (`0x11c2da0`) invokes a vtable getter via `0x11aee20` to fill a temporary set of nine item descriptors, then calls `0x11b67a0` with a context at `page+0x1f8` and the page's `+0x1bb38` index; it refreshes the page if that method reports a change. This traces a second ring-page index/data path, but it does not connect controller input to `0x1417f70`'s `+0x1b9f8` field or identify how the player-record pocket slots are initially populated.
 
@@ -90,6 +90,20 @@ The tool-ring binder's native path is visible in `0x1424f00 -> 0x1424660`: it bu
 
 The ring page constructor `0x14254f0` also initializes an internal eight-value lookup table at `this+0x1b980` to `[2, 1, 0, 7, 6, 5, 4, 3]`. Native lookup `0x1412770` maps each value back to its table index; the runner verifies all eight values plus the out-of-range sentinel (9 cases, 0 mismatch). This establishes an internal selector permutation, but the values' meaning and relation to player inventory are still open. See `tools/tool_ring_index_native.py` and `output/gameplay/tool_mechanics_followup/tool_ring_index_native.json`.
 
+## Residual trace: break trigger, held item, and persistence
+
+`tools/tool_durability_residual_static.py` records the remaining native call edges and EventFlow boundary in `output/gameplay/tool_mechanics_followup/tool_durability_residual_static.json`.
+
+The indexed call table has three otherwise-unowned dispatch edges in the `0xdf65xx` player-state region: `0xdf6584 -> 0xe37830` (`BreakTool`), `0xdf65d8 -> 0xe37a50` (`PlayerToolBreak` update), and `0xdf6654 -> 0xe37ed0` (the force-break-demo handler). Disassembly of `0xdf65a0` shows it calls the `PlayerToolBreak` update and checks state bookkeeping around that call. This establishes where those handlers run in the state lifecycle; it does not show what selects `PlayerToolBreak` when a tool is exhausted.
+
+The threshold helper `0xaa7ce0` has one indexed direct caller, `0xee1060`; that function is called six times from `0xee1420`, whose string references are `DiyCount`, `DIYFurniture`, `DIYItem`, and `DIYTool`. The decompiled consumer uses the remaining value while building a workbench/list representation. In the indexed graph this is a UI/list consumer, not a break-state transition. `db01e0` reads the `ForceToolBreakDemo` flag and the held item's current `ToolDamage`, but neither it nor the `e37a50` state update directly compares current damage with `BreakDamage`. The missing edge is the indirect state-selection producer, not the threshold arithmetic.
+
+For the tool ring, the native callback reads the selected pocket record and copies its complete eight-byte item descriptor into the page's selection data. The updated bounded probe gives all eight synthetic tools distinct nonzero `ToolDamage` values (`1..8`) and confirms the original reader preserves both the low ten wear bits and upper reserved bits. The callback then updates the ring UI item pool and selection state; it has no direct call to `e893c0`, `e895a0`, or `db00f0`. The pocket-to-ring copy is established, while a later transfer into the player's held-hand object and the `ToolChange`/`ToolPullout` transition are still unproven.
+
+The bounded `e895a0` probe confirms the wear update copies the packed descriptor back to its player pocket slot and sets that slot's dirty bit `0x4000`. `e767b0` includes a corresponding clear of `0x4000` among several slot-state bits as part of a broader cleanup path. The indexed EventFlow trace maps the generic `System_SaveGameClose#1` `SaveSimpleSave(Process=cAll)` request through `0x338080 -> 0xfb3160 -> 0xfaf180` and its completion poll. That generic SaveProc path is not linked to the tool-slot dirty bit. No exact save serializer field or durable file write/flush is established.
+
+The action call graph identifies known wear boundaries but not a complete cadence table: net and rod result states call `db00f0`; shovel get-demo paths call `db0140` and reach `e893c0`; other shared interaction paths also reach `e893c0`. The rod +2 case is statically conditioned by the existing rod/item predicate. Other family-specific use conditions and an end-to-end break transition require a live player action/state run, which is not available in this analysis environment.
+
 ## Reproduction and inputs
 
 From this worktree, run:
@@ -98,6 +112,7 @@ From this worktree, run:
 PYTHONPATH=/workspace/acnh-re/.deps python3 acnh-re/tools/tool_mechanics_followup_native.py
 python3 acnh-re/tools/tool_durability_static_audit.py --index-db /workspace/acnh-re/output/index.sqlite --research-root /workspace/acnh-re/output
 PYTHONPATH=/workspace/acnh-re/.deps:/workspace/acnh-re-github/acnh-re/tools python3 acnh-re/tools/tool_durability_native.py --research-root /workspace/acnh-re/output
+python3 acnh-re/tools/tool_durability_residual_static.py
 PYTHONPATH=/workspace/acnh-re/.deps python3 acnh-re/tools/tool_catch_inventory_native.py
 PYTHONPATH=/workspace/acnh-re/.deps python3 acnh-re/tools/tool_ring_inventory_native.py
 PYTHONPATH=/workspace/acnh-re/.deps python3 acnh-re/tools/tool_slingshot_launch_native.py
