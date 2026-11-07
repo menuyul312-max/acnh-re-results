@@ -1,0 +1,385 @@
+{
+  "schema": "acnh.registration-terrain-followup/1",
+  "created_utc_date": "2026-11-07",
+  "scope": "Follow-up on ACNH new-player TerrainSelect: UIMapSelectHandling controller/layout binding, four child card parts and preview assets, FieldMainFieldParam/LandMaking join, and cVillage save result. No Godot implementation or build.",
+  "status_legend": {
+    "EF": "Decoded EventFlow action, branch, or named result handoff.",
+    "TBL": "Decoded base-game table/BYML row or exact table-name data join.",
+    "STRUCT": "Parsed asset structure; supplemental assets are not asserted as exact ACNH 1.0.0 unless identified from base sources.",
+    "PSEUDO": "Static native/layout correspondence or callback candidate without execution/ownership proof.",
+    "NATIVE": "Original native behavior exercised or statically resolved with the fixture limits stated.",
+    "CAT": "Catalogue-only asset candidate; raw source archive is unavailable.",
+    "OPEN": "Required source/runtime edge remains unresolved."
+  },
+  "source_sets": {
+    "base_game": {
+      "manifest_path": "/workspace/acnh-re-github/acnh-re/output/manifest.json",
+      "eventflow_source": {
+        "path": "B_data/EventFlow/Tutorials_Prologue1_Charactermaking.bfevfl",
+        "source_id": 661,
+        "sha256": "cbf8fc7e4f5df544398f8dfd4b401f558bf386862af1abac72b8ab57c1d8688d"
+      },
+      "main_nso_path": "inputs/additional_exefs/main",
+      "main_nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+      "analyzed_elf_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/A_logic/main.elf",
+      "analyzed_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74"
+    },
+    "supplemental_romfs": {
+      "extracted_manifest_path": "/workspace/acnh-re/output/additional_romfs/extracted_manifest.json",
+      "extracted_manifest_sha256": "5e2327bc81c0a526cbcf878e9d899f47536b5b8f5a9fdf8b4a776413f75b64b8",
+      "version_status": "STRUCT comparison corpus; exact game version not established. The inventory says: Compare content evidence; do not infer exact version from filenames.",
+      "model_sources_present": false,
+      "audio_source_path_matches": 0
+    }
+  },
+  "source_indexes": [
+    {
+      "path": "output/ui_hud/page_factory_catalog.json",
+      "sha256": "f9b990db0b9539d5207a751558e2ba02e304c2f5f3ea3dbb86b49bcb57863b70"
+    },
+    {
+      "path": "output/ui_hud/page_layout_method_bindings.json",
+      "sha256": "8b55f0a1dbc810b71573444707bdd1ab2a891d3a9b3577be556c9da74c07716a"
+    },
+    {
+      "path": "output/ui_hud/page_registry_factory_candidates.json",
+      "sha256": "e45940bbaa799cd8ff681bb6a241e06009147f9e1a72ed2bd660fcb177eb2a00"
+    },
+    {
+      "path": "output/ui_hud/native_bindings.json",
+      "sha256": "2884663d3a86109964e738c10cf824d7d44c91f1d2c8b64c7136d902ffb75dab"
+    },
+    {
+      "path": "output/ui_island/layouts.json",
+      "sha256": "a561d1c067b0c0045d430a55ab29bdbe8a8a9e1e8f756491386aa89e1d291e6c"
+    },
+    {
+      "path": "output/ui_hud/resource_bindings.json",
+      "sha256": "5980371fa5216d408062264e692ef68477855d6bd45ba59f1d33757abd69ab75"
+    },
+    {
+      "path": "output/ui_island/animations.json",
+      "sha256": "11f6028610b4d591af1767822b7173de545f05cbe404785feb1d940c8e812a76"
+    },
+    {
+      "path": "output/gameplay/trees/Tutorials_Prologue1_Charactermaking.txt",
+      "sha256": "ab80afbe18263519a0962291e30220cfbd2d05d235ef0075fb0ecb1e4c00122d"
+    },
+    {
+      "path": "output/ui_island/island.json",
+      "sha256": "af6f780249a88359424476d624a5fed1c5915c8bc2996b53f10b1a31663dcb8d"
+    },
+    {
+      "path": "output/ui_island/island_loader_remainder_20261107/result.json",
+      "sha256": "ef42f317b1228efc8423e40eeead0ca3c0df228027e8cff7870d5785474d7aa1"
+    },
+    {
+      "path": "output/ui_island/preset_template_candidate_pools.json",
+      "sha256": "9e7ca30afb3ab423331a2a97c556e43f1afd3de5b22441fec5dd8a905ac1e10a"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/code_pointer_arrays.json",
+      "sha256": "64d474068ca289f9146f7f32e6647a16a05e8f5be8e635615a478744b62ef822"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/1243980.c",
+      "sha256": "2a7adac8e5238348cd7b2cd4bded49f6adeb280f642de1606a3028b76839f28d"
+    },
+    {
+      "path": "/workspace/acnh-re/output/mechanics/focus7/native_event_handlers.json",
+      "sha256": "712f56b5649487bffe5d6c7269544d8f78a2242a598fe4733306d480ee8be2dd"
+    }
+  ],
+  "eventflow": {
+    "status": "EF",
+    "source_id": 661,
+    "source_path": "B_data/EventFlow/Tutorials_Prologue1_Charactermaking.bfevfl",
+    "sha256": "cbf8fc7e4f5df544398f8dfd4b401f558bf386862af1abac72b8ab57c1d8688d",
+    "entry": "TerrainSelect",
+    "ordered_calls": [
+      {
+        "event_index": 0,
+        "action": "UIMapSelectHandling",
+        "params": {}
+      },
+      {
+        "event_index": 1,
+        "action": "SaveSetFromUIResult",
+        "params": {
+          "SaveType": "cVillage"
+        }
+      }
+    ],
+    "proven": "The map-selection action precedes a named cVillage UI-result save handoff.",
+    "not_proven": "Action handler/controller, output encoding, actual cVillage value, and durable save writer."
+  },
+  "page_controller_layout": {
+    "status": "PSEUDO",
+    "registry_candidate": {
+      "registry_page_name": "cMapSelect",
+      "helper_va": "0x1549400",
+      "raw_integer_arguments": [
+        19
+      ],
+      "normalization": "remove leading c",
+      "candidate_class": "MapSelectPage",
+      "candidate_factory_va": "0x1242550",
+      "registry_factory_status": "normalized_name_candidate_unproven",
+      "registry_limit": "Registry flags do not expose a factory function pointer; row-to-factory edge is not proven."
+    },
+    "factory_and_layout": {
+      "page_class": "MapSelectPage",
+      "factory_va": "0x1242550",
+      "constructor_va": "0x12406d0",
+      "allocation_size_bytes": 1472,
+      "vptr_relocation_slot_va": "0x3307b48",
+      "address_point_va": "0x3110b38",
+      "layout_getter_slot_index": 46,
+      "layout_getter_offset_bytes": "0x170",
+      "layout_getter_va": "0x1241910",
+      "returned_string_va": "0x294cbc3",
+      "returned_layout_name": "CharaMakeMap",
+      "parsed_layout_sha256": "b110eb4c09bb23ce89f3f7a32139a68d1cc6b37c615788d75284a113941ca6ea",
+      "exact_layout_name_match": true
+    },
+    "loader_callback_candidate": {
+      "function_va": "0x1242fa0",
+      "function_size_bytes": 356,
+      "direct_callsite_pc": "0x1242fc8",
+      "direct_target_va": "0x1243980",
+      "helper_literal_string": "CharaMakeMap",
+      "helper_literal_va": "0x294cbc3",
+      "observed_body_shape": [
+        "Checks a field at +0x218 and accesses the slot collection at +0x210; helper 0x1243980 also dereferences +0x210.",
+        "Calls 0x1243980, whose static pseudocode passes CharaMakeMap to a resource-loading path.",
+        "Performs repeated child-handle setup with literal indices 0, 1, 2, and 3."
+      ],
+      "pointer_array_membership": {
+        "array_start_va": "0x3307ba0",
+        "entry_va": "0x3307bb8",
+        "target_va": "0x1242fa0",
+        "array_status": "relocated code pointer sequence; not automatically a C++ vtable"
+      },
+      "limit": "No incoming owner/callback edge or array-to-MapSelectPage ownership is established; treat as a page-adjacent initialization candidate, not a proven UIMapSelectHandling callback."
+    },
+    "unresolved_controller_edge": "UIMapSelectHandling -> native handler/controller -> cMapSelect registry record -> MapSelectPage factory remains OPEN.",
+    "focused_handler_index_check": {
+      "source_path": "output/mechanics/focus7/native_event_handlers.json",
+      "sha256": "712f56b5649487bffe5d6c7269544d8f78a2242a598fe4733306d480ee8be2dd",
+      "contains_UIMapSelectHandling": false,
+      "contains_EventFlowActionUIMapSelectHandling": false,
+      "scope_limit": "This is one focused native handler index; absence here does not prove the action has no implementation elsewhere."
+    }
+  },
+  "card_assets": {
+    "status": "STRUCT",
+    "version_limit": "All cited Layout .zs records are supplemental new_path files; exact 1.0.0 identity is OPEN.",
+    "parent_layout": {
+      "source_path": "Layout/CharaMakeMap.Nin_NX_NVN.zs",
+      "raw_archive_sha256": "873d26ca41ba4b982cc96b55daf68adcdc657099be50626266615b3a9f2b6700",
+      "bflyt_member": "CharaMakeMap.arc!blyt/CharaMakeMap.bflyt",
+      "bflyt_sha256": "b110eb4c09bb23ce89f3f7a32139a68d1cc6b37c615788d75284a113941ca6ea",
+      "design_size": [
+        1920,
+        1080
+      ],
+      "card_parts": [
+        {
+          "part": "L_Btn_00",
+          "child_layout": "LCharaMakeMapBtn",
+          "position": [-260, 76],
+          "size": [562, 438]
+        },
+        {
+          "part": "L_Btn_01",
+          "child_layout": "LCharaMakeMapBtn",
+          "position": [260, 76],
+          "size": [562, 438]
+        },
+        {
+          "part": "L_Btn_02",
+          "child_layout": "LCharaMakeMapBtn",
+          "position": [-260, -220],
+          "size": [562, 438]
+        },
+        {
+          "part": "L_Btn_03",
+          "child_layout": "LCharaMakeMapBtn",
+          "position": [260, -220],
+          "size": [562, 438]
+        }
+      ],
+      "preview_ids_in_parent_layout": false
+    },
+    "card_child": {
+      "source_path": "Layout/LCharaMakeMapBtn.Nin_NX_NVN.zs",
+      "raw_archive_sha256": "04bb82e3cbd7c02109af61f3d76731b1188d32e6d748a044ccb78c5ce397fb34",
+      "bfl_y_t_member": "LCharaMakeMapBtn.arc!blyt/LCharaMakeMapBtn.bflyt",
+      "bflyt_sha256": "cc947b0e738ed7fbbbb340e2a585f9fdb135825398a515052fda4ca9611b0f74",
+      "notable_panes_and_parts": [
+        "B_Btn_00",
+        "N_Capture_00",
+        "L_MapChoice_00 -> LMapChoice",
+        "P_Capture_00"
+      ],
+      "texture_member": "LCharaMakeMapBtn.arc!timg/__Combined.bntx",
+      "bntx_sha256": "70a859c80fa60ccd45647f4ee4d2e7d952ba25156a721bf592c242cd76808803",
+      "texture_names": [
+        "Black_00^r",
+        "Corner^s",
+        "GraSinV^w",
+        "MapWave^s",
+        "Noise+r",
+        "TexPaper^s",
+        "WorkBenchCardCornerR12^s",
+        "WorkBenchCardCornerR12Sh^s"
+      ],
+      "per_card_image_id_present": false
+    },
+    "map_choice_child": {
+      "source_path": "Layout/LMapChoice.Nin_NX_NVN.zs",
+      "raw_archive_sha256": "d53a3adecc2b6a30586f46fa62b3a59dee533110d70e9ccf3c69b68cb6108cc1",
+      "bflyt_member": "LMapChoice.arc!blyt/LMapChoice.bflyt",
+      "bflyt_sha256": "a4fe91a4abcc2d3bb84e7d88cf3753d14f8bd444be7435ab8bf61b0326a099aa",
+      "map_picture_pane": "P_Map_00",
+      "map_picture_texture_ref": "Capture^t",
+      "texture_member": "LMapChoice.arc!timg/__Combined.bntx",
+      "bntx_sha256": "6cc500513685c399c42dc3ec3cdf8f68c8a2611aa76af3afeb3bd203da2648b9",
+      "textures": [
+        {
+          "name": "Capture^t",
+          "format": "BC5_UNORM",
+          "width": 8,
+          "height": 8
+        },
+        {
+          "name": "Noise^r",
+          "format": "BC4_UNORM",
+          "width": 64,
+          "height": 64
+        }
+      ],
+      "per_card_image_id_present": false,
+      "capture_producer": "OPEN"
+    },
+    "open_space_marker": {
+      "source_path": "Layout/LMapIconOpenSpaceStart.Nin_NX_NVN.zs",
+      "raw_archive_sha256": "e22c37ea04173e427c22c2db2f46bd44ebfcce2f91988d8c812f4c36fd0509a1",
+      "bflyt_sha256": "4eaa872703e8571987ad7ebfb513083e05afc87f27a02233ce49213849308e13",
+      "bntx_sha256": "6a4c069a9a401335616d3a349ea4d76093509a8fed065e5777147ef91d64a953",
+      "textures": [
+        {
+          "name": "FullMapIconMrk01^t",
+          "format": "BC5_UNORM",
+          "width": 64,
+          "height": 64
+        },
+        {
+          "name": "MiniMapIconOpenSpc^s",
+          "format": "BC4_UNORM",
+          "width": 38,
+          "height": 32
+        }
+      ],
+      "interpretation": "Marker icon only; no island preview or preset ID is encoded here."
+    },
+    "animations": [
+      {
+        "member": "LMapChoice.arc!anim/LMapChoice_In.bflan",
+        "sha256": "6a311583a81925946379d042e85db12cbafe5bf6e7215d38dda174f2a0767fd5",
+        "targets": ["P_Map_00 pane/material alpha", "N_MapArea_00 alpha", "N_Icon_00 alpha"]
+      },
+      {
+        "member": "LMapChoice.arc!anim/LMapChoice_Out.bflan",
+        "sha256": "53202fb1250939fbdea4d339ab63b737bdb58e44e4159fd122d3edd91e375dcd",
+        "targets": ["P_Map_00 pane/material alpha", "N_MapArea_00 alpha", "N_Icon_00 alpha"]
+      },
+      {
+        "member": "LCharaMakeMapBtn.arc!anim/LCharaMakeMapBtn_Select.bflan",
+        "sha256": "1b271f4c7fccfeaa4b95460a7d00f3df4d0ee2a70c838c018e7727b664827637",
+        "targets": ["N_Scale_00 translate_y"]
+      },
+      {
+        "member": "LCharaMakeMapBtn.arc!anim/LCharaMakeMapBtn_Decide.bflan",
+        "sha256": "85bb3595f922fd04ad0064746fcbe7d980049a0771c24e9a9247b93f52798e6b",
+        "targets": ["N_Scale_00 translate_y"]
+      }
+    ],
+    "animation_limit": "Parsed targets establish layout/animation structure, not trigger timing or controller callbacks."
+  },
+  "terrain_preset_data": {
+    "status": "TBL",
+    "field_main_field_param": {
+      "source_id": 41,
+      "source_path": "B_data/Bcsv/FieldMainFieldParam.bcsv",
+      "sha256": "3ebd1057e41b0666aa30c6d8beee9220b52d8fb5280c478e8eb13eaca5d27944",
+      "row_count": 96,
+      "fields": ["UniqueID", "FieldData", "OutsideTemplateKind", "Label", "StructureData", "ItemData"],
+      "example_row": {
+        "UniqueID": 0,
+        "FieldData": "FieldPresetA00",
+        "OutsideTemplateKind": 0,
+        "Label": "VillagePresetA00",
+        "StructureData": "StructurePresetA00",
+        "ItemData": "ItemPresetA00"
+      }
+    },
+    "fielddata_to_landmaking": {
+      "fielddata_key": "FieldPresetA00",
+      "landmaking_source_id": 2442,
+      "source_path": "B_data/Param/Field/MainFieldPreset/FieldPresetA00_LandMaking.byml",
+      "sha256": "cba1ab90d21982b443e719e30a19c80fa9aa9ead86f03705f5ecbd3c821d4aca",
+      "join_basis": "Exact FieldData filename stem crosswalk; table-to-file membership only, no UI/card-selection meaning."
+    },
+    "outside_template_table": {
+      "source_id": 46,
+      "source_path": "B_data/Bcsv/FieldOutsideTemplate.bcsv",
+      "sha256": "1c615f1c8b42d4f690f81fd577261a3daf61f814bb3b1f93354fd1b714c5a314",
+      "row_count": 36
+    },
+    "generator_audit": {
+      "status": "PSEUDO",
+      "evidence_path": "output/ui_island/island_loader_remainder_20261107/result.json",
+      "parent_function_va": "0x529910",
+      "source_row_selector_calls": 4,
+      "outside_template_selector_va": "0x552bb0",
+      "preset_setup_calls_va": "0x528bf0",
+      "execution_limit": "The 0x529910 parent generator and 0x528bf0 setup were not invoked end-to-end in that audit; four generator slots do not identify the four UI cards."
+    },
+    "card_to_preset_mapping": "OPEN"
+  },
+  "save_linkage": {
+    "eventflow_result_save": {
+      "status": "EF",
+      "save_type": "cVillage",
+      "source_id": 661,
+      "entry": "TerrainSelect",
+      "event_index": 1
+    },
+    "native_cVillage_writer": "OPEN",
+    "cVillage_value_to_fieldmainfieldparam_uniqueid": "OPEN",
+    "card_index_to_cVillage_value": "OPEN"
+  },
+  "remaining_open_edges": [
+    "UIMapSelectHandling action -> native handler/controller.",
+    "cMapSelect registry record -> MapSelectPage factory pointer.",
+    "MapSelectPage callback owner/incoming edge for 0x1242fa0 and owner of code-pointer sequence at 0x3307ba0.",
+    "Runtime source that populates LMapChoice.P_Map_00/Capture^t for each of the four card instances.",
+    "A distinct ID/name/value for each visual card.",
+    "Card/result value -> FieldMainFieldParam.UniqueID/FieldData -> selected LandMaking BYML.",
+    "SaveSetFromUIResult cVillage -> native save writer/durable commit."
+  ],
+  "godot_conversion_notes": [
+    "Keep the four card child instances at their source BFLYT transforms and preserve nested part structure.",
+    "Decode BNTX block format/channel sources before texture import; do not interpret generic Capture^t as an island preview file.",
+    "Preserve BFLAN targets as pane/material animation data until the controller trigger path is known.",
+    "Keep FieldData-to-LandMaking source joins independent of the UI until cVillage mapping is recovered."
+  ],
+  "validation": {
+    "json_tool": "python -m json.tool",
+    "source_hashes_spot_checked": true,
+    "shared_crosswalk_readme_handoff_changed": false,
+    "godot_or_build_performed": false,
+    "git_commit_or_push_performed": false
+  }
+}
