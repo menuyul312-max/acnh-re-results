@@ -1,0 +1,226 @@
+{
+  "scope": "ACNH 1.0.0 query-list ownership and candidate-producer follow-up",
+  "status": "OPEN",
+  "source_identity": {
+    "elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+    "additional_exefs_main_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900"
+  },
+  "query_entrypoints": {
+    "movement_ground_query": "0x7bccf0",
+    "paired_position_query": "0x7c5570",
+    "query_context": "world_root+0x28",
+    "grid_query": "0x1577a0",
+    "candidate_iteration": "0x157270",
+    "candidate_dispatch": "candidate_vtable+0x30(candidate, position, status, 0)",
+    "candidate_dispatch_target": "OPEN: relocated candidate vtable slot not resolved"
+  },
+  "world_root_ownership": {
+    "singleton_va": "0x32d0de8",
+    "constructor": "0x197740",
+    "constructor_direct_callers": ["0x96ef0"],
+    "allocated_size": "0xf88",
+    "query_context_constructor": "0x156840 at root+0x28",
+    "query_context_initial_state": {
+      "lock": "context+0x8 initialized",
+      "sentinel_forward": "context+0x48 points to context+0x48",
+      "sentinel_back": "context+0x50 points to context+0x48",
+      "candidate_count": "context+0x58 = 0",
+      "candidate_link_bias_s32": "context+0x5c = 8",
+      "candidate_link_fields": ["candidate+0x8", "candidate+0x10"]
+    },
+    "grid_pointer": "root+0xa0 = context+0x78; constructor default null",
+    "ready_byte": "root+0xf10; constructor default 0",
+    "disabled_byte": "root+0xf60; 0x1978a0 clears it",
+    "live_root_or_grid_installation": "OPEN",
+    "constructor_probe": {
+      "completed": false,
+      "classification": "Sandbox allocator/import bootstrap fault",
+      "fault_is_gameplay_evidence": false,
+      "supporting_ledger": "output/mechanics/player_collider_query_remainder_20261107/world_root_init_followup.json"
+    }
+  },
+  "query_list_contract": {
+    "initializer": "0x156840",
+    "lock_offset": "0x8",
+    "sentinel_offset": "0x48",
+    "sentinel_first_link_offset": "0x50",
+    "count_offset": "0x58",
+    "signed_link_bias_offset": "0x5c",
+    "empty_condition": "*(context+0x50) == context+0x48",
+    "iterator": "0x157270",
+    "add": "0x157060",
+    "remove": "0x1571e0",
+    "add_wrapper": "0x1868c0",
+    "remove_wrapper": "0x1868e0",
+    "add_direct_callers": ["0x56eb80", "0xc74610", "0xc74970"],
+    "remove_direct_callers": ["0x170ee0", "0x56e890", "0x56eb00", "0xc744a0", "0xd4acf0"],
+    "remove_behavior": "Unlinks and decrements count; wrapper invokes candidate vtable+0x20 cleanup.",
+    "separate_registry": {
+      "sentinel_offset": "0xef0",
+      "count_offset": "0xf00",
+      "link_bias_offset": "0xf04",
+      "insert_function": "0x1651b0",
+      "insert_callers": ["0x156320", "0x1563d0", "0x156480", "0x156530", "0x1565f0"],
+      "queried_by_0x157270": false
+    }
+  },
+  "native_candidate_producers": [
+    {
+      "function": "0x156e30",
+      "kind": "Spatial-index object self-registration",
+      "object_size": "0x118",
+      "constructor": "0x172090",
+      "grid_initializer": "0x1725f0",
+      "dimensions": {
+        "default": [64, 64],
+        "alternate": [160, 160]
+      },
+      "query_context_fields": {
+        "active_index": "+0x78",
+        "backing_allocation": "+0x90"
+      },
+      "registers_itself": true,
+      "direct_callers": ["0x1978a0"],
+      "lifecycle_method": "0x1978a0 clears root+0xf60 then calls 0x156e30",
+      "runtime_lifecycle_invocation": "OPEN: 0x1978a0 has no indexed direct callers"
+    },
+    {
+      "function": "0x56eb80",
+      "kind": "Embedded object candidate selected by flags",
+      "candidate_offsets": ["object+0x58", "object+0x240"],
+      "constructors": {
+        "object+0x58": "0x1711d0 from 0x56e830",
+        "object+0x240": "0x171bc0 from 0x56e830"
+      },
+      "parent_add_path": "0x573e00 -> 0x56f260 -> 0x56eb80 -> 0x1868c0 -> 0x157060",
+      "activation_condition": "0x56f260 calls 0x56eb80 when object flag byte+0x18 bit 0 is set",
+      "live_world_population": "OPEN"
+    },
+    {
+      "function": "0xc74610",
+      "kind": "Four allocated box-shaped query candidate nodes",
+      "object_size": "0x1e8 each",
+      "candidate_constructor": "0x1711d0",
+      "flag_setter": "0x170ff0(node, 0x800)",
+      "additional_flag": "node+0x44 = 0x200000",
+      "registers_each": true,
+      "candidate_array": "owner+0x2c8 with count at owner+0x2c0",
+      "direct_callers": [],
+      "dispatcher_or_owner": "OPEN"
+    },
+    {
+      "function": "0xc74970",
+      "kind": "One data-derived volume-shaped query candidate node",
+      "candidate_constructor": "0x1711d0",
+      "source_label_seen": "Entrance",
+      "registers_candidate": true,
+      "direct_callers": ["0xc3baa0"],
+      "cleanup": "0xc744a0 removes array candidates with 0x1868e0 and invokes vtable+0x18",
+      "exact_gameplay_semantics": "OPEN"
+    }
+  ],
+  "candidate_semantics": {
+    "supported_classification": "CAT: nodes are registered into the candidate list iterated by 0x157270; several producers create dimensioned volume-shaped objects",
+    "not_established": [
+      "The exact vtable+0x30 callback and its return/out-parameter contract",
+      "Which live island actors populate the list and their order",
+      "How the candidate and spatial-index outputs combine into a ground or movement result",
+      "Whether a specific node is a bridge, ladder, cliff, river, or other traversal surface"
+    ]
+  },
+  "fixture_review": [
+    {
+      "artifact": "tools/terrain_native.py; output/mechanics/terrain_native.json",
+      "status": "NATIVE",
+      "verified": "1791 cases over coordinate conversion, 52-byte runtime grid records, overlays, and ground aggregators",
+      "world_fixture": "Direct singleton->world and world+0xa0->grid pointers",
+      "does_not_build": ["0xf88 root", "query list", "0x156e30 index", "candidate vtables"],
+      "full_query_valid": false
+    },
+    {
+      "artifact": "tools/ground_context_gate_native.py; output/mechanics/ground_context_gate_native.json",
+      "status": "NATIVE",
+      "verified": "112 stage/readiness and selector guard cases",
+      "fixture_limit": "Synthetic guard memory and deliberate empty-item early return; no loaded grid/query list",
+      "full_query_valid": false
+    },
+    {
+      "artifact": "tools/world_registry_release_native.py; output/mechanics/world_registry_release_native.json",
+      "status": "NATIVE",
+      "verified": "126 release/unlink cases on prepared region-registry lists",
+      "fixture_limit": "Distinct registry/list layout; not context+0x48 candidate list and not candidate vtable+0x30",
+      "full_query_valid": false
+    },
+    {
+      "artifact": "output/mechanics/player_collider_query_remainder_20261107/player_7bccf0_boundary_native.json",
+      "status": "NATIVE / OPEN",
+      "verified": "Null-singleton sandbox boundary and invalid read at 0x172780",
+      "fixture_limit": "No gameplay query result; emulator setup fault only",
+      "full_query_valid": false
+    }
+  ],
+  "asset_family": {
+    "table": "output/tables_resolved/ColGroundAttributeParam.json",
+    "table_status": "TBL",
+    "runtime_grid_record_size": 52,
+    "landmaking_preset_cell_size": 14,
+    "conversion_from_island_assets_to_runtime_grid_and_candidate_nodes": "OPEN",
+    "terrain_native_evidence": "Grid accessor fixture uses table rows but does not execute world query candidate callbacks."
+  },
+  "required_missing_inputs_for_faithful_query": [
+    "Original initialized world root stored at singleton 0x32d0de8",
+    "Live root+0xa0 grid and backing cells/overlays",
+    "Root readiness root+0xf10 set by the original load path",
+    "Indirect invocation path for root lifecycle method 0x1978a0",
+    "Populated query list at root+0x28+0x48 with link-compatible nodes",
+    "Actual relocated candidate vtables and implementation of slot+0x30",
+    "Runtime owner/dispatcher and loaded data for candidate constructors 0xc74610/0xc74970",
+    "Original allocator/import bootstrap required by root construction"
+  ],
+  "original_query_rerun": {
+    "attempted": false,
+    "reason": "Existing fixtures do not supply a live root, loaded grid, readiness, spatial-index lifecycle, query-list candidates, or their real vtables. A hand-built substitute would test guessed state only."
+  },
+  "evidence_labels": ["EF", "TBL", "STRUCT", "PSEUDO", "NATIVE", "CAT", "OPEN"],
+  "source_refs": [
+    "output/binary/analysis_decomp/197740.c",
+    "output/binary/analysis_decomp/156840.c",
+    "output/binary/analysis_decomp/156e30.c",
+    "output/binary/analysis_decomp/157060.c",
+    "output/binary/analysis_decomp/1571e0.c",
+    "output/binary/analysis_decomp/157270.c",
+    "output/binary/analysis_decomp/1577a0.c",
+    "output/binary/analysis_decomp/1651b0.c",
+    "output/binary/analysis_decomp/1711d0.c",
+    "output/binary/analysis_decomp/172090.c",
+    "output/binary/analysis_decomp/1725f0.c",
+    "output/binary/analysis_decomp/1868c0.c",
+    "output/binary/analysis_decomp/1868e0.c",
+    "output/binary/analysis_decomp/1978a0.c",
+    "output/binary/analysis_decomp/56e830.c",
+    "output/binary/analysis_decomp/56eb80.c",
+    "output/binary/analysis_decomp/56f260.c",
+    "output/binary/analysis_decomp/573e00.c",
+    "output/binary/analysis_decomp/c3baa0.c",
+    "output/binary/analysis_decomp/c744a0.c",
+    "output/binary/analysis_decomp/c74610.c",
+    "output/binary/analysis_decomp/c74970.c"
+  ],
+  "references": [
+    "docs/PLAYER_COLLIDER_QUERY_INIT_FOLLOWUP_20261107.md",
+    "output/mechanics/player_collider_query_remainder_20261107/world_root_init_followup.json",
+    "output/mechanics/player_collider_query_remainder_20261107/player_7bccf0_boundary_native.json",
+    "output/mechanics/terrain_native.json",
+    "output/mechanics/ground_context_gate_native.json",
+    "output/mechanics/world_registry_release_native.json"
+  ],
+  "limitations": [
+    "Candidate creation and membership are statically established; live runtime list contents are not.",
+    "Candidate vtable slot+0x30 is not resolved, so exact response semantics and gameplay result are not proven.",
+    "Spatial-index lifecycle method 0x1978a0 has no indexed direct caller; indirect dispatch remains OPEN.",
+    "The terrain fixture proves isolated grid contracts only, not the complete 0x7bccf0/0x7c5570 query.",
+    "The constructor sandbox failure is allocator/import setup, not an ACNH runtime fault.",
+    "The 14-byte preset and 52-byte runtime grid records are not shown to be a conversion pair.",
+    "No bridge/ladder/cliff/river crossing or traversal execution is proven here."
+  ]
+}
