@@ -2,7 +2,7 @@
 
 **Cakupan:** ACNH 1.0.0 dari boot/registrasi pemain sampai konser K.K. pertama dan pembukaan Island Designer. Ini indeks bukti reverse engineering untuk kebutuhan gameplay; bukan implementasi Godot atau bukti bahwa satu save sudah dimainkan dari awal sampai akhir.
 
-Crosswalk utama memuat 28 beat dan 11 keluarga aset di setiap beat. Ada 381 rujukan untuk 308 slot wajib: 243 `OPEN`, 73 `CAT`, dan 65 `EF/PSEUDO/STRUCT/TBL`. Status itu berarti kategori sudah diperiksa pada setiap beat, bukan seluruh consumer runtime telah ditemukan. Model dan audio tetap memakai katalog sebagai referensi karena arsip sumber mentah tidak tersedia.
+Crosswalk utama memuat 28 beat dan 11 keluarga aset di setiap beat. Ada 381 rujukan untuk 308 slot wajib: 235 `OPEN`, 73 `CAT`, dan 73 `EF/PSEUDO/STRUCT/TBL`. Status itu berarti kategori sudah diperiksa pada setiap beat, bukan seluruh consumer runtime telah ditemukan. Model dan audio tetap memakai katalog sebagai referensi karena arsip sumber mentah tidak tersedia.
 
 ## Rantai gameplay dan bukti saat ini
 

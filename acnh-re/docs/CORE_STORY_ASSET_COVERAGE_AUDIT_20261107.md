@@ -7,7 +7,7 @@ Ledger mesin: [core_story_asset_coverage_audit_20261107.json](../output/gameplay
 
 ## Hasil audit
 
-Struktur crosswalk sudah mencakup 28 beat dan 11 keluarga aset dengan 381 rujukan. Namun, ini belum berarti seluruh aset cerita terhubung ke pemanggil atau consumer. Status saat audit: **243 OPEN**, **73 CAT**, dan **65 EF/PSEUDO/STRUCT/TBL**; `full_semantic_coverage_proven=false`. Jadi hanya 17,1% dari rujukan berstatus bukti sumber selain katalog/placeholder (`65/381`), sedangkan 82,9% masih terbuka atau katalog saja (`316/381`). Persentase tersebut mengukur rujukan crosswalk, bukan persen reverse engineering seluruh game.
+Struktur crosswalk mencakup 28 beat dan 11 keluarga aset dengan 381 rujukan. Setelah integrasi bukti UI prolog, hitungannya **235 OPEN**, **73 CAT**, dan **73 EF/PSEUDO/STRUCT/TBL**; `full_semantic_coverage_proven=false`. Jadi 19,2% rujukan berstatus bukti sumber selain katalog/placeholder (`73/381`), sedangkan 80,8% masih terbuka atau katalog saja (`308/381`). Persentase tersebut mengukur rujukan crosswalk, bukan persen reverse engineering seluruh game.
 
 | Keluarga | Rujukan non-OPEN / katalog | OPEN | Makna praktis |
 |---|---:|---:|---|
@@ -16,16 +16,16 @@ Struktur crosswalk sudah mencakup 28 beat dan 11 keluarga aset dengan 381 rujuka
 | Model | 34 CAT | 18 | Semua yang tertaut ke cerita masih kandidat katalog; model mentah tidak tersedia. |
 | Audio | 23 (2 EF, 1 TBL, 20 CAT) | 21 | Musik api unggun punya sambungan numerik sampai tabel audio; kandidat lain belum menjadi pemutaran yang terbukti. |
 | Teks | 25 EF | 6 | EventFlow menyebut label/pesan; subset terpilih sudah diverifikasi ke MSBT/BDLI pada 14 locale, tetapi teks tidak membuktikan layar, substitusi, atau voice cue. |
-| Tekstur | 0 | 28 | BNTX UI ada secara global, namun tiap beat belum menunjuk tekstur dan pane/consumer-nya. |
-| Material/shader | 0 | 28 | Arsip/rekaman shader ada secara global; pasangan material/model/UI per beat belum terpetakan. |
+| Tekstur | 3 STRUCT | 25 | Tiga beat prolog kini merujuk pane/material/BNTX structural; screen runtime dan consumer pada beat lain belum terikat. |
+| Material/shader | 3 STRUCT | 25 | Tiga beat prolog mempunyai material/pane; enam material-to-GLSL join ada di UI keyboard/message candidate. Pipeline/runtime dan beat lain belum terpetakan. |
 | Efek | 0 | 28 | VFX/PTCL tersedia pada inventaris global, tetapi pemicu/actor/material per adegan belum dihubungkan. |
-| Font | 0 | 28 | Format/font dikenali secara global, tetapi font aktual per layout dan pesan cerita belum dikunci. |
+| Font | 2 STRUCT | 26 | Dua beat prolog mendeklarasikan alias ke konfigurasi FCPX; locale yang dipakai runtime dan font per beat lain belum dikunci. |
 | Data dunia | 8 (4 PSEUDO, 4 TBL) | 20 | Preset/template dan beberapa consumer telah dipetakan; kartu pulau ke preset/save serta transform cerita masih terbuka. |
 | Collision | 2 CAT | 27 | Katalog/kelas collider belum terhubung ke instance bangunan, actor, atau hasil validasi/query. |
 
-Empat keluarga terakhir—tekstur, material/shader, efek, dan font—masing-masing seluruhnya `OPEN` di tiap beat. Ini terutama **kekosongan relasi beat→consumer**, bukan bukti bahwa arsipnya tidak ada: inventaris global mencatat 431 kontainer BNTX, dua arsip BFSHA, dua VFXB/PTCL, serta importer font. Karena itu, angka slot wajib yang terisi sebaiknya dibaca sebagai disiplin pencatatan kategori, bukan cakupan semantik.
+Efek masih `OPEN` pada seluruh 28 beat. Tekstur, material/shader, dan font masih mayoritas `OPEN`; beberapa slot prolog sekarang `STRUCT`. Ini terutama **kekosongan relasi beat→consumer/runtime**, bukan bukti bahwa arsipnya tidak ada: inventaris global mencatat 431 kontainer BNTX, dua arsip BFSHA, dua VFXB/PTCL, serta importer font. Karena itu, angka slot wajib yang terisi sebaiknya dibaca sebagai disiplin pencatatan kategori, bukan cakupan semantik.
 
-Follow-up khusus lima layar prolog dan 12 layout pendukung menemukan 195 entri texture-list dengan kandidat BNTX exact-name dalam archive yang sama, 193 jalur pane→material→texture→BNTX, deklarasi font `SystemB_00`/`Normal_00` ke index FCPX, dan enam material→GLSL bernama. Dua PTCL dan link database efek ditemukan secara global, tetapi belum ada event/actor prolog yang terhubung ke effect key. Ini adalah bukti `CONSUMER_JOINED` di struktur archive UI supplemental, bukan bukti seluruh 28 beat membuka halaman itu: archive bertanda `new_path`, trigger runtime/page handoff belum tersambung, dan gambar empat map-card `P_Capture_00` masih belum memiliki producer.
+Follow-up khusus lima layar prolog dan layout pendukung menemukan 195 entri texture-list dengan kandidat BNTX exact-name dalam archive yang sama, 193 jalur pane→material→texture→BNTX, deklarasi font `SystemB_00`/`Normal_00` ke index FCPX, dan enam material→GLSL bernama. Delapan referensi struktur ini telah dimasukkan ke beat title/registration, opening landing, dan campfire. Dua PTCL dan link database efek ditemukan secara global, tetapi belum ada event/actor prolog yang terhubung ke effect key. Ini adalah bukti `CONSUMER_JOINED` di struktur archive UI supplemental, bukan bukti seluruh 28 beat membuka halaman itu: archive bertanda `new_path`, trigger runtime/page handoff belum tersambung, dan gambar empat map-card `P_Capture_00` masih belum memiliki producer.
 
 ## Jalur aset yang sudah memiliki bukti terkuat
 
@@ -46,7 +46,7 @@ Ini membuktikan kecocokan identifier/layout dalam data supplemental, **bukan** b
 3. **Animasi actor:** internal native state index untuk `ActionIdx` 1–3 sudah ditemukan; join index 26/27/19 ke resource, clip/ASB state, rig, waktu, dan perubahan stage tetap belum terbukti. Nama command ke node ASB saja belum menyelesaikan ini.
 4. **Instance dunia:** keenam site-cell ke jenis bangunan/plot; cell-to-world origin/axis/unit/rotation/height; validator; model dan collider yang dimuat; mutasi instance dan save/day-change.
 5. **Model/audio sebagai katalog:** kandidat harus dihubungkan secara ID ke actor/parameter/consumer per beat. Sesuai kebijakan proyek, katalog cukup menjadi referensi; tanpa raw payload tidak boleh dinaikkan menjadi hasil konversi atau bukti pemutaran.
-6. **Tekstur, shader, efek dan font:** beberapa layar prolog kini memiliki join deklaratif pane→BNTX, font alias→FCPX, dan material→GLSL; sisa pekerjaan adalah mengikat page tersebut ke handler/instance runtime, melacak effect key ke actor/flow, serta mengulang peta per beat pada seluruh cerita atau menandai `not_applicable` bila kategori memang tidak dipakai.
+6. **Tekstur, shader, efek dan font:** beberapa layar prolog memiliki join deklaratif pane→BNTX, font alias→FCPX, dan material→GLSL; sisa pekerjaan adalah mengikat page tersebut ke handler/instance runtime, melacak effect key ke actor/flow, serta mengulang peta per beat pada seluruh cerita atau menandai `not_applicable` bila kategori memang tidak dipakai.
 7. **Alur end-to-end:** belum ada satu rantai yang membuktikan input pemain → world query/interaksi → inventory/craft atau placement → save/day-change → gate cerita → UI/actor/stage berikutnya.
 
 ## Urutan pemeriksaan yang paling memperkecil gap

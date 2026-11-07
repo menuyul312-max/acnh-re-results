@@ -95,7 +95,7 @@
             "notes": "Handler names are known; concrete layouts and BFLAN are OPEN."
           },
           {
-            "name": "TitlePage → Title",
+            "name": "TitlePage \u2192 Title",
             "role": "page-class layout identifier",
             "path": "Layout/Title.Nin_NX_NVN.zs",
             "source": "acnh-re/output/ui_hud/page_layout_method_bindings.json",
@@ -103,7 +103,7 @@
             "notes": "Static layout-name method binding; not proof this page is opened by the prologue flow."
           },
           {
-            "name": "CharaMakePage → CharaMake",
+            "name": "CharaMakePage \u2192 CharaMake",
             "role": "page-class layout identifier",
             "path": "Layout/CharaMake.Nin_NX_NVN.zs",
             "source": "acnh-re/output/ui_hud/page_layout_method_bindings.json",
@@ -111,7 +111,7 @@
             "notes": "Exact identifier/layout match in static binding; flow-to-page handler path remains open."
           },
           {
-            "name": "DateInputPage → DateInput",
+            "name": "DateInputPage \u2192 DateInput",
             "role": "birthday input layout",
             "path": "Layout/DateInput.Nin_NX_NVN.zs",
             "source": "acnh-re/output/ui_hud/page_layout_method_bindings.json",
@@ -119,7 +119,7 @@
             "notes": "Static page/layout match; exact callsite from UIDateHandling remains open."
           },
           {
-            "name": "MapSelectPage → CharaMakeMap",
+            "name": "MapSelectPage \u2192 CharaMakeMap",
             "role": "island selection layout",
             "path": "Layout/CharaMakeMap.Nin_NX_NVN.zs",
             "source": "acnh-re/output/ui_hud/page_layout_method_bindings.json",
@@ -180,7 +180,7 @@
         "text": [
           {
             "status": "EF",
-            "name": "Tutorials/Tutorials_Prologue1_Airport:001_01–028",
+            "name": "Tutorials/Tutorials_Prologue1_Airport:001_01\u2013028",
             "path": "B_data/EventFlow/Tutorials_Prologue1_Charactermaking.bfevfl",
             "source": "decoded EventFlow 00661",
             "notes": "Flow message keys recorded; localized text-bank/layout join OPEN."
@@ -188,14 +188,24 @@
         ],
         "texture": [
           {
-            "status": "OPEN",
-            "name": "texture join unresolved"
+            "status": "STRUCT",
+            "name": "Prologue pane-to-texture resource map",
+            "role": "page-local BFLYT pane to material to same-archive BNTX; page activation remains unproven",
+            "path": "Layout/Title.Nin_NX_NVN.zs; CharaMake, DateInput, CharaMakeMap and their child layouts (exact files in follow-up ledger)",
+            "key": "171 texture-list entries; 169 pane-material-texture edges across 14 title/character/date/map layouts and parts",
+            "source": "acnh-re/output/gameplay/prologue_ui_resource_family_followup_20261107.json",
+            "notes": "Each texture-list entry has a unique same-archive BNTX candidate; this is supplemental structural evidence with archive status new_path, not proof of runtime page use. CharaMakeMap uses P_Capture_00/Capture^t; producer and selected map image are OPEN."
           }
         ],
         "material_shader": [
           {
-            "status": "OPEN",
-            "name": "material/shader join unresolved"
+            "status": "STRUCT",
+            "name": "Prologue pane-material and shader resources",
+            "role": "BFLYT pane-to-material bindings; compiled shader archives are candidates",
+            "path": "Layout/Title.Nin_NX_NVN.zs; CharaMake, DateInput, CharaMakeMap and child layouts",
+            "key": "248 material records; no named material-to-GLSL edge in this title/creation group",
+            "source": "acnh-re/output/gameplay/prologue_ui_resource_family_followup_20261107.json",
+            "notes": "CharaMake and LCharaMakeMapBtn contain compiled shader archive candidates, but no material/program runtime selection is proven. Exact page activation and patch identity remain OPEN."
           }
         ],
         "effect": [
@@ -206,8 +216,13 @@
         ],
         "font": [
           {
-            "status": "OPEN",
-            "name": "font join unresolved"
+            "status": "STRUCT",
+            "name": "SystemB_00 font alias for title and player-registration layouts",
+            "role": "BFLYT font declaration to FontInfo/FCPX resource mapping",
+            "path": "Font/Fcpx.sarc.zs!SystemB_00.bfcpx; declared by Title, CharaMake, DateInput, CharaMakeMap and title/date child layouts",
+            "key": "6 of 14 inspected title/creation layouts declare SystemB_00; four locale aliases indexed",
+            "source": "acnh-re/output/gameplay/prologue_ui_resource_family_followup_20261107.json",
+            "notes": "Alias and fallback configuration are structurally joined in the supplemental archive. Runtime page use and locale selection remain OPEN; archive is new_path and exact patch identity is unknown."
           }
         ],
         "world_data": [
@@ -280,7 +295,7 @@
       "actions": [
         {
           "status": "EF",
-          "name": "NewGame → landing → airport request",
+          "name": "NewGame \u2192 landing \u2192 airport request",
           "path": "B_data/EventFlow/System_GrowUp.bfevfl",
           "key": "cMainFieldDemoLanding; cFrontOfAirPort",
           "source": "decoded EventFlows 00645/00670; second source B_data/EventFlow/Tutorials_Prologue_DemoLanding.bfevfl",
@@ -306,7 +321,7 @@
             "notes": "Concrete layout/BFLAN OPEN."
           },
           {
-            "name": "PrologueBGPage → WipePrologue",
+            "name": "PrologueBGPage \u2192 WipePrologue",
             "role": "prologue wipe page/layout",
             "path": "Layout/WipePrologue.Nin_NX_NVN.zs",
             "source": "acnh-re/output/ui_hud/page_layout_method_bindings.json",
@@ -396,14 +411,24 @@
         ],
         "texture": [
           {
-            "status": "OPEN",
-            "name": "texture join unresolved"
+            "status": "STRUCT",
+            "name": "WipePrologue pane texture binding",
+            "role": "two transition panes to material and BNTX texture",
+            "path": "Layout/WipePrologue.Nin_NX_NVN.zs!WipePrologue.arc!blyt/WipePrologue.bflyt",
+            "key": "P_Up_00 and P_Down_00 \u2192 Black_00^r",
+            "source": "acnh-re/output/gameplay/prologue_ui_resource_family_followup_20261107.json",
+            "notes": "Two pane/material/texture structural edges are present in the supplemental archive. Screen trigger, exact runtime timing and patch identity remain OPEN."
           }
         ],
         "material_shader": [
           {
-            "status": "OPEN",
-            "name": "material/shader join unresolved"
+            "status": "STRUCT",
+            "name": "WipePrologue pane-material records",
+            "role": "BFLYT material assignment for transition panes",
+            "path": "Layout/WipePrologue.Nin_NX_NVN.zs!WipePrologue.arc!blyt/WipePrologue.bflyt",
+            "key": "2 materials; no named GLSL consumer edge",
+            "source": "acnh-re/output/gameplay/prologue_ui_resource_family_followup_20261107.json",
+            "notes": "Materials and texture references are structurally parsed; no shader selection or runtime transition result is proven. Supplemental archive version remains OPEN."
           }
         ],
         "effect": [
@@ -638,7 +663,7 @@
           "path": "B_data/EventFlow/Tutorials_Prologue3_Orientation1.bfevfl",
           "key": "ValidateVillageSave OFF; PrologueDone1stTalkAtPlaza",
           "source": "decoded EventFlows 00664/00667; second source B_data/EventFlow/Tutorials_Prologue4_Orientation2_RcmRct.bfevfl",
-          "notes": "Message keys 007–011; SetDeliveryItemAtRandom 2750 and 6058; PlayerPocketUIEnable/MainmenuMap set."
+          "notes": "Message keys 007\u2013011; SetDeliveryItemAtRandom 2750 and 6058; PlayerPocketUIEnable/MainmenuMap set."
         }
       ],
       "items": [
@@ -656,7 +681,7 @@
           "path": "B_data/Bcsv/ItemParam.bcsv",
           "key": 6058,
           "source": "ItemParam source_id=72; output/tables_resolved/ItemParam.json",
-          "notes": "Flow delivery ID; table row Japanese name is ちず."
+          "notes": "Flow delivery ID; table row Japanese name is \u3061\u305a."
         }
       ],
       "structures": [
@@ -682,7 +707,7 @@
             "notes": "Concrete layout/BFLAN OPEN."
           },
           {
-            "name": "MenuDevicePage → MenuDevice",
+            "name": "MenuDevicePage \u2192 MenuDevice",
             "role": "NookPhone/menu device layout candidate",
             "path": "Layout/MenuDevice.Nin_NX_NVN.zs",
             "source": "acnh-re/output/ui_hud/page_layout_method_bindings.json",
@@ -727,7 +752,7 @@
         "text": [
           {
             "status": "EF",
-            "name": "Tutorials/Tutorials_Prologue3_Orientation1:007–011 and Tutorials_Prologue3_Orientation2_Rcm:001_01–001_03",
+            "name": "Tutorials/Tutorials_Prologue3_Orientation1:007\u2013011 and Tutorials_Prologue3_Orientation2_Rcm:001_01\u2013001_03",
             "path": "B_data/EventFlow/Tutorials_Prologue3_Orientation1.bfevfl",
             "source": "decoded EventFlows 00664/00667; second flow B_data/EventFlow/Tutorials_Prologue4_Orientation2_RcmRct.bfevfl",
             "notes": "Keys only; message bank/layout join OPEN."
@@ -842,7 +867,7 @@
           "path": "B_data/Bcsv/ItemParam.bcsv",
           "key": 2500,
           "source": "ItemParam source_id=72",
-          "notes": "Table label DIYBranch; Japanese name きのえだ."
+          "notes": "Table label DIYBranch; Japanese name \u304d\u306e\u3048\u3060."
         },
         {
           "status": "TBL",
@@ -1009,7 +1034,7 @@
           "path": "B_data/EventFlow/Tutorials_Prologue5_Campfire.bfevfl",
           "key": "Root / CampFire_Start",
           "source": "decoded EventFlow 00669",
-          "notes": "Town-name UI, messages 041_01–047, applause/cheers, story flags."
+          "notes": "Town-name UI, messages 041_01\u2013047, applause/cheers, story flags."
         },
         {
           "status": "EF",
@@ -1083,7 +1108,7 @@
         "audio": [
           {
             "status": "TBL",
-            "name": "MusicName=4318 → ItemParam FtrMjkMainTheme → SoundAudioMusic AudioMusicID=95",
+            "name": "MusicName=4318 \u2192 ItemParam FtrMjkMainTheme \u2192 SoundAudioMusic AudioMusicID=95",
             "path": "B_data/Bcsv/ItemParam.bcsv; B_data/Bcsv/SoundAudioMusic.bcsv",
             "source": "output/gameplay/story_message_cue_followup_20261107.json",
             "notes": "Exact numeric source-table chain: ItemParam row 1732/UniqueID 4318 maps to SoundAudioMusic row 94/UniqueID 103, AudioMusicID 95, Minnaatsumare. Raw waveform/resource consumer is unresolved; FireOn/Cheers remain catalogue candidates only."
@@ -1116,7 +1141,7 @@
         "text": [
           {
             "status": "EF",
-            "name": "Tutorials/Tutorials_Prologue4_Orientation3:041_01–047",
+            "name": "Tutorials/Tutorials_Prologue4_Orientation3:041_01\u2013047",
             "path": "B_data/EventFlow/Tutorials_Prologue5_Campfire.bfevfl",
             "source": "decoded EventFlow 00669",
             "notes": "Keys only; message bank join OPEN."
@@ -1124,14 +1149,24 @@
         ],
         "texture": [
           {
-            "status": "OPEN",
-            "name": "texture join unresolved"
+            "status": "STRUCT",
+            "name": "Village-name keyboard and message-window texture bindings",
+            "role": "same-archive BFLYT pane/material/BNTX resources for candidate campfire UI layouts",
+            "path": "Layout/SwkbdTextAreaVillageName.Nin_NX_NVN.zs; Layout/MsgWin.Nin_NX_NVN.zs",
+            "key": "23 texture-list entries; 22 pane-material-texture edges across 2 layouts",
+            "source": "acnh-re/output/gameplay/prologue_ui_resource_family_followup_20261107.json",
+            "notes": "The FormType=cVillage keyboard layout and MsgWin are structurally present; event/action-to-page instance remains OPEN. Archive files are supplemental new_path and their exact patch identity is unknown."
           }
         ],
         "material_shader": [
           {
-            "status": "OPEN",
-            "name": "material/shader join unresolved"
+            "status": "STRUCT",
+            "name": "Campfire UI material and named GLSL resources",
+            "role": "pane-to-material and exact material combiner-to-GLSL joins in candidate UI layouts",
+            "path": "Layout/SwkbdTextAreaVillageName.Nin_NX_NVN.zs!bgsh/MsgWinBase.glsl; Layout/MsgWin.Nin_NX_NVN.zs!bgsh/{MsgWinBase,Morphing}.glsl",
+            "key": "46 materials; 6 named same-archive material-to-GLSL edges",
+            "source": "acnh-re/output/gameplay/prologue_ui_resource_family_followup_20261107.json",
+            "notes": "Internal layout/resource joins are exact-name structural evidence; UI handler/page consumer, shader pipeline and visual output remain OPEN."
           }
         ],
         "effect": [
@@ -1142,8 +1177,13 @@
         ],
         "font": [
           {
-            "status": "OPEN",
-            "name": "font join unresolved"
+            "status": "STRUCT",
+            "name": "SystemB_00 and Normal_00 fonts for candidate village-name/message layouts",
+            "role": "BFLYT font alias to FontInfo/FCPX resource mapping",
+            "path": "Font/Fcpx.sarc.zs!{SystemB_00,Normal_00}.bfcpx",
+            "key": "2 layouts declare aliases SystemB_00 and Normal_00",
+            "source": "acnh-re/output/gameplay/prologue_ui_resource_family_followup_20261107.json",
+            "notes": "Font configuration and locale fallback aliases are structurally joined. The FormType=cVillage event-to-page route and actual locale selection remain OPEN; supplemental archive patch identity is unproven."
           }
         ],
         "world_data": [
@@ -1213,7 +1253,7 @@
           "path": "B_data/EventFlow/Tutorials_Prologue_Tkk.bfevfl",
           "key": "Tkk_Dream_Talk / Tkk_Dream_AfterTalk",
           "source": "decoded EventFlow 00673",
-          "notes": "Messages TalkSNpc/tkk/SP_tkk_dream:001–007; completion flag and next-day command."
+          "notes": "Messages TalkSNpc/tkk/SP_tkk_dream:001\u2013007; completion flag and next-day command."
         }
       ],
       "items": [
@@ -1285,7 +1325,7 @@
         "text": [
           {
             "status": "EF",
-            "name": "TalkSNpc/tkk/SP_tkk_dream:001–007",
+            "name": "TalkSNpc/tkk/SP_tkk_dream:001\u2013007",
             "path": "B_data/EventFlow/Tutorials_Prologue_Tkk.bfevfl",
             "source": "decoded EventFlow 00673",
             "notes": "Message keys only; localization join OPEN."

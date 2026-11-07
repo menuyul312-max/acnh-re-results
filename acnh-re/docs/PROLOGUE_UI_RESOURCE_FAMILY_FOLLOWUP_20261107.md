@@ -1,13 +1,13 @@
 # Follow-up resource UI prolog: tekstur, material/shader, efek, font
 
 **Tanggal:** 7 November 2026  
-**Cakupan:** halaman `Title`, `CharaMake`, `DateInput`, `CharaMakeMap`, `WipePrologue`, serta UI keyboard dan dialog di sekitar penamaan pulau/api unggun. Audit ini hanya membaca index sumber/layout/katalog yang tersedia. Tidak mengubah crosswalk utama, Godot, atau file model/audio.
+**Cakupan:** halaman `Title`, `CharaMake`, `DateInput`, `CharaMakeMap`, `WipePrologue`, serta UI keyboard dan dialog di sekitar penamaan pulau/api unggun. Audit ini hanya membaca index sumber/layout/katalog yang tersedia. Audit ini sendiri tidak mengubah crosswalk, Godot, atau file model/audio; setelah audit, integrasi terpisah menambahkan delapan referensi `STRUCT` prolog ke crosswalk utama.
 
 Ledger machine-readable: [prologue_ui_resource_family_followup_20261107.json](../output/gameplay/prologue_ui_resource_family_followup_20261107.json). Index utama yang dicek adalah [`ui_island/layouts.json`](../output/ui_island/layouts.json), [`ui_hud/resource_bindings.json`](../output/ui_hud/resource_bindings.json), [`ui_hud/font_bindings.json`](../output/ui_hud/font_bindings.json), dan [`ui_hud/page_layout_method_bindings.json`](../output/ui_hud/page_layout_method_bindings.json). Semua index UI berasal dari arsip RomFS tambahan; identitas patch archive itu belum terikat ke build 1.0.0.
 
 ## Kesimpulan
 
-Label `OPEN` 28/28 pada keluarga tekstur, material/shader, efek, dan font di crosswalk besar terlalu kasar untuk menyatakan bahwa tidak ada yang bisa dibaca. Pada halaman prolog, pane→material→BNTX dan pane→font alias sudah dapat ditautkan secara struktural. Dua layout campfire-related juga memiliki relasi material→GLSL bernama. Namun, UI action EventFlow→page instance belum dibuktikan; keberadaan layout dan resource di archive supplemental tidak membuktikan halaman itu dijalankan pada build target.
+Snapshot crosswalk sebelum integrasi ini menandai semua slot tekstur/material/shader/efek/font `OPEN`. Bukti struktural berikutnya kini ditambahkan ke tiga beat: texture dan material pada title/registration, opening landing, dan campfire; font pada title/registration dan campfire. Dua layout campfire-related juga memiliki relasi material→GLSL bernama. Namun, UI action EventFlow→page instance belum dibuktikan; keberadaan layout dan resource di archive supplemental tidak membuktikan halaman itu dijalankan pada build target.
 
 | Keluarga | Status tertinggi pada target prolog | Batas yang masih OPEN |
 |---|---|---|
