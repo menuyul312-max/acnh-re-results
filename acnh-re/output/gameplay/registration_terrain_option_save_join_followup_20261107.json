@@ -1,0 +1,360 @@
+{
+  "schema": "acnh.registration-terrain-option-save-join/1",
+  "created_utc_date": "2026-11-07",
+  "scope": "Static ACNH 1.0.0 follow-up joining registration terrain option entries, cVillage result slot, candidate row ID, and SaveMainField in-memory writes. No game/save execution or modification.",
+  "evidence_labels": {
+    "NATIVE": "Raw AArch64 code/relocation or generated direct-call index.",
+    "PSEUDO": "Control/dataflow interpretation from generated decompilation, limited by raw-PC evidence.",
+    "TBL": "Decoded local table metadata or row-to-file data join.",
+    "STRUCT": "External versioned save schema aligned to local save-layout offsets/sizes; structural corroboration, not local RTTI.",
+    "OPEN": "Not established by available static evidence."
+  },
+  "source_build": {
+    "game": "Animal Crossing: New Horizons",
+    "version_scope": "Supplied main NSO, labeled 1.0.0 by existing local analysis.",
+    "main_nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+    "raw_segment": {
+      "path": "/workspace/acnh-re/work/exefs_modules/main/0.bin",
+      "segment_va_base": "0x0",
+      "size_bytes": 35723872,
+      "sha256": "9c9b45d8e7a58706ca59e7243b4aebac2325ef98faa205e007974eeeb2f758e9"
+    },
+    "analysis_decomp_root": "/workspace/acnh-re/output/binary/analysis_decomp",
+    "resolved_tables_root": "/workspace/acnh-re/output",
+    "elf_metadata_sha256": "42bfdc3107b4fde9add2459049ef6febd8bca4d999725eedfd3485bf5be8040d",
+    "address_convention": "PCs are raw ELF VAs and offsets in main/0.bin. Generated FUN_006... pseudonames carry +0x100000 display bias."
+  },
+  "source_artifacts": [
+    {
+      "path": "analysis_decomp/529910.c",
+      "sha256": "60b968019ada35592ce5202d29ec1739be335c57c0a6a9ff6af578565afee324"
+    },
+    {
+      "path": "analysis_decomp/529860.c",
+      "sha256": "6c06343608b47f3779cb477059dc5b00495837c3bffd4c193a86da8d36789dd1"
+    },
+    {
+      "path": "analysis_decomp/528bf0.c",
+      "sha256": "cbc4ab8241ef929df5eae3294d136cc7e6bf3fb4c3ec4bfb86fb90263ae7cb45"
+    },
+    {
+      "path": "analysis_decomp/529e50.c",
+      "sha256": "7a457af49d5983e4de577dea448edf42c78f5f82cd383c57be263c1c92622165"
+    },
+    {
+      "path": "analysis_decomp/5651b0.c",
+      "sha256": "6834b80ca4e44c2c4a58a6f7e39bbf87d2eaa9670966505e6ef6fda3c2b66eda"
+    },
+    {
+      "path": "analysis_decomp/565300.c",
+      "sha256": "4771e0d151246e2cc483f60fc01e06d7ef68a6738bb22cde4553c03e727aad39"
+    },
+    {
+      "path": "analysis_decomp/54e190.c",
+      "sha256": "69a6433e7e5ee19d9bd3388768419e102b26602faad2da2ac8066ce357c42593"
+    },
+    {
+      "path": "analysis_decomp/54e330.c",
+      "sha256": "b7e2b100182e383356d49733831899b3595973fbec8166d114cd3437903d54ff"
+    },
+    {
+      "path": "analysis_decomp/54edf0.c",
+      "sha256": "f59ab14179e98b9ae42a0574a07aece8a6562842f42b4eba3bdf3682a24645e3"
+    },
+    {
+      "path": "analysis_decomp/54e930.c",
+      "sha256": "99b19128a8515eb95122f725d10743f61ae98aa88f5081fdd09f420df2af33f4"
+    },
+    {
+      "path": "analysis_decomp/54e460.c",
+      "sha256": "9ce75b1f55be7b170c380fdf9717473c055bd39a7b78cdd6747825e3ce8854d8"
+    },
+    {
+      "path": "analysis_decomp/54e890.c",
+      "sha256": "03b29cc0c2aec322e047900d97679c735e7a2c804efafa9adfa3a5f615021826"
+    },
+    {
+      "path": "analysis_decomp/4e1db0.c",
+      "sha256": "4a17909774882f113dcc2e69efa953606b04624041b77fd45bbf8c044a7cbacb"
+    },
+    {
+      "path": "analysis_decomp/5662e0.c",
+      "sha256": "5a4a1f6366d57e7d9ef94f5c130c57639f0dc88365c8d05fb0335c1d7da2f4e3"
+    },
+    {
+      "path": "analysis_decomp/f8f2a0.c",
+      "sha256": "1968f3afbdc56180cff6a3f4958b27e0fe868b8054f932650d7cfe0e65238a1f"
+    },
+    {
+      "path": "tables_resolved/FieldMainFieldParam.json",
+      "sha256": "141a6d85166bc8b08eac399389114fbebd5708e0d1c3b54af3be37e116a0e100"
+    },
+    {
+      "path": "acnh-re-github/acnh-re/output/gameplay/save_layout.json",
+      "sha256": "a326c84213faad1921bd7660c3e171a7b3af117ec55e2ca711a871ad637e51dc"
+    },
+    {
+      "path": "acnh-re-github/acnh-re/output/gameplay/save_layout_external_crosswalk.json",
+      "sha256": "2fea2dfb23c286c08d6a33f93e944cfccec4cd606bf43cab08c6eee96f7e0604"
+    },
+    {
+      "path": "acnh-re-github/acnh-re/output/gameplay/registration_c_village_context_followup_20261107.json",
+      "sha256": "55a6e1dd6a42a176f3868cd2b19f03c6e37703f36c0f4fb37f97a5bd1487f386"
+    },
+    {
+      "path": "acnh-re-github/acnh-re/output/gameplay/registration_terrain_followup_20261107.json",
+      "sha256": "e13dd4a152e5ebec06ac2b2cd991017c499d80735be66fcc4683aadb6c853b1a"
+    }
+  ],
+  "findings": {
+    "candidate_generator": {
+      "status": "NATIVE/PSEUDO",
+      "setup": {
+        "caller": "0x5651b0",
+        "caller_pc": "0x5651ec",
+        "guard": "0x529860",
+        "generator": "0x529910",
+        "guard_to_generator_pc": "0x5298b4",
+        "count_store_pc": "0x529964",
+        "count": 4,
+        "entry_stride": "0xe0"
+      },
+      "slots": [
+        {
+          "slot": 0,
+          "id_lookup": "0x5299f4",
+          "outside_kind": "0x5299fc",
+          "outside_template": "0x529a0c",
+          "entry_builder": "0x529a80"
+        },
+        {
+          "slot": 1,
+          "id_lookup": "0x529b04",
+          "outside_kind": "0x529b0c",
+          "outside_template": "0x529b1c",
+          "entry_builder": "0x529b90"
+        },
+        {
+          "slot": 2,
+          "id_lookup": "0x529c14",
+          "outside_kind": "0x529c1c",
+          "outside_template": "0x529c2c",
+          "entry_builder": "0x529ca0"
+        },
+        {
+          "slot": 3,
+          "id_lookup": "0x529d24",
+          "outside_kind": "0x529d2c",
+          "outside_template": "0x529d3c",
+          "entry_builder": "0x529db0"
+        }
+      ],
+      "entry_fields": {
+        "unique_id": {
+          "offset": "0x0c",
+          "width": 2
+        },
+        "outside_template_unique_id": {
+          "offset": "0x0e",
+          "width": 2
+        },
+        "payload": "0x10",
+        "slot_ordinal": "0xb8",
+        "resource_or_object": "0xa0"
+      },
+      "selection": "Dynamic random selection plus de-duplication; no fixed slot-to-ID map."
+    },
+    "candidate_row_index": {
+      "status": "NATIVE/TBL",
+      "global_context_pseudoname": "0x33d1ba8",
+      "accessor": "0x54e190",
+      "fields": {
+        "+0x1108": "u32 lookup span bound",
+        "+0x1110": "array of eight-byte row/resource handles indexed by candidateID - base",
+        "+0x1128": "u16 base/start UniqueID",
+        "+0x112a": "iterator terminal bound used by 0x54e930"
+      },
+      "iterator": {
+        "wrapper": "0x54edf0",
+        "generator_call_pc": "0x529940",
+        "function": "0x54e930",
+        "wrapper_call_pc": "0x54ee0c",
+        "row_unique_id_hash": "0x54706054"
+      },
+      "table": {
+        "path": "B_data/Bcsv/FieldMainFieldParam.bcsv",
+        "source_id": 41,
+        "sha256": "3ebd1057e41b0666aa30c6d8beee9220b52d8fb5280c478e8eb13eaca5d27944",
+        "rows": 96,
+        "columns": [
+          {
+            "name": "UniqueID",
+            "hash": "0x54706054",
+            "type": "u16",
+            "offset": 4
+          },
+          {
+            "name": "FieldData",
+            "hash": "0x6e1ac981",
+            "type": "string32",
+            "offset": 6
+          },
+          {
+            "name": "OutsideTemplateKind",
+            "hash": "0x948eb946",
+            "type": "u8",
+            "offset": 38
+          }
+        ]
+      },
+      "table_to_landmaking_join": {
+        "status": "TBL",
+        "rule": "FieldData stem to <FieldData>_LandMaking.byml",
+        "example": {
+          "unique_id": 0,
+          "field_data": "FieldPresetA00",
+          "landmaking": "FieldPresetA00_LandMaking.byml",
+          "source_id": 2442
+        }
+      },
+      "producer_of_context_range_and_array": "OPEN"
+    },
+    "c_village_slot_consumer": {
+      "status": "PSEUDO",
+      "result_field_whole_context_offset": "0x45f0",
+      "result_field_subobject_offset": "0x20",
+      "caller": "0x565300",
+      "call_pc": "0x565368",
+      "cleanup": "0x529e50",
+      "index_load_pc": "0x529e84",
+      "index_load_bytes_le": "61 22 40 b9",
+      "tail_branch_pc": "0x529e94",
+      "tail_branch_bytes_le": "03 00 00 14",
+      "target": "0x529ea0 (interior entry within indexed span 0x529e50)",
+      "behavior": "Bounds-check count at +0x10; select entry[index] from pointer array +0x18."
+    },
+    "save_destination": {
+      "status": "NATIVE/STRUCT",
+      "mainfield_descriptor_key": "0xda2ac",
+      "mainfield_key_setup_pc_range": [
+        "0x529f1c",
+        "0x529f28"
+      ],
+      "selected_id_load": {
+        "pc": "0x529f34",
+        "bytes_le": "a9 1a 40 79",
+        "entry_offset": "0x0c",
+        "width": 2
+      },
+      "selected_id_store": {
+        "pc": "0x529f44",
+        "bytes_le": "09 69 2a 78",
+        "destination": "SaveLand.MainField.MainFieldParamUniqueID",
+        "offset_mainfield": "0xcfa2a",
+        "width": 2
+      },
+      "outsidefield_descriptor_key": "0x92",
+      "outsidefield_key_setup_pc_range": [
+        "0x529f80",
+        "0x529f88"
+      ],
+      "outsidefield_value_pc": "0x529f90",
+      "payload_pointer_pc": "0x529f94",
+      "copy_pc": "0x529f9c",
+      "copy_helper": "0xf8f2a0",
+      "copy_effect": "memcpy(dest, src, 0x90); *(u16 *)(dest+0x90) = param3",
+      "outsidefield_destination": {
+        "name": "SaveLand.MainField.OutsideField",
+        "size": "0x92",
+        "mainfield_relative_offset": "0xcf998",
+        "local_layout_node": "0x17c4c0",
+        "save_root_data_offset": "0x2d118c"
+      },
+      "mainfield_layout": {
+        "name": "SaveLand.MainField / ::Game::SaveMainField",
+        "size": "0xda2ac",
+        "local_layout_node": "0x1575e8",
+        "save_root_data_offset": "0x2017f4"
+      },
+      "unique_id_layout": {
+        "name": "MainFieldParamUniqueID",
+        "size": 2,
+        "local_layout_node": "0x17c4f8",
+        "save_root_data_offset": "0x2d121e",
+        "mainfield_relative_offset": "0xcfa2a"
+      },
+      "persistence": "In-memory save-object assignments only; no durable serialization/file commit proven."
+    },
+    "independent_creator_path": {
+      "function": "0x5662e0",
+      "caller": "0xfc3b00",
+      "call_pc": "0xfc3b08",
+      "corroborates_same_descriptor_keys_and_offsets": true,
+      "is_not_used_as_index_to_candidate_proof": true
+    }
+  },
+  "unresolved": [
+    {
+      "status": "OPEN",
+      "item": "Producer/resource loader for context+0x1108, +0x1110, +0x1128, +0x112a."
+    },
+    {
+      "status": "OPEN",
+      "item": "Concrete option slot 0–3 to UniqueID/FieldData map for a particular run; IDs are dynamic."
+    },
+    {
+      "status": "OPEN",
+      "item": "Selected option consumer to actual LandMaking/map generation or application, seed, and spawn chain."
+    },
+    {
+      "status": "OPEN",
+      "item": "Durable save serialization/file commit after the SaveMainField assignments."
+    },
+    {
+      "status": "OPEN",
+      "item": "Direct lifecycle/action call edge from cVillage SaveSetFromUIResult to 0x565300 cleanup."
+    }
+  ],
+  "bounded_search": {
+    "generated_index_path": "/workspace/acnh-re/output/index.sqlite",
+    "generated_index_sha256": "a78c7af27d37b8fd931bba8bc611623dacf7685cb6e8b4f827effa0765340aad",
+    "direct_callers_of_54e190": {
+      "0x529910": [
+        "0x5299f4",
+        "0x529b04",
+        "0x529c14",
+        "0x529d24"
+      ],
+      "0x4e1db0": [
+        "0x4e1e34"
+      ],
+      "0x558f40": [
+        "0x558f84"
+      ],
+      "0x5598c0": [
+        "0x5598f0"
+      ],
+      "0x559b80": [
+        "0x559ba8"
+      ],
+      "0x5662e0": [
+        "0x566370"
+      ]
+    },
+    "iterator_direct_call": {
+      "caller": "0x54edf0",
+      "pc": "0x54ee0c",
+      "callee": "0x54e930"
+    },
+    "negative_result": "The generated-decompilation search showed reads from the context range/pointer-array offsets in 0x54e190 and 0x54e930 but no clear writer; aliased arithmetic and runtime resource registration can hide other edges."
+  },
+  "validation": {
+    "source_hashes_checked": true,
+    "json_parse_expected": "python -m json.tool",
+    "new_isolated_artifacts_only": true,
+    "prior_or_other_agent_files_edited": false,
+    "game_or_save_modified": false,
+    "godot_runtime_or_build": false,
+    "commit_or_push": false
+  }
+}
