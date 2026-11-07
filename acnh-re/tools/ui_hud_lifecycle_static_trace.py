@@ -30,6 +30,15 @@ GENERIC_PANE_RENDER = 0x192FB20
 PANE_HIT_VISIBILITY = 0x14C80D0
 SCISSOR_SET_BOUNDS = 0x14C8D00
 SCISSOR_RENDER_CALLBACK = 0x14C8D30
+ROOT_PAGE_FACTORY_METHOD = 0x1DD4090
+ROOT_PAGE_CONSTRUCTOR = 0x1DA5B50
+ROOT_PAGE_EVENT_METHOD = 0x1DD4560
+ROOT_PAGE_EVENT_METHOD_ALT = 0x1DD44C0
+ROOT_PAGE_TEARDOWN_METHOD = 0x1DD4390
+ROOT_PAGE_TRANSITION_METHOD = 0x1DD43A0
+PAGE_TREE_PROCESS_METHOD = 0x1DD43B0
+PAGE_STATE_SET_ONE = 0x1DA40A0
+PAGE_STATE_SET_TWO = 0x1DA40B0
 
 
 def read_function_size(db: sqlite3.Connection, address: int) -> int:
@@ -70,6 +79,62 @@ def owner_callsite_map(db: sqlite3.Connection, target: int) -> dict[int, int]:
     return result
 
 
+def pointer_sequence_inventory(path: Path, targets: set[int]):
+    """Summarize exact memberships in the relocated code-pointer inventory.
+
+    The inventory deliberately does not call every sequence a C++ vtable; this
+    function preserves that source label so an observed slot is not mistaken
+    for a proven dynamic call edge.
+    """
+    rows = json.loads(path.read_text())
+    memberships = {target: [] for target in targets}
+    entry_count = 0
+    for row in rows:
+        entries = row.get("entries", [])
+        entry_count += len(entries)
+        for slot, entry in enumerate(entries):
+            target = int(entry["target_va"], 16)
+            if target in memberships:
+                memberships[target].append({
+                    "sequence_start": row["start_va"],
+                    "slot_index": slot,
+                    "pointer_va": entry["pointer_va"],
+                    "sequence_length": len(entries),
+                    "source_status": row["status"],
+                })
+    return {
+        "sequence_count": len(rows),
+        "entry_count": entry_count,
+        "memberships": {hex(target): found for target, found in memberships.items()},
+    }
+
+
+def callsite_context(db: sqlite3.Connection, target: int) -> list[dict[str, str | None]]:
+    """Recover the smallest indexed function range when direct-call owner is null."""
+    result = []
+    for pc, owner, instruction in db.execute(
+        "select pc,owner_va,instruction from direct_calls where target_va=? order by pc",
+        (target,),
+    ):
+        range_evidence = "indexed_owner"
+        if owner is None:
+            candidates = db.execute(
+                """select va,name,span_end_va from native_functions
+                   where va<=? and span_end_va>? order by (span_end_va-va),va""",
+                (pc, pc),
+            ).fetchall()
+            if candidates:
+                owner, _name, _end = candidates[0]
+                range_evidence = "smallest_enclosing_native_function_range"
+        result.append({
+            "callsite": hex(pc),
+            "owner": None if owner is None else hex(owner),
+            "owner_evidence": range_evidence if owner is not None else None,
+            "instruction": instruction,
+        })
+    return result
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output-root", type=Path, default=DEFAULT_OUTPUT_ROOT,
@@ -80,6 +145,16 @@ def main() -> None:
     segments = re_helpers.nso_segments(NSO)
     md = Cs(CS_ARCH_ARM64, CS_MODE_ARM)
     md.detail = True
+    pointer_inventory = pointer_sequence_inventory(
+        args.output_root / "binary/code_pointer_arrays.json",
+        {
+            ROOT_PAGE_FACTORY_METHOD,
+            ROOT_PAGE_TEARDOWN_METHOD,
+            ROOT_PAGE_TRANSITION_METHOD,
+            PAGE_TREE_PROCESS_METHOD,
+            0x192D490,
+        },
+    )
 
     npad = disassemble_function(md, segments, db, NPAD_UPDATE)
     npad_calls = []
@@ -201,6 +276,20 @@ def main() -> None:
     visibility = disassemble_function(md, segments, db, PANE_HIT_VISIBILITY)
     setter = disassemble_function(md, segments, db, SCISSOR_SET_BOUNDS)
     scissor_callback = disassemble_function(md, segments, db, SCISSOR_RENDER_CALLBACK)
+    root_page_factory_method = disassemble_function(md, segments, db, ROOT_PAGE_FACTORY_METHOD)
+    root_page_constructor = disassemble_function(md, segments, db, ROOT_PAGE_CONSTRUCTOR)
+    root_page_teardown_method = disassemble_function(md, segments, db, ROOT_PAGE_TEARDOWN_METHOD)
+    root_page_transition_method = disassemble_function(md, segments, db, ROOT_PAGE_TRANSITION_METHOD)
+    page_tree_process_method = disassemble_function(md, segments, db, PAGE_TREE_PROCESS_METHOD)
+    page_state_set_one = disassemble_function(md, segments, db, PAGE_STATE_SET_ONE)
+    page_state_set_two = disassemble_function(md, segments, db, PAGE_STATE_SET_TWO)
+    page_start = disassemble_function(md, segments, db, 0x1DA7030)
+    page_start_wait = disassemble_function(md, segments, db, 0x1DA7150)
+    page_stop = disassemble_function(md, segments, db, 0x1DA4890)
+    page_finish = disassemble_function(md, segments, db, 0x1DA43D0)
+    page_close_request = disassemble_function(md, segments, db, 0x1DA4210)
+    root_page_dispatch = disassemble_function(md, segments, db, ROOT_PAGE_EVENT_METHOD)
+    root_page_dispatch_alt = disassemble_function(md, segments, db, ROOT_PAGE_EVENT_METHOD_ALT)
 
     renderer_rows = instruction_rows(renderer, [
         0x192FB30, 0x192FB34, 0x192FB38, 0x192FB3C,
@@ -222,6 +311,48 @@ def main() -> None:
         0x14C8D44, 0x14C8D4C, 0x14C8D50, 0x14C8D54,
         0x14C8D7C, 0x14C8E40, 0x14C8E44,
     ])
+    root_page_factory_rows = instruction_rows(root_page_factory_method, [
+        0x1DD42F4, 0x1DD42F8, 0x1DD4300, 0x1DD4308, 0x1DD430C, 0x1DD4314,
+    ])
+    root_page_constructor_rows = instruction_rows(root_page_constructor, [0x1DA5BBC])
+    root_page_state_helper_rows = instruction_rows(page_state_set_one, [0x1DA40A0, 0x1DA40A4])
+    root_page_state_helper_rows.extend(instruction_rows(page_state_set_two, [0x1DA40B0, 0x1DA40B4]))
+    root_page_teardown_rows = instruction_rows(root_page_teardown_method, [0x1DD4394])
+    root_page_transition_rows = instruction_rows(root_page_transition_method, [0x1DD43A4])
+    page_tree_process_rows = instruction_rows(page_tree_process_method, [
+        0x1DD4420, 0x1DD4428, 0x1DD4430, 0x1DD4438,
+    ])
+    root_page_dispatch_rows = instruction_rows(root_page_dispatch, [0x1DD4578])
+    root_page_dispatch_alt_rows = instruction_rows(root_page_dispatch_alt, [0x1DD4540])
+    page_state_instruction_rows = {
+        "start_if_state_one_then_store_two": instruction_rows(page_start, [0x1DA703C, 0x1DA704C]),
+        "start_wait_may_store_one": instruction_rows(page_start_wait, [0x1DA7168, 0x1DA7348]),
+        "stop_store_four": instruction_rows(page_stop, [0x1DA48AC]),
+        "finish_store_site": instruction_rows(page_finish, [0x1DA453C]),
+        "close_request_store_sites": instruction_rows(page_close_request, [
+            0x1DA42BC, 0x1DA42F0, 0x1DA436C, 0x1DA43B4,
+        ]),
+    }
+    root_page_constructor_strings = [row[0] for row in db.execute(
+        "select text from string_refs where function_va=? order by text",
+        (ROOT_PAGE_CONSTRUCTOR,),
+    )]
+    root_page_direct_call_count = db.execute(
+        "select count(*) from direct_calls where target_va=?",
+        (ROOT_PAGE_FACTORY_METHOD,),
+    ).fetchone()[0]
+    root_page_event_callers = {
+        hex(target): callsite_context(db, target)
+        for target in (ROOT_PAGE_EVENT_METHOD, ROOT_PAGE_EVENT_METHOD_ALT)
+    }
+    flag_copy_pointer_membership = pointer_inventory["memberships"][hex(0x192D490)]
+    root_method_pointer_membership = pointer_inventory["memberships"][hex(ROOT_PAGE_FACTORY_METHOD)]
+    if root_page_direct_call_count != 0 or len(root_method_pointer_membership) != 1:
+        raise AssertionError("RootPage creator method direct-call/pointer-sequence evidence changed")
+    if "RootPage" not in root_page_constructor_strings:
+        raise AssertionError("RootPage constructor token string reference missing")
+    if flag_copy_pointer_membership:
+        raise AssertionError("Raw pane flag-copy candidate unexpectedly appears in pointer inventory")
 
     source_hash = hashlib.sha256(NSO.read_bytes()).hexdigest()
     result = {
@@ -271,7 +402,87 @@ def main() -> None:
                 "observed": page_selector["observed_operations"],
                 "limit": page_selector["limit"],
             },
-            "status": "Factory construction and collection insertion are statically mapped; getter-to-layout-loader handoff, page open/update/close/back scheduling, modal ordering, focus restoration, and page teardown remain unresolved.",
+            "root_page_creation_and_state": {
+                "creator_method": hex(ROOT_PAGE_FACTORY_METHOD),
+                "creator_method_direct_callers": root_page_direct_call_count,
+                "relocated_pointer_sequence_membership": root_method_pointer_membership,
+                "pointer_sequence_classification_limit": "The shared inventory labels this as a relocated code-pointer sequence, not automatically a C++ vtable; the slot membership is proven, the virtual dispatch interpretation is not.",
+                "root_page_constructor": {
+                    "function": hex(ROOT_PAGE_CONSTRUCTOR),
+                    "string_refs": root_page_constructor_strings,
+                    "allocation_size_bytes": "0x1c8",
+                    "owner_object_member_offset": "0x448",
+                    "constructor_state_initialization": {
+                        "field_offset_bytes": "0x48",
+                        "instruction": root_page_constructor_rows[0],
+                        "observed_value": 0,
+                    },
+                },
+                "creator_instructions": root_page_factory_rows,
+                "state_helper_instructions": root_page_state_helper_rows,
+                "observed_state_sequence": [0, 1, 2],
+                "observation": "The method allocates 0x1c8 bytes, calls the constructor whose native string reference is RootPage, stores that object at +0x448, then calls helpers which write +0x48 values 1 and 2 in order. The state-2 helper also dispatches through the new object's vtable slot +0x28. This is a concrete construction transition; the three integers remain unnamed states.",
+                "registration_limit": "This method calls the state-2 helper 0x1da40b0, but not the collection-inserting wrapper 0x1da8220. The available instructions do not show whether another path attaches this RootPage elsewhere.",
+            },
+            "root_page_dispatch_and_stop_methods": {
+                "event_method_callers": root_page_event_callers,
+                "event_method_instructions": {
+                    hex(ROOT_PAGE_EVENT_METHOD): root_page_dispatch_rows,
+                    hex(ROOT_PAGE_EVENT_METHOD_ALT): root_page_dispatch_alt_rows,
+                },
+                "event_helper": {
+                    "function": hex(0x1DA4DB0),
+                    "observed": "Returns immediately for numeric state 3; otherwise walks the child list recursively and calls each page object's virtual slot +0x78 with the supplied context.",
+                },
+                "teardown_method": {
+                    "function": hex(ROOT_PAGE_TEARDOWN_METHOD),
+                    "sequence_membership": pointer_inventory["memberships"][hex(ROOT_PAGE_TEARDOWN_METHOD)],
+                    "tail_call_instruction": root_page_teardown_rows[0],
+                    "target": hex(0x1DA4890),
+                },
+                "transition_method": {
+                    "function": hex(ROOT_PAGE_TRANSITION_METHOD),
+                    "sequence_membership": pointer_inventory["memberships"][hex(ROOT_PAGE_TRANSITION_METHOD)],
+                    "tail_call_instruction": root_page_transition_rows[0],
+                    "target": hex(0x1DA43D0),
+                },
+                "limit": "The event callbacks are directly connected into the RootPage child tree, and the two manager methods have exact sequence-slot membership. Their external scheduler/open-close call routes and semantic labels are still unresolved.",
+            },
+            "numeric_page_state_handlers": {
+                "field_offset_bytes": "0x48",
+                "instruction_rows": page_state_instruction_rows,
+                "handlers": [
+                    {
+                        "function": "0x1da7030",
+                        "observed": "Only proceeds when +0x48 is 1, stores 2, constructs a pending-work mask at +0x854, and signals selected child resources.",
+                    },
+                    {
+                        "function": "0x1da7150",
+                        "observed": "Reads states 0, 2, and 5; state 2 checks pending child-resource conditions and can store state 1 at 0x1da7348. Other branches wait or return according to these numeric values.",
+                    },
+                    {
+                        "function": "0x1da4890",
+                        "observed": "Stores state 4, resets +0x54 to -1, calls virtual slots +0x80 and +0x38, recursively processes children, then calls slot +0x88.",
+                    },
+                    {
+                        "function": "0x1da4210",
+                        "observed": "Close-request path moves child/self states through numeric 4/6 to 5, state 3 to 2 after list removal, 5 to 7, and state 2 to 8 after virtual slot +0x30; it then invokes 0x1da43d0.",
+                    },
+                    {
+                        "function": "0x1da43d0",
+                        "observed": "Finishes states 3 through 7 recursively: state 3 returns; 4/6 become 3; 5 is unlinked and becomes 2; 7 is unlinked, calls slot +0x30, and becomes 8. It clears +0x50 and resets +0x54 to -1 on processed nodes.",
+                    },
+                ],
+                "manager_process_method": {
+                    "function": hex(PAGE_TREE_PROCESS_METHOD),
+                    "sequence_membership": pointer_inventory["memberships"][hex(PAGE_TREE_PROCESS_METHOD)],
+                    "observed_instructions": page_tree_process_rows,
+                    "observation": "This method calls 0x1da4cd0 on the RootPage at owner +0x448, then calls 0x1da7030 and 0x1da7150 on a separate page object at owner +0x420. The former recursively dispatches child callbacks through slot +0x70; the latter two perform the numeric state/resource processing described above.",
+                    "limit": "No indexed direct call reaches this method; its slot membership is an indirect-call candidate, not proof of scheduler cadence.",
+                },
+                "semantic_limit": "These are observed numeric transitions and callback effects only. No recovered string or runtime capture names the states as open, active, closing, or visible.",
+            },
+            "status": "Factory construction/insertion, the RootPage 0→1→2 construction route, its child callback path, and several numeric page-state transitions are statically mapped. Getter-to-layout-loader handoff, the semantic names of the states, outer scheduler reachability/cadence, modal order, focus restoration, and live instance behavior remain unresolved.",
         },
         "npad_to_action_route": {
             "npad_update_function": hex(NPAD_UPDATE),
@@ -313,7 +524,12 @@ def main() -> None:
                     "input_byte_+0x08_to_object_+0x58": True,
                     "input_byte_+0x0b_to_object_+0x5c": True,
                     "indexed_direct_caller_count": raw_flag_copy_direct_callers,
-                    "limit": "The function body copies pane-like bytes into the renderer fields, but the available call index contains no direct caller. Its connection to the ScissorPane layout-loader path is not established.",
+                    "relocated_pointer_sequence_membership": flag_copy_pointer_membership,
+                    "pointer_inventory_coverage": {
+                        "sequence_count": pointer_inventory["sequence_count"],
+                        "entry_count": pointer_inventory["entry_count"],
+                    },
+                    "limit": "The function body copies pane-like bytes into the renderer fields, but it has neither an indexed direct caller nor membership in the 18,348-sequence/192,637-entry relocated pointer inventory. Its connection to the ScissorPane layout-loader path is not established; callback or unindexed runtime routes remain possible.",
                 },
                 "visible_label_strings": visibility_label_refs,
                 "visible_label_limit": "VisibleOn/VisibleOff string references are present in page functions, but the available evidence does not connect those labels to writes of these renderer flag bytes or to current callback state.",
@@ -367,8 +583,9 @@ def main() -> None:
             "No synchronized live capture aligns page scheduler events, Npad samples, BFLYT instance pointers, renderer flags, and GPU output.",
             "The current worktree does not contain raw RomFS archives under inputs/; BFLYT claims here use the committed parser/catalogue outputs.",
             "The static Npad call graph does not establish indirect routes from HID state to the 13 UI action IDs.",
+            "RootPage creation and numeric +0x48 transitions are statically mapped, but state names and the outer scheduler dispatch route/cadence are not.",
             "The parent-bound pointer used by hit testing is not named a render clip by native code; its geometric intersection is established, but visual clipping from that field is not.",
-            "The renderer's pane flag bytes and ScissorPane bounds-source byte have no recovered runtime active-state names beyond the code behavior recorded above.",
+            "The renderer's pane flag bytes and ScissorPane bounds-source byte have no recovered runtime active-state names; the only flag-copy candidate is unlinked in the direct-call and relocated-pointer indexes.",
             "Scissor stack fixtures do not execute NVN or compare displayed pixels, so framebuffer origin and actual clip coverage remain unmeasured.",
         ],
     }
@@ -380,6 +597,9 @@ def main() -> None:
         "npad_update_direct_action_edge": result["npad_to_action_route"]["direct_edge_from_npad_update_to_action_dispatcher"],
         "B_Hit_pairs": result["hit_pane_identity"]["asset_pair_count"],
         "scissor_fixture_checks": result["static_pane_and_scissor_flags"]["synthetic_fixture"]["checks_without_mismatch"],
+        "root_page_state_sequence": result["page_loader_and_lifecycle"]["root_page_creation_and_state"]["observed_state_sequence"],
+        "root_page_direct_callers": result["page_loader_and_lifecycle"]["root_page_creation_and_state"]["creator_method_direct_callers"],
+        "flag_copy_pointer_memberships": len(result["static_pane_and_scissor_flags"]["constructor_defaults_and_source_candidates"]["unlinked_raw_pane_flag_copy_candidate"]["relocated_pointer_sequence_membership"]),
         "limits": len(result["limits"]),
     }, indent=2))
 
