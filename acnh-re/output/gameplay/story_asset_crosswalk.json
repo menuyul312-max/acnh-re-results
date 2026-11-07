@@ -1150,8 +1150,11 @@
         ],
         "audio": [
           {
-            "status": "OPEN",
-            "name": "FireOn/Cheers/MusicName=4318 not mapped to audio catalogue/raw file"
+            "status": "TBL",
+            "name": "MusicName=4318 → ItemParam FtrMjkMainTheme → SoundAudioMusic AudioMusicID=95",
+            "path": "B_data/Bcsv/ItemParam.bcsv; B_data/Bcsv/SoundAudioMusic.bcsv",
+            "source": "output/gameplay/story_message_cue_followup_20261107.json",
+            "notes": "Exact numeric source-table chain: ItemParam row 1732/UniqueID 4318 maps to SoundAudioMusic row 94/UniqueID 103, AudioMusicID 95, Minnaatsumare. Raw waveform/resource consumer is unresolved; FireOn/Cheers remain catalogue candidates only."
           },
           {
             "name": "BGM_Demo_Prologue_Campfire",
@@ -7669,8 +7672,9 @@
         "CAT": 34
       },
       "audio": {
-        "OPEN": 22,
+        "OPEN": 21,
         "CAT": 20,
+        "TBL": 1,
         "EF": 2
       },
       "text": {
@@ -7702,9 +7706,9 @@
     "overall_status_counts": {
       "EF": 35,
       "PSEUDO": 13,
-      "OPEN": 244,
+      "OPEN": 243,
       "STRUCT": 10,
-      "TBL": 6,
+      "TBL": 7,
       "CAT": 73
     },
     "required_asset_family_count": 11,

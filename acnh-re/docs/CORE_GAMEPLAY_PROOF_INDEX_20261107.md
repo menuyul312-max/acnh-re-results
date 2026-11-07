@@ -2,7 +2,7 @@
 
 **Cakupan:** ACNH 1.0.0 dari boot/registrasi pemain sampai konser K.K. pertama dan pembukaan Island Designer. Ini indeks bukti reverse engineering untuk kebutuhan gameplay; bukan implementasi Godot atau bukti bahwa satu save sudah dimainkan dari awal sampai akhir.
 
-Crosswalk utama memuat 28 beat dan 11 keluarga aset di setiap beat. Ada 381 rujukan untuk 308 slot wajib: 244 `OPEN`, 73 `CAT`, dan 64 `EF/PSEUDO/STRUCT/TBL`. Status itu berarti kategori sudah diperiksa pada setiap beat, bukan seluruh consumer runtime telah ditemukan. Model dan audio tetap memakai katalog sebagai referensi karena arsip sumber mentah tidak tersedia.
+Crosswalk utama memuat 28 beat dan 11 keluarga aset di setiap beat. Ada 381 rujukan untuk 308 slot wajib: 243 `OPEN`, 73 `CAT`, dan 65 `EF/PSEUDO/STRUCT/TBL`. Status itu berarti kategori sudah diperiksa pada setiap beat, bukan seluruh consumer runtime telah ditemukan. Model dan audio tetap memakai katalog sebagai referensi karena arsip sumber mentah tidak tersedia.
 
 ## Rantai gameplay dan bukti saat ini
 
@@ -33,4 +33,4 @@ Data gameplay BCSV/BYML/AAMP/EventFlow dipertahankan sebagai JSON bertipe dengan
 
 ## Gerbang selesai RE inti
 
-Gameplay inti baru dapat disebut terpetakan sampai tuntas ketika bukti menghubungkan: (1) hasil pendaftaran/peta ke field preset dan save; (2) kontrol pemain ke update posisi, ground/collision, dan traversal; (3) pickup/inventory ke konsumsi craft dan hasil yang tersimpan; (4) placement kit ke transform, validasi, instance model/collider, perubahan hari, dan flag; serta (5) gate plot/NPC/rating ke konser pertama dan unlock aplikasi. Artefak saat ini menutup banyak node dan tabel, tetapi belum memenuhi trace sambungan tersebut. Celah utama yang tersisa ditulis per sumber pada keenam laporan di atas dan tetap menjadi pekerjaan lanjutan.
+Gameplay inti baru dapat disebut terpetakan sampai tuntas ketika bukti menghubungkan: (1) hasil pendaftaran/peta ke field preset dan save; (2) kontrol pemain ke update posisi, ground/collision, dan traversal; (3) pickup/inventory ke konsumsi craft dan hasil yang tersimpan; (4) placement kit ke transform, validasi, instance model/collider, perubahan hari, dan flag; serta (5) gate plot/NPC/rating ke konser pertama dan unlock aplikasi. Artefak saat ini menutup banyak node dan tabel, tetapi belum memenuhi trace sambungan tersebut. Celah utama yang tersisa ditulis per sumber pada laporan terkait di atas dan tetap menjadi pekerjaan lanjutan.
