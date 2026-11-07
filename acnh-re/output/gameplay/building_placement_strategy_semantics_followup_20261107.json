@@ -1,0 +1,309 @@
+{
+  "schema": "acnh-re/1",
+  "title": "Building placement StructureType ordinals and error status mapping",
+  "created_utc": "2026-11-07",
+  "scope": {
+    "binary": "ACNH 1.0.0 main.elf",
+    "source_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+    "method": "static EventFlow parameter binding, enum parser/list, switch dispatch, status bit getter/setter, and localized message lookup",
+    "excluded": [
+      "Ghidra rebuild",
+      "runtime execution",
+      "BCSV crosswalk/index edits",
+      "Godot edits",
+      "commit or push"
+    ]
+  },
+  "proof_chain": [
+    {
+      "from": "EventFlowQueryCanBuildHere constructor 0x408bc0",
+      "to": "first input at object+0xd0",
+      "evidence": "Constructor property-name pointer is 0x2980336, whose raw ELF C string is StructureType; its next property-name pointer is 0x294b32f (StructureBuildPosType), followed by 0x299bee7 (StructureBuildTiming)."
+    },
+    {
+      "from": "EventFlowQueryCanBuildHere body 0x408cd0, call PC 0x408cfc",
+      "to": "enum conversion 0x339030",
+      "evidence": "First parsed property at object+0xd0 is passed to the enum converter. The converter returns the matching list index; its static list is the nine-value StructureType enum at ELF VA 0x2969f28."
+    },
+    {
+      "from": "StructureType ordinal",
+      "to": "strategy selector 0x376eb0",
+      "evidence": "Query body passes converter output to pose helper 0x3771d0; that helper passes the ordinal to switch at 0x376eb0. This proves ordinal and strategy route without name-based category inference."
+    },
+    {
+      "from": "BuildStructureErrorMsg body 0x36b100",
+      "to": "status and TalkSys localization",
+      "evidence": "This registered action makes the same pose/strategy dispatch, reads the first set status code from the result bitset through 0x10e4e40, selects a message id/suffix, then calls message lookup with TalkSys/SYS_Player:%d or TalkSys/SYS_Player:%d%s."
+    },
+    {
+      "from": "selected BuildStructure site record",
+      "to": "actor-context handoff",
+      "evidence": "BuildStructure dispatch is at 0x369f18. It checks that result before reading/selecting the saved mSiteList entry at 0x36a37c; the parsed pair reaches actor context at 0x36a3ac. The newly selected pair is therefore not an argument to this earlier validator call in the same invocation."
+    }
+  ],
+  "enum_source": {
+    "enum_va": "0x2969f28",
+    "extractor_rule": "C_reverse/tools/acnh_rip/re/enums.py states that comma-separated enum names are split at runtime and index = enum value.",
+    "values": [
+      "cPlayerHouse",
+      "cNormalNpcHouse",
+      "cMuseum",
+      "cMarket",
+      "cReserveNpcHouse",
+      "cBridge",
+      "cSlope",
+      "cTailor",
+      "cCampSite"
+    ],
+    "field_binding": "The native constructor binds the first query property to StructureType; the body applies the enum converter to this property. Player_HousingKit EventFlow calls provide those strings as the StructureType argument."
+  },
+  "ordinal_strategy_map": [
+    {
+      "ordinal": 0,
+      "eventflow_name": "cPlayerHouse",
+      "strategy_index": 1
+    },
+    {
+      "ordinal": 1,
+      "eventflow_name": "cNormalNpcHouse",
+      "strategy_index": 2
+    },
+    {
+      "ordinal": 2,
+      "eventflow_name": "cMuseum",
+      "strategy_index": 3,
+      "strategy_subtype": 2
+    },
+    {
+      "ordinal": 3,
+      "eventflow_name": "cMarket",
+      "strategy_index": 3,
+      "strategy_subtype": 0
+    },
+    {
+      "ordinal": 4,
+      "eventflow_name": "cReserveNpcHouse",
+      "strategy_index": 2
+    },
+    {
+      "ordinal": 5,
+      "eventflow_name": "cBridge",
+      "strategy_index": "4 if its secondary lookup succeeds; otherwise dispatch falls through case 6 and can route to 5 or 3/subtype 2"
+    },
+    {
+      "ordinal": 6,
+      "eventflow_name": "cSlope",
+      "strategy_index": "5 if its secondary lookup succeeds; otherwise 3/subtype 2"
+    },
+    {
+      "ordinal": 7,
+      "eventflow_name": "cTailor",
+      "strategy_index": 3,
+      "strategy_subtype": 5
+    },
+    {
+      "ordinal": 8,
+      "eventflow_name": "cCampSite",
+      "strategy_index": 3,
+      "strategy_subtype": 6
+    }
+  ],
+  "result_status_model": {
+    "setter_va": "0x10e4ef0",
+    "getter_va": "0x10e4e40",
+    "setter_observed": "Accepts code 0..21. Before setting the target bit it checks only the low 32-bit word at result+8; it does not establish a global first-write-only rule for codes 8..21. Getter returns the lowest set bit index, or 21 if none is set.",
+    "getter_observed": "Scans bit positions 0..21 and returns the first set bit index; if none is set, returns 21.",
+    "message_route_observed": "BuildStructureErrorMsg converts result code through a switch; the selected decimal message id is formatted as TalkSys/SYS_Player:<id>, with optional suffixes _01/_02/_03."
+  },
+  "status_message_map": [
+    {
+      "status": 0,
+      "label": "911",
+      "suffix": "",
+      "text": "I'm too close to the water.\nI need more room."
+    },
+    {
+      "status": 1,
+      "label": "911_01",
+      "suffix": "_01",
+      "text": "The ground isn't stable near these\nrocks, so I shouldn't try to build\nanything here."
+    },
+    {
+      "status": 2,
+      "label": "912",
+      "suffix": "",
+      "text": "I'm too close to the water.\nI need more room."
+    },
+    {
+      "status": 3,
+      "label": "913",
+      "suffix": "",
+      "text": "I'm too close to a cliff.\nI need more room."
+    },
+    {
+      "status": 4,
+      "label": "914",
+      "suffix": "",
+      "text": "I'm too close to the ledge.\nI need more room."
+    },
+    {
+      "status": 5,
+      "label": "914_01",
+      "suffix": "_01",
+      "text": "Everyone gathers in this plaza, so\nyou should choose a different place."
+    },
+    {
+      "status": 6,
+      "label": "915",
+      "suffix": "",
+      "text": "If I place buildings too close to each\nother, it'll block the flow of traffic.\nBetter choose another place!"
+    },
+    {
+      "status": 7,
+      "label": "916",
+      "suffix": "",
+      "text": "If it's too close to a bridge like this,\nit'll block the flow of traffic. Better\nchoose another place!"
+    },
+    {
+      "status": 8,
+      "label": "917",
+      "suffix": "",
+      "text": "If it's too close to an incline like\nthis, it'll block the flow of traffic.\nBetter choose another place!"
+    },
+    {
+      "status": 9,
+      "label": "918",
+      "suffix": "",
+      "text": "This is too close to the plaza. I don't\nwant anything to get in the way here.\nBetter choose another place!"
+    },
+    {
+      "status": 10,
+      "label": "919",
+      "suffix": "",
+      "text": "This is fairly close to someone's\nmailbox, so this isn't a good spot.\nBetter choose another place!"
+    },
+    {
+      "status": 11,
+      "label": "919_01",
+      "suffix": "_01",
+      "text": "I'll need to move the [tag group=0 type=3 data=0100]mailbox[tag group=0 type=3 data=ffff] first."
+    },
+    {
+      "status": 12,
+      "label": "921",
+      "suffix": "",
+      "text": "There's no river near here that I can\nplace a bridge over!"
+    },
+    {
+      "status": 13,
+      "label": "926",
+      "suffix": "",
+      "text": "To place a bridge, you need the river\nto be just the right width. And the\nland on either side should be even."
+    },
+    {
+      "status": 14,
+      "label": "926_01",
+      "suffix": "_01",
+      "text": "It'd be hard to use a bridge\nhere with the water so close."
+    },
+    {
+      "status": 15,
+      "label": "926_02",
+      "suffix": "_02",
+      "text": "It'd be hard to use a bridge\nhere with the cliff so close."
+    },
+    {
+      "status": 16,
+      "label": "926_03",
+      "suffix": "_03",
+      "text": "I don't think it'd be a good idea to\nbuild a bridge on the sand here."
+    },
+    {
+      "status": 17,
+      "label": "921",
+      "suffix": "",
+      "text": "There's no river near here that I can\nplace a bridge over!"
+    },
+    {
+      "status": 18,
+      "label": "927",
+      "suffix": "",
+      "text": "I don't see an even stretch of cliffs\nhere where an incline could go."
+    },
+    {
+      "status": 19,
+      "label": "928",
+      "suffix": "",
+      "text": "If I put an incline here, the end of it\nwill bump up against a cliff."
+    },
+    {
+      "status": 20,
+      "label": "928_01",
+      "suffix": "_01",
+      "text": "This is a little too high. I don't think\nI'll build an incline up here."
+    },
+    {
+      "status": 21,
+      "label": "910",
+      "suffix": "",
+      "text": "There isn't enough space here.",
+      "note": "Switch default; applies to status 21 because there is no explicit case 21 (also catches any other out-of-range switch value)."
+    }
+  ],
+  "bCSV_join": {
+    "status": "OPEN",
+    "detail": "No direct native or table key join found from these nine EventFlow ordinals to specific StructureInfoParam/StructureBridgeParam/StructureSlopeParam rows. StructureInfoParam exposes categories House/Facility/Bridge/Slope, but assigning individual EventFlow values to specific rows from category/name similarity would be inference."
+  },
+  "saved_site_pair_join": {
+    "status": "BOUNDED_NEGATIVE_FOR_SAME_HANDLER_INVOCATION",
+    "detail": "BuildStructure strategy validation precedes the selected mSiteList pair read and the pair is not among the validator call arguments. Static evidence does not rule out an earlier saved selection held in hidden actor/global state; no direct pair-to-validator dataflow was found."
+  },
+  "evidence_sources": [
+    {
+      "path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/A_logic/main.elf",
+      "sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74"
+    },
+    {
+      "path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/C_reverse/generated/re/enums.json",
+      "sha256": "53b2ea1b1b846fcdf1c3bec0d3b155acc53e53e41bd3a8479b5c6dfa2d655828"
+    },
+    {
+      "path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/C_reverse/tools/acnh_rip/re/enums.py",
+      "sha256": "817067d578613f14b73b0854bb5865077537b50e1e54f618ccf8f5e59cda70d2"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/408bc0.c",
+      "sha256": "a9974f99d079a43787a765971509f86dc020534d3418b4bb93bb799c5c5ccb3b"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/408cd0.c",
+      "sha256": "58bc3846e7a5629b1a4b1acaa6d33113256fbbd1cce2cc617a24f7019ac5bec6"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/376eb0.c",
+      "sha256": "c88ef9a8f79acb57ec905bb5a756327d13811b9395ffb60ebdd6df991d65e538"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/36b100.c",
+      "sha256": "2a7e18d2a2e073f6b9bc0a5ac1417f0d051abfc305e7dcf666a468a03d8925d7"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/event_handlers_resolved.json",
+      "sha256": "dfc298dfcb1b288b8fda9cd6a49c728fdad903b41f8fc1c9288df7d732ec92a5"
+    },
+    {
+      "path": "/workspace/acnh-re/work/eventflow/Player_HousingKit.json",
+      "sha256": "52034d36a43e9fd1f8a258ef87cd47fa75ce11d741a89018f711074261a1bf13"
+    },
+    {
+      "path": "/workspace/acnh-re/output/additional_romfs/messages/USen/TalkSys.json",
+      "sha256": "d055f20580613071487095a7a86b6e697376b7f1a0e83ccc59ed717e92186fd3",
+      "message_member_sha256": "8319ee56967b8e8a74c981289d909f47be9ffa13b37ddd5917b07153f3f896bd"
+    },
+    {
+      "path": "main.elf native disassembly at 0x10e4e40/0x10e4ef0",
+      "sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74"
+    }
+  ],
+  "report": "acnh-re/docs/BUILDING_PLACEMENT_STRATEGY_SEMANTICS_FOLLOWUP_20261107.md"
+}
