@@ -1,0 +1,482 @@
+{
+  "schema": "acnh-re/core-story-asset-coverage-audit/1",
+  "as_of": "2026-11-07",
+  "game_version": "ACNH 1.0.0 baseline; supplemental archive patch identity unresolved",
+  "scope": "New Game through first K.K. concert and Island Designer unlock; story and asset references only, no Godot implementation",
+  "sources": [
+    "acnh-re/output/gameplay/story_asset_crosswalk.json",
+    "acnh-re/output/gameplay/story_asset_parts/asset_inventory.json",
+    "acnh-re/output/ui_hud/page_layout_method_bindings.json",
+    "acnh-re/output/ui_hud/animation_semantics.json",
+    "acnh-re/docs/REGISTRATION_TERRAIN_PROOF_20261107.md",
+    "acnh-re/docs/STORY_MESSAGE_CUE_FOLLOWUP_20261107.md",
+    "acnh-re/docs/STORY_ACTOR_ASSET_PROOF_20261107.md",
+    "acnh-re/docs/BUILDING_PLACEMENT_PROOF_20261107.md"
+  ],
+  "crosswalk_snapshot": {
+    "beat_count": 28,
+    "required_asset_families": [
+      "ui",
+      "animation",
+      "model",
+      "audio",
+      "text",
+      "texture",
+      "material_shader",
+      "effect",
+      "font",
+      "world_data",
+      "collision"
+    ],
+    "reference_count": 381,
+    "status_counts": {
+      "EF": 35,
+      "PSEUDO": 13,
+      "OPEN": 243,
+      "STRUCT": 10,
+      "TBL": 7,
+      "CAT": 73
+    },
+    "family_status_counts": {
+      "ui": {
+        "CAT": 11,
+        "EF": 5,
+        "OPEN": 19,
+        "PSEUDO": 9
+      },
+      "animation": {
+        "CAT": 6,
+        "EF": 3,
+        "OPEN": 20,
+        "STRUCT": 10,
+        "TBL": 2
+      },
+      "model": {
+        "CAT": 34,
+        "OPEN": 18
+      },
+      "audio": {
+        "CAT": 20,
+        "EF": 2,
+        "OPEN": 21,
+        "TBL": 1
+      },
+      "text": {
+        "EF": 25,
+        "OPEN": 6
+      },
+      "texture": {
+        "OPEN": 28
+      },
+      "material_shader": {
+        "OPEN": 28
+      },
+      "effect": {
+        "OPEN": 28
+      },
+      "font": {
+        "OPEN": 28
+      },
+      "world_data": {
+        "OPEN": 20,
+        "PSEUDO": 4,
+        "TBL": 4
+      },
+      "collision": {
+        "CAT": 2,
+        "OPEN": 27
+      }
+    },
+    "full_semantic_coverage_proven": false,
+    "evidence_other_than_open_or_catalogue": 65,
+    "open_or_catalogue": 316
+  },
+  "global_inventory_snapshot": {
+    "gameplay_data": {
+      "status": "STRUCT",
+      "source": "ACNH 1.0.0 B_data",
+      "counts": {
+        "source_files": 1171,
+        "decoded_entries": 2986,
+        "BCSV": 164,
+        "BYML": 2313,
+        "AAMP": 47,
+        "BFEVFL": 456
+      },
+      "limitations": [
+        "91 BCSV columns lack exact descriptor",
+        "431 unique BYML hash keys unresolved",
+        "decoded graph/table is not native behavior by itself"
+      ]
+    },
+    "text": {
+      "status": "STRUCT",
+      "source": "additional RomFS MSBT and BDLI",
+      "counts": {
+        "messages": 965426,
+        "languages": 14,
+        "archive_files": 154
+      },
+      "limitations": [
+        "runtime label selection and substitutions are partial",
+        "message text does not prove scene or voice playback"
+      ]
+    },
+    "ui": {
+      "status": "STRUCT/PSEUDO",
+      "source": "additional RomFS UI archives",
+      "counts": {
+        "BFLYT": 523,
+        "BFLAN": 2095,
+        "BNTX_containers": 431,
+        "texture_records": 3336,
+        "cnt1_unresolved": 356,
+        "usd1_unresolved": 2164
+      },
+      "limitations": [
+        "page bindings, focus/input/modal lifecycle, renderer parity and live capture remain partial",
+        "texture count may include duplicates"
+      ]
+    },
+    "animation": {
+      "status": "STRUCT/PSEUDO",
+      "source": "additional RomFS AnimationSequence, AnimationInfo and BFLAN; skeletal source expected in model BFRES archives",
+      "counts": {
+        "ASB": 83,
+        "AnimationInfo_BYML": 55,
+        "ASB_nodes": 1159,
+        "ASB_transitions": 10001,
+        "ASB_warps": 1297,
+        "ASB_parameter_cases": 1895
+      },
+      "limitations": [
+        "ASB transition semantics and actor-to-state binding are partial",
+        "no model archive means skeletal clip-to-rig matching is unavailable"
+      ]
+    },
+    "model": {
+      "status": "CAT",
+      "source": "catalogues/model.json only; supplied additional RomFS has no Model/ source archive",
+      "counts": {
+        "catalog_rows": 37459,
+        "catalog_GLTF_PNG": 5627,
+        "catalog_PNG_only": 31832,
+        "ItemParam_ResName_exact_Asset_ID_matches": 7668,
+        "unmatched_ItemParam_ResName": 540
+      },
+      "limitations": [
+        "catalog row is not a mesh or converted file",
+        "catalog paths do not resolve to supplied raw source",
+        "material/LOD fidelity is limited"
+      ]
+    },
+    "audio": {
+      "status": "CAT",
+      "source": "catalogues/audio.json only; supplied additional RomFS has no Sound/Resource source archive",
+      "counts": {
+        "catalog_rows": 17410,
+        "BGM": 860,
+        "SFX": 16550
+      },
+      "limitations": [
+        "no waveform or source timing can be confirmed from the catalog alone",
+        "song/SFX consumer-to-beat and playback timing remain OPEN"
+      ]
+    },
+    "texture": {
+      "status": "STRUCT/PSEUDO",
+      "source": "UI BNTX and limited shader/texture content in additional RomFS; model textures are expected inside unavailable model archives",
+      "counts": {},
+      "limitations": [
+        "not every texture has been converted",
+        "story consumer and material binding remain partial"
+      ]
+    },
+    "material_shader": {
+      "status": "STRUCT/PSEUDO",
+      "source": "two BFSHA archives and limited GLSL/BNSH content",
+      "counts": {
+        "BFSHA_archives": 2,
+        "shader_model_records": 5,
+        "program_slots": 1889,
+        "GLSL_members": 133,
+        "unique_GLSL_hashes": 30,
+        "BNSH_members": 256
+      },
+      "limitations": [
+        "program/key table incomplete",
+        "slot metadata is not a complete shader implementation"
+      ]
+    },
+    "effect": {
+      "status": "STRUCT/OPEN",
+      "source": "two VFXB/PTCL archives plus ELink2DB.belnk and SLink2DB.bslnk",
+      "counts": {},
+      "limitations": [
+        "PTCL/XLNK semantics and story/runtime callers are partial"
+      ]
+    },
+    "font": {
+      "status": "OPEN",
+      "source": "Font archives/FontInfo are handled by reference importers when raw source is present",
+      "counts": {},
+      "limitations": [
+        "per-screen font assignment and exact prologue text-render binding still require crosswalk"
+      ]
+    },
+    "world_data": {
+      "status": "STRUCT/PSEUDO/NATIVE partial",
+      "source": "FieldPreset, item/structure tables, terrain unit models and PBC references",
+      "counts": {},
+      "limitations": [
+        "full seed-to-world loader, all transforms, story actor anchors and live placement are not connected"
+      ]
+    },
+    "collision": {
+      "status": "PSEUDO/OPEN",
+      "source": "native collision/terrain consumers and `.phive` expected inside model archives",
+      "counts": {},
+      "limitations": [
+        "raw model archive absent",
+        "solver, masks, friction and full actor-to-collider binding remain incomplete"
+      ]
+    }
+  },
+  "ui_binding_scan": {
+    "source": "ACNH main.elf from the locally extracted game build; same RomFS/ExeFS corpus used by the static UI analysis",
+    "main_nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+    "factory_pages_examined": 135,
+    "exact_layout_name_matches": 134,
+    "returned_identifiers_without_layout": 1,
+    "direct_B_or_BL_reference_sites_to_getters": 0,
+    "limits": [
+      "The 135 pages are those matching the existing shared-factory scan, not a proof of every page in the game.",
+      "An exact returned string does not prove that a loader calls the method or that the page loads, owns, or renders that BFLYT.",
+      "No direct B/BL instruction targets any of the 135 getter functions; indirect calls are not associated with a page receiver by this static crosswalk.",
+      "A returned identifier absent from the available 523-layout catalog may resolve through another archive, version, alias, or no resource; this static corpus does not decide which."
+    ],
+    "examples": [
+      {
+        "page_class": "TitlePage",
+        "method_va": "0x156cde0",
+        "returned_identifier": "Title",
+        "layout_member": "Title.arc!blyt/Title.bflyt"
+      },
+      {
+        "page_class": "CharaMakePage",
+        "method_va": "0x11959c0",
+        "returned_identifier": "CharaMake",
+        "layout_member": "CharaMake.arc!blyt/CharaMake.bflyt"
+      },
+      {
+        "page_class": "DateInputPage",
+        "method_va": "0x11e1cc0",
+        "returned_identifier": "DateInput",
+        "layout_member": "DateInput.arc!blyt/DateInput.bflyt"
+      },
+      {
+        "page_class": "MapSelectPage",
+        "method_va": "0x1241910",
+        "returned_identifier": "CharaMakeMap",
+        "layout_member": "CharaMakeMap.arc!blyt/CharaMakeMap.bflyt"
+      },
+      {
+        "page_class": "PrologueBGPage",
+        "method_va": "0x140efd0",
+        "returned_identifier": "WipePrologue",
+        "layout_member": "WipePrologue.arc!blyt/WipePrologue.bflyt"
+      },
+      {
+        "page_class": "StaffCreditPage",
+        "method_va": "0x146e000",
+        "returned_identifier": "StaffCredit",
+        "layout_member": "StaffCredit.arc!blyt/StaffCredit.bflyt"
+      }
+    ]
+  },
+  "proof_examples": [
+    {
+      "id": "registration_and_map_selection",
+      "status": "EF + PSEUDO + STRUCT; downstream OPEN",
+      "source": "B_data/EventFlow/Tutorials_Prologue1_Charactermaking.bfevfl",
+      "manifest_source_id": 661,
+      "source_sha256": "cbf8fc7e4f5df544398f8dfd4b401f558bf386862af1abac72b8ab57c1d8688d",
+      "known_keys": [
+        "EnteringNameAndBday",
+        "Charactermaking",
+        "TerrainSelect",
+        "UIMapSelectHandling",
+        "cVillage"
+      ],
+      "open_joins": [
+        "handler to instantiated page",
+        "four map-card images to source data",
+        "cVillage to field preset/seed",
+        "durable save writer",
+        "player spawn"
+      ]
+    },
+    {
+      "id": "story_text_subset",
+      "status": "exact source/member/label/index match in supplied supplemental archive",
+      "eventflow_refs": 460,
+      "eventflow_files": 17,
+      "files_with_message_refs": 16,
+      "unique_qualified_keys": 425,
+      "locales": 14,
+      "msbt_checks": 6440,
+      "bdli_checks": 6440,
+      "limits": [
+        "dialogue bodies omitted",
+        "supplemental archive patch identity unresolved",
+        "page rendering and substitutions not proven"
+      ]
+    },
+    {
+      "id": "campfire_music",
+      "status": "numeric table chain proven; waveform/runtime playback OPEN",
+      "eventflow": "Tutorials_Prologue5_Campfire event #140 MusicName=4318",
+      "itemparam": {
+        "row_index": 1732,
+        "UniqueID": 4318,
+        "ResName": "FtrMjkMainTheme"
+      },
+      "sound_audio_music": {
+        "row_index": 94,
+        "UniqueID": 103,
+        "RefItemUniqueID": 4318,
+        "AudioMusicID": 95,
+        "label": "Minnaatsumare"
+      },
+      "catalogue_status": "CAT; name BGM_Live_095_Minnaatsumare is not exact numeric consumer key"
+    },
+    {
+      "id": "structure_placement",
+      "status": "source flow/table IDs known; world instance transform unproven",
+      "source": "B_data/Param/Field/MainFieldPreset/StructurePresetA00.byml",
+      "manifest_source_id": 2729,
+      "source_sha256": "2a0be5f7a0904fe09c5ead536802749696e317bf1261d22327811aafb036436e",
+      "site_cell_count": 6,
+      "known_lifecycle_subject_count": 14,
+      "proven_placement_transform_count": 0,
+      "open_joins": [
+        "cell role to story structure",
+        "cell to world axes/origin/units/rotation/elevation",
+        "model and PBC/collider consumer",
+        "instance save and day-change write"
+      ]
+    }
+  ],
+  "priority_gaps": [
+    {
+      "priority": 1,
+      "topic": "registration to selected island instance",
+      "families": [
+        "ui",
+        "world_data",
+        "texture",
+        "collision"
+      ],
+      "beats": [
+        "title_character_creation",
+        "opening_landing"
+      ],
+      "next_evidence": "MapSelect handler/page registry, four CharaMakeMap preview pane image sources, cVillage writer and preset/seed consumer."
+    },
+    {
+      "priority": 2,
+      "topic": "story UI and animation dispatch",
+      "families": [
+        "ui",
+        "animation",
+        "text",
+        "font"
+      ],
+      "beats": "many core beats",
+      "next_evidence": "Join EventFlow UI handlers/actions to page controller/factory/vtable and track actual animation dispatch/state."
+    },
+    {
+      "priority": 3,
+      "topic": "structure placement and world instance",
+      "families": [
+        "world_data",
+        "model",
+        "texture",
+        "material_shader",
+        "effect",
+        "collision"
+      ],
+      "beats": [
+        "shop-place-open-and-unlock-plots",
+        "bridge-and-ladder",
+        "three-housing-plots",
+        "plot-furniture-requirements",
+        "office.opening_isabelle",
+        "campsite.build_and_ceremony"
+      ],
+      "next_evidence": "Map site selector index, selected preset cell and pose helper to world transform, structure row/model catalog candidate and PBC/collider consumer."
+    },
+    {
+      "priority": 4,
+      "topic": "actor clip and catalog-to-story use",
+      "families": [
+        "animation",
+        "model",
+        "audio"
+      ],
+      "beats": [
+        "arrival_talk",
+        "campfire_ceremony",
+        "kk_dream",
+        "plot-completion-villager-selection",
+        "resident-arrival-announcement",
+        "kk.first_live_performance_and_credits"
+      ],
+      "next_evidence": "Resolve numeric ActionIdx and sound IDs to dispatch/catalogue keys; retain model/audio as CAT unless exact catalog-ID consumer is found."
+    },
+    {
+      "priority": 5,
+      "topic": "global category placeholders",
+      "families": [
+        "texture",
+        "material_shader",
+        "effect",
+        "font"
+      ],
+      "beats": "all 28 have OPEN slots",
+      "next_evidence": "Join only resources actually consumed by UI/actor/world features to beat/source; classify genuinely unused categories as not applicable."
+    },
+    {
+      "priority": 6,
+      "topic": "end-to-end gameplay state continuity",
+      "families": [
+        "world_data",
+        "collision",
+        "ui",
+        "animation",
+        "model",
+        "audio"
+      ],
+      "beats": "registration through first K.K. live and Island Designer",
+      "next_evidence": "Single save trace or source-complete chain linking user action, manager state, day processor, progression flag, page/actor/stage transition."
+    }
+  ],
+  "conversion_policy": {
+    "model_audio": "Catalogue only per project instruction; generated GLB/OGG paths are references, not payloads.",
+    "supplemental_ui_animation_text": "Parsed as structural evidence with supplemental build-version caveat.",
+    "world_data": "Retain source IDs, grid/cell namespace, enums, hashes and units; do not infer transforms.",
+    "raw_model_or_audio_copied": false,
+    "godot_changed": false
+  },
+  "validation": {
+    "crosswalk_file": "acnh-re/output/gameplay/story_asset_crosswalk.json",
+    "all_status_counts_read_from_source": true,
+    "source_path_exists_checks": "8/8 listed project sources exist at integration time",
+    "full_semantic_coverage_proven": false,
+    "source_paths_checked": 8,
+    "crosswalk_counts_recomputed": true,
+    "recomputed_reference_count": 381,
+    "recomputed_status_counts_match": true,
+    "recomputed_family_status_counts_match": true
+  }
+}
