@@ -1,0 +1,180 @@
+{
+  "schema": "acnh-re/core-story-firstlive-stage-dispatch-followup/1",
+  "game_version": "1.0.0",
+  "analysis_date": "2026-11-07",
+  "analysis_mode": "static AArch64 and extracted BYML/EventFlow cross-check; no runtime execution",
+  "source_root_relative_to_deliverable_repo": "../../acnh-re",
+  "report_path": "docs/CORE_STORY_FIRSTLIVE_STAGE_DISPATCH_FOLLOWUP_20261107.md",
+  "scope": "PAnnounceSza first-live stage dispatch, candidate stage include, NpcActorMgr registration/factory, AI/talk bridge, return stage, and StaffCredit callback join.",
+  "source_hashes": [
+    {"path":"inputs/additional_exefs/main","sha256":"f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900","kind":"main NSO static source"},
+    {"path":"output/index.sqlite","sha256":"a78c7af27d37b8fd931bba8bc611623dacf7685cb6e8b4f827effa0765340aad","kind":"native direct-call/function index"},
+    {"path":"output/binary/event_handlers_resolved.json","sha256":"dfc298dfcb1b288b8fda9cd6a49c728fdad903b41f8fc1c9288df7d732ec92a5","kind":"EventFlow native action factory/vtable map"},
+    {"path":"output/gameplay/flow_index.json","sha256":"359f3a21a17a116902b0c8e1110c3892814b6fccbeb50b71d573c8ab3e1c68c5","kind":"456-flow explicit entry/subflow caller index; message text excluded"},
+    {"path":"output/stage/by_source/02909.json","sha256":"2b003d9744649e7668585ff93df4dd17d0844e92ce86e5a06f7b094f1428bd28","kind":"decoded Stage/Game candidate projection"},
+    {"path":"output/stage/by_source/02984.json","sha256":"c8f1b99f215f4294aac674e7dba5f6f6ec7cbaa502a284e960b929b23c9cebed","kind":"decoded commonOutdoor projection"},
+    {"path":"output/decoded/02982.json","sha256":"6fde28a7e359083b2ce7f65b17cf17e4876a8987a732d95852c9f7de706425eb","kind":"StageList BYML decode"},
+    {"path":"output/stage/actor_type_registry.json","sha256":"67439173a460ad49bb6cbc0086047eb192581f0cad36f4c936c4078a39d959be","kind":"native stage actor type registry"},
+    {"path":"output/stage/native_summary.json","sha256":"396383658321f378b256acdfb80a20faac22b4f84a6faad45dd23db45b3ce4f7","kind":"native stage reader/registry summary"},
+    {"path":"output/binary/code_pointer_arrays.json","sha256":"64d474068ca289f9146f7f32e6647a16a05e8f5be8e635615a478744b62ef822","kind":"relocated code-pointer sequence inventory"},
+    {"path":"output/binary/analysis_decomp/304f80.c","sha256":"3cffa9fc83ba7e401a06f2ce293d41d8cb1123022f7379f3b16d1f1b9b30ad9a","kind":"ChangeStage handler pseudocode"},
+    {"path":"output/binary/analysis_decomp/fef090.c","sha256":"ed8312ad93649d8bc21a627994cfa4a032cde2dc0bf9bdef8b29d17da0fc7e0a","kind":"generic stage load loop pseudocode"},
+    {"path":"output/binary/analysis_decomp/fea5a0.c","sha256":"29e92c752809fb4639db26f2cfd1691f6b2e703c063455c373ecfaaf798c90fe","kind":"Stage/Game loader pseudocode"},
+    {"path":"output/binary/analysis_decomp/fe8420.c","sha256":"2c9a2c3aa131b247af8fb4132029a3f05f1282204950e88409d55c87bcdcc34e","kind":"Stage/Game path/resource helper pseudocode"},
+    {"path":"output/binary/analysis_decomp/fea760.c","sha256":"6815a0f2cfb61e2c9e3c2a0e1315c8055a0414395294f5f290205171287c1848","kind":"recursive Stage include reader pseudocode"},
+    {"path":"output/binary/analysis_decomp/feaa40.c","sha256":"ddb268ca264014e4233ff10987900a958a2c513394b6a88d09cd2eb768d1485f","kind":"recursive stage actor/UI list loader pseudocode"},
+    {"path":"output/binary/analysis_decomp/feabc0.c","sha256":"ae4e7911740333bcca0f2a763145da1eb1303d6dbad9e3e06b0d54ab0af27b09","kind":"ActorList parser dispatch pseudocode"},
+    {"path":"output/binary/analysis_decomp/feb390.c","sha256":"1b2a2709b79f77f27dd25baa22b7458bcadd61fa36213815bcdeac448c19d9ef","kind":"actor-kind hash/index reader pseudocode"},
+    {"path":"output/binary/analysis_decomp/feb5e0.c","sha256":"e2b9cda11676ac51f0fc722e5445cdf2445e05ee01c80139cb5afc9fd08a1b54","kind":"actor record consumer pseudocode"},
+    {"path":"output/binary/analysis_decomp/c70da0.c","sha256":"b2253dd8192f615ce55cb57d7ff4de45a22ae14d4186edf61a4e57bb8f0b5588","kind":"first-live NPC builder pseudocode"},
+    {"path":"output/binary/analysis_decomp/1470e90.c","sha256":"c37c9542db23aa8d74105a101da693608282c529acbee2c33ab4bc50da873425","kind":"StaffCredit generic helper pseudocode"},
+    {"path":"output/gameplay/core_story_indirect_owner_trace_20261107.json","sha256":"1f3cf301b2c450581d17b01233db6b5f91d5e394a76907c29873e20bb9720823","kind":"prior NpcActorMgr/State::cPlay relocation and callback proof record"}
+  ],
+  "raw_source_hashes": [
+    {"source_id":279,"source":"B_data/EventFlow/Demo_PublicAnnouncement.bfevfl","sha256":"7ec0d30107a1d40169b4455932f0f6853beb9ef7b7cf69ca2ee2f77958a12602"},
+    {"source_id":625,"source":"B_data/EventFlow/SNPC_tkk_Live.bfevfl","sha256":"d1a9d0253d4ae6c1ed46e87d007f8924f4cba637589a3d0750ca07295794d316"},
+    {"source_id":272,"source":"B_data/EventFlow/AI_NPC_Tkk_FirstLive.bfevfl","sha256":"5f7c36dba971c8c30f434b92085a8bb7e8bd677df39bcd008d0aa8950e02a9f8"},
+    {"source_id":2909,"source":"B_data/Stage/Game/MainFieldDemoFirstLive.byml","sha256":"0cf0898403df0b2eb8a47fae804a373ca6a7dcc8eb9680aac64360847b16bd12"},
+    {"source_id":2984,"source":"B_data/Stage/commonOutdoor.byml","sha256":"5ab2a53a8b702782416576e7296724fe53a52580558c20500b4015449dec4503"},
+    {"source_id":2982,"source":"B_data/Stage/StageList.byml","sha256":"9dd2757d7dad92fdf5724df38902a56a6b9445dca87defc06d3ee8e6adee9414"}
+  ],
+  "stage_request_dispatch": {
+    "status":"CONFIRMED_TO_SPECIALIZED_BRANCH; stage loader/resource continuation OPEN",
+    "eventflow_action": {
+      "flow":"Demo_PublicAnnouncement",
+      "source_id":279,
+      "entry":"PAnnounceSza",
+      "target_stage":"cMainFieldFirstLive",
+      "action_name":"EventFlowActionSystemRequestChangeStage"
+    },
+    "native_action_registration": {
+      "registration_va":"0x305ac78",
+      "factory":"0x450db0",
+      "constructor":"0x304df0",
+      "vtable":"0x3048cf0",
+      "target_stage_parameter":"TargetStage",
+      "dispatch_method_slot_index":9,
+      "dispatch_method":"0x304f80"
+    },
+    "label_dispatch": {
+      "table_builder":"0x306c80",
+      "labels_va":"0x29a5e06",
+      "label_index":26,
+      "label":"cMainFieldFirstLive",
+      "instruction_pc":"0x305adc",
+      "instruction":"BL",
+      "target":"0x306910",
+      "meaning":"The ChangeStage method recognizes this TargetStage value and routes it to the dedicated native case handler."
+    },
+    "return_label_dispatch": {
+      "label_index":17,
+      "label":"cMainFieldPlayerHouse",
+      "meaning":"The return label is present in the same native label table; this follow-up does not claim execution of the return branch."
+    }
+  },
+  "generic_stage_loader": {
+    "status":"CONFIRMED_AS_GENERIC_PIPELINE; NOT_JOINED_TO_THE_CHANGE_STAGE_CASE",
+    "calls":[
+      {"pc":"0xfef1c0","from":"0xfef090","to":"0xfea5a0","instruction":"BL","role":"iterate active stage entries and load game-stage data"},
+      {"pc":"0xfea710","from":"0xfea5a0","to":"0xfe8420","instruction":"BL","role":"build/open Stage/Game resource"},
+      {"pc":"0xfea740","from":"0xfea5a0","to":"0xfea760","instruction":"BL","role":"process stage resource lists"},
+      {"pc":"0xfea8a8","from":"0xfea760","to":"0xfea760","instruction":"BL","role":"recursive Stage/%s.byml processing"},
+      {"pc":"0xfeaa10","from":"0xfea990","to":"0xfeaa40","instruction":"BL","owner_recovered_from_native_span":"0xfea990-0xfeaa3f","role":"stage actor-list loader entry"},
+      {"pc":"0xfeab84","from":"0xfeaa40","to":"0xfeaa40","instruction":"BL","role":"recursive include/resource traversal"},
+      {"pc":"0xfeab90","from":"0xfeaa40","to":"0xfeabc0","instruction":"BL","role":"parse ActorList and UIList"},
+      {"pc":"0xfeac94","from":"0xfeabc0","to":"0xfeb390","instruction":"BL","role":"read actor kind hash and map to native index"},
+      {"pc":"0xfeac9c","from":"0xfeabc0","to":"0xfeb5e0","instruction":"BL","role":"consume actor record"}
+    ],
+    "resource_path_evidence": [
+      {"function":"0xfe8420","string_va":"0x29429e0","string":"Stage/Game/%s.byml","call_pc":"0xfea710"},
+      {"function":"0xfea760","string_va":"0x29abc61","string":"Stage/%s.byml","evidence":"recursive resource traversal in the stage-list reader"}
+    ],
+    "limits":[
+      "The static call graph does not connect 0x306910 or its queued state/event continuation to 0xfef090.",
+      "The Stage/Game path helper proves the generic format, not the stage alias passed for cMainFieldFirstLive."
+    ]
+  },
+  "candidate_stage_and_manager": {
+    "status":"CANDIDATE_RESOURCE_MATCH; INCLUDE_AND_TYPE_CROSSWALK_CONFIRMED; ACTUAL_STAGE_SELECTION_AND_FACTORY_CALL_OPEN",
+    "candidate_stage": {
+      "source_id":2909,
+      "path":"B_data/Stage/Game/MainFieldDemoFirstLive.byml",
+      "raw_sha256":"0cf0898403df0b2eb8a47fae804a373ca6a7dcc8eb9680aac64360847b16bd12",
+      "include_key_hash":"0x5cee711c",
+      "included_resource":"commonOutdoor",
+      "included_resource_source_id":2984,
+      "note":"Filename/flow label are semantically aligned, but no explicit cMainFieldFirstLive-to-this-filename map was recovered."
+    },
+    "common_outdoor_actor_row": {
+      "source_id":2984,
+      "source":"B_data/Stage/commonOutdoor.byml",
+      "actor_list_key_hash":"0x3cbaa541",
+      "row":"/3cbaa541/2",
+      "actor_name_hash":"0xc2701e0b",
+      "native_actor_type_index":5,
+      "native_actor_type":"NpcActorMgr",
+      "type_registry_sha256":"67439173a460ad49bb6cbc0086047eb192581f0cad36f4c936c4078a39d959be"
+    },
+    "native_manager_registration": {
+      "initializer":"_INIT_2810@0xc71bf0",
+      "registration_call_pc":"0xc7236c",
+      "registered_name":"NpcActorMgr",
+      "factory":"0xc67fa0",
+      "factory_constructor":"0xc67ff0",
+      "constructor_call_pc":"0xc67fd0",
+      "vtable_base":"0x30d9a50",
+      "method_slot_va":"0x30d9a88",
+      "method_target":"0xc685a0",
+      "method_builder_call_pc":"0xc686ac",
+      "method_builder_call_bytes_le":"bd210094",
+      "builder":"0xc70da0",
+      "builder_actor_string":{"va":"0x2992dbb","value":"E_FirstLive_NPC_0"},
+      "builder_ai_string":{"va":"0x298de83","value":"%s/AIC:Special/AIF:AI_NPC_Tkk_FirstLive"},
+      "actor_submit_pc":"0xc70ff4",
+      "actor_submit_target":"0xc6c210",
+      "factory_dispatch_status":"OPEN: matching actor type and registered native factory are established, but actor-row-to-factory indirect call was not resolved"
+    }
+  },
+  "eventflow_talk_and_return": {
+    "status":"FLOW_CONTENT_CONFIRMED; SPAWNED_ACTOR_TO_TALK_ENTRY OPEN",
+    "talk_flow": {
+      "source_id":625,
+      "flow":"SNPC_tkk_Live",
+      "entry":"Tkk_LandFirstLive",
+      "called_from":[],
+      "subflows":[
+        {"event":118,"entry":"Tkk_1stLIveMC"},
+        {"event":92,"entry":"Tkk_LiveDemo"},
+        {"event":93,"entry":"Tkk_LiveAfter_Flag"}
+      ],
+      "return_action_event":94,
+      "return_target_stage":"cMainFieldPlayerHouse"
+    },
+    "ai_flow": {
+      "source_id":272,
+      "flow":"AI_NPC_Tkk_FirstLive",
+      "entry":"Root",
+      "called_from":[],
+      "subflow":{"flow":"AI_NPC_Common","entry":"ContinueSpeak"}
+    },
+    "negative_scope":"No explicit subflow edge to Tkk_LandFirstLive or AI_NPC_Tkk_FirstLive:Root appears in the indexed 456-flow caller/subflow graph. This cannot exclude engine-side dynamic talk selection."
+  },
+  "credits_join": {
+    "status":"GENERIC_STATE_CALLBACK_CONFIRMED; FIRST-LIVE TRIGGER OPEN",
+    "callback":"0x146f2c0",
+    "state_key":"State::cPlay",
+    "state_registration_pc":"0x146f17c",
+    "callback_pointer_slot":"0x330db20",
+    "callback_helper_call_pc":"0x146f34c",
+    "callback_helper":"0x1470e90",
+    "helper_string":{"va":"0x298a2f5","value":"StaffCredit"},
+    "negative_scope":"Literal search across the 456 extracted EventFlow JSON files found no StaffCredit or StaffList token; indexed flow metadata excludes message text. No K.K./first-live caller edge joins the cPlay callback."
+  },
+  "bounded_open_items": [
+    "Resolve whether TargetStage cMainFieldFirstLive maps to Stage/Game/MainFieldDemoFirstLive.byml; StageList.byml contains only base stage labels and no such alias.",
+    "Recover the generic stage-transition queue/manager edge from 0x306910 to the 0xfef090 Stage/Game loading path.",
+    "Resolve the actor-list indirect dispatch target for commonOutdoor ActorList[2] and prove invocation of NpcActorMgr factory 0xc67fa0.",
+    "Find the engine-side AI/talk selection bridge from AI_NPC_Tkk_FirstLive to SNPC_tkk_Live:Tkk_LandFirstLive.",
+    "Find a first-live/story trigger joining the State::cPlay/StaffCredit callback, or constrain the callback's actual gameplay purpose further."
+  ]
+}
