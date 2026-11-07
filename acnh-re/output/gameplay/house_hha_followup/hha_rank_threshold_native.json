@@ -1,0 +1,1174 @@
+{
+  "schema": "hha_rank_threshold_native_v1",
+  "scope": "Bounded native reproduction of the per-house-level HHA rank classifier plus static ordinal-to-grade-report candidate crosswalk; not a live save, overlap resolver, mailbox capture, or delivery-time test.",
+  "source": {
+    "main_nso": {
+      "path": "/workspace/acnh-re/inputs/additional_exefs/main",
+      "sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900"
+    },
+    "index_sqlite": {
+      "path": "/workspace/acnh-re/output/index.sqlite",
+      "sha256": "a78c7af27d37b8fd931bba8bc611623dacf7685cb6e8b4f827effa0765340aad"
+    },
+    "us_en_rank_resource": "/workspace/acnh-re/output/additional_romfs/messages/USen/String.json"
+  },
+  "thresholds": [
+    {
+      "raw_house_level_selector": 2,
+      "rank_order": [
+        {
+          "rank": "B",
+          "score_min": 0,
+          "score_max": 9999,
+          "ordinal": 2
+        },
+        {
+          "rank": "A",
+          "score_min": 10000,
+          "score_max": 14999,
+          "ordinal": 1
+        },
+        {
+          "rank": "S",
+          "score_min": 15000,
+          "score_max": null,
+          "ordinal": 0
+        }
+      ],
+      "b_max_compare_immediate": 9999,
+      "a_max_compare_immediate": 14999
+    },
+    {
+      "raw_house_level_selector": 3,
+      "rank_order": [
+        {
+          "rank": "B",
+          "score_min": 0,
+          "score_max": 16999,
+          "ordinal": 2
+        },
+        {
+          "rank": "A",
+          "score_min": 17000,
+          "score_max": 22999,
+          "ordinal": 1
+        },
+        {
+          "rank": "S",
+          "score_min": 23000,
+          "score_max": null,
+          "ordinal": 0
+        }
+      ],
+      "b_max_compare_immediate": 16999,
+      "a_max_compare_immediate": 22999
+    },
+    {
+      "raw_house_level_selector": 4,
+      "rank_order": [
+        {
+          "rank": "B",
+          "score_min": 0,
+          "score_max": 24999,
+          "ordinal": 2
+        },
+        {
+          "rank": "A",
+          "score_min": 25000,
+          "score_max": 34999,
+          "ordinal": 1
+        },
+        {
+          "rank": "S",
+          "score_min": 35000,
+          "score_max": null,
+          "ordinal": 0
+        }
+      ],
+      "b_max_compare_immediate": 24999,
+      "a_max_compare_immediate": 34999
+    },
+    {
+      "raw_house_level_selector": 5,
+      "rank_order": [
+        {
+          "rank": "B",
+          "score_min": 0,
+          "score_max": 37999,
+          "ordinal": 2
+        },
+        {
+          "rank": "A",
+          "score_min": 38000,
+          "score_max": 46999,
+          "ordinal": 1
+        },
+        {
+          "rank": "S",
+          "score_min": 47000,
+          "score_max": null,
+          "ordinal": 0
+        }
+      ],
+      "b_max_compare_immediate": 37999,
+      "a_max_compare_immediate": 46999
+    },
+    {
+      "raw_house_level_selector": 6,
+      "rank_order": [
+        {
+          "rank": "B",
+          "score_min": 0,
+          "score_max": 49999,
+          "ordinal": 2
+        },
+        {
+          "rank": "A",
+          "score_min": 50000,
+          "score_max": 59999,
+          "ordinal": 1
+        },
+        {
+          "rank": "S",
+          "score_min": 60000,
+          "score_max": null,
+          "ordinal": 0
+        }
+      ],
+      "b_max_compare_immediate": 49999,
+      "a_max_compare_immediate": 59999
+    },
+    {
+      "raw_house_level_selector": 7,
+      "rank_order": [
+        {
+          "rank": "B",
+          "score_min": 0,
+          "score_max": 63999,
+          "ordinal": 2
+        },
+        {
+          "rank": "A",
+          "score_min": 64000,
+          "score_max": 74999,
+          "ordinal": 1
+        },
+        {
+          "rank": "S",
+          "score_min": 75000,
+          "score_max": null,
+          "ordinal": 0
+        }
+      ],
+      "b_max_compare_immediate": 63999,
+      "a_max_compare_immediate": 74999
+    },
+    {
+      "raw_house_level_selector": 8,
+      "rank_order": [
+        {
+          "rank": "B",
+          "score_min": 0,
+          "score_max": 79999,
+          "ordinal": 2
+        },
+        {
+          "rank": "A",
+          "score_min": 80000,
+          "score_max": 89999,
+          "ordinal": 1
+        },
+        {
+          "rank": "S",
+          "score_min": 90000,
+          "score_max": null,
+          "ordinal": 0
+        }
+      ],
+      "b_max_compare_immediate": 79999,
+      "a_max_compare_immediate": 89999
+    }
+  ],
+  "static_evidence": {
+    "main_nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+    "evaluator_call": {
+      "pc": "0x7b29b4",
+      "target": "0x7b3ff0",
+      "owner": "0x7b1fe0",
+      "owner_name": "FUN_008b1fe0",
+      "instruction": "BL"
+    },
+    "classifier_disassembly": {
+      "function": "0x7b3ff0",
+      "category_score_offsets": [
+        "0x24",
+        "0x28",
+        "0x2c",
+        "0x30",
+        "0x34",
+        "0x38",
+        "0x3c",
+        "0x40",
+        "0x44",
+        "0x48",
+        "0x4c",
+        "0x50"
+      ],
+      "total_score_output_offset": "0x110",
+      "result_rank_ordinal_offset": "0x8",
+      "house_level_table_va": "0x29f7aaa",
+      "house_level_table_bytes": "0009121b242d3b",
+      "branch_targets_for_raw_levels_2_to_8": [
+        "0x7b41dc",
+        "0x7b4200",
+        "0x7b4224",
+        "0x7b4248",
+        "0x7b426c",
+        "0x7b4290",
+        "0x7b42c8"
+      ],
+      "comparison_immediates": {
+        "2": {
+          "b_max_compare_pc": "0x7b41e4",
+          "b_max_immediate": 9999,
+          "a_max_compare_pc": "0x7b41f0",
+          "a_max_immediate": 14999
+        },
+        "3": {
+          "b_max_compare_pc": "0x7b4208",
+          "b_max_immediate": 16999,
+          "a_max_compare_pc": "0x7b4214",
+          "a_max_immediate": 22999
+        },
+        "4": {
+          "b_max_compare_pc": "0x7b422c",
+          "b_max_immediate": 24999,
+          "a_max_compare_pc": "0x7b4238",
+          "a_max_immediate": 34999
+        },
+        "5": {
+          "b_max_compare_pc": "0x7b4250",
+          "b_max_immediate": 37999,
+          "a_max_compare_pc": "0x7b425c",
+          "a_max_immediate": 46999
+        },
+        "6": {
+          "b_max_compare_pc": "0x7b4274",
+          "b_max_immediate": 49999,
+          "a_max_compare_pc": "0x7b4280",
+          "a_max_immediate": 59999
+        },
+        "7": {
+          "b_max_compare_pc": "0x7b4298",
+          "b_max_immediate": 63999,
+          "a_max_compare_pc": "0x7b42a4",
+          "a_max_immediate": 74999
+        },
+        "8": {
+          "b_max_compare_pc": "0x7b42d0",
+          "b_max_immediate": 79999,
+          "a_max_compare_pc": "0x7b42f8",
+          "a_max_immediate": 89999
+        }
+      },
+      "rank_result_stores": {
+        "ordinal_2_below_or_at_b_max": "0x7b42e0",
+        "ordinal_1_above_b_max_through_a_max": "0x7b4308",
+        "ordinal_0_above_a_max": "0x7b42b4"
+      }
+    },
+    "rank_ordinal_crosswalk": {
+      "code_zero_is_s_rank": {
+        "evidence": "0x7b4a20 branches when evaluator row +8 == 0 and updates native flag GetSRankonHHA",
+        "native_flag_referencing_function": "0x7b4a20"
+      },
+      "rank_ui_labels": {
+        "001": "S",
+        "002": "A",
+        "003": "B"
+      },
+      "rank_ui_functions": {
+        "0xac2e30": {
+          "path": "/workspace/acnh-re/output/binary/analysis_decomp/ac2e30.c",
+          "sha256": "f02e480118a2d31decc2b50255b5bffb71e411c6122df7568450248252cafbee",
+          "uses_zero_based_rank_value_plus_one_for_STR_HHA_Rank": true
+        },
+        "0xac3360": {
+          "path": "/workspace/acnh-re/output/binary/analysis_decomp/ac3360.c",
+          "sha256": "4bcdddf049178cc8f90fa90fe27ac721447192929ca55083f4109b263279451d",
+          "uses_zero_based_rank_value_plus_one_for_STR_HHA_Rank": true
+        }
+      },
+      "hha_vtable_trampolines": [
+        {
+          "array_start": "0x30883a8",
+          "pointer_va": "0x30883f8",
+          "target_va": "0x7b8270",
+          "byte_slot_from_address_point": 80
+        },
+        {
+          "array_start": "0x3088410",
+          "pointer_va": "0x3088460",
+          "target_va": "0x7b8420",
+          "byte_slot_from_address_point": 80
+        }
+      ],
+      "grade_report_candidate": {
+        "evaluator_result_offset": "0x8",
+        "candidate_mask": "0x7b4fc0 includes bit (1 << evaluator row +0x08) plus report-condition bits",
+        "candidate_choice": {
+          "random_range": "bounded xorshift-derived selection in [0, popcount(mask)) via 0xf53450; state at 0x36e9510 is advanced by 0x1aaa0e0",
+          "native_instruction_sequence": {
+            "0x7b5288": {
+              "mnemonic": "bl",
+              "op_str": "#0x198b590"
+            },
+            "0x7b528c": {
+              "mnemonic": "mov",
+              "op_str": "w1, w0"
+            },
+            "0x7b5290": {
+              "mnemonic": "mov",
+              "op_str": "w0, wzr"
+            },
+            "0x7b5294": {
+              "mnemonic": "bl",
+              "op_str": "#0xf53450"
+            },
+            "0x7b5298": {
+              "mnemonic": "add",
+              "op_str": "w1, w0, #1"
+            },
+            "0x7b529c": {
+              "mnemonic": "mov",
+              "op_str": "w0, w20"
+            },
+            "0x7b52a0": {
+              "mnemonic": "bl",
+              "op_str": "#0x198b630"
+            },
+            "0x7b52a8": {
+              "mnemonic": "mov",
+              "op_str": "w2, w0"
+            },
+            "0x7b52b0": {
+              "mnemonic": "bl",
+              "op_str": "#0x7b6470"
+            }
+          },
+          "set_bit_resolver": "0x198b630 maps the random ordinal to the corresponding set-bit index",
+          "dispatch_call": {
+            "pc": "0x7b52b0",
+            "target": "0x7b6470"
+          }
+        },
+        "rank_ordinal_to_grade_record_label_code": {
+          "0": 40,
+          "1": 41,
+          "2": 42
+        },
+        "grade_package_selector": 11,
+        "grade_archive_labels_present": [
+          "040",
+          "041",
+          "042",
+          "140",
+          "141",
+          "142"
+        ],
+        "archive_body_rank_crosswalk": {
+          "140": "S",
+          "141": "A",
+          "142": "B"
+        },
+        "limits": [
+          "The S/A/B record candidate is one member of a randomly chosen report-candidate mask; it is not selected on every evaluation.",
+          "Native record label codes 40/41/42 are passed as the +0x38 input to the Grade package formatter. The matching 140/141/142 archive bodies explicitly name S/A/B, but this pass did not prove the formatter expands base label N to body label N+100."
+        ]
+      },
+      "save_backed_message_insertion": {
+        "hha_queue_path": [
+          "0x7b6470",
+          "0xabf610",
+          "0xac0a60",
+          "0xabfb40",
+          "0xac1ff0"
+        ],
+        "save_data_offset": "0x2633d0",
+        "formatted_output_dispatch": {
+          "100_slot_collection": {
+            "handler": "0xac8840",
+            "append": "0xfadfc0",
+            "slot_count": 100,
+            "entry_stride": "0x2440"
+          },
+          "40_slot_collection": {
+            "handler": "0xac87c0",
+            "append": "0xfae7b0",
+            "slot_count": 40,
+            "entry_stride": "0x99d0"
+          },
+          "state_mark": 2
+        },
+        "system_mail_action": {
+          "registration_hash": "809c435c",
+          "vtable": "0x304ce68",
+          "method_va": "0x345890",
+          "record_builder_edges": [
+            "0x345f84 -> 0xac77a0",
+            "0x346048 -> 0xac77a0"
+          ],
+          "route_dispatch_edges": [
+            "0x345f94 -> 0x346a50",
+            "0x346058 -> 0x346a50"
+          ],
+          "shared_handler": "0xac1ff0"
+        },
+        "indexed_hha_eventflow_actions": [
+          {
+            "flow": "SNPC_rco_10_Common_UpgradeMyhome",
+            "event_index": 45,
+            "actor": "EventFlowSystemActor",
+            "kind": "actions",
+            "name": "EventFlowActionSystemMailSend",
+            "params_json": "{\"FromType\": \"cHHA\", \"FileIndex\": \"MAIL_SP_HHA_BuildCelebration\", \"Present\": \"cReward\", \"Route\": \"cFastTomorrow\", \"LabelIndex\": 1, \"TagType\": \"cNone\", \"ToSharePlayer\": false}"
+          }
+        ],
+        "grade_eventflow_actions": [],
+        "grade_mail_flag": {
+          "definition": {
+            "table": "EventFlagsPlayerParam",
+            "source_id": 26,
+            "name_ja": "HHA|評価の手紙送付ON?",
+            "max": 1,
+            "default": 0,
+            "flow_access": 2,
+            "net_access": null,
+            "reset_policy_raw": {
+              "h_5140e4b4": 0,
+              "h_bed25a86": 1
+            }
+          },
+          "eventflow_readers": [],
+          "eventflow_writers": [],
+          "native_name_xrefs": [
+            "0x7b1fe0"
+          ],
+          "native_setter_function": "0x7b1fe0",
+          "native_setter_guard": "player slot nonzero; raw house selector > 1; cached signed byte at SavePlayerHouse + 0x263d0 != -1",
+          "reads_or_clearers": [],
+          "limits": "Native string/xref and decompilation evidence identifies the setter only. No reader/clearer was found in the indexed native pseudocode or EventFlow; another consumer may remain unindexed or require runtime observation."
+        },
+        "scope": "Static code proves HHA text output reaches a save-backed message collection through the shared record handler also used by the SystemMailSend action. The HHA formatter can dispatch to either 100-slot or 40-slot collection depending on output markers. No runtime capture ties the HHA output to a visible mailbox entry or delivery date."
+      },
+      "limits": [
+        "The evaluator rank ordinal, the S-rank achievement branch, and rank string labels agree on the 0/1/2 ordering; the indexed direct call graph does not contain a complete evaluator-result-to-UI object construction edge.",
+        "Rank thresholds use native total +0x110, which is the sum of twelve category fields. This does not resolve the remaining theme/situation bonus weights or the source of each per-item category score."
+      ]
+    },
+    "queue_and_mail_scope": {
+      "hha_grade_record_formatter": "0xac7a00 formats a record through the localized text builder; type-3 dispatch then stores formatted output in a save-backed 100-slot or 40-slot message collection through 0xac8840/0xac87c0.",
+      "system_mail_comparison": "The EventFlow SystemMailSend action method 0x345890 uses the same 0xac77a0 record builder and route-dispatch helper 0x346a50, which can call shared handler 0xac1ff0. HHA grade output is a separate native producer/queue path, not an indexed EventFlow SystemMailSend action.",
+      "grade_mail_flag": "The indexed literal flag reference remains only in 0x7b1fe0, with no EventFlow readers/writers; no reader/clear or delivery timing was found.",
+      "scope": "The save-backed message-list insertion path is statically resolved, but visible mailbox arrival, HHA flag consumption, and delivery timing still require runtime capture."
+    }
+  },
+  "native_execution": {
+    "cases": 33,
+    "threshold_cases": 29,
+    "invalid_level_cases": 4,
+    "mismatches": 0,
+    "boundary_policy": {
+      "score_at_b_max": "ordinal 2 (B)",
+      "score_at_b_max_plus_one": "ordinal 1 (A)",
+      "score_at_a_max": "ordinal 1 (A)",
+      "score_at_a_max_plus_one": "ordinal 0 (S)"
+    },
+    "stub_responsibilities": {
+      "0xef8260": "returns a controlled valid-player result",
+      "0xee9350": "places a synthetic descriptor view for a known PlayerHouseLevel value",
+      "0xee93d0": "closes the controlled descriptor view without save side effects"
+    },
+    "native_behavior_left_unreplaced": [
+      "12-category score summation into record +0x110",
+      "raw level 2..8 dispatch through the original 7-entry branch table",
+      "per-level lower/upper rank comparisons",
+      "rank ordinal store to record +8"
+    ],
+    "stub_calls": {
+      "player_validity": 33,
+      "save_accessor_open": 33,
+      "save_accessor_close": 33
+    },
+    "results": [
+      {
+        "case_id": "level_2_b_max",
+        "raw_house_level": 2,
+        "category_scores": [
+          9999,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "score_total": 9999,
+        "result_ordinal": 2,
+        "localized_rank_label": "003",
+        "rank_label_text": "B"
+      },
+      {
+        "case_id": "level_2_first_a",
+        "raw_house_level": 2,
+        "category_scores": [
+          10000,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "score_total": 10000,
+        "result_ordinal": 1,
+        "localized_rank_label": "002",
+        "rank_label_text": "A"
+      },
+      {
+        "case_id": "level_2_a_max",
+        "raw_house_level": 2,
+        "category_scores": [
+          14999,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "score_total": 14999,
+        "result_ordinal": 1,
+        "localized_rank_label": "002",
+        "rank_label_text": "A"
+      },
+      {
+        "case_id": "level_2_first_s",
+        "raw_house_level": 2,
+        "category_scores": [
+          15000,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "score_total": 15000,
+        "result_ordinal": 0,
+        "localized_rank_label": "001",
+        "rank_label_text": "S"
+      },
+      {
+        "case_id": "level_3_b_max",
+        "raw_house_level": 3,
+        "category_scores": [
+          16999,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "score_total": 16999,
+        "result_ordinal": 2,
+        "localized_rank_label": "003",
+        "rank_label_text": "B"
+      },
+      {
+        "case_id": "level_3_first_a",
+        "raw_house_level": 3,
+        "category_scores": [
+          17000,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "score_total": 17000,
+        "result_ordinal": 1,
+        "localized_rank_label": "002",
+        "rank_label_text": "A"
+      },
+      {
+        "case_id": "level_3_a_max",
+        "raw_house_level": 3,
+        "category_scores": [
+          22999,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "score_total": 22999,
+        "result_ordinal": 1,
+        "localized_rank_label": "002",
+        "rank_label_text": "A"
+      },
+      {
+        "case_id": "level_3_first_s",
+        "raw_house_level": 3,
+        "category_scores": [
+          23000,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "score_total": 23000,
+        "result_ordinal": 0,
+        "localized_rank_label": "001",
+        "rank_label_text": "S"
+      },
+      {
+        "case_id": "level_4_b_max",
+        "raw_house_level": 4,
+        "category_scores": [
+          24999,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "score_total": 24999,
+        "result_ordinal": 2,
+        "localized_rank_label": "003",
+        "rank_label_text": "B"
+      },
+      {
+        "case_id": "level_4_first_a",
+        "raw_house_level": 4,
+        "category_scores": [
+          25000,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "score_total": 25000,
+        "result_ordinal": 1,
+        "localized_rank_label": "002",
+        "rank_label_text": "A"
+      },
+      {
+        "case_id": "level_4_a_max",
+        "raw_house_level": 4,
+        "category_scores": [
+          34999,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "score_total": 34999,
+        "result_ordinal": 1,
+        "localized_rank_label": "002",
+        "rank_label_text": "A"
+      },
+      {
+        "case_id": "level_4_first_s",
+        "raw_house_level": 4,
+        "category_scores": [
+          35000,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "score_total": 35000,
+        "result_ordinal": 0,
+        "localized_rank_label": "001",
+        "rank_label_text": "S"
+      },
+      {
+        "case_id": "level_5_b_max",
+        "raw_house_level": 5,
+        "category_scores": [
+          37999,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "score_total": 37999,
+        "result_ordinal": 2,
+        "localized_rank_label": "003",
+        "rank_label_text": "B"
+      },
+      {
+        "case_id": "level_5_first_a",
+        "raw_house_level": 5,
+        "category_scores": [
+          38000,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "score_total": 38000,
+        "result_ordinal": 1,
+        "localized_rank_label": "002",
+        "rank_label_text": "A"
+      },
+      {
+        "case_id": "level_5_a_max",
+        "raw_house_level": 5,
+        "category_scores": [
+          46999,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "score_total": 46999,
+        "result_ordinal": 1,
+        "localized_rank_label": "002",
+        "rank_label_text": "A"
+      },
+      {
+        "case_id": "level_5_first_s",
+        "raw_house_level": 5,
+        "category_scores": [
+          47000,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "score_total": 47000,
+        "result_ordinal": 0,
+        "localized_rank_label": "001",
+        "rank_label_text": "S"
+      },
+      {
+        "case_id": "level_6_b_max",
+        "raw_house_level": 6,
+        "category_scores": [
+          49999,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "score_total": 49999,
+        "result_ordinal": 2,
+        "localized_rank_label": "003",
+        "rank_label_text": "B"
+      },
+      {
+        "case_id": "level_6_first_a",
+        "raw_house_level": 6,
+        "category_scores": [
+          50000,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "score_total": 50000,
+        "result_ordinal": 1,
+        "localized_rank_label": "002",
+        "rank_label_text": "A"
+      },
+      {
+        "case_id": "level_6_a_max",
+        "raw_house_level": 6,
+        "category_scores": [
+          59999,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "score_total": 59999,
+        "result_ordinal": 1,
+        "localized_rank_label": "002",
+        "rank_label_text": "A"
+      },
+      {
+        "case_id": "level_6_first_s",
+        "raw_house_level": 6,
+        "category_scores": [
+          60000,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "score_total": 60000,
+        "result_ordinal": 0,
+        "localized_rank_label": "001",
+        "rank_label_text": "S"
+      },
+      {
+        "case_id": "level_7_b_max",
+        "raw_house_level": 7,
+        "category_scores": [
+          63999,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "score_total": 63999,
+        "result_ordinal": 2,
+        "localized_rank_label": "003",
+        "rank_label_text": "B"
+      },
+      {
+        "case_id": "level_7_first_a",
+        "raw_house_level": 7,
+        "category_scores": [
+          64000,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "score_total": 64000,
+        "result_ordinal": 1,
+        "localized_rank_label": "002",
+        "rank_label_text": "A"
+      },
+      {
+        "case_id": "level_7_a_max",
+        "raw_house_level": 7,
+        "category_scores": [
+          74999,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "score_total": 74999,
+        "result_ordinal": 1,
+        "localized_rank_label": "002",
+        "rank_label_text": "A"
+      },
+      {
+        "case_id": "level_7_first_s",
+        "raw_house_level": 7,
+        "category_scores": [
+          75000,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "score_total": 75000,
+        "result_ordinal": 0,
+        "localized_rank_label": "001",
+        "rank_label_text": "S"
+      },
+      {
+        "case_id": "level_8_b_max",
+        "raw_house_level": 8,
+        "category_scores": [
+          79999,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "score_total": 79999,
+        "result_ordinal": 2,
+        "localized_rank_label": "003",
+        "rank_label_text": "B"
+      },
+      {
+        "case_id": "level_8_first_a",
+        "raw_house_level": 8,
+        "category_scores": [
+          80000,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "score_total": 80000,
+        "result_ordinal": 1,
+        "localized_rank_label": "002",
+        "rank_label_text": "A"
+      },
+      {
+        "case_id": "level_8_a_max",
+        "raw_house_level": 8,
+        "category_scores": [
+          89999,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "score_total": 89999,
+        "result_ordinal": 1,
+        "localized_rank_label": "002",
+        "rank_label_text": "A"
+      },
+      {
+        "case_id": "level_8_first_s",
+        "raw_house_level": 8,
+        "category_scores": [
+          90000,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "score_total": 90000,
+        "result_ordinal": 0,
+        "localized_rank_label": "001",
+        "rank_label_text": "S"
+      },
+      {
+        "case_id": "level_2_mixed_category_sum",
+        "raw_house_level": 2,
+        "category_scores": [
+          1000,
+          2000,
+          3000,
+          4000,
+          5000,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "score_total": 15000,
+        "result_ordinal": 0,
+        "localized_rank_label": "001",
+        "rank_label_text": "S"
+      }
+    ],
+    "invalid_level_results": [
+      {
+        "raw_house_level": 0,
+        "score_total": 50000,
+        "rank_ordinal_preserved": "0xdeadbeef"
+      },
+      {
+        "raw_house_level": 1,
+        "score_total": 50000,
+        "rank_ordinal_preserved": "0xdeadbeef"
+      },
+      {
+        "raw_house_level": 9,
+        "score_total": 50000,
+        "rank_ordinal_preserved": "0xdeadbeef"
+      },
+      {
+        "raw_house_level": 4294967295,
+        "score_total": 50000,
+        "rank_ordinal_preserved": "0xdeadbeef"
+      }
+    ]
+  },
+  "limits": [
+    "Player validity, PlayerHouseLevel descriptor lookup, and descriptor close are controlled stubs; no live save or game process is used.",
+    "Native thresholds apply to HHA score total +0x110 (the sum of twelve category accumulators), but the full item eligibility/bonus formula and live overlap resolver are not reproduced.",
+    "The native ordinal zero is confirmed as S by the GetSRankonHHA update branch; A/B labels are a string-resource ordinal crosswalk. An end-to-end live UI/mail capture remains absent.",
+    "Static code establishes a save-backed formatted-message collection insertion route for HHA output; which of the two message collections a live HHA output takes and when that output becomes a visible mailbox entry remain unproven.",
+    "The native ordinal-to-label code 40/41/42 mapping is direct. The matching Grade archive body labels 140/141/142 name S/A/B, but formatter arithmetic connecting a base label to its body label remains unproven.",
+    "No HHAGradeMailFlag reader/clear or delivery timing is established."
+  ]
+}
