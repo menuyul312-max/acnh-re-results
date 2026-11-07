@@ -15,6 +15,7 @@
     "current_damage_width_bits": 10,
     "increment_adds_to_current_damage_and_clamps_at": 999,
     "remaining_damage_formula": "supplied ItemOutfitInfo.BreakDamage - current ToolDamage",
+    "e895a0_return_status": "1 means the item-use and native wear update gates succeeded; 0 is an early gate/update failure. The status is not a break-threshold result.",
     "table_stub_limit": "ItemParam eligibility/cache and BreakDamage table getter are supplied by stubs; this does not execute a live save or prove the transition into PlayerToolBreak."
   },
   "stubs": [
@@ -37,6 +38,16 @@
     "reserved_bits_preserved": true,
     "dirty_slot_marker": "0x4000",
     "other_slot_markers_zero": true,
+    "return_status_at_exhaustion": 1,
+    "remaining_damage_at_exhaustion": 0,
+    "status_semantics": "1 means the item-use and native wear update gates succeeded; it does not mean the tool remains usable or report a break transition. 0 is an early gate/update failure.",
+    "second_apply_at_exhaustion": {
+      "result_status": 1,
+      "wear_after": 101,
+      "remaining_damage_unsigned": 4294967295,
+      "remaining_damage_signed": -1,
+      "meaning": "The wrapper accepts another use after remaining reaches zero; no break state is returned."
+    },
     "bounded_stubs": [
       "0xf58d00 item-use gate",
       "0xa9c290 item-view construction",

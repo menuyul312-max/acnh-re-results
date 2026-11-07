@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import json
 from pathlib import Path
+import re
 import sqlite3
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -18,6 +19,11 @@ RING_CALLBACK = 0x1417F70
 RING_ITEM_READ = 0x11B7210
 REMAINING_DAMAGE = 0xAA7CE0
 REMAINING_DAMAGE_CONSUMER = 0xEE1060
+PLAYER_ITEM_CONTEXT_GLOBAL = "33d3e00"
+PLAYER_SLOT_BASE = "0x204"
+SLOT_DIRTY_SET = re.compile(r"0x0*4000(?![0-9a-f])", re.IGNORECASE)
+SLOT_DIRTY_CLEAR = re.compile(r"0x0*ffffbfff(?![0-9a-f])", re.IGNORECASE)
+SAVEPROC_NODES = (0x337F00, 0x338080, 0xFB3160, 0xFAF180, 0xF1DA80)
 
 
 def edge_rows(conn: sqlite3.Connection, *, target: int | None = None,
@@ -95,6 +101,79 @@ def saveproc_summary(research_root: Path) -> dict | None:
     }
 
 
+def dirty_slot_decomp_scan(conn: sqlite3.Connection, research_root: Path) -> dict:
+    """Search every indexed decomp snapshot for the exact player-slot dirty-bit access."""
+    rows = conn.execute("SELECT va,path FROM decomp_new ORDER BY va").fetchall()
+    scanned = 0
+    context_slot_functions = 0
+    marker_accesses = []
+    paths_by_va = {va: path for va, path in rows}
+    for va, relative in rows:
+        if not relative:
+            continue
+        path = research_root / relative
+        if not path.is_file():
+            continue
+        source = path.read_text(errors="ignore")
+        scanned += 1
+        has_context = PLAYER_ITEM_CONTEXT_GLOBAL in source.lower()
+        has_slot_base = PLAYER_SLOT_BASE in source.lower()
+        if has_context and has_slot_base:
+            context_slot_functions += 1
+        if not (has_context and has_slot_base):
+            continue
+        for match in SLOT_DIRTY_SET.finditer(source):
+            line = source.count("\n", 0, match.start()) + 1
+            text = source.splitlines()[line - 1].strip()
+            marker_accesses.append({"function_va": hex(va), "operation": "set_0x4000",
+                                    "decomp_path": relative, "line": line,
+                                    "source": text})
+        for match in SLOT_DIRTY_CLEAR.finditer(source):
+            line = source.count("\n", 0, match.start()) + 1
+            text = source.splitlines()[line - 1].strip()
+            marker_accesses.append({"function_va": hex(va), "operation": "clear_0x4000",
+                                    "decomp_path": relative, "line": line,
+                                    "source": text})
+
+    save_nodes = []
+    for va in SAVEPROC_NODES:
+        relative = paths_by_va.get(va)
+        source_path = research_root / relative if relative else None
+        source = source_path.read_text(errors="ignore") if source_path and source_path.is_file() else ""
+        save_nodes.append({
+            "function_va": hex(va),
+            "decomp_path": relative,
+            "decomp_available": bool(source),
+            "references_player_item_context_global": PLAYER_ITEM_CONTEXT_GLOBAL in source.lower(),
+            "references_player_slot_base_0x204": PLAYER_SLOT_BASE in source.lower(),
+            "references_exact_slot_dirty_set_or_clear": bool(
+                SLOT_DIRTY_SET.search(source) or SLOT_DIRTY_CLEAR.search(source)
+            ),
+        })
+
+    return {
+        "evidence_level": "EXHAUSTIVE_TEXT_SCAN_OF_INDEXED_DECOMP_NEW_SNAPSHOT",
+        "decomp_root": str(research_root / "binary/analysis_decomp"),
+        "indexed_snapshot_rows": len(rows),
+        "decomp_files_scanned": scanned,
+        "functions_referencing_player_context_and_slot_base": context_slot_functions,
+        "exact_marker_accesses": marker_accesses,
+        "saveproc_chain_nodes": save_nodes,
+        "finding": (
+            "Across the available indexed decompilation snapshot, the only exact access to "
+            "the per-player slot-state word at context+0x204+slot*8 using marker 0x4000 is "
+            "the e895a0 setter and e767b0 clear-mask. The SaveSimpleSave/SaveProc nodes with "
+            "available decompilation do not reference that player-slot context or marker; "
+            "the process-dispatch node 0x338080 has no indexed decomp snapshot."
+        ),
+        "bound": (
+            "This is a static scan of indexed decomp source, not proof that no indirect or "
+            "omitted serializer callback reads the slot marker. SaveProc request/completion "
+            "is mapped separately; the serializer and durable file write/flush remain unknown."
+        ),
+    }
+
+
 def run(index_db: Path, research_root: Path, output: Path) -> dict:
     conn = sqlite3.connect(f"file:{index_db.resolve()}?mode=ro", uri=True)
     remaining_callers = edge_rows(conn, target=REMAINING_DAMAGE)
@@ -129,6 +208,32 @@ def run(index_db: Path, research_root: Path, output: Path) -> dict:
                 "parent_string_refs": consumer_strings,
             },
             "break_state_lifecycle_edges": break_dispatch,
+            "break_state_handlers": {
+                hex(va): function_info(conn, va) for va in BREAK_DISPATCH_TARGETS
+            },
+            "break_state_wear_edges": [
+                edge for va in BREAK_DISPATCH_TARGETS
+                for edge in edge_rows(conn, owner=va)
+                if int(edge["target_va"], 16) in {
+                    0xAA7700, 0xAA77D0, 0xAA79A0, REMAINING_DAMAGE,
+                    0xE895A0, 0xE893C0, 0xDB00F0,
+                }
+            ],
+            "handler_notes": {
+                "0xe37830": (
+                    "Branches on state byte +0x1024: zero requests the BreakTool event flag; "
+                    "nonzero enters e37950. Clears state-local +0x898 and +0x89c."
+                ),
+                "0xe37a50": (
+                    "Updates PlayerToolBreak animation/timing fields, increments state-local "
+                    "+0x898 on progression branches, and can enter e37950; no ToolDamage or "
+                    "BreakDamage helper call is indexed."
+                ),
+                "0xe37ed0": (
+                    "Clears ForceToolBreakDemo through f4e990 and can enter e37950 on its "
+                    "state gate; no ToolDamage or BreakDamage helper call is indexed."
+                ),
+            },
             "player_tool_break_eventflow": flow,
             "finding": (
                 "The only indexed direct call to 0xaa7ce0 is 0xee1198 from 0xee1060. "
@@ -154,6 +259,56 @@ def run(index_db: Path, research_root: Path, output: Path) -> dict:
                 edge for edge in edge_rows(conn, target=0xDB0140)
                 if edge["owner_va"] in {"0xe52390", "0xe52ee0", "0xe541a0"}
             ],
+            "wrapper_status_contract": {
+                "0xe895a0": (
+                    "Returns 0 when its item-use gate or native wear increment fails; returns "
+                    "1 after the packed word is copied back and the selected slot flag is set. "
+                    "The status does not encode remaining damage or break state."
+                ),
+                "0xe893c0": (
+                    "Has no scalar return status; it checks e895a0's low-bit success before "
+                    "producing the action result descriptor. The db0140 consumer tests that "
+                    "descriptor's ItemUniqueID against the empty sentinel -2."
+                ),
+                "0xdb00f0": (
+                    "Returns 1 only when e895a0 succeeds (and then requests the action telemetry "
+                    "update through dafee0); otherwise returns 0. Its indexed net, rod, and "
+                    "generic callers do not branch on this scalar result."
+                ),
+            },
+            "wrapper_action_callsites": {
+                "0xe893c0": [
+                    {"caller": "0x4c0190", "pc": "0x4c0258", "wear_amount": 1,
+                     "result_use": "writes local output descriptor; caller ignores it"},
+                    {"caller": "0xda4560", "pc": "0xda4598", "wear_amount": 1,
+                     "result_use": "writes local output descriptor; caller ignores it"},
+                    {"caller": "0xdb0140", "pc": "0xdb0168", "wear_amount": 1,
+                     "result_use": "checks ItemUniqueID != -2, then enters item-result insertion"},
+                ],
+                "0xdb00f0": [
+                    {"caller": "0xe45b80", "pc": "0xe45cbc", "action": "NetGetDemo",
+                     "wear_amount": 1},
+                    {"caller": "0xe4e730", "pc": "0xe4ea70", "action": "RodGetDemo",
+                     "wear_amount": "1 or 2 from rod-state/item predicate"},
+                    {"caller": "0xe899b0", "pc": "0xe89ac0", "action": "generic result path",
+                     "wear_amount": "forwarded caller argument"},
+                ],
+            },
+            "exhaustion_status_probe": {
+                "artifact": "output/gameplay/tool_mechanics_followup/tool_durability_native.json",
+                "item_unique_id": 2100,
+                "break_damage": 100,
+                "first_apply": {"start_damage": 99, "result_status": 1,
+                                 "remaining_after": 0, "slot_marker": "0x4000"},
+                "second_apply": {"start_damage": 100, "result_status": 1,
+                                  "damage_after": 101,
+                                  "remaining_unsigned": 4294967295,
+                                  "remaining_signed": -1},
+                "interpretation": (
+                    "In this bounded native probe, e895a0's status is update success, not a "
+                    "break notification; the wrapper permits another wear increment at zero remaining."
+                ),
+            },
             "finding": (
                 "e895a0 is reached through e893c0 (which passes wear amount 1) and db00f0 "
                 "(used by the net/rod result states and a generic indirect caller). The "
@@ -180,12 +335,15 @@ def run(index_db: Path, research_root: Path, output: Path) -> dict:
             "wear_writer": function_info(conn, 0xE895A0),
             "slot_flag_clearer": function_info(conn, 0xE767B0),
             "slot_flag_clearer_callers": edge_rows(conn, target=0xE767B0),
+            "available_decomp_slot_marker_scan": dirty_slot_decomp_scan(conn, research_root),
             "tool_break_save_eventflow": save_event,
             "generic_saveproc_trace": saveproc_summary(research_root),
             "finding": (
                 "The bounded e895a0 probe confirms in-memory packed-word copy-back and bit "
                 "0x4000 on the selected player-item slot. e767b0 contains a matching clear "
-                "for that bit as part of broader slot-state cleanup. EventFlow has an explicit "
+                "for that bit as part of broader slot-state cleanup. An exhaustive scan of "
+                "indexed decomp files finds no additional exact setter/clearer or reference "
+                "from the SaveProc nodes to this slot-state array. EventFlow has an explicit "
                 "SaveSimpleSave request at System_SaveGameClose, and the separate indexed "
                 "SaveProc trace reaches its request/completion boundary. No indexed edge ties "
                 "this tool dirty bit to a particular serialized save member or durable file flush."

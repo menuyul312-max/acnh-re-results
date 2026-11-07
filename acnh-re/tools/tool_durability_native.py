@@ -139,11 +139,14 @@ def run_apply_wrapper_case(sb: Sandbox, item: dict, cache_data: int) -> dict:
     sb.uc.mem_write(dirty_slots_global, struct.pack("<Q", dirty_slots))
     sb.uc.mem_write(0x32D3E00, struct.pack("<Q", dirty_slots_global))
 
+    item_views = []
+
     def make_native_item_view(sandbox: Sandbox):
         # a9c290 normally constructs the game's item view/reference. Give the
         # original aa77d0 the packed word at view + 8 and a bounded row pointer.
         view = sandbox.reg("x0")
         source = sandbox.reg("x1")
+        item_views.append(view)
         sandbox.uc.mem_write(view + 8, sandbox.read(source, 8))
         sandbox.uc.mem_write(view + 16, struct.pack("<Q", item_row))
         return 1
@@ -165,6 +168,24 @@ def run_apply_wrapper_case(sb: Sandbox, item: dict, cache_data: int) -> dict:
                               "expected": hex(reserved | expected_wear)})
     if slot_markers != [0, 0, 0, 0x4000, 0, 0, 0, 0]:
         raise AssertionError({"slot_dirty_markers": [hex(value) for value in slot_markers]})
+
+    # Reuse the exact item view produced inside E895A0. The remaining helper
+    # reads this same packed word and the joined ItemOutfitInfo row.
+    remaining_at_limit = sb.call(0xAA7CE0, (item_views[-1],)) & 0xFFFFFFFF
+    if remaining_at_limit != 0:
+        raise AssertionError({"remaining_at_limit": hex(remaining_at_limit)})
+
+    # E895A0 returns success at the exhausted value and permits another wear
+    # update; its status is item-update success, not a break-threshold result.
+    result_at_limit = sb.call(0xE895A0, (packed_item, pocket_index, 1)) & 0xFFFFFFFF
+    packed_over_limit = sb.read(packed_item, 8)
+    wear_over_limit = struct.unpack_from("<H", packed_over_limit, 6)[0]
+    remaining_over_limit = sb.call(0xAA7CE0, (item_views[-1],)) & 0xFFFFFFFF
+    if (result_at_limit, wear_over_limit, remaining_over_limit) != (
+            1, reserved | (start_damage + 2), 0xFFFFFFFF):
+        raise AssertionError({"result_at_limit": result_at_limit,
+                              "wear_over_limit": hex(wear_over_limit),
+                              "remaining_over_limit": hex(remaining_over_limit)})
     if sb.unknown_imports:
         raise AssertionError({"unexpected_imports": sb.unknown_imports})
 
@@ -181,6 +202,19 @@ def run_apply_wrapper_case(sb: Sandbox, item: dict, cache_data: int) -> dict:
         "other_slot_markers_zero": all(
             marker == 0 for index, marker in enumerate(slot_markers) if index != slot_index
         ),
+        "return_status_at_exhaustion": result,
+        "remaining_damage_at_exhaustion": remaining_at_limit,
+        "status_semantics": (
+            "1 means the item-use and native wear update gates succeeded; it does not mean "
+            "the tool remains usable or report a break transition. 0 is an early gate/update failure."
+        ),
+        "second_apply_at_exhaustion": {
+            "result_status": result_at_limit,
+            "wear_after": wear_over_limit & 0x03FF,
+            "remaining_damage_unsigned": remaining_over_limit,
+            "remaining_damage_signed": -1,
+            "meaning": "The wrapper accepts another use after remaining reaches zero; no break state is returned.",
+        },
         "bounded_stubs": ["0xf58d00 item-use gate", "0xa9c290 item-view construction",
                           "0x1665ea0 ItemParam row index", "0xaa7a30 table cache",
                           "0xda4020 pocket-context gate"],
@@ -241,6 +275,10 @@ def main():
             "current_damage_width_bits": 10,
             "increment_adds_to_current_damage_and_clamps_at": 999,
             "remaining_damage_formula": "supplied ItemOutfitInfo.BreakDamage - current ToolDamage",
+            "e895a0_return_status": (
+                "1 means the item-use and native wear update gates succeeded; 0 is an early "
+                "gate/update failure. The status is not a break-threshold result."
+            ),
             "table_stub_limit": "ItemParam eligibility/cache and BreakDamage table getter are supplied by stubs; this does not execute a live save or prove the transition into PlayerToolBreak.",
         },
         "stubs": ["0xaa7880 item-class eligibility", "0x1665ea0 row index", "0xaa7a30 table cache", "0xaa7b90 BreakDamage table value"],
