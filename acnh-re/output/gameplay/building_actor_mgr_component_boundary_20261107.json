@@ -1,0 +1,64 @@
+{
+  "schema": "acnh-re.building-actor-mgr-component-boundary/1",
+  "game_version": "ACNH 1.0.0",
+  "scope": "Determine whether the NpcActorMgr factory/worker path explains the NpcActor actor+0x68 component used by the building-coordinate callback.",
+  "status": "MANAGER_REQUEST_BUILDER_STATIC;NPC_ACTOR_COMPONENT_ATTACHMENT_OPEN",
+  "report": "acnh-re/docs/BUILDING_ACTOR_MGR_COMPONENT_BOUNDARY_20261107.md",
+  "source_identity": {
+    "main_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+    "address_convention": "Raw ELF VAs/PCs; generated decomp names may include a 0x100000 display offset.",
+    "source_hashes": [
+      {"path": "/workspace/acnh-re/output/binary/analysis_decomp/becc50.c", "sha256": "3d572dd2a47d98d352e45f51453374c9621fcb9fe2a963d63266fb83f9345ea5"},
+      {"path": "/workspace/acnh-re/output/binary/analysis_decomp/7bbe20.c", "sha256": "5694a55b3ffd21fdad10be045a52f5170d7a1f33c26b422e08261882cb0291ab"},
+      {"path": "/workspace/acnh-re/output/binary/analysis_decomp/27c70.c", "sha256": "91af7c66c95663369fb49a154d14f8d065249e888fde5d14d177a48146519846"},
+      {"path": "/workspace/acnh-re/output/binary/analysis_decomp/c71bf0.c", "sha256": "df0143f8def558ee26a80fdba2ec7f81be9787bb62833f43d0502ec00687272a"},
+      {"path": "/workspace/acnh-re/output/binary/analysis_decomp/c67ff0.c", "sha256": "14c396b819c682273f129d53aeaa09f12fc40f5412ab1230a0187f82a106b6ef"},
+      {"path": "/workspace/acnh-re/output/binary/analysis_decomp/c70da0.c", "sha256": "b2253dd8192f615ce55cb57d7ff4de45a22ae14d4186edf61a4e57bb8f0b5588"},
+      {"path": "/workspace/acnh-re/output/binary/analysis_decomp/c6c210.c", "sha256": "baffdee9f089b4f117fcd428f82373155fac3986f5bd74aaf112e2d57f44d089"},
+      {"path": "/workspace/acnh-re/output/binary/code_pointer_arrays.json", "sha256": "64d474068ca289f9146f7f32e6647a16a05e8f5be8e635615a478744b62ef822"},
+      {"path": "/workspace/acnh-re/output/stage/actor_type_registry.json", "sha256": "67439173a460ad49bb6cbc0086047eb192581f0cad36f4c936c4078a39d959be"},
+      {"path": "/workspace/analysis/acnh/project/generated/re/string_refs.tsv", "sha256": "d65df09399b7300ebf3ac54ccdd79ca192433421210cd82b22d5dd91dce602cf"},
+      {"path": "acnh-re/output/gameplay/building_site_component_vptr_lifecycle_boundary_20261107.json", "sha256": "fcfdf31b810de110e827f5f2744637d97529b20841390e0b05b47b5c5d66a976"}
+    ]
+  },
+  "objects": {
+    "npc_actor": {
+      "initializer": {"name": "_INIT_2780", "va": "0xbecc50"},
+      "registered_name": "NpcActor",
+      "factory_constructor": "0xbe5e40",
+      "allocation_size": "0x618",
+      "base_init_chain": ["0xbe5e40", "0x7bbe20", "0x27c70"],
+      "base_init_effect": "clears receiver offsets +0x68 and +0x70",
+      "outer_vptr_addresspoint": "0x30d58a0",
+      "building_handler_receivers": ["0xbe6340", "0xbe6480"],
+      "component_attachment": "OPEN"
+    },
+    "npc_actor_mgr": {
+      "initializer": {"name": "_INIT_2810", "va": "0xc71bf0"},
+      "registered_name": "NpcActorMgr",
+      "factory": "0xc67fa0",
+      "constructor": "0xc67ff0",
+      "allocation_size": "0x10780",
+      "outer_vptr_addresspoint": "0x30d9a50",
+      "manager_method": {"slot_va": "0x30d9a88", "slot_offset": "+0x38", "target": "0xc685a0"},
+      "builder_call": {"from": "0xc685a0", "to": "0xc70da0", "call_pc": "0xc686ac"},
+      "actor_request_submitter": "0xc6c210",
+      "builds": ["E_FirstLive_NPC_0", "AI_NPC_Tkk_FirstLive"],
+      "does_not_prove": ["NpcActor receiver component assignment", "building placement component identity", "runtime construction execution"]
+    }
+  },
+  "bounded_checks": {
+    "manager_constructor_direct_store_to_receiver_plus_0x68": false,
+    "firstlive_builder_direct_store_to_receiver_plus_0x68": false,
+    "actor_request_submitter_pseudocode_has_direct_plus_0x68_store": false,
+    "scope": "Checked decompilation only for c67ff0, c70da0, and c6c210; indirect runtime construction and omitted/deferred targets remain outside this negative.",
+    "interpretation": "NpcActorMgr is not established as the missing NpcActor component writer."
+  },
+  "open_edges": [
+    "NpcActor runtime lifecycle writer/attachment for receiver+0x68.",
+    "Runtime inner vptr/global instance and its slot+0x128 implementation.",
+    "Final structure transform, footprint, collision/terrain validator, preview/build handoff, and save completion."
+  ],
+  "runtime_execution": false,
+  "godot_work": false
+}
