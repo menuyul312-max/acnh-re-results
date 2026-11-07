@@ -1,0 +1,358 @@
+{
+  "schema": "acnh.registration-terrain-proof/1",
+  "created_utc_date": "2026-11-07",
+  "scope": "Decoded/native evidence for the ACNH 1.0.0 new-player route from boot/title through registration, map selection, NewGame and the first landing sequence. No live game or Godot implementation is claimed.",
+  "status_legend": {
+    "EF": "Direct action, branch, or key in decoded EventFlow.",
+    "TBL": "Decoded source table, including BCSV parameters.",
+    "STRUCT": "Parsed asset or stage structure; raw asset presence is only claimed where its exact extracted member is cited.",
+    "PSEUDO": "Static page/layout identifier correspondence; caller, loader, or runtime instantiation remains unproved.",
+    "NATIVE": "Original native code behavior exercised or statically resolved; fixture/cache limits are retained.",
+    "CAT": "Catalogue-only candidate; raw Model/Sound archives are not present in the supplied source inventory.",
+    "OPEN": "Required runtime/source join is unresolved."
+  },
+  "source_sets": {
+    "base_game": {
+      "status": "ACNH 1.0.0 B_data / main NSO evidence used by the existing local source manifest",
+      "manifest": "acnh-re/output/manifest.json",
+      "main_nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+      "notes": "Source IDs, B_data paths, and file SHA-256 values below come from output/manifest.json."
+    },
+    "supplemental_romfs": {
+      "status": "STRUCT comparison corpus; exact game version is not established",
+      "manifest": "/workspace/acnh-re/output/additional_romfs/extracted_manifest.json",
+      "summary": "/workspace/acnh-re/output/additional_romfs/summary.json",
+      "version_note": "The inventory says 'Compare content evidence; do not infer exact version from filenames.' Its 1,171 identical files match the original set, but the specific UI/message assets cited below are new_path records unless otherwise established. They are not asserted as exact 1.0.0 assets.",
+      "model_sources_present": false,
+      "audio_source_path_matches": 0
+    }
+  },
+  "route": [
+    {
+      "step": 1,
+      "name": "Boot save load",
+      "status": "EF",
+      "source_path": "B_data/EventFlow/System_BootSequence.bfevfl",
+      "source_id": 627,
+      "sha256": "49d5c698a84ff22a8e469b382bad9b5471d9c6dc137b083c592f3906cc88f0d0",
+      "evidence": [
+        "Root calls SaveSimpleLoad {Process:cAll}.",
+        "On SaveProcIsSuccess case 0, calls SaveCopyToEnv, CreateStaticField, System_BootSequence_LangChk:Root, then System_BootSequence_PcSaveChk:Root."
+      ],
+      "limit": "This proves the decoded boot load sequence and branch labels, not save-media durability or the meaning of every boolean branch."
+    },
+    {
+      "step": 2,
+      "name": "Title to new-player order stage",
+      "status": "EF",
+      "source_path": "B_data/EventFlow/System_Title.bfevfl",
+      "source_id": 659,
+      "sha256": "0cc338bc2f0e739193b742ccc0f603148b0b0149282e5db4a169f6d8dea39333",
+      "key": "Root / UITitleHandling / UITitleResult case 1",
+      "evidence": "Requests SystemRequestChangeStage TargetStage:cCharacterOrder.",
+      "limit": "The exact CharacterOrder-to-IdrAirPortDemoDeparture handoff is OPEN."
+    },
+    {
+      "step": 3,
+      "name": "Departure stage and registration launcher",
+      "status": "STRUCT",
+      "source_path": "B_data/Stage/Game/IdrAirPortDemoDeparture.byml",
+      "source_id": 2887,
+      "sha256": "2004fd9b04cf7a7216a00fd6f6d410357f510b45adf56ee66b1e7952b5b382e5",
+      "evidence": [
+        "Stage contains launcher rcm/AIC:Demo/DMF:Tutorials_Prologue1_Charactermaking.",
+        "Actor labels rco and rct and CameraTag:Root are structurally present; rco/rct are at (120,160,0), camera at (160,160,0)."
+      ],
+      "limit": "No player spawn or CharacterOrder handoff is proved by this stage structure."
+    },
+    {
+      "step": 4,
+      "name": "Name and birthday registration",
+      "status": "EF",
+      "source_path": "B_data/EventFlow/Tutorials_Prologue1_Charactermaking.bfevfl",
+      "source_id": 661,
+      "sha256": "cbf8fc7e4f5df544398f8dfd4b401f558bf386862af1abac72b8ab57c1d8688d",
+      "key": "Apply -> EnteringNameAndBday",
+      "evidence": [
+        "UISoftwareKeyboardHandling {FormType:cName, IsClearString:true}.",
+        "SaveSetFromUIResult {SaveType:cPlayerName}; SetTagFromUIResult {TagType:cPlayerNameNoGender, TagID:0}.",
+        "UIDateHandling {DateInputType:cOpeningBirthday}; SaveSetFromUIResult {SaveType:cBirthDay}."
+      ],
+      "branch_context": "Apply reaches this step on both validated-save and new-prologue branches; the latter continues when cLand:ValidateVillageSave is OFF.",
+      "limit": "Action/result names do not alone prove the final durable save writer or UI handler implementation."
+    },
+    {
+      "step": 5,
+      "name": "Avatar creation",
+      "status": "EF",
+      "source_path": "B_data/EventFlow/Tutorials_Prologue1_Charactermaking.bfevfl",
+      "source_id": 661,
+      "sha256": "cbf8fc7e4f5df544398f8dfd4b401f558bf386862af1abac72b8ab57c1d8688d",
+      "key": "Apply -> Charactermaking",
+      "evidence": [
+        "UICharactermakingCreate.",
+        "UICharactermakingHandling {CharctermakingFilterType:cFirstTime}.",
+        "SaveSetFromUIResult {SaveType:cCharaMakeResult}."
+      ],
+      "limit": "The consumer linkage from handler to a particular layout is PSEUDO, and the native result-to-save mapping is OPEN."
+    },
+    {
+      "step": 6,
+      "name": "Region/weather-area choice",
+      "status": "EF",
+      "source_path": "B_data/EventFlow/Tutorials_Prologue1_Areacheck.bfevfl",
+      "source_id": 660,
+      "sha256": "e0a2260e57821e0d874eef053df88720a2a8e027d135fd4b94bbee8638f6704b",
+      "key": "Root -> Prologue1_SelSouth / AreaSel_ChoiseNorth / AreaSel_ChoiseSouth1st",
+      "evidence": "Choice branches call EnvWeatherArea with cWeatherArea_North or cWeatherArea_South before TerrainSelect. This regional weather-area selection is distinct from the four map preview cards.",
+      "limit": "Exact persistence field for this choice is OPEN."
+    },
+    {
+      "step": 7,
+      "name": "Island/map choice",
+      "status": "EF",
+      "source_path": "B_data/EventFlow/Tutorials_Prologue1_Charactermaking.bfevfl",
+      "source_id": 661,
+      "sha256": "cbf8fc7e4f5df544398f8dfd4b401f558bf386862af1abac72b8ab57c1d8688d",
+      "key": "Apply new-player branch -> Tutorials_Prologue1_Areacheck:Root -> TerrainSelect",
+      "evidence": [
+        "TerrainSelect displays message key 021, calls UIMapSelectHandling, then SaveSetFromUIResult {SaveType:cVillage}.",
+        "Message keys 022/023 and GeneralTalkChoice4 follow the returned result."
+      ],
+      "limit": "The selected cVillage result is not directly joined to a specific FieldMainFieldParam row, preview-map identity, or final saved template."
+    },
+    {
+      "step": 8,
+      "name": "End of character creation / opening movie handoff",
+      "status": "EF",
+      "source_path": "B_data/EventFlow/Tutorials_Prologue1_Charactermaking.bfevfl",
+      "source_id": 661,
+      "sha256": "cbf8fc7e4f5df544398f8dfd4b401f558bf386862af1abac72b8ab57c1d8688d",
+      "key": "EndCharacterMaking -> PV, ValidateVillageSave OFF branch",
+      "evidence": [
+        "Sets demo time to 14:00 and cLockDemo.",
+        "Sets cPlayer:MakeVillagePlayerFlag, cLandTemp:IsFirstPrologue and cLand:OpeningSeqBGMChangeCounter=1; reserves PrologueTanukichi.",
+        "Subsequent code requests cOpeningMovie."
+      ],
+      "limit": "The precise system-flow invocation that enters System_GrowUp:NewGame from cOpeningMovie is OPEN. The new-player branch does not set DoneCharacterCreation/EntryGame at this point; those flags are in the validated-save ON branch."
+    },
+    {
+      "step": 9,
+      "name": "NewGame setup and landing stage request",
+      "status": "EF",
+      "source_path": "B_data/EventFlow/System_GrowUp.bfevfl",
+      "source_id": 645,
+      "sha256": "ff6c2241927e1f657e941b504dd99ac3a27ba0fee296afba47c144eddee0ecb7",
+      "key": "NewGame",
+      "evidence": [
+        "Calls DateCheck; game-process Root and FirstDay; weather FirstDay.",
+        "Calls SaveGrowUp {GrowUpSituation:cStart}, unlocks time, then requests cMainFieldDemoLanding."
+      ],
+      "limit": "SaveGrowUp is an EventFlow action in this sequence; durable save commit semantics are OPEN."
+    },
+    {
+      "step": 10,
+      "name": "First landing cinematic and airport arrival stage",
+      "status": "EF",
+      "source_path": "B_data/EventFlow/Tutorials_Prologue_DemoLanding.bfevfl",
+      "source_id": 670,
+      "sha256": "3853a5ab67854826784baba8cd77f30b9081f18fbdd5ea37a0567b7fed8324b5",
+      "key": "Root",
+      "evidence": "Runs the landing cut, UILogoAppear {SelectKind:cTitle}, Flight_Landing trigger and requests cFrontOfAirPort.",
+      "stage_source": {
+        "status": "STRUCT",
+        "path": "B_data/Stage/Game/MainFieldDemoLanding.byml",
+        "source_id": 2910,
+        "sha256": "f65850ad99eec9bc52861a2a9591f46358ea3ad09bb14273f40ba5751e918143",
+        "notes": "Includes landing-flow launcher and AirportDemoAirplaneShadow actor; it does not establish a player spawn or model import."
+      }
+    }
+  ],
+  "save_evidence": {
+    "status": "STRUCT",
+    "index_path": "acnh-re/output/gameplay/save_layout.json",
+    "source_main_nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+    "birthday_member": {
+      "player_record_node_offset": "0x16a08",
+      "save_data_offset": "0x11478",
+      "size_bytes": 2,
+      "native_reference": "PlayerBirthday at 0xefe10 and 0xf920f0"
+    },
+    "interpretation": "The native save-layout crosswalk identifies a birthday field and related native routines, but does not prove the EventFlow cBirthDay result writes that member. Name, cCharaMakeResult and cVillage final offsets/writers remain OPEN. Boot SaveSimpleLoad and NewGame SaveGrowUp are not treated as proof of first durable save commit."
+  },
+  "ui_assets": [
+    {
+      "status": "PSEUDO",
+      "role": "static page-class to layout-name correspondence",
+      "source_path": "acnh-re/output/ui_hud/page_layout_method_bindings.json",
+      "main_nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+      "method": "Vtable method slot 46 at offset 0x170 returns a NUL-terminated string exactly matching a catalogued layout name; caller/loader/render path is not recovered.",
+      "bindings": [
+        {"page_class": "TitlePage", "method_va": "0x156cde0", "layout": "Title", "layout_bflyt_sha256": "40b872f05178df2009b2c5cca853e86120d9e01dee729fd4c54b5ad388749d0c"},
+        {"page_class": "CharaMakePage", "method_va": "0x11959c0", "layout": "CharaMake", "layout_bflyt_sha256": "251b48fc218d87ed64305d3b00bb20874daf5dcb3b99103dd90941ab3fa82a01"},
+        {"page_class": "DateInputPage", "method_va": "0x11e1cc0", "layout": "DateInput", "layout_bflyt_sha256": "2f2faed68871c59992eafa1ce96e38b83b441e965b45f798e42cb1648be5cb0d"},
+        {"page_class": "MapSelectPage", "method_va": "0x1241910", "layout": "CharaMakeMap", "layout_bflyt_sha256": "b110eb4c09bb23ce89f3f7a32139a68d1cc6b37c615788d75284a113941ca6ea"},
+        {"page_class": "PrologueBGPage", "method_va": "0x140efd0", "layout": "WipePrologue", "layout_bflyt_sha256": "411ad0aee7fb031004d5246ba101471a108e0cb964b2b2ae7761721bdb8588bc"}
+      ]
+    },
+    {
+      "status": "STRUCT",
+      "role": "parsed supplemental Layout BFLYT structure; exact 1.0.0 resource identity remains OPEN",
+      "source_path": "/workspace/acnh-re/output/ui_hud/screen_catalog.json",
+      "layouts": [
+        {"layout": "Title", "archive": "Layout/Title.Nin_NX_NVN.zs", "archive_sha256": "344dd7752c696a78d4f6712a1a6ce6d231d81c62272d563c89aac4a8906164ed", "bflyt_member": "Title.arc!blyt/Title.bflyt", "bflyt_sha256": "40b872f05178df2009b2c5cca853e86120d9e01dee729fd4c54b5ad388749d0c", "design_size": [1920, 1080], "pane_count": 22, "parts": ["L_BtnPressA_00 -> LTitlePressABtn", "regional title sublayouts"]},
+        {"layout": "CharaMake", "archive": "Layout/CharaMake.Nin_NX_NVN.zs", "archive_sha256": "670e2c2672cff10fa498239478fc6263111c0af923445580f4a48e3117ed1401", "bflyt_member": "CharaMake.arc!blyt/CharaMake.bflyt", "bflyt_sha256": "251b48fc218d87ed64305d3b00bb20874daf5dcb3b99103dd90941ab3fa82a01", "design_size": [1920, 1080], "pane_count": 120, "parts": ["face, hair/style/color, eye/style/color, nose, mouth, cheek, design, body and finish-dialog part families"]},
+        {"layout": "DateInput", "archive": "Layout/DateInput.Nin_NX_NVN.zs", "archive_sha256": "5ce672040b3bda9a0e284fb44dfe4752570fa24625e90404f5c7723313dc260d", "bflyt_member": "DateInput.arc!blyt/DateInput.bflyt", "bflyt_sha256": "2f2faed68871c59992eafa1ce96e38b83b441e965b45f798e42cb1648be5cb0d", "design_size": [1920, 1080], "pane_count": 36, "parts": ["month/day numeric selectors", "birthday confirmation button"]},
+        {"layout": "CharaMakeMap", "archive": "Layout/CharaMakeMap.Nin_NX_NVN.zs", "archive_sha256": "9d5c049c4b9368f0f1c462ef22a3e98665066d565e9cfa6f2f8a7f9d8be7c310", "bflyt_member": "CharaMakeMap.arc!blyt/CharaMakeMap.bflyt", "bflyt_sha256": "b110eb4c09bb23ce89f3f7a32139a68d1cc6b37c615788d75284a113941ca6ea", "design_size": [1920, 1080], "pane_count": 18, "map_card_panes": [{"pane": "L_Btn_00", "position": [-260, 76], "size": [562, 438]}, {"pane": "L_Btn_01", "position": [260, 76], "size": [562, 438]}, {"pane": "L_Btn_02", "position": [-260, -220], "size": [562, 438]}, {"pane": "L_Btn_03", "position": [260, -220], "size": [562, 438]}], "parts": ["each card is LCharaMakeMapBtn; dialog is LDialogMap"]},
+        {"layout": "WipePrologue", "archive": "Layout/WipePrologue.Nin_NX_NVN.zs", "archive_sha256": "46c4ef003a713b5fd80fcb24568476d3a1a39741bc10bcde1d151e7ed6e188c9", "bflyt_member": "WipePrologue.arc!blyt/WipePrologue.bflyt", "bflyt_sha256": "411ad0aee7fb031004d5246ba101471a108e0cb964b2b2ae7761721bdb8588bc", "design_size": [1920, 1080], "pane_count": 3}
+      ]
+    },
+    {
+      "status": "STRUCT",
+      "role": "BFLAN members exist in supplemental archives; trigger/timing is unresolved",
+      "source_path": "/workspace/acnh-re/output/additional_romfs/resource_inventory.json",
+      "assets": [
+        {"name": "Title_In / Title_Out / Title_InPressA", "archive": "Layout/Title.Nin_NX_NVN.zs", "member_names": ["Title.arc!anim/Title_In.bflan", "Title.arc!anim/Title_Out.bflan", "Title.arc!anim/Title_InPressA.bflan"]},
+        {"name": "CharaMake_In / CharaMake_Out / FinishOut / Type / CategoryNum / HairColorPos / Equip / Share / RegionLanguageType / 3DPoseWait", "archive": "Layout/CharaMake.Nin_NX_NVN.zs", "member_names": ["CharaMake.arc!anim/CharaMake_In.bflan", "CharaMake.arc!anim/CharaMake_Out.bflan", "CharaMake.arc!anim/CharaMake_FinishOut.bflan", "CharaMake.arc!anim/CharaMake_Type.bflan", "CharaMake.arc!anim/CharaMake_CategoryNum.bflan", "CharaMake.arc!anim/CharaMake_HairColorPos.bflan", "CharaMake.arc!anim/CharaMake_Equip.bflan", "CharaMake.arc!anim/CharaMake_Share.bflan", "CharaMake.arc!anim/CharaMake_RegionLanguageType.bflan", "CharaMake.arc!anim/CharaMake_3DPoseWait.bflan"]},
+        {"name": "DateInput_In / DateInput_Out / RegionLanguageType", "archive": "Layout/DateInput.Nin_NX_NVN.zs", "member_names": ["DateInput.arc!anim/DateInput_In.bflan", "DateInput.arc!anim/DateInput_Out.bflan", "DateInput.arc!anim/DateInput_RegionLanguageType.bflan"]},
+        {"name": "CharaMakeMap_In / CharaMakeMap_Out / RegionLanguageType", "archive": "Layout/CharaMakeMap.Nin_NX_NVN.zs", "member_names": ["CharaMakeMap.arc!anim/CharaMakeMap_In.bflan", "CharaMakeMap.arc!anim/CharaMakeMap_Out.bflan", "CharaMakeMap.arc!anim/CharaMakeMap_RegionLanguageType.bflan"]},
+        {"name": "WipePrologue_In / WipePrologue_Out", "archive": "Layout/WipePrologue.Nin_NX_NVN.zs", "member_names": ["WipePrologue.arc!anim/WipePrologue_In.bflan", "WipePrologue.arc!anim/WipePrologue_Out.bflan"]}
+      ]
+    },
+    {
+      "status": "STRUCT",
+      "role": "BNTX textures are hash/size/name proven in supplemental archive; page-specific use is only as far as BFLYT texture refs",
+      "source_path": "/workspace/acnh-re/output/additional_romfs/resource_inventory.json",
+      "assets": [
+        {"layout": "Title", "bntx_member": "Title.arc!timg/__Combined.bntx", "sha256": "47b2345b40f4d6d506a0efdb88596d13d8d03ee73ebb0b32b3d85d58e2d0569d", "textures": ["Capture^t"]},
+        {"layout": "CharaMake", "bntx_member": "CharaMake.arc!timg/__Combined.bntx", "sha256": "690a8f3f30dca784465a3d50042b5d95537fc4f6561773f7def9c0fbc6691c9a", "textures": ["CharaMakeCheekBtnCheek01^t", "CharaMakeGuideEquip^t", "CharaMakeIcoFacePaint^t", "CharaMakeMouthB^t", "CharaMakeMouthC^t", "CharaMakeMouthD^t", "CharaMakeNoseB^q", "CharaMakeNoseC^q"]},
+        {"layout": "DateInput", "bntx_member": "DateInput.arc!timg/__Combined.bntx", "sha256": "7e5cc31c5a106b571dee09779bb44e8da28b0bed8eaac4d9349343b95985ef71", "textures": ["LineB^s", "LogoNookIncETC^s", "LogoNookIncJP^s", "StartHeaderL^s", "StartHeaderR^s", "StartPattern^r", "StartWindowBase^s", "StartWindowBaseSdw^s", "TexPaper^r"]},
+        {"layout": "CharaMakeMap", "bntx_member": "CharaMakeMap.arc!timg/__Combined.bntx", "sha256": "5d0bae0edd0ed336c6bdb88318ca58b788738c52532a25efd2f67a731a00bb93", "textures": ["LogoNookIncETC^s", "LogoNookIncJP^s", "StartHeaderL^s", "StartHeaderR^s", "StartPattern^r", "StartWindowBase^s", "StartWindowBaseSdw^s", "TexPaper^r"]},
+        {"layout": "WipePrologue", "bntx_member": "WipePrologue.arc!timg/__Combined.bntx", "sha256": "3d9924d76d92d45ccdfd6d9ce543f43a35b35cfd967b7408dcc0973f8f8bd2b5", "textures": ["Black_00^r"]}
+      ],
+      "limit": "Map-card child LCharaMakeMapBtn layouts may carry the preview-image binding; the parent BNTX texture list does not prove the four island pictures or their data source."
+    },
+    {
+      "status": "OPEN",
+      "role": "main-game StaticParam UI definitions are source-backed, but page use remains unproved",
+      "sources": [
+        {"path": "B_data/Pack/StaticParam.pack!Param/Layout/CharaMake.byml", "source_id": 936, "sha256": "ea4e732051fb0ce166c2a49d63da29451cbbefd6b758a8d5f791cc69aba6e17d", "key": "UI_CharaMake", "parts": ["L_BtnOk", "L_ColorBtnFace_", "L_BtnListHair_", "L_BtnListEye_", "L_BtnNose_", "L_BtnMouth_", "L_BtnCheek_"]},
+        {"path": "B_data/Pack/StaticParam.pack!Param/Layout/CharaMakeMap.byml", "source_id": 1652, "sha256": "c46216c67b2bfe46641ce6981ddef4334a5c6f302a96d8e68b7e41708b9c0e56", "key": "UI_CharaMakeMap", "parts": ["/L_Dialog_00", "L_Dialog_00/L_BtnL", "L_Dialog_00/L_BtnR"]}
+      ],
+      "limit": "These BYML parameter rows corroborate layout/part names, not the handlers' page creation or data bindings."
+    }
+  ],
+  "text_assets": [
+    {
+      "status": "EF",
+      "source_path": "B_data/EventFlow/Tutorials_Prologue1_Charactermaking.bfevfl",
+      "source_id": 661,
+      "keys": ["Tutorials/Tutorials_Prologue1_Airport:003_02", "005_01", "005_02", "021", "022", "023", "024"],
+      "claim": "These message IDs are invoked at name/birthday, avatar, island choice, and final-question points in EventFlow."
+    },
+    {
+      "status": "STRUCT",
+      "source_path": "/workspace/acnh-re/output/additional_romfs/messages/USen/Tutorials.json",
+      "archive_path": "Message/Tutorials_USen.sarc.zs",
+      "archive_sha256": "2cc35ef4907f06a53213f44adab3f6bb9047fe196290413ec47a2246f652da73",
+      "member_path": "Tutorials_Prologue1_Airport.msbt",
+      "member_sha256": "7e17eb63129ef707e9bff5773648a55cc38a0342b36a726e6b095508f7a99e6f",
+      "examples": {
+        "003_02": "asks for the applicant's name and birthday",
+        "005_01": "says the next step is to take the player's picture and appearance can be adjusted",
+        "021": "says all islands are approximately the same size/natural before map choice",
+        "022": "confirms the selected island"
+      },
+      "limit": "Localized MSBT is supplemental STRUCT evidence; its exact 1.0.0 identity and final layout binding are OPEN."
+    }
+  ],
+  "parameter_tables": [
+    {"status": "TBL", "table": "CharaMakeCheekTypeParam", "path": "B_data/Bcsv/CharaMakeCheekTypeParam.bcsv", "source_id": 5, "sha256": "9af9aecfa53a5916e3e845d0cd28b581f1584e2aaafa1b346e72c35820b49a26"},
+    {"status": "TBL", "table": "CharaMakeEyeColorParam", "path": "B_data/Bcsv/CharaMakeEyeColorParam.bcsv", "source_id": 6, "sha256": "80ede6a0079c3ba4cc1b8427647aa053daf9371573d6c07834c096284a9221b0"},
+    {"status": "TBL", "table": "CharaMakeEyeTypeParam", "path": "B_data/Bcsv/CharaMakeEyeTypeParam.bcsv", "source_id": 7, "sha256": "d8d95883b7dbb6193754ac79c289672903994f184ce870def4dfea3ee7184547"},
+    {"status": "TBL", "table": "CharaMakeHairColorParam", "path": "B_data/Bcsv/CharaMakeHairColorParam.bcsv", "source_id": 8, "sha256": "b55b84e127da2361c01feb615d27f02379e9e072e13afd564ed0945930f42272"},
+    {"status": "TBL", "table": "CharaMakeHairStyleParam", "path": "B_data/Bcsv/CharaMakeHairStyleParam.bcsv", "source_id": 9, "sha256": "70d80dccf6a42435270f80690770914e9529f6b46d82305b7447a9b158025f72"},
+    {"status": "TBL", "table": "CharaMakeMouthTypeParam", "path": "B_data/Bcsv/CharaMakeMouthTypeParam.bcsv", "source_id": 10, "sha256": "90920502b9153c7e89d41dadcdc213250d28fed62bc60f0b1553696d2c7c29c9"},
+    {"status": "TBL", "table": "CharaMakeNoseTypeParam", "path": "B_data/Bcsv/CharaMakeNoseTypeParam.bcsv", "source_id": 11, "sha256": "0135c826164adb3a12a1aca83f94c5f352c0aaf73d0ae46af09f9aa934b1d93c"},
+    {"status": "TBL", "table": "CharaMakeSkinColorParam", "path": "B_data/Bcsv/CharaMakeSkinColorParam.bcsv", "source_id": 12, "sha256": "a627b26ba459cabfe34987a2a14a4ebfe7d29315301631fed0206ff3bd8d8382"}
+  ],
+  "terrain_world_data": [
+    {
+      "status": "TBL",
+      "tables": [
+        {"name": "FieldMainFieldParam", "path": "B_data/Bcsv/FieldMainFieldParam.bcsv", "source_id": 41, "sha256": "3ebd1057e41b0666aa30c6d8beee9220b52d8fb5280c478e8eb13eaca5d27944", "rows": 96},
+        {"name": "FieldOutsideParts", "path": "B_data/Bcsv/FieldOutsideParts.bcsv", "source_id": 45, "sha256": "1d244d825f4ef111afae5df2568486ceab243caccd21c17259b5ec59830650e6", "rows": 136},
+        {"name": "FieldOutsideTemplate", "path": "B_data/Bcsv/FieldOutsideTemplate.bcsv", "source_id": 46, "sha256": "1c615f1c8b42d4f690f81fd577261a3daf61f814bb3b1f93354fd1b714c5a314", "rows": 36}
+      ],
+      "derived_evidence_path": "acnh-re/output/ui_island/island.json",
+      "key_relations": [
+        "FieldMainFieldParam.FieldData values resolve to *_LandMaking.byml, *_EventPlaza.byml, structure-preset and item-preset resources.",
+        "FieldOutsideTemplate stores UniqueID, TemplateKind, sea/wind data and outside-part slots; FieldOutsideParts supplies type-filtered part IDs/model names."
+      ],
+      "limit": "These tables establish terrain/world data families and row relationships, not which field preset or map was selected by cVillage."
+    },
+    {
+      "status": "NATIVE",
+      "source_path": "acnh-re/output/ui_island/island_template_selector_native.json",
+      "source_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+      "functions": {"main_field_row_reader": "0x54e330", "template_kind_reader": "0x5089e0", "selector": "0x552bb0", "selector_caller": "0x529910"},
+      "evidence": "528 native selector fixture cases had no mismatches. With reconstructed typed caches and the original 96-row FieldMainFieldParam plus 36-row FieldOutsideTemplate inputs, 3B_S2 / 3B_SE / 3B_SW pools contain 12 templates each; each of 96 presets maps to one 12-template candidate pool.",
+      "limit": "The fixture proves a coast/outside-template candidate selector, not the player's four-card choice or a chosen saved island. Original cache initialization, live RNG integration, actual map/template loading and selected cVillage-to-preset join remain OPEN."
+    },
+    {
+      "status": "STRUCT",
+      "source_path": "acnh-re/docs/TERRAIN_RUNTIME.md",
+      "evidence": "LandMaking grids are 112x96; coast subdivision is 7x6 segments of 16x16; native segment centers are 160 units apart. PBC runtime records are 52 bytes and differ from 14-byte preset records; converter/loader linkage is unresolved.",
+      "limit": "Terrain dimensions are supporting world-data context, not proof that registration's selected map has loaded or that Godot should use a particular transform."
+    }
+  ],
+  "model_sound_catalog_candidates": [
+    {
+      "status": "CAT",
+      "kind": "Model",
+      "source_path": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json",
+      "archive_availability": "raw Model sources are absent; generated paths are references only",
+      "candidates": [
+        {"asset_id": "NpcSpRco", "catalogue_name": "Tom Nook", "generated_reference": "acnh_godot/generated/models/NpcSpRco/NpcSpRco.glb"},
+        {"asset_id": "StrcAirPortA00", "generated_reference": "acnh_godot/generated/models/StrcAirPortA00/StrcAirPortA00.glb"},
+        {"asset_id": "StrcAirPortA00Deck", "generated_reference": "acnh_godot/generated/models/StrcAirPortA00Deck/StrcAirPortA00Deck.glb"}
+      ],
+      "limit": "Candidate IDs align by name with airport-stage context only; no actor/structure consumer, raw file, rig, transform, collision, or preview-map model join is established."
+    },
+    {
+      "status": "CAT",
+      "kind": "Sound",
+      "source_path": "/workspace/acnh-re/output/additional_romfs/catalogues/audio.json",
+      "archive_availability": "raw Sound sources are absent; generated paths are references only; inventory has zero raw path matches",
+      "candidates": [
+        {"audio_id": "Event_Tutorials_Prologue1_Charactermaking/Demo_Plane_Inside", "source_reference": "Sound/Resource/Event_Tutorials_Prologue1_Charactermaking.bars"},
+        {"audio_id": "Event_Tutorials_Prologue_DemoLanding/Demo_Plane_Landing", "source_reference": "Sound/Resource/Event_Tutorials_Prologue_DemoLanding.bars"},
+        {"audio_id": "BGM_Field_Prologue_Phase1", "source_reference": "Sound/Resource/Stream/BGM_Field_Prologue_Phase1.bwav"}
+      ],
+      "limit": "EventFlow BGMPropertyControl IDs 55/54 and Flight_Landing are call keys only; they do not prove these catalogue entries are the corresponding runtime sounds."
+    }
+  ],
+  "open_joins": [
+    "UITitleResult -> CharacterOrder stage and CharacterOrder -> IdrAirPortDemoDeparture transition.",
+    "EventFlow UI handler -> instantiated UI page/layout, user input events, and actual page animation triggers.",
+    "Exact 1.0.0 identity of the supplemental Layout and MSBT resource files.",
+    "Four CharaMakeMap card preview image/model source and card-to-cVillage result mapping.",
+    "cVillage result -> FieldMainFieldParam UniqueID / FieldData -> selected initial map and coast/template result.",
+    "Region weather-area setting -> exact save member.",
+    "cPlayerName, cBirthDay, cCharaMakeResult and cVillage -> final save writers / first durable save commit.",
+    "cOpeningMovie -> System_GrowUp:NewGame dispatcher and exact cFrontOfAirPort stage launch ownership.",
+    "Departure/landing stage actors -> raw Model archive members, skeleton/animation clips, transforms, collision and visible initial player spawn.",
+    "BGMPropertyControl/Flight_Landing -> raw Sound members and playback parameters."
+  ],
+  "godot_conversion_notes": [
+    "Treat BFLYT/BFLAN and static parameter names as source of truth; recreate layout hierarchy, anchors and animations in Godot UI only after exact 1.0.0 asset identity and handler bindings are resolved.",
+    "BNTX textures require NVN/GX2 block-format decoding to ordinary image textures; preserve channel swizzles, dimensions and alpha interpretation before importing. Parent CharaMakeMap BNTX does not prove the four preview images.",
+    "BCSV/BYML table rows should first be normalized into typed Godot data resources while retaining source IDs, enum labels, ordering and unknown fields. Keep map-card choice, preset selection, coast-template selection and PBC loading as separate stages until proven linked.",
+    "Do not convert catalogue GLB/OGG reference paths into runtime assets; raw Model and Sound archives are absent in this input set."
+  ],
+  "validation": {
+    "json_schema": "acnh-re/output/gameplay/registration_terrain_proof_20261107.json is valid JSON; this standalone report uses its own schema label and is not an extension of the shared story crosswalk schema.",
+    "source_hashes": "Hashes were copied from output/manifest.json, page_layout_method_bindings.json or additional RomFS inventory entries and spot-checked against those local sources.",
+    "scope_controls": ["No Godot implementation", "No build", "No git commit/push", "No shared story crosswalk/README/HANDOFF edits"]
+  }
+}
