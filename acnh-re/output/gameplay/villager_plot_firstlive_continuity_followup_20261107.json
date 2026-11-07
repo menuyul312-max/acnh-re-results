@@ -1,0 +1,310 @@
+{
+  "schema": "acnh-re/gameplay/villager_plot_firstlive_continuity_followup/1",
+  "game_version": "1.0.0",
+  "analysis_date": "2026-11-07",
+  "analysis_mode": "static source trace; no native execution or save mutation",
+  "report": "docs/VILLAGER_PLOT_FIRSTLIVE_CONTINUITY_FOLLOWUP_20261107.md",
+  "scope": "A/B/C migrant plot completion through selected resident save records, first campsite camper selection/talk/slot assignment, and K.K. first-live stage/AI/talk progress boundary. Placement/furniture detail is cross-referenced, not repeated.",
+  "provenance": {
+    "raw_manifest": {
+      "path": "/workspace/acnh-re/output/manifest.json",
+      "sha256": "eb8d114129e01e6c3284a7a2613c3f451d649c0708a58a1a08cd757c5f3840a8"
+    },
+    "native_main": {
+      "path": "/workspace/acnh-re/inputs/additional_exefs/main",
+      "sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+      "kind": "ACNH 1.0.0 main NSO; direct disassembly address base"
+    },
+    "native_index": {
+      "path": "/workspace/acnh-re/output/index.sqlite",
+      "sha256": "a78c7af27d37b8fd931bba8bc611623dacf7685cb6e8b4f827effa0765340aad",
+      "kind": "function and direct-call index; read-only workspace outside deliverable repository"
+    },
+    "event_handler_map": {
+      "path": "/workspace/acnh-re/output/binary/event_handlers_resolved.json",
+      "sha256": "dfc298dfcb1b288b8fda9cd6a49c728fdad903b41f8fc1c9288df7d732ec92a5"
+    },
+    "flow_index": {
+      "path": "/workspace/acnh-re/output/gameplay/flow_index.json",
+      "sha256": "359f3a21a17a116902b0c8e1110c3892814b6fccbeb50b71d573c8ab3e1c68c5",
+      "limit": "456-flow explicit entry/subflow/caller index; excludes message text and engine-side dynamic talk selection"
+    },
+    "native_flag_refs": {
+      "path": "/workspace/acnh-re/output/gameplay/native_flag_refs.json",
+      "sha256": "e7b1f581a342a6ec856cc735326823f0721aa81b587fc54f4300b2ab2b25bedc",
+      "limit": "automated pseudocode/string cross-references; static, not native execution"
+    },
+    "actor_type_registry": {
+      "path": "/workspace/acnh-re/output/stage/actor_type_registry.json",
+      "sha256": "67439173a460ad49bb6cbc0086047eb192581f0cad36f4c936c4078a39d959be",
+      "kind": "native stage actor type registry crosswalk"
+    },
+    "existing_proofs": [
+      {
+        "path": "docs/BUILDING_PLACEMENT_PROOF_20261107.md",
+        "sha256": "9c0b6fc6b8fe91593ad55cded3ba8be830bd035cf3e93c17b41b7317cc85a95d",
+        "purpose": "plot construction and material gates; no placements duplicated here"
+      },
+      {
+        "path": "output/gameplay/core_story_progression_gate_proof_20261107.json",
+        "sha256": "b58e8a000d4656ff49a2fb1863a8d4a8a0b8f3ba0037d289929e919d3deeba02",
+        "purpose": "prior story progression and first-live progress boundaries"
+      },
+      {
+        "path": "output/gameplay/core_story_firstlive_stage_dispatch_followup_20261107.json",
+        "sha256": "a5b9db9c004419c40fb2a2a05e52911498d40b097586327d50088b2082c8bc45",
+        "purpose": "prior K.K. first-live label, candidate stage, NpcActorMgr and first-live actor builder trace"
+      }
+    ],
+    "evidence_policy": {
+      "EF": "EventFlow source graph/action evidence; not proof of runtime event entry",
+      "TBL": "raw/resolved BCSV table field or enum evidence",
+      "STRUCT": "parsed stage BYML record evidence; not proof of resource selection or runtime use",
+      "PSEUDO": "static pseudocode/disassembly interpretation; not native execution",
+      "OPEN": "required join not recovered",
+      "status_boundary": "A static call/string/record does not establish runtime stage-manager dispatch, actor instantiation, or engine-selected talk entry without an explicit join."
+    }
+  },
+  "source_inventory": [
+    {"source_id": 650, "path": "B_data/EventFlow/System_MigrantsQuestProcess.bfevfl", "format": "BFEVFL", "sha256": "16623f71911d5a79b1c72be57d6087e9086c519e18f056a2a79fb4eb6cfc08d9"},
+    {"source_id": 295, "path": "B_data/EventFlow/Demo_PublicAnnouncement_Process.bfevfl", "format": "BFEVFL", "sha256": "7b921fd4ef4b262169b3f9d445bf74437fcf913294607d20f8b29c6b65bb8077"},
+    {"source_id": 604, "path": "B_data/EventFlow/SNPC_rco_53_MigrantsQuest.bfevfl", "format": "BFEVFL", "sha256": "1e47270f484207fdbf9adadccb70a3dc32807fae2cdc306d140124cef350ec22"},
+    {"source_id": 646, "path": "B_data/EventFlow/System_GrowUp_GameProcess.bfevfl", "format": "BFEVFL", "sha256": "03b729f203a7cd309b5427f6c9a54e1a238fc8818f44ca7b40f5249aa52d7a2e"},
+    {"source_id": 605, "path": "B_data/EventFlow/SNPC_rco_54_IslandDevelopment.bfevfl", "format": "BFEVFL", "sha256": "6d7e6be11b6781102595328a6d636e7cfdba1fc9a74414d4137025744a570fc8"},
+    {"source_id": 506, "path": "B_data/EventFlow/Player_Demo_HousingFinish.bfevfl", "format": "BFEVFL", "sha256": "0d985729c46942063a1e57aa33bd47d307ede97c2d195cfcee72f6034a3e8c4d"},
+    {"source_id": 459, "path": "B_data/EventFlow/NNPC_Spot_Camp.bfevfl", "format": "BFEVFL", "sha256": "e14f475db1ccdeae628592b167d64a50cec5436634e666ca146f7c9a7210f948"},
+    {"source_id": 222, "path": "B_data/EventFlow/AI_NPC_Camp.bfevfl", "format": "BFEVFL", "sha256": "5b2d0a4569b0bbf3b0ee6237264fbe00dbd58637af28b96dda6de7887a3a163c"},
+    {"source_id": 279, "path": "B_data/EventFlow/Demo_PublicAnnouncement.bfevfl", "format": "BFEVFL", "sha256": "7ec0d30107a1d40169b4455932f0f6853beb9ef7b7cf69ca2ee2f77958a12602"},
+    {"source_id": 625, "path": "B_data/EventFlow/SNPC_tkk_Live.bfevfl", "format": "BFEVFL", "sha256": "d1a9d0253d4ae6c1ed46e87d007f8924f4cba637589a3d0750ca07295794d316"},
+    {"source_id": 272, "path": "B_data/EventFlow/AI_NPC_Tkk_FirstLive.bfevfl", "format": "BFEVFL", "sha256": "5f7c36dba971c8c30f434b92085a8bb7e8bd677df39bcd008d0aa8950e02a9f8"},
+    {"source_id": 240, "path": "B_data/EventFlow/AI_NPC_Normal.bfevfl", "format": "BFEVFL", "sha256": "b4fbdfb3e95ef83ada368c339f3c57ff83360449c0a3fb8d23cf45863fed60a1"},
+    {"source_id": 241, "path": "B_data/EventFlow/AI_NPC_Outdoor.bfevfl", "format": "BFEVFL", "sha256": "8d5ac4551e821765f3d0fa0656a6ec42a40b7aadfc028b43bb9b75ede0054fa"},
+    {"source_id": 226, "path": "B_data/EventFlow/AI_NPC_Common.bfevfl", "format": "BFEVFL", "sha256": "ae5068b0fed03c29c52a922333988f99c8cee6a4ea982ffda88a1e0e4cbc697f"},
+    {"source_id": 108, "path": "B_data/Bcsv/NmlNpcParam.bcsv", "format": "BCSV", "sha256": "73a3d877def047adc7e0d2776d2aaf5f0cbe63cfafdacfaf52732b3264e6cbbc", "rows": 397},
+    {"source_id": 2907, "path": "B_data/Stage/Game/MainField.byml", "format": "BYML", "sha256": "f1d017317db841026fb23d9a4af5b92b573aa243e984e54dfc2ef281dd115674"},
+    {"source_id": 2984, "path": "B_data/Stage/commonOutdoor.byml", "format": "BYML", "sha256": "5ab2a53a8b702782416576e7296724fe53a52580558c20500b4015449dec4503"},
+    {"source_id": 2909, "path": "B_data/Stage/Game/MainFieldDemoFirstLive.byml", "format": "BYML", "sha256": "0cf0898403df0b2eb8a47fae804a373ca6a7dcc8eb9680aac64360847b16bd12"},
+    {"source_id": 2982, "path": "B_data/Stage/StageList.byml", "format": "BYML", "sha256": "9dd2757d7dad92fdf5724df38902a56a6b9445dca87defc06d3ee8e6adee9414"}
+  ],
+  "plot_completion_and_selection": {
+    "eventflow": [
+      {
+        "source_id": 650,
+        "flow": "System_MigrantsQuestProcess",
+        "entries": [
+          {"entry": "ChkRcoImmQClearChkA", "settler_type": 0, "actions": [{"event": 4, "action": "CompleteSettlerQuestSubject"}, {"event": 56, "action": "DecideSettlerNpc"}]},
+          {"entry": "ChkRcoImmQClearChkB", "settler_type": 1, "actions": [{"event": 13, "action": "CompleteSettlerQuestSubject"}, {"event": 55, "action": "DecideSettlerNpc"}]},
+          {"entry": "ChkRcoImmQClearChkC", "settler_type": 2, "actions": [{"event": 14, "action": "CompleteSettlerQuestSubject"}, {"event": 54, "action": "DecideSettlerNpc"}]}
+        ],
+        "gate_note": "Each branch checks its own final outside check with OutsideCheckType=3 after indoor completion conditions. Placement proof retains the distinct furnishing requirements."
+      },
+      {
+        "source_id": 295,
+        "flow": "Demo_PublicAnnouncement_Process",
+        "entries": [
+          {"settler_type": 0, "outside_gate_event": 52, "complete_event": 61, "decide_event": 114},
+          {"settler_type": 1, "outside_gate_event": 56, "complete_event": 62, "decide_event": 115},
+          {"settler_type": 2, "outside_gate_event": 60, "complete_event": 63, "decide_event": 116}
+        ],
+        "all_three_complete_flag_event": 71,
+        "all_three_complete_flag": "cLand:RcmImmQuestComplete"
+      }
+    ],
+    "native_handlers": {
+      "complete_settler_quest_subject": {
+        "registration_name": "EventFlowActionCompleteSettlerQuestSubject",
+        "factory": "0x452830",
+        "constructor": "0x33bea0",
+        "execute_slot": "0x33bf50",
+        "parameter": "SettlerType:int",
+        "raw_pcs": ["0x33bf64", "0x33bfa4-0x33bfbc", "0x33c04c", "0x33c058"],
+        "static_effect": "loads SettlerType; calls 0xfc2f00 on the settler member; writes ImmQ_A_Complete, ImmQ_B_Complete, or ImmQ_C_Complete ON for types 0, 1, 2 respectively",
+        "completion_order": {"helper": "0xfc2f00", "member_offsets": ["+0xb4", "+0xb5", "+0xb6"], "empty_sentinel": 3, "interpretation": "records type in first empty byte; [PSEUDO]"}
+      },
+      "decide_settler_npc": {
+        "registration_name": "EventFlowActionDecideSettlerNpc",
+        "factory": "0x44ecb0",
+        "constructor": "0x33c5b0",
+        "execute_slot": "0x33c660",
+        "parameter": "SettlerType:int",
+        "raw_pcs": ["0x33c674", "0x33c6fc-0x33c710", "0x33c728", "0x33c744-0x33c75c", "0x33c784", "0x33c798"],
+        "static_effect": "indexes the 0xc0 settler member by SettlerType*0x3c, checks for an empty plot NPC ID, obtains/validates a 3-byte ID, stores it, then queries and emits plot update state",
+        "picker": {
+          "function": "0xf8dd70",
+          "table_va": "0x29fa1dc",
+          "filter_values": [0, 5, 4],
+          "filter_callback": "0xf8de30",
+          "candidate_picker": "0xf8d860",
+          "npc_table_field": "NmlNpcParam.NpcLooks",
+          "enum_labels_in_order": ["Boy_normal", "Boy_active", "Boy_pride", "Boy_snobby", "Girl_normal", "Girl_active", "Girl_pride", "Girl_big_sis"],
+          "selection_limit": "Static filter/picker path is resolved; no player save was executed."
+        }
+      }
+    },
+    "status": "EF and native handler/data path confirmed statically through per-plot selected NPC ID; no runtime actor proof."
+  },
+  "move_in_and_resident_actor": {
+    "move_in_processor": {
+      "dispatcher": "0xf84320",
+      "dispatcher_calls": ["0xf847f0", "0xf84f10"],
+      "plot_consumer": "0xf8c540",
+      "consumer_callers": ["0xf84f10", "0xf8c540"],
+      "raw_pcs": ["0xf8c5b8", "0xf8c5f4", "0xf8c65c", "0xf8c6fc", "0xf8c73c", "0xf8c780", "0xf8c7bc", "0xf8c7d4", "0xf8c7e8"],
+      "static_effect": [
+        "reads next SettlerType/plot via 0xfc2d20 and checks plot/housing progress via 0xfc30e0 and plot completion flags via 0xfc2cf0",
+        "reads the selected ID from the same 0xc0 settler member with 3 slots at 0x3c-byte stride; uses 0xf8d860 fallback if an ID is absent",
+        "writes NPC ID to NPC save slot via 0xf03360; records FromSettlerQuest through 0xf497c0",
+        "calls 0xf13c10 then 0xf8de90 to write MoveInOrder and MoveInCompletion state"
+      ],
+      "npc_save_slots": {"count": 10, "stride": "0x12ab0", "evidence": "native_flag_refs.json villager_moves and 0xf8c540 static decomp"},
+      "status": "Static save-processor join confirmed; day-change path not run."
+    },
+    "stage_and_actor_candidate": {
+      "stage_sources": [2907, 2984],
+      "mainfield_includes": "commonOutdoor",
+      "common_outdoor_npc_actor_manager_row": {"row": "/3cbaa541/2", "actor_name_hash": "0xc2701e0b", "native_type_index": 5, "native_type": "NpcActorMgr"},
+      "candidate_builder": {
+        "function": "0xc68f30",
+        "direct_callers_in_native_index": [],
+        "body_observations": ["10 NPC save-slot loop", "checks AbandonedHouse state and MoveInCompletion", "builds %s%02d actor name", "builds %s/AIC:%s path", "submits actor through 0xc6c210"],
+        "status": "body is a resident-actor candidate; stage alias/include runtime selection and indirect manager call to this function are OPEN"
+      },
+      "general_ai_resources": [{"source_id": 240, "flow": "AI_NPC_Normal"}, {"source_id": 241, "flow": "AI_NPC_Outdoor"}],
+      "open_talk_join": "No indexed plot-resident first-meeting entry or engine AI/talk selector to a specific talk flow was recovered."
+    }
+  },
+  "first_camper": {
+    "first_camper_gate": {
+      "source_id": 646,
+      "flow": "System_GrowUp_GameProcess",
+      "entry": "FirstCamperCheck",
+      "eventflow_edges": [
+        {"event": 0, "query": "CampSiteBuilt", "true_case": 0, "next": 11},
+        {"event": 11, "query": "RcoBuildFirstVisitorsHousingKitComplete", "false_case": 1, "next": 1},
+        {"event": 1, "write_on": "RcoMeetFirstVisitorRequest"},
+        {"event": 10, "write_on": "CampFirstCamperVisit"},
+        {"event": 12, "write_off": "CampFirstCamperVisit", "next": 14},
+        {"event": 14, "write_on": "TanuportAmiiboCampUnlock"}
+      ],
+      "status": "EF branch content confirmed; it is not evidence the campsite was built in a live save."
+    },
+    "visitor_selection": {
+      "day_change_function": "0xf7d4c0",
+      "requires": "campsite member +0x20d4d0 state == 2",
+      "first_visitor_flag": "CampFirstCamperVisit ON forces visitor selection",
+      "picker": "0xd418b0; excludes residents on island",
+      "store": "0xf7d990 to campsite member +0x20d578; mirrored to NPC data by 0xf86300",
+      "raw_pcs": ["0xf7d584", "0xf7d58c", "0xf7d5a4"],
+      "status": "PSEUDO static visitor selection and save write; no day-change execution."
+    },
+    "actor_candidate": {
+      "builder": "0xc6ce40",
+      "direct_caller": "0xc68f30",
+      "raw_pcs": ["0xc6ce78", "0xc6ce98", "0xc6d100", "0xc6d128"],
+      "static_effect": "reads campsite camper data, calls 0xf7d760, constructs E_%s_NPC_%02d plus %s/AIC:Camp/AIF:AI_NPC_Camp, submits via 0xc6c210",
+      "status": "candidate body; stage/runtime invocation OPEN"
+    },
+    "ai_to_talk": {
+      "source_id": 222,
+      "flow": "AI_NPC_Camp",
+      "entry": "Root",
+      "decoded_actions": [
+        {"event": 2, "query": "CampFirstCamperVisit"},
+        {"event": 3, "query": "RcoMeetFirstVisitorComplete"},
+        {"event": 7, "action": "SetNpcSpeakFlow", "params": {"FlowName": "NNPC_Spot_Camp", "EntryName": "Root"}},
+        {"event": 4, "action": "NpcChangeAIState", "params": {"StateName": "cSpeak", "TalkEventFlowName": "NNPC_Spot_Camp", "TalkEntryPointName": "Root"}},
+        {"event": 5, "action": "NpcChangeAIState", "params": {"StateName": "cCampWander"}},
+        {"event": 10, "action": "NpcChangeAIState", "params": {"StateName": "cCampWander"}}
+      ],
+      "condition": "first-visitor flag ON and first-visitor-complete flag OFF selects configured cSpeak path",
+      "status": "EF action path confirmed after AI root entry; root entry/runtime actor join remains open"
+    },
+    "first_talk_and_slot_assignment": {
+      "source_id": 459,
+      "flow": "NNPC_Spot_Camp",
+      "normal_route": {"entry": "Flow_Normal", "first_visitor_call_event": 96, "target": "Flow_FirstCamperZK"},
+      "first_visitor_flow": {
+        "entry": "Flow_FirstCamperZK",
+        "first_talk_flag": {"event": 92, "flag": "cPlayer:CampFirstTalk_FirstVisitor", "value": "ON"},
+        "set_sixth_villager": {"event": 120, "action": "Set6thVillager", "params": {"Step": 0}},
+        "story_flags_after_first_talk": [
+          {"event": 94, "flag": "cPlayer:IslandDevQuestOrderFirstCamperMyself", "value": "ON"},
+          {"event": 95, "flag": "cLand:RcoMeetFirstVisitorComplete", "value": "ON"}
+        ]
+      },
+      "native_action": {
+        "factory": "0x44f8b0",
+        "constructor": "0x313f40",
+        "execute_slot": "0x313ff0",
+        "parameter": "Step:int",
+        "step0_call_pc": "0x3140b8",
+        "step0_callee": "0xf86f30",
+        "slot_write": {"helper": "0xf03360", "pc": "0xf86f60", "npc_slot": 5, "slot_base_offset": "0x5d570", "slot_stride": "0x12ab0", "index_notification": {"pc": "0xf86fc0", "value": 5}}
+      },
+      "status": "first talk sequence and camper-ID write to slot 5 confirmed statically; slot-5 housing-completion-to-spawn join OPEN"
+    }
+  },
+  "first_live": {
+    "prior_proof": "output/gameplay/core_story_firstlive_stage_dispatch_followup_20261107.json",
+    "announcement": {"source_id": 279, "flow": "Demo_PublicAnnouncement", "entry": "PAnnounceSza", "event": 41, "target_stage": "cMainFieldFirstLive"},
+    "candidate_actor": {
+      "source_id": 2909,
+      "stage": "B_data/Stage/Game/MainFieldDemoFirstLive.byml",
+      "includes_source_id": 2984,
+      "manager_type": "NpcActorMgr",
+      "manager_method": "0xc685a0",
+      "actor_builder": "0xc70da0",
+      "actor_name": "E_FirstLive_NPC_0",
+      "ai_path": "%s/AIC:Special/AIF:AI_NPC_Tkk_FirstLive",
+      "status": "candidate stage and actor/AI builder statically established in prior proof; stage alias and indirect factory invocation remain OPEN"
+    },
+    "ai_talk_entry": {
+      "source_id": 272,
+      "ai_flow": "AI_NPC_Tkk_FirstLive",
+      "ai_entry": "Root",
+      "event": 5,
+      "subflow": "AI_NPC_Common:ContinueSpeak",
+      "source_id_talk": 625,
+      "talk_flow": "SNPC_tkk_Live",
+      "talk_entry": "Tkk_LandFirstLive",
+      "indexed_callers": [],
+      "status": "OPEN: no explicit AI-root or native dynamic-talk callsite to Tkk_LandFirstLive recovered"
+    },
+    "talk_content_if_entered": {
+      "subflows": [{"event": 118, "entry": "Tkk_1stLIveMC"}, {"event": 92, "entry": "Tkk_LiveDemo"}, {"event": 93, "entry": "Tkk_LiveAfter_Flag"}],
+      "return_stage": {"event": 94, "target": "cMainFieldPlayerHouse"},
+      "first_live_flags": [
+        {"event": 141, "flag": "cPlayer:StandByRcoVisitMyHomeAfterTkkFirstLive", "operation": "ON"},
+        {"event": 142, "flag": "cPlayer:TkkFirstLiveJoined", "operation": "ON"},
+        {"event": 143, "flag": "cPlayer:TkkLiveToday", "operation": "ON"},
+        {"event": 144, "flag": "cPlayer:TotakekeLiveCount", "operation": "ADD 1"},
+        {"event": 145, "flag": "cLifeSupportAchievement:GotoTotakekeShow", "operation": "ADD 1"},
+        {"event": 146, "flag": "cPlayer:TkkTalkToday", "operation": "ON"}
+      ],
+      "day_change_completion": {"function": "0xf545f0", "condition": "TotakekeLiveCount >= 1", "effect": "TkkFirstLive=ON"},
+      "status": "EventFlow body and native day-change behavior are statically present; execution depends on the open stage/AI-to-entry bridge"
+    }
+  },
+  "joins": [
+    {"id": "plot_completion_to_selected_id", "status": "CONFIRMED_STATIC", "boundary": "per-plot EF completion and native NPC ID storage; no runtime save replay"},
+    {"id": "selected_id_to_move_in_save_slot", "status": "CONFIRMED_STATIC", "boundary": "day-change processor and flags; no executed day change"},
+    {"id": "move_in_save_slot_to_stage_actor", "status": "OPEN", "boundary": "builder body exists, but stage-manager call/alias and actor-slot dispatch are unresolved"},
+    {"id": "plot_resident_actor_to_first_talk", "status": "OPEN", "boundary": "no specific initial villager talk entry/selector found in the indexed EventFlow graph"},
+    {"id": "camp_flag_to_camper_selection", "status": "CONFIRMED_STATIC", "boundary": "flag-gated EF request and native day-change selection/storage"},
+    {"id": "camper_selection_to_camp_actor", "status": "OPEN", "boundary": "candidate actor-builder body; stage/runtime invocation unresolved"},
+    {"id": "camp_ai_to_first_talk", "status": "CONFIRMED_EF_CONDITIONAL", "boundary": "AI root actions select NNPC_Spot_Camp:Root if the AI root is entered under first-visitor flags"},
+    {"id": "first_camp_talk_to_slot5", "status": "CONFIRMED_STATIC", "boundary": "first-camper EF action and native slot-5 ID write; subsequent housing/actor join unresolved"},
+    {"id": "firstlive_stage_request_to_actor_candidate", "status": "CANDIDATE_WITH_OPEN_RUNTIME_DISPATCH", "boundary": "see first-live dispatch follow-up"},
+    {"id": "firstlive_ai_to_talk_entry", "status": "OPEN", "boundary": "AI root only calls ContinueSpeak; talk entry has no indexed caller"},
+    {"id": "firstlive_talk_entry_to_progress_flags", "status": "CONFIRMED_EF_CONTENT_CONDITIONAL", "boundary": "flags and return stage are in flow content; entry execution not joined"}
+  ],
+  "bounded_negative_results": [
+    "flow_index.json indexes explicit EventFlow caller/subflow references, not message text or engine-selected dynamic talk flow names",
+    "direct_calls and static pseudocode do not resolve indirect actor-manager dispatch or prove a native stage manager invoked a builder",
+    "MainField.byml/commonOutdoor.byml actor-manager record has no plot ID or selected NPC save-slot reference",
+    "No runtime save/day-change/stage execution was performed; every native behavior is static pseudocode or disassembly interpretation"
+  ],
+  "summary": {
+    "main_conclusion": "Plot completion, resident selection, move-in save writes, first-camper talk actions, and first-live flow contents are individually source-backed. Runtime joins from plot/camper save records through stage actor activation and from the first-live AI actor into its dedicated talk entry remain unresolved."
+  }
+}
