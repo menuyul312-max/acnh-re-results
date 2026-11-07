@@ -7757,7 +7757,7 @@
     "required_asset_family_count": 11,
     "all_beats_have_all_asset_families": true,
     "full_semantic_coverage_proven": false,
-    "supplemental_proof_count": 51,
+    "supplemental_proof_count": 52,
     "supplemental_proof_files_exist": true
   },
   "full_semantic_coverage_proven": false,
@@ -8096,7 +8096,7 @@
       "report": "acnh-re/docs/ISLAND_DESIGNER_ACTIONPARAM_ERROR_CONSUMERS_FOLLOWUP_20261107.md",
       "data": "acnh-re/output/ui_island/island_designer_actionparam_error_consumers_followup_20261107.json",
       "scope": "LandMakingActionParam parser/callers, point/3x3 footprint validation, temporary four-layer 12x12 work grid, 3x3 output copy, and error-row dispatch.",
-      "status": "actionparam_to_local_validation_and_patch_buffer_STATIC;tool_dispatch_canonical_island_write_refresh_undo_and_save_OPEN"
+      "status": "actionparam_to_scratch_grid_STATIC;3x3_copy_is_stack_local_no_escape;tool_dispatch_canonical_island_write_refresh_undo_and_save_OPEN"
     },
     {
       "id": "world_item_pickup_interaction_followup",
@@ -8118,6 +8118,13 @@
       "data": "acnh-re/output/gameplay/prologue_setup_actor_position_type3_preset_boundary_20261107.json",
       "scope": "ValidateVillageSave literal case 0 into SetupActorPosition(Type=3), UID-keyed EventPlaza values through SaveMainField into shared anchor, grid query and offsets.",
       "status": "uid_eventplaza_pair_to_type3_shared_anchor_STATIC;coordinate_semantics_actor_identity_and_visible_spawn_OPEN"
+    },
+    {
+      "id": "island_designer_patch_output_escape_boundary_followup",
+      "report": "acnh-re/docs/ISLAND_DESIGNER_PATCH_OUTPUT_ESCAPE_BOUNDARY_FOLLOWUP_20261107.md",
+      "data": "acnh-re/output/ui_island/island_designer_patch_output_escape_boundary_followup_20261107.json",
+      "scope": "Caller stack ownership and escape analysis of the 3x3 patch copy, direct-call and code-pointer-array scan for the terrain validation/result builder.",
+      "status": "3x3_copy_stack_local_no_consumer_found;canonical_map_apply_refresh_undo_and_save_OPEN"
     }
   ]
 }

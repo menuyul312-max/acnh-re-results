@@ -1,0 +1,220 @@
+{
+  "schema": "acnh.re.island_patch_output_escape_boundary_followup.v1",
+  "title": "Island Designer 3x3 patch output escape boundary",
+  "game_build": "Animal Crossing: New Horizons 1.0.0",
+  "date": "2026-11-07",
+  "scope": {
+    "question": "Does the 3x3 copy from 0x54dc70 escape its caller's stack frame to a consumer, canonical map setter, or save/apply path?",
+    "method": "Read existing native disassembly/decompilation, direct_calls and functions tables in index.sqlite, code_pointer_arrays.json, and the supplied main NSO text segment. No Ghidra rebuild, index/crosswalk edit, execution, or game-state mutation.",
+    "conclusion": "The 3x3 destination is 0x531ad0's stack-local address sp+0x80. The function returns only a boolean/status and no consumer of that block is identified in the inspected chain. Canonical map application, refresh, undo/apply, and save remain unproven."
+  },
+  "inputs": {
+    "main_nso": {
+      "workspace_path": "/workspace/acnh-re/inputs/additional_exefs/main",
+      "bytes": 24990531,
+      "sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900"
+    },
+    "main_text_segment": {
+      "workspace_path": "/workspace/acnh-re/work/exefs_modules/main/0.bin",
+      "native_va": "0x0",
+      "bytes": 35723872,
+      "sha256": "9c9b45d8e7a58706ca59e7244b3aebac2325ef98faa205e007974eeeb2f758e9"
+    },
+    "native_index": {
+      "workspace_path": "/workspace/acnh-re/output/index.sqlite",
+      "sha256": "a78c7af27d37b8fd931bba8bc611623dacf7685cb6e8b4f827effa0765340aad"
+    },
+    "code_pointer_arrays": {
+      "workspace_path": "/workspace/acnh-re/output/binary/code_pointer_arrays.json",
+      "sha256": "64d474068ca289f9146f7f32e6647a16a05e8f5be8e635615a478744b62ef822",
+      "sequence_count": 18348,
+      "entry_count": 192637
+    }
+  },
+  "function_slices": {
+    "hash_basis": "SHA-256 over the function's exact byte span in the main text segment, using indexed native VA and size.",
+    "functions": {
+      "0x531ad0": {
+        "size": 200,
+        "sha256": "5d46cc1a5f5e09ddfcb422681b61f076922f0703bb9f0edd5d82bb8cd48ee928"
+      },
+      "0x54dc70": {
+        "size": 512,
+        "sha256": "aaf1e0f8b6a5f4e8b453d1624871f129bf2c142b3dc79bada237bcbd6a49e6e3"
+      },
+      "0x543000": {
+        "size": 140,
+        "sha256": "0f11ae2b6a6d21d281fec3c3129f1f2156ec83ebabc3892352f5465335a482b2"
+      },
+      "0x543260": {
+        "size": 28,
+        "sha256": "d1e8fa7f1e08d06f82825631d1e1281f3de615b03d7f9884916e76f1e5a6fc28"
+      },
+      "0x53e4f0": {
+        "size": 388,
+        "sha256": "169f8ce32bcb9f4d95be4c847f7c88bd4fdf6846ce074e064913d4240992a811"
+      },
+      "0x53e1b0": {
+        "size": 84,
+        "sha256": "70ac5b3d0ee3783f1d22404ed91d6db1e276029a27a830711eb049447cb8e977"
+      },
+      "0x53e2b0": {
+        "size": 92,
+        "sha256": "0fbb70ea85cb586c72a20078de98dc7338d7a86085d69da501801462807af855"
+      },
+      "0x53e210": {
+        "size": 72,
+        "sha256": "8c6b7a8e3bab2fafbc33bb86cba01bdefe2f958755052d1f105aa10626253cd6"
+      },
+      "0x53e4e0": {
+        "size": 4,
+        "sha256": "e8a9277091f953f3e476722e176679dad3d12c9bd8fa2303b22aa4f159200821"
+      },
+      "0x531790": {
+        "size": 324,
+        "sha256": "2e3cb475929991b83930f9d6a67946da082bfffb17bf6ac84d4b245dd0e778ea"
+      },
+      "0x5318e0": {
+        "size": 496,
+        "sha256": "f8ee25802aa4c9b45059fdb794e237b36e0035129a4101141b0c9056344e3f8c"
+      },
+      "0x531ba0": {
+        "size": 208,
+        "sha256": "50fba58a728019e647fb04a184eeec5420ec43edfb61947edcd48785623ac923"
+      }
+    }
+  },
+  "evidence": {
+    "address_convention": "Native ELF VAs; Ghidra display addresses add 0x100000.",
+    "result_builder": {
+      "va": "0x531ad0",
+      "instructions": [
+        {
+          "pc": "0x531aec",
+          "effect": "mov x19,x1; preserve incoming source pointer"
+        },
+        {
+          "pc": "0x531b20",
+          "effect": "mov x22,sp; preserve this function's current stack base"
+        },
+        {
+          "pc": "0x531b4c",
+          "effect": "add x1,x22,#0x80; destination is this function's stack frame"
+        },
+        {
+          "pc": "0x531b50",
+          "effect": "mov x0,x19; source is incoming pointer"
+        },
+        {
+          "pc": "0x531b54",
+          "effect": "bl 0x54dc70"
+        },
+        {
+          "pc": "0x531b58",
+          "effect": "set status to 1"
+        },
+        {
+          "pc": "0x531b64",
+          "effect": "begin temporary context cleanup"
+        },
+        {
+          "pc": "0x531b78",
+          "effect": "move status to w0 for return"
+        },
+        {
+          "pc": "0x531b94",
+          "effect": "ret"
+        }
+      ],
+      "direct_callers": [
+        {
+          "caller": "0x531790",
+          "pc": "0x531830"
+        },
+        {
+          "caller": "0x531790",
+          "pc": "0x5318b4"
+        },
+        {
+          "caller": "0x5318e0",
+          "pc": "0x531950"
+        },
+        {
+          "caller": "0x5318e0",
+          "pc": "0x531a50"
+        },
+        {
+          "caller": "0x531ba0",
+          "pc": "0x531bf4"
+        },
+        {
+          "caller": "0x531ba0",
+          "pc": "0x531c40"
+        }
+      ],
+      "interpretation": "The output address is local to 0x531ad0. The function returns an integer status, does not return this address, and has no explicit post-copy read of the destination before restoring its stack."
+    },
+    "patch_copy": {
+      "va": "0x54dc70",
+      "direct_callers": [
+        {
+          "caller": "0x531ad0",
+          "pc": "0x531b54"
+        }
+      ],
+      "argument_roles": {
+        "x0": "source record collection",
+        "x1": "destination block"
+      },
+      "shape": {
+        "bounded_region": "3x3",
+        "record_stride_bytes": 14,
+        "copied_payload": "11 bytes per record: offsets 0-4, 6-10, and 12"
+      },
+      "record_copy_helper": {
+        "va": "0x543000",
+        "call_pc": "0x54de14",
+        "subhelper_va": "0x543260",
+        "subhelper_call_pcs": [
+          "0x543040",
+          "0x54306c"
+        ]
+      },
+      "consumer_status": "No consumer of the stack-local destination is identified in the direct chain; it is not forwarded out of 0x531ad0."
+    },
+    "temporary_context": {
+      "setup_va": "0x53e1b0",
+      "seed_va": "0x53e2b0",
+      "scratch_mutation_va": "0x53e4f0",
+      "thunk_va": "0x53e4e0",
+      "thunk_direct_caller": {
+        "caller": "0x531ad0",
+        "pc": "0x531b44"
+      },
+      "cleanup_va": "0x53e210",
+      "cleanup_effect": "Touches context fields at offsets +0x8, +0x48, and +0x13c0 through its cleanup calls; the inspected cleanup routine does not use the +0x80 patch destination as a separate argument."
+    },
+    "bounded_negative_results": {
+      "direct_call_index": {
+        "0x54dc70_incoming_calls": 1,
+        "0x540a10_incoming_calls": 0,
+        "note": "0x540a10 has no function entry in the indexed function table; this count is exact for direct_calls target edges."
+      },
+      "code_pointer_array_targets": {
+        "0x540a10": 0,
+        "0x531ad0": 0,
+        "0x54dc70": 0,
+        "scan_extent": "All 192637 entries in 18348 sequences of the existing generated code-pointer-array inventory.",
+        "limitation": "Does not rule out dynamic dispatch, unindexed pointer encodings, or other indirect call mechanisms."
+      }
+    }
+  },
+  "unresolved": [
+    "No caller/consumer of the 0x531ad0 stack-local 3x3 output is established.",
+    "No link from this temporary result to the canonical 112x96 island map is established.",
+    "Terrain refresh, committed edit, undo/apply transaction, and save serialization remain unproven.",
+    "The active input route into candidate validator 0x540a10 remains unjoined."
+  ],
+  "artifact_policy": "This follow-up creates only a distinct report and JSON ledger; it does not edit indexes or crosswalks and does not commit or push.",
+  "report": "acnh-re/docs/ISLAND_DESIGNER_PATCH_OUTPUT_ESCAPE_BOUNDARY_FOLLOWUP_20261107.md"
+}
