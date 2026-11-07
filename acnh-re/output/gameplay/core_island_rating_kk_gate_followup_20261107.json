@@ -1,0 +1,371 @@
+{
+  "schema": "acnh-re/core-island-rating-kk-gate-followup/1",
+  "game_version": "1.0.0",
+  "audit_date": "2026-11-07",
+  "scope": "Static native and EventFlow evidence from island-score calculation/save copy through Isabelle's first-K.K.-live readiness branch and public-announcement stage request.",
+  "evidence_policy": {
+    "EF": "Direct BFEVFL action, condition, result assignment, or subflow edge.",
+    "MSBT": "Extracted message-member text and labels; proves visible string mapping, not its runtime presentation.",
+    "STATIC_NATIVE": "Raw AArch64 code, callsite, or data reference; not a game execution.",
+    "OPEN_JOIN": "Adjacent static endpoints exist, but the connecting runtime dispatch or execution is not established."
+  },
+  "sources": [
+    {
+      "id": "main_nso",
+      "path": "inputs/additional_exefs/main",
+      "sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+      "role": "ACNH ExeFS main used for raw AArch64 callsite verification"
+    },
+    {
+      "id": "main_elf",
+      "path": "A_logic/main.elf (source inventory / native function hash basis)",
+      "sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+      "role": "ELF function spans used for function-body SHA-256 values; relevant callsite and function bytes match the supplied ExeFS main"
+    },
+    {
+      "id": "score_flow",
+      "source_id": 649,
+      "path": "B_data/EventFlow/System_IslandEvaluationCheck.bfevfl",
+      "sha256": "10c1339435504a0a49fc3547961e5a9734a5b313a69f18d0a31ba9b3b61d7ad2",
+      "role": "Score rank thresholds, house-count clamp, result construction"
+    },
+    {
+      "id": "isabelle_flow",
+      "source_id": 622,
+      "path": "B_data/EventFlow/SNPC_sza_50_IslandEvaluation.bfevfl",
+      "sha256": "c57c677d2d2f09290c0414f7a43c404bb28e8b8c126b6ce703df61c61ff3281e",
+      "role": "Evaluation dialogue, result-to-K.K. readiness branch, readiness flag write"
+    },
+    {
+      "id": "announcement_flow",
+      "source_id": 279,
+      "path": "B_data/EventFlow/Demo_PublicAnnouncement.bfevfl",
+      "sha256": "7ec0d30107a1d40169b4455932f0f6853beb9ef7b7cf69ca2ee2f77958a12602",
+      "role": "First-live reservation and exact stage request"
+    },
+    {
+      "id": "land_flags",
+      "source_id": 18,
+      "path": "B_data/Bcsv/EventFlagsLandParam.bcsv",
+      "sha256": "f556f2209a849e9bbe1f46584f4aabb59c651614e0c9c6be06e1f7521509c43a",
+      "role": "Land-flag definitions, defaults, access modes"
+    },
+    {
+      "id": "player_flags",
+      "source_id": 26,
+      "path": "B_data/Bcsv/EventFlagsPlayerParam.bcsv",
+      "sha256": "9d14ab9d9f78bd72c7b4d43a0db2cc3ff98a4608d3763d9b6f403b0815f5603e",
+      "role": "Player-flag definitions, defaults, access modes"
+    },
+    {
+      "id": "evaluation_message_member",
+      "path": "Message/TalkSNpc_USen.sarc.zs!sza/SP_sza_50_IslandEvaluation.msbt",
+      "sha256": "1b2a62c50d05f73f4ba945b7d3205192a9b693935960362267921629b241706f",
+      "role": "Explicit 1-star through 5-star message strings for result mapping"
+    },
+    {
+      "id": "save_layout",
+      "path": "output/gameplay/save_layout.json",
+      "sha256": "a326c84213faad1921bd7660c3e171a7b3af117ec55e2ca711a871ad637e51dc",
+      "role": "Score member descriptor and data location cross-reference",
+      "member": {
+        "descriptor_va": "0x24fdb0",
+        "data_va": "0x4f8b34",
+        "size": "0x250"
+      }
+    }
+  ],
+  "native_functions": [
+    {
+      "va": "0x15c61f0",
+      "size": "0x5d8",
+      "sha256": "ee7870d0d1e17686e6b7443865b0ece9abcfbb4ba2e4695c87cf2e147179983a",
+      "role": "Aggregates per-category block counters, applies the native weight table, adds structure/facility contributions, and updates the in-memory score manager. Not executed by the existing score fixtures."
+    },
+    {
+      "va": "0x15c68c0",
+      "size": "0x48",
+      "sha256": "9fdef96b676a45816f15f13974d8e82e9d22c059f1eaa1243201dc57eccf6722",
+      "role": "Copies the category-10 grid and aggregate outputs to the score-save member."
+    },
+    {
+      "va": "0xd50c0",
+      "size": "0x24",
+      "sha256": "7d46d297df4fdb2bed095de6aac988514948552962b0b6d37a677eddadb03ec4",
+      "role": "Loads the score-manager pointer through global 0x32d3f68 and calls 0x15c61f0."
+    },
+    {
+      "va": "0xd4df0",
+      "size": "0x174",
+      "sha256": "523d62a38edb244c2fe209d69e6458e976bfe3720f967ace77107a9aebe5f007",
+      "role": "Save callback; obtains the score member view at 0x24fdb0 with length 0x250 and calls 0x15c68c0 on the same manager pointer."
+    },
+    {
+      "va": "0x3e0b80",
+      "size": "0x78",
+      "sha256": "0dbb9227af407dd9d586d74688fa34f5c83aadd69d1d56df96f26a2a534c99f6",
+      "role": "EventFlow VillageScoreCheckNatural query; compares its threshold parameter to saved score offset +0x240."
+    },
+    {
+      "va": "0x3df930",
+      "size": "0x78",
+      "sha256": "ede5873ac02fd6343d82b7cabf45f4107a87a66b032094aa3487ac62747d8146",
+      "role": "EventFlow VillageScoreCheckLife query; compares its threshold parameter to saved score offset +0x244."
+    },
+    {
+      "va": "0x419690",
+      "size": "0x320",
+      "sha256": "aea7fca322acb0998fcb5a605259b44c73265c568a507e8f6c63317b0f28bae9",
+      "role": "EventFlow NpcHouseNum query; result is count < Num."
+    },
+    {
+      "va": "0xfd8920",
+      "size": "0x158",
+      "sha256": "7c76d4c5454bb68b9eb85a69775437a8f9898042a0a9fdb587e65b8d429d26c3",
+      "role": "Elapsed-day/readiness/previous-first-live gate; writes TkkFirstLiveEnable."
+    },
+    {
+      "va": "0x304f80",
+      "size": "0x1500",
+      "sha256": "f32f1ff7add0fb0b3c56efaf3d9b7b389e280177b36a1eafe82cb2f8e344e5db",
+      "role": "SystemRequestChangeStage target-label handler."
+    },
+    {
+      "va": "0x306910",
+      "size": "0x244",
+      "sha256": "49e403835d5a15e5b0d12eb4de8a73259b0f0ef04ad0ba44f1f704609aadf895",
+      "role": "First-live-specific target-label branch reached by the handler."
+    }
+  ],
+  "score_save_member": {
+    "descriptor_va": "0x24fdb0",
+    "descriptor": "0x33d5320",
+    "data_va": "0x4f8b34",
+    "size": "0x250",
+    "fields": {
+      "0x000": "u16[18][16] category-10 half-unit counts per block; VillageScoreVeryMessy reads this grid",
+      "0x240": "f32 Natural; VillageScoreCheckNatural reads this field",
+      "0x244": "f32 Life; VillageScoreCheckLife reads this field",
+      "0x248": "i32 category-9 count; VillageScorePutUnitIconNum reads this field",
+      "0x24c": "i32 category-5 count; VillageScoreCheckTreeNum reads this field"
+    }
+  },
+  "score_call_sites": [
+    {
+      "caller_va": "0xd50c0",
+      "pc": "0xd50d4",
+      "bytes_le": "47c45394",
+      "instruction": "bl 0x15c61f0",
+      "status": "STATIC_NATIVE_CONFIRMED"
+    },
+    {
+      "caller_va": "0xd4df0",
+      "pc": "0xd4f34",
+      "bytes_le": "63c65394",
+      "instruction": "bl 0x15c68c0",
+      "save_member_offset": "0x24fdb0",
+      "member_bytes": "0x250",
+      "status": "STATIC_NATIVE_CONFIRMED"
+    }
+  ],
+  "evaluation_gate": {
+    "rank_entries": {
+      "source_id": 649,
+      "path": "B_data/EventFlow/System_IslandEvaluationCheck.bfevfl",
+      "nature": {
+        "entry": "ChkNaturalRank",
+        "query": "VillageScoreCheckNatural",
+        "borders": [200, 270, 350, 450],
+        "rank_2_minimum": 270
+      },
+      "life": {
+        "entry": "ChkLifeRank",
+        "query": "VillageScoreCheckLife",
+        "borders": [80, 160, 400, 650],
+        "rank_2_minimum": 160
+      },
+      "constructed_house_gate": {
+        "entry": "IslandEvaluationChk",
+        "query": "NpcHouseNum",
+        "npc_house_type": "cConstructed",
+        "num": 8,
+        "query_semantics": "count < Num; case 0 is count >= Num, case 1 is fewer"
+      },
+      "below_eight_behavior": {
+        "entry": "NotEnoughNNpc",
+        "seven_house_exception": "at least 7 houses plus Nature rank >=2 and Life rank >=2 can produce result index 1 (2 stars)",
+        "maximum_result_index": 1
+      },
+      "accepted_overall_result_indices": [2, 3, 4],
+      "result_to_star_evidence": {
+        "entry": "NormalSeq",
+        "flow_source_id": 622,
+        "message_labels": ["003_01", "003_02", "003_03", "003_04", "003_05"],
+        "label_to_result_index": [0, 1, 2, 3, 4],
+        "label_text_star_counts": [1, 2, 3, 4, 5],
+        "conclusion": "result indices 2, 3, and 4 are the explicit 3-star, 4-star, and 5-star dialogue cases"
+      },
+      "minimum_score_path_for_unlock": {
+        "constructed_npc_houses": ">=8",
+        "natural": ">=270",
+        "life": ">=160",
+        "basis": "EventFlow rank calculation/result construction, the NpcHouseNum query polarity, and explicit result-to-star message mapping"
+      }
+    },
+    "isabelle_entry": {
+      "source_id": 622,
+      "entry": "Sza_Evaluation_CmnImpression",
+      "conditions": [
+        "IslandDevQuestComplete OFF",
+        "overall rating result index 2, 3, or 4",
+        "MakeVillagePlayerFlag ON"
+      ],
+      "dialogue_compare": "Compare_BeforeEvaluation uses SzaBeforeIslandEvaluation to select an impression message. Its case-2 falling-rating message 001_06 rejoins the result-specific path and is not a separate K.K. score condition.",
+      "subflow": "ClearTkkFirstLiveScore",
+      "success_condition": "EventBranch AddDay=1 case 0",
+      "writes": {
+        "IslandEvaluationClearTkkLive": 1,
+        "IslandDevQuestRunning": 0,
+        "IslandDevQuestComplete": 1
+      }
+    },
+    "native_enable": {
+      "function_va": "0xfd8920",
+      "result": "elapsed days >=1 AND IslandEvaluationClearTkkLive ON AND TkkFirstLive OFF => TkkFirstLiveEnable ON",
+      "direct_caller": {
+        "function_va": "0xf545f0",
+        "call_pc": "0xf54fdc"
+      },
+      "native_runtime": "not executed in a progressing story save"
+    },
+    "announcement_stage_request": {
+      "source_id": 279,
+      "flow": "Demo_PublicAnnouncement",
+      "caller_entry": "Root",
+      "caller_event": 20,
+      "caller_conditions": "BuiltTownOffice ON and BuiltTownOfficeToday OFF branch",
+      "reservation_entry": "Root_Init",
+      "reservation_conditions": [
+        "MakeVillagePlayerFlag ON",
+        "TkkFirstLiveEnable ON",
+        "EventBranch AddDay=0 case 0",
+        "office/day conditions"
+      ],
+      "reservation_writes": ["TkkFirstLiveReserved", "TkkFirstLiveSubPlayer"],
+      "entry": "PAnnounceSza",
+      "event": 41,
+      "stage_request_condition": "TkkFirstLiveReserved ON",
+      "action": "SystemRequestChangeStage",
+      "target_stage": "cMainFieldFirstLive",
+      "native_handler": {
+        "function_va": "0x304f80",
+        "dispatch_call_pc": "0x305adc",
+        "call_bytes_le": "8d030094",
+        "target_function_va": "0x306910",
+        "target_table_index": 26
+      }
+    }
+  },
+  "story_flags": [
+    {
+      "name": "cLand:IslandEvaluationClearTkkLive",
+      "table_source_id": 18,
+      "default": 0,
+      "eventflow_writer": "SNPC_sza_50_IslandEvaluation:ClearTkkFirstLiveScore event #52",
+      "write_condition": "EventBranch AddDay=1 case 0"
+    },
+    {
+      "name": "cLand:IslandDevQuestRunning",
+      "table_source_id": 18,
+      "default": 0,
+      "eventflow_writer": "SNPC_sza_50_IslandEvaluation:ClearTkkFirstLiveScore event #55; OFF"
+    },
+    {
+      "name": "cLand:IslandDevQuestComplete",
+      "table_source_id": 18,
+      "default": 0,
+      "eventflow_writer": "SNPC_sza_50_IslandEvaluation:ClearTkkFirstLiveScore event #54; ON",
+      "read_at_unlock_branch": "Sza_Evaluation_CmnImpression; must be OFF to enter first-live readiness route"
+    },
+    {
+      "name": "cPlayer:MakeVillagePlayerFlag",
+      "table_source_id": 26,
+      "default": 0,
+      "read_at_unlock_branch": "Sza_Evaluation_CmnImpression; must be ON"
+    },
+    {
+      "name": "cPlayer:SzaBeforeIslandEvaluation",
+      "table_source_id": 26,
+      "default": 0,
+      "max": 5,
+      "role": "Previous result input to Compare_BeforeEvaluation; affects the dialogue branch, not the saved score thresholds"
+    },
+    {
+      "name": "cLand:TkkFirstLiveEnable",
+      "table_source_id": 18,
+      "default": 0,
+      "eventflow_writer": null,
+      "native_writer": "0xfd8920"
+    },
+    {
+      "name": "cLand:TkkFirstLive",
+      "table_source_id": 18,
+      "default": 0,
+      "eventflow_writer": null,
+      "native_read": "0xfd8920 gate",
+      "native_writer": "0xf545f0 after TotakekeLiveCount >=1 in its guarded day-change block"
+    }
+  ],
+  "graph": {
+    "nodes": [
+      {"id": "score_manager_aggregate", "status": "STATIC_NATIVE_CONFIRMED", "state": "0x15c61f0 computes category-weighted Natural/Life and related counts; actor wrapper callsite is exact."},
+      {"id": "score_save_copy", "status": "STATIC_NATIVE_CONFIRMED", "state": "0x15c68c0 copies manager fields to the 0x250-byte score member at 0x24fdb0."},
+      {"id": "score_query", "status": "STATIC_NATIVE_CONFIRMED", "state": "Natural and Life queries read the committed save fields and compare their BorderValue inputs."},
+      {"id": "rank_and_star_result", "status": "EF_PLUS_MSBT", "state": "Rank entries and house-count clamp produce result indices; USen labels explicitly map indices 0..4 to 1..5 stars."},
+      {"id": "isabelle_readiness", "status": "EF_LOCAL", "state": "Result indices 2..4, representative flag, not-yet-complete development quest, and successful AddDay branch set IslandEvaluationClearTkkLive."},
+      {"id": "native_enable", "status": "STATIC_NATIVE_CONFIRMED", "state": "Day-change function 0xfd8920 consumes readiness plus elapsed-day and not-yet-live conditions, then sets TkkFirstLiveEnable."},
+      {"id": "stage_request", "status": "EF_AND_STATIC_NATIVE", "state": "Demo_PublicAnnouncement:PAnnounceSza event #41 requests cMainFieldFirstLive; native action handler selects branch 26 and calls 0x306910."},
+      {"id": "stage_runtime_continuation", "status": "OPEN_JOIN", "state": "Exact runtime mapping from the branch to selected stage resource/actor and subsequent talk EventFlow is still open."},
+      {"id": "rating_ui_runtime", "status": "OPEN_JOIN", "state": "Message labels map score results to explicit star text; a rating-specific page or runtime CmnDialog invocation is not tied to this flow."}
+    ],
+    "edges": [
+      {"from": "score_manager_aggregate", "to": "score_save_copy", "status": "STATIC_SAME_OBJECT_WITH_RUNTIME_ORDER_OPEN", "evidence": "Both callbacks use manager pointer through global 0x32d3f68; no integrated callback execution was captured."},
+      {"from": "score_save_copy", "to": "score_query", "status": "STATIC_NATIVE_CONFIRMED", "evidence": "Writer and query functions use the same member offset and respective field offsets."},
+      {"from": "score_query", "to": "rank_and_star_result", "status": "EF_PLUS_STATIC_NATIVE_QUERY", "evidence": "Query BorderValue semantics plus rank-entry branches and message-label map."},
+      {"from": "rank_and_star_result", "to": "isabelle_readiness", "status": "EF_LOCAL", "evidence": "Explicit result cases 2,3,4 and named flag conditions in source 622."},
+      {"from": "isabelle_readiness", "to": "native_enable", "status": "STATIC_GATE_CONFIRMED_RUNTIME_OPEN", "evidence": "EventFlow writer #52 joins to native reader/writer; story execution is not shown."},
+      {"from": "native_enable", "to": "stage_request", "status": "EF_LOCAL_RUNTIME_OPEN", "evidence": "Announcement flow reads enable/reserves first live; PAnnounceSza #41 requests stage."},
+      {"from": "stage_request", "to": "stage_runtime_continuation", "status": "OPEN_JOIN", "evidence": "Native handler reaches 0x306910; runtime stage resource selection and actor continuation are unresolved."},
+      {"from": "rank_and_star_result", "to": "rating_ui_runtime", "status": "OPEN_JOIN", "evidence": "Message strings are resolved; page-open/runtime UI consumer is not."}
+    ]
+  },
+  "open_joins": [
+    {
+      "id": "aggregate_to_save_execution",
+      "missing": "No controlled native fixture runs 0x15c61f0 and 0x15c68c0 on the same score-manager object and save member; static callback relationship is established, runtime order is not."
+    },
+    {
+      "id": "rating_ui_page",
+      "missing": "The flow's result-index message branches are mapped to five explicit star labels, but no native EventFlow-to-CmnDialog page-open edge or dedicated rating page is established."
+    },
+    {
+      "id": "first_live_stage_continuation",
+      "missing": "0x304f80 dispatches target label 26 to 0x306910, but the exact stage resource, actor creation, and actor-to-SNPC_tkk_Live talk entry remain open."
+    },
+    {
+      "id": "integrated_story_execution",
+      "missing": "No main-game save was executed from score commit through Isabelle's flow, first-live enable, announcement reservation, or stage request."
+    }
+  ],
+  "validation": {
+    "raw_callsite_checks": [
+      {"pc": "0xd50d4", "bytes_le": "47c45394", "decoded": "bl 0x15c61f0", "match": true},
+      {"pc": "0xd4f34", "bytes_le": "63c65394", "decoded": "bl 0x15c68c0", "match": true},
+      {"pc": "0x305adc", "bytes_le": "8d030094", "decoded": "bl 0x306910", "match": true}
+    ],
+    "message_mapping_check": "USen member labels 003_01..003_05 explicitly state 1-star through 5-star ratings; 003_03 is the 3-star text.",
+    "native_execution": "None; static analysis only.",
+    "game_or_save_mutation": "None.",
+    "test_harness": "Not run."
+  }
+}
