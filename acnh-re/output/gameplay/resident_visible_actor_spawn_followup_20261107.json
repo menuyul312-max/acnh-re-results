@@ -1,0 +1,184 @@
+{
+  "schema": "acnh-re.resident-visible-actor-spawn-followup/1",
+  "game_version": "1.0.0",
+  "analysis_date": "2026-11-07",
+  "analysis_mode": "static AArch64 disassembly/decompilation, direct-call index, function extents, native flag references, stage BYML projections",
+  "report": "acnh-re/docs/RESIDENT_VISIBLE_ACTOR_SPAWN_FOLLOWUP_20261107.md",
+  "report_sha256": "93495296459fd80170f928c848cb3fd2edd996f0b464376670371d8cb22c4ec1",
+  "scope": "Resident and campsite NpcActorMgr requests through generic request processing, move-in bookkeeping, NpcHouse parameter loading, common stage rows, and the unresolved join to visible actors/transforms.",
+  "status": "GENERIC_REQUEST_QUEUE_AND_NPC_HOUSE_PARAMETER_LOAD_STATIC;VISIBLE_ACTOR_FACTORY_AND_WORLD_TRANSFORM_OPEN",
+  "source_identity": {
+    "address_convention": "Raw ELF virtual addresses; generated Ghidra display addresses may add 0x100000.",
+    "main_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+    "main_nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+    "source_artifacts": [
+      {"path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/A_logic/main.elf", "sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74", "role": "ACNH 1.0.0 main ELF instruction source"},
+      {"path": "/workspace/acnh-re/inputs/additional_exefs/main", "sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900", "role": "supplied ExeFS main NSO identity"},
+      {"path": "/workspace/acnh-re/output/index.sqlite", "sha256": "a78c7af27d37b8fd931bba8bc611623dacf7685cb6e8b4f827effa0765340aad", "role": "read-only direct_calls and native function index"},
+      {"path": "/workspace/acnh-re/output/binary/analyzed_functions.tsv", "sha256": "38455b8aaef240037d2f45d53db9b4a1473dfd938cb52d5e6e0087a2ba26b288", "role": "function extents; resolves the 0xc6869c callsite to 0xc685a0"},
+      {"path": "/workspace/acnh-re/output/binary/code_pointer_arrays.json", "sha256": "64d474068ca289f9146f7f32e6647a16a05e8f5be8e635615a478744b62ef822", "role": "native method sequence and actor registration cross-reference"},
+      {"path": "/workspace/acnh-re/output/gameplay/native_flag_refs.json", "sha256": "e7b1f581a342a6ec856cc735326823f0721aa81b587fc54f4300b2ab2b25bedc", "role": "static native function/flag references, including house and move-in labels"},
+      {"path": "/workspace/acnh-re/output/stage/catalogue.json", "sha256": "9ed3807027cb3f99247435a3a8433d73407ca57f7e5f27a925086ece1a000d59", "role": "108-resource projected stage catalogue"},
+      {"path": "/workspace/acnh-re/output/stage/native_summary.json", "sha256": "396383658321f378b256acdfb80a20faac22b4f84a6faad45dd23db45b3ce4f7", "role": "native actor-type and function flag references"},
+      {"path": "/workspace/acnh-re/output/stage/actor_type_registry.json", "sha256": "67439173a460ad49bb6cbc0086047eb192581f0cad36f4c936c4078a39d959be", "role": "stage actor-kind index crosswalk"},
+      {"path": "/workspace/acnh-re-additional-romfs.zip", "sha256": "2acdf4a5b69f1f4a08078a6b8e35516997a740670a98de22dea308b6f79328e3", "role": "supplied additional-ROMFS archive searched for NpcHouse parameter payload"},
+      {"path": "/workspace/acnh-re/output/additional_romfs/archive_inventory.json", "sha256": "55114fc88dbbd9f71907b4fcd2b8d3547d211be7e85cd0b0d015d1368af5f654", "role": "inventory for the supplied additional-ROMFS extraction"}
+    ],
+    "decomp_sha256": {
+      "0xc68f30": "e8fa3bbe2c39bce3684ea61a7a2ef6b34885c5633a7a88387baf6d6753c7707a",
+      "0xc6ce40": "ad4267f8ada697e70bf09fb5158ea6aa8790c8cd350ffb5532564016e788cf3a",
+      "0xc6c210": "baffdee9f089b4f117fcd428f82373155fac3986f5bd74aaf112e2d57f44d089",
+      "0xc687f0": "23fc652be2c4e602930339e3f4924b576242812467e2ca5e43b597591b86ac00",
+      "0xc70da0": "b2253dd8192f615ce55cb57d7ff4de45a22ae14d4186edf61a4e57bb8f0b5588",
+      "0x490f0": "7c5c1e1dff0b249ea6e1810ed43ee7f71f8351854902415081a15ccabf776b58",
+      "0x49360": "6408e4b245afdcfd87e45391d5f6df8d8e49e8c76d4c74628b618334923db051",
+      "0xd45c0": "f45217aab6a77e5f4a0d7b1506e085d3bddcc1ed31748dfbb60004c653e3067e",
+      "0x2201820": "19d80e664008bad5a335d1b2dafad128d9fbe79193bf3be5e8d18548e05eb3a9",
+      "0xd21110": "4f6e90f831a2619ff339a2eac3c2ef1aa3190cbea9e87b0af381abf06eb2e130",
+      "0xf84f10": "8d7ee56ca018c5152d640bf42f47dd27f0a8428baac74ee0f78b31818f1e2428",
+      "0xf8cea0": "e47551023d7852f0df6294e809071c10056b6c2b38247e20b0390dd68cbb191a",
+      "0xf826c0": "a791b826cde4558c2526434f6ed351b191da8efd300d7e1c3cb06cfa96c833da",
+      "0xf814c0": "f7b16bcf3cb2526b7eb60422d29f834c4836813fb018df926937ec22a344ebc7",
+      "0xd214e0": "18fde38be6224690ceb06bbb2f867edab1e5bf74bacc008949049808a350b369",
+      "0xbe4f70": "2406b8cfc5194a458f457baf21283cd5d54ba295e8cab59197ea1a2e15ad1a4a",
+      "0x1f05a80": "8a42471e0627507073a064e22366e7c32efeff4d3fbdb03d9157fdcd04ea9845",
+      "0xf86340": "6cde2ed03c37c443d1af2e80564796f1e7046996870bf9d56b69e6cb56557bde",
+      "0xf86490": "16cc2f09ddd5fe579f19b19530e60f02f14d8561223186713cab25eba2db2c65"
+    },
+    "prior_reports": [
+      {"path": "acnh-re/docs/RESIDENT_CAMP_ACTOR_MANAGER_DISPATCH_FOLLOWUP_20261107.md", "sha256": "e5557b2cf8725fb91bc0d88bf61bd6561f6c7ea643286cb70ed58247498d42c2", "role": "resident/campsite request-builder baseline"},
+      {"path": "acnh-re/output/gameplay/resident_camp_actor_manager_dispatch_followup_20261107.json", "sha256": "a2bbe611234a037b31153f77a1d1f581d03e08601a374775799f1e1c8d175cdf", "role": "baseline machine ledger"},
+      {"path": "acnh-re/docs/VILLAGER_PLOT_FIRSTLIVE_CONTINUITY_FOLLOWUP_20261107.md", "sha256": "deefc171b697c8cbaab040357e9a8ff729675ee8f77e768366c41511778cb702", "role": "plot, camper slot-5, and first-live handoff baseline"},
+      {"path": "acnh-re/output/gameplay/villager_plot_firstlive_continuity_followup_20261107.json", "sha256": "379fddc7194412aaa79c0b6d9b4f8acb52b91489534c27ce3896928bd00d119d", "role": "plot/first-live baseline machine ledger"},
+      {"path": "acnh-re/docs/BUILDING_ACTOR_MGR_COMPONENT_BOUNDARY_20261107.md", "sha256": "e308d1829411c6ad4fe7f3873cdc62eb66410cdf4c31e1660306c06781676b4d", "role": "NpcActorMgr and NpcActor registration/factory distinction"},
+      {"path": "acnh-re/output/gameplay/building_actor_mgr_component_boundary_20261107.json", "sha256": "eea736d81f20e1c23d18eeb050ef7d6986327aa443f35e0e304d8a980d5a6448", "role": "component boundary machine ledger"}
+    ]
+  },
+  "request_dispatch": {
+    "manager": {
+      "registered_class": "NpcActorMgr",
+      "factory": "0xc67fa0",
+      "method_sequence_target": "0xc685a0",
+      "method_sequence_offset": "+0x38",
+      "extent": {"start": "0xc685a0", "size_bytes": 584, "end_inclusive": "0xc687e7"},
+      "resident_builder_call": {"pc": "0xc686b8", "target": "0xc68f30"},
+      "campsite_builder_call": {"pc": "0xc69838", "owner": "0xc68f30", "target": "0xc6ce40"}
+    },
+    "builder_submission_calls": [
+      {"pc": "0xc695cc", "owner": "0xc68f30", "target": "0xc6c210", "role": "resident request"},
+      {"pc": "0xc698ac", "owner": "0xc68f30", "target": "0xc6c210", "role": "resident request"},
+      {"pc": "0xc6d128", "owner": "0xc6ce40", "target": "0xc6c210", "role": "campsite visitor request"}
+    ],
+    "request_service_edges": [
+      {"pc": "0xc6cbe4", "owner": "0xc6c210", "target": "0x490f0"},
+      {"pc": "0x4929c", "owner": "0x490f0", "target": "0x49360"},
+      {"pc": "0x4930c", "owner": "0x490f0", "target": "0xd45c0"},
+      {"pc": "0xd466c", "owner": "0xd45c0", "target": "0x2201820"}
+    ],
+    "generic_consumer_boundary": {
+      "function": "0x2201820",
+      "observed_behavior": "invokes an indirect method on the supplied request object and queues work",
+      "concrete_resident_or_campsite_actor_consumer": "OPEN",
+      "claim_limit": "The static path reaches a generic request queue; it does not establish actor factory invocation, actor construction, visibility, model, or collision."
+    },
+    "direct_call_index_counts": {
+      "target_0x490f0": {"rows": 133, "rows_with_owner": 71},
+      "target_0xbe5e40_npc_actor_factory": {"rows": 0},
+      "target_0xc67fa0_npc_actor_mgr_factory": {"rows": 0},
+      "limit": "Counts are direct-call index rows only; unresolved indirect dispatch is not represented as a direct edge."
+    }
+  },
+  "activation_and_house_data": {
+    "move_in_completion_bookkeeping": {
+      "function": "0xc687f0",
+      "callsite": {"pc": "0xc6869c", "owner_va_in_index": null, "enclosing_function": "0xc685a0", "resolution": "PC falls within the 0xc685a0–0xc687e7 function extent"},
+      "resident_slots": 10,
+      "slot_stride": "0x12ab0",
+      "reads": ["AbandonedHouse", "MoveInCompletion"],
+      "writes": ["manager bitmask +0x10220", "generated resident-name list +0x10228", "count +0x103a8"],
+      "consumer_join_to_0xc68f30": "OPEN; cache fields are only found in this generated decompilation search in 0xc687f0"
+    },
+    "house_move_in_processor": {
+      "function": "0xf84f10",
+      "target": "0xf8cea0",
+      "direct_call_sites": [
+        {"pc": "0xf851a4", "owner": "0xf84f10"},
+        {"pc": "0xf8520c", "owner": "0xf84f10"}
+      ],
+      "0xf8cea0_role": "Selects a waiting-NPC record among four temporary records using state byte 3, updates resident data, and builds the house on the supplied plot according to native-summary labels.",
+      "house_parameter_helpers": [
+        {"pc": "0xf8d180", "owner": "0xf8cea0", "target": "0xf826c0"},
+        {"pc": "0xf8d1c0", "owner": "0xf8cea0", "target": "0xf814c0"}
+      ],
+      "transform_boundary": "No outdoor coordinate or final visible NPC transform is established by these calls."
+    },
+    "npc_house_parameter_request": {
+      "function": "0xd21110",
+      "direct_callers": [
+        {"pc": "0xce438", "owner_va": null},
+        {"pc": "0xbbf068", "owner": "0xbbe5a0"},
+        {"pc": "0xbbfeac", "owner": "0xbbf3e0"},
+        {"pc": "0xbc04c8", "owner": "0xbc0430"},
+        {"pc": "0xf53f50", "owner": "0xf53a70"}
+      ],
+      "resident_predicate": "AbandonedHouse < 2 and MoveInCompletion set",
+      "resident_slot_count": 10,
+      "counter_field": "+0x63b0",
+      "resource_pattern": "Param/NpcHouse/%s.byml",
+      "resource_request_call": {"pc": "0xd21354", "owner": "0xd21110", "target": "0x1f05a80"},
+      "request_object_call": {"pc": "0xd213d8", "owner": "0xd21110", "target": "0xd214e0"},
+      "conditional_resident_apply_call": {"pc": "0xd212ec", "owner": "0xd21110", "target": "0xbe4f70"},
+      "claim_limit": "Native selection/request path for interior parameter data; no resource completion or visible room occupant is established."
+    },
+    "camper_to_resident_handoff": {
+      "prior_story_write": "First-camper talk writes visitor ID into NPC slot 5 at save offset 0x5d570 (prior continuity report).",
+      "slot_scan_relation": "Slot 5 is within the ten-slot manager and house-data loops.",
+      "joins_to_waiting_npc_record_house_ready_or_accepted_field_request": "OPEN"
+    }
+  },
+  "stage_and_factory": {
+    "actor_kind_registry": [
+      {"type_index": 5, "type": "NpcActorMgr"},
+      {"type_index": 6, "type": "Npc"}
+    ],
+    "class_registration_boundary": {
+      "npc_actor_mgr": {"factory": "0xc67fa0", "registration_initializer": "_INIT_2810"},
+      "npc_actor": {"factory": "0xbe5e40", "registration_initializer": "_INIT_2780"},
+      "request_to_npc_actor_factory_edge": "OPEN",
+      "note": "The manager registration/factory and concrete NpcActor registration/factory are distinct classes."
+    },
+    "stage_sources": [
+      {"source_id": 2907, "resource": "B_data/Stage/Game/MainField.byml", "projected_sha256": "1f1642e5f8ea00fe969484e1bb6d2da3557897e219f0f4fecfcfc7fb980c444a", "raw_byml_sha256": "f1d017317db841026fb23d9a4af5b92b573aa243e984e54dfc2ef281dd115674", "relation": "includes commonOutdoor source 2984"},
+      {"source_id": 2984, "resource": "B_data/Stage/commonOutdoor.byml", "projected_sha256": "c8f1b99f215f4294aac674e7dba5f6f6ec7cbaa502a284e960b929b23c9cebed", "raw_byml_sha256": "5ab2a53a8b702782416576e7296724fe53a52580558c20500b4015449dec4503", "rows": [{"path": "/3cbaa541/2", "actor_type_index": 5, "actor": "NpcActorMgr", "position": null, "angle": null, "argument": null}]},
+      {"source_id": 2983, "resource": "B_data/Stage/commonIndoor.byml", "projected_sha256": "e1353066f273f3d9accc31a80548b9f660b18bb4ec075d8cce3b982d7f97747a", "raw_byml_sha256": "74e59e7ebdc82fc0eda0706e682aa3598f0a79685aa6743ef1082d27f6d509d7", "rows": [{"path": "/3cbaa541/0", "actor_type_index": 5, "actor": "NpcActorMgr", "position": null, "angle": null, "argument": null}]},
+      {"source_id": 2881, "resource": "B_data/Stage/Dream_Tkk.byml", "projected_sha256": "b466eaa2d19634e4877d2c8459e1efe3bc6f5ffad1319f66ffb97cb16653e051", "raw_byml_sha256": "fa12894f20f4f89000180029dde8b779a21f2d0b81bcb68b735977ada86596ed", "rows": [{"path": "/3cbaa541/0", "actor_type_index": 6, "actor": "Npc", "actor_kind_parent": "NpcActorMgr", "position_raw": {"2814d70c": 160.0, "3dbac09d": 160.0, "dd29f651": 0.0}, "argument": "tkkA/AIC:Demo/AIF:AI_NPC_Tkk_Dream/DMF:Tutorials_Prologue_Tkk"}], "role": "positioned static NPC control row; not a dynamic resident request or house placement"},
+      {"source_id": 2914, "resource": "B_data/Stage/NpcHouse0.byml", "projected_sha256": "b28b7b1d1b0b911ffd763cf6262304286db66dab1f7a5455b86b378aaec38f65", "raw_byml_sha256": "158925164096b936dfec1de4c1bd497309a5365e7782ddd5e79c628f6ea4c4a5", "commonIndoor": true, "local_actor_rows": [{"actor": "PlayerActorMgr", "position_raw": {"2814d70c": 160.0, "3dbac09d": 185.0, "dd29f651": 0.0}}]},
+      {"source_id": 2915, "resource": "B_data/Stage/NpcHouse1.byml", "projected_sha256": "30e1ada4bb0008f9b1c6bcba8a2fb9b53515c670d829b2e548682072ed84708b", "raw_byml_sha256": "2d72999bb614bdc20997ade9830d34d2cd840b03ed91c3be8b4301c4c1dad418", "commonIndoor": true, "local_actor_rows": [{"actor": "PlayerActorMgr", "position_raw": {"2814d70c": 160.0, "3dbac09d": 185.0, "dd29f651": 0.0}}]},
+      {"source_id": 2916, "resource": "B_data/Stage/NpcHouse2.byml", "projected_sha256": "55688e43748471678de9999eee90ed5ca0e56bcfcfdc1548300b50ec04d7ca73", "raw_byml_sha256": "d2cf94ad503aade9bcb5568ade37eef3a85b6bcd368246740a7e57fa91f01c03", "commonIndoor": true, "local_actor_rows": [{"actor": "PlayerActorMgr", "position_raw": {"2814d70c": 160.0, "3dbac09d": 185.0, "dd29f651": 0.0}}]},
+      {"source_id": 2917, "resource": "B_data/Stage/NpcHouse3.byml", "projected_sha256": "39d5f5fc59e700ed1c3fffcf25968b00e6a05f7be5ff07d06762f0f2ba6ac4d9", "raw_byml_sha256": "550f480b303ffe911dffd240313b00b55ca1dc76946159a3424996c25c312655", "commonIndoor": true, "local_actor_rows": [{"actor": "PlayerActorMgr", "position_raw": {"2814d70c": 160.0, "3dbac09d": 185.0, "dd29f651": 0.0}}]},
+      {"source_id": 2918, "resource": "B_data/Stage/NpcHouse4.byml", "projected_sha256": "ea547620ad4f7d7e3b9e939114feb9bc0394f3491677b9d578e0b380ac7159ba", "raw_byml_sha256": "ce94e47c09447072cd7385c2336acc2882e574e500c298c7d1b10aec6b16dc4d", "commonIndoor": true, "local_actor_rows": [{"actor": "PlayerActorMgr", "position_raw": {"2814d70c": 160.0, "3dbac09d": 185.0, "dd29f651": 0.0}}]},
+      {"source_id": 2919, "resource": "B_data/Stage/NpcHouse5.byml", "projected_sha256": "dd30b155f4b0924bfc47e7bb2564cc607fa1a7f1f5953be6e5b7f372ba2a96a4", "raw_byml_sha256": "7d99cf0854223d79f62fcbe57a5af32ccbaa76edbd8c2e0ed1687f8e7a49712e5", "commonIndoor": true, "local_actor_rows": [{"actor": "PlayerActorMgr", "position_raw": {"2814d70c": 160.0, "3dbac09d": 185.0, "dd29f651": 0.0}}]},
+      {"source_id": 2920, "resource": "B_data/Stage/NpcHouse6.byml", "projected_sha256": "796a11e0872a1a8ad31444ecd59fc47a952b0ffb7199b53c0dcb3e108739d04a", "raw_byml_sha256": "4dec7a06dac714dcb53f8ca0dc445659eb9b57d5311932c471956108c5100c72", "commonIndoor": true, "local_actor_rows": [{"actor": "PlayerActorMgr", "position_raw": {"2814d70c": 160.0, "3dbac09d": 185.0, "dd29f651": 0.0}}]},
+      {"source_id": 2921, "resource": "B_data/Stage/NpcHouse7.byml", "projected_sha256": "fe320d490da28a1891beedef4664ff2383b91e56ca5d34bbde9793563dabeccc", "raw_byml_sha256": "6c37bd171ac7ec821512b8e7fb7284f973d75b14b39ef2de7dd41a52c86e7a94", "commonIndoor": true, "local_actor_rows": [{"actor": "PlayerActorMgr", "position_raw": {"2814d70c": 160.0, "3dbac09d": 185.0, "dd29f651": 0.0}}]},
+      {"source_id": 2922, "resource": "B_data/Stage/NpcHouse8.byml", "projected_sha256": "1bd325453a9aa1a433758989a47a022111b51a3dc4b6cea5c4bb97fbc4f20bde", "raw_byml_sha256": "8c36d9171ce2129fcc7ae91f95c49c18f443ae7e5349ef441dac789e35c5681b", "commonIndoor": true, "local_actor_rows": [{"actor": "PlayerActorMgr", "position_raw": {"2814d70c": 160.0, "3dbac09d": 185.0, "dd29f651": 0.0}}]},
+      {"source_id": 2923, "resource": "B_data/Stage/NpcHouse9.byml", "projected_sha256": "2114964e4150bcd89ae6a060aa0beba012b8f326411569853b5d91815e9bf2fb", "raw_byml_sha256": "fd597f7e6f47ac7b96bafab3bb5cd15ea7884765746835666f5621393235ad65", "commonIndoor": true, "local_actor_rows": [{"actor": "PlayerActorMgr", "position_raw": {"2814d70c": 160.0, "3dbac09d": 185.0, "dd29f651": 0.0}}]}
+    ],
+    "stage_row_boundary": "All NpcHouse templates relate to commonIndoor and one local player start. No local resident Npc row, resident identifier, outdoor plot coordinate, or assigned-house transform is present in these rows."
+  },
+  "bounded_searches": [
+    {"search": "direct_calls WHERE target_va=0x490f0", "scope": "/workspace/acnh-re/output/index.sqlite direct_calls", "result": "133 rows; 71 have owner_va", "limit": "Shared service call census; does not resolve indirect request handler."},
+    {"search": "direct_calls WHERE target_va IN (0xbe5e40,0xc67fa0)", "scope": "entire indexed direct-call table", "result": "zero rows to either registered candidate factory", "limit": "A zero direct-edge result cannot rule out indirect factory selection."},
+    {"search": "generated decompilation references to 0x10220, 0x10228, 103a8", "scope": "/workspace/acnh-re/output/binary/analysis_decomp", "result": "literal cache-field references occur in c687f0.c only", "limit": "Text search can miss computed offsets, indirect member access, or omitted decompilation."},
+    {"search": "NpcActorMgr and Npc stage rows", "scope": "projected files under /workspace/acnh-re/output/stage/by_source and 108 entries in catalogue.json", "result": "two NpcActorMgr rows (commonIndoor/commonOutdoor); 28 Npc actor rows across projected resources", "limit": "Projection inventory does not prove stage selection or runtime load."},
+    {"search": "NpcHouse templates", "scope": "NpcHouse0.byml through NpcHouse9.byml, source IDs 2914–2923", "result": "all ten include commonIndoor; each local actor list contains only PlayerActorMgr", "limit": "Interior template rows do not identify resident assignment or field-house placement."},
+    {"search": "NpcHouse parameter payload", "scope": "supplied /workspace/acnh-re/output/additional_romfs extraction and /workspace/acnh-re-additional-romfs.zip listing", "result": "no Param/NpcHouse payload found in supplied extract/listing", "limit": "Only this supplied additional-ROMFS data was searched; native resource-path evidence remains."}
+  ],
+  "open_edges": [
+    "NpcActorMgr generic request object and indirect queue handler to concrete resident/camper NpcActor factory 0xbe5e40.",
+    "Actor-kind registry dispatch and stage manager row to a live MainField manager instance and accepted request callback.",
+    "Resident save slot, plot record, and house-build result to an outdoor world coordinate and final actor transform.",
+    "NpcHouse parameter request to resource-load completion and any rendered in-home resident instance.",
+    "First camper slot-5 write to the waiting-NPC record consumed by 0xf8cea0, ready-house predicate in 0xd21110, or a later visible field actor."
+  ],
+  "execution": {"game_run": false, "save_mutation": false, "godot_change": false, "stage_commit_or_push": false}
+}
