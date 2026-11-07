@@ -1,0 +1,2733 @@
+{
+  "schema": "acnh.crafting_transaction_manager_followup_native.v1",
+  "evidence_status": "BOUNDED_NATIVE_EXECUTION_WITH_RECONSTRUCTED_TABLE_AND_PLAYER_FIXTURES",
+  "provenance": {
+    "analysis_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+    "main_nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+    "recipe_table_raw_sha256": "97fe6d73e183dab43dad7358627a0a1a43f5764f0a18fa044a63a9ecf56ba919",
+    "recipe_id": 56,
+    "recipe_result_item_id": 975,
+    "recipe_materials": [
+      {
+        "slot": 0,
+        "item_id": 2213,
+        "amount": 1
+      },
+      {
+        "slot": 1,
+        "item_id": 2285,
+        "amount": 1
+      },
+      {
+        "slot": 2,
+        "item_id": 2287,
+        "amount": 1
+      },
+      {
+        "slot": 3,
+        "item_id": 2214,
+        "amount": 1
+      },
+      {
+        "slot": 4,
+        "item_id": 2286,
+        "amount": 1
+      },
+      {
+        "slot": 5,
+        "item_id": 65534,
+        "amount": 0
+      }
+    ]
+  },
+  "correction_to_earlier_row_pointer_hypothesis": {
+    "supersedes": "CRAFTING_TRANSACTION_REMAINDER_20261107.md claim that 0xaac730 compared the raw ItemParam row pointer against the dense row count",
+    "correct_flow": "0xa9c290 stores the ItemParam BCSV row pointer at ItemParam-object+0x10; 0xaac730 passes that pointer through 0x1665ea0, receives dense ItemParam row index 495 for Apple, then indexes the ItemParam->ItemKind ordinal cache.",
+    "clean_install_setup": "inventory_requirements_native.install_item_tables installs the raw ItemParam and ItemKind BCSV blobs, ItemParam UniqueID dense-pointer array, ItemKind row-pointer array, kind-ordinal mapping, metadata offsets, and native table-manager globals.",
+    "native_result": {
+      "ItemParam_Apple_row_index": 495,
+      "ItemParam_Apple_row_pointer_in_item_object_plus_0x10": "0x5103c9d8",
+      "native_0x1665ea0_dense_index": 495,
+      "native_0xaac730_SaveCountMaxNum_value": 0,
+      "native_0xaac910_nonzero_predicate": 0,
+      "ItemKind_Fruit": {
+        "UniqueID": 51,
+        "Label": "Fruit",
+        "MultiHoldMaxNum": 10,
+        "SaveCountMaxNum": 0
+      },
+      "field_source": {
+        "schema": "CylindricalEarth/specs_100.py ItemKind.SaveCountMaxNum",
+        "hash": "0x0ce69142",
+        "type": "u16",
+        "offset": 26,
+        "raw_table": "B_data/Bcsv/ItemKind.bcsv",
+        "raw_sha256": "4cac0178cc69519585528b24ceef022ccb1fefa12b23fc9a9e4280e40185ba7b"
+      },
+      "native_callsite_contract": {
+        "0xaac730_reads_ItemParam_object_plus_0x10_and_calls_0x1665ea0": true,
+        "0xaac730_uses_dense_index_to_ItemParam_to_ItemKind_ordinal_cache": true,
+        "0xaac910_returns_one_when_0xaac730_nonzero": true,
+        "0xf9e840_callsite": "0xf9e874 then tbz w0,#0 to return 0 at 0xf9ebf8 when the predicate is zero",
+        "0xf9e410_callsite": "0xf9e430; the return-zero branch at 0xf9e434 skips all slot scans/count writes",
+        "tested_f9e410_delta": -1,
+        "f9e410_pocket_fixture_bytes_unchanged": true
+      },
+      "scope_limit": "This proves only the SaveCountMaxNum predicate and early return in the generic signed count-update helper for this reconstructed Apple object. It does not prove Apple crafting is rejected or that this is the recipe-56 default path."
+    }
+  },
+  "source_item_count_semantics": {
+    "Fruit_ItemKind_row": "UniqueID=51, Label=Fruit",
+    "MultiHoldMaxNum": "s16 offset 24; source value 10 for Fruit and the stack-limit field used by the separately proven inventory counter producer.",
+    "SaveCountMaxNum": "u16 offset 26, descriptor hash 0x0ce69142; source value 0 for Fruit. This is the field read by 0xaac730 in the specific 0xf9e840/0xf9e410 count-update path, not the Fruit stack-limit field.",
+    "Apple_ItemParam_ItemOutfitInfo": "None -> ItemOutfitInfo row ordinal 30 (source Storage raw data u16=0); the source schema does not assign a stronger Storage interpretation. This separate row manager is required by 0xa9e440/0xa9f140.",
+    "ItemOutfitInfo_Storage_scope": "The native 0xa9f140 lookup is reached by 0xee1060 and reads this distinct field; no source or test here equates it with stack count, SaveCountMaxNum, or ingredient rejection."
+  },
+  "native_default_material_branch": {
+    "0xee1420_default_selector": "param2+0x3c == 0 -> calls 0xee1060 for slots 0..5 with param5=0 and param6=null.",
+    "alternate_selector": "param2+0x3c != 0 selects six per-material 0xeff060 branches only for slots whose amount is nonzero; each material record +0x10 marker also controls whether that slot is routed to 0xeff060.",
+    "verified_branch_context": "The previous 0xee1420 branch probe used a synthetic +0x38 guard and varied +0x3c to select the two paths. Its material mutators were stubbed; it did not establish the payload builder’s real marker values. This follow-up calls original 0xee1060 directly with its default-mode argument tuple and the reconstructed ItemOutfitInfo manager; it returns 1, while the synthetic pocket bytes remain unchanged."
+  },
+  "itemoutfit_manager_setup": {
+    "source": "B_data/Bcsv/ItemOutfitInfo.bcsv",
+    "source_id": 71,
+    "row_count": 108,
+    "row_size": 144,
+    "raw_sha256": "0a5544498bd41f7db79101f845d1007f47425510654d1a8ab82f00b679620aa9",
+    "manager_contract": "0xa9e440 -> 0xa774c0 reads row count +0x1c0 and row-pointer array +0x1b8; 0xab9400 resolves ItemOutfitInfo.Storage by hash 0xc89fb7af.",
+    "itemparam_reference_contract": "ItemParam.ItemOutfitInfo resolves to ItemOutfitInfo.Label row ordinal; dense per-ItemParam-row ordinals are installed at 0x32f0a98.",
+    "Storage_field_source": "CylindricalEarth/specs_100.py declares ItemOutfitInfo.Storage as RawData(hash 0xc89fb7af, width 2); no stronger semantic interpretation is assigned here.",
+    "ItemParam_row_count": 8208,
+    "recipe56_material_references": [
+      {
+        "item_id": 2213,
+        "item_label": "Apple",
+        "ItemParam_ItemOutfitInfo": {
+          "hash": "dfa2aff1",
+          "labels": [
+            "None",
+            "なし"
+          ]
+        },
+        "ItemOutfitInfo_row_index": 30,
+        "ItemOutfitInfo_label": "None",
+        "Storage_raw_u16": 0
+      },
+      {
+        "item_id": 2285,
+        "item_label": "Pear",
+        "ItemParam_ItemOutfitInfo": {
+          "hash": "dfa2aff1",
+          "labels": [
+            "None",
+            "なし"
+          ]
+        },
+        "ItemOutfitInfo_row_index": 30,
+        "ItemOutfitInfo_label": "None",
+        "Storage_raw_u16": 0
+      },
+      {
+        "item_id": 2287,
+        "item_label": "Cherry",
+        "ItemParam_ItemOutfitInfo": {
+          "hash": "dfa2aff1",
+          "labels": [
+            "None",
+            "なし"
+          ]
+        },
+        "ItemOutfitInfo_row_index": 30,
+        "ItemOutfitInfo_label": "None",
+        "Storage_raw_u16": 0
+      },
+      {
+        "item_id": 2214,
+        "item_label": "Orange",
+        "ItemParam_ItemOutfitInfo": {
+          "hash": "dfa2aff1",
+          "labels": [
+            "None",
+            "なし"
+          ]
+        },
+        "ItemOutfitInfo_row_index": 30,
+        "ItemOutfitInfo_label": "None",
+        "Storage_raw_u16": 0
+      },
+      {
+        "item_id": 2286,
+        "item_label": "Peach",
+        "ItemParam_ItemOutfitInfo": {
+          "hash": "dfa2aff1",
+          "labels": [
+            "None",
+            "なし"
+          ]
+        },
+        "ItemOutfitInfo_row_index": 30,
+        "ItemOutfitInfo_label": "None",
+        "Storage_raw_u16": 0
+      }
+    ],
+    "dependencies_stubbed_in_material_call": [
+      "Two view-service virtual methods in the existing partial player/pocket fixture return success."
+    ]
+  },
+  "direct_ee1060_recipe56_material_cases": [
+    {
+      "entry": "0xee1060",
+      "material": {
+        "slot": 0,
+        "item_id": 2213,
+        "amount": 1
+      },
+      "pocket_before_first_six": [
+        [
+          2213,
+          0,
+          0
+        ],
+        [
+          2285,
+          0,
+          0
+        ],
+        [
+          2287,
+          0,
+          0
+        ],
+        [
+          2214,
+          0,
+          0
+        ],
+        [
+          2286,
+          0,
+          0
+        ],
+        [
+          65534,
+          0,
+          0
+        ]
+      ],
+      "pocket_after_first_eight": [
+        [
+          2213,
+          0,
+          0
+        ],
+        [
+          2285,
+          0,
+          0
+        ],
+        [
+          2287,
+          0,
+          0
+        ],
+        [
+          2214,
+          0,
+          0
+        ],
+        [
+          2286,
+          0,
+          0
+        ],
+        [
+          65534,
+          0,
+          0
+        ],
+        [
+          65534,
+          0,
+          0
+        ],
+        [
+          65534,
+          0,
+          0
+        ]
+      ],
+      "dirty_marker_bytes_before": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "dirty_marker_bytes_after": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "changed_pocket_offsets": [],
+      "pocket_write_events": [],
+      "native_return": 1,
+      "native_error": null,
+      "native_0xa9f140_Storage_query_return": "0x0",
+      "ItemOutfitInfo_material_reference": {
+        "item_id": 2213,
+        "item_label": "Apple",
+        "ItemParam_row_index": 495,
+        "ItemParam_ItemOutfitInfo": {
+          "hash": "dfa2aff1",
+          "labels": [
+            "None",
+            "なし"
+          ]
+        },
+        "ItemOutfitInfo_row_index": 30,
+        "ItemOutfitInfo_label": "None",
+        "Storage_raw_u16": 0
+      },
+      "unmapped_accesses": [],
+      "trace": [
+        {
+          "va": "0xee1060",
+          "x0_x5": [
+            "0x50010000",
+            "0x501c0000",
+            "0x50010000",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xe89170",
+          "x0_x5": [
+            "0x50010000",
+            "0x2e",
+            "0xcb5eb33f",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xa9f140",
+          "x0_x5": [
+            "0x401fef78",
+            "0x1",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xa9e440",
+          "x0_x5": [
+            "0x401fef78",
+            "0x401fef20",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xa774c0",
+          "x0_x5": [
+            "0x51602000",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xab9400",
+          "x0_x5": [
+            "0x51f0009c",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee1100",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee12d8",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee12e8",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee138c",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee1390",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee1398",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        }
+      ],
+      "branch_trace": [
+        {
+          "va": "0xee12d8",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee12dc",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee12e0",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee12e4",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee12e8",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee12ec",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee138c",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee1390",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee1394",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee1398",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee13e8",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        }
+      ],
+      "helper_return_values": [
+        {
+          "helper_va": "0xa9f140",
+          "return_va": "0xee10fc",
+          "return_x0": "0x0"
+        }
+      ],
+      "table_setup": {
+        "ItemParam_raw_sha256": "89230e97fc877ff2b2b48ac1c707ef32b3a7760118839c307f19797e2553458c",
+        "ItemKind_raw_sha256": "4cac0178cc69519585528b24ceef022ccb1fefa12b23fc9a9e4280e40185ba7b",
+        "ItemOutfitInfo_raw_sha256": "0a5544498bd41f7db79101f845d1007f47425510654d1a8ab82f00b679620aa9",
+        "ItemParam_to_ItemOutfitInfo_for_recipe56_materials": [
+          {
+            "item_id": 2213,
+            "item_label": "Apple",
+            "ItemParam_row_index": 495,
+            "ItemParam_ItemOutfitInfo": {
+              "hash": "dfa2aff1",
+              "labels": [
+                "None",
+                "なし"
+              ]
+            },
+            "ItemOutfitInfo_row_index": 30,
+            "ItemOutfitInfo_label": "None",
+            "Storage_raw_u16": 0
+          },
+          {
+            "item_id": 2285,
+            "item_label": "Pear",
+            "ItemParam_row_index": 564,
+            "ItemParam_ItemOutfitInfo": {
+              "hash": "dfa2aff1",
+              "labels": [
+                "None",
+                "なし"
+              ]
+            },
+            "ItemOutfitInfo_row_index": 30,
+            "ItemOutfitInfo_label": "None",
+            "Storage_raw_u16": 0
+          },
+          {
+            "item_id": 2287,
+            "item_label": "Cherry",
+            "ItemParam_row_index": 566,
+            "ItemParam_ItemOutfitInfo": {
+              "hash": "dfa2aff1",
+              "labels": [
+                "None",
+                "なし"
+              ]
+            },
+            "ItemOutfitInfo_row_index": 30,
+            "ItemOutfitInfo_label": "None",
+            "Storage_raw_u16": 0
+          },
+          {
+            "item_id": 2214,
+            "item_label": "Orange",
+            "ItemParam_row_index": 496,
+            "ItemParam_ItemOutfitInfo": {
+              "hash": "dfa2aff1",
+              "labels": [
+                "None",
+                "なし"
+              ]
+            },
+            "ItemOutfitInfo_row_index": 30,
+            "ItemOutfitInfo_label": "None",
+            "Storage_raw_u16": 0
+          },
+          {
+            "item_id": 2286,
+            "item_label": "Peach",
+            "ItemParam_row_index": 565,
+            "ItemParam_ItemOutfitInfo": {
+              "hash": "dfa2aff1",
+              "labels": [
+                "None",
+                "なし"
+              ]
+            },
+            "ItemOutfitInfo_row_index": 30,
+            "ItemOutfitInfo_label": "None",
+            "Storage_raw_u16": 0
+          }
+        ]
+      },
+      "fixture_limits": [
+        "The 0x33d3d78 member array and +0x118 active view are synthetic records sized to fields read by this path.",
+        "The two view-service virtual methods return success from synthetic code; their actual runtime implementations remain unknown.",
+        "The full 0x3ce50-byte player member and unrelated runtime managers are not reconstructed."
+      ]
+    },
+    {
+      "entry": "0xee1060",
+      "material": {
+        "slot": 1,
+        "item_id": 2285,
+        "amount": 1
+      },
+      "pocket_before_first_six": [
+        [
+          2213,
+          0,
+          0
+        ],
+        [
+          2285,
+          0,
+          0
+        ],
+        [
+          2287,
+          0,
+          0
+        ],
+        [
+          2214,
+          0,
+          0
+        ],
+        [
+          2286,
+          0,
+          0
+        ],
+        [
+          65534,
+          0,
+          0
+        ]
+      ],
+      "pocket_after_first_eight": [
+        [
+          2213,
+          0,
+          0
+        ],
+        [
+          2285,
+          0,
+          0
+        ],
+        [
+          2287,
+          0,
+          0
+        ],
+        [
+          2214,
+          0,
+          0
+        ],
+        [
+          2286,
+          0,
+          0
+        ],
+        [
+          65534,
+          0,
+          0
+        ],
+        [
+          65534,
+          0,
+          0
+        ],
+        [
+          65534,
+          0,
+          0
+        ]
+      ],
+      "dirty_marker_bytes_before": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "dirty_marker_bytes_after": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "changed_pocket_offsets": [],
+      "pocket_write_events": [],
+      "native_return": 1,
+      "native_error": null,
+      "native_0xa9f140_Storage_query_return": "0x0",
+      "ItemOutfitInfo_material_reference": {
+        "item_id": 2285,
+        "item_label": "Pear",
+        "ItemParam_row_index": 564,
+        "ItemParam_ItemOutfitInfo": {
+          "hash": "dfa2aff1",
+          "labels": [
+            "None",
+            "なし"
+          ]
+        },
+        "ItemOutfitInfo_row_index": 30,
+        "ItemOutfitInfo_label": "None",
+        "Storage_raw_u16": 0
+      },
+      "unmapped_accesses": [],
+      "trace": [
+        {
+          "va": "0xee1060",
+          "x0_x5": [
+            "0x50010000",
+            "0x501c0000",
+            "0x50010000",
+            "0x1",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xe89170",
+          "x0_x5": [
+            "0x50010000",
+            "0x2e",
+            "0xcb5eb33f",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xa9f140",
+          "x0_x5": [
+            "0x401fef78",
+            "0x1",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xa9e440",
+          "x0_x5": [
+            "0x401fef78",
+            "0x401fef20",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xa774c0",
+          "x0_x5": [
+            "0x51602000",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xab9400",
+          "x0_x5": [
+            "0x51f0009c",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee1100",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee12d8",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee12e8",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee138c",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee1390",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee1398",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        }
+      ],
+      "branch_trace": [
+        {
+          "va": "0xee12d8",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee12dc",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee12e0",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee12e4",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee12e8",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee12ec",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee138c",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee1390",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee1394",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee1398",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee13e8",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        }
+      ],
+      "helper_return_values": [
+        {
+          "helper_va": "0xa9f140",
+          "return_va": "0xee10fc",
+          "return_x0": "0x0"
+        }
+      ],
+      "table_setup": {
+        "ItemParam_raw_sha256": "89230e97fc877ff2b2b48ac1c707ef32b3a7760118839c307f19797e2553458c",
+        "ItemKind_raw_sha256": "4cac0178cc69519585528b24ceef022ccb1fefa12b23fc9a9e4280e40185ba7b",
+        "ItemOutfitInfo_raw_sha256": "0a5544498bd41f7db79101f845d1007f47425510654d1a8ab82f00b679620aa9",
+        "ItemParam_to_ItemOutfitInfo_for_recipe56_materials": [
+          {
+            "item_id": 2213,
+            "item_label": "Apple",
+            "ItemParam_row_index": 495,
+            "ItemParam_ItemOutfitInfo": {
+              "hash": "dfa2aff1",
+              "labels": [
+                "None",
+                "なし"
+              ]
+            },
+            "ItemOutfitInfo_row_index": 30,
+            "ItemOutfitInfo_label": "None",
+            "Storage_raw_u16": 0
+          },
+          {
+            "item_id": 2285,
+            "item_label": "Pear",
+            "ItemParam_row_index": 564,
+            "ItemParam_ItemOutfitInfo": {
+              "hash": "dfa2aff1",
+              "labels": [
+                "None",
+                "なし"
+              ]
+            },
+            "ItemOutfitInfo_row_index": 30,
+            "ItemOutfitInfo_label": "None",
+            "Storage_raw_u16": 0
+          },
+          {
+            "item_id": 2287,
+            "item_label": "Cherry",
+            "ItemParam_row_index": 566,
+            "ItemParam_ItemOutfitInfo": {
+              "hash": "dfa2aff1",
+              "labels": [
+                "None",
+                "なし"
+              ]
+            },
+            "ItemOutfitInfo_row_index": 30,
+            "ItemOutfitInfo_label": "None",
+            "Storage_raw_u16": 0
+          },
+          {
+            "item_id": 2214,
+            "item_label": "Orange",
+            "ItemParam_row_index": 496,
+            "ItemParam_ItemOutfitInfo": {
+              "hash": "dfa2aff1",
+              "labels": [
+                "None",
+                "なし"
+              ]
+            },
+            "ItemOutfitInfo_row_index": 30,
+            "ItemOutfitInfo_label": "None",
+            "Storage_raw_u16": 0
+          },
+          {
+            "item_id": 2286,
+            "item_label": "Peach",
+            "ItemParam_row_index": 565,
+            "ItemParam_ItemOutfitInfo": {
+              "hash": "dfa2aff1",
+              "labels": [
+                "None",
+                "なし"
+              ]
+            },
+            "ItemOutfitInfo_row_index": 30,
+            "ItemOutfitInfo_label": "None",
+            "Storage_raw_u16": 0
+          }
+        ]
+      },
+      "fixture_limits": [
+        "The 0x33d3d78 member array and +0x118 active view are synthetic records sized to fields read by this path.",
+        "The two view-service virtual methods return success from synthetic code; their actual runtime implementations remain unknown.",
+        "The full 0x3ce50-byte player member and unrelated runtime managers are not reconstructed."
+      ]
+    },
+    {
+      "entry": "0xee1060",
+      "material": {
+        "slot": 2,
+        "item_id": 2287,
+        "amount": 1
+      },
+      "pocket_before_first_six": [
+        [
+          2213,
+          0,
+          0
+        ],
+        [
+          2285,
+          0,
+          0
+        ],
+        [
+          2287,
+          0,
+          0
+        ],
+        [
+          2214,
+          0,
+          0
+        ],
+        [
+          2286,
+          0,
+          0
+        ],
+        [
+          65534,
+          0,
+          0
+        ]
+      ],
+      "pocket_after_first_eight": [
+        [
+          2213,
+          0,
+          0
+        ],
+        [
+          2285,
+          0,
+          0
+        ],
+        [
+          2287,
+          0,
+          0
+        ],
+        [
+          2214,
+          0,
+          0
+        ],
+        [
+          2286,
+          0,
+          0
+        ],
+        [
+          65534,
+          0,
+          0
+        ],
+        [
+          65534,
+          0,
+          0
+        ],
+        [
+          65534,
+          0,
+          0
+        ]
+      ],
+      "dirty_marker_bytes_before": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "dirty_marker_bytes_after": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "changed_pocket_offsets": [],
+      "pocket_write_events": [],
+      "native_return": 1,
+      "native_error": null,
+      "native_0xa9f140_Storage_query_return": "0x0",
+      "ItemOutfitInfo_material_reference": {
+        "item_id": 2287,
+        "item_label": "Cherry",
+        "ItemParam_row_index": 566,
+        "ItemParam_ItemOutfitInfo": {
+          "hash": "dfa2aff1",
+          "labels": [
+            "None",
+            "なし"
+          ]
+        },
+        "ItemOutfitInfo_row_index": 30,
+        "ItemOutfitInfo_label": "None",
+        "Storage_raw_u16": 0
+      },
+      "unmapped_accesses": [],
+      "trace": [
+        {
+          "va": "0xee1060",
+          "x0_x5": [
+            "0x50010000",
+            "0x501c0000",
+            "0x50010000",
+            "0x2",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xe89170",
+          "x0_x5": [
+            "0x50010000",
+            "0x2e",
+            "0xcb5eb33f",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xa9f140",
+          "x0_x5": [
+            "0x401fef78",
+            "0x1",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xa9e440",
+          "x0_x5": [
+            "0x401fef78",
+            "0x401fef20",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xa774c0",
+          "x0_x5": [
+            "0x51602000",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xab9400",
+          "x0_x5": [
+            "0x51f0009c",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee1100",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee12d8",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee12e8",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee138c",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee1390",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee1398",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        }
+      ],
+      "branch_trace": [
+        {
+          "va": "0xee12d8",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee12dc",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee12e0",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee12e4",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee12e8",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee12ec",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee138c",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee1390",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee1394",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee1398",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee13e8",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        }
+      ],
+      "helper_return_values": [
+        {
+          "helper_va": "0xa9f140",
+          "return_va": "0xee10fc",
+          "return_x0": "0x0"
+        }
+      ],
+      "table_setup": {
+        "ItemParam_raw_sha256": "89230e97fc877ff2b2b48ac1c707ef32b3a7760118839c307f19797e2553458c",
+        "ItemKind_raw_sha256": "4cac0178cc69519585528b24ceef022ccb1fefa12b23fc9a9e4280e40185ba7b",
+        "ItemOutfitInfo_raw_sha256": "0a5544498bd41f7db79101f845d1007f47425510654d1a8ab82f00b679620aa9",
+        "ItemParam_to_ItemOutfitInfo_for_recipe56_materials": [
+          {
+            "item_id": 2213,
+            "item_label": "Apple",
+            "ItemParam_row_index": 495,
+            "ItemParam_ItemOutfitInfo": {
+              "hash": "dfa2aff1",
+              "labels": [
+                "None",
+                "なし"
+              ]
+            },
+            "ItemOutfitInfo_row_index": 30,
+            "ItemOutfitInfo_label": "None",
+            "Storage_raw_u16": 0
+          },
+          {
+            "item_id": 2285,
+            "item_label": "Pear",
+            "ItemParam_row_index": 564,
+            "ItemParam_ItemOutfitInfo": {
+              "hash": "dfa2aff1",
+              "labels": [
+                "None",
+                "なし"
+              ]
+            },
+            "ItemOutfitInfo_row_index": 30,
+            "ItemOutfitInfo_label": "None",
+            "Storage_raw_u16": 0
+          },
+          {
+            "item_id": 2287,
+            "item_label": "Cherry",
+            "ItemParam_row_index": 566,
+            "ItemParam_ItemOutfitInfo": {
+              "hash": "dfa2aff1",
+              "labels": [
+                "None",
+                "なし"
+              ]
+            },
+            "ItemOutfitInfo_row_index": 30,
+            "ItemOutfitInfo_label": "None",
+            "Storage_raw_u16": 0
+          },
+          {
+            "item_id": 2214,
+            "item_label": "Orange",
+            "ItemParam_row_index": 496,
+            "ItemParam_ItemOutfitInfo": {
+              "hash": "dfa2aff1",
+              "labels": [
+                "None",
+                "なし"
+              ]
+            },
+            "ItemOutfitInfo_row_index": 30,
+            "ItemOutfitInfo_label": "None",
+            "Storage_raw_u16": 0
+          },
+          {
+            "item_id": 2286,
+            "item_label": "Peach",
+            "ItemParam_row_index": 565,
+            "ItemParam_ItemOutfitInfo": {
+              "hash": "dfa2aff1",
+              "labels": [
+                "None",
+                "なし"
+              ]
+            },
+            "ItemOutfitInfo_row_index": 30,
+            "ItemOutfitInfo_label": "None",
+            "Storage_raw_u16": 0
+          }
+        ]
+      },
+      "fixture_limits": [
+        "The 0x33d3d78 member array and +0x118 active view are synthetic records sized to fields read by this path.",
+        "The two view-service virtual methods return success from synthetic code; their actual runtime implementations remain unknown.",
+        "The full 0x3ce50-byte player member and unrelated runtime managers are not reconstructed."
+      ]
+    },
+    {
+      "entry": "0xee1060",
+      "material": {
+        "slot": 3,
+        "item_id": 2214,
+        "amount": 1
+      },
+      "pocket_before_first_six": [
+        [
+          2213,
+          0,
+          0
+        ],
+        [
+          2285,
+          0,
+          0
+        ],
+        [
+          2287,
+          0,
+          0
+        ],
+        [
+          2214,
+          0,
+          0
+        ],
+        [
+          2286,
+          0,
+          0
+        ],
+        [
+          65534,
+          0,
+          0
+        ]
+      ],
+      "pocket_after_first_eight": [
+        [
+          2213,
+          0,
+          0
+        ],
+        [
+          2285,
+          0,
+          0
+        ],
+        [
+          2287,
+          0,
+          0
+        ],
+        [
+          2214,
+          0,
+          0
+        ],
+        [
+          2286,
+          0,
+          0
+        ],
+        [
+          65534,
+          0,
+          0
+        ],
+        [
+          65534,
+          0,
+          0
+        ],
+        [
+          65534,
+          0,
+          0
+        ]
+      ],
+      "dirty_marker_bytes_before": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "dirty_marker_bytes_after": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "changed_pocket_offsets": [],
+      "pocket_write_events": [],
+      "native_return": 1,
+      "native_error": null,
+      "native_0xa9f140_Storage_query_return": "0x0",
+      "ItemOutfitInfo_material_reference": {
+        "item_id": 2214,
+        "item_label": "Orange",
+        "ItemParam_row_index": 496,
+        "ItemParam_ItemOutfitInfo": {
+          "hash": "dfa2aff1",
+          "labels": [
+            "None",
+            "なし"
+          ]
+        },
+        "ItemOutfitInfo_row_index": 30,
+        "ItemOutfitInfo_label": "None",
+        "Storage_raw_u16": 0
+      },
+      "unmapped_accesses": [],
+      "trace": [
+        {
+          "va": "0xee1060",
+          "x0_x5": [
+            "0x50010000",
+            "0x501c0000",
+            "0x50010000",
+            "0x3",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xe89170",
+          "x0_x5": [
+            "0x50010000",
+            "0x2e",
+            "0xcb5eb33f",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xa9f140",
+          "x0_x5": [
+            "0x401fef78",
+            "0x1",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xa9e440",
+          "x0_x5": [
+            "0x401fef78",
+            "0x401fef20",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xa774c0",
+          "x0_x5": [
+            "0x51602000",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xab9400",
+          "x0_x5": [
+            "0x51f0009c",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee1100",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee12d8",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee12e8",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee138c",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee1390",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee1398",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        }
+      ],
+      "branch_trace": [
+        {
+          "va": "0xee12d8",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee12dc",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee12e0",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee12e4",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee12e8",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee12ec",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee138c",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee1390",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee1394",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee1398",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee13e8",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        }
+      ],
+      "helper_return_values": [
+        {
+          "helper_va": "0xa9f140",
+          "return_va": "0xee10fc",
+          "return_x0": "0x0"
+        }
+      ],
+      "table_setup": {
+        "ItemParam_raw_sha256": "89230e97fc877ff2b2b48ac1c707ef32b3a7760118839c307f19797e2553458c",
+        "ItemKind_raw_sha256": "4cac0178cc69519585528b24ceef022ccb1fefa12b23fc9a9e4280e40185ba7b",
+        "ItemOutfitInfo_raw_sha256": "0a5544498bd41f7db79101f845d1007f47425510654d1a8ab82f00b679620aa9",
+        "ItemParam_to_ItemOutfitInfo_for_recipe56_materials": [
+          {
+            "item_id": 2213,
+            "item_label": "Apple",
+            "ItemParam_row_index": 495,
+            "ItemParam_ItemOutfitInfo": {
+              "hash": "dfa2aff1",
+              "labels": [
+                "None",
+                "なし"
+              ]
+            },
+            "ItemOutfitInfo_row_index": 30,
+            "ItemOutfitInfo_label": "None",
+            "Storage_raw_u16": 0
+          },
+          {
+            "item_id": 2285,
+            "item_label": "Pear",
+            "ItemParam_row_index": 564,
+            "ItemParam_ItemOutfitInfo": {
+              "hash": "dfa2aff1",
+              "labels": [
+                "None",
+                "なし"
+              ]
+            },
+            "ItemOutfitInfo_row_index": 30,
+            "ItemOutfitInfo_label": "None",
+            "Storage_raw_u16": 0
+          },
+          {
+            "item_id": 2287,
+            "item_label": "Cherry",
+            "ItemParam_row_index": 566,
+            "ItemParam_ItemOutfitInfo": {
+              "hash": "dfa2aff1",
+              "labels": [
+                "None",
+                "なし"
+              ]
+            },
+            "ItemOutfitInfo_row_index": 30,
+            "ItemOutfitInfo_label": "None",
+            "Storage_raw_u16": 0
+          },
+          {
+            "item_id": 2214,
+            "item_label": "Orange",
+            "ItemParam_row_index": 496,
+            "ItemParam_ItemOutfitInfo": {
+              "hash": "dfa2aff1",
+              "labels": [
+                "None",
+                "なし"
+              ]
+            },
+            "ItemOutfitInfo_row_index": 30,
+            "ItemOutfitInfo_label": "None",
+            "Storage_raw_u16": 0
+          },
+          {
+            "item_id": 2286,
+            "item_label": "Peach",
+            "ItemParam_row_index": 565,
+            "ItemParam_ItemOutfitInfo": {
+              "hash": "dfa2aff1",
+              "labels": [
+                "None",
+                "なし"
+              ]
+            },
+            "ItemOutfitInfo_row_index": 30,
+            "ItemOutfitInfo_label": "None",
+            "Storage_raw_u16": 0
+          }
+        ]
+      },
+      "fixture_limits": [
+        "The 0x33d3d78 member array and +0x118 active view are synthetic records sized to fields read by this path.",
+        "The two view-service virtual methods return success from synthetic code; their actual runtime implementations remain unknown.",
+        "The full 0x3ce50-byte player member and unrelated runtime managers are not reconstructed."
+      ]
+    },
+    {
+      "entry": "0xee1060",
+      "material": {
+        "slot": 4,
+        "item_id": 2286,
+        "amount": 1
+      },
+      "pocket_before_first_six": [
+        [
+          2213,
+          0,
+          0
+        ],
+        [
+          2285,
+          0,
+          0
+        ],
+        [
+          2287,
+          0,
+          0
+        ],
+        [
+          2214,
+          0,
+          0
+        ],
+        [
+          2286,
+          0,
+          0
+        ],
+        [
+          65534,
+          0,
+          0
+        ]
+      ],
+      "pocket_after_first_eight": [
+        [
+          2213,
+          0,
+          0
+        ],
+        [
+          2285,
+          0,
+          0
+        ],
+        [
+          2287,
+          0,
+          0
+        ],
+        [
+          2214,
+          0,
+          0
+        ],
+        [
+          2286,
+          0,
+          0
+        ],
+        [
+          65534,
+          0,
+          0
+        ],
+        [
+          65534,
+          0,
+          0
+        ],
+        [
+          65534,
+          0,
+          0
+        ]
+      ],
+      "dirty_marker_bytes_before": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "dirty_marker_bytes_after": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "changed_pocket_offsets": [],
+      "pocket_write_events": [],
+      "native_return": 1,
+      "native_error": null,
+      "native_0xa9f140_Storage_query_return": "0x0",
+      "ItemOutfitInfo_material_reference": {
+        "item_id": 2286,
+        "item_label": "Peach",
+        "ItemParam_row_index": 565,
+        "ItemParam_ItemOutfitInfo": {
+          "hash": "dfa2aff1",
+          "labels": [
+            "None",
+            "なし"
+          ]
+        },
+        "ItemOutfitInfo_row_index": 30,
+        "ItemOutfitInfo_label": "None",
+        "Storage_raw_u16": 0
+      },
+      "unmapped_accesses": [],
+      "trace": [
+        {
+          "va": "0xee1060",
+          "x0_x5": [
+            "0x50010000",
+            "0x501c0000",
+            "0x50010000",
+            "0x4",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xe89170",
+          "x0_x5": [
+            "0x50010000",
+            "0x2e",
+            "0xcb5eb33f",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xa9f140",
+          "x0_x5": [
+            "0x401fef78",
+            "0x1",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xa9e440",
+          "x0_x5": [
+            "0x401fef78",
+            "0x401fef20",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xa774c0",
+          "x0_x5": [
+            "0x51602000",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xab9400",
+          "x0_x5": [
+            "0x51f0009c",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee1100",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee12d8",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee12e8",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee138c",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee1390",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee1398",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        }
+      ],
+      "branch_trace": [
+        {
+          "va": "0xee12d8",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee12dc",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee12e0",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee12e4",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee12e8",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee12ec",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee138c",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee1390",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee1394",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee1398",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee13e8",
+          "x0_x5": [
+            "0x0",
+            "0x0",
+            "0x1",
+            "0x0",
+            "0x0",
+            "0x0"
+          ]
+        }
+      ],
+      "helper_return_values": [
+        {
+          "helper_va": "0xa9f140",
+          "return_va": "0xee10fc",
+          "return_x0": "0x0"
+        }
+      ],
+      "table_setup": {
+        "ItemParam_raw_sha256": "89230e97fc877ff2b2b48ac1c707ef32b3a7760118839c307f19797e2553458c",
+        "ItemKind_raw_sha256": "4cac0178cc69519585528b24ceef022ccb1fefa12b23fc9a9e4280e40185ba7b",
+        "ItemOutfitInfo_raw_sha256": "0a5544498bd41f7db79101f845d1007f47425510654d1a8ab82f00b679620aa9",
+        "ItemParam_to_ItemOutfitInfo_for_recipe56_materials": [
+          {
+            "item_id": 2213,
+            "item_label": "Apple",
+            "ItemParam_row_index": 495,
+            "ItemParam_ItemOutfitInfo": {
+              "hash": "dfa2aff1",
+              "labels": [
+                "None",
+                "なし"
+              ]
+            },
+            "ItemOutfitInfo_row_index": 30,
+            "ItemOutfitInfo_label": "None",
+            "Storage_raw_u16": 0
+          },
+          {
+            "item_id": 2285,
+            "item_label": "Pear",
+            "ItemParam_row_index": 564,
+            "ItemParam_ItemOutfitInfo": {
+              "hash": "dfa2aff1",
+              "labels": [
+                "None",
+                "なし"
+              ]
+            },
+            "ItemOutfitInfo_row_index": 30,
+            "ItemOutfitInfo_label": "None",
+            "Storage_raw_u16": 0
+          },
+          {
+            "item_id": 2287,
+            "item_label": "Cherry",
+            "ItemParam_row_index": 566,
+            "ItemParam_ItemOutfitInfo": {
+              "hash": "dfa2aff1",
+              "labels": [
+                "None",
+                "なし"
+              ]
+            },
+            "ItemOutfitInfo_row_index": 30,
+            "ItemOutfitInfo_label": "None",
+            "Storage_raw_u16": 0
+          },
+          {
+            "item_id": 2214,
+            "item_label": "Orange",
+            "ItemParam_row_index": 496,
+            "ItemParam_ItemOutfitInfo": {
+              "hash": "dfa2aff1",
+              "labels": [
+                "None",
+                "なし"
+              ]
+            },
+            "ItemOutfitInfo_row_index": 30,
+            "ItemOutfitInfo_label": "None",
+            "Storage_raw_u16": 0
+          },
+          {
+            "item_id": 2286,
+            "item_label": "Peach",
+            "ItemParam_row_index": 565,
+            "ItemParam_ItemOutfitInfo": {
+              "hash": "dfa2aff1",
+              "labels": [
+                "None",
+                "なし"
+              ]
+            },
+            "ItemOutfitInfo_row_index": 30,
+            "ItemOutfitInfo_label": "None",
+            "Storage_raw_u16": 0
+          }
+        ]
+      },
+      "fixture_limits": [
+        "The 0x33d3d78 member array and +0x118 active view are synthetic records sized to fields read by this path.",
+        "The two view-service virtual methods return success from synthetic code; their actual runtime implementations remain unknown.",
+        "The full 0x3ce50-byte player member and unrelated runtime managers are not reconstructed."
+      ]
+    }
+  ],
+  "material_item_kinds_and_true_counts": [
+    {
+      "item_id": 2213,
+      "item_label": "Apple",
+      "item_kind": "Fruit",
+      "multi_hold_max_num": 10,
+      "save_count_max_num": 0,
+      "required_amount": 1,
+      "fixture_free_param": 0,
+      "fixture_pocket_records": 1,
+      "fixture_count_context": "not initialized; no native unit-count value inferred"
+    },
+    {
+      "item_id": 2285,
+      "item_label": "Pear",
+      "item_kind": "Fruit",
+      "multi_hold_max_num": 10,
+      "save_count_max_num": 0,
+      "required_amount": 1,
+      "fixture_free_param": 0,
+      "fixture_pocket_records": 1,
+      "fixture_count_context": "not initialized; no native unit-count value inferred"
+    },
+    {
+      "item_id": 2287,
+      "item_label": "Cherry",
+      "item_kind": "Fruit",
+      "multi_hold_max_num": 10,
+      "save_count_max_num": 0,
+      "required_amount": 1,
+      "fixture_free_param": 0,
+      "fixture_pocket_records": 1,
+      "fixture_count_context": "not initialized; no native unit-count value inferred"
+    },
+    {
+      "item_id": 2214,
+      "item_label": "Orange",
+      "item_kind": "Fruit",
+      "multi_hold_max_num": 10,
+      "save_count_max_num": 0,
+      "required_amount": 1,
+      "fixture_free_param": 0,
+      "fixture_pocket_records": 1,
+      "fixture_count_context": "not initialized; no native unit-count value inferred"
+    },
+    {
+      "item_id": 2286,
+      "item_label": "Peach",
+      "item_kind": "Fruit",
+      "multi_hold_max_num": 10,
+      "save_count_max_num": 0,
+      "required_amount": 1,
+      "fixture_free_param": 0,
+      "fixture_pocket_records": 1,
+      "fixture_count_context": "not initialized; no native unit-count value inferred"
+    }
+  ],
+  "transaction_and_save_limits": [
+    "0xee1060 was called directly per actual RecipeCraftParam.UniqueID=56 material, with one native-form item record for each fruit stack; this is not the full 0xee1420 transaction or the UI payload builder.",
+    "The partial player/pocket resolver uses synthetic manager/member records and two success-return virtual view stubs from crafting_pocket_manager_probe.initialize_manager_fixture. One item word per source material is present, but the native A/B/C inventory counter/cache context and its source-record producers are not initialized, so this is not a true count fixture.",
+    "No real save was loaded, changed, serialized, or flushed. Recipe-56 result insertion, cancellation, rollback/refund, and durable SaveProc effects remain open.",
+    "A successful 0xee1060 return alone is not treated as proof of material consumption; only changed synthetic pocket bytes would establish fixture mutation.",
+    "The 0xeff060 SaveCountMaxNum probe is an alternate helper branch and cannot be generalized to in-game Apple material rejection."
+  ]
+}

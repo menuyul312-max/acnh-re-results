@@ -475,5 +475,22 @@
     "The member reference service pointer at +0x28 is null, so ee94f0 takes its native no-provider path; no virtual view provider is emulated.",
     "ItemParam and ItemKind tables are reconstructed from the supplied dump by inventory_requirements_native.install_item_tables; this does not recreate the game's whole runtime table manager graph.",
     "0xaac730 is original and unpatched. If the native gate rejects the fixture, no count mutation is claimed."
-  ]
+  ],
+  "interpretation_update": {
+    "status": "historical_fixture_result_superseded_for_gameplay_interpretation",
+    "superseding_report": "acnh-re/docs/CRAFTING_TRANSACTION_MANAGER_FOLLOWUP_20261107.md",
+    "corrected_pointer_join": {
+      "ItemParam_row_pointer": "0x5103c9d8",
+      "dense_ItemParam_index": 495,
+      "meaning": "the clean manager maps the Apple row pointer to index 495; the earlier 0x51007078 fixture diagnosis is not the final table mapping"
+    },
+    "zero_gate_scope": "SaveCountMaxNum=0 is read on the alternate 0xeff060 -> 0xf9e410 signed-count route; it does not establish that Apple is rejected as a recipe material",
+    "default_material_helper": {
+      "address": "0xee1060",
+      "recipe56_material_cases_returning_1": 5,
+      "pocket_mutations_observed": 0,
+      "real_A_B_C_inventory_count_caches_installed": false
+    },
+    "current_open_boundary": "construct the real inventory count/cache manager and trace source-record producers before claiming material consumption"
+  }
 }
