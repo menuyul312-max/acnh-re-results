@@ -7757,7 +7757,7 @@
     "required_asset_family_count": 11,
     "all_beats_have_all_asset_families": true,
     "full_semantic_coverage_proven": false,
-    "supplemental_proof_count": 23,
+    "supplemental_proof_count": 24,
     "supplemental_proof_files_exist": true
   },
   "full_semantic_coverage_proven": false,
@@ -7915,6 +7915,13 @@
       "data": "acnh-re/output/gameplay/crafting_persistence_transaction_boundary_20261107.json",
       "scope": "Craft material/result in-memory mutation and SaveSimpleSave/SaveProc persistence request/dispatch boundary.",
       "status": "pocket_mutations_and_save_queue_mapped; named_save_member_serializer_durable_write_and_reload_OPEN"
+    },
+    {
+      "id": "crafting_saveproc_fileio_trace",
+      "report": "acnh-re/docs/CRAFTING_SAVEPROC_FILEIO_TRACE_20261107.md",
+      "data": "acnh-re/output/gameplay/crafting_saveproc_fileio_trace_20261107.json",
+      "scope": "SaveProc task queue, conditional filesystem Commit, direct write/flush wrappers, and local pocket-view naming.",
+      "status": "conditional_commit_branch_STATIC_CONFIRMED; save_request_serializer_write_reload_and_named_pocket_member_OPEN"
     },
     {
       "id": "player_grid_ground_movement_result",

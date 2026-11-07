@@ -1,0 +1,173 @@
+{
+  "schema": "acnh.crafting_saveproc_fileio_trace.v1",
+  "game_version": "ACNH 1.0.0",
+  "evidence_status": "STATIC_CALLGRAPH_AND_LAYOUT_REVIEW",
+  "scope": "Trace SaveProc callback/worker handling, direct filesystem write/flush/commit callers, and local pocket-view naming. No game execution, save write, synthetic fixture, or reload test.",
+  "report": "docs/CRAFTING_SAVEPROC_FILEIO_TRACE_20261107.md",
+  "conclusion": {
+    "conditional_worker_commit_proven": true,
+    "commit_tied_to_specific_save_simple_save_or_craft_request": false,
+    "saveproc_serializer_callback_identity": "open_indirect",
+    "writefile_flushfile_tied_to_saveproc_callback": false,
+    "named_local_1_0_0_pocket_member": false,
+    "reload_persistence_proven": false
+  },
+  "evidence": {
+    "saveproc_queue": {
+      "startup_va": "0x96ef0",
+      "worker_manager_constructor_va": "0xfb40c0",
+      "worker_manager_registration_callsite": "0x970ec",
+      "save_simple_save_dispatcher_va": "0x338080",
+      "tail_branch_pc": "0x3380f8",
+      "queue_request_va": "0xfb3160",
+      "request_stores_operation_at_object_offset": "0x8",
+      "queue_enqueue_callsite": "0xfb3234",
+      "queue_enqueue_va": "0xfaf180",
+      "queue_record_size": "0x38",
+      "registered_task_name": "SaveProc",
+      "registration_va": "0xfb4150",
+      "generic_registration_factory_va": "0xd4240",
+      "worker_consumer_va": "0xfaf210",
+      "worker_readiness_callsite": "0xfaf240",
+      "worker_readiness_thunk_va": "0xd47a0",
+      "worker_readiness_target_va": "0x22fe870",
+      "worker_to_task_wrapper_callsite": "0xfaf274",
+      "worker_to_task_wrapper_thunk_va": "0xfb41c0",
+      "worker_to_task_wrapper_va": "0xd45c0",
+      "generic_executor_callsite": "0xd466c",
+      "generic_executor_va": "0x2201820",
+      "indirect_callback": {
+        "status": "unresolved",
+        "reason": "runtime task message and virtual-method target are selected through generic object/vtable state; no concrete serializer method target is recovered"
+      }
+    },
+    "conditional_commit": {
+      "operation_state_driver_va": "0xfb3010",
+      "operation_state_driver_from_va": "0xfb2f30",
+      "state_callback_table_va": "0x30ed140",
+      "worker_dispatch_callsite": "0xfb30e4",
+      "worker_dispatch_va": "0xfaf360",
+      "state_step_callsite": "0xfaf374",
+      "state_step_va": "0xfaf4e0",
+      "condition": {
+        "operation_flags_mask": "0x20f8",
+        "operation_flags_mask_nonzero_required": true,
+        "operation_byte_offset": "0x1",
+        "operation_byte_bit": 4,
+        "operation_byte_bit_must_be_clear": true,
+        "save_path_manager_must_be_present": true
+      },
+      "commit_helper_callsite": "0xfaf86c",
+      "commit_helper_va": "0xf21f30",
+      "sdk_commit_symbol": "nn::fs::Commit(const char *const *, int)",
+      "sdk_commit_callsite": "0xf22230",
+      "commit_result_mapping": {
+        "api_result_zero": 1,
+        "other_api_result": 7
+      },
+      "commit_semantic_scope": "Proves a conditional commit in the save-operation state machinery, not that this exact SaveProc/craft request satisfies the condition. Operation flag names and the indirect callback link remain unresolved."
+    },
+    "filesystem_direct_callers": {
+      "write_file": [
+        {"call_pc": "0x1970020", "function_va": "0x196ffd0"},
+        {"call_pc": "0x1c2fab4", "function_va": "0x1c2fa70"},
+        {"call_pc": "0x1c2fe18", "function_va": "0x1c2fdd0"},
+        {"call_pc": "0x1fc8c7c", "function_va": "0x1fc8c40"}
+      ],
+      "flush_file": [
+        {"call_pc": "0x196fde8", "function_va": "0x196fda0"},
+        {"call_pc": "0x196fe2c", "function_va": "0x196fe10"},
+        {"call_pc": "0x1c2f94c", "function_va": "0x1c2f920"},
+        {"call_pc": "0x1fc8bc0", "function_va": "0x1fc8b90"},
+        {"call_pc": "0x1fc8c10", "function_va": "0x1fc8be0"},
+        {"call_pc": "0x1fc8db8", "function_va": "0x1fc8db0"},
+        {"call_pc": "0x1fc8e00", "function_va": "0x1fc8de0"}
+      ],
+      "commit_import_callers": [
+        {"call_pc": "0xf22230", "function_va": "0xf21f30", "symbol": "nn::fs::Commit(const char *const *, int)"},
+        {"call_pc": "0x1970ae4", "function_va": "0x1970ac0", "symbol": "nn::fs::Commit(const char *)", "note": "Separate file workflow; no SaveProc edge established."}
+      ],
+      "writer_vtable_candidate": {
+        "pointer_sequence_va": "0x321cef0",
+        "write_method_va": "0x1fc8c40",
+        "constructor_va": "0x1fc8a40",
+        "source_string": "hkNxStreamWriter.cpp",
+        "interpretation": "Generic/Havok file stream evidence, not a SaveProc serializer binding."
+      },
+      "candidate_player_data_helper": {
+        "mount_helper_va": "0xf214a0",
+        "open_resize_close_helper_va": "0xf21350",
+        "mount_name": "ACNH_SAVE",
+        "file_path": "ACNH_SAVE:/PlayerData.bin",
+        "size": "0x4000",
+        "observed_operations": ["MountDeviceSaveData", "OpenFile", "SetFileSize", "CloseFile"],
+        "write_or_flush_observed": false,
+        "tied_to_saveproc_callback": false
+      }
+    },
+    "craft_pocket_view": {
+      "material_path": {
+        "helper_va": "0xeff060",
+        "resolved_context_accessor_va": "0xf8f400",
+        "context_offset": "0x1c0",
+        "view_size": "0x140",
+        "mutation_helper_va": "0xf9e410"
+      },
+      "result_path": {
+        "helper_va": "0xefac20",
+        "resolved_context_accessor_va": "0xf8f400",
+        "context_offset": "0x70",
+        "view_size": "0x17c",
+        "insert_helper_va": "0xf987c0"
+      },
+      "local_save_layout": {
+        "root_size": "0x4fa0d8",
+        "max_depth": 2,
+        "node_0x70": {"data": "0x0", "size": "0x4", "name": null},
+        "player_record_node_0x70": {"data": "0x4", "size": "0x1", "name": null},
+        "player_record_node_0xa8": {"data": "0x8", "size": "0xaf90", "name": null},
+        "named_pocket_member": false
+      },
+      "external_crosswalk": {
+        "schema_name": "save_schema_111_103",
+        "local_build": "1.0.0",
+        "exact_0x17c_craft_view_member": false,
+        "status": "cross-version candidate only; not local RTTI/member-name proof"
+      }
+    }
+  },
+  "provenance": {
+    "main_nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+    "code_segment_main_0_bin_sha256": "9c9b45d8e7a58706ca59e7244b3aebac2325ef98faa205e007974eeeb2f758e9",
+    "native_index_sha256": "a78c7af27d37b8fd931bba8bc611623dacf7685cb6e8b4f827effa0765340aad",
+    "analysis_elf_json_sha256": "42bfdc3107b4fde9add2459049ef6febd8bca4d999725eedfd3485bf5be8040d",
+    "code_pointer_arrays_json_sha256": "64d474068ca289f9146f7f32e6647a16a05e8f5be8e635615a478744b62ef822",
+    "save_layout_json_sha256": "a326c84213faad1921bd7660c3e171a7b3af117ec55e2ca711a871ad637e51dc",
+    "external_crosswalk_json_sha256": "2fea2dfb23c286c08d6a33f93e944cfccec4cd606bf43cab08c6eee96f7e0604",
+    "prior_persistence_markdown_sha256": "4e7c44eac3fd2a41650692c5356ee10cfa623bf768af9da25b1653079ec4502b",
+    "prior_persistence_json_sha256": "d0e52a7ef9592029d32adb4dfe40d102ae13d62f07d1b85f2c82dae9b031a7c4",
+    "source_decomp_sha256": {
+      "fb4150.c": "132881bcf182674685e36aea39343571b66ee7b4db2541d29a1dc4e5c4a5e57c",
+      "fb3160.c": "ba423c352409ee3c5b36400fb485f7b5e5773720a2852794cf2c0e081cf2efe9",
+      "faf180.c": "a648412a4cf72267653e1e5563da407387593bf60006c8f67aee025bf5110f41",
+      "faf210.c": "18d0ab3ca3ebca60ac1797901110019a3bd8d8fc09611456c6cbb3128fe74e6a",
+      "faf360.c": "bc75c4dad931d6b54c8586f76e448373b10406f4aaa96761a5d291d038e47b0e",
+      "faf4e0.c": "b8e6246a01f931021ae3e357df6a4de5abeaf8c566fbead13290293813fc4b9d",
+      "fb3010.c": "c42f4bf5f7998ac60cb60d788e20147dff97980f9f97be2b4651d60e69a8987b",
+      "fb2f30.c": "1386266e325e8ababdc16b67c4bf16d9db1fefd55bbbffb125eec5195d388814",
+      "f21f30.c": "36727cc2b4474b9f50c56371faa5ae54c7b7d2e003922feaa755313f104d4c75",
+      "f21cf0.c": "0cceaab32228e32a6a53ff45cb0681f18c47b3d536a689e5721ddd06c2bb8cd9",
+      "f214a0.c": "b7728ae8664105ef68e287e5c17a2978b93decbf0559584cd750229e6fcfce7c",
+      "f21350.c": "d360b906560fa00b234506d1d0805202e980bf479f4236fc3017f5d80dd4e925",
+      "1fc8a40.c": "0eac581208ad85bc6067ba1e90e0008e58d031f3262ccac0172aad7d3cdd048d",
+      "1c2fa70.c": "eda9b9cc1611a25d559bfabdb75fa7d5388f1021ca94b1c2833d4ca344b04ed2",
+      "d45c0.c": "f45217aab6a77e5f4a0d7b1506e085d3bddcc1ed31748dfbb60004c653e3067e",
+      "fb41c0.c": "1aef7765b6570f463d47898dcdeff2609867ddb4b24f97383b4034232306e9b5",
+      "d4240.c": "140e3e6fc2b92ec494c561cbb7bc57db390b21e02ab06742befc85793b731c90",
+      "2201820.c": "19d80e664008bad5a335d1b2dafad128d9fbe79193bf3be5e8d18548e05eb3a9",
+      "eff060.c": "07e50377ddbfb10fa5f9229f28ca588246d462d0d78ace63566af3b50b70349b",
+      "efac20.c": "9d4690536e0fb3049b53394a05deb6defe37bb335b6827176f19a82a750c926d",
+      "f8f580.c": "cb0c0f63d3e7ac95cbc044a8b85936df73762d98c117e9cf60b366214397a465"
+    }
+  }
+}
