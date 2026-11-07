@@ -364,6 +364,108 @@ def main():
         'execution_method_pseudocode': 'Action method 0x367bd0 calls helper 0x367c20, returns while helper-context state at +0xc8 is nonzero, otherwise writes completion state 1 to action object+0xb0. The helper manages an indexed UI/message queue and calls generic UI services; its 212-function owner-resolved direct-call closure has no Friendship literal, getter, generic-key writer, or field-writer edge.',
         'limit': 'This is a negative result for the indexed direct-call closure of the UI wait action. It cannot exclude virtual callbacks, deferred save processing, another unindexed module, or later recipient/attachment handlers.',
     }
+    net_receive_mail_handler = native_handlers[
+        'EventFlowSystemActor.EventFlowActionNetReceiveMail']
+    grow_up_meta = flow_index['System_GrowUp']
+    grow_up_decoded = json.loads(
+        (analysis/'decoded'/f"{grow_up_meta['source_id']:05d}.json").read_text())
+    grow_up_flowchart = next(
+        fc for fc in grow_up_decoded['data']['flowcharts']
+        if fc['name'] == 'System_GrowUp')
+
+    def flow_event_at(flowchart, array_index):
+        """Describe a decoded EventFlow node by its array index and label."""
+        event = flowchart['events'][array_index]
+        node = {
+            'array_index': array_index,
+            'event_label': event['name'],
+            'type': event.get('type'),
+            'next_array_index': event.get('next'),
+        }
+        if event.get('type') == 'action':
+            actor = flowchart['actors'][event['actor']]
+            node['name'] = actor['actions'][event['action']]
+            node['params'] = event.get('params') or {}
+        elif event.get('type') == 'switch':
+            actor = flowchart['actors'][event['actor']]
+            node['name'] = actor['queries'][event['query']]
+            node['params'] = event.get('params') or {}
+            node['cases'] = event.get('cases') or []
+        elif event.get('type') == 'subflow':
+            node['flowchart'] = event.get('flowchart') or None
+            node['entry_point'] = event.get('entry_point')
+        return node
+
+    # These are actual EventFlow array indexes; labels such as Event28 are
+    # separate source identifiers and must not be treated as the array index.
+    net_receive_mail_routes = [
+        {
+            'entry_point': 'ContinueCommon',
+            'route_array_indices': [4, 66, 44, 13],
+            'route': [flow_event_at(grow_up_flowchart, i)
+                      for i in [4, 66, 44, 13]],
+            'conditions': [],
+            'context': 'The top-level Continue entrypoint also schedules local subflow event index 5, which calls ContinueCommon.',
+        },
+        {
+            'entry_point': 'InGame',
+            'route_array_indices': [22, 61, 82, 6, 67, 45, 26],
+            'route': [flow_event_at(grow_up_flowchart, i)
+                      for i in [22, 61, 82, 6, 67, 45, 26]],
+            'conditions': [{'event_array_index': 82, 'query': 'EventFlowQueryPassDaysSincePreviousGrowUp',
+                            'case_value': 1}],
+            'context': 'The local path reaches NetReceiveMail only on the case-1 branch of PassDaysSincePreviousGrowUp.',
+        },
+        {
+            'entry_point': 'AfterNet',
+            'route_array_indices': [23, 62, 85, 8, 68, 27],
+            'route': [flow_event_at(grow_up_flowchart, i)
+                      for i in [23, 62, 85, 8, 68, 27]],
+            'conditions': [{'event_array_index': 85, 'query': 'EventFlowQueryPassDaysSincePreviousGrowUp',
+                            'case_value': 1}],
+            'context': 'The local path reaches NetReceiveMail only on the case-1 branch of PassDaysSincePreviousGrowUp.',
+        },
+        {
+            'entry_point': 'PostPlayerSwitch',
+            'route_array_indices': [48, 28, 69, 46, 47, 34],
+            'route': [flow_event_at(grow_up_flowchart, i)
+                      for i in [48, 28, 69, 46, 47, 34]],
+            'conditions': [
+                {'event_array_index': 48, 'query': 'EventFlowQueryIsSharePlay',
+                 'params': {'TargetMode': 0}, 'case_value': 0},
+                {'event_array_index': 46, 'query': 'EventFlowQueryIsSharePlay',
+                 'params': {'TargetMode': 0}, 'case_value': 1},
+            ],
+            'context': 'After the initial IsSharePlay case 0 path, SaveGrowUp(cInGame), and TimeLock(cUnlock), a second IsSharePlay query routes case 1 through NetUpdateFriendList to NetReceiveMail.',
+        },
+    ]
+    net_receive_mail_native_trace = {
+        'registration_va': net_receive_mail_handler.get('registration_va'),
+        'factory': net_receive_mail_handler.get('factory'),
+        'constructor': net_receive_mail_handler.get('constructor'),
+        'object_size': net_receive_mail_handler.get('object_size'),
+        'vtable': net_receive_mail_handler.get('vtable'),
+        'slots': net_receive_mail_handler.get('slots'),
+        'explicit_eventflow_parameters': net_receive_mail_handler.get('parameters'),
+        'execution_slot_index': 8,
+        'execution_slot_va': '0x326b60',
+        'execution_slot_body': 'No-op native body.',
+        'completion_slot_index': 9,
+        'completion_slot_va': '0x326b70',
+        'completion_slot_body': 'Stores 1 to action object+0xb0.',
+        'friendship_writer_edges': {
+            'execution_slot_direct_callees': hexes(calls(0x326b60)),
+            'completion_slot_direct_callees': hexes(calls(0x326b70)),
+            'execution_slot_calls_f486c0': 0xf486c0 in calls(0x326b60),
+            'execution_slot_calls_ef2c70': 0xef2c70 in calls(0x326b60),
+            'execution_slot_calls_f48840': 0xf48840 in calls(0x326b60),
+            'completion_slot_calls_f486c0': 0xf486c0 in calls(0x326b70),
+            'completion_slot_calls_ef2c70': 0xef2c70 in calls(0x326b70),
+            'completion_slot_calls_f48840': 0xf48840 in calls(0x326b70),
+        },
+        'interpretation': 'The four System_GrowUp actions have no explicit EventFlow parameters or attached-present input. Their registered execution method is a no-op, followed by a completion-state setter; this does not reveal the external network receipt/payload processing that may occur elsewhere.',
+        'limit': 'This is a bounded negative result for the decoded local 1.0.0 action and these two native methods. It cannot exclude framework side effects, indirect callbacks, deferred network/mail processing, or a missing module.',
+    }
     mail_processor_edges = {
         '0xf53a70': [hex(x) for x in calls(0xf53a70)
                      if x in (0xaba970, 0xabff90)],
@@ -424,9 +526,16 @@ def main():
     timer_call_sites = unowned_direct_call_sites(0xc1e2e0)
     pointer_arrays_path = analysis/'binary/code_pointer_arrays.json'
     timer_owner_array = None
+    timer_owner_members = {}
     if pointer_arrays_path.exists():
         for pointer_array in json.loads(pointer_arrays_path.read_text()):
             for slot_index, entry in enumerate(pointer_array['entries']):
+                if entry.get('target_va') in {
+                        '0xbe6270', '0xbe98a0', '0xbec1f0', '0xbec810'}:
+                    timer_owner_members[entry['target_va']] = {
+                        'pointer_va': entry['pointer_va'],
+                        'slot_index': slot_index,
+                    }
                 if entry.get('target_va') == '0xbec1f0':
                     timer_owner_array = {
                         'start_va': pointer_array['start_va'],
@@ -435,9 +544,13 @@ def main():
                         'slot_index': slot_index,
                         'sequence_status': pointer_array.get('status'),
                     }
-                    break
             if timer_owner_array:
+                timer_owner_array['related_owner_methods'] = timer_owner_members
                 break
+
+    npc_ai_state_names = sorted({row[0] for row in db.execute(
+        'SELECT DISTINCT text FROM string_refs WHERE function_va=? '
+        "AND text LIKE 'NpcAIState::%' ORDER BY text", (0xc1ac50,))})
 
     refs_friendship = refs('Friendship')
     callsite_notes = {
@@ -593,13 +706,17 @@ def main():
                         'native_handler': mailbox_native_action_trace,
                     },
                     'System_GrowUp': {
-                        'event_indices': [event_index for flow_name, event_index, name, params
-                                          in db.execute(
-                                              "SELECT flow,event_index,name,params_json "
-                                              "FROM event_calls WHERE flow='System_GrowUp' "
-                                              "AND name='EventFlowActionNetReceiveMail' "
-                                              "ORDER BY event_index")],
-                        'finding': 'Four EventFlowActionNetReceiveMail nodes occur in the online/network startup flow, separate from player-to-villager post-office delivery; no NpcAddFriendship action appears in these flow nodes.',
+                        'source': grow_up_meta['source'],
+                        'array_index_note': 'event_calls.event_index is the EventFlow event-array index; EventXX is a separate source label.',
+                        'event_indices': [event_array_index for event_array_index, event in enumerate(
+                            grow_up_flowchart['events'])
+                            if event.get('type') == 'action'
+                            and grow_up_flowchart['actors'][event['actor']]['actions'][event['action']]
+                            == 'EventFlowActionNetReceiveMail'],
+                        'routes': net_receive_mail_routes,
+                        'native_handler': net_receive_mail_native_trace,
+                        'finding': 'Four parameterless EventFlowActionNetReceiveMail nodes occur in online/network startup routes, separate from the local Ftr_MailBox UI wait and player-to-villager post-office flow. ContinueCommon follows SaveGrowUp(cStart), time unlock, and NetUpdateFriendList; InGame/AfterNet reach receipt only on PassDaysSincePreviousGrowUp case 1; PostPlayerSwitch traverses the two IsSharePlay(TargetMode=0) switch cases recorded per route. The registered action execution body is a no-op and its completion method only sets action state; neither has a direct Friendship writer edge or explicit attachment parameter.',
+                        'attachment_limit': 'A network mail payload may still be processed by framework/network code outside this action. These nodes do not prove that a received attachment is a villager present or that it changes Friendship.',
                     },
                     'Obj_MessageCardRack_02_SendFuture': 'Only future-mail reservation/edit/delete/return-present actions and queries; it is not a recipient delivery flow and has no NpcAddFriendship action.',
                 },
@@ -660,8 +777,9 @@ def main():
             'capture_plan': [
                 'At 0xab9dc0 entry/return, log caller/backtrace, ushort item ID, descriptor+0x10 key, mapped ItemParam.ItemKind ordinal, async wrapper status at +0x50, result at +0x20, and output delta. Observe calls from both 0xabff90 and 0xabfcf0 on an ordinary day and after day-change; compare -2, ordinary category, and one item per six mapped categories.',
                 'At 0xac0200 and 0xf48840, snapshot Friendship before/after each candidate to establish whether either -3 guard is reached and written during normal play.',
-                'Place a write watchpoint on NPC actor+0xaca8 and log every write PC/backtrace/object base; hook clear 0x258b10 and read 0x388660. Count calls to 0xc1e2e0 and its owner 0xbec1f0 callsite 0xbec314 against elapsed frames/time; this identifies the incrementer and actual update cadence.',
-                'On a cloned save, send and receive controlled player letters with no attachment, an ordinary attachment, and representative attachments from each mapped ItemKind. Trace mailbox UI wait, network receipt, recipient handlers, Friendship getter/writer sites, and saved-state diff. This separates the Ftr_MailBox UI action from any deferred present effect.',
+                'At owner constructor 0xbe5e40, population method 0xbe98a0, and indirect factory load/call at 0xbeab28/0xbeab30, record the selected registry row/key, resolved target, returned child pointer/vptr, owner+0x2f8 store, and setup call 0xc1ac50. Watch +0x2f8 through slot-18 clear 0xbec810 and destructor 0xbe6270 to identify all runtime lifecycle transitions and the concrete child type.',
+                'Place a write watchpoint on NPC actor+0xaca8 and log every write PC/backtrace/object base; hook clear 0x258b10 and read 0x388660. Trace the actual indirect dispatch into owner vtable slot 13 at 0xbec1f0 (entry 0x30d5908, byte offset 0x68) and count its entries and child calls to 0xc1e2e0 at 0xbec314 against frame numbers and elapsed time; this identifies the incrementer and actual update cadence.',
+                'On a cloned save, send and receive controlled player letters with no attachment, an ordinary attachment, and representative attachments from each mapped ItemKind. Capture execution of each System_GrowUp NetReceiveMail route and the external network payload/recipient processor; trace Ftr_MailBox UI separately, then log Friendship getter/writer sites and saved-state diff. Break at NetReceiveMail native execution 0x326b60 and completion 0x326b70, while recognizing their local bodies alone do not expose payload processing.',
                 'During local and network Friendship writes, capture the live Key="Friendship" descriptor returned through 0xdc5e20, its UniqueID/MaxValue, typed view address selected by 0xef2c70, save root, and resulting raw bytes. Compare with local formula save_base+resident*0x10798+player*0xa8+0x39f8 and network formula save_base+resident*0x10798+player*0x700+0x1c0; then observe save flush/persistence.',
             ],
         },
@@ -769,12 +887,78 @@ def main():
                         'decrementer_method': '0xc1e2e0',
                         'direct_call_sites': timer_call_sites,
                         'pointer_sequence_membership': timer_owner_array,
+                        'owner_object_subobject_lifecycle': {
+                            'field_offset': '0x2f8',
+                            'semantic_candidate': 'NPC AI-state/controller subobject; the native RTTI/class name is not recovered, but setup method 0xc1ac50 references 43 NpcAIState::... names.',
+                            'owner_class_evidence': {
+                                'constructor_va': '0xbe5e40',
+                                'constructor_native_span': '0xbe5e40..0xbe5f5b',
+                                'constructor_behavior': 'Raw disassembly allocates 0x618 bytes, stores the vptr from *(0x32f7a18)+0x10, and zeros owner offsets +0x2f0, +0x2f8, +0x300, +0x308, +0x310, and +0x318 before later initialization.',
+                                'pointer_sequence_methods': timer_owner_members,
+                                'global_vptr_handle': {
+                                    'global_va': '0x32f7a18',
+                                    'relocated_value': '0x30d5890',
+                                    'constructor_addend': '0x10',
+                                    'constructor_store_va': '0xbe5e98',
+                                    'resolved_vtable_va': '0x30d58a0',
+                                    'evidence': 'The main NSO R_AARCH64_RELATIVE relocation resolves *(0x32f7a18) to 0x30d5890; constructor 0xbe5e70..0xbe5e98 loads it, adds 0x10, and stores the resulting 0x30d58a0 to the new owner object. This equals the sequence start and confirms this sequence is the owner vtable.',
+                                },
+                                'classification': 'Confirmed owner vtable at 0x30d58a0: slot 0 is the destructor, slot 7 populates +0x2f8, slot 13 performs the owner update, and slot 18 tears the child down.',
+                            },
+                            'population_method': {
+                                'va': '0xbe98a0',
+                                'vtable_slot': 7,
+                                'factory_indirect_callsite': '0xbeab30',
+                                'pointer_store_pc': '0xbeab34',
+                                'null_check_pc': '0xbeab38',
+                                'setup_callsite': '0xbeab40',
+                                'setup_method': '0xc1ac50',
+                                'behavior': 'The selected indirect factory returns a child pointer in x0; the method stores it at owner+0x2f8, skips setup when null, and otherwise calls 0xc1ac50(child, original_method_arg2). 0xc1ac50 registers 43 statically named NpcAIState entries, including cIdle, cWander, cTalk, cHit, and cConversationPretense.',
+                                'direct_callers_of_population_method': hexes(callers(0xbe98a0)),
+                                'factory_dispatch': 'The R_AARCH64_RELATIVE relocation at global 0x32d3e20 resolves to BSS object 0x356b3f0. At 0xbeaa68..0xbeaa6c, the method loads the runtime registry object pointer from that BSS object; at 0xbeaa8c..0xbeaa94 it reads the count at registry+8 and records pointer at registry+0x10. It searches 0x20-byte records using the computed w0 key against record+0x18. On a match, 0xbeab28 loads the record qword at +0 and 0xbeab30 calls it indirectly; 0xbeab34 stores the returned child at owner+0x2f8. The registry object pointer/table contents are runtime-populated in BSS, so the selected row and target cannot be recovered from this dump alone.',
+                                'factory_identity': 'Unresolved statically: the factory comes from a runtime-populated BSS registry and is loaded indirectly at 0xbeab28. Capture its target and selected row/key at runtime.',
+                                'factory_registry': {
+                                    'global_va': '0x32d3e20',
+                                    'global_relocated_value': '0x356b3f0',
+                                    'registry_pointer_field_offset': '0x0',
+                                    'count_field_offset': '0x8',
+                                    'records_pointer_field_offset': '0x10',
+                                    'record_size': '0x20',
+                                    'record_factory_pointer_offset': '0x0',
+                                    'factory_pointer_load_pc': '0xbeab28',
+                                    'factory_indirect_call_pc': '0xbeab30',
+                                    'record_selector_key_offset': '0x18',
+                                    'selector_key_source': 'Return value in w0 from helper 0x1bf0 at 0xbeaa80, called with owner+0x360 and w1=0.',
+                                    'status': 'The global resolves to a BSS storage object, but its registry pointer/count/record contents are runtime-populated and absent from the static file image.',
+                                },
+                                'npc_ai_state_registration_names': npc_ai_state_names,
+                            },
+                            'update_method': {
+                                'va': '0xbec1f0',
+                                'vtable_slot': 13,
+                            'direct_callers': hexes(callers(0xbec1f0)),
+                                'indirect_membership': 'pointer_sequence_membership above',
+                                'callsite_to_child_update': '0xbec314',
+                                'condition': 'At 0xbec30c the owner loads owner+0x2f8 into x0; 0xbec310 skips the call if null; otherwise 0xbec314 calls 0xc1e2e0 with the child as this.',
+                            },
+                            'clear_method': {
+                                'va': '0xbec810',
+                                'vtable_slot': 18,
+                                'behavior': 'If owner+0x2f8 is non-null, calls child cleanup 0xc1eab0, calls child virtual release slot +0x18, then stores null at owner+0x2f8.',
+                            },
+                            'destructor': {
+                                'va': '0xbe6270',
+                                'vtable_slot': 0,
+                                'behavior': 'Replaces the current vptr with the global-base vptr, releases child owner+0x2f8 through its virtual slot +0x18, then clears the pointer.',
+                            },
+                            'name_limit': 'Static evidence identifies the child by its AI-state registration strings and lifecycle. No native RTTI symbol, public exact 1.0.0 class name, or selected dynamic factory target identifies the concrete child type.',
+                        },
                         'owner_disassembly': {
                             'source': 'Raw local main NSO AArch64 disassembly, same SHA-256 as evidence_basis.nso_sha256; owner C body is absent from both decomp trees.',
                             'callsite': '0xbec314',
                             'call_condition': 'Owner loads pointer from owner_object+0x2f8 at 0xbec30c, branches around the call if it is null at 0xbec310, and calls 0xc1e2e0 at 0xbec314 otherwise.',
                         },
-                        'interpretation': 'The decrementer is called from the unlabelled native function at 0xbec1f0, present in slot 13 of an untyped relocated-code-pointer sequence. Static evidence now identifies the immediate call condition, but the sequence has no indexed xref/caller evidence proving its type or exposing the runtime dispatcher and cadence.',
+                        'interpretation': 'The decrementer is called from owner update method 0xbec1f0 in slot 13 of a strong vtable candidate; the parent constructor, +0x2f8 AI-state population, and teardown are now mapped. The indexed direct-call graph has zero callers of 0xbec1f0; slot membership supplies an indirect-dispatch candidate but does not identify or prove the external dispatcher or cadence.',
                     },
                     'limit': 'The native test proves Timer*30 storage in a synthetic context; static update pseudocode bounds the +0xacac countdown to one unit per eligible method invocation. The real update dispatch rate and +0xaca8 hit-counter incrementer remain unknown, so exact seconds, hits-per-window, and hits-per-day are not established.',
                 },
@@ -825,7 +1009,7 @@ def main():
             'Run the day-change 0xab9dc0 -3 candidate with the real task/manager/save/table dependencies and establish ordinary-day reachability; the six category names are mapped, but the async worker result and guard occurrence remain unresolved.',
             'Trace delivery/receipt of cToNpc mail and its attached-present handler through a Friendship write; sender-side item serialization and return-to-baggage paths are now mapped, but recipient effect is unproved.',
             'Execute with the real runtime save root and Friendship descriptor table; current setter fixtures control both descriptor lookup and field offset.',
-            'Find the +0xaca8 hit-counter incrementer and runtime dispatch rate of indexed actor-update method 0xc1e2e0 to establish exact net-hit cadence.',
+            'Resolve the runtime factory row/child type for owner+0x2f8, identify the runtime dispatcher invoking owner vtable slot 13 (0xbec1f0), and measure its cadence; find the +0xaca8 hit-counter incrementer to establish exact net-hit timing.',
             'Determine host/guest state-transition conditions and prove whether 0x395bc0/0x395e50/0x3960d0 result indexes are dialog topics, messages, or another conversation selector.',
         ],
     }

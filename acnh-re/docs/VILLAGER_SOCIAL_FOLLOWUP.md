@@ -232,7 +232,18 @@ di 35 flow. Pada flow lokal 1.0.0, `Ftr_MailBox` mulai dari query
 `UIWaitReceivingMailAppear`, `UIPostHandling`, lalu `UIResultMenuDecide`.
 Flow ini tidak mengonfigurasi `NpcAddFriendship` dan aksi wait-nya bukan decoder
 surat penerima. Empat aksi `NetReceiveMail` ada di `System_GrowUp` untuk jalur
-network, bukan kiriman pemain ke villager. `Obj_MessageCardRack_02_SendFuture`
+network, bukan kiriman pemain ke villager. Pada EventFlow lokal, indeks array
+13/26/27/34 (label sumber `Event28`/`Event33`/`Event34`/`Event42`) dicapai lewat
+empat rute: `ContinueCommon` menjalankan SaveGrowUp(cStart), unlock, dan
+NetUpdateFriendList; `InGame`/`AfterNet` memerlukan case 1 dari
+`PassDaysSincePreviousGrowUp`; `PostPlayerSwitch` melewati dua query
+`IsSharePlay(TargetMode=0)` dengan cabang yang tercatat di inventory. Semua node
+itu tanpa parameter eksplisit. Handler native terdaftar memiliki method eksekusi
+`0x326b60` yang no-op dan method completion `0x326b70` yang hanya menulis flag
+selesai; keduanya tidak memanggil Friendship writer secara langsung. Ini hasil
+negatif yang dibatasi pada aksi lokal tersebut, bukan bukti bahwa jalur payload
+network eksternal tidak memproses attachment.
+`Obj_MessageCardRack_02_SendFuture`
 hanya mengelola surat terjadwal dan hadiah yang dapat dikembalikan ke pocket.
 Sejumlah flow villager-to-player seperti birthday dan quest juga memuat aksi
 Friendship, tetapi kedekatan event dalam satu flow tidak membuktikan bahwa
@@ -321,15 +332,32 @@ net-hit. Kasus native dan batas fixture ada di
 [`hit_timer_native.json`](../output/gameplay/villager_social_followup/hit_timer_native.json)
 dan [`npc_hit_timer_native.py`](../tools/npc_hit_timer_native.py).
 
-Pemanggil langsung decrementer `0xc1e2e0` juga sudah dipersempit: callsite
-`0xbec314` berada di dalam fungsi native `0xbec1f0` (`FUN_00cec1f0`, ukuran
-`0x2b8`), yang menjadi slot 13 pada relocated pointer sequence `0x30d58a0`
-(entry `0x30d5908`). Raw disassembly menunjukkan owner memanggilnya hanya jika
-pointer pada `owner_object+0x2f8` non-null. Badan fungsi pemilik tidak tersedia
-di pohon decomp. Sequence ditandai sebagai code-pointer array yang belum
-terklasifikasi, jadi ia belum membuktikan nama kelas, scheduler, atau interval
-per frame. Yang terbukti hanya satu call owner langsung dan guard pointer itu;
-frekuensi dispatch timer tetap runtime blocker.
+Constructor native `0xbe5e40` mengalokasikan object `0x618` byte, mengisi vptr
+dari global `0x32f7a18`, lalu mengosongkan `+0x2f8` bersama pointer field di
+sekitarnya. Relokasi `R_AARCH64_RELATIVE` pada global itu memberi nilai
+`0x30d5890`; instruksi constructor menambah `0x10` dan menyimpan `0x30d58a0`,
+jadi sequence pointer tersebut terbukti sebagai vtable owner ini. Method slot 7
+`0xbe98a0` memakai relokasi global `0x32d3e20 → 0x356b3f0`, yang menunjuk ke
+storage registry di BSS. Ia membaca registry pointer, count di `+0x8`, dan
+pointer records di `+0x10`; lalu mencari record `0x20` byte dengan kunci hasil
+helper `0x1bf0` pada `+0x18`, memanggil factory pointer di awal record secara
+tidak langsung, dan menyimpan hasilnya ke `owner+0x2f8` pada `0xbeab34`. Isi
+registry ada di runtime BSS, bukan di dump statik, jadi target factory, kunci,
+dan row yang terpilih masih memerlukan capture.
+Setelah factory mengembalikan pointer, method `0xbe98a0` menjalankan setup
+`0xc1ac50` bila pointer tidak null. Setup tersebut merujuk 43 nama
+`NpcAIState::...`, termasuk `cIdle`, `cWander`, `cTalk`, `cHit`, dan
+`cConversationPretense`; ini mendukung label subobject AI-state/controller,
+tetapi tidak menamai tipe konkret hasil factory. Method slot 13 `0xbec1f0`
+membaca `owner+0x2f8` dan pada `0xbec314` memanggil `0xc1e2e0` hanya jika child
+ada. Index direct-call menunjukkan nol pemanggil langsung untuk `0xbec1f0`;
+vtable mengonfirmasi fungsi itu terdaftar di slot 13, tetapi dispatcher yang
+memanggil slot tersebut belum teridentifikasi. Slot 18 `0xbec810` menjalankan
+cleanup child, melepasnya lewat virtual slot `+0x18`, dan mengosongkan field;
+destructor slot 0 `0xbe6270` juga melepas dan membersihkan child. Jadi
+constructor, populasi, update, dan teardown `+0x2f8` terbukti secara statik.
+Yang belum terbaca adalah factory row/target aktual, dispatcher runtime,
+frekuensi update, incrementer `+0xaca8`, dan nama tipe konkret child.
 
 **[PSEUDO]** percakapan pertama per villager pada hari itu memberi
 `min(ContinuousTalkDays, 3)`, jadi bonus talk harian berhenti naik setelah +3.
@@ -528,23 +556,30 @@ kontrol. Ikuti ke `0xac0200`/`0xf48840` dan ambil nilai Friendship sebelum dan
 sesudah untuk membuktikan guard berjalan.
 
 Untuk net-hit, pasang write watchpoint di actor `+0xaca8` dan catat setiap PC,
-backtrace, serta alamat object; hook clear `0x258b10`, query `0x388660`, method
-`0xc1e2e0`, dan owner `0xbec1f0` pada callsite `0xbec314`. Bandingkan jumlah
-invocation dan waktu nyata/frame untuk mengenali incrementer serta cadence
-dispatcher.
+backtrace, serta alamat object; hook clear `0x258b10` dan query `0x388660`.
+Rekam dispatch aktual ke owner update vtable slot 13 (`0xbec1f0`, entry
+`0x30d5908`, byte offset `0x68`), child update `0xc1e2e0`, dan frame/time pada
+callsite `0xbec314` untuk menemukan incrementer serta cadence.
+Pada owner, tangkap constructor `0xbe5e40`, isi runtime registry storage
+`0x356b3f0`, kunci/row dan indirect factory target di `0xbeab28`/`0xbeab30`,
+store pointer `0xbeab34`, setup `0xc1ac50`, dan clear/destructor;
+catat pointer, vptr, dan transisi state agar child konkret dan caller dispatcher
+bisa diidentifikasi.
 
 Untuk surat, gunakan save salinan dan kirim ke villager yang sama tanpa item,
 dengan item biasa, dan dengan item dari enam kategori. Rekam UI wait mailbox,
-network receipt, handler penerima, semua pemanggilan `0xef2c70`/`0xf48840`, dan
-diff save sebelum/sesudah. Untuk descriptor, hook lookup key `Friendship` di
+setiap entry `NetReceiveMail` pada rute `System_GrowUp`, pemrosesan payload
+network di luar aksi EventFlow, handler penerima, semua pemanggilan
+`0xef2c70`/`0xf48840`, dan diff save sebelum/sesudah. Untuk descriptor, hook
+lookup key `Friendship` di
 `0xdc5e20`, catat pointer, `UniqueID`/`MaxValue`, view dari `0xef2c70`, root save,
 dan bytes sesudah flush; lakukan pada record lokal dan network menggunakan dua
 rumus record yang didokumentasikan di atas.
 
 Jadi yang masih terbuka ialah worker result dan reachability normal-day untuk
 dua guard -3; efek receipt surat/present; descriptor manager dan offset absolut
-Friendship pada save nyata; incrementer +0xaca8; serta cadence runtime method
-`0xc1e2e0`.
+Friendship pada save nyata; factory target/tipe konkret dan dispatcher/cadence
+owner AI update; incrementer +0xaca8; serta cadence runtime method `0xc1e2e0`.
 Penurunan -3 dari net-hit dan timeout quest adalah aksi bersyarat yang
 dikonfigurasi, bukan bukti decay pasif. Batas total Friendship harian juga belum
 terbukti; tidak ada cap agregat di bukti writer/EventFlow yang terindeks.
