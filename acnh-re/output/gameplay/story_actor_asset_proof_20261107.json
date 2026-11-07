@@ -1,0 +1,1091 @@
+{
+  "schema": "acnh-re/story-actor-asset-proof/1",
+  "title": "Story actor and asset proof crosswalk",
+  "game_version_scope": {
+    "baseline": "ACNH 1.0.0 B_data / EventFlow inputs",
+    "additional_archive": "The supplied additional RomFS archive contains the preserved B_data subset, but its extra paths do not carry independent per-file build-version proof.",
+    "runtime_execution": false,
+    "godot_or_build": false
+  },
+  "evidence_levels": {
+    "EF": "Decoded BFEVFL event or entry with exact action, query, parameter, and event index. Proves static EventFlow intent, not that a playthrough reached it.",
+    "STAGE": "Source-backed Stage BYML actor or transition projection with source_id, source path, and source pointer. Static stage configuration only.",
+    "PARAM": "Decoded B_data BCSV/param record. Supports a static key/value join; runtime consumer execution was not performed.",
+    "ASSET_SOURCE": "Raw supplied RomFS source member was present and parsed. Does not alone prove scene use.",
+    "CAT": "External asset catalogue row or generated path reference. Never treated as proof that the source payload exists or that a scene loads it.",
+    "MSG_REF": "EventFlow message path and label reference. The additional RomFS message resolver classified the cited story message archive as not supplied, so localized text was not proven for those refs.",
+    "DOC": "Existing crosswalk narrative summarizing the source tree/native analysis; used as an index, with underlying source paths supplied where available."
+  },
+  "provenance": [
+    {
+      "source": "/workspace/acnh-parallel/crafting_transaction/acnh-re/output/gameplay/trees/",
+      "method": "Decoded EventFlow BFEVFL trees; comments identify source flow and node indexes."
+    },
+    {
+      "source": "/workspace/acnh-re/output/stage/by_source/",
+      "method": "Stage BYML source projections retain source path, source_id, source_sha256, actor kind, argument_string, and source_pointer."
+    },
+    {
+      "source": "/workspace/acnh-re/output/tables_resolved/SpNpcParam.json",
+      "method": "B_data/Bcsv/SpNpcParam.bcsv decoded to named columns including ResName and Label."
+    },
+    {
+      "source": "/workspace/acnh-re/output/additional_romfs/",
+      "method": "Supplied additional RomFS archive parsed to eventflow_message_bindings.json, new_byml/, animation_sequences/, ui/, catalogues/, and resource_inventory.json."
+    },
+    {
+      "source": "/workspace/acnh-parallel/crafting_transaction/acnh-re/docs/ADDITIONAL_ROMFS.md",
+      "method": "Archive audit and content limitations; 1,171 original B_data paths matched exactly, while version of all extra paths is not independently established."
+    }
+  ],
+  "story": [
+    {
+      "arc": "new_game_arrival",
+      "claims": [
+        {
+          "claim": "System_GrowUp NewGame requests stage cMainFieldDemoLanding after first-day processing.",
+          "evidence": "EF",
+          "source": "acnh-parallel/crafting_transaction/acnh-re/output/gameplay/trees/System_GrowUp.txt",
+          "entry": "NewGame",
+          "event_index": 3,
+          "action": "SystemRequestChangeStage",
+          "params": {
+            "TargetStage": "cMainFieldDemoLanding"
+          }
+        },
+        {
+          "claim": "The MainFieldDemoLanding source stage includes an ActorSystemFlowLauncher argument for Tutorials_Prologue_DemoLanding/Root.",
+          "evidence": "STAGE",
+          "source": "/workspace/acnh-re/output/stage/by_source/02910.json",
+          "source_id": 2910,
+          "source_path": "B_data/Stage/Game/MainFieldDemoLanding.byml",
+          "source_pointer": "/3cbaa541/8",
+          "key": "argument_string",
+          "value": "Tutorials_Prologue_DemoLanding/Root",
+          "join_limit": "The cMainFieldDemoLanding target to this similarly named source BYML is a name-level correspondence; this report does not assert a native stage-key resolution."
+        },
+        {
+          "claim": "The arrival EventFlow sets a bird-view camera, then on the validated-save branch targets Npc:rco and sets rco's isSpeak blackboard value; message calls use explicit Tutorials labels.",
+          "evidence": "EF+MSG_REF",
+          "source": "acnh-parallel/crafting_transaction/acnh-re/output/gameplay/trees/Tutorials_Prologue2_Arrival.txt",
+          "entry": "Root",
+          "event_indexes": [
+            11,
+            3,
+            4,
+            6,
+            5,
+            7,
+            9
+          ],
+          "keys": [
+            "CameraParamKey=cBirdView",
+            "CameraTargetKey=Npc:rco",
+            "NpcLabel=rco",
+            "Key=isSpeak"
+          ],
+          "message_examples": [
+            "Tutorials/Tutorials_Prologue2_Arrival:001",
+            "Tutorials/Tutorials_Prologue2_Arrival:003"
+          ],
+          "message_binding": "additional_romfs/eventflow_message_bindings.json classifies all four Arrival refs as message_archive_not_supplied."
+        }
+      ]
+    },
+    {
+      "arc": "orientation",
+      "claims": [
+        {
+          "claim": "Orientation calls Rco_GetSmartPhone and Rco_OrientationEnd, delivers item 2750, and enables Map and Encyclopedia menu flags; this is direct event data rather than a reconstruction from dialog prose.",
+          "evidence": "EF",
+          "source": "acnh-parallel/crafting_transaction/acnh-re/output/gameplay/trees/Tutorials_Prologue3_Orientation1.txt",
+          "entry": "Root",
+          "event_indexes": [
+            35,
+            37,
+            93,
+            68,
+            70,
+            69
+          ],
+          "source_calls": [
+            "SNPC_rco_00_StartMainGame:Rco_GetSmartPhone",
+            "SNPC_rco_00_StartMainGame:Rco_OrientationEnd"
+          ],
+          "message_examples": [
+            "Tutorials/Tutorials_Prologue3_Orientation1:007",
+            "TalkSNpc/rco/SP_rco_01_StartingMaingame:013_01"
+          ],
+          "message_binding": "additional_romfs/eventflow_message_bindings.json classifies all 30 Orientation1 refs as message_archive_not_supplied."
+        },
+        {
+          "claim": "The Rco_GetSmartPhone entry delivers item 3076 and issues SmartPhone and UIMenuDeviceAppear actions; it does not identify a specific BFLYT resource.",
+          "evidence": "EF",
+          "source": "acnh-parallel/crafting_transaction/acnh-re/output/gameplay/trees/SNPC_rco_00_StartMainGame.txt",
+          "entry": "Rco_GetSmartPhone",
+          "event_indexes": [
+            22,
+            23,
+            47,
+            48,
+            34,
+            50,
+            53
+          ],
+          "action_examples": [
+            "SmartPhone",
+            "UIMenuDeviceAppear"
+          ],
+          "ui_asset_join": "No EventFlow-to-Layout consumer mapping was established."
+        }
+      ]
+    },
+    {
+      "arc": "campfire_and_dream",
+      "claims": [
+        {
+          "claim": "Campfire EventFlow prompts for the village name, plays message references, runs applause/cheer and player smoothie actions, sets the campfire flag, and invokes temporary music with MusicName 4318.",
+          "evidence": "EF+MSG_REF",
+          "source": "acnh-parallel/crafting_transaction/acnh-re/output/gameplay/trees/Tutorials_Prologue5_Campfire.txt",
+          "entry": "Root",
+          "event_indexes": [
+            7,
+            85,
+            86,
+            107,
+            62,
+            74,
+            50,
+            140,
+            141
+          ],
+          "keys": [
+            "UISoftwareKeyboardHandling.FormType=cVillage",
+            "TurnOnTempAudioMusic.MusicName=4318",
+            "AccessKey=cLandTemp:PrologueStartedCampfire"
+          ],
+          "message_examples": [
+            "Tutorials/Tutorials_Prologue4_Orientation3:041_01",
+            "Tutorials/Tutorials_Prologue4_Orientation3:045_04_02"
+          ],
+          "message_binding": "All 30 Campfire refs tested in eventflow_message_bindings.json resolve as message_archive_not_supplied.",
+          "audio_note": "The event argument is a consumer-side numeric reference; SoundAudioMusic and ItemParam provide a source table join for 4318 below. The raw Sound/Resource payload is absent."
+        },
+        {
+          "claim": "The dream flow uses K.K. NPC actions, guitar command, BGM property controls, seven TalkSNpc/tkk message references, and reserves PrologueNextDayAwake before ReturnStage.",
+          "evidence": "EF+MSG_REF",
+          "source": "acnh-parallel/crafting_transaction/acnh-re/output/gameplay/trees/Tutorials_Prologue_Tkk.txt",
+          "entries": {
+            "Tkk_Dream_BeforeTalk": [
+              2,
+              13,
+              17,
+              14,
+              24,
+              21
+            ],
+            "Tkk_Dream_Talk": [
+              5,
+              6,
+              7,
+              8,
+              9,
+              29,
+              11
+            ],
+            "Tkk_Dream_AfterTalk": [
+              15,
+              18,
+              16,
+              4,
+              10,
+              3
+            ]
+          },
+          "stage_exit": "ReturnStage has no explicit TargetStage; exact return-stage selection is not claimed.",
+          "message_binding": "All seven dream message refs resolve as message_archive_not_supplied."
+        },
+        {
+          "claim": "Dream_Tkk.byml defines a registered Npc actor with the argument tkkA/AIC:Demo/AIF:AI_NPC_Tkk_Dream/DMF:Tutorials_Prologue_Tkk, plus a Root camera tag and FtrViewerActor.",
+          "evidence": "STAGE",
+          "source": "/workspace/acnh-re/output/stage/by_source/02881.json",
+          "source_id": 2881,
+          "source_path": "B_data/Stage/Game/Dream_Tkk.byml",
+          "source_sha256": "fa12894f20f4f89000180029dde8b779a21f2d0b81bcb68b735977ada86596ed",
+          "source_pointer": "/3cbaa541/0",
+          "key": "argument_string",
+          "value": "tkkA/AIC:Demo/AIF:AI_NPC_Tkk_Dream/DMF:Tutorials_Prologue_Tkk",
+          "join": "The DMF value exactly names the decoded dream flow above."
+        }
+      ]
+    },
+    {
+      "arc": "day_two_and_museum",
+      "claims": [
+        {
+          "claim": "The prologue dream schedules PrologueNextDayAwake; the NewGame boot enters MainFieldDemoLanding, while the normal continuation branch explicitly requests cMainFieldPlayerHouse. The exact transition from dream return into that branch is outside the explicit ReturnStage parameters.",
+          "evidence": "EF",
+          "sources": [
+            {
+              "source": "acnh-parallel/crafting_transaction/acnh-re/output/gameplay/trees/Tutorials_Prologue_Tkk.txt",
+              "entry": "Tkk_Dream_AfterTalk",
+              "event_index": 4,
+              "action": "ReserveNpcCommand",
+              "params": {
+                "Command": "PrologueNextDayAwake"
+              }
+            },
+            {
+              "source": "acnh-parallel/crafting_transaction/acnh-re/output/gameplay/trees/System_GrowUp.txt",
+              "entry": "NewGame",
+              "event_index": 3,
+              "action": "SystemRequestChangeStage",
+              "params": {
+                "TargetStage": "cMainFieldDemoLanding"
+              }
+            },
+            {
+              "source": "acnh-parallel/crafting_transaction/acnh-re/output/gameplay/trees/System_GrowUp.txt",
+              "entry": "ContinueCommon",
+              "event_index": 55,
+              "action": "SystemRequestChangeStage",
+              "params": {
+                "TargetStage": "cMainFieldPlayerHouse"
+              }
+            }
+          ]
+        },
+        {
+          "claim": "Tom Nook's start-main-game flow resets NPC schedule/activity through RcoTentCall and completes orientation; the one-time player demo routes through announcement processing and marks PcMaingameStart on its continue entry.",
+          "evidence": "EF",
+          "sources": [
+            {
+              "source": "acnh-parallel/crafting_transaction/acnh-re/output/gameplay/trees/SNPC_rco_00_StartMainGame.txt",
+              "entry": "RcoTentCall",
+              "event_indexes": [
+                43,
+                78,
+                12
+              ]
+            },
+            {
+              "source": "acnh-parallel/crafting_transaction/acnh-re/output/gameplay/trees/Player_GetDemo_Once.txt",
+              "entry": "Get_MainGame",
+              "event_indexes": [
+                46,
+                44
+              ]
+            },
+            {
+              "source": "acnh-parallel/crafting_transaction/acnh-re/output/gameplay/trees/Player_GetDemo_Once.txt",
+              "entry": "StartMainGameBitSet",
+              "event_index": 12,
+              "key": "AccessKey=cPlayer:PcMaingameStart"
+            }
+          ]
+        },
+        {
+          "claim": "Blathers' donation flow presents an item-select UI and calls donation completion logic; the tree references TalkSNpc/owl message labels and delegates tent completion to SNPC_owl_11_Tent_Entries.",
+          "evidence": "EF+MSG_REF",
+          "source": "acnh-parallel/crafting_transaction/acnh-re/output/gameplay/trees/SNPC_owl_01_Museum_Donation.txt",
+          "entry": "Root",
+          "event_indexes": [
+            45,
+            4,
+            63,
+            65
+          ],
+          "ui_action": "UIItemSelectWindowHandling",
+          "message_example": "TalkSNpc/owl/SP_owl_00_Common:104",
+          "message_binding": "The additional message binding result is message_archive_not_supplied for the cited TalkSNpc refs."
+        },
+        {
+          "claim": "Museum tent placement is recorded through the player housing-finish flow; the original gameplay crosswalk documents the day-growth completion and museum upgrade sequence as a mix of EventFlow and native pseudocode.",
+          "evidence": "EF+DOC",
+          "sources": [
+            {
+              "source": "acnh-parallel/crafting_transaction/acnh-re/output/gameplay/trees/Player_Demo_HousingFinish.txt",
+              "event_indexes": [
+                10,
+                16
+              ],
+              "keys": [
+                "cPlayer:DecidedMuseumTentPlace",
+                "cPlayer:RcoTalkAfterMuseumTent"
+              ]
+            },
+            {
+              "source": "acnh-parallel/crafting_transaction/acnh-re/docs/GAMEPLAY_FLOW.md",
+              "section": "3. Tenda Tom Nook dan museum",
+              "crosswalk": "Museum level/day-transition behavior; native parts are marked PSEUDO."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "arc": "shop_and_plots",
+      "claims": [
+        {
+          "claim": "The Timmy tent request tree routes dialogue choices to material collection, with explicit TalkSNpc/rcm label refs and money UI action. The source stage IdrMarket01 configures PlayerActorMgr plus rcm, rct, and hgh NPCs and a renewal flow launcher.",
+          "evidence": "EF+STAGE+MSG_REF",
+          "sources": [
+            {
+              "source": "acnh-parallel/crafting_transaction/acnh-re/output/gameplay/trees/SNPC_rcm_01_Tent_1_Entries.txt",
+              "entry": "Request",
+              "event_indexes": [
+                25,
+                0,
+                36,
+                40
+              ],
+              "ui_action": "UIMoneyAppear",
+              "message_example": "TalkSNpc/rcm/SP_rcm_02_TentRequest:001"
+            },
+            {
+              "source": "/workspace/acnh-re/output/stage/by_source/02891.json",
+              "source_id": 2891,
+              "source_path": "B_data/Stage/Game/IdrMarket01.byml",
+              "actor_refs": [
+                "/3cbaa541/0",
+                "/3cbaa541/1",
+                "/3cbaa541/2",
+                "/3cbaa541/3",
+                "/3cbaa541/4"
+              ],
+              "arguments": [
+                "rcm/AIC:Special/AIF:AI_NPC_Rcm_Shop",
+                "rct/AIC:Special/AIF:AI_NPC_Rct_Shop",
+                "hgh/AIC:Special/AIF:AI_NPC_Hgh",
+                "SNPC_rcm_03_RenualOpen/Rcm_RenualOpen1_ConvHgh_Prepare"
+              ]
+            }
+          ],
+          "message_binding": "The cited rcm tent request reference resolves as message_archive_not_supplied."
+        },
+        {
+          "claim": "The shop-opening announcement sets RcmImmQuestOpen, which is the gate read by the migrants/three-housing-kit quest; the flow then grants three housing items (5827, 5828, 5829) and checks the three-house existence condition.",
+          "evidence": "EF",
+          "sources": [
+            {
+              "source": "acnh-parallel/crafting_transaction/acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_03_Rco_Once.txt",
+              "event_index": 15,
+              "key": "AccessKey=cLand:RcmImmQuestOpen"
+            },
+            {
+              "source": "acnh-parallel/crafting_transaction/acnh-re/output/gameplay/trees/SNPC_rco_53_MigrantsQuest.txt",
+              "entry": "GetHousingKit",
+              "event_indexes": [
+                99,
+                98,
+                100
+              ],
+              "item_ids": [
+                5827,
+                5828,
+                5829
+              ]
+            },
+            {
+              "source": "acnh-parallel/crafting_transaction/acnh-re/output/gameplay/trees/SNPC_rco_53_MigrantsQuest.txt",
+              "entry": "Root",
+              "event_index": 114,
+              "query": "NpcHouseNum",
+              "params": {
+                "NpcHouseType": "cExist",
+                "Num": 3
+              }
+            }
+          ],
+          "interpretation_limit": "The existing gameplay crosswalk notes that progression timing also depends on building/native day processors; this row proves the EventFlow gates and rewards."
+        }
+      ]
+    },
+    {
+      "arc": "office_campsite_and_first_camper",
+      "claims": [
+        {
+          "claim": "IdrOffice01.byml places PlayerActorMgr, Isabelle (sza), and Tom Nook (rco), plus workbench and ATM object actors. IdrCampSiteTent.byml has a PlayerActorMgr and a stage transition record but does not identify an NPC actor in that file.",
+          "evidence": "STAGE",
+          "sources": [
+            {
+              "source": "/workspace/acnh-re/output/stage/by_source/02904.json",
+              "source_id": 2904,
+              "source_path": "B_data/Stage/Game/IdrOffice01.byml",
+              "actor_refs": [
+                "/3cbaa541/0",
+                "/3cbaa541/1",
+                "/3cbaa541/2",
+                "/3cbaa541/3",
+                "/3cbaa541/4"
+              ],
+              "argument_strings": [
+                "sza/AIC:Special/AIF:AI_NPC_Sza",
+                "rco/AIC:Special/AIF:AI_NPC_Rco",
+                "ObjectWorkbench",
+                "ObjectATM"
+              ]
+            },
+            {
+              "source": "/workspace/acnh-re/output/stage/by_source/02890.json",
+              "source_id": 2890,
+              "source_path": "B_data/Stage/Game/IdrCampSiteTent.byml",
+              "actors": [
+                "PlayerActorMgr"
+              ],
+              "transition_count": 1
+            }
+          ]
+        },
+        {
+          "claim": "The office development flow grants the campsite recipe and advances through campsite request, build, and first-visitor housing entries. It opens the island-evaluation entry after the constructed-house threshold is met.",
+          "evidence": "EF+MSG_REF",
+          "source": "acnh-parallel/crafting_transaction/acnh-re/output/gameplay/trees/SNPC_rco_54_IslandDevelopment.txt",
+          "entries": {
+            "Root": [
+              56,
+              6,
+              11,
+              23,
+              24,
+              69
+            ],
+            "CampSiteRequest": [
+              74,
+              75,
+              2,
+              4,
+              5
+            ],
+            "Root2CampSiteVisitor": [
+              30,
+              38,
+              40,
+              45,
+              22
+            ],
+            "Root3IslandEvaluation": [
+              51,
+              52,
+              54
+            ]
+          },
+          "keys": [
+            "cLand:RcoBuildCampsiteOngoing",
+            "cLand:RcoBuildCampsiteComplete",
+            "cLand:CampSiteBuilt",
+            "cLand:RcoMeetFirstVisitorRequest"
+          ],
+          "message_example": "TalkSNpc/rco/SP_rco_07_IslandDevelopment:000_01",
+          "message_binding": "The cited story message refs are not resolved in the additional archive."
+        }
+      ]
+    },
+    {
+      "arc": "evaluation_first_live_credits_and_island_designer",
+      "claims": [
+        {
+          "claim": "The first-live announcement branch requests cMainFieldFirstLive. The semantically corresponding MainFieldDemoFirstLive source BYML registers PlayerActorMgr and ActorEventStartDemo but no explicit K.K. NPC actor record in the projected actors.",
+          "evidence": "EF+STAGE",
+          "sources": [
+            {
+              "source": "acnh-parallel/crafting_transaction/acnh-re/output/gameplay/trees/Demo_PublicAnnouncement.txt",
+              "entry": "Root",
+              "event_index": 41,
+              "action": "SystemRequestChangeStage",
+              "params": {
+                "TargetStage": "cMainFieldFirstLive"
+              }
+            },
+            {
+              "source": "/workspace/acnh-re/output/stage/by_source/02909.json",
+              "source_id": 2909,
+              "source_path": "B_data/Stage/Game/MainFieldDemoFirstLive.byml",
+              "source_sha256": "0cf0898403df0b2eb8a47fae804a373ca6a7dcc8eb9680aac64360847b16bd12",
+              "actor_kinds": [
+                "PlayerActorMgr",
+                "ActorEventStartDemo"
+              ]
+            }
+          ],
+          "join_limit": "Target key and BYML basename correspond by name/scene; this is not a native StageList key-resolution result."
+        },
+        {
+          "claim": "SNPC_tkk_Live runs song selection, camera setup targeting Npc:tkk, actor command/action work, and marks the first-live joined state. This proves actor and performance command invocation in the graph, not a specific skeletal clip or sound file.",
+          "evidence": "EF",
+          "source": "acnh-parallel/crafting_transaction/acnh-re/output/gameplay/trees/SNPC_tkk_Live.txt",
+          "entries": {
+            "Root": [
+              25,
+              17,
+              18
+            ],
+            "Tkk_LandFirstLive": [
+              89,
+              92,
+              93,
+              135
+            ],
+            "Tkk_LiveAfter_Flag": [
+              142,
+              141
+            ]
+          },
+          "keys": [
+            "CameraTargetKey=Npc:tkk",
+            "TkkRequestSongSet",
+            "TkkFirstLiveJoined",
+            "StandByRcoVisitMyHomeAfterTkkFirstLive"
+          ]
+        },
+        {
+          "claim": "After the first live, InvitePlayerHouse delivers item 4318 and installs the construction-license app through UIMenuDeviceAppear cConstructLicense.",
+          "evidence": "EF+PARAM",
+          "source": "acnh-parallel/crafting_transaction/acnh-re/output/gameplay/trees/SNPC_rco_55_TkkFirstLive.txt",
+          "entry": "InvitePlayerHouse",
+          "event_indexes": [
+            10,
+            11,
+            16,
+            17
+          ],
+          "keys": [
+            "ItemUniqueID=4318",
+            "AccessKey=cPlayer:MainmenuConstructLicense",
+            "Application=cConstructLicense"
+          ],
+          "message_example": "TalkSNpc/rco/SP_rco_11_TkkFirstLive:001",
+          "message_binding": "All 14 refs in this flow resolve as message_archive_not_supplied."
+        },
+        {
+          "claim": "StaffCredit layouts and STR_StaffList BDLI/string data are present in the supplied additional RomFS outputs, but the existing EventFlow crosswalk found no EventFlow action that invokes them; stage/native trigger remains unresolved.",
+          "evidence": "ASSET_SOURCE+DOC",
+          "sources": [
+            {
+              "source": "/workspace/acnh-re/output/additional_romfs/ui/b19031182032f911a347d217eede81c86721f2f9df0d9b5901ca833cf3e3c6fb.json",
+              "source_member": "Layout/StaffCredit.Nin_NX_NVN.zs",
+              "member": "StaffCredit.arc!blyt/StaffCredit.bflyt"
+            },
+            {
+              "source": "/workspace/acnh-re/output/additional_romfs/extracted_manifest.json",
+              "source_path": "BDLI/String/USen/STR_StaffList.bdli.zs"
+            },
+            {
+              "source": "acnh-parallel/crafting_transaction/acnh-re/docs/GAMEPLAY_FLOW.md",
+              "section": "10. Rating pulau dan konser pertama K.K.",
+              "statement": "Staff roll data exists; no EventFlow action calls it; trigger is stage/native."
+            }
+          ],
+          "interpretation_limit": "Presence is not proof the first-live scene consumes these layout/string records."
+        }
+      ]
+    }
+  ],
+  "static_actor_resource_joins": [
+    {
+      "actor_code": "rco",
+      "stage_consumer_evidence": [
+        {
+          "source": "acnh-parallel/crafting_transaction/acnh-re/output/gameplay/trees/Tutorials_Prologue2_Arrival.txt",
+          "entry": "Root",
+          "event_index": 5,
+          "key": "CameraTargetKey",
+          "value": "Npc:rco"
+        },
+        {
+          "source": "/workspace/acnh-re/output/stage/by_source/02904.json",
+          "source_path": "B_data/Stage/Game/IdrOffice01.byml",
+          "source_pointer": "/3cbaa541/2",
+          "argument_string": "rco/AIC:Special/AIF:AI_NPC_Rco"
+        }
+      ],
+      "parameter_join": {
+        "source": "/workspace/acnh-re/output/tables_resolved/SpNpcParam.json",
+        "table_source": "B_data/Bcsv/SpNpcParam.bcsv",
+        "columns": {
+          "Label": "rco",
+          "ResName": "NpcSpRco"
+        }
+      },
+      "catalogue_candidate": {
+        "source": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json",
+        "Asset_ID": "NpcSpRco",
+        "name": "Tom Nook",
+        "generated_path": "acnh_godot/generated/models/NpcSpRco/NpcSpRco.glb",
+        "evidence": "CAT"
+      },
+      "status": "Configured actor-code to ResName join is supported by source stage and BCSV records; catalogue row is a matching candidate. The GLB path is a catalogue reference only and raw Model/ plus generated payload are absent. No runtime model load was executed."
+    },
+    {
+      "actor_code": "tkkA",
+      "stage_consumer_evidence": [
+        {
+          "source": "/workspace/acnh-re/output/stage/by_source/02881.json",
+          "source_path": "B_data/Stage/Game/Dream_Tkk.byml",
+          "source_pointer": "/3cbaa541/0",
+          "argument_prefix": "tkkA/"
+        }
+      ],
+      "parameter_join": {
+        "source": "/workspace/acnh-re/output/tables_resolved/SpNpcParam.json",
+        "table_source": "B_data/Bcsv/SpNpcParam.bcsv",
+        "columns": {
+          "Label": "tkkA",
+          "ResName": "NpcSpTkk"
+        }
+      },
+      "catalogue_candidate": {
+        "source": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json",
+        "Asset_ID": "NpcSpTkk",
+        "name": "K.K. Slider",
+        "generated_path": "acnh_godot/generated/models/NpcSpTkk/NpcSpTkk.glb",
+        "evidence": "CAT"
+      },
+      "status": "Configured actor-code to ResName join is supported by the dream stage and BCSV records; the GLB is a matching catalogue candidate only. Raw Model/ and generated payload are absent; runtime load was not executed."
+    },
+    {
+      "actor_codes": [
+        "owl",
+        "sza",
+        "rcm",
+        "rct"
+      ],
+      "parameter_source": "/workspace/acnh-re/output/tables_resolved/SpNpcParam.json",
+      "rows": [
+        {
+          "Label": "owl",
+          "ResName": "NpcSpOwl"
+        },
+        {
+          "Label": "sza",
+          "ResName": "NpcSpSza"
+        },
+        {
+          "Label": "rcm",
+          "ResName": "NpcSpRcm"
+        }
+      ],
+      "consumers": [
+        {
+          "source": "/workspace/acnh-re/output/stage/by_source/02904.json",
+          "source_path": "B_data/Stage/Game/IdrOffice01.byml",
+          "argument_prefixes": [
+            "sza/",
+            "rco/"
+          ]
+        },
+        {
+          "source": "/workspace/acnh-re/output/stage/by_source/02891.json",
+          "source_path": "B_data/Stage/Game/IdrMarket01.byml",
+          "argument_prefixes": [
+            "rcm/",
+            "rct/"
+          ]
+        }
+      ],
+      "status": "Static actor-code references are present. Catalogue candidates exist for NpcSpOwl/NpcSpSza/NpcSpRcm, but this report does not upgrade them to verified loaded assets. rct is listed as a scene actor; its exact catalogue row was not needed for this story join."
+    }
+  ],
+  "audio_id_joins": [
+    {
+      "id": 4318,
+      "eventflow_use": {
+        "source": "acnh-parallel/crafting_transaction/acnh-re/output/gameplay/trees/Tutorials_Prologue5_Campfire.txt",
+        "entry": "Root",
+        "event_index": 140,
+        "action": "TurnOnTempAudioMusic",
+        "key": "MusicName",
+        "value": 4318
+      },
+      "sound_music_table": {
+        "source": "/workspace/acnh-re/output/tables_resolved/SoundAudioMusic.json",
+        "table_source": "B_data/Bcsv/SoundAudioMusic.bcsv",
+        "row": {
+          "UniqueID": 103,
+          "RefItemUniqueID": 4318,
+          "AudioMusicID": 95,
+          "Label": "Minnaatsumare",
+          "KimeProbability": 40
+        }
+      },
+      "item_table": {
+        "source": "/workspace/acnh-re/output/tables_resolved/ItemParam.json",
+        "table_source": "B_data/Bcsv/ItemParam.bcsv",
+        "row_keys": {
+          "UniqueID": 4318,
+          "ItemKind": "Music",
+          "ItemFrom": "TkkFirst",
+          "ResName": "mjk_MainTheme",
+          "ItemName": "みんなあつまれ"
+        }
+      },
+      "post_concert_use": {
+        "source": "acnh-parallel/crafting_transaction/acnh-re/output/gameplay/trees/SNPC_rco_55_TkkFirstLive.txt",
+        "entry": "InvitePlayerHouse",
+        "event_index": 10,
+        "action": "SetDeliveryItemAtRandom",
+        "key": "ItemUniqueID",
+        "value": 4318
+      },
+      "asset_status": "The EventFlow and BCSV tables establish a source-level numeric join to the K.K. song item/audio-music row. They do not identify an available raw waveform or exact Sound/Resource file; catalog audio names remain CAT candidates."
+    },
+    {
+      "scene": "Prologue campfire and K.K. dream",
+      "eventflow_keys": [
+        {
+          "source": "/workspace/acnh-parallel/crafting_transaction/acnh-re/output/gameplay/trees/Tutorials_Prologue5_Campfire.txt",
+          "entry": "Root",
+          "controls": [
+            {
+              "event_index": 85,
+              "action": "BGMPropertyControl",
+              "key": "BGMProperty",
+              "value": 79
+            },
+            {
+              "event_index": 86,
+              "action": "BGMPropertyControl",
+              "key": "BGMProperty",
+              "value": 81
+            },
+            {
+              "event_index": 87,
+              "action": "BGMPropertyControl",
+              "key": "BGMProperty",
+              "value": 80
+            },
+            {
+              "event_index": 55,
+              "action": "BGMPropertyControl",
+              "key": "BGMProperty",
+              "value": 79
+            }
+          ]
+        },
+        {
+          "source": "/workspace/acnh-parallel/crafting_transaction/acnh-re/output/gameplay/trees/Tutorials_Prologue_Tkk.txt",
+          "entries": [
+            {
+              "entry": "Tkk_Dream_BeforeTalk",
+              "controls": [
+                {
+                  "event_index": 13,
+                  "action": "BGMPropertyControl",
+                  "key": "BGMProperty",
+                  "value": 14
+                },
+                {
+                  "event_index": 14,
+                  "action": "BGMPropertyControl",
+                  "key": "BGMProperty",
+                  "value": 18
+                }
+              ]
+            },
+            {
+              "entry": "Tkk_Dream_AfterTalk",
+              "controls": [
+                {
+                  "event_index": 15,
+                  "action": "BGMPropertyControl",
+                  "key": "BGMProperty",
+                  "value": 14
+                },
+                {
+                  "event_index": 16,
+                  "action": "BGMPropertyControl",
+                  "key": "BGMProperty",
+                  "value": 15
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "table_join": [
+        {
+          "source": "/workspace/acnh-re/output/tables_resolved/BgmPropertyControlParam.json",
+          "row": {
+            "UniqueID": 79,
+            "Value": 0,
+            "PropertyID": 24,
+            "Name": "BGM一時停止：0_解除"
+          }
+        },
+        {
+          "source": "/workspace/acnh-re/output/tables_resolved/BgmPropertyControlParam.json",
+          "row": {
+            "UniqueID": 80,
+            "Value": 0,
+            "PropertyID": 25,
+            "Name": "キャンプファイヤー：0_再生しない"
+          }
+        },
+        {
+          "source": "/workspace/acnh-re/output/tables_resolved/BgmPropertyControlParam.json",
+          "row": {
+            "UniqueID": 81,
+            "Value": 1,
+            "PropertyID": 25,
+            "Name": "キャンプファイヤー：1_再生"
+          }
+        },
+        {
+          "source": "/workspace/acnh-re/output/tables_resolved/BgmPropertyControlParam.json",
+          "row": {
+            "UniqueID": 14,
+            "Value": 1,
+            "PropertyID": 6,
+            "Name": "とたけけの夢：1_ギターあり"
+          }
+        },
+        {
+          "source": "/workspace/acnh-re/output/tables_resolved/BgmPropertyControlParam.json",
+          "row": {
+            "UniqueID": 18,
+            "Value": 2,
+            "PropertyID": 6,
+            "Name": "とたけけの夢：2_ギターなし"
+          }
+        },
+        {
+          "source": "/workspace/acnh-re/output/tables_resolved/BgmPropertyControlParam.json",
+          "row": {
+            "UniqueID": 15,
+            "Value": 0,
+            "PropertyID": 6,
+            "Name": "とたけけの夢：3_終了"
+          }
+        },
+        {
+          "source": "/workspace/acnh-re/output/tables_resolved/BgmPropertyParam.json",
+          "row": {
+            "UniqueID": 24,
+            "Label": "BgmPauseState"
+          }
+        },
+        {
+          "source": "/workspace/acnh-re/output/tables_resolved/BgmPropertyParam.json",
+          "row": {
+            "UniqueID": 25,
+            "Label": "CampfireBgmState"
+          }
+        },
+        {
+          "source": "/workspace/acnh-re/output/tables_resolved/BgmPropertyParam.json",
+          "row": {
+            "UniqueID": 6,
+            "Label": "Evfl_PrologueTKKState"
+          }
+        }
+      ],
+      "catalogue_candidates": [
+        "BGM_Demo_Prologue_Campfire",
+        "BGM_Demo_Prologue_TKK"
+      ],
+      "status": "EventFlow control IDs join exactly to BgmPropertyControlParam, whose PropertyID joins to BgmPropertyParam: campfire controls 80/81 use CampfireBgmState; 79 releases BgmPauseState; dream controls 14/18/15 use Evfl_PrologueTKKState. These are control-state table joins, not proof of a specific loaded Sound/Resource payload; raw Sound/Resource is absent."
+    }
+  ],
+  "animation_and_ui": {
+    "animation": {
+      "available_source_facts": [
+        {
+          "source": "/workspace/acnh-re/output/additional_romfs/summary.json",
+          "key": "counts.asb_files",
+          "value": 83
+        },
+        {
+          "source": "/workspace/acnh-re/output/additional_romfs/summary.json",
+          "key": "asb_counts",
+          "values": {
+            "nodes": 1159,
+            "transitions": 10001,
+            "warps": 1297,
+            "parameter_cases": 1895
+          }
+        },
+        {
+          "source": "/workspace/acnh-re/output/additional_romfs/animation_sequences/EventObjCampfire.root.asb.json",
+          "key": "source",
+          "value": "AnimationSequence/EventObjCampfire.root.asb"
+        },
+        {
+          "source": "/workspace/acnh-re/output/additional_romfs/new_byml/AnimationInfo/NpcSpTkk.byml.json",
+          "key": "source",
+          "value": "AnimationInfo/NpcSpTkk.byml"
+        },
+        {
+          "source": "/workspace/acnh-re/output/additional_romfs/new_byml/AnimationInfo/NpcSpRco.byml.json",
+          "key": "source",
+          "value": "AnimationInfo/NpcSpRco.byml"
+        }
+      ],
+      "eventflow_commands": [
+        {
+          "source": "acnh-parallel/crafting_transaction/acnh-re/output/gameplay/trees/Tutorials_Prologue5_Campfire.txt",
+          "entry": "Root",
+          "event_index": 62,
+          "action": "RequestSimple",
+          "key": "AsCommand",
+          "value": "NpcCheers"
+        },
+        {
+          "source": "acnh-parallel/crafting_transaction/acnh-re/output/gameplay/trees/Tutorials_Prologue_Tkk.txt",
+          "entry": "Tkk_Dream_BeforeTalk",
+          "event_indexes": [
+            17,
+            21
+          ],
+          "action": "NpcRequestAction",
+          "key": "ActionIdx",
+          "values": [
+            1,
+            0
+          ]
+        }
+      ],
+      "limit": "No EventFlow-to-specific ASB/model clip join was established for these scenes. ASB or AnimationInfo presence is not proof of scene use, and raw Model/ is absent."
+    },
+    "ui": {
+      "eventflow_consumers": [
+        {
+          "source": "acnh-parallel/crafting_transaction/acnh-re/output/gameplay/trees/Tutorials_Prologue1_Charactermaking.txt",
+          "entries": {
+            "EnteringNameAndBday": [
+              {
+                "event_index": 19,
+                "action": "UISoftwareKeyboardHandling",
+                "FormType": "cName"
+              },
+              {
+                "event_index": 21,
+                "action": "UIDateHandling",
+                "DateInputType": "cOpeningBirthday"
+              }
+            ],
+            "Charactermaking": [
+              {
+                "event_index": 24,
+                "action": "UICharactermakingHandling",
+                "CharctermakingFilterType": "cFirstTime"
+              }
+            ],
+            "TerrainSelect": [
+              {
+                "event_index": 0,
+                "action": "UIMapSelectHandling"
+              }
+            ]
+          }
+        },
+        {
+          "source": "acnh-parallel/crafting_transaction/acnh-re/output/gameplay/trees/Tutorials_Prologue5_Campfire.txt",
+          "entry": "Root",
+          "event_index": 7,
+          "action": "UISoftwareKeyboardHandling",
+          "params": {
+            "FormType": "cVillage"
+          }
+        },
+        {
+          "source": "acnh-parallel/crafting_transaction/acnh-re/output/gameplay/trees/SNPC_rco_55_TkkFirstLive.txt",
+          "entry": "InvitePlayerHouse",
+          "event_index": 17,
+          "action": "UIMenuDeviceAppear",
+          "params": {
+            "EventType": "cInstall",
+            "Application": "cConstructLicense"
+          }
+        }
+      ],
+      "available_layout_candidates": [
+        {
+          "source": "/workspace/acnh-re/output/additional_romfs/ui/592f2331d52dcaa6c307f3ee9741f5b955115591fd38dfaea4e6d382b93c6e99.json",
+          "source_member": "Layout/SwkbdTextAreaVillageName.Nin_NX_NVN.zs",
+          "member": "SwkbdTextAreaVillageName.arc!blyt/SwkbdTextAreaVillageName.bflyt"
+        },
+        {
+          "source": "/workspace/acnh-re/output/additional_romfs/ui/954a0c065cb116c1a60ff63fe66cd6399c7b6faf3dbfb4211df3790f2460bff8.json",
+          "source_member": "Layout/MenuDevice.Nin_NX_NVN.zs",
+          "member": "MenuDevice.arc!blyt/MenuDevice.bflyt"
+        },
+        {
+          "source": "/workspace/acnh-re/output/additional_romfs/ui/3a93f5fbebe2e98dabcc8ca01a51f94c210536759f631a476167b955f8db3b71.json",
+          "source_member": "Layout/CharaMake.Nin_NX_NVN.zs",
+          "member": "CharaMake.arc!blyt/CharaMake.bflyt"
+        }
+      ],
+      "limit": "EventFlow action types and source layout names line up by purpose, but no direct native/layout consumer key join was proved. Treat these BFLYT files as candidates, not the screens confirmed loaded by those actions."
+    }
+  },
+  "conversion_steps": [
+    {
+      "input": "B_data/EventFlow/*.bfevfl",
+      "operation": "Decode BFEVFL actors, events, action/query params and entry points; story output is the tree export.",
+      "output": "acnh-parallel/crafting_transaction/acnh-re/output/gameplay/trees/*.txt",
+      "reproduction_reference": "acnh-parallel/crafting_transaction/acnh-re/tools/gameplay_flow.py"
+    },
+    {
+      "input": "B_data/Stage/*.byml",
+      "operation": "Parse source BYML actor-kind hashes, actor arguments, includes, and transition records; preserve source_id, hash, source_pointer, and raw blob reference.",
+      "output": "/workspace/acnh-re/output/stage/by_source/*.json",
+      "evidence_note": "Static projection; stage-name-to-native-stage-key mapping is not asserted here."
+    },
+    {
+      "input": "B_data/Bcsv/SpNpcParam.bcsv, ItemParam.bcsv, SoundAudioMusic.bcsv, BgmPropertyControlParam.bcsv, BgmPropertyParam.bcsv",
+      "operation": "Decode rows and use named source columns for joins: NPC Label -> ResName; item ID -> audio-music ID; BGM property control ID -> property/state name.",
+      "output": "/workspace/acnh-re/output/tables_resolved/*.json"
+    },
+    {
+      "input": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs",
+      "operation": "Audit archive hashes and extract SARC/SZS data; parse BFLYT, MSBT, ASB, and added BYML into structured source outputs.",
+      "output": "/workspace/acnh-re/output/additional_romfs/{ui,messages,animation_sequences,new_byml,resource_inventory.json}"
+    },
+    {
+      "input": "KATALOG_MODEL_ACNH.csv and KATALOG_AUDIO_ACNH.csv",
+      "operation": "Parse catalogue rows and path/category metadata. Catalogue paths are references; payload existence is verified separately.",
+      "output": "/workspace/acnh-re/output/additional_romfs/catalogues/{model,audio}.json"
+    }
+  ],
+  "gaps": [
+    {
+      "gap": "Model payload and raw skeletal animation source",
+      "evidence": "/workspace/acnh-re/output/additional_romfs/summary.json and acnh-parallel/crafting_transaction/acnh-re/docs/ADDITIONAL_ROMFS.md state no Model/ source directory and generated GLB/PNG references are not supplied.",
+      "consequence": "Stage/SpNpcParam can identify configured ResName values and catalogue candidates; this proof cannot verify model payloads, rigs, clip availability, or runtime draw."
+    },
+    {
+      "gap": "Raw audio resources",
+      "evidence": "/workspace/acnh-re/output/additional_romfs/summary.json and docs/ADDITIONAL_ROMFS.md state no Sound/Resource source directory and catalogue raw source-path match count is zero.",
+      "consequence": "Numeric audio/music joins and catalogue candidates do not prove waveform presence, loop points, or exact BGM/SFX payload."
+    },
+    {
+      "gap": "Exact scene-to-ASB and EventFlow-to-BFLYT resolution",
+      "evidence": "EventFlow nodes call action/command names and UI action classes; no exact ASB or BFLYT resource key is present in the cited consumer nodes.",
+      "consequence": "AnimationSequence and Layout presence remains separate from runtime invocation."
+    },
+    {
+      "gap": "Story localized message archives",
+      "evidence": "/workspace/acnh-re/output/additional_romfs/eventflow_message_bindings.json classifies all tested arrival, orientation, campfire, dream, museum, shop, development, and first-live refs cited above as message_archive_not_supplied.",
+      "consequence": "This report cites message resource paths and labels only; it does not quote untranslated or unresolved story text."
+    },
+    {
+      "gap": "Credits trigger and post-demo stage dispatch",
+      "evidence": "The existing GAMEPLAY_FLOW.md identifies StaffCredit and STR_StaffList data presence but no EventFlow call; native/stage trigger is unresolved. ReturnStage has no explicit target in Tutorials_Prologue_Tkk.",
+      "consequence": "Credits consumption and exact prologue dream return target remain unproven."
+    },
+    {
+      "gap": "Additional archive exact version",
+      "evidence": "Additional ROMFS audit identifies 1,171 byte-identical original B_data files and 24,426 extra paths without independent per-file build metadata.",
+      "consequence": "Use exact 1.0.0 B_data claims for baseline files; describe extra Layout/AnimationInfo/AnimationSequence findings as present in the supplied archive, not independently version-authenticated."
+    }
+  ],
+  "counts": {
+    "additional_archive_layouts_parsed": 523,
+    "additional_archive_asb_files": 83,
+    "additional_archive_message_archives": 154,
+    "additional_archive_model_catalogue_rows": 37459,
+    "additional_archive_audio_catalogue_rows": 17410,
+    "additional_archive_raw_model_source_dirs": 0,
+    "additional_archive_raw_sound_resource_source_dirs": 0
+  }
+}
