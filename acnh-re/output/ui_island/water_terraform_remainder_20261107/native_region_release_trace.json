@@ -1,0 +1,99 @@
+{
+  "source_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+  "native_functions_entered": [
+    "0x168140",
+    "0x165240",
+    "0x181ae0"
+  ],
+  "dependency_stubs": [],
+  "synthetic_fixture": {
+    "entry_kind": 1,
+    "entry_enabled_low_bit": 1,
+    "owner_entry_count_before_after": [
+      3,
+      2
+    ],
+    "list_node_count_before_after": [
+      3,
+      2
+    ],
+    "fixture_link_offset": "0x48",
+    "selected_rectangle_inclusive": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "three_distinct_worlds": true,
+    "initial_runtime_word": "0x1f40"
+  },
+  "observed_mutation": {
+    "selected_world_member": "owner+0x60 (kind 1)",
+    "word_bit_cleared": "0x40",
+    "changed_cells": [
+      {
+        "world_member_index": 0,
+        "x": 1,
+        "z": 2,
+        "word_after": "0x1f00"
+      },
+      {
+        "world_member_index": 0,
+        "x": 2,
+        "z": 2,
+        "word_after": "0x1f00"
+      },
+      {
+        "world_member_index": 0,
+        "x": 3,
+        "z": 2,
+        "word_after": "0x1f00"
+      },
+      {
+        "world_member_index": 0,
+        "x": 1,
+        "z": 3,
+        "word_after": "0x1f00"
+      },
+      {
+        "world_member_index": 0,
+        "x": 2,
+        "z": 3,
+        "word_after": "0x1f00"
+      },
+      {
+        "world_member_index": 0,
+        "x": 3,
+        "z": 3,
+        "word_after": "0x1f00"
+      },
+      {
+        "world_member_index": 0,
+        "x": 1,
+        "z": 4,
+        "word_after": "0x1f00"
+      },
+      {
+        "world_member_index": 0,
+        "x": 2,
+        "z": 4,
+        "word_after": "0x1f00"
+      },
+      {
+        "world_member_index": 0,
+        "x": 3,
+        "z": 4,
+        "word_after": "0x1f00"
+      }
+    ],
+    "all_other_cells_and_worlds_preserved": true,
+    "selected_entry_enabled_byte_after": 0,
+    "selected_link_bytes_after": "00000000000000000000000000000000"
+  },
+  "result": "PASS: original wrapper -> release -> rectangle bit mutation executed on the prepared fixture.",
+  "limits": [
+    "The entry/list, owner, three world records, and 0x48 link offset are constructed fixture values, not a capture of the live editor.",
+    "This exercises registry release and region-flag cleanup; it does not show MakeFall/BreakFall or RiverMaker/CliffMaker invoking the cleanup path.",
+    "It does not modify the 14-byte LandMaking record, generate water geometry, update mesh/collision, or serialize a save."
+  ]
+}

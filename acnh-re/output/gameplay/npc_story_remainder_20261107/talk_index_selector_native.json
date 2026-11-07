@@ -1,0 +1,424 @@
+{
+  "cases": 12,
+  "mismatches": [],
+  "build": {
+    "main_nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+    "main_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74"
+  },
+  "native_functions": {
+    "talk_counter_index_selector": "0xf4dbd0",
+    "controlled_counter_lookup": "0xf4d560",
+    "controlled_query_context": "0xf4da70",
+    "native_key_formatter": "0x47360"
+  },
+  "cases_data": [
+    {
+      "selector_argument": 0,
+      "returned_resident_index": 0,
+      "controlled_reads": [
+        {
+          "key": "TalkNpc0Count",
+          "controlled_value": 0
+        },
+        {
+          "key": "TalkNpc0Count",
+          "controlled_value": 0
+        }
+      ],
+      "name": "first_match_at_resident_slot_0"
+    },
+    {
+      "selector_argument": 1,
+      "returned_resident_index": 1,
+      "controlled_reads": [
+        {
+          "key": "TalkNpc0Count",
+          "controlled_value": 1
+        },
+        {
+          "key": "TalkNpc0Count",
+          "controlled_value": 101
+        },
+        {
+          "key": "TalkNpc1Count",
+          "controlled_value": 1
+        }
+      ],
+      "name": "first_match_at_resident_slot_1"
+    },
+    {
+      "selector_argument": 2,
+      "returned_resident_index": 2,
+      "controlled_reads": [
+        {
+          "key": "TalkNpc0Count",
+          "controlled_value": 2
+        },
+        {
+          "key": "TalkNpc0Count",
+          "controlled_value": 102
+        },
+        {
+          "key": "TalkNpc1Count",
+          "controlled_value": 102
+        },
+        {
+          "key": "TalkNpc2Count",
+          "controlled_value": 2
+        }
+      ],
+      "name": "first_match_at_resident_slot_2"
+    },
+    {
+      "selector_argument": 3,
+      "returned_resident_index": 3,
+      "controlled_reads": [
+        {
+          "key": "TalkNpc0Count",
+          "controlled_value": 3
+        },
+        {
+          "key": "TalkNpc0Count",
+          "controlled_value": 103
+        },
+        {
+          "key": "TalkNpc1Count",
+          "controlled_value": 103
+        },
+        {
+          "key": "TalkNpc2Count",
+          "controlled_value": 103
+        },
+        {
+          "key": "TalkNpc3Count",
+          "controlled_value": 3
+        }
+      ],
+      "name": "first_match_at_resident_slot_3"
+    },
+    {
+      "selector_argument": 4,
+      "returned_resident_index": 4,
+      "controlled_reads": [
+        {
+          "key": "TalkNpc0Count",
+          "controlled_value": 4
+        },
+        {
+          "key": "TalkNpc0Count",
+          "controlled_value": 104
+        },
+        {
+          "key": "TalkNpc1Count",
+          "controlled_value": 104
+        },
+        {
+          "key": "TalkNpc2Count",
+          "controlled_value": 104
+        },
+        {
+          "key": "TalkNpc3Count",
+          "controlled_value": 104
+        },
+        {
+          "key": "TalkNpc4Count",
+          "controlled_value": 4
+        }
+      ],
+      "name": "first_match_at_resident_slot_4"
+    },
+    {
+      "selector_argument": 5,
+      "returned_resident_index": 5,
+      "controlled_reads": [
+        {
+          "key": "TalkNpc0Count",
+          "controlled_value": 5
+        },
+        {
+          "key": "TalkNpc0Count",
+          "controlled_value": 105
+        },
+        {
+          "key": "TalkNpc1Count",
+          "controlled_value": 105
+        },
+        {
+          "key": "TalkNpc2Count",
+          "controlled_value": 105
+        },
+        {
+          "key": "TalkNpc3Count",
+          "controlled_value": 105
+        },
+        {
+          "key": "TalkNpc4Count",
+          "controlled_value": 105
+        },
+        {
+          "key": "TalkNpc5Count",
+          "controlled_value": 5
+        }
+      ],
+      "name": "first_match_at_resident_slot_5"
+    },
+    {
+      "selector_argument": 6,
+      "returned_resident_index": 6,
+      "controlled_reads": [
+        {
+          "key": "TalkNpc0Count",
+          "controlled_value": 6
+        },
+        {
+          "key": "TalkNpc0Count",
+          "controlled_value": 106
+        },
+        {
+          "key": "TalkNpc1Count",
+          "controlled_value": 106
+        },
+        {
+          "key": "TalkNpc2Count",
+          "controlled_value": 106
+        },
+        {
+          "key": "TalkNpc3Count",
+          "controlled_value": 106
+        },
+        {
+          "key": "TalkNpc4Count",
+          "controlled_value": 106
+        },
+        {
+          "key": "TalkNpc5Count",
+          "controlled_value": 106
+        },
+        {
+          "key": "TalkNpc6Count",
+          "controlled_value": 6
+        }
+      ],
+      "name": "first_match_at_resident_slot_6"
+    },
+    {
+      "selector_argument": 7,
+      "returned_resident_index": 7,
+      "controlled_reads": [
+        {
+          "key": "TalkNpc0Count",
+          "controlled_value": 7
+        },
+        {
+          "key": "TalkNpc0Count",
+          "controlled_value": 107
+        },
+        {
+          "key": "TalkNpc1Count",
+          "controlled_value": 107
+        },
+        {
+          "key": "TalkNpc2Count",
+          "controlled_value": 107
+        },
+        {
+          "key": "TalkNpc3Count",
+          "controlled_value": 107
+        },
+        {
+          "key": "TalkNpc4Count",
+          "controlled_value": 107
+        },
+        {
+          "key": "TalkNpc5Count",
+          "controlled_value": 107
+        },
+        {
+          "key": "TalkNpc6Count",
+          "controlled_value": 107
+        },
+        {
+          "key": "TalkNpc7Count",
+          "controlled_value": 7
+        }
+      ],
+      "name": "first_match_at_resident_slot_7"
+    },
+    {
+      "selector_argument": 8,
+      "returned_resident_index": 8,
+      "controlled_reads": [
+        {
+          "key": "TalkNpc0Count",
+          "controlled_value": 8
+        },
+        {
+          "key": "TalkNpc0Count",
+          "controlled_value": 108
+        },
+        {
+          "key": "TalkNpc1Count",
+          "controlled_value": 108
+        },
+        {
+          "key": "TalkNpc2Count",
+          "controlled_value": 108
+        },
+        {
+          "key": "TalkNpc3Count",
+          "controlled_value": 108
+        },
+        {
+          "key": "TalkNpc4Count",
+          "controlled_value": 108
+        },
+        {
+          "key": "TalkNpc5Count",
+          "controlled_value": 108
+        },
+        {
+          "key": "TalkNpc6Count",
+          "controlled_value": 108
+        },
+        {
+          "key": "TalkNpc7Count",
+          "controlled_value": 108
+        },
+        {
+          "key": "TalkNpc8Count",
+          "controlled_value": 8
+        }
+      ],
+      "name": "first_match_at_resident_slot_8"
+    },
+    {
+      "selector_argument": 9,
+      "returned_resident_index": 9,
+      "controlled_reads": [
+        {
+          "key": "TalkNpc0Count",
+          "controlled_value": 9
+        },
+        {
+          "key": "TalkNpc0Count",
+          "controlled_value": 109
+        },
+        {
+          "key": "TalkNpc1Count",
+          "controlled_value": 109
+        },
+        {
+          "key": "TalkNpc2Count",
+          "controlled_value": 109
+        },
+        {
+          "key": "TalkNpc3Count",
+          "controlled_value": 109
+        },
+        {
+          "key": "TalkNpc4Count",
+          "controlled_value": 109
+        },
+        {
+          "key": "TalkNpc5Count",
+          "controlled_value": 109
+        },
+        {
+          "key": "TalkNpc6Count",
+          "controlled_value": 109
+        },
+        {
+          "key": "TalkNpc7Count",
+          "controlled_value": 109
+        },
+        {
+          "key": "TalkNpc8Count",
+          "controlled_value": 109
+        },
+        {
+          "key": "TalkNpc9Count",
+          "controlled_value": 9
+        }
+      ],
+      "name": "first_match_at_resident_slot_9"
+    },
+    {
+      "selector_argument": 4,
+      "returned_resident_index": -1,
+      "controlled_reads": [
+        {
+          "key": "TalkNpc0Count",
+          "controlled_value": 3
+        }
+      ],
+      "name": "initial_gate_mismatch"
+    },
+    {
+      "selector_argument": 5,
+      "returned_resident_index": -1,
+      "controlled_reads": [
+        {
+          "key": "TalkNpc0Count",
+          "controlled_value": 5
+        },
+        {
+          "key": "TalkNpc0Count",
+          "controlled_value": 6
+        },
+        {
+          "key": "TalkNpc1Count",
+          "controlled_value": 6
+        },
+        {
+          "key": "TalkNpc2Count",
+          "controlled_value": 6
+        },
+        {
+          "key": "TalkNpc3Count",
+          "controlled_value": 6
+        },
+        {
+          "key": "TalkNpc4Count",
+          "controlled_value": 6
+        },
+        {
+          "key": "TalkNpc5Count",
+          "controlled_value": 6
+        },
+        {
+          "key": "TalkNpc6Count",
+          "controlled_value": 6
+        },
+        {
+          "key": "TalkNpc7Count",
+          "controlled_value": 6
+        },
+        {
+          "key": "TalkNpc8Count",
+          "controlled_value": 6
+        },
+        {
+          "key": "TalkNpc9Count",
+          "controlled_value": 6
+        }
+      ],
+      "name": "all_ten_slots_miss"
+    }
+  ],
+  "verified_boundary": "Original 0xf4dbd0 instructions and 0x47360 key formatting ran. The initial TalkNpc0Count gate and first matching slot were checked for indices 0 through 9; the native function returned the matching resident index or -1.",
+  "dependencies_controlled": [
+    {
+      "va": "0xf4d560",
+      "purpose": "supplies explicit per-key saved counter values"
+    },
+    {
+      "va": "0xf4da70",
+      "purpose": "preserves the selector input while bypassing live query-context lookup"
+    }
+  ],
+  "limits": [
+    "No live save, resident record, or runtime query context was loaded.",
+    "The test proves selector mechanics only; it does not show that the returned resident index is a topic, message, or EventFlow entry ID.",
+    "Caller functions 0x395bc0, 0x395e50, and 0x3960d0 and the runtime scheduler were not executed."
+  ]
+}

@@ -1,0 +1,172 @@
+{
+  "cases": 1,
+  "mismatches": [],
+  "build": {
+    "main_nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+    "main_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74"
+  },
+  "callback": {
+    "registered_state": "NpcAIActivityState::cConversationGuest",
+    "registered_state_index": 61,
+    "role": "entry",
+    "va": "0xc0c9e0"
+  },
+  "prepared_pair": {
+    "owner": "0x80000000",
+    "owner_event_context": "0x80011000",
+    "paired_context": "0x80011800",
+    "resident_slot_input": 4,
+    "actor_position_inputs": {
+      "owner_context_actor": {
+        "address": "0x80012278",
+        "xz": [
+          1.25,
+          -2.5
+        ]
+      },
+      "paired_context_actor": {
+        "address": "0x80012678",
+        "xz": [
+          5.0,
+          7.5
+        ]
+      }
+    }
+  },
+  "callback_owner_writes": [
+    {
+      "address": "0x8000ab41",
+      "offset_from_owner": "0xab41",
+      "before_hex": "00",
+      "after_hex": "10"
+    },
+    {
+      "address": "0x800103dc",
+      "offset_from_owner": "0x103dc",
+      "before_hex": "0000",
+      "after_hex": "5713"
+    }
+  ],
+  "asserted_fields": {
+    "owner_plus_0xab40_u64_before": "0x41",
+    "owner_plus_0xab40_u64_after": "0x1041",
+    "owner_plus_0x7834_u32_input": "0x1357",
+    "owner_plus_0x7d1c_u32_input": "0x2468",
+    "owner_plus_0x103dc_u32_after": "0x1357"
+  },
+  "captured_calls": [
+    {
+      "helper": "0x3fe00",
+      "source": "0x80007d1c",
+      "source_offset_from_owner": "0x7d1c",
+      "source_u32": "0x2468",
+      "mode": 0,
+      "returned_paired_context": "0x80011800",
+      "returned_state_bytes": {
+        "temporary_plus_8": 1,
+        "temporary_plus_10": 1
+      }
+    },
+    {
+      "helper": "0xd1cb80",
+      "args_x0_to_x4": [
+        "0x4",
+        "0x1",
+        "0x0",
+        "0x0",
+        "0x0"
+      ]
+    },
+    {
+      "helper": "0x1c780",
+      "position_a": "0x80012278",
+      "position_b": "0x80012678",
+      "hidden_output_x8": "0x703fefc8",
+      "position_a_values": [
+        1.25,
+        -2.5
+      ],
+      "position_b_values": [
+        5.0,
+        7.5
+      ]
+    },
+    {
+      "helper": "0xbf78f0",
+      "args_x0_to_x4": [
+        "0x80012800",
+        "0x703fefc8",
+        "0x29f948c",
+        "0x703fefb8",
+        "0x6"
+      ]
+    },
+    {
+      "helper": "0xc8c920",
+      "args_x0_to_x4": [
+        "0x80013000",
+        "0x0",
+        "0x2468",
+        "0x34ca2e8",
+        "0x0"
+      ]
+    },
+    {
+      "helper": "0xceb7d0",
+      "object": "0x8000a8f0",
+      "object_offset_from_owner": "0xa8f0",
+      "value": 1
+    },
+    {
+      "helper": "0x40040",
+      "args_x0_to_x4": [
+        "0x703fefd0",
+        "0x1",
+        "0x2468",
+        "0x34ca2e8",
+        "0x0"
+      ]
+    }
+  ],
+  "execution_boundary": "Original 0xc0c9e0 body executed to return. The paired-context resolver, actor/user lookup, position comparison, unrelated engine requests, and temporary-object destructor were replaced with controlled adapters.",
+  "dependencies_controlled": [
+    {
+      "va": "0x3fe00",
+      "purpose": "supplies a paired-context pointer and two positive context-state bytes"
+    },
+    {
+      "va": "0xd1cb80",
+      "purpose": "controls the helper called with raw resident slot 4 and mode 1; returns null"
+    },
+    {
+      "va": "0xd1eaf0",
+      "purpose": "is skipped by the controlled null result from 0xd1cb80"
+    },
+    {
+      "va": "0x1c780",
+      "purpose": "captures the two actor position addresses and skips the engine position comparison"
+    },
+    {
+      "va": "0xbf78f0",
+      "purpose": "captures arguments for an additional context helper without running its body"
+    },
+    {
+      "va": "0xc8c920",
+      "purpose": "captures callback arguments without running the native service body"
+    },
+    {
+      "va": "0xceb7d0",
+      "purpose": "captures a related helper request; the callback's direct owner bitfield write remains native"
+    },
+    {
+      "va": "0x40040",
+      "purpose": "skips destruction of the synthetic temporary context wrapper"
+    }
+  ],
+  "limits": [
+    "The owner, pair, actor contexts, positions, resident slot, and source value are synthetic; no live NPC pair or save was loaded.",
+    "This tests one positive cConversationGuest entry branch only; it does not execute the host callback, update/exit bodies, state manager transition, network synchronization, or scheduler.",
+    "The meanings of owner offsets +0xab40, +0x7834, +0x7d1c, and +0x103dc are not recovered from this fixture; only the byte-level operations are proven.",
+    "The 0xc8c920 service and helper called by 0xd1cb80 are controlled, so their downstream effects remain open."
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "source": {
+    "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Bcsv/FieldLandMakingActionParam.bcsv",
+    "sha256": "fe3f06ae6fb26c95631e842cd043a52348ba2c7399fc5d6085ff13dcfed0af9a",
+    "bytes": 804,
+    "resolved_json_path": "/workspace/acnh-re/output/tables_resolved/FieldLandMakingActionParam.json",
+    "resolved_json_sha256": "7160aa79ddaedb2a4b9012b5f5a99c49a22d4d3aea7bda8b953e733ae5a66a9f",
+    "row_count": 17
+  },
+  "fall_action_rows": [
+    {
+      "source_row_index": 9,
+      "action_range": "3x3",
+      "layer": "No0",
+      "success_result": "Make",
+      "fall_action_type": "MakeFall",
+      "fall_to_river": 0,
+      "main_type_raw_u8": 1
+    },
+    {
+      "source_row_index": 10,
+      "action_range": "3x3",
+      "layer": "No0",
+      "success_result": "Break",
+      "fall_action_type": "BreakFall",
+      "fall_to_river": 1,
+      "main_type_raw_u8": 3
+    }
+  ],
+  "field_hash_reference_inventory": {
+    "FallActionType": {
+      "hash": "0x281f90a8",
+      "elf_hash_reference_locations": [
+        {
+          "pc": "0x4f4344",
+          "owner_function": "0x4f4300"
+        }
+      ],
+      "direct_callers_of_reference_functions": [
+        {
+          "pc": "0x4f36f4",
+          "owner_function": "0x4f3630",
+          "target_function": "0x4f4300"
+        }
+      ]
+    },
+    "FallToRiver": {
+      "hash": "0xf9a37bdc",
+      "elf_hash_reference_locations": [
+        {
+          "pc": "0x5332a8",
+          "owner_function": "0x533260"
+        }
+      ],
+      "direct_callers_of_reference_functions": [
+        {
+          "pc": "0x533514",
+          "owner_function": "0x533400",
+          "target_function": "0x533260"
+        }
+      ]
+    },
+    "MainType": {
+      "hash": "0x31450aa2",
+      "elf_hash_reference_locations": [
+        {
+          "pc": "0x532f88",
+          "owner_function": "0x532f40"
+        }
+      ],
+      "direct_callers_of_reference_functions": [
+        {
+          "pc": "0x533418",
+          "owner_function": "0x533400",
+          "target_function": "0x532f40"
+        }
+      ]
+    }
+  },
+  "limits": [
+    "MakeFall/BreakFall and FallToRiver are table values; this slice does not identify the live player action, validation callback, or save transaction that consumes them.",
+    "MainType is preserved as a raw byte because its enum meaning is not established here.",
+    "Hash-reference locations show where field hashes occur; they do not alone prove runtime row consumption."
+  ]
+}

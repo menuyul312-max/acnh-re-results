@@ -1,0 +1,173 @@
+{
+  "build": {
+    "main_nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+    "main_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74"
+  },
+  "initial_unprepared_access": {
+    "dispatcher_x0": "0x0",
+    "raw_i32_callback_count": "0xd100c3ff",
+    "signed_i32_callback_count": -788478977,
+    "faulting_load_base_x20": "0x910083fda9027bfd",
+    "error_type": "UcError",
+    "error": "Invalid memory read (UC_ERR_READ_UNMAPPED)",
+    "pc": "0xca4394",
+    "instruction": "ldr x1, [x20], #8",
+    "singleton_cell": "0x357aec0",
+    "singleton_value_before": "0x0"
+  },
+  "controlled_host_entry": {
+    "registered_state": "NpcAIActivityState::cConversationHost",
+    "registered_state_index": 60,
+    "callback_entry": "0xc0b510",
+    "execution": "original NSO code; no function VAs stubbed",
+    "fixture": {
+      "owner": "0x80000000",
+      "owner_context": "0x80011000",
+      "actor": "0x80011800",
+      "actor_vector": "0x80011a78",
+      "actor_vector_x_f32": 1.25,
+      "actor_vector_z_f32": -2.5,
+      "context_scalar_u32": {
+        "address": "0x80011230",
+        "value": "0x77"
+      },
+      "runtime_context": "0x80011c00",
+      "nested_context": "0x80013400",
+      "vtable_slot": {
+        "address": "0x80013c18",
+        "target": "0x3fcc0"
+      },
+      "runtime_context_equal_sentinel": "0x29d4e28 at +0x3b0",
+      "callback_registry": {
+        "global_cell": "0x32d3e18",
+        "singleton_pointer_cell": "0x357aec0",
+        "singleton_value_before": "0x0",
+        "singleton_value_after": "0x80012400",
+        "synthetic_manager": "0x80012400",
+        "manager_callback_count_offset": "+0xb70",
+        "manager_callback_count": 0
+      },
+      "view_initializer_global_cell": "0x32d0de0",
+      "view_initializer_inner_pointer": "0x0"
+    },
+    "native_observations": [
+      {
+        "callsite": "0xc0b550",
+        "target": "0xd355f0",
+        "actor_vector": "0x80011a78",
+        "actor_vector_offset": "0x278",
+        "scalar_out": "0x703fef68",
+        "mode": 0,
+        "context_scalar_source": "0x80011230",
+        "context_scalar": "0x77"
+      },
+      {
+        "callsite": "0xc0b56c",
+        "branch": "null output from original 0x3fa40 view initializer",
+        "view_object": "0x703fef88",
+        "view_bytes": "00000000000000000000000000000000",
+        "conversion_scalar": "0x0"
+      },
+      {
+        "entry": "0xbf7850",
+        "x0_runtime_context": "0x80011c00",
+        "x1_global_value": "0x6"
+      },
+      {
+        "entry": "0xbf7670",
+        "x0_runtime_context": "0x80011c00",
+        "x1": "0x0",
+        "x2_static_record": "0x2a3e2cc",
+        "x3_stack_record": "0x703feef8",
+        "x4_stack_record": "0x703feef0",
+        "x5_static_record": "0x29f9454",
+        "x6_mode": 6
+      }
+    ],
+    "owner_changed_ranges": [],
+    "owner_context_changed_ranges": [],
+    "actor_changed_ranges": [],
+    "runtime_context_changed_ranges": [
+      {
+        "address": "0x80011f82",
+        "offset": "0x382",
+        "before_hex": "0000",
+        "after_hex": "80bf"
+      },
+      {
+        "address": "0x80011f87",
+        "offset": "0x387",
+        "before_hex": "00",
+        "after_hex": "40"
+      },
+      {
+        "address": "0x80011f94",
+        "offset": "0x394",
+        "before_hex": "00",
+        "after_hex": "06"
+      },
+      {
+        "address": "0x80012000",
+        "offset": "0x400",
+        "before_hex": "0000",
+        "after_hex": "feff"
+      }
+    ],
+    "runtime_context_field_before_after": [
+      {
+        "offset": "+0x380",
+        "type": "u32",
+        "before_hex": "00000000",
+        "after_hex": "000080bf",
+        "before_u32": 0,
+        "after_u32_hex": "0xbf800000"
+      },
+      {
+        "offset": "+0x384",
+        "type": "u32",
+        "before_hex": "00000000",
+        "after_hex": "00000040",
+        "after_float": 2.0
+      },
+      {
+        "offset": "+0x394",
+        "type": "u32",
+        "before_hex": "00000000",
+        "after_hex": "06000000",
+        "after_u32": 6
+      },
+      {
+        "offset": "+0x400",
+        "type": "u64",
+        "before_hex": "0000000000000000",
+        "after_hex": "feff000000000000",
+        "after_u64": "0xfffe"
+      }
+    ],
+    "nested_context_changed_ranges": [],
+    "native_function_entries_seen": [
+      "0x3fa40",
+      "0x3fcc0",
+      "0xbf7670",
+      "0xbf7850",
+      "0xc0b510",
+      "0xca4370",
+      "0xd355f0",
+      "0xf57780",
+      "0xf57e10",
+      "0xf58890",
+      "0xf5ae70",
+      "0x1990780",
+      "0x1990820"
+    ],
+    "unknown_imports": {},
+    "raw_x0_after_callback_return": "0x703fef88"
+  },
+  "limits": [
+    "The host entry was called directly; this does not run the NPC state manager or scheduler.",
+    "The callback registry was supplied as an empty synthetic object, so no registry callbacks ran.",
+    "The nested runtime vtable points to the existing native RET at 0x3fcc0; it is not an ACNH runtime implementation.",
+    "The original 0x3fa40 initializer returned a null view, so the host took its early-return branch.",
+    "No dialogue topic, message, EventFlow selection, host/guest admission, or network synchronization was exercised."
+  ]
+}

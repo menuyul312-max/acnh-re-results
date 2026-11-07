@@ -1,0 +1,80 @@
+{
+  "native_function": "0x7bccf0",
+  "source_identity": {
+    "elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+    "additional_exefs_main_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900"
+  },
+  "input": {
+    "x0_position_pointer": "0x50010000",
+    "position_xyz": [
+      13.0,
+      -7.0,
+      29.0
+    ],
+    "x1_optional_output": "null",
+    "w2_flags": 0,
+    "s0_query_y": 0.0
+  },
+  "sandbox_state": {
+    "root_global": "0x32d0de8",
+    "root_global_points_to_slot": "0x33728b0",
+    "root_pointer_in_fresh_sandbox": "0x0",
+    "assumption": "No game startup or world/context constructor ran; Sandbox maps original ELF segments and relocations only, then synthetic stack/heap/stop regions."
+  },
+  "observed_chain": [
+    {
+      "va": "0x7bcd28",
+      "operation": "load world-root slot through 0x32d0de8",
+      "value": "0x33728b0"
+    },
+    {
+      "va": "0x7bcd2c",
+      "operation": "load *root_slot",
+      "value": "0x0"
+    },
+    {
+      "va": "0x7bcd30",
+      "operation": "form context = root + 0x28",
+      "value": "0x28"
+    },
+    {
+      "va": "0x1577b8",
+      "operation": "read *(context + 0x78) from low mapped ELF bytes",
+      "value": "0xf90033e8f9419e10"
+    },
+    {
+      "va": "0x172780",
+      "operation": "load word at candidate_grid + 0x30",
+      "effective_address": "0xf90033e8f9419e40"
+    }
+  ],
+  "native_result": {
+    "completed": false,
+    "exception": "UcError: Invalid memory read (UC_ERR_READ_UNMAPPED)",
+    "fault": {
+      "access": 19,
+      "address": "0xf90033e8f9419e40",
+      "size": 4,
+      "pc": "0x172780"
+    },
+    "position_unchanged": true,
+    "dependencies_stubbed": [],
+    "callees_reached_before_fault": [
+      "0x71cfa0",
+      "0x1577a0",
+      "0x18ba40",
+      "0x172740"
+    ]
+  },
+  "evidence": {
+    "query_bytes": 456,
+    "query_sha256": "6e917b040777027bcbb14e469afc37d8c2cb949c356b7b9969c18550b0134476",
+    "fault_instruction": "ldr w10, [x20, #0x30]",
+    "caller_registers": "The 0xdac780 and 0xda86b0 query sites set X0=actor+0x278, X1=0, W2=0, S0=0 before BL 0x7bccf0."
+  },
+  "limits": [
+    "This is a reproducible harness-context fault, not a completed query result.",
+    "The world singleton, broad-phase grid, candidate list, collision candidates, and any live query result are unavailable in the fresh Sandbox.",
+    "No collider candidate selection, floor/landing scalar, or movement integration is proven."
+  ]
+}

@@ -1,0 +1,1023 @@
+{
+  "scope": "One bounded outer-generator path audit plus deterministic execution of the native integer RNG helpers. The four-slot 0x529910 body and 0x528bf0 setup are not invoked in this iteration.",
+  "evidence_labels": {
+    "NATIVE": "ELF instructions, call sites, and bounded original-instruction harness results.",
+    "PSEUDO": "Control-flow interpretation derived from the native instruction sequence/decompilation.",
+    "TBL": "Raw BCSV/BYML data read from the supplied additional RomFS and cross-checked with committed summaries.",
+    "EF": "Inference or limitation requiring unavailable PBC payloads or unexecuted runtime resource state."
+  },
+  "sources": {
+    "elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+    "index_sqlite": "/workspace/acnh-re/output/index.sqlite",
+    "additional_romfs": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs",
+    "raw_tables": {
+      "FieldMainFieldParam": {
+        "sha256": "3ebd1057e41b0666aa30c6d8beee9220b52d8fb5280c478e8eb13eaca5d27944",
+        "rows": 96
+      },
+      "FieldOutsideTemplate": {
+        "sha256": "1c615f1c8b42d4f690f81fd577261a3daf61f814bb3b1f93354fd1b714c5a314",
+        "rows": 36
+      },
+      "FieldLandMakingUnitModelParam": {
+        "sha256": "289ad2fb68d511121a0779f24e21dfc5f8c627a6053c6aaf334b6a56481d36fc",
+        "rows": 246
+      }
+    }
+  },
+  "generator_path": {
+    "label": "[NATIVE] call graph / [PSEUDO] execution order",
+    "function_sizes_from_index": {
+      "0x529910": {
+        "size_bytes": 1220,
+        "name": "FUN_00629910"
+      },
+      "0x528bf0": {
+        "size_bytes": 476,
+        "name": "FUN_00628bf0"
+      },
+      "0x558f40": {
+        "size_bytes": 1864,
+        "name": "FUN_00658f40"
+      },
+      "0x54e330": {
+        "size_bytes": 304,
+        "name": "FUN_0064e330"
+      },
+      "0x552bb0": {
+        "size_bytes": 992,
+        "name": "FUN_00652bb0"
+      }
+    },
+    "callsites": {
+      "0x529910": [
+        {
+          "pc": "0x529a0c",
+          "target": "0x552bb0"
+        },
+        {
+          "pc": "0x529a80",
+          "target": "0x528bf0"
+        },
+        {
+          "pc": "0x529b1c",
+          "target": "0x552bb0"
+        },
+        {
+          "pc": "0x529b90",
+          "target": "0x528bf0"
+        },
+        {
+          "pc": "0x529c2c",
+          "target": "0x552bb0"
+        },
+        {
+          "pc": "0x529ca0",
+          "target": "0x528bf0"
+        },
+        {
+          "pc": "0x529d3c",
+          "target": "0x552bb0"
+        },
+        {
+          "pc": "0x529db0",
+          "target": "0x528bf0"
+        }
+      ],
+      "0x528bf0": [
+        {
+          "pc": "0x528c98",
+          "target": "0x558f40"
+        }
+      ]
+    },
+    "direct_call_counts": {
+      "0x529910": {
+        "0x552bb0": 4,
+        "0x528bf0": 4
+      },
+      "0x528bf0": {
+        "0x558f40": 1
+      }
+    },
+    "ELF_vs_index_calls_match": true,
+    "per_slot_flow": [
+      "0x529910 builds a row-eligibility bitset from FieldMainFieldParam.",
+      "The original xorshift draw is multiplied by the eligible count; 0x52a110 returns the ranked source row, then its bit is removed.",
+      "0x54e190 binds the source row and 0x54e330 reads OutsideTemplateKind.",
+      "0x552bb0 selects a FieldOutsideTemplate UniqueID for that category using the shared RNG state.",
+      "0x529910 constructs a 0xe0-byte setup parameter with the source-row UID, selected template UID and slot index, then calls 0x528bf0.",
+      "0x528bf0 calls 0x558f40 only when the template resource and destination grid are non-null."
+    ],
+    "slot_invariants": {
+      "generator_selector_calls": 4,
+      "generator_setup_calls": 4,
+      "unique_source_rows": true,
+      "raw_table_category_counts": {
+        "0": 30,
+        "1": 33,
+        "2": 33
+      },
+      "source_preset_uid_range": [
+        0,
+        119
+      ],
+      "template_rows": 36,
+      "landmaking_unit_rows": 246
+    },
+    "native_execution_status": "[NATIVE] The standalone RNG seed-expansion and eight draw steps pass. [PSEUDO] The parent generator sequence is documented from code and its four call sites; this iteration does not invoke 0x529910 or 0x528bf0.",
+    "rng": {
+      "seed": "0x4d41504a",
+      "native_functions": [
+        "0x19aa040",
+        "0x19aa0e0"
+      ],
+      "draws_checked": 8,
+      "draws": [
+        {
+          "u32": 2048676392,
+          "state_after": [
+            1685073247,
+            2384147481,
+            1885012395,
+            2048676392
+          ]
+        },
+        {
+          "u32": 2682491617,
+          "state_after": [
+            2384147481,
+            1885012395,
+            2048676392,
+            2682491617
+          ]
+        },
+        {
+          "u32": 3356477176,
+          "state_after": [
+            1885012395,
+            2048676392,
+            2682491617,
+            3356477176
+          ]
+        },
+        {
+          "u32": 1626460171,
+          "state_after": [
+            2048676392,
+            2682491617,
+            3356477176,
+            1626460171
+          ]
+        },
+        {
+          "u32": 4175708975,
+          "state_after": [
+            2682491617,
+            3356477176,
+            1626460171,
+            4175708975
+          ]
+        },
+        {
+          "u32": 2064888392,
+          "state_after": [
+            3356477176,
+            1626460171,
+            4175708975,
+            2064888392
+          ]
+        },
+        {
+          "u32": 3449652180,
+          "state_after": [
+            1626460171,
+            4175708975,
+            2064888392,
+            3449652180
+          ]
+        },
+        {
+          "u32": 587359204,
+          "state_after": [
+            4175708975,
+            2064888392,
+            3449652180,
+            587359204
+          ]
+        }
+      ],
+      "mismatches": 0,
+      "scope": "Original seed expansion and xorshift instructions ran natively on a deterministic seed. This does not execute 0x529910's GetSystemTick-seeded constructor or its caller draw order."
+    }
+  },
+  "preset_to_runtime": {
+    "label": "[NATIVE] field transfer / [EF] PBC and transform join",
+    "source_record": {
+      "stride_bytes": 14,
+      "fields": [
+        {
+          "offset": 0,
+          "size": 2,
+          "field": "layer0.unit_id"
+        },
+        {
+          "offset": 2,
+          "size": 2,
+          "field": "layer0.variation_index"
+        },
+        {
+          "offset": 4,
+          "size": 1,
+          "field": "layer0.rotation"
+        },
+        {
+          "offset": 5,
+          "size": 1,
+          "field": "padding"
+        },
+        {
+          "offset": 6,
+          "size": 2,
+          "field": "layer1.unit_id"
+        },
+        {
+          "offset": 8,
+          "size": 2,
+          "field": "layer1.variation_index"
+        },
+        {
+          "offset": 10,
+          "size": 1,
+          "field": "layer1.rotation"
+        },
+        {
+          "offset": 11,
+          "size": 1,
+          "field": "padding"
+        },
+        {
+          "offset": 12,
+          "size": 1,
+          "field": "height"
+        },
+        {
+          "offset": 13,
+          "size": 1,
+          "field": "padding"
+        }
+      ]
+    },
+    "preset_collection": {
+      "count": 96,
+      "grid": [
+        112,
+        96
+      ],
+      "all_grid_cells": 1032192
+    },
+    "native_transfer": {
+      "call_chain": [
+        {
+          "caller": "0x529910",
+          "callee": "0x528bf0",
+          "evidence": "four repeated generation slots call the preset setup function"
+        },
+        {
+          "caller": "0x528bf0",
+          "callee": "0x558f40",
+          "condition": "preset resource and destination grid pointers are non-null"
+        }
+      ],
+      "grid_iteration": {
+        "width": 112,
+        "height": 96,
+        "source_cell_index": "x + 112*z",
+        "source_cell_byte_offset": "14 * (x + 112*z)",
+        "layer_loop": "0, 1",
+        "source_layer_byte_offsets": [
+          0,
+          6
+        ],
+        "source_height_byte_offset": 12,
+        "coordinates": "passed to destination grid accessors; out-of-range coordinates are skipped"
+      },
+      "wrapper_backing_store": {
+        "constructor_elf_va": "0x559690",
+        "nested_vtable_global_elf_va": "0x32e4838",
+        "nested_vtable_address_point": "0x3065e88",
+        "payload_accessor_vtable_offset": "0xf0",
+        "payload_accessor_elf_va": "0x55ac40",
+        "payload_accessor_rule": "0x55ac40 returns this+0x28; constructor copies at returned_pointer+8, i.e. constructor_object+0xf0.",
+        "zeroed_bytes": 150528,
+        "copy_bytes": 150528,
+        "size_equation": "0x24c00 = 112 * 96 * 14",
+        "interpretation": "The wrapper's inline backing buffer begins at constructor_object+0xf0 and has the same total size as the decoded 14-byte preset grid.",
+        "does_not_prove": "This size match does not establish that the wrapper buffer is the destination accessor's cell storage or the separate 52-byte ground/collision grid."
+      },
+      "destination_cell_writes": [
+        {
+          "offset": 0,
+          "size": 2,
+          "field": "layer0.unit_id"
+        },
+        {
+          "offset": 2,
+          "size": 2,
+          "field": "layer0.variation_index"
+        },
+        {
+          "offset": 4,
+          "size": 1,
+          "field": "layer0.rotation"
+        },
+        {
+          "offset": 6,
+          "size": 2,
+          "field": "layer1.unit_id"
+        },
+        {
+          "offset": 8,
+          "size": 2,
+          "field": "layer1.variation_index"
+        },
+        {
+          "offset": 10,
+          "size": 1,
+          "field": "layer1.rotation"
+        },
+        {
+          "offset": 12,
+          "size": 1,
+          "field": "height"
+        }
+      ],
+      "write_offsets_note": "Offsets are relative to the cell pointer returned by the destination grid accessor. The accessor's internal allocation/chunk stride is not established here.",
+      "unit_id_rule": "Source ID is copied unless it equals the native empty-unit sentinel; that value is replaced by the native default-unit ID. Sentinel/default runtime values were not resolved.",
+      "variation_rule": "The loader looks up the destination unit's FieldUnitParam Variation u16 limit (CRC32 0xc733aa77); a source variation index greater than the limit is reset to 0, otherwise it is copied.",
+      "height_rule": "The source height byte is copied to cell offset 12. Downstream height accessor 0xf52860 clamps values above 5 to 4; all decoded presets in this corpus contain heights 0–3."
+    },
+    "runtime_ground_record": {
+      "stride_bytes": 52,
+      "height_bytes": [
+        0,
+        48
+      ],
+      "material_bytes": [
+        48,
+        52
+      ],
+      "grid_index": "x + width*z"
+    },
+    "join_status": "[EF] 0x558f40 transfers the 14-byte preset schema into destination LandMaking cell fields; it does not expand the cell into the separate 52-byte ground/PBC record. ModelName + '_pbc' resource naming is statically cataloged, but payload values are absent from both this partial RomFS and the indexed source corpus.",
+    "transform_status": "[EF] The 2x2 PBC-per-unit and 5.0-unit PBC cell model is carried by earlier audit metadata; the exact 14-byte cell to PBC subcell rotation/origin/height transform and runtime cache bootstrap are not proven by this loader.",
+    "variation_cache_rule": "The loader looks up the destination unit's FieldUnitParam Variation u16 limit (CRC32 0xc733aa77); a source variation index greater than the limit is reset to 0, otherwise it is copied.",
+    "height_rule": "The source height byte is copied to cell offset 12. Downstream height accessor 0xf52860 clamps values above 5 to 4; all decoded presets in this corpus contain heights 0–3.",
+    "missing_assets": {
+      "pbc_named_files_in_additional_romfs": [],
+      "pbc_named_files_in_index_sqlite": 0,
+      "blocker": "The user-supplied additional RomFS is partial and contains no PBC-named payloads; exact 52-byte record join and per-cell transform cannot be validated from missing asset bytes."
+    }
+  },
+  "verification": {
+    "assertions_passed": [
+      "Raw additional BCSV row counts: FieldMainFieldParam=96, FieldOutsideTemplate=36, FieldLandMakingUnitModelParam=246.",
+      "FieldMainFieldParam contains 96 unique preset UIDs and category counts 30/33/33 for OutsideTemplateKind 0..2.",
+      "The additional RomFS contains 96 LandMaking preset BYML files.",
+      "Disassembled ELF direct BL targets match the index.sqlite call graph; 0x529910 has exactly four 0x552bb0 and four 0x528bf0 calls, and 0x528bf0 directly references 0x558f40.",
+      "The 14-byte destination field offsets are [0,2,4,6,8,10,12], and the separate runtime/PBC record stride is 52 bytes.",
+      "No PBC-named file is present in the additional RomFS or index.sqlite.",
+      "Original native RNG seed expansion and eight deterministic u32 draws match independent arithmetic with unchanged state transitions."
+    ],
+    "mismatches": 0
+  },
+  "remainder_20261107": {
+    "scope": "Replay of the existing bounded loader audit plus an inventory of the exact inputs currently available in this workspace. This does not add execution of 0x529910 or 0x528bf0.",
+    "prior_reproducer": {
+      "path": "/workspace/acnh-re-github/acnh-re/output/ui_island/island_loader_followup/reproduce.py",
+      "sha256": "39ca5a87c9e129b028f1841b64658ca955d1bd7c0854b6e8ec8241fc569f848c",
+      "previous_result_path": "/workspace/acnh-re-github/acnh-re/output/ui_island/island_loader_followup/result.json",
+      "previous_result_sha256": "6774f2fce296a2279e07ff4c9ad635b467e5a6de6e2250cf12f7ffe78b040d51"
+    },
+    "current_reproducer": {
+      "path": "/workspace/acnh-re-github/acnh-re/output/ui_island/island_loader_remainder_20261107/reproduce.py",
+      "sha256": "d21d6c1714aa3181ab33a250f44cc7e05eb41b242a497b9fbc39e727bed45b23"
+    },
+    "current_inputs": {
+      "source_elf": {
+        "path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/A_logic/main.elf",
+        "size_bytes": 53729580,
+        "sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74"
+      },
+      "additional_exefs_main_nso": {
+        "path": "/workspace/acnh-re-github/acnh-re/inputs/additional_exefs/main",
+        "size_bytes": 24990531,
+        "sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+        "note": "This is the separate raw ExeFS main input. The replay harness reads A_logic/main.elf above."
+      },
+      "indexed_source": {
+        "index_sqlite": {
+          "path": "/workspace/acnh-re/output/index.sqlite",
+          "size_bytes": 63946752,
+          "sha256": "a78c7af27d37b8fd931bba8bc611623dacf7685cb6e8b4f827effa0765340aad"
+        },
+        "raw_bcsv": {
+          "FieldMainFieldParam.bcsv": {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Bcsv/FieldMainFieldParam.bcsv",
+            "size_bytes": 13132,
+            "sha256": "3ebd1057e41b0666aa30c6d8beee9220b52d8fb5280c478e8eb13eaca5d27944"
+          },
+          "FieldOutsideTemplate.bcsv": {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Bcsv/FieldOutsideTemplate.bcsv",
+            "size_bytes": 5284,
+            "sha256": "1c615f1c8b42d4f690f81fd577261a3daf61f814bb3b1f93354fd1b714c5a314"
+          },
+          "FieldLandMakingUnitModelParam.bcsv": {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Bcsv/FieldLandMakingUnitModelParam.bcsv",
+            "size_bytes": 24964,
+            "sha256": "289ad2fb68d511121a0779f24e21dfc5f8c627a6053c6aaf334b6a56481d36fc"
+          }
+        },
+        "raw_landmaking_presets_byml": [
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetA00_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "cba1ab90d21982b443e719e30a19c80fa9aa9ead86f03705f5ecbd3c821d4aca"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetA01_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "41639394b47efec15fe3b90e1a2e1b597372cbb152150b61d6b59f19d32c5406"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetA02_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "807921a1fdedafad636be3d145ba66619062bf2fc4886d08a69262d8274eca79"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetA03_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "9c73759cb986c4005d8122edd93dd2dba27d033516747d5f4d74b39bac96beff"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetA04_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "1841a74df683109f56b8efd6c8c416cab7625ce20730cccc1e1d83a0faf16001"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetA05_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "100e56f768a320e8e6f5925dd97439e1c0e5aaaa897ec6a973b7f98fdb114945"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetA09_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "1d391c23e4609c64204bb00ac14bd9f75a4e078fc88b55c8ebe174775356ae27"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetA10_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "d3c700636296ad25633ee92cb4699ede3d575b07faa41b09613e90090ac98a94"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetA11_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "492faae157b08432c3288aabdf301a477ecfdabc34b61ec5a90ca601769d8573"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetA12_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "3c6fc2eb594fe7019d3b464d10c944ed4fcb8e5f5ea1562198891737e8a72984"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetA13_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "713f109ef968c3e558e0be0f597493d84867fa24eabf510ac8afb5dd2404cc03"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetA14_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "4d5523ca67c35a0c98737cc1c9af6886a0566071f066e6f354dc434b9bfb16ac"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetA15_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "3d5623418500c74bd40df14c1b4feaeb05b3eaae940f45d3cb9ea4af29db8da0"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetA16_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "235de871b7ee7d7837148bb7c7dc0f06ea8019ad45b0db1fc4262f756ca26ab6"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetA17_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "9664de2f47efc3f01b9fd7c83e4031c7480705349af925b66bdcd044af4f2602"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetA18_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "50a2a7f15950044846aae4a8837f4ad8357181348a8ac73401e5a2fc0165d946"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetA19_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "d721af562cebd1fd32311c1bfb4f2d68d9affc543a4aec1d1c2703730de6b372"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetA20_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "5cf93ee7a384645638f3b56da91a57726e7b99f17158b77a86eef8b4610bb5ac"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetA21_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "2b721c654589d1b4a01f879bd34a05370f8b70356768d4b68ab2b473212d5510"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetA22_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "c092b051ec3b037be84fd672fe864164dae06091086217cefb5a0d6eeff25f16"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetA23_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "f54523ddaa3b4ac993500b4620ac3fb25298b22ea3fc07c6f246cf58e0799253"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetA24_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "dedc981cd5677abff0ef0996f0cab1790c0652d31c9dcb880d8c76ff765488f2"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetA25_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "ae425d9438016aadcbc615597a59cad1c3c1feac67d96caec1011edb5a8e03a7"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetA26_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "62ab0836082cb2435f1b8ce4ef28d8150fab8491572d8f5d6a72397136052fc9"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetA27_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "9df5bf1d27862431814c71481d90ac7f2297212dc26fb24e2874991c8a2810ef"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetA28_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "e8014fe48f8ee6bf941735d3ee8887f80405e6cb46a7bbfee5bb8dbeadcf88b0"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetA29_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "f7d5d9a46fd903e414f5e9ccc7d8b2776f1e5b40b365e221c574cf1eaad66e55"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetA30_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "743db02639c17394b79a010cbd2330da049b466cca72063aeadb1d1384873970"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetA31_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "360fb673debc095a4132034ace7b07cc1cfe20a56a3d0089e6d151511ef0bb9c"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetA32_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "414de6f056c2bae000b6903b5c5339276dd1fa8dd6b3ba7612bf86b174163b9c"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetB00_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "929f949631b995b1f76226536a091d7d3630e12265f6e332a3944d712dedb6fa"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetB01_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "07e30e54fef189573bef3608a61b8d68175a5cd398d39d95da425ca0b6588aac"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetB02_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "f21349a93f39cb4b91ca728e9195c34d3a14401867018ec54d1401f7a75ac05e"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetB03_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "5fddc80dcab88f8c70f07e45f418334fcb041ff6be0929cf2cb26d31ed5c5486"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetB04_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "bcbf096aeeae99bc3bf24393102821cb40ec335c3191702a991c815ce5057c23"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetB05_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "c9220480e6642ac8034e2c67f400f2c72f80cc277590aa3a76bcf27fe8227e47"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetB06_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "f2ed881418214a09266743d76325be438f43a1da745c5dded44dde775933abdd"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetB07_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "db0275839ff62fb8691d0731ed56d8d885f29535478379c6fc538ad0bbb863e5"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetB08_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "a4c123c218822a27f872a11db7b07230b7172bce0a8aad105cdf7535b70213fe"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetB09_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "f2287d83bc587ad84df96a10b3b57230147881cdd89a328032734a1d3ada0277"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetB10_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "eae978091203a34a53452385f5586740d39ed888306cdf632ef4bb2b3955a407"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetB11_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "ed020d96bd9c24dceaf6f4e688f71c968bcafb88d9fc25351835d84c534f3c4b"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetB12_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "de84e7a6204f0abc749300b9f9f17e1ec6dd873571d3a703556c305a15542058"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetB13_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "2f705b0aaa0e5cae2304c16ae8b6d20dd12b3e29a888fb14b6223ee4a6d87366"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetB14_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "3f78193be0c79971708b3a7244f3557fe4ff7bef76f96307aadac3c37ba60e8b"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetB15_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "9e39f05a2ec51b1440096a6b436487142c402eedc5598766dc440ac4c831bb61"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetB16_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "bcb40e6cf8781371a9fc3858f277b5017370125c83f83924d58a4d356eafa3fa"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetB17_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "9e8c8b71905f8023040cfeea4f4cde5258131e3945bb149c8a41794ca8cd2e94"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetB18_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "5b2cff3552b052d21d370f3c4eb54ddb4a1a4a6fe7a2d02b3fe1e02d2b4ae55f"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetB19_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "89fbcdd4038087944a5e87c42658321f674a960ed0ae3cd9f3071fe6a72f60f8"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetB20_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "354ae27f7e623d96f5fb0282e6433156d04b4ac97d2320a76069ad5a22f872e0"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetB21_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "40542a3731f76b7aed17043842f4eb996ca3459362023911d1394ff25df5abd8"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetB22_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "43c1a30fb73bc470e31b73f67f6a1ab536e382644446eefe3cffed4ad7d1a474"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetB23_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "d8bd7c510ffb7f3d8c94e719cba10d8e6ab05a9811cb4b4afd81327ef60f44c8"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetB24_LandMaking.byml",
+            "size_bytes": 150604,
+            "sha256": "20373027a400e0cd27acbdcbe3ad43222f22b67f1e838ac9d8583e5a47e1cfde"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetB25_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "f75e2a1c9b6a66d14bdf91e14790951f0d936569b0344ae6f8b5b3a1c23b5549"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetB26_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "4bb0d958e37f0d0abcaed78b0101457cadad731829643d07f9bae4b4109b8bb3"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetB27_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "7954fe8826f0e01a956ef8c238d6db4e40504ef9e9cbf7f47d4e0b738b39fffe"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetB28_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "2f8a27d624c9b739164a637c7cd873eda173963ff51c2bbee40c0ea53ef02e5c"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetB29_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "7c4690d58f41ad6d5dd95409b9208a03b5817913c9098d6e4ef8ad2248fcc362"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetB30_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "76a94884afd54d904363217503f5d3e6cc5cd515cedd71e4a19d714685c72c49"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetB31_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "f3a11acabe0e46c59912e08fa3a398938c1e21a794d001292b566bdd6d7d015c"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetB32_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "531c54435592b8e28242690ce0a0279e51e9cd56bf58154eff0b77afd1a4b271"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetC00_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "d69742fe9a12b06950557e65ce918887ad278916435a4b76ef293a130721dce4"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetC01_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "aedcae4d265652dc5c4cccb1f5763a8cfb38cb0825100e0527276bfb4ad239b0"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetC02_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "3f9168ff64e82476396422b60f845d42636e565b68a77b0c6a9054273b8eb754"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetC03_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "ffa3670abc08ca76d70f65f2b34734c5c727d0e413dcb5bcd8f9bbafa92034f1"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetC04_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "bcd29859a2c7d9b2ce9d4402fc6efe787e7eb1674a32f13f9867c5dfe5e041ac"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetC05_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "cf741f42a1ab1112ebd2b39d0d8543fe0d76d67cbbcf2fa4c2ddc107ade496ac"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetC06_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "4b11cfac472d19a16f91acba9fc7073f7f360447a964521e3f24c9e1809e7d68"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetC07_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "9b438dd6412fd4c37c3c55363713d5831ad12b906520ac582eb3223c0ccfdfca"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetC08_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "a9281002679c0fd96ca3cd53f856574c6a9bdd78e1b735bc04e555269d6706eb"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetC09_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "d5f64e71da9bc38918bafd012f0eefbe072f0ce1df749aca3e515c089db7eb6f"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetC10_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "4ae6f7d27471007174ebb8caf2702055cad07f0f0c873520d40a9bb2caf0ab91"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetC11_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "31dd10fb3c2b28a783c32f62de4c70cc618dc723d7b56381ccf92a954a4b4ef5"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetC12_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "f04a289e358163fba66a000559024ecfe805e889f7ea125d1e28520807bcc067"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetC13_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "7480166743a8441b9547c1d1cee687b3f518ecdb475e0bec260d78f7f9c72b59"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetC14_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "2fb61d03834fe21e1693dafce70bade8cac095eed77e253c0337195f8e33dbdf"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetC15_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "c40ba2d7f246ec2a2828fbacc441de26cb67d80f9c327e21bcae08bc34118ec2"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetC16_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "214480e4197eda3f3fb6c4147492268b1fcce716ae2d40cbbf23d5f99610ec20"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetC17_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "7a1f749d38133ad6a0e2ac25c60eadcd41fb2be71797e8e0e1eed2215ba7ba32"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetC18_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "6ad07b8c0910ba695e4416082b15397e73161d28aec2a628ce97749080a31991"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetC19_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "26f6545d69043d925399391a5557e9d39526167f36ad80453bd9f1a8f6f0d939"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetC20_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "0ef028f61290257868b56bc46d103ae9925edbd118e5cfb8f3b40be6dab81d9f"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetC21_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "fae3dc3d8bc9d27333f37a3ac4c4dce08a7c34747c507899b26375f4661c7e4a"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetC22_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "0020d6800c4c99111a6651ed45dad1e751e65cae949d81c1ad61abc2d171d370"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetC23_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "281b234c8fe2a83ea85adabc73229fbb8d7fa3159a2dfe0e4a707f855c92ab1b"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetC24_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "eb3f69a665e9aa346d70f7ca8ddebc822e2df259e8eb9c54e008b4efdae74f75"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetC25_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "2def004cb7f757c4d089538621f8c0dc0b524ccbdf042b3a0151a572cb0780c8"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetC26_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "af0b22b0ee69db2390275015dd22fb89d3c4690d437287c033687824d769feb9"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetC27_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "407bb9458ee6a9fa3cff043622cde02fe0c973c6cc456048c6b3b6b442f09f45"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetC28_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "0aabd4589df70dbbc2d7a2ddef6c572fc718a511c51fe72d18867abc79e12f27"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetC29_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "061292631632a201ecb38a09931ad93f113b7acb1df2395a28b9b1e9977710aa"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetC30_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "d1ef41ddb314e0ab1d711864d64ad9d1eb38e859a908fad134f9d05b249155c1"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetC31_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "5579a9feef462dfceeb1ba7b3a4e5c960bd3794553b30b01cfb46289e1b49b24"
+          },
+          {
+            "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Field/MainFieldPreset/FieldPresetC32_LandMaking.byml",
+            "size_bytes": 150608,
+            "sha256": "94668076331940d4166333ffbafad839f84f5ad983a3839130fbcea23e43fb17"
+          }
+        ],
+        "raw_bcsv_directory": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs"
+      },
+      "prior_docs_and_analysis_artifacts": [
+        {
+          "path": "/workspace/acnh-re-github/acnh-re/output/manifest.json",
+          "sha256": "eb8d114129e01e6c3284a7a2613c3f451d649c0708a58a1a08cd757c5f3840a8"
+        },
+        {
+          "path": "/workspace/acnh-re-github/acnh-re/docs/ISLAND_LOADER_FOLLOWUP.md",
+          "sha256": "8e52338ba2829d7baa91771c38a07748596e55be3d6d4c4f33ed6238e214b5aa"
+        },
+        {
+          "path": "/workspace/acnh-re-github/acnh-re/docs/ISLAND_TEMPLATE_SELECTOR_NATIVE.md",
+          "sha256": "58f5c75e8a8071f09b265b66664ec05bfede490d85ed4255b6ee9fecbc4f8f62"
+        },
+        {
+          "path": "/workspace/acnh-re-github/acnh-re/output/ui_island/island_loader_followup/reproduce.py",
+          "sha256": "39ca5a87c9e129b028f1841b64658ca955d1bd7c0854b6e8ec8241fc569f848c"
+        },
+        {
+          "path": "/workspace/acnh-re-github/acnh-re/output/ui_island/island_loader_followup/result.json",
+          "sha256": "6774f2fce296a2279e07ff4c9ad635b467e5a6de6e2250cf12f7ffe78b040d51"
+        },
+        {
+          "path": "/workspace/acnh-re-github/acnh-re/output/ui_island/island_terrain_loader_native.json",
+          "sha256": "a091e416a8713a95cc52565e1e9b4f03ab74b83425e62f0620991525611f61c9"
+        },
+        {
+          "path": "/workspace/acnh-re-github/acnh-re/output/mechanics/terrain_native.json",
+          "sha256": "5455972cdd105edb69b435aa8199124f9781c4b0cb0eaa32044029d6f0b10cd6"
+        },
+        {
+          "path": "/workspace/acnh-re-github/acnh-re/output/mechanics/terrain_pbc_native_consumers.json",
+          "sha256": "69d6e3d5873480ea9950002436c790367c987b07b5007505eaa746162ffb71af"
+        },
+        {
+          "path": "/workspace/acnh-re-github/acnh-re/output/ui_island/manifests_pbc_audit.json",
+          "sha256": "0245d3353d94685c8be8aae73a38a6353ad901de6fb24f31f019786978f5d161"
+        }
+      ],
+      "available_archives": [
+        {
+          "path": "/workspace/downloads/ACNH_island_RE.zip",
+          "size_bytes": 34500062,
+          "sha256": "75638c10fb7058063f76e87f184b931c9e38ce3a187f42cc3a5c8563a4a8c667",
+          "zip_members": 15564,
+          "pbc_named_members": []
+        },
+        {
+          "path": "/workspace/acnh-re-additional-romfs.zip",
+          "size_bytes": 110995803,
+          "sha256": "2acdf4a5b69f1f4a08078a6b8e35516997a740670a98de22dea308b6f79328e3",
+          "zip_members": 1125,
+          "pbc_named_members": []
+        },
+        {
+          "path": "/workspace/acnh-re-delivery/additional_romfs/ACNH_RE_tambahan_romfs_bagian_01_dari_03.zip",
+          "size_bytes": 48952501,
+          "sha256": "8d6539888d31a06aaea2b683b998e633103b64acd54ad8099c35462861b93f89",
+          "zip_members": 234,
+          "pbc_named_members": []
+        },
+        {
+          "path": "/workspace/acnh-re-delivery/additional_romfs/ACNH_RE_tambahan_romfs_bagian_02_dari_03.zip",
+          "size_bytes": 50138431,
+          "sha256": "24e7b24e865d46dac4a82106eb2b49456d16ec4975cc69d2e01f04323ee276b3",
+          "zip_members": 139,
+          "pbc_named_members": []
+        },
+        {
+          "path": "/workspace/acnh-re-delivery/additional_romfs/ACNH_RE_tambahan_romfs_bagian_03_dari_03.zip",
+          "size_bytes": 11904915,
+          "sha256": "6ce1544004f1962ea8fff82440a72794e9aa77fbeac1e2a028b0fd363873b6f6",
+          "zip_members": 752,
+          "pbc_named_members": []
+        }
+      ],
+      "extracted_additional_romfs_pbc_named_files": [],
+      "extracted_island_source_pbc_named_files": [],
+      "historical_pbc_audit_reference": {
+        "filename": "acnh_manifests_drive.zip",
+        "size_bytes": 134055965,
+        "sha256": "8995d65b09a5cb84b181907c78991806f6da325bc82d35ea24ae6ecf1e263f3a",
+        "reported_pbc_payloads": 783,
+        "matching_files_by_name_in_workspace": [],
+        "matching_archive_hashes_among_current_sources": [],
+        "boundary": "The archive filename is absent from /workspace, and its recorded checksum matches none of the current primary or split island/RomFS source archives inventoried here; the PBC payload bytes cannot be replayed from these inputs."
+      }
+    },
+    "stubbed_dependencies": {
+      "native_rng_leafs": [],
+      "explanation": "0x19aa040 and 0x19aa0e0 execute original ELF instructions in the bounded Sandbox. The Sandbox supplies synthetic seed/state memory, stack, heap, and a return sentinel; it does not stub calls inside either RNG leaf. No system tick, registry/cache bootstrap, resource manager, or world object is supplied because the parent generator/setup functions are not executed."
+    },
+    "checks": {
+      "replayed_assertion_count": 7,
+      "current_relevant_archives_have_zero_pbc_named_members": true,
+      "historical_manifest_archive_name_absent_and_hash_matches_no_current_source_archive": true,
+      "status": "PASS: bounded checks replay; full generator-to-world gate remains open."
+    }
+  }
+}

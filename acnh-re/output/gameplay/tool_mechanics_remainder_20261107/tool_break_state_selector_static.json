@@ -1,0 +1,1770 @@
+{
+  "schema": "acnh-re/tool-mechanics-remainder-state-selector-static/1",
+  "game_version": "1.0.0",
+  "evidence_level": "STATIC_INDEXED_CALLER_TRACE_AND_BOUNDED_NATIVE_STATE_REQUEST_PROBE",
+  "source_origin": {
+    "main_nso": "/workspace/acnh-re-github/acnh-re/inputs/additional_exefs/main",
+    "main_nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+    "index_db": "/workspace/acnh-re/output/index.sqlite",
+    "index_db_sha256": "a78c7af27d37b8fd931bba8bc611623dacf7685cb6e8b4f827effa0765340aad",
+    "state_registry_disassembly": "/workspace/acnh-re/output/binary/disassembly_fallback/dd9a60.asm",
+    "callback_pointer_array": "/workspace/acnh-re/output/binary/code_pointer_arrays.json",
+    "decomp_snapshots": {
+      "0xe37760": {
+        "path": "/workspace/acnh-re/output/binary/analysis_decomp/e37760.c",
+        "sha256": "501f25c4bb078bd7339045fa1f86e5ee426569843b63d4a501c58b1912181c1f",
+        "local_sha256": "501f25c4bb078bd7339045fa1f86e5ee426569843b63d4a501c58b1912181c1f",
+        "available": true
+      },
+      "0xe375d0": {
+        "path": "/workspace/acnh-re/output/binary/analysis_decomp/e375d0.c",
+        "sha256": "6a4676ed7f13a79af68719747b6c6cee9251433f4d919ed678ddee56607da398",
+        "local_sha256": "6a4676ed7f13a79af68719747b6c6cee9251433f4d919ed678ddee56607da398",
+        "available": true
+      },
+      "0xdb01e0": {
+        "path": "/workspace/acnh-re/output/binary/analysis_decomp/db01e0.c",
+        "sha256": "0fc1fdf23b2757a7101a4989ef17eef8f121409ec8415b39c0fa68213f954912",
+        "local_sha256": "0fc1fdf23b2757a7101a4989ef17eef8f121409ec8415b39c0fa68213f954912",
+        "available": true
+      },
+      "0xe585c0": {
+        "path": "/workspace/acnh-re/output/binary/analysis_decomp/e585c0.c",
+        "sha256": "40d60b74bc803f2c9846be35b2ace5d228d5edbd1c13e843a99a6b46bae46cd4",
+        "local_sha256": "40d60b74bc803f2c9846be35b2ace5d228d5edbd1c13e843a99a6b46bae46cd4",
+        "available": true
+      }
+    }
+  },
+  "predicate_to_state_request": {
+    "predicate_function": {
+      "va": "0xe375d0",
+      "name": "FUN_00f375d0",
+      "size": 396,
+      "span_end_va": "0xe3775b",
+      "direct_calls": [
+        {
+          "pc": "0xe375e8",
+          "target": "0xdb01e0"
+        },
+        {
+          "pc": "0xe375fc",
+          "target": "0xda7b10"
+        },
+        {
+          "pc": "0xe37604",
+          "target": "0xe25d00"
+        },
+        {
+          "pc": "0xe37610",
+          "target": "0xe25980"
+        },
+        {
+          "pc": "0xe37638",
+          "target": "0xe70590"
+        },
+        {
+          "pc": "0xe37698",
+          "target": "0xe70590"
+        },
+        {
+          "pc": "0xe376d0",
+          "target": "0xe70590"
+        }
+      ],
+      "direct_callers": [
+        {
+          "pc": "0xe32af0",
+          "owner": "0xe32ad0"
+        },
+        {
+          "pc": "0xe37784",
+          "owner": "0xe37760"
+        }
+      ],
+      "strings": []
+    },
+    "request_function": {
+      "va": "0xe37760",
+      "name": "FUN_00f37760",
+      "size": 204,
+      "span_end_va": "0xe3782b",
+      "direct_calls": [
+        {
+          "pc": "0xe37784",
+          "target": "0xe375d0"
+        },
+        {
+          "pc": "0xe37790",
+          "target": "0xdd7c40"
+        },
+        {
+          "pc": "0xe377a0",
+          "target": "0xe5a880"
+        },
+        {
+          "pc": "0xe377ac",
+          "target": "0x15bbbf0"
+        },
+        {
+          "pc": "0xe377bc",
+          "target": "0x15bbc10"
+        },
+        {
+          "pc": "0xe377d8",
+          "target": "0x7c9560"
+        },
+        {
+          "pc": "0xe377e4",
+          "target": "0x15bbc10"
+        },
+        {
+          "pc": "0xe37808",
+          "target": "0xdd5c40"
+        }
+      ],
+      "direct_callers": [
+        {
+          "pc": "0xdd6900",
+          "owner": "0xdd65f0"
+        },
+        {
+          "pc": "0xdd6c34",
+          "owner": "0xdd6ba0"
+        }
+      ],
+      "strings": []
+    },
+    "decomp_observation": "e37760 enters the request block only when the local +0xf04 bit-2 guard is clear and e375d0 returns true; that block calls generic state helper 0xdd5c40 with state argument 0xb8.",
+    "registered_state": {
+      "state_id_in_registry_call": "0xb8",
+      "state_name": "State::cToolBreakDemo",
+      "string_va": "0x2947827",
+      "callback_pointer_indices": [
+        549,
+        550,
+        551
+      ],
+      "callback_targets": [
+        "0xdf6360",
+        "0xdf6420",
+        "0xdf63a0"
+      ]
+    },
+    "registry_sequence_note": "The relocated callback pointer sequence maps ordinal 0xb8 to State::cToolBreakDemo and three callbacks. The sequence is evidence of registration, not independently proven to be a C++ vtable."
+  },
+  "predicate_inputs_and_limit": {
+    "predicate_direct_calls": [
+      {
+        "pc": "0xe375e8",
+        "target": "0xdb01e0"
+      },
+      {
+        "pc": "0xe375fc",
+        "target": "0xda7b10"
+      },
+      {
+        "pc": "0xe37604",
+        "target": "0xe25d00"
+      },
+      {
+        "pc": "0xe37610",
+        "target": "0xe25980"
+      },
+      {
+        "pc": "0xe37638",
+        "target": "0xe70590"
+      },
+      {
+        "pc": "0xe37698",
+        "target": "0xe70590"
+      },
+      {
+        "pc": "0xe376d0",
+        "target": "0xe70590"
+      }
+    ],
+    "db01e0_function": {
+      "va": "0xdb01e0",
+      "name": "FUN_00eb01e0",
+      "size": 284,
+      "span_end_va": "0xdb02fb",
+      "direct_calls": [
+        {
+          "pc": "0xdb0208",
+          "target": "0xe31ea0"
+        },
+        {
+          "pc": "0xdb0210",
+          "target": "0xf58d00"
+        },
+        {
+          "pc": "0xdb0220",
+          "target": "0xa9c290"
+        },
+        {
+          "pc": "0xdb0228",
+          "target": "0xa9d0b0"
+        },
+        {
+          "pc": "0xdb0248",
+          "target": "0xe5aca0"
+        },
+        {
+          "pc": "0xdb025c",
+          "target": "0xe31ea0"
+        },
+        {
+          "pc": "0xdb0268",
+          "target": "0xe896f0"
+        },
+        {
+          "pc": "0xdb0294",
+          "target": "0xf4e8a0"
+        },
+        {
+          "pc": "0xdb02b0",
+          "target": "0xe31ea0"
+        },
+        {
+          "pc": "0xdb02b8",
+          "target": "0xe89360"
+        },
+        {
+          "pc": "0xdb02cc",
+          "target": "0xe5acb0"
+        },
+        {
+          "pc": "0xdb02dc",
+          "target": "0xe5ad20"
+        }
+      ],
+      "direct_callers": [
+        {
+          "pc": "0xe375e8",
+          "owner": "0xe375d0"
+        },
+        {
+          "pc": "0xe45ce8",
+          "owner": "0xe45b80"
+        },
+        {
+          "pc": "0xe4ea9c",
+          "owner": "0xe4e730"
+        },
+        {
+          "pc": "0xe58708",
+          "owner": "0xe585c0"
+        },
+        {
+          "pc": "0xe5be5c",
+          "owner": "0xe5bd90"
+        }
+      ],
+      "strings": [
+        "ForceToolBreakDemo"
+      ]
+    },
+    "db01e0_relevant_callers": [
+      {
+        "pc": "0xe375e8",
+        "owner": "0xe375d0",
+        "owner_name": "FUN_00f375d0"
+      },
+      {
+        "pc": "0xe45ce8",
+        "owner": "0xe45b80",
+        "owner_name": "FUN_00f45b80"
+      },
+      {
+        "pc": "0xe4ea9c",
+        "owner": "0xe4e730",
+        "owner_name": "FUN_00f4e730"
+      },
+      {
+        "pc": "0xe58708",
+        "owner": "0xe585c0",
+        "owner_name": "FUN_00f585c0"
+      },
+      {
+        "pc": "0xe5be5c",
+        "owner": "0xe5bd90",
+        "owner_name": "FUN_00f5bd90"
+      }
+    ],
+    "current_damage_read_path": {
+      "edge": [
+        "0xdb01e0",
+        "0xe89360",
+        "0xaa7700"
+      ],
+      "meaning": "e89360 reaches the native packed ToolDamage getter identified in the followup."
+    },
+    "no_threshold_edge_in_exercised_static_slice": {
+      "e375d0_directly_calls_aa7ce0": false,
+      "db01e0_directly_calls_aa7ce0": false,
+      "db01e0_directly_calls_wear_commit": false,
+      "interpretation": "The predicate reaches a current-wear read, but this slice has no direct BreakDamage-minus-ToolDamage check or wear commit edge. This does not exclude indirect calls or omitted native/runtime state."
+    }
+  },
+  "family_action_caller_trace": {
+    "anchors": {
+      "Axe": {
+        "va": "0xe36ec0",
+        "name": "FUN_00f36ec0",
+        "size": 260,
+        "span_end_va": "0xe36fc3",
+        "direct_calls": [
+          {
+            "pc": "0xe36edc",
+            "target": "0xe99510"
+          },
+          {
+            "pc": "0xe36f04",
+            "target": "0x7bc1c0"
+          },
+          {
+            "pc": "0xe36f0c",
+            "target": "0xda7b10"
+          },
+          {
+            "pc": "0xe36f14",
+            "target": "0xe794d0"
+          },
+          {
+            "pc": "0xe36f1c",
+            "target": "0xf58d00"
+          },
+          {
+            "pc": "0xe36f2c",
+            "target": "0xa9c290"
+          },
+          {
+            "pc": "0xe36f34",
+            "target": "0xa9de90"
+          },
+          {
+            "pc": "0xe36f40",
+            "target": "0x7be330"
+          },
+          {
+            "pc": "0xe36f60",
+            "target": "0x7be330"
+          },
+          {
+            "pc": "0xe36f8c",
+            "target": "0x7d1510"
+          },
+          {
+            "pc": "0xe36fac",
+            "target": "0xda7b10"
+          },
+          {
+            "pc": "0xe36fb0",
+            "target": "0xe80ca0"
+          }
+        ],
+        "direct_callers": [
+          {
+            "pc": "0xde7984",
+            "owner": null
+          }
+        ],
+        "strings": [
+          "PlayerAxeDullHitTree",
+          "PlayerAxeHitTree"
+        ]
+      },
+      "Shovel_get_demo": {
+        "va": "0xe541a0",
+        "name": "FUN_00f541a0",
+        "size": 800,
+        "span_end_va": "0xe544bf",
+        "direct_calls": [
+          {
+            "pc": "0xe541c4",
+            "target": "0xe99510"
+          },
+          {
+            "pc": "0xe541d8",
+            "target": "0xe99510"
+          },
+          {
+            "pc": "0xe541f4",
+            "target": "0x15bbbc0"
+          },
+          {
+            "pc": "0xe541fc",
+            "target": "0xdc9110"
+          },
+          {
+            "pc": "0xe54208",
+            "target": "0xf58d00"
+          },
+          {
+            "pc": "0xe54214",
+            "target": "0xf58f20"
+          },
+          {
+            "pc": "0xe54228",
+            "target": "0xdb0140"
+          },
+          {
+            "pc": "0xe54240",
+            "target": "0xea7310"
+          },
+          {
+            "pc": "0xe54248",
+            "target": "0x7be330"
+          },
+          {
+            "pc": "0xe5424c",
+            "target": "0x7d8a30"
+          },
+          {
+            "pc": "0xe54254",
+            "target": "0x7bd740"
+          },
+          {
+            "pc": "0xe5426c",
+            "target": "0xdad100"
+          },
+          {
+            "pc": "0xe5427c",
+            "target": "0x7be330"
+          },
+          {
+            "pc": "0xe54298",
+            "target": "0xdb2a20"
+          },
+          {
+            "pc": "0xe542a0",
+            "target": "0x7be330"
+          },
+          {
+            "pc": "0xe542c8",
+            "target": "0x7d5780"
+          },
+          {
+            "pc": "0xe542e8",
+            "target": "0x7bc1c0"
+          },
+          {
+            "pc": "0xe54330",
+            "target": "0xdc80a0"
+          },
+          {
+            "pc": "0xe54340",
+            "target": "0x15bbbc0"
+          },
+          {
+            "pc": "0xe54358",
+            "target": "0xdab840"
+          },
+          {
+            "pc": "0xe54360",
+            "target": "0xdad700"
+          },
+          {
+            "pc": "0xe54368",
+            "target": "0xdab8d0"
+          },
+          {
+            "pc": "0xe5438c",
+            "target": "0xda7550"
+          },
+          {
+            "pc": "0xe543d4",
+            "target": "0xdd3b40"
+          },
+          {
+            "pc": "0xe543e0",
+            "target": "0xf589e0"
+          },
+          {
+            "pc": "0xe54420",
+            "target": "0xdd3be0"
+          }
+        ],
+        "direct_callers": [
+          {
+            "pc": "0xde5580",
+            "owner": null
+          }
+        ],
+        "strings": [
+          "PlayerScoopDigGetDemo",
+          "PlayerScoopDigGetDemoKeep"
+        ]
+      },
+      "Net_get_demo": {
+        "va": "0xe45b80",
+        "name": "FUN_00f45b80",
+        "size": 820,
+        "span_end_va": "0xe45eb3",
+        "direct_calls": [
+          {
+            "pc": "0xe45b98",
+            "target": "0xdc80a0"
+          },
+          {
+            "pc": "0xe45ba4",
+            "target": "0xda7b10"
+          },
+          {
+            "pc": "0xe45ba8",
+            "target": "0xdb0310"
+          },
+          {
+            "pc": "0xe45bd4",
+            "target": "0x7be330"
+          },
+          {
+            "pc": "0xe45c0c",
+            "target": "0x7d57a0"
+          },
+          {
+            "pc": "0xe45c14",
+            "target": "0x804f80"
+          },
+          {
+            "pc": "0xe45c1c",
+            "target": "0xdc80a0"
+          },
+          {
+            "pc": "0xe45c58",
+            "target": "0x15bbbc0"
+          },
+          {
+            "pc": "0xe45c6c",
+            "target": "0xdab840"
+          },
+          {
+            "pc": "0xe45c74",
+            "target": "0xdab8d0"
+          },
+          {
+            "pc": "0xe45ca0",
+            "target": "0xe31ea0"
+          },
+          {
+            "pc": "0xe45ca8",
+            "target": "0xda7b10"
+          },
+          {
+            "pc": "0xe45cbc",
+            "target": "0xdb00f0"
+          },
+          {
+            "pc": "0xe45cc4",
+            "target": "0xda7b10"
+          },
+          {
+            "pc": "0xe45ccc",
+            "target": "0xdafee0"
+          },
+          {
+            "pc": "0xe45cdc",
+            "target": "0x15bbbf0"
+          },
+          {
+            "pc": "0xe45ce8",
+            "target": "0xdb01e0"
+          },
+          {
+            "pc": "0xe45d04",
+            "target": "0xda3fc0"
+          },
+          {
+            "pc": "0xe45d18",
+            "target": "0xf589b0"
+          },
+          {
+            "pc": "0xe45d20",
+            "target": "0xda7b10"
+          },
+          {
+            "pc": "0xe45d28",
+            "target": "0xda4020"
+          },
+          {
+            "pc": "0xe45d40",
+            "target": "0xda7b10"
+          },
+          {
+            "pc": "0xe45d44",
+            "target": "0xeaace0"
+          },
+          {
+            "pc": "0xe45d58",
+            "target": "0xf589e0"
+          },
+          {
+            "pc": "0xe45d60",
+            "target": "0xda5450"
+          },
+          {
+            "pc": "0xe45d74",
+            "target": "0x15bbbc0"
+          },
+          {
+            "pc": "0xe45d88",
+            "target": "0xf58a10"
+          },
+          {
+            "pc": "0xe45d94",
+            "target": "0xdb30f0"
+          },
+          {
+            "pc": "0xe45da0",
+            "target": "0xdb2a20"
+          },
+          {
+            "pc": "0xe45da8",
+            "target": "0xda7b10"
+          },
+          {
+            "pc": "0xe45db4",
+            "target": "0xda3fc0"
+          },
+          {
+            "pc": "0xe45dbc",
+            "target": "0xe25d00"
+          },
+          {
+            "pc": "0xe45dc8",
+            "target": "0xe712f0"
+          },
+          {
+            "pc": "0xe45dd0",
+            "target": "0xda4020"
+          },
+          {
+            "pc": "0xe45dec",
+            "target": "0x15bbbc0"
+          },
+          {
+            "pc": "0xe45dfc",
+            "target": "0xefec70"
+          },
+          {
+            "pc": "0xe45e18",
+            "target": "0xe4d60"
+          },
+          {
+            "pc": "0xe45e20",
+            "target": "0xdad700"
+          },
+          {
+            "pc": "0xe45e28",
+            "target": "0xdd3b40"
+          },
+          {
+            "pc": "0xe45e48",
+            "target": "0x15bbbc0"
+          },
+          {
+            "pc": "0xe45e54",
+            "target": "0xf589e0"
+          },
+          {
+            "pc": "0xe45e98",
+            "target": "0xdd3be0"
+          }
+        ],
+        "direct_callers": [
+          {
+            "pc": "0xdf1184",
+            "owner": null
+          }
+        ],
+        "strings": [
+          "PlayerNetGetDemo",
+          "PlayerNetGetDemoKeep"
+        ]
+      },
+      "FishingRod_get_demo": {
+        "va": "0xe4e730",
+        "name": "FUN_00f4e730",
+        "size": 1888,
+        "span_end_va": "0xe4ee8f",
+        "direct_calls": [
+          {
+            "pc": "0xe4e750",
+            "target": "0xdc80a0"
+          },
+          {
+            "pc": "0xe4e75c",
+            "target": "0xda7b10"
+          },
+          {
+            "pc": "0xe4e760",
+            "target": "0xdb0300"
+          },
+          {
+            "pc": "0xe4e780",
+            "target": "0xdc80a0"
+          },
+          {
+            "pc": "0xe4e790",
+            "target": "0xda7b10"
+          },
+          {
+            "pc": "0xe4e794",
+            "target": "0xe70590"
+          },
+          {
+            "pc": "0xe4e7f0",
+            "target": "0x7c9560"
+          },
+          {
+            "pc": "0xe4e7fc",
+            "target": "0x15bbc10"
+          },
+          {
+            "pc": "0xe4e830",
+            "target": "0x15bbbc0"
+          },
+          {
+            "pc": "0xe4e838",
+            "target": "0xf58a90"
+          },
+          {
+            "pc": "0xe4e844",
+            "target": "0x5b2b70"
+          },
+          {
+            "pc": "0xe4e858",
+            "target": "0x7be330"
+          },
+          {
+            "pc": "0xe4e8b0",
+            "target": "0x7d57a0"
+          },
+          {
+            "pc": "0xe4e8c4",
+            "target": "0x7c7ca0"
+          },
+          {
+            "pc": "0xe4e8f4",
+            "target": "0x805630"
+          },
+          {
+            "pc": "0xe4e8fc",
+            "target": "0xe4b6f0"
+          },
+          {
+            "pc": "0xe4e910",
+            "target": "0x3fa40"
+          },
+          {
+            "pc": "0xe4e96c",
+            "target": "0x7fb7a0"
+          },
+          {
+            "pc": "0xe4e974",
+            "target": "0x3fcc0"
+          },
+          {
+            "pc": "0xe4e988",
+            "target": "0xdc80a0"
+          },
+          {
+            "pc": "0xe4e9b0",
+            "target": "0x15bbbc0"
+          },
+          {
+            "pc": "0xe4e9c4",
+            "target": "0xdab840"
+          },
+          {
+            "pc": "0xe4e9cc",
+            "target": "0xdab8d0"
+          },
+          {
+            "pc": "0xe4e9fc",
+            "target": "0xe31ea0"
+          },
+          {
+            "pc": "0xe4ea34",
+            "target": "0xe31ea0"
+          },
+          {
+            "pc": "0xe4ea48",
+            "target": "0xf58a10"
+          },
+          {
+            "pc": "0xe4ea60",
+            "target": "0xda7b10"
+          },
+          {
+            "pc": "0xe4ea70",
+            "target": "0xdb00f0"
+          },
+          {
+            "pc": "0xe4ea78",
+            "target": "0xda7b10"
+          },
+          {
+            "pc": "0xe4ea80",
+            "target": "0xdafee0"
+          },
+          {
+            "pc": "0xe4ea90",
+            "target": "0x15bbbf0"
+          },
+          {
+            "pc": "0xe4ea9c",
+            "target": "0xdb01e0"
+          },
+          {
+            "pc": "0xe4ead8",
+            "target": "0xe31ea0"
+          },
+          {
+            "pc": "0xe4eaec",
+            "target": "0xf58a10"
+          },
+          {
+            "pc": "0xe4eaf8",
+            "target": "0xda7b10"
+          },
+          {
+            "pc": "0xe4eafc",
+            "target": "0xe89320"
+          },
+          {
+            "pc": "0xe4eb18",
+            "target": "0xda3fc0"
+          },
+          {
+            "pc": "0xe4eb2c",
+            "target": "0xf589b0"
+          },
+          {
+            "pc": "0xe4eb34",
+            "target": "0xda7b10"
+          },
+          {
+            "pc": "0xe4eb3c",
+            "target": "0xda4020"
+          },
+          {
+            "pc": "0xe4eb54",
+            "target": "0xda7b10"
+          },
+          {
+            "pc": "0xe4eb58",
+            "target": "0xeaace0"
+          },
+          {
+            "pc": "0xe4eb6c",
+            "target": "0xf589e0"
+          },
+          {
+            "pc": "0xe4eb74",
+            "target": "0xda5450"
+          },
+          {
+            "pc": "0xe4eb7c",
+            "target": "0xda7b10"
+          },
+          {
+            "pc": "0xe4eb88",
+            "target": "0xda3fc0"
+          },
+          {
+            "pc": "0xe4eb90",
+            "target": "0xe25d00"
+          },
+          {
+            "pc": "0xe4eb9c",
+            "target": "0xe712f0"
+          },
+          {
+            "pc": "0xe4eba4",
+            "target": "0xda4020"
+          },
+          {
+            "pc": "0xe4ebc0",
+            "target": "0x15bbbc0"
+          },
+          {
+            "pc": "0xe4ebd0",
+            "target": "0xefec70"
+          },
+          {
+            "pc": "0xe4ebec",
+            "target": "0xe4d60"
+          },
+          {
+            "pc": "0xe4ebf8",
+            "target": "0x15bbbc0"
+          },
+          {
+            "pc": "0xe4ec10",
+            "target": "0xa9c290"
+          },
+          {
+            "pc": "0xe4ec18",
+            "target": "0xaae900"
+          },
+          {
+            "pc": "0xe4ec24",
+            "target": "0xa9f670"
+          },
+          {
+            "pc": "0xe4ec3c",
+            "target": "0xda7b10"
+          },
+          {
+            "pc": "0xe4ec60",
+            "target": "0xf4af10"
+          },
+          {
+            "pc": "0xe4ec68",
+            "target": "0xda7b10"
+          },
+          {
+            "pc": "0xe4ec88",
+            "target": "0xf628a0"
+          },
+          {
+            "pc": "0xe4ec9c",
+            "target": "0xda7b10"
+          },
+          {
+            "pc": "0xe4ecb0",
+            "target": "0xf4a810"
+          },
+          {
+            "pc": "0xe4ecc4",
+            "target": "0xda7b10"
+          },
+          {
+            "pc": "0xe4ecd8",
+            "target": "0xf62b50"
+          },
+          {
+            "pc": "0xe4ece0",
+            "target": "0xda7b10"
+          },
+          {
+            "pc": "0xe4ecec",
+            "target": "0xda3fc0"
+          },
+          {
+            "pc": "0xe4ecf8",
+            "target": "0x15bbbc0"
+          },
+          {
+            "pc": "0xe4ed10",
+            "target": "0xf4a810"
+          },
+          {
+            "pc": "0xe4ed24",
+            "target": "0xda3fc0"
+          },
+          {
+            "pc": "0xe4ed2c",
+            "target": "0xef61b0"
+          },
+          {
+            "pc": "0xe4ed40",
+            "target": "0xfe8ab0"
+          },
+          {
+            "pc": "0xe4ed50",
+            "target": "0xd134a0"
+          },
+          {
+            "pc": "0xe4ed58",
+            "target": "0xdad700"
+          },
+          {
+            "pc": "0xe4ed60",
+            "target": "0xdd3b40"
+          },
+          {
+            "pc": "0xe4ed7c",
+            "target": "0x15bbbc0"
+          },
+          {
+            "pc": "0xe4ed88",
+            "target": "0xf589e0"
+          },
+          {
+            "pc": "0xe4eda4",
+            "target": "0xe99510"
+          },
+          {
+            "pc": "0xe4edb4",
+            "target": "0xda7550"
+          },
+          {
+            "pc": "0xe4ee20",
+            "target": "0xdd3be0"
+          },
+          {
+            "pc": "0xe4ee54",
+            "target": "0x220e3e0"
+          },
+          {
+            "pc": "0xe4ee84",
+            "target": "0x220e3f0"
+          }
+        ],
+        "direct_callers": [
+          {
+            "pc": "0xdf2784",
+            "owner": null
+          }
+        ],
+        "strings": [
+          "BeyDaily_QuestStart",
+          "CatchFishContinueCount",
+          "CatchFishContinueCount",
+          "CatchFishContinuously",
+          "CatchFishContinuously",
+          "CommonRodGetDemo",
+          "CommonRodGetDemoKeep",
+          "CommonRodGetDemoSideways",
+          "CommonRodGetDemoSidewaysKeep",
+          "ToolRodGetDemo"
+        ]
+      },
+      "Slingshot_shoot": {
+        "va": "0xe564b0",
+        "name": "FUN_00f564b0",
+        "size": 952,
+        "span_end_va": "0xe56867",
+        "direct_calls": [
+          {
+            "pc": "0xe564cc",
+            "target": "0x7be330"
+          },
+          {
+            "pc": "0xe564f4",
+            "target": "0x7d57a0"
+          },
+          {
+            "pc": "0xe564fc",
+            "target": "0xdc80a0"
+          },
+          {
+            "pc": "0xe56550",
+            "target": "0x3fa40"
+          },
+          {
+            "pc": "0xe565bc",
+            "target": "0xd520d0"
+          },
+          {
+            "pc": "0xe56610",
+            "target": "0x220e5a0"
+          },
+          {
+            "pc": "0xe56670",
+            "target": "0x220e580"
+          },
+          {
+            "pc": "0xe5667c",
+            "target": "0x220e590"
+          },
+          {
+            "pc": "0xe566f8",
+            "target": "0x3fcc0"
+          },
+          {
+            "pc": "0xe56700",
+            "target": "0xe5a840"
+          },
+          {
+            "pc": "0xe5670c",
+            "target": "0xf589b0"
+          },
+          {
+            "pc": "0xe56724",
+            "target": "0xa9c290"
+          },
+          {
+            "pc": "0xe5672c",
+            "target": "0xa9d000"
+          },
+          {
+            "pc": "0xe56748",
+            "target": "0xe56870"
+          },
+          {
+            "pc": "0xe5675c",
+            "target": "0x3fa40"
+          },
+          {
+            "pc": "0xe567c0",
+            "target": "0x803690"
+          },
+          {
+            "pc": "0xe567c8",
+            "target": "0x3fcc0"
+          },
+          {
+            "pc": "0xe567f4",
+            "target": "0x220e3e0"
+          },
+          {
+            "pc": "0xe56824",
+            "target": "0x220e3f0"
+          },
+          {
+            "pc": "0xe56838",
+            "target": "0x220e3e0"
+          },
+          {
+            "pc": "0xe56860",
+            "target": "0x220e3f0"
+          }
+        ],
+        "direct_callers": [
+          {
+            "pc": "0xdf2f84",
+            "owner": null
+          }
+        ],
+        "strings": [
+          "PlayerSlingshotShooting"
+        ]
+      },
+      "Watering": {
+        "va": "0xe585c0",
+        "name": "FUN_00f585c0",
+        "size": 984,
+        "span_end_va": "0xe58997",
+        "direct_calls": [
+          {
+            "pc": "0xe585e4",
+            "target": "0xda7b10"
+          },
+          {
+            "pc": "0xe585f0",
+            "target": "0xdc80a0"
+          },
+          {
+            "pc": "0xe58600",
+            "target": "0xe99510"
+          },
+          {
+            "pc": "0xe58618",
+            "target": "0x15bbc00"
+          },
+          {
+            "pc": "0xe58628",
+            "target": "0x7c9b20"
+          },
+          {
+            "pc": "0xe58640",
+            "target": "0xe99550"
+          },
+          {
+            "pc": "0xe58650",
+            "target": "0xe99510"
+          },
+          {
+            "pc": "0xe58678",
+            "target": "0x7bc1a0"
+          },
+          {
+            "pc": "0xe58680",
+            "target": "0xdc80a0"
+          },
+          {
+            "pc": "0xe58694",
+            "target": "0xe99510"
+          },
+          {
+            "pc": "0xe586ac",
+            "target": "0x7bd690"
+          },
+          {
+            "pc": "0xe586c0",
+            "target": "0x15bbbf0"
+          },
+          {
+            "pc": "0xe586dc",
+            "target": "0xf58f20"
+          },
+          {
+            "pc": "0xe586ec",
+            "target": "0x4d4a90"
+          },
+          {
+            "pc": "0xe586f8",
+            "target": "0x4d5ab0"
+          },
+          {
+            "pc": "0xe58708",
+            "target": "0xdb01e0"
+          },
+          {
+            "pc": "0xe58754",
+            "target": "0x7bccf0"
+          },
+          {
+            "pc": "0xe58764",
+            "target": "0xe99550"
+          },
+          {
+            "pc": "0xe587a4",
+            "target": "0x220e570"
+          },
+          {
+            "pc": "0xe587c8",
+            "target": "0xe6fb50"
+          },
+          {
+            "pc": "0xe58820",
+            "target": "0x7bccf0"
+          },
+          {
+            "pc": "0xe58838",
+            "target": "0xe99550"
+          },
+          {
+            "pc": "0xe58850",
+            "target": "0x1c780"
+          },
+          {
+            "pc": "0xe5885c",
+            "target": "0x15bbc10"
+          },
+          {
+            "pc": "0xe5886c",
+            "target": "0x15bbc00"
+          },
+          {
+            "pc": "0xe5887c",
+            "target": "0x7c9b20"
+          },
+          {
+            "pc": "0xe588b0",
+            "target": "0x7bccf0"
+          },
+          {
+            "pc": "0xe588c0",
+            "target": "0xe99550"
+          },
+          {
+            "pc": "0xe588ec",
+            "target": "0x7bc1a0"
+          },
+          {
+            "pc": "0xe588f8",
+            "target": "0xe794d0"
+          },
+          {
+            "pc": "0xe58900",
+            "target": "0xf58d00"
+          },
+          {
+            "pc": "0xe58910",
+            "target": "0xa9c290"
+          },
+          {
+            "pc": "0xe58918",
+            "target": "0xa9d000"
+          },
+          {
+            "pc": "0xe58928",
+            "target": "0x7be330"
+          },
+          {
+            "pc": "0xe5894c",
+            "target": "0x7be330"
+          },
+          {
+            "pc": "0xe58974",
+            "target": "0x7d57a0"
+          }
+        ],
+        "direct_callers": [
+          {
+            "pc": "0xdefd84",
+            "owner": null
+          }
+        ],
+        "strings": [
+          "CommonWatering",
+          "CommonWateringUpperLevel"
+        ]
+      }
+    },
+    "wear_wrapper_callers": {
+      "0xe893c0": [
+        {
+          "pc": "0x4c0258",
+          "owner": "0x4c0190"
+        },
+        {
+          "pc": "0xda4598",
+          "owner": "0xda4560"
+        },
+        {
+          "pc": "0xdb0168",
+          "owner": "0xdb0140"
+        }
+      ],
+      "0xe895a0": [
+        {
+          "pc": "0xdb0104",
+          "owner": "0xdb00f0"
+        },
+        {
+          "pc": "0xe89428",
+          "owner": "0xe893c0"
+        }
+      ],
+      "0xdb00f0": [
+        {
+          "pc": "0xe45cbc",
+          "owner": "0xe45b80"
+        },
+        {
+          "pc": "0xe4ea70",
+          "owner": "0xe4e730"
+        },
+        {
+          "pc": "0xe89ac0",
+          "owner": "0xe899b0"
+        }
+      ]
+    },
+    "watering_specific": {
+      "direct_edge": "0xe585c0 -> 0xdb01e0",
+      "nested_wear_read": "0xdb01e0 -> 0xe89360 -> 0xaa7700",
+      "direct_wear_commit_from_common_watering": false,
+      "interpretation": "This adds the CommonWatering/UpperLevel path to the held-tool eligibility/current-wear read boundary, not to the durability increment.",
+      "adjacent_action_region_edge": "0xe589a0 -> 0xdd6ba0",
+      "conditional_state_route": "0xe589a0 -> 0xdd6ba0 -> 0xe37760 -> 0xe375d0 -> 0xdb01e0 -> 0xe89360 -> 0xaa7700",
+      "direct_wear_commit_from_0xe589a0": false,
+      "label_status": "0xe589a0 has no direct string refs in the indexed function table; it is described by address, not confidently named CommonWateringUpperLevel."
+    },
+    "coverage_limit": "This is a direct-call inventory around indexed action anchors and known wrappers. Indirect dispatch and unindexed runtime behavior remain open."
+  },
+  "checks": {
+    "e37760_calls_e375d0": true,
+    "e37760_calls_generic_state_helper_dd5c40": true,
+    "decomp_requests_state_0xb8": true,
+    "state_0xb8_registry_name": true,
+    "db01e0_reads_current_wear_helper": true,
+    "watering_reaches_db01e0": true,
+    "watering_action_region_reaches_dd6ba0": true,
+    "dd6ba0_reaches_e37760": true,
+    "watering_state_route_predicate_reaches_damage_getter": true
+  },
+  "conclusion": "The static trace and bounded native probe close a selector boundary: with e375d0 controlled true, original e37760 requests state 0xb8, registered as State::cToolBreakDemo. A neighboring watering-action function e589a0 reaches the shared dd6ba0/e37760 route; the predicate also reaches the current-wear reader. The route is not proven to be selected by remaining durability == 0, and e589a0 has no direct wear-commit edge.",
+  "shared_action_state_check": {
+    "function": {
+      "va": "0xdd6ba0",
+      "name": "FUN_00ed6ba0",
+      "size": 236,
+      "span_end_va": "0xdd6c8b",
+      "strings": [],
+      "direct_calls": [
+        {
+          "pc": "0xdd6bd8",
+          "target": "0xda7b10"
+        },
+        {
+          "pc": "0xdd6be4",
+          "target": "0xdd5f90"
+        },
+        {
+          "pc": "0xdd6c04",
+          "target": "0x1f5f20"
+        },
+        {
+          "pc": "0xdd6c34",
+          "target": "0xe37760"
+        },
+        {
+          "pc": "0xdd6c44",
+          "target": "0xda7b10"
+        },
+        {
+          "pc": "0xdd6c4c",
+          "target": "0xe7ef00"
+        },
+        {
+          "pc": "0xdd6c6c",
+          "target": "0xdd7500"
+        }
+      ],
+      "direct_callers": [
+        {
+          "pc": "0xdd4420",
+          "owner": "0xdd42e0"
+        },
+        {
+          "pc": "0xe32b58",
+          "owner": "0xe32ad0"
+        },
+        {
+          "pc": "0xe3358c",
+          "owner": "0xe33270"
+        },
+        {
+          "pc": "0xe46864",
+          "owner": "0xe45ec0"
+        },
+        {
+          "pc": "0xe46b88",
+          "owner": "0xe46af0"
+        },
+        {
+          "pc": "0xe4f934",
+          "owner": "0xe4ee90"
+        },
+        {
+          "pc": "0xe4fd28",
+          "owner": "0xe4fc90"
+        },
+        {
+          "pc": "0xe4ff2c",
+          "owner": "0xe4fec0"
+        },
+        {
+          "pc": "0xe5193c",
+          "owner": null
+        },
+        {
+          "pc": "0xe51e40",
+          "owner": null
+        },
+        {
+          "pc": "0xe5276c",
+          "owner": "0xe524e0"
+        },
+        {
+          "pc": "0xe52d20",
+          "owner": "0xe52a20"
+        },
+        {
+          "pc": "0xe53d2c",
+          "owner": "0xe53090"
+        },
+        {
+          "pc": "0xe5566c",
+          "owner": "0xe544c0"
+        },
+        {
+          "pc": "0xe56b90",
+          "owner": "0xe569f0"
+        },
+        {
+          "pc": "0xe58acc",
+          "owner": "0xe589a0"
+        },
+        {
+          "pc": "0xe592c8",
+          "owner": "0xe59180"
+        },
+        {
+          "pc": "0xe76014",
+          "owner": "0xe75f20"
+        }
+      ]
+    },
+    "direct_route": [
+      "action-state caller",
+      "0xdd6ba0",
+      "0xe37760",
+      "0xe375d0",
+      "0xdb01e0",
+      "0xe89360",
+      "0xaa7700"
+    ],
+    "route_condition": "dd6ba0 calls e37760 only on its own state/context branch; e37760 then requires its +0xf04 bit-2 guard clear and e375d0 true before requesting state 0xb8.",
+    "action_anchor_with_this_edge": {
+      "va": "0xe589a0",
+      "name": "FUN_00f589a0",
+      "size": 340,
+      "span_end_va": "0xe58af3",
+      "strings": [],
+      "direct_calls": [
+        {
+          "pc": "0xe589c0",
+          "target": "0xe99510"
+        },
+        {
+          "pc": "0xe589d4",
+          "target": "0xe99510"
+        },
+        {
+          "pc": "0xe589e0",
+          "target": "0xda7550"
+        },
+        {
+          "pc": "0xe58a14",
+          "target": "0xdb0de0"
+        },
+        {
+          "pc": "0xe58a24",
+          "target": "0x15bbc00"
+        },
+        {
+          "pc": "0xe58a28",
+          "target": "0xda7550"
+        },
+        {
+          "pc": "0xe58a74",
+          "target": "0xdaa4a0"
+        },
+        {
+          "pc": "0xe58a7c",
+          "target": "0xdc80a0"
+        },
+        {
+          "pc": "0xe58a8c",
+          "target": "0x7c9ce0"
+        },
+        {
+          "pc": "0xe58a94",
+          "target": "0x7bc0b0"
+        },
+        {
+          "pc": "0xe58a9c",
+          "target": "0x7d4ff0"
+        },
+        {
+          "pc": "0xe58aa8",
+          "target": "0x7d6970"
+        },
+        {
+          "pc": "0xe58ab4",
+          "target": "0xdc80a0"
+        },
+        {
+          "pc": "0xe58acc",
+          "target": "0xdd6ba0"
+        },
+        {
+          "pc": "0xe58adc",
+          "target": "0xdaaa50"
+        }
+      ],
+      "direct_callers": [
+        {
+          "pc": "0xdefdd8",
+          "owner": null
+        }
+      ]
+    },
+    "raw_name_caveat": "The indexed string references CommonWatering and CommonWateringUpperLevel attach to 0xe585c0; 0xe589a0 is an adjacent action-region function with no own string refs. Keep its direct edge and address visible instead of assigning a family label from proximity.",
+    "all_direct_callers": [
+      {
+        "pc": "0xdd4420",
+        "owner": "0xdd42e0",
+        "owner_name": "FUN_00ed42e0",
+        "owner_strings": [
+          "PlayerWait",
+          "PlayerWait"
+        ]
+      },
+      {
+        "pc": "0xe32b58",
+        "owner": "0xe32ad0",
+        "owner_name": "FUN_00f32ad0",
+        "owner_strings": []
+      },
+      {
+        "pc": "0xe3358c",
+        "owner": "0xe33270",
+        "owner_name": "FUN_00f33270",
+        "owner_strings": []
+      },
+      {
+        "pc": "0xe46864",
+        "owner": "0xe45ec0",
+        "owner_name": "FUN_00f45ec0",
+        "owner_strings": [
+          "Get_Insect",
+          "Get_Insect",
+          "Get_InsectFes",
+          "Get_InsectFes",
+          "Player_GetDemo",
+          "Player_GetDemo"
+        ]
+      },
+      {
+        "pc": "0xe46b88",
+        "owner": "0xe46af0",
+        "owner_name": "FUN_00f46af0",
+        "owner_strings": []
+      },
+      {
+        "pc": "0xe4f934",
+        "owner": "0xe4ee90",
+        "owner_name": "FUN_00f4ee90",
+        "owner_strings": [
+          "Get_Fish",
+          "Get_Fish",
+          "Get_FishFes",
+          "Get_FishFes",
+          "Player_GetDemo",
+          "Player_GetDemo"
+        ]
+      },
+      {
+        "pc": "0xe4fd28",
+        "owner": "0xe4fc90",
+        "owner_name": "FUN_00f4fc90",
+        "owner_strings": []
+      },
+      {
+        "pc": "0xe4ff2c",
+        "owner": "0xe4fec0",
+        "owner_name": "FUN_00f4fec0",
+        "owner_strings": []
+      },
+      {
+        "pc": "0xe5193c",
+        "owner": null,
+        "owner_name": null,
+        "owner_strings": []
+      },
+      {
+        "pc": "0xe51e40",
+        "owner": null,
+        "owner_name": null,
+        "owner_strings": []
+      },
+      {
+        "pc": "0xe5276c",
+        "owner": "0xe524e0",
+        "owner_name": "FUN_00f524e0",
+        "owner_strings": []
+      },
+      {
+        "pc": "0xe52d20",
+        "owner": "0xe52a20",
+        "owner_name": "FUN_00f52a20",
+        "owner_strings": []
+      },
+      {
+        "pc": "0xe53d2c",
+        "owner": "0xe53090",
+        "owner_name": "FUN_00f53090",
+        "owner_strings": [
+          "FullItem_Plant",
+          "FullItem_Plant",
+          "Get_Pickup",
+          "Get_Pickup",
+          "Get_Scoop",
+          "Get_Scoop",
+          "PlayerScoopDigGetPutawayAfter",
+          "PlayerScoopDigGetPutawayAfter",
+          "PlayerScoopDigGetPutawayAfter",
+          "Player_GetDemo",
+          "Player_GetDemo",
+          "Player_GetDemo",
+          "Player_GetDemo"
+        ]
+      },
+      {
+        "pc": "0xe5566c",
+        "owner": "0xe544c0",
+        "owner_name": "FUN_00f544c0",
+        "owner_strings": [
+          "Get_Scoop",
+          "Get_Scoop",
+          "Get_TreasureHunt",
+          "Get_TreasureHunt",
+          "Player_GetDemo",
+          "Player_GetDemo"
+        ]
+      },
+      {
+        "pc": "0xe56b90",
+        "owner": "0xe569f0",
+        "owner_name": "FUN_00f569f0",
+        "owner_strings": []
+      },
+      {
+        "pc": "0xe58acc",
+        "owner": "0xe589a0",
+        "owner_name": "FUN_00f589a0",
+        "owner_strings": []
+      },
+      {
+        "pc": "0xe592c8",
+        "owner": "0xe59180",
+        "owner_name": "FUN_00f59180",
+        "owner_strings": []
+      },
+      {
+        "pc": "0xe76014",
+        "owner": "0xe75f20",
+        "owner_name": "FUN_00f75f20",
+        "owner_strings": []
+      }
+    ]
+  },
+  "native_e37760_state_request_probe": {
+    "evidence_level": "ORIGINAL_NATIVE_E37760_BODY_WITH_CONTROLLED_PREDICATE_AND_CONTEXT_BOUNDARIES",
+    "main_nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+    "entry": "0xe37760",
+    "case_count": 3,
+    "mismatches": 0,
+    "cases": [
+      {
+        "case": "predicate_true_guard_clear",
+        "state_plus_0xf04_byte": "0x00",
+        "controlled_e375d0_return": 1,
+        "predicate_call_count": 1,
+        "dd5c40_requests": [
+          {
+            "state_ordinal": "0xb8"
+          }
+        ]
+      },
+      {
+        "case": "predicate_false_guard_clear",
+        "state_plus_0xf04_byte": "0x00",
+        "controlled_e375d0_return": 0,
+        "predicate_call_count": 1,
+        "dd5c40_requests": []
+      },
+      {
+        "case": "state_guard_set",
+        "state_plus_0xf04_byte": "0x04",
+        "controlled_e375d0_return": 1,
+        "predicate_call_count": 0,
+        "dd5c40_requests": []
+      }
+    ],
+    "synthetic_fixture": {
+      "player_state_object": "zeroed 0x1200-byte allocation; +0x68 points to a zeroed 0x400-byte context",
+      "second_argument": "zeroed 0x20-byte allocation with +0xc set to 0x7f",
+      "controlled_predicate": "original e375d0 body replaced by a per-case return value",
+      "captured_transition_boundary": "dd5c40 records x1 (requested state ordinal)"
+    },
+    "bounded_stubs": [
+      "e375d0 predicate return (controlled true/false)",
+      "dd7c40",
+      "e5a880",
+      "15bbbf0",
+      "15bbc10",
+      "7c9560",
+      "dd5c40 generic state transition boundary"
+    ],
+    "unknown_imports": {},
+    "proven": [
+      "Original e37760 requests state ordinal 0xb8 when its +0xf04 bit-2 guard is clear and the controlled e375d0 result is true.",
+      "A false predicate result or set guard bit emits no request in the controlled cases."
+    ],
+    "limits": [
+      "The e375d0 predicate itself is not executed in this fixture.",
+      "The dd5c40 state manager is captured, not executed; no live state callback or EventFlow runs.",
+      "This does not establish that the predicate is selected by remaining durability == 0 or by the wear commit."
+    ]
+  }
+}

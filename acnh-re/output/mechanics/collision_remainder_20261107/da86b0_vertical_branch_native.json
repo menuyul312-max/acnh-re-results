@@ -1,0 +1,167 @@
+{
+  "native_function": "0xda86b0",
+  "executed_fragment": {
+    "begin": "0xda86e4",
+    "stop_before_by_lane": {
+      "direct_set_or_no_store": "0xda8774",
+      "query_path": "0xda8734"
+    },
+    "note": "The earlier collider tests and BL to 0xdacc40 are outside this fragment."
+  },
+  "state_branch_map": {
+    "state_w0_in_1_5_6": "The one-hot bit intersects 0x62; store player+0x1304 through the actor vtable +0x110 setter.",
+    "state_w0_2": "If player+0xf58 > 0, store f32(player+0xf58 + actor+0x288); otherwise bypass the Y store.",
+    "other_tested_values": "Branch to 0xda8734, whose next operation calls 0x7bccf0; fixture stops before that call."
+  },
+  "actor_vtable": {
+    "address": "0x30e38f8",
+    "slot_0x110": "0xdb4f90",
+    "slot_target": "0x2eac0",
+    "target_rule": "str s0, [x0, #0x27c]; ret"
+  },
+  "groups": {
+    "set_target": 3,
+    "set_sum": 1,
+    "no_store": 2,
+    "query_lane": 5
+  },
+  "cases": 11,
+  "mismatches": [],
+  "samples": [
+    {
+      "name": "state_1_uses_player_1304",
+      "state_helper_result_w0": 1,
+      "stopped_at": "0xda8774",
+      "lane": "set_target",
+      "position_y_before": -2.0,
+      "position_y_after": 4.25
+    },
+    {
+      "name": "state_5_uses_player_1304",
+      "state_helper_result_w0": 5,
+      "stopped_at": "0xda8774",
+      "lane": "set_target",
+      "position_y_before": 9.0,
+      "position_y_after": -1.5
+    },
+    {
+      "name": "state_6_uses_player_1304",
+      "state_helper_result_w0": 6,
+      "stopped_at": "0xda8774",
+      "lane": "set_target",
+      "position_y_before": -4.0,
+      "position_y_after": 0.75
+    },
+    {
+      "name": "state_2_positive_adds_actor_288",
+      "state_helper_result_w0": 2,
+      "stopped_at": "0xda8774",
+      "lane": "set_sum",
+      "position_y_before": -3.0,
+      "position_y_after": 1.75
+    },
+    {
+      "name": "state_2_zero_does_not_store",
+      "state_helper_result_w0": 2,
+      "stopped_at": "0xda8774",
+      "lane": "no_store",
+      "position_y_before": 2.0,
+      "position_y_after": 2.0
+    },
+    {
+      "name": "state_2_negative_does_not_store",
+      "state_helper_result_w0": 2,
+      "stopped_at": "0xda8774",
+      "lane": "no_store",
+      "position_y_before": 2.0,
+      "position_y_after": 2.0
+    },
+    {
+      "name": "state_0_routes_to_query_lane",
+      "state_helper_result_w0": 0,
+      "stopped_at": "0xda8734",
+      "lane": "query_lane",
+      "position_y_before": 3.0,
+      "position_y_after": 3.0
+    },
+    {
+      "name": "state_3_routes_to_query_lane",
+      "state_helper_result_w0": 3,
+      "stopped_at": "0xda8734",
+      "lane": "query_lane",
+      "position_y_before": 3.0,
+      "position_y_after": 3.0
+    },
+    {
+      "name": "state_4_routes_to_query_lane",
+      "state_helper_result_w0": 4,
+      "stopped_at": "0xda8734",
+      "lane": "query_lane",
+      "position_y_before": 3.0,
+      "position_y_after": 3.0
+    },
+    {
+      "name": "state_7_routes_to_query_lane",
+      "state_helper_result_w0": 7,
+      "stopped_at": "0xda8734",
+      "lane": "query_lane",
+      "position_y_before": 3.0,
+      "position_y_after": 3.0
+    },
+    {
+      "name": "state_u32_max_routes_to_query_lane",
+      "state_helper_result_w0": 4294967295,
+      "stopped_at": "0xda8734",
+      "lane": "query_lane",
+      "position_y_before": 3.0,
+      "position_y_after": 3.0
+    }
+  ],
+  "harness": {
+    "engine": "Unicorn AArch64 over the supplied ELF image; no game or console OS.",
+    "injected_input": "W0 at 0xda86e4 is the u32 return value supplied for the earlier native 0xdacc40 call.",
+    "reconstructed": [
+      "Player+0x68 actor pointer and original actor vtable from 0x32fbc00 + 16.",
+      "Player+0x1304 and player+0xf58 scalar values where the selected branch reads them.",
+      "Actor position vector at +0x278 and adjustment float at +0x288."
+    ],
+    "dependencies_stubbed": [],
+    "executed_native_vtable_path": [
+      "0xdb4f90",
+      "0x2eac0"
+    ],
+    "not_executed": [
+      "Earlier collider gate and 0xdacc40 state producer.",
+      "Query helper 0x7bccf0 and remainder of 0xda86b0."
+    ]
+  },
+  "evidence": [
+    {
+      "va": "0xda86e4",
+      "bytes": 144,
+      "sha256": "326d2653f299010c8df22d7986c2b6507f59b01e34e438b114e80c9653923a8c"
+    },
+    {
+      "va": "0xdb4f90",
+      "bytes": 4,
+      "sha256": "f2cfbca9b722dd7f18928f2722afa85059fd380de199f897bdae0a24facd6ed7"
+    },
+    {
+      "va": "0x2eac0",
+      "bytes": 8,
+      "sha256": "1da8df5746e8c889d5339a89b8cd70d8ea139bc7beaa3382069f9141a1ac0cac"
+    }
+  ],
+  "source_identity": {
+    "elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+    "additional_exefs_main": "/workspace/acnh-re-github/acnh-re/inputs/additional_exefs/main",
+    "additional_exefs_main_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+    "relation": "The existing ADDITIONAL_EXEFS.md audit records identical main-code segments for this ELF and NSO build."
+  },
+  "limits": [
+    "State index/result is supplied at W0; this test does not prove which gameplay state names produce these values.",
+    "Collider gates before 0xda86e8 are not executed, so no collision-mask meaning is assigned.",
+    "The query path at 0xda8734/0x7bccf0, geometric penetration response, friction, and complete update remain open.",
+    "This is a selected native branch proof, not a full landing or physics simulation."
+  ]
+}

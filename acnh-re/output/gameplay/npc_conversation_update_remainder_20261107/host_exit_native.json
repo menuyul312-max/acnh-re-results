@@ -1,0 +1,149 @@
+{
+  "build": {
+    "main_nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+    "main_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74"
+  },
+  "callback": {
+    "registered_state": "NpcAIActivityState::cConversationHost",
+    "registered_state_index": 60,
+    "callback_kind": "exit",
+    "entry": "0xc0c280",
+    "direct_call_args": {
+      "x0_owner": "0x80000000",
+      "x1": 0
+    },
+    "execution": "original NSO code; no function VAs stubbed"
+  },
+  "fixture": {
+    "owner": "0x80000000",
+    "owner_context": "0x80011000",
+    "owner_context_scalar": {
+      "offset": "+0x230",
+      "value": "0x77"
+    },
+    "owner_activity_flags_before": "0x1020",
+    "owner_activity_mask_before": "0xffff",
+    "owner_7d14_before": "0x55",
+    "owner_7d1c_before": "0x66",
+    "owner_103dc_before": "0x99",
+    "singleton_global": "0x32d3e18",
+    "singleton_pointer_cell": "0x357aec0",
+    "singleton_pointer_before": "0x0",
+    "synthetic_empty_manager": "0x80011800",
+    "manager_list_end": "0x80013c88",
+    "manager_empty_sentinel": "0x80013c80",
+    "view_global": "0x32d0de0",
+    "view_global_inner_pointer": "0x0",
+    "counter_global": "0x32d1c88",
+    "counter_pointer": "0x3348650",
+    "counter_value": "0x0"
+  },
+  "native_observations": [
+    {
+      "pc": "0xc0c2a8",
+      "activity_flags_before_branch": "0x1020",
+      "branch_bit_5": 1
+    },
+    {
+      "pc": "0xc0c420",
+      "activity_flags_before_clear_bit_12": "0x1020"
+    },
+    {
+      "entry": "0xceb7d0",
+      "x0": "0x8000a8f0",
+      "x0_offset_from_owner": "0xa8f0",
+      "x1": 0,
+      "halfword_before": "0xffff"
+    },
+    {
+      "entry": "0xca52a0",
+      "manager": "0x80011800",
+      "list_end_pointer": "0x80013c80",
+      "empty_list_sentinel": "0x80013c80",
+      "condition_is_equal": true,
+      "scalar_input": "0x77"
+    },
+    {
+      "pc": "0xc0c6e4",
+      "view_pointer": "0x0",
+      "view_wrapper_bytes": "00000000000000000000000000000000"
+    },
+    {
+      "pc": "0xc0c390",
+      "view_pointer": "0x0",
+      "view_wrapper_bytes": "00000000000000000000000000000000"
+    },
+    {
+      "pc": "0xc0c3f4",
+      "counter_pointer": "0x3348650",
+      "counter_value": "0x0",
+      "target_owner_offset": "+0x7d14"
+    },
+    {
+      "pc": "0xc0c408",
+      "activity_flags_before_clear_bit_5": "0x20"
+    },
+    {
+      "pc": "0xc0c890",
+      "counter_pointer": "0x3348650",
+      "counter_value": "0x0",
+      "target_owner_offset": "+0x7d1c"
+    }
+  ],
+  "owner_changed_ranges": [
+    {
+      "address": "0x80007d14",
+      "offset": "0x7d14",
+      "before_hex": "55",
+      "after_hex": "00"
+    },
+    {
+      "address": "0x80007d1c",
+      "offset": "0x7d1c",
+      "before_hex": "66",
+      "after_hex": "00"
+    },
+    {
+      "address": "0x8000ab10",
+      "offset": "0xab10",
+      "before_hex": "ffff",
+      "after_hex": "00fc"
+    },
+    {
+      "address": "0x8000ab40",
+      "offset": "0xab40",
+      "before_hex": "2010",
+      "after_hex": "0000"
+    },
+    {
+      "address": "0x800103dc",
+      "offset": "0x103dc",
+      "before_hex": "99",
+      "after_hex": "00"
+    }
+  ],
+  "owner_context_changed_ranges": [],
+  "manager_changed_ranges": [],
+  "final_owner_fields": {
+    "+0xab40_u64": "0x0",
+    "+0xab10_u16": "0xfc00",
+    "+0x7d14_u32": "0x0",
+    "+0x7d1c_u32": "0x0",
+    "+0x103dc_u32": "0x0"
+  },
+  "native_function_entries_seen": [
+    "0x3fa40",
+    "0x3fcc0",
+    "0xc0c280",
+    "0xca52a0",
+    "0xceb7d0"
+  ],
+  "unknown_imports": {},
+  "raw_x0_after_callback_return": "0x703fef28",
+  "limits": [
+    "The host exit callback was called directly; no state manager or scheduler ran.",
+    "The singleton manager and its empty-list sentinel are synthetic fixture data.",
+    "The original view initializer returned null on both +0x7d14 paths; no live view was exercised.",
+    "No host/guest pair selection, dialogue topic/message, EventFlow, or network behavior was exercised."
+  ]
+}

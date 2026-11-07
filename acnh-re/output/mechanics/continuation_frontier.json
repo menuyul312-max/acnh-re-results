@@ -6,7 +6,9 @@
   "areas": {
     "physics_collision": {
       "verified_reference": [
-        "mechanics/collision_response_native.json"
+        "mechanics/collision_response_native.json",
+        "mechanics/collision_remainder_20261107/da86b0_vertical_branch_native.json",
+        "mechanics/player_collider_query_remainder_20261107/player_7bccf0_boundary_native.json"
       ],
       "remaining": [
         "Geometric penetration response",
@@ -23,15 +25,20 @@
           "pseudocode": "binary/analysis_decomp/da86b0.c",
           "evidence": "Existing native address index; semantic role must be checked against instructions."
         }
-      ]
+      ],
+      "verified_boundary": "Bounded 0xda86b0 vertical setter fragment: 11 cases, no stubs; W0 after 0xdacc40 is injected and execution stops before 0x7bccf0. The 0x7bccf0 caller register shape and static registry/list reads are mapped, but the fresh sandbox has a null world-root and faults at 0x172780 before producing any candidate query result (player_collider_query_remainder_20261107)."
     },
     "player_movement": {
       "verified_reference": [
         "mechanics/player_position_native.json",
         "mechanics/player_root_motion_native.json",
-        "mechanics/ballistic_velocity_native.json"
+        "mechanics/ballistic_velocity_native.json",
+        "mechanics/player_physics_remainder_20261107/player_xz_position_native.json",
+        "mechanics/player_motion_gap_remainder_20261107/interpolation_target_native.json",
+        "mechanics/player_postmotion_remainder_20261107/dac780_postmotion_native.json",
+        "mechanics/player_collider_query_remainder_20261107/player_7bccf0_boundary_native.json"
       ],
-      "verified_boundary": "Complete position/root-motion consumer0xdac550 on reconstructed context; complete ballistic helper0x1d280; bounded player block0xe17e54..before0xe17e94.",
+      "verified_boundary": "Complete position/root-motion consumer0xdac550 on reconstructed context; complete ballistic helper0x1d280; bounded player block0xe17e54..before0xe17e94.; Bounded native X/Z position consumer: 8 cases, no stubs; only original ranges 0xe17e0c..0xe17e94 and 0xe17ff8..0xe18038 were executed.; Additional seven-case native fragment tests the no-hit scalar interpolation/predicate path through 0xe17ff8; it stores a property scalar, not actor Y.; Bounded 0xdac780 post-motion fragments: 3 early returns, 4 state-edge inputs, and 5 actor-Y sink cases pass; W0/S8 values from upstream producers are supplied.",
       "remaining": [
         "Input/state -> real runtime velocity/gravity integration",
         "Post-motion collision and landing correction",
@@ -76,7 +83,9 @@
         "mechanics/terrain_region_check_native.json",
         "mechanics/terrain_region_mutation_native.json",
         "mechanics/world_registry_release_native.json",
-        "mechanics/terrain_pbc_native_consumers.json"
+        "mechanics/terrain_pbc_native_consumers.json",
+        "ui_island/island_loader_remainder_20261107/result.json",
+        "ui_island/water_terraform_remainder_20261107/native_region_release_trace.json"
       ],
       "remaining": [
         "14-byte preset ->52-byte runtime constructor and source loader",

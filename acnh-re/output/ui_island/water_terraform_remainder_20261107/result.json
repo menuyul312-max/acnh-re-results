@@ -1,0 +1,541 @@
+{
+  "scope": "One native region-release-to-flag-mutation fixture plus a static boundary between the FieldLandMakingActionParam waterfall rows and the cleanup path.",
+  "action_table": {
+    "source": {
+      "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Bcsv/FieldLandMakingActionParam.bcsv",
+      "sha256": "fe3f06ae6fb26c95631e842cd043a52348ba2c7399fc5d6085ff13dcfed0af9a",
+      "bytes": 804,
+      "resolved_json_path": "/workspace/acnh-re/output/tables_resolved/FieldLandMakingActionParam.json",
+      "resolved_json_sha256": "7160aa79ddaedb2a4b9012b5f5a99c49a22d4d3aea7bda8b953e733ae5a66a9f",
+      "row_count": 17
+    },
+    "fall_action_rows": [
+      {
+        "source_row_index": 9,
+        "action_range": "3x3",
+        "layer": "No0",
+        "success_result": "Make",
+        "fall_action_type": "MakeFall",
+        "fall_to_river": 0,
+        "main_type_raw_u8": 1
+      },
+      {
+        "source_row_index": 10,
+        "action_range": "3x3",
+        "layer": "No0",
+        "success_result": "Break",
+        "fall_action_type": "BreakFall",
+        "fall_to_river": 1,
+        "main_type_raw_u8": 3
+      }
+    ],
+    "field_hash_reference_inventory": {
+      "FallActionType": {
+        "hash": "0x281f90a8",
+        "elf_hash_reference_locations": [
+          {
+            "pc": "0x4f4344",
+            "owner_function": "0x4f4300"
+          }
+        ],
+        "direct_callers_of_reference_functions": [
+          {
+            "pc": "0x4f36f4",
+            "owner_function": "0x4f3630",
+            "target_function": "0x4f4300"
+          }
+        ]
+      },
+      "FallToRiver": {
+        "hash": "0xf9a37bdc",
+        "elf_hash_reference_locations": [
+          {
+            "pc": "0x5332a8",
+            "owner_function": "0x533260"
+          }
+        ],
+        "direct_callers_of_reference_functions": [
+          {
+            "pc": "0x533514",
+            "owner_function": "0x533400",
+            "target_function": "0x533260"
+          }
+        ]
+      },
+      "MainType": {
+        "hash": "0x31450aa2",
+        "elf_hash_reference_locations": [
+          {
+            "pc": "0x532f88",
+            "owner_function": "0x532f40"
+          }
+        ],
+        "direct_callers_of_reference_functions": [
+          {
+            "pc": "0x533418",
+            "owner_function": "0x533400",
+            "target_function": "0x532f40"
+          }
+        ]
+      }
+    },
+    "limits": [
+      "MakeFall/BreakFall and FallToRiver are table values; this slice does not identify the live player action, validation callback, or save transaction that consumes them.",
+      "MainType is preserved as a raw byte because its enum meaning is not established here.",
+      "Hash-reference locations show where field hashes occur; they do not alone prove runtime row consumption."
+    ]
+  },
+  "native_direct_call_graph": {
+    "0x181fa0": {
+      "name_size": [
+        "FUN_00281fa0",
+        752
+      ],
+      "direct_calls": [
+        {
+          "pc": "0x181fdc",
+          "target": "0x52c950"
+        },
+        {
+          "pc": "0x181ff0",
+          "target": "0x52c950"
+        },
+        {
+          "pc": "0x181ff8",
+          "target": "0x52c970"
+        },
+        {
+          "pc": "0x182014",
+          "target": "0x52b3a0"
+        },
+        {
+          "pc": "0x18201c",
+          "target": "0x52c960"
+        },
+        {
+          "pc": "0x182028",
+          "target": "0x52c9b0"
+        },
+        {
+          "pc": "0x182058",
+          "target": "0x52c9e0"
+        },
+        {
+          "pc": "0x182064",
+          "target": "0x52b3a0"
+        },
+        {
+          "pc": "0x182104",
+          "target": "0x52b3e0"
+        },
+        {
+          "pc": "0x18210c",
+          "target": "0x52c970"
+        },
+        {
+          "pc": "0x182118",
+          "target": "0x52c9b0"
+        },
+        {
+          "pc": "0x182134",
+          "target": "0x52c9e0"
+        },
+        {
+          "pc": "0x182140",
+          "target": "0x52b3a0"
+        },
+        {
+          "pc": "0x182230",
+          "target": "0x52b3e0"
+        },
+        {
+          "pc": "0x182238",
+          "target": "0x52c970"
+        },
+        {
+          "pc": "0x182244",
+          "target": "0x52c9b0"
+        },
+        {
+          "pc": "0x182254",
+          "target": "0x52c960"
+        },
+        {
+          "pc": "0x18225c",
+          "target": "0x52c960"
+        },
+        {
+          "pc": "0x182284",
+          "target": "0x52b3e0"
+        }
+      ],
+      "direct_callers": [
+        {
+          "pc": "0x163748",
+          "caller": "0x163740"
+        },
+        {
+          "pc": "0x164e98",
+          "caller": "0x164e90"
+        }
+      ]
+    },
+    "0x181ae0": {
+      "name_size": [
+        "FUN_00281ae0",
+        492
+      ],
+      "direct_calls": [
+        {
+          "pc": "0x181b14",
+          "target": "0x52c950"
+        },
+        {
+          "pc": "0x181b28",
+          "target": "0x52c950"
+        },
+        {
+          "pc": "0x181b30",
+          "target": "0x52c970"
+        },
+        {
+          "pc": "0x181b4c",
+          "target": "0x52b3a0"
+        },
+        {
+          "pc": "0x181b54",
+          "target": "0x52c960"
+        },
+        {
+          "pc": "0x181b60",
+          "target": "0x52c9b0"
+        },
+        {
+          "pc": "0x181b78",
+          "target": "0x52c9e0"
+        },
+        {
+          "pc": "0x181b84",
+          "target": "0x52b3a0"
+        },
+        {
+          "pc": "0x181bec",
+          "target": "0x52b3e0"
+        },
+        {
+          "pc": "0x181bf4",
+          "target": "0x52c970"
+        },
+        {
+          "pc": "0x181c00",
+          "target": "0x52c9b0"
+        },
+        {
+          "pc": "0x181c18",
+          "target": "0x52c9e0"
+        },
+        {
+          "pc": "0x181c24",
+          "target": "0x52b3a0"
+        },
+        {
+          "pc": "0x181c8c",
+          "target": "0x52b3e0"
+        },
+        {
+          "pc": "0x181c94",
+          "target": "0x52c970"
+        },
+        {
+          "pc": "0x181ca0",
+          "target": "0x52c9b0"
+        },
+        {
+          "pc": "0x181cac",
+          "target": "0x52c960"
+        },
+        {
+          "pc": "0x181cb4",
+          "target": "0x52c960"
+        }
+      ],
+      "direct_callers": [
+        {
+          "pc": "0x1652d4",
+          "caller": "0x165240"
+        }
+      ]
+    },
+    "0x165240": {
+      "name_size": [
+        "FUN_00265240",
+        152
+      ],
+      "direct_calls": [
+        {
+          "pc": "0x16525c",
+          "target": "0x168180"
+        },
+        {
+          "pc": "0x16526c",
+          "target": "0x1967c60"
+        },
+        {
+          "pc": "0x1652bc",
+          "target": "0x168190"
+        },
+        {
+          "pc": "0x1652d4",
+          "target": "0x181ae0"
+        }
+      ],
+      "direct_callers": [
+        {
+          "pc": "0x168164",
+          "caller": "0x168140"
+        }
+      ]
+    },
+    "0x168140": {
+      "name_size": [
+        "FUN_00268140",
+        56
+      ],
+      "direct_calls": [
+        {
+          "pc": "0x168164",
+          "target": "0x165240"
+        }
+      ],
+      "direct_callers": [
+        {
+          "pc": "0x156b08",
+          "caller": "0x156970"
+        },
+        {
+          "pc": "0x156b5c",
+          "caller": "0x156970"
+        },
+        {
+          "pc": "0x156bb0",
+          "caller": "0x156970"
+        },
+        {
+          "pc": "0x15f594",
+          "caller": "0x15f4e0"
+        },
+        {
+          "pc": "0x160a00",
+          "caller": "0x160940"
+        },
+        {
+          "pc": "0x160b44",
+          "caller": "0x160940"
+        }
+      ]
+    }
+  },
+  "blocker": {
+    "validation": "0x181fa0 is reached directly through 0x163740/0x164e90 forwarders.",
+    "mutation": "0x181ae0 is called directly by 0x165240; 0x165240 is called directly by wrapper 0x168140.",
+    "release_wrapper_callers": [
+      "0x156970",
+      "0x15f4e0",
+      "0x160940"
+    ],
+    "finding": "The supplied direct-call index binds validation and release mutation to separate paths. No direct edge connects the MakeFall/BreakFall table rows or 0x181fa0 validation to 0x165240/0x181ae0. Indirect dispatch may exist, so this is a bounded missing-link result, not proof that no live path exists.",
+    "action_path_closed": false
+  },
+  "native_release_fixture": {
+    "source_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+    "native_functions_entered": [
+      "0x168140",
+      "0x165240",
+      "0x181ae0"
+    ],
+    "dependency_stubs": [],
+    "synthetic_fixture": {
+      "entry_kind": 1,
+      "entry_enabled_low_bit": 1,
+      "owner_entry_count_before_after": [
+        3,
+        2
+      ],
+      "list_node_count_before_after": [
+        3,
+        2
+      ],
+      "fixture_link_offset": "0x48",
+      "selected_rectangle_inclusive": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "three_distinct_worlds": true,
+      "initial_runtime_word": "0x1f40"
+    },
+    "observed_mutation": {
+      "selected_world_member": "owner+0x60 (kind 1)",
+      "word_bit_cleared": "0x40",
+      "changed_cells": [
+        {
+          "world_member_index": 0,
+          "x": 1,
+          "z": 2,
+          "word_after": "0x1f00"
+        },
+        {
+          "world_member_index": 0,
+          "x": 2,
+          "z": 2,
+          "word_after": "0x1f00"
+        },
+        {
+          "world_member_index": 0,
+          "x": 3,
+          "z": 2,
+          "word_after": "0x1f00"
+        },
+        {
+          "world_member_index": 0,
+          "x": 1,
+          "z": 3,
+          "word_after": "0x1f00"
+        },
+        {
+          "world_member_index": 0,
+          "x": 2,
+          "z": 3,
+          "word_after": "0x1f00"
+        },
+        {
+          "world_member_index": 0,
+          "x": 3,
+          "z": 3,
+          "word_after": "0x1f00"
+        },
+        {
+          "world_member_index": 0,
+          "x": 1,
+          "z": 4,
+          "word_after": "0x1f00"
+        },
+        {
+          "world_member_index": 0,
+          "x": 2,
+          "z": 4,
+          "word_after": "0x1f00"
+        },
+        {
+          "world_member_index": 0,
+          "x": 3,
+          "z": 4,
+          "word_after": "0x1f00"
+        }
+      ],
+      "all_other_cells_and_worlds_preserved": true,
+      "selected_entry_enabled_byte_after": 0,
+      "selected_link_bytes_after": "00000000000000000000000000000000"
+    },
+    "result": "PASS: original wrapper -> release -> rectangle bit mutation executed on the prepared fixture.",
+    "limits": [
+      "The entry/list, owner, three world records, and 0x48 link offset are constructed fixture values, not a capture of the live editor.",
+      "This exercises registry release and region-flag cleanup; it does not show MakeFall/BreakFall or RiverMaker/CliffMaker invoking the cleanup path.",
+      "It does not modify the 14-byte LandMaking record, generate water geometry, update mesh/collision, or serialize a save."
+    ]
+  },
+  "inputs": {
+    "elf": {
+      "path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/A_logic/main.elf",
+      "bytes": 53729580,
+      "sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74"
+    },
+    "additional_exefs_main_nso": {
+      "path": "/workspace/acnh-re-github/acnh-re/inputs/additional_exefs/main",
+      "bytes": 24990531,
+      "sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+      "executed_by_this_harness": false
+    },
+    "native_dependency_bundle": {
+      "path": "/workspace/acnh-re/.deps",
+      "note": "Read-only shared Python dependencies used by Unicorn/Capstone/pyelftools imports."
+    },
+    "shared_sqlite_index": {
+      "path": "/workspace/acnh-re/output/index.sqlite",
+      "bytes": 63946752,
+      "sha256": "a78c7af27d37b8fd931bba8bc611623dacf7685cb6e8b4f827effa0765340aad",
+      "note": "This is the valid shared index; the delivery-checkout copy is empty and is not opened."
+    },
+    "action_parameter_bcsv": {
+      "path": "/workspace/downloads/acnh_additional_romfs_2026-11-02/romfs/Bcsv/FieldLandMakingActionParam.bcsv",
+      "sha256": "fe3f06ae6fb26c95631e842cd043a52348ba2c7399fc5d6085ff13dcfed0af9a",
+      "bytes": 804,
+      "resolved_json_path": "/workspace/acnh-re/output/tables_resolved/FieldLandMakingActionParam.json",
+      "resolved_json_sha256": "7160aa79ddaedb2a4b9012b5f5a99c49a22d4d3aea7bda8b953e733ae5a66a9f",
+      "row_count": 17
+    },
+    "action_parameter_decompilation": [
+      {
+        "path": "/workspace/acnh-re/output/binary/analysis_decomp/181fa0.c",
+        "sha256": "a6028052ec6dcca34863b50052ad72e35cafd124666a0993cc5b0a1b46ebb304"
+      },
+      {
+        "path": "/workspace/acnh-re/output/binary/analysis_decomp/181ae0.c",
+        "sha256": "11f227aaa6ebd1a170d7ee1b089d5a5a528cdad6c9db4ede44d9ced032ccfcab"
+      },
+      {
+        "path": "/workspace/acnh-re/output/binary/analysis_decomp/165240.c",
+        "sha256": "2f4c3ab93d60d2949fffd2322b21d7e4ce748c4725f68e81c82848fe106ce889"
+      },
+      {
+        "path": "/workspace/acnh-re/output/binary/analysis_decomp/168140.c",
+        "sha256": "e2c71b52e8d25e21fb38d188ae8b12d6c5ffd3dd29ed4440cc00777180d0705e"
+      },
+      {
+        "path": "/workspace/acnh-re/output/binary/analysis_decomp/156970.c",
+        "sha256": "f14cfce00eabeef287ee27e3dafb9b94bc242c7827f806963f759eb2c392e0bc"
+      },
+      {
+        "path": "/workspace/acnh-re/output/binary/analysis_decomp/15f4e0.c",
+        "sha256": "5f48b2c550a71628cdb5a5d2a91d4600428ed6d5b36651da36cdcad5a11e6ace"
+      },
+      {
+        "path": "/workspace/acnh-re/output/binary/analysis_decomp/160940.c",
+        "sha256": "4f4e28cc2cba1f178490de7160a39f5546eb8813f8b6235ae40665b6355955a7"
+      }
+    ],
+    "pbc_audit_metadata": {
+      "path": "/workspace/acnh-re-github/acnh-re/output/ui_island/manifests_pbc_audit.json",
+      "sha256": "0245d3353d94685c8be8aae73a38a6353ad901de6fb24f31f019786978f5d161",
+      "historically_referenced_archive": {
+        "filename": "acnh_manifests_drive.zip",
+        "size_bytes": 134055965,
+        "sha256": "8995d65b09a5cb84b181907c78991806f6da325bc82d35ea24ae6ecf1e263f3a",
+        "zip_members": 6008,
+        "uncompressed_bytes": 628040963,
+        "zip_crc_bad_member": null,
+        "extract_manifest_output_count": 38236,
+        "collision_manifest_output_count": 1547,
+        "collision_manifest_pbc_count": 783,
+        "collision_pbc_failed": []
+      }
+    }
+  },
+  "stubbed_dependencies": {
+    "native_function_stubs": [],
+    "fixture_state": "Owner/list entries, enabled byte, rectangle, singleton world reference and three world records are synthetic. The original code and helper callees execute from the checksum-verified ELF."
+  },
+  "reproduction": {
+    "script": "/workspace/acnh-re-github/acnh-re/output/ui_island/water_terraform_remainder_20261107/reproduce.py",
+    "script_sha256": "81c5b85d86cd6ad7f8fd8c7c34e7854834ecaf99f6c655230d6271f85dcbd86e",
+    "shared_index_path_used": "/workspace/acnh-re/output/index.sqlite",
+    "checks": [
+      "ELF path and SHA256 match the repository manifest and expected 1.0.0 source.",
+      "SQLite size and call graph match the shared index, not the zero-byte delivery copy.",
+      "Raw ActionParam BCSV hash matches its resolved table source hash; waterfall rows are MakeFall/FallToRiver=0 and BreakFall/FallToRiver=1.",
+      "Original 0x168140 -> 0x165240 -> 0x181ae0 chain clears only the selected inclusive rectangle's bit6 and releases exactly one prepared list entry."
+    ],
+    "status": "PASS: bounded native mutation reproduced; live terraform/action/save and water rendering remain open."
+  }
+}

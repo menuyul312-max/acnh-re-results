@@ -1,0 +1,363 @@
+{
+  "schema": "acnh.crafting.transaction_remainder_boundary_audit.v1",
+  "generated_utc": "2026-11-07T10:54:40.684390+00:00",
+  "scope": "Read-only provenance and boundary audit. It reproduces the existing bounded native branch artifact and identifies the next material-consumption boundary; it does not execute a full craft transaction.",
+  "queue_snapshot": {
+    "source": {
+      "path": "/workspace/acnh-re-github/acnh-re/docs/re_queue.json",
+      "exists": true,
+      "bytes": 47793,
+      "sha256": "edf623595f6d7fbaae5a71c03596b22d7104563037712c3263c38fdf5c631466",
+      "mtime_utc": "2026-11-07T10:16:49.677581+00:00"
+    },
+    "crafting_diy_status": "open",
+    "goal": "DIY crafting: recipe table RecipeCraftParam, recipe learning (LearnRecipe), material check and consumption, workbench flow, customization (Remake).",
+    "remaining": [
+      "Execute SetCraftRecipe, ResetCraftRecipe, and HasCraftRecipe against a reconstructed save-member fixture; verify query polarity and full wrapper behavior.",
+      "Run SaveSetFromUIResult cWorkCraft and 0xee1420 with a complete reconstructed player/UI fixture; identify the 0xefbd30 temporary item and trigger, result insertion behavior, and rollback/interruption semantics.",
+      "Identify the serializer/flush boundary from in-memory inventory and recipe-marker mutations through SaveProc to durable save data.",
+      "Finish remake tutorial path: execute the full 0x15ad1c0 state builder and map tutorial cancellation inside cRemakeSelectTutorial. Type 0x38 mapping and item 3436 predicate result are already tested.",
+      "Execute PlayerIsMadeCraftRecipe on player-save and eight-item fixtures to verify cAND/cOR polarity and mixed valid/invalid inputs."
+    ]
+  },
+  "sources": {
+    "analysis_elf": {
+      "path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/A_logic/main.elf",
+      "exists": true,
+      "bytes": 53729580,
+      "sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+      "mtime_utc": "2026-11-01T17:17:13.204600+00:00"
+    },
+    "main_nso": {
+      "path": "/workspace/acnh-re/inputs/additional_exefs/main",
+      "exists": true,
+      "bytes": 24990531,
+      "sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+      "mtime_utc": "2026-11-02T05:24:28.210254+00:00"
+    },
+    "shared_index": {
+      "path": "/workspace/acnh-re/output/index.sqlite",
+      "exists": true,
+      "bytes": 63946752,
+      "sha256": "a78c7af27d37b8fd931bba8bc611623dacf7685cb6e8b4f827effa0765340aad",
+      "mtime_utc": "2026-11-02T06:25:35.343741+00:00"
+    },
+    "shared_manifest": {
+      "path": "/workspace/acnh-re/output/manifest.json",
+      "exists": true,
+      "bytes": 1670574,
+      "sha256": "eb8d114129e01e6c3284a7a2613c3f451d649c0708a58a1a08cd757c5f3840a8",
+      "mtime_utc": "2026-11-02T05:02:10.172129+00:00"
+    },
+    "worktree_same_name_index": {
+      "path": "/workspace/acnh-re-github/acnh-re/output/index.sqlite",
+      "exists": true,
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mtime_utc": "2026-11-06T15:30:48.472746+00:00",
+      "used": false,
+      "reason": "This worktree copy is empty; queries use the valid shared index above."
+    },
+    "tables": {
+      "RecipeCraftParam": {
+        "resolved_json": {
+          "path": "/workspace/acnh-re/output/tables_resolved/RecipeCraftParam.json",
+          "exists": true,
+          "bytes": 111297,
+          "sha256": "41efd9393380dd2c0b90e0c99aec9246b7058791bad14335d4e0e7920009cc09",
+          "mtime_utc": "2026-11-02T05:02:48.099294+00:00"
+        },
+        "rows": 552,
+        "raw_bcsv": {
+          "path": "/workspace/acnh-re/output/blobs/97fe6d73e183dab43dad7358627a0a1a43f5764f0a18fa044a63a9ecf56ba919.bin",
+          "bytes": 28884,
+          "sha256": "97fe6d73e183dab43dad7358627a0a1a43f5764f0a18fa044a63a9ecf56ba919"
+        }
+      },
+      "ItemParam": {
+        "resolved_json": {
+          "path": "/workspace/acnh-re/output/tables_resolved/ItemParam.json",
+          "exists": true,
+          "bytes": 22811861,
+          "sha256": "2934112d0cede6dc5e73ebafe74afcfbb9630de5c12eb58745e0cdbb5138006b",
+          "mtime_utc": "2026-11-02T05:02:47.739335+00:00"
+        },
+        "rows": 8208,
+        "raw_bcsv": {
+          "path": "/workspace/acnh-re/output/blobs/89230e97fc877ff2b2b48ac1c707ef32b3a7760118839c307f19797e2553458c.bin",
+          "bytes": 4104780,
+          "sha256": "89230e97fc877ff2b2b48ac1c707ef32b3a7760118839c307f19797e2553458c"
+        }
+      },
+      "ItemKind": {
+        "resolved_json": {
+          "path": "/workspace/acnh-re/output/tables_resolved/ItemKind.json",
+          "exists": true,
+          "bytes": 56641,
+          "sha256": "08e5360de83a3ac6aba2ed50e26d539f20365500598fdc942db3b95371978abd",
+          "mtime_utc": "2026-11-02T05:02:43.652231+00:00"
+        },
+        "rows": 120,
+        "raw_bcsv": {
+          "path": "/workspace/acnh-re/output/blobs/4cac0178cc69519585528b24ceef022ccb1fefa12b23fc9a9e4280e40185ba7b.bin",
+          "bytes": 17532,
+          "sha256": "4cac0178cc69519585528b24ceef022ccb1fefa12b23fc9a9e4280e40185ba7b"
+        }
+      }
+    },
+    "recipe_56": {
+      "recipe_id": 56,
+      "result_item_id": 975,
+      "materials": [
+        {
+          "slot": 1,
+          "item_id": 2213,
+          "amount": 1
+        },
+        {
+          "slot": 2,
+          "item_id": 2285,
+          "amount": 1
+        },
+        {
+          "slot": 3,
+          "item_id": 2287,
+          "amount": 1
+        },
+        {
+          "slot": 4,
+          "item_id": 2214,
+          "amount": 1
+        },
+        {
+          "slot": 5,
+          "item_id": 2286,
+          "amount": 1
+        },
+        {
+          "slot": 6,
+          "item_id": 65534,
+          "amount": 0
+        }
+      ]
+    }
+  },
+  "existing_evidence": {
+    "followup_doc": {
+      "path": "/workspace/acnh-re-github/acnh-re/docs/CRAFTING_TRANSACTION_FOLLOWUP.md",
+      "exists": true,
+      "bytes": 29542,
+      "sha256": "427529feac43b4664f84fc75501898e8a7513839c60b6eb0bc14c12c20045163",
+      "mtime_utc": "2026-11-07T06:06:02.158550+00:00"
+    },
+    "08_41_branch_artifact": {
+      "path": "/workspace/acnh-re-github/acnh-re/output/gameplay/crafting_transaction_followup/crafting_transaction_branch_native.json",
+      "exists": true,
+      "bytes": 60875,
+      "sha256": "f41f60944fc02543e7bc09011eb73d7898ae93757c0d4ae1a39e3a94ae72313c",
+      "mtime_utc": "2026-11-07T08:41:29.809479+00:00"
+    },
+    "bounded_branch_reproduction": {
+      "path": "/workspace/acnh-re-github/acnh-re/output/gameplay/crafting_transaction_remainder_20261107/crafting_transaction_branch_native.json",
+      "exists": true,
+      "bytes": 60875,
+      "sha256": "f41f60944fc02543e7bc09011eb73d7898ae93757c0d4ae1a39e3a94ae72313c",
+      "mtime_utc": "2026-11-07T10:54:39.050880+00:00"
+    },
+    "reproduction_byte_identical_to_08_41": true,
+    "fixture_attempt": {
+      "path": "/workspace/acnh-re-github/acnh-re/output/gameplay/crafting_transaction_followup/crafting_transaction_fixture_attempt.json",
+      "exists": true,
+      "bytes": 7774,
+      "sha256": "39d803c40577718c5811811a4fa4f0773309060c1adb1f8a744b6d86ab168ee9",
+      "mtime_utc": "2026-11-07T05:47:06.110573+00:00"
+    },
+    "recipe_flow_leaf_probe": {
+      "path": "/workspace/acnh-re-github/acnh-re/output/gameplay/crafting_transaction_followup/crafting_recipe_flow_native.json",
+      "exists": true,
+      "bytes": 41932,
+      "sha256": "b404014a185a1b2d0451fc3f40f772b58d7e2cc5a6ae3b043ad07a9ab1272764",
+      "mtime_utc": "2026-11-07T03:46:09.917292+00:00"
+    },
+    "signed_delta_leaf_probe": {
+      "helper_va": "0xf9e410",
+      "stack_match_gate_va": "0xf9e840",
+      "cases": [
+        {
+          "case": "partial_removal",
+          "item_id": 2213,
+          "available_count_before": 9,
+          "requested_remove": 3,
+          "available_count_after": 6,
+          "changed_byte_offsets": [
+            "0x100"
+          ]
+        },
+        {
+          "case": "below_request_clamps_zero",
+          "item_id": 2213,
+          "available_count_before": 2,
+          "requested_remove": 3,
+          "available_count_after": 0,
+          "changed_byte_offsets": [
+            "0x100"
+          ]
+        },
+        {
+          "case": "exact_stack_becomes_zero",
+          "item_id": 2213,
+          "available_count_before": 9,
+          "requested_remove": 9,
+          "available_count_after": 0,
+          "changed_byte_offsets": [
+            "0x100"
+          ]
+        }
+      ],
+      "limitation": "Each case patches 0xaac730 to return true. Item lookup, pocket slot search, 0xf9e840 control flow, 0xf9e410, and the u16 count writes execute from the original ELF."
+    },
+    "prior_ee1420_fixture_blocker": {
+      "path": "0xee1420 -> 0xee0ed0 -> 0xeff060 -> 0xa9e440 -> 0xa774c0 -> 0xab9400",
+      "dependency_global": "0x32f3f78 (cell 0x354ce00)",
+      "first_unmapped_access": {
+        "address": "0xa9023ff0f941b463",
+        "pc": "0xab941c",
+        "size": 4,
+        "x0_x3": [
+          "0xa9023ff0f941b463",
+          "0x1e",
+          "0x1",
+          "0x1"
+        ],
+        "last_pcs": [
+          "0xa774ec",
+          "0xa774f0",
+          "0xa774f4",
+          "0xa774f8",
+          "0xa774fc",
+          "0xa77500",
+          "0xa77504",
+          "0xa77508",
+          "0xa7750c",
+          "0xa77510",
+          "0xa9e4a4",
+          "0xa9e4a8",
+          "0xab9400",
+          "0xab9404",
+          "0xab9408",
+          "0xab940c",
+          "0xab9410",
+          "0xab9414",
+          "0xab9418",
+          "0xab941c"
+        ]
+      },
+      "interpretation": "The partial fixture leaves the manager/table pointer at this GOT null. The original path passes null through 0xa774c0, then 0xab9400 dereferences the invalid returned pointer at 0xab941c. The manager semantics are unnamed here; no material helper return, conditional insertion, or rollback result was observed."
+    }
+  },
+  "native_static_edges": {
+    "0xee1420->0xee0ed0": [
+      "0xee1478"
+    ],
+    "0xee1420->0xeff060": [
+      "0xee14dc",
+      "0xee14fc",
+      "0xee151c",
+      "0xee153c",
+      "0xee155c",
+      "0xee157c"
+    ],
+    "0xee1420->0xee1060": [
+      "0xee15a0",
+      "0xee15c4",
+      "0xee15e8",
+      "0xee160c",
+      "0xee1630",
+      "0xee1654"
+    ],
+    "0xee1420->0xefbd30": [
+      "0xee1688"
+    ],
+    "0xeff060->0xf9e410": [
+      "0xeff0e4"
+    ]
+  },
+  "bounded_branch_result": {
+    "schema": "acnh.crafting.transaction_branch_native.v1",
+    "case_names": [
+      "full_pocket_marker_zero",
+      "full_pocket_marker_one",
+      "one_free_slot_marker_zero",
+      "full_pocket_actor_resolver_stub",
+      "one_free_slot_actor_resolver_stub"
+    ],
+    "branch_findings": {
+      "full_pocket": "20 occupied slots cause 0xee1420 to call 0xee0ed0 and then 0xefbd30; a 19/20 pocket skips both, including 0xf99270.",
+      "material_descriptor": "In the full fixture, 0xee0ed0 copies Material1 (item 2213) to the temporary output, and 0xefbd30 receives those exact 8 bytes. This is separate from the result descriptor.",
+      "per_material_marker": "At +0x3c (Material1 record +0x10), zero routes all six material rows through 0xee1060. One routes Material1 through 0xeff060 while five unmarked rows still use 0xee1060.",
+      "result_descriptor": "The result ID 975 from param2+8 reaches 0xefab90 then 0xefac20 after the pocket-full path. In the unmodified partial actor-registry fixture, 0xefac20 takes an equality early return at 0xefac98 before pocket lookup; controlled no-match variants subsequently reach 0xf987c0 and mutate a free slot.",
+      "result_insert_static_route": {
+        "recipe_entry_result_path_direct_edges": [
+          {
+            "caller": "0xee1420",
+            "callee": "0xefab90",
+            "call_sites": [
+              "0xee17bc"
+            ]
+          },
+          {
+            "caller": "0xefab90",
+            "callee": "0xefac20",
+            "call_sites": [
+              "0xefabf8"
+            ]
+          },
+          {
+            "caller": "0xefac20",
+            "callee": "0xf987c0",
+            "call_sites": [
+              "0xefad2c"
+            ]
+          }
+        ],
+        "other_direct_f987c0_callers": [
+          "0xf990e0",
+          "0xf9a5a0",
+          "0xf9b790"
+        ],
+        "interpretation": "The indexed recipe entry has one direct result-award chain through 0xefab90 -> 0xefac20 -> 0xf987c0. Other direct callers of the shared insert helper exist, but no alternate result-specific handler is called from 0xee1420."
+      },
+      "result_insert_fixture_followup": "With a controlled actor resolver and explicit no-match registry response, the real 0xf987c0 is reached. In the 19/20 case it writes result 975 into slot 19 and sets marker +0x16f to 0xff without calling 0xf98650. In the 20/20 case, preceding native compaction opens slots and 975 appears in slot 4; the marker range was already set by compaction. These synthetic cases prove the insert helper mutation, not a complete live-game award or save.",
+      "compaction_observation": "On the synthetic 20-record fixture (each raw record [2213,0,1]), 0xf99270 rewrote 24 slots through 0xf98650; the first four raw records became [2213,0,9], the remaining slots became [65534,0,0], and all 20 primary dirty bytes became 0xff. The u32 payload field is reported raw; its gameplay count meaning and conservation rule are not established."
+    },
+    "transaction_limits": [
+      "The per-material mutators 0xeff060/0xee1060 were stubbed, so no material subtraction or transaction balance is observed.",
+      "The entry gate halfword at +0x38 was set synthetically to reach the +0x3c toggle; the payload was not produced by the real UI result builder 0xedf8e0 in this test.",
+      "No interruption/cancellation was injected while native transaction instructions were executing. Atomicity and rollback remain open.",
+      "The dirty marker is proven to be written during pocket slot rewrites, but its consumption by a real SaveProc serializer/durable flush remains open because the callback target is runtime-bound."
+    ],
+    "sample_fixture_stubs": [
+      "0xf8f540 returns the synthetic active-view pointer; the remaining view methods execute through the two bounded method stubs in the shared fixture.",
+      "0xeff060 and 0xee1060 are no-op stubs. The branch is tested, but material removal is not.",
+      "At 0xee1698, the result descriptor is copied from x22 (param2+8) and execution resumes at 0xee17a8, bypassing dynamic UI/event-log setup.",
+      "0xee17e0 is stubbed; made-recipe marker persistence is not tested.",
+      "The player/session/save manager is partial. Result insertion is only proven to reach 0xefab90/0xefac20 when those calls appear; final inventory insertion is not assumed."
+    ]
+  },
+  "next_boundary": {
+    "target": "Run the original 0xeff060 per-material mutator through 0xf9e410 for one table-backed material, beginning with RecipeCraftParam row 56 / Apple item 2213.",
+    "reason": "The current branch probe has already covered the pocket-full gate, material-descriptor source, and result-insertion route, but replaces both 0xeff060 and 0xee1060 with no-op callbacks. The signed quantity leaf 0xf9e410 was separately exercised on a controlled slot fixture, so the missing high-value seam is the native wrapper plus its item-data/player-view lookup context.",
+    "required_fixture_work": [
+      "Reconstruct or reach the runtime item-data/index manager required by the original 0xa9e440 -> 0xa774c0 -> 0xab9400 lookup; available RecipeCraftParam, ItemParam, and ItemKind tables supply rows, not the live manager pointer graph.",
+      "Supply the minimum player/view service data used by 0xeff060, then leave its 0xf9e410 call and the 0xaac730 item/stack gate native; do not force the gate to success.",
+      "First prove one Apple count delta and unchanged item identity in a controlled pocket fixture. Then extend to the five recipe-56 materials and an insufficient-material control before reopening the full 0xee1420 branch."
+    ],
+    "boundaries_still_open": [
+      "0xee1060 branch behavior and complete material sufficiency/consumption in the transaction.",
+      "Real 0xedf8e0 UI payload and full SaveSetFromUIResult cWorkCraft dispatch.",
+      "Cancellation/interruption and rollback/atomicity after native mutations.",
+      "SaveProc serializer callback, durable write/flush, and linkage from the in-memory dirty slot marker."
+    ],
+    "evidence_class": "All current transaction runs use controlled synthetic fixtures; no live game process or real player save was supplied."
+  }
+}

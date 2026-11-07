@@ -1,0 +1,152 @@
+{
+  "native_function": "0xdac780",
+  "incoming_callers": {
+    "status": "No direct B/BL reference or relocation/code-pointer-array entry was found in the inspected main ELF evidence; incoming caller/frame schedule remains unresolved.",
+    "scope": "The outgoing path inside this function is mapped below."
+  },
+  "outgoing_call_path": {
+    "early_state_mask_edge": "At 0xdac7bc, dacc40 result W0 is tested as 1<<state against 0x66; results 1,2,5,6 branch to 0xdac9e0, immediately before BL 0xda86b0.",
+    "actor_y_correction_edge": "Selected S8 reaches the virtual getter slot actor_vtable+0xf8 at 0xdac9d0; original getter 0xdb4fb0 returns actor+0x278; str s8,[x0,#4] writes actor+0x27c; BL 0xda86b0 follows at 0xdac9e4.",
+    "tail_edge": "A second branch at 0xdac9a4 restores the frame then branches to 0xda86b0."
+  },
+  "static_branch_map": {
+    "gate": "Original 0xdc80b0 returns 1 iff u32(player+0x178)==1.",
+    "gate_false": "player+0xa0 == null returns without writes; otherwise a separate collider-property/scalar-smoothing path runs before state-dependent routing.",
+    "gate_true": "Copies actor+0x27c into player+0x1304, then player+0xefd bit0 selects query path versus dacc40 state routing.",
+    "state_path": "If (1<<W0)&0x66 is nonzero, skip the floor-query branch and call 0xda86b0. State 0 uses packed input player+0x1001 and 0x7c5570; other unmatched states call 0x7bccf0.",
+    "query_result_consumer": "0x7bccf0 result is compared with actor+0x27c; unless player+0xf40==1, the selected S8 is max(query_result, actor_y). The selected scalar is written through the common actor-Y sink."
+  },
+  "native_fixtures": {
+    "full_function_early_return": {
+      "cases": 3,
+      "gate_words": [
+        0,
+        2,
+        4294967295
+      ],
+      "collider_pointer": "null",
+      "writes": 0,
+      "callee_executed": "0xdc80b0"
+    },
+    "state_to_da86b0_edge": {
+      "cases": 4,
+      "mismatches": [],
+      "state_results": [
+        {
+          "dacc40_result_u32": 1,
+          "stopped_before_call_at": "0xdac9e0"
+        },
+        {
+          "dacc40_result_u32": 2,
+          "stopped_before_call_at": "0xdac9e0"
+        },
+        {
+          "dacc40_result_u32": 5,
+          "stopped_before_call_at": "0xdac9e0"
+        },
+        {
+          "dacc40_result_u32": 6,
+          "stopped_before_call_at": "0xdac9e0"
+        }
+      ],
+      "injected_input": "W0 at 0xdac7bc is supplied as the earlier 0xdacc40 result."
+    },
+    "common_actor_y_sink": {
+      "cases": 5,
+      "mismatches": [],
+      "samples": [
+        {
+          "selected_s8": -2.0,
+          "actor_position_after": [
+            13.0,
+            -2.0,
+            29.0
+          ],
+          "stopped_before_da86b0_call_at": "0xdac9e0"
+        },
+        {
+          "selected_s8": -0.0,
+          "actor_position_after": [
+            13.0,
+            -0.0,
+            29.0
+          ],
+          "stopped_before_da86b0_call_at": "0xdac9e0"
+        },
+        {
+          "selected_s8": 0.25,
+          "actor_position_after": [
+            13.0,
+            0.25,
+            29.0
+          ],
+          "stopped_before_da86b0_call_at": "0xdac9e0"
+        },
+        {
+          "selected_s8": 1.5,
+          "actor_position_after": [
+            13.0,
+            1.5,
+            29.0
+          ],
+          "stopped_before_da86b0_call_at": "0xdac9e0"
+        },
+        {
+          "selected_s8": 10.0,
+          "actor_position_after": [
+            13.0,
+            10.0,
+            29.0
+          ],
+          "stopped_before_da86b0_call_at": "0xdac9e0"
+        }
+      ],
+      "injected_input": "S8 is the selected upstream query/floor scalar; query producer is not executed."
+    },
+    "dependencies_stubbed": [],
+    "native_callees_executed": [
+      "0xdc80b0",
+      "0xdb4fb0"
+    ]
+  },
+  "evidence": [
+    {
+      "va": "0xdac780",
+      "bytes": 636,
+      "sha256": "2a566dafe1ac9d612f51b09583e5075ebb8058b18db00ce7f2e3506aa8f59c3d"
+    },
+    {
+      "va": "0xdac7bc",
+      "bytes": 548,
+      "sha256": "3c1f3c5b958e80f09166b2f6be63379b38a58bad2148fe21ba4ca3bd55463f34"
+    },
+    {
+      "va": "0xdac9d0",
+      "bytes": 16,
+      "sha256": "d882d204f93c957a9825fe540a5f1357c7b2cba3cf0c68255bfb46ba85c7ae42"
+    },
+    {
+      "va": "0xdc80b0",
+      "bytes": 12,
+      "sha256": "dda8ed38208195069d9958c8087fa0825fd474aeac37c759e660a6bcada1eb91"
+    },
+    {
+      "va": "0xdb4fb0",
+      "bytes": 8,
+      "sha256": "618a0d7d99eebbb8901df7f5ad870da7d87510caacab105fbc1c336887c83b82"
+    }
+  ],
+  "source_identity": {
+    "elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+    "additional_exefs_main": "/workspace/acnh-re-github/acnh-re/inputs/additional_exefs/main",
+    "additional_exefs_main_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+    "relation": "The existing ADDITIONAL_EXEFS.md audit records identical main-code segments for this ELF and NSO build."
+  },
+  "limits": [
+    "The 0x7bccf0 and 0x7c5570 query producers are not executed; the Y-sink fixture supplies S8.",
+    "The collider-present scalar-smoothing branch and its e254a0/e6fb50/dd7040/dacc40 path are not executed.",
+    "The state producer 0xdacc40 and actual state/frame caller of 0xdac780 remain unresolved.",
+    "Calls to 0xda86b0 are established as static outgoing edges; this fixture stops before executing that callee.",
+    "No complete player frame, collision geometry, penetration solver, or live game integration is proven."
+  ]
+}

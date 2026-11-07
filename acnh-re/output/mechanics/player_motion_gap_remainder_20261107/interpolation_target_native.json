@@ -1,0 +1,332 @@
+{
+  "native_function": "0xe17cb0",
+  "static_gap": {
+    "begin": "0xe17e94",
+    "end_exclusive": "0xe17ff8",
+    "prefix": [
+      "0xe17e94 reads packed positions at player+0x1018 and player+0x1022 through 0xe99510; the converted values are held in S8/S9/S10 and SP+0x40..0x48.",
+      "0x1d5e0 computes an X/Z direction value into SP+0x18 from the two converted point records; 0xdaa4a0 consumes it with stack constants and an actor virtual call.",
+      "0xe17ef4..0xe17f20 builds a query key and calls 0x7d1e60. A zero W0 branches to 0xe17f58. A nonzero result calls 0x7d6970; a zero there jumps to the epilogue at 0xe18084. A nonzero result calls 0xdc80a0, then selects 0xdd6b40(player,6,1) or 0xdaaa50(player,6), and also reaches that epilogue."
+    ],
+    "no_hit_path": "At 0xe17f58, 0xdc80a0 returns 1 iff u32(player+0x178)==0. A zero return skips the scalar interpolation to 0xe17ff8; a nonzero return enters the distance-ratio block.",
+    "interpolation_formula_finite_non_nan": "dActor = hypot(anchorX-actorX, anchorZ-actorZ); dTarget = hypot(anchorX-targetX, anchorZ-targetZ); t = clamp(dActor/dTarget, 0, 1); targetScalar = anchorY + (targetY-anchorY)*t.",
+    "output": "0xe5a6a0 selects player+0x3f8 when nonnull (otherwise a global default object); 0xdb5050 stores the scalar at selected_object+0x2ec and sets byte selected_object+0x2e5 to 1. This gap does not directly store actor+0x27c."
+  },
+  "native_fixture": {
+    "begin": "0xe17f58",
+    "stop_before": "0xe17ff8",
+    "cases": 7,
+    "groups": {
+      "predicate_true_interpolation": 5,
+      "predicate_false_skip": 2
+    },
+    "mismatches": [],
+    "native_callees_executed": [
+      "0xe99510",
+      "0xdc80a0",
+      "0xe5a6a0",
+      "0xdb5050"
+    ],
+    "dependencies_stubbed": [],
+    "externally_reconstructed": [
+      "Packed points at player+0x1018 and player+0x1022; their world triples are produced by original 0xe99510.",
+      "Actor pointer at player+0x68 and actor X/Z position at +0x278/+0x280.",
+      "Property object at player+0x3f8, plus target position XYZ at SP+0x40..0x48.",
+      "S8/S9/S10 are seeded with the original conversion output for player+0x1018, matching the earlier gap prefix."
+    ],
+    "skipped_context": [
+      "The 0x7d1e60 lookup earlier in the gap; fixture represents its no-hit branch.",
+      "The 0x1d5e0 and 0xdaa4a0 prefix calls; they do not supply the lower interpolation operands exercised here.",
+      "The 0xe17ff8 X/Z position writes and function epilogue."
+    ],
+    "domain": "Finite packed points and actor positions; one dTarget=0 case uses nonzero dActor, yielding an infinite ratio that clamps to 1. No NaN distances."
+  },
+  "samples": [
+    {
+      "name": "actor_at_anchor",
+      "predicate_field_player_178": 0,
+      "first_packed_xyz": [
+        0,
+        4,
+        0
+      ],
+      "target_packed_xyz": [
+        100,
+        12,
+        0
+      ],
+      "first_world_xyz": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "target_world_xyz": [
+        0.10000000149011612,
+        3.0,
+        0.0
+      ],
+      "actor_xz_world": [
+        0.0,
+        0.0
+      ],
+      "actor_distance_xz": 0.0,
+      "target_distance_xz": 0.10000000149011612,
+      "clamped_ratio": 0.0,
+      "written_target_y": 1.0,
+      "property_flag_after": 1
+    },
+    {
+      "name": "halfway_axis",
+      "predicate_field_player_178": 0,
+      "first_packed_xyz": [
+        0,
+        4,
+        0
+      ],
+      "target_packed_xyz": [
+        100,
+        12,
+        0
+      ],
+      "first_world_xyz": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "target_world_xyz": [
+        0.10000000149011612,
+        3.0,
+        0.0
+      ],
+      "actor_xz_world": [
+        0.05,
+        0.0
+      ],
+      "actor_distance_xz": 0.05000000074505806,
+      "target_distance_xz": 0.10000000149011612,
+      "clamped_ratio": 0.5,
+      "written_target_y": 2.0,
+      "property_flag_after": 1
+    },
+    {
+      "name": "past_target_clamps_to_one",
+      "predicate_field_player_178": 0,
+      "first_packed_xyz": [
+        0,
+        4,
+        0
+      ],
+      "target_packed_xyz": [
+        100,
+        12,
+        0
+      ],
+      "first_world_xyz": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "target_world_xyz": [
+        0.10000000149011612,
+        3.0,
+        0.0
+      ],
+      "actor_xz_world": [
+        0.25,
+        0.0
+      ],
+      "actor_distance_xz": 0.25,
+      "target_distance_xz": 0.10000000149011612,
+      "clamped_ratio": 1.0,
+      "written_target_y": 3.0,
+      "property_flag_after": 1
+    },
+    {
+      "name": "halfway_diagonal",
+      "predicate_field_player_178": 0,
+      "first_packed_xyz": [
+        0,
+        4,
+        0
+      ],
+      "target_packed_xyz": [
+        300,
+        10,
+        400
+      ],
+      "first_world_xyz": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "target_world_xyz": [
+        0.30000001192092896,
+        2.5,
+        0.4000000059604645
+      ],
+      "actor_xz_world": [
+        0.15,
+        0.2
+      ],
+      "actor_distance_xz": 0.25,
+      "target_distance_xz": 0.5,
+      "clamped_ratio": 0.5,
+      "written_target_y": 1.75,
+      "property_flag_after": 1
+    },
+    {
+      "name": "zero_target_distance_with_nonzero_actor_distance",
+      "predicate_field_player_178": 0,
+      "first_packed_xyz": [
+        0,
+        4,
+        0
+      ],
+      "target_packed_xyz": [
+        0,
+        10,
+        0
+      ],
+      "first_world_xyz": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "target_world_xyz": [
+        0.0,
+        2.5,
+        0.0
+      ],
+      "actor_xz_world": [
+        0.05,
+        0.0
+      ],
+      "actor_distance_xz": 0.05000000074505806,
+      "target_distance_xz": 0.0,
+      "clamped_ratio": 1.0,
+      "written_target_y": 2.5,
+      "property_flag_after": 1
+    },
+    {
+      "name": "predicate_false_skips_scalar_store",
+      "predicate_field_player_178": 1,
+      "first_packed_xyz": [
+        0,
+        4,
+        0
+      ],
+      "target_packed_xyz": [
+        100,
+        12,
+        0
+      ],
+      "first_world_xyz": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "target_world_xyz": [
+        0.10000000149011612,
+        3.0,
+        0.0
+      ],
+      "actor_xz_world": [
+        0.05,
+        0.0
+      ],
+      "actor_distance_xz": 0.05000000074505806,
+      "target_distance_xz": 0.10000000149011612,
+      "clamped_ratio": 0.5,
+      "written_target_y": null,
+      "property_flag_after": 0
+    },
+    {
+      "name": "predicate_false_all_bits_skips_scalar_store",
+      "predicate_field_player_178": 4294967295,
+      "first_packed_xyz": [
+        300,
+        -8,
+        -400
+      ],
+      "target_packed_xyz": [
+        -100,
+        20,
+        0
+      ],
+      "first_world_xyz": [
+        0.30000001192092896,
+        -2.0,
+        -0.4000000059604645
+      ],
+      "target_world_xyz": [
+        -0.10000000149011612,
+        5.0,
+        0.0
+      ],
+      "actor_xz_world": [
+        0.0,
+        0.0
+      ],
+      "actor_distance_xz": 0.5,
+      "target_distance_xz": 0.5656854510307312,
+      "clamped_ratio": 0.8838834166526794,
+      "written_target_y": null,
+      "property_flag_after": 0
+    }
+  ],
+  "evidence": [
+    {
+      "va": "0xe17e94",
+      "bytes": 356,
+      "sha256": "ee25afb83e9f1b544c1e4bce562e80940c4de7e2fb7e0c827fcb68ac118e8662"
+    },
+    {
+      "va": "0xe17f58",
+      "bytes": 160,
+      "sha256": "44b3e14e673d99e2981c244e3e17db5f9f2530d645a448cabd22845595df3026"
+    },
+    {
+      "va": "0xe99510",
+      "bytes": 56,
+      "sha256": "7f04b4f97a293f0bdae385403305e3817f9fe31a1bb90b29705d9e80d73d4413"
+    },
+    {
+      "va": "0x1d5e0",
+      "bytes": 292,
+      "sha256": "cddd7bfe529384eccc6c2a024ee997345ac0182261973066841474eadae03698"
+    },
+    {
+      "va": "0xdaa4a0",
+      "bytes": 92,
+      "sha256": "4ba31f881c8f3544be58813f9cba5fa981672356aa082a7aac68b9cb423197b6"
+    },
+    {
+      "va": "0xdc80a0",
+      "bytes": 16,
+      "sha256": "0d447ce417f5654d2a78c9a584734d74965bc414b766a99ef0aa4d83d37b3532"
+    },
+    {
+      "va": "0xe5a6a0",
+      "bytes": 24,
+      "sha256": "c89bdf02950ad5bb274fa01a9e4c458c6a32eb0add89a167ab401c94adc426ed"
+    },
+    {
+      "va": "0xdb5050",
+      "bytes": 16,
+      "sha256": "0cc507b203610c92eec343091db9d34287f568c19e509b86810b4202e7e5fb8c"
+    }
+  ],
+  "source_identity": {
+    "elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+    "additional_exefs_main": "/workspace/acnh-re-github/acnh-re/inputs/additional_exefs/main",
+    "additional_exefs_main_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+    "conversion_scale_float_at_0x29d6404": 0.0010000000474974513,
+    "relation": "The existing ADDITIONAL_EXEFS.md audit records identical main-code segments for this ELF and NSO build."
+  },
+  "limits": [
+    "The full gap was statically mapped, but only the 0xe17f58..0xe17ff8 predicate/interpolation path was executed natively.",
+    "The 0x7d1e60 lookup hit branch and its 0x7d6970/0xdd6b40/0xdaaa50 behavior were not executed.",
+    "The stored scalar is a selected property-object field, not a direct actor Y write; no claim assigns its gameplay name or proves subsequent application.",
+    "Landing resolution, geometric penetration response, collision masks, complete update scheduling, and duration units remain open."
+  ]
+}

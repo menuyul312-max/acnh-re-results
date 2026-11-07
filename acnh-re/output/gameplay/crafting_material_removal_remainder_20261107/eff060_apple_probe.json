@@ -1,0 +1,479 @@
+{
+  "schema": "acnh.crafting.material_removal_eff060_probe.v1",
+  "scope": "One direct original-ELF 0xeff060 call for RecipeCraftParam row 56 Material1 Apple 2213, with a negative one-unit delta. No full transaction, rollback, or durable save is exercised.",
+  "provenance": {
+    "analysis_elf_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/A_logic/main.elf",
+    "analysis_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+    "main_nso_path": "/workspace/acnh-re/inputs/additional_exefs/main",
+    "main_nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+    "shared_index_path": "/workspace/acnh-re/output/index.sqlite",
+    "shared_index_sha256": "a78c7af27d37b8fd931bba8bc611623dacf7685cb6e8b4f827effa0765340aad",
+    "recipe_table_path": "/workspace/acnh-re/output/tables_resolved/RecipeCraftParam.json",
+    "recipe_table_raw_sha256": "97fe6d73e183dab43dad7358627a0a1a43f5764f0a18fa044a63a9ecf56ba919",
+    "itemparam_raw_sha256": "89230e97fc877ff2b2b48ac1c707ef32b3a7760118839c307f19797e2553458c",
+    "itemkind_raw_sha256": "4cac0178cc69519585528b24ceef022ccb1fefa12b23fc9a9e4280e40185ba7b"
+  },
+  "fixture": {
+    "class": "Controlled synthetic player/session/view and inventory member; no real save or live game process.",
+    "recipe_id": 56,
+    "recipe_material1": {
+      "item_id": 2213,
+      "amount": 1
+    },
+    "context_va": "0x50010000",
+    "descriptor_va": "0x50020000",
+    "descriptor_bytes": "a508000000000000",
+    "inventory_va": "0x501c0000",
+    "inventory_layout": "0x140 bytes: 32 eight-byte descriptors at +0x00..+0xff; 32 u16 counts at +0x100..+0x13f",
+    "slot0_before": [
+      2213,
+      0,
+      0
+    ],
+    "count_slot0_before": 9,
+    "player_manager_fixture": {
+      "save_records_va": "0x50120000",
+      "save_player_record_state": {
+        "slot_index": 0,
+        "state_u32_at_plus_0xb08": 1,
+        "active_flag_at_plus_0xb0c": 1,
+        "resolver_subindex_at_plus_0xb0d": 0
+      },
+      "manager_global": {
+        "got_va": "0x32d3d78",
+        "cell_va": "0x35e7430",
+        "fixture_value": "0x50180000"
+      },
+      "world_player_manager_va": "0x50180000",
+      "manager_count_member": {
+        "offset": "0xe8",
+        "value": 1
+      },
+      "manager_array_member": {
+        "offset": "0xf0",
+        "value_va": "0x50140000",
+        "element_stride": "0x3ce50"
+      },
+      "active_view_member": {
+        "manager_offset": "0x118",
+        "value_va": "0x50190000"
+      },
+      "pocket_record_va": "0x501a0000",
+      "pocket_record_size": "0x17c",
+      "pocket_layout": {
+        "active_slot_count_offset": "0x158",
+        "secondary_slot_count_offset": "0xa0",
+        "slot_records_offset": "0xb8",
+        "slot_record_stride": 8,
+        "dirty_slot_markers_offset": "0x15c",
+        "category_byte_offset": "0x178"
+      },
+      "pocket_slot0_before": [
+        2213,
+        0,
+        0
+      ],
+      "pocket_slot0_fixture_item_id": 2213,
+      "item_descriptor_va": "0x50020000",
+      "item_descriptor_bytes": "a508000000000000",
+      "view_proxy_fields": {
+        "player_plus_0x70_plus_8_base_pointer": "0x501a0000",
+        "player_plus_0x70_plus_0x10_offset": 0,
+        "player_plus_0x70_plus_0x28_proxy": "0x501b0000",
+        "validity_virtual_method_stub_va": "0x501b5000",
+        "access_virtual_method_stub_va": "0x501b5010",
+        "stub_instruction_bytes": "20008052c0035fd6"
+      },
+      "limits": [
+        "The 0x33d3d78 member array and +0x118 active view are synthetic records sized to fields read by this path.",
+        "The two view-service virtual methods return success from synthetic code; their actual runtime implementations remain unknown.",
+        "The full 0x3ce50-byte player member and unrelated runtime managers are not reconstructed."
+      ]
+    },
+    "player_member_view_injection": [
+      {
+        "resolved_view_va": "0x50190000",
+        "member_ref_va": "0x501901c0",
+        "base_pointer_va": "0x501c0000",
+        "offset": 0,
+        "service_pointer": 0,
+        "injected_at_native_f8f400_callsite": true
+      }
+    ],
+    "pocket_view_before_slot0": [
+      2213,
+      0,
+      0
+    ]
+  },
+  "execution": {
+    "entry_va": "0xeff060",
+    "arguments": [
+      "0x50010000",
+      "0x50020000",
+      "0xffffffff (signed -1)"
+    ],
+    "native_return_x0": "0x401fefb8",
+    "error": null,
+    "first_unmapped_access": null,
+    "calls": [
+      {
+        "va": "0xeff060",
+        "x0_x3": [
+          "0x50010000",
+          "0x50020000",
+          "0xffffffff",
+          "0x0"
+        ]
+      },
+      {
+        "va": "0xef6700",
+        "x0_x3": [
+          "0x401fefd8",
+          "0x50010000",
+          "0xffffffff",
+          "0x0"
+        ]
+      },
+      {
+        "va": "0xf8f400",
+        "x0_x3": [
+          "0x50140000",
+          "0x0",
+          "0x1",
+          "0x0"
+        ],
+        "resolver_actor_va": "0x50140000"
+      },
+      {
+        "va": "0xee9350",
+        "x0_x3": [
+          "0x401fefb8",
+          "0x501901c0",
+          "0x0",
+          "0x0"
+        ]
+      },
+      {
+        "va": "0xee9490",
+        "x0_x3": [
+          "0x401fefb8",
+          "0x501901c0",
+          "0x0",
+          "0x0"
+        ]
+      },
+      {
+        "va": "0xee94f0",
+        "x0_x3": [
+          "0x501901c0",
+          "0x140",
+          "0x0",
+          "0x0"
+        ]
+      },
+      {
+        "va": "0xf9e410",
+        "x0_x3": [
+          "0x501c0000",
+          "0x50020000",
+          "0xffffffff",
+          "0x0"
+        ],
+        "expected_item_descriptor": "a508000000000000"
+      },
+      {
+        "va": "0xf9e840",
+        "x0_x3": [
+          "0x501c0000",
+          "0x50020000",
+          "0xffffffff",
+          "0x0"
+        ]
+      },
+      {
+        "va": "0xaac730",
+        "x0_x3": [
+          "0x401fef28",
+          "0x2e",
+          "0xcb5eb33f",
+          "0x0"
+        ],
+        "predicate_bytes": "fb0f1af8fa6701a9",
+        "predicate_record_pointer_va": "0x401fef28",
+        "predicate_record_plus_0x10_u64": 1359202776,
+        "itemparam_lookup_cache_count": 8208,
+        "predicate_record_plus_0x10_in_index_range": false
+      },
+      {
+        "va": "0xf9e434",
+        "x0_x3": [
+          "0x0",
+          "0x2e",
+          "0xcb5eb33f",
+          "0x0"
+        ],
+        "native_f9e840_return_w0": 0
+      },
+      {
+        "va": "0xf9e4f4",
+        "x0_x3": [
+          "0x0",
+          "0x2e",
+          "0xcb5eb33f",
+          "0x0"
+        ]
+      }
+    ],
+    "f9e840_internal_returns": [
+      {
+        "return_pc": "0xf9e860",
+        "callee": "0xf58d00",
+        "return_w0": 1
+      },
+      {
+        "return_pc": "0xaac91c",
+        "callee": "0xaac730",
+        "return_w0": 0
+      },
+      {
+        "return_pc": "0xf9e878",
+        "callee": "0xaac910",
+        "return_w0": 0
+      },
+      {
+        "pc": "0xf9ebf8",
+        "gate_path": "reject",
+        "w0": 0
+      }
+    ],
+    "native_call_counts": {
+      "0xeff060": 1,
+      "0xef6700": 1,
+      "0xf8f400": 1,
+      "0xee9350": 1,
+      "0xee9490": 1,
+      "0xee94f0": 1,
+      "0xf9e410": 1,
+      "0xf9e840": 1,
+      "0xaac730": 1,
+      "0xf9e434": 1,
+      "0xf9e4f4": 1
+    },
+    "aac730": {
+      "original_bytes_before": "fb0f1af8fa6701a9",
+      "original_bytes_after": "fb0f1af8fa6701a9",
+      "patched": false,
+      "calls_observed": 1,
+      "return_observed": {
+        "return_pc": "0xaac91c",
+        "callee": "0xaac730",
+        "return_w0": 0
+      }
+    }
+  },
+  "static_boundary": {
+    "source": "Original analysis main.elf; static disassembly, no code patching.",
+    "analysis_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+    "shared_index_sha256": "a78c7af27d37b8fd931bba8bc611623dacf7685cb6e8b4f827effa0765340aad",
+    "recipe_table_path": "/workspace/acnh-re/output/tables_resolved/RecipeCraftParam.json",
+    "direct_calls": {
+      "0xeff060->0xf9e410": [
+        "0xeff0e4"
+      ],
+      "0xf9e840->0xaac910": [
+        "0xf9e874",
+        "0xf9e898",
+        "0xf9e8b4",
+        "0xf9e8d0",
+        "0xf9e8ec",
+        "0xf9e908",
+        "0xf9e924",
+        "0xf9e940",
+        "0xf9e95c",
+        "0xf9e978",
+        "0xf9e994",
+        "0xf9e9b0",
+        "0xf9e9cc",
+        "0xf9e9e8",
+        "0xf9ea04",
+        "0xf9ea20",
+        "0xf9ea3c",
+        "0xf9ea58",
+        "0xf9ea74",
+        "0xf9ea90",
+        "0xf9eaac",
+        "0xf9eac8",
+        "0xf9eae4",
+        "0xf9eb00",
+        "0xf9eb1c",
+        "0xf9eb38",
+        "0xf9eb54",
+        "0xf9eb70",
+        "0xf9eb8c",
+        "0xf9eba8",
+        "0xf9ebc4",
+        "0xf9ebe0"
+      ],
+      "0xaac910->0xaac730": [
+        "0xaac918"
+      ]
+    },
+    "itemkind_field_read_by_aac730": {
+      "crc32": "0x0ce69142",
+      "resolved_column": "SaveCountMaxNum",
+      "offset": 26,
+      "width": 2,
+      "type": "u16"
+    },
+    "dump_row_context": {
+      "apple_item_id": 2213,
+      "itemparam_itemkind_hash": "0x61cafd93",
+      "itemkind_label": "Fruit",
+      "itemkind_unique_id": 51,
+      "save_count_max_num": 0,
+      "interpretation_limit": "Resolved dump row only; the controlled probe does not reconstruct the complete live row/cache manager."
+    },
+    "instructions": [
+      {
+        "va": "0xeff0e4",
+        "bytes": "cb7c0294",
+        "mnemonic": "bl",
+        "operands": "#0xf9e410"
+      },
+      {
+        "va": "0xf9e430",
+        "bytes": "04010094",
+        "mnemonic": "bl",
+        "operands": "#0xf9e840"
+      },
+      {
+        "va": "0xf9e434",
+        "bytes": "00060036",
+        "mnemonic": "tbz",
+        "operands": "w0, #0, #0xf9e4f4"
+      },
+      {
+        "va": "0xf9e874",
+        "bytes": "2738ec97",
+        "mnemonic": "bl",
+        "operands": "#0xaac910"
+      },
+      {
+        "va": "0xf9e878",
+        "bytes": "001c0036",
+        "mnemonic": "tbz",
+        "operands": "w0, #0, #0xf9ebf8"
+      },
+      {
+        "va": "0xaac918",
+        "bytes": "86ffff97",
+        "mnemonic": "bl",
+        "operands": "#0xaac730"
+      },
+      {
+        "va": "0xaac91c",
+        "bytes": "1f000071",
+        "mnemonic": "cmp",
+        "operands": "w0, #0"
+      },
+      {
+        "va": "0xaac920",
+        "bytes": "e0079f1a",
+        "mnemonic": "cset",
+        "operands": "w0, ne"
+      },
+      {
+        "va": "0xaac74c",
+        "bytes": "000840f9",
+        "mnemonic": "ldr",
+        "operands": "x0, [x0, #0x10]"
+      },
+      {
+        "va": "0xaac760",
+        "bytes": "090140b9",
+        "mnemonic": "ldr",
+        "operands": "w9, [x8]"
+      },
+      {
+        "va": "0xaac764",
+        "bytes": "1f00096b",
+        "mnemonic": "cmp",
+        "operands": "w0, w9"
+      },
+      {
+        "va": "0xaac768",
+        "bytes": "a2000054",
+        "mnemonic": "b.hs",
+        "operands": "#0xaac77c"
+      },
+      {
+        "va": "0xaac770",
+        "bytes": "08d96078",
+        "mnemonic": "ldrh",
+        "operands": "w8, [x8, w0, sxtw #1]"
+      },
+      {
+        "va": "0xaac77c",
+        "bytes": "e8031f2a",
+        "mnemonic": "mov",
+        "operands": "w8, wzr"
+      },
+      {
+        "va": "0xaac79c",
+        "bytes": "b9c6fd97",
+        "mnemonic": "bl",
+        "operands": "#0xa1e280"
+      },
+      {
+        "va": "0xaac7d0",
+        "bytes": "db9ca172",
+        "mnemonic": "movk",
+        "operands": "w27, #0xce6, lsl #16"
+      },
+      {
+        "va": "0xaac84c",
+        "bytes": "1f050031",
+        "mnemonic": "cmn",
+        "operands": "w8, #1"
+      },
+      {
+        "va": "0xaac854",
+        "bytes": "081b00b9",
+        "mnemonic": "str",
+        "operands": "w8, [x24, #0x18]"
+      }
+    ],
+    "control_flow_facts": [
+      "0xeff060 calls 0xf9e410 at 0xeff0e4.",
+      "0xf9e410 calls 0xf9e840 at 0xf9e430 and tests W0 bit 0 at 0xf9e434; zero branches to its no-change epilogue at 0xf9e4f4.",
+      "0xf9e840 calls 0xaac910 at 0xf9e874; zero at the 0xf9e878 test branches to the reject return at 0xf9ebf8.",
+      "0xaac910 calls 0xaac730 at 0xaac918, then converts its W0 result to a boolean at 0xaac91c-0xaac920.",
+      "0xaac730 reads its record+0x10 value, bounds it against the ItemParam lookup-cache count, and uses an in-range value as an index into a 16-bit kind map; an out-of-range value becomes index zero.",
+      "0xaac730 searches a runtime ItemKind row for hash 0x0ce69142 and returns the field value; the resolved schema identifies this as ItemKind.SaveCountMaxNum."
+    ]
+  },
+  "result": {
+    "f9e410_reached": true,
+    "f9e840_return_observed": 0,
+    "f9e410_zero_gate_branch_observed": true,
+    "f9e410_no_change_epilogue_observed": true,
+    "f9e840_reject_branch_observed": true,
+    "aac730_return_w0": 0,
+    "count_slot0_after": 9,
+    "changed_inventory_offsets": [],
+    "slot0_after": [
+      2213,
+      0,
+      0
+    ],
+    "pocket_view_unchanged": true,
+    "consumption_verified": false
+  },
+  "limits": [
+    "The player member and its 0x140-byte view are synthetic; the member pointer/offset are installed at the native f8f400 call boundary.",
+    "The member reference service pointer at +0x28 is null, so ee94f0 takes its native no-provider path; no virtual view provider is emulated.",
+    "ItemParam and ItemKind tables are reconstructed from the supplied dump by inventory_requirements_native.install_item_tables; this does not recreate the game's whole runtime table manager graph.",
+    "0xaac730 is original and unpatched. If the native gate rejects the fixture, no count mutation is claimed."
+  ]
+}
