@@ -244,6 +244,24 @@ address query `0xCFAD0` returned 14 unrelated numeric/text hits. This index is
 not exhaustive or commit-pinned; it corroborates, but does not replace, the
 pinned repository checks in `public_source_inventory.json`.
 
+A second pass searched GitHub repository metadata for ACNH decompilation,
+reverse engineering, 1.0.0 symbols, EventFlow, ROMFS, modding, and save editors,
+then inspected newly surfaced candidates at pinned commits. `ACNH_Dumper`
+requires a user-supplied dumped/extracted ROMFS and has no releases; its source
+does not provide the data it unpacks. `ACNH-Save-Editor` explicitly targets
+3.0.3 and edits economy/pockets, not the Museum ledger. The modding site's
+EventFlow catalog labels `OwlDonationDone` (`0x8F02DDD1`) and
+`MuseumDonationNumCheck` (`0x3E5CFCA6`) but declares neither target build nor
+native addresses or row values. EventFlow compiler/decompiler repositories
+require caller-supplied flows and function catalogs; the compiler's sample
+corpus is v1.11.0. ACNHRecomp's v0.8.0 release has platform app packages but no
+separately named map or symbol asset, and its README excludes game files. The
+additional source pins, release metadata, query counts, and compatibility
+limits are recorded in `public_source_inventory.json`. The public static-source
+pass is exhausted within this documented search scope; completing the CFAD0 key
+and selector join remains blocked on live 1.0.0 memory plus a matching save
+trace.
+
 ## Save-to-expansion boundary
 
 The static path joins the writer, count, flag, and day-change code. Native

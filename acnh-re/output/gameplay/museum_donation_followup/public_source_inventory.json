@@ -40,7 +40,9 @@
         "term": "OwlDonationDone",
         "hits": 10,
         "pages_checked": 1,
-        "repositories": ["kwsch/NHSE"],
+        "repositories": [
+          "kwsch/NHSE"
+        ],
         "result_paths": [
           "NHSE.Core/Resources/text/*/internal_*.txt",
           "NHSE.Core/Structures/Records/EventFlagPlayer.cs"
@@ -58,22 +60,45 @@
         "term": "GSaveMuseum",
         "hits": 1,
         "pages_checked": 1,
-        "repositories": ["kwsch/NHSE"],
-        "result_paths": ["NHSE.Core/Save/Offsets/MainSaveOffsets30.cs"],
+        "repositories": [
+          "kwsch/NHSE"
+        ],
+        "result_paths": [
+          "NHSE.Core/Save/Offsets/MainSaveOffsets30.cs"
+        ],
         "interpretation": "Only a later-version NHSE offset-map hit; the separate pinned MainSaveOffsets10.cs cross-check is listed above."
       },
       {
         "term": "SaveMuseum",
         "hits": 15,
         "pages_checked": 2,
-        "repositories": ["kwsch/NHSE", "Soopyboo32/SoopyV2", "pret/pokeemerald", "pret/pokeruby", "haven1433/HexManiacAdvance", "mstan/EmeraldRecomp"],
+        "repositories": [
+          "kwsch/NHSE",
+          "Soopyboo32/SoopyV2",
+          "pret/pokeemerald",
+          "pret/pokeruby",
+          "haven1433/HexManiacAdvance",
+          "mstan/EmeraldRecomp"
+        ],
         "interpretation": "The only hit among the directly checked ACNH save-format sources is NHSE's later-version offset file; other hits are unrelated games or tools and publish no ACNH CFAD0 row values."
       },
       {
         "term": "0xCFAD0",
         "hits": 14,
         "pages_checked": 2,
-        "repositories": ["cnjinhao/nana", "guanzhi/GmSSL", "openmv/openmv", "NVIDIA/open-gpu-kernel-modules", "mrnugget/dotfiles", "jgromes/RadioLib", "wx1183618058/HuaWei-Optical-Network-Terminal-Decoder", "leiradel/ImGuiAl", "EmberGL-org/EmberGL", "kirbystealer/WebOfShadowsTools", "google/enjarify"],
+        "repositories": [
+          "cnjinhao/nana",
+          "guanzhi/GmSSL",
+          "openmv/openmv",
+          "NVIDIA/open-gpu-kernel-modules",
+          "mrnugget/dotfiles",
+          "jgromes/RadioLib",
+          "wx1183618058/HuaWei-Optical-Network-Terminal-Decoder",
+          "leiradel/ImGuiAl",
+          "EmberGL-org/EmberGL",
+          "kirbystealer/WebOfShadowsTools",
+          "google/enjarify"
+        ],
         "interpretation": "All indexed matches are unrelated numeric/text occurrences; none is an ACNH native-code or runtime-data source."
       }
     ],
@@ -153,6 +178,165 @@
       "runtime_rows_or_player_join": "No."
     }
   ],
-  "conclusion": "No checked public source provides concrete 1.0.0 CFAD0 runtime row u32 keys, the event-context-selector-to-player mapping, or a real-save donation/day-change trace. Public candidates provide build support, save schemas, handler-name crosswalks, or later-version resources only.",
-  "exact_blocker": "The local 1.0.0 native audit places the CFAD0/EAA8C0 state-manager pointer cells at 0x33d3cb0 and 0x33d4ff0 inside zero-fill BSS (0x333dec8–0x3ab7000); CFAD0 then traverses an object-owned dynamic row list. Static repository/binary artifacts therefore do not supply the live pointer contents and active row values. The EventFlow passes only MultiComplete and CompleteRoomType. Resolving the remaining join requires a 1.0.0 process memory capture (or a public source artifact generated from that same build) that records the active CFAD0 key and selector at OwlDonationDone together with the resulting SaveMuseum Players byte, plus a real save/day-change trace for the expansion boundary."
+  "conclusion": "No checked public source or repository release supplies concrete ACNH 1.0.0 CFAD0 runtime row u32 keys or the OwlDonationDone context-selector-to-player mapping. Newly found repositories either require externally supplied dumps/flows, provide only event/save-format labels, edit unrelated save fields, or target v1.11.0/3.0.3. The live BSS-backed row list and same-save/day-change evidence remain runtime-only.",
+  "exact_blocker": "The local 1.0.0 native audit places the CFAD0/EAA8C0 state-manager pointer cells at 0x33d3cb0 and 0x33d4ff0 inside zero-fill BSS (0x333dec8–0x3ab7000); CFAD0 then traverses an object-owned dynamic row list. Static repository/binary artifacts therefore do not supply the live pointer contents and active row values. The EventFlow passes only MultiComplete and CompleteRoomType. Resolving the remaining join requires a 1.0.0 process memory capture (or a public source artifact generated from that same build) that records the active CFAD0 key and selector at OwlDonationDone together with the resulting SaveMuseum Players byte, plus a real save/day-change trace for the expansion boundary.",
+  "supplemental_repository_search": {
+    "service": "GitHub REST repository search and public tree/release metadata",
+    "checked_at": "2026-11-07",
+    "queries": [
+      {
+        "query": "animal crossing new horizons decomp",
+        "total_count": 1,
+        "repos": [
+          "asteriation/acnh-eventflow-decompiler"
+        ]
+      },
+      {
+        "query": "ACNH reverse engineering",
+        "total_count": 0,
+        "repos": []
+      },
+      {
+        "query": "ACNH 1.0.0 symbols",
+        "total_count": 0,
+        "repos": []
+      },
+      {
+        "query": "Animal Crossing New Horizons recomp",
+        "total_count": 0,
+        "repos": []
+      },
+      {
+        "query": "ACNH modding",
+        "total_count": 3,
+        "repos": [
+          "Rafacasari/acnh-modding",
+          "acnhmodding/acnhmodding.github.io",
+          "Bacondude117/ACNH-3.0.X-Ultrawide"
+        ]
+      },
+      {
+        "query": "ACNH EventFlow",
+        "total_count": 4,
+        "repos": [
+          "asteriation/acnh-eventflow-decompiler",
+          "asteriation/acnh-eventflow-compiler",
+          "ShrineFox/ACNH-Tutorial-Skip",
+          "Rafacasari/acnh-eventflows"
+        ]
+      },
+      {
+        "query": "animal crossing new horizons romfs",
+        "total_count": 1,
+        "repos": [
+          "kwsch/ACNH_Dumper"
+        ]
+      },
+      {
+        "query": "ACNH save editor",
+        "total_count": 2,
+        "repos": [
+          "cbreezy210/ACNH-Save-Editor",
+          "Fusion86/AcnhPatternTools"
+        ]
+      }
+    ],
+    "recomp_release_check": {
+      "repository": "Nycolazs/ACNHRecomp",
+      "revision": "6adabcb5cf30f8a7b3dfa8988159a5faa361442e",
+      "release": "v0.8.0",
+      "published_at": "2026-11-05",
+      "asset_names": [
+        "ACNHRecomp-v0.8.0-android.apk",
+        "ACNHRecomp-v0.8.0-linux-x64.tar.gz",
+        "ACNHRecomp-v0.8.0-macOS-arm64.zip",
+        "ACNHRecomp-v0.8.0-windows-x64.zip"
+      ],
+      "finding": "The inspected release exposes platform application packages only; no separately named hades.map, symbol file, RomFS, or museum data asset. The pinned source README says game files are not included."
+    },
+    "limitations": "GitHub repository search indexes metadata, not all file contents. Public branches/releases were checked at the stated revisions or immutable release tag; this does not rule out private/unindexed data. No game dump or non-public artifact was downloaded or used.",
+    "conclusion": "Additional public repos are tooling, EventFlow name/hash catalogs, a save editor explicitly tested on 3.0.3, or mod projects explicitly targeting 3.0.3. None supplies the 1.0.0 CFAD0 row list or a selector-to-player observation."
+  },
+  "supplemental_repositories": [
+    {
+      "repository": "kwsch/ACNH_Dumper",
+      "revision": "ceb3001bc811363ecc968594b0e46f3dd6d3bd6a",
+      "files": [
+        "https://github.com/kwsch/ACNH_Dumper/blob/ceb3001bc811363ecc968594b0e46f3dd6d3bd6a/README.md"
+      ],
+      "release_count": 0,
+      "finding": "README says the tool must be pointed at the user's already dumped and extracted RomFS, then unpacks selected file formats. The 15-file tree is tool source only and contains no museum data/map; it is not a source for obtaining a public dump or CFAD0 rows."
+    },
+    {
+      "repository": "cbreezy210/ACNH-Save-Editor",
+      "revision": "731c2284195bf4a56699709fb053a2124cd8fba2",
+      "files": [
+        "https://github.com/cbreezy210/ACNH-Save-Editor/blob/731c2284195bf4a56699709fb053a2124cd8fba2/README.md",
+        "https://github.com/cbreezy210/ACNH-Save-Editor/blob/731c2284195bf4a56699709fb053a2124cd8fba2/source/main.cpp"
+      ],
+      "release_versions": [
+        "v1.0",
+        "v1.1",
+        "v1.2.0",
+        "v1.3.0",
+        "v.1.4.0"
+      ],
+      "build_match": "README compatibility table explicitly says ACNH 3.0.3; it does not claim 1.0.0 support.",
+      "finding": "The editor documents personal.dat/main.dat edits for wallet, bank, Miles, loan, and pocket items. The inspected source search and 20-path tree reveal no Museum/CFAD0 implementation or native symbol/map data."
+    },
+    {
+      "repository": "acnhmodding/acnhmodding.github.io",
+      "revision": "109450b2a46618c9b1698695f15b55464a2052e2",
+      "files": [
+        "https://github.com/acnhmodding/acnhmodding.github.io/blob/109450b2a46618c9b1698695f15b55464a2052e2/public/data/eventflow-functions.json",
+        "https://github.com/acnhmodding/acnhmodding.github.io/blob/109450b2a46618c9b1698695f15b55464a2052e2/src/content/docs/guides/dumping-save-data.mdx"
+      ],
+      "finding": "Its function catalog identifies EventFlowActionOwlDonationDone hash 0x8F02DDD1 and EventFlowQueryMuseumDonationNumCheck hash 0x3E5CFCA6, with actor declarations only. The JSON declares no game build or native VA, and contains no CFAD0 rows. The save-dumping guide documents a method, not a published save/memory capture."
+    },
+    {
+      "repository": "asteriation/acnh-eventflow-compiler",
+      "revision": "821b2b5f4e7c31ccdf46a7743ccfcd0e3219a4f8",
+      "files": [
+        "https://github.com/asteriation/acnh-eventflow-compiler/blob/821b2b5f4e7c31ccdf46a7743ccfcd0e3219a4f8/README.md"
+      ],
+      "release_count": 0,
+      "finding": "Compiler tooling requires caller-supplied EventFlow files and functions.csv. README says its sample corpus is ACNH v1.11.0; the 105-file repository tree has no Museum/CFAD0 symbols, game image, runtime rows, or save capture."
+    },
+    {
+      "repository": "asteriation/acnh-eventflow-decompiler",
+      "revision": "95f33afe29572649d94b820128d54b5026e1b191",
+      "files": [
+        "https://github.com/asteriation/acnh-eventflow-decompiler/blob/95f33afe29572649d94b820128d54b5026e1b191/README.md"
+      ],
+      "release_count": 0,
+      "finding": "Decompiler tooling requires caller-supplied BFEVFL and functions.csv; the 22-file repository tree has no Museum/CFAD0 dataset or native map. It can expose flow names when supplied resources exist, not runtime manager values."
+    },
+    {
+      "repository": "Rafacasari/acnh-modding",
+      "revision": "742f05b9d502637ba240a386068c944b74bda668",
+      "files": [
+        "https://github.com/Rafacasari/acnh-modding/blob/742f05b9d502637ba240a386068c944b74bda668/README.md"
+      ],
+      "finding": "README marks this repository obsolete and redirects to the community docs site; the 25-file tree contains no Museum/CFAD0 source or symbol data."
+    },
+    {
+      "repository": "Fusion86/AcnhPatternTools",
+      "revision": "300e98ef2c122361866ce9f42c2a5c0c8016f154",
+      "files": [
+        "https://github.com/Fusion86/AcnhPatternTools/blob/300e98ef2c122361866ce9f42c2a5c0c8016f154/README.md",
+        "https://github.com/Fusion86/AcnhPatternTools/blob/300e98ef2c122361866ce9f42c2a5c0c8016f154/horizonlib/include/HorizonSaveData.hpp",
+        "https://github.com/Fusion86/AcnhPatternTools/blob/300e98ef2c122361866ce9f42c2a5c0c8016f154/horizonlib/lib/HorizonSaveData.cpp"
+      ],
+      "finding": "A save/pattern editor with generic Horizon save parsing. The checked Museum/Donation/CFAD0/version terms return no source hits; no 1.0.0 symbol map or runtime row dataset is identified."
+    },
+    {
+      "repository": "Bacondude117/ACNH-3.0.X-Ultrawide",
+      "revision": "9570051a7f93ee041fa4723c5b0f386dfced9051",
+      "files": [
+        "https://github.com/Bacondude117/ACNH-3.0.X-Ultrawide/blob/9570051a7f93ee041fa4723c5b0f386dfced9051/README.md"
+      ],
+      "build_match": "README targets ACNH 3.0.3, build ID FF1D1C05670DB6021C85B624A710B963.",
+      "finding": "The source targets display/field/UI patches for a later build. Its 41-file tree contains no Museum, donation, CFAD0, or symbol-map path; it cannot establish the v1.0.0 runtime rows."
+    }
+  ]
 }
