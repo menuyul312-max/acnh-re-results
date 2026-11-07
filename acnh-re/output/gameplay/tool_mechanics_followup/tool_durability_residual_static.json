@@ -1,5 +1,5 @@
 {
-  "schema": "acnh-re/tool-durability-residual-static/1",
+  "schema": "acnh-re/tool-durability-residual-static/2",
   "evidence_level": "INDEXED_NATIVE_CALLS_EVENTFLOW_AND_EXISTING_BOUNDED_PROBES",
   "game_version": "1.0.0",
   "zero_remaining_to_break_state": {
@@ -530,6 +530,157 @@
           }
         ]
       }
+    },
+    "indirect_player_state_callback_audit": {
+      "status": "RESOLVED_CALLBACK_POINTER_GROUP; THRESHOLD_PRODUCER_OPEN",
+      "registry_va": "0xdd9a60",
+      "registry_artifact": "/workspace/acnh-re/output/binary/disassembly_fallback/dd9a60.asm",
+      "callback_sequence_start_va": "0x32fbef0",
+      "callback_sequence_status": "relocated code pointer sequence; not automatically a C++ vtable",
+      "callback_sequence_is_proven_cpp_vtable": false,
+      "adjacent_state_registrations": {
+        "184": {
+          "state_id_in_registry_call": "0xb8",
+          "state_name": "State::cToolBreakDemo",
+          "string_va": "0x2947827",
+          "callback_pointer_indices": [
+            549,
+            550,
+            551
+          ],
+          "callback_targets": [
+            "0xdf6360",
+            "0xdf6420",
+            "0xdf63a0"
+          ]
+        },
+        "185": {
+          "state_id_in_registry_call": "0xb9",
+          "state_name": "State::cBeeStingDemo",
+          "string_va": "0x292f5cf",
+          "callback_pointer_indices": [
+            552,
+            553,
+            554
+          ],
+          "callback_targets": [
+            "0xdf6560",
+            "0xdf6620",
+            "0xdf65a0"
+          ]
+        }
+      },
+      "break_handler_wrapper_calls": [
+        {
+          "callsite_pc": "0xdf6584",
+          "wrapper_va": "0xdf6560",
+          "wrapper_is_in_registered_callback_group": true,
+          "target_va": "0xe37830"
+        },
+        {
+          "callsite_pc": "0xdf65d8",
+          "wrapper_va": "0xdf65a0",
+          "wrapper_is_in_registered_callback_group": true,
+          "target_va": "0xe37a50"
+        },
+        {
+          "callsite_pc": "0xdf6654",
+          "wrapper_va": "0xdf6620",
+          "wrapper_is_in_registered_callback_group": true,
+          "target_va": "0xe37ed0"
+        }
+      ],
+      "break_handler_addresses_present_as_direct_code_pointers": {
+        "0xe37830": 0,
+        "0xe37a50": 0,
+        "0xe37ed0": 0
+      },
+      "event_handler_resolved_name_matches": [],
+      "player_tool_break_eventflow_row_count": 9,
+      "player_tool_break_eventflow_action_names": [
+        "EventFlowActionEventFlagSystemAdd",
+        "EventFlowActionOpenMessageWindow",
+        "EventFlowActionReservePlayerMutterDemo",
+        "EventFlowActionSetTagFromSystem"
+      ],
+      "player_tool_break_entry_flag_effects": {
+        "ToolBreak_Axe": {
+          "flag_reads": [
+            "cPlayer:GoldenAxeLearningCount",
+            "cPlayer:MainmenuRecipe"
+          ],
+          "flag_writes": [
+            {
+              "flag": "cPlayer:GoldenAxeLearningCount",
+              "op": "add",
+              "value": 1,
+              "event": 7
+            }
+          ]
+        },
+        "ToolBreak_Scoop": {
+          "flag_reads": [],
+          "flag_writes": []
+        },
+        "ToolBreak_Watering": {
+          "flag_reads": [],
+          "flag_writes": []
+        },
+        "ToolBreak_Net": {
+          "flag_reads": [],
+          "flag_writes": []
+        },
+        "ToolBreak_Slingshot": {
+          "flag_reads": [],
+          "flag_writes": []
+        },
+        "ToolBreak_FishingRod": {
+          "flag_reads": [],
+          "flag_writes": []
+        }
+      },
+      "native_break_flag_name_references": {
+        "cLifeSupportAchievement:BreakTool": {
+          "definition": {
+            "table": "EventFlagsLifeSupportAchievementParam",
+            "source_id": 20,
+            "name_ja": "道具を壊した",
+            "max": 1,
+            "default": null,
+            "flow_access": null,
+            "net_access": null,
+            "reset_policy_raw": {}
+          },
+          "eventflow_writers": [],
+          "eventflow_readers": [],
+          "writer_status": "no_eventflow_writer; written by native code or never written in 1.0.0 (unproven)"
+        },
+        "cPlayerTemp:ForceToolBreakDemo": {
+          "definition": {
+            "table": "EventFlagsPlayerTempParam",
+            "source_id": 27,
+            "name_ja": "道具|強制壊れデモ",
+            "max": 1,
+            "default": 0,
+            "flow_access": 1,
+            "net_access": null,
+            "reset_policy_raw": {
+              "h_3c7fb88f": 0
+            }
+          },
+          "eventflow_writers": [],
+          "eventflow_readers": [],
+          "writer_status": "no_eventflow_writer; written by native code or never written in 1.0.0 (unproven)"
+        }
+      },
+      "action_result_vs_wear_boundary": {
+        "e895a0": "Returns update-success after writing packed ToolDamage and slot dirty bit 0x4000; it does not return a break/action result.",
+        "e893c0_and_db0140": "e893c0 gates descriptor creation on the e895a0 success bit; db0140 checks the descriptor UID against -2 before inserting a result item. Neither status is the Player_ToolBreak event result.",
+        "db00f0": "Forwards e895a0 update success as 1/0; its indexed net and rod callers do not branch on that value.",
+        "Player_ToolBreak": "Its six indexed entry points present break messages; only ToolBreak_Axe writes cPlayer:GoldenAxeLearningCount, and only on the recipe/limit branch. These EventFlow effects do not write the packed wear word or slot dirty marker.",
+        "native_break_flag_name_limit": "BreakTool and ForceToolBreakDemo names also occur in native state handlers. The flag index supplies same-name definitions, but the BreakTool namespace binding is not established by the handler callback audit alone."
+      },
+      "finding": "The player-state registry binds a relocated callback triple to the wrappers that directly call e37830/e37a50/e37ed0. The registered descriptor labels for the neighboring IDs are cToolBreakDemo (0xb8) and cBeeStingDemo (0xb9); the break wrappers are in the 0xb9 triple while their wrapper bodies carry internal ordinal 0xb8. Preserve this raw name/index association rather than treating the sequence as a named C++ vtable. EventFlow has no matching resolved handler-name entry, and Player_ToolBreak's indexed rows contain messages/recipe conditions rather than a native state-selection action. This confirms the handler callback route but not the remaining-damage-to-break producer."
     },
     "break_state_wear_edges": [],
     "handler_notes": {
@@ -1440,8 +1591,862 @@
         ],
         "claim": "The SaveSimpleSave handler stores/processes the Process parameter and tail-dispatches to 0x338080; that dispatcher calls 0xfb3160, which constructs a SaveProc operation and passes it to 0xfaf180. The action update path polls completion via 0xf1da80. The tail edge is from decompiler control flow because the indexed direct-call table omits the terminal branch."
       },
-      "durable_flush_status": "OPEN; the SaveSimpleSave -> 338080 -> SaveProc handoff and completion path are mapped, but the serializer and durable file write/flush after SaveProc were not identified.",
+      "durable_flush_status": "OPEN; SaveSimpleSave -> SaveProc request, queue worker, and indirect task-dispatch boundary are mapped. The worker callback, serializer, and durable file write/flush are not identified; the available native sandbox cannot execute the separate SDK filesystem imports.",
       "scope_limit": "This is the generic SaveSimpleSave -> SaveProc request/completion trace. It does not connect the tool-slot dirty bit to a serialized field or prove a disk flush."
+    },
+    "saveproc_exefs_worker_audit": {
+      "status": "PARTIAL_FILE_WORKER_EVIDENCE; PLAYER_SLOT_SERIALIZATION_OPEN",
+      "supplied_exefs_modules": [
+        {
+          "module": "rtld",
+          "build_id": "31a2773ea6928ffe3d32b17b3ad08f54826da39f000000000000000000000000",
+          "soname": null,
+          "needed": [],
+          "symbol_count": 20,
+          "relevant_static_strings": [],
+          "game_tool_save_symbol_matches": []
+        },
+        {
+          "module": "main",
+          "build_id": "7fc1baff976aeca414520cb89f4616cb00000000000000000000000000000000",
+          "soname": null,
+          "needed": [
+            "D:/home/Project/Park/App/Lib/NintendoSDK/Libraries/NX-NXFP2-a64/Release//multimedia.nss",
+            "nnSdk.nss"
+          ],
+          "symbol_count": 941,
+          "relevant_static_strings": [
+            {
+              "va": "0x292ac13",
+              "text": "ToolDamage"
+            },
+            {
+              "va": "0x294c618",
+              "text": "PlayerToolBreak"
+            },
+            {
+              "va": "0x2963e21",
+              "text": "SaveProc"
+            },
+            {
+              "va": "0x2965aa1",
+              "text": "Player_ToolBreak"
+            },
+            {
+              "va": "0x2976405",
+              "text": "BreakToolCount"
+            },
+            {
+              "va": "0x298e0d5",
+              "text": "BreakTool"
+            },
+            {
+              "va": "0x29a72ff",
+              "text": "PlayerToolBreakKeep"
+            }
+          ],
+          "game_tool_save_symbol_matches": []
+        },
+        {
+          "module": "subsdk0",
+          "build_id": "5a7ada8dd7447c10aa244944f64d0aff17c50539000000000000000000000000",
+          "soname": null,
+          "needed": [],
+          "symbol_count": 11514,
+          "relevant_static_strings": [],
+          "game_tool_save_symbol_matches": []
+        },
+        {
+          "module": "sdk",
+          "build_id": "ad3fdfbd62a5f4b082d385ffe420d4400abb831d000000000000000000000000",
+          "soname": "nnSdk.nss",
+          "needed": [],
+          "symbol_count": 25042,
+          "relevant_static_strings": [],
+          "game_tool_save_symbol_matches": []
+        }
+      ],
+      "main_missing_dependency_candidates": [
+        "D:/home/Project/Park/App/Lib/NintendoSDK/Libraries/NX-NXFP2-a64/Release//multimedia.nss"
+      ],
+      "saveproc_callback_pointer_candidate": {
+        "array_start_va": "0x32ff8d8",
+        "array_status": "relocated code pointer sequence; not automatically a C++ vtable",
+        "entries_for_fafec0": [
+          {
+            "index": 11,
+            "pointer_va": "0x32ff930",
+            "target_va": "0xfafec0"
+          }
+        ],
+        "fafec0_direct_callees": [
+          "0xfb1e10",
+          "0xf2d1a0",
+          "0xf32790",
+          "0xf32790",
+          "0xf328f0",
+          "0xf32840",
+          "0xf328f0",
+          "0xf32910",
+          "0xfb1ff0",
+          "0xf2d1a0",
+          "0xfb2200",
+          "0xf2d1a0",
+          "0xf2dd50",
+          "0xfb23e0",
+          "0xf2d1a0",
+          "0xf2df80",
+          "0xfb25e0"
+        ],
+        "fafec0_direct_task_targets": [
+          "0xfb1e10",
+          "0xfb1ff0",
+          "0xfb2200",
+          "0xfb23e0",
+          "0xfb25e0"
+        ],
+        "task_callbacks": [
+          {
+            "function_va": "0xfb1e10",
+            "name": "FUN_010b1e10",
+            "size_bytes": 468,
+            "span_end_va": "0xfb1fe3",
+            "string_refs": [],
+            "direct_calls": [
+              {
+                "pc": "0xfb1e4c",
+                "target_va": "0xf2d1a0"
+              },
+              {
+                "pc": "0xfb1e5c",
+                "target_va": "0xf2d1a0"
+              },
+              {
+                "pc": "0xfb1e9c",
+                "target_va": "0x1990780"
+              },
+              {
+                "pc": "0xfb1ed4",
+                "target_va": "0xf323b0"
+              },
+              {
+                "pc": "0xfb1eec",
+                "target_va": "0x1990780"
+              },
+              {
+                "pc": "0xfb1f08",
+                "target_va": "0xf325a0"
+              },
+              {
+                "pc": "0xfb1f20",
+                "target_va": "0xf29600"
+              },
+              {
+                "pc": "0xfb1f5c",
+                "target_va": "0xf214a0"
+              },
+              {
+                "pc": "0xfb1f7c",
+                "target_va": "0xf214a0"
+              }
+            ],
+            "direct_callers": [
+              {
+                "pc": "0xfafedc",
+                "owner_va": null,
+                "target_va": "0xfb1e10"
+              },
+              {
+                "pc": "0xfb0108",
+                "owner_va": null,
+                "target_va": "0xfb1e10"
+              }
+            ]
+          },
+          {
+            "function_va": "0xfb1ff0",
+            "name": "FUN_010b1ff0",
+            "size_bytes": 516,
+            "span_end_va": "0xfb21f3",
+            "string_refs": [],
+            "direct_calls": [
+              {
+                "pc": "0xfb202c",
+                "target_va": "0xf2d1a0"
+              },
+              {
+                "pc": "0xfb2044",
+                "target_va": "0xf300a0"
+              },
+              {
+                "pc": "0xfb204c",
+                "target_va": "0xf2d1a0"
+              },
+              {
+                "pc": "0xfb2058",
+                "target_va": "0xf300f0"
+              },
+              {
+                "pc": "0xfb2094",
+                "target_va": "0x1990780"
+              },
+              {
+                "pc": "0xfb20c8",
+                "target_va": "0xf323b0"
+              },
+              {
+                "pc": "0xfb20e0",
+                "target_va": "0x1990780"
+              },
+              {
+                "pc": "0xfb2104",
+                "target_va": "0xf325a0"
+              },
+              {
+                "pc": "0xfb211c",
+                "target_va": "0xf29600"
+              },
+              {
+                "pc": "0xfb218c",
+                "target_va": "0xf214a0"
+              },
+              {
+                "pc": "0xfb21ac",
+                "target_va": "0xf214a0"
+              }
+            ],
+            "direct_callers": [
+              {
+                "pc": "0xfaff50",
+                "owner_va": null,
+                "target_va": "0xfb1ff0"
+              }
+            ]
+          },
+          {
+            "function_va": "0xfb2200",
+            "name": "FUN_010b2200",
+            "size_bytes": 476,
+            "span_end_va": "0xfb23db",
+            "string_refs": [],
+            "direct_calls": [
+              {
+                "pc": "0xfb222c",
+                "target_va": "0xf2d1a0"
+              },
+              {
+                "pc": "0xfb2238",
+                "target_va": "0xf2d1a0"
+              },
+              {
+                "pc": "0xfb224c",
+                "target_va": "0xf2d1a0"
+              },
+              {
+                "pc": "0xfb2264",
+                "target_va": "0xf2d1a0"
+              },
+              {
+                "pc": "0xfb22b0",
+                "target_va": "0x1990780"
+              },
+              {
+                "pc": "0xfb22e4",
+                "target_va": "0xf323b0"
+              },
+              {
+                "pc": "0xfb22fc",
+                "target_va": "0x1990780"
+              },
+              {
+                "pc": "0xfb2318",
+                "target_va": "0xf325a0"
+              },
+              {
+                "pc": "0xfb2330",
+                "target_va": "0xf29600"
+              },
+              {
+                "pc": "0xfb236c",
+                "target_va": "0xf214a0"
+              }
+            ],
+            "direct_callers": [
+              {
+                "pc": "0xfaffc8",
+                "owner_va": null,
+                "target_va": "0xfb2200"
+              },
+              {
+                "pc": "0xfb0168",
+                "owner_va": null,
+                "target_va": "0xfb2200"
+              }
+            ]
+          },
+          {
+            "function_va": "0xfb23e0",
+            "name": "FUN_010b23e0",
+            "size_bytes": 508,
+            "span_end_va": "0xfb25db",
+            "string_refs": [],
+            "direct_calls": [
+              {
+                "pc": "0xfb240c",
+                "target_va": "0xf2d1a0"
+              },
+              {
+                "pc": "0xfb2414",
+                "target_va": "0xf2dc70"
+              },
+              {
+                "pc": "0xfb241c",
+                "target_va": "0xf2d1a0"
+              },
+              {
+                "pc": "0xfb2430",
+                "target_va": "0xf2d1a0"
+              },
+              {
+                "pc": "0xfb2448",
+                "target_va": "0xf2d1a0"
+              },
+              {
+                "pc": "0xfb245c",
+                "target_va": "0xf2dd50"
+              },
+              {
+                "pc": "0xfb2498",
+                "target_va": "0x1990780"
+              },
+              {
+                "pc": "0xfb24cc",
+                "target_va": "0xf323b0"
+              },
+              {
+                "pc": "0xfb24e4",
+                "target_va": "0x1990780"
+              },
+              {
+                "pc": "0xfb2500",
+                "target_va": "0xf325a0"
+              },
+              {
+                "pc": "0xfb2518",
+                "target_va": "0xf29600"
+              },
+              {
+                "pc": "0xfb2554",
+                "target_va": "0xf214a0"
+              },
+              {
+                "pc": "0xfb2574",
+                "target_va": "0xf214a0"
+              }
+            ],
+            "direct_callers": [
+              {
+                "pc": "0xfafff0",
+                "owner_va": null,
+                "target_va": "0xfb23e0"
+              },
+              {
+                "pc": "0xfb01c8",
+                "owner_va": null,
+                "target_va": "0xfb23e0"
+              }
+            ]
+          },
+          {
+            "function_va": "0xfb25e0",
+            "name": "FUN_010b25e0",
+            "size_bytes": 528,
+            "span_end_va": "0xfb27ef",
+            "string_refs": [],
+            "direct_calls": [
+              {
+                "pc": "0xfb260c",
+                "target_va": "0xf2d1a0"
+              },
+              {
+                "pc": "0xfb2614",
+                "target_va": "0xf2dec0"
+              },
+              {
+                "pc": "0xfb261c",
+                "target_va": "0xf2d1a0"
+              },
+              {
+                "pc": "0xfb2630",
+                "target_va": "0xf2d1a0"
+              },
+              {
+                "pc": "0xfb2648",
+                "target_va": "0xf2d1a0"
+              },
+              {
+                "pc": "0xfb2664",
+                "target_va": "0xf2df80"
+              },
+              {
+                "pc": "0xfb2690",
+                "target_va": "0x1990780"
+              },
+              {
+                "pc": "0xfb26c4",
+                "target_va": "0xf323b0"
+              },
+              {
+                "pc": "0xfb26dc",
+                "target_va": "0x1990780"
+              },
+              {
+                "pc": "0xfb26f8",
+                "target_va": "0xf325a0"
+              },
+              {
+                "pc": "0xfb2710",
+                "target_va": "0xf29600"
+              },
+              {
+                "pc": "0xfb2760",
+                "target_va": "0xf214a0"
+              },
+              {
+                "pc": "0xfb2780",
+                "target_va": "0xf214a0"
+              }
+            ],
+            "direct_callers": [
+              {
+                "pc": "0xfb0018",
+                "owner_va": null,
+                "target_va": "0xfb25e0"
+              },
+              {
+                "pc": "0xfb0228",
+                "owner_va": null,
+                "target_va": "0xfb25e0"
+              }
+            ]
+          }
+        ],
+        "direct_task_and_filesystem_edges": [
+          {
+            "pc": "0xfafedc",
+            "owner_va": null,
+            "target_va": "0xfb1e10"
+          },
+          {
+            "pc": "0xfaff50",
+            "owner_va": null,
+            "target_va": "0xfb1ff0"
+          },
+          {
+            "pc": "0xfaffc8",
+            "owner_va": null,
+            "target_va": "0xfb2200"
+          },
+          {
+            "pc": "0xfafff0",
+            "owner_va": null,
+            "target_va": "0xfb23e0"
+          },
+          {
+            "pc": "0xfb0018",
+            "owner_va": null,
+            "target_va": "0xfb25e0"
+          },
+          {
+            "pc": "0xfb1f20",
+            "owner_va": "0xfb1e10",
+            "target_va": "0xf29600"
+          },
+          {
+            "pc": "0xfb1f5c",
+            "owner_va": "0xfb1e10",
+            "target_va": "0xf214a0"
+          },
+          {
+            "pc": "0xfb1f7c",
+            "owner_va": "0xfb1e10",
+            "target_va": "0xf214a0"
+          },
+          {
+            "pc": "0xfb211c",
+            "owner_va": "0xfb1ff0",
+            "target_va": "0xf29600"
+          },
+          {
+            "pc": "0xfb218c",
+            "owner_va": "0xfb1ff0",
+            "target_va": "0xf214a0"
+          },
+          {
+            "pc": "0xfb21ac",
+            "owner_va": "0xfb1ff0",
+            "target_va": "0xf214a0"
+          },
+          {
+            "pc": "0xfb2330",
+            "owner_va": "0xfb2200",
+            "target_va": "0xf29600"
+          },
+          {
+            "pc": "0xfb236c",
+            "owner_va": "0xfb2200",
+            "target_va": "0xf214a0"
+          },
+          {
+            "pc": "0xfb2518",
+            "owner_va": "0xfb23e0",
+            "target_va": "0xf29600"
+          },
+          {
+            "pc": "0xfb2554",
+            "owner_va": "0xfb23e0",
+            "target_va": "0xf214a0"
+          },
+          {
+            "pc": "0xfb2574",
+            "owner_va": "0xfb23e0",
+            "target_va": "0xf214a0"
+          },
+          {
+            "pc": "0xfb2710",
+            "owner_va": "0xfb25e0",
+            "target_va": "0xf29600"
+          },
+          {
+            "pc": "0xfb2760",
+            "owner_va": "0xfb25e0",
+            "target_va": "0xf214a0"
+          },
+          {
+            "pc": "0xfb2780",
+            "owner_va": "0xfb25e0",
+            "target_va": "0xf214a0"
+          },
+          {
+            "pc": "0xf214e4",
+            "owner_va": "0xf214a0",
+            "target_va": "0x220ee60"
+          },
+          {
+            "pc": "0xf21414",
+            "owner_va": "0xf21350",
+            "target_va": "0x220ee80"
+          },
+          {
+            "pc": "0xf21444",
+            "owner_va": "0xf21350",
+            "target_va": "0x220ee90"
+          },
+          {
+            "pc": "0xf21450",
+            "owner_va": "0xf21350",
+            "target_va": "0x220eea0"
+          }
+        ],
+        "binding_limit": "The relocated sequence contains the worker candidate, and the generic task executor reaches an indirect object callback, but this sequence is not proven as the SaveProc object's vtable and the queued object-to-entry binding remains open."
+      },
+      "filesystem_imports_resolved_to_sdk": [
+        {
+          "api": "MountDeviceSaveData",
+          "status": "unique_export_match",
+          "sdk_exports": [
+            "0x6ad00"
+          ],
+          "got_sites": [
+            "0x32cecf8"
+          ]
+        },
+        {
+          "api": "OpenFile",
+          "status": "unique_export_match",
+          "sdk_exports": [
+            "0x66300"
+          ],
+          "got_sites": [
+            "0x32ced08"
+          ]
+        },
+        {
+          "api": "SetFileSize",
+          "status": "unique_export_match",
+          "sdk_exports": [
+            "0x64e20"
+          ],
+          "got_sites": [
+            "0x32ced10"
+          ]
+        },
+        {
+          "api": "CloseFile",
+          "status": "unique_export_match",
+          "sdk_exports": [
+            "0x64860"
+          ],
+          "got_sites": [
+            "0x32ced18"
+          ]
+        },
+        {
+          "api": "WriteFile",
+          "status": "unique_export_match",
+          "sdk_exports": [
+            "0x64bf0"
+          ],
+          "got_sites": [
+            "0x32cf7a8"
+          ]
+        },
+        {
+          "api": "FlushFile",
+          "status": "unique_export_match",
+          "sdk_exports": [
+            "0x64d30"
+          ],
+          "got_sites": [
+            "0x32cf798"
+          ]
+        }
+      ],
+      "filesystem_api_direct_callers": {
+        "MountDeviceSaveData": [
+          {
+            "pc": "0xf20c20",
+            "owner_va": "0xf20bd0",
+            "target_va": "0x220ee60"
+          },
+          {
+            "pc": "0xf21280",
+            "owner_va": "0xf21230",
+            "target_va": "0x220ee60"
+          },
+          {
+            "pc": "0xf214e4",
+            "owner_va": "0xf214a0",
+            "target_va": "0x220ee60"
+          },
+          {
+            "pc": "0xf21744",
+            "owner_va": "0xf21700",
+            "target_va": "0x220ee60"
+          },
+          {
+            "pc": "0xf21854",
+            "owner_va": "0xf21810",
+            "target_va": "0x220ee60"
+          },
+          {
+            "pc": "0xf2228c",
+            "owner_va": "0xf22250",
+            "target_va": "0x220ee60"
+          },
+          {
+            "pc": "0xf22400",
+            "owner_va": "0xf223c0",
+            "target_va": "0x220ee60"
+          },
+          {
+            "pc": "0xf22590",
+            "owner_va": "0xf22550",
+            "target_va": "0x220ee60"
+          }
+        ],
+        "OpenFile": [
+          {
+            "pc": "0xf21414",
+            "owner_va": "0xf21350",
+            "target_va": "0x220ee80"
+          },
+          {
+            "pc": "0x14eec2c",
+            "owner_va": "0x14eebb0",
+            "target_va": "0x220ee80"
+          },
+          {
+            "pc": "0x196fd28",
+            "owner_va": null,
+            "target_va": "0x220ee80"
+          },
+          {
+            "pc": "0x1b8da7c",
+            "owner_va": null,
+            "target_va": "0x220ee80"
+          },
+          {
+            "pc": "0x1b99a98",
+            "owner_va": null,
+            "target_va": "0x220ee80"
+          },
+          {
+            "pc": "0x1c2f864",
+            "owner_va": "0x1c2f830",
+            "target_va": "0x220ee80"
+          },
+          {
+            "pc": "0x1fc8810",
+            "owner_va": "0x1fc8780",
+            "target_va": "0x220ee80"
+          },
+          {
+            "pc": "0x1fc8a68",
+            "owner_va": "0x1fc8a40",
+            "target_va": "0x220ee80"
+          },
+          {
+            "pc": "0x1fc8abc",
+            "owner_va": "0x1fc8a40",
+            "target_va": "0x220ee80"
+          }
+        ],
+        "SetFileSize": [
+          {
+            "pc": "0xf21444",
+            "owner_va": "0xf21350",
+            "target_va": "0x220ee90"
+          },
+          {
+            "pc": "0x196fd58",
+            "owner_va": null,
+            "target_va": "0x220ee90"
+          },
+          {
+            "pc": "0x1fc8a7c",
+            "owner_va": "0x1fc8a40",
+            "target_va": "0x220ee90"
+          }
+        ],
+        "CloseFile": [
+          {
+            "pc": "0xf21450",
+            "owner_va": "0xf21350",
+            "target_va": "0x220eea0"
+          },
+          {
+            "pc": "0x14eed1c",
+            "owner_va": "0x14eed10",
+            "target_va": "0x220eea0"
+          },
+          {
+            "pc": "0x196fd68",
+            "owner_va": null,
+            "target_va": "0x220eea0"
+          },
+          {
+            "pc": "0x196fdcc",
+            "owner_va": null,
+            "target_va": "0x220eea0"
+          },
+          {
+            "pc": "0x196fdf8",
+            "owner_va": null,
+            "target_va": "0x220eea0"
+          },
+          {
+            "pc": "0x1b8db9c",
+            "owner_va": null,
+            "target_va": "0x220eea0"
+          },
+          {
+            "pc": "0x1b99bb0",
+            "owner_va": null,
+            "target_va": "0x220eea0"
+          },
+          {
+            "pc": "0x1c2f904",
+            "owner_va": "0x1c2f8d0",
+            "target_va": "0x220eea0"
+          },
+          {
+            "pc": "0x1fc88b8",
+            "owner_va": null,
+            "target_va": "0x220eea0"
+          },
+          {
+            "pc": "0x1fc88f8",
+            "owner_va": null,
+            "target_va": "0x220eea0"
+          },
+          {
+            "pc": "0x1fc8bc8",
+            "owner_va": null,
+            "target_va": "0x220eea0"
+          },
+          {
+            "pc": "0x1fc8c18",
+            "owner_va": null,
+            "target_va": "0x220eea0"
+          },
+          {
+            "pc": "0x1fc8d90",
+            "owner_va": null,
+            "target_va": "0x220eea0"
+          }
+        ],
+        "WriteFile": [
+          {
+            "pc": "0x1970020",
+            "owner_va": null,
+            "target_va": "0x22103c0"
+          },
+          {
+            "pc": "0x1c2fab4",
+            "owner_va": "0x1c2fa70",
+            "target_va": "0x22103c0"
+          },
+          {
+            "pc": "0x1c2fe18",
+            "owner_va": null,
+            "target_va": "0x22103c0"
+          },
+          {
+            "pc": "0x1fc8c7c",
+            "owner_va": null,
+            "target_va": "0x22103c0"
+          }
+        ],
+        "FlushFile": [
+          {
+            "pc": "0x196fde8",
+            "owner_va": null,
+            "target_va": "0x22103a0"
+          },
+          {
+            "pc": "0x196fe2c",
+            "owner_va": null,
+            "target_va": "0x22103a0"
+          },
+          {
+            "pc": "0x1c2f94c",
+            "owner_va": null,
+            "target_va": "0x22103a0"
+          },
+          {
+            "pc": "0x1fc8bc0",
+            "owner_va": null,
+            "target_va": "0x22103a0"
+          },
+          {
+            "pc": "0x1fc8c10",
+            "owner_va": null,
+            "target_va": "0x22103a0"
+          },
+          {
+            "pc": "0x1fc8db8",
+            "owner_va": null,
+            "target_va": "0x22103a0"
+          },
+          {
+            "pc": "0x1fc8e00",
+            "owner_va": null,
+            "target_va": "0x22103a0"
+          }
+        ]
+      },
+      "finding": "This pass extends the SaveProc request/completion trace to a candidate file-oriented worker family: its table contains 0xfafec0, which dispatches task helpers; those helpers reach 0xf214a0/0xf21350 and the main-module wrappers for MountDeviceSaveData, OpenFile, SetFileSize, and CloseFile. The main imports generic filesystem APIs from the supplied sdk/nnSdk module, while rtld/subsdk0 have no game-specific tool/save strings or symbols. WriteFile/FlushFile imports have callers in other file-stream and engine paths, but none is an indexed direct call from the SaveProc request, queue, or candidate task-helper spans. Their possible indirect reachability is unresolved. The SaveProc callback identity, packed slot-to-stream serializer mapping, and a durable FlushFile/Commit edge remain unresolved. The main module also lists the multimedia.nss dependency, which is not in the supplied ExeFS files."
     },
     "finding": "The bounded e895a0 probe confirms in-memory packed-word copy-back and bit 0x4000 on the selected player-item slot. e767b0 contains a matching clear for that bit as part of broader slot-state cleanup. An exhaustive scan of indexed decomp files finds no additional exact setter/clearer or reference from the SaveProc nodes to this slot-state array. EventFlow has an explicit SaveSimpleSave request at System_SaveGameClose, and the separate indexed SaveProc trace reaches its request/completion boundary. No indexed edge ties this tool dirty bit to a particular serialized save member or durable file flush."
   },
