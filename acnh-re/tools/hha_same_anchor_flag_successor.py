@@ -9,6 +9,7 @@ No game runtime or inbox delivery is simulated.
 import hashlib
 import json
 from pathlib import Path
+import re
 import sqlite3
 import sys
 import zlib
@@ -126,6 +127,190 @@ def pointer_array_hits(targets):
                     "target_va": entry.get("target_va"),
                 })
     return hits
+
+
+def hash_candidate_values(value):
+    """Return common 32-bit text-hash candidates; these are probes, not game semantics."""
+    data = value if isinstance(value, bytes) else value.encode("utf-8")
+
+    def u32(number):
+        return number & 0xFFFFFFFF
+
+    fnv = 0x811C9DC5
+    djb = 5381
+    sdbm = 0
+    jenkins = 0
+    for byte in data:
+        fnv = u32((fnv ^ byte) * 0x01000193)
+        djb = u32(djb * 33 + byte)
+        sdbm = u32(byte + (sdbm << 6) + (sdbm << 16) - sdbm)
+        jenkins = u32(jenkins + byte)
+        jenkins = u32(jenkins + (jenkins << 10))
+        jenkins = u32(jenkins ^ (jenkins >> 6))
+    jenkins = u32(jenkins + (jenkins << 3))
+    jenkins = u32(jenkins ^ (jenkins >> 11))
+    jenkins = u32(jenkins + (jenkins << 15))
+    return {
+        "crc32": zlib.crc32(data) & 0xFFFFFFFF,
+        "fnv1a32": fnv,
+        "djb2_32": djb,
+        "sdbm32": sdbm,
+        "jenkins_oat32": jenkins,
+        "adler32": zlib.adler32(data) & 0xFFFFFFFF,
+    }
+
+
+def candidate_hash_audit(db):
+    labels = [
+        "HHAGradeMailFlag",
+        "cPlayer:HHAGradeMailFlag",
+        "Player:HHAGradeMailFlag",
+        "EventFlagsPlayerParam:HHAGradeMailFlag",
+        "cPlayer_HHAGradeMailFlag",
+        "HHA|評価の手紙送付ON?",
+        "SavePlayerHouse+0x263d0",
+        "SavePlayerHouse+0x263d1",
+        "SavePlayerHouse+0x263e0",
+        "SavePlayerHouse:0x263d0",
+        "SavePlayerHouse:0x263d1",
+        "SavePlayerHouse:0x263e0",
+        "0x263d0",
+        "0x263d1",
+        "0x263e0",
+    ]
+    candidates = {}
+    for label in labels:
+        for variant in {label, label.lower(), label.upper()}:
+            for suffix in (b"", b"\x00"):
+                variant_bytes = variant.encode("utf-8") + suffix
+                for algorithm, value in hash_candidate_values(variant_bytes).items():
+                    candidates.setdefault(value, []).append({
+                        "label": label,
+                        "variant": "lower" if variant == label.lower() and variant != label else (
+                            "upper" if variant == label.upper() and variant != label else "exact"
+                        ),
+                        "nul_terminated": bool(suffix),
+                        "algorithm": algorithm,
+                    })
+    matches = []
+    for value, sources in sorted(candidates.items()):
+        refs = [dict(row) for row in db.execute(
+            "SELECT hash,pc,owner_va FROM hash_refs WHERE hash=? ORDER BY pc", (value,)
+        )]
+        if refs:
+            matches.append({"candidate_hash": hx(value), "sources": sources, "refs": refs})
+    raw_offsets = {}
+    for value in (0x263D0, 0x263D1, 0x263E0):
+        raw_offsets[hx(value)] = [dict(row) for row in db.execute(
+            "SELECT hash,pc,owner_va FROM hash_refs WHERE hash=? ORDER BY pc", (value,)
+        )]
+
+    generic_columns = {}
+    for value in (0x5140E4B4, 0xBED25A86):
+        generic_columns[hx(value)] = {
+            "table_columns": [dict(row) for row in db.execute(
+                "SELECT table_name,name,offset,width,evidence FROM columns_resolved "
+                "WHERE hash=? ORDER BY table_name", (value,)
+            )],
+            "native_hash_reference_sites": [dict(row) for row in db.execute(
+                "SELECT printf('0x%08x',hash) AS hash,printf('0x%llx',pc) AS pc,"
+                "printf('0x%llx',owner_va) AS owner_va FROM hash_refs "
+                "WHERE hash=? ORDER BY pc", (value,)
+            )],
+        }
+    return {
+        "index_hash_ref_rows": db.execute("SELECT count(*) FROM hash_refs").fetchone()[0],
+        "candidate_algorithms": ["CRC32", "FNV-1a 32", "djb2 32", "SDBM 32", "Jenkins one-at-a-time 32", "Adler-32"],
+        "candidate_labels": labels,
+        "case_and_nul_variants_tested": ["exact", "lowercase", "uppercase", "each with and without trailing NUL"],
+        "distinct_candidate_hashes_tested": len(candidates),
+        "candidate_hash_matches": matches,
+        "raw_offset_integer_hash_refs": raw_offsets,
+        "generic_event_flag_column_hashes": generic_columns,
+        "interpretation": "No tested text-hash candidate or raw offset integer has a hash_refs hit. 0x5140e4b4 and 0xbed25a86 are unresolved BCSV column hashes reused across EventFlags schemas; they are not aliases for HHAGradeMailFlag. This is a bounded candidate scan, not proof that no dynamic alias/hash exists.",
+    }
+
+
+def decomp_offset_inventory():
+    offsets = (0x263D0, 0x263D1, 0x263E0, 0x263F0)
+    patterns = {value: re.compile(r"\+\s*0x" + f"{value:x}" + r"\b", re.IGNORECASE) for value in offsets}
+    hits = {hx(value): [] for value in offsets}
+    file_count = 0
+    for path in DECOMP.glob("*.c"):
+        file_count += 1
+        try:
+            lines = path.read_text(errors="replace").splitlines()
+        except OSError:
+            continue
+        for line_number, line in enumerate(lines, 1):
+            for value, pattern in patterns.items():
+                if pattern.search(line):
+                    hits[hx(value)].append({
+                        "function_file": path.name,
+                        "line": line_number,
+                        "pseudocode": line.strip(),
+                    })
+    return {
+        "source_directory": str(DECOMP),
+        "decomp_file_count_scanned": file_count,
+        "literal_offset_reference_hits": hits,
+        "interpretation": "This inventory finds pseudocode expressions using these literal offsets, including +0x263f0 in a separate constructor with an unresolved base pointer. It does not assign semantic field names to unlabelled save bytes.",
+    }
+
+
+def pointer_index_audit(targets):
+    arrays = json.loads(POINTER_ARRAYS.read_text())
+    wanted = {hx(target): target for target in targets}
+    hits = {key: [] for key in wanted}
+    for array in arrays:
+        for entry in array.get("entries", []):
+            target = entry.get("target_va")
+            if target in hits:
+                hits[target].append({
+                    "array_start_va": array.get("start_va"),
+                    "pointer_va": entry.get("pointer_va"),
+                    "status": array.get("status"),
+                })
+    return {
+        "indexed_pointer_sequence_count": len(arrays),
+        "target_hits": hits,
+        "interpretation": "The scan covers exact target addresses in the indexed relocated code-pointer sequences. Those sequences are not presumed to be C++ vtables; absence excludes these indexed pointer targets only.",
+    }
+
+
+def generic_accessor_owner_inventory(db, native_flags):
+    result = {}
+    flags = native_flags["data"]["flags"]
+    for target in (0xF4AFF0, 0xF4B0D0, 0xF4B170):
+        rows = list(db.execute(
+            "SELECT pc,owner_va FROM direct_calls WHERE target_va=? ORDER BY pc", (target,)
+        ))
+        counts = {}
+        for row in rows:
+            owner = row["owner_va"]
+            if owner is None:
+                continue
+            counts[owner] = counts.get(owner, 0) + 1
+        owners = []
+        for owner, call_count in sorted(counts.items()):
+            owner_hex = hx(owner)
+            owner_flags = sorted(
+                key for key, info in flags.items()
+                if owner_hex in info.get("referencing_functions", [])
+            )
+            relevant_flags = [key for key in owner_flags if re.search(r"hha|grade|mail|house|home", key, re.IGNORECASE)]
+            if relevant_flags:
+                owners.append({
+                    "owner_va": owner_hex,
+                    "direct_callsite_count": call_count,
+                    "named_relevant_flags_in_native_flag_index": relevant_flags,
+                })
+        result[hx(target)] = {
+            "direct_callsite_count": len(rows),
+            "unique_resolved_owner_count": len(counts),
+            "owners_with_HHA_grade_mail_or_house_named_flag_refs": owners,
+        }
+    return result
 
 
 def main():
@@ -303,7 +488,8 @@ def main():
         if refs:
             raise AssertionError({"unexpected_flag_crc_refs": flag_hash_refs[label]})
 
-    native_flag = json.loads(NATIVE_FLAGS.read_text())["data"]["flags"][HHA_FLAG]
+    native_flags = json.loads(NATIVE_FLAGS.read_text())
+    native_flag = native_flags["data"]["flags"][HHA_FLAG]
     indexed_flag = json.loads(FLAG_INDEX.read_text())["data"][HHA_FLAG]
     if native_flag["referencing_functions"] != ["0x7b1fe0"] or native_flag["pseudocode_readings"]:
         raise AssertionError({"native_flag_index_changed": native_flag})
@@ -323,13 +509,170 @@ def main():
         "SELECT flow,event_index,name,params_json FROM event_calls "
         "WHERE params_json LIKE '%HHAGradeMailFlag%' ORDER BY flow,event_index"
     )]
+    player_flag_table = json.loads((DATA / "output/tables_resolved/EventFlagsPlayerParam.json").read_text())
+    player_flag_columns = {column["name"]: index for index, column in enumerate(player_flag_table["columns"])}
+    hha_flag_row = next(
+        row for row in player_flag_table["rows"]
+        if row[player_flag_columns["Key"]] == "HHAGradeMailFlag"
+    )
+    event_handlers = json.loads(EVENT_HANDLERS.read_text())["entries"]
+    system_mail_handler = event_handlers["EventFlowSystemActor.EventFlowActionSystemMailSend"]
+    direct_mail_handler = event_handlers["EventFlowSystemActor.EventFlowActionSystemMailSendDirect"]
+    eventflow_calls = db.execute("SELECT count(*) FROM event_calls").fetchone()[0]
+    mail_action_count = db.execute(
+        "SELECT count(*) FROM event_calls WHERE name='EventFlowActionSystemMailSend'"
+    ).fetchone()[0]
+    hha_mail_resource_events = [dict(row) for row in db.execute(
+        "SELECT flow,event_index,name,params_json FROM event_calls "
+        "WHERE params_json LIKE '%MAIL_SP_HHA%' ORDER BY flow,event_index"
+    )]
+    grade_named_events = [dict(row) for row in db.execute(
+        "SELECT flow,event_index,name,params_json FROM event_calls "
+        "WHERE name LIKE '%HHAGrade%' OR params_json LIKE '%HHAGradeMailFlag%' "
+        "OR params_json LIKE '%MAIL_SP_HHA_Grade%' ORDER BY flow,event_index"
+    )]
+    all_hha_event_mentions = [dict(row) for row in db.execute(
+        "SELECT flow,event_index,name,params_json FROM event_calls "
+        "WHERE name LIKE '%HHA%' OR params_json LIKE '%HHA%' ORDER BY flow,event_index"
+    )]
+    if eventflow_calls != 24804 or mail_action_count != 50:
+        raise AssertionError({"eventflow_index_counts": [eventflow_calls, mail_action_count]})
+    if hha_mail_resource_events != hha_action_events or grade_named_events:
+        raise AssertionError({"eventflow_HHA_mail_or_grade_inventory": [hha_mail_resource_events, grade_named_events]})
+
+    hash_alias_audit = candidate_hash_audit(db)
+    save_byte_offset_inventory = decomp_offset_inventory()
+    final_pointer_targets = (
+        0xF4AFF0, 0xF4B0D0, 0xF4B170,
+        0x7B1DD0, 0x7B1FE0, 0x7B29D0, 0x7B3FF0, 0x7B4FC0, 0x7B6470,
+        0xABF610, 0xAC77A0, 0xAC1FF0, 0xAC0A60,
+        0x345890, 0x346A50, 0xAC7070, 0xFAABF0, 0xFAA3F0, 0xFAAEB0,
+        0x52F220, 0x52F270, 0x52F280, 0x52D980, 0x52E0A0, 0x52E360,
+        0x52DF00, 0xA14320, 0xA144B0, 0x63CA90, 0x5FF7F0,
+        0x600F30, 0x6010B0, 0x601230, 0xF95610, 0xF949C0, 0xF95BA0,
+        0xF95CA0, 0xF95E60, 0xF95C60, 0xF95BF0,
+    )
+    final_pointer_index = pointer_index_audit(final_pointer_targets)
+    accessor_owner_summary = generic_accessor_owner_inventory(db, native_flags)
+    HHA_GENERIC_GETTER_OWNERS = {
+        owner["owner_va"]
+        for owner in accessor_owner_summary["0xf4aff0"]["owners_with_HHA_grade_mail_or_house_named_flag_refs"]
+    }
+    if HHA_GENERIC_GETTER_OWNERS != {"0x7b4330", "0x7b4fc0", "0x7b5e60"}:
+        raise AssertionError({"unexpected_HHA_generic_getter_owners": sorted(HHA_GENERIC_GETTER_OWNERS)})
+
     result = {
-        "schema": "acnh-re/hha-same-anchor-flag-successor/2",
+        "schema": "acnh-re/hha-same-anchor-flag-successor/3",
         "scope": "Static follow-up for HHA room-grid same-anchor ordering, HHAGradeMailFlag reader/clearer xrefs, and the boundary between HHA report queuing and EventFlow SystemMailSend. It stops before claiming a particular save object's winner or runtime inbox delivery.",
         "source": {
             "main_nso_sha256": NSO_SHA256,
             "indexed_build_match": True,
             "index_database": str(DB),
+        },
+        "final_static_successor_audit": {
+            "coverage": [
+                "exact native string/hash references and candidate text-hash aliases",
+                "SavePlayerHouse byte-offset pseudocode references across the full analysis_decomp corpus",
+                "all indexed direct generic flag accessor callsites and their named HHA/house flag owners",
+                "all indexed EventFlow calls, resolved mail action registration, HHA/grade parameters, and relevant relocated code-pointer targets",
+                "direct room-grid insert/update caller inventory and exact indirect pointer hits for known loader/writer candidates",
+            ],
+            "field_alias_hash_scan": hash_alias_audit,
+            "save_byte_offset_pseudocode_scan": save_byte_offset_inventory,
+            "event_flag_data_row": {
+                "table": "EventFlagsPlayerParam",
+                "source_id": player_flag_table["source_id"],
+                "row_index": hha_flag_row[2],
+                "resolved_row": dict(zip(
+                    [column["name"] for column in player_flag_table["columns"]], hha_flag_row
+                )),
+                "unresolved_column_note": "The per-row bytes 0 and 1 under column hashes 0x5140e4b4 and 0xbed25a86 are table policy fields; matching those hash immediates in native table handlers does not create an alias for the row's Key value HHAGradeMailFlag.",
+            },
+            "generic_flag_accessor_owner_inventory": {
+                "by_accessor": accessor_owner_summary,
+                "hha_adjacent_generic_getter_owners": [
+                    {
+                        "owner_va": "0x7b4330",
+                        "named_flag_refs": [
+                            "cPlayer:HappyHomeMission1",
+                            "cPlayer:HappyHomeMission2",
+                            "cPlayer:HappyHomeMission3",
+                            "cPlayer:HappyHomeMission4",
+                            "cPlayer:HappyHomeMission5",
+                            "cPlayer:HappyHomeMission6",
+                        ],
+                        "meaning": "HHA mission flag checks via the generic getter; no HHAGradeMailFlag reference.",
+                    },
+                    {
+                        "owner_va": "0x7b4fc0",
+                        "named_flag_refs": ["cLifeSupportAchievement:GetSRankonHHA", "cPlayer:HappyHomeMission1"],
+                        "meaning": "HHA achievement/mission checks via the generic getter; no HHAGradeMailFlag reference.",
+                    },
+                    {
+                        "owner_va": "0x7b5e60",
+                        "named_flag_refs": [
+                            "cLifeSupportAchievement:GetSRankonHHA",
+                            "cPlayer:HappyHomeMission1",
+                            "cPlayer:HappyHomeMission2",
+                            "cPlayer:HappyHomeMission3",
+                            "cPlayer:HappyHomeMission4",
+                            "cPlayer:HappyHomeMission5",
+                        ],
+                        "meaning": "HHA achievement/mission checks via the generic getter; no HHAGradeMailFlag reference.",
+                    },
+                ],
+                "coverage_limit": "The direct caller list is complete for the indexed direct BL/B calls to the three generic accessors. Calls with keys assembled at runtime, unindexed indirect-call mechanisms, or code outside this indexed build remain runtime/coverage limits.",
+            },
+            "eventflow_and_action_index": {
+                "indexed_event_calls": eventflow_calls,
+                "system_mail_send_action_uses": mail_action_count,
+                "event_calls_mentioning_HHAGradeMailFlag": len(event_rows),
+                "event_calls_mentioning_MAIL_SP_HHA_Grade": len(grade_named_events),
+                "event_calls_with_any_HHA_text": all_hha_event_mentions,
+                "HHA_mail_resource_event_calls": hha_mail_resource_events,
+                "grade_HHA_event_calls": grade_named_events,
+                "resolved_action_registration": {
+                    "SystemMailSend": {
+                        "registration_hash": system_mail_handler["registration_hash"],
+                        "registration_va": system_mail_handler["registration_va"],
+                        "factory": system_mail_handler["factory"],
+                        "constructor": system_mail_handler["constructor"],
+                        "vtable": system_mail_handler["vtable"],
+                        "event_uses": system_mail_handler["event_uses"],
+                        "method_slot_target": "0x345890",
+                    },
+                    "SystemMailSendDirect": {
+                        "registration_hash": direct_mail_handler["registration_hash"],
+                        "registration_va": direct_mail_handler["registration_va"],
+                        "factory": direct_mail_handler["factory"],
+                        "constructor": direct_mail_handler["constructor"],
+                        "vtable": direct_mail_handler["vtable"],
+                        "event_uses": direct_mail_handler["event_uses"],
+                    },
+                },
+                "interpretation": "The full indexed EventFlow call corpus has one HHA SystemMailSend payload: BuildCelebration/cFastTomorrow. It is a house-upgrade event. No indexed action/query names or parameters mention HHAGradeMailFlag or MAIL_SP_HHA_Grade; the HHA grade report remains on the separate native queue/virtual-consumer path already mapped.",
+            },
+            "indexed_dynamic_pointer_routes": final_pointer_index,
+            "room_furniture_load_enumeration": {
+                "direct_grid_insert_callsite_count": len(insert_callers),
+                "direct_grid_update_callsite_count": len(update_callers),
+                "known_grid_setter_or_spatial_loop_pointer_hits": {
+                    target: final_pointer_index["target_hits"][target]
+                    for target in (
+                        "0x52f220", "0x52f270", "0x52f280", "0x52d980", "0x52e0a0",
+                        "0x52e360", "0x52df00", "0xa14320", "0xa144b0", "0x63ca90",
+                        "0x5ff7f0", "0x600f30", "0x6010b0", "0x601230",
+                    )
+                },
+                "SavePlayerHouse_callback_pointer_hit": final_pointer_index["target_hits"]["0xf95e60"],
+                "interpretation": "The complete indexed direct grid-setter caller inventory and exact code-pointer scan find no initial saved-furniture loader function. The one SavePlayerHouse-related callback at 0xf95e60 is a one-value comparison/update/insert route through +0x263e0, not a furniture-list traversal. 0x5ff7f0 processes generated spatial rows only.",
+                "remaining_blocker": "The dump/index has no identified constructor/loader symbol or data structure enumeration trace tying a saved furniture list to initial occupancy-grid insertion. Same-anchor winner is therefore last accepted writer, but the stable save enumeration order is not statically proven.",
+            },
+            "mail_action_pointer_hits": {
+                target: final_pointer_index["target_hits"][target]
+                for target in ("0x345890", "0x346a50", "0xac7070", "0xfaabf0", "0xfaa3f0", "0xfaaeb0")
+            },
+            "static_result": "Exhaustive over the available indexed direct-call, string/hash-reference, EventFlow call/action, save-layout, pseudocode-offset, and relocated code-pointer datasets for these exact targets. The indexes show no static HHAGradeMailFlag reader/clearer, grade-to-SystemMailSend route, or initial saved-furniture enumeration path. Dynamic key resolution and runtime ordering remain unproven.",
         },
         "same_anchor": {
             "hha_read_route": ["0x7b1fe0", "0xa13fe0", "0x52f220", "0x52d640"],
@@ -473,6 +816,14 @@ def main():
             "room_grid": "Capture room index, constructor/loader function and saved furniture record IDs in enumerated order, plus coordinates; then every write to the selected occupancy grid with writer VA, anchor, incoming short descriptor, prior cell value, and resulting cell value. Capture the value returned by 0xa13fe0 for that same anchor. Repeat a two-item shared-anchor fixture with save/list order reversed while other state is fixed.",
             "same_anchor_fixture": "Two recognized furniture descriptors at one anchor, repeated with insertion order reversed while all other save state is fixed. This isolates whether scene/load ordering or item ownership influences the last accepted write.",
             "flag_and_mail": "In the same timestamped pass, capture resolved HHAGradeMailFlag getter/setter keys and values, raw +0x263d0/+0x263d1 bytes, HHA report queue records, the virtual consumer target and each save-backed mail collection's counts/slots before and after. Record any SystemMailSend action invocation/route/writer in the same timeline. Capture inbox before/after across the applicable clock transition only as a separate delivery observation; separate mail captures cannot prove a flag-to-mail edge.",
+            "capture_fields": {
+                "identity": ["matching main NSO SHA-256", "save SHA-256", "player slot", "house/room index", "monotonic timestamp", "hook sequence number"],
+                "furniture_loader": ["loader function and entry/exit PC", "list count and stride", "saved record index and furniture ID", "room, anchor, orientation", "validation result", "actual enumeration order", "repeat fixture with two same-anchor records reversed in save order"],
+                "grid_write": ["wrapper VA", "implementation VA and call PC", "grid/room", "cell coordinates", "incoming signed-short descriptor", "prior/resulting cell value", "existing-object predicate result", "0xa13fe0 resolver result", "preceding-object footprint if anchor was masked"],
+                "save_flag": ["SavePlayerHouse address", "raw +0x263d0 and +0x263d1 bytes", "signed-short +0x263e0", "every generic flag API call", "resolved canonical key", "player slot", "old/new value"],
+                "hha_report": ["evaluation start/end", "house-level selector", "score and bucket outputs", "report record bytes/ID", "queue address", "virtual consumer target", "save insertion result"],
+                "mail_action": ["before/after save-mail slot counts and entries", "EventFlow name/event index/full params", "Route", "validation result", "writer VA", "selected slot", "separate inbox snapshots around the clock transition if delivery is tested"],
+            },
             "runtime_status": "No synchronized room-grid/save/flag/mail capture is present in the static corpus; no runtime behavior is claimed.",
         },
     }

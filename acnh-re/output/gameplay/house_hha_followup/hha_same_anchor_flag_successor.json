@@ -1,10 +1,670 @@
 {
-  "schema": "acnh-re/hha-same-anchor-flag-successor/2",
+  "schema": "acnh-re/hha-same-anchor-flag-successor/3",
   "scope": "Static follow-up for HHA room-grid same-anchor ordering, HHAGradeMailFlag reader/clearer xrefs, and the boundary between HHA report queuing and EventFlow SystemMailSend. It stops before claiming a particular save object's winner or runtime inbox delivery.",
   "source": {
     "main_nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
     "indexed_build_match": true,
     "index_database": "/workspace/acnh-re/output/index.sqlite"
+  },
+  "final_static_successor_audit": {
+    "coverage": [
+      "exact native string/hash references and candidate text-hash aliases",
+      "SavePlayerHouse byte-offset pseudocode references across the full analysis_decomp corpus",
+      "all indexed direct generic flag accessor callsites and their named HHA/house flag owners",
+      "all indexed EventFlow calls, resolved mail action registration, HHA/grade parameters, and relevant relocated code-pointer targets",
+      "direct room-grid insert/update caller inventory and exact indirect pointer hits for known loader/writer candidates"
+    ],
+    "field_alias_hash_scan": {
+      "index_hash_ref_rows": 2357,
+      "candidate_algorithms": [
+        "CRC32",
+        "FNV-1a 32",
+        "djb2 32",
+        "SDBM 32",
+        "Jenkins one-at-a-time 32",
+        "Adler-32"
+      ],
+      "candidate_labels": [
+        "HHAGradeMailFlag",
+        "cPlayer:HHAGradeMailFlag",
+        "Player:HHAGradeMailFlag",
+        "EventFlagsPlayerParam:HHAGradeMailFlag",
+        "cPlayer_HHAGradeMailFlag",
+        "HHA|評価の手紙送付ON?",
+        "SavePlayerHouse+0x263d0",
+        "SavePlayerHouse+0x263d1",
+        "SavePlayerHouse+0x263e0",
+        "SavePlayerHouse:0x263d0",
+        "SavePlayerHouse:0x263d1",
+        "SavePlayerHouse:0x263e0",
+        "0x263d0",
+        "0x263d1",
+        "0x263e0"
+      ],
+      "case_and_nul_variants_tested": [
+        "exact",
+        "lowercase",
+        "uppercase",
+        "each with and without trailing NUL"
+      ],
+      "distinct_candidate_hashes_tested": 492,
+      "candidate_hash_matches": [],
+      "raw_offset_integer_hash_refs": {
+        "0x263d0": [],
+        "0x263d1": [],
+        "0x263e0": []
+      },
+      "generic_event_flag_column_hashes": {
+        "0x5140e4b4": {
+          "table_columns": [
+            {
+              "table_name": "EventFlagsHouseParam",
+              "name": "h_5140e4b4",
+              "offset": 207,
+              "width": 1,
+              "evidence": "unresolved"
+            },
+            {
+              "table_name": "EventFlagsLandTempParam",
+              "name": "h_5140e4b4",
+              "offset": 12,
+              "width": 1,
+              "evidence": "unresolved"
+            },
+            {
+              "table_name": "EventFlagsNpcMemoryParam",
+              "name": "h_5140e4b4",
+              "offset": 201,
+              "width": 1,
+              "evidence": "unresolved"
+            },
+            {
+              "table_name": "EventFlagsNpcSaveParam",
+              "name": "h_5140e4b4",
+              "offset": 142,
+              "width": 1,
+              "evidence": "unresolved"
+            },
+            {
+              "table_name": "EventFlagsPlayerParam",
+              "name": "h_5140e4b4",
+              "offset": 207,
+              "width": 1,
+              "evidence": "unresolved"
+            }
+          ],
+          "native_hash_reference_sites": [
+            {
+              "hash": "0x5140e4b4",
+              "pc": "0xf43274",
+              "owner_va": "0xf43220"
+            },
+            {
+              "hash": "0x5140e4b4",
+              "pc": "0xf46268",
+              "owner_va": "0xf46200"
+            },
+            {
+              "hash": "0x5140e4b4",
+              "pc": "0xf48314",
+              "owner_va": "0xf482c0"
+            },
+            {
+              "hash": "0x5140e4b4",
+              "pc": "0xf49244",
+              "owner_va": "0xf491f0"
+            },
+            {
+              "hash": "0x5140e4b4",
+              "pc": "0xf4a204",
+              "owner_va": "0xf4a1b0"
+            },
+            {
+              "hash": "0x5140e4b4",
+              "pc": "0xf4bd24",
+              "owner_va": "0xf4bcd0"
+            }
+          ]
+        },
+        "0xbed25a86": {
+          "table_columns": [
+            {
+              "table_name": "EventFlagsPlayerParam",
+              "name": "h_bed25a86",
+              "offset": 208,
+              "width": 1,
+              "evidence": "unresolved"
+            }
+          ],
+          "native_hash_reference_sites": [
+            {
+              "hash": "0xbed25a86",
+              "pc": "0xf4bd2c",
+              "owner_va": "0xf4bcd0"
+            }
+          ]
+        }
+      },
+      "interpretation": "No tested text-hash candidate or raw offset integer has a hash_refs hit. 0x5140e4b4 and 0xbed25a86 are unresolved BCSV column hashes reused across EventFlags schemas; they are not aliases for HHAGradeMailFlag. This is a bounded candidate scan, not proof that no dynamic alias/hash exists."
+    },
+    "save_byte_offset_pseudocode_scan": {
+      "source_directory": "/workspace/acnh-re/output/binary/analysis_decomp",
+      "decomp_file_count_scanned": 64475,
+      "literal_offset_reference_hits": {
+        "0x263d0": [
+          {
+            "function_file": "f37200.c",
+            "line": 43,
+            "pseudocode": "lVar3 = lVar6 + 0x263d0;"
+          },
+          {
+            "function_file": "f95610.c",
+            "line": 5,
+            "pseudocode": "return (long)*(char *)(param_1 + 0x263d0);"
+          },
+          {
+            "function_file": "f95ca0.c",
+            "line": 29,
+            "pseudocode": "if (*(char *)(param_1 + 0x263d0) != -1) {"
+          },
+          {
+            "function_file": "f95ca0.c",
+            "line": 31,
+            "pseudocode": "uStack_78 = CONCAT44(uStack_78._4_4_,(int)*(char *)(param_1 + 0x263d0));"
+          },
+          {
+            "function_file": "f95900.c",
+            "line": 23,
+            "pseudocode": "((iVar4 != *(char *)(param_1 + 0x263d0) && (iVar4 != *(char *)(param_1 + 0x263d1))))) {"
+          },
+          {
+            "function_file": "f95900.c",
+            "line": 49,
+            "pseudocode": "((iVar4 == *(char *)(param_1 + 0x263d0) || (iVar4 == *(char *)(param_1 + 0x263d1)))))"
+          },
+          {
+            "function_file": "f95ba0.c",
+            "line": 8,
+            "pseudocode": "if (*(char *)(param_1 + 0x263d0) == param_2) {"
+          }
+        ],
+        "0x263d1": [
+          {
+            "function_file": "f94740.c",
+            "line": 57,
+            "pseudocode": "*(undefined1 *)((long)param_1 + 0x263d1) = 0xff;"
+          },
+          {
+            "function_file": "f37200.c",
+            "line": 69,
+            "pseudocode": "FUN_00fe9220(plVar2,plVar1,lVar6 + 0x263d1);"
+          },
+          {
+            "function_file": "f949c0.c",
+            "line": 115,
+            "pseudocode": "if (((char)param_1[0x98f4] != -1) || (*(char *)((long)param_1 + 0x263d1) != -1)) {"
+          },
+          {
+            "function_file": "f95ca0.c",
+            "line": 38,
+            "pseudocode": "if (*(char *)(param_1 + 0x263d1) != -1) {"
+          },
+          {
+            "function_file": "f95ca0.c",
+            "line": 40,
+            "pseudocode": "uStack_78 = CONCAT44(uStack_78._4_4_,(int)*(char *)(param_1 + 0x263d1));"
+          },
+          {
+            "function_file": "f95900.c",
+            "line": 23,
+            "pseudocode": "((iVar4 != *(char *)(param_1 + 0x263d0) && (iVar4 != *(char *)(param_1 + 0x263d1))))) {"
+          },
+          {
+            "function_file": "f95900.c",
+            "line": 49,
+            "pseudocode": "((iVar4 == *(char *)(param_1 + 0x263d0) || (iVar4 == *(char *)(param_1 + 0x263d1)))))"
+          },
+          {
+            "function_file": "f95ba0.c",
+            "line": 11,
+            "pseudocode": "return *(char *)(param_1 + 0x263d1) == param_2;"
+          }
+        ],
+        "0x263e0": [
+          {
+            "function_file": "f95bf0.c",
+            "line": 9,
+            "pseudocode": "FUN_00b9c290(auStack_48,param_1 + 0x263e0);"
+          },
+          {
+            "function_file": "f95bf0.c",
+            "line": 12,
+            "pseudocode": "FUN_010589e0(param_1 + 0x263e0,auStack_28);"
+          },
+          {
+            "function_file": "f95c60.c",
+            "line": 7,
+            "pseudocode": "psVar1 = (short *)(param_2 + 0x263e0);"
+          },
+          {
+            "function_file": "f95e60.c",
+            "line": 22,
+            "pseudocode": "FUN_00b14320(*(undefined8 *)(param_1 + 0x10),0,lVar3 + 0x263e0,param_3);"
+          },
+          {
+            "function_file": "f95ca0.c",
+            "line": 20,
+            "pseudocode": "lVar1 = param_1 + 0x263e0;"
+          }
+        ],
+        "0x263f0": [
+          {
+            "function_file": "f94910.c",
+            "line": 6,
+            "pseudocode": "FUN_010271d0(param_1 + 0x263f0);"
+          },
+          {
+            "function_file": "f37200.c",
+            "line": 70,
+            "pseudocode": "FUN_00fe94a0(param_1 + 0x1c70,param_1,param_1[2] + 0x263f0);"
+          }
+        ]
+      },
+      "interpretation": "This inventory finds pseudocode expressions using these literal offsets, including +0x263f0 in a separate constructor with an unresolved base pointer. It does not assign semantic field names to unlabelled save bytes."
+    },
+    "event_flag_data_row": {
+      "table": "EventFlagsPlayerParam",
+      "source_id": 26,
+      "row_index": 306,
+      "resolved_row": {
+        "DefaultValue": 0,
+        "MaxValue": 1,
+        "UniqueID": 306,
+        "FlagsFlowAccess": 2,
+        "Name": "HHA|評価の手紙送付ON?",
+        "Key": "HHAGradeMailFlag",
+        "h_5140e4b4": 0,
+        "h_bed25a86": 1,
+        "SendPlayReport": 1
+      },
+      "unresolved_column_note": "The per-row bytes 0 and 1 under column hashes 0x5140e4b4 and 0xbed25a86 are table policy fields; matching those hash immediates in native table handlers does not create an alias for the row's Key value HHAGradeMailFlag."
+    },
+    "generic_flag_accessor_owner_inventory": {
+      "by_accessor": {
+        "0xf4aff0": {
+          "direct_callsite_count": 51,
+          "unique_resolved_owner_count": 15,
+          "owners_with_HHA_grade_mail_or_house_named_flag_refs": [
+            {
+              "owner_va": "0x7b4330",
+              "direct_callsite_count": 6,
+              "named_relevant_flags_in_native_flag_index": [
+                "cPlayer:HappyHomeMission1",
+                "cPlayer:HappyHomeMission2",
+                "cPlayer:HappyHomeMission3",
+                "cPlayer:HappyHomeMission4",
+                "cPlayer:HappyHomeMission5",
+                "cPlayer:HappyHomeMission6"
+              ]
+            },
+            {
+              "owner_va": "0x7b4fc0",
+              "direct_callsite_count": 1,
+              "named_relevant_flags_in_native_flag_index": [
+                "cLifeSupportAchievement:GetSRankonHHA",
+                "cPlayer:HappyHomeMission1"
+              ]
+            },
+            {
+              "owner_va": "0x7b5e60",
+              "direct_callsite_count": 5,
+              "named_relevant_flags_in_native_flag_index": [
+                "cLifeSupportAchievement:GetSRankonHHA",
+                "cPlayer:HappyHomeMission1",
+                "cPlayer:HappyHomeMission2",
+                "cPlayer:HappyHomeMission3",
+                "cPlayer:HappyHomeMission4",
+                "cPlayer:HappyHomeMission5"
+              ]
+            }
+          ]
+        },
+        "0xf4b0d0": {
+          "direct_callsite_count": 145,
+          "unique_resolved_owner_count": 18,
+          "owners_with_HHA_grade_mail_or_house_named_flag_refs": [
+            {
+              "owner_va": "0x7b1fe0",
+              "direct_callsite_count": 1,
+              "named_relevant_flags_in_native_flag_index": [
+                "cPlayer:HHAGradeMailFlag"
+              ]
+            },
+            {
+              "owner_va": "0x7b4330",
+              "direct_callsite_count": 1,
+              "named_relevant_flags_in_native_flag_index": [
+                "cPlayer:HappyHomeMission1",
+                "cPlayer:HappyHomeMission2",
+                "cPlayer:HappyHomeMission3",
+                "cPlayer:HappyHomeMission4",
+                "cPlayer:HappyHomeMission5",
+                "cPlayer:HappyHomeMission6"
+              ]
+            },
+            {
+              "owner_va": "0xf949c0",
+              "direct_callsite_count": 1,
+              "named_relevant_flags_in_native_flag_index": [
+                "cLifeSupportAchievement:ExtendMyHome",
+                "cLifeSupportAchievement:ReformMyHome"
+              ]
+            }
+          ]
+        },
+        "0xf4b170": {
+          "direct_callsite_count": 16,
+          "unique_resolved_owner_count": 7,
+          "owners_with_HHA_grade_mail_or_house_named_flag_refs": []
+        }
+      },
+      "hha_adjacent_generic_getter_owners": [
+        {
+          "owner_va": "0x7b4330",
+          "named_flag_refs": [
+            "cPlayer:HappyHomeMission1",
+            "cPlayer:HappyHomeMission2",
+            "cPlayer:HappyHomeMission3",
+            "cPlayer:HappyHomeMission4",
+            "cPlayer:HappyHomeMission5",
+            "cPlayer:HappyHomeMission6"
+          ],
+          "meaning": "HHA mission flag checks via the generic getter; no HHAGradeMailFlag reference."
+        },
+        {
+          "owner_va": "0x7b4fc0",
+          "named_flag_refs": [
+            "cLifeSupportAchievement:GetSRankonHHA",
+            "cPlayer:HappyHomeMission1"
+          ],
+          "meaning": "HHA achievement/mission checks via the generic getter; no HHAGradeMailFlag reference."
+        },
+        {
+          "owner_va": "0x7b5e60",
+          "named_flag_refs": [
+            "cLifeSupportAchievement:GetSRankonHHA",
+            "cPlayer:HappyHomeMission1",
+            "cPlayer:HappyHomeMission2",
+            "cPlayer:HappyHomeMission3",
+            "cPlayer:HappyHomeMission4",
+            "cPlayer:HappyHomeMission5"
+          ],
+          "meaning": "HHA achievement/mission checks via the generic getter; no HHAGradeMailFlag reference."
+        }
+      ],
+      "coverage_limit": "The direct caller list is complete for the indexed direct BL/B calls to the three generic accessors. Calls with keys assembled at runtime, unindexed indirect-call mechanisms, or code outside this indexed build remain runtime/coverage limits."
+    },
+    "eventflow_and_action_index": {
+      "indexed_event_calls": 24804,
+      "system_mail_send_action_uses": 50,
+      "event_calls_mentioning_HHAGradeMailFlag": 0,
+      "event_calls_mentioning_MAIL_SP_HHA_Grade": 0,
+      "event_calls_with_any_HHA_text": [
+        {
+          "flow": "NNPC_FreeEF",
+          "event_index": 10,
+          "name": "EventFlowActionNpcOpenFreeMessage",
+          "params_json": "{\"OpenMessageType\": \"cFreeEHHA\"}"
+        },
+        {
+          "flow": "NNPC_FreeEF",
+          "event_index": 11,
+          "name": "EventFlowQueryNpcHasFreeMessage",
+          "params_json": "{\"QueryMessageType\": \"cFreeEHHA\"}"
+        },
+        {
+          "flow": "NNPC_FreeEF",
+          "event_index": 12,
+          "name": "EventFlowQueryEventFlagNpcBool",
+          "params_json": "{\"AccessKey\": \"cNpcMemory:TalkHHAToday\"}"
+        },
+        {
+          "flow": "NNPC_FreeEF",
+          "event_index": 14,
+          "name": "EventFlowActionEventFlagNpcOn",
+          "params_json": "{\"AccessKey\": \"cNpcMemory:TalkHHAToday\"}"
+        },
+        {
+          "flow": "SNPC_rco_10_Common_UpgradeMyhome",
+          "event_index": 45,
+          "name": "EventFlowActionSystemMailSend",
+          "params_json": "{\"FromType\": \"cHHA\", \"FileIndex\": \"MAIL_SP_HHA_BuildCelebration\", \"Present\": \"cReward\", \"Route\": \"cFastTomorrow\", \"LabelIndex\": 1, \"TagType\": \"cNone\", \"ToSharePlayer\": false}"
+        }
+      ],
+      "HHA_mail_resource_event_calls": [
+        {
+          "flow": "SNPC_rco_10_Common_UpgradeMyhome",
+          "event_index": 45,
+          "name": "EventFlowActionSystemMailSend",
+          "params_json": "{\"FromType\": \"cHHA\", \"FileIndex\": \"MAIL_SP_HHA_BuildCelebration\", \"Present\": \"cReward\", \"Route\": \"cFastTomorrow\", \"LabelIndex\": 1, \"TagType\": \"cNone\", \"ToSharePlayer\": false}"
+        }
+      ],
+      "grade_HHA_event_calls": [],
+      "resolved_action_registration": {
+        "SystemMailSend": {
+          "registration_hash": "809c435c",
+          "registration_va": "0x305aaa8",
+          "factory": "0x450670",
+          "constructor": "0x345640",
+          "vtable": "0x304ce68",
+          "event_uses": 50,
+          "method_slot_target": "0x345890"
+        },
+        "SystemMailSendDirect": {
+          "registration_hash": "656b1688",
+          "registration_va": "0x305a6d8",
+          "factory": "0x44f730",
+          "constructor": "0x349180",
+          "vtable": "0x304d118",
+          "event_uses": 2
+        }
+      },
+      "interpretation": "The full indexed EventFlow call corpus has one HHA SystemMailSend payload: BuildCelebration/cFastTomorrow. It is a house-upgrade event. No indexed action/query names or parameters mention HHAGradeMailFlag or MAIL_SP_HHA_Grade; the HHA grade report remains on the separate native queue/virtual-consumer path already mapped."
+    },
+    "indexed_dynamic_pointer_routes": {
+      "indexed_pointer_sequence_count": 18348,
+      "target_hits": {
+        "0xf4aff0": [],
+        "0xf4b0d0": [],
+        "0xf4b170": [],
+        "0x7b1dd0": [],
+        "0x7b1fe0": [],
+        "0x7b29d0": [],
+        "0x7b3ff0": [],
+        "0x7b4fc0": [],
+        "0x7b6470": [],
+        "0xabf610": [],
+        "0xac77a0": [],
+        "0xac1ff0": [],
+        "0xac0a60": [],
+        "0x345890": [
+          {
+            "array_start_va": "0x304ce68",
+            "pointer_va": "0x304cec0",
+            "status": "relocated code pointer sequence; not automatically a C++ vtable"
+          }
+        ],
+        "0x346a50": [],
+        "0xac7070": [
+          {
+            "array_start_va": "0x304cf98",
+            "pointer_va": "0x304cfc8",
+            "status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "array_start_va": "0x304d048",
+            "pointer_va": "0x304d078",
+            "status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "array_start_va": "0x304d0b0",
+            "pointer_va": "0x304d0e0",
+            "status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "array_start_va": "0x3060c58",
+            "pointer_va": "0x3060c88",
+            "status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "array_start_va": "0x30883a8",
+            "pointer_va": "0x30883d8",
+            "status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "array_start_va": "0x3088410",
+            "pointer_va": "0x3088440",
+            "status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "array_start_va": "0x30c97e8",
+            "pointer_va": "0x30c9818",
+            "status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "array_start_va": "0x30c9aa0",
+            "pointer_va": "0x30c9ad0",
+            "status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "array_start_va": "0x30c9b00",
+            "pointer_va": "0x30c9b30",
+            "status": "relocated code pointer sequence; not automatically a C++ vtable"
+          }
+        ],
+        "0xfaabf0": [],
+        "0xfaa3f0": [],
+        "0xfaaeb0": [],
+        "0x52f220": [],
+        "0x52f270": [],
+        "0x52f280": [],
+        "0x52d980": [],
+        "0x52e0a0": [],
+        "0x52e360": [],
+        "0x52df00": [],
+        "0xa14320": [],
+        "0xa144b0": [],
+        "0x63ca90": [],
+        "0x5ff7f0": [],
+        "0x600f30": [],
+        "0x6010b0": [],
+        "0x601230": [],
+        "0xf95610": [],
+        "0xf949c0": [],
+        "0xf95ba0": [],
+        "0xf95ca0": [],
+        "0xf95e60": [
+          {
+            "array_start_va": "0x30ed020",
+            "pointer_va": "0x30ed020",
+            "status": "relocated code pointer sequence; not automatically a C++ vtable"
+          }
+        ],
+        "0xf95c60": [],
+        "0xf95bf0": []
+      },
+      "interpretation": "The scan covers exact target addresses in the indexed relocated code-pointer sequences. Those sequences are not presumed to be C++ vtables; absence excludes these indexed pointer targets only."
+    },
+    "room_furniture_load_enumeration": {
+      "direct_grid_insert_callsite_count": 30,
+      "direct_grid_update_callsite_count": 62,
+      "known_grid_setter_or_spatial_loop_pointer_hits": {
+        "0x52f220": [],
+        "0x52f270": [],
+        "0x52f280": [],
+        "0x52d980": [],
+        "0x52e0a0": [],
+        "0x52e360": [],
+        "0x52df00": [],
+        "0xa14320": [],
+        "0xa144b0": [],
+        "0x63ca90": [],
+        "0x5ff7f0": [],
+        "0x600f30": [],
+        "0x6010b0": [],
+        "0x601230": []
+      },
+      "SavePlayerHouse_callback_pointer_hit": [
+        {
+          "array_start_va": "0x30ed020",
+          "pointer_va": "0x30ed020",
+          "status": "relocated code pointer sequence; not automatically a C++ vtable"
+        }
+      ],
+      "interpretation": "The complete indexed direct grid-setter caller inventory and exact code-pointer scan find no initial saved-furniture loader function. The one SavePlayerHouse-related callback at 0xf95e60 is a one-value comparison/update/insert route through +0x263e0, not a furniture-list traversal. 0x5ff7f0 processes generated spatial rows only.",
+      "remaining_blocker": "The dump/index has no identified constructor/loader symbol or data structure enumeration trace tying a saved furniture list to initial occupancy-grid insertion. Same-anchor winner is therefore last accepted writer, but the stable save enumeration order is not statically proven."
+    },
+    "mail_action_pointer_hits": {
+      "0x345890": [
+        {
+          "array_start_va": "0x304ce68",
+          "pointer_va": "0x304cec0",
+          "status": "relocated code pointer sequence; not automatically a C++ vtable"
+        }
+      ],
+      "0x346a50": [],
+      "0xac7070": [
+        {
+          "array_start_va": "0x304cf98",
+          "pointer_va": "0x304cfc8",
+          "status": "relocated code pointer sequence; not automatically a C++ vtable"
+        },
+        {
+          "array_start_va": "0x304d048",
+          "pointer_va": "0x304d078",
+          "status": "relocated code pointer sequence; not automatically a C++ vtable"
+        },
+        {
+          "array_start_va": "0x304d0b0",
+          "pointer_va": "0x304d0e0",
+          "status": "relocated code pointer sequence; not automatically a C++ vtable"
+        },
+        {
+          "array_start_va": "0x3060c58",
+          "pointer_va": "0x3060c88",
+          "status": "relocated code pointer sequence; not automatically a C++ vtable"
+        },
+        {
+          "array_start_va": "0x30883a8",
+          "pointer_va": "0x30883d8",
+          "status": "relocated code pointer sequence; not automatically a C++ vtable"
+        },
+        {
+          "array_start_va": "0x3088410",
+          "pointer_va": "0x3088440",
+          "status": "relocated code pointer sequence; not automatically a C++ vtable"
+        },
+        {
+          "array_start_va": "0x30c97e8",
+          "pointer_va": "0x30c9818",
+          "status": "relocated code pointer sequence; not automatically a C++ vtable"
+        },
+        {
+          "array_start_va": "0x30c9aa0",
+          "pointer_va": "0x30c9ad0",
+          "status": "relocated code pointer sequence; not automatically a C++ vtable"
+        },
+        {
+          "array_start_va": "0x30c9b00",
+          "pointer_va": "0x30c9b30",
+          "status": "relocated code pointer sequence; not automatically a C++ vtable"
+        }
+      ],
+      "0xfaabf0": [],
+      "0xfaa3f0": [],
+      "0xfaaeb0": []
+    },
+    "static_result": "Exhaustive over the available indexed direct-call, string/hash-reference, EventFlow call/action, save-layout, pseudocode-offset, and relocated code-pointer datasets for these exact targets. The indexes show no static HHAGradeMailFlag reader/clearer, grade-to-SystemMailSend route, or initial saved-furniture enumeration path. Dynamic key resolution and runtime ordering remain unproven."
   },
   "same_anchor": {
     "hha_read_route": [
@@ -2985,6 +3645,63 @@
     "room_grid": "Capture room index, constructor/loader function and saved furniture record IDs in enumerated order, plus coordinates; then every write to the selected occupancy grid with writer VA, anchor, incoming short descriptor, prior cell value, and resulting cell value. Capture the value returned by 0xa13fe0 for that same anchor. Repeat a two-item shared-anchor fixture with save/list order reversed while other state is fixed.",
     "same_anchor_fixture": "Two recognized furniture descriptors at one anchor, repeated with insertion order reversed while all other save state is fixed. This isolates whether scene/load ordering or item ownership influences the last accepted write.",
     "flag_and_mail": "In the same timestamped pass, capture resolved HHAGradeMailFlag getter/setter keys and values, raw +0x263d0/+0x263d1 bytes, HHA report queue records, the virtual consumer target and each save-backed mail collection's counts/slots before and after. Record any SystemMailSend action invocation/route/writer in the same timeline. Capture inbox before/after across the applicable clock transition only as a separate delivery observation; separate mail captures cannot prove a flag-to-mail edge.",
+    "capture_fields": {
+      "identity": [
+        "matching main NSO SHA-256",
+        "save SHA-256",
+        "player slot",
+        "house/room index",
+        "monotonic timestamp",
+        "hook sequence number"
+      ],
+      "furniture_loader": [
+        "loader function and entry/exit PC",
+        "list count and stride",
+        "saved record index and furniture ID",
+        "room, anchor, orientation",
+        "validation result",
+        "actual enumeration order",
+        "repeat fixture with two same-anchor records reversed in save order"
+      ],
+      "grid_write": [
+        "wrapper VA",
+        "implementation VA and call PC",
+        "grid/room",
+        "cell coordinates",
+        "incoming signed-short descriptor",
+        "prior/resulting cell value",
+        "existing-object predicate result",
+        "0xa13fe0 resolver result",
+        "preceding-object footprint if anchor was masked"
+      ],
+      "save_flag": [
+        "SavePlayerHouse address",
+        "raw +0x263d0 and +0x263d1 bytes",
+        "signed-short +0x263e0",
+        "every generic flag API call",
+        "resolved canonical key",
+        "player slot",
+        "old/new value"
+      ],
+      "hha_report": [
+        "evaluation start/end",
+        "house-level selector",
+        "score and bucket outputs",
+        "report record bytes/ID",
+        "queue address",
+        "virtual consumer target",
+        "save insertion result"
+      ],
+      "mail_action": [
+        "before/after save-mail slot counts and entries",
+        "EventFlow name/event index/full params",
+        "Route",
+        "validation result",
+        "writer VA",
+        "selected slot",
+        "separate inbox snapshots around the clock transition if delivery is tested"
+      ]
+    },
     "runtime_status": "No synchronized room-grid/save/flag/mail capture is present in the static corpus; no runtime behavior is claimed."
   }
 }
