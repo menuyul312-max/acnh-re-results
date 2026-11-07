@@ -1,0 +1,257 @@
+{
+  "schema": "acnh-re/core-story-firstlive-talk-entry-parameter-followup/1",
+  "game_version_basis": "ACNH 1.0.0 supplied analysis corpus; raw EventFlow version inherited from that corpus and hash-pinned",
+  "analysis_mode": "static EventFlow data and native action-registry cross-check; no game/save execution",
+  "status": "AI_ROOT_TO_TALK_ENTRY_PARAMETER_EDGE_CONFIRMED; STAGE_ACTIVATION_AND_CREDITS_TRIGGER_OPEN",
+  "scope": "Trace first-live NPC AI resource through parameterized EventFlow speak selection, concert talk content, return-stage action, and credits-trigger boundary.",
+  "report": "acnh-re/docs/CORE_STORY_FIRSTLIVE_TALK_ENTRY_PARAMETER_FOLLOWUP_20261107.md",
+  "executable_identity": {
+    "path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/A_logic/main.elf",
+    "sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74"
+  },
+  "source_artifacts": [
+    {
+      "path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/EventFlow/AI_NPC_Tkk_FirstLive.bfevfl",
+      "source_id": 272,
+      "sha256": "5f7c36dba971c8c30f434b92085a8bb7e8bd677df39bcd008d0aa8950e02a9f8",
+      "role": "AI root and parameterized common-speak subflow"
+    },
+    {
+      "path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/EventFlow/AI_NPC_Common.bfevfl",
+      "source_id": 226,
+      "sha256": "ae5068b0fed03c29c52a922333988f99c8cee6a4ea982ffda88a1e0e4cbc697f",
+      "role": "cContinueSpeak and argument-forwarding SetNpcSpeakFlow actions"
+    },
+    {
+      "path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/EventFlow/SNPC_tkk_Live.bfevfl",
+      "source_id": 625,
+      "sha256": "d1a9d0253d4ae6c1ed46e87d007f8924f4cba637589a3d0750ca07295794d316",
+      "role": "dedicated K.K. live and first-live entry flow"
+    },
+    {
+      "path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/EventFlow/AI_NPC_Rco_FirstLiveInvite.bfevfl",
+      "source_id": 258,
+      "sha256": "f0b576c5d5f8b1877609b4a971f32aebed02a612f7aabad8e8c60cb8cd89da2c",
+      "role": "distinct post-live invite AI used only for comparison"
+    },
+    {
+      "path": "/workspace/analysis/acnh/project/generated/eventflow/AI_NPC_Tkk_FirstLive.json",
+      "sha256": "cb7b9ac356314ad7501c2db2c520b6e62bf90737662e2575ab8ebbacb67bf7b4",
+      "role": "parsed caller flow"
+    },
+    {
+      "path": "/workspace/analysis/acnh/project/generated/eventflow/AI_NPC_Common.json",
+      "sha256": "e8ffec35a85e456eef163262071a503f0e1982587f70decb5cb41efaa93a43c6",
+      "role": "parsed argument-forwarding flow"
+    },
+    {
+      "path": "/workspace/analysis/acnh/project/generated/eventflow/SNPC_tkk_Live.json",
+      "sha256": "1e3734d866843ad4da16cca5d5d240c4ea6019d1a2cd163788bc71ad1481feb6",
+      "role": "parsed target talk flow"
+    },
+    {
+      "path": "/workspace/analysis/acnh/project/generated/eventflow/AI_NPC_Rco_FirstLiveInvite.json",
+      "sha256": "f2e1b1090e049279c6c5ff22c7212e48c978e80ea7cca98a56f6986bd7b64eec",
+      "role": "parsed comparison flow"
+    },
+    {
+      "path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/EventFlow/SNPC_rco_55_TkkFirstLive.bfevfl",
+      "source_id": 606,
+      "sha256": "b3d6e9d359a19a744561d7b2c7f213b71513c3489ebee2c679b46e1540407905",
+      "role": "separate Nook invitation/visit-home follow-up flow"
+    },
+    {
+      "path": "/workspace/analysis/acnh/project/generated/eventflow/SNPC_rco_55_TkkFirstLive.json",
+      "sha256": "4fb93e333d08fe1c5facd93250f38c01228e0fa922950149f795249e61596aa9",
+      "role": "parsed comparison target flow"
+    },
+    {
+      "path": "acnh-re/output/mechanics/focus7/native_event_handlers.json",
+      "sha256": "712f56b5649487bffe5d6c7269544d8f78a2242a598fe4733306d480ee8be2dd",
+      "role": "native EventFlow action registrations and parameter schemas"
+    },
+    {
+      "path": "/workspace/acnh-re/output/gameplay/flow_index.json",
+      "sha256": "359f3a21a17a116902b0c8e1110c3892814b6fccbeb50b71d573c8ab3e1c68c5",
+      "role": "456-flow index used to demonstrate parameterized-call false negative"
+    },
+    {
+      "path": "acnh-re/output/gameplay/trees/SNPC_tkk_Live.txt",
+      "sha256": "a0bbb59aaba721f966f8a04c9e92f98c57fc831a9ca8c53dad503af0a967c8e5",
+      "role": "event-indexed target-flow tree showing first-live calls and return stage"
+    },
+    {
+      "path": "acnh-re/docs/CORE_STORY_FIRSTLIVE_STAGE_DISPATCH_FOLLOWUP_20261107.md",
+      "sha256": "f3bfd076b0cb8350fbce3915c0ed67a4dfce04b450df42553d4c0d1fd3cee7a1",
+      "role": "prior stage alias, candidate actor, and native builder boundary"
+    },
+    {
+      "path": "acnh-re/output/gameplay/core_story_firstlive_stage_dispatch_followup_20261107.json",
+      "sha256": "a5b9db9c004419c40fb2a2a05e52911498d40b097586327d50088b2082c8bc45",
+      "role": "prior native PCs, stage candidate evidence, and bounded search"
+    },
+    {
+      "path": "acnh-re/output/gameplay/villager_plot_firstlive_continuity_followup_20261107.json",
+      "sha256": "379fddc7194412aaa79c0b6d9b4f8acb52b91489534c27ce3896928bd00d119d",
+      "role": "prior camper/resident and first-live continuity record"
+    }
+  ],
+  "ai_root_to_talk_entry": {
+    "status": "PROVEN_IN_EVENTFLOW_SOURCE_GRAPH; RUNTIME_ENTRY_CONDITIONAL",
+    "caller": {
+      "flowchart": "AI_NPC_Tkk_FirstLive",
+      "entry_point": "Root",
+      "main_event_array_index": 5,
+      "event_name": "Event5",
+      "event_type": "subflow",
+      "subflow_target": "AI_NPC_Common:ContinueSpeak",
+      "parameters": {
+        "FlowName": "SNPC_tkk_Live",
+        "EntryName": "Tkk_LandFirstLive"
+      }
+    },
+    "callee_argument_consumer": [
+      {
+        "flowchart": "AI_NPC_Common",
+        "entry_point": "ContinueSpeak",
+        "event_array_index": 2,
+        "event_name": "Event2",
+        "action": "EventFlowActionNpcChangeAIState",
+        "parameters": {
+          "StateName": "cContinueSpeak",
+          "IsChangeSameState": false,
+          "IsChangePreState": true,
+          "TalkEventFlowName": "",
+          "TalkEntryPointName": ""
+        },
+        "next_event_array_index": 3
+      },
+      {
+        "flowchart": "AI_NPC_Common",
+        "entry_point": "ContinueSpeak",
+        "event_array_index": 3,
+        "event_name": "Event3",
+        "action": "EventFlowActionSetNpcSpeakFlow",
+        "parameters": {
+          "FlowName": "$arg(FlowName)",
+          "EntryName": "$arg(EntryName)"
+        }
+      }
+    ],
+    "resolved_target": "SNPC_tkk_Live:Tkk_LandFirstLive",
+    "native_action_registrations": [
+      {
+        "action": "EventFlowActionNpcChangeAIState",
+        "registration_hash": "0x9cff97bf",
+        "registration_va": "0x305aeb8",
+        "factory": "0x4516b0",
+        "constructor": "0x252f30",
+        "vtable": "0x303ee00",
+        "parameter_schema": [
+          "StateName",
+          "TalkEventFlowName",
+          "TalkEntryPointName",
+          "SubEntryName",
+          "IsChangeSameState",
+          "IsChangePreState"
+        ]
+      },
+      {
+        "action": "EventFlowActionSetNpcSpeakFlow",
+        "registration_hash": "0x878212f7",
+        "registration_va": "0x305aba8",
+        "factory": "0x450a70",
+        "constructor": "0x25eab0",
+        "vtable": "0x303f518",
+        "parameter_schema": [
+          "FlowName",
+          "EntryName"
+        ]
+      }
+    ]
+  },
+  "talk_entry_and_return": {
+    "target": "SNPC_tkk_Live:Tkk_LandFirstLive",
+    "entry_main_event_array_index": 91,
+    "entry_subflow_event_array_indices": [118, 92, 93],
+    "subflow_targets": [
+      "Tkk_1stLIveMC",
+      "Tkk_LiveDemo",
+      "Tkk_LiveAfter_Flag"
+    ],
+    "return_action": {
+      "event_array_index": 94,
+      "action": "EventFlowActionSystemRequestChangeStage",
+      "parameters": {
+        "TargetStage": "cMainFieldPlayerHouse",
+        "FadeOutKindString": "cCircle",
+        "FadeInKindString": "cCircle",
+        "FadeColorString": "cBlack"
+      },
+      "status": "STATIC_FLOW_CONTENT; EXECUTION_DEPENDS_ON_ENTRY_PATH"
+    },
+    "completion_writes_and_day_gate": {
+      "writes_in_Tkk_LiveAfter_Flag": [
+        "cPlayer:TkkFirstLiveJoined",
+        "cPlayer:TkkLiveToday",
+        "cPlayer:TkkTalkToday",
+        "cPlayer:StandByRcoVisitMyHomeAfterTkkFirstLive",
+        "cPlayer:TotakekeLiveCount += 1"
+      ],
+      "day_change_native_handler": "0xf545f0",
+      "day_change_effect": "sets cPlayer:TkkFirstLive when TotakekeLiveCount is positive",
+      "status": "STATIC_EVENTFLOW_AND_NATIVE_CROSS_REFERENCE; NO_SINGLE_SAVE_PLAYTHROUGH"
+    }
+  },
+  "flow_index_limitation": {
+    "observed": {
+      "AI_NPC_Tkk_FirstLive_Root_subflow": "AI_NPC_Common:ContinueSpeak",
+      "flow_index_SNPC_tkk_Live_called_from": [],
+      "flow_index_meta_policy": "subflows not inlined"
+    },
+    "explanation": "The index records literal flowchart/entry_point subflow references, but the target flow and entry are passed as parameters to SetNpcSpeakFlow through the intermediate ContinueSpeak entry. The empty target caller list is a bounded index false negative for this parameterized path."
+  },
+  "comparison_path": {
+    "caller": "AI_NPC_Rco_FirstLiveInvite:Root",
+    "subflow_target": "AI_NPC_Common:VisitSpeak",
+    "parameters": {
+      "FlowName": "SNPC_rco_55_TkkFirstLive",
+      "EntryName": "InvitePlayerHouse"
+    },
+    "interpretation": "Separate Nook invite/visit-home conversation, not the K.K. concert talk entry.",
+    "additional_flow_action": {
+      "flow": "SNPC_rco_55_TkkFirstLive:InvitePlayerHouse",
+      "action": "ReservePlayerMutterDemo",
+      "EventFileName": "Player_GetDemo_Once",
+      "EntryPointName": "Finish_1stKkLive"
+    }
+  },
+  "stage_and_credits_boundary": {
+    "confirmed_candidate_chain": [
+      "prior native builder 0xc70da0 creates E_FirstLive_NPC_0 with AI_NPC_Tkk_FirstLive resource name",
+      "AI_NPC_Tkk_FirstLive:Root statically selects SNPC_tkk_Live:Tkk_LandFirstLive",
+      "Tkk_LandFirstLive contains an authored return request to cMainFieldPlayerHouse"
+    ],
+    "still_open": [
+      "cMainFieldFirstLive native case to exact MainFieldDemoFirstLive.byml alias/load",
+      "candidate stage ActorList row to NpcActorMgr factory invocation",
+      "runtime activation of NpcActorMgr builder and AI_NPC_Tkk_FirstLive:Root",
+      "native execution of SetNpcSpeakFlow and resulting live NPC state transition",
+      "first-live story or return-stage trigger to State::cPlay StaffCredit callback"
+    ],
+    "bounded_credits_search": {
+      "tokens": [
+        "StaffCredit",
+        "StaffList"
+      ],
+      "scope": [
+        "/workspace/analysis/acnh/project/generated/eventflow/*.json",
+        "/workspace/acnh-re/work/eventflow/*.json",
+        "flow_index.json"
+      ],
+      "matches": 0,
+      "limit": "This excludes explicit token references in those extracted flow sources/index; it cannot exclude a dynamic native or resource-name trigger."
+    }
+  },
+  "full_semantic_coverage_proven": false
+}
