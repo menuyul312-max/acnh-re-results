@@ -1,0 +1,1454 @@
+{
+  "title": "ACNH prologue landing: UID EventPlaza preset to SetupActorPosition(Type=3)",
+  "date_utc": "2026-11-07",
+  "scope": "Static join of FieldMainFieldParam.UniqueID/EventPlaza rows with the landing EventFlow and native Type=3 position request. No executable rebuild or runtime tracing performed.",
+  "answer": {
+    "direct_link_proven": true,
+    "short": "The UID-selected EventPlaza preset pair flows through the EventPlaza loader into a saved pair and then into the same native global anchor returned to SetupActorPosition(Type=3). Type=3 samples the current root-grid ground and forms an offset position request from that anchor. This is a proven indirect input relationship, not proof that the pair itself is a named player or airplane spawn coordinate.",
+    "confidence_boundary": "Proven: static data/control-flow and shared-object relation. Unproven: decoded hash names/units/origin, whether the target request is applied specifically to the player or airplane, and whether this is the final visible landing location."
+  },
+  "eventflow": {
+    "source": "/workspace/analysis/acnh/project/generated/eventflow/Tutorials_Prologue2_Arrival.json",
+    "flowchart": "Tutorials_Prologue2_Arrival",
+    "relevant_events": [
+      {
+        "event": "Event2",
+        "record": {
+          "name": "Event2",
+          "type": "switch",
+          "actor": 1,
+          "query": 0,
+          "params": {
+            "AccessKey": "cLand:ValidateVillageSave"
+          },
+          "cases": [
+            {
+              "value": 0,
+              "event": 3
+            },
+            {
+              "value": 1,
+              "event": 0
+            }
+          ]
+        },
+        "interpretation": "Literal switch value 0 reaches Event3; value 1 reaches Event0. Do not assume bool polarity."
+      },
+      {
+        "event": "Event3",
+        "record": {
+          "name": "Event3",
+          "type": "action",
+          "next": 4,
+          "actor": 0,
+          "action": 0,
+          "params": {
+            "MessageID": "Tutorials/Tutorials_Prologue2_Arrival:003",
+            "IsCloseMessageWindow": false
+          }
+        }
+      },
+      {
+        "event": "Event4",
+        "record": {
+          "name": "Event4",
+          "type": "action",
+          "next": 12,
+          "actor": 0,
+          "action": 0,
+          "params": {
+            "MessageID": "Tutorials/Tutorials_Prologue2_Arrival:004",
+            "IsCloseMessageWindow": true
+          }
+        }
+      },
+      {
+        "event": "Event12",
+        "record": {
+          "name": "Event12",
+          "type": "action",
+          "next": 6,
+          "actor": 1,
+          "action": 5,
+          "params": {
+            "WaitFrame": 20
+          }
+        }
+      },
+      {
+        "event": "Event6",
+        "record": {
+          "name": "Event6",
+          "type": "action",
+          "next": 5,
+          "actor": 1,
+          "action": 1,
+          "params": {
+            "FadeOutKindString": "cCircle",
+            "FadeInKindString": "cCircle",
+            "FadeColorString": "cBlack",
+            "IsUseDucking": true,
+            "FadeOutSpeed": 0.8,
+            "FadeInSpeed": 0.8
+          }
+        }
+      },
+      {
+        "event": "Event5",
+        "record": {
+          "name": "Event5",
+          "type": "action",
+          "next": 7,
+          "actor": 1,
+          "action": 0,
+          "params": {
+            "Type": 3
+          }
+        },
+        "registration": "EventFlowSystemActor.EventFlowActionSetupActorPosition"
+      },
+      {
+        "event": "Event7",
+        "record": {
+          "name": "Event7",
+          "type": "action",
+          "next": 2,
+          "actor": 1,
+          "action": 3,
+          "params": {
+            "AccessKey": "cPlayer:FirstPlayAfterPlayerMake"
+          }
+        }
+      },
+      {
+        "event": "Event11",
+        "record": {
+          "name": "Event11",
+          "type": "action",
+          "next": 8,
+          "actor": 1,
+          "action": 2,
+          "params": {
+            "CameraInterpolateKey": "",
+            "Arg": 0,
+            "CameraTargetKey": "Keep",
+            "CameraParamKey": "cBirdView",
+            "AdjustAngleYOnEnter": false,
+            "AdjustAngleYOnLeave": false,
+            "UseNearCulling": false
+          }
+        }
+      },
+      {
+        "event": "Event8",
+        "record": {
+          "name": "Event8",
+          "type": "action",
+          "next": 9,
+          "actor": 1,
+          "action": 2,
+          "params": {
+            "CameraInterpolateKey": "",
+            "CameraTargetKey": "Npc:rco",
+            "Arg": 0,
+            "CameraParamKey": "EventPlazaPrologue",
+            "AdjustAngleYOnEnter": false,
+            "AdjustAngleYOnLeave": false,
+            "UseNearCulling": false
+          }
+        },
+        "note": "Camera uses target Npc:rco and parameter key EventPlazaPrologue; this is not the Type=3 actor-target proof."
+      }
+    ],
+    "branch": "The literal case value 0 path goes through messages 003/004, wait/fade, then Event5 Type=3. Case value 1 goes to messages 001/002 and terminates."
+  },
+  "native": {
+    "address_convention": "PCs/targets below are raw main.elf VAs from the ELF analysis inventory. Decompiler symbol labels commonly appear +0x100000 above the raw VA; do not mix the two address domains.",
+    "registration": {
+      "key": "EventFlowSystemActor.EventFlowActionSetupActorPosition",
+      "registration_hash": "0x5233e4d1",
+      "parameters": {
+        "Type": "int"
+      },
+      "factory_analysis_va": "0x44ea70",
+      "constructor_analysis_va": "0x2fe930",
+      "object_size": 328,
+      "vtable_analysis_va": "0x30486c8",
+      "native_slots_raw": [
+        "0x2ff670",
+        "0x2ff710",
+        "0x2fe9d0",
+        "0x2fea00",
+        "0x2fea30",
+        "0x238fd0",
+        "0x238fe0",
+        "0x238ff0",
+        "0x2ff0d0",
+        "0x2ff5d0",
+        "0x2ff660",
+        "0x239010"
+      ],
+      "slot_8_target_raw": "0x2ff0d0",
+      "handler_extent_raw": "0x2ff0d0\u20130x2ff5cb"
+    },
+    "type3_block": {
+      "switch_case": 3,
+      "call_edges": [
+        {
+          "pc": "0x2ff250",
+          "target": "0x469680",
+          "effect": "gets the shared EventPlaza anchor object at global+0x40"
+        },
+        {
+          "pc": "0x2ff284",
+          "target": "0x1577a0",
+          "effect": "samples/adjusts a position against the current root-grid context (root+0x28)"
+        },
+        {
+          "pc": "0x2ff2a4",
+          "target": "0x11c780",
+          "effect": "applies a static vector/transform input"
+        },
+        {
+          "pc": "0x2ff2d4",
+          "target": "0xe712f0",
+          "effect": "constructs the position request"
+        },
+        {
+          "pc": "0x2ff2e8",
+          "target": "0xe8cfd0",
+          "effect": "fills request data from derived position/transform"
+        },
+        {
+          "pc": "0x2ff30c",
+          "target": "0xca4370",
+          "effect": "dispatches request through a generic callback list"
+        }
+      ],
+      "position_logic": "Uses the anchor returned by 0x469680; root-grid helper 0x1577a0 is called before emitting the request. Decompiled case-3 logic includes horizontal offsets -7.5 and +15.0 and caller-supplied height. Treat these as request-transform offsets, not proven player spawn coordinates.",
+      "generic_dispatch": "0xca4370 iterates a callback/list at receiver offsets +0xb70/+0xb78 and invokes the callback vtable. It does not identify an actor class or prove player/airplane identity."
+    },
+    "shared_anchor": {
+      "getter_raw": "0x469680",
+      "decomp": "analysis_decomp/469680.c",
+      "expression": "return *(global 0x32d6f98) + 0x40",
+      "eventplaza_loader_raw": "0x5598c0",
+      "loader_eventplaza_callsite": "0x559ad4 calls 0xf74c50 with two EventPlaza values",
+      "updater_raw": "0x47c1e0",
+      "updater_call": "0x5598c0 calls 0x47c1e0 with global 0x32d6f98 + 0x10",
+      "object_offset_relation": "updater param1 is global+0x10; param1+0x30 equals global+0x40, exactly the pointer returned by 0x469680 and consumed by Type=3.",
+      "updater_data_use": "0x47c1e0 obtains a pair via 0xf74c30, passes it to 0x52bcf0, then calls 0x52c5f0(param1+8,param1+0x30) to update the shared position object. The pair getter 0xf74c30 reads saved SaveMainField offsets +0xcfa2c and +0xcfa30."
+    },
+    "save_pair_writer": {
+      "raw_helper": "0xf74c50",
+      "callsite": "0x559ad4",
+      "decomp": "analysis_decomp/f74c50.c",
+      "writes": [
+        "SaveMainField+0xcfa2c <- source+8 (32-bit)",
+        "SaveMainField+0xcfa30 <- source+0xc (32-bit)"
+      ]
+    }
+  },
+  "preset_data": {
+    "table_source": "/workspace/acnh-re/output/tables_resolved/FieldMainFieldParam.json",
+    "raw_bcsv_sha256": "3ebd1057e41b0666aa30c6d8beee9220b52d8fb5280c478e8eb13eaca5d27944",
+    "row_count": 96,
+    "relevant_columns": [
+      {
+        "name": "UniqueID",
+        "hash": "54706054",
+        "type": "u16",
+        "offset": 4,
+        "width": 2
+      },
+      {
+        "name": "FieldData",
+        "hash": "6e1ac981",
+        "type": "string32",
+        "offset": 6,
+        "width": 32
+      }
+    ],
+    "eventplaza_inventory": {
+      "decoded_rows_found": 96,
+      "missing": [],
+      "unique_raw_value_pairs": 91,
+      "hash_fields": [
+        "h_035daede",
+        "h_799dfdbe"
+      ],
+      "interpretation": "Each table row selects the same FieldData stem used to locate <FieldData>_EventPlaza.json. Its two integer hash fields are copied into the saved pair by the native loader. Hash names remain unresolved in the local native evidence.",
+      "rows": [
+        {
+          "UniqueID": 0,
+          "FieldData": "FieldPresetA00",
+          "OutsideTemplateKind": 0,
+          "event_plaza_values": {
+            "h_035daede": 77,
+            "h_799dfdbe": 65
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetA00_EventPlaza.json",
+          "decoded_json_sha256": "0bf61e40d22fa8b2420143180d43ff03663a3fc52b5fd49ff9a31b7cf40a0480"
+        },
+        {
+          "UniqueID": 8,
+          "FieldData": "FieldPresetA01",
+          "OutsideTemplateKind": 0,
+          "event_plaza_values": {
+            "h_035daede": 80,
+            "h_799dfdbe": 69
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetA01_EventPlaza.json",
+          "decoded_json_sha256": "fe4289d2a9d4eb94ab5fc352fcb00062139666191daff7cd220493118c271df6"
+        },
+        {
+          "UniqueID": 9,
+          "FieldData": "FieldPresetA02",
+          "OutsideTemplateKind": 0,
+          "event_plaza_values": {
+            "h_035daede": 74,
+            "h_799dfdbe": 74
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetA02_EventPlaza.json",
+          "decoded_json_sha256": "398f0eccb9931af68fe96479aed2c943ec8c4a86aa4d5164f9442c5011c20987"
+        },
+        {
+          "UniqueID": 10,
+          "FieldData": "FieldPresetB00",
+          "OutsideTemplateKind": 2,
+          "event_plaza_values": {
+            "h_035daede": 64,
+            "h_799dfdbe": 40
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetB00_EventPlaza.json",
+          "decoded_json_sha256": "caaff390b9abcd722b74561b1f28183d81b301eed965409f3c531f6568b1053e"
+        },
+        {
+          "UniqueID": 11,
+          "FieldData": "FieldPresetB01",
+          "OutsideTemplateKind": 2,
+          "event_plaza_values": {
+            "h_035daede": 75,
+            "h_799dfdbe": 51
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetB01_EventPlaza.json",
+          "decoded_json_sha256": "344de3d69ffaebc6713bf0097e8b661215ef7672ffa0d3461c11a03b17fc4aae"
+        },
+        {
+          "UniqueID": 12,
+          "FieldData": "FieldPresetB02",
+          "OutsideTemplateKind": 2,
+          "event_plaza_values": {
+            "h_035daede": 75,
+            "h_799dfdbe": 51
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetB02_EventPlaza.json",
+          "decoded_json_sha256": "ec4620df2314220812acc352356f889a158e5986951591d227c8c04d6372ad3f"
+        },
+        {
+          "UniqueID": 13,
+          "FieldData": "FieldPresetC00",
+          "OutsideTemplateKind": 1,
+          "event_plaza_values": {
+            "h_035daede": 85,
+            "h_799dfdbe": 63
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetC00_EventPlaza.json",
+          "decoded_json_sha256": "3ce1f8e9a4131005e494e5879e771f62fb9961b61327266c5c7b58042a53c07d"
+        },
+        {
+          "UniqueID": 14,
+          "FieldData": "FieldPresetC01",
+          "OutsideTemplateKind": 1,
+          "event_plaza_values": {
+            "h_035daede": 68,
+            "h_799dfdbe": 79
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetC01_EventPlaza.json",
+          "decoded_json_sha256": "ce7b2c431f4ae6dd724867e4442607225ded6ace82099b785a2ef37e2b65cde2"
+        },
+        {
+          "UniqueID": 15,
+          "FieldData": "FieldPresetC02",
+          "OutsideTemplateKind": 1,
+          "event_plaza_values": {
+            "h_035daede": 76,
+            "h_799dfdbe": 89
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetC02_EventPlaza.json",
+          "decoded_json_sha256": "c2dd3628afd90b14706670d54db8f346a7973a39922f9c43a5b904890d0e2ac6"
+        },
+        {
+          "UniqueID": 16,
+          "FieldData": "FieldPresetA03",
+          "OutsideTemplateKind": 0,
+          "event_plaza_values": {
+            "h_035daede": 63,
+            "h_799dfdbe": 86
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetA03_EventPlaza.json",
+          "decoded_json_sha256": "4de6bff04d3f87143c1110f142fa01868874a439ba3cc1ea5803a2ce51d41fa3"
+        },
+        {
+          "UniqueID": 17,
+          "FieldData": "FieldPresetA04",
+          "OutsideTemplateKind": 0,
+          "event_plaza_values": {
+            "h_035daede": 75,
+            "h_799dfdbe": 68
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetA04_EventPlaza.json",
+          "decoded_json_sha256": "8a1a2fbd4bb9794bcb8070c357abf06060570a38d223745c385b6e718d7e16c0"
+        },
+        {
+          "UniqueID": 18,
+          "FieldData": "FieldPresetA05",
+          "OutsideTemplateKind": 0,
+          "event_plaza_values": {
+            "h_035daede": 78,
+            "h_799dfdbe": 71
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetA05_EventPlaza.json",
+          "decoded_json_sha256": "a3f18f91e561f806bb8a8976a7edaf799f6ec4c12030d170d6c73d1c85698517"
+        },
+        {
+          "UniqueID": 19,
+          "FieldData": "FieldPresetB03",
+          "OutsideTemplateKind": 2,
+          "event_plaza_values": {
+            "h_035daede": 68,
+            "h_799dfdbe": 68
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetB03_EventPlaza.json",
+          "decoded_json_sha256": "2521b5677913a382863b1482d7ec9e923df1e87a8be9b605cb4765481dbbb5c1"
+        },
+        {
+          "UniqueID": 20,
+          "FieldData": "FieldPresetB04",
+          "OutsideTemplateKind": 2,
+          "event_plaza_values": {
+            "h_035daede": 77,
+            "h_799dfdbe": 37
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetB04_EventPlaza.json",
+          "decoded_json_sha256": "49b71bb79f3b33dde80f62a292b6302845fc6a5cefb6b23b4a959f9483a9cebf"
+        },
+        {
+          "UniqueID": 21,
+          "FieldData": "FieldPresetB05",
+          "OutsideTemplateKind": 2,
+          "event_plaza_values": {
+            "h_035daede": 73,
+            "h_799dfdbe": 61
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetB05_EventPlaza.json",
+          "decoded_json_sha256": "5c619f1fc0bb7dcbf6054f553a5cdfa0a6c494fefe8917dc1f873dfe2eef2e56"
+        },
+        {
+          "UniqueID": 22,
+          "FieldData": "FieldPresetC03",
+          "OutsideTemplateKind": 1,
+          "event_plaza_values": {
+            "h_035daede": 72,
+            "h_799dfdbe": 96
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetC03_EventPlaza.json",
+          "decoded_json_sha256": "ff1a1239edf9457ae0e872264f6570934d06341eb3a8ba4c48d572023fc43bc0"
+        },
+        {
+          "UniqueID": 23,
+          "FieldData": "FieldPresetC04",
+          "OutsideTemplateKind": 1,
+          "event_plaza_values": {
+            "h_035daede": 58,
+            "h_799dfdbe": 97
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetC04_EventPlaza.json",
+          "decoded_json_sha256": "eb260e8ce424d5626e79fede1942b49cc367a6f582543302b5d135ea628a704a"
+        },
+        {
+          "UniqueID": 24,
+          "FieldData": "FieldPresetC05",
+          "OutsideTemplateKind": 1,
+          "event_plaza_values": {
+            "h_035daede": 71,
+            "h_799dfdbe": 93
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetC05_EventPlaza.json",
+          "decoded_json_sha256": "c61bfa40d89b64c0465b409dedff1ca688613b30f0d0bee3d9047c98051915f9"
+        },
+        {
+          "UniqueID": 28,
+          "FieldData": "FieldPresetB06",
+          "OutsideTemplateKind": 2,
+          "event_plaza_values": {
+            "h_035daede": 76,
+            "h_799dfdbe": 43
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetB06_EventPlaza.json",
+          "decoded_json_sha256": "1bfa42e289ad48cc075e2cee382ab34665255cb9c4c71b150827829063f45456"
+        },
+        {
+          "UniqueID": 29,
+          "FieldData": "FieldPresetC06",
+          "OutsideTemplateKind": 1,
+          "event_plaza_values": {
+            "h_035daede": 72,
+            "h_799dfdbe": 88
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetC06_EventPlaza.json",
+          "decoded_json_sha256": "9bc568d2007168267a3af6356b44f4753a5ca09d78bdb5db9170e453003f698a"
+        },
+        {
+          "UniqueID": 30,
+          "FieldData": "FieldPresetA09",
+          "OutsideTemplateKind": 0,
+          "event_plaza_values": {
+            "h_035daede": 69,
+            "h_799dfdbe": 51
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetA09_EventPlaza.json",
+          "decoded_json_sha256": "ae99ab027a504c3454cbf0bcf285d14655510fa96458cdc8d449b0cd53ad9d14"
+        },
+        {
+          "UniqueID": 31,
+          "FieldData": "FieldPresetA10",
+          "OutsideTemplateKind": 0,
+          "event_plaza_values": {
+            "h_035daede": 72,
+            "h_799dfdbe": 70
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetA10_EventPlaza.json",
+          "decoded_json_sha256": "c732e88473e12953b523e93f7b2d2d919cc1e7703a1c0b569f860233b1aaa90c"
+        },
+        {
+          "UniqueID": 32,
+          "FieldData": "FieldPresetA11",
+          "OutsideTemplateKind": 0,
+          "event_plaza_values": {
+            "h_035daede": 79,
+            "h_799dfdbe": 66
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetA11_EventPlaza.json",
+          "decoded_json_sha256": "a11679994cf1a2215ca76bd9818f787980ef3e0ed5162444f0fcedcab802eb40"
+        },
+        {
+          "UniqueID": 33,
+          "FieldData": "FieldPresetA12",
+          "OutsideTemplateKind": 0,
+          "event_plaza_values": {
+            "h_035daede": 77,
+            "h_799dfdbe": 63
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetA12_EventPlaza.json",
+          "decoded_json_sha256": "9972c02510a7d75718a41576634914f9be8b9ce8d4e5f0da278c270017838b88"
+        },
+        {
+          "UniqueID": 34,
+          "FieldData": "FieldPresetA13",
+          "OutsideTemplateKind": 0,
+          "event_plaza_values": {
+            "h_035daede": 75,
+            "h_799dfdbe": 70
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetA13_EventPlaza.json",
+          "decoded_json_sha256": "a1cd448e9023fe4fc3da17a8e1a9fa6c2605e24dc3e941186ee5fc7b3d21187d"
+        },
+        {
+          "UniqueID": 35,
+          "FieldData": "FieldPresetA14",
+          "OutsideTemplateKind": 0,
+          "event_plaza_values": {
+            "h_035daede": 76,
+            "h_799dfdbe": 66
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetA14_EventPlaza.json",
+          "decoded_json_sha256": "2915befa1d9eca2d9e9ec4dcf31d5da395b7f0e4c2b2e8b113927ac28014707a"
+        },
+        {
+          "UniqueID": 36,
+          "FieldData": "FieldPresetA15",
+          "OutsideTemplateKind": 0,
+          "event_plaza_values": {
+            "h_035daede": 78,
+            "h_799dfdbe": 64
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetA15_EventPlaza.json",
+          "decoded_json_sha256": "88913fa1ca9df4ee63d53b5f57717163d87235cadfe042bf881a9790544e3171"
+        },
+        {
+          "UniqueID": 37,
+          "FieldData": "FieldPresetA16",
+          "OutsideTemplateKind": 0,
+          "event_plaza_values": {
+            "h_035daede": 77,
+            "h_799dfdbe": 66
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetA16_EventPlaza.json",
+          "decoded_json_sha256": "8936d5e4c3816167168e2ebb7ad1f2a192c2ffd2211d0f72fcd25a926452ac9b"
+        },
+        {
+          "UniqueID": 38,
+          "FieldData": "FieldPresetA17",
+          "OutsideTemplateKind": 0,
+          "event_plaza_values": {
+            "h_035daede": 78,
+            "h_799dfdbe": 68
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetA17_EventPlaza.json",
+          "decoded_json_sha256": "52cb86352c0dc1d32e5134469f2202eb111dbd089a29c07154d06b9857b9bc89"
+        },
+        {
+          "UniqueID": 39,
+          "FieldData": "FieldPresetA18",
+          "OutsideTemplateKind": 0,
+          "event_plaza_values": {
+            "h_035daede": 74,
+            "h_799dfdbe": 60
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetA18_EventPlaza.json",
+          "decoded_json_sha256": "823361f3753223eda4aa320fae7ed735b6c770b479ca5db69a16c68fae3cb99c"
+        },
+        {
+          "UniqueID": 40,
+          "FieldData": "FieldPresetA19",
+          "OutsideTemplateKind": 0,
+          "event_plaza_values": {
+            "h_035daede": 73,
+            "h_799dfdbe": 71
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetA19_EventPlaza.json",
+          "decoded_json_sha256": "3a5e4662ccac014e79ac5a71bfacbe2905ed61459dd5b00ee7582b2e747489c1"
+        },
+        {
+          "UniqueID": 41,
+          "FieldData": "FieldPresetA20",
+          "OutsideTemplateKind": 0,
+          "event_plaza_values": {
+            "h_035daede": 74,
+            "h_799dfdbe": 66
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetA20_EventPlaza.json",
+          "decoded_json_sha256": "114bc85ed6fe6828b1434eee30cbc36b92008c2e539832f86eab956d8cfff35e"
+        },
+        {
+          "UniqueID": 42,
+          "FieldData": "FieldPresetB07",
+          "OutsideTemplateKind": 2,
+          "event_plaza_values": {
+            "h_035daede": 75,
+            "h_799dfdbe": 50
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetB07_EventPlaza.json",
+          "decoded_json_sha256": "df679ffbc1adeab44cb78a28ef36f9fa5fc2fce1dc55b331a0b4ddbcf8ae3623"
+        },
+        {
+          "UniqueID": 43,
+          "FieldData": "FieldPresetB08",
+          "OutsideTemplateKind": 2,
+          "event_plaza_values": {
+            "h_035daede": 75,
+            "h_799dfdbe": 51
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetB08_EventPlaza.json",
+          "decoded_json_sha256": "3999c5c6f887956a8d050b2dde513eec88b7f822f16010efa8a2fa516f1acf4e"
+        },
+        {
+          "UniqueID": 44,
+          "FieldData": "FieldPresetB09",
+          "OutsideTemplateKind": 2,
+          "event_plaza_values": {
+            "h_035daede": 74,
+            "h_799dfdbe": 44
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetB09_EventPlaza.json",
+          "decoded_json_sha256": "8f111ee5fea0cea2f6d65822755e3ea078074c8cfa87ae688d3a4ec36a3a0f3c"
+        },
+        {
+          "UniqueID": 45,
+          "FieldData": "FieldPresetB10",
+          "OutsideTemplateKind": 2,
+          "event_plaza_values": {
+            "h_035daede": 76,
+            "h_799dfdbe": 57
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetB10_EventPlaza.json",
+          "decoded_json_sha256": "5d5763e371d7493c9bc5650b3d217a9c0be2a16470315de8b998b4e8791e91e0"
+        },
+        {
+          "UniqueID": 46,
+          "FieldData": "FieldPresetB11",
+          "OutsideTemplateKind": 2,
+          "event_plaza_values": {
+            "h_035daede": 79,
+            "h_799dfdbe": 55
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetB11_EventPlaza.json",
+          "decoded_json_sha256": "2a4ceab4479db94d0beaf088d25630bf7c194c78169ffb50b1f7bcdbc8d41e15"
+        },
+        {
+          "UniqueID": 47,
+          "FieldData": "FieldPresetB12",
+          "OutsideTemplateKind": 2,
+          "event_plaza_values": {
+            "h_035daede": 71,
+            "h_799dfdbe": 55
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetB12_EventPlaza.json",
+          "decoded_json_sha256": "105c74e2ddbeaff27fc82cb08ab3bfa49d65616945e4742434bf6c8b803b68dd"
+        },
+        {
+          "UniqueID": 48,
+          "FieldData": "FieldPresetB13",
+          "OutsideTemplateKind": 2,
+          "event_plaza_values": {
+            "h_035daede": 66,
+            "h_799dfdbe": 47
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetB13_EventPlaza.json",
+          "decoded_json_sha256": "9e34cffea0483975286ba23dc658e2d70ed073eed2edd36f3d88c9a958060500"
+        },
+        {
+          "UniqueID": 49,
+          "FieldData": "FieldPresetB14",
+          "OutsideTemplateKind": 2,
+          "event_plaza_values": {
+            "h_035daede": 68,
+            "h_799dfdbe": 71
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetB14_EventPlaza.json",
+          "decoded_json_sha256": "e0105b290c3f4381acec3b6247c153b86f51b1f64fb8bfee70cdd34962cb3aab"
+        },
+        {
+          "UniqueID": 50,
+          "FieldData": "FieldPresetB15",
+          "OutsideTemplateKind": 2,
+          "event_plaza_values": {
+            "h_035daede": 79,
+            "h_799dfdbe": 47
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetB15_EventPlaza.json",
+          "decoded_json_sha256": "1e769759255b55b20ebb116158d18b6b8dc274b2e13d52a9fb149da34c7a2b1a"
+        },
+        {
+          "UniqueID": 51,
+          "FieldData": "FieldPresetB16",
+          "OutsideTemplateKind": 2,
+          "event_plaza_values": {
+            "h_035daede": 79,
+            "h_799dfdbe": 48
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetB16_EventPlaza.json",
+          "decoded_json_sha256": "053bbe27814e49d146f382706f44a6062bea805f8c4fae2521ae2c4f9f4c6001"
+        },
+        {
+          "UniqueID": 52,
+          "FieldData": "FieldPresetB17",
+          "OutsideTemplateKind": 2,
+          "event_plaza_values": {
+            "h_035daede": 81,
+            "h_799dfdbe": 52
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetB17_EventPlaza.json",
+          "decoded_json_sha256": "0f7b9455e94b2b8bb6be376541c00e65956d334c13d6b0892cf2bb5228161867"
+        },
+        {
+          "UniqueID": 53,
+          "FieldData": "FieldPresetB18",
+          "OutsideTemplateKind": 2,
+          "event_plaza_values": {
+            "h_035daede": 83,
+            "h_799dfdbe": 59
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetB18_EventPlaza.json",
+          "decoded_json_sha256": "f7b1d23861daed564b392f9f691c3747b53fdebfdcc16b28e23dc6f5a95470bb"
+        },
+        {
+          "UniqueID": 54,
+          "FieldData": "FieldPresetB19",
+          "OutsideTemplateKind": 2,
+          "event_plaza_values": {
+            "h_035daede": 67,
+            "h_799dfdbe": 69
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetB19_EventPlaza.json",
+          "decoded_json_sha256": "affeb090d19658822d6e0b59fbaae8ff079fe5739c1e1e47d00a89f3dadf575a"
+        },
+        {
+          "UniqueID": 55,
+          "FieldData": "FieldPresetB20",
+          "OutsideTemplateKind": 2,
+          "event_plaza_values": {
+            "h_035daede": 73,
+            "h_799dfdbe": 38
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetB20_EventPlaza.json",
+          "decoded_json_sha256": "50c168f23b35217b904b46288fdace0238dd657e5f410b9e9f8e147e6582708f"
+        },
+        {
+          "UniqueID": 56,
+          "FieldData": "FieldPresetC07",
+          "OutsideTemplateKind": 1,
+          "event_plaza_values": {
+            "h_035daede": 72,
+            "h_799dfdbe": 72
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetC07_EventPlaza.json",
+          "decoded_json_sha256": "5c635c32c3ab7dca3217eba22a0195a5593ab11c8faa825dc4c6bf98c2f34b1f"
+        },
+        {
+          "UniqueID": 57,
+          "FieldData": "FieldPresetC08",
+          "OutsideTemplateKind": 1,
+          "event_plaza_values": {
+            "h_035daede": 70,
+            "h_799dfdbe": 85
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetC08_EventPlaza.json",
+          "decoded_json_sha256": "017d661fb53c05e758f071602816962790fbca922e5cfe9769ead607d9becf87"
+        },
+        {
+          "UniqueID": 58,
+          "FieldData": "FieldPresetC09",
+          "OutsideTemplateKind": 1,
+          "event_plaza_values": {
+            "h_035daede": 79,
+            "h_799dfdbe": 80
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetC09_EventPlaza.json",
+          "decoded_json_sha256": "21e5c49e2c982d6433db380b754d15815247ac3c78587e9fec62b541656f972f"
+        },
+        {
+          "UniqueID": 59,
+          "FieldData": "FieldPresetC10",
+          "OutsideTemplateKind": 1,
+          "event_plaza_values": {
+            "h_035daede": 66,
+            "h_799dfdbe": 79
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetC10_EventPlaza.json",
+          "decoded_json_sha256": "6c1bba008ba5cc651f8a05fa888527000a09ffe5d32e58e42ea074211df7deda"
+        },
+        {
+          "UniqueID": 60,
+          "FieldData": "FieldPresetC11",
+          "OutsideTemplateKind": 1,
+          "event_plaza_values": {
+            "h_035daede": 75,
+            "h_799dfdbe": 80
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetC11_EventPlaza.json",
+          "decoded_json_sha256": "7f71b2c62ff053bdabf4c6bdcf4128f5e8ad6e1491db48fb4e0fb831f43dd580"
+        },
+        {
+          "UniqueID": 61,
+          "FieldData": "FieldPresetC12",
+          "OutsideTemplateKind": 1,
+          "event_plaza_values": {
+            "h_035daede": 71,
+            "h_799dfdbe": 88
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetC12_EventPlaza.json",
+          "decoded_json_sha256": "a8f51e3ba83d25670d05e495e080d82679340f31a98fc13086fe52fd383005ef"
+        },
+        {
+          "UniqueID": 62,
+          "FieldData": "FieldPresetC13",
+          "OutsideTemplateKind": 1,
+          "event_plaza_values": {
+            "h_035daede": 62,
+            "h_799dfdbe": 90
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetC13_EventPlaza.json",
+          "decoded_json_sha256": "c26174f6b080b97e1d684aa294a1523fa53ac6cb1576774418b5233ea04d8a68"
+        },
+        {
+          "UniqueID": 63,
+          "FieldData": "FieldPresetC14",
+          "OutsideTemplateKind": 1,
+          "event_plaza_values": {
+            "h_035daede": 75,
+            "h_799dfdbe": 73
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetC14_EventPlaza.json",
+          "decoded_json_sha256": "296dfb43ea9d73ec4919fcdcec8f3d205e0da4596d42563d1ed1713244b6823c"
+        },
+        {
+          "UniqueID": 64,
+          "FieldData": "FieldPresetC15",
+          "OutsideTemplateKind": 1,
+          "event_plaza_values": {
+            "h_035daede": 78,
+            "h_799dfdbe": 85
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetC15_EventPlaza.json",
+          "decoded_json_sha256": "9ea0fb8d31ff9a9c9bd5660ef907f0c319d374362aff18feabb0e40716acb3f9"
+        },
+        {
+          "UniqueID": 65,
+          "FieldData": "FieldPresetC16",
+          "OutsideTemplateKind": 1,
+          "event_plaza_values": {
+            "h_035daede": 76,
+            "h_799dfdbe": 79
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetC16_EventPlaza.json",
+          "decoded_json_sha256": "0a1ea45954509995c92aca162cc43065f71ee801d3fb20231c74ff850fe9c794"
+        },
+        {
+          "UniqueID": 66,
+          "FieldData": "FieldPresetC17",
+          "OutsideTemplateKind": 1,
+          "event_plaza_values": {
+            "h_035daede": 81,
+            "h_799dfdbe": 74
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetC17_EventPlaza.json",
+          "decoded_json_sha256": "22cc93da1f4ed6631b2c0a30d6f9bdabf9b28e3c4db4d024def97d9febb1a2c8"
+        },
+        {
+          "UniqueID": 67,
+          "FieldData": "FieldPresetC18",
+          "OutsideTemplateKind": 1,
+          "event_plaza_values": {
+            "h_035daede": 79,
+            "h_799dfdbe": 80
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetC18_EventPlaza.json",
+          "decoded_json_sha256": "5d8a3135f752bdca5c07c733d85aaa874c77830eb632ddeced873c710f9b889b"
+        },
+        {
+          "UniqueID": 68,
+          "FieldData": "FieldPresetC19",
+          "OutsideTemplateKind": 1,
+          "event_plaza_values": {
+            "h_035daede": 79,
+            "h_799dfdbe": 81
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetC19_EventPlaza.json",
+          "decoded_json_sha256": "6995d1a3fe1c0dbca2349ec2032a1ba4b89e0238068fbfc60b11d490e841d315"
+        },
+        {
+          "UniqueID": 69,
+          "FieldData": "FieldPresetC20",
+          "OutsideTemplateKind": 1,
+          "event_plaza_values": {
+            "h_035daede": 81,
+            "h_799dfdbe": 80
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetC20_EventPlaza.json",
+          "decoded_json_sha256": "b13f8a5d3c38cd4af3a1b03fceb093060468c9b8787da67abec837cadcaa6b03"
+        },
+        {
+          "UniqueID": 70,
+          "FieldData": "FieldPresetA21",
+          "OutsideTemplateKind": 0,
+          "event_plaza_values": {
+            "h_035daede": 79,
+            "h_799dfdbe": 66
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetA21_EventPlaza.json",
+          "decoded_json_sha256": "eb9c3a98a95d9050f8c05f2e412a4d8e1d818c75da7128b08a07d0c34444e405"
+        },
+        {
+          "UniqueID": 71,
+          "FieldData": "FieldPresetA22",
+          "OutsideTemplateKind": 0,
+          "event_plaza_values": {
+            "h_035daede": 71,
+            "h_799dfdbe": 68
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetA22_EventPlaza.json",
+          "decoded_json_sha256": "895cefdd1b0e7afffc76fd66f5e1df398f031068b6179e6a5ee5f0c55e8bb742"
+        },
+        {
+          "UniqueID": 72,
+          "FieldData": "FieldPresetA23",
+          "OutsideTemplateKind": 0,
+          "event_plaza_values": {
+            "h_035daede": 77,
+            "h_799dfdbe": 72
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetA23_EventPlaza.json",
+          "decoded_json_sha256": "094bc79494de6f0fa346254829d05d34475f4479345ead46d1b8e235ee437d5e"
+        },
+        {
+          "UniqueID": 73,
+          "FieldData": "FieldPresetA24",
+          "OutsideTemplateKind": 0,
+          "event_plaza_values": {
+            "h_035daede": 72,
+            "h_799dfdbe": 67
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetA24_EventPlaza.json",
+          "decoded_json_sha256": "64f0867e0c22a92886966c39d82c2265fa89121e8e1eea2174c467c2c01b77b2"
+        },
+        {
+          "UniqueID": 74,
+          "FieldData": "FieldPresetA25",
+          "OutsideTemplateKind": 0,
+          "event_plaza_values": {
+            "h_035daede": 72,
+            "h_799dfdbe": 64
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetA25_EventPlaza.json",
+          "decoded_json_sha256": "b511d1222bfb780c28531f52efd29f30d6979baa9de25926a818320d115db74d"
+        },
+        {
+          "UniqueID": 75,
+          "FieldData": "FieldPresetA26",
+          "OutsideTemplateKind": 0,
+          "event_plaza_values": {
+            "h_035daede": 76,
+            "h_799dfdbe": 67
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetA26_EventPlaza.json",
+          "decoded_json_sha256": "032ea8c2afe80b505bcefc3ff02d9a995485290d4bdb9a896bc475c26d61268e"
+        },
+        {
+          "UniqueID": 76,
+          "FieldData": "FieldPresetA27",
+          "OutsideTemplateKind": 0,
+          "event_plaza_values": {
+            "h_035daede": 81,
+            "h_799dfdbe": 66
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetA27_EventPlaza.json",
+          "decoded_json_sha256": "e708b1a35937b88f65f7d69c609f9ee8360b15746bb4b43a811cccbe6def6c1a"
+        },
+        {
+          "UniqueID": 77,
+          "FieldData": "FieldPresetA28",
+          "OutsideTemplateKind": 0,
+          "event_plaza_values": {
+            "h_035daede": 77,
+            "h_799dfdbe": 67
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetA28_EventPlaza.json",
+          "decoded_json_sha256": "573e534843a8bc3be28e36b52dabeeaa7789461240b4a27ea93db0804650c640"
+        },
+        {
+          "UniqueID": 78,
+          "FieldData": "FieldPresetA29",
+          "OutsideTemplateKind": 0,
+          "event_plaza_values": {
+            "h_035daede": 80,
+            "h_799dfdbe": 65
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetA29_EventPlaza.json",
+          "decoded_json_sha256": "69b2a6a9a5435f0c06d8e20b0d45c1f6e76ab518dc061a1534e0b56ab5272adf"
+        },
+        {
+          "UniqueID": 79,
+          "FieldData": "FieldPresetA30",
+          "OutsideTemplateKind": 0,
+          "event_plaza_values": {
+            "h_035daede": 79,
+            "h_799dfdbe": 65
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetA30_EventPlaza.json",
+          "decoded_json_sha256": "ce84a718f54f5c30f924ebf6cbe732bde905577dfb837d8d054b528dda610081"
+        },
+        {
+          "UniqueID": 80,
+          "FieldData": "FieldPresetA31",
+          "OutsideTemplateKind": 0,
+          "event_plaza_values": {
+            "h_035daede": 80,
+            "h_799dfdbe": 76
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetA31_EventPlaza.json",
+          "decoded_json_sha256": "3c754bdd5d0d547a9490d5696c9dfe14e284769d30ff5d810df4b9842a2655a5"
+        },
+        {
+          "UniqueID": 81,
+          "FieldData": "FieldPresetA32",
+          "OutsideTemplateKind": 0,
+          "event_plaza_values": {
+            "h_035daede": 80,
+            "h_799dfdbe": 62
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetA32_EventPlaza.json",
+          "decoded_json_sha256": "49ad16f1beb19608fe77cdb53f928fdc66dd9e96545da6496204294caef37cd0"
+        },
+        {
+          "UniqueID": 89,
+          "FieldData": "FieldPresetB21",
+          "OutsideTemplateKind": 2,
+          "event_plaza_values": {
+            "h_035daede": 77,
+            "h_799dfdbe": 51
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetB21_EventPlaza.json",
+          "decoded_json_sha256": "d5a84f78e2c1f7c19edbccfa59a0507e70badda44b94b2a0fcabbe5353f867f3"
+        },
+        {
+          "UniqueID": 90,
+          "FieldData": "FieldPresetB22",
+          "OutsideTemplateKind": 2,
+          "event_plaza_values": {
+            "h_035daede": 80,
+            "h_799dfdbe": 41
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetB22_EventPlaza.json",
+          "decoded_json_sha256": "3b49d4058f7dcc689112e760cdd990b0c403d7d044ee02e36a4b8b7a473f59de"
+        },
+        {
+          "UniqueID": 91,
+          "FieldData": "FieldPresetB23",
+          "OutsideTemplateKind": 2,
+          "event_plaza_values": {
+            "h_035daede": 77,
+            "h_799dfdbe": 52
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetB23_EventPlaza.json",
+          "decoded_json_sha256": "27718e233dadf5e95762ebf53d760ec2e83effb2304f36d3573b36c729cf3074"
+        },
+        {
+          "UniqueID": 92,
+          "FieldData": "FieldPresetB24",
+          "OutsideTemplateKind": 2,
+          "event_plaza_values": {
+            "h_035daede": 82,
+            "h_799dfdbe": 63
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetB24_EventPlaza.json",
+          "decoded_json_sha256": "79ee163694c3a1cd3a94cf88aab1f463f6c755beecad442fc8fe17a233fc1356"
+        },
+        {
+          "UniqueID": 93,
+          "FieldData": "FieldPresetB25",
+          "OutsideTemplateKind": 2,
+          "event_plaza_values": {
+            "h_035daede": 83,
+            "h_799dfdbe": 53
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetB25_EventPlaza.json",
+          "decoded_json_sha256": "7d4fe5633baf51f112d182d256a0ec65ea21d33db137c5b1f14053891ac74ad3"
+        },
+        {
+          "UniqueID": 94,
+          "FieldData": "FieldPresetB26",
+          "OutsideTemplateKind": 2,
+          "event_plaza_values": {
+            "h_035daede": 81,
+            "h_799dfdbe": 54
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetB26_EventPlaza.json",
+          "decoded_json_sha256": "e825ae0ade29b2fe23df46cf90aed3aebec9992b454894b2bfc0f84bfcd085d2"
+        },
+        {
+          "UniqueID": 95,
+          "FieldData": "FieldPresetB27",
+          "OutsideTemplateKind": 2,
+          "event_plaza_values": {
+            "h_035daede": 75,
+            "h_799dfdbe": 53
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetB27_EventPlaza.json",
+          "decoded_json_sha256": "e5e7edcf023d3a8b95c70ab830ccb9e940e6dc65c548f7e41432125bd1c3143b"
+        },
+        {
+          "UniqueID": 96,
+          "FieldData": "FieldPresetB28",
+          "OutsideTemplateKind": 2,
+          "event_plaza_values": {
+            "h_035daede": 82,
+            "h_799dfdbe": 62
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetB28_EventPlaza.json",
+          "decoded_json_sha256": "20030e23f915434281d021c88bf9107680ed032153d07319043ffdba3692d036"
+        },
+        {
+          "UniqueID": 97,
+          "FieldData": "FieldPresetB29",
+          "OutsideTemplateKind": 2,
+          "event_plaza_values": {
+            "h_035daede": 78,
+            "h_799dfdbe": 50
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetB29_EventPlaza.json",
+          "decoded_json_sha256": "5f217be916569da8e354efeb54d45bcbb33e480f29ba2cedab7bb59aa9396e75"
+        },
+        {
+          "UniqueID": 98,
+          "FieldData": "FieldPresetB30",
+          "OutsideTemplateKind": 2,
+          "event_plaza_values": {
+            "h_035daede": 78,
+            "h_799dfdbe": 46
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetB30_EventPlaza.json",
+          "decoded_json_sha256": "a1590ad27daf60250f555a7041ffd1e54bf9a94bf1b6243d9e4c0d528cd9a633"
+        },
+        {
+          "UniqueID": 99,
+          "FieldData": "FieldPresetB31",
+          "OutsideTemplateKind": 2,
+          "event_plaza_values": {
+            "h_035daede": 80,
+            "h_799dfdbe": 56
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetB31_EventPlaza.json",
+          "decoded_json_sha256": "411beefcf149f5f195b8941fe160bc1efdd173fbf633e7f4726226440b949c5c"
+        },
+        {
+          "UniqueID": 100,
+          "FieldData": "FieldPresetB32",
+          "OutsideTemplateKind": 2,
+          "event_plaza_values": {
+            "h_035daede": 79,
+            "h_799dfdbe": 46
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetB32_EventPlaza.json",
+          "decoded_json_sha256": "77eee022951e5138492d2a604ee79051ab5a6c24300b3304106eda0b3eade583"
+        },
+        {
+          "UniqueID": 108,
+          "FieldData": "FieldPresetC21",
+          "OutsideTemplateKind": 1,
+          "event_plaza_values": {
+            "h_035daede": 74,
+            "h_799dfdbe": 85
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetC21_EventPlaza.json",
+          "decoded_json_sha256": "428233ebb3ed92d7d75bfb9a3434f128d9898aafe6ef62c0f41c3b54b717c2e1"
+        },
+        {
+          "UniqueID": 109,
+          "FieldData": "FieldPresetC22",
+          "OutsideTemplateKind": 1,
+          "event_plaza_values": {
+            "h_035daede": 82,
+            "h_799dfdbe": 77
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetC22_EventPlaza.json",
+          "decoded_json_sha256": "eb8f369939faf12e0f5c77b90854f293e69a499d27cb7596cac4747363e82ce4"
+        },
+        {
+          "UniqueID": 110,
+          "FieldData": "FieldPresetC23",
+          "OutsideTemplateKind": 1,
+          "event_plaza_values": {
+            "h_035daede": 76,
+            "h_799dfdbe": 75
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetC23_EventPlaza.json",
+          "decoded_json_sha256": "b6d04d4773a66c0d3a00f6fd8104acebf03b6831dcdb60224db9a243559ff20c"
+        },
+        {
+          "UniqueID": 111,
+          "FieldData": "FieldPresetC24",
+          "OutsideTemplateKind": 1,
+          "event_plaza_values": {
+            "h_035daede": 83,
+            "h_799dfdbe": 90
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetC24_EventPlaza.json",
+          "decoded_json_sha256": "c7a5d4c93cf657e942c775f36077e0ef678255edc618e7c7f5d79245b7dd6ab8"
+        },
+        {
+          "UniqueID": 112,
+          "FieldData": "FieldPresetC25",
+          "OutsideTemplateKind": 1,
+          "event_plaza_values": {
+            "h_035daede": 84,
+            "h_799dfdbe": 73
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetC25_EventPlaza.json",
+          "decoded_json_sha256": "62254ae0f9693849cdc58d8df9e5fd69c4853df66b9a63979a98656c0f0514f0"
+        },
+        {
+          "UniqueID": 113,
+          "FieldData": "FieldPresetC26",
+          "OutsideTemplateKind": 1,
+          "event_plaza_values": {
+            "h_035daede": 73,
+            "h_799dfdbe": 87
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetC26_EventPlaza.json",
+          "decoded_json_sha256": "bc9c43f9478fc48684934c3cce4f1cfec1d1e4ca19b427db8484e1ce36b4e70b"
+        },
+        {
+          "UniqueID": 114,
+          "FieldData": "FieldPresetC27",
+          "OutsideTemplateKind": 1,
+          "event_plaza_values": {
+            "h_035daede": 70,
+            "h_799dfdbe": 71
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetC27_EventPlaza.json",
+          "decoded_json_sha256": "7e52a30cc7ca1835c76d4c34b6fcc2edea9a3160f1a386f2a47ea2e26e14ef56"
+        },
+        {
+          "UniqueID": 115,
+          "FieldData": "FieldPresetC28",
+          "OutsideTemplateKind": 1,
+          "event_plaza_values": {
+            "h_035daede": 67,
+            "h_799dfdbe": 89
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetC28_EventPlaza.json",
+          "decoded_json_sha256": "232eb3d4a67ae8221e4b4f07a282e1b10ebfe52d64135a87e6db142207fbf8d0"
+        },
+        {
+          "UniqueID": 116,
+          "FieldData": "FieldPresetC29",
+          "OutsideTemplateKind": 1,
+          "event_plaza_values": {
+            "h_035daede": 73,
+            "h_799dfdbe": 83
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetC29_EventPlaza.json",
+          "decoded_json_sha256": "52a16837324d737e92e9d5fc4bf0a8a6f842ea5c4b3fceb9efb4e2c33b4d5440"
+        },
+        {
+          "UniqueID": 117,
+          "FieldData": "FieldPresetC30",
+          "OutsideTemplateKind": 1,
+          "event_plaza_values": {
+            "h_035daede": 63,
+            "h_799dfdbe": 90
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetC30_EventPlaza.json",
+          "decoded_json_sha256": "56c8cbcc6043d08d423d5804d0a0713beb8f9959f29bb948e5ce556643862957"
+        },
+        {
+          "UniqueID": 118,
+          "FieldData": "FieldPresetC31",
+          "OutsideTemplateKind": 1,
+          "event_plaza_values": {
+            "h_035daede": 79,
+            "h_799dfdbe": 80
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetC31_EventPlaza.json",
+          "decoded_json_sha256": "1c50cea75fc96676a031473a52f79cbe56d1f34c56b2610d0e919dcc6d0e3bd3"
+        },
+        {
+          "UniqueID": 119,
+          "FieldData": "FieldPresetC32",
+          "OutsideTemplateKind": 1,
+          "event_plaza_values": {
+            "h_035daede": 73,
+            "h_799dfdbe": 89
+          },
+          "decoded_json": "/workspace/analysis/acnh/project/generated/data/byml/Param/Field/MainFieldPreset/FieldPresetC32_EventPlaza.json",
+          "decoded_json_sha256": "791cc2d53326ca1b5ce452d5e19222ab19d39f9459079a2f41fabd18552fe6ee"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "UniqueID": 0,
+        "FieldData": "FieldPresetA00",
+        "event_plaza_values": {
+          "h_035daede": 77,
+          "h_799dfdbe": 65
+        }
+      },
+      {
+        "UniqueID": 8,
+        "FieldData": "FieldPresetA01",
+        "event_plaza_values": {
+          "h_035daede": 80,
+          "h_799dfdbe": 69
+        }
+      },
+      {
+        "UniqueID": 9,
+        "FieldData": "FieldPresetA02",
+        "event_plaza_values": {
+          "h_035daede": 74,
+          "h_799dfdbe": 74
+        }
+      },
+      {
+        "UniqueID": 10,
+        "FieldData": "FieldPresetB00",
+        "event_plaza_values": {
+          "h_035daede": 64,
+          "h_799dfdbe": 40
+        }
+      }
+    ]
+  },
+  "external_alignment": {
+    "source": "/workspace/acnh-re-github/acnh-re/output/gameplay/save_layout_external_crosswalk.json",
+    "candidate_names": [
+      "SaveLand.MainField.EventPlazaLeftUpX",
+      "SaveLand.MainField.EventPlazaLeftUpZ"
+    ],
+    "status": "External schema alignment only (Treeki/CylindricalEarth schema/version); do not treat these field names as proven local native names or use them to assign units/origin."
+  },
+  "what_remains_unproven": [
+    "The meaning, axis ordering, units, and origin of the two BYML hashes h_035daede and h_799dfdbe in local native code.",
+    "Whether the shared EventPlaza anchor is the intended player spawn or airplane/arrival actor spawn. The Type=3 handler emits a generic callback request and no player/airplane identity was found in the traced path.",
+    "Whether this request is the final visible landing position versus an intermediate actor placement/camera setup.",
+    "Runtime confirmation of the selection-to-world-init handoff and ground result for an actual selected UID."
+  ],
+  "conversion_notes": [
+    "Keep all 96 UID\u2192FieldData\u2192EventPlaza rows and both integer hash values verbatim; do not rename or rescale the hashes without further native proof.",
+    "Reproduce the static relation: selected UID resolves FieldData, EventPlaza values populate the shared anchor, Type=3 reads the anchor, samples root-grid ground, then adds the observed offsets before generic dispatch.",
+    "Keep the Npc:rco EventPlazaPrologue camera target as a separate camera cue; it is not a substitute for the Type=3 position target.",
+    "Do not label Type=3 as player spawn in an implementation until the generic callback receiver is identified."
+  ],
+  "source_hashes": {
+    "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/A_logic/main.elf": {
+      "size_bytes": 53729580,
+      "sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74"
+    },
+    "/workspace/acnh-re/output/tables_resolved/FieldMainFieldParam.json": {
+      "size_bytes": 10456,
+      "sha256": "141a6d85166bc8b08eac399389114fbebd5708e0d1c3b54af3be37e116a0e100"
+    },
+    "/workspace/analysis/acnh/project/generated/eventflow/Tutorials_Prologue2_Arrival.json": {
+      "size_bytes": 2815,
+      "sha256": "e747141099847f2c0565e143ddc6536e82636a5cd3f2501e2222e364d28fd783"
+    },
+    "/workspace/acnh-re/output/binary/event_handlers_resolved.json": {
+      "size_bytes": 1009896,
+      "sha256": "dfc298dfcb1b288b8fda9cd6a49c728fdad903b41f8fc1c9288df7d732ec92a5"
+    },
+    "/workspace/acnh-re/output/binary/analyzed_functions.tsv": {
+      "size_bytes": 6138583,
+      "sha256": "38455b8aaef240037d2f45d53db9b4a1473dfd938cb52d5e6e0087a2ba26b288"
+    },
+    "/workspace/acnh-re/output/binary/analysis_decomp/2ff0d0.c": {
+      "size_bytes": 5363,
+      "sha256": "9264577142db32e6258ac4d3d287aece92be20eafa45cc8e99e699e2433b6667"
+    },
+    "/workspace/acnh-re/output/binary/analysis_decomp/5598c0.c": {
+      "size_bytes": 3042,
+      "sha256": "ceda098c5d2f01cb0f23b03ba9ee8ee72f5275d9d372ac41476eed1c4ade1b2c"
+    },
+    "/workspace/acnh-re/output/binary/analysis_decomp/47c1e0.c": {
+      "size_bytes": 1305,
+      "sha256": "792fa161ace80cbc74e777b6ca1b48c3a3bb8875dfea88de1415457929eadf1b"
+    },
+    "/workspace/acnh-re/output/binary/analysis_decomp/469680.c": {
+      "size_bytes": 71,
+      "sha256": "fbedd7f73d555825df29a70bb091f049b3f9f79846c78ea2918cd686cd54b703"
+    },
+    "/workspace/acnh-re/output/binary/analysis_decomp/f74c30.c": {
+      "size_bytes": 163,
+      "sha256": "76e9ca347f21290768141e59adf64c3381154ed7220df32eb8f8251426849dc0"
+    },
+    "/workspace/acnh-re/output/binary/analysis_decomp/f74c50.c": {
+      "size_bytes": 202,
+      "sha256": "7d7d5cf564c66c694725a73e7dd30fb070825c9c8a8d4e0f2c28ecd478255d2a"
+    },
+    "/workspace/acnh-re/output/binary/analysis_decomp/ca4370.c": {
+      "size_bytes": 384,
+      "sha256": "59a2dc7235d44a3a0b3db2c7fe6b481e90e20d1b2af7aad42aeb53bce7949a03"
+    },
+    "/workspace/acnh-re-github/acnh-re/output/gameplay/save_layout_external_crosswalk.json": {
+      "size_bytes": 234766,
+      "sha256": "2fea2dfb23c286c08d6a33f93e944cfccec4cd606bf43cab08c6eee96f7e0604"
+    },
+    "/workspace/acnh-re-github/acnh-re/docs/REGISTRATION_UID_LANDMAKING_WORLD_BUILDER_FOLLOWUP_20261107.md": {
+      "size_bytes": 7514,
+      "sha256": "36548e356084cd128c7e3692fa7281fe39c83d467b3574ccb4b370f9039853cd"
+    }
+  },
+  "report": "acnh-re/docs/PROLOGUE_SETUP_ACTOR_POSITION_TYPE3_PRESET_BOUNDARY_20261107.md"
+}
