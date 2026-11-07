@@ -1,0 +1,87 @@
+{
+  "schema": "acnh-re/story-asset-inventory/1",
+  "scope": "Global source and conversion inventory used to audit story crosswalk coverage; not a list of all individual runtime resource bindings",
+  "as_of": "2026-11-07",
+  "classes": {
+    "gameplay_data": {
+      "status": "STRUCT",
+      "source": "ACNH 1.0.0 B_data",
+      "counts": {"source_files": 1171, "decoded_entries": 2986, "BCSV": 164, "BYML": 2313, "AAMP": 47, "BFEVFL": 456},
+      "conversion": "BCSV/BYML/AAMP/BFEVFL decoded to typed/indexed JSON; keep raw IDs, descriptors, exact integer values and provenance",
+      "limitations": ["91 BCSV columns lack exact descriptor", "431 unique BYML hash keys unresolved", "decoded graph/table is not native behavior by itself"]
+    },
+    "text": {
+      "status": "STRUCT",
+      "source": "additional RomFS MSBT and BDLI",
+      "counts": {"messages": 965426, "languages": 14, "archive_files": 154},
+      "conversion": "MSBT to JSON retaining archive, label, text, language, tags and message-source identity",
+      "limitations": ["runtime label selection and substitutions are partial", "message text does not prove scene or voice playback"]
+    },
+    "ui": {
+      "status": "STRUCT/PSEUDO",
+      "source": "additional RomFS UI archives",
+      "counts": {"BFLYT": 523, "BFLAN": 2095, "BNTX_containers": 431, "texture_records": 3336, "cnt1_unresolved": 356, "usd1_unresolved": 2164},
+      "conversion": "BFLYT to pane-tree JSON; BFLAN sections to summary/raw JSON; BNTX to PNG; join UIName/page factory/input/message before assigning a story beat",
+      "limitations": ["page bindings, focus/input/modal lifecycle, renderer parity and live capture remain partial", "texture count may include duplicates"]
+    },
+    "animation": {
+      "status": "STRUCT/PSEUDO",
+      "source": "additional RomFS AnimationSequence, AnimationInfo and BFLAN; skeletal source expected in model BFRES archives",
+      "counts": {"ASB": 83, "AnimationInfo_BYML": 55, "ASB_nodes": 1159, "ASB_transitions": 10001, "ASB_warps": 1297, "ASB_parameter_cases": 1895},
+      "conversion": "ASB to state/transition/condition/event JSON; skeletal BFRES clips can be sampled to per-bone JSON when source archive and rig are present; BFLAN is a separate UI-animation format",
+      "limitations": ["ASB transition semantics and actor-to-state binding are partial", "no model archive means skeletal clip-to-rig matching is unavailable"]
+    },
+    "model": {
+      "status": "CAT",
+      "source": "catalogues/model.json only; supplied additional RomFS has no Model/ source archive",
+      "counts": {"catalog_rows": 37459, "catalog_GLTF_PNG": 5627, "catalog_PNG_only": 31832, "ItemParam_ResName_exact_Asset_ID_matches": 7668, "unmatched_ItemParam_ResName": 540},
+      "conversion": "When raw files exist: Yaz0/SARC to BFRES; BFRES to GLB (current exporter LOD0) and material extras; embedded/external BNTX to PNG/HDR; skeletal animations to JSON; `.phive` preserved verbatim",
+      "limitations": ["catalog row is not a mesh or converted file", "catalog paths do not resolve to supplied raw source", "material/LOD fidelity is limited"]
+    },
+    "audio": {
+      "status": "CAT",
+      "source": "catalogues/audio.json only; supplied additional RomFS has no Sound/Resource source archive",
+      "counts": {"catalog_rows": 17410, "BGM": 860, "SFX": 16550},
+      "conversion": "When raw files exist: BARS via AMTA entries to BWAV offsets, BWAV to PCM WAV then OGG; retain sample rate, channel count, sample count and loop points",
+      "limitations": ["no waveform or source timing can be confirmed from the catalog alone", "song/SFX consumer-to-beat and playback timing remain OPEN"]
+    },
+    "texture": {
+      "status": "STRUCT/PSEUDO",
+      "source": "UI BNTX and limited shader/texture content in additional RomFS; model textures are expected inside unavailable model archives",
+      "conversion": "BNTX decoder to PNG or HDR; preserve texture name, source container, dimensions, format and color-space notes",
+      "limitations": ["not every texture has been converted", "story consumer and material binding remain partial"]
+    },
+    "material_shader": {
+      "status": "STRUCT/PSEUDO",
+      "source": "two BFSHA archives and limited GLSL/BNSH content",
+      "counts": {"BFSHA_archives": 2, "shader_model_records": 5, "program_slots": 1889, "GLSL_members": 133, "unique_GLSL_hashes": 30, "BNSH_members": 256},
+      "conversion": "Keep archive/option/program metadata and raw shader bytes; join material parameters to textures and consumers before engine mapping",
+      "limitations": ["program/key table incomplete", "slot metadata is not a complete shader implementation"]
+    },
+    "effect": {
+      "status": "STRUCT/OPEN",
+      "source": "two VFXB/PTCL archives plus ELink2DB.belnk and SLink2DB.bslnk",
+      "conversion": "Preserve source and hashes; decode and connect effect emitters, material, timing and actor consumer where format support is proven",
+      "limitations": ["PTCL/XLNK semantics and story/runtime callers are partial"]
+    },
+    "font": {
+      "status": "OPEN",
+      "source": "Font archives/FontInfo are handled by reference importers when raw source is present",
+      "conversion": "BFTTF/BFOTF to TTF/OTF; retain BFFNT raw when bitmap layout is not decoded",
+      "limitations": ["per-screen font assignment and exact prologue text-render binding still require crosswalk"]
+    },
+    "world_data": {
+      "status": "STRUCT/PSEUDO/NATIVE partial",
+      "source": "FieldPreset, item/structure tables, terrain unit models and PBC references",
+      "conversion": "Keep raw grid records and ID joins; resolve unit/variant/PBC and world transform only when a native consumer verifies it",
+      "limitations": ["full seed-to-world loader, all transforms, story actor anchors and live placement are not connected"]
+    },
+    "collision": {
+      "status": "PSEUDO/OPEN",
+      "source": "native collision/terrain consumers and `.phive` expected inside model archives",
+      "conversion": "Preserve `.phive` byte-for-byte until parser and physics semantics are validated; record collision source and owning model/transform",
+      "limitations": ["raw model archive absent", "solver, masks, friction and full actor-to-collider binding remain incomplete"]
+    }
+  },
+  "policy": "Each story beat must cite an exact source or a CAT/OPEN placeholder for each asset family. These global totals do not claim every individual catalog row is used by the main-story path."
+}

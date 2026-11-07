@@ -1,0 +1,2125 @@
+{
+  "schema": "acnh-re/story-asset-crosswalk-part/1",
+  "scope": "ACNH 1.0.0 Resident Services/Isabelle completion through campsite and first camper, island evaluation, first K.K. live/credits, and post-live Island Designer unlock. Flow and limited native/decomp evidence are crosswalked; world coordinates and unresolved consumers stay OPEN.",
+  "asset_inventory": {
+    "model_catalog": {
+      "path": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json",
+      "rows": 37459,
+      "status": "CAT",
+      "notes": "The catalog's generated paths are references only; this task does not assert that any story candidate is loaded by the game stage."
+    },
+    "audio_catalog": {
+      "path": "/workspace/acnh-re/output/additional_romfs/catalogues/audio.json",
+      "rows": 17410,
+      "status": "CAT",
+      "notes": "K.K. live category has 98 entries; no first-live selected track was identified and no audio was played/converted here."
+    },
+    "ui_catalog": {
+      "path": "acnh-re/output/ui_hud/screen_catalog.json",
+      "layouts": 523,
+      "status": "CAT",
+      "notes": "StaffCredit UI and BFLAN are catalogued, but no EventFlow/native trigger join is found."
+    },
+    "flow_data": {
+      "path": "acnh-re/output/gameplay/flow_index.json",
+      "status": "EF",
+      "notes": "Decoded EventFlow graph index supplies named entries, flags/actions and message labels."
+    },
+    "native_data": {
+      "path": "acnh-re/output/gameplay/native_flag_refs.json",
+      "status": "PSEUDO",
+      "notes": "Disassembly summaries for office/campsite/day-change and K.K. gate are not runtime traces; rating score aggregator is also not end-to-end executed."
+    },
+    "conversion_status": "No model/audio conversion status is asserted. UI layout/BFLAN and event-flow text references are catalog/decode records; story consumer joins remain CAT or OPEN unless explicitly EF."
+  },
+  "items": [
+    {
+      "beat_id": "office.opening_isabelle",
+      "order": 0,
+      "title": "Resident Services completes; Isabelle is introduced",
+      "flow": [
+        {
+          "status": "PSEUDO",
+          "name": "Resident Services day-change completion",
+          "path": "acnh-re/output/gameplay/native_flag_refs.json",
+          "key": "data.functions.0x10c2ad0",
+          "role": "native flag/structure read",
+          "notes": "Checks for structure kind 1 and sets BuiltTownOffice, BuiltTownOfficeToday, GlobalEventReady and EventPlazaBuilt; body is documented from disassembly, not executed in this crosswalk."
+        },
+        {
+          "status": "EF",
+          "name": "Demo_PublicAnnouncement",
+          "path": "B_data/EventFlow/Demo_PublicAnnouncement.bfevfl",
+          "key": "PAnnounceSza",
+          "role": "EventFlow",
+          "notes": "Root branches on BuiltTownOffice/BuiltTownOfficeToday; office opening announcement joins the Isabelle path."
+        },
+        {
+          "status": "EF",
+          "name": "TownNews_Rco_OfficeOpen",
+          "path": "acnh-re/docs/GAMEPLAY_FLOW.md",
+          "key": "§8, office-open announcement",
+          "role": "message/event name",
+          "notes": "Recorded by the flow audit; exact message label/table row not resolved here."
+        }
+      ],
+      "stage": {
+        "status": "OPEN",
+        "name": null,
+        "path": null,
+        "key": null,
+        "role": "announcement stage",
+        "notes": "Opening announcement's exact entrance/office scene is not established by the flow excerpt; do not infer that it uses the ceremony stage."
+      },
+      "actors": [
+        {
+          "status": "EF",
+          "name": "sza (Isabelle)",
+          "path": "B_data/EventFlow/Demo_PublicAnnouncement.bfevfl",
+          "key": "Root_Init / NpcAITalkSubCastEntry FindLabel=sza",
+          "role": "announcer",
+          "notes": "The eventflow casts sza on the BuiltTownOfficeToday path."
+        }
+      ],
+      "actions": [
+        {
+          "status": "PSEUDO",
+          "name": "Structure kind 1 present at day change",
+          "path": "acnh-re/output/gameplay/native_flag_refs.json",
+          "key": "0x10c2ad0",
+          "role": "facility completion check",
+          "notes": "Enables office/global-event/plaza flags; tent-to-building asset swap remains unresolved."
+        },
+        {
+          "status": "EF",
+          "name": "Isabelle public announcement",
+          "path": "B_data/EventFlow/Demo_PublicAnnouncement.bfevfl",
+          "key": "PAnnounceSza",
+          "role": "announcement",
+          "notes": "Flow chooses the Isabelle announcement path after office completion."
+        }
+      ],
+      "items": [
+        {
+          "status": "OPEN",
+          "name": null,
+          "path": null,
+          "key": null,
+          "role": "item reward",
+          "notes": "No item reward is evidenced for this office-completion beat."
+        }
+      ],
+      "structures": [
+        {
+          "status": "PSEUDO",
+          "name": "Resident Services / office, kind 1",
+          "path": "acnh-re/output/gameplay/native_flag_refs.json",
+          "key": "0x10c2ad0",
+          "role": "facility structure kind",
+          "notes": "Native decompilation records kind 1 as the completion predicate; exact StructureInfoParam row and tent/building swap consumer remain open."
+        }
+      ],
+      "placements": [
+        {
+          "status": "EF",
+          "name": "cMainFieldCeremonyOffice",
+          "path": "acnh-re/output/gameplay/trees/SNPC_rco_05_ChkCeremony.txt",
+          "key": "SystemRequestChangeStage TargetStage",
+          "role": "ceremony stage",
+          "notes": "The ceremony graph explicitly requests this stage. No transform, plaza anchor, spawn point or building coordinates are exposed here."
+        },
+        {
+          "status": "OPEN",
+          "name": null,
+          "path": null,
+          "key": null,
+          "role": "spatial anchor",
+          "notes": "Office exterior/plaza placement, Isabelle spawn and event-camera anchor are not resolved."
+        }
+      ],
+      "assets": {
+        "ui": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "UI",
+            "notes": "Announcement/office UI layout binding is not joined to the event flow."
+          }
+        ],
+        "animation": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "animation",
+            "notes": "Office completion/swap animation and actor binding are unjoined."
+          }
+        ],
+        "model": [
+          {
+            "status": "CAT",
+            "name": "StrcOfficeA01",
+            "path": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json",
+            "key": "Asset_ID=StrcOfficeA01",
+            "role": "Resident Services model candidate",
+            "notes": "Catalog record labels this Resident Services Town Hall and lists a generated GLB path. Model catalog is reference-only here; no EventFlow/stage/structure-row join or runtime model selection is proven."
+          }
+        ],
+        "audio": [
+          {
+            "status": "EF",
+            "name": "BGMChangeCheck",
+            "path": "B_data/EventFlow/Demo_PublicAnnouncement.bfevfl",
+            "key": "Root / PAnnounceRco",
+            "role": "office-opening music change check",
+            "notes": "Flow documentation records 24-hour BGM change at office opening; exact stream/audio resource is unresolved."
+          },
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "audio stream",
+            "notes": "Exact office-opening BGM stream selection is unresolved."
+          }
+        ],
+        "text": [
+          {
+            "status": "EF",
+            "name": "SP_rco_06_Office message family",
+            "path": "B_data/EventFlow/SNPC_rco_01_Office_1_Entries.bfevfl",
+            "key": "OfficeOpening_Force:001/002; NormalTalk:009/001",
+            "role": "dialogue",
+            "notes": "Message labels are flow evidence; localized message strings and speaker pacing are not crosswalked."
+          }
+        ],
+        "texture": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "texture",
+            "notes": "No beat-specific source-to-consumer join established for texture; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ],
+        "material_shader": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "material_shader",
+            "notes": "No beat-specific source-to-consumer join established for material_shader; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ],
+        "effect": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "effect",
+            "notes": "No beat-specific source-to-consumer join established for effect; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ],
+        "font": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "font",
+            "notes": "No beat-specific source-to-consumer join established for font; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ],
+        "world_data": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "world data",
+            "notes": "Ceremony stage known; world placement and office swap world-state rows remain open."
+          }
+        ],
+        "collision": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "collision",
+            "notes": "No beat-specific source-to-consumer join established for collision; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "status": "EF",
+          "name": "Office opening flow",
+          "path": "acnh-re/output/gameplay/flow_index.json",
+          "key": "SNPC_rco_01_Office_1_Entries:OfficeOpening_Force/NormalTalk",
+          "role": "flow index",
+          "notes": "Writes RcoOfficeFirstTalkNow, RcoFirstTalkNewOffice, IslandDevQuestRunning; force path writes OfficeSzaIntroduction."
+        },
+        {
+          "status": "PSEUDO",
+          "name": "Office completion processor",
+          "path": "acnh-re/output/gameplay/native_flag_refs.json",
+          "key": "0x10c2ad0",
+          "role": "decompilation summary",
+          "notes": "Structure kind 1 completion rule and flags are documented; not dynamically executed."
+        }
+      ],
+      "gaps": [
+        "Office tent-to-building model/state swap, exact StructureInfoParam row, coordinates, exterior/cutscene actor anchors and asset consumer are unresolved.",
+        "Exact TownNews message row, page/layout, BGM stream, model and animation usage are not proven from catalog names."
+      ]
+    },
+    {
+      "beat_id": "office.ceremony_and_island_dev",
+      "order": 1,
+      "title": "Office ceremony and first Resident Services development conversation",
+      "flow": [
+        {
+          "status": "EF",
+          "name": "SNPC_rco_05_ChkCeremony",
+          "path": "Stage/event graph requests office ceremony stage.",
+          "key": "office ceremony branch",
+          "role": "EventFlow",
+          "notes": "CeremonyBuildOffice"
+        },
+        {
+          "status": "EF",
+          "name": "SNPC_rco_01_Office_1_Entries",
+          "path": "B_data/EventFlow/SNPC_rco_01_Office_1_Entries.bfevfl",
+          "key": "OfficeOpening_Force",
+          "role": "EventFlow",
+          "notes": "Intro flow writes IslandDevQuestRunning and OfficeSzaIntroduction."
+        },
+        {
+          "status": "EF",
+          "name": "SNPC_rco_54_IslandDevelopment",
+          "path": "B_data/EventFlow/SNPC_rco_54_IslandDevelopment.bfevfl",
+          "key": "Root / KkProject_Intro",
+          "role": "EventFlow",
+          "notes": "Office conversation branches into island development/campsite progression."
+        }
+      ],
+      "stage": {
+        "status": "EF",
+        "name": "cMainFieldCeremonyOffice",
+        "path": "acnh-re/output/gameplay/trees/SNPC_rco_05_ChkCeremony.txt",
+        "key": "events #234/#283",
+        "role": "ceremony stage",
+        "notes": "The ceremony flow issues SystemRequestChangeStage to this name; stage internals and location are not parsed here."
+      },
+      "actors": [
+        {
+          "status": "EF",
+          "name": "rco (Tom Nook)",
+          "path": "B_data/EventFlow/SNPC_rco_01_Office_1_Entries.bfevfl",
+          "key": "OfficeOpening_Force/NormalTalk",
+          "role": "office host",
+          "notes": "Office entry flow and message labels identify Rco."
+        },
+        {
+          "status": "EF",
+          "name": "sza (Isabelle)",
+          "path": "B_data/EventFlow/SNPC_rco_01_Office_1_Entries.bfevfl",
+          "key": "OfficeOpening_Force_Init CastID=1 FindLabel=sza",
+          "role": "office cast",
+          "notes": "Cast binding exists in flow; position/model not bound."
+        }
+      ],
+      "actions": [
+        {
+          "status": "EF",
+          "name": "Enable Island Development quest",
+          "path": "B_data/EventFlow/SNPC_rco_01_Office_1_Entries.bfevfl",
+          "key": "OfficeOpening_Force:#35",
+          "role": "progression flag",
+          "notes": "Turns IslandDevQuestRunning on."
+        },
+        {
+          "status": "EF",
+          "name": "Request office ceremony stage",
+          "path": "acnh-re/output/gameplay/trees/SNPC_rco_05_ChkCeremony.txt",
+          "key": "#234/#283",
+          "role": "stage request",
+          "notes": "EventFlow stage transition evidence only."
+        }
+      ],
+      "items": [
+        {
+          "status": "OPEN",
+          "name": null,
+          "path": null,
+          "key": null,
+          "role": "item",
+          "notes": "No specific inventory item is granted in this conversation beat."
+        }
+      ],
+      "structures": [
+        {
+          "status": "PSEUDO",
+          "name": "Resident Services, kind 1",
+          "path": "acnh-re/output/gameplay/native_flag_refs.json",
+          "key": "0x10c2ad0",
+          "role": "office structure",
+          "notes": "Presence predicate associated with BuiltTownOffice; final model row remains unresolved."
+        }
+      ],
+      "placements": [
+        {
+          "status": "EF",
+          "name": "cMainFieldCeremonyOffice",
+          "path": "acnh-re/output/gameplay/trees/SNPC_rco_05_ChkCeremony.txt",
+          "key": "TargetStage at events #234/#283",
+          "role": "ceremony scene",
+          "notes": "Stage transition is evidenced. No positions/rotations or actor-camera anchors are recorded."
+        },
+        {
+          "status": "OPEN",
+          "name": null,
+          "path": null,
+          "key": null,
+          "role": "world placement",
+          "notes": "Office NPC positions, ceremony prop layout and conversation trigger geometry remain unresolved."
+        }
+      ],
+      "assets": {
+        "ui": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "ui",
+            "notes": "No beat-specific source-to-consumer join established for ui; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ],
+        "animation": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "animation",
+            "notes": "No beat-specific source-to-consumer join established for animation; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ],
+        "model": [
+          {
+            "status": "CAT",
+            "name": "StrcOfficeA01",
+            "path": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json",
+            "key": "Asset_ID=StrcOfficeA01",
+            "role": "Resident Services model candidate",
+            "notes": "Catalog record labels this Resident Services Town Hall and lists a generated GLB path. Model catalog is reference-only here; no EventFlow/stage/structure-row join or runtime model selection is proven."
+          }
+        ],
+        "audio": [
+          {
+            "status": "EF",
+            "name": "BGMChangeCheck",
+            "path": "B_data/EventFlow/Demo_PublicAnnouncement.bfevfl",
+            "key": "Root / PAnnounceRco",
+            "role": "office-opening music change check",
+            "notes": "Flow documentation records 24-hour BGM change at office opening; exact stream/audio resource is unresolved."
+          }
+        ],
+        "text": [
+          {
+            "status": "EF",
+            "name": "SP_rco_00_Common and SP_rco_06_Office labels",
+            "path": "B_data/EventFlow/SNPC_rco_01_Office_1_Entries.bfevfl",
+            "key": "OfficeOpening_Force / OfficeOpening_NormalTalk",
+            "role": "dialogue",
+            "notes": "Flow labels are known; localized contents are not resolved in this task."
+          }
+        ],
+        "texture": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "texture",
+            "notes": "No beat-specific source-to-consumer join established for texture; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ],
+        "material_shader": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "material_shader",
+            "notes": "No beat-specific source-to-consumer join established for material_shader; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ],
+        "effect": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "effect",
+            "notes": "No beat-specific source-to-consumer join established for effect; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ],
+        "font": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "font",
+            "notes": "No beat-specific source-to-consumer join established for font; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ],
+        "world_data": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "world_data",
+            "notes": "No beat-specific source-to-consumer join established for world_data; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ],
+        "collision": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "collision",
+            "notes": "No beat-specific source-to-consumer join established for collision; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "status": "EF",
+          "name": "Office first-talk entries",
+          "path": "acnh-re/output/gameplay/flow_index.json",
+          "key": "SNPC_rco_01_Office_1_Entries:OfficeOpening_Force/NormalTalk",
+          "role": "flow index",
+          "notes": "Evidence of entry point, flag reads/writes and message labels."
+        },
+        {
+          "status": "EF",
+          "name": "Ceremony stage request",
+          "path": "acnh-re/output/gameplay/trees/SNPC_rco_05_ChkCeremony.txt",
+          "key": "events #234/#283",
+          "role": "decoded event tree",
+          "notes": "TargetStage is cMainFieldCeremonyOffice."
+        }
+      ],
+      "gaps": [
+        "No stage map, scene objects, actor transforms, camera markers, or resource bindings are joined to the ceremony.",
+        "Office ceremony only proves a stage transition; the crosswalk does not claim a rendered location or structure appearance."
+      ]
+    },
+    {
+      "beat_id": "campsite.build_and_ceremony",
+      "order": 2,
+      "title": "Campsite construction request, completion and ceremony",
+      "flow": [
+        {
+          "status": "EF",
+          "name": "SNPC_rco_54_IslandDevelopment",
+          "path": "B_data/EventFlow/SNPC_rco_54_IslandDevelopment.bfevfl",
+          "key": "CampSiteRequest",
+          "role": "EventFlow",
+          "notes": "Unlocks recipe and sets RcoBuildCampsiteOngoing."
+        },
+        {
+          "status": "EF",
+          "name": "System_GrowUp_GameProcess",
+          "path": "B_data/EventFlow/System_GrowUp_GameProcess.bfevfl",
+          "key": "FirstCamperCheck",
+          "role": "EventFlow",
+          "notes": "Day-change processing follows campsite completion flags."
+        },
+        {
+          "status": "PSEUDO",
+          "name": "Campsite facility completion",
+          "path": "acnh-re/output/gameplay/native_flag_refs.json",
+          "key": "0xf26330",
+          "role": "day-change native",
+          "notes": "State 1 plus structure kind 6 sets CampSiteBuilt, CampSiteBuiltToday and CeremonyBuildCampSite; decompilation summary, not executed."
+        }
+      ],
+      "stage": {
+        "status": "EF",
+        "name": "cMainFieldCeremonyCampSite",
+        "path": "acnh-re/output/gameplay/trees/SNPC_rco_05_ChkCeremony.txt",
+        "key": "event #249/#298 TargetStage",
+        "role": "ceremony stage",
+        "notes": "EventFlow explicitly requests campsite ceremony stage; underlying campsite scene is not identified."
+      },
+      "actors": [
+        {
+          "status": "EF",
+          "name": "rco (Tom Nook)",
+          "path": "B_data/EventFlow/SNPC_rco_54_IslandDevelopment.bfevfl",
+          "key": "CampSiteRequest/CampSiteBuild",
+          "role": "quest giver",
+          "notes": "EventFlow branch and dialogue labels."
+        },
+        {
+          "status": "EF",
+          "name": "sza (Isabelle)",
+          "path": "acnh-re/output/gameplay/trees/SNPC_rco_05_ChkCeremony.txt",
+          "key": "ceremony flow cast if present",
+          "role": "ceremony attendee",
+          "notes": "Actor transform and appearance unresolved."
+        }
+      ],
+      "actions": [
+        {
+          "status": "EF",
+          "name": "PlayerSetCraftRecipe",
+          "path": "B_data/EventFlow/SNPC_rco_54_IslandDevelopment.bfevfl",
+          "key": "CampSiteRequest:#2 UnlockType=CampSite, ItemUniqueId=65534",
+          "role": "recipe unlock",
+          "notes": "Recipe unlock action; kit inventory ID recorded by GAMEPLAY_FLOW as 5166."
+        },
+        {
+          "status": "EF",
+          "name": "RcoBuildCampsiteComplete",
+          "path": "acnh-re/docs/GAMEPLAY_FLOW.md",
+          "key": "§9 campsite",
+          "role": "construction completion flag",
+          "notes": "Flow audit records placed kit completion flag; placement handler trace not covered here."
+        },
+        {
+          "status": "PSEUDO",
+          "name": "Native facility state check",
+          "path": "acnh-re/output/gameplay/native_flag_refs.json",
+          "key": "0xf26330",
+          "role": "completion state",
+          "notes": "Checks structure kind 6 and promotes campsite state on day change."
+        }
+      ],
+      "items": [
+        {
+          "status": "EF",
+          "name": "Campsite construction kit recipe/item ID 5166",
+          "path": "acnh-re/docs/GAMEPLAY_FLOW.md",
+          "key": "§9.2",
+          "role": "recipe/item ID",
+          "notes": "Flow audit states kit 5166; direct ItemUniqueId action in this EventFlow entry is 65534 as the recipe-unlock selector, not the placed kit ID."
+        }
+      ],
+      "structures": [
+        {
+          "status": "PSEUDO",
+          "name": "Campsite, kind 6",
+          "path": "acnh-re/output/gameplay/native_flag_refs.json",
+          "key": "0xf26330",
+          "role": "facility kind",
+          "notes": "Native summary says kind 6 present advances campsite completion state."
+        },
+        {
+          "status": "TBL",
+          "name": "StructureInfoParam / StructureFacilityModel tables",
+          "path": "/workspace/acnh-re/output/decoded/00153.json; /workspace/acnh-re/output/decoded/00148.json",
+          "key": "B_data/Bcsv/StructureInfoParam.bcsv; StructureFacilityModel.bcsv",
+          "role": "structure catalogs",
+          "notes": "Tables exist in decoded corpus; this report does not assert a row-to-kind/model join."
+        }
+      ],
+      "placements": [
+        {
+          "status": "EF",
+          "name": "cMainFieldCeremonyCampSite",
+          "path": "acnh-re/output/gameplay/trees/SNPC_rco_05_ChkCeremony.txt",
+          "key": "#249/#298",
+          "role": "ceremony scene",
+          "notes": "Stage target present; no actual structure placement coordinates."
+        },
+        {
+          "status": "OPEN",
+          "name": null,
+          "path": null,
+          "key": null,
+          "role": "world placement",
+          "notes": "Campsite world-space location, kit grid cell, rotation, terrain constraints, ceremony marker and NPC spawn remain unresolved."
+        }
+      ],
+      "assets": {
+        "ui": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "UI",
+            "notes": "Recipe/placement UI page and page binding are unjoined."
+          }
+        ],
+        "animation": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "animation",
+            "notes": "Construction/ceremony/campsite model animations are not linked to this flow."
+          }
+        ],
+        "model": [
+          {
+            "status": "CAT",
+            "name": "StrcCampsiteTentA00",
+            "path": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json",
+            "key": "Asset_ID=StrcCampsiteTentA00",
+            "role": "campsite tent model candidate",
+            "notes": "Catalog-only name/path; no story structure-to-model join is established."
+          },
+          {
+            "status": "CAT",
+            "name": "StrcCampsiteA00",
+            "path": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json",
+            "key": "Asset_ID=StrcCampsiteA00",
+            "role": "campsite model candidate",
+            "notes": "Catalog-only name/path; do not infer whether this or the tent candidate is the story-stage model."
+          }
+        ],
+        "audio": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "audio",
+            "notes": "No specific campsite construction/ceremony audio consumer is identified."
+          }
+        ],
+        "text": [
+          {
+            "status": "EF",
+            "name": "SP_rco_07_IslandDevelopment labels",
+            "path": "B_data/EventFlow/SNPC_rco_54_IslandDevelopment.bfevfl",
+            "key": "CampSiteRequest:101-103; CampSiteBuild:201_01/202",
+            "role": "dialogue",
+            "notes": "Labels and flow source known; localized text bytes and presentation remain open."
+          }
+        ],
+        "texture": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "texture",
+            "notes": "No beat-specific source-to-consumer join established for texture; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ],
+        "material_shader": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "material_shader",
+            "notes": "No beat-specific source-to-consumer join established for material_shader; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ],
+        "effect": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "effect",
+            "notes": "No beat-specific source-to-consumer join established for effect; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ],
+        "font": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "font",
+            "notes": "No beat-specific source-to-consumer join established for font; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ],
+        "world_data": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "world_data",
+            "notes": "No beat-specific source-to-consumer join established for world_data; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ],
+        "collision": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "collision",
+            "notes": "No beat-specific source-to-consumer join established for collision; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "status": "EF",
+          "name": "Campsite recipe request",
+          "path": "acnh-re/output/gameplay/flow_index.json",
+          "key": "SNPC_rco_54_IslandDevelopment:CampSiteRequest",
+          "role": "flow index",
+          "notes": "Recipe action and progress flags are indexed."
+        },
+        {
+          "status": "PSEUDO",
+          "name": "Campsite structure completion",
+          "path": "acnh-re/output/gameplay/native_flag_refs.json",
+          "key": "0xf26330",
+          "role": "native summary",
+          "notes": "Kind 6 and completion flags documented, not executed in fixture."
+        },
+        {
+          "status": "EF",
+          "name": "Ceremony stage request",
+          "path": "acnh-re/output/gameplay/trees/SNPC_rco_05_ChkCeremony.txt",
+          "key": "events #249/#298",
+          "role": "decoded event tree",
+          "notes": "TargetStage is cMainFieldCeremonyCampSite."
+        }
+      ],
+      "gaps": [
+        "The campsite main-field location, placement transform, campsite type/model selection and structure catalog row are unresolved.",
+        "The kit placement handler, day-change native execution, ceremony actor placement and UI/animation/audio consumers remain untraced."
+      ]
+    },
+    {
+      "beat_id": "campsite.first_camper",
+      "order": 3,
+      "title": "First camper visits, speaks with the player and receives a housing kit",
+      "flow": [
+        {
+          "status": "EF",
+          "name": "System_GrowUp_GameProcess",
+          "path": "B_data/EventFlow/System_GrowUp_GameProcess.bfevfl",
+          "key": "FirstCamperCheck",
+          "role": "EventFlow",
+          "notes": "Day change after CampSiteBuilt and before first housing kit completion sets the first visitor request/visit flags."
+        },
+        {
+          "status": "EF",
+          "name": "NNPC_Spot_Camp",
+          "path": "B_data/EventFlow/NNPC_Spot_Camp.bfevfl",
+          "key": "Flow_FirstCamper*",
+          "role": "EventFlow",
+          "notes": "Eight personality-specific first-camper entries are present; sample ZK path is documented below."
+        },
+        {
+          "status": "EF",
+          "name": "SNPC_rco_54_IslandDevelopment",
+          "path": "B_data/EventFlow/SNPC_rco_54_IslandDevelopment.bfevfl",
+          "key": "MeetFirstCamperRequest / SetFirstCamperHouseRequest",
+          "role": "EventFlow",
+          "notes": "Tom Nook request path gives housing kit item 3349."
+        }
+      ],
+      "stage": {
+        "status": "OPEN",
+        "name": null,
+        "path": null,
+        "key": null,
+        "role": "first camper scene",
+        "notes": "NNPC_Spot_Camp proves a camper conversation flow, but this audit did not join its cast to a main-field stage or campsite interior stage."
+      },
+      "actors": [
+        {
+          "status": "EF",
+          "name": "first campsite visitor (personality-dependent villager)",
+          "path": "B_data/EventFlow/NNPC_Spot_Camp.bfevfl",
+          "key": "Flow_FirstCamperAN/BO/FU/GE/HA/KO/OT/ZK",
+          "role": "visitor actor",
+          "notes": "Eight personality variants; no selected species/model or actor transform is identified here."
+        },
+        {
+          "status": "EF",
+          "name": "rco (Tom Nook)",
+          "path": "B_data/EventFlow/SNPC_rco_54_IslandDevelopment.bfevfl",
+          "key": "MeetFirstCamperRequest / SetFirstCamperHouseRequest",
+          "role": "request giver",
+          "notes": "Flow actor reference only."
+        }
+      ],
+      "actions": [
+        {
+          "status": "EF",
+          "name": "Set first camper visit/request flags",
+          "path": "B_data/EventFlow/System_GrowUp_GameProcess.bfevfl",
+          "key": "FirstCamperCheck",
+          "role": "day change",
+          "notes": "Gates on CampSiteBuilt and housing kit completion flags; sets RcoMeetFirstVisitorRequest and CampFirstCamperVisit."
+        },
+        {
+          "status": "EF",
+          "name": "Grant first camper housing kit",
+          "path": "B_data/EventFlow/SNPC_rco_54_IslandDevelopment.bfevfl",
+          "key": "SetFirstCamperHouseRequest:#116 SetItemToPocket ItemUniqueId=3349",
+          "role": "item grant",
+          "notes": "Housing-kit grant action is explicit."
+        },
+        {
+          "status": "EF",
+          "name": "Amiibo campsite unlock",
+          "path": "B_data/EventFlow/System_GrowUp_GameProcess.bfevfl",
+          "key": "FirstCamperCheck:#14",
+          "role": "unlock",
+          "notes": "Flag TanuportAmiiboCampUnlock is set in this progression entry after first-house completion branch."
+        }
+      ],
+      "items": [
+        {
+          "status": "EF",
+          "name": "First camper housing kit, 3349",
+          "path": "B_data/EventFlow/SNPC_rco_54_IslandDevelopment.bfevfl",
+          "key": "SetFirstCamperHouseRequest:#116",
+          "role": "placed house kit",
+          "notes": "SetItemToPocket ItemUniqueId 3349, SetNum 1."
+        },
+        {
+          "status": "OPEN",
+          "name": null,
+          "path": null,
+          "key": null,
+          "role": "visitor item/model",
+          "notes": "Specific camper selection/species/variant itemization is unresolved."
+        }
+      ],
+      "structures": [
+        {
+          "status": "EF",
+          "name": "First visitor housing construction",
+          "path": "acnh-re/docs/GAMEPLAY_FLOW.md",
+          "key": "§9.3 RcoBuildFirstVisitorsHousingKitComplete",
+          "role": "housing completion flag",
+          "notes": "Kit completion flag is documented; structure kind/model catalog join is not established here."
+        }
+      ],
+      "placements": [
+        {
+          "status": "OPEN",
+          "name": null,
+          "path": null,
+          "key": null,
+          "role": "world placement",
+          "notes": "Campsite visitor position, player interaction radius, camera point and house-kit placement grid/transform are unknown."
+        }
+      ],
+      "assets": {
+        "ui": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "UI",
+            "notes": "First camper talk UI layout/page binding is unresolved."
+          }
+        ],
+        "animation": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "animation",
+            "notes": "No beat-specific source-to-consumer join established for animation; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ],
+        "model": [
+          {
+            "status": "CAT",
+            "name": "StrcCampsiteTentA00",
+            "path": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json",
+            "key": "Asset_ID=StrcCampsiteTentA00",
+            "role": "campsite tent model candidate",
+            "notes": "Catalog-only name/path; no story structure-to-model join is established."
+          }
+        ],
+        "audio": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "audio",
+            "notes": "No beat-specific source-to-consumer join established for audio; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ],
+        "text": [
+          {
+            "status": "EF",
+            "name": "Personality-specific Spot_Camp message labels",
+            "path": "B_data/EventFlow/NNPC_Spot_Camp.bfevfl",
+            "key": "Flow_FirstCamperZK and parallel personality entries",
+            "role": "dialogue",
+            "notes": "Labels are personality-specific; no localized message content or final villager species selected."
+          }
+        ],
+        "texture": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "texture",
+            "notes": "No beat-specific source-to-consumer join established for texture; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ],
+        "material_shader": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "material_shader",
+            "notes": "No beat-specific source-to-consumer join established for material_shader; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ],
+        "effect": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "effect",
+            "notes": "No beat-specific source-to-consumer join established for effect; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ],
+        "font": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "font",
+            "notes": "No beat-specific source-to-consumer join established for font; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ],
+        "world_data": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "world_data",
+            "notes": "No beat-specific source-to-consumer join established for world_data; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ],
+        "collision": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "collision",
+            "notes": "No beat-specific source-to-consumer join established for collision; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "status": "EF",
+          "name": "First camper day-change gate",
+          "path": "acnh-re/output/gameplay/trees/System_GrowUp_GameProcess.txt",
+          "key": "FirstCamperCheck",
+          "role": "decoded EventFlow",
+          "notes": "CampSiteBuilt and RcoBuildFirstVisitorsHousingKitComplete are the entry conditions; writes request/visit flags."
+        },
+        {
+          "status": "EF",
+          "name": "Housing-kit item action",
+          "path": "acnh-re/output/gameplay/flow_index.json",
+          "key": "SNPC_rco_54_IslandDevelopment:SetFirstCamperHouseRequest",
+          "role": "flow index",
+          "notes": "ItemUniqueId 3349 action and related flags are indexed."
+        },
+        {
+          "status": "EF",
+          "name": "First camper variant flow",
+          "path": "acnh-re/output/gameplay/flow_index.json",
+          "key": "NNPC_Spot_Camp:Flow_FirstCamper*",
+          "role": "flow index",
+          "notes": "Multiple personalities are represented; do not collapse to a single fixed villager model."
+        }
+      ],
+      "gaps": [
+        "Visitor scheduler's full native/day-change scene binding, actual visitor identity/model, campsite scene placement and player/NPC transforms remain open.",
+        "Housing kit completion-to-world placement geometry, visitor dialogue assets, camera, animation and audio consumers remain open."
+      ]
+    },
+    {
+      "beat_id": "island_evaluation.rating",
+      "order": 4,
+      "title": "Island Evaluation unlock and score/rating calculation",
+      "flow": [
+        {
+          "status": "EF",
+          "name": "SNPC_rco_54_IslandDevelopment",
+          "path": "B_data/EventFlow/SNPC_rco_54_IslandDevelopment.bfevfl",
+          "key": "Root3IslandEvaluation / IslandEvaluationRunning",
+          "role": "EventFlow",
+          "notes": "At the housing threshold, starts island evaluation and turns on IslandEvaluationUnlock."
+        },
+        {
+          "status": "EF",
+          "name": "System_IslandEvaluationCheck",
+          "path": "B_data/EventFlow/System_IslandEvaluationCheck.bfevfl",
+          "key": "IslandEvaluationChk",
+          "role": "EventFlow",
+          "notes": "Calls natural rank, life rank and minus-point checks; can run through daily processing and Isabelle conversation."
+        },
+        {
+          "status": "PSEUDO",
+          "name": "Native island-score aggregation",
+          "path": "acnh-re/docs/ISLAND_SCORE_REMAINDER_20261107.md",
+          "key": "native score companion; aggregator 0x15c61f0",
+          "role": "native score summary",
+          "notes": "Source disassembly has a reconstructed formula; full score/flow/save chain is not dynamically executed end-to-end."
+        }
+      ],
+      "stage": {
+        "status": "OPEN",
+        "name": null,
+        "path": null,
+        "key": null,
+        "role": "evaluation stage",
+        "notes": "Rating can be requested through Isabelle dialogue and daily process; a dedicated stage/camera transition was not found."
+      },
+      "actors": [
+        {
+          "status": "EF",
+          "name": "sza (Isabelle)",
+          "path": "B_data/EventFlow/SNPC_sza_50_IslandEvaluation.bfevfl",
+          "key": "Root / Sza_Evaluation_CmnImpression",
+          "role": "rating speaker",
+          "notes": "Flow is tied to Isabelle conversation; actor transform and UI binding remain open."
+        },
+        {
+          "status": "EF",
+          "name": "rco (Tom Nook)",
+          "path": "B_data/EventFlow/SNPC_rco_54_IslandDevelopment.bfevfl",
+          "key": "Root3IslandEvaluation",
+          "role": "evaluation unlock conversation",
+          "notes": "EventFlow progression gate only."
+        }
+      ],
+      "actions": [
+        {
+          "status": "EF",
+          "name": "Set IslandEvaluationUnlock",
+          "path": "B_data/EventFlow/SNPC_rco_54_IslandDevelopment.bfevfl",
+          "key": "IslandEvaluationRunning:#153",
+          "role": "unlock flag",
+          "notes": "Flow index shows IslandEvaluationUnlock and player-side detail flags."
+        },
+        {
+          "status": "EF",
+          "name": "IslandEvaluationChk",
+          "path": "B_data/EventFlow/System_IslandEvaluationCheck.bfevfl",
+          "key": "IslandEvaluationChk",
+          "role": "score query sequence",
+          "notes": "Calls ChkNaturalRank, ChkLifeRank and ChkMinusPoint."
+        },
+        {
+          "status": "PSEUDO",
+          "name": "Score classifier/aggregator",
+          "path": "acnh-re/docs/ISLAND_SCORE_REMAINDER_20261107.md",
+          "key": "§10.1; functions 0x15c4590, 0x15c61f0",
+          "role": "native score",
+          "notes": "Reconstructed from disassembly; full aggregator was not executed for this task."
+        }
+      ],
+      "items": [
+        {
+          "status": "OPEN",
+          "name": null,
+          "path": null,
+          "key": null,
+          "role": "score items are world inventory inputs",
+          "notes": "No specific inventory item is required to open island evaluation."
+        }
+      ],
+      "structures": [
+        {
+          "status": "PSEUDO",
+          "name": "Village score world structures/items",
+          "path": "acnh-re/docs/ISLAND_SCORE_REMAINDER_20261107.md",
+          "key": "§10.1: structures 26/27; facility state bonuses",
+          "role": "score inputs",
+          "notes": "Bridge/slope/facility state and placed item categories affect the score; no story-beat structure placement asset mapping is inferred."
+        }
+      ],
+      "placements": [
+        {
+          "status": "OPEN",
+          "name": null,
+          "path": null,
+          "key": null,
+          "role": "score input placement",
+          "notes": "The score uses island-wide cells/placed objects; this record does not reconstruct every world transform or score-item consumer."
+        }
+      ],
+      "assets": {
+        "ui": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "UI",
+            "notes": "Evaluation result/rating UI screen and page binding remain unjoined."
+          }
+        ],
+        "animation": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "animation",
+            "notes": "Isabelle evaluation gestures/clips not joined to flow."
+          }
+        ],
+        "model": [
+          {
+            "status": "CAT",
+            "name": "Isabelle special NPC model family",
+            "path": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json",
+            "key": "Kategori=NPC Khusus (Special NPC)",
+            "role": "model catalog family",
+            "notes": "Catalog category only; no exact Isabelle Asset_ID is bound to this event in this crosswalk."
+          }
+        ],
+        "audio": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "audio",
+            "notes": "No beat-specific source-to-consumer join established for audio; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ],
+        "text": [
+          {
+            "status": "EF",
+            "name": "SP_sza_50_IslandEvaluation labels",
+            "path": "B_data/EventFlow/SNPC_sza_50_IslandEvaluation.bfevfl",
+            "key": "Root:000_05; CmnImpression:900_01/901/902; clear:501-503",
+            "role": "dialogue",
+            "notes": "Message references recorded; full localized line strings not resolved here."
+          }
+        ],
+        "texture": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "texture",
+            "notes": "No beat-specific source-to-consumer join established for texture; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ],
+        "material_shader": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "material_shader",
+            "notes": "No beat-specific source-to-consumer join established for material_shader; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ],
+        "effect": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "effect",
+            "notes": "No beat-specific source-to-consumer join established for effect; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ],
+        "font": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "font",
+            "notes": "No beat-specific source-to-consumer join established for font; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ],
+        "world_data": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "world_data",
+            "notes": "No beat-specific source-to-consumer join established for world_data; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ],
+        "collision": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "collision",
+            "notes": "No beat-specific source-to-consumer join established for collision; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "status": "EF",
+          "name": "Unlock conversation",
+          "path": "acnh-re/output/gameplay/flow_index.json",
+          "key": "SNPC_rco_54_IslandDevelopment:IslandEvaluationRunning",
+          "role": "flow index",
+          "notes": "Writes IslandEvaluationUnlock and evaluation detail flags."
+        },
+        {
+          "status": "EF",
+          "name": "Rating flow query",
+          "path": "acnh-re/output/gameplay/flow_index.json",
+          "key": "System_IslandEvaluationCheck:IslandEvaluationChk",
+          "role": "flow index",
+          "notes": "Calls three evaluator subflows."
+        },
+        {
+          "status": "PSEUDO",
+          "name": "Score classifier audit",
+          "path": "acnh-re/docs/ISLAND_SCORE_REMAINDER_20261107.md",
+          "key": "§10.1 and native score companion JSON",
+          "role": "disassembly summary",
+          "notes": "Nature/life thresholds and penalties are documented; complete aggregator and score-to-unlock chain remain untested."
+        }
+      ],
+      "gaps": [
+        "Score values are reconstructed from disassembly and flow; full score calculation, save input capture, and end-to-end unlock have not been executed in a controlled fixture.",
+        "Exact score-result UI/page, Isabelle model/animation, placement input rows, and rendering/collision consumers are open."
+      ]
+    },
+    {
+      "beat_id": "kk.first_live_unlock_and_announcement",
+      "order": 5,
+      "title": "Isabelle's qualifying rating clears the K.K. gate and schedules the first live",
+      "flow": [
+        {
+          "status": "EF",
+          "name": "SNPC_sza_50_IslandEvaluation",
+          "path": "B_data/EventFlow/SNPC_sza_50_IslandEvaluation.bfevfl",
+          "key": "Sza_Evaluation_CmnImpression / ClearTkkFirstLiveScore",
+          "role": "EventFlow",
+          "notes": "≥3-star result (result 0 values 2/3/4), representative flag, quest incomplete; clear flow sets gate flags."
+        },
+        {
+          "status": "PSEUDO",
+          "name": "Day-change K.K. enable processor",
+          "path": "acnh-re/output/gameplay/native_flag_refs.json",
+          "key": "0xfd8920",
+          "role": "day-change native",
+          "notes": "TkkFirstLiveEnable is set after IslandEvaluationClearTkkLive and an unresolved second flag condition; likely TkkFirstLive, but decompilation loses the call argument."
+        },
+        {
+          "status": "EF",
+          "name": "Demo_PublicAnnouncement",
+          "path": "B_data/EventFlow/Demo_PublicAnnouncement.bfevfl",
+          "key": "Root_Init / PAnnounceSza",
+          "role": "EventFlow",
+          "notes": "Reserves first live on eligible public-announcement day and stage changes to cMainFieldFirstLive."
+        },
+        {
+          "status": "EF",
+          "name": "Demo_PublicAnnouncement_13_Sza_Once",
+          "path": "B_data/EventFlow/Demo_PublicAnnouncement_13_Sza_Once.bfevfl",
+          "key": "TownNews_KK1stLive",
+          "role": "EventFlow",
+          "notes": "One-time Isabelle announcement message flow."
+        }
+      ],
+      "stage": {
+        "status": "EF",
+        "name": "cMainFieldFirstLive",
+        "path": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement.txt",
+        "key": "PAnnounceSza:#41",
+        "role": "first live stage",
+        "notes": "Flow sets this stage on TkkFirstLiveReserved. The stage's spatial actors, camera and music objects are not inspected here."
+      },
+      "actors": [
+        {
+          "status": "EF",
+          "name": "sza (Isabelle)",
+          "path": "B_data/EventFlow/SNPC_sza_50_IslandEvaluation.bfevfl",
+          "key": "Sza_Evaluation_CmnImpression",
+          "role": "rating / K.K. announcement",
+          "notes": "Flow cast; world transform not proven."
+        },
+        {
+          "status": "EF",
+          "name": "tkk (K.K. Slider)",
+          "path": "B_data/EventFlow/SNPC_tkk_Live.bfevfl",
+          "key": "Root CameraSetDemoParam CameraTargetKey=Npc:tkk",
+          "role": "first-live performer",
+          "notes": "Actor target name exists in event flow; model/rig placement unresolved."
+        }
+      ],
+      "actions": [
+        {
+          "status": "EF",
+          "name": "ClearTkkFirstLiveScore",
+          "path": "B_data/EventFlow/SNPC_sza_50_IslandEvaluation.bfevfl",
+          "key": "ClearTkkFirstLiveScore",
+          "role": "qualifying evaluation",
+          "notes": "Sets IslandEvaluationClearTkkLive and IslandDevQuestComplete; turns IslandDevQuestRunning off."
+        },
+        {
+          "status": "PSEUDO",
+          "name": "Enable first-live schedule",
+          "path": "acnh-re/output/gameplay/native_flag_refs.json",
+          "key": "0xfd8920",
+          "role": "native day change",
+          "notes": "Requires elapsed day, IslandEvaluationClearTkkLive and a second unresolved flag condition."
+        },
+        {
+          "status": "EF",
+          "name": "Reserve and change stage",
+          "path": "B_data/EventFlow/Demo_PublicAnnouncement.bfevfl",
+          "key": "Root_Init #83/#91; PAnnounceSza #41",
+          "role": "announcement/scheduling",
+          "notes": "Root_Init sets TkkFirstLiveReserved and TkkFirstLiveSubPlayer; PAnnounceSza requests cMainFieldFirstLive."
+        }
+      ],
+      "items": [
+        {
+          "status": "OPEN",
+          "name": null,
+          "path": null,
+          "key": null,
+          "role": "concert reward",
+          "notes": "No item grant is attached to the first-live announcement/concert itself; reward follows with Nook's home visit."
+        }
+      ],
+      "structures": [
+        {
+          "status": "OPEN",
+          "name": null,
+          "path": null,
+          "key": null,
+          "role": "concert venue",
+          "notes": "No required structure type is specified in this K.K. unlock/announcement flow."
+        }
+      ],
+      "placements": [
+        {
+          "status": "EF",
+          "name": "cMainFieldFirstLive",
+          "path": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement.txt",
+          "key": "PAnnounceSza:#41",
+          "role": "concert stage",
+          "notes": "Stage switch is explicit; no concert venue world coordinates, chair/performer transforms or audience placements are joined."
+        },
+        {
+          "status": "OPEN",
+          "name": null,
+          "path": null,
+          "key": null,
+          "role": "spatial layout",
+          "notes": "K.K. seat, player seating, camera target transform, light/audio emitters and stage-object positions are unresolved."
+        }
+      ],
+      "assets": {
+        "ui": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "UI",
+            "notes": "Public announcement screen/layout and first-live HUD page binding are unjoined."
+          }
+        ],
+        "animation": [
+          {
+            "status": "EF",
+            "name": "TkkLiveEnter / TkkLiveExit actions",
+            "path": "B_data/EventFlow/SNPC_tkk_Live.bfevfl",
+            "key": "Tkk_LiveDemoEnter:#35; Tkk_LiveDemoExit:#36",
+            "role": "live transition actions",
+            "notes": "EventFlow action references are real; underlying animation clips, rig and actor binding remain open."
+          }
+        ],
+        "model": [
+          {
+            "status": "CAT",
+            "name": "tkk / K.K. Slider special NPC model catalog family",
+            "path": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json",
+            "key": "Kategori=NPC Khusus (Special NPC)",
+            "role": "model family",
+            "notes": "Catalog family is available; no exact K.K. model Asset_ID-to-stage join is made here."
+          }
+        ],
+        "audio": [
+          {
+            "status": "CAT",
+            "name": "BGM_Live_* (98 catalog entries)",
+            "path": "/workspace/acnh-re/output/additional_romfs/catalogues/audio.json",
+            "key": "Kategori_Spesifik=Konser Musik K.K. Slider (Live Performance)",
+            "role": "possible K.K. live tracks",
+            "notes": "Audio category is present, including generated path/source fields; no EventFlow/native song-selection result identifies the first-live track. Catalog-only, not converted/played in this work."
+          }
+        ],
+        "text": [
+          {
+            "status": "EF",
+            "name": "TownNews_KK1stLive and evaluation message labels",
+            "path": "B_data/EventFlow/Demo_PublicAnnouncement_13_Sza_Once.bfevfl",
+            "key": "TownNews_KK1stLive; TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_11_Sza_Once:302/303",
+            "role": "announcement dialogue",
+            "notes": "Flow label evidence only; localized text content and voice/audio mapping unresolved."
+          },
+          {
+            "status": "EF",
+            "name": "SP_tkk_Live message family",
+            "path": "B_data/EventFlow/SNPC_tkk_Live.bfevfl",
+            "key": "003; 001-009 in Tkk_LiveBefore_Msg",
+            "role": "concert dialogue",
+            "notes": "Dynamic song/request branches exist; no exact first-live track mapping established."
+          }
+        ],
+        "texture": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "texture",
+            "notes": "No beat-specific source-to-consumer join established for texture; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ],
+        "material_shader": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "material_shader",
+            "notes": "No beat-specific source-to-consumer join established for material_shader; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ],
+        "effect": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "effect",
+            "notes": "No beat-specific source-to-consumer join established for effect; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ],
+        "font": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "font",
+            "notes": "No beat-specific source-to-consumer join established for font; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ],
+        "world_data": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "world_data",
+            "notes": "No beat-specific source-to-consumer join established for world_data; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ],
+        "collision": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "collision",
+            "notes": "No beat-specific source-to-consumer join established for collision; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "status": "EF",
+          "name": "Qualifying Isabelle evaluation and clear",
+          "path": "acnh-re/output/gameplay/flow_index.json",
+          "key": "SNPC_sza_50_IslandEvaluation:Sza_Evaluation_CmnImpression/ClearTkkFirstLiveScore",
+          "role": "flow index",
+          "notes": "Records condition fields, clear flow and flag writes."
+        },
+        {
+          "status": "PSEUDO",
+          "name": "Day-change concert enable",
+          "path": "acnh-re/output/gameplay/native_flag_refs.json",
+          "key": "0xfd8920",
+          "role": "native decompilation summary",
+          "notes": "Second gate flag is unresolved; keep open."
+        },
+        {
+          "status": "EF",
+          "name": "Announcement scheduling and stage transition",
+          "path": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement.txt",
+          "key": "Root_Init and PAnnounceSza",
+          "role": "decoded event tree",
+          "notes": "Flags and target stage explicitly present."
+        },
+        {
+          "status": "EF",
+          "name": "Performance action graph",
+          "path": "acnh-re/output/gameplay/trees/SNPC_tkk_Live.txt",
+          "key": "Root / Tkk_LiveDemoEnter / Tkk_LiveDemoExit",
+          "role": "decoded event tree",
+          "notes": "Contains TkkRequestSongSet, camera key, TkkLive/TkkLiveEnter/TkkLiveExit and BGM property controls."
+        }
+      ],
+      "gaps": [
+        "The exact native eligibility flag and full day/special-visitor scheduler context are unresolved; no schedule is replayed here.",
+        "The selected first-live song, stage actor transforms, camera parameters, seat/prop set, model/rig, ASB clip, BGM/SFX and visual resource joins remain open."
+      ]
+    },
+    {
+      "beat_id": "kk.first_live_performance_and_credits",
+      "order": 6,
+      "title": "K.K. Slider performs; staff credits trigger is unresolved",
+      "flow": [
+        {
+          "status": "EF",
+          "name": "SNPC_tkk_Live",
+          "path": "B_data/EventFlow/SNPC_tkk_Live.bfevfl",
+          "key": "Root / Tkk_LiveDemo / Tkk_LiveAfter_Flag",
+          "role": "EventFlow",
+          "notes": "Selects song from context, enters/exits performance, flags first-live joined and schedules Nook follow-up."
+        },
+        {
+          "status": "OPEN",
+          "name": "Staff-credit invocation",
+          "path": "acnh-re/output/gameplay/flow_index.json",
+          "key": "search: no StaffCredit/StaffList flow reference",
+          "role": "unlocated credit trigger",
+          "notes": "No EventFlow call was found in the indexed flows/decoded trees; stage/native trigger not established."
+        }
+      ],
+      "stage": {
+        "status": "EF",
+        "name": "cMainFieldFirstLive",
+        "path": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement.txt",
+        "key": "PAnnounceSza:#41",
+        "role": "first-live stage",
+        "notes": "Incoming stage is explicit. Whether credits execute here or in a later stage is unknown."
+      },
+      "actors": [
+        {
+          "status": "EF",
+          "name": "tkk (K.K. Slider)",
+          "path": "B_data/EventFlow/SNPC_tkk_Live.bfevfl",
+          "key": "Root / CameraTargetKey=Npc:tkk",
+          "role": "performer",
+          "notes": "Flow references actor by key; model/resource binding open."
+        },
+        {
+          "status": "EF",
+          "name": "player",
+          "path": "B_data/EventFlow/SNPC_tkk_Live.bfevfl",
+          "key": "Tkk_LiveDemoEnter:PlayerChairStandup / PlayerTotakekeTurnToStarter / PlayerTotakekeLiveGetRhythm",
+          "role": "audience participant",
+          "notes": "Actions reference player state; chair/placement/animation resources are unresolved."
+        }
+      ],
+      "actions": [
+        {
+          "status": "EF",
+          "name": "Request song by context",
+          "path": "B_data/EventFlow/SNPC_tkk_Live.bfevfl",
+          "key": "Root:#17 TkkRequestSongSet SelectSongMethod=cTkkSelectSongMethod_ToContext",
+          "role": "song selection",
+          "notes": "Actual first-live selection context and returned track are not resolved."
+        },
+        {
+          "status": "EF",
+          "name": "Performance enter/live/exit",
+          "path": "B_data/EventFlow/SNPC_tkk_Live.bfevfl",
+          "key": "Tkk_LiveDemoEnter:#35/#37; Tkk_LiveDemoExit:#36",
+          "role": "performance actions",
+          "notes": "Native EventFlow action names are present; underlying clip and world transforms are not established."
+        },
+        {
+          "status": "EF",
+          "name": "Mark first-live joined",
+          "path": "B_data/EventFlow/SNPC_tkk_Live.bfevfl",
+          "key": "Tkk_LiveAfter_Flag:#142-#141",
+          "role": "post-performance state",
+          "notes": "Sets TkkFirstLiveJoined, TkkTalkToday, TkkLiveToday, increments TotakekeLiveCount/achievement and StandByRcoVisitMyHomeAfterTkkFirstLive."
+        },
+        {
+          "status": "OPEN",
+          "name": null,
+          "path": null,
+          "key": null,
+          "role": "credit trigger",
+          "notes": "Staff credit page invocation and timing relative to K.K.'s first performance."
+        }
+      ],
+      "items": [
+        {
+          "status": "OPEN",
+          "name": null,
+          "path": null,
+          "key": null,
+          "role": "song item",
+          "notes": "No first-live performance song grant is evidenced by this entry; song request/selection is contextual."
+        }
+      ],
+      "structures": [
+        {
+          "status": "OPEN",
+          "name": null,
+          "path": null,
+          "key": null,
+          "role": "venue objects",
+          "notes": "Concert seating/venue structures are not identified by the eventflow."
+        }
+      ],
+      "placements": [
+        {
+          "status": "OPEN",
+          "name": null,
+          "path": null,
+          "key": null,
+          "role": "concert spatial layout",
+          "notes": "Performer position, player chair anchor, audience area, light/speaker placements and stage camera transforms are not joined to cMainFieldFirstLive."
+        }
+      ],
+      "assets": {
+        "ui": [
+          {
+            "status": "CAT",
+            "name": "StaffCredit",
+            "path": "acnh-re/output/ui_hud/screen_catalog.json",
+            "key": "layout=StaffCredit; archive=StaffCredit.Nin_NX_NVN.zs",
+            "role": "staff-credit layout",
+            "notes": "Catalog layout and related StaffCreditNameSingle/Double/Role sublayouts exist. No EventFlow call or native stage trigger is identified for the first K.K. live."
+          }
+        ],
+        "animation": [
+          {
+            "status": "EF",
+            "name": "TkkLiveEnter / TkkLiveExit actions",
+            "path": "B_data/EventFlow/SNPC_tkk_Live.bfevfl",
+            "key": "Tkk_LiveDemoEnter:#35; Tkk_LiveDemoExit:#36",
+            "role": "live transition actions",
+            "notes": "EventFlow action references are real; underlying animation clips, rig and actor binding remain open."
+          },
+          {
+            "status": "CAT",
+            "name": "StaffCredit_CorporationIn.bflan",
+            "path": "acnh-re/output/ui_hud/screen_catalog.json",
+            "key": "StaffCredit.arc!anim/StaffCredit_CorporationIn.bflan",
+            "role": "staff-credit animation candidate",
+            "notes": "BFLAN is catalogued with the layout; its execution in the story ending is unproven."
+          }
+        ],
+        "model": [
+          {
+            "status": "CAT",
+            "name": "tkk and player model candidates",
+            "path": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json",
+            "key": "special-NPC/player model categories",
+            "role": "performer and participant models",
+            "notes": "Catalog family only; exact asset rows and stage binding are open."
+          }
+        ],
+        "audio": [
+          {
+            "status": "CAT",
+            "name": "BGM_Live_* (98 catalog entries)",
+            "path": "/workspace/acnh-re/output/additional_romfs/catalogues/audio.json",
+            "key": "Kategori_Spesifik=Konser Musik K.K. Slider (Live Performance)",
+            "role": "possible K.K. live tracks",
+            "notes": "Audio category is present, including generated path/source fields; no EventFlow/native song-selection result identifies the first-live track. Catalog-only, not converted/played in this work."
+          }
+        ],
+        "text": [
+          {
+            "status": "EF",
+            "name": "SP_tkk_Live dialogue labels",
+            "path": "B_data/EventFlow/SNPC_tkk_Live.bfevfl",
+            "key": "Root:003; Tkk_LiveBefore_Msg:001-009",
+            "role": "performance dialogue",
+            "notes": "Flow labels known; first-live text/song title resolution is open."
+          },
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "credits text",
+            "notes": "STR_StaffList is mentioned in the gameplay audit, but its underlying source/text row and trigger are not located in this task."
+          }
+        ],
+        "texture": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "texture",
+            "notes": "No beat-specific source-to-consumer join established for texture; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ],
+        "material_shader": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "material_shader",
+            "notes": "No beat-specific source-to-consumer join established for material_shader; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ],
+        "effect": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "effect",
+            "notes": "No beat-specific source-to-consumer join established for effect; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ],
+        "font": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "font",
+            "notes": "No beat-specific source-to-consumer join established for font; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ],
+        "world_data": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "world_data",
+            "notes": "No beat-specific source-to-consumer join established for world_data; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ],
+        "collision": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "collision",
+            "notes": "No beat-specific source-to-consumer join established for collision; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "status": "EF",
+          "name": "K.K. song/action state flow",
+          "path": "acnh-re/output/gameplay/trees/SNPC_tkk_Live.txt",
+          "key": "Root, Tkk_LiveDemoEnter/Exit, Tkk_LiveAfter_Flag",
+          "role": "decoded event tree",
+          "notes": "`TkkRequestSongSet`, BGMPropertyControl, TkkLiveEnter/Exit and first-live flags are present."
+        },
+        {
+          "status": "CAT",
+          "name": "StaffCredit layout and BFLAN",
+          "path": "acnh-re/output/ui_hud/screen_catalog.json",
+          "key": "StaffCredit layout record and StaffCredit_CorporationIn.bflan",
+          "role": "UI catalog",
+          "notes": "Catalog proves UI layout/animation references exist, not that the story calls them."
+        },
+        {
+          "status": "OPEN",
+          "name": "No flow trigger identified",
+          "path": "acnh-re/output/gameplay/flow_index.json",
+          "key": "query: StaffCredit, STR_StaffList",
+          "role": "negative search result",
+          "notes": "Credits may be stage/native-driven; code/stage trigger remains unresolved."
+        }
+      ],
+      "gaps": [
+        "Full concert scene, action timing, song selection outcome, camera/actor anchors and audio playback binding remain open.",
+        "The StaffCredit UI/BFLAN catalog entry is not joined to this event; STR_StaffList text source and native/stage trigger are unlocated."
+      ]
+    },
+    {
+      "beat_id": "kk.post_live_island_designer",
+      "order": 7,
+      "title": "Tom Nook visits the player and installs Island Designer",
+      "flow": [
+        {
+          "status": "EF",
+          "name": "SNPC_tkk_Live",
+          "path": "B_data/EventFlow/SNPC_tkk_Live.bfevfl",
+          "key": "Tkk_LiveAfter_Flag",
+          "role": "EventFlow",
+          "notes": "Sets StandByRcoVisitMyHomeAfterTkkFirstLive after first-live result."
+        },
+        {
+          "status": "EF",
+          "name": "SNPC_rco_55_TkkFirstLive",
+          "path": "B_data/EventFlow/SNPC_rco_55_TkkFirstLive.bfevfl",
+          "key": "InvitePlayerHouse",
+          "role": "EventFlow",
+          "notes": "Grants Welcome Horizons (4318), writes MainmenuConstructLicense, and requests the cConstructLicense application UI."
+        }
+      ],
+      "stage": {
+        "status": "OPEN",
+        "name": null,
+        "path": null,
+        "key": null,
+        "role": "player-house visit stage",
+        "notes": "The home visit is an EventFlow entry; exact stage and player-house spawn/entrance binding are not requested by this entry."
+      },
+      "actors": [
+        {
+          "status": "EF",
+          "name": "rco (Tom Nook)",
+          "path": "B_data/EventFlow/SNPC_rco_55_TkkFirstLive.bfevfl",
+          "key": "InvitePlayerHouse",
+          "role": "visitor",
+          "notes": "NpcDelivery and Nook dialogue are explicit; actor position remains open."
+        },
+        {
+          "status": "EF",
+          "name": "player",
+          "path": "B_data/EventFlow/SNPC_rco_55_TkkFirstLive.bfevfl",
+          "key": "ReservePlayerMutterDemo EventFileName=Player_GetDemo_Once",
+          "role": "recipient",
+          "notes": "Player mutter demo is requested; transform/camera details are unresolved."
+        }
+      ],
+      "actions": [
+        {
+          "status": "EF",
+          "name": "Grant Welcome Horizons",
+          "path": "B_data/EventFlow/SNPC_rco_55_TkkFirstLive.bfevfl",
+          "key": "InvitePlayerHouse:#10 ItemUniqueID=4318",
+          "role": "reward item",
+          "notes": "Delivered directly if bag has room, otherwise mail/reward path."
+        },
+        {
+          "status": "EF",
+          "name": "Enable Island Designer app",
+          "path": "B_data/EventFlow/SNPC_rco_55_TkkFirstLive.bfevfl",
+          "key": "InvitePlayerHouse:#16/#17",
+          "role": "app unlock/UI request",
+          "notes": "Sets MainmenuConstructLicense and UIMenuDeviceAppear EventType=cInstall Application=cConstructLicense."
+        },
+        {
+          "status": "EF",
+          "name": "Clear follow-up standby",
+          "path": "B_data/EventFlow/SNPC_rco_55_TkkFirstLive.bfevfl",
+          "key": "InvitePlayerHouse:#31",
+          "role": "progression state",
+          "notes": "Turns StandByRcoVisitMyHomeAfterTkkFirstLive off."
+        }
+      ],
+      "items": [
+        {
+          "status": "EF",
+          "name": "Welcome Horizons, item 4318",
+          "path": "B_data/EventFlow/SNPC_rco_55_TkkFirstLive.bfevfl",
+          "key": "SetDeliveryItemAtRandom / SelectRewardItemDirect",
+          "role": "song reward",
+          "notes": "Item ID and reward paths are explicit."
+        }
+      ],
+      "structures": [
+        {
+          "status": "OPEN",
+          "name": null,
+          "path": null,
+          "key": null,
+          "role": "house scene",
+          "notes": "Player home structure/room binding is not in this EventFlow record."
+        }
+      ],
+      "placements": [
+        {
+          "status": "OPEN",
+          "name": null,
+          "path": null,
+          "key": null,
+          "role": "spatial anchor",
+          "notes": "Tom Nook's player-home visitor spawn, player interaction point, camera and reward demonstration position are not resolved."
+        }
+      ],
+      "assets": {
+        "ui": [
+          {
+            "status": "EF",
+            "name": "Island Designer app install UI request",
+            "path": "B_data/EventFlow/SNPC_rco_55_TkkFirstLive.bfevfl",
+            "key": "InvitePlayerHouse:#17 Application=cConstructLicense",
+            "role": "app UI request",
+            "notes": "EventFlow requests application appearance; concrete page/layout/resource binding is open."
+          }
+        ],
+        "animation": [
+          {
+            "status": "EF",
+            "name": "Player_GetDemo_Once:Finish_1stKkLive",
+            "path": "B_data/EventFlow/SNPC_rco_55_TkkFirstLive.bfevfl",
+            "key": "ReservePlayerMutterDemo:#3",
+            "role": "player mutter demo entry",
+            "notes": "Requested event entry is evidence; underlying animation clip and actor binding remain open."
+          }
+        ],
+        "model": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "model",
+            "notes": "No beat-specific source-to-consumer join established for model; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ],
+        "audio": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "audio",
+            "notes": "No beat-specific source-to-consumer join established for audio; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ],
+        "text": [
+          {
+            "status": "EF",
+            "name": "SP_rco_11_TkkFirstLive dialogue",
+            "path": "B_data/EventFlow/SNPC_rco_55_TkkFirstLive.bfevfl",
+            "key": "InvitePlayerHouse:001-009",
+            "role": "dialogue",
+            "notes": "Labels are explicit; localized contents not extracted here."
+          }
+        ],
+        "texture": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "texture",
+            "notes": "No beat-specific source-to-consumer join established for texture; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ],
+        "material_shader": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "material_shader",
+            "notes": "No beat-specific source-to-consumer join established for material_shader; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ],
+        "effect": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "effect",
+            "notes": "No beat-specific source-to-consumer join established for effect; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ],
+        "font": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "font",
+            "notes": "No beat-specific source-to-consumer join established for font; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ],
+        "world_data": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "world_data",
+            "notes": "No beat-specific source-to-consumer join established for world_data; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ],
+        "collision": [
+          {
+            "status": "OPEN",
+            "name": null,
+            "path": null,
+            "key": null,
+            "role": "collision",
+            "notes": "No beat-specific source-to-consumer join established for collision; inspect the cited flow and resolve the resource consumer before promoting."
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "status": "EF",
+          "name": "Post-concert follow-up and app unlock",
+          "path": "acnh-re/output/gameplay/trees/SNPC_rco_55_TkkFirstLive.txt",
+          "key": "InvitePlayerHouse",
+          "role": "decoded event tree",
+          "notes": "Shows reward ID 4318, app flag, cConstructLicense page request and bag-full mail branch."
+        },
+        {
+          "status": "EF",
+          "name": "Performance follow-up flag",
+          "path": "acnh-re/output/gameplay/trees/SNPC_tkk_Live.txt",
+          "key": "Tkk_LiveAfter_Flag:#141",
+          "role": "decoded event tree",
+          "notes": "Sets StandByRcoVisitMyHomeAfterTkkFirstLive after first live."
+        }
+      ],
+      "gaps": [
+        "App install action is established, but actual app page/layout assets, interaction/input flow, house scene and visitor/reward demo placement are not joined.",
+        "Reward sound/animation/model and mail rendering are unresolved."
+      ]
+    }
+  ]
+}

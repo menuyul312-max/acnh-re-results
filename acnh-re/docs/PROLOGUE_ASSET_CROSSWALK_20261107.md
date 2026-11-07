@@ -1,0 +1,13 @@
+# Prologue story-to-asset crosswalk evidence
+
+The companion [prologue.json](../output/gameplay/story_asset_parts/prologue.json) maps the ACNH 1.0.0 new-player sequence from title and character creation through landing, arrival, plaza orientation, tent progress, campfire, and the K.K. dream. Evidence comes from decoded EventFlow, stage BYML, and ItemParam inputs under `/workspace/acnh-re`, with source IDs and hashes copied from `output/manifest.json` where available.
+
+Directly supported links include the character-creation flow and departure-stage launcher, `System_GrowUp` to `cMainFieldDemoLanding`, the landing flow’s `cFrontOfAirPort` request, the arrival AI caller, orientation flags, tent/map delivery IDs `2750` and `6058`, campfire material checks (`2500` and six-unit fruit branches), and K.K.’s `NpcSetRewardRecipe ItemUniqueId=7142`. The 7142 parameter is recorded without inferring whether it identifies a recipe row or output item.
+
+The expanded UI index adds static page-to-layout identifier bindings for `TitlePage→Title`, `CharaMakePage→CharaMake`, `DateInputPage→DateInput`, `MapSelectPage→CharaMakeMap`, `PrologueBGPage→WipePrologue`, and `MenuDevicePage→MenuDevice`. The BFLAN index contains title prompt, character-creation, date/map-selection and prologue-wipe animation members. These are **PSEUDO/STRUCT** resource links; the prologue EventFlow handler-to-page call and animation triggers remain open. The model catalogue supplies CAT candidates `NpcSpRco`, airport structures, campfire/bonfire objects, `FtrCampbed`, and `NpcSpTkk`. The audio catalogue supplies CAT candidates for plane flight/landing, prologue field phases, campfire/cheers/fire ignition, and the K.K. dream. None of these catalogue rows proves the underlying model or audio file exists in the supplied archive.
+
+Every required asset family is represented for each beat. EventFlow UI handlers and message keys are recorded as EF references; static layout/animation candidates are now indexed, but the exact visual trigger, actor-to-ASB action and world placement remain OPEN. `NpcSpTkk` and the other listed model/audio candidates are CAT references only: generated paths do not prove raw-file existence. No live-game behavior or raw ROMFS file existence is asserted.
+
+The main unresolved joins are CharacterOrder-to-departure, the `cFrontOfAirPort` stage, visible arrival actor/stage, tent and bonfire structure instances/positions, campfire asset bindings, and the caller/stage for the K.K. dream. `MainFieldDemoLandingNet` is not treated as the single-player prologue landing.
+
+Validation: JSON parsing, JSON Schema validation against `output/gameplay/story_asset_crosswalk.schema.json`, and local reference-path existence checks.

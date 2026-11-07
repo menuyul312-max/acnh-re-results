@@ -1,0 +1,1577 @@
+{
+  "schema": "acnh-re/story-asset-crosswalk-part/1",
+  "scope": "Day 2 tutorial through migration payment, initial creature donations, Blathers tent/museum construction and related recipe unlocks; source-backed flow/table refs only",
+  "items": [
+    {
+      "beat_id": "day2.airport_and_start",
+      "order": 0,
+      "title": "Hari kedua, main-game start dan pengumuman bandara",
+      "flow": [
+        {
+          "name": "SNPC_rco_00_StartMainGame:Root",
+          "role": "start-main-game",
+          "path": null,
+          "key": null,
+          "source": "docs/GAMEPLAY_FLOW.md §2",
+          "status": "EF",
+          "notes": null
+        },
+        {
+          "name": "Demo_PublicAnnouncement_03_Rco_Once:TownNews_OnThe2ndDay",
+          "role": "airport-open-announcement",
+          "path": null,
+          "key": null,
+          "source": "docs/GAMEPLAY_FLOW.md §2",
+          "status": "EF",
+          "notes": null
+        }
+      ],
+      "stage": {
+        "name": null,
+        "role": "day-2 field stage",
+        "path": null,
+        "key": null,
+        "source": "docs/GAMEPLAY_FLOW.md §2",
+        "status": "OPEN",
+        "notes": "Flow/stage dispatch for this announcement beat has not been linked to exact visible scene placement."
+      },
+      "actors": [
+        {
+          "name": "rco",
+          "role": "Tom Nook",
+          "path": null,
+          "key": null,
+          "source": "docs/GAMEPLAY_FLOW.md §2",
+          "status": "EF",
+          "notes": null
+        }
+      ],
+      "actions": [
+        {
+          "name": "StartMainGameBitSet",
+          "role": "progress-state transition",
+          "path": null,
+          "key": null,
+          "source": "docs/GAMEPLAY_FLOW.md §2",
+          "status": "EF",
+          "notes": null
+        }
+      ],
+      "items": [],
+      "structures": [],
+      "placements": [
+        {
+          "name": null,
+          "role": "airport and morning-announcement anchor",
+          "path": null,
+          "key": null,
+          "source": "story asset plan",
+          "status": "OPEN",
+          "notes": "Announcement is in flow; exact camera, actor and airport/world coordinates are not proven."
+        }
+      ],
+      "assets": {
+        "ui": [
+          {
+            "name": null,
+            "role": "ui",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "EventFlow app/handler may be known; exact BFLYT/UIName page binding remains OPEN."
+          }
+        ],
+        "animation": [
+          {
+            "name": null,
+            "role": "animation",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "No story actor-to-ASB/BFLAN clip binding proven in this beat."
+          }
+        ],
+        "model": [
+          {
+            "name": null,
+            "role": "model",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "Model catalog may be searched as CAT only; raw Model archive is absent and no exact model join is proven here."
+          }
+        ],
+        "audio": [
+          {
+            "name": null,
+            "role": "audio",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "Audio catalog only; no exact raw sound or runtime consumer is proven here."
+          }
+        ],
+        "text": [
+          {
+            "name": null,
+            "role": "text",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "EventFlow dialogue/announcement reference exists; exact MSBT label and substitution may remain unresolved."
+          }
+        ],
+        "texture": [
+          {
+            "name": null,
+            "role": "texture",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "Exact texture/container-to-story consumer binding is OPEN."
+          }
+        ],
+        "material_shader": [
+          {
+            "name": null,
+            "role": "material_shader",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "Exact material/shader-to-actor consumer binding is OPEN."
+          }
+        ],
+        "effect": [
+          {
+            "name": null,
+            "role": "effect",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "Effect trigger and emitter binding are OPEN."
+          }
+        ],
+        "font": [
+          {
+            "name": null,
+            "role": "font",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "Exact screen/font assignment is OPEN."
+          }
+        ],
+        "world_data": [
+          {
+            "name": null,
+            "role": "world_data",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "Source IDs or processor references are listed in the beat; complete world transform/consumer may remain OPEN."
+          }
+        ],
+        "collision": [
+          {
+            "name": null,
+            "role": "collision",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "Exact actor/model collider and response binding is OPEN."
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "name": "GAMEPLAY_FLOW §2",
+          "role": "story progression",
+          "path": null,
+          "key": null,
+          "source": "docs/GAMEPLAY_FLOW.md",
+          "status": "EF",
+          "notes": null
+        }
+      ],
+      "gaps": [
+        "Stage-to-screen/camera mapping and save transition through morning announcement are not an end-to-end trace.",
+        "Airport, actor, BGM and message assets are not bound to exact source resources."
+      ]
+    },
+    {
+      "beat_id": "day2.workshop_diy",
+      "order": 1,
+      "title": "Workshop DIY dan pembukaan aplikasi resep",
+      "flow": [
+        {
+          "name": "SNPC_rco_01_Tent_1_Entries:RcoTentAskDIYtrial",
+          "role": "DIY trial",
+          "path": null,
+          "key": null,
+          "source": "docs/GAMEPLAY_FLOW.md §2",
+          "status": "EF",
+          "notes": null
+        }
+      ],
+      "stage": {
+        "name": null,
+        "role": "Tom Nook tent/workshop stage",
+        "path": null,
+        "key": null,
+        "source": "docs/GAMEPLAY_FLOW.md §2",
+        "status": "OPEN",
+        "notes": "Ftr_Working is identified as the workbench object; exact stage and world transform remain OPEN."
+      },
+      "actors": [
+        {
+          "name": "rco",
+          "role": "Tom Nook",
+          "path": null,
+          "key": null,
+          "source": "docs/GAMEPLAY_FLOW.md §2",
+          "status": "EF",
+          "notes": null
+        }
+      ],
+      "actions": [
+        {
+          "name": "Ftr_Working",
+          "role": "use workbench / DIY tutorial",
+          "path": null,
+          "key": null,
+          "source": "docs/GAMEPLAY_FLOW.md §2",
+          "status": "EF",
+          "notes": null
+        }
+      ],
+      "items": [
+        {
+          "name": "DIYtutorial1",
+          "role": "tutorial recipe",
+          "path": null,
+          "key": null,
+          "source": "docs/GAMEPLAY_FLOW.md §2",
+          "status": "TBL",
+          "notes": null
+        },
+        {
+          "name": "DIYtutorial2",
+          "role": "tutorial recipe",
+          "path": null,
+          "key": null,
+          "source": "docs/GAMEPLAY_FLOW.md §2",
+          "status": "TBL",
+          "notes": null
+        },
+        {
+          "name": "2500",
+          "role": "Tree branch material",
+          "path": null,
+          "key": 2500,
+          "source": "docs/GAMEPLAY_FLOW.md §2",
+          "status": "TBL",
+          "notes": null
+        }
+      ],
+      "structures": [],
+      "placements": [
+        {
+          "name": "Ftr_Working",
+          "role": "workbench object in tent",
+          "path": null,
+          "key": null,
+          "source": "docs/GAMEPLAY_FLOW.md §2",
+          "status": "EF",
+          "notes": "Object reference is known; grid cell, orientation, interaction range and camera are OPEN."
+        }
+      ],
+      "assets": {
+        "ui": [
+          {
+            "name": "MainmenuRecipe",
+            "role": "recipe app state; not layout binding",
+            "path": null,
+            "key": null,
+            "source": "docs/GAMEPLAY_FLOW.md §2",
+            "status": "OPEN",
+            "notes": "Unlock flag/action is known; concrete page, pane and input controller remain unresolved."
+          },
+          {
+            "name": "WorkCraftInfoPage → WorkBenchInfo",
+            "role": "crafting detail layout",
+            "path": "Layout/WorkBenchInfo.Nin_NX_NVN.zs",
+            "source": "acnh-re/output/ui_hud/page_layout_method_bindings.json",
+            "status": "PSEUDO",
+            "notes": "Static page-to-layout binding; exact workshop callsite/render state not runtime-tested."
+          },
+          {
+            "name": "WorkCraftListPage → WorkBench",
+            "role": "crafting recipe-list layout",
+            "path": "Layout/WorkBench.Nin_NX_NVN.zs",
+            "source": "acnh-re/output/ui_hud/page_layout_method_bindings.json",
+            "status": "PSEUDO",
+            "notes": "Static page-to-layout binding; UI flow and focus transition remain open."
+          },
+          {
+            "name": "MenuRecipePage → MenuRecipe",
+            "role": "recipe app layout",
+            "path": "Layout/MenuRecipe.Nin_NX_NVN.zs",
+            "source": "acnh-re/output/ui_hud/page_layout_method_bindings.json",
+            "status": "PSEUDO",
+            "notes": "Static page-to-layout binding; MainmenuRecipe unlock to open page is not executed."
+          }
+        ],
+        "animation": [
+          {
+            "name": null,
+            "role": "animation",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "No story actor-to-ASB/BFLAN clip binding proven in this beat."
+          },
+          {
+            "name": "WorkBenchInfo_EquipIn / PressLeft",
+            "role": "crafting panel BFLAN candidates",
+            "path": "Layout/WorkBenchInfo.Nin_NX_NVN.zs#WorkBenchInfo_EquipIn,WorkBenchInfo_PressLeft.bflan",
+            "source": "acnh-re/output/ui_hud/animation_semantics.json",
+            "status": "STRUCT",
+            "notes": "BFLAN members exist; trigger and selected panel state are not linked."
+          },
+          {
+            "name": "WorkBenchBG_In / Change / Out",
+            "role": "workbench background BFLAN candidates",
+            "path": "Layout/WorkBenchBG.Nin_NX_NVN.zs#WorkBenchBG_In,Change,Out.bflan",
+            "source": "acnh-re/output/ui_hud/animation_semantics.json",
+            "status": "STRUCT",
+            "notes": "BFLAN members exist; relation to tutorial flow remains OPEN."
+          },
+          {
+            "name": "MenuRecipe_In / Out",
+            "role": "recipe app BFLAN candidates",
+            "path": "Layout/MenuRecipe.Nin_NX_NVN.zs#MenuRecipe_In,MenuRecipe_Out.bflan",
+            "source": "acnh-re/output/ui_hud/animation_semantics.json",
+            "status": "STRUCT",
+            "notes": "BFLAN members exist; activation timing is not proven."
+          }
+        ],
+        "model": [
+          {
+            "name": null,
+            "role": "model",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "Model catalog may be searched as CAT only; raw Model archive is absent and no exact model join is proven here."
+          },
+          {
+            "name": "FtrWorkbench",
+            "role": "DIY workbench model candidate",
+            "path": "acnh_godot/generated/models/FtrWorkbench/FtrWorkbench.glb",
+            "source": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json",
+            "status": "CAT",
+            "notes": "Catalog candidate for Ftr_Working; exact ItemParam/world object join and source mesh are not proven."
+          },
+          {
+            "name": "NpcSpRco",
+            "role": "Tom Nook model candidate",
+            "path": "acnh_godot/generated/models/NpcSpRco/NpcSpRco.glb",
+            "source": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json",
+            "status": "CAT",
+            "notes": "Catalog only; actor-to-scene/rig binding absent."
+          }
+        ],
+        "audio": [
+          {
+            "name": null,
+            "role": "audio",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "Audio catalog only; no exact raw sound or runtime consumer is proven here."
+          },
+          {
+            "name": "Player/Pl_LearningRecipe_00",
+            "role": "recipe-learning SFX candidate",
+            "path": "Sound/Resource/Player.bars",
+            "source": "/workspace/acnh-re/output/additional_romfs/catalogues/audio.json",
+            "status": "CAT",
+            "notes": "Catalog candidate only; tutorial event playback not validated."
+          },
+          {
+            "name": "Npc/Npc_Diy_Hummer_0..3",
+            "role": "DIY hammering SFX candidates",
+            "path": "Sound/Resource/Npc.bars",
+            "source": "/workspace/acnh-re/output/additional_romfs/catalogues/audio.json",
+            "status": "CAT",
+            "notes": "Catalog candidates by action name; exact actor and craft-animation timing not linked."
+          },
+          {
+            "name": "UI_WorkCraftInfo/UI_Decide_Small and UI_Invalid",
+            "role": "crafting UI feedback SFX candidates",
+            "path": "Sound/Resource/UI_WorkCraftInfo.bars",
+            "source": "/workspace/acnh-re/output/additional_romfs/catalogues/audio.json",
+            "status": "CAT",
+            "notes": "Catalog references only; controller/result-branch calls are OPEN."
+          }
+        ],
+        "text": [
+          {
+            "name": "RcoTentAskDIYtrial",
+            "role": "workshop/dialogue flow",
+            "path": null,
+            "key": null,
+            "source": "docs/GAMEPLAY_FLOW.md §2",
+            "status": "EF",
+            "notes": "EventFlow dialogue/announcement reference exists; exact MSBT label and substitution may remain unresolved."
+          }
+        ],
+        "texture": [
+          {
+            "name": null,
+            "role": "texture",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "Exact texture/container-to-story consumer binding is OPEN."
+          }
+        ],
+        "material_shader": [
+          {
+            "name": null,
+            "role": "material_shader",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "Exact material/shader-to-actor consumer binding is OPEN."
+          }
+        ],
+        "effect": [
+          {
+            "name": null,
+            "role": "effect",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "Effect trigger and emitter binding are OPEN."
+          }
+        ],
+        "font": [
+          {
+            "name": null,
+            "role": "font",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "Exact screen/font assignment is OPEN."
+          }
+        ],
+        "world_data": [
+          {
+            "name": null,
+            "role": "world_data",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "Source IDs or processor references are listed in the beat; complete world transform/consumer may remain OPEN."
+          }
+        ],
+        "collision": [
+          {
+            "name": null,
+            "role": "collision",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "Exact actor/model collider and response binding is OPEN."
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "name": "MainmenuRecipe",
+          "role": "recipe app unlock",
+          "path": null,
+          "key": null,
+          "source": "docs/GAMEPLAY_FLOW.md §2",
+          "status": "EF",
+          "notes": null
+        },
+        {
+          "name": "FlightBalloonEnable / MessageBottleAvailable",
+          "role": "progression effects",
+          "path": null,
+          "key": null,
+          "source": "docs/GAMEPLAY_FLOW.md §2",
+          "status": "EF",
+          "notes": null
+        }
+      ],
+      "gaps": [
+        "Material checking, consumption, result award, interruption/rollback and durable save remain open.",
+        "Exact BFLYT page, workbench model/pose, craft clip, material VFX/SFX and screen font binding are not proven."
+      ]
+    },
+    {
+      "beat_id": "settlement.migration_payment_and_house",
+      "order": 2,
+      "title": "Biaya pindah dan upgrade rumah pertama",
+      "flow": [
+        {
+          "name": "SNPC_rco_01_Tent_1_Entries:RcoTentAboutMyhome",
+          "role": "loan/payment gate",
+          "path": null,
+          "key": null,
+          "source": "docs/GAMEPLAY_FLOW.md §3",
+          "status": "EF",
+          "notes": null
+        },
+        {
+          "name": "SNPC_rco_10_Common_UpgradeMyhome",
+          "role": "house upgrade dialogue",
+          "path": null,
+          "key": null,
+          "source": "docs/GAMEPLAY_FLOW.md §4",
+          "status": "EF",
+          "notes": null
+        }
+      ],
+      "stage": {
+        "name": null,
+        "role": "Tom Nook tent/house construction transition",
+        "path": null,
+        "key": null,
+        "source": "docs/GAMEPLAY_FLOW.md §§3–4",
+        "status": "OPEN",
+        "notes": null
+      },
+      "actors": [
+        {
+          "name": "rco",
+          "role": "Tom Nook",
+          "path": null,
+          "key": null,
+          "source": "docs/GAMEPLAY_FLOW.md §§3–4",
+          "status": "EF",
+          "notes": null
+        }
+      ],
+      "actions": [
+        {
+          "name": "HasLifeSupportPoint Point=5000",
+          "role": "Nook Miles affordability query",
+          "path": null,
+          "key": null,
+          "source": "docs/GAMEPLAY_FLOW.md §3",
+          "status": "EF",
+          "notes": null
+        },
+        {
+          "name": "RcoPaid1stCharge",
+          "role": "payment progress state",
+          "path": null,
+          "key": null,
+          "source": "docs/GAMEPLAY_FLOW.md §3",
+          "status": "EF",
+          "notes": null
+        }
+      ],
+      "items": [
+        {
+          "name": "Nook Miles 5000",
+          "role": "moving fee threshold",
+          "path": null,
+          "key": 5000,
+          "source": "docs/GAMEPLAY_FLOW.md §3",
+          "status": "TBL",
+          "notes": null
+        }
+      ],
+      "structures": [
+        {
+          "name": "StructureHouseShapeParam: Tent / Level00",
+          "role": "house shape progression",
+          "path": null,
+          "key": null,
+          "source": "docs/GAMEPLAY_FLOW.md §4",
+          "status": "TBL",
+          "notes": null
+        }
+      ],
+      "placements": [
+        {
+          "name": null,
+          "role": "house construction location and shape transform",
+          "path": null,
+          "key": null,
+          "source": "docs/GAMEPLAY_FLOW.md §4",
+          "status": "OPEN",
+          "notes": "House level table exists; placement coordinates, mesh transition and construction timing are not fully linked."
+        }
+      ],
+      "assets": {
+        "ui": [
+          {
+            "name": null,
+            "role": "ui",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "EventFlow app/handler may be known; exact BFLYT/UIName page binding remains OPEN."
+          }
+        ],
+        "animation": [
+          {
+            "name": null,
+            "role": "animation",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "No story actor-to-ASB/BFLAN clip binding proven in this beat."
+          }
+        ],
+        "model": [
+          {
+            "name": null,
+            "role": "model",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "Model catalog may be searched as CAT only; raw Model archive is absent and no exact model join is proven here."
+          },
+          {
+            "name": "NpcSpRco",
+            "role": "Tom Nook model candidate",
+            "path": "acnh_godot/generated/models/NpcSpRco/NpcSpRco.glb",
+            "source": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json",
+            "status": "CAT",
+            "notes": "Catalog only; dialogue actor instance and model source absent."
+          },
+          {
+            "name": "player house model variant",
+            "role": "house level model/mesh transition",
+            "path": "catalogue lookup not uniquely joined",
+            "source": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json",
+            "status": "OPEN",
+            "notes": "StructureHouseShapeParam lists Tent/Level00+; model-to-level and transition consumer remain OPEN."
+          }
+        ],
+        "audio": [
+          {
+            "name": null,
+            "role": "audio",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "Audio catalog only; no exact raw sound or runtime consumer is proven here."
+          }
+        ],
+        "text": [
+          {
+            "name": null,
+            "role": "text",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "EventFlow dialogue/announcement reference exists; exact MSBT label and substitution may remain unresolved."
+          }
+        ],
+        "texture": [
+          {
+            "name": null,
+            "role": "texture",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "Exact texture/container-to-story consumer binding is OPEN."
+          }
+        ],
+        "material_shader": [
+          {
+            "name": null,
+            "role": "material_shader",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "Exact material/shader-to-actor consumer binding is OPEN."
+          }
+        ],
+        "effect": [
+          {
+            "name": null,
+            "role": "effect",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "Effect trigger and emitter binding are OPEN."
+          }
+        ],
+        "font": [
+          {
+            "name": null,
+            "role": "font",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "Exact screen/font assignment is OPEN."
+          }
+        ],
+        "world_data": [
+          {
+            "name": null,
+            "role": "world_data",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "Source IDs or processor references are listed in the beat; complete world transform/consumer may remain OPEN."
+          }
+        ],
+        "collision": [
+          {
+            "name": null,
+            "role": "collision",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "Exact actor/model collider and response binding is OPEN."
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "name": "RcoPaid1stCharge / PcHousingLoanFinish",
+          "role": "payment milestones",
+          "path": null,
+          "key": null,
+          "source": "docs/GAMEPLAY_FLOW.md §§3–4",
+          "status": "EF",
+          "notes": null
+        },
+        {
+          "name": "house updater",
+          "role": "native level-change summary",
+          "path": null,
+          "key": null,
+          "source": "docs/GAMEPLAY_FLOW.md §4",
+          "status": "PSEUDO",
+          "notes": null
+        }
+      ],
+      "gaps": [
+        "Currency mutation, payment serialization, construction transition and reload durability are not proven as one native trace.",
+        "House model variants, UI page/message labels, animation and sound consumers are not joined."
+      ]
+    },
+    {
+      "beat_id": "museum.initial_donations_and_tent",
+      "order": 3,
+      "title": "Lima donasi awal dan penempatan tenda Blathers",
+      "flow": [
+        {
+          "name": "SNPC_rco_01_Tent_1_Entries:RcoTentFishInsect",
+          "role": "first-donation gate",
+          "path": null,
+          "key": null,
+          "source": "docs/GAMEPLAY_FLOW.md §3",
+          "status": "EF",
+          "notes": null
+        },
+        {
+          "name": "Player_Demo_HousingFinish:HousingFinish_OwlTent_Built",
+          "role": "museum-tent placement completion",
+          "path": null,
+          "key": null,
+          "source": "docs/GAMEPLAY_FLOW.md §3",
+          "status": "EF",
+          "notes": null
+        }
+      ],
+      "stage": {
+        "name": null,
+        "role": "Tom Nook tent then Blathers tent",
+        "path": null,
+        "key": null,
+        "source": "docs/GAMEPLAY_FLOW.md §3",
+        "status": "OPEN",
+        "notes": null
+      },
+      "actors": [
+        {
+          "name": "rco",
+          "role": "Tom Nook",
+          "path": null,
+          "key": null,
+          "source": "docs/GAMEPLAY_FLOW.md §3",
+          "status": "EF",
+          "notes": null
+        },
+        {
+          "name": "owl",
+          "role": "Blathers",
+          "path": null,
+          "key": null,
+          "source": "docs/GAMEPLAY_FLOW.md §3",
+          "status": "EF",
+          "notes": null
+        }
+      ],
+      "actions": [
+        {
+          "name": "MuseumDonationNumCheck Border=5",
+          "role": "first donation threshold",
+          "path": null,
+          "key": null,
+          "source": "docs/GAMEPLAY_FLOW.md §3",
+          "status": "EF",
+          "notes": null
+        },
+        {
+          "name": "DecidedMuseumTentPlace",
+          "role": "tent placement result flag",
+          "path": null,
+          "key": null,
+          "source": "docs/GAMEPLAY_FLOW.md §3",
+          "status": "EF",
+          "notes": null
+        }
+      ],
+      "items": [
+        {
+          "name": "ItemFilterType=OwlDonation",
+          "role": "creature donation filter",
+          "path": null,
+          "key": null,
+          "source": "output/gameplay/milestones.json",
+          "status": "EF",
+          "notes": "Specific accepted item IDs and display/carry models vary; do not infer from category label."
+        }
+      ],
+      "structures": [
+        {
+          "name": "Museum structure kind 2",
+          "role": "next-day tent presence processor",
+          "path": null,
+          "key": null,
+          "source": "docs/GAMEPLAY_FLOW.md §3",
+          "status": "PSEUDO",
+          "notes": null
+        }
+      ],
+      "placements": [
+        {
+          "name": null,
+          "role": "chosen museum tent cell/rotation and visitor approach",
+          "path": null,
+          "key": null,
+          "source": "docs/GAMEPLAY_FLOW.md §3",
+          "status": "OPEN",
+          "notes": "Player placement action is in flow; exact selected coordinates and commit transform are not linked."
+        }
+      ],
+      "assets": {
+        "ui": [
+          {
+            "name": null,
+            "role": "ui",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "EventFlow app/handler may be known; exact BFLYT/UIName page binding remains OPEN."
+          }
+        ],
+        "animation": [
+          {
+            "name": null,
+            "role": "animation",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "No story actor-to-ASB/BFLAN clip binding proven in this beat."
+          }
+        ],
+        "model": [
+          {
+            "name": null,
+            "role": "model",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "Model catalog may be searched as CAT only; raw Model archive is absent and no exact model join is proven here."
+          },
+          {
+            "name": "NpcSpOwl",
+            "role": "Blathers model candidate",
+            "path": "acnh_godot/generated/models/NpcSpOwl/NpcSpOwl.glb",
+            "source": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json",
+            "status": "CAT",
+            "notes": "Catalog describes special NPC; no raw model or tent-scene spawn binding."
+          },
+          {
+            "name": "StrcMuseumA00Reserve",
+            "role": "museum tent/reserved structure candidate",
+            "path": "catalogue model row",
+            "source": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json",
+            "status": "CAT",
+            "notes": "Catalog candidate only; kind-2 processor/selected structure row has not been joined to this model."
+          }
+        ],
+        "audio": [
+          {
+            "name": null,
+            "role": "audio",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "Audio catalog only; no exact raw sound or runtime consumer is proven here."
+          },
+          {
+            "name": "BGM_Indoor_Museum_Tent",
+            "role": "museum tent interior BGM candidate",
+            "path": "Sound/Resource/Stream/BGM_Indoor_Museum_Tent.bwav",
+            "source": "/workspace/acnh-re/output/additional_romfs/catalogues/audio.json",
+            "status": "CAT",
+            "notes": "Catalog only; no exact room entry/playback binding in the story flow."
+          }
+        ],
+        "text": [
+          {
+            "name": "RcoTentFishInsect",
+            "role": "donation request/dialogue",
+            "path": null,
+            "key": null,
+            "source": "docs/GAMEPLAY_FLOW.md §3",
+            "status": "EF",
+            "notes": "EventFlow dialogue/announcement reference exists; exact MSBT label and substitution may remain unresolved."
+          }
+        ],
+        "texture": [
+          {
+            "name": null,
+            "role": "texture",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "Exact texture/container-to-story consumer binding is OPEN."
+          }
+        ],
+        "material_shader": [
+          {
+            "name": null,
+            "role": "material_shader",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "Exact material/shader-to-actor consumer binding is OPEN."
+          }
+        ],
+        "effect": [
+          {
+            "name": null,
+            "role": "effect",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "Effect trigger and emitter binding are OPEN."
+          }
+        ],
+        "font": [
+          {
+            "name": null,
+            "role": "font",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "Exact screen/font assignment is OPEN."
+          }
+        ],
+        "world_data": [
+          {
+            "name": "Museum structure kind 2",
+            "role": "next-day tent presence check",
+            "path": null,
+            "key": null,
+            "source": "docs/GAMEPLAY_FLOW.md §3; native_flag_refs.json",
+            "status": "PSEUDO",
+            "notes": "Structure type check known from processor summary; selected cell and world transform remain OPEN."
+          }
+        ],
+        "collision": [
+          {
+            "name": null,
+            "role": "collision",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "Exact actor/model collider and response binding is OPEN."
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "name": "RcoTentDonation / SNPC_rco_51_DonationReward",
+          "role": "first donation reward",
+          "path": null,
+          "key": null,
+          "source": "docs/GAMEPLAY_FLOW.md §3",
+          "status": "EF",
+          "notes": null
+        },
+        {
+          "name": "0xf77050 state 1",
+          "role": "Museum tent processor",
+          "path": null,
+          "key": null,
+          "source": "docs/GAMEPLAY_FLOW.md §3",
+          "status": "PSEUDO",
+          "notes": null
+        }
+      ],
+      "gaps": [
+        "Accepted creature inventory mutation and donor row/player mapping are not end-to-end verified on one real save.",
+        "Blathers tent/player animations, display meshes, donation UI, announcement assets and sound links remain unbound."
+      ]
+    },
+    {
+      "beat_id": "museum.donation_threshold_and_build",
+      "order": 4,
+      "title": "Ambang donasi 20 dan konstruksi gedung museum",
+      "flow": [
+        {
+          "name": "MuseumDonationNumCheck Border=20",
+          "role": "museum-donation threshold",
+          "path": null,
+          "key": null,
+          "source": "docs/GAMEPLAY_FLOW.md §3",
+          "status": "EF",
+          "notes": null
+        },
+        {
+          "name": "Demo_PublicAnnouncement_Process:MuseumGrouUpChk",
+          "role": "daily announcement/check",
+          "path": null,
+          "key": null,
+          "source": "docs/GAMEPLAY_FLOW.md §3",
+          "status": "EF",
+          "notes": null
+        }
+      ],
+      "stage": {
+        "name": null,
+        "role": "museum tent to museum building transition",
+        "path": null,
+        "key": null,
+        "source": "docs/GAMEPLAY_FLOW.md §3",
+        "status": "OPEN",
+        "notes": null
+      },
+      "actors": [
+        {
+          "name": "owl",
+          "role": "Blathers",
+          "path": null,
+          "key": null,
+          "source": "docs/GAMEPLAY_FLOW.md §3",
+          "status": "EF",
+          "notes": null
+        }
+      ],
+      "actions": [
+        {
+          "name": "MuseumGrowupEnable1",
+          "role": "start construction flag",
+          "path": null,
+          "key": null,
+          "source": "docs/GAMEPLAY_FLOW.md §3",
+          "status": "EF",
+          "notes": null
+        },
+        {
+          "name": "MuseumConstruction1",
+          "role": "day-change construction counter",
+          "path": null,
+          "key": null,
+          "source": "docs/GAMEPLAY_FLOW.md §3",
+          "status": "PSEUDO",
+          "notes": null
+        }
+      ],
+      "items": [],
+      "structures": [
+        {
+          "name": "Museum structure kind 2/state 3",
+          "role": "museum building processor",
+          "path": null,
+          "key": null,
+          "source": "docs/GAMEPLAY_FLOW.md §3",
+          "status": "PSEUDO",
+          "notes": null
+        }
+      ],
+      "placements": [
+        {
+          "name": null,
+          "role": "museum building footprint and entrance transform",
+          "path": null,
+          "key": null,
+          "source": "docs/GAMEPLAY_FLOW.md §3",
+          "status": "OPEN",
+          "notes": "Facility state and placement presence are distinct; footprint, mesh swap and interaction anchors remain OPEN."
+        }
+      ],
+      "assets": {
+        "ui": [
+          {
+            "name": null,
+            "role": "ui",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "EventFlow app/handler may be known; exact BFLYT/UIName page binding remains OPEN."
+          }
+        ],
+        "animation": [
+          {
+            "name": null,
+            "role": "animation",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "No story actor-to-ASB/BFLAN clip binding proven in this beat."
+          }
+        ],
+        "model": [
+          {
+            "name": null,
+            "role": "model",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "Model catalog may be searched as CAT only; raw Model archive is absent and no exact model join is proven here."
+          },
+          {
+            "name": "StrcMuseumA00 / StrcMuseumA00Build",
+            "role": "museum building model candidates",
+            "path": "catalogue model rows",
+            "source": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json",
+            "status": "CAT",
+            "notes": "Catalog names indicate facility/reserved/build variants; processor-to-variant selection remains OPEN."
+          },
+          {
+            "name": "NpcSpOwl",
+            "role": "Blathers model candidate",
+            "path": "acnh_godot/generated/models/NpcSpOwl/NpcSpOwl.glb",
+            "source": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json",
+            "status": "CAT",
+            "notes": "Catalog only; construction scene actor binding is unresolved."
+          }
+        ],
+        "audio": [
+          {
+            "name": null,
+            "role": "audio",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "Audio catalog only; no exact raw sound or runtime consumer is proven here."
+          },
+          {
+            "name": "DuringConstruction/Env_FacilityConstruction00",
+            "role": "construction ambience candidate",
+            "path": "Sound/Resource/DuringConstruction.bars",
+            "source": "/workspace/acnh-re/output/additional_romfs/catalogues/audio.json",
+            "status": "CAT",
+            "notes": "Generic facility-construction catalog reference; not proven as the museum sound."
+          }
+        ],
+        "text": [
+          {
+            "name": null,
+            "role": "text",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "EventFlow dialogue/announcement reference exists; exact MSBT label and substitution may remain unresolved."
+          }
+        ],
+        "texture": [
+          {
+            "name": null,
+            "role": "texture",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "Exact texture/container-to-story consumer binding is OPEN."
+          }
+        ],
+        "material_shader": [
+          {
+            "name": null,
+            "role": "material_shader",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "Exact material/shader-to-actor consumer binding is OPEN."
+          }
+        ],
+        "effect": [
+          {
+            "name": null,
+            "role": "effect",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "Effect trigger and emitter binding are OPEN."
+          }
+        ],
+        "font": [
+          {
+            "name": null,
+            "role": "font",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "Exact screen/font assignment is OPEN."
+          }
+        ],
+        "world_data": [
+          {
+            "name": "Museum state 2→3",
+            "role": "donation threshold and day-change construction",
+            "path": null,
+            "key": null,
+            "source": "docs/GAMEPLAY_FLOW.md §3; native_flag_refs.json",
+            "status": "PSEUDO",
+            "notes": "State/flag summary is pseudocode; real save end-to-end is not executed."
+          }
+        ],
+        "collision": [
+          {
+            "name": null,
+            "role": "collision",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "Exact actor/model collider and response binding is OPEN."
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "name": "0xf77050 states 2→3",
+          "role": "museum day-change processor",
+          "path": null,
+          "key": null,
+          "source": "docs/GAMEPLAY_FLOW.md §3",
+          "status": "PSEUDO",
+          "notes": null
+        },
+        {
+          "name": "Museum2Built",
+          "role": "museum completion event flag",
+          "path": null,
+          "key": null,
+          "source": "docs/GAMEPLAY_FLOW.md §3",
+          "status": "EF",
+          "notes": null
+        }
+      ],
+      "gaps": [
+        "The 20th accepted donation → same-save marker → next-day construction trace is not closed.",
+        "Exact structure model, materials/textures, construction effect/animation, BGM and announcement message binding remain OPEN."
+      ]
+    },
+    {
+      "beat_id": "museum.open_and_tool_recipes",
+      "order": 5,
+      "title": "Museum completion and pembukaan resep shovel/pole",
+      "flow": [
+        {
+          "name": "Demo_PublicAnnouncement_Process:MuseumGrouUpChk",
+          "role": "museum open announcement",
+          "path": null,
+          "key": null,
+          "source": "docs/GAMEPLAY_FLOW.md §3",
+          "status": "EF",
+          "notes": null
+        }
+      ],
+      "stage": {
+        "name": null,
+        "role": "museum opening/day announcement stage",
+        "path": null,
+        "key": null,
+        "source": "docs/GAMEPLAY_FLOW.md §3",
+        "status": "OPEN",
+        "notes": null
+      },
+      "actors": [
+        {
+          "name": "owl",
+          "role": "Blathers",
+          "path": null,
+          "key": null,
+          "source": "docs/GAMEPLAY_FLOW.md §3",
+          "status": "EF",
+          "notes": null
+        },
+        {
+          "name": "rcm/rct",
+          "role": "Timmy/Tommy shop",
+          "path": null,
+          "key": null,
+          "source": "docs/GAMEPLAY_FLOW.md §3",
+          "status": "EF",
+          "notes": null
+        }
+      ],
+      "actions": [
+        {
+          "name": "MarketSellRecipeScoopStick",
+          "role": "shop recipe availability state",
+          "path": null,
+          "key": null,
+          "source": "docs/GAMEPLAY_FLOW.md §3",
+          "status": "EF",
+          "notes": null
+        }
+      ],
+      "items": [
+        {
+          "name": "shovel and vaulting-pole recipes",
+          "role": "unlock rewards",
+          "path": null,
+          "key": null,
+          "source": "docs/GAMEPLAY_FLOW.md §3",
+          "status": "TBL",
+          "notes": null
+        }
+      ],
+      "structures": [
+        {
+          "name": "Museum2Built",
+          "role": "museum-complete state",
+          "path": null,
+          "key": null,
+          "source": "docs/GAMEPLAY_FLOW.md §3",
+          "status": "PSEUDO",
+          "notes": null
+        }
+      ],
+      "placements": [
+        {
+          "name": null,
+          "role": "museum/store day-announcement actor and camera anchors",
+          "path": null,
+          "key": null,
+          "source": "docs/GAMEPLAY_FLOW.md §3",
+          "status": "OPEN",
+          "notes": null
+        }
+      ],
+      "assets": {
+        "ui": [
+          {
+            "name": "MarketSellRecipeScoopStick",
+            "role": "recipe-sale permission/event state",
+            "path": null,
+            "key": null,
+            "source": "docs/GAMEPLAY_FLOW.md §3",
+            "status": "OPEN",
+            "notes": "EventFlow/process flag is known; exact shop page binding is OPEN."
+          }
+        ],
+        "animation": [
+          {
+            "name": null,
+            "role": "animation",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "No story actor-to-ASB/BFLAN clip binding proven in this beat."
+          }
+        ],
+        "model": [
+          {
+            "name": null,
+            "role": "model",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "Model catalog may be searched as CAT only; raw Model archive is absent and no exact model join is proven here."
+          },
+          {
+            "name": "StrcMuseumA00",
+            "role": "museum completed-building candidate",
+            "path": "catalogue model row",
+            "source": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json",
+            "status": "CAT",
+            "notes": "Candidate only; exact state and rendered building asset not joined."
+          }
+        ],
+        "audio": [
+          {
+            "name": null,
+            "role": "audio",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "Audio catalog only; no exact raw sound or runtime consumer is proven here."
+          },
+          {
+            "name": "BGM_Indoor_Museum_Entrance_01",
+            "role": "museum entrance BGM candidate",
+            "path": "Sound/Resource/Stream/BGM_Indoor_Museum_Entrance_01.bwav",
+            "source": "/workspace/acnh-re/output/additional_romfs/catalogues/audio.json",
+            "status": "CAT",
+            "notes": "Catalog reference only; opening-day flow does not identify the playback consumer."
+          }
+        ],
+        "text": [
+          {
+            "name": null,
+            "role": "text",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "EventFlow dialogue/announcement reference exists; exact MSBT label and substitution may remain unresolved."
+          }
+        ],
+        "texture": [
+          {
+            "name": null,
+            "role": "texture",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "Exact texture/container-to-story consumer binding is OPEN."
+          }
+        ],
+        "material_shader": [
+          {
+            "name": null,
+            "role": "material_shader",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "Exact material/shader-to-actor consumer binding is OPEN."
+          }
+        ],
+        "effect": [
+          {
+            "name": null,
+            "role": "effect",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "Effect trigger and emitter binding are OPEN."
+          }
+        ],
+        "font": [
+          {
+            "name": null,
+            "role": "font",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "Exact screen/font assignment is OPEN."
+          }
+        ],
+        "world_data": [
+          {
+            "name": null,
+            "role": "world_data",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "Source IDs or processor references are listed in the beat; complete world transform/consumer may remain OPEN."
+          }
+        ],
+        "collision": [
+          {
+            "name": null,
+            "role": "collision",
+            "path": null,
+            "key": null,
+            "source": "story asset crosswalk",
+            "status": "OPEN",
+            "notes": "Exact actor/model collider and response binding is OPEN."
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "name": "MuseumGrouUpChk",
+          "role": "daily public-announcement branch",
+          "path": null,
+          "key": null,
+          "source": "docs/GAMEPLAY_FLOW.md §3",
+          "status": "EF",
+          "notes": null
+        }
+      ],
+      "gaps": [
+        "Exact news animation/camera, player/NPC visibility, UI badges and item-store listing are not cross-linked.",
+        "Model/audio catalog matches, if found, remain CAT until a source file and consumer are available."
+      ]
+    }
+  ]
+}

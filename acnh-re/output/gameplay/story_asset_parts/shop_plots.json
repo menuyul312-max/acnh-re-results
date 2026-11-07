@@ -1,0 +1,2510 @@
+{
+  "schema": "acnh-re/story-asset-crosswalk-part/1",
+  "scope": "ACNH 1.0.0 Nook's Cranny material hand-in/opening through the bridge/ladder, three reserved NPC plots, indoor/outdoor furniture checks, plot completion, villager assignment and move-in announcement. Local model/audio catalogs are CAT-only candidates; story use is asserted only where EventFlow or tables directly support it.",
+  "asset_inventory": {
+    "source_baseline": "Local decoded EventFlow and resolved BCSV tables in acnh-re-github; shared /workspace/acnh-re model/audio catalogs are read-only CAT references.",
+    "coordinate_policy": "Logical structure and placement-class IDs are recorded separately from grid cells and world transforms. No map x/z, yaw, elevation, or per-save structure transform is claimed.",
+    "catalog_policy": "CAT references are candidate assets only; they do not prove an EventFlow-to-asset runtime binding."
+  },
+  "items": [
+    {
+      "beat_id": "shop-materials",
+      "order": 0,
+      "title": "Nook's Cranny: material collection",
+      "flow": [
+        {
+          "name": "SNPC_rcm_01_Tent_1_Entries:Request",
+          "role": "story-flow evidence",
+          "path": "acnh-re/output/gameplay/trees/SNPC_rcm_01_Tent_1_Entries.txt",
+          "key": "Request gate into material collection",
+          "source": "acnh-re/output/gameplay/trees/SNPC_rcm_01_Tent_1_Entries.txt#Request gate into material collection",
+          "status": "EF",
+          "notes": "GAMEPLAY_FLOW §5 records the initial gating flags and representative/house-level requirements."
+        },
+        {
+          "name": "SNPC_rcm_21_MaterialCollecting:Root",
+          "role": "story-flow evidence",
+          "path": "acnh-re/output/gameplay/trees/SNPC_rcm_21_MaterialCollecting.txt",
+          "key": "Root / donation selector",
+          "source": "acnh-re/output/gameplay/trees/SNPC_rcm_21_MaterialCollecting.txt#Root / donation selector",
+          "status": "EF",
+          "notes": null
+        },
+        {
+          "name": "SNPC_rcm_24_MaterialGiveProcess:DeleteWood",
+          "role": "story-flow evidence",
+          "path": "acnh-re/output/gameplay/trees/SNPC_rcm_24_MaterialGiveProcess.txt",
+          "key": "DeleteWood / DeleteSoftWood / DeleteHardWood / DeleteIron",
+          "source": "acnh-re/output/gameplay/trees/SNPC_rcm_24_MaterialGiveProcess.txt#DeleteWood / DeleteSoftWood / DeleteHardWood / DeleteIron",
+          "status": "EF",
+          "notes": null
+        }
+      ],
+      "stage": null,
+      "actors": [
+        {
+          "name": "Timmy/Tommy (rcm)",
+          "role": "shop clerks",
+          "path": "acnh-re/docs/GAMEPLAY_FLOW.md",
+          "key": "NPC map: rcm",
+          "source": "acnh-re/docs/GAMEPLAY_FLOW.md#NPC map: rcm",
+          "status": "EF",
+          "notes": "The flow family SNPC_rcm_* identifies the shop clerks; no individual actor instance is selected here."
+        }
+      ],
+      "actions": [
+        {
+          "name": "SNPC_rcm_24_MaterialGiveProcess:DeleteWood",
+          "role": "story-flow evidence",
+          "path": "acnh-re/output/gameplay/trees/SNPC_rcm_24_MaterialGiveProcess.txt",
+          "key": "event 16-17",
+          "source": "acnh-re/output/gameplay/trees/SNPC_rcm_24_MaterialGiveProcess.txt#event 16-17",
+          "status": "EF",
+          "notes": "Consumes 30 wood (2768) and raises RcmShopMaterial_Wood."
+        },
+        {
+          "name": "SNPC_rcm_24_MaterialGiveProcess:DeleteSoftWood",
+          "role": "story-flow evidence",
+          "path": "acnh-re/output/gameplay/trees/SNPC_rcm_24_MaterialGiveProcess.txt",
+          "key": "event 19-18",
+          "source": "acnh-re/output/gameplay/trees/SNPC_rcm_24_MaterialGiveProcess.txt#event 19-18",
+          "status": "EF",
+          "notes": "Consumes 30 softwood (2767)."
+        },
+        {
+          "name": "SNPC_rcm_24_MaterialGiveProcess:DeleteHardWood",
+          "role": "story-flow evidence",
+          "path": "acnh-re/output/gameplay/trees/SNPC_rcm_24_MaterialGiveProcess.txt",
+          "key": "event 20-21",
+          "source": "acnh-re/output/gameplay/trees/SNPC_rcm_24_MaterialGiveProcess.txt#event 20-21",
+          "status": "EF",
+          "notes": "Consumes 30 hardwood (2769)."
+        },
+        {
+          "name": "SNPC_rcm_24_MaterialGiveProcess:DeleteIron",
+          "role": "story-flow evidence",
+          "path": "acnh-re/output/gameplay/trees/SNPC_rcm_24_MaterialGiveProcess.txt",
+          "key": "event 15-22",
+          "source": "acnh-re/output/gameplay/trees/SNPC_rcm_24_MaterialGiveProcess.txt#event 15-22",
+          "status": "EF",
+          "notes": "Consumes 30 iron nugget (2511)."
+        }
+      ],
+      "items": [
+        {
+          "name": "wood ×30 (2768)",
+          "role": null,
+          "path": "acnh-re/output/gameplay/trees/SNPC_rcm_24_MaterialGiveProcess.txt",
+          "key": "DeleteWood event 16",
+          "source": "acnh-re/output/gameplay/trees/SNPC_rcm_24_MaterialGiveProcess.txt#DeleteWood event 16",
+          "status": "EF",
+          "notes": "USen item localization resolves wood."
+        },
+        {
+          "name": "softwood ×30 (2767)",
+          "role": null,
+          "path": "acnh-re/output/gameplay/trees/SNPC_rcm_24_MaterialGiveProcess.txt",
+          "key": "DeleteSoftWood event 19",
+          "source": "acnh-re/output/gameplay/trees/SNPC_rcm_24_MaterialGiveProcess.txt#DeleteSoftWood event 19",
+          "status": "EF",
+          "notes": "USen item localization resolves softwood."
+        },
+        {
+          "name": "hardwood ×30 (2769)",
+          "role": null,
+          "path": "acnh-re/output/gameplay/trees/SNPC_rcm_24_MaterialGiveProcess.txt",
+          "key": "DeleteHardWood event 20",
+          "source": "acnh-re/output/gameplay/trees/SNPC_rcm_24_MaterialGiveProcess.txt#DeleteHardWood event 20",
+          "status": "EF",
+          "notes": "USen item localization resolves hardwood."
+        },
+        {
+          "name": "iron nugget ×30 (2511)",
+          "role": null,
+          "path": "acnh-re/output/gameplay/trees/SNPC_rcm_24_MaterialGiveProcess.txt",
+          "key": "DeleteIron event 15",
+          "source": "acnh-re/output/gameplay/trees/SNPC_rcm_24_MaterialGiveProcess.txt#DeleteIron event 15",
+          "status": "EF",
+          "notes": "USen item localization resolves iron nugget."
+        }
+      ],
+      "structures": [
+        {
+          "name": "structure: unresolved",
+          "role": "structure evidence gap",
+          "path": null,
+          "key": null,
+          "source": null,
+          "status": "OPEN",
+          "notes": "Materials are collected before the shop kit is placed."
+        }
+      ],
+      "placements": [
+        {
+          "name": "placement: unresolved",
+          "role": "placement evidence gap",
+          "path": null,
+          "key": null,
+          "source": null,
+          "status": "OPEN",
+          "notes": "No structure placement occurs in the material hand-in beat."
+        }
+      ],
+      "assets": {
+        "ui": [
+          {
+            "name": "CommonDialogPage",
+            "role": "dialog candidate",
+            "path": "acnh-re/output/ui_hud/page_factory_catalog.json",
+            "key": "class_name=CommonDialogPage",
+            "source": "acnh-re/output/ui_hud/page_factory_catalog.json#class_name=CommonDialogPage",
+            "status": "CAT",
+            "notes": "NPC dialogue/choice flow is explicit, but page-to-flow binding is not."
+          },
+          {
+            "name": "UI page binding: unresolved",
+            "role": "UI page binding evidence gap",
+            "path": null,
+            "key": null,
+            "source": null,
+            "status": "OPEN",
+            "notes": "No exact UI page class is referenced by the EventFlow."
+          }
+        ],
+        "animation": [
+          {
+            "name": "animation: unresolved",
+            "role": "animation evidence gap",
+            "path": null,
+            "key": null,
+            "source": null,
+            "status": "OPEN",
+            "notes": "shop material collection: no exact runtime animation binding was found."
+          }
+        ],
+        "model": [
+          {
+            "name": "model: unresolved",
+            "role": "model evidence gap",
+            "path": null,
+            "key": null,
+            "source": null,
+            "status": "OPEN",
+            "notes": "shop material collection: no exact runtime model binding was found."
+          }
+        ],
+        "audio": [
+          {
+            "name": "audio: unresolved",
+            "role": "audio evidence gap",
+            "path": null,
+            "key": null,
+            "source": null,
+            "status": "OPEN",
+            "notes": "No shop-collection sound action is named in these flow entries."
+          }
+        ],
+        "text": [
+          {
+            "name": "Shop material dialogue labels",
+            "role": "dialogue",
+            "path": "acnh-re/output/gameplay/trees/SNPC_rcm_21_MaterialCollecting.txt",
+            "key": "MSG labels under Root/DonateMaterials_*",
+            "source": "acnh-re/output/gameplay/trees/SNPC_rcm_21_MaterialCollecting.txt#MSG labels under Root/DonateMaterials_*",
+            "status": "EF",
+            "notes": "Flow labels are present; raw USen string payload is not resolved in this output."
+          }
+        ],
+        "texture": [
+          {
+            "name": "texture: unresolved",
+            "role": "texture evidence gap",
+            "path": null,
+            "key": null,
+            "source": null,
+            "status": "OPEN",
+            "notes": "shop material collection: catalog texture-to-flow binding is unresolved."
+          }
+        ],
+        "material_shader": [
+          {
+            "name": "material/shader: unresolved",
+            "role": "material/shader evidence gap",
+            "path": null,
+            "key": null,
+            "source": null,
+            "status": "OPEN",
+            "notes": "shop material collection: material or shader binding is unresolved."
+          }
+        ],
+        "effect": [
+          {
+            "name": "effect: unresolved",
+            "role": "effect evidence gap",
+            "path": null,
+            "key": null,
+            "source": null,
+            "status": "OPEN",
+            "notes": "shop material collection: effect binding is unresolved."
+          }
+        ],
+        "font": [
+          {
+            "name": "font: unresolved",
+            "role": "font evidence gap",
+            "path": null,
+            "key": null,
+            "source": null,
+            "status": "OPEN",
+            "notes": "shop material collection: font/layout binding is unresolved."
+          }
+        ],
+        "world_data": [
+          {
+            "name": "world data: unresolved",
+            "role": "world data evidence gap",
+            "path": null,
+            "key": null,
+            "source": null,
+            "status": "OPEN",
+            "notes": "shop material collection: no save-specific world placement record was joined."
+          }
+        ],
+        "collision": [
+          {
+            "name": "collision: unresolved",
+            "role": "collision evidence gap",
+            "path": null,
+            "key": null,
+            "source": null,
+            "status": "OPEN",
+            "notes": "shop material collection: collision consumer is unresolved."
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "name": "GAMEPLAY_FLOW.md",
+          "role": "story summary",
+          "path": "acnh-re/docs/GAMEPLAY_FLOW.md",
+          "key": "§5.1–5.2",
+          "source": "acnh-re/docs/GAMEPLAY_FLOW.md#§5.1–5.2",
+          "status": "EF",
+          "notes": "30 each of four materials; source tree has the exact item IDs/counts."
+        },
+        {
+          "name": "Item-localization IDs 2767/2768/2769/2511",
+          "role": "ACNH 1.0.0 table row",
+          "path": "/workspace/acnh-re/output/tables_resolved/ItemParam.json",
+          "key": "UniqueID values 2767/2768/2769/2511",
+          "source": "B_data/Bcsv/ItemParam.bcsv#UniqueID values 2767/2768/2769/2511",
+          "status": "TBL",
+          "notes": "Human-readable USen names are joined by item_localization_and_catalogue_links.json."
+        }
+      ],
+      "gaps": [
+        "Shop-kit item UID is not established in the inspected output.",
+        "Shop-specific dialogue labels are visible in the flow, but their decoded USen message text is unavailable here."
+      ]
+    },
+    {
+      "beat_id": "shop-place-open-and-unlock-plots",
+      "order": 1,
+      "title": "Nook's Cranny: place shop kit, open, unlock three-house quest",
+      "flow": [
+        {
+          "name": "Player_Demo_HousingFinish:HousingFinish_Shop_Built",
+          "role": "story-flow evidence",
+          "path": "acnh-re/output/gameplay/trees/Player_Demo_HousingFinish.txt",
+          "key": "events 15,17-18,104",
+          "source": "acnh-re/output/gameplay/trees/Player_Demo_HousingFinish.txt#events 15,17-18,104",
+          "status": "EF",
+          "notes": "Sets Prologue4BuiltShop and player shop-area decision flags."
+        },
+        {
+          "name": "Player_HousingKit:ShopReserveKit",
+          "role": "placement preview",
+          "path": "acnh-re/output/gameplay/flow_index.json",
+          "key": "data.Player_HousingKit.entries.ShopReserveKit",
+          "source": "acnh-re/output/gameplay/flow_index.json#data.Player_HousingKit.entries.ShopReserveKit",
+          "status": "EF",
+          "notes": "StructureStartPreviewGuide uses StructureType=cMarket and StructureBuildPosType=cPlayer."
+        },
+        {
+          "name": "Demo_PublicAnnouncement_21_CmnEvChk:ChkMarket",
+          "role": "story-flow evidence",
+          "path": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_21_CmnEvChk.txt",
+          "key": "MarketOpen1stDay1 branch",
+          "source": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_21_CmnEvChk.txt#MarketOpen1stDay1 branch",
+          "status": "EF",
+          "notes": "The first-open result routes to the house-build announcement."
+        },
+        {
+          "name": "Demo_PublicAnnouncement_03_Rco_Once:TownNews_Rco_HouseBuild",
+          "role": "story-flow evidence",
+          "path": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_03_Rco_Once.txt",
+          "key": "events 25-29, 15",
+          "source": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_03_Rco_Once.txt#events 25-29, 15",
+          "status": "EF",
+          "notes": "The announcement sets RcmImmQuestOpen."
+        },
+        {
+          "name": "GAMEPLAY_FLOW.md",
+          "role": "story summary",
+          "path": "acnh-re/docs/GAMEPLAY_FLOW.md",
+          "key": "§5.3–5.4",
+          "source": "acnh-re/docs/GAMEPLAY_FLOW.md#§5.3–5.4",
+          "status": "EF",
+          "notes": "Native daily processor is described as PSEUDO in the gameplay flow."
+        }
+      ],
+      "stage": null,
+      "actors": [
+        {
+          "name": "Timmy/Tommy (rcm)",
+          "role": "shop clerks",
+          "path": "acnh-re/docs/GAMEPLAY_FLOW.md",
+          "key": "§5",
+          "source": "acnh-re/docs/GAMEPLAY_FLOW.md#§5",
+          "status": "EF",
+          "notes": null
+        },
+        {
+          "name": "Tom Nook (rco)",
+          "role": "announcement speaker",
+          "path": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_03_Rco_Once.txt",
+          "key": "TownNews_Rco_HouseBuild",
+          "source": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_03_Rco_Once.txt#TownNews_Rco_HouseBuild",
+          "status": "EF",
+          "notes": null
+        }
+      ],
+      "actions": [
+        {
+          "name": "StructureStartPreviewGuide(cMarket,cPlayer)",
+          "role": "shop-kit placement",
+          "path": "acnh-re/output/gameplay/flow_index.json",
+          "key": "data.Player_HousingKit.entries.ShopReserveKit.notable_actions[1]",
+          "source": "acnh-re/output/gameplay/flow_index.json#data.Player_HousingKit.entries.ShopReserveKit.notable_actions[1]",
+          "status": "EF",
+          "notes": "Identifies the placement class; the selected world transform is not in this flow index."
+        },
+        {
+          "name": "Daily shop processor checks structure type 0",
+          "role": "next-day completion",
+          "path": "acnh-re/docs/GAMEPLAY_FLOW.md",
+          "key": "§0.5 / §5.3 / 0xfc4560",
+          "source": "acnh-re/docs/GAMEPLAY_FLOW.md#§0.5 / §5.3 / 0xfc4560",
+          "status": "PSEUDO",
+          "notes": "Pseudocode-derived; not a native execution in this task."
+        },
+        {
+          "name": "Demo_PublicAnnouncement_21_CmnEvChk:ChkMarket",
+          "role": "story-flow evidence",
+          "path": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_21_CmnEvChk.txt",
+          "key": "MarketOpen1stDay1 → result 13=1",
+          "source": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_21_CmnEvChk.txt#MarketOpen1stDay1 → result 13=1",
+          "status": "EF",
+          "notes": "The announcement handoff precedes TownNews_Rco_HouseBuild."
+        }
+      ],
+      "items": [
+        {
+          "name": "shop construction kit (UID unresolved)",
+          "role": "kit",
+          "path": "acnh-re/docs/GAMEPLAY_FLOW.md",
+          "key": "§5.3",
+          "source": "acnh-re/docs/GAMEPLAY_FLOW.md#§5.3",
+          "status": "EF",
+          "notes": "The story flow says the player receives/places the shop kit; its ItemUniqueId was not recovered in the inspected tree."
+        },
+        {
+          "name": "RcmImmQuestOpen",
+          "role": "quest unlock flag",
+          "path": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_03_Rco_Once.txt",
+          "key": "TownNews_Rco_HouseBuild event 15",
+          "source": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_03_Rco_Once.txt#TownNews_Rco_HouseBuild event 15",
+          "status": "EF",
+          "notes": null
+        }
+      ],
+      "structures": [
+        {
+          "name": "logical structure cMarket",
+          "role": "market placement class",
+          "path": "acnh-re/output/gameplay/flow_index.json",
+          "key": "Player_HousingKit:ShopReserveKit / StructureType=cMarket",
+          "source": "acnh-re/output/gameplay/flow_index.json#Player_HousingKit:ShopReserveKit / StructureType=cMarket",
+          "status": "EF",
+          "notes": null
+        },
+        {
+          "name": "market reserve model UID 0: StrcMarketA00Reserve",
+          "role": "ACNH 1.0.0 table row",
+          "path": "/workspace/acnh-re/output/tables_resolved/StructureFacilityModel.json",
+          "key": "UniqueID=0",
+          "source": "B_data/Bcsv/StructureFacilityModel.bcsv#UniqueID=0",
+          "status": "TBL",
+          "notes": "Table model candidate, not a world transform."
+        },
+        {
+          "name": "market build/final model UIDs 24/1/2",
+          "role": "ACNH 1.0.0 table row",
+          "path": "/workspace/acnh-re/output/tables_resolved/StructureFacilityModel.json",
+          "key": "UniqueID=24,1,2",
+          "source": "B_data/Bcsv/StructureFacilityModel.bcsv#UniqueID=24,1,2",
+          "status": "TBL",
+          "notes": "Build model 24; facility levels A01/A02 are UIDs 1/2."
+        }
+      ],
+      "placements": [
+        {
+          "name": "shop placement class cPlayer",
+          "role": "placement selector",
+          "path": "acnh-re/output/gameplay/flow_index.json",
+          "key": "data.Player_HousingKit.entries.ShopReserveKit.notable_actions[1]",
+          "source": "acnh-re/output/gameplay/flow_index.json#data.Player_HousingKit.entries.ShopReserveKit.notable_actions[1]",
+          "status": "EF",
+          "notes": "Confirms placement is player-selected."
+        },
+        {
+          "name": "shop world transform: unresolved",
+          "role": "shop world transform evidence gap",
+          "path": null,
+          "key": null,
+          "source": null,
+          "status": "OPEN",
+          "notes": "No map cell, x/z, rotation, elevation, or serialized placement value was joined."
+        }
+      ],
+      "assets": {
+        "ui": [
+          {
+            "name": "CommonDialogPage",
+            "role": "dialog candidate",
+            "path": "acnh-re/output/ui_hud/page_factory_catalog.json",
+            "key": "class_name=CommonDialogPage",
+            "source": "acnh-re/output/ui_hud/page_factory_catalog.json#class_name=CommonDialogPage",
+            "status": "CAT",
+            "notes": "Not joined to this flow."
+          },
+          {
+            "name": "ShopBridgeSlopePage",
+            "role": "nearby build-menu candidate",
+            "path": "acnh-re/output/ui_hud/page_factory_catalog.json",
+            "key": "class_name=ShopBridgeSlopePage",
+            "source": "acnh-re/output/ui_hud/page_factory_catalog.json#class_name=ShopBridgeSlopePage",
+            "status": "CAT",
+            "notes": "Catalog page name only; this is not evidence it is used for the scripted market kit."
+          },
+          {
+            "name": "shop placement UI: unresolved",
+            "role": "shop placement UI evidence gap",
+            "path": null,
+            "key": null,
+            "source": null,
+            "status": "OPEN",
+            "notes": "StructureStartPreviewGuide is known; exact page/layout join is unresolved."
+          }
+        ],
+        "animation": [
+          {
+            "name": "StructureFacility.root.asb",
+            "role": "facility animation candidate",
+            "path": "/workspace/acnh-re/output/additional_romfs/animation_sequences/StructureFacility.root.asb.json",
+            "key": "nodes include MarketBoxLight* / EigyoLight*",
+            "source": "/workspace/acnh-re/output/additional_romfs/animation_sequences/StructureFacility.root.asb.json#nodes include MarketBoxLight* / EigyoLight*",
+            "status": "CAT",
+            "notes": "No EventFlow action binds these nodes to shop opening."
+          }
+        ],
+        "model": [
+          {
+            "name": "StrcMarketA00Reserve",
+            "role": "candidate model only",
+            "path": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json",
+            "key": "Asset_ID=StrcMarketA00Reserve",
+            "source": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json#Asset_ID=StrcMarketA00Reserve",
+            "status": "CAT",
+            "notes": "Matches StructureFacilityModel UID 0."
+          },
+          {
+            "name": "StrcMarketA00Build",
+            "role": "candidate model only",
+            "path": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json",
+            "key": "Asset_ID=StrcMarketA00Build",
+            "source": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json#Asset_ID=StrcMarketA00Build",
+            "status": "CAT",
+            "notes": "Matches StructureFacilityModel UID 24."
+          },
+          {
+            "name": "StrcMarketA01",
+            "role": "candidate model only",
+            "path": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json",
+            "key": "Asset_ID=StrcMarketA01",
+            "source": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json#Asset_ID=StrcMarketA01",
+            "status": "CAT",
+            "notes": "Matches StructureFacilityModel UID 1; later facility level."
+          },
+          {
+            "name": "StrcMarketA02",
+            "role": "candidate model only",
+            "path": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json",
+            "key": "Asset_ID=StrcMarketA02",
+            "source": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json#Asset_ID=StrcMarketA02",
+            "status": "CAT",
+            "notes": "Matches StructureFacilityModel UID 2; later facility level."
+          }
+        ],
+        "audio": [
+          {
+            "name": "DuringConstruction/Env_FacilityConstruction00",
+            "role": "candidate audio only",
+            "path": "/workspace/acnh-re/output/additional_romfs/catalogues/audio.json",
+            "key": "Audio_ID starts DuringConstruction/Env_FacilityConstruction00",
+            "source": "/workspace/acnh-re/output/additional_romfs/catalogues/audio.json#Audio_ID starts DuringConstruction/Env_FacilityConstruction00",
+            "status": "CAT",
+            "notes": "Facility-construction sound candidate; no flow call binds it to MarketBuilt."
+          },
+          {
+            "name": "StrcMarketBox/",
+            "role": "candidate audio only",
+            "path": "/workspace/acnh-re/output/additional_romfs/catalogues/audio.json",
+            "key": "Audio_ID starts StrcMarketBox/",
+            "source": "/workspace/acnh-re/output/additional_romfs/catalogues/audio.json#Audio_ID starts StrcMarketBox/",
+            "status": "CAT",
+            "notes": "Shop-box open/close catalog family; not shown in this story flow."
+          }
+        ],
+        "text": [
+          {
+            "name": "SP_rcm_02_TentRequest:024",
+            "role": "post-placement dialogue",
+            "path": "acnh-re/output/gameplay/trees/SNPC_rcm_01_Tent_1_Entries.txt",
+            "key": "ReportTent event 13",
+            "source": "acnh-re/output/gameplay/trees/SNPC_rcm_01_Tent_1_Entries.txt#ReportTent event 13",
+            "status": "EF",
+            "notes": "Message label only; decoded English text is absent here."
+          },
+          {
+            "name": "SP_PublicAnnouncement_10_Rco_Once:201-204_01",
+            "role": "plot-quest announcement labels",
+            "path": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_03_Rco_Once.txt",
+            "key": "TownNews_Rco_HouseBuild",
+            "source": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_03_Rco_Once.txt#TownNews_Rco_HouseBuild",
+            "status": "EF",
+            "notes": "Raw USen payload is not resolved."
+          }
+        ],
+        "texture": [
+          {
+            "name": "texture: unresolved",
+            "role": "texture evidence gap",
+            "path": null,
+            "key": null,
+            "source": null,
+            "status": "OPEN",
+            "notes": "market kit placement / first opening: catalog texture-to-flow binding is unresolved."
+          }
+        ],
+        "material_shader": [
+          {
+            "name": "material/shader: unresolved",
+            "role": "material/shader evidence gap",
+            "path": null,
+            "key": null,
+            "source": null,
+            "status": "OPEN",
+            "notes": "market kit placement / first opening: material or shader binding is unresolved."
+          }
+        ],
+        "effect": [
+          {
+            "name": "effect: unresolved",
+            "role": "effect evidence gap",
+            "path": null,
+            "key": null,
+            "source": null,
+            "status": "OPEN",
+            "notes": "market kit placement / first opening: effect binding is unresolved."
+          }
+        ],
+        "font": [
+          {
+            "name": "font: unresolved",
+            "role": "font evidence gap",
+            "path": null,
+            "key": null,
+            "source": null,
+            "status": "OPEN",
+            "notes": "market kit placement / first opening: font/layout binding is unresolved."
+          }
+        ],
+        "world_data": [
+          {
+            "name": "Facility model table",
+            "role": "ACNH 1.0.0 table row",
+            "path": "/workspace/acnh-re/output/tables_resolved/StructureFacilityModel.json",
+            "key": "UniqueID=0,1,2,24",
+            "source": "B_data/Bcsv/StructureFacilityModel.bcsv#UniqueID=0,1,2,24",
+            "status": "TBL",
+            "notes": "Model UIDs/classes only; does not encode the island instance position."
+          }
+        ],
+        "collision": [
+          {
+            "name": "StrcMarketA00Reserve_pbc",
+            "role": "candidate model only",
+            "path": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json",
+            "key": "Asset_ID=StrcMarketA00Reserve_pbc",
+            "source": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json#Asset_ID=StrcMarketA00Reserve_pbc",
+            "status": "CAT",
+            "notes": "PBC-suffixed catalog candidate; runtime collision consumer not joined."
+          },
+          {
+            "name": "collision binding: unresolved",
+            "role": "collision binding evidence gap",
+            "path": null,
+            "key": null,
+            "source": null,
+            "status": "OPEN",
+            "notes": "Catalog candidate is not proof of runtime use."
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "name": "Demo_PublicAnnouncement_21_CmnEvChk:ChkMarket",
+          "role": "story-flow evidence",
+          "path": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_21_CmnEvChk.txt",
+          "key": "events 8-32",
+          "source": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_21_CmnEvChk.txt#events 8-32",
+          "status": "EF",
+          "notes": "First shop open sets the result that dispatches the house-build announcement."
+        },
+        {
+          "name": "Demo_PublicAnnouncement_03_Rco_Once:TownNews_Rco_HouseBuild",
+          "role": "story-flow evidence",
+          "path": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_03_Rco_Once.txt",
+          "key": "event 15",
+          "source": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_03_Rco_Once.txt#event 15",
+          "status": "EF",
+          "notes": "Direct RcmImmQuestOpen writer."
+        },
+        {
+          "name": "StructureFacilityModel",
+          "role": "ACNH 1.0.0 table row",
+          "path": "/workspace/acnh-re/output/tables_resolved/StructureFacilityModel.json",
+          "key": "UID 0/24/1/2",
+          "source": "B_data/Bcsv/StructureFacilityModel.bcsv#UID 0/24/1/2",
+          "status": "TBL",
+          "notes": "Shop reserve, construction, and later model candidates."
+        },
+        {
+          "name": "StructureInfoParam logical building type",
+          "role": "ACNH 1.0.0 table row",
+          "path": "/workspace/acnh-re/output/tables_resolved/StructureInfoParam.json",
+          "key": "UniqueID=19..25 facility group",
+          "source": "B_data/Bcsv/StructureInfoParam.bcsv#UniqueID=19..25 facility group",
+          "status": "TBL",
+          "notes": "Facility group table is not the same identifier namespace as EventFlow cMarket."
+        }
+      ],
+      "gaps": [
+        "The native day-advance building check is PSEUDO, not executed in this task.",
+        "The user-chosen shop transform and preview/layout member remain unknown."
+      ]
+    },
+    {
+      "beat_id": "bridge-and-ladder",
+      "order": 2,
+      "title": "Bridge kit and ladder unlocks",
+      "flow": [
+        {
+          "name": "SNPC_rco_53_MigrantsQuest:FirstIntroduction",
+          "role": "story-flow evidence",
+          "path": "acnh-re/output/gameplay/trees/SNPC_rco_53_MigrantsQuest.txt",
+          "key": "events 202,11,71-74,5",
+          "source": "acnh-re/output/gameplay/trees/SNPC_rco_53_MigrantsQuest.txt#events 202,11,71-74,5",
+          "status": "EF",
+          "notes": "Grants recipe 7211 once the quest is introduced."
+        },
+        {
+          "name": "Player_Demo_HousingFinish:HousingFinish_Bridge",
+          "role": "story-flow evidence",
+          "path": "acnh-re/output/gameplay/trees/Player_Demo_HousingFinish.txt",
+          "key": "events 84,86-89,106",
+          "source": "acnh-re/output/gameplay/trees/Player_Demo_HousingFinish.txt#events 84,86-89,106",
+          "status": "EF",
+          "notes": "Placing selected UID 7211 raises ImmQ_SetBridge."
+        },
+        {
+          "name": "Player_HousingKit:BridgeReserveKit",
+          "role": "placement preview",
+          "path": "acnh-re/output/gameplay/flow_index.json",
+          "key": "data.Player_HousingKit.entries.BridgeReserveKit.notable_actions[1]",
+          "source": "acnh-re/output/gameplay/flow_index.json#data.Player_HousingKit.entries.BridgeReserveKit.notable_actions[1]",
+          "status": "EF",
+          "notes": "StructureStartPreviewGuide uses StructureType=cBridge and StructureBuildPosType=cPlayer."
+        },
+        {
+          "name": "SNPC_rco_53_MigrantsQuest:GetHousingKit",
+          "role": "story-flow evidence",
+          "path": "acnh-re/output/gameplay/trees/SNPC_rco_53_MigrantsQuest.txt",
+          "key": "events 99-105",
+          "source": "acnh-re/output/gameplay/trees/SNPC_rco_53_MigrantsQuest.txt#events 99-105",
+          "status": "EF",
+          "notes": "After bridge, grants housing kits and ladder recipe UID 2615."
+        }
+      ],
+      "stage": null,
+      "actors": [
+        {
+          "name": "Tom Nook (rco)",
+          "role": "quest giver",
+          "path": "acnh-re/output/gameplay/trees/SNPC_rco_53_MigrantsQuest.txt",
+          "key": "ENTRY FirstIntroduction / Root",
+          "source": "acnh-re/output/gameplay/trees/SNPC_rco_53_MigrantsQuest.txt#ENTRY FirstIntroduction / Root",
+          "status": "EF",
+          "notes": null
+        }
+      ],
+      "actions": [
+        {
+          "name": "SNPC_rco_53_MigrantsQuest:FirstIntroduction",
+          "role": "story-flow evidence",
+          "path": "acnh-re/output/gameplay/trees/SNPC_rco_53_MigrantsQuest.txt",
+          "key": "PlayerSetCraftRecipe ItemUniqueId=7211",
+          "source": "acnh-re/output/gameplay/trees/SNPC_rco_53_MigrantsQuest.txt#PlayerSetCraftRecipe ItemUniqueId=7211",
+          "status": "EF",
+          "notes": "Bridge recipe unlock."
+        },
+        {
+          "name": "StructureStartPreviewGuide(cBridge,cPlayer)",
+          "role": "bridge placement preview",
+          "path": "acnh-re/output/gameplay/flow_index.json",
+          "key": "data.Player_HousingKit.entries.BridgeReserveKit.notable_actions[1]",
+          "source": "acnh-re/output/gameplay/flow_index.json#data.Player_HousingKit.entries.BridgeReserveKit.notable_actions[1]",
+          "status": "EF",
+          "notes": null
+        },
+        {
+          "name": "Player_Demo_HousingFinish:HousingFinish_Bridge",
+          "role": "story-flow evidence",
+          "path": "acnh-re/output/gameplay/trees/Player_Demo_HousingFinish.txt",
+          "key": "UIPocketMenuItemSelected UID 7211 → ImmQ_SetBridge",
+          "source": "acnh-re/output/gameplay/trees/Player_Demo_HousingFinish.txt#UIPocketMenuItemSelected UID 7211 → ImmQ_SetBridge",
+          "status": "EF",
+          "notes": "Marks bridge-kit placement in the quest."
+        },
+        {
+          "name": "SNPC_rco_53_MigrantsQuest:GetHousingKit",
+          "role": "story-flow evidence",
+          "path": "acnh-re/output/gameplay/trees/SNPC_rco_53_MigrantsQuest.txt",
+          "key": "PlayerSetCraftRecipe ItemUniqueId=2615",
+          "source": "acnh-re/output/gameplay/trees/SNPC_rco_53_MigrantsQuest.txt#PlayerSetCraftRecipe ItemUniqueId=2615",
+          "status": "EF",
+          "notes": "Ladder recipe is granted after bridge and plot kits."
+        }
+      ],
+      "items": [
+        {
+          "name": "bridge construction kit (7211)",
+          "role": "craft recipe",
+          "path": "acnh-re/output/gameplay/trees/SNPC_rco_53_MigrantsQuest.txt",
+          "key": "FirstIntroduction event 73",
+          "source": "acnh-re/output/gameplay/trees/SNPC_rco_53_MigrantsQuest.txt#FirstIntroduction event 73",
+          "status": "EF",
+          "notes": null
+        },
+        {
+          "name": "ladder (2615)",
+          "role": "craft recipe",
+          "path": "acnh-re/output/gameplay/trees/SNPC_rco_53_MigrantsQuest.txt",
+          "key": "GetHousingKit event 105",
+          "source": "acnh-re/output/gameplay/trees/SNPC_rco_53_MigrantsQuest.txt#GetHousingKit event 105",
+          "status": "EF",
+          "notes": "Ladder is an item/tool, not a structure placement."
+        },
+        {
+          "name": "bridge-reservation style label (6903)",
+          "role": "reserved bridge table label",
+          "path": "/workspace/acnh-re/output/tables_resolved/StructureBridgeTypeParam.json",
+          "key": "UniqueID=7 / ItemNameUniqueID=6903",
+          "source": "/workspace/acnh-re/output/tables_resolved/StructureBridgeTypeParam.json#UniqueID=7 / ItemNameUniqueID=6903",
+          "status": "TBL",
+          "notes": "Separate table label candidate; it is not the quest kit UID 7211."
+        }
+      ],
+      "structures": [
+        {
+          "name": "logical structure cBridge",
+          "role": "bridge placement class",
+          "path": "acnh-re/output/gameplay/flow_index.json",
+          "key": "Player_HousingKit:BridgeReserveKit / StructureType=cBridge",
+          "source": "acnh-re/output/gameplay/flow_index.json#Player_HousingKit:BridgeReserveKit / StructureType=cBridge",
+          "status": "EF",
+          "notes": null
+        },
+        {
+          "name": "StructureInfoParam bridge UID 26",
+          "role": "ACNH 1.0.0 table row",
+          "path": "/workspace/acnh-re/output/tables_resolved/StructureInfoParam.json",
+          "key": "StructureInfoType=Bridge; UniqueID=26",
+          "source": "B_data/Bcsv/StructureInfoParam.bcsv#StructureInfoType=Bridge; UniqueID=26",
+          "status": "TBL",
+          "notes": "Table namespace identifier; do not read as an island grid coordinate."
+        },
+        {
+          "name": "bridge reservation type UID 7",
+          "role": "ACNH 1.0.0 table row",
+          "path": "/workspace/acnh-re/output/tables_resolved/StructureBridgeTypeParam.json",
+          "key": "UniqueID=7 / BridgeTypeName=BridgeReserved",
+          "source": "B_data/Bcsv/StructureBridgeTypeParam.bcsv#UniqueID=7 / BridgeTypeName=BridgeReserved",
+          "status": "TBL",
+          "notes": "Catalog/table type for reserved bridge marker."
+        },
+        {
+          "name": "reserved bridge model UIDs 26–31",
+          "role": "ACNH 1.0.0 table row",
+          "path": "/workspace/acnh-re/output/tables_resolved/StructureBridgeParam.json",
+          "key": "BridgeTypeUniqueID=7 / UniqueID=26..31",
+          "source": "B_data/Bcsv/StructureBridgeParam.bcsv#BridgeTypeUniqueID=7 / UniqueID=26..31",
+          "status": "TBL",
+          "notes": "Reserved bridge model variants (03/04/05 and diagonal patterns)."
+        }
+      ],
+      "placements": [
+        {
+          "name": "bridge placement class cPlayer",
+          "role": "player-selected bridge placement",
+          "path": "acnh-re/output/gameplay/flow_index.json",
+          "key": "Player_HousingKit:BridgeReserveKit / StructureBuildPosType=cPlayer",
+          "source": "acnh-re/output/gameplay/flow_index.json#Player_HousingKit:BridgeReserveKit / StructureBuildPosType=cPlayer",
+          "status": "EF",
+          "notes": "Flow confirms player-positioned placement class only."
+        },
+        {
+          "name": "bridge transform: unresolved",
+          "role": "bridge transform evidence gap",
+          "path": null,
+          "key": null,
+          "source": null,
+          "status": "OPEN",
+          "notes": "No chosen river grid cells, orientation, endpoint heights, or exact model variant are in the flow evidence."
+        },
+        {
+          "name": "ladder world placement: unresolved",
+          "role": "ladder world placement evidence gap",
+          "path": null,
+          "key": null,
+          "source": null,
+          "status": "OPEN",
+          "notes": "Ladder is a craftable tool; exact use locations/transforms are runtime state."
+        }
+      ],
+      "assets": {
+        "ui": [
+          {
+            "name": "SmartPhoneIconPage",
+            "role": "recipe phone UI candidate",
+            "path": "acnh-re/output/ui_hud/page_factory_catalog.json",
+            "key": "class_name=SmartPhoneIconPage",
+            "source": "acnh-re/output/ui_hud/page_factory_catalog.json#class_name=SmartPhoneIconPage",
+            "status": "CAT",
+            "notes": "Flow invokes SmartPhone; exact page is not bound."
+          },
+          {
+            "name": "MenuRecipePage",
+            "role": "recipe UI candidate",
+            "path": "acnh-re/output/ui_hud/page_factory_catalog.json",
+            "key": "class_name=MenuRecipePage",
+            "source": "acnh-re/output/ui_hud/page_factory_catalog.json#class_name=MenuRecipePage",
+            "status": "CAT",
+            "notes": "Catalog candidate only."
+          },
+          {
+            "name": "bridge preview UI: unresolved",
+            "role": "bridge preview UI evidence gap",
+            "path": null,
+            "key": null,
+            "source": null,
+            "status": "OPEN",
+            "notes": "Build-page/layout join for the player quest kit is not proven."
+          }
+        ],
+        "animation": [
+          {
+            "name": "StructureBridge.root.asb",
+            "role": "bridge animation candidate",
+            "path": "/workspace/acnh-re/output/additional_romfs/animation_sequences/StructureBridge.root.asb.json",
+            "key": "nodes Stop / Sway",
+            "source": "/workspace/acnh-re/output/additional_romfs/animation_sequences/StructureBridge.root.asb.json#nodes Stop / Sway",
+            "status": "CAT",
+            "notes": "No flow action joins Sway to this bridge instance."
+          }
+        ],
+        "model": [
+          {
+            "name": "BridgeReserved",
+            "role": "candidate model only",
+            "path": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json",
+            "key": "Asset_ID=BridgeReserved",
+            "source": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json#Asset_ID=BridgeReserved",
+            "status": "CAT",
+            "notes": "StructureBridgeParam reserved-variant family; catalogue is base-name evidence only."
+          },
+          {
+            "name": "BridgeStone",
+            "role": "candidate model only",
+            "path": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json",
+            "key": "Asset_ID=BridgeStone",
+            "source": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json#Asset_ID=BridgeStone",
+            "status": "CAT",
+            "notes": "Example built bridge style candidate; the quest does not force this style."
+          }
+        ],
+        "audio": [
+          {
+            "name": "DuringConstruction/Env_FacilityConstruction00",
+            "role": "candidate audio only",
+            "path": "/workspace/acnh-re/output/additional_romfs/catalogues/audio.json",
+            "key": "Audio_ID starts DuringConstruction/Env_FacilityConstruction00",
+            "source": "/workspace/acnh-re/output/additional_romfs/catalogues/audio.json#Audio_ID starts DuringConstruction/Env_FacilityConstruction00",
+            "status": "CAT",
+            "notes": "Generic construction SFX candidate; exact bridge flow use is not shown."
+          }
+        ],
+        "text": [
+          {
+            "name": "SP_rco_05_MigrantsQuest:012_01-012_03 / 014-018",
+            "role": "bridge quest messages",
+            "path": "acnh-re/output/gameplay/trees/SNPC_rco_53_MigrantsQuest.txt",
+            "key": "FirstIntroduction, Root, FinishBridge",
+            "source": "acnh-re/output/gameplay/trees/SNPC_rco_53_MigrantsQuest.txt#FirstIntroduction, Root, FinishBridge",
+            "status": "EF",
+            "notes": "Message labels exist; USen strings are not in this output."
+          }
+        ],
+        "texture": [
+          {
+            "name": "texture: unresolved",
+            "role": "texture evidence gap",
+            "path": null,
+            "key": null,
+            "source": null,
+            "status": "OPEN",
+            "notes": "bridge kit / ladder: catalog texture-to-flow binding is unresolved."
+          }
+        ],
+        "material_shader": [
+          {
+            "name": "material/shader: unresolved",
+            "role": "material/shader evidence gap",
+            "path": null,
+            "key": null,
+            "source": null,
+            "status": "OPEN",
+            "notes": "bridge kit / ladder: material or shader binding is unresolved."
+          }
+        ],
+        "effect": [
+          {
+            "name": "effect: unresolved",
+            "role": "effect evidence gap",
+            "path": null,
+            "key": null,
+            "source": null,
+            "status": "OPEN",
+            "notes": "bridge kit / ladder: effect binding is unresolved."
+          }
+        ],
+        "font": [
+          {
+            "name": "font: unresolved",
+            "role": "font evidence gap",
+            "path": null,
+            "key": null,
+            "source": null,
+            "status": "OPEN",
+            "notes": "bridge kit / ladder: font/layout binding is unresolved."
+          }
+        ],
+        "world_data": [
+          {
+            "name": "StructureBridgeParam",
+            "role": "ACNH 1.0.0 table row",
+            "path": "/workspace/acnh-re/output/tables_resolved/StructureBridgeParam.json",
+            "key": "BridgeTypeUniqueID=7, UniqueID=26..31",
+            "source": "B_data/Bcsv/StructureBridgeParam.bcsv#BridgeTypeUniqueID=7, UniqueID=26..31",
+            "status": "TBL",
+            "notes": "Reserved marker variant data; no per-island transform."
+          }
+        ],
+        "collision": [
+          {
+            "name": "BridgeReserved_pbc",
+            "role": "candidate model only",
+            "path": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json",
+            "key": "Asset_ID=BridgeReserved_pbc",
+            "source": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json#Asset_ID=BridgeReserved_pbc",
+            "status": "CAT",
+            "notes": "PBC-suffixed catalog candidate; exact placement validator/runtime consumer is unresolved."
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "name": "GAMEPLAY_FLOW.md",
+          "role": "story summary",
+          "path": "acnh-re/docs/GAMEPLAY_FLOW.md",
+          "key": "§7.1–7.2",
+          "source": "acnh-re/docs/GAMEPLAY_FLOW.md#§7.1–7.2",
+          "status": "EF",
+          "notes": "Bridge kit recipe 7211 is followed by bridge placement; after it the flow gives plots and ladder."
+        },
+        {
+          "name": "StructureBridgeTypeParam",
+          "role": "ACNH 1.0.0 table row",
+          "path": "/workspace/acnh-re/output/tables_resolved/StructureBridgeTypeParam.json",
+          "key": "UID 7 BridgeReserved; item label UID 6903",
+          "source": "B_data/Bcsv/StructureBridgeTypeParam.bcsv#UID 7 BridgeReserved; item label UID 6903",
+          "status": "TBL",
+          "notes": "A reserved bridge structure class exists in the local 1.0.0 table."
+        },
+        {
+          "name": "animation sequence",
+          "role": "animation catalog",
+          "path": "/workspace/acnh-re/output/additional_romfs/animation_sequences/StructureBridge.root.asb.json",
+          "key": "nodes=Stop,Sway",
+          "source": "/workspace/acnh-re/output/additional_romfs/animation_sequences/StructureBridge.root.asb.json#nodes=Stop,Sway",
+          "status": "CAT",
+          "notes": null
+        }
+      ],
+      "gaps": [
+        "The bridge kit 7211 is not the same UID as the reserved-style table label 6903.",
+        "No bridge endpoint cells or world transform were recovered.",
+        "The ladder unlock is evidenced; ladder movement/tool animation is out of scope for this story placement join."
+      ]
+    },
+    {
+      "beat_id": "three-housing-plots",
+      "order": 3,
+      "title": "Three reserved villager plots",
+      "flow": [
+        {
+          "name": "SNPC_rco_53_MigrantsQuest:GetHousingKit",
+          "role": "story-flow evidence",
+          "path": "acnh-re/output/gameplay/trees/SNPC_rco_53_MigrantsQuest.txt",
+          "key": "events 99-105",
+          "source": "acnh-re/output/gameplay/trees/SNPC_rco_53_MigrantsQuest.txt#events 99-105",
+          "status": "EF",
+          "notes": "Gives plot kit items 5827-5829, plot flags, and recipe 2615."
+        },
+        {
+          "name": "Player_HousingKit:MigrateQuestA/B/C",
+          "role": "housing placement",
+          "path": "acnh-re/output/gameplay/flow_index.json",
+          "key": "data.Player_HousingKit.entries.MigrateQuestA/B/C",
+          "source": "acnh-re/output/gameplay/flow_index.json#data.Player_HousingKit.entries.MigrateQuestA/B/C",
+          "status": "EF",
+          "notes": "All three use cReserveNpcHouse and cSettlerQuest."
+        },
+        {
+          "name": "Player_Demo_HousingFinish:HousingFinish_NnpcImmigrateQuestA",
+          "role": "story-flow evidence",
+          "path": "acnh-re/output/gameplay/trees/Player_Demo_HousingFinish.txt",
+          "key": "events 23,78,81,98",
+          "source": "acnh-re/output/gameplay/trees/Player_Demo_HousingFinish.txt#events 23,78,81,98",
+          "status": "EF",
+          "notes": "Sets plot A placed flag; B/C use adjacent entries."
+        }
+      ],
+      "stage": null,
+      "actors": [
+        {
+          "name": "Tom Nook (rco)",
+          "role": "quest giver",
+          "path": "acnh-re/output/gameplay/trees/SNPC_rco_53_MigrantsQuest.txt",
+          "key": "ENTRY GetHousingKit",
+          "source": "acnh-re/output/gameplay/trees/SNPC_rco_53_MigrantsQuest.txt#ENTRY GetHousingKit",
+          "status": "EF",
+          "notes": null
+        }
+      ],
+      "actions": [
+        {
+          "name": "SNPC_rco_53_MigrantsQuest:GetHousingKit",
+          "role": "story-flow evidence",
+          "path": "acnh-re/output/gameplay/trees/SNPC_rco_53_MigrantsQuest.txt",
+          "key": "SetItemToPocket 5827/5828/5829; ImmQ_A/B/C_GetHousing",
+          "source": "acnh-re/output/gameplay/trees/SNPC_rco_53_MigrantsQuest.txt#SetItemToPocket 5827/5828/5829; ImmQ_A/B/C_GetHousing",
+          "status": "EF",
+          "notes": "Grants the three plots after bridge placement."
+        },
+        {
+          "name": "StructureStartPreviewGuide(cReserveNpcHouse,cSettlerQuest)",
+          "role": "reserved plot placement",
+          "path": "acnh-re/output/gameplay/flow_index.json",
+          "key": "MigrateQuestA/B/C events 168-170",
+          "source": "acnh-re/output/gameplay/flow_index.json#MigrateQuestA/B/C events 168-170",
+          "status": "EF",
+          "notes": "Separate `SettlerType` values 0/1/2 identify the quest subjects."
+        },
+        {
+          "name": "Player_Demo_HousingFinish:HousingFinish_NnpcImmigrateQuestA",
+          "role": "story-flow evidence",
+          "path": "acnh-re/output/gameplay/trees/Player_Demo_HousingFinish.txt",
+          "key": "events 23,78,98",
+          "source": "acnh-re/output/gameplay/trees/Player_Demo_HousingFinish.txt#events 23,78,98",
+          "status": "EF",
+          "notes": "A placed flag; same pattern in B and C entries."
+        }
+      ],
+      "items": [
+        {
+          "name": "plot 1 housing kit (5827)",
+          "role": "plot kit",
+          "path": "acnh-re/output/gameplay/trees/SNPC_rco_53_MigrantsQuest.txt",
+          "key": "GetHousingKit event 99",
+          "source": "acnh-re/output/gameplay/trees/SNPC_rco_53_MigrantsQuest.txt#GetHousingKit event 99",
+          "status": "EF",
+          "notes": null
+        },
+        {
+          "name": "plot 2 housing kit (5828)",
+          "role": "plot kit",
+          "path": "acnh-re/output/gameplay/trees/SNPC_rco_53_MigrantsQuest.txt",
+          "key": "GetHousingKit event 98",
+          "source": "acnh-re/output/gameplay/trees/SNPC_rco_53_MigrantsQuest.txt#GetHousingKit event 98",
+          "status": "EF",
+          "notes": null
+        },
+        {
+          "name": "plot 3 housing kit (5829)",
+          "role": "plot kit",
+          "path": "acnh-re/output/gameplay/trees/SNPC_rco_53_MigrantsQuest.txt",
+          "key": "GetHousingKit event 100",
+          "source": "acnh-re/output/gameplay/trees/SNPC_rco_53_MigrantsQuest.txt#GetHousingKit event 100",
+          "status": "EF",
+          "notes": null
+        },
+        {
+          "name": "ladder recipe (2615)",
+          "role": "tool recipe",
+          "path": "acnh-re/output/gameplay/trees/SNPC_rco_53_MigrantsQuest.txt",
+          "key": "GetHousingKit event 105",
+          "source": "acnh-re/output/gameplay/trees/SNPC_rco_53_MigrantsQuest.txt#GetHousingKit event 105",
+          "status": "EF",
+          "notes": null
+        }
+      ],
+      "structures": [
+        {
+          "name": "plot structures: cReserveNpcHouse",
+          "role": "reserved NPC-house class",
+          "path": "acnh-re/output/gameplay/flow_index.json",
+          "key": "Player_HousingKit:MigrateQuestA/B/C / StructureType",
+          "source": "acnh-re/output/gameplay/flow_index.json#Player_HousingKit:MigrateQuestA/B/C / StructureType",
+          "status": "EF",
+          "notes": null
+        },
+        {
+          "name": "placement namespace: cSettlerQuest",
+          "role": "quest-controlled plot allocator; no cell IDs are exposed here.",
+          "path": "acnh-re/output/gameplay/flow_index.json",
+          "key": "Player_HousingKit:MigrateQuestA/B/C / StructureBuildPosType",
+          "source": "acnh-re/output/gameplay/flow_index.json#Player_HousingKit:MigrateQuestA/B/C / StructureBuildPosType",
+          "status": "EF",
+          "notes": null
+        },
+        {
+          "name": "StructureHouseShapeParam UID 5: NPC for-sale land",
+          "role": "ACNH 1.0.0 table row",
+          "path": "/workspace/acnh-re/output/tables_resolved/StructureHouseShapeParam.json",
+          "key": "UniqueID=5 / HousePartsType=Npc",
+          "source": "B_data/Bcsv/StructureHouseShapeParam.bcsv#UniqueID=5 / HousePartsType=Npc",
+          "status": "TBL",
+          "notes": "Confirms a reserved NPC land/house-shape entry exists; candidate class match, not a join to A/B/C."
+        },
+        {
+          "name": "StructureHouseShapeParam UID 6: NPC sold land",
+          "role": "ACNH 1.0.0 table row",
+          "path": "/workspace/acnh-re/output/tables_resolved/StructureHouseShapeParam.json",
+          "key": "UniqueID=6 / HousePartsType=Npc",
+          "source": "B_data/Bcsv/StructureHouseShapeParam.bcsv#UniqueID=6 / HousePartsType=Npc",
+          "status": "TBL",
+          "notes": "Sold-land candidate after assignment; not a plot coordinate."
+        },
+        {
+          "name": "NPC house model info UIDs 9–18",
+          "role": "ACNH 1.0.0 table row",
+          "path": "/workspace/acnh-re/output/tables_resolved/StructureInfoParam.json",
+          "key": "StructureInfoType=House / HousePartsType=Npc / UniqueID=9..18",
+          "source": "B_data/Bcsv/StructureInfoParam.bcsv#StructureInfoType=House / HousePartsType=Npc / UniqueID=9..18",
+          "status": "TBL",
+          "notes": "NPC house models/parts namespace; not the three selected structures in world."
+        }
+      ],
+      "placements": [
+        {
+          "name": "three logical subjects",
+          "role": "slot mapping",
+          "path": "acnh-re/output/gameplay/trees/Player_Demo_HousingFinish.txt",
+          "key": "ImmQ_A/B/C_SetHousing; SettlerType 0/1/2",
+          "source": "acnh-re/output/gameplay/trees/Player_Demo_HousingFinish.txt#ImmQ_A/B/C_SetHousing; SettlerType 0/1/2",
+          "status": "EF",
+          "notes": "The source distinguishes plot A/B/C; no grid coordinate accompanies the flags."
+        },
+        {
+          "name": "special placement selector cSettlerQuest",
+          "role": "world placement class",
+          "path": "acnh-re/output/gameplay/flow_index.json",
+          "key": "MigrateQuestA/B/C",
+          "source": "acnh-re/output/gameplay/flow_index.json#MigrateQuestA/B/C",
+          "status": "EF",
+          "notes": null
+        },
+        {
+          "name": "per-island plot transforms: unresolved",
+          "role": "per-island plot transforms evidence gap",
+          "path": null,
+          "key": null,
+          "source": null,
+          "status": "OPEN",
+          "notes": "No grid x/z, facing, elevation, footprint origin, or island-template-specific coordinates are in the collected source."
+        }
+      ],
+      "assets": {
+        "ui": [
+          {
+            "name": "CommonDialogPage",
+            "role": "dialog candidate",
+            "path": "acnh-re/output/ui_hud/page_factory_catalog.json",
+            "key": "class_name=CommonDialogPage",
+            "source": "acnh-re/output/ui_hud/page_factory_catalog.json#class_name=CommonDialogPage",
+            "status": "CAT",
+            "notes": "Not bound to an exact plot placement page."
+          },
+          {
+            "name": "plot placement UI: unresolved",
+            "role": "plot placement UI evidence gap",
+            "path": null,
+            "key": null,
+            "source": null,
+            "status": "OPEN",
+            "notes": "The StructureStartPreviewGuide action is known; page/layout member is not."
+          }
+        ],
+        "animation": [
+          {
+            "name": "StructureHouseWall.root.asb",
+            "role": "house animation candidate",
+            "path": "/workspace/acnh-re/output/additional_romfs/animation_sequences/StructureHouseWall.root.asb.json",
+            "key": "house-wall animation sequence",
+            "source": "/workspace/acnh-re/output/additional_romfs/animation_sequences/StructureHouseWall.root.asb.json#house-wall animation sequence",
+            "status": "CAT",
+            "notes": "No exact animation state is tied to plot placement."
+          }
+        ],
+        "model": [
+          {
+            "name": "plot placeholder model: unresolved",
+            "role": "plot placeholder model evidence gap",
+            "path": null,
+            "key": null,
+            "source": null,
+            "status": "OPEN",
+            "notes": "Table UID 5 is a house-shape class; its exact runtime mesh and plot instance are unresolved."
+          }
+        ],
+        "audio": [
+          {
+            "name": "DuringConstruction/Env_FacilityConstruction00",
+            "role": "candidate audio only",
+            "path": "/workspace/acnh-re/output/additional_romfs/catalogues/audio.json",
+            "key": "Audio_ID starts DuringConstruction/Env_FacilityConstruction00",
+            "source": "/workspace/acnh-re/output/additional_romfs/catalogues/audio.json#Audio_ID starts DuringConstruction/Env_FacilityConstruction00",
+            "status": "CAT",
+            "notes": "Generic construction cue candidate only; no plot-specific flow call."
+          }
+        ],
+        "text": [
+          {
+            "name": "SP_rco_05_MigrantsQuest:032-035",
+            "role": "plot-kit and ladder message labels",
+            "path": "acnh-re/output/gameplay/trees/SNPC_rco_53_MigrantsQuest.txt",
+            "key": "GetHousingKit",
+            "source": "acnh-re/output/gameplay/trees/SNPC_rco_53_MigrantsQuest.txt#GetHousingKit",
+            "status": "EF",
+            "notes": "USen string payload not resolved."
+          }
+        ],
+        "texture": [
+          {
+            "name": "texture: unresolved",
+            "role": "texture evidence gap",
+            "path": null,
+            "key": null,
+            "source": null,
+            "status": "OPEN",
+            "notes": "three plot kits: catalog texture-to-flow binding is unresolved."
+          }
+        ],
+        "material_shader": [
+          {
+            "name": "material/shader: unresolved",
+            "role": "material/shader evidence gap",
+            "path": null,
+            "key": null,
+            "source": null,
+            "status": "OPEN",
+            "notes": "three plot kits: material or shader binding is unresolved."
+          }
+        ],
+        "effect": [
+          {
+            "name": "effect: unresolved",
+            "role": "effect evidence gap",
+            "path": null,
+            "key": null,
+            "source": null,
+            "status": "OPEN",
+            "notes": "three plot kits: effect binding is unresolved."
+          }
+        ],
+        "font": [
+          {
+            "name": "font: unresolved",
+            "role": "font evidence gap",
+            "path": null,
+            "key": null,
+            "source": null,
+            "status": "OPEN",
+            "notes": "three plot kits: font/layout binding is unresolved."
+          }
+        ],
+        "world_data": [
+          {
+            "name": "FieldMainFieldParam template map",
+            "role": "ACNH 1.0.0 table row",
+            "path": "/workspace/acnh-re/output/tables_resolved/FieldMainFieldParam.json",
+            "key": "UniqueID rows map FieldPreset* to StructurePreset*/ItemPreset*",
+            "source": "B_data/Bcsv/FieldMainFieldParam.bcsv#UniqueID rows map FieldPreset* to StructurePreset*/ItemPreset*",
+            "status": "TBL",
+            "notes": "Template names are catalogued, but no plot kit is joined to a specific island template row or transform."
+          }
+        ],
+        "collision": [
+          {
+            "name": "plot collision: unresolved",
+            "role": "plot collision evidence gap",
+            "path": null,
+            "key": null,
+            "source": null,
+            "status": "OPEN",
+            "notes": "No exact NPC plot mesh/collision binding was recovered."
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "name": "house-kit placement flow entries",
+          "role": "flow-index evidence",
+          "path": "acnh-re/output/gameplay/flow_index.json",
+          "key": "Player_HousingKit.entries.MigrateQuestA/B/C",
+          "source": "acnh-re/output/gameplay/flow_index.json#Player_HousingKit.entries.MigrateQuestA/B/C",
+          "status": "EF",
+          "notes": "Each action uses StructureType=cReserveNpcHouse and StructureBuildPosType=cSettlerQuest."
+        },
+        {
+          "name": "NPC reserve/sold house-shape rows",
+          "role": "ACNH 1.0.0 table row",
+          "path": "/workspace/acnh-re/output/tables_resolved/StructureHouseShapeParam.json",
+          "key": "UID 5/6",
+          "source": "B_data/Bcsv/StructureHouseShapeParam.bcsv#UID 5/6",
+          "status": "TBL",
+          "notes": "Table corroborates reserved/sold NPC land classes; not coordinates."
+        },
+        {
+          "name": "field template table",
+          "role": "ACNH 1.0.0 table row",
+          "path": "/workspace/acnh-re/output/tables_resolved/FieldMainFieldParam.json",
+          "key": "UniqueID + FieldData/StructureData/ItemData",
+          "source": "B_data/Bcsv/FieldMainFieldParam.bcsv#UniqueID + FieldData/StructureData/ItemData",
+          "status": "TBL",
+          "notes": "The table lists per-template resource names only."
+        }
+      ],
+      "gaps": [
+        "A/B/C logical subject IDs are confirmed; island grid coordinates/transforms remain OPEN.",
+        "The table model IDs and flow placement selectors are different namespaces and must not be substituted for coordinates.",
+        "Plot kit meshes and final NPC house appearance depend on later assignment/runtime state."
+      ]
+    },
+    {
+      "beat_id": "plot-furniture-requirements",
+      "order": 4,
+      "title": "Interior donations and outside furniture requirements for plots A/B/C",
+      "flow": [
+        {
+          "name": "Obj_ReservedPlaceBox:ChkIndoorFtrA",
+          "role": "story-flow evidence",
+          "path": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt",
+          "key": "slots 1-3 plus item requests",
+          "source": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt#slots 1-3 plus item requests",
+          "status": "EF",
+          "notes": "Indoor slot flags and required item candidates."
+        },
+        {
+          "name": "Obj_ReservedPlaceBox:ChkIndoorFtrB",
+          "role": "story-flow evidence",
+          "path": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt",
+          "key": "slots 1-3 plus item requests",
+          "source": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt#slots 1-3 plus item requests",
+          "status": "EF",
+          "notes": "Indoor slot flags and required item candidates."
+        },
+        {
+          "name": "Obj_ReservedPlaceBox:ChkIndoorFtrC",
+          "role": "story-flow evidence",
+          "path": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt",
+          "key": "slots 1-3 plus item requests",
+          "source": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt#slots 1-3 plus item requests",
+          "status": "EF",
+          "notes": "Indoor slot flags and required item candidates."
+        },
+        {
+          "name": "Obj_ReservedPlaceBox:ChkOutdoorFtrA",
+          "role": "story-flow evidence",
+          "path": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt",
+          "key": "OutsideCheckType 0/1/2 for SettlerType 0",
+          "source": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt#OutsideCheckType 0/1/2 for SettlerType 0",
+          "status": "EF",
+          "notes": "Queries three outside requirements; displayed item IDs vary by pattern."
+        },
+        {
+          "name": "Obj_ReservedPlaceBox:ChkOutdoorFtrB",
+          "role": "story-flow evidence",
+          "path": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt",
+          "key": "OutsideCheckType 0/1/2 for SettlerType 1",
+          "source": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt#OutsideCheckType 0/1/2 for SettlerType 1",
+          "status": "EF",
+          "notes": "Queries three outside requirements; displayed item IDs vary by pattern."
+        },
+        {
+          "name": "Obj_ReservedPlaceBox:ChkOutdoorFtrC",
+          "role": "story-flow evidence",
+          "path": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt",
+          "key": "OutsideCheckType 0/1/2 for SettlerType 2",
+          "source": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt#OutsideCheckType 0/1/2 for SettlerType 2",
+          "status": "EF",
+          "notes": "Queries three outside requirements; displayed item IDs vary by pattern."
+        },
+        {
+          "name": "Demo_PublicAnnouncement_Process:ImmQFtrChkA",
+          "role": "story-flow evidence",
+          "path": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_Process.txt",
+          "key": "outside check type 3 + three interior flags",
+          "source": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_Process.txt#outside check type 3 + three interior flags",
+          "status": "EF",
+          "notes": "Completion needs all indoor donated and outside complete."
+        },
+        {
+          "name": "Demo_PublicAnnouncement_Process:ImmQFtrChkB",
+          "role": "story-flow evidence",
+          "path": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_Process.txt",
+          "key": "outside check type 3 + three interior flags",
+          "source": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_Process.txt#outside check type 3 + three interior flags",
+          "status": "EF",
+          "notes": "Completion needs all indoor donated and outside complete."
+        },
+        {
+          "name": "Demo_PublicAnnouncement_Process:ImmQFtrChkC",
+          "role": "story-flow evidence",
+          "path": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_Process.txt",
+          "key": "outside check type 3 + three interior flags",
+          "source": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_Process.txt#outside check type 3 + three interior flags",
+          "status": "EF",
+          "notes": "Completion needs all indoor donated and outside complete."
+        }
+      ],
+      "stage": null,
+      "actors": [
+        {
+          "name": "Plot A/B/C resident-designated subjects",
+          "role": "reserved place box owner",
+          "path": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt",
+          "key": "SettlerQuest values 1/2/3; checks use SettlerType 0/1/2",
+          "source": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt#SettlerQuest values 1/2/3; checks use SettlerType 0/1/2",
+          "status": "EF",
+          "notes": "Three subjects are identified, but no villager name is assigned at this point."
+        }
+      ],
+      "actions": [
+        {
+          "name": "Obj_ReservedPlaceBox:DelFtrA1/DelFtrA2/DelFtrA3",
+          "role": "story-flow evidence",
+          "path": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt",
+          "key": "DeleteSelectedSettlerQuestInsideMaterial then ImmQ_A_Interior1-3Donate",
+          "source": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt#DeleteSelectedSettlerQuestInsideMaterial then ImmQ_A_Interior1-3Donate",
+          "status": "EF",
+          "notes": "Three indoor pieces are donated to the box for A; B/C have parallel entries."
+        },
+        {
+          "name": "Obj_ReservedPlaceBox:ChkOutdoorFtrA",
+          "role": "story-flow evidence",
+          "path": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt",
+          "key": "OutsideCheckType 0-2",
+          "source": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt#OutsideCheckType 0-2",
+          "status": "EF",
+          "notes": "Checks three outside furniture requirements; B/C parallel."
+        },
+        {
+          "name": "Demo_PublicAnnouncement_Process:ImmQFtrChkA",
+          "role": "story-flow evidence",
+          "path": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_Process.txt",
+          "key": "checks all 3 interior flags and OutsideCheckType=3",
+          "source": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_Process.txt#checks all 3 interior flags and OutsideCheckType=3",
+          "status": "EF",
+          "notes": "Morning completeness check for A; B/C parallel."
+        }
+      ],
+      "items": [
+        {
+          "name": "A interior slots 1–2: native-fruit variant pair",
+          "role": "patterned furniture",
+          "path": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt",
+          "key": "SelFruitFtr; ChkHaveFtrFruit1/2",
+          "source": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt#SelFruitFtr; ChkHaveFtrFruit1/2",
+          "status": "EF",
+          "notes": "Fruit code 0..4 maps pairs: 4011/4012 (cherry speakers/lamp), 3976/3975 (orange clock/end table), 1263/4546 (pear wardrobe/bed), 4128/4127 (peach surprise box/chair), 4134/2596 (apple chair/juicy-apple TV)."
+        },
+        {
+          "name": "A interior slot 3: pot (2559)",
+          "role": "fixed indoor requirement",
+          "path": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt",
+          "key": "ChkIndoorFtrA event 27 / HaveFtrATrue",
+          "source": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt#ChkIndoorFtrA event 27 / HaveFtrATrue",
+          "status": "EF",
+          "notes": null
+        },
+        {
+          "name": "B interior slots 1–2: wooden-block stereo (3205), wooden-block table (1565)",
+          "role": "fixed indoor requirements",
+          "path": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt",
+          "key": "ChkIndoorFtrB events 28-29",
+          "source": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt#ChkIndoorFtrB events 28-29",
+          "status": "EF",
+          "notes": null
+        },
+        {
+          "name": "B interior slot 3: flower wreath by island-flower type",
+          "role": "patterned furniture",
+          "path": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt",
+          "key": "SelFlowerFtr; ChkHaveFtrFlower",
+          "source": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt#SelFlowerFtr; ChkHaveFtrFlower",
+          "status": "EF",
+          "notes": "VillageFlower cBirthday maps one of eight wreath IDs 5467/5641/4293/5468/5437/5436/5670/5466 (mum/lily/cosmos/hyacinth/rose/anemone/tulip/pansy)."
+        },
+        {
+          "name": "C interior: wooden simple bed (2605), wooden chair (1913), classic pitcher (4073)",
+          "role": "fixed indoor requirements",
+          "path": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt",
+          "key": "ChkIndoorFtrC events 30,424,31",
+          "source": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt#ChkIndoorFtrC events 30,424,31",
+          "status": "EF",
+          "notes": null
+        },
+        {
+          "name": "A outdoor pattern ON: hay bed (3675), swinging bench (1170), barrel (1266)",
+          "role": "outdoor branch",
+          "path": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt",
+          "key": "ChkOutdoorFtrA events 298-300; RecipeGetA",
+          "source": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt#ChkOutdoorFtrA events 298-300; RecipeGetA",
+          "status": "EF",
+          "notes": "Branch controlled by ImmQ_A_OutdoorPattern."
+        },
+        {
+          "name": "A outdoor pattern OFF: stone stool (3398), stone table (3397), clothesline (3229)",
+          "role": "outdoor branch",
+          "path": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt",
+          "key": "ChkOutdoorFtrA events 268-270; RecipeGetA",
+          "source": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt#ChkOutdoorFtrA events 268-270; RecipeGetA",
+          "status": "EF",
+          "notes": "Branch controlled by ImmQ_A_OutdoorPattern."
+        },
+        {
+          "name": "B outdoor pattern ON: natural garden chair (2586), table (3396), birdbath (331)",
+          "role": "outdoor branch",
+          "path": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt",
+          "key": "ChkOutdoorFtrB events 301-303; RecipeGetB",
+          "source": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt#ChkOutdoorFtrB events 301-303; RecipeGetB",
+          "status": "EF",
+          "notes": "Branch controlled by ImmQ_B_OutdoorPattern."
+        },
+        {
+          "name": "B outdoor pattern OFF: iron garden chair (1626), table (1627), birdhouse (333)",
+          "role": "outdoor branch",
+          "path": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt",
+          "key": "ChkOutdoorFtrB events 271-273; RecipeGetB",
+          "source": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt#ChkOutdoorFtrB events 271-273; RecipeGetB",
+          "status": "EF",
+          "notes": "Branch controlled by ImmQ_B_OutdoorPattern."
+        },
+        {
+          "name": "C outdoor pattern ON: log garden lounge (4035), log stool (4038), water pump (2326)",
+          "role": "outdoor branch",
+          "path": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt",
+          "key": "ChkOutdoorFtrC events 304-306; RecipeGetC",
+          "source": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt#ChkOutdoorFtrC events 304-306; RecipeGetC",
+          "status": "EF",
+          "notes": "Branch controlled by ImmQ_C_OutdoorPattern."
+        },
+        {
+          "name": "C outdoor pattern OFF: log dining table (4040), log bench (4042), wooden bucket (880)",
+          "role": "outdoor branch",
+          "path": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt",
+          "key": "ChkOutdoorFtrC events 307-309; RecipeGetC",
+          "source": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt#ChkOutdoorFtrC events 307-309; RecipeGetC",
+          "status": "EF",
+          "notes": "Branch controlled by ImmQ_C_OutdoorPattern."
+        },
+        {
+          "name": "indoor item name/resource crosswalk",
+          "role": "item catalog crosswalk",
+          "path": "/workspace/acnh-re/output/additional_romfs/item_localization_and_catalogue_links.json",
+          "key": "unique_id → resource_name + USen display name",
+          "source": "/workspace/acnh-re/output/additional_romfs/item_localization_and_catalogue_links.json#unique_id → resource_name + USen display name",
+          "status": "CROSS",
+          "notes": "Exact item IDs with USen names are listed above. The model candidate subset is: 4011=FtrFruitsMusic; 4012=FtrFruitsLampW; 3976=FtrFruitsClockW; 3975=FtrFruitsTableS; 1263=FtrFruitsClosetLR; 4546=FtrFruitsBedS; 4128=FtrFruitsBox; 4127=FtrFruitsChairPeach; 4134=FtrFruitsChairApple; 2596=FtrFruitsTV; 2559=FtrKame; 3205=FtrBlockCompo; 1565=FtrBlockTableL; 5467=FtrDoorOrnamentWreathMum; 5641=FtrDoorOrnamentWreathYuri; 4293=FtrDoorOrnamentWreathCosmos; 5468=FtrDoorOrnamentWreathHyacinth; 5437=FtrDoorOrnamentWreathRose; 5436=FtrDoorOrnamentWreathAnemone; 5670=FtrDoorOrnamentWreathTulip; 5466=FtrDoorOrnamentWreathPansy; 2605=FtrWoodenBedS; 1913=FtrWoodenChairS; 4073=FtrPotteryjug; 3675=FtrHaybed; 1170=FtrSwingWood; 1266=FtrPirateBarrel; 3398=FtrStoneChair; 3397=FtrStoneTable; 3229=FtrClothesline; 2586=FtrGardenChairNatural; 3396=FtrGardenTableNatural; 331=FtrBirdbus; 1626=FtrIrongardenChair; 1627=FtrIrongardenTable; 333=FtrBirdhouse; 4035=FtrLogBedS; 4038=FtrLogStoolS; 2326=FtrHandpump; 4040=FtrLogTableL; 4042=FtrLogStoolL; 880=FtrBucketWood"
+        }
+      ],
+      "structures": [
+        {
+          "name": "reserved box subject IDs",
+          "role": "box routing",
+          "path": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt",
+          "key": "SettlerQuest cases 1/2/3 → A/B/C",
+          "source": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt#SettlerQuest cases 1/2/3 → A/B/C",
+          "status": "EF",
+          "notes": null
+        }
+      ],
+      "placements": [
+        {
+          "name": "indoor donation target: Obj_ReservedPlaceBox",
+          "role": "donation interaction",
+          "path": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt",
+          "key": "ENTRY ImmQBox / ChkIndoorFtrA/B/C",
+          "source": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt#ENTRY ImmQBox / ChkIndoorFtrA/B/C",
+          "status": "EF",
+          "notes": "Each plot has three selected indoor materials and three donation flags."
+        },
+        {
+          "name": "outside placement requirement slots 0/1/2",
+          "role": "three outside requirements",
+          "path": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt",
+          "key": "ChkOutdoorFtrA/B/C / OutsideCheckType 0-2",
+          "source": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt#ChkOutdoorFtrA/B/C / OutsideCheckType 0-2",
+          "status": "EF",
+          "notes": "The story verifies furniture presence by plot; exact cell coordinates/orientation are native query data and remain unknown."
+        },
+        {
+          "name": "furniture transforms: unresolved",
+          "role": "furniture transforms evidence gap",
+          "path": null,
+          "key": null,
+          "source": null,
+          "status": "OPEN",
+          "notes": "The query exposes subject/type and completeness, but not target cells, facing, offsets, or accepted placements."
+        }
+      ],
+      "assets": {
+        "ui": [
+          {
+            "name": "CommonDialogPage",
+            "role": "dialog candidate",
+            "path": "acnh-re/output/ui_hud/page_factory_catalog.json",
+            "key": "class_name=CommonDialogPage",
+            "source": "acnh-re/output/ui_hud/page_factory_catalog.json#class_name=CommonDialogPage",
+            "status": "CAT",
+            "notes": "No direct layout join."
+          },
+          {
+            "name": "WorkCraftInfoPage / WorkCraftListPage",
+            "role": "DIY recipe page candidates",
+            "path": "acnh-re/output/ui_hud/page_factory_catalog.json",
+            "key": "class_name=WorkCraftInfoPage / WorkCraftListPage",
+            "source": "acnh-re/output/ui_hud/page_factory_catalog.json#class_name=WorkCraftInfoPage / WorkCraftListPage",
+            "status": "CAT",
+            "notes": "The recipes are unlocked by flow, but catalog page binding is not proven."
+          }
+        ],
+        "animation": [
+          {
+            "name": "StructureSettlerQuestFtrBox.root.asb",
+            "role": "box animation candidate",
+            "path": "/workspace/acnh-re/output/additional_romfs/animation_sequences/StructureSettlerQuestFtrBox.root.asb.json",
+            "key": "nodes Open / Close",
+            "source": "/workspace/acnh-re/output/additional_romfs/animation_sequences/StructureSettlerQuestFtrBox.root.asb.json#nodes Open / Close",
+            "status": "CAT",
+            "notes": "Obj_ReservedPlaceBox issues StartAnimation ActionName=Close; exact runtime asset binding is still a catalog-level join."
+          },
+          {
+            "name": "HouseObjFtrBoxA/B/C",
+            "role": "box mesh candidates",
+            "path": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json",
+            "key": "Asset_ID=HouseObjFtrBoxA/B/C",
+            "source": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json#Asset_ID=HouseObjFtrBoxA/B/C",
+            "status": "CAT",
+            "notes": "Catalog objects correspond by naming to plot furniture boxes; no flow-to-model binding is present."
+          }
+        ],
+        "model": [
+          {
+            "name": "quest furniture candidate models",
+            "role": "furniture models",
+            "path": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json",
+            "key": "Asset_ID exact-match from item resource_name",
+            "source": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json#Asset_ID exact-match from item resource_name",
+            "status": "CAT",
+            "notes": "CAT inventory crosswalk for requested furniture item UIDs: 4011=FtrFruitsMusic; 4012=FtrFruitsLampW; 3976=FtrFruitsClockW; 3975=FtrFruitsTableS; 1263=FtrFruitsClosetLR; 4546=FtrFruitsBedS; 4128=FtrFruitsBox; 4127=FtrFruitsChairPeach; 4134=FtrFruitsChairApple; 2596=FtrFruitsTV; 2559=FtrKame; 3205=FtrBlockCompo; 1565=FtrBlockTableL; 5467=FtrDoorOrnamentWreathMum; 5641=FtrDoorOrnamentWreathYuri; 4293=FtrDoorOrnamentWreathCosmos; 5468=FtrDoorOrnamentWreathHyacinth; 5437=FtrDoorOrnamentWreathRose; 5436=FtrDoorOrnamentWreathAnemone; 5670=FtrDoorOrnamentWreathTulip; 5466=FtrDoorOrnamentWreathPansy; 2605=FtrWoodenBedS; 1913=FtrWoodenChairS; 4073=FtrPotteryjug; 3675=FtrHaybed; 1170=FtrSwingWood; 1266=FtrPirateBarrel; 3398=FtrStoneChair; 3397=FtrStoneTable; 3229=FtrClothesline; 2586=FtrGardenChairNatural; 3396=FtrGardenTableNatural; 331=FtrBirdbus; 1626=FtrIrongardenChair; 1627=FtrIrongardenTable; 333=FtrBirdhouse; 4035=FtrLogBedS; 4038=FtrLogStoolS; 2326=FtrHandpump; 4040=FtrLogTableL; 4042=FtrLogStoolL; 880=FtrBucketWood"
+          }
+        ],
+        "audio": [
+          {
+            "name": "SettlerQuestFtrBox/",
+            "role": "candidate audio only",
+            "path": "/workspace/acnh-re/output/additional_romfs/catalogues/audio.json",
+            "key": "Audio_ID starts SettlerQuestFtrBox/",
+            "source": "/workspace/acnh-re/output/additional_romfs/catalogues/audio.json#Audio_ID starts SettlerQuestFtrBox/",
+            "status": "CAT",
+            "notes": "Open00 and Close00 SFX for the matching object-name family; no action explicitly calls this Audio_ID."
+          },
+          {
+            "name": "item-specific audio: unresolved",
+            "role": "item-specific audio evidence gap",
+            "path": null,
+            "key": null,
+            "source": null,
+            "status": "OPEN",
+            "notes": "Furniture model-specific sound triggers are not joined to the furniture checklist."
+          }
+        ],
+        "text": [
+          {
+            "name": "OBJ_MigrantsQuest message labels",
+            "role": "box help/requirement dialogue",
+            "path": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt",
+            "key": "labels 001_01–004, 011, 013–014, 022–023",
+            "source": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt#labels 001_01–004, 011, 013–014, 022–023",
+            "status": "EF",
+            "notes": "Exact labels are in flow; localized string payload is unresolved."
+          }
+        ],
+        "texture": [
+          {
+            "name": "texture: unresolved",
+            "role": "texture evidence gap",
+            "path": null,
+            "key": null,
+            "source": null,
+            "status": "OPEN",
+            "notes": "plot furniture requirements: catalog texture-to-flow binding is unresolved."
+          }
+        ],
+        "material_shader": [
+          {
+            "name": "material/shader: unresolved",
+            "role": "material/shader evidence gap",
+            "path": null,
+            "key": null,
+            "source": null,
+            "status": "OPEN",
+            "notes": "plot furniture requirements: material or shader binding is unresolved."
+          }
+        ],
+        "effect": [
+          {
+            "name": "effect: unresolved",
+            "role": "effect evidence gap",
+            "path": null,
+            "key": null,
+            "source": null,
+            "status": "OPEN",
+            "notes": "plot furniture requirements: effect binding is unresolved."
+          }
+        ],
+        "font": [
+          {
+            "name": "font: unresolved",
+            "role": "font evidence gap",
+            "path": null,
+            "key": null,
+            "source": null,
+            "status": "OPEN",
+            "notes": "plot furniture requirements: font/layout binding is unresolved."
+          }
+        ],
+        "world_data": [
+          {
+            "name": "item parameter tables",
+            "role": "ACNH 1.0.0 table row",
+            "path": "/workspace/acnh-re/output/tables_resolved/ItemParam.json",
+            "key": "UniqueID rows for required item IDs",
+            "source": "B_data/Bcsv/ItemParam.bcsv#UniqueID rows for required item IDs",
+            "status": "TBL",
+            "notes": "Names/resources are crosswalked from item_localization_and_catalogue_links; these tables do not reveal the outdoor target transform."
+          }
+        ],
+        "collision": [
+          {
+            "name": "furniture collision use: unresolved",
+            "role": "furniture collision use evidence gap",
+            "path": null,
+            "key": null,
+            "source": null,
+            "status": "OPEN",
+            "notes": "The catalogue contains model/PBC resources, but the requirement query-to-collision join is not known."
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "name": "Obj_ReservedPlaceBox:ChkIndoorFtrA",
+          "role": "story-flow evidence",
+          "path": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt",
+          "key": "events 27 and SelFruitFtr; fruit mappings in ChkHaveFtrFruit1/2",
+          "source": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt#events 27 and SelFruitFtr; fruit mappings in ChkHaveFtrFruit1/2",
+          "status": "EF",
+          "notes": "A uses two native-fruit-dependent items plus UID2559."
+        },
+        {
+          "name": "Obj_ReservedPlaceBox:ChkIndoorFtrB",
+          "role": "story-flow evidence",
+          "path": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt",
+          "key": "events 28-29 and SelFlowerFtr",
+          "source": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt#events 28-29 and SelFlowerFtr",
+          "status": "EF",
+          "notes": "B uses fixed items plus one island-flower-dependent wreath."
+        },
+        {
+          "name": "Obj_ReservedPlaceBox:ChkIndoorFtrC",
+          "role": "story-flow evidence",
+          "path": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt",
+          "key": "events 30,424,31",
+          "source": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt#events 30,424,31",
+          "status": "EF",
+          "notes": "C has three fixed indoor requirements."
+        },
+        {
+          "name": "Obj_ReservedPlaceBox:ChkOutdoorFtrA/B/C",
+          "role": "story-flow evidence",
+          "path": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt",
+          "key": "events 268-309",
+          "source": "acnh-re/output/gameplay/trees/Obj_ReservedPlaceBox.txt#events 268-309",
+          "status": "EF",
+          "notes": "Each outdoor pattern branch yields three known item IDs."
+        },
+        {
+          "name": "Demo_PublicAnnouncement_Process:ImmQFtrChkA/B/C",
+          "role": "story-flow evidence",
+          "path": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_Process.txt",
+          "key": "events 52-63",
+          "source": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_Process.txt#events 52-63",
+          "status": "EF",
+          "notes": "Morning checks require outside completion plus all three indoor donation flags."
+        }
+      ],
+      "gaps": [
+        "ImmQ_*_OutdoorPattern writer/randomization is not resolved here; both recipe sets are listed.",
+        "Per-island outdoor placement cells and orientation are absent.",
+        "`IsSettlerQuestOutsideComplete` and `IsSettlerQuestInsideMaterialSelect` are EventFlow query names; their native internals are not executed in this task."
+      ]
+    },
+    {
+      "beat_id": "plot-completion-villager-selection",
+      "order": 5,
+      "title": "Complete plots and assign incoming villagers",
+      "flow": [
+        {
+          "name": "Demo_PublicAnnouncement_Process:ImmQFtrChk",
+          "role": "story-flow evidence",
+          "path": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_Process.txt",
+          "key": "calls A/B/C and end check",
+          "source": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_Process.txt#calls A/B/C and end check",
+          "status": "EF",
+          "notes": "Daily announcement processing runs each plot check while RcmImmQuestRunning is ON."
+        },
+        {
+          "name": "Demo_PublicAnnouncement_Process:ImmQFtrChkA",
+          "role": "story-flow evidence",
+          "path": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_Process.txt",
+          "key": "events 61,114",
+          "source": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_Process.txt#events 61,114",
+          "status": "EF",
+          "notes": "CompleteSettlerQuestSubject then DecideSettlerNpc for SettlerType 0."
+        },
+        {
+          "name": "Demo_PublicAnnouncement_Process:ImmQFtrChkB",
+          "role": "story-flow evidence",
+          "path": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_Process.txt",
+          "key": "events 62,115",
+          "source": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_Process.txt#events 62,115",
+          "status": "EF",
+          "notes": "Parallel for SettlerType 1."
+        },
+        {
+          "name": "Demo_PublicAnnouncement_Process:ImmQFtrChkC",
+          "role": "story-flow evidence",
+          "path": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_Process.txt",
+          "key": "events 63,116",
+          "source": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_Process.txt#events 63,116",
+          "status": "EF",
+          "notes": "Parallel for SettlerType 2."
+        },
+        {
+          "name": "Demo_PublicAnnouncement_Process:ImmQEndChk",
+          "role": "story-flow evidence",
+          "path": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_Process.txt",
+          "key": "events 68-73,145-146",
+          "source": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_Process.txt#events 68-73,145-146",
+          "status": "EF",
+          "notes": "All three completion flags end the quest and set next-day cleanup."
+        },
+        {
+          "name": "native villager selection findings",
+          "role": "selection and assignment",
+          "path": "acnh-re/docs/GAMEPLAY_SCENARIO.md",
+          "key": "§5 / §5.2 / GAMEPLAY_FLOW.md §7.4, §11",
+          "source": "acnh-re/docs/GAMEPLAY_SCENARIO.md#§5 / §5.2 / GAMEPLAY_FLOW.md §7.4, §11",
+          "status": "PSEUDO",
+          "notes": "Flow command is direct; dispatch, candidate selection and exact native writer details are described in existing RE docs."
+        }
+      ],
+      "stage": null,
+      "actors": [
+        {
+          "name": "Tom Nook (rco)",
+          "role": "quest completion speaker",
+          "path": "acnh-re/output/gameplay/trees/SNPC_rco_53_MigrantsQuest.txt",
+          "key": "Rco_FinishMigrantEvent_Reward",
+          "source": "acnh-re/output/gameplay/trees/SNPC_rco_53_MigrantsQuest.txt#Rco_FinishMigrantEvent_Reward",
+          "status": "EF",
+          "notes": null
+        },
+        {
+          "name": "three selected NNPC residents",
+          "role": "resident candidates",
+          "path": "acnh-re/docs/GAMEPLAY_SCENARIO.md",
+          "key": "§5.2 / Quest 3 houses",
+          "source": "acnh-re/docs/GAMEPLAY_SCENARIO.md#§5.2 / Quest 3 houses",
+          "status": "PSEUDO",
+          "notes": "Selection is runtime/native; identities vary by save/pool."
+        }
+      ],
+      "actions": [
+        {
+          "name": "Demo_PublicAnnouncement_Process:ImmQFtrChkA",
+          "role": "story-flow evidence",
+          "path": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_Process.txt",
+          "key": "complete check → CompleteSettlerQuestSubject(SettlerType=0) → DecideSettlerNpc(SettlerType=0)",
+          "source": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_Process.txt#complete check → CompleteSettlerQuestSubject(SettlerType=0) → DecideSettlerNpc(SettlerType=0)",
+          "status": "EF",
+          "notes": "Same pattern for B/C with types 1/2."
+        },
+        {
+          "name": "personality filter by plot",
+          "role": "native selection rule",
+          "path": "acnh-re/docs/GAMEPLAY_SCENARIO.md",
+          "key": "§5 row Quest 3 houses",
+          "source": "acnh-re/docs/GAMEPLAY_SCENARIO.md#§5 row Quest 3 houses",
+          "status": "PSEUDO",
+          "notes": "Existing RE notes give personality indices [0,5,4] for A/B/C; selection flow remains runtime-driven."
+        },
+        {
+          "name": "Demo_PublicAnnouncement_Process:ImmQEndChk",
+          "role": "story-flow evidence",
+          "path": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_Process.txt",
+          "key": "RcmImmQuestComplete and ImmQClearNextDay",
+          "source": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_Process.txt#RcmImmQuestComplete and ImmQClearNextDay",
+          "status": "EF",
+          "notes": "All three flags must be ON to finish the shared quest."
+        },
+        {
+          "name": "SNPC_rco_53_MigrantsQuest:Ending2",
+          "role": "story-flow evidence",
+          "path": "acnh-re/output/gameplay/trees/SNPC_rco_53_MigrantsQuest.txt",
+          "key": "SelectRewardItemDirect SetNum=50 ItemUniqueId=11711",
+          "source": "acnh-re/output/gameplay/trees/SNPC_rco_53_MigrantsQuest.txt#SelectRewardItemDirect SetNum=50 ItemUniqueId=11711",
+          "status": "EF",
+          "notes": "Simple wooden fence quest reward."
+        }
+      ],
+      "items": [
+        {
+          "name": "50 simple wooden fence (11711)",
+          "role": "quest reward",
+          "path": "acnh-re/output/gameplay/trees/SNPC_rco_53_MigrantsQuest.txt",
+          "key": "Ending2 / Rco_FinishMigrantEvent_Reward",
+          "source": "acnh-re/output/gameplay/trees/SNPC_rco_53_MigrantsQuest.txt#Ending2 / Rco_FinishMigrantEvent_Reward",
+          "status": "EF",
+          "notes": null
+        }
+      ],
+      "structures": [
+        {
+          "name": "plot A/B/C reservation subjects",
+          "role": "completion slots",
+          "path": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_Process.txt",
+          "key": "SettlerType 0/1/2",
+          "source": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_Process.txt#SettlerType 0/1/2",
+          "status": "EF",
+          "notes": null
+        },
+        {
+          "name": "NPC house selection and move-in state",
+          "role": "native house/slot candidate",
+          "path": "acnh-re/docs/GAMEPLAY_SCENARIO.md",
+          "key": "§5.2 / FromSettlerQuest",
+          "source": "acnh-re/docs/GAMEPLAY_SCENARIO.md#§5.2 / FromSettlerQuest",
+          "status": "PSEUDO",
+          "notes": "Exact villager name and final house customization are save/runtime dependent."
+        }
+      ],
+      "placements": [
+        {
+          "name": "plot completion state",
+          "role": "completion predicate",
+          "path": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_Process.txt",
+          "key": "IsSettlerQuestOutsideComplete type 3 + interior flags",
+          "source": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_Process.txt#IsSettlerQuestOutsideComplete type 3 + interior flags",
+          "status": "EF",
+          "notes": null
+        },
+        {
+          "name": "final NPC house transform: unresolved",
+          "role": "final NPC house transform evidence gap",
+          "path": null,
+          "key": null,
+          "source": null,
+          "status": "OPEN",
+          "notes": "The conversion from reserved plot to assigned resident house is native/save-state work; no resolved x/z/yaw is in the story flow."
+        }
+      ],
+      "assets": {
+        "ui": [
+          {
+            "name": "CommonDialogPage",
+            "role": "dialog candidate",
+            "path": "acnh-re/output/ui_hud/page_factory_catalog.json",
+            "key": "class_name=CommonDialogPage",
+            "source": "acnh-re/output/ui_hud/page_factory_catalog.json#class_name=CommonDialogPage",
+            "status": "CAT",
+            "notes": "No plot completion page member is identified."
+          }
+        ],
+        "animation": [
+          {
+            "name": "resident assignment animation: unresolved",
+            "role": "resident assignment animation evidence gap",
+            "path": null,
+            "key": null,
+            "source": null,
+            "status": "OPEN",
+            "notes": "No exact villager arrival/plot completion animation is named in the relevant EventFlow entries."
+          }
+        ],
+        "model": [
+          {
+            "name": "runtime-selected villager/house model: unresolved",
+            "role": "runtime-selected villager/house model evidence gap",
+            "path": null,
+            "key": null,
+            "source": null,
+            "status": "OPEN",
+            "notes": "Native selection and `Param/NpcHouse/%s.byml` determine save-specific candidates; no single model can be assigned."
+          }
+        ],
+        "audio": [
+          {
+            "name": "resident assignment audio: unresolved",
+            "role": "resident assignment audio evidence gap",
+            "path": null,
+            "key": null,
+            "source": null,
+            "status": "OPEN",
+            "notes": "No beat-specific sound/audio key is present in the flow."
+          }
+        ],
+        "text": [
+          {
+            "name": "quest completion/reward message labels",
+            "role": "quest result dialogue",
+            "path": "acnh-re/output/gameplay/trees/SNPC_rco_53_MigrantsQuest.txt",
+            "key": "Ending / Ending2 / Rco_FinishMigrantEvent_Reward",
+            "source": "acnh-re/output/gameplay/trees/SNPC_rco_53_MigrantsQuest.txt#Ending / Ending2 / Rco_FinishMigrantEvent_Reward",
+            "status": "EF",
+            "notes": "Message labels are present; string payload not extracted."
+          }
+        ],
+        "texture": [
+          {
+            "name": "texture: unresolved",
+            "role": "texture evidence gap",
+            "path": null,
+            "key": null,
+            "source": null,
+            "status": "OPEN",
+            "notes": "plot completion and resident assignment: catalog texture-to-flow binding is unresolved."
+          }
+        ],
+        "material_shader": [
+          {
+            "name": "material/shader: unresolved",
+            "role": "material/shader evidence gap",
+            "path": null,
+            "key": null,
+            "source": null,
+            "status": "OPEN",
+            "notes": "plot completion and resident assignment: material or shader binding is unresolved."
+          }
+        ],
+        "effect": [
+          {
+            "name": "effect: unresolved",
+            "role": "effect evidence gap",
+            "path": null,
+            "key": null,
+            "source": null,
+            "status": "OPEN",
+            "notes": "plot completion and resident assignment: effect binding is unresolved."
+          }
+        ],
+        "font": [
+          {
+            "name": "font: unresolved",
+            "role": "font evidence gap",
+            "path": null,
+            "key": null,
+            "source": null,
+            "status": "OPEN",
+            "notes": "plot completion and resident assignment: font/layout binding is unresolved."
+          }
+        ],
+        "world_data": [
+          {
+            "name": "NPC move-in RE crosswalk",
+            "role": "native result",
+            "path": "acnh-re/docs/GAMEPLAY_SCENARIO.md",
+            "key": "§5.2 / functions 0xf8c540, 0xf8de90",
+            "source": "acnh-re/docs/GAMEPLAY_SCENARIO.md#§5.2 / functions 0xf8c540, 0xf8de90",
+            "status": "PSEUDO",
+            "notes": "The documented resident path uses the reserved plot and native-generated house; no per-save placement is included."
+          }
+        ],
+        "collision": [
+          {
+            "name": "resident-house collision: unresolved",
+            "role": "resident-house collision evidence gap",
+            "path": null,
+            "key": null,
+            "source": null,
+            "status": "OPEN",
+            "notes": "No runtime-selected house collision instance is joined to plot assignment."
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "name": "GAMEPLAY_FLOW.md",
+          "role": "story summary",
+          "path": "acnh-re/docs/GAMEPLAY_FLOW.md",
+          "key": "§7.4–7.5",
+          "source": "acnh-re/docs/GAMEPLAY_FLOW.md#§7.4–7.5",
+          "status": "EF",
+          "notes": "Three indoor donations plus outside check lead to native completion/selection; quest end requires A/B/C."
+        },
+        {
+          "name": "plot selection and move-in native notes",
+          "role": "native RE report",
+          "path": "acnh-re/docs/GAMEPLAY_SCENARIO.md",
+          "key": "§5.2",
+          "source": "acnh-re/docs/GAMEPLAY_SCENARIO.md#§5.2",
+          "status": "PSEUDO",
+          "notes": "Existing report says the personality filter and selection are native/pseudocode as labeled there."
+        },
+        {
+          "name": "System_MigrantsQuestProcess:ChkRcoImmQClearChkA/B/C",
+          "role": "story-flow evidence",
+          "path": "acnh-re/output/gameplay/trees/System_MigrantsQuestProcess.txt",
+          "key": "Completion recheck path",
+          "source": "acnh-re/output/gameplay/trees/System_MigrantsQuestProcess.txt#Completion recheck path",
+          "status": "EF",
+          "notes": "A daily system path also performs CompleteSettlerQuestSubject and DecideSettlerNpc."
+        }
+      ],
+      "gaps": [
+        "Selection API and writer details are not executed by this crosswalk task.",
+        "Quest completion is not identical to resident arrival; movement is a later native lifecycle step."
+      ]
+    },
+    {
+      "beat_id": "resident-arrival-announcement",
+      "order": 6,
+      "title": "Villager move-in and public-announcement handoff",
+      "flow": [
+        {
+          "name": "Demo_PublicAnnouncement_21_CmnEvChk:CmnMoveInChk",
+          "role": "story-flow evidence",
+          "path": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_21_CmnEvChk.txt",
+          "key": "event 1 IsExistMoveNpc MoveOut=false",
+          "source": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_21_CmnEvChk.txt#event 1 IsExistMoveNpc MoveOut=false",
+          "status": "EF",
+          "notes": "Sets result when a move-in announcement is available."
+        },
+        {
+          "name": "Demo_PublicAnnouncement_32_CmnNewsMoveIn:Root",
+          "role": "announcement event flow",
+          "path": "acnh-re/output/gameplay/flow_index.json",
+          "key": "data.Demo_PublicAnnouncement_32_CmnNewsMoveIn",
+          "source": "acnh-re/output/gameplay/flow_index.json#data.Demo_PublicAnnouncement_32_CmnNewsMoveIn",
+          "status": "EF",
+          "notes": "The common public announcement flow dispatches this flow when move-in result is selected."
+        },
+        {
+          "name": "native plot move-in lifecycle",
+          "role": "resident lifecycle",
+          "path": "acnh-re/docs/GAMEPLAY_SCENARIO.md",
+          "key": "§5.2 / 0xf84f10 / 0xf8c540 / 0xf8d210",
+          "source": "acnh-re/docs/GAMEPLAY_SCENARIO.md#§5.2 / 0xf84f10 / 0xf8c540 / 0xf8d210",
+          "status": "PSEUDO",
+          "notes": "The existing RE report says the plot/contract path, move-in order, and house generation involve native code; not all writer functions were executed."
+        }
+      ],
+      "stage": null,
+      "actors": [
+        {
+          "name": "new NNPC resident(s)",
+          "role": "moving-in villager",
+          "path": "acnh-re/docs/GAMEPLAY_SCENARIO.md",
+          "key": "§5.2 / FromSettlerQuest",
+          "source": "acnh-re/docs/GAMEPLAY_SCENARIO.md#§5.2 / FromSettlerQuest",
+          "status": "PSEUDO",
+          "notes": "Specific species/name depends on the runtime candidate pool and slot state."
+        }
+      ],
+      "actions": [
+        {
+          "name": "Demo_PublicAnnouncement_21_CmnEvChk:CmnMoveInChk",
+          "role": "story-flow evidence",
+          "path": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_21_CmnEvChk.txt",
+          "key": "IsExistMoveNpc MoveOut=false",
+          "source": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_21_CmnEvChk.txt#IsExistMoveNpc MoveOut=false",
+          "status": "EF",
+          "notes": "Checks if a move-in announcement is pending."
+        },
+        {
+          "name": "plot-induced move-in",
+          "role": "native move-in path",
+          "path": "acnh-re/docs/GAMEPLAY_SCENARIO.md",
+          "key": "§5.2 / 0xf8c540",
+          "source": "acnh-re/docs/GAMEPLAY_SCENARIO.md#§5.2 / 0xf8c540",
+          "status": "PSEUDO",
+          "notes": "Existing RE notes associate FromSettlerQuest with the 3-plot quest and house creation."
+        },
+        {
+          "name": "resident house generation",
+          "role": "house data selection",
+          "path": "acnh-re/docs/GAMEPLAY_SCENARIO.md",
+          "key": "§5.2 / Param/NpcHouse/%s.byml",
+          "source": "acnh-re/docs/GAMEPLAY_SCENARIO.md#§5.2 / Param/NpcHouse/%s.byml",
+          "status": "PSEUDO",
+          "notes": "The species-specific house layout comes from local NPC-house data; exact transform is save state."
+        }
+      ],
+      "items": [],
+      "structures": [
+        {
+          "name": "resident plot/house slot",
+          "role": "runtime house slot",
+          "path": "acnh-re/docs/GAMEPLAY_SCENARIO.md",
+          "key": "§5.2 / 10 plots / available plot selector",
+          "source": "acnh-re/docs/GAMEPLAY_SCENARIO.md#§5.2 / 10 plots / available plot selector",
+          "status": "PSEUDO",
+          "notes": "The report describes a 10-plot pool and runtime plot selection; no plot grid coordinates were joined."
+        }
+      ],
+      "placements": [
+        {
+          "name": "incoming villager final transform: unresolved",
+          "role": "incoming villager final transform evidence gap",
+          "path": null,
+          "key": null,
+          "source": null,
+          "status": "OPEN",
+          "notes": "The move-in is tied to the reserved plot, but the final island x/z/yaw/elevation is save-specific and not present in the flow dump."
+        },
+        {
+          "name": "daily move-in announcement gate",
+          "role": "announcement gate",
+          "path": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_21_CmnEvChk.txt",
+          "key": "CmnMoveInChk / IsExistMoveNpc MoveOut=false",
+          "source": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_21_CmnEvChk.txt#CmnMoveInChk / IsExistMoveNpc MoveOut=false",
+          "status": "EF",
+          "notes": "Announcement presence is confirmed; it does not expose placement coordinates."
+        }
+      ],
+      "assets": {
+        "ui": [
+          {
+            "name": "CommonDialogPage",
+            "role": "announcement/dialog candidate",
+            "path": "acnh-re/output/ui_hud/page_factory_catalog.json",
+            "key": "class_name=CommonDialogPage",
+            "source": "acnh-re/output/ui_hud/page_factory_catalog.json#class_name=CommonDialogPage",
+            "status": "CAT",
+            "notes": "No exact move-in page/layout binding is identified."
+          }
+        ],
+        "animation": [
+          {
+            "name": "arrival animation: unresolved",
+            "role": "arrival animation evidence gap",
+            "path": null,
+            "key": null,
+            "source": null,
+            "status": "OPEN",
+            "notes": "The selection/arrival flow is native and no exact clip key was joined."
+          }
+        ],
+        "model": [
+          {
+            "name": "resident species model: unresolved",
+            "role": "resident species model evidence gap",
+            "path": null,
+            "key": null,
+            "source": null,
+            "status": "OPEN",
+            "notes": "The chosen resident and NPC-house record are runtime-selected; exact model remains unknown."
+          }
+        ],
+        "audio": [
+          {
+            "name": "resident voice / arrival sound: unresolved",
+            "role": "resident voice / arrival sound evidence gap",
+            "path": null,
+            "key": null,
+            "source": null,
+            "status": "OPEN",
+            "notes": "No exact Audio_ID is called by the story flow."
+          }
+        ],
+        "text": [
+          {
+            "name": "move-in announcement flow labels",
+            "role": "message labels",
+            "path": "acnh-re/output/gameplay/flow_index.json",
+            "key": "Demo_PublicAnnouncement_32_CmnNewsMoveIn",
+            "source": "acnh-re/output/gameplay/flow_index.json#Demo_PublicAnnouncement_32_CmnNewsMoveIn",
+            "status": "EF",
+            "notes": "The referenced flow is present; this part did not resolve its specific message labels/USen text."
+          }
+        ],
+        "texture": [
+          {
+            "name": "texture: unresolved",
+            "role": "texture evidence gap",
+            "path": null,
+            "key": null,
+            "source": null,
+            "status": "OPEN",
+            "notes": "villager arrival: catalog texture-to-flow binding is unresolved."
+          }
+        ],
+        "material_shader": [
+          {
+            "name": "material/shader: unresolved",
+            "role": "material/shader evidence gap",
+            "path": null,
+            "key": null,
+            "source": null,
+            "status": "OPEN",
+            "notes": "villager arrival: material or shader binding is unresolved."
+          }
+        ],
+        "effect": [
+          {
+            "name": "effect: unresolved",
+            "role": "effect evidence gap",
+            "path": null,
+            "key": null,
+            "source": null,
+            "status": "OPEN",
+            "notes": "villager arrival: effect binding is unresolved."
+          }
+        ],
+        "font": [
+          {
+            "name": "font: unresolved",
+            "role": "font evidence gap",
+            "path": null,
+            "key": null,
+            "source": null,
+            "status": "OPEN",
+            "notes": "villager arrival: font/layout binding is unresolved."
+          }
+        ],
+        "world_data": [
+          {
+            "name": "runtime move-in plot selector",
+            "role": "world-placement lifecycle",
+            "path": "acnh-re/docs/GAMEPLAY_SCENARIO.md",
+            "key": "§5.2 / functions 0xf84f10, 0xf8d640",
+            "source": "acnh-re/docs/GAMEPLAY_SCENARIO.md#§5.2 / functions 0xf84f10, 0xf8d640",
+            "status": "PSEUDO",
+            "notes": "A runtime pool/selection mechanism is described, but there is no save-specific transform input in this part."
+          }
+        ],
+        "collision": [
+          {
+            "name": "arrival collision: unresolved",
+            "role": "arrival collision evidence gap",
+            "path": null,
+            "key": null,
+            "source": null,
+            "status": "OPEN",
+            "notes": "No final house instance/collision bundle was joined."
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "name": "Demo_PublicAnnouncement_21_CmnEvChk:CmnMoveInChk",
+          "role": "story-flow evidence",
+          "path": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_21_CmnEvChk.txt",
+          "key": "IsExistMoveNpc MoveOut=false",
+          "source": "acnh-re/output/gameplay/trees/Demo_PublicAnnouncement_21_CmnEvChk.txt#IsExistMoveNpc MoveOut=false",
+          "status": "EF",
+          "notes": "EventFlow checks for move-in news."
+        },
+        {
+          "name": "resident slot algorithm",
+          "role": "native lifecycle summary",
+          "path": "acnh-re/docs/GAMEPLAY_SCENARIO.md",
+          "key": "§5.2",
+          "source": "acnh-re/docs/GAMEPLAY_SCENARIO.md#§5.2",
+          "status": "PSEUDO",
+          "notes": "Move-in processing and house creation are described in existing RE notes with explicit PSEUDO limits."
+        }
+      ],
+      "gaps": [
+        "No save/world snapshot is available to bind an assigned villager to grid coordinates.",
+        "Move-in announcement labels, exact animation, model variant, and voice/audio are unjoined.",
+        "Native move-in functions are documented as PSEUDO in the existing scenario report."
+      ]
+    }
+  ]
+}

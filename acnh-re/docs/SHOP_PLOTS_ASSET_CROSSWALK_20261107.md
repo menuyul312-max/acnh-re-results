@@ -1,0 +1,23 @@
+# Shop, bridge, and three-plot story-to-asset crosswalk
+
+Date: 7 November 2026. Scope: ACNH 1.0.0 Nook's Cranny materials and opening through the bridge/ladder, three villager plots, furniture checks, plot completion, and move-in announcement. The machine-readable part is [`shop_plots.json`](../output/gameplay/story_asset_parts/shop_plots.json), schema [`story_asset_crosswalk.schema.json`](../output/gameplay/story_asset_crosswalk.schema.json).
+
+## Story chain and confirmed identifiers
+
+- `SNPC_rcm_21_MaterialCollecting` / `SNPC_rcm_24_MaterialGiveProcess` require 30 each of wood 2768, softwood 2767, hardwood 2769, and iron nugget 2511. `Player_Demo_HousingFinish:HousingFinish_Shop_Built` sets `Prologue4BuiltShop`; `Player_HousingKit:ShopReserveKit` identifies the preview class as `cMarket` placed with `cPlayer`. The daily shop construction check and first-open flag are PSEUDO in [`GAMEPLAY_FLOW.md`](GAMEPLAY_FLOW.md#5-nooks-cranny). First-open announcement `ChkMarket` dispatches `TownNews_Rco_HouseBuild`, which writes `RcmImmQuestOpen`.
+- Tom Nook's quest gives bridge recipe 7211. `Player_HousingKit:BridgeReserveKit` uses `StructureType=cBridge` and `StructureBuildPosType=cPlayer`; `HousingFinish_Bridge` marks `ImmQ_SetBridge` when the player selects kit 7211. The later plot-kit path gives 5827/5828/5829 and ladder recipe 2615.
+- The three housing kits use `StructureType=cReserveNpcHouse` with `StructureBuildPosType=cSettlerQuest` in `Player_HousingKit:MigrateQuestA/B/C`. Plot subjects are `SettlerType` 0/1/2 and EventFlow flags A/B/C. The resolved `StructureHouseShapeParam` table has NPC vacant-land UID 5 and sold-land UID 6; this corroborates a structure class but is not a plot coordinate.
+- Indoor donations are three materials per plot to `Obj_ReservedPlaceBox`. Plot A has two furniture pieces selected from a native-fruit pair plus pot UID 2559; B has wooden-block stereo 3205, wooden-block table 1565, and a wreath selected from the island-flower type; C has 2605, 1913, and 4073. Each plot also requires three outside items. Their IDs branch on `ImmQ_*_OutdoorPattern`; both branches are listed in JSON. Fruit and flower branch mappings come directly from `Obj_ReservedPlaceBox`.
+- The announcement processor checks all three interior donation flags plus `IsSettlerQuestOutsideComplete(..., OutsideCheckType=3)`, then calls `CompleteSettlerQuestSubject` and `DecideSettlerNpc` for A/B/C. Existing RE notes give the plot personality filter and runtime move-in behavior; those native internals remain labeled PSEUDO where applicable. `CmnMoveInChk` checks `IsExistMoveNpc(MoveOut=false)` before dispatching the move-in announcement.
+
+## Placement and asset boundaries
+
+Confirmed placement classes are `cMarket/cPlayer`, `cBridge/cPlayer`, and `cReserveNpcHouse/cSettlerQuest`. The table namespaces also show bridge structure UID 26 and reserved bridge type UID 7, with reserved bridge model variants 26–31; these are table IDs, not grid cells. `StructureFacilityModel` rows identify market reserve/build/facility model candidates (UIDs 0/24/1/2). `FieldMainFieldParam` links island templates to named structure/item data, but this inspection did not join any template row to the three quest plot transforms.
+
+No island save snapshot or placement record was available to derive coordinates. World x/z, orientation, elevation, footprint origin, selected bridge endpoints, plot-to-template coordinate mapping, and final resident-house transform remain OPEN. The JSON repeats this explicitly in every placement beat.
+
+UI page candidates (`CommonDialog`, `SmartPhoneIcon`, `MenuRecipe`, and `ShopBridgeSlope`), model catalog entries, animation sequences (`StructureFacility`, `StructureBridge`, `StructureSettlerQuestFtrBox`), and matching audio catalog families are marked CAT. Matching labels and names make them useful candidates, but this part does not claim the story flow binds them. Message label IDs are direct EF references; the underlying localized story strings were not decoded here. Texture, shader/material, effect, font, and collision bindings are OPEN where no direct join was found.
+
+## Validation and remaining OPENs
+
+The JSON is validated against the repository schema and checked for all required beat fields, all eleven required asset families, nonempty asset-family arrays, and nonempty placement evidence. Remaining high-value work is the runtime writer for `ImmQ_*_OutdoorPattern`, the query internals for the furniture selectors, and a save/world-data join that supplies actual per-island transforms. The full resident selection/move-in path is not re-executed by this crosswalk.

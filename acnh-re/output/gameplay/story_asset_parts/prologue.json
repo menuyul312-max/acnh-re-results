@@ -1,0 +1,1344 @@
+{
+  "schema": "acnh-re/story-asset-crosswalk-part/1",
+  "scope": "ACNH 1.0.0 new-player prologue: title and character creation through landing, arrival, orientation, tent progress, campfire and K.K. dream. Decoded-source crosswalk only; not live-game validation.",
+  "asset_inventory": {
+    "game_version": "1.0.0",
+    "source_root": "/workspace/acnh-re local decoded inputs; source metadata in output/manifest.json",
+    "model_catalog": "output/additional_romfs/catalogues/model.json; generated paths are references only; raw_romfs_source_path_matches=null",
+    "audio_catalog": "output/additional_romfs/catalogues/audio.json; generated paths are references only; raw_romfs_source_path_matches=0",
+    "policy": "CAT is catalogue-only. EF/TBL/STRUCT are local decoded-source references. OPEN marks an unresolved join. No raw asset existence is asserted."
+  },
+  "items": [
+    {
+      "beat_id": "title_character_creation",
+      "order": 0,
+      "title": "Title and character creation",
+      "flow": [
+        {
+          "status": "EF",
+          "name": "System_Title",
+          "path": "B_data/EventFlow/System_Title.bfevfl",
+          "key": "UITitleResult case 1",
+          "source": "output/gameplay/trees/System_Title.txt",
+          "notes": "Requests cCharacterOrder."
+        },
+        {
+          "status": "EF",
+          "name": "Tutorials_Prologue1_Charactermaking",
+          "path": "B_data/EventFlow/Tutorials_Prologue1_Charactermaking.bfevfl",
+          "key": 661,
+          "source": "output/manifest.json sha256 cbf8fc7e4f5df544398f8dfd4b401f558bf386862af1abac72b8ab57c1d8688d",
+          "notes": "Apply runs name, birthday, avatar and terrain setup; new-prologue branch uses ValidateVillageSave OFF."
+        }
+      ],
+      "stage": {
+        "status": "STRUCT",
+        "name": "IdrAirPortDemoDeparture",
+        "path": "B_data/Stage/Game/IdrAirPortDemoDeparture.byml",
+        "key": 2887,
+        "source": "output/manifest.json sha256 2004fd9b04cf7a7216a00fd6f6d410357f510b45adf56ee66b1e7952b5b382e5",
+        "notes": "Contains Tutorials_Prologue1_Charactermaking launcher."
+      },
+      "actors": [
+        {
+          "status": "STRUCT",
+          "name": "Rco/Rct airport actors",
+          "path": "B_data/Stage/Game/IdrAirPortDemoDeparture.byml",
+          "key": "Rco/Rct",
+          "source": "decoded stage 02887",
+          "notes": "Actor instances are present; speaker-instance mapping is unresolved."
+        }
+      ],
+      "actions": [
+        {
+          "status": "EF",
+          "name": "title to character-order route",
+          "path": "B_data/EventFlow/System_Title.bfevfl",
+          "key": "UITitleResult case 1",
+          "source": "System_Title",
+          "notes": "Title result requests cCharacterOrder."
+        },
+        {
+          "status": "EF",
+          "name": "name, birthday, avatar and terrain setup",
+          "path": "B_data/EventFlow/Tutorials_Prologue1_Charactermaking.bfevfl",
+          "key": "EnteringNameAndBday / Charactermaking / TerrainSelect",
+          "source": "decoded EventFlow 00661",
+          "notes": "Handlers include cName, cOpeningBirthday, cFirstTime and UIMapSelectHandling. New-game branch sets demo time 14:00 and first-prologue flags."
+        }
+      ],
+      "items": [],
+      "structures": [],
+      "placements": [
+        {
+          "status": "STRUCT",
+          "name": "departure actor transforms",
+          "path": "B_data/Stage/Game/IdrAirPortDemoDeparture.byml",
+          "key": "Rco/Rct; CameraTag:Root",
+          "source": "decoded stage 02887",
+          "notes": "Rco/Rct at (120,160,0); camera at (160,160,0). These do not prove the player spawn."
+        },
+        {
+          "status": "OPEN",
+          "name": "CharacterOrder handoff",
+          "notes": "Exact CharacterOrder-to-departure transition unresolved."
+        }
+      ],
+      "assets": {
+        "ui": [
+          {
+            "status": "EF",
+            "name": "UISoftwareKeyboardHandling / UIDateHandling / UICharactermakingCreate / UICharactermakingHandling / UIMapSelectHandling",
+            "path": "B_data/EventFlow/Tutorials_Prologue1_Charactermaking.bfevfl",
+            "key": "EnteringNameAndBday / Charactermaking / TerrainSelect",
+            "source": "decoded EventFlow 00661",
+            "notes": "Handler names are known; concrete layouts and BFLAN are OPEN."
+          },
+          {
+            "name": "TitlePage → Title",
+            "role": "page-class layout identifier",
+            "path": "Layout/Title.Nin_NX_NVN.zs",
+            "source": "acnh-re/output/ui_hud/page_layout_method_bindings.json",
+            "status": "PSEUDO",
+            "notes": "Static layout-name method binding; not proof this page is opened by the prologue flow."
+          },
+          {
+            "name": "CharaMakePage → CharaMake",
+            "role": "page-class layout identifier",
+            "path": "Layout/CharaMake.Nin_NX_NVN.zs",
+            "source": "acnh-re/output/ui_hud/page_layout_method_bindings.json",
+            "status": "PSEUDO",
+            "notes": "Exact identifier/layout match in static binding; flow-to-page handler path remains open."
+          },
+          {
+            "name": "DateInputPage → DateInput",
+            "role": "birthday input layout",
+            "path": "Layout/DateInput.Nin_NX_NVN.zs",
+            "source": "acnh-re/output/ui_hud/page_layout_method_bindings.json",
+            "status": "PSEUDO",
+            "notes": "Static page/layout match; exact callsite from UIDateHandling remains open."
+          },
+          {
+            "name": "MapSelectPage → CharaMakeMap",
+            "role": "island selection layout",
+            "path": "Layout/CharaMakeMap.Nin_NX_NVN.zs",
+            "source": "acnh-re/output/ui_hud/page_layout_method_bindings.json",
+            "status": "PSEUDO",
+            "notes": "Static page/layout match; EventFlow-to-page callsite remains open."
+          }
+        ],
+        "animation": [
+          {
+            "status": "OPEN",
+            "name": "animation/BFLAN join unresolved"
+          },
+          {
+            "name": "CharaMake_In / CharaMake_Out",
+            "role": "character creation UI animation resources",
+            "path": "Layout/CharaMake.Nin_NX_NVN.zs#CharaMake_In,CharaMake_Out.bflan",
+            "source": "acnh-re/output/ui_hud/animation_semantics.json",
+            "status": "STRUCT",
+            "notes": "BFLAN members are present in animation index; runtime trigger and timing not linked."
+          },
+          {
+            "name": "CharaMakeMap_In / CharaMakeMap_Out",
+            "role": "island selection UI animation resources",
+            "path": "Layout/CharaMakeMap.Nin_NX_NVN.zs#CharaMakeMap_In,CharaMakeMap_Out.bflan",
+            "source": "acnh-re/output/ui_hud/animation_semantics.json",
+            "status": "STRUCT",
+            "notes": "BFLAN members are present; runtime page animation state remains unproven."
+          },
+          {
+            "name": "DateInput_In / DateInput_Out",
+            "role": "birthday UI animation resources",
+            "path": "Layout/DateInput.Nin_NX_NVN.zs#DateInput_In,DateInput_Out.bflan",
+            "source": "acnh-re/output/ui_hud/animation_semantics.json",
+            "status": "STRUCT",
+            "notes": "BFLAN members are present; interaction event binding remains open."
+          },
+          {
+            "name": "LTitlePressABtn_Loop",
+            "role": "title prompt button animation candidate",
+            "path": "Layout/LTitlePressABtn.Nin_NX_NVN.zs#LTitlePressABtn_Loop.bflan",
+            "source": "acnh-re/output/ui_hud/animation_semantics.json",
+            "status": "STRUCT",
+            "notes": "Resource exists in UI animation index; title flow trigger is not linked."
+          }
+        ],
+        "model": [
+          {
+            "status": "OPEN",
+            "name": "character and airport model joins unresolved"
+          }
+        ],
+        "audio": [
+          {
+            "status": "OPEN",
+            "name": "audio catalogue/raw-file join unresolved"
+          }
+        ],
+        "text": [
+          {
+            "status": "EF",
+            "name": "Tutorials/Tutorials_Prologue1_Airport:001_01–028",
+            "path": "B_data/EventFlow/Tutorials_Prologue1_Charactermaking.bfevfl",
+            "source": "decoded EventFlow 00661",
+            "notes": "Flow message keys recorded; localized text-bank/layout join OPEN."
+          }
+        ],
+        "texture": [
+          {
+            "status": "OPEN",
+            "name": "texture join unresolved"
+          }
+        ],
+        "material_shader": [
+          {
+            "status": "OPEN",
+            "name": "material/shader join unresolved"
+          }
+        ],
+        "effect": [
+          {
+            "status": "OPEN",
+            "name": "effect join unresolved"
+          }
+        ],
+        "font": [
+          {
+            "status": "OPEN",
+            "name": "font join unresolved"
+          }
+        ],
+        "world_data": [
+          {
+            "status": "OPEN",
+            "name": "world-data join unresolved"
+          }
+        ],
+        "collision": [
+          {
+            "status": "OPEN",
+            "name": "collision join unresolved"
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "status": "STRUCT",
+          "path": "B_data/Stage/Game/CharacterOrder.byml",
+          "key": 2879,
+          "source": "output/manifest.json sha256 27bb99a767a668b9922c8b68dbcb7f776aad480817adc96e8e7d2c1b448899eb",
+          "notes": "CharacterOrder stage exists; exact handoff remains OPEN."
+        }
+      ],
+      "gaps": [
+        "CharacterOrder-to-departure handoff and concrete screen layouts remain OPEN."
+      ],
+      "confidence": "High for flow and departure actors; medium for handoff."
+    },
+    {
+      "beat_id": "opening_landing",
+      "order": 1,
+      "title": "Opening movie and landing",
+      "flow": [
+        {
+          "status": "EF",
+          "name": "System_GrowUp",
+          "path": "B_data/EventFlow/System_GrowUp.bfevfl",
+          "key": 645,
+          "source": "output/manifest.json sha256 ff6c2241927e1f657e941b504dd99ac3a27ba0fee296afba47c144eddee0ecb7",
+          "notes": "NewGame branch requests cMainFieldDemoLanding."
+        },
+        {
+          "status": "EF",
+          "name": "Tutorials_Prologue_DemoLanding",
+          "path": "B_data/EventFlow/Tutorials_Prologue_DemoLanding.bfevfl",
+          "key": 670,
+          "source": "output/manifest.json sha256 3853a5ab67854826784baba8cd77f30b9081f18fbdd5ea37a0567b7fed8324b5",
+          "notes": "Root runs landing cut, UILogoAppear cTitle, Flight_Landing trigger, then requests cFrontOfAirPort."
+        }
+      ],
+      "stage": {
+        "status": "STRUCT",
+        "name": "MainFieldDemoLanding",
+        "path": "B_data/Stage/Game/MainFieldDemoLanding.byml",
+        "key": 2910,
+        "source": "output/manifest.json sha256 f65850ad99eec9bc52861a2a9591f46358ea3ad09bb14273f40ba5751e918143",
+        "notes": "Contains landing flow launcher and AirportDemoAirplaneShadow actor."
+      },
+      "actors": [
+        {
+          "status": "STRUCT",
+          "name": "AirportDemoAirplaneShadow",
+          "path": "B_data/Stage/Game/MainFieldDemoLanding.byml",
+          "key": "AirportDemoAirplaneShadow",
+          "source": "decoded stage 02910",
+          "notes": "Actor key present; transform/model join unresolved."
+        }
+      ],
+      "actions": [
+        {
+          "status": "EF",
+          "name": "NewGame → landing → airport request",
+          "path": "B_data/EventFlow/System_GrowUp.bfevfl",
+          "key": "cMainFieldDemoLanding; cFrontOfAirPort",
+          "source": "decoded EventFlows 00645/00670; second source B_data/EventFlow/Tutorials_Prologue_DemoLanding.bfevfl",
+          "notes": "Stage targets are explicit in flow."
+        }
+      ],
+      "items": [],
+      "structures": [],
+      "placements": [
+        {
+          "status": "OPEN",
+          "name": "player spawn and landing transforms unresolved"
+        }
+      ],
+      "assets": {
+        "ui": [
+          {
+            "status": "EF",
+            "name": "UILogoAppear SelectKind=cTitle",
+            "path": "B_data/EventFlow/Tutorials_Prologue_DemoLanding.bfevfl",
+            "key": "Root",
+            "source": "decoded EventFlow 00670",
+            "notes": "Concrete layout/BFLAN OPEN."
+          },
+          {
+            "name": "PrologueBGPage → WipePrologue",
+            "role": "prologue wipe page/layout",
+            "path": "Layout/WipePrologue.Nin_NX_NVN.zs",
+            "source": "acnh-re/output/ui_hud/page_layout_method_bindings.json",
+            "status": "PSEUDO",
+            "notes": "Static page/layout identifier match; scene transition trigger remains open."
+          }
+        ],
+        "animation": [
+          {
+            "status": "OPEN",
+            "name": "animation join unresolved"
+          },
+          {
+            "name": "WipePrologue_In / WipePrologue_Out",
+            "role": "prologue transition animations",
+            "path": "Layout/WipePrologue.Nin_NX_NVN.zs#WipePrologue_In, WipePrologue_Out.bflan",
+            "source": "acnh-re/output/ui_hud/animation_semantics.json",
+            "status": "STRUCT",
+            "notes": "BFLAN resources exist; exact stage handoff/timing has not been replayed."
+          },
+          {
+            "status": "TBL",
+            "name": "NpcSpRco AnimationInfo / Act_PlaneRun* metadata",
+            "role": "actor animation metadata candidate, not clip binding",
+            "path": "/workspace/acnh-re/output/additional_romfs/new_byml/AnimationInfo/NpcSpRco.byml.json",
+            "source": "additional RomFS AnimationInfo BYML",
+            "notes": "The BYML has generic Act_PlaneRun* entries and scale metadata. It does not identify an ASB/BFRES clip or prove use during prologue arrival."
+          }
+        ],
+        "model": [
+          {
+            "status": "OPEN",
+            "name": "airplane/actor model join unresolved"
+          },
+          {
+            "name": "StrcAirPortA00",
+            "role": "airport structure model candidate",
+            "path": "acnh_godot/generated/models/StrcAirPortA00/StrcAirPortA00.glb",
+            "source": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json",
+            "status": "CAT",
+            "notes": "Catalog candidate only; raw Model archive absent and no landing-stage consumer join."
+          },
+          {
+            "name": "StrcAirPortA00Deck",
+            "role": "airport deck model candidate",
+            "path": "acnh_godot/generated/models/StrcAirPortA00Deck/StrcAirPortA00Deck.glb",
+            "source": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json",
+            "status": "CAT",
+            "notes": "Catalog candidate only; world placement/ownership not proven."
+          },
+          {
+            "name": "FldOutSAirPortLeft00 / FldOutSAirPortRight00",
+            "role": "airport exterior field-piece candidates",
+            "path": "catalogue model rows",
+            "source": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json",
+            "status": "CAT",
+            "notes": "Names suggest airport surroundings; use is unproven and raw files are absent."
+          }
+        ],
+        "audio": [
+          {
+            "status": "OPEN",
+            "name": "Flight_Landing EF key not matched to audio catalog/raw file"
+          },
+          {
+            "name": "Event_Tutorials_Prologue_DemoLanding/Demo_Plane_Landing",
+            "role": "plane landing SFX candidate",
+            "path": "Sound/Resource/Event_Tutorials_Prologue_DemoLanding.bars",
+            "source": "/workspace/acnh-re/output/additional_romfs/catalogues/audio.json",
+            "status": "CAT",
+            "notes": "Catalog name aligns with prologue landing; no raw audio or runtime playback validation."
+          },
+          {
+            "name": "Demo_Plane_Flight / Demo_Plane_Inside",
+            "role": "plane sequence audio candidates",
+            "path": "Sound/Resource/Stream/Demo_Plane_Flight.bwav; Demo_Plane_Inside.bwav",
+            "source": "/workspace/acnh-re/output/additional_romfs/catalogues/audio.json",
+            "status": "CAT",
+            "notes": "Catalog references only; exact scene calls and sequence timing remain open."
+          }
+        ],
+        "text": [
+          {
+            "status": "OPEN",
+            "name": "landing message-bank join unresolved"
+          }
+        ],
+        "texture": [
+          {
+            "status": "OPEN",
+            "name": "texture join unresolved"
+          }
+        ],
+        "material_shader": [
+          {
+            "status": "OPEN",
+            "name": "material/shader join unresolved"
+          }
+        ],
+        "effect": [
+          {
+            "status": "OPEN",
+            "name": "effect join unresolved"
+          }
+        ],
+        "font": [
+          {
+            "status": "OPEN",
+            "name": "font join unresolved"
+          }
+        ],
+        "world_data": [
+          {
+            "status": "OPEN",
+            "name": "world-data join unresolved"
+          }
+        ],
+        "collision": [
+          {
+            "status": "OPEN",
+            "name": "collision join unresolved"
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "status": "STRUCT",
+          "name": "OpeningMovie",
+          "path": "B_data/Stage/Game/OpeningMovie.byml",
+          "key": 2924,
+          "source": "output/manifest.json sha256 561a91cba99fb1f4d2f6f7138c2992d36d2fc102cab364287a77c14b3401ad18",
+          "notes": "Contains ObjectMoviePlayer."
+        }
+      ],
+      "gaps": [
+        "cFrontOfAirPort stage identity unresolved. MainFieldDemoLandingNet is not assumed to be the single-player prologue landing."
+      ],
+      "confidence": "High for event and stage actor names; airport handoff OPEN."
+    },
+    {
+      "beat_id": "arrival_talk",
+      "order": 2,
+      "title": "Arrival conversation",
+      "flow": [
+        {
+          "status": "EF",
+          "name": "Tutorials_Prologue2_Arrival",
+          "path": "B_data/EventFlow/Tutorials_Prologue2_Arrival.bfevfl",
+          "key": 662,
+          "source": "output/manifest.json sha256 b115aa96d76c1c49a29b3b7ab43bc595205bd8d890cd1776020ef7e5569ef735",
+          "notes": "Root checks PrologueArrivalTalked, FirstPlayAfterPlayerMake and ValidateVillageSave."
+        },
+        {
+          "status": "EF",
+          "name": "AI_NPC_Prologue_Rcm",
+          "path": "B_data/EventFlow/AI_NPC_Prologue_Rcm.bfevfl",
+          "key": 248,
+          "source": "output/manifest.json sha256 a1fb1ee2067a1516a5267df2384a0cf4b06554f30887ec5152a5c0b8f636f36c",
+          "notes": "Event6 Speak subflow invokes Arrival Root."
+        }
+      ],
+      "stage": null,
+      "actors": [
+        {
+          "status": "EF",
+          "name": "Prologue_Rcm AI caller",
+          "path": "B_data/EventFlow/AI_NPC_Prologue_Rcm.bfevfl",
+          "key": "Event6 Speak",
+          "source": "decoded EventFlow 00248",
+          "notes": "Visible speaker instance and physical stage are OPEN."
+        }
+      ],
+      "actions": [
+        {
+          "status": "EF",
+          "name": "arrival flag-gated branches",
+          "path": "B_data/EventFlow/Tutorials_Prologue2_Arrival.bfevfl",
+          "key": "Root",
+          "source": "decoded EventFlow 00662",
+          "notes": "Flow establishes branch flags, not visible NPC placement."
+        }
+      ],
+      "items": [],
+      "structures": [],
+      "placements": [
+        {
+          "status": "OPEN",
+          "name": "arrival scene stage and speaker placement unresolved"
+        }
+      ],
+      "assets": {
+        "ui": [
+          {
+            "status": "OPEN",
+            "name": "arrival UI/layout join unresolved"
+          }
+        ],
+        "animation": [
+          {
+            "status": "OPEN",
+            "name": "animation join unresolved"
+          }
+        ],
+        "model": [
+          {
+            "status": "OPEN",
+            "name": "visible NPC model join unresolved"
+          },
+          {
+            "name": "NpcSpRco",
+            "role": "Tom Nook actor model candidate",
+            "path": "acnh_godot/generated/models/NpcSpRco/NpcSpRco.glb",
+            "source": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json",
+            "status": "CAT",
+            "notes": "Catalog describes Tom Nook; no source model or arrival actor spawn/rig binding."
+          }
+        ],
+        "audio": [
+          {
+            "status": "OPEN",
+            "name": "audio join unresolved"
+          },
+          {
+            "name": "BGM_Field_Prologue_Phase1",
+            "role": "prologue field music candidate",
+            "path": "Sound/Resource/Stream/BGM_Field_Prologue_Phase1.bwav",
+            "source": "/workspace/acnh-re/output/additional_romfs/catalogues/audio.json",
+            "status": "CAT",
+            "notes": "Catalog candidate by phase name only; exact stage/time consumer is not proven."
+          }
+        ],
+        "text": [
+          {
+            "status": "EF",
+            "name": "Tutorials/Tutorials_Prologue2_Arrival:*",
+            "path": "B_data/EventFlow/Tutorials_Prologue2_Arrival.bfevfl",
+            "source": "decoded EventFlow 00662",
+            "notes": "Message keys only; localized text/layout join OPEN."
+          }
+        ],
+        "texture": [
+          {
+            "status": "OPEN",
+            "name": "texture join unresolved"
+          }
+        ],
+        "material_shader": [
+          {
+            "status": "OPEN",
+            "name": "material/shader join unresolved"
+          }
+        ],
+        "effect": [
+          {
+            "status": "OPEN",
+            "name": "effect join unresolved"
+          }
+        ],
+        "font": [
+          {
+            "status": "OPEN",
+            "name": "font join unresolved"
+          }
+        ],
+        "world_data": [
+          {
+            "status": "OPEN",
+            "name": "world-data join unresolved"
+          }
+        ],
+        "collision": [
+          {
+            "status": "OPEN",
+            "name": "collision join unresolved"
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "status": "EF",
+          "path": "B_data/EventFlow/AI_NPC_Prologue_Rcm.bfevfl",
+          "key": "FlowName=Tutorials_Prologue2_Arrival; EntryName=Root",
+          "source": "decoded EventFlow 00248",
+          "notes": "Direct caller link."
+        }
+      ],
+      "gaps": [
+        "Visible speaker identity and physical arrival stage are unresolved."
+      ],
+      "confidence": "High for flow caller and flags; low for visible scene."
+    },
+    {
+      "beat_id": "orientation_tent_kit",
+      "order": 3,
+      "title": "First plaza orientation and tent/map delivery",
+      "flow": [
+        {
+          "status": "EF",
+          "name": "Tutorials_Prologue3_Orientation1",
+          "path": "B_data/EventFlow/Tutorials_Prologue3_Orientation1.bfevfl",
+          "key": 664,
+          "source": "output/manifest.json sha256 4cb49b510565e06ca896197c41975a326cefe6f3f5224cd346d6082811ea733d",
+          "notes": "ValidateVillageSave OFF sets PrologueDone1stTalkAtPlaza; GoEventPlaza targets Place:EventPlaza and Npc:rco."
+        },
+        {
+          "status": "EF",
+          "name": "Tutorials_Prologue4_Orientation2_RcmRct",
+          "path": "B_data/EventFlow/Tutorials_Prologue4_Orientation2_RcmRct.bfevfl",
+          "key": 667,
+          "source": "output/manifest.json sha256 bb3e7993195e034254a984361b3d2b0f4900159c6034cb22dfe488ac2dd582c9",
+          "notes": "Delivers IDs 2750 and 6058; enables pocket/map flags."
+        }
+      ],
+      "stage": null,
+      "actors": [
+        {
+          "status": "EF",
+          "name": "Npc:rco",
+          "path": "B_data/EventFlow/Tutorials_Prologue3_Orientation1.bfevfl",
+          "key": "GoEventPlaza CameraTargetKey",
+          "source": "decoded EventFlow 00664",
+          "notes": "Physical stage/position unresolved."
+        }
+      ],
+      "actions": [
+        {
+          "status": "EF",
+          "name": "first prologue orientation and delivery",
+          "path": "B_data/EventFlow/Tutorials_Prologue3_Orientation1.bfevfl",
+          "key": "ValidateVillageSave OFF; PrologueDone1stTalkAtPlaza",
+          "source": "decoded EventFlows 00664/00667; second source B_data/EventFlow/Tutorials_Prologue4_Orientation2_RcmRct.bfevfl",
+          "notes": "Message keys 007–011; SetDeliveryItemAtRandom 2750 and 6058; PlayerPocketUIEnable/MainmenuMap set."
+        }
+      ],
+      "items": [
+        {
+          "status": "TBL",
+          "name": "TutorialTent / HousingKit",
+          "path": "B_data/Bcsv/ItemParam.bcsv",
+          "key": 2750,
+          "source": "ItemParam source_id=72; output/tables_resolved/ItemParam.json",
+          "notes": "Flow delivery ID; built tent structure is not established."
+        },
+        {
+          "status": "TBL",
+          "name": "SequenceOnly005 / map",
+          "path": "B_data/Bcsv/ItemParam.bcsv",
+          "key": 6058,
+          "source": "ItemParam source_id=72; output/tables_resolved/ItemParam.json",
+          "notes": "Flow delivery ID; table row Japanese name is ちず."
+        }
+      ],
+      "structures": [
+        {
+          "status": "OPEN",
+          "name": "Tent kit does not identify a built structure instance or structure ID"
+        }
+      ],
+      "placements": [
+        {
+          "status": "OPEN",
+          "name": "plaza and tent coordinates/orientation unresolved"
+        }
+      ],
+      "assets": {
+        "ui": [
+          {
+            "status": "EF",
+            "name": "NpcDelivery and orientation message actions",
+            "path": "B_data/EventFlow/Tutorials_Prologue4_Orientation2_RcmRct.bfevfl",
+            "key": "NpcDelivery",
+            "source": "decoded EventFlow 00667",
+            "notes": "Concrete layout/BFLAN OPEN."
+          },
+          {
+            "name": "MenuDevicePage → MenuDevice",
+            "role": "NookPhone/menu device layout candidate",
+            "path": "Layout/MenuDevice.Nin_NX_NVN.zs",
+            "source": "acnh-re/output/ui_hud/page_layout_method_bindings.json",
+            "status": "PSEUDO",
+            "notes": "Static page/layout binding exists; prologue app unlock to page activation is not traced."
+          }
+        ],
+        "animation": [
+          {
+            "status": "OPEN",
+            "name": "animation join unresolved"
+          },
+          {
+            "name": "CmnDialogSmartPhone_In / Loop / Out",
+            "role": "phone dialog UI animation candidates",
+            "path": "Layout/CmnDialogSmartPhone.Nin_NX_NVN.zs#CmnDialogSmartPhone_In,Loop,Out.bflan",
+            "source": "acnh-re/output/ui_hud/animation_semantics.json",
+            "status": "STRUCT",
+            "notes": "Layout and BFLAN resources are indexed; exact Map/encyclopedia app interactions are not linked."
+          }
+        ],
+        "model": [
+          {
+            "status": "OPEN",
+            "name": "NPC/tent model join unresolved"
+          },
+          {
+            "name": "NpcSpRco",
+            "role": "Tom Nook actor model candidate",
+            "path": "acnh_godot/generated/models/NpcSpRco/NpcSpRco.glb",
+            "source": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json",
+            "status": "CAT",
+            "notes": "Catalog describes Tom Nook; no raw model or scene-instance join."
+          }
+        ],
+        "audio": [
+          {
+            "status": "OPEN",
+            "name": "audio join unresolved"
+          }
+        ],
+        "text": [
+          {
+            "status": "EF",
+            "name": "Tutorials/Tutorials_Prologue3_Orientation1:007–011 and Tutorials_Prologue3_Orientation2_Rcm:001_01–001_03",
+            "path": "B_data/EventFlow/Tutorials_Prologue3_Orientation1.bfevfl",
+            "source": "decoded EventFlows 00664/00667; second flow B_data/EventFlow/Tutorials_Prologue4_Orientation2_RcmRct.bfevfl",
+            "notes": "Keys only; message bank/layout join OPEN."
+          }
+        ],
+        "texture": [
+          {
+            "status": "OPEN",
+            "name": "texture join unresolved"
+          }
+        ],
+        "material_shader": [
+          {
+            "status": "OPEN",
+            "name": "material/shader join unresolved"
+          }
+        ],
+        "effect": [
+          {
+            "status": "OPEN",
+            "name": "effect join unresolved"
+          }
+        ],
+        "font": [
+          {
+            "status": "OPEN",
+            "name": "font join unresolved"
+          }
+        ],
+        "world_data": [
+          {
+            "status": "OPEN",
+            "name": "world-data join unresolved"
+          }
+        ],
+        "collision": [
+          {
+            "status": "OPEN",
+            "name": "collision join unresolved"
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "status": "TBL",
+          "path": "B_data/Bcsv/ItemParam.bcsv",
+          "key": "2750, 6058",
+          "source": "output/tables_resolved/ItemParam.json",
+          "notes": "Resolved table labels described above."
+        }
+      ],
+      "gaps": [
+        "No built tent structure instance/coordinate or plaza-stage join is claimed."
+      ],
+      "confidence": "High for flow flags, delivery IDs and item table rows."
+    },
+    {
+      "beat_id": "tent_checks_campfire_prep",
+      "order": 4,
+      "title": "Tent checks and campfire preparation",
+      "flow": [
+        {
+          "status": "EF",
+          "name": "Tutorials_Prologue_Rco",
+          "path": "B_data/EventFlow/Tutorials_Prologue_Rco.bfevfl",
+          "key": 671,
+          "source": "output/manifest.json sha256 9b705fd779a7b4f9af81a2df26ee78c650cbbcf685dc82eb60877f78d1649127",
+          "notes": "Tent flags and TownFruitTypeChk; fruit IDs 2287,2214,2285,2286,2213 with six-count checks; branch material ID 2500."
+        },
+        {
+          "status": "EF",
+          "name": "Tutorials_Prologue4_Orientation2_AN",
+          "path": "B_data/EventFlow/Tutorials_Prologue4_Orientation2_AN.bfevfl",
+          "key": 665,
+          "source": "decoded EventFlow",
+          "notes": "NPC tent-progress flow; kit ID not explicit here."
+        },
+        {
+          "status": "EF",
+          "name": "Tutorials_Prologue4_Orientation2_HA",
+          "path": "B_data/EventFlow/Tutorials_Prologue4_Orientation2_HA.bfevfl",
+          "key": 666,
+          "source": "decoded EventFlow",
+          "notes": "NPC tent-progress flow; kit ID not explicit here."
+        }
+      ],
+      "stage": null,
+      "actors": [
+        {
+          "status": "EF",
+          "name": "Prologue_Rco",
+          "path": "B_data/EventFlow/Tutorials_Prologue_Rco.bfevfl",
+          "key": "Root_Init SetupKey=Prologue_Rco",
+          "source": "decoded EventFlow 00671",
+          "notes": "Visible actor instance/model join unresolved."
+        }
+      ],
+      "actions": [
+        {
+          "status": "EF",
+          "name": "tent progress and campfire material checks",
+          "path": "B_data/EventFlow/Tutorials_Prologue_Rco.bfevfl",
+          "key": "Prologue4BuiltPlayer/NpcAN/NpcHA; TownFruitTypeChk; PrologueForCampfire1/2; PrologueStartedCampfire",
+          "source": "decoded EventFlow 00671",
+          "notes": "Flow checks/deletes six matching town fruit and references branch material; flags do not establish placed object."
+        }
+      ],
+      "items": [
+        {
+          "status": "TBL",
+          "name": "DIYBranch / tree branch",
+          "path": "B_data/Bcsv/ItemParam.bcsv",
+          "key": 2500,
+          "source": "ItemParam source_id=72",
+          "notes": "Table label DIYBranch; Japanese name きのえだ."
+        },
+        {
+          "status": "TBL",
+          "name": "town-fruit material alternatives",
+          "path": "B_data/Bcsv/ItemParam.bcsv",
+          "key": "2287,2214,2285,2286,2213",
+          "source": "ItemParam source_id=72; TownFruitTypeChk",
+          "notes": "Branch selects by LandFruit; each check uses quantity 6."
+        }
+      ],
+      "structures": [
+        {
+          "status": "OPEN",
+          "name": "Tent flags do not identify structure rows/instances"
+        },
+        {
+          "status": "OPEN",
+          "name": "SetPrologueBonfire flag does not identify bonfire structure ID"
+        }
+      ],
+      "placements": [
+        {
+          "status": "OPEN",
+          "name": "tent and bonfire coordinates/rotations unresolved"
+        }
+      ],
+      "assets": {
+        "ui": [
+          {
+            "status": "OPEN",
+            "name": "campfire preparation layout/BFLAN unresolved"
+          }
+        ],
+        "animation": [
+          {
+            "status": "OPEN",
+            "name": "animation join unresolved"
+          }
+        ],
+        "model": [
+          {
+            "status": "OPEN",
+            "name": "tent/bonfire model join unresolved"
+          },
+          {
+            "name": "EvtobjCampfire",
+            "role": "campfire event object candidate",
+            "path": "acnh_godot/generated/models/EvtobjCampfire/EvtobjCampfire.glb",
+            "source": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json",
+            "status": "CAT",
+            "notes": "Catalog candidate; the prologue object instance/placement is not joined."
+          },
+          {
+            "name": "FtrBonfire / FtrCampfire",
+            "role": "campfire furniture candidates",
+            "path": "catalogue model rows",
+            "source": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json",
+            "status": "CAT",
+            "notes": "These are alternatives, not confirmed replacements for EvtobjCampfire."
+          }
+        ],
+        "audio": [
+          {
+            "status": "OPEN",
+            "name": "audio join unresolved"
+          }
+        ],
+        "text": [
+          {
+            "status": "EF",
+            "name": "Tutorials/Tutorials_Prologue4_Orientation3:*",
+            "path": "B_data/EventFlow/Tutorials_Prologue_Rco.bfevfl",
+            "source": "decoded EventFlow 00671",
+            "notes": "Flow message key family; localized bank/layout join OPEN."
+          }
+        ],
+        "texture": [
+          {
+            "status": "OPEN",
+            "name": "texture join unresolved"
+          }
+        ],
+        "material_shader": [
+          {
+            "status": "OPEN",
+            "name": "material/shader join unresolved"
+          }
+        ],
+        "effect": [
+          {
+            "status": "OPEN",
+            "name": "effect join unresolved"
+          }
+        ],
+        "font": [
+          {
+            "status": "OPEN",
+            "name": "font join unresolved"
+          }
+        ],
+        "world_data": [
+          {
+            "status": "OPEN",
+            "name": "world-data join unresolved"
+          }
+        ],
+        "collision": [
+          {
+            "status": "OPEN",
+            "name": "collision join unresolved"
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "status": "TBL",
+          "path": "B_data/Bcsv/ItemParam.bcsv",
+          "key": "2500; 2287,2214,2285,2286,2213",
+          "source": "ItemParam source_id=72",
+          "notes": "Item IDs used by flow are retained without inferring structure links."
+        }
+      ],
+      "gaps": [
+        "AN/HA kit IDs, built structure IDs, and world positions remain OPEN."
+      ],
+      "confidence": "High for flow flags and item IDs; placement unresolved."
+    },
+    {
+      "beat_id": "campfire_ceremony",
+      "order": 5,
+      "title": "Campfire ceremony and town naming",
+      "flow": [
+        {
+          "status": "EF",
+          "name": "Tutorials_Prologue5_Campfire",
+          "path": "B_data/EventFlow/Tutorials_Prologue5_Campfire.bfevfl",
+          "key": 669,
+          "source": "output/manifest.json sha256 b5a8369c1fa2a919b3722a85c6269a79842c5bc05f13dfcd330fc19acdde70c7",
+          "notes": "CampFire_Start; cVillage town-name input; ceremony messages/applause/cheers; selected branch sets PrologueStartedCampfire."
+        }
+      ],
+      "stage": {
+        "status": "STRUCT",
+        "name": "MainFieldDemoCeremony",
+        "path": "B_data/Stage/Game/MainFieldDemoCeremony.byml",
+        "key": 2908,
+        "source": "output/manifest.json sha256 6c722b2ceec02839c554e84222c5274326abda3f647ffcbdea855324fb423d34",
+        "notes": "No direct bonfire structure placement actor established in this audit."
+      },
+      "actors": [
+        {
+          "status": "EF",
+          "name": "NPC group",
+          "path": "B_data/EventFlow/Tutorials_Prologue5_Campfire.bfevfl",
+          "key": "NpcBalloonTalkAll / NpcCheers",
+          "source": "decoded EventFlow 00669",
+          "notes": "Roster-to-stage actor join unresolved."
+        }
+      ],
+      "actions": [
+        {
+          "status": "EF",
+          "name": "CampFire_Start and ceremony",
+          "path": "B_data/EventFlow/Tutorials_Prologue5_Campfire.bfevfl",
+          "key": "Root / CampFire_Start",
+          "source": "decoded EventFlow 00669",
+          "notes": "Town-name UI, messages 041_01–047, applause/cheers, story flags."
+        },
+        {
+          "status": "EF",
+          "name": "audio event parameters",
+          "path": "B_data/EventFlow/Tutorials_Prologue5_Campfire.bfevfl",
+          "key": "FireOn; Cheers; MusicName=4318",
+          "source": "decoded EventFlow 00669",
+          "notes": "Exact catalogue/raw audio mappings unresolved."
+        }
+      ],
+      "items": [],
+      "structures": [
+        {
+          "status": "OPEN",
+          "name": "bonfire structure item/actor ID unresolved"
+        }
+      ],
+      "placements": [
+        {
+          "status": "OPEN",
+          "name": "EventPlazaCampFire camera key exists; stage transform/bonfire location unresolved"
+        }
+      ],
+      "assets": {
+        "ui": [
+          {
+            "status": "EF",
+            "name": "UISoftwareKeyboardHandling FormType=cVillage",
+            "path": "B_data/EventFlow/Tutorials_Prologue5_Campfire.bfevfl",
+            "key": "Root",
+            "source": "decoded EventFlow 00669",
+            "notes": "Concrete layout/BFLAN OPEN."
+          }
+        ],
+        "animation": [
+          {
+            "status": "OPEN",
+            "name": "animation join unresolved"
+          },
+          {
+            "name": "EventObjCampfire.root.asb",
+            "role": "campfire event-object state graph candidate",
+            "path": "/workspace/acnh-re/output/additional_romfs/animation_sequences/EventObjCampfire.root.asb.json",
+            "source": "additional RomFS ASB export",
+            "status": "STRUCT",
+            "notes": "ASB exists and name matches the object family; no prologue-flow-to-state transition is joined."
+          }
+        ],
+        "model": [
+          {
+            "status": "OPEN",
+            "name": "bonfire/NPC model join unresolved"
+          },
+          {
+            "name": "EvtobjCampfire",
+            "role": "campfire event object candidate",
+            "path": "acnh_godot/generated/models/EvtobjCampfire/EvtobjCampfire.glb",
+            "source": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json",
+            "status": "CAT",
+            "notes": "Catalog only; no raw mesh or event-object binding."
+          },
+          {
+            "name": "FtrCampbed",
+            "role": "camping cot candidate",
+            "path": "acnh_godot/generated/models/FtrCampbed/FtrCampbed.glb",
+            "source": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json",
+            "status": "CAT",
+            "notes": "Name matches Ftr_Campbed flow reference; exact resolved model/material variant is unverified."
+          }
+        ],
+        "audio": [
+          {
+            "status": "OPEN",
+            "name": "FireOn/Cheers/MusicName=4318 not mapped to audio catalogue/raw file"
+          },
+          {
+            "name": "BGM_Demo_Prologue_Campfire",
+            "role": "prologue campfire music candidate",
+            "path": "Sound/Resource/Stream/BGM_Demo_Prologue_Campfire.bwav",
+            "source": "/workspace/acnh-re/output/additional_romfs/catalogues/audio.json",
+            "status": "CAT",
+            "notes": "Catalog only; flow-stage playback binding not executed."
+          },
+          {
+            "name": "Event_Tutorials_Prologue5_Campfire/Demo_Campfire_Cheers",
+            "role": "campfire cheer SFX candidate",
+            "path": "Sound/Resource/Event_Tutorials_Prologue5_Campfire.bars",
+            "source": "/workspace/acnh-re/output/additional_romfs/catalogues/audio.json",
+            "status": "CAT",
+            "notes": "Catalog key matches prologue campfire naming; source archive absent."
+          },
+          {
+            "name": "Event_Tutorials_Prologue_Rco/Ftr_Fire_Size4_On",
+            "role": "fire ignition SFX candidate",
+            "path": "Sound/Resource/Event_Tutorials_Prologue_Rco.bars",
+            "source": "/workspace/acnh-re/output/additional_romfs/catalogues/audio.json",
+            "status": "CAT",
+            "notes": "Catalog candidate by fire event name; runtime trigger remains unproven."
+          }
+        ],
+        "text": [
+          {
+            "status": "EF",
+            "name": "Tutorials/Tutorials_Prologue4_Orientation3:041_01–047",
+            "path": "B_data/EventFlow/Tutorials_Prologue5_Campfire.bfevfl",
+            "source": "decoded EventFlow 00669",
+            "notes": "Keys only; message bank join OPEN."
+          }
+        ],
+        "texture": [
+          {
+            "status": "OPEN",
+            "name": "texture join unresolved"
+          }
+        ],
+        "material_shader": [
+          {
+            "status": "OPEN",
+            "name": "material/shader join unresolved"
+          }
+        ],
+        "effect": [
+          {
+            "status": "OPEN",
+            "name": "effect join unresolved"
+          }
+        ],
+        "font": [
+          {
+            "status": "OPEN",
+            "name": "font join unresolved"
+          }
+        ],
+        "world_data": [
+          {
+            "status": "OPEN",
+            "name": "world-data join unresolved"
+          }
+        ],
+        "collision": [
+          {
+            "status": "OPEN",
+            "name": "collision join unresolved"
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "status": "STRUCT",
+          "path": "B_data/Stage/Game/MainFieldDemoCeremony.byml",
+          "key": 2908,
+          "source": "output/manifest.json",
+          "notes": "Stage included as ceremony context; does not prove bonfire placement."
+        }
+      ],
+      "gaps": [
+        "No direct bonfire placement actor, transform, or asset binding established."
+      ],
+      "confidence": "High for event sequence; placed assets unresolved."
+    },
+    {
+      "beat_id": "kk_dream",
+      "order": 6,
+      "title": "K.K. dream and reward",
+      "flow": [
+        {
+          "status": "EF",
+          "name": "Tutorials_Prologue_Tkk",
+          "path": "B_data/EventFlow/Tutorials_Prologue_Tkk.bfevfl",
+          "key": 673,
+          "source": "output/manifest.json sha256 0d8d17f3b63e536843727ada9a2bf23d51bad431855f35b37c0f948fea3f6115",
+          "notes": "Dream dialogue; sets completion, reserves PrologueNextDayAwake, NpcSetRewardRecipe ItemUniqueId=7142, tent light and return-stage actions."
+        }
+      ],
+      "stage": null,
+      "actors": [
+        {
+          "status": "EF",
+          "name": "tkk action target",
+          "path": "B_data/EventFlow/Tutorials_Prologue_Tkk.bfevfl",
+          "key": "TkkAGuitarPlayEnd / NpcRequestAction",
+          "source": "decoded EventFlow 00673",
+          "notes": "Flow implies tkk actor; physical instance/spawn unresolved."
+        },
+        {
+          "status": "CAT",
+          "name": "NpcSpTkk",
+          "path": "output/additional_romfs/catalogues/model.json",
+          "key": "Asset_ID=NpcSpTkk",
+          "source": "local additional-ROMFS model catalogue",
+          "notes": "Generated path reference only; raw_romfs_source_path_matches=null; runtime actor join unresolved."
+        }
+      ],
+      "actions": [
+        {
+          "status": "EF",
+          "name": "dream talk and completion",
+          "path": "B_data/EventFlow/Tutorials_Prologue_Tkk.bfevfl",
+          "key": "Tkk_Dream_Talk / Tkk_Dream_AfterTalk",
+          "source": "decoded EventFlow 00673",
+          "notes": "Messages TalkSNpc/tkk/SP_tkk_dream:001–007; completion flag and next-day command."
+        }
+      ],
+      "items": [
+        {
+          "status": "TBL",
+          "name": "FtrWorkbenchStump table label",
+          "path": "B_data/Bcsv/ItemParam.bcsv",
+          "key": 7142,
+          "source": "ItemParam source_id=72",
+          "notes": "Recorded as NpcSetRewardRecipe parameter; recipe-vs-output semantics unresolved."
+        }
+      ],
+      "structures": [],
+      "placements": [
+        {
+          "status": "OPEN",
+          "name": "dream-stage and tent-light world positions unresolved"
+        }
+      ],
+      "assets": {
+        "ui": [
+          {
+            "status": "OPEN",
+            "name": "dream UI/layout join unresolved"
+          }
+        ],
+        "animation": [
+          {
+            "status": "TBL",
+            "name": "NpcSpTkk AnimationInfo",
+            "path": "output/additional_romfs/new_byml/AnimationInfo/NpcSpTkk.byml.json",
+            "key": "NpcSpTkk",
+            "source": "local decoded additional-ROMFS BYML",
+            "notes": "ActionIdx 0/1 not mapped to animation names/ASB."
+          }
+        ],
+        "model": [
+          {
+            "status": "CAT",
+            "name": "NpcSpTkk",
+            "path": "output/additional_romfs/catalogues/model.json",
+            "key": "Asset_ID=NpcSpTkk",
+            "source": "model catalogue",
+            "notes": "Reference only; raw file existence not claimed."
+          },
+          {
+            "name": "NpcSpRco",
+            "role": "Tom Nook actor model candidate",
+            "path": "acnh_godot/generated/models/NpcSpRco/NpcSpRco.glb",
+            "source": "/workspace/acnh-re/output/additional_romfs/catalogues/model.json",
+            "status": "CAT",
+            "notes": "Catalog describes Tom Nook; whether visible in this dream scene is unresolved."
+          }
+        ],
+        "audio": [
+          {
+            "status": "OPEN",
+            "name": "TkkAGuitarPlayEnd audio catalogue/raw-file mapping unresolved"
+          },
+          {
+            "name": "BGM_Demo_Prologue_TKK",
+            "role": "K.K. dream music candidate",
+            "path": "Sound/Resource/Stream/BGM_Demo_Prologue_TKK.bwav",
+            "source": "/workspace/acnh-re/output/additional_romfs/catalogues/audio.json",
+            "status": "CAT",
+            "notes": "Catalog only; dream-stage playback binding and waveform are not verified."
+          }
+        ],
+        "text": [
+          {
+            "status": "EF",
+            "name": "TalkSNpc/tkk/SP_tkk_dream:001–007",
+            "path": "B_data/EventFlow/Tutorials_Prologue_Tkk.bfevfl",
+            "source": "decoded EventFlow 00673",
+            "notes": "Message keys only; localization join OPEN."
+          }
+        ],
+        "texture": [
+          {
+            "status": "OPEN",
+            "name": "texture join unresolved"
+          }
+        ],
+        "material_shader": [
+          {
+            "status": "OPEN",
+            "name": "material/shader join unresolved"
+          }
+        ],
+        "effect": [
+          {
+            "status": "OPEN",
+            "name": "effect join unresolved"
+          }
+        ],
+        "font": [
+          {
+            "status": "OPEN",
+            "name": "font join unresolved"
+          }
+        ],
+        "world_data": [
+          {
+            "status": "OPEN",
+            "name": "world-data join unresolved"
+          }
+        ],
+        "collision": [
+          {
+            "status": "OPEN",
+            "name": "collision join unresolved"
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "status": "EF",
+          "path": "B_data/EventFlow/Tutorials_Prologue_Tkk.bfevfl",
+          "key": "ActionIdx 0/1; NpcSetRewardRecipe 7142; PrologueFinishTkkDream",
+          "source": "decoded EventFlow 00673",
+          "notes": "Flow evidence only; no caller/stage launch found."
+        }
+      ],
+      "gaps": [
+        "No direct flow caller/stage launcher established. CAT model and AnimationInfo are references; raw asset and placement joins remain OPEN."
+      ],
+      "confidence": "High for flow actions/flags; medium for actor identity; runtime asset join OPEN."
+    }
+  ],
+  "asset_catalog_candidate_policy": "Model/audio additions are CAT references only. Static UI page/layout and BFLAN/ASB source presence do not prove story runtime triggers."
+}

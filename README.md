@@ -9,7 +9,10 @@ Paket hasil reverse engineering Animal Crossing: New Horizons versi 1.0.0 (build
 | Dokumen | Isi |
 |---|---|
 | [Handoff untuk sesi berikutnya](acnh-re/docs/HANDOFF.md) | Status singkat, setup data, alat, aturan, log sesi; antrian kerja di [re_queue.json](acnh-re/docs/re_queue.json) |
-| [Rencana build gameplay utama](acnh-re/docs/PLAYABLE_MAIN_GAME_PLAN.md) | Tahapan menuju game single-player yang bisa dimainkan dari New Game sampai konser K.K. dan loop setelah cerita utama; termasuk gap proyek Godot |
+| [Peta RE gameplay utama dan konversi aset](acnh-re/docs/PLAYABLE_GAME_RE_COVERAGE.md) | Bukti dan gap RE per bab cerita/sistem, pemetaan penggunaan dan konversi aset, serta antrean yang masih terbuka; tidak mengimplementasikan Godot |
+| [Rencana crosswalk cerita→aset gameplay inti](acnh-re/docs/CORE_GAMEPLAY_STORY_ASSET_PLAN.md) | Urutan pemetaan prolog sampai K.K.: flow, penempatan dunia, interaksi, UI, animasi, model/audio, metode konversi, dan kriteria selesai RE |
+| [Manifest crosswalk cerita→aset](acnh-re/output/gameplay/story_asset_crosswalk.json) | 28 beat, 11 kelas aset per beat, daftar part dan status bukti (`EF/TBL/NATIVE/PSEUDO/CAT/OPEN`) |
+| [Inventaris sumber dan konversi aset cerita](acnh-re/docs/STORY_ASSET_INVENTORY_CROSSWALK_20261107.md) | Cakupan data/UI/teks/animasi/model/audio/world/collision, pipeline yang tersedia, dan kelas sumber yang hilang |
 | [Workflow penggunaan data RE](acnh-re/docs/WORKFLOW.md) | Persiapan, ekstrak ZIP, file mana untuk apa, siklus satu tahap RE, verifikasi, kerja multi-agen |
 | [Alur gameplay dari data](acnh-re/docs/GAMEPLAY_FLOW.md) | Alur prolog sampai konser K.K. dan loop setelahnya, dari 456 EventFlow dan 1.555 flag, dengan label bukti per langkah |
 | [Skenario gameplay lengkap](acnh-re/docs/GAMEPLAY_SCENARIO.md) | Satu hari (pipeline pergantian hari native), satu minggu, satu tahun (kalender event, musim), siklus villager, pengunjung khusus, timeline progres dalam pergantian hari |
@@ -29,7 +32,7 @@ Paket hasil reverse engineering Animal Crossing: New Horizons versi 1.0.0 (build
 | Rumus yang terbukti native | RNG, cuaca hari biasa, kalender dan batas hari 05:00, genetika bunga, pembaca BYML, item 8 byte, resep, flag reset | [CALENDAR_FLOWERS](acnh-re/docs/CALENDAR_FLOWERS.md), [NATIVE_STAGE_WEATHER](acnh-re/docs/NATIVE_STAGE_WEATHER.md) |
 | Tujuh mekanik (collision, gerak, terrain, ground, posisi, NPC/navigasi, item/crafting) | Parsial; helper inti teruji di context rekonstruksi | [FOCUS7_MECHANICS](acnh-re/docs/FOCUS7_MECHANICS.md), frontier JSON |
 | Pembentukan pulau (template, pantai, terrain, PBC) | Parsial; selector, perakitan pantai dan konsumen tinggi PBC teruji | [ISLAND_TEMPLATE_SELECTOR_NATIVE](acnh-re/docs/ISLAND_TEMPLATE_SELECTOR_NATIVE.md) |
-| Save, ekonomi (lobak, toko), multiplayer, spawn ikan/serangga, scheduler villager | Belum di-RE secara native; data tabel tersedia | [GAMEPLAY_FLOW §12](acnh-re/docs/GAMEPLAY_FLOW.md), [coverage.json](acnh-re/output/coverage.json) |
+| Save, ekonomi, multiplayer, spawn dan scheduler | Parsial: layout save, beberapa processor, pemilih ikan/serangga, jadwal pengunjung dan pemilih villager telah diuji; transaksi menyeluruh, multiplayer dan banyak consumer masih terbuka | [Peta cakupan RE](acnh-re/docs/PLAYABLE_GAME_RE_COVERAGE.md), [GAMEPLAY_FLOW §12](acnh-re/docs/GAMEPLAY_FLOW.md), [coverage.json](acnh-re/output/coverage.json) |
 | Model 3D, audio, Havok | Sumber tidak ada di dump; hanya katalog referensi | [ADDITIONAL_ROMFS](acnh-re/docs/ADDITIONAL_ROMFS.md) |
 
 Total kasus helper/blok native terbaru dicatat di satu tempat saja: `latest_phase.native_helper_cases_total` dalam [continuation_frontier.json](acnh-re/output/mechanics/continuation_frontier.json). Uji pulau dilaporkan terpisah di dokumen pulau.
