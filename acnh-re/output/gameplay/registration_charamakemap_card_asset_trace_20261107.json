@@ -1,0 +1,3623 @@
+{
+  "schema": "acnh.registration-charamakemap-card-asset-trace/1",
+  "created_utc_date": "2026-11-07",
+  "scope": "ACNH 1.0.0 registration asset trace for CharaMakeMap card children L_Btn_00..03, their BFLYT part chain, BNTX/material references, static textures, and the Param/Layout CharaMakeMap bridge check.",
+  "status_legend": {
+    "ASSET": "Direct BFLYT/BNTX archive evidence or decoded texture evidence, with source/output hashes.",
+    "OPEN": "Source-version compatibility or runtime-produced image behavior not established by the available files."
+  },
+  "repo_links": {
+    "report": "docs/REGISTRATION_CHARAMAKEMAP_CARD_ASSET_TRACE_20261107.md",
+    "related_c_village_report": "docs/REGISTRATION_CVILLAGE_CONTEXT_FOLLOWUP_20261107.md",
+    "related_c_village_json": "output/gameplay/registration_c_village_context_followup_20261107.json"
+  },
+  "path_conventions": {
+    "workspace_root": "/workspace",
+    "source_and_support_paths": "Paths inside evidence.trace are relative to /workspace unless explicitly absolute; these files are outside acnh-re-github/acnh-re.",
+    "support_output_policy": "Parsed BFLYT JSON projections and 22 decoded PNGs remain in /workspace/analysis/acnh/CharaMakeMap_asset_trace/ and are not copied into this deliverable repository. Their paths and hashes are retained in the trace for reproducibility.",
+    "repo_output_policy": "Only this JSON trace and the linked Markdown report were added by this task; the shared index/crosswalk was not edited."
+  },
+  "source_build": {
+    "target_registration_version": "ACNH 1.0.0",
+    "supplemental_ui_archive_set": "downloads/acnh_additional_romfs_2026-11-02/romfs/Layout (workspace-relative)",
+    "supplemental_ui_release_version": "OPEN; files/folder provide no explicit ACNH release/build id",
+    "compatibility_with_1_0_0": "OPEN; the supplemental layout archives have not been proven to be 1.0.0 assets",
+    "raw_param_byml_available": false,
+    "param_record_workspace_path": "analysis/acnh/project/generated/data/static/Param/Layout/CharaMakeMap.json",
+    "param_record_sha256": "b6c1cbdf094d07f00ae86c853e12fe07179253c74a556f0bd721a2c1eaf5559e",
+    "param_record_version_provenance": "OPEN; the available JSON is a converted record used in the 1.0.0 registration analysis, but the raw BYML is absent and the JSON does not embed a verifiable game build identifier."
+  },
+  "conversion_reproduction": {
+    "sarc_chain": "Decompress .zs with acnh_rip.formats.compression.read_file; parse outer/inner SARC with acnh_rip.formats.sarc.read_sarc; parse each BFLYT with acnh_rip.formats.bflyt.read_bflyt.",
+    "bflyt_json": "Compact UTF-8 JSON serialization of the parsed BFLYT dict. Parser source hash and output path/hash for each layout are recorded per entry.",
+    "texture_command": "gcc -O2 -o /tmp/acnh_ui_texdec downloads/ACNH_island_RE/ACNH_island_RE/C_reverse/tools/acnh_rip/native/texdec.c -lm",
+    "texture_decode": "Call acnh_rip.exporters.models._decode_textures(bntx_bytes, output_dir, manifest) after setting models.TEXDEC=/tmp/acnh_ui_texdec. It parses BNTX through formats/bntx.py and exports mip 0 / layer 0 PNGs.",
+    "conversion_tool_hashes": {
+      "layout_parser": {
+        "path": "downloads/ACNH_island_RE/ACNH_island_RE/C_reverse/tools/acnh_rip/formats/bflyt.py",
+        "bytes": 6358,
+        "sha256": "eb76f817f9d9e623efcddb0ec591add5d4b897239c3471f52272bb05e8c6330a"
+      },
+      "bntx_parser": {
+        "path": "downloads/ACNH_island_RE/ACNH_island_RE/C_reverse/tools/acnh_rip/formats/bntx.py",
+        "bytes": 2692,
+        "sha256": "619a675e8fe46341e186a18d227d29c259e53f84ff4e0fa17580f197a70d2139"
+      },
+      "texture_exporter": {
+        "path": "downloads/ACNH_island_RE/ACNH_island_RE/C_reverse/tools/acnh_rip/exporters/models.py",
+        "bytes": 7213,
+        "sha256": "cd2ca840438ea5ae69bb2fc34a5c558200d0a47d44ff538fdbc65295d76be399"
+      },
+      "texdec_source": {
+        "path": "downloads/ACNH_island_RE/ACNH_island_RE/C_reverse/tools/acnh_rip/native/texdec.c",
+        "bytes": 6808,
+        "sha256": "af7ab5d6014819a254d50d85228c28f9330731984992a63f0f98df2c7f9c8d23"
+      },
+      "texdec_astc_header": {
+        "path": "downloads/ACNH_island_RE/ACNH_island_RE/C_reverse/tools/acnh_rip/native/astc.h",
+        "bytes": 16893,
+        "sha256": "fcc6297f19f9bdad7819965ea88d7d8b5d5f7f89ac14f43e82dccac385f3bbe3"
+      },
+      "compiled_texdec": {
+        "path": "/tmp/acnh_ui_texdec",
+        "compile_command": "gcc -O2 -o /tmp/acnh_ui_texdec <acnh_rip/native/texdec.c> -lm"
+      },
+      "texture_conversion_scope": "mip 0 only, layer 0 only, decoded PNG through acnh_rip.exporters.models._decode_textures and native/texdec (BC and ASTC paths as applicable)"
+    }
+  },
+  "evidence": {
+    "title": "ACNH CharaMakeMap card asset trace",
+    "scope": {
+      "registration_version": "1.0.0 target",
+      "supplemental_archives_version": "unknown; source folder is downloads/acnh_additional_romfs_2026-11-02/romfs/Layout and no build identifier was found in these archive names",
+      "supplemental_release_match_to_1_0_0": "OPEN"
+    },
+    "param_layout_1_0_0_evidence": {
+      "claimed_scope": "ACNH 1.0.0 registration source under investigation",
+      "raw_byml_expected_path": "downloads/acnh_additional_romfs_2026-11-02/romfs/Param/Layout/CharaMakeMap.byml",
+      "raw_byml_present": false,
+      "available_converted_record": {
+        "path": "analysis/acnh/project/generated/data/static/Param/Layout/CharaMakeMap.json",
+        "bytes": 420,
+        "sha256": "b6c1cbdf094d07f00ae86c853e12fe07179253c74a556f0bd721a2c1eaf5559e"
+      },
+      "converted_record": {
+        "XLink": {
+          "h_213f7f84": [
+            {
+              "h_383f6e2e": false,
+              "h_a8e79f6f": null,
+              "h_ce24f49e": 1,
+              "h_d17c5197": "/L_Dialog_00",
+              "h_eedd76eb": "Dialog"
+            },
+            {
+              "h_383f6e2e": true,
+              "h_a8e79f6f": null,
+              "h_ce24f49e": 0,
+              "h_d17c5197": "L_Dialog_00/L_BtnL",
+              "h_eedd76eb": "Dialog_L"
+            },
+            {
+              "h_383f6e2e": true,
+              "h_a8e79f6f": null,
+              "h_ce24f49e": 0,
+              "h_d17c5197": "L_Dialog_00/L_BtnR",
+              "h_eedd76eb": "Dialog_R"
+            }
+          ],
+          "h_4309561a": "UI_CharaMakeMap",
+          "h_718df20d": false,
+          "h_a8e79f6f": null
+        }
+      },
+      "part_path_keys_present": [],
+      "cVillage_literal_in_record": false,
+      "finding": "The converted Param/Layout record exposes XLink -> UI_CharaMakeMap and three L_Dialog_00 paths; it has no per-card part/image path and no cVillage literal. Raw BYML is not locally present, so source BYML version/hash cannot be independently checked here.",
+      "raw_byml_search_result": "No raw CharaMakeMap.byml was found in the available workspace file inventory; only the converted CharaMakeMap.json record is available for this check."
+    },
+    "conversion_tools": {
+      "layout_parser": {
+        "path": "downloads/ACNH_island_RE/ACNH_island_RE/C_reverse/tools/acnh_rip/formats/bflyt.py",
+        "bytes": 6358,
+        "sha256": "eb76f817f9d9e623efcddb0ec591add5d4b897239c3471f52272bb05e8c6330a"
+      },
+      "bntx_parser": {
+        "path": "downloads/ACNH_island_RE/ACNH_island_RE/C_reverse/tools/acnh_rip/formats/bntx.py",
+        "bytes": 2692,
+        "sha256": "619a675e8fe46341e186a18d227d29c259e53f84ff4e0fa17580f197a70d2139"
+      },
+      "texture_exporter": {
+        "path": "downloads/ACNH_island_RE/ACNH_island_RE/C_reverse/tools/acnh_rip/exporters/models.py",
+        "bytes": 7213,
+        "sha256": "cd2ca840438ea5ae69bb2fc34a5c558200d0a47d44ff538fdbc65295d76be399"
+      },
+      "texdec_source": {
+        "path": "downloads/ACNH_island_RE/ACNH_island_RE/C_reverse/tools/acnh_rip/native/texdec.c",
+        "bytes": 6808,
+        "sha256": "af7ab5d6014819a254d50d85228c28f9330731984992a63f0f98df2c7f9c8d23"
+      },
+      "texdec_astc_header": {
+        "path": "downloads/ACNH_island_RE/ACNH_island_RE/C_reverse/tools/acnh_rip/native/astc.h",
+        "bytes": 16893,
+        "sha256": "fcc6297f19f9bdad7819965ea88d7d8b5d5f7f89ac14f43e82dccac385f3bbe3"
+      },
+      "compiled_texdec": {
+        "path": "/tmp/acnh_ui_texdec",
+        "compile_command": "gcc -O2 -o /tmp/acnh_ui_texdec <acnh_rip/native/texdec.c> -lm"
+      },
+      "texture_conversion_scope": "mip 0 only, layer 0 only, decoded PNG through acnh_rip.exporters.models._decode_textures and native/texdec (BC and ASTC paths as applicable)"
+    },
+    "archives": [
+      {
+        "name": "CharaMakeMap",
+        "source": {
+          "path": "downloads/acnh_additional_romfs_2026-11-02/romfs/Layout/CharaMakeMap.Nin_NX_NVN.zs",
+          "bytes": 53194,
+          "sha256": "873d26ca41ba4b982cc96b55daf68adcdc657099be50626266615b3a9f2b6700"
+        },
+        "compression": "Zstandard .zs",
+        "decompressed_sarc": {
+          "bytes": 156028,
+          "magic": "SARC",
+          "sha256": "9d5c049c4b9368f0f1c462ef22a3e98665066d565e9cfa6f2f8a7f9d8be7c310"
+        },
+        "outer_members": [
+          {
+            "name": "CharaMakeMap.arc",
+            "bytes": 147836,
+            "magic": "SARC",
+            "sha256": "4c1fa83ac5c0f157a17fa711b1a05435a086eb5c982a7df57148b74c9f9085b9",
+            "members": [
+              {
+                "name": "blyt/CharaMakeMap.bflyt",
+                "bytes": 4932,
+                "magic": "FLYT",
+                "sha256": "b110eb4c09bb23ce89f3f7a32139a68d1cc6b37c615788d75284a113941ca6ea",
+                "conversion": {
+                  "tool": "downloads/ACNH_island_RE/ACNH_island_RE/C_reverse/tools/acnh_rip/formats/bflyt.py read_bflyt; JSON serialization UTF-8 compact",
+                  "output": "analysis/acnh/CharaMakeMap_asset_trace/converted_layouts/CharaMakeMap/CharaMakeMap.json",
+                  "output_bytes": 7651,
+                  "output_sha256": "3dd2227c8f388b95536e32243dd427a1054d1a606630eddea0af828bf39a2b6e"
+                }
+              },
+              {
+                "name": "anim/CharaMakeMap_In.bflan",
+                "bytes": 440,
+                "magic": "FLAN",
+                "sha256": "74381efa8a345b90bd27885f9fa97f3c053a82407422e605b1c583c2a005ab7f"
+              },
+              {
+                "name": "fcpx/SystemB_00.bfcpx",
+                "bytes": 704,
+                "magic": "FCPX",
+                "sha256": "f9bc690630950b7ad22ba39d0675955d985ded2a307864075f99f398637df5bc"
+              },
+              {
+                "name": "anim/CharaMakeMap_Out.bflan",
+                "bytes": 500,
+                "magic": "FLAN",
+                "sha256": "ee86e34f293db8b1fa03e77a31768ce9305ed4139620e00b2b26fe4de61e6876"
+              },
+              {
+                "name": "timg/__Combined.bntx",
+                "bytes": 135296,
+                "magic": "BNTX",
+                "sha256": "5d0bae0edd0ed336c6bdb88318ca58b788738c52532a25efd2f67a731a00bb93",
+                "textures": [
+                  {
+                    "name": "LogoNookIncETC^s",
+                    "format_name": "BC4_UNORM",
+                    "width": 428,
+                    "height": 86,
+                    "mip_count": 1,
+                    "array_count": 1,
+                    "channel_sources": [
+                      1,
+                      1,
+                      1,
+                      2
+                    ],
+                    "mip0_size": 28672
+                  },
+                  {
+                    "name": "LogoNookIncJP^s",
+                    "format_name": "BC4_UNORM",
+                    "width": 428,
+                    "height": 86,
+                    "mip_count": 1,
+                    "array_count": 1,
+                    "channel_sources": [
+                      1,
+                      1,
+                      1,
+                      2
+                    ],
+                    "mip0_size": 28672
+                  },
+                  {
+                    "name": "StartHeaderL^s",
+                    "format_name": "BC4_UNORM",
+                    "width": 50,
+                    "height": 48,
+                    "mip_count": 1,
+                    "array_count": 1,
+                    "channel_sources": [
+                      1,
+                      1,
+                      1,
+                      2
+                    ],
+                    "mip0_size": 2048
+                  },
+                  {
+                    "name": "StartHeaderR^s",
+                    "format_name": "BC4_UNORM",
+                    "width": 50,
+                    "height": 48,
+                    "mip_count": 1,
+                    "array_count": 1,
+                    "channel_sources": [
+                      1,
+                      1,
+                      1,
+                      2
+                    ],
+                    "mip0_size": 2048
+                  },
+                  {
+                    "name": "StartPattern^r",
+                    "format_name": "BC4_UNORM",
+                    "width": 200,
+                    "height": 200,
+                    "mip_count": 1,
+                    "array_count": 1,
+                    "channel_sources": [
+                      2,
+                      2,
+                      2,
+                      1
+                    ],
+                    "mip0_size": 28672
+                  },
+                  {
+                    "name": "StartWindowBaseSdw^s",
+                    "format_name": "BC4_UNORM",
+                    "width": 60,
+                    "height": 60,
+                    "mip_count": 1,
+                    "array_count": 1,
+                    "channel_sources": [
+                      1,
+                      1,
+                      1,
+                      2
+                    ],
+                    "mip0_size": 2048
+                  },
+                  {
+                    "name": "StartWindowBase^s",
+                    "format_name": "BC4_UNORM",
+                    "width": 60,
+                    "height": 60,
+                    "mip_count": 1,
+                    "array_count": 1,
+                    "channel_sources": [
+                      1,
+                      1,
+                      1,
+                      2
+                    ],
+                    "mip0_size": 2048
+                  },
+                  {
+                    "name": "TexPaper^r",
+                    "format_name": "BC4_UNORM",
+                    "width": 256,
+                    "height": 256,
+                    "mip_count": 1,
+                    "array_count": 1,
+                    "channel_sources": [
+                      2,
+                      2,
+                      2,
+                      1
+                    ],
+                    "mip0_size": 32768
+                  }
+                ]
+              },
+              {
+                "name": "anim/CharaMakeMap_RegionLanguageType.bflan",
+                "bytes": 252,
+                "magic": "FLAN",
+                "sha256": "dfa6efa25e2eaec60a8beb34f6c77e339d73fc4263dea865a990f3b84227022b"
+              }
+            ]
+          }
+        ],
+        "layouts": [
+          {
+            "entry": "blyt/CharaMakeMap.bflyt",
+            "entry_sha256": "b110eb4c09bb23ce89f3f7a32139a68d1cc6b37c615788d75284a113941ca6ea",
+            "output": "analysis/acnh/CharaMakeMap_asset_trace/converted_layouts/CharaMakeMap/CharaMakeMap.json",
+            "output_sha256": "3dd2227c8f388b95536e32243dd427a1054d1a606630eddea0af828bf39a2b6e",
+            "layout_name": "CharaMakeMap",
+            "layout_size": [
+              1920.0,
+              1080.0
+            ],
+            "texture_names": [
+              "LogoNookIncJP^s",
+              "StartHeaderL^s",
+              "StartHeaderR^s",
+              "StartPattern^r",
+              "StartWindowBase^s",
+              "StartWindowBaseSdw^s",
+              "TexPaper^r"
+            ],
+            "material_table": [
+              {
+                "material_index": 0,
+                "name": "T_Text_00",
+                "texture_bindings": [],
+                "flags": 0
+              },
+              {
+                "material_index": 1,
+                "name": "P_Logo_00",
+                "texture_bindings": [
+                  {
+                    "texture_index": 0,
+                    "texture_name": "LogoNookIncJP^s",
+                    "wrap_s": 4,
+                    "wrap_t": 4
+                  }
+                ],
+                "flags": 21
+              },
+              {
+                "material_index": 2,
+                "name": "W_Header_00C ",
+                "texture_bindings": [],
+                "flags": 0
+              },
+              {
+                "material_index": 3,
+                "name": "W_Header_00LT",
+                "texture_bindings": [
+                  {
+                    "texture_index": 1,
+                    "texture_name": "StartHeaderL^s",
+                    "wrap_s": 4,
+                    "wrap_t": 6
+                  },
+                  {
+                    "texture_index": 3,
+                    "texture_name": "StartPattern^r",
+                    "wrap_s": 5,
+                    "wrap_t": 5
+                  }
+                ],
+                "flags": 32874
+              },
+              {
+                "material_index": 4,
+                "name": "W_Header_00RT",
+                "texture_bindings": [
+                  {
+                    "texture_index": 2,
+                    "texture_name": "StartHeaderR^s",
+                    "wrap_s": 4,
+                    "wrap_t": 6
+                  },
+                  {
+                    "texture_index": 3,
+                    "texture_name": "StartPattern^r",
+                    "wrap_s": 5,
+                    "wrap_t": 5
+                  }
+                ],
+                "flags": 2154
+              },
+              {
+                "material_index": 5,
+                "name": "W_Sheet_00C ",
+                "texture_bindings": [
+                  {
+                    "texture_index": 4,
+                    "texture_name": "StartWindowBase^s",
+                    "wrap_s": 4,
+                    "wrap_t": 4
+                  }
+                ],
+                "flags": 21
+              },
+              {
+                "material_index": 6,
+                "name": "W_Sheet_00LT",
+                "texture_bindings": [
+                  {
+                    "texture_index": 4,
+                    "texture_name": "StartWindowBase^s",
+                    "wrap_s": 4,
+                    "wrap_t": 4
+                  }
+                ],
+                "flags": 21
+              },
+              {
+                "material_index": 7,
+                "name": "W_SheetSdw_00C ",
+                "texture_bindings": [
+                  {
+                    "texture_index": 5,
+                    "texture_name": "StartWindowBaseSdw^s",
+                    "wrap_s": 4,
+                    "wrap_t": 4
+                  }
+                ],
+                "flags": 21
+              },
+              {
+                "material_index": 8,
+                "name": "W_SheetSdw_00LT",
+                "texture_bindings": [
+                  {
+                    "texture_index": 5,
+                    "texture_name": "StartWindowBaseSdw^s",
+                    "wrap_s": 4,
+                    "wrap_t": 4
+                  }
+                ],
+                "flags": 21
+              },
+              {
+                "material_index": 9,
+                "name": "W_SheetTex_00C ",
+                "texture_bindings": [
+                  {
+                    "texture_index": 4,
+                    "texture_name": "StartWindowBase^s",
+                    "wrap_s": 4,
+                    "wrap_t": 4
+                  },
+                  {
+                    "texture_index": 6,
+                    "texture_name": "TexPaper^r",
+                    "wrap_s": 6,
+                    "wrap_t": 6
+                  }
+                ],
+                "flags": 32874
+              },
+              {
+                "material_index": 10,
+                "name": "W_SheetTex_00LT",
+                "texture_bindings": [
+                  {
+                    "texture_index": 4,
+                    "texture_name": "StartWindowBase^s",
+                    "wrap_s": 4,
+                    "wrap_t": 4
+                  },
+                  {
+                    "texture_index": 6,
+                    "texture_name": "TexPaper^r",
+                    "wrap_s": 6,
+                    "wrap_t": 6
+                  }
+                ],
+                "flags": 32874
+              },
+              {
+                "material_index": 11,
+                "name": "W_Footer_01C ",
+                "texture_bindings": [],
+                "flags": 0
+              },
+              {
+                "material_index": 12,
+                "name": "W_Footer_01LT",
+                "texture_bindings": [
+                  {
+                    "texture_index": 1,
+                    "texture_name": "StartHeaderL^s",
+                    "wrap_s": 4,
+                    "wrap_t": 6
+                  },
+                  {
+                    "texture_index": 3,
+                    "texture_name": "StartPattern^r",
+                    "wrap_s": 5,
+                    "wrap_t": 5
+                  }
+                ],
+                "flags": 32874
+              },
+              {
+                "material_index": 13,
+                "name": "W_Footer_01RT",
+                "texture_bindings": [
+                  {
+                    "texture_index": 2,
+                    "texture_name": "StartHeaderR^s",
+                    "wrap_s": 4,
+                    "wrap_t": 6
+                  },
+                  {
+                    "texture_index": 3,
+                    "texture_name": "StartPattern^r",
+                    "wrap_s": 5,
+                    "wrap_t": 5
+                  }
+                ],
+                "flags": 2154
+              }
+            ],
+            "picture_bindings": [
+              {
+                "pane_path": "RootPane/N_InOut_00/N_Sheet_01/W_Sheet_00/P_Logo_00",
+                "pane_name": "P_Logo_00",
+                "pane_size": [
+                  428.0,
+                  86.0
+                ],
+                "material_index": 1,
+                "material_name": "P_Logo_00",
+                "texture_bindings": [
+                  {
+                    "texture_index": 0,
+                    "texture_name": "LogoNookIncJP^s",
+                    "wrap_s": 4,
+                    "wrap_t": 4
+                  }
+                ]
+              }
+            ],
+            "panes": [
+              {
+                "path": "RootPane",
+                "type": "pan1",
+                "name": "RootPane",
+                "visible": true,
+                "size": [
+                  1920.0,
+                  1080.0
+                ]
+              },
+              {
+                "path": "RootPane/N_InOut_02",
+                "type": "pan1",
+                "name": "N_InOut_02",
+                "visible": true,
+                "size": [
+                  30.0,
+                  40.0
+                ]
+              },
+              {
+                "path": "RootPane/N_InOut_02/L_Bg_00",
+                "type": "prt1",
+                "name": "L_Bg_00",
+                "visible": true,
+                "size": [
+                  1920.0,
+                  1080.0
+                ],
+                "part_layout": "LCmnBg"
+              },
+              {
+                "path": "RootPane/N_InOut_00",
+                "type": "pan1",
+                "name": "N_InOut_00",
+                "visible": true,
+                "size": [
+                  30.0,
+                  40.0
+                ]
+              },
+              {
+                "path": "RootPane/N_InOut_00/N_Sheet_01",
+                "type": "pan1",
+                "name": "N_Sheet_01",
+                "visible": true,
+                "size": [
+                  30.0,
+                  40.0
+                ]
+              },
+              {
+                "path": "RootPane/N_InOut_00/N_Sheet_01/W_SheetSdw_00",
+                "type": "wnd1",
+                "name": "W_SheetSdw_00",
+                "visible": true,
+                "size": [
+                  1500.0,
+                  1000.0
+                ]
+              },
+              {
+                "path": "RootPane/N_InOut_00/N_Sheet_01/W_Sheet_00",
+                "type": "wnd1",
+                "name": "W_Sheet_00",
+                "visible": true,
+                "size": [
+                  1500.0,
+                  1000.0
+                ]
+              },
+              {
+                "path": "RootPane/N_InOut_00/N_Sheet_01/W_Sheet_00/W_Header_00",
+                "type": "wnd1",
+                "name": "W_Header_00",
+                "visible": true,
+                "size": [
+                  1364.0,
+                  96.0
+                ]
+              },
+              {
+                "path": "RootPane/N_InOut_00/N_Sheet_01/W_Sheet_00/P_Logo_00",
+                "type": "pic1",
+                "name": "P_Logo_00",
+                "visible": true,
+                "size": [
+                  428.0,
+                  86.0
+                ],
+                "material_index": 1
+              },
+              {
+                "path": "RootPane/N_InOut_00/N_Sheet_01/W_Sheet_00/W_Footer_01",
+                "type": "wnd1",
+                "name": "W_Footer_01",
+                "visible": true,
+                "size": [
+                  2728.0,
+                  96.0
+                ]
+              },
+              {
+                "path": "RootPane/N_InOut_00/N_Sheet_01/W_SheetTex_00",
+                "type": "wnd1",
+                "name": "W_SheetTex_00",
+                "visible": true,
+                "size": [
+                  1500.0,
+                  1000.0
+                ]
+              },
+              {
+                "path": "RootPane/N_InOut_00/T_Text_00",
+                "type": "txt1",
+                "name": "T_Text_00",
+                "visible": true,
+                "size": [
+                  960.0,
+                  70.0
+                ],
+                "material_index": 0,
+                "text": "好きな島を　選んでね！"
+              },
+              {
+                "path": "RootPane/N_InOut_00/N_InOut_01",
+                "type": "pan1",
+                "name": "N_InOut_01",
+                "visible": true,
+                "size": [
+                  30.0,
+                  40.0
+                ]
+              },
+              {
+                "path": "RootPane/N_InOut_00/N_InOut_01/L_Btn_00",
+                "type": "prt1",
+                "name": "L_Btn_00",
+                "visible": true,
+                "size": [
+                  562.0,
+                  438.0
+                ],
+                "part_layout": "LCharaMakeMapBtn"
+              },
+              {
+                "path": "RootPane/N_InOut_00/N_InOut_01/L_Btn_01",
+                "type": "prt1",
+                "name": "L_Btn_01",
+                "visible": true,
+                "size": [
+                  562.0,
+                  438.0
+                ],
+                "part_layout": "LCharaMakeMapBtn"
+              },
+              {
+                "path": "RootPane/N_InOut_00/N_InOut_01/L_Btn_02",
+                "type": "prt1",
+                "name": "L_Btn_02",
+                "visible": true,
+                "size": [
+                  562.0,
+                  438.0
+                ],
+                "part_layout": "LCharaMakeMapBtn"
+              },
+              {
+                "path": "RootPane/N_InOut_00/N_InOut_01/L_Btn_03",
+                "type": "prt1",
+                "name": "L_Btn_03",
+                "visible": true,
+                "size": [
+                  562.0,
+                  438.0
+                ],
+                "part_layout": "LCharaMakeMapBtn"
+              },
+              {
+                "path": "RootPane/L_Dialog_00",
+                "type": "prt1",
+                "name": "L_Dialog_00",
+                "visible": true,
+                "size": [
+                  1920.0,
+                  2090.626953125
+                ],
+                "part_layout": "LDialogMap"
+              }
+            ]
+          }
+        ],
+        "bntx": [
+          {
+            "entry": "timg/__Combined.bntx",
+            "bytes": 135296,
+            "sha256": "5d0bae0edd0ed336c6bdb88318ca58b788738c52532a25efd2f67a731a00bb93",
+            "textures": [
+              {
+                "name": "LogoNookIncETC^s",
+                "format_name": "BC4_UNORM",
+                "width": 428,
+                "height": 86,
+                "mip_count": 1,
+                "array_count": 1,
+                "channel_sources": [
+                  1,
+                  1,
+                  1,
+                  2
+                ],
+                "mip0_size": 28672,
+                "decoded_png": {
+                  "path": "analysis/acnh/CharaMakeMap_asset_trace/converted_textures/CharaMakeMap/LogoNookIncETC^s.png",
+                  "bytes": 7008,
+                  "sha256": "21e664ffa19e79342991690b27c2d21e6b995c0c59710ab42e32f70c7494e69d",
+                  "dimensions": [
+                    428,
+                    86
+                  ],
+                  "unique_rgba_colors": 247,
+                  "only_rgba_color": null
+                }
+              },
+              {
+                "name": "LogoNookIncJP^s",
+                "format_name": "BC4_UNORM",
+                "width": 428,
+                "height": 86,
+                "mip_count": 1,
+                "array_count": 1,
+                "channel_sources": [
+                  1,
+                  1,
+                  1,
+                  2
+                ],
+                "mip0_size": 28672,
+                "decoded_png": {
+                  "path": "analysis/acnh/CharaMakeMap_asset_trace/converted_textures/CharaMakeMap/LogoNookIncJP^s.png",
+                  "bytes": 9455,
+                  "sha256": "d4659945ddeab9835e50dec758e3ffb570b84fd883aab0b4bc43fea4a87be5e9",
+                  "dimensions": [
+                    428,
+                    86
+                  ],
+                  "unique_rgba_colors": 255,
+                  "only_rgba_color": null
+                }
+              },
+              {
+                "name": "StartHeaderL^s",
+                "format_name": "BC4_UNORM",
+                "width": 50,
+                "height": 48,
+                "mip_count": 1,
+                "array_count": 1,
+                "channel_sources": [
+                  1,
+                  1,
+                  1,
+                  2
+                ],
+                "mip0_size": 2048,
+                "decoded_png": {
+                  "path": "analysis/acnh/CharaMakeMap_asset_trace/converted_textures/CharaMakeMap/StartHeaderL^s.png",
+                  "bytes": 530,
+                  "sha256": "1b2acac4b25519238b1dc45a60664bc73cb5e259ad51d17cc8d1ea4454e3689f",
+                  "dimensions": [
+                    50,
+                    48
+                  ],
+                  "unique_rgba_colors": 61,
+                  "only_rgba_color": null
+                }
+              },
+              {
+                "name": "StartHeaderR^s",
+                "format_name": "BC4_UNORM",
+                "width": 50,
+                "height": 48,
+                "mip_count": 1,
+                "array_count": 1,
+                "channel_sources": [
+                  1,
+                  1,
+                  1,
+                  2
+                ],
+                "mip0_size": 2048,
+                "decoded_png": {
+                  "path": "analysis/acnh/CharaMakeMap_asset_trace/converted_textures/CharaMakeMap/StartHeaderR^s.png",
+                  "bytes": 277,
+                  "sha256": "b5a841560921cac42f94b83d988e43e3bfab58a539b42cc8af21973bf2fc252a",
+                  "dimensions": [
+                    50,
+                    48
+                  ],
+                  "unique_rgba_colors": 9,
+                  "only_rgba_color": null
+                }
+              },
+              {
+                "name": "StartPattern^r",
+                "format_name": "BC4_UNORM",
+                "width": 200,
+                "height": 200,
+                "mip_count": 1,
+                "array_count": 1,
+                "channel_sources": [
+                  2,
+                  2,
+                  2,
+                  1
+                ],
+                "mip0_size": 28672,
+                "decoded_png": {
+                  "path": "analysis/acnh/CharaMakeMap_asset_trace/converted_textures/CharaMakeMap/StartPattern^r.png",
+                  "bytes": 19411,
+                  "sha256": "8634286c80f9e0426e8abb36c60d5e55767f60790bec87299ecce8f7b6513dff",
+                  "dimensions": [
+                    200,
+                    200
+                  ],
+                  "unique_rgba_colors": 256,
+                  "only_rgba_color": null
+                }
+              },
+              {
+                "name": "StartWindowBaseSdw^s",
+                "format_name": "BC4_UNORM",
+                "width": 60,
+                "height": 60,
+                "mip_count": 1,
+                "array_count": 1,
+                "channel_sources": [
+                  1,
+                  1,
+                  1,
+                  2
+                ],
+                "mip0_size": 2048,
+                "decoded_png": {
+                  "path": "analysis/acnh/CharaMakeMap_asset_trace/converted_textures/CharaMakeMap/StartWindowBaseSdw^s.png",
+                  "bytes": 1939,
+                  "sha256": "256c456b4e4abd85e88aa4092f70bbdd75320ebdf6936e27115c22ee1056edcb",
+                  "dimensions": [
+                    60,
+                    60
+                  ],
+                  "unique_rgba_colors": 169,
+                  "only_rgba_color": null
+                }
+              },
+              {
+                "name": "StartWindowBase^s",
+                "format_name": "BC4_UNORM",
+                "width": 60,
+                "height": 60,
+                "mip_count": 1,
+                "array_count": 1,
+                "channel_sources": [
+                  1,
+                  1,
+                  1,
+                  2
+                ],
+                "mip0_size": 2048,
+                "decoded_png": {
+                  "path": "analysis/acnh/CharaMakeMap_asset_trace/converted_textures/CharaMakeMap/StartWindowBase^s.png",
+                  "bytes": 280,
+                  "sha256": "809a1f2bf1788f5381492135c10d7f3a1bb372de5fa461f60a7f29e3f5f71e59",
+                  "dimensions": [
+                    60,
+                    60
+                  ],
+                  "unique_rgba_colors": 6,
+                  "only_rgba_color": null
+                }
+              },
+              {
+                "name": "TexPaper^r",
+                "format_name": "BC4_UNORM",
+                "width": 256,
+                "height": 256,
+                "mip_count": 1,
+                "array_count": 1,
+                "channel_sources": [
+                  2,
+                  2,
+                  2,
+                  1
+                ],
+                "mip0_size": 32768,
+                "decoded_png": {
+                  "path": "analysis/acnh/CharaMakeMap_asset_trace/converted_textures/CharaMakeMap/TexPaper^r.png",
+                  "bytes": 129796,
+                  "sha256": "727cd70a8b6bfd9254618f19ab5e33db8e50fe09098fcd80769d222b5bb755a5",
+                  "dimensions": [
+                    256,
+                    256
+                  ],
+                  "unique_rgba_colors": 256,
+                  "only_rgba_color": null
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "LCharaMakeMapBtn",
+        "source": {
+          "path": "downloads/acnh_additional_romfs_2026-11-02/romfs/Layout/LCharaMakeMapBtn.Nin_NX_NVN.zs",
+          "bytes": 43866,
+          "sha256": "04bb82e3cbd7c02109af61f3d76731b1188d32e6d748a044ccb78c5ce397fb34"
+        },
+        "compression": "Zstandard .zs",
+        "decompressed_sarc": {
+          "bytes": 111536,
+          "magic": "SARC",
+          "sha256": "f214bff4cc828941f2fd2a5a083c773596b0e8fe3f855ad4767549517fdfce12"
+        },
+        "outer_members": [
+          {
+            "name": "LCharaMakeMapBtn.arc",
+            "bytes": 103344,
+            "magic": "SARC",
+            "sha256": "9c81d0f312f2caba9a8ac94653d00f58d4b158fbe797f045730fbb5a0ecc8194",
+            "members": [
+              {
+                "name": "anim/LCharaMakeMapBtn_Select.bflan",
+                "bytes": 216,
+                "magic": "FLAN",
+                "sha256": "1b271f4c7fccfeaa4b95460a7d00f3df4d0ee2a70c838c018e7727b664827637"
+              },
+              {
+                "name": "bgsh/__ArchiveShader.bnsh",
+                "bytes": 29320,
+                "magic": "BNSH",
+                "sha256": "3590282597b6438eedbefabc928f97275b8c6bd49067e230ebc88a95434d447b"
+              },
+              {
+                "name": "anim/LCharaMakeMapBtn_Decide.bflan",
+                "bytes": 204,
+                "magic": "FLAN",
+                "sha256": "85bb3595f922fd04ad0064746fcbe7d980049a0771c24e9a9247b93f52798e6b"
+              },
+              {
+                "name": "bgsh/__ArchiveShader.bushvt",
+                "bytes": 28,
+                "magic": "\u0001\u0000\u0000\u0000",
+                "sha256": "151e28e32af587e3c8838b84513a69ad6917efa7067ad37a92daeeefea201ca4"
+              },
+              {
+                "name": "timg/__Combined.bntx",
+                "bytes": 53376,
+                "magic": "BNTX",
+                "sha256": "70a859c80fa60ccd45647f4ee4d2e7d952ba25156a721bf592c242cd76808803",
+                "textures": [
+                  {
+                    "name": "Black_00^r",
+                    "format_name": "BC4_UNORM",
+                    "width": 8,
+                    "height": 8,
+                    "mip_count": 1,
+                    "array_count": 1,
+                    "channel_sources": [
+                      2,
+                      2,
+                      2,
+                      1
+                    ],
+                    "mip0_size": 512
+                  },
+                  {
+                    "name": "Corner^s",
+                    "format_name": "BC4_UNORM",
+                    "width": 8,
+                    "height": 8,
+                    "mip_count": 1,
+                    "array_count": 1,
+                    "channel_sources": [
+                      1,
+                      1,
+                      1,
+                      2
+                    ],
+                    "mip0_size": 512
+                  },
+                  {
+                    "name": "GraSinV^w",
+                    "format_name": "ASTC_4x4_SRGB",
+                    "width": 64,
+                    "height": 64,
+                    "mip_count": 1,
+                    "array_count": 1,
+                    "channel_sources": [
+                      2,
+                      3,
+                      4,
+                      5
+                    ],
+                    "mip0_size": 4096
+                  },
+                  {
+                    "name": "MapWave^s",
+                    "format_name": "BC4_UNORM",
+                    "width": 64,
+                    "height": 32,
+                    "mip_count": 1,
+                    "array_count": 1,
+                    "channel_sources": [
+                      1,
+                      1,
+                      1,
+                      2
+                    ],
+                    "mip0_size": 1024
+                  },
+                  {
+                    "name": "Noise+r",
+                    "format_name": "BC4_UNORM",
+                    "width": 64,
+                    "height": 64,
+                    "mip_count": 1,
+                    "array_count": 1,
+                    "channel_sources": [
+                      2,
+                      2,
+                      2,
+                      1
+                    ],
+                    "mip0_size": 2048
+                  },
+                  {
+                    "name": "TexPaper^s",
+                    "format_name": "BC4_UNORM",
+                    "width": 256,
+                    "height": 256,
+                    "mip_count": 1,
+                    "array_count": 1,
+                    "channel_sources": [
+                      1,
+                      1,
+                      1,
+                      2
+                    ],
+                    "mip0_size": 32768
+                  },
+                  {
+                    "name": "WorkBenchCardCornerR12Sh^s",
+                    "format_name": "BC4_UNORM",
+                    "width": 24,
+                    "height": 24,
+                    "mip_count": 1,
+                    "array_count": 1,
+                    "channel_sources": [
+                      1,
+                      1,
+                      1,
+                      2
+                    ],
+                    "mip0_size": 512
+                  },
+                  {
+                    "name": "WorkBenchCardCornerR12^s",
+                    "format_name": "BC4_UNORM",
+                    "width": 14,
+                    "height": 14,
+                    "mip_count": 1,
+                    "array_count": 1,
+                    "channel_sources": [
+                      1,
+                      1,
+                      1,
+                      2
+                    ],
+                    "mip0_size": 512
+                  }
+                ]
+              },
+              {
+                "name": "blyt/LCharaMakeMapBtn.bflyt",
+                "bytes": 9008,
+                "magic": "FLYT",
+                "sha256": "cc947b0e738ed7fbbbb340e2a585f9fdb135825398a515052fda4ca9611b0f74",
+                "conversion": {
+                  "tool": "downloads/ACNH_island_RE/ACNH_island_RE/C_reverse/tools/acnh_rip/formats/bflyt.py read_bflyt; JSON serialization UTF-8 compact",
+                  "output": "analysis/acnh/CharaMakeMap_asset_trace/converted_layouts/LCharaMakeMapBtn/LCharaMakeMapBtn.json",
+                  "output_bytes": 8054,
+                  "output_sha256": "70064f61470b74b4ae7c1bfc9264b91773d4e8076940c0050f874145edd30d05"
+                }
+              }
+            ]
+          }
+        ],
+        "layouts": [
+          {
+            "entry": "blyt/LCharaMakeMapBtn.bflyt",
+            "entry_sha256": "cc947b0e738ed7fbbbb340e2a585f9fdb135825398a515052fda4ca9611b0f74",
+            "output": "analysis/acnh/CharaMakeMap_asset_trace/converted_layouts/LCharaMakeMapBtn/LCharaMakeMapBtn.json",
+            "output_sha256": "70064f61470b74b4ae7c1bfc9264b91773d4e8076940c0050f874145edd30d05",
+            "layout_name": "LCharaMakeMapBtn",
+            "layout_size": [
+              1920.0,
+              1080.0
+            ],
+            "texture_names": [
+              "Black_00^r",
+              "Corner^s",
+              "GraSinV^w",
+              "MapWave^s",
+              "Noise+r",
+              "TexPaper^s",
+              "WorkBenchCardCornerR12^s",
+              "WorkBenchCardCornerR12Sh^s"
+            ],
+            "material_table": [
+              {
+                "material_index": 0,
+                "name": "P_Maru_00",
+                "texture_bindings": [],
+                "flags": 0
+              },
+              {
+                "material_index": 1,
+                "name": "P_Maru_01",
+                "texture_bindings": [],
+                "flags": 0
+              },
+              {
+                "material_index": 2,
+                "name": "P_Maru_02",
+                "texture_bindings": [],
+                "flags": 0
+              },
+              {
+                "material_index": 3,
+                "name": "P_Maru_03",
+                "texture_bindings": [],
+                "flags": 0
+              },
+              {
+                "material_index": 4,
+                "name": "P_Maru_04",
+                "texture_bindings": [],
+                "flags": 0
+              },
+              {
+                "material_index": 5,
+                "name": "P_Maru_05",
+                "texture_bindings": [],
+                "flags": 0
+              },
+              {
+                "material_index": 6,
+                "name": "P_Maru_06",
+                "texture_bindings": [],
+                "flags": 0
+              },
+              {
+                "material_index": 7,
+                "name": "P_Maru_07",
+                "texture_bindings": [],
+                "flags": 0
+              },
+              {
+                "material_index": 8,
+                "name": "P_Wave_05",
+                "texture_bindings": [
+                  {
+                    "texture_index": 3,
+                    "texture_name": "MapWave^s",
+                    "wrap_s": 5,
+                    "wrap_t": 5
+                  }
+                ],
+                "flags": 21
+              },
+              {
+                "material_index": 9,
+                "name": "P_Wave_06",
+                "texture_bindings": [
+                  {
+                    "texture_index": 3,
+                    "texture_name": "MapWave^s",
+                    "wrap_s": 5,
+                    "wrap_t": 5
+                  }
+                ],
+                "flags": 21
+              },
+              {
+                "material_index": 10,
+                "name": "P_Wave_07",
+                "texture_bindings": [
+                  {
+                    "texture_index": 3,
+                    "texture_name": "MapWave^s",
+                    "wrap_s": 5,
+                    "wrap_t": 5
+                  }
+                ],
+                "flags": 21
+              },
+              {
+                "material_index": 11,
+                "name": "P_Wave_08",
+                "texture_bindings": [
+                  {
+                    "texture_index": 3,
+                    "texture_name": "MapWave^s",
+                    "wrap_s": 5,
+                    "wrap_t": 5
+                  }
+                ],
+                "flags": 21
+              },
+              {
+                "material_index": 12,
+                "name": "W_Base_02C ",
+                "texture_bindings": [],
+                "flags": 0
+              },
+              {
+                "material_index": 13,
+                "name": "W_Base_02LT",
+                "texture_bindings": [
+                  {
+                    "texture_index": 1,
+                    "texture_name": "Corner^s",
+                    "wrap_s": 4,
+                    "wrap_t": 4
+                  }
+                ],
+                "flags": 21
+              },
+              {
+                "material_index": 14,
+                "name": "W_Frame_00C ",
+                "texture_bindings": [],
+                "flags": 0
+              },
+              {
+                "material_index": 15,
+                "name": "W_Frame_00LT",
+                "texture_bindings": [
+                  {
+                    "texture_index": 6,
+                    "texture_name": "WorkBenchCardCornerR12^s",
+                    "wrap_s": 4,
+                    "wrap_t": 4
+                  }
+                ],
+                "flags": 21
+              },
+              {
+                "material_index": 16,
+                "name": "W_FrameSh_00C ",
+                "texture_bindings": [],
+                "flags": 0
+              },
+              {
+                "material_index": 17,
+                "name": "W_FrameSh_00LT",
+                "texture_bindings": [
+                  {
+                    "texture_index": 7,
+                    "texture_name": "WorkBenchCardCornerR12Sh^s",
+                    "wrap_s": 4,
+                    "wrap_t": 4
+                  }
+                ],
+                "flags": 21
+              },
+              {
+                "material_index": 18,
+                "name": "W_Tex_00C ",
+                "texture_bindings": [
+                  {
+                    "texture_index": 1,
+                    "texture_name": "Corner^s",
+                    "wrap_s": 4,
+                    "wrap_t": 4
+                  },
+                  {
+                    "texture_index": 5,
+                    "texture_name": "TexPaper^s",
+                    "wrap_s": 6,
+                    "wrap_t": 6
+                  }
+                ],
+                "flags": 32874
+              },
+              {
+                "material_index": 19,
+                "name": "W_Tex_00LT",
+                "texture_bindings": [
+                  {
+                    "texture_index": 1,
+                    "texture_name": "Corner^s",
+                    "wrap_s": 4,
+                    "wrap_t": 4
+                  },
+                  {
+                    "texture_index": 5,
+                    "texture_name": "TexPaper^s",
+                    "wrap_s": 6,
+                    "wrap_t": 6
+                  }
+                ],
+                "flags": 32874
+              },
+              {
+                "material_index": 20,
+                "name": "P_Capture_00",
+                "texture_bindings": [
+                  {
+                    "texture_index": 0,
+                    "texture_name": "Black_00^r",
+                    "wrap_s": 4,
+                    "wrap_t": 4
+                  },
+                  {
+                    "texture_index": 4,
+                    "texture_name": "Noise+r",
+                    "wrap_s": 5,
+                    "wrap_t": 5
+                  }
+                ],
+                "flags": 49258
+              },
+              {
+                "material_index": 21,
+                "name": "W_Gra_00C ",
+                "texture_bindings": [
+                  {
+                    "texture_index": 2,
+                    "texture_name": "GraSinV^w",
+                    "wrap_s": 4,
+                    "wrap_t": 4
+                  }
+                ],
+                "flags": 32789
+              },
+              {
+                "material_index": 22,
+                "name": "W_Gra_00LT",
+                "texture_bindings": [
+                  {
+                    "texture_index": 1,
+                    "texture_name": "Corner^s",
+                    "wrap_s": 4,
+                    "wrap_t": 4
+                  },
+                  {
+                    "texture_index": 2,
+                    "texture_name": "GraSinV^w",
+                    "wrap_s": 4,
+                    "wrap_t": 4
+                  }
+                ],
+                "flags": 32874
+              }
+            ],
+            "picture_bindings": [
+              {
+                "pane_path": "RootPane/N_Scale_00/N_Wave_01/P_Wave_08",
+                "pane_name": "P_Wave_08",
+                "pane_size": [
+                  256.0,
+                  32.0
+                ],
+                "material_index": 11,
+                "material_name": "P_Wave_08",
+                "texture_bindings": [
+                  {
+                    "texture_index": 3,
+                    "texture_name": "MapWave^s",
+                    "wrap_s": 5,
+                    "wrap_t": 5
+                  }
+                ]
+              },
+              {
+                "pane_path": "RootPane/N_Scale_00/N_Wave_01/P_Wave_07",
+                "pane_name": "P_Wave_07",
+                "pane_size": [
+                  192.0,
+                  32.0
+                ],
+                "material_index": 10,
+                "material_name": "P_Wave_07",
+                "texture_bindings": [
+                  {
+                    "texture_index": 3,
+                    "texture_name": "MapWave^s",
+                    "wrap_s": 5,
+                    "wrap_t": 5
+                  }
+                ]
+              },
+              {
+                "pane_path": "RootPane/N_Scale_00/N_Wave_01/P_Wave_06",
+                "pane_name": "P_Wave_06",
+                "pane_size": [
+                  192.0,
+                  32.0
+                ],
+                "material_index": 9,
+                "material_name": "P_Wave_06",
+                "texture_bindings": [
+                  {
+                    "texture_index": 3,
+                    "texture_name": "MapWave^s",
+                    "wrap_s": 5,
+                    "wrap_t": 5
+                  }
+                ]
+              },
+              {
+                "pane_path": "RootPane/N_Scale_00/N_Wave_01/P_Wave_05",
+                "pane_name": "P_Wave_05",
+                "pane_size": [
+                  128.0,
+                  32.0
+                ],
+                "material_index": 8,
+                "material_name": "P_Wave_05",
+                "texture_bindings": [
+                  {
+                    "texture_index": 3,
+                    "texture_name": "MapWave^s",
+                    "wrap_s": 5,
+                    "wrap_t": 5
+                  }
+                ]
+              },
+              {
+                "pane_path": "RootPane/N_Scale_00/P_Capture_00",
+                "pane_name": "P_Capture_00",
+                "pane_size": [
+                  418.0,
+                  418.0
+                ],
+                "material_index": 20,
+                "material_name": "P_Capture_00",
+                "texture_bindings": [
+                  {
+                    "texture_index": 0,
+                    "texture_name": "Black_00^r",
+                    "wrap_s": 4,
+                    "wrap_t": 4
+                  },
+                  {
+                    "texture_index": 4,
+                    "texture_name": "Noise+r",
+                    "wrap_s": 5,
+                    "wrap_t": 5
+                  }
+                ]
+              }
+            ],
+            "panes": [
+              {
+                "path": "RootPane",
+                "type": "pan1",
+                "name": "RootPane",
+                "visible": true,
+                "size": [
+                  1920.0,
+                  1080.0
+                ]
+              },
+              {
+                "path": "RootPane/B_Btn_00",
+                "type": "bnd1",
+                "name": "B_Btn_00",
+                "visible": true,
+                "size": [
+                  400.0,
+                  210.0
+                ]
+              },
+              {
+                "path": "RootPane/N_Scale_00",
+                "type": "pan1",
+                "name": "N_Scale_00",
+                "visible": true,
+                "size": [
+                  30.0,
+                  40.0
+                ]
+              },
+              {
+                "path": "RootPane/N_Scale_00/W_FrameSh_00",
+                "type": "wnd1",
+                "name": "W_FrameSh_00",
+                "visible": true,
+                "size": [
+                  562.0,
+                  354.0
+                ]
+              },
+              {
+                "path": "RootPane/N_Scale_00/W_Frame_00",
+                "type": "wnd1",
+                "name": "W_Frame_00",
+                "visible": true,
+                "size": [
+                  554.0,
+                  346.0
+                ]
+              },
+              {
+                "path": "RootPane/N_Scale_00/W_Base_02",
+                "type": "wnd1",
+                "name": "W_Base_02",
+                "visible": true,
+                "size": [
+                  528.0,
+                  320.0
+                ]
+              },
+              {
+                "path": "RootPane/N_Scale_00/N_Wave_01",
+                "type": "pan1",
+                "name": "N_Wave_01",
+                "visible": true,
+                "size": [
+                  30.0,
+                  40.0
+                ]
+              },
+              {
+                "path": "RootPane/N_Scale_00/N_Wave_01/P_Wave_08",
+                "type": "pic1",
+                "name": "P_Wave_08",
+                "visible": true,
+                "size": [
+                  256.0,
+                  32.0
+                ],
+                "material_index": 11
+              },
+              {
+                "path": "RootPane/N_Scale_00/N_Wave_01/P_Wave_07",
+                "type": "pic1",
+                "name": "P_Wave_07",
+                "visible": true,
+                "size": [
+                  192.0,
+                  32.0
+                ],
+                "material_index": 10
+              },
+              {
+                "path": "RootPane/N_Scale_00/N_Wave_01/P_Wave_06",
+                "type": "pic1",
+                "name": "P_Wave_06",
+                "visible": true,
+                "size": [
+                  192.0,
+                  32.0
+                ],
+                "material_index": 9
+              },
+              {
+                "path": "RootPane/N_Scale_00/N_Wave_01/P_Wave_05",
+                "type": "pic1",
+                "name": "P_Wave_05",
+                "visible": true,
+                "size": [
+                  128.0,
+                  32.0
+                ],
+                "material_index": 8
+              },
+              {
+                "path": "RootPane/N_Scale_00/W_Gra_00",
+                "type": "wnd1",
+                "name": "W_Gra_00",
+                "visible": true,
+                "size": [
+                  528.0,
+                  320.0
+                ]
+              },
+              {
+                "path": "RootPane/N_Scale_00/N_Capture_00",
+                "type": "pan1",
+                "name": "N_Capture_00",
+                "visible": true,
+                "size": [
+                  390.0,
+                  390.0
+                ]
+              },
+              {
+                "path": "RootPane/N_Scale_00/N_Capture_00/L_MapChoice_00",
+                "type": "prt1",
+                "name": "L_MapChoice_00",
+                "visible": true,
+                "size": [
+                  426.0,
+                  380.0000305175781
+                ],
+                "part_layout": "LMapChoice"
+              },
+              {
+                "path": "RootPane/N_Scale_00/P_Capture_00",
+                "type": "pic1",
+                "name": "P_Capture_00",
+                "visible": true,
+                "size": [
+                  418.0,
+                  418.0
+                ],
+                "material_index": 20
+              },
+              {
+                "path": "RootPane/N_Scale_00/W_Tex_00",
+                "type": "wnd1",
+                "name": "W_Tex_00",
+                "visible": true,
+                "size": [
+                  528.0,
+                  320.0
+                ]
+              },
+              {
+                "path": "RootPane/N_Scale_00/L_LoadingIcon_00",
+                "type": "prt1",
+                "name": "L_LoadingIcon_00",
+                "visible": true,
+                "size": [
+                  82.49212646484375,
+                  70.62742614746094
+                ],
+                "part_layout": "LIconLoad"
+              }
+            ]
+          }
+        ],
+        "bntx": [
+          {
+            "entry": "timg/__Combined.bntx",
+            "bytes": 53376,
+            "sha256": "70a859c80fa60ccd45647f4ee4d2e7d952ba25156a721bf592c242cd76808803",
+            "textures": [
+              {
+                "name": "Black_00^r",
+                "format_name": "BC4_UNORM",
+                "width": 8,
+                "height": 8,
+                "mip_count": 1,
+                "array_count": 1,
+                "channel_sources": [
+                  2,
+                  2,
+                  2,
+                  1
+                ],
+                "mip0_size": 512,
+                "decoded_png": {
+                  "path": "analysis/acnh/CharaMakeMap_asset_trace/converted_textures/LCharaMakeMapBtn/Black_00^r.png",
+                  "bytes": 79,
+                  "sha256": "2f62f422e0729f6b85cbd215464738166844882753b3d5c36014f094eb709947",
+                  "dimensions": [
+                    8,
+                    8
+                  ],
+                  "unique_rgba_colors": 1,
+                  "only_rgba_color": [
+                    0,
+                    0,
+                    0,
+                    255
+                  ]
+                }
+              },
+              {
+                "name": "Corner^s",
+                "format_name": "BC4_UNORM",
+                "width": 8,
+                "height": 8,
+                "mip_count": 1,
+                "array_count": 1,
+                "channel_sources": [
+                  1,
+                  1,
+                  1,
+                  2
+                ],
+                "mip0_size": 512,
+                "decoded_png": {
+                  "path": "analysis/acnh/CharaMakeMap_asset_trace/converted_textures/LCharaMakeMapBtn/Corner^s.png",
+                  "bytes": 86,
+                  "sha256": "acd56e470ff7b2982e9ce9142cc365a88d787d7815d0c7d003340184c5715982",
+                  "dimensions": [
+                    8,
+                    8
+                  ],
+                  "unique_rgba_colors": 2,
+                  "only_rgba_color": null
+                }
+              },
+              {
+                "name": "GraSinV^w",
+                "format_name": "ASTC_4x4_SRGB",
+                "width": 64,
+                "height": 64,
+                "mip_count": 1,
+                "array_count": 1,
+                "channel_sources": [
+                  2,
+                  3,
+                  4,
+                  5
+                ],
+                "mip0_size": 4096,
+                "decoded_png": {
+                  "path": "analysis/acnh/CharaMakeMap_asset_trace/converted_textures/LCharaMakeMapBtn/GraSinV^w.png",
+                  "bytes": 1411,
+                  "sha256": "b2f199e4439468e01a4b6e30e41ba753b2ee157b240b019cf646ce32d1dd0e0a",
+                  "dimensions": [
+                    64,
+                    64
+                  ],
+                  "unique_rgba_colors": 103,
+                  "only_rgba_color": null
+                }
+              },
+              {
+                "name": "MapWave^s",
+                "format_name": "BC4_UNORM",
+                "width": 64,
+                "height": 32,
+                "mip_count": 1,
+                "array_count": 1,
+                "channel_sources": [
+                  1,
+                  1,
+                  1,
+                  2
+                ],
+                "mip0_size": 1024,
+                "decoded_png": {
+                  "path": "analysis/acnh/CharaMakeMap_asset_trace/converted_textures/LCharaMakeMapBtn/MapWave^s.png",
+                  "bytes": 935,
+                  "sha256": "8ca93dd6242623f1cbcf03b1c01e726a94311f48783c17cdfc86c885aa56c865",
+                  "dimensions": [
+                    64,
+                    32
+                  ],
+                  "unique_rgba_colors": 114,
+                  "only_rgba_color": null
+                }
+              },
+              {
+                "name": "Noise+r",
+                "format_name": "BC4_UNORM",
+                "width": 64,
+                "height": 64,
+                "mip_count": 1,
+                "array_count": 1,
+                "channel_sources": [
+                  2,
+                  2,
+                  2,
+                  1
+                ],
+                "mip0_size": 2048,
+                "decoded_png": {
+                  "path": "analysis/acnh/CharaMakeMap_asset_trace/converted_textures/LCharaMakeMapBtn/Noise+r.png",
+                  "bytes": 3403,
+                  "sha256": "b423f752a62aa056095d8937536043ead227ea49af864fa6b372fd332ccc4dc9",
+                  "dimensions": [
+                    64,
+                    64
+                  ],
+                  "unique_rgba_colors": 185,
+                  "only_rgba_color": null
+                }
+              },
+              {
+                "name": "TexPaper^s",
+                "format_name": "BC4_UNORM",
+                "width": 256,
+                "height": 256,
+                "mip_count": 1,
+                "array_count": 1,
+                "channel_sources": [
+                  1,
+                  1,
+                  1,
+                  2
+                ],
+                "mip0_size": 32768,
+                "decoded_png": {
+                  "path": "analysis/acnh/CharaMakeMap_asset_trace/converted_textures/LCharaMakeMapBtn/TexPaper^s.png",
+                  "bytes": 121601,
+                  "sha256": "09380388f7a2ffa5f890a0b3edf505fe201505bcef6953fea07e7d3f87e678eb",
+                  "dimensions": [
+                    256,
+                    256
+                  ],
+                  "unique_rgba_colors": 255,
+                  "only_rgba_color": null
+                }
+              },
+              {
+                "name": "WorkBenchCardCornerR12Sh^s",
+                "format_name": "BC4_UNORM",
+                "width": 24,
+                "height": 24,
+                "mip_count": 1,
+                "array_count": 1,
+                "channel_sources": [
+                  1,
+                  1,
+                  1,
+                  2
+                ],
+                "mip0_size": 512,
+                "decoded_png": {
+                  "path": "analysis/acnh/CharaMakeMap_asset_trace/converted_textures/LCharaMakeMapBtn/WorkBenchCardCornerR12Sh^s.png",
+                  "bytes": 687,
+                  "sha256": "494bfd1086bc4e4ab6df2501307a02d2d8f0b89917684525bc9b27e6f7abc07d",
+                  "dimensions": [
+                    24,
+                    24
+                  ],
+                  "unique_rgba_colors": 114,
+                  "only_rgba_color": null
+                }
+              },
+              {
+                "name": "WorkBenchCardCornerR12^s",
+                "format_name": "BC4_UNORM",
+                "width": 14,
+                "height": 14,
+                "mip_count": 1,
+                "array_count": 1,
+                "channel_sources": [
+                  1,
+                  1,
+                  1,
+                  2
+                ],
+                "mip0_size": 512,
+                "decoded_png": {
+                  "path": "analysis/acnh/CharaMakeMap_asset_trace/converted_textures/LCharaMakeMapBtn/WorkBenchCardCornerR12^s.png",
+                  "bytes": 181,
+                  "sha256": "e2357485aeaad73f8424ce4640b82adaf9816be7e78192078081091a40d40af2",
+                  "dimensions": [
+                    14,
+                    14
+                  ],
+                  "unique_rgba_colors": 16,
+                  "only_rgba_color": null
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "LMapChoice",
+        "source": {
+          "path": "downloads/acnh_additional_romfs_2026-11-02/romfs/Layout/LMapChoice.Nin_NX_NVN.zs",
+          "bytes": 3210,
+          "sha256": "d53a3adecc2b6a30586f46fa62b3a59dee533110d70e9ccf3c69b68cb6108cc1"
+        },
+        "compression": "Zstandard .zs",
+        "decompressed_sarc": {
+          "bytes": 27704,
+          "magic": "SARC",
+          "sha256": "d05df6a94da1423d1773270104c9cb39d17e2f848121a1e5f4b905b145b671be"
+        },
+        "outer_members": [
+          {
+            "name": "LMapChoice.arc",
+            "bytes": 19512,
+            "magic": "SARC",
+            "sha256": "654a5863f230d216e65972202d3ef17022cd28a6acc1ea9347331bdb68032587",
+            "members": [
+              {
+                "name": "anim/LMapChoice_Out.bflan",
+                "bytes": 504,
+                "magic": "FLAN",
+                "sha256": "53202fb1250939fbdea4d339ab63b737bdb58e44e4159fd122d3edd91e375dcd"
+              },
+              {
+                "name": "timg/__Combined.bntx",
+                "bytes": 8312,
+                "magic": "BNTX",
+                "sha256": "6cc500513685c399c42dc3ec3cdf8f68c8a2611aa76af3afeb3bd203da2648b9",
+                "textures": [
+                  {
+                    "name": "Capture^t",
+                    "format_name": "BC5_UNORM",
+                    "width": 8,
+                    "height": 8,
+                    "mip_count": 1,
+                    "array_count": 1,
+                    "channel_sources": [
+                      2,
+                      2,
+                      2,
+                      3
+                    ],
+                    "mip0_size": 512
+                  },
+                  {
+                    "name": "Noise^r",
+                    "format_name": "BC4_UNORM",
+                    "width": 64,
+                    "height": 64,
+                    "mip_count": 1,
+                    "array_count": 1,
+                    "channel_sources": [
+                      2,
+                      2,
+                      2,
+                      1
+                    ],
+                    "mip0_size": 2048
+                  }
+                ]
+              },
+              {
+                "name": "blyt/LMapChoice.bflyt",
+                "bytes": 2496,
+                "magic": "FLYT",
+                "sha256": "a4fe91a4abcc2d3bb84e7d88cf3753d14f8bd444be7435ab8bf61b0326a099aa",
+                "conversion": {
+                  "tool": "downloads/ACNH_island_RE/ACNH_island_RE/C_reverse/tools/acnh_rip/formats/bflyt.py read_bflyt; JSON serialization UTF-8 compact",
+                  "output": "analysis/acnh/CharaMakeMap_asset_trace/converted_layouts/LMapChoice/LMapChoice.json",
+                  "output_bytes": 2688,
+                  "output_sha256": "08fc60a5f16943f51a37c391130209ea8844d800627ed95b5f2b23bae68a0a60"
+                }
+              },
+              {
+                "name": "anim/LMapChoice_In.bflan",
+                "bytes": 504,
+                "magic": "FLAN",
+                "sha256": "6a311583a81925946379d042e85db12cbafe5bf6e7215d38dda174f2a0767fd5"
+              }
+            ]
+          }
+        ],
+        "layouts": [
+          {
+            "entry": "blyt/LMapChoice.bflyt",
+            "entry_sha256": "a4fe91a4abcc2d3bb84e7d88cf3753d14f8bd444be7435ab8bf61b0326a099aa",
+            "output": "analysis/acnh/CharaMakeMap_asset_trace/converted_layouts/LMapChoice/LMapChoice.json",
+            "output_sha256": "08fc60a5f16943f51a37c391130209ea8844d800627ed95b5f2b23bae68a0a60",
+            "layout_name": "LMapChoice",
+            "layout_size": [
+              1920.0,
+              1080.0
+            ],
+            "texture_names": [
+              "Capture^t",
+              "Noise^r"
+            ],
+            "material_table": [
+              {
+                "material_index": 0,
+                "name": "P_Map_00",
+                "texture_bindings": [
+                  {
+                    "texture_index": 0,
+                    "texture_name": "Capture^t",
+                    "wrap_s": 0,
+                    "wrap_t": 0
+                  }
+                ],
+                "flags": 267285
+              },
+              {
+                "material_index": 1,
+                "name": "P_Material_00",
+                "texture_bindings": [
+                  {
+                    "texture_index": 1,
+                    "texture_name": "Noise^r",
+                    "wrap_s": 5,
+                    "wrap_t": 5
+                  }
+                ],
+                "flags": 33813
+              }
+            ],
+            "picture_bindings": [
+              {
+                "pane_path": "RootPane/N_InOut_00/N_Scissor_00/P_Map_00",
+                "pane_name": "P_Map_00",
+                "pane_size": [
+                  380.0,
+                  380.0
+                ],
+                "material_index": 0,
+                "material_name": "P_Map_00",
+                "texture_bindings": [
+                  {
+                    "texture_index": 0,
+                    "texture_name": "Capture^t",
+                    "wrap_s": 0,
+                    "wrap_t": 0
+                  }
+                ]
+              },
+              {
+                "pane_path": "RootPane/N_InOut_00/P_Material_00",
+                "pane_name": "P_Material_00",
+                "pane_size": [
+                  370.0,
+                  302.0
+                ],
+                "material_index": 1,
+                "material_name": "P_Material_00",
+                "texture_bindings": [
+                  {
+                    "texture_index": 1,
+                    "texture_name": "Noise^r",
+                    "wrap_s": 5,
+                    "wrap_t": 5
+                  }
+                ]
+              }
+            ],
+            "panes": [
+              {
+                "path": "RootPane",
+                "type": "pan1",
+                "name": "RootPane",
+                "visible": true,
+                "size": [
+                  1920.0,
+                  1080.0
+                ]
+              },
+              {
+                "path": "RootPane/N_InOut_00",
+                "type": "pan1",
+                "name": "N_InOut_00",
+                "visible": true,
+                "size": [
+                  360.0,
+                  360.0
+                ]
+              },
+              {
+                "path": "RootPane/N_InOut_00/N_Scissor_00",
+                "type": "pan1",
+                "name": "N_Scissor_00",
+                "visible": true,
+                "size": [
+                  354.0,
+                  290.0
+                ]
+              },
+              {
+                "path": "RootPane/N_InOut_00/N_Scissor_00/P_Map_00",
+                "type": "pic1",
+                "name": "P_Map_00",
+                "visible": true,
+                "size": [
+                  380.0,
+                  380.0
+                ],
+                "material_index": 0
+              },
+              {
+                "path": "RootPane/N_InOut_00/P_Material_00",
+                "type": "pic1",
+                "name": "P_Material_00",
+                "visible": true,
+                "size": [
+                  370.0,
+                  302.0
+                ],
+                "material_index": 1
+              },
+              {
+                "path": "RootPane/N_InOut_00/N_Icon_00",
+                "type": "pan1",
+                "name": "N_Icon_00",
+                "visible": true,
+                "size": [
+                  30.0,
+                  40.0
+                ]
+              },
+              {
+                "path": "RootPane/N_InOut_00/N_Icon_00/N_IconOpenSpace_00",
+                "type": "pan1",
+                "name": "N_IconOpenSpace_00",
+                "visible": true,
+                "size": [
+                  30.0,
+                  40.0
+                ]
+              },
+              {
+                "path": "RootPane/N_InOut_00/N_Icon_00/N_IconOpenSpace_00/L_IconOpenSpace_00",
+                "type": "prt1",
+                "name": "L_IconOpenSpace_00",
+                "visible": true,
+                "size": [
+                  40.89999771118164,
+                  39.599998474121094
+                ],
+                "part_layout": "LMapIconOpenSpaceStart"
+              },
+              {
+                "path": "RootPane/N_InOut_00/N_MapArea_00",
+                "type": "pan1",
+                "name": "N_MapArea_00",
+                "visible": true,
+                "size": [
+                  427.5,
+                  380.0
+                ]
+              }
+            ]
+          }
+        ],
+        "bntx": [
+          {
+            "entry": "timg/__Combined.bntx",
+            "bytes": 8312,
+            "sha256": "6cc500513685c399c42dc3ec3cdf8f68c8a2611aa76af3afeb3bd203da2648b9",
+            "textures": [
+              {
+                "name": "Capture^t",
+                "format_name": "BC5_UNORM",
+                "width": 8,
+                "height": 8,
+                "mip_count": 1,
+                "array_count": 1,
+                "channel_sources": [
+                  2,
+                  2,
+                  2,
+                  3
+                ],
+                "mip0_size": 512,
+                "decoded_png": {
+                  "path": "analysis/acnh/CharaMakeMap_asset_trace/converted_textures/LMapChoice/Capture^t.png",
+                  "bytes": 78,
+                  "sha256": "58014df8c2e6a72b5323bfbb0a565ffb403ce1008215afbda789624c5b0f9ea7",
+                  "dimensions": [
+                    8,
+                    8
+                  ],
+                  "unique_rgba_colors": 1,
+                  "only_rgba_color": [
+                    255,
+                    255,
+                    255,
+                    0
+                  ]
+                }
+              },
+              {
+                "name": "Noise^r",
+                "format_name": "BC4_UNORM",
+                "width": 64,
+                "height": 64,
+                "mip_count": 1,
+                "array_count": 1,
+                "channel_sources": [
+                  2,
+                  2,
+                  2,
+                  1
+                ],
+                "mip0_size": 2048,
+                "decoded_png": {
+                  "path": "analysis/acnh/CharaMakeMap_asset_trace/converted_textures/LMapChoice/Noise^r.png",
+                  "bytes": 3185,
+                  "sha256": "e8a3e224eb7a27823434fcd48e05103d4ce2fec7b63376329ed19722b4c980b5",
+                  "dimensions": [
+                    64,
+                    64
+                  ],
+                  "unique_rgba_colors": 147,
+                  "only_rgba_color": null
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "LIconLoad",
+        "source": {
+          "path": "downloads/acnh_additional_romfs_2026-11-02/romfs/Layout/LIconLoad.Nin_NX_NVN.zs",
+          "bytes": 6830,
+          "sha256": "c6d26e1baab869f2977509614caa43c79737b1c9efa04778904a9473a92f2fea"
+        },
+        "compression": "Zstandard .zs",
+        "decompressed_sarc": {
+          "bytes": 65656,
+          "magic": "SARC",
+          "sha256": "5968dcef3cc612c48d85024c4b896842799b26e12301426953ce9bc7f8898d08"
+        },
+        "outer_members": [
+          {
+            "name": "LIconLoad.arc",
+            "bytes": 57464,
+            "magic": "SARC",
+            "sha256": "0721deb9981381e916a3fafda045fc40f8a0cd65a5c38f55e4e49e9b44692124",
+            "members": [
+              {
+                "name": "bgsh/__ArchiveShader.bnsh",
+                "bytes": 29392,
+                "magic": "BNSH",
+                "sha256": "8ae75a5ade3306b8dee3554d7f7d864a241eaa1947d973cf01d43a017c73bfb0"
+              },
+              {
+                "name": "blyt/LIconLoad.bflyt",
+                "bytes": 8664,
+                "magic": "FLYT",
+                "sha256": "c55f1e401bf8d892b56d5b0bec6b83f94a1427f739fec76696b154fcc2127d76",
+                "conversion": {
+                  "tool": "downloads/ACNH_island_RE/ACNH_island_RE/C_reverse/tools/acnh_rip/formats/bflyt.py read_bflyt; JSON serialization UTF-8 compact",
+                  "output": "analysis/acnh/CharaMakeMap_asset_trace/converted_layouts/LIconLoad/LIconLoad.json",
+                  "output_bytes": 11359,
+                  "output_sha256": "c6e62d93b45bc77526260c37887f5b427a6d6145292dd48ac82678321a0a8666"
+                }
+              },
+              {
+                "name": "anim/LIconLoad_In.bflan",
+                "bytes": 212,
+                "magic": "FLAN",
+                "sha256": "d8a3cdc4ab68a390c55a455f8ecc58980e3eac2f84fb797a573632a19cd055d6"
+              },
+              {
+                "name": "bgsh/__ArchiveShader.bushvt",
+                "bytes": 28,
+                "magic": "\u0001\u0000\u0000\u0000",
+                "sha256": "149a1e7ee2f2f4f63dcabd8a45c3656c5e90611f437f8eb50f27c5697116a42f"
+              },
+              {
+                "name": "anim/LIconLoad_Loop.bflan",
+                "bytes": 4080,
+                "magic": "FLAN",
+                "sha256": "f75e011f4a2d223813e8ce9d5e56fd22def3888580917bf7bbef7b01337582e5"
+              },
+              {
+                "name": "timg/__Combined.bntx",
+                "bytes": 8312,
+                "magic": "BNTX",
+                "sha256": "661709c684e95f38eabe20b71360e13ec3f90d93d29634e4ed6bf000c2ccbebe",
+                "textures": [
+                  {
+                    "name": "MaruBlur^s",
+                    "format_name": "BC4_UNORM",
+                    "width": 8,
+                    "height": 8,
+                    "mip_count": 1,
+                    "array_count": 1,
+                    "channel_sources": [
+                      1,
+                      1,
+                      1,
+                      2
+                    ],
+                    "mip0_size": 512
+                  },
+                  {
+                    "name": "White_00^r",
+                    "format_name": "BC4_UNORM",
+                    "width": 8,
+                    "height": 8,
+                    "mip_count": 1,
+                    "array_count": 1,
+                    "channel_sources": [
+                      2,
+                      2,
+                      2,
+                      1
+                    ],
+                    "mip0_size": 512
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "layouts": [
+          {
+            "entry": "blyt/LIconLoad.bflyt",
+            "entry_sha256": "c55f1e401bf8d892b56d5b0bec6b83f94a1427f739fec76696b154fcc2127d76",
+            "output": "analysis/acnh/CharaMakeMap_asset_trace/converted_layouts/LIconLoad/LIconLoad.json",
+            "output_sha256": "c6e62d93b45bc77526260c37887f5b427a6d6145292dd48ac82678321a0a8666",
+            "layout_name": "LIconLoad",
+            "layout_size": [
+              1920.0,
+              1080.0
+            ],
+            "texture_names": [
+              "MaruBlur^s",
+              "White_00^r"
+            ],
+            "material_table": [
+              {
+                "material_index": 0,
+                "name": "P_Sh_00",
+                "texture_bindings": [
+                  {
+                    "texture_index": 0,
+                    "texture_name": "MaruBlur^s",
+                    "wrap_s": 6,
+                    "wrap_t": 6
+                  }
+                ],
+                "flags": 21
+              },
+              {
+                "material_index": 1,
+                "name": "P_Sh_01",
+                "texture_bindings": [
+                  {
+                    "texture_index": 0,
+                    "texture_name": "MaruBlur^s",
+                    "wrap_s": 6,
+                    "wrap_t": 6
+                  }
+                ],
+                "flags": 21
+              },
+              {
+                "material_index": 2,
+                "name": "P_Sh_02",
+                "texture_bindings": [
+                  {
+                    "texture_index": 0,
+                    "texture_name": "MaruBlur^s",
+                    "wrap_s": 6,
+                    "wrap_t": 6
+                  }
+                ],
+                "flags": 21
+              },
+              {
+                "material_index": 3,
+                "name": "P_Sh_03",
+                "texture_bindings": [
+                  {
+                    "texture_index": 0,
+                    "texture_name": "MaruBlur^s",
+                    "wrap_s": 6,
+                    "wrap_t": 6
+                  }
+                ],
+                "flags": 21
+              },
+              {
+                "material_index": 4,
+                "name": "P_Sh_04",
+                "texture_bindings": [
+                  {
+                    "texture_index": 0,
+                    "texture_name": "MaruBlur^s",
+                    "wrap_s": 6,
+                    "wrap_t": 6
+                  }
+                ],
+                "flags": 21
+              },
+              {
+                "material_index": 5,
+                "name": "P_Sh_05",
+                "texture_bindings": [
+                  {
+                    "texture_index": 0,
+                    "texture_name": "MaruBlur^s",
+                    "wrap_s": 6,
+                    "wrap_t": 6
+                  }
+                ],
+                "flags": 21
+              },
+              {
+                "material_index": 6,
+                "name": "P_Sh_06",
+                "texture_bindings": [
+                  {
+                    "texture_index": 0,
+                    "texture_name": "MaruBlur^s",
+                    "wrap_s": 6,
+                    "wrap_t": 6
+                  }
+                ],
+                "flags": 21
+              },
+              {
+                "material_index": 7,
+                "name": "P_Sh_07",
+                "texture_bindings": [
+                  {
+                    "texture_index": 0,
+                    "texture_name": "MaruBlur^s",
+                    "wrap_s": 6,
+                    "wrap_t": 6
+                  }
+                ],
+                "flags": 21
+              },
+              {
+                "material_index": 8,
+                "name": "P_Maru_00",
+                "texture_bindings": [
+                  {
+                    "texture_index": 1,
+                    "texture_name": "White_00^r",
+                    "wrap_s": 4,
+                    "wrap_t": 4
+                  }
+                ],
+                "flags": 21
+              },
+              {
+                "material_index": 9,
+                "name": "P_Maru_01",
+                "texture_bindings": [
+                  {
+                    "texture_index": 1,
+                    "texture_name": "White_00^r",
+                    "wrap_s": 4,
+                    "wrap_t": 4
+                  }
+                ],
+                "flags": 21
+              },
+              {
+                "material_index": 10,
+                "name": "P_Maru_02",
+                "texture_bindings": [
+                  {
+                    "texture_index": 1,
+                    "texture_name": "White_00^r",
+                    "wrap_s": 4,
+                    "wrap_t": 4
+                  }
+                ],
+                "flags": 21
+              },
+              {
+                "material_index": 11,
+                "name": "P_Maru_03",
+                "texture_bindings": [
+                  {
+                    "texture_index": 1,
+                    "texture_name": "White_00^r",
+                    "wrap_s": 4,
+                    "wrap_t": 4
+                  }
+                ],
+                "flags": 21
+              },
+              {
+                "material_index": 12,
+                "name": "P_Maru_04",
+                "texture_bindings": [
+                  {
+                    "texture_index": 1,
+                    "texture_name": "White_00^r",
+                    "wrap_s": 4,
+                    "wrap_t": 4
+                  }
+                ],
+                "flags": 21
+              },
+              {
+                "material_index": 13,
+                "name": "P_Maru_05",
+                "texture_bindings": [
+                  {
+                    "texture_index": 1,
+                    "texture_name": "White_00^r",
+                    "wrap_s": 4,
+                    "wrap_t": 4
+                  }
+                ],
+                "flags": 21
+              },
+              {
+                "material_index": 14,
+                "name": "P_Maru_06",
+                "texture_bindings": [
+                  {
+                    "texture_index": 1,
+                    "texture_name": "White_00^r",
+                    "wrap_s": 4,
+                    "wrap_t": 4
+                  }
+                ],
+                "flags": 21
+              },
+              {
+                "material_index": 15,
+                "name": "P_Maru_07",
+                "texture_bindings": [
+                  {
+                    "texture_index": 1,
+                    "texture_name": "White_00^r",
+                    "wrap_s": 4,
+                    "wrap_t": 4
+                  }
+                ],
+                "flags": 21
+              }
+            ],
+            "picture_bindings": [
+              {
+                "pane_path": "RootPane/N_InOut_00/N_ShONOFF_00/N_Sh_00/P_Sh_00",
+                "pane_name": "P_Sh_00",
+                "pane_size": [
+                  16.0,
+                  16.0
+                ],
+                "material_index": 0,
+                "material_name": "P_Sh_00",
+                "texture_bindings": [
+                  {
+                    "texture_index": 0,
+                    "texture_name": "MaruBlur^s",
+                    "wrap_s": 6,
+                    "wrap_t": 6
+                  }
+                ]
+              },
+              {
+                "pane_path": "RootPane/N_InOut_00/N_ShONOFF_00/N_Sh_01/P_Sh_01",
+                "pane_name": "P_Sh_01",
+                "pane_size": [
+                  30.681838989257812,
+                  30.681838989257812
+                ],
+                "material_index": 1,
+                "material_name": "P_Sh_01",
+                "texture_bindings": [
+                  {
+                    "texture_index": 0,
+                    "texture_name": "MaruBlur^s",
+                    "wrap_s": 6,
+                    "wrap_t": 6
+                  }
+                ]
+              },
+              {
+                "pane_path": "RootPane/N_InOut_00/N_ShONOFF_00/N_Sh_02/P_Sh_02",
+                "pane_name": "P_Sh_02",
+                "pane_size": [
+                  24.38962173461914,
+                  24.38962173461914
+                ],
+                "material_index": 2,
+                "material_name": "P_Sh_02",
+                "texture_bindings": [
+                  {
+                    "texture_index": 0,
+                    "texture_name": "MaruBlur^s",
+                    "wrap_s": 6,
+                    "wrap_t": 6
+                  }
+                ]
+              },
+              {
+                "pane_path": "RootPane/N_InOut_00/N_ShONOFF_00/N_Sh_03/P_Sh_03",
+                "pane_name": "P_Sh_03",
+                "pane_size": [
+                  18.563495635986328,
+                  18.563495635986328
+                ],
+                "material_index": 3,
+                "material_name": "P_Sh_03",
+                "texture_bindings": [
+                  {
+                    "texture_index": 0,
+                    "texture_name": "MaruBlur^s",
+                    "wrap_s": 6,
+                    "wrap_t": 6
+                  }
+                ]
+              },
+              {
+                "pane_path": "RootPane/N_InOut_00/N_ShONOFF_00/N_Sh_04/P_Sh_04",
+                "pane_name": "P_Sh_04",
+                "pane_size": [
+                  16.0,
+                  16.0
+                ],
+                "material_index": 4,
+                "material_name": "P_Sh_04",
+                "texture_bindings": [
+                  {
+                    "texture_index": 0,
+                    "texture_name": "MaruBlur^s",
+                    "wrap_s": 6,
+                    "wrap_t": 6
+                  }
+                ]
+              },
+              {
+                "pane_path": "RootPane/N_InOut_00/N_ShONOFF_00/N_Sh_05/P_Sh_05",
+                "pane_name": "P_Sh_05",
+                "pane_size": [
+                  16.0,
+                  16.0
+                ],
+                "material_index": 5,
+                "material_name": "P_Sh_05",
+                "texture_bindings": [
+                  {
+                    "texture_index": 0,
+                    "texture_name": "MaruBlur^s",
+                    "wrap_s": 6,
+                    "wrap_t": 6
+                  }
+                ]
+              },
+              {
+                "pane_path": "RootPane/N_InOut_00/N_ShONOFF_00/N_Sh_06/P_Sh_06",
+                "pane_name": "P_Sh_06",
+                "pane_size": [
+                  16.0,
+                  16.0
+                ],
+                "material_index": 6,
+                "material_name": "P_Sh_06",
+                "texture_bindings": [
+                  {
+                    "texture_index": 0,
+                    "texture_name": "MaruBlur^s",
+                    "wrap_s": 6,
+                    "wrap_t": 6
+                  }
+                ]
+              },
+              {
+                "pane_path": "RootPane/N_InOut_00/N_ShONOFF_00/N_Sh_07/P_Sh_07",
+                "pane_name": "P_Sh_07",
+                "pane_size": [
+                  16.0,
+                  16.0
+                ],
+                "material_index": 7,
+                "material_name": "P_Sh_07",
+                "texture_bindings": [
+                  {
+                    "texture_index": 0,
+                    "texture_name": "MaruBlur^s",
+                    "wrap_s": 6,
+                    "wrap_t": 6
+                  }
+                ]
+              },
+              {
+                "pane_path": "RootPane/N_InOut_00/N_Maru_00/P_Maru_00",
+                "pane_name": "P_Maru_00",
+                "pane_size": [
+                  8.0,
+                  8.0
+                ],
+                "material_index": 8,
+                "material_name": "P_Maru_00",
+                "texture_bindings": [
+                  {
+                    "texture_index": 1,
+                    "texture_name": "White_00^r",
+                    "wrap_s": 4,
+                    "wrap_t": 4
+                  }
+                ]
+              },
+              {
+                "pane_path": "RootPane/N_InOut_00/N_Maru_01/P_Maru_01",
+                "pane_name": "P_Maru_01",
+                "pane_size": [
+                  16.258533477783203,
+                  16.258533477783203
+                ],
+                "material_index": 9,
+                "material_name": "P_Maru_01",
+                "texture_bindings": [
+                  {
+                    "texture_index": 1,
+                    "texture_name": "White_00^r",
+                    "wrap_s": 4,
+                    "wrap_t": 4
+                  }
+                ]
+              },
+              {
+                "pane_path": "RootPane/N_InOut_00/N_Maru_02/P_Maru_02",
+                "pane_name": "P_Maru_02",
+                "pane_size": [
+                  12.719162940979004,
+                  12.719162940979004
+                ],
+                "material_index": 10,
+                "material_name": "P_Maru_02",
+                "texture_bindings": [
+                  {
+                    "texture_index": 1,
+                    "texture_name": "White_00^r",
+                    "wrap_s": 4,
+                    "wrap_t": 4
+                  }
+                ]
+              },
+              {
+                "pane_path": "RootPane/N_InOut_00/N_Maru_03/P_Maru_03",
+                "pane_name": "P_Maru_03",
+                "pane_size": [
+                  9.44196605682373,
+                  9.44196605682373
+                ],
+                "material_index": 11,
+                "material_name": "P_Maru_03",
+                "texture_bindings": [
+                  {
+                    "texture_index": 1,
+                    "texture_name": "White_00^r",
+                    "wrap_s": 4,
+                    "wrap_t": 4
+                  }
+                ]
+              },
+              {
+                "pane_path": "RootPane/N_InOut_00/N_Maru_04/P_Maru_04",
+                "pane_name": "P_Maru_04",
+                "pane_size": [
+                  8.0,
+                  8.0
+                ],
+                "material_index": 12,
+                "material_name": "P_Maru_04",
+                "texture_bindings": [
+                  {
+                    "texture_index": 1,
+                    "texture_name": "White_00^r",
+                    "wrap_s": 4,
+                    "wrap_t": 4
+                  }
+                ]
+              },
+              {
+                "pane_path": "RootPane/N_InOut_00/N_Maru_05/P_Maru_05",
+                "pane_name": "P_Maru_05",
+                "pane_size": [
+                  8.0,
+                  8.0
+                ],
+                "material_index": 13,
+                "material_name": "P_Maru_05",
+                "texture_bindings": [
+                  {
+                    "texture_index": 1,
+                    "texture_name": "White_00^r",
+                    "wrap_s": 4,
+                    "wrap_t": 4
+                  }
+                ]
+              },
+              {
+                "pane_path": "RootPane/N_InOut_00/N_Maru_06/P_Maru_06",
+                "pane_name": "P_Maru_06",
+                "pane_size": [
+                  8.0,
+                  8.0
+                ],
+                "material_index": 14,
+                "material_name": "P_Maru_06",
+                "texture_bindings": [
+                  {
+                    "texture_index": 1,
+                    "texture_name": "White_00^r",
+                    "wrap_s": 4,
+                    "wrap_t": 4
+                  }
+                ]
+              },
+              {
+                "pane_path": "RootPane/N_InOut_00/N_Maru_07/P_Maru_07",
+                "pane_name": "P_Maru_07",
+                "pane_size": [
+                  8.0,
+                  8.0
+                ],
+                "material_index": 15,
+                "material_name": "P_Maru_07",
+                "texture_bindings": [
+                  {
+                    "texture_index": 1,
+                    "texture_name": "White_00^r",
+                    "wrap_s": 4,
+                    "wrap_t": 4
+                  }
+                ]
+              }
+            ],
+            "panes": [
+              {
+                "path": "RootPane",
+                "type": "pan1",
+                "name": "RootPane",
+                "visible": true,
+                "size": [
+                  1920.0,
+                  1080.0
+                ]
+              },
+              {
+                "path": "RootPane/N_InOut_00",
+                "type": "pan1",
+                "name": "N_InOut_00",
+                "visible": true,
+                "size": [
+                  30.0,
+                  40.0
+                ]
+              },
+              {
+                "path": "RootPane/N_InOut_00/N_ShONOFF_00",
+                "type": "pan1",
+                "name": "N_ShONOFF_00",
+                "visible": false,
+                "size": [
+                  30.0,
+                  40.0
+                ]
+              },
+              {
+                "path": "RootPane/N_InOut_00/N_ShONOFF_00/N_Sh_00",
+                "type": "pan1",
+                "name": "N_Sh_00",
+                "visible": true,
+                "size": [
+                  30.0,
+                  40.0
+                ]
+              },
+              {
+                "path": "RootPane/N_InOut_00/N_ShONOFF_00/N_Sh_00/P_Sh_00",
+                "type": "pic1",
+                "name": "P_Sh_00",
+                "visible": true,
+                "size": [
+                  16.0,
+                  16.0
+                ],
+                "material_index": 0
+              },
+              {
+                "path": "RootPane/N_InOut_00/N_ShONOFF_00/N_Sh_01",
+                "type": "pan1",
+                "name": "N_Sh_01",
+                "visible": true,
+                "size": [
+                  30.0,
+                  40.0
+                ]
+              },
+              {
+                "path": "RootPane/N_InOut_00/N_ShONOFF_00/N_Sh_01/P_Sh_01",
+                "type": "pic1",
+                "name": "P_Sh_01",
+                "visible": true,
+                "size": [
+                  30.681838989257812,
+                  30.681838989257812
+                ],
+                "material_index": 1
+              },
+              {
+                "path": "RootPane/N_InOut_00/N_ShONOFF_00/N_Sh_02",
+                "type": "pan1",
+                "name": "N_Sh_02",
+                "visible": true,
+                "size": [
+                  30.0,
+                  40.0
+                ]
+              },
+              {
+                "path": "RootPane/N_InOut_00/N_ShONOFF_00/N_Sh_02/P_Sh_02",
+                "type": "pic1",
+                "name": "P_Sh_02",
+                "visible": true,
+                "size": [
+                  24.38962173461914,
+                  24.38962173461914
+                ],
+                "material_index": 2
+              },
+              {
+                "path": "RootPane/N_InOut_00/N_ShONOFF_00/N_Sh_03",
+                "type": "pan1",
+                "name": "N_Sh_03",
+                "visible": true,
+                "size": [
+                  30.0,
+                  40.0
+                ]
+              },
+              {
+                "path": "RootPane/N_InOut_00/N_ShONOFF_00/N_Sh_03/P_Sh_03",
+                "type": "pic1",
+                "name": "P_Sh_03",
+                "visible": true,
+                "size": [
+                  18.563495635986328,
+                  18.563495635986328
+                ],
+                "material_index": 3
+              },
+              {
+                "path": "RootPane/N_InOut_00/N_ShONOFF_00/N_Sh_04",
+                "type": "pan1",
+                "name": "N_Sh_04",
+                "visible": true,
+                "size": [
+                  30.0,
+                  40.0
+                ]
+              },
+              {
+                "path": "RootPane/N_InOut_00/N_ShONOFF_00/N_Sh_04/P_Sh_04",
+                "type": "pic1",
+                "name": "P_Sh_04",
+                "visible": true,
+                "size": [
+                  16.0,
+                  16.0
+                ],
+                "material_index": 4
+              },
+              {
+                "path": "RootPane/N_InOut_00/N_ShONOFF_00/N_Sh_05",
+                "type": "pan1",
+                "name": "N_Sh_05",
+                "visible": true,
+                "size": [
+                  30.0,
+                  40.0
+                ]
+              },
+              {
+                "path": "RootPane/N_InOut_00/N_ShONOFF_00/N_Sh_05/P_Sh_05",
+                "type": "pic1",
+                "name": "P_Sh_05",
+                "visible": true,
+                "size": [
+                  16.0,
+                  16.0
+                ],
+                "material_index": 5
+              },
+              {
+                "path": "RootPane/N_InOut_00/N_ShONOFF_00/N_Sh_06",
+                "type": "pan1",
+                "name": "N_Sh_06",
+                "visible": true,
+                "size": [
+                  30.0,
+                  40.0
+                ]
+              },
+              {
+                "path": "RootPane/N_InOut_00/N_ShONOFF_00/N_Sh_06/P_Sh_06",
+                "type": "pic1",
+                "name": "P_Sh_06",
+                "visible": true,
+                "size": [
+                  16.0,
+                  16.0
+                ],
+                "material_index": 6
+              },
+              {
+                "path": "RootPane/N_InOut_00/N_ShONOFF_00/N_Sh_07",
+                "type": "pan1",
+                "name": "N_Sh_07",
+                "visible": true,
+                "size": [
+                  30.0,
+                  40.0
+                ]
+              },
+              {
+                "path": "RootPane/N_InOut_00/N_ShONOFF_00/N_Sh_07/P_Sh_07",
+                "type": "pic1",
+                "name": "P_Sh_07",
+                "visible": true,
+                "size": [
+                  16.0,
+                  16.0
+                ],
+                "material_index": 7
+              },
+              {
+                "path": "RootPane/N_InOut_00/N_Maru_00",
+                "type": "pan1",
+                "name": "N_Maru_00",
+                "visible": true,
+                "size": [
+                  30.0,
+                  40.0
+                ]
+              },
+              {
+                "path": "RootPane/N_InOut_00/N_Maru_00/P_Maru_00",
+                "type": "pic1",
+                "name": "P_Maru_00",
+                "visible": true,
+                "size": [
+                  8.0,
+                  8.0
+                ],
+                "material_index": 8
+              },
+              {
+                "path": "RootPane/N_InOut_00/N_Maru_01",
+                "type": "pan1",
+                "name": "N_Maru_01",
+                "visible": true,
+                "size": [
+                  30.0,
+                  40.0
+                ]
+              },
+              {
+                "path": "RootPane/N_InOut_00/N_Maru_01/P_Maru_01",
+                "type": "pic1",
+                "name": "P_Maru_01",
+                "visible": true,
+                "size": [
+                  16.258533477783203,
+                  16.258533477783203
+                ],
+                "material_index": 9
+              },
+              {
+                "path": "RootPane/N_InOut_00/N_Maru_02",
+                "type": "pan1",
+                "name": "N_Maru_02",
+                "visible": true,
+                "size": [
+                  30.0,
+                  40.0
+                ]
+              },
+              {
+                "path": "RootPane/N_InOut_00/N_Maru_02/P_Maru_02",
+                "type": "pic1",
+                "name": "P_Maru_02",
+                "visible": true,
+                "size": [
+                  12.719162940979004,
+                  12.719162940979004
+                ],
+                "material_index": 10
+              },
+              {
+                "path": "RootPane/N_InOut_00/N_Maru_03",
+                "type": "pan1",
+                "name": "N_Maru_03",
+                "visible": true,
+                "size": [
+                  30.0,
+                  40.0
+                ]
+              },
+              {
+                "path": "RootPane/N_InOut_00/N_Maru_03/P_Maru_03",
+                "type": "pic1",
+                "name": "P_Maru_03",
+                "visible": true,
+                "size": [
+                  9.44196605682373,
+                  9.44196605682373
+                ],
+                "material_index": 11
+              },
+              {
+                "path": "RootPane/N_InOut_00/N_Maru_04",
+                "type": "pan1",
+                "name": "N_Maru_04",
+                "visible": true,
+                "size": [
+                  30.0,
+                  40.0
+                ]
+              },
+              {
+                "path": "RootPane/N_InOut_00/N_Maru_04/P_Maru_04",
+                "type": "pic1",
+                "name": "P_Maru_04",
+                "visible": true,
+                "size": [
+                  8.0,
+                  8.0
+                ],
+                "material_index": 12
+              },
+              {
+                "path": "RootPane/N_InOut_00/N_Maru_05",
+                "type": "pan1",
+                "name": "N_Maru_05",
+                "visible": true,
+                "size": [
+                  30.0,
+                  40.0
+                ]
+              },
+              {
+                "path": "RootPane/N_InOut_00/N_Maru_05/P_Maru_05",
+                "type": "pic1",
+                "name": "P_Maru_05",
+                "visible": true,
+                "size": [
+                  8.0,
+                  8.0
+                ],
+                "material_index": 13
+              },
+              {
+                "path": "RootPane/N_InOut_00/N_Maru_06",
+                "type": "pan1",
+                "name": "N_Maru_06",
+                "visible": true,
+                "size": [
+                  30.0,
+                  40.0
+                ]
+              },
+              {
+                "path": "RootPane/N_InOut_00/N_Maru_06/P_Maru_06",
+                "type": "pic1",
+                "name": "P_Maru_06",
+                "visible": true,
+                "size": [
+                  8.0,
+                  8.0
+                ],
+                "material_index": 14
+              },
+              {
+                "path": "RootPane/N_InOut_00/N_Maru_07",
+                "type": "pan1",
+                "name": "N_Maru_07",
+                "visible": true,
+                "size": [
+                  30.0,
+                  40.0
+                ]
+              },
+              {
+                "path": "RootPane/N_InOut_00/N_Maru_07/P_Maru_07",
+                "type": "pic1",
+                "name": "P_Maru_07",
+                "visible": true,
+                "size": [
+                  8.0,
+                  8.0
+                ],
+                "material_index": 15
+              }
+            ]
+          }
+        ],
+        "bntx": [
+          {
+            "entry": "timg/__Combined.bntx",
+            "bytes": 8312,
+            "sha256": "661709c684e95f38eabe20b71360e13ec3f90d93d29634e4ed6bf000c2ccbebe",
+            "textures": [
+              {
+                "name": "MaruBlur^s",
+                "format_name": "BC4_UNORM",
+                "width": 8,
+                "height": 8,
+                "mip_count": 1,
+                "array_count": 1,
+                "channel_sources": [
+                  1,
+                  1,
+                  1,
+                  2
+                ],
+                "mip0_size": 512,
+                "decoded_png": {
+                  "path": "analysis/acnh/CharaMakeMap_asset_trace/converted_textures/LIconLoad/MaruBlur^s.png",
+                  "bytes": 164,
+                  "sha256": "e87d47141238ca2a95cbe9a44d2531147cd98d3f4054e1d8867e322ae918cca7",
+                  "dimensions": [
+                    8,
+                    8
+                  ],
+                  "unique_rgba_colors": 20,
+                  "only_rgba_color": null
+                }
+              },
+              {
+                "name": "White_00^r",
+                "format_name": "BC4_UNORM",
+                "width": 8,
+                "height": 8,
+                "mip_count": 1,
+                "array_count": 1,
+                "channel_sources": [
+                  2,
+                  2,
+                  2,
+                  1
+                ],
+                "mip0_size": 512,
+                "decoded_png": {
+                  "path": "analysis/acnh/CharaMakeMap_asset_trace/converted_textures/LIconLoad/White_00^r.png",
+                  "bytes": 78,
+                  "sha256": "67415ef8853df4544712f37a2e99a1b85f22f01897544226b1daf1b1198af35b",
+                  "dimensions": [
+                    8,
+                    8
+                  ],
+                  "unique_rgba_colors": 1,
+                  "only_rgba_color": [
+                    255,
+                    255,
+                    255,
+                    255
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "LMapIconOpenSpaceStart",
+        "source": {
+          "path": "downloads/acnh_additional_romfs_2026-11-02/romfs/Layout/LMapIconOpenSpaceStart.Nin_NX_NVN.zs",
+          "bytes": 2279,
+          "sha256": "e22c37ea04173e427c22c2db2f46bd44ebfcce2f91988d8c812f4c36fd0509a1"
+        },
+        "compression": "Zstandard .zs",
+        "decompressed_sarc": {
+          "bytes": 29256,
+          "magic": "SARC",
+          "sha256": "2c9dcea3ce60ee7d721ab5c29e3c4f901cf8070f44c7d32364389da9ab91ff91"
+        },
+        "outer_members": [
+          {
+            "name": "LMapIconOpenSpaceStart.arc",
+            "bytes": 21064,
+            "magic": "SARC",
+            "sha256": "fd0f6fa3d66ecd038b3af8237a6662e22a50dda4dc5763acc604f062bad8ffb8",
+            "members": [
+              {
+                "name": "anim/LMapIconOpenSpaceStart_Type.bflan",
+                "bytes": 188,
+                "magic": "FLAN",
+                "sha256": "98cd3b17f59f8822cad2a3402a69353e9ca97c4628c1fabf0ea1db9de40aeada"
+              },
+              {
+                "name": "anim/LMapIconOpenSpaceStart_Normal.bflan",
+                "bytes": 248,
+                "magic": "FLAN",
+                "sha256": "a98a9b6c3b8b732d538294ee5f69e3f5dd412aab656ee218db9e257c7f5bb60c"
+              },
+              {
+                "name": "blyt/LMapIconOpenSpaceStart.bflyt",
+                "bytes": 1200,
+                "magic": "FLYT",
+                "sha256": "4eaa872703e8571987ad7ebfb513083e05afc87f27a02233ce49213849308e13",
+                "conversion": {
+                  "tool": "downloads/ACNH_island_RE/ACNH_island_RE/C_reverse/tools/acnh_rip/formats/bflyt.py read_bflyt; JSON serialization UTF-8 compact",
+                  "output": "analysis/acnh/CharaMakeMap_asset_trace/converted_layouts/LMapIconOpenSpaceStart/LMapIconOpenSpaceStart.json",
+                  "output_bytes": 1636,
+                  "output_sha256": "58d113abd839fdab8c75c631c5b9be9a9a54e056a39d421730a9404b2f194ee0"
+                }
+              },
+              {
+                "name": "timg/__Combined.bntx",
+                "bytes": 12408,
+                "magic": "BNTX",
+                "sha256": "6a4c069a9a401335616d3a349ea4d76093509a8fed065e5777147ef91d64a953",
+                "textures": [
+                  {
+                    "name": "FullMapIconMrk01^t",
+                    "format_name": "BC5_UNORM",
+                    "width": 64,
+                    "height": 64,
+                    "mip_count": 1,
+                    "array_count": 1,
+                    "channel_sources": [
+                      2,
+                      2,
+                      2,
+                      3
+                    ],
+                    "mip0_size": 4096
+                  },
+                  {
+                    "name": "MiniMapIconOpenSpc^s",
+                    "format_name": "BC4_UNORM",
+                    "width": 38,
+                    "height": 32,
+                    "mip_count": 1,
+                    "array_count": 1,
+                    "channel_sources": [
+                      1,
+                      1,
+                      1,
+                      2
+                    ],
+                    "mip0_size": 1024
+                  }
+                ]
+              },
+              {
+                "name": "anim/LMapIconOpenSpaceStart_Attention.bflan",
+                "bytes": 252,
+                "magic": "FLAN",
+                "sha256": "2021ac839344d801ee4881687c5165a770d751ffd1c0d2988e7c161352794d28"
+              },
+              {
+                "name": "anim/LMapIconOpenSpaceStart_In.bflan",
+                "bytes": 200,
+                "magic": "FLAN",
+                "sha256": "de5d42571e1feda2f8fdf9e28e5c41c86c1e8bfdfd77d924e15560425424f7f5"
+              }
+            ]
+          }
+        ],
+        "layouts": [
+          {
+            "entry": "blyt/LMapIconOpenSpaceStart.bflyt",
+            "entry_sha256": "4eaa872703e8571987ad7ebfb513083e05afc87f27a02233ce49213849308e13",
+            "output": "analysis/acnh/CharaMakeMap_asset_trace/converted_layouts/LMapIconOpenSpaceStart/LMapIconOpenSpaceStart.json",
+            "output_sha256": "58d113abd839fdab8c75c631c5b9be9a9a54e056a39d421730a9404b2f194ee0",
+            "layout_name": "LMapIconOpenSpaceStart",
+            "layout_size": [
+              1920.0,
+              1080.0
+            ],
+            "texture_names": [
+              "FullMapIconMrk01^t",
+              "MiniMapIconOpenSpc^s"
+            ],
+            "material_table": [
+              {
+                "material_index": 0,
+                "name": "P_pict_00",
+                "texture_bindings": [
+                  {
+                    "texture_index": 1,
+                    "texture_name": "MiniMapIconOpenSpc^s",
+                    "wrap_s": 4,
+                    "wrap_t": 4
+                  }
+                ],
+                "flags": 5141
+              },
+              {
+                "material_index": 1,
+                "name": "P_pict_01",
+                "texture_bindings": [
+                  {
+                    "texture_index": 0,
+                    "texture_name": "FullMapIconMrk01^t",
+                    "wrap_s": 4,
+                    "wrap_t": 4
+                  }
+                ],
+                "flags": 5141
+              }
+            ],
+            "picture_bindings": [
+              {
+                "pane_path": "RootPane/N_InOut_00/P_pict_00",
+                "pane_name": "P_pict_00",
+                "pane_size": [
+                  38.0,
+                  32.0
+                ],
+                "material_index": 0,
+                "material_name": "P_pict_00",
+                "texture_bindings": [
+                  {
+                    "texture_index": 1,
+                    "texture_name": "MiniMapIconOpenSpc^s",
+                    "wrap_s": 4,
+                    "wrap_t": 4
+                  }
+                ]
+              },
+              {
+                "pane_path": "RootPane/N_InOut_00/P_pict_00/P_pict_01",
+                "pane_name": "P_pict_01",
+                "pane_size": [
+                  30.0,
+                  30.0
+                ],
+                "material_index": 1,
+                "material_name": "P_pict_01",
+                "texture_bindings": [
+                  {
+                    "texture_index": 0,
+                    "texture_name": "FullMapIconMrk01^t",
+                    "wrap_s": 4,
+                    "wrap_t": 4
+                  }
+                ]
+              }
+            ],
+            "panes": [
+              {
+                "path": "RootPane",
+                "type": "pan1",
+                "name": "RootPane",
+                "visible": true,
+                "size": [
+                  1920.0,
+                  1080.0
+                ]
+              },
+              {
+                "path": "RootPane/N_InOut_00",
+                "type": "pan1",
+                "name": "N_InOut_00",
+                "visible": true,
+                "size": [
+                  36.0,
+                  30.0
+                ]
+              },
+              {
+                "path": "RootPane/N_InOut_00/P_pict_00",
+                "type": "pic1",
+                "name": "P_pict_00",
+                "visible": true,
+                "size": [
+                  38.0,
+                  32.0
+                ],
+                "material_index": 0
+              },
+              {
+                "path": "RootPane/N_InOut_00/P_pict_00/P_pict_01",
+                "type": "pic1",
+                "name": "P_pict_01",
+                "visible": true,
+                "size": [
+                  30.0,
+                  30.0
+                ],
+                "material_index": 1
+              }
+            ]
+          }
+        ],
+        "bntx": [
+          {
+            "entry": "timg/__Combined.bntx",
+            "bytes": 12408,
+            "sha256": "6a4c069a9a401335616d3a349ea4d76093509a8fed065e5777147ef91d64a953",
+            "textures": [
+              {
+                "name": "FullMapIconMrk01^t",
+                "format_name": "BC5_UNORM",
+                "width": 64,
+                "height": 64,
+                "mip_count": 1,
+                "array_count": 1,
+                "channel_sources": [
+                  2,
+                  2,
+                  2,
+                  3
+                ],
+                "mip0_size": 4096,
+                "decoded_png": {
+                  "path": "analysis/acnh/CharaMakeMap_asset_trace/converted_textures/LMapIconOpenSpaceStart/FullMapIconMrk01^t.png",
+                  "bytes": 1628,
+                  "sha256": "23bfae42fec40d884dc89ad810cdf38767f726de2139707277d2680f7f1edffc",
+                  "dimensions": [
+                    64,
+                    64
+                  ],
+                  "unique_rgba_colors": 132,
+                  "only_rgba_color": null
+                }
+              },
+              {
+                "name": "MiniMapIconOpenSpc^s",
+                "format_name": "BC4_UNORM",
+                "width": 38,
+                "height": 32,
+                "mip_count": 1,
+                "array_count": 1,
+                "channel_sources": [
+                  1,
+                  1,
+                  1,
+                  2
+                ],
+                "mip0_size": 1024,
+                "decoded_png": {
+                  "path": "analysis/acnh/CharaMakeMap_asset_trace/converted_textures/LMapIconOpenSpaceStart/MiniMapIconOpenSpc^s.png",
+                  "bytes": 227,
+                  "sha256": "4ce4d424e286e6a3c958284ccfcae369356661a3a21bf9a12dee2dec6280ca36",
+                  "dimensions": [
+                    38,
+                    32
+                  ],
+                  "unique_rgba_colors": 9,
+                  "only_rgba_color": null
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "findings": [
+      "The supplemental CharaMakeMap BFLYT contains four distinct prt1 panes L_Btn_00..03, each size 562×438, and each points to part_layout LCharaMakeMapBtn.",
+      "The LCharaMakeMapBtn BFLYT contains L_MapChoice_00 -> LMapChoice, L_LoadingIcon_00 -> LIconLoad, and a 418×418 P_Capture_00 picture. P_Capture_00 material binds only Black_00^r and Noise+r, both generic mask/noise inputs rather than an island preview image.",
+      "LMapChoice contains a 380×380 P_Map_00 picture in a scissor pane; its material binds Capture^t. The embedded BNTX entry decodes Capture^t as a uniform transparent 8×8 RGBA texture. This is a capture-named slot, not a static island preview image. The archive does not identify the runtime producer or prove that the slot is replaced at runtime.",
+      "Other LMapChoice texture is Noise^r. Its nested LMapIconOpenSpaceStart part uses FullMapIconMrk01^t and MiniMapIconOpenSpc^s for an open-space/map marker graphic, not an island screenshot.",
+      "LCharaMakeMapBtn textures and materials include frame corners/shadows (WorkBenchCardCornerR12^s, WorkBenchCardCornerR12Sh^s), card base corner (Corner^s), paper (TexPaper^s), wave pattern (MapWave^s), gradient/noise (GraSinV^w, Noise+r), and black mask (Black_00^r). These are card/UI decoration or shader inputs, not per-island image assets.",
+      "The available 1.0.0 converted Param/Layout/CharaMakeMap.json links only UI_CharaMakeMap and its dialog aliases (/L_Dialog_00, L_Dialog_00/L_BtnL, L_Dialog_00/L_BtnR). It contains no per-card part/image path and no cVillage literal. The raw BYML is absent from the workspace.",
+      "The supplemental UI archive directory carries a 2026-11-02 collection name but no explicit ACNH release/build id. Its exact relation to 1.0.0 is therefore OPEN. The actual dynamic source and lifetime of the Capture^t/P_Capture_00 content also remain OPEN."
+    ]
+  }
+}
