@@ -1,0 +1,130 @@
+{
+  "schema": "acnh-re/building-placement-native-handler-followup/1",
+  "game_version": "1.0.0",
+  "date": "2026-11-07",
+  "scope": "Bounded read-only trace of native EventFlow registrations/call references for CanBuildHere, StartPreviewStructureGuide, PreviewStructure, BuildStructure, mSiteList, selected site entry, pose helper, and PBC/model references. No runtime execution.",
+  "summary": "The full resolved EventFlow handler registry supplies factory/constructor/vtable mappings for the placement query and actions. Vtable slot candidates for CanBuildHere, StartPreviewStructureGuide, PreviewStructure, and BuildStructure call a shared pose helper. The BuildStructure method candidate reads a six-entry list at structure-heap offset +0x3a50, chooses an entry using a field read from an actor object, reads that entry, and passes it to a pair parser. This aligns statically with the mSiteList descriptor and six cells, but the selected actor field is not resolved to BuildingSiteIndex, and the selected cell pair is not joined to the pose helper's transform input or to a world-space conversion.",
+  "labels": {
+    "EF": "Raw EventFlow graph or exact flow-index call values; does not by itself prove runtime semantics.",
+    "BIND": "BindInfo/ELF factory-constructor-vtable registration evidence; factories are not behavior implementations and slot roles may be partial.",
+    "PSEUDO": "Static analysis/decompiler evidence only.",
+    "TBL": "Table row/column evidence; table-local IDs remain separate absent exact joins.",
+    "STRUCT": "BYML cell/record evidence; not world coordinates.",
+    "OPEN": "Source or consumer join remains unresolved.",
+    "CAT": "Class/resource string candidate only."
+  },
+  "provenance": {
+    "bind_source": {"path":"B_data/EventFlow/Info/BindInfo.byml", "manifest_id":307, "sha256":"d5867e0729d4d0eb222c27ff8a6b5cdc0ac401f34feadd3353f420c36368e999"},
+    "resolved_registry": {"path":"/workspace/acnh-re/output/binary/event_handlers_resolved.json", "sha256":"dfc298dfcb1b288b8fda9cd6a49c728fdad903b41f8fc1c9288df7d732ec92a5", "entry_count":1057, "native_factories":1056, "constructors_traced":904, "trace_limitations":"Bounded linear constant propagation with AAPCS caller-clobbers; not full path-sensitive constructor emulation."},
+    "registry_caution":"/workspace/acnh-re/output/binary/event_handlers.json says exact and prefix hash matches are distinguished and factories are not behavior implementations.",
+    "index": {"path":"/workspace/acnh-re/output/index.sqlite", "sha256":"a78c7af27d37b8fd931bba8bc611623dacf7685cb6e8b4f827effa0765340aad", "elf_sha256":"5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74"},
+    "placement_flows": [
+      {"path":"B_data/EventFlow/Player_HousingKit.bfevfl", "id":516, "sha256":"6b7e56629772c85053c44b399d9e1a9bdf1d8f147cceb8bb499cc8c8918a0383"},
+      {"path":"B_data/EventFlow/System_Structure_Common.bfevfl", "id":658, "sha256":"e64c08ddc898616e354c6951ae891597726d78c4ca2c61e4257264d837033c12"}
+    ],
+    "structure_preset": {"path":"B_data/Param/Field/MainFieldPreset/StructurePresetA00.byml", "id":2729, "sha256":"2a0be5f7a0904fe09c5ead536802749696e317bf1261d22327811aafb036436e"},
+    "field_selector": {"path":"B_data/Bcsv/FieldMainFieldParam.bcsv", "id":41, "sha256":"3ebd1057e41b0666aa30c6d8beee9220b52d8fb5280c478e8eb13eaca5d27944"}
+  },
+  "registration_mappings": [
+    {
+      "label":"BIND",
+      "name":"EventFlowSystemActor.EventFlowQueryCanBuildHere",
+      "registration_hash":"2e0432f3", "event_uses":18,
+      "parameters":{"StructureBuildPosType":"str","StructureType":"str","StructureBuildTiming":"arg"},
+      "registration_va":"0x305c170", "factory":"0x4572b0", "constructor_va":"0x408bc0", "object_size":328, "vtable":"0x3056760",
+      "vtable_slots_raw":["0x408ed0","0x409050","0x408c90","0x408cb0","0x408cc0","0x238fd0","0x408cd0"],
+      "behavior_candidate":{"slot_index":6,"va":"0x408cd0","pseudocode":"/workspace/acnh-re/output/binary/analysis_decomp/408cd0.c","sha256":"58bc3846e7a5629b1a4b1acaa6d33113256fbbd1cce2cc617a24f7019ac5bec6","observed":"Decodes StructureType, StructureBuildPosType, and StructureBuildTiming; calls shared helper VA 0x3771d0; returns an int/bool-like query value."},
+      "claim_limit":"Registry slot roles remain unlabeled. The named registration and vtable candidate are exact analysis joins; native validation semantics are only partially reconstructed."
+    },
+    {
+      "label":"BIND",
+      "name":"EventFlowSystemActor.EventFlowActionStructureStartPreviewGuide",
+      "registration_hash":"ceec247d", "event_uses":18,
+      "parameters":{"StructureType":"str","StructureBuildPosType":"str","StructureBuildTiming":"arg"},
+      "registration_va":"0x305b5a8", "factory":"0x453270", "constructor_va":"0x344490", "object_size":344, "vtable":"0x304cdf8",
+      "vtable_slots_raw":["0x344e90","0x344f30","0x344570","0x344590","0x3445a0","0x238fd0","0x238fe0","0x238ff0","0x3445b0","0x344d20","0x344e80","0x239010"],
+      "behavior_candidate":{"slot_index":8,"va":"0x3445b0","pseudocode":"/workspace/acnh-re/output/binary/analysis_decomp/3445b0.c","sha256":"eb1fe2e2faa02c30e877096794658ab4918494f9eddd25e229b4fd5ab52365f8","observed":"Calls shared helper VA 0x3771d0; the continuation constructs/configures an actor-like object and copies pose fields. No class/resource key is resolved in this function."},
+      "claim_limit":"The action-to-factory/constructor/vtable is mapped, and a slot candidate consumes the selector args and pose helper. Its exact callback role and the spawned actor class remain OPEN."
+    },
+    {
+      "label":"BIND",
+      "name":"EventFlowSystemActor.EventFlowActionPreviewStructure",
+      "registration_hash":"dc696a44", "event_uses":1,
+      "parameters":{"StructureType":"arg","StructureBuildPosType":"arg","StructureBuildTiming":"arg"},
+      "registration_va":"0x305b768", "factory":"0x453970", "constructor_va":"0x36e010", "object_size":352, "vtable":"0x3050190",
+      "vtable_slots_raw":["0x36e690","0x36e730","0x36e100","0x36e120","0x36e130","0x238fd0","0x238fe0","0x238ff0","0x36e140","0x36e430","0x36e680","0x239010"],
+      "behavior_candidate":{"slot_index":8,"va":"0x36e140","pseudocode":"/workspace/acnh-re/output/binary/analysis_decomp/36e140.c","sha256":"c63e41d955b0175c9aae8363cd20c2ae80b05bd50e0545468fdf7a4e1f5c1604","observed":"Calls shared pose helper VA 0x3771d0 and writes returned pose-like fields into an actor-context object at +0x288."},
+      "claim_limit":"Pose handoff is static pseudocode. It does not identify a preview mesh/model/collider or show that a site-list cell is an input."
+    },
+    {
+      "label":"BIND",
+      "name":"EventFlowSystemActor.EventFlowActionBuildStructure",
+      "registration_hash":"202e4467", "event_uses":3,
+      "parameters":{"StructureType":"arg","StructureBuildPosType":"arg","StructureBuildTiming":"arg"},
+      "registration_va":"0x3059ca8", "factory":"0x44ce70", "constructor_va":"0x369c10", "object_size":352, "vtable":"0x304fd90",
+      "vtable_slots_raw":["0x36a510","0x36a5b0","0x369ce0","0x369d00","0x369d40","0x238fd0","0x238fe0","0x238ff0","0x369d50","0x36a460","0x36a500","0x239010"],
+      "behavior_candidate":{"slot_index":8,"va":"0x369d50","pseudocode":"/workspace/acnh-re/output/binary/analysis_decomp/369d50.c","sha256":"b52478377f3cd7d9d9702bcbc474589b0435e48eb699938c67a08e753cbf11c8","observed":"Reads StructureType/StructureBuildPosType args; calls pose helper VA 0x3771d0 at PC 0x369ef0; accesses structure-like list offsets +0x3a50/+0x3a58/+0x3a60 and selects a cell-list entry using an actor-side field."},
+      "claim_limit":"The registration/vtable membership and data access are exact static joins. The vtable slot role, identity of the object at +0x3a50, actor-side key, and relationship of the selected list entry to the pose helper remain unresolved."
+    }
+  ],
+  "native_structure_list_trace": {
+    "label":"PSEUDO",
+    "loader_sources":[
+      {"va":"0x55dfd0","file":"/workspace/acnh-re/output/binary/analysis_decomp/55dfd0.c","sha256":"9d1f91df09702094ef72ad160bd6d5f04d1dcbd3af36bda5df74192abe29f05e","evidence":"string_refs associates mSiteList and SiteList with this function; it constructs a descriptor and calls 0x55e050."},
+      {"va":"0x4e1db0","file":"/workspace/acnh-re/output/binary/analysis_decomp/4e1db0.c","sha256":"4a17909774882f113dcc2e69efa953606b04624041b77fd45bbf8c044a7cbacb","evidence":"Calls descriptor VA 0x55dfd0 and enumerates six child slots, indices 0..5."},
+      {"va":"0x5651b0","file":"/workspace/acnh-re/output/binary/analysis_decomp/5651b0.c","sha256":"6834b80ca4e44c2c4a58a6f7e39bbf87d2eaa9670966505e6ef6fda3c2b66eda","evidence":"String refs associate ValidateVillageSave; call passes param_1+0x3a50 to loader VA 0x4e1db0."}
+    ],
+    "build_consumer_observations":[
+      "BuildStructure slot candidate uses structure-like member +0x3a50 and companion count/data fields +0x3a58/+0x3a60.",
+      "It walks candidate indices 0..5 and uses helper VA 0x4e1d80 to bounds-check index, fetch array[index], and pass the cell object into VA 0x4e1430.",
+      "The selected actor-side integer is obtained through VA 0x176ab70 from actor field +0x51; if nonnegative and below the member count, the consumer reads the corresponding pointer from +0x3a60[index].",
+      "The selected BYML-like child is passed to VA 0x4e1670, whose pseudocode parses a two-component record and writes a pair using observed arithmetic iStack_170+(iVar1>>1), iStack_15c+1. Field names, units, and semantic meaning of this adjustment are not recoverable from that function's string refs."
+    ],
+    "list_cells_from_source":[[61,66],[78,77],[49,79],[88,80],[97,84],[69,90]],
+    "claim_limit":"The six-cell source, generic descriptor loader, and BuildStructure vtable candidate share array length/member layout and are a strong static alignment. No proof establishes that the loaded global object is the StructurePresetA00 instance for the observed run, or that the actor field is BuildingSiteIndex. No story object is assigned to a specific index."
+  },
+  "shared_pose_helper": {
+    "label":"PSEUDO",
+    "helper":{"va":"0x3771d0","label_name":"FUN_004771d0","file":"/workspace/acnh-re/output/binary/analysis_decomp/3771d0.c","sha256":"e142f8e6276bdf59cc349190b12d0b95b001b88d09bca7eb0f8d89b9ae1cafbf"},
+    "struct_helper":{"va":"0x376eb0","label_name":"FUN_00476eb0","file":"/workspace/acnh-re/output/binary/analysis_decomp/376eb0.c","sha256":"c88ef9a8f79acb57ec905bb5a756327d13811b9395ffb60ebdd6df991d65e538","decomp_warning":true},
+    "indexed_call_sites":[
+      {"pc":"0x338f68","function_va":"0x338cc0"},
+      {"pc":"0x344730","function_va":"0x344490"},
+      {"pc":"0x369ef0","function_va":"0x369c10"},
+      {"pc":"0x36b284","function_va":"0x36af50"},
+      {"pc":"0x36e2d0","function_va":"0x36e010"},
+      {"pc":"0x408e5c","function_va":"0x408bc0"},
+      {"pc":"0x443a0c","function_va":"0x443770"}
+    ],
+    "selector_enum_sources":{"structure_type_va":"0x339030","structure_type_labels":["cPlayerHouse","cNormalNpcHouse","cMuseum","cMarket","cReserveNpcHouse","cBridge","cSlope","cTailor","cCampSite"],"position_type_va":"0x339550","position_type_labels":["cPlayer","cNpc","cSettlerQuest"]},
+    "observed_behavior":"The registered query and action candidates decode StructureType, StructureBuildPosType, and timing, then call 0x3771d0. The helper invokes 0x376eb0 and writes a pose-like output with three float fields at +0xc/+0x10/+0x14, an additional scalar at +0x18, and a 16-byte transform-like field at +0x20. Position enum 0 branch uses helper-derived player/context transform; branch 1 reads values at an NPC-like object +0x278/+0x27c/+0x280 and orientation; branch 2 transforms input context at +0x2a8 and adds -20 to the third float field. The enum order is statically mapped from cPlayer=0, cNpc=1, cSettlerQuest=2.",
+    "claim_limit":"These are field writes and branch operations in pseudocode. Axis labels, world origin, scale, height meaning, rotation convention, collision validation, and any use of the selected mSiteList pair are not established. The helper itself has no direct mSiteList member reads."
+  },
+  "building_site_index_trace": {
+    "eventflow_evidence":"The AN/HA prologue flows initialize BuildingSiteIndex=-1; common flow queries that key with Border=0; orientation flows reset it to -1. These nodes contain no 0..5 assignment and no mSiteList parameter.",
+    "native_key_boundary":"string_refs exact/prefix query for BuildingSiteIndex returns 0 records. BuildStructure pseudocode's actor-side pointer remains UNK_02a80082; the native key cannot be identified as BuildingSiteIndex from the indexed artifacts. CRC32 searches for the literal among hash_refs also returned zero, which is only a bounded negative.",
+    "status":"OPEN"
+  },
+  "corrected_address_note": {
+    "correction":"An earlier follow-up conflated two VAs due the observed +0x100000 pseudocode-label display offset. The BuildStructure call is ELF VA 0x4e1d80 / label FUN_005e1d80 / file analysis_decomp/4e1d80.c, a real 48-byte array accessor. It is not ELF VA 0x5e1d80 / FUN_006e1d80 / file 5e1d80.c, the separate four-byte empty stub.",
+    "accessor_sha256":"648e46a2364143720465e3567d6fab2dca0fb091a05762022c5a6bfcbad755f2",
+    "accessor_behavior":"Rejects index >5; if index < count at param+8, reads pointer at param+0x10 + index*8, calls 0x4e1430 and returns the pointer; otherwise returns 0."
+  },
+  "bounded_negative_search": {
+    "registry_scope_correction":"The earlier 221-entry focus7 handler report was partial. This pass uses the full 1,057-entry event_handlers_resolved.json. The earlier no-match within focus7 should not be interpreted as absence of native factories.",
+    "native_string_refs_zero_for":["EventFlowQueryCanBuildHere","EventFlowActionStructureStartPreviewGuide","PreviewStructure","DeletePreviewStructure","BuildingSiteIndex"],
+    "direct_pose_helper_callers":"Seven indexed direct-call PCs are listed above; no corresponding mSiteList cell input appears in helper 0x3771d0's function body or string_refs.",
+    "model_pbc_check":"The query/action/pose/structure-list helper functions above have no indexed string_refs. Their direct-call target sets do not include the indexed named PBC resource-reference functions at VAs 0x15fa20, 0x170480, or 0x1700d0. This rules out only a direct named reference in the checked functions; indirect resource dispatch remains OPEN.",
+    "preview_actor_boundary":"StructurePreviewActor, StructurePreviewGuideActor, and StructurePreviewSwapActor strings occur in generic actor/module initialization references. The bounded direct-call table shows no direct call from the listed EventFlow method candidates to those actor-module initializer addresses; dynamic registration/actor creation remains OPEN."
+  },
+  "open_joins": [
+    {"id":"selected_actor_field_to_BuildingSiteIndex","status":"OPEN","why":"Native field +0x51 key pointer is UNK_02a80082, with no exact string/hash match to the EventFlow blackboard key."},
+    {"id":"StructurePresetA00_instance_to_runtime_member","status":"OPEN","why":"Loader and consumer share +0x3a50/+0x3a58/+0x3a60 layout, but exact global object identity and selected preset instance are not proven."},
+    {"id":"story_structure_to_site_index","status":"OPEN","why":"No mapping from cPlayerHouse/cBridge/cReserveNpcHouse or plot A/B/C to one of indices 0..5."},
+    {"id":"cell_pair_to_pose_helper","status":"OPEN","why":"BuildStructure reads/adjusts a selected list record, while the shared pose helper separately uses player/NPC/quest actor transforms; no exact argument carries the selected pair into the helper."},
+    {"id":"cell_pair_to_world_coordinates","status":"OPEN","why":"No source establishes coordinate units, axes, origin, elevation, scale, final rotation, or whether the pair adjustment is a footprint-center offset."},
+    {"id":"query_validation_geometry","status":"OPEN","why":"Query method candidate calls shared pose helper, but overlap/terrain/footprint validators are delegated through unresolved helpers and indirect calls."},
+    {"id":"model_mesh_and_pbc_collider","status":"OPEN","why":"No named model or PBC resource is joined to the registered action methods, preview actor class, or selected list record."}
+  ],
+  "validation": {"json_syntax_checked":true,"registered_actions":4,"native_pose_helper_call_sites":7,"site_list_cell_count":6,"open_join_count":7,"no_build_or_game_execution":true}
+}
