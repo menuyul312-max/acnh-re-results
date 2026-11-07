@@ -1,6 +1,6 @@
 # Residual Catalog Order and Eligibility Trace
 
-This pass closes the variant-selection mechanics around `0x118a3d0`, `0x118a740`, and `0xeecc70`, then follows `CatalogMailSend` and `SystemMailSend` only through their record insertion boundaries. It separates the page's incoming item list from the `ItemCatalogType` table field: the list producer remains unknown, so this work does not claim that an item is orderable or that a message reaches an inbox.
+This pass closes the variant-selection mechanics around `0x118a3d0`, `0x118a740`, and `0xeecc70`, maps the `NotSee` gate in the page builder, then follows `CatalogMailSend` and `SystemMailSend` only through their record insertion boundaries. The source and composition of selector 4's additions remain unresolved, so this work does not claim that an item is orderable or that a message reaches an inbox.
 
 ## Catalog page: first registered body variant wins
 
@@ -53,4 +53,4 @@ python3 acnh-re/tools/catalog_order_remainder_audit.py \
   --tables-root /workspace/acnh-re/output/tables_resolved
 ```
 
-Before rebuilding the aggregate artifact, regenerate the focused NotSee-gate trace with `PYTHONPATH=/workspace/acnh-re/.deps python3 acnh-re/tools/catalog_notsee_gate_audit.py`; it reads the matching 1.0.0 `main.elf`, native index, and relocated code-pointer inventory. Remaining catalog evidence includes the post-filter helper composition, exact order-price/quantity rules, purchase payload handling, save serialization, mailbox consumption, and actual delivery timing. The aggregate artifact also records the mail action inventories and exact static boundaries found so far.
+Before rebuilding the aggregate artifact, regenerate the focused NotSee-gate trace with `PYTHONPATH=/workspace/acnh-re/.deps python3 acnh-re/tools/catalog_notsee_gate_audit.py`; it reads the matching 1.0.0 `main.elf`, native index, and relocated code-pointer inventory. Remaining catalog evidence includes selector 4's post-filter composition, exact order-price/quantity rules, purchase payload handling, save serialization, mailbox consumption, and actual delivery timing. The aggregate artifact also records the mail action inventories and exact static boundaries found so far.
