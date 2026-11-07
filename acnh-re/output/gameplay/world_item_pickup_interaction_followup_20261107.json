@@ -1,0 +1,237 @@
+{
+  "artifact": "world_item_pickup_interaction_followup_20261107",
+  "build": "Animal Crossing: New Horizons 1.0.0",
+  "scope": "World item pickup interaction, guarded path to the shared inventory slot writer, full-pocket exchange EventFlow, candidate pickup counters, and the save boundary. Static analysis only; no Ghidra rebuild or live-game run.",
+  "address_convention": "Native addresses are raw offsets in ExeFS main/0.bin. Generated Ghidra-style names may appear in parentheses with the analysis image's +0x100000 mapping.",
+  "source_identity": {
+    "main_nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+    "main_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+    "raw_main_segment_0_sha256": "9c9b45d8e7a58706ca59e7244b3aebac2325ef98faa205e007974eeeb2f758e9",
+    "source_files": [
+      {
+        "path": "B_data/EventFlow/Player_GetDemo.bfevfl",
+        "sha256": "b5ac3c44b5161615ed6b245fce3e9289c2f6d7b9ec186941ce9790ea624703fa"
+      },
+      {
+        "path": "B_data/EventFlow/Player_PickupFullItem.bfevfl",
+        "sha256": "757f28163719419d7fb606793c256d52bc42396676518933e442fe9a60175911"
+      },
+      {
+        "path": "B_data/Bcsv/PlayerStateParam.bcsv",
+        "sha256": "746619914744a62365b7b4cc74fd5b7fad169e78dffe74c3c03c726d3ea49b0d"
+      },
+      {
+        "path": "generated/EventFlow/Player_GetDemo.json",
+        "sha256": "e937aee95d923bfbdde2e923e1783f5a9001a3d716768e06bde8f1212cd96052"
+      },
+      {
+        "path": "output/mechanics/collision_states.json",
+        "sha256": "329ef1728c1737bf1a0fd9be9b6465b5abb694b6261c53389b25c5d1e576256d"
+      }
+    ]
+  },
+  "method": {
+    "indexes": [
+      "index.sqlite: direct_calls",
+      "index.sqlite: native_functions",
+      "index.sqlite: string_refs"
+    ],
+    "disassembly": "Capstone over raw ExeFS main segment 0",
+    "eventflow": "Existing decoded EventFlow JSON; branch reachability is static graph reachability",
+    "table": "PlayerStateParam decoded to collision_states.json"
+  },
+  "findings": [
+    {
+      "id": "pickup_state_registration",
+      "evidence_level": "native-static + table",
+      "states": [
+        {
+          "source_row": 30,
+          "state": "PickupWait",
+          "state_id": "0x1e",
+          "entry_wrapper": "0xde3160",
+          "entry_callback": "0xe20eb0",
+          "update_wrapper": "0xde31a0",
+          "update_callback": "0xe20f00",
+          "table_flags": {
+            "background_mode": "Normal",
+            "object_mode": "Heavy",
+            "stop_auto_save": 1
+          }
+        },
+        {
+          "source_row": 31,
+          "state": "Pickup",
+          "state_id": "0x1f",
+          "entry_wrapper": "0xde3360",
+          "entry_callback": "0xe21270",
+          "update_wrapper": "0xde33a0",
+          "update_callback": "0xe21490",
+          "table_flags": {
+            "background_mode": "Normal",
+            "object_mode": "Heavy",
+            "stop_auto_save": 1
+          }
+        },
+        {
+          "source_row": 32,
+          "state": "PickupGetDemo",
+          "state_id": "0x20",
+          "entry_wrapper": "0xde3560",
+          "entry_callback": "0xe220a0",
+          "update_wrapper": "0xde35a0",
+          "update_callback": "0xe22220",
+          "table_flags": {
+            "background_mode": "Normal",
+            "object_mode": "Heavy",
+            "stop_auto_save": 1
+          }
+        }
+      ],
+      "bounded_claim": "Native wrappers bind PlayerStateParam rows 30-32 to the named pickup state callbacks; this does not establish the initiating input or target validation."
+    },
+    {
+      "id": "pickup_state_to_slot_writer",
+      "evidence_level": "native-static",
+      "direct_call_edges": [
+        {
+          "from": "0xe21490",
+          "call_pc": "0xe21688",
+          "to": "0xe21e40"
+        },
+        {
+          "from": "0xe21e40",
+          "call_pc": "0xe21e7c",
+          "to": "0xdb0450"
+        },
+        {
+          "from": "0xdb0450",
+          "call_pc": "0xdb0608",
+          "to": "0xefab90",
+          "guarded": true
+        },
+        {
+          "from": "0xefab90",
+          "call_pc": "0xefabf8",
+          "to": "0xefac20",
+          "guarded": true
+        },
+        {
+          "from": "0xefac20",
+          "call_pc": "0xefad2c",
+          "to": "0xf987c0"
+        }
+      ],
+      "second_path": [
+        {
+          "from": "0xe22220",
+          "call_pc": "0xe22928",
+          "to": "0xefab90",
+          "guarded": true
+        },
+        {
+          "from": "0xefab90",
+          "call_pc": "0xefabf8",
+          "to": "0xefac20",
+          "guarded": true
+        },
+        {
+          "from": "0xefac20",
+          "call_pc": "0xefad2c",
+          "to": "0xf987c0"
+        }
+      ],
+      "writer_behavior": "0xf987c0 scans item views with 20-record bounds and empty sentinel -2/0xfffe, handles merge/free-slot cases, and calls 0xf98650 to write the selected record. Existing controlled fixture evidence is documented in CORE_ITEM_CRAFTING_LOOP_PROOF_20261107.md.",
+      "bounded_claim": "The Pickup and PickupGetDemo native callback paths can reach the shared item-view writer under guards. Static reachability does not prove a successful world-item insertion, the selected item UID, or source actor deletion."
+    },
+    {
+      "id": "get_pickup_exchange_flow",
+      "evidence_level": "decoded-eventflow-static",
+      "flowchart": "Player_GetDemo",
+      "entry_point": "Get_Pickup",
+      "entry_event_index": 11,
+      "reachable_exchange_action": {
+        "event_index": 7,
+        "actor": "EventFlowSystemActor",
+        "action": "EventFlowActionUIItemSelectWindowHandling",
+        "parameters": {
+          "FilterType": "cPickupFull",
+          "ItemUniqueID": 65534,
+          "ItemKindType": "",
+          "ItemFilterType": "",
+          "Mode": "cExchangeByPickup"
+        }
+      },
+      "reachable_checks": [
+        "CheckItem=cLostItem",
+        "ItemUniqueId=3406 / UnlockType=\"\"",
+        "PlayerEventFlowAI=cGetDemo_PickupFullItem",
+        "CheckKindInsect/FishAndDiveFish/Put/Bury",
+        "PlayerGetDemoCollectStatus",
+        "PlayerGetDemoCheckItem",
+        "PlayerHasExchaneableItem"
+      ],
+      "bounded_claim": "The post-get flow has collection/type checks and a full-pocket item exchange UI. This EventFlow graph contains no SetItemToPocket or DeleteTargetItem action for the reachable Get_Pickup route."
+    },
+    {
+      "id": "pickup_enable_and_full_error",
+      "evidence_level": "native-static + decoded-eventflow-static",
+      "native_function": "0xe015b0",
+      "native_helper": "0xe5ad90",
+      "string_refs": [
+        "Player_PickupFullItem",
+        "PickupFtr_FullItem",
+        "PickupFlower_FullItem",
+        "PickupVegetable_FullItem",
+        "PickupBell_FullItem",
+        "PickupFence_FullItem",
+        "PlayerPickupEnable"
+      ],
+      "bounded_claim": "A full/error handler references PlayerPickupEnable through its helper and routes target-specific full-item feedback. This does not prove a global normal-pickup gate."
+    },
+    {
+      "id": "candidate_pickup_stat_notifier",
+      "evidence_level": "native-static-string-reference",
+      "call_edge": {
+        "from": "0xe21490",
+        "call_pc": "0xe21a94",
+        "to": "0xda4370"
+      },
+      "helper_string_refs": [
+        "PickUpFirst",
+        "FenceEditCount",
+        "MoveFurnitureFieldCount"
+      ],
+      "bounded_claim": "The shared helper has a pickup-related token and is called from the Pickup update. Its runtime branch selection and whether it increments/persists a quest counter remain unresolved."
+    },
+    {
+      "id": "save_boundary",
+      "evidence_level": "bounded-negative",
+      "observed": "The insertion helper resolves a typed runtime component 0x17c; pickup-state table rows have stop_auto_save=1. No named serializer, file flush, save reload, or durable-write edge was established for this transaction.",
+      "bounded_claim": "The runtime slot mutation path is not yet tied to durable save serialization."
+    }
+  ],
+  "open_gaps": [
+    "Input/request and target-availability predicates that select PickupWait to Pickup for a specific field item.",
+    "Mapping from the opaque pickup-state descriptor to a source world actor and exact item UID.",
+    "Successful native pickup fixture covering actor guards, f987c0 success, and full-pocket behavior.",
+    "World actor deletion, persistence, or respawn after insertion.",
+    "Which PickUpFirst/stat branch is selected and whether it is committed for ordinary pickup.",
+    "Named save object, serializer, durable write, and reload verification for the new pocket record."
+  ],
+  "related_prior_proof": {
+    "markdown": "docs/CORE_ITEM_CRAFTING_LOOP_PROOF_20261107.md",
+    "json": "output/gameplay/core_item_crafting_loop_proof_20261107.json"
+  },
+  "change_scope": {
+    "new_files_only": [
+      "docs/WORLD_ITEM_PICKUP_INTERACTION_FOLLOWUP_20261107.md",
+      "output/gameplay/world_item_pickup_interaction_followup_20261107.json"
+    ],
+    "indexes_modified": false,
+    "crosswalk_modified": false,
+    "native_code_modified": false,
+    "commit_or_push": false
+  },
+  "report": "acnh-re/docs/WORLD_ITEM_PICKUP_INTERACTION_FOLLOWUP_20261107.md"
+}
