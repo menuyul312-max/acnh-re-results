@@ -1,0 +1,1883 @@
+{
+  "schema": "acnh-re/story-native-action-ui-routing/1",
+  "title": "Story ActionIdx native-state and UI page routing follow-up",
+  "date": "2026-11-07",
+  "scope": {
+    "baseline": "ACNH 1.0.0 EventFlow and ExeFS static analysis",
+    "supplemental_assets": "STRUCT; all listed supplemental members are new_path and exact patch version is unproven",
+    "runtime_execution": false,
+    "godot_or_build": false,
+    "raw_asset_copy": false,
+    "dialogue_text_included": false
+  },
+  "evidence_levels": {
+    "EF": "baseline EventFlow tree event/node parameters",
+    "NATIVE_STATIC": "binary registration/decompilation shows a static code path or numeric state request",
+    "BASELINE_STRUCT": "baseline StaticParam BYML/page configuration record",
+    "STRUCT": "supplemental parsed asset/resource candidate with version or consumer identity unproven",
+    "CAT": "catalogue-only listing, not proof of raw asset or runtime use",
+    "OPEN": "direct target/resource consumer join not present in supplied source indexes"
+  },
+  "source_indexes": {
+    "eventflow_trees": "output/gameplay/trees",
+    "native_handler_registry": "/workspace/acnh-re/output/binary/event_handlers_resolved.json",
+    "native_decomp_root": "/workspace/acnh-re/output/binary/analysis_decomp",
+    "baseline_manifest": "/workspace/acnh-re/output/manifest.json",
+    "supplemental_extracted_manifest": "/workspace/acnh-re/output/additional_romfs/extracted_manifest.json",
+    "supplemental_layout_parse_root": "/workspace/acnh-re/output/additional_romfs/ui",
+    "supplemental_animation_info_root": "/workspace/acnh-re/output/additional_romfs/new_byml/AnimationInfo",
+    "supplemental_asb_root": "/workspace/acnh-re/output/additional_romfs/animation_sequences",
+    "read_only_sibling_analysis_root": "/workspace/acnh-re",
+    "baseline_game_source_root": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE",
+    "current_artifact_checkout": ".",
+    "supplemental_summary": "/workspace/acnh-re/output/additional_romfs/summary.json"
+  },
+  "npc_request_action": {
+    "event_nodes": [
+      {
+        "flow": "SNPC_rco_00_StartMainGame",
+        "flow_source": "output/gameplay/trees/SNPC_rco_00_StartMainGame.txt",
+        "entry": "InvisibleNpc",
+        "event_index": 77,
+        "action": "NpcRequestAction",
+        "params": {
+          "ActionIdx": 3
+        },
+        "action_index": 3
+      },
+      {
+        "flow": "SNPC_rco_00_StartMainGame",
+        "flow_source": "output/gameplay/trees/SNPC_rco_00_StartMainGame.txt",
+        "entry": "InvisibleNpc",
+        "event_index": 75,
+        "action": "NpcRequestAction",
+        "params": {
+          "ActionIdx": 3
+        },
+        "action_index": 3
+      },
+      {
+        "flow": "SNPC_rco_00_StartMainGame",
+        "flow_source": "output/gameplay/trees/SNPC_rco_00_StartMainGame.txt",
+        "entry": "InvisibleNpc",
+        "event_index": 76,
+        "action": "NpcRequestAction",
+        "params": {
+          "ActionIdx": 3
+        },
+        "action_index": 3
+      },
+      {
+        "flow": "Tutorials_Prologue5_Campfire",
+        "flow_source": "output/gameplay/trees/Tutorials_Prologue5_Campfire.txt",
+        "entry": "Root",
+        "event_index": 96,
+        "action": "NpcRequestAction",
+        "params": {
+          "ActionIdx": 2
+        },
+        "action_index": 2
+      },
+      {
+        "flow": "Tutorials_Prologue5_Campfire",
+        "flow_source": "output/gameplay/trees/Tutorials_Prologue5_Campfire.txt",
+        "entry": "Root",
+        "event_index": 97,
+        "action": "NpcRequestAction",
+        "params": {
+          "ActionIdx": 2
+        },
+        "action_index": 2
+      },
+      {
+        "flow": "Tutorials_Prologue5_Campfire",
+        "flow_source": "output/gameplay/trees/Tutorials_Prologue5_Campfire.txt",
+        "entry": "Root",
+        "event_index": 98,
+        "action": "NpcRequestAction",
+        "params": {
+          "ActionIdx": 2
+        },
+        "action_index": 2
+      },
+      {
+        "flow": "Tutorials_Prologue_Tkk",
+        "flow_source": "output/gameplay/trees/Tutorials_Prologue_Tkk.txt",
+        "entry": "Tkk_Dream_BeforeTalk",
+        "event_index": 17,
+        "action": "NpcRequestAction",
+        "params": {
+          "ActionIdx": 1
+        },
+        "action_index": 1
+      },
+      {
+        "flow": "Tutorials_Prologue_Tkk",
+        "flow_source": "output/gameplay/trees/Tutorials_Prologue_Tkk.txt",
+        "entry": "Tkk_Dream_BeforeTalk",
+        "event_index": 21,
+        "action": "NpcRequestAction",
+        "params": {
+          "ActionIdx": 0
+        },
+        "action_index": 0
+      },
+      {
+        "flow": "Tutorials_Prologue_Tkk",
+        "flow_source": "output/gameplay/trees/Tutorials_Prologue_Tkk.txt",
+        "entry": "Tkk_Dream_AfterTalk",
+        "event_index": 18,
+        "action": "NpcRequestAction",
+        "params": {
+          "ActionIdx": 1
+        },
+        "action_index": 1
+      }
+    ],
+    "native_handler_record": {
+      "registry_key": "MainNpc.EventFlowActionNpcRequestAction",
+      "registration_hash": "c66fda40",
+      "registration_va": "0x305b468",
+      "factory": "0x452d70",
+      "constructor": "0x245dc0",
+      "vtable": "0x303e0a0",
+      "parameters": {
+        "ActionIdx": "int"
+      },
+      "vtable_slot_limit": "contiguous code pointers; later class-specific slot roles unresolved",
+      "run_method_function_va": "0x345e70",
+      "run_method_slot_list_index_zero_based": 8,
+      "slot_roles_unresolved": true
+    },
+    "native_dispatch_source": {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/245e70.c",
+      "function": "FUN_00345e70",
+      "sha256": "3385181b4875414e9e1fdce32ffcdb18e28cb1d7ba3ad01d8adf243102c30a32",
+      "read_field": "param_1[0x1b] / ActionIdx-bound field",
+      "switch_cases": [
+        {
+          "ActionIdx": 0,
+          "handler_target": "FUN_00cf7850",
+          "next_state_target": "FUN_00cf7670",
+          "internal_state_argument": "*(uint32_t*)PTR_DAT_033d8b20",
+          "internal_state_value": null,
+          "extra_effects": [],
+          "confidence": "NATIVE_STATIC; global state value unresolved",
+          "target_source": "/workspace/acnh-re/output/binary/analysis_decomp/bf7850.c",
+          "target_source_sha256": "558b1499791d7ca2cfea5bc276dd2981722f6208dbced5edf6af74f22f29c42b"
+        },
+        {
+          "ActionIdx": 1,
+          "handler_target": "FUN_00cf8b40",
+          "next_state_target": "FUN_00cf7670",
+          "internal_state_argument": "0x1a",
+          "internal_state_value": 26,
+          "extra_effects": [],
+          "confidence": "NATIVE_STATIC numeric state-machine index; clip name unresolved",
+          "target_source": "/workspace/acnh-re/output/binary/analysis_decomp/bf8b40.c",
+          "target_source_sha256": "7d0d6a662ea672ce4764fe90dd35a996acf0f0cf0ae3c96a497c4e90d45070ee"
+        },
+        {
+          "ActionIdx": 2,
+          "handler_target": "FUN_00cf8b90",
+          "next_state_target": "FUN_00cf7670",
+          "internal_state_argument": "0x1b",
+          "internal_state_value": 27,
+          "extra_effects": [
+            "sets object bytes at +0x644 and +0x646 to 0"
+          ],
+          "confidence": "NATIVE_STATIC numeric state-machine index; clip name unresolved",
+          "target_source": "/workspace/acnh-re/output/binary/analysis_decomp/bf8b90.c",
+          "target_source_sha256": "1def58b1445ae6ec9aa4118a56f863cd1f9946dd06c710cd32f0bd47c008e555"
+        },
+        {
+          "ActionIdx": 3,
+          "handler_target": "FUN_00cf8890",
+          "next_state_target": "FUN_00cf7670",
+          "internal_state_argument": "0x13",
+          "internal_state_value": 19,
+          "extra_effects": [],
+          "confidence": "NATIVE_STATIC numeric state-machine index; clip name unresolved",
+          "target_source": "/workspace/acnh-re/output/binary/analysis_decomp/bf8890.c",
+          "target_source_sha256": "9ed35974d19ad1b20345e65c931296f7b8305124a476ed4dee57740b46b1f39a"
+        }
+      ]
+    },
+    "state_setter": {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/bf7670.c",
+      "function": "FUN_00cf7670",
+      "sha256": "82fbea9a5b8df2981455a78f21388b6fe9aa0b1fc0d396dbd3b714ab53e4d603",
+      "effect": "stores incoming state selector at param_2+0x370; initializes action-state data"
+    },
+    "state_machine_transition": {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/1f067b0.c",
+      "function": "FUN_020067b0",
+      "sha256": "be50b90e58095987703546ae51694d25900548d284833eeadbfa93a71173e81a",
+      "effect": "uses uint state argument as an index into a vtable-backed state array at param_1+0x30"
+    },
+    "state_field_consumer": {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/bf59c0.c",
+      "function": "FUN_00cf59c0",
+      "sha256": "37a4e91ba1a5f9e2c1278e0577a5302897de782bc2d3285507ca238d9b4dcdc3",
+      "effect": "reads state at +0x370, bounds it to 0..30, copies it to +0x358, and passes it to FUN_020067b0"
+    },
+    "animation_info_scan": {
+      "file_count": 55,
+      "scale_entry_count": 3335,
+      "ActionIdx_or_ActionIndex_node_count": 0,
+      "example_nodes": [
+        {
+          "source": "AnimationInfo/NpcSpRco.byml",
+          "node": "ActSp_ArrangeRemove",
+          "key": "scale",
+          "value": [
+            1.2403080463409424,
+            21.808734893798828,
+            4.5400800704956055
+          ]
+        },
+        {
+          "source": "AnimationInfo/NpcSpRco.byml",
+          "node": "ActSp_ArrangeRemoveHigh",
+          "key": "scale",
+          "value": [
+            1.2423039674758911,
+            12.372760772705078,
+            6.856979846954346
+          ]
+        },
+        {
+          "source": "AnimationInfo/NpcSpRco.byml",
+          "node": "Gst_Walk",
+          "key": "scale",
+          "value": [
+            1.195937991142273,
+            0.6091499924659729,
+            0.6292780041694641
+          ]
+        },
+        {
+          "source": "AnimationInfo/NpcSpTkk.byml",
+          "node": "ActSp_ArrangeRemove",
+          "key": "scale",
+          "value": [
+            1.288851022720337,
+            18.94593048095703,
+            3.521127939224243
+          ]
+        },
+        {
+          "source": "AnimationInfo/NpcSpTkk.byml",
+          "node": "ActSp_ArrangeRemoveHigh",
+          "key": "scale",
+          "value": [
+            1.2908459901809692,
+            12.393230438232422,
+            5.054034233093262
+          ]
+        },
+        {
+          "source": "AnimationInfo/NpcSpTkk.byml",
+          "node": "Gst_Walk",
+          "key": "scale",
+          "value": [
+            1.2572050094604492,
+            0.7884299755096436,
+            0.8063799738883972
+          ]
+        }
+      ],
+      "search_scope": "All parsed AnimationInfo BYML files in the additional archive; no action-index key or clip target was found."
+    },
+    "clip_name_join_status": "OPEN; numeric ActionIdx resolves to internal state-machine index for cases 1–3 and an unresolved global state argument for case 0; no state-index-to-ASB node/clip lookup is present.",
+    "separate_ascommand_static_joins": {
+      "call_site_count": 16,
+      "unique_command_count": 10,
+      "asb_member": "AnimationSequence/CharaCommon.root.asb",
+      "asb_sha256": "26db3f260a09e59b38e73422b91dc84cf566e367059f20ea519ec63652db957c",
+      "unique_examples": [
+        {
+          "as_command": "SzaNewsPrepare",
+          "asb_node_name": "SzaNewsPrepare",
+          "node_index": 322,
+          "first_transition": 2568,
+          "source_member": "AnimationSequence/CharaCommon.root.asb",
+          "source_sha256": "26db3f260a09e59b38e73422b91dc84cf566e367059f20ea519ec63652db957c"
+        },
+        {
+          "as_command": "SzaNewsNotice",
+          "asb_node_name": "SzaNewsNotice",
+          "node_index": 321,
+          "first_transition": 2565,
+          "source_member": "AnimationSequence/CharaCommon.root.asb",
+          "source_sha256": "26db3f260a09e59b38e73422b91dc84cf566e367059f20ea519ec63652db957c"
+        },
+        {
+          "as_command": "SzaNewsSmile",
+          "asb_node_name": "SzaNewsSmile",
+          "node_index": 324,
+          "first_transition": 2578,
+          "source_member": "AnimationSequence/CharaCommon.root.asb",
+          "source_sha256": "26db3f260a09e59b38e73422b91dc84cf566e367059f20ea519ec63652db957c"
+        },
+        {
+          "as_command": "NpcSpTyping",
+          "asb_node_name": "NpcSpTyping",
+          "node_index": 636,
+          "first_transition": 7827,
+          "source_member": "AnimationSequence/CharaCommon.root.asb",
+          "source_sha256": "26db3f260a09e59b38e73422b91dc84cf566e367059f20ea519ec63652db957c"
+        },
+        {
+          "as_command": "NpcCheers",
+          "asb_node_name": "NpcCheers",
+          "node_index": 551,
+          "first_transition": 4684,
+          "source_member": "AnimationSequence/CharaCommon.root.asb",
+          "source_sha256": "26db3f260a09e59b38e73422b91dc84cf566e367059f20ea519ec63652db957c"
+        },
+        {
+          "as_command": "NpcSpDrinking",
+          "asb_node_name": "NpcSpDrinking",
+          "node_index": 640,
+          "first_transition": 7847,
+          "source_member": "AnimationSequence/CharaCommon.root.asb",
+          "source_sha256": "26db3f260a09e59b38e73422b91dc84cf566e367059f20ea519ec63652db957c"
+        },
+        {
+          "as_command": "NpcSpRhythm",
+          "asb_node_name": "NpcSpRhythm",
+          "node_index": 602,
+          "first_transition": 7261,
+          "source_member": "AnimationSequence/CharaCommon.root.asb",
+          "source_sha256": "26db3f260a09e59b38e73422b91dc84cf566e367059f20ea519ec63652db957c"
+        },
+        {
+          "as_command": "NpcSpTambourineSound",
+          "asb_node_name": "NpcSpTambourineSound",
+          "node_index": 603,
+          "first_transition": 7347,
+          "source_member": "AnimationSequence/CharaCommon.root.asb",
+          "source_sha256": "26db3f260a09e59b38e73422b91dc84cf566e367059f20ea519ec63652db957c"
+        },
+        {
+          "as_command": "NpcSpArrangeShort",
+          "asb_node_name": "NpcSpArrangeShort",
+          "node_index": 620,
+          "first_transition": 7258,
+          "source_member": "AnimationSequence/CharaCommon.root.asb",
+          "source_sha256": "26db3f260a09e59b38e73422b91dc84cf566e367059f20ea519ec63652db957c"
+        },
+        {
+          "as_command": "TkkAGuitarPlayEnd",
+          "asb_node_name": "TkkAGuitarPlayEnd",
+          "node_index": 315,
+          "first_transition": 2528,
+          "source_member": "AnimationSequence/CharaCommon.root.asb",
+          "source_sha256": "26db3f260a09e59b38e73422b91dc84cf566e367059f20ea519ec63652db957c"
+        }
+      ],
+      "limit": "Exact AsCommand == node_name matches are independent from ActionIdx dispatch and do not prove runtime playback."
+    }
+  },
+  "ui_action_resource_routing": {
+    "eventflow_ui_action_nodes": [
+      {
+        "flow": "Demo_PublicAnnouncement",
+        "flow_source": "output/gameplay/trees/Demo_PublicAnnouncement.txt",
+        "entry": "SzaPrepareAction",
+        "event_index": 57,
+        "action": "UIDemoClock",
+        "params": {
+          "DisplayFrame": 60
+        },
+        "explicit_layout_key_present": false
+      },
+      {
+        "flow": "Demo_PublicAnnouncement",
+        "flow_source": "output/gameplay/trees/Demo_PublicAnnouncement.txt",
+        "entry": "SzaPrepareAction",
+        "event_index": 60,
+        "action": "UIDemoClock",
+        "params": {
+          "DisplayFrame": 60
+        },
+        "explicit_layout_key_present": false
+      },
+      {
+        "flow": "Demo_PublicAnnouncement",
+        "flow_source": "output/gameplay/trees/Demo_PublicAnnouncement.txt",
+        "entry": "OutdoorDemoStart",
+        "event_index": 56,
+        "action": "UIDemoClock",
+        "params": {
+          "DisplayFrame": 60
+        },
+        "explicit_layout_key_present": false
+      },
+      {
+        "flow": "Demo_PublicAnnouncement",
+        "flow_source": "output/gameplay/trees/Demo_PublicAnnouncement.txt",
+        "entry": "Sza_NormalPreAction",
+        "event_index": 60,
+        "action": "UIDemoClock",
+        "params": {
+          "DisplayFrame": 60
+        },
+        "explicit_layout_key_present": false
+      },
+      {
+        "flow": "SNPC_owl_01_Museum_Donation",
+        "flow_source": "output/gameplay/trees/SNPC_owl_01_Museum_Donation.txt",
+        "entry": "Root",
+        "event_index": 45,
+        "action": "UIItemSelectWindowHandling",
+        "params": {
+          "ItemUniqueID": 65534,
+          "ItemKindType": "",
+          "Mode": "cItemSelect",
+          "FilterType": "cItemFilter",
+          "ItemFilterType": "OwlTentDonation1"
+        },
+        "explicit_layout_key_present": false
+      },
+      {
+        "flow": "SNPC_owl_01_Museum_Donation",
+        "flow_source": "output/gameplay/trees/SNPC_owl_01_Museum_Donation.txt",
+        "entry": "Root",
+        "event_index": 85,
+        "action": "UIItemSelectWindowHandling",
+        "params": {
+          "ItemUniqueID": 65534,
+          "ItemKindType": "",
+          "Mode": "cItemSelect",
+          "ItemFilterType": "OwlDonation",
+          "FilterType": "cItemFilter"
+        },
+        "explicit_layout_key_present": false
+      },
+      {
+        "flow": "SNPC_owl_01_Museum_Donation",
+        "flow_source": "output/gameplay/trees/SNPC_owl_01_Museum_Donation.txt",
+        "entry": "Root",
+        "event_index": 68,
+        "action": "UIItemSelectWindowHandling",
+        "params": {
+          "ItemUniqueID": 65534,
+          "ItemKindType": "",
+          "Mode": "cItemSelect",
+          "FilterType": "cItemFilter",
+          "ItemFilterType": "OwlTentDonation0"
+        },
+        "explicit_layout_key_present": false
+      },
+      {
+        "flow": "SNPC_owl_01_Museum_Donation",
+        "flow_source": "output/gameplay/trees/SNPC_owl_01_Museum_Donation.txt",
+        "entry": "OwlTentDonationAgain",
+        "event_index": 45,
+        "action": "UIItemSelectWindowHandling",
+        "params": {
+          "ItemUniqueID": 65534,
+          "ItemKindType": "",
+          "Mode": "cItemSelect",
+          "FilterType": "cItemFilter",
+          "ItemFilterType": "OwlTentDonation1"
+        },
+        "explicit_layout_key_present": false
+      },
+      {
+        "flow": "SNPC_owl_01_Museum_Donation",
+        "flow_source": "output/gameplay/trees/SNPC_owl_01_Museum_Donation.txt",
+        "entry": "OwlTentDonationAgain",
+        "event_index": 85,
+        "action": "UIItemSelectWindowHandling",
+        "params": {
+          "ItemUniqueID": 65534,
+          "ItemKindType": "",
+          "Mode": "cItemSelect",
+          "ItemFilterType": "OwlDonation",
+          "FilterType": "cItemFilter"
+        },
+        "explicit_layout_key_present": false
+      },
+      {
+        "flow": "SNPC_owl_01_Museum_Donation",
+        "flow_source": "output/gameplay/trees/SNPC_owl_01_Museum_Donation.txt",
+        "entry": "OwlTentDonationAgain",
+        "event_index": 68,
+        "action": "UIItemSelectWindowHandling",
+        "params": {
+          "ItemUniqueID": 65534,
+          "ItemKindType": "",
+          "Mode": "cItemSelect",
+          "FilterType": "cItemFilter",
+          "ItemFilterType": "OwlTentDonation0"
+        },
+        "explicit_layout_key_present": false
+      },
+      {
+        "flow": "SNPC_rcm_01_Tent_1_Entries",
+        "flow_source": "output/gameplay/trees/SNPC_rcm_01_Tent_1_Entries.txt",
+        "entry": "Request",
+        "event_index": 25,
+        "action": "UIMoneyAppear",
+        "params": {},
+        "explicit_layout_key_present": false
+      },
+      {
+        "flow": "SNPC_rcm_01_Tent_1_Entries",
+        "flow_source": "output/gameplay/trees/SNPC_rcm_01_Tent_1_Entries.txt",
+        "entry": "Request",
+        "event_index": 24,
+        "action": "UIMoneyAppear",
+        "params": {},
+        "explicit_layout_key_present": false
+      },
+      {
+        "flow": "SNPC_rcm_01_Tent_1_Entries",
+        "flow_source": "output/gameplay/trees/SNPC_rcm_01_Tent_1_Entries.txt",
+        "entry": "RcmCmnGreeting",
+        "event_index": 44,
+        "action": "UIMoneyAppear",
+        "params": {},
+        "explicit_layout_key_present": false
+      },
+      {
+        "flow": "SNPC_rco_00_StartMainGame",
+        "flow_source": "output/gameplay/trees/SNPC_rco_00_StartMainGame.txt",
+        "entry": "Rco_GetSmartPhone",
+        "event_index": 34,
+        "action": "UIMenuDeviceAppear",
+        "params": {
+          "EventType": "cBoot",
+          "Application": "cNone"
+        },
+        "explicit_layout_key_present": false
+      },
+      {
+        "flow": "SNPC_rco_00_StartMainGame",
+        "flow_source": "output/gameplay/trees/SNPC_rco_00_StartMainGame.txt",
+        "entry": "Rco_TutorialGetBill",
+        "event_index": 32,
+        "action": "UIMoneyAppear",
+        "params": {},
+        "explicit_layout_key_present": false
+      },
+      {
+        "flow": "SNPC_rco_00_StartMainGame",
+        "flow_source": "output/gameplay/trees/SNPC_rco_00_StartMainGame.txt",
+        "entry": "Rco_TutorialGetBill",
+        "event_index": 31,
+        "action": "UIMoneyDisappear",
+        "params": {},
+        "explicit_layout_key_present": false
+      },
+      {
+        "flow": "SNPC_rco_55_TkkFirstLive",
+        "flow_source": "output/gameplay/trees/SNPC_rco_55_TkkFirstLive.txt",
+        "entry": "InvitePlayerHouse",
+        "event_index": 17,
+        "action": "UIMenuDeviceAppear",
+        "params": {
+          "EventType": "cInstall",
+          "Application": "cConstructLicense"
+        },
+        "explicit_layout_key_present": false
+      },
+      {
+        "flow": "System_GrowUp",
+        "flow_source": "output/gameplay/trees/System_GrowUp.txt",
+        "entry": "Save",
+        "event_index": 14,
+        "action": "UISaveIconAppear",
+        "params": {},
+        "explicit_layout_key_present": false
+      },
+      {
+        "flow": "System_GrowUp",
+        "flow_source": "output/gameplay/trees/System_GrowUp.txt",
+        "entry": "Save",
+        "event_index": 16,
+        "action": "UISaveIconDisappear",
+        "params": {},
+        "explicit_layout_key_present": false
+      },
+      {
+        "flow": "Tutorials_Prologue1_Charactermaking",
+        "flow_source": "output/gameplay/trees/Tutorials_Prologue1_Charactermaking.txt",
+        "entry": "EnteringNameAndBday",
+        "event_index": 19,
+        "action": "UISoftwareKeyboardHandling",
+        "params": {
+          "FormType": "cName",
+          "IsClearString": true
+        },
+        "explicit_layout_key_present": false
+      },
+      {
+        "flow": "Tutorials_Prologue1_Charactermaking",
+        "flow_source": "output/gameplay/trees/Tutorials_Prologue1_Charactermaking.txt",
+        "entry": "EnteringNameAndBday",
+        "event_index": 21,
+        "action": "UIDateHandling",
+        "params": {
+          "DateInputType": "cOpeningBirthday"
+        },
+        "explicit_layout_key_present": false
+      },
+      {
+        "flow": "Tutorials_Prologue1_Charactermaking",
+        "flow_source": "output/gameplay/trees/Tutorials_Prologue1_Charactermaking.txt",
+        "entry": "Charactermaking",
+        "event_index": 71,
+        "action": "UICharactermakingCreate",
+        "params": {},
+        "explicit_layout_key_present": false
+      },
+      {
+        "flow": "Tutorials_Prologue1_Charactermaking",
+        "flow_source": "output/gameplay/trees/Tutorials_Prologue1_Charactermaking.txt",
+        "entry": "Charactermaking",
+        "event_index": 24,
+        "action": "UICharactermakingHandling",
+        "params": {
+          "CharctermakingFilterType": "cFirstTime"
+        },
+        "explicit_layout_key_present": false
+      },
+      {
+        "flow": "Tutorials_Prologue1_Charactermaking",
+        "flow_source": "output/gameplay/trees/Tutorials_Prologue1_Charactermaking.txt",
+        "entry": "TerrainSelect",
+        "event_index": 0,
+        "action": "UIMapSelectHandling",
+        "params": {},
+        "explicit_layout_key_present": false
+      },
+      {
+        "flow": "Tutorials_Prologue1_Charactermaking",
+        "flow_source": "output/gameplay/trees/Tutorials_Prologue1_Charactermaking.txt",
+        "entry": "Cut0",
+        "event_index": 68,
+        "action": "UIPrologueBGAppear",
+        "params": {},
+        "explicit_layout_key_present": false
+      },
+      {
+        "flow": "Tutorials_Prologue1_Charactermaking",
+        "flow_source": "output/gameplay/trees/Tutorials_Prologue1_Charactermaking.txt",
+        "entry": "Cut0",
+        "event_index": 69,
+        "action": "UIPrologueBGDisappear",
+        "params": {},
+        "explicit_layout_key_present": false
+      },
+      {
+        "flow": "Tutorials_Prologue5_Campfire",
+        "flow_source": "output/gameplay/trees/Tutorials_Prologue5_Campfire.txt",
+        "entry": "Root",
+        "event_index": 7,
+        "action": "UISoftwareKeyboardHandling",
+        "params": {
+          "FormType": "cVillage",
+          "IsClearString": true
+        },
+        "explicit_layout_key_present": false
+      }
+    ],
+    "native_handler_records": [
+      {
+        "action": "UICharactermakingCreate",
+        "registry_key": "EventFlowSystemActor.EventFlowActionUICharactermakingCreate",
+        "found": true,
+        "parameters": {},
+        "registration_hash": "84d60aeb",
+        "registration_va": "0x305ab48",
+        "factory": "0x4508f0",
+        "constructor": "0x34c7f0",
+        "vtable": "0x304d758",
+        "slots": [
+          "0x34c870",
+          "0x34c910",
+          "0x34c820",
+          "0x19679b0",
+          "0x34c840",
+          "0x238fd0",
+          "0x23c0c0",
+          "0x34c980",
+          "0x23c0d0",
+          "0x23c0e0",
+          "0x23c0f0",
+          "0x34c850"
+        ],
+        "slot_role_caveat": "contiguous code pointers; later class-specific slot roles unresolved"
+      },
+      {
+        "action": "UICharactermakingHandling",
+        "registry_key": "EventFlowSystemActor.EventFlowActionUICharactermakingHandling",
+        "found": true,
+        "parameters": {
+          "CharctermakingFilterType": "str"
+        },
+        "registration_hash": "7d27be72",
+        "registration_va": "0x305a9d8",
+        "factory": "0x450330",
+        "constructor": "0x34ca40",
+        "vtable": "0x304d7c8",
+        "slots": [
+          "0x34cd90",
+          "0x34cea0",
+          "0x34cab0",
+          "0x34cad0",
+          "0x34cb10",
+          "0x238fd0",
+          "0x238fe0",
+          "0x238ff0",
+          "0x34a9b0",
+          "0x34aa20",
+          "0x34b7a0",
+          "0x239010",
+          "0x34b700",
+          "0x34b760",
+          "0x34cb20",
+          "0x34af90",
+          "0x34afa0"
+        ],
+        "slot_role_caveat": "contiguous code pointers; later class-specific slot roles unresolved"
+      },
+      {
+        "action": "UIDateHandling",
+        "registry_key": "EventFlowSystemActor.EventFlowActionUIDateHandling",
+        "found": true,
+        "parameters": {
+          "DateInputType": "str"
+        },
+        "registration_hash": "47c53626",
+        "registration_va": "0x305a268",
+        "factory": "0x44e570",
+        "constructor": "0x34fec0",
+        "vtable": "0x304dde0",
+        "slots": [
+          "0x350410",
+          "0x350520",
+          "0x34ff30",
+          "0x34ff50",
+          "0x34ff90",
+          "0x238fd0",
+          "0x238fe0",
+          "0x350590",
+          "0x34a9b0",
+          "0x34aa20",
+          "0x34b7a0",
+          "0x239010",
+          "0x34b700",
+          "0x34b760",
+          "0x34ffa0",
+          "0x34af90",
+          "0x34afa0"
+        ],
+        "slot_role_caveat": "contiguous code pointers; later class-specific slot roles unresolved"
+      },
+      {
+        "action": "UIDemoClock",
+        "registry_key": "EventFlowSystemActor.EventFlowActionUIDemoClock",
+        "found": true,
+        "parameters": {
+          "DisplayFrame": "int"
+        },
+        "registration_hash": "6cfbd60b",
+        "registration_va": "0x305a7a8",
+        "factory": "0x44fa70",
+        "constructor": "0x350650",
+        "vtable": "0x304de78",
+        "slots": [
+          "0x350740",
+          "0x3507e0",
+          "0x3506c0",
+          "0x19679b0",
+          "0x3506f0",
+          "0x238fd0",
+          "0x23c0c0",
+          "0x238ff0",
+          "0x23c0d0",
+          "0x23c0e0",
+          "0x23c0f0",
+          "0x350700"
+        ],
+        "slot_role_caveat": "contiguous code pointers; later class-specific slot roles unresolved"
+      },
+      {
+        "action": "UIItemSelectWindowHandling",
+        "registry_key": "EventFlowSystemActor.EventFlowActionUIItemSelectWindowHandling",
+        "found": true,
+        "parameters": {
+          "FilterType": "str",
+          "ItemUniqueID": "int",
+          "ItemKindType": "str",
+          "ItemFilterType": "str",
+          "Mode": "str"
+        },
+        "registration_hash": "80f8f65e",
+        "registration_va": "0x305aab8",
+        "factory": "0x4506b0",
+        "constructor": "0x353a80",
+        "vtable": "0x304df80",
+        "slots": [
+          "0x354b00",
+          "0x354c10",
+          "0x353ba0",
+          "0x353bc0",
+          "0x353c00",
+          "0x238fd0",
+          "0x238fe0",
+          "0x238ff0",
+          "0x34a9b0",
+          "0x34aa20",
+          "0x34b7a0",
+          "0x239010",
+          "0x34b700",
+          "0x34b760",
+          "0x353c10",
+          "0x354850",
+          "0x34afa0"
+        ],
+        "slot_role_caveat": "contiguous code pointers; later class-specific slot roles unresolved"
+      },
+      {
+        "action": "UIMapSelectHandling",
+        "registry_key": "EventFlowSystemActor.EventFlowActionUIMapSelectHandling",
+        "found": true,
+        "parameters": {},
+        "registration_hash": "1a24f4b5",
+        "registration_va": "0x3059bd8",
+        "factory": "0x44cb30",
+        "constructor": "0x356e90",
+        "vtable": "0x304e3e0",
+        "slots": [
+          "0x356f20",
+          "0x357030",
+          "0x34b6e0",
+          "0x356ed0",
+          "0x356f00",
+          "0x238fd0",
+          "0x238fe0",
+          "0x238ff0",
+          "0x34a9b0",
+          "0x34aa20",
+          "0x34b7a0",
+          "0x239010",
+          "0x34b700",
+          "0x34b760",
+          "0x356f10",
+          "0x34af90",
+          "0x34afa0"
+        ],
+        "slot_role_caveat": "contiguous code pointers; later class-specific slot roles unresolved"
+      },
+      {
+        "action": "UIMenuDeviceAppear",
+        "registry_key": "EventFlowSystemActor.EventFlowActionUIMenuDeviceAppear",
+        "found": true,
+        "parameters": {
+          "EventType": "str",
+          "Application": "str"
+        },
+        "registration_hash": "49f7be22",
+        "registration_va": "0x305a2d8",
+        "factory": "0x44e730",
+        "constructor": "0x357660",
+        "vtable": "0x304e580",
+        "slots": [
+          "0x357f40",
+          "0x358050",
+          "0x357700",
+          "0x357720",
+          "0x357760",
+          "0x238fd0",
+          "0x238fe0",
+          "0x238ff0",
+          "0x34a9b0",
+          "0x34aa20",
+          "0x34b7a0",
+          "0x239010",
+          "0x34b700",
+          "0x34b760",
+          "0x357770",
+          "0x34af90",
+          "0x34afa0"
+        ],
+        "slot_role_caveat": "contiguous code pointers; later class-specific slot roles unresolved"
+      },
+      {
+        "action": "UIMoneyAppear",
+        "registry_key": "EventFlowSystemActor.EventFlowActionUIMoneyAppear",
+        "found": true,
+        "parameters": {},
+        "registration_hash": "966962b0",
+        "registration_va": "0x305adb8",
+        "factory": "0x4512b0",
+        "constructor": "0x35ac20",
+        "vtable": "0x304e860",
+        "slots": [
+          "0x35ad10",
+          "0x35adb0",
+          "0x35ac50",
+          "0x19679b0",
+          "0x35ac70",
+          "0x238fd0",
+          "0x238fe0",
+          "0x238ff0",
+          "0x35ac80",
+          "0x35acc0",
+          "0x35ad00",
+          "0x239010"
+        ],
+        "slot_role_caveat": "contiguous code pointers; later class-specific slot roles unresolved"
+      },
+      {
+        "action": "UIMoneyDisappear",
+        "registry_key": "EventFlowSystemActor.EventFlowActionUIMoneyDisappear",
+        "found": true,
+        "parameters": {},
+        "registration_hash": "fe93126a",
+        "registration_va": "0x305bc98",
+        "factory": "0x454e30",
+        "constructor": "0x35af10",
+        "vtable": "0x304e8d0",
+        "slots": [
+          "0x35afd0",
+          "0x35b070",
+          "0x35af40",
+          "0x19679b0",
+          "0x35af60",
+          "0x238fd0",
+          "0x238fe0",
+          "0x238ff0",
+          "0x1228cc0",
+          "0x35af80",
+          "0x35afc0",
+          "0x239010"
+        ],
+        "slot_role_caveat": "contiguous code pointers; later class-specific slot roles unresolved"
+      },
+      {
+        "action": "UIPrologueBGAppear",
+        "registry_key": "EventFlowSystemActor.EventFlowActionUIPrologueBGAppear",
+        "found": true,
+        "parameters": {},
+        "registration_hash": "1d124b8b",
+        "registration_va": "0x3059c48",
+        "factory": "0x44ccf0",
+        "constructor": "0x35d6c0",
+        "vtable": "0x304edd0",
+        "slots": [
+          "0x35d730",
+          "0x35d7d0",
+          "0x35d6f0",
+          "0x19679b0",
+          "0x35d710",
+          "0x238fd0",
+          "0x23c0c0",
+          "0x35d840",
+          "0x23c0d0",
+          "0x23c0e0",
+          "0x23c0f0",
+          "0x35d720"
+        ],
+        "slot_role_caveat": "contiguous code pointers; later class-specific slot roles unresolved"
+      },
+      {
+        "action": "UIPrologueBGDisappear",
+        "registry_key": "EventFlowSystemActor.EventFlowActionUIPrologueBGDisappear",
+        "found": true,
+        "parameters": {},
+        "registration_hash": "869cb01c",
+        "registration_va": "0x305ab88",
+        "factory": "0x4509f0",
+        "constructor": "0x35d900",
+        "vtable": "0x304ee40",
+        "slots": [
+          "0x35d970",
+          "0x35da10",
+          "0x35d930",
+          "0x19679b0",
+          "0x35d950",
+          "0x238fd0",
+          "0x23c0c0",
+          "0x35da80",
+          "0x23c0d0",
+          "0x23c0e0",
+          "0x23c0f0",
+          "0x35d960"
+        ],
+        "slot_role_caveat": "contiguous code pointers; later class-specific slot roles unresolved"
+      },
+      {
+        "action": "UISaveIconAppear",
+        "registry_key": "EventFlowSystemActor.EventFlowActionUISaveIconAppear",
+        "found": true,
+        "parameters": {},
+        "registration_hash": "5398fdae",
+        "registration_va": "0x305a3d8",
+        "factory": "0x44eb30",
+        "constructor": "0x35db40",
+        "vtable": "0x304eeb0",
+        "slots": [
+          "0x35dbf0",
+          "0x35dc90",
+          "0x35db70",
+          "0x19679b0",
+          "0x35db90",
+          "0x238fd0",
+          "0x238fe0",
+          "0x238ff0",
+          "0x35dba0",
+          "0x35dbb0",
+          "0x35dbe0",
+          "0x239010"
+        ],
+        "slot_role_caveat": "contiguous code pointers; later class-specific slot roles unresolved"
+      },
+      {
+        "action": "UISaveIconDisappear",
+        "registry_key": "EventFlowSystemActor.EventFlowActionUISaveIconDisappear",
+        "found": true,
+        "parameters": {},
+        "registration_hash": "1e57a1d3",
+        "registration_va": "0x3059c68",
+        "factory": "0x44cd70",
+        "constructor": "0x35ddd0",
+        "vtable": "0x304ef20",
+        "slots": [
+          "0x35de40",
+          "0x35dee0",
+          "0x35de00",
+          "0x19679b0",
+          "0x35de20",
+          "0x238fd0",
+          "0x23c0c0",
+          "0x238ff0",
+          "0x23c0d0",
+          "0x23c0e0",
+          "0x23c0f0",
+          "0x1228ed0"
+        ],
+        "slot_role_caveat": "contiguous code pointers; later class-specific slot roles unresolved"
+      },
+      {
+        "action": "UISoftwareKeyboardHandling",
+        "registry_key": "EventFlowSystemActor.EventFlowActionUISoftwareKeyboardHandling",
+        "found": true,
+        "parameters": {
+          "FormType": "str",
+          "IsClearString": "bool"
+        },
+        "registration_hash": "954f3ca0",
+        "registration_va": "0x305ad88",
+        "factory": "0x4511f0",
+        "constructor": "0x362e20",
+        "vtable": "0x304f2c0",
+        "slots": [
+          "0x3631d0",
+          "0x3632e0",
+          "0x362ec0",
+          "0x362ee0",
+          "0x362f20",
+          "0x238fd0",
+          "0x238fe0",
+          "0x238ff0",
+          "0x34a9b0",
+          "0x34aa20",
+          "0x34b7a0",
+          "0x239010",
+          "0x34b700",
+          "0x34b760",
+          "0x362f30",
+          "0x363190",
+          "0x34afa0"
+        ],
+        "slot_role_caveat": "contiguous code pointers; later class-specific slot roles unresolved"
+      }
+    ],
+    "code_route_examples": [
+      {
+        "route": "menu_device",
+        "eventflow_nodes": [
+          {
+            "flow": "SNPC_rco_00_StartMainGame",
+            "flow_source": "output/gameplay/trees/SNPC_rco_00_StartMainGame.txt",
+            "entry": "Rco_GetSmartPhone",
+            "event_index": 34,
+            "action": "UIMenuDeviceAppear",
+            "params": {
+              "EventType": "cBoot",
+              "Application": "cNone"
+            },
+            "explicit_layout_key_present": false
+          },
+          {
+            "flow": "SNPC_rco_55_TkkFirstLive",
+            "flow_source": "output/gameplay/trees/SNPC_rco_55_TkkFirstLive.txt",
+            "entry": "InvitePlayerHouse",
+            "event_index": 17,
+            "action": "UIMenuDeviceAppear",
+            "params": {
+              "EventType": "cInstall",
+              "Application": "cConstructLicense"
+            },
+            "explicit_layout_key_present": false
+          }
+        ],
+        "native_handler_key": "EventFlowSystemActor.EventFlowActionUIMenuDeviceAppear",
+        "native_callback": {
+          "source": "/workspace/acnh-re/output/binary/decomp/357770.c",
+          "function": "FUN_00457770",
+          "behavior": "Matches EventType/Application fields and sends an internal UI event request through FUN_0164a040; no MenuDevice layout/resource string or route to that BFLYT member is present."
+        },
+        "page_config_candidate": "menu_device",
+        "layout_candidate": "menu_device",
+        "join_status": "STRUCT_CANDIDATE; direct action-to-page/resource link OPEN"
+      },
+      {
+        "route": "date_input",
+        "eventflow_nodes": [
+          {
+            "flow": "Tutorials_Prologue1_Charactermaking",
+            "flow_source": "output/gameplay/trees/Tutorials_Prologue1_Charactermaking.txt",
+            "entry": "EnteringNameAndBday",
+            "event_index": 21,
+            "action": "UIDateHandling",
+            "params": {
+              "DateInputType": "cOpeningBirthday"
+            },
+            "explicit_layout_key_present": false
+          }
+        ],
+        "native_handler_key": "EventFlowSystemActor.EventFlowActionUIDateHandling",
+        "native_callback": {
+          "source": "/workspace/acnh-re/output/binary/decomp/34ffa0.c",
+          "function": "FUN_0044ffa0",
+          "behavior": "Recognizes the cDate / cOpeningBirthday input pair and calls the generic UI event path FUN_0164a520; no DateInput.arc/BFLYT consumer path appears in this handler."
+        },
+        "page_config_candidate": "date_input",
+        "layout_candidate": "date_input",
+        "join_status": "STRUCT_CANDIDATE; internal date UI dispatch proven, exact page/resource consumer OPEN"
+      },
+      {
+        "route": "character_make",
+        "eventflow_nodes": [
+          {
+            "flow": "Tutorials_Prologue1_Charactermaking",
+            "flow_source": "output/gameplay/trees/Tutorials_Prologue1_Charactermaking.txt",
+            "entry": "Charactermaking",
+            "event_index": 24,
+            "action": "UICharactermakingHandling",
+            "params": {
+              "CharctermakingFilterType": "cFirstTime"
+            },
+            "explicit_layout_key_present": false
+          },
+          {
+            "flow": "Tutorials_Prologue1_Charactermaking",
+            "flow_source": "output/gameplay/trees/Tutorials_Prologue1_Charactermaking.txt",
+            "entry": "Charactermaking",
+            "event_index": 71,
+            "action": "UICharactermakingCreate",
+            "params": {},
+            "explicit_layout_key_present": false
+          }
+        ],
+        "native_handler_key": "EventFlowSystemActor.EventFlowActionUICharactermakingHandling",
+        "native_callback": {
+          "source": "/workspace/acnh-re/output/binary/decomp/34cb20.c",
+          "function": "FUN_0044cb20",
+          "behavior": "Reads CharctermakingFilterType and sends a generic UI event through FUN_0164a3a0; no CharaMake.bflyt resource string or exact page resolver is present."
+        },
+        "page_config_candidate": "chara_make",
+        "layout_candidate": "chara_make",
+        "join_status": "STRUCT_CANDIDATE; direct action-to-page/resource link OPEN"
+      },
+      {
+        "route": "map_select",
+        "eventflow_nodes": [
+          {
+            "flow": "Tutorials_Prologue1_Charactermaking",
+            "flow_source": "output/gameplay/trees/Tutorials_Prologue1_Charactermaking.txt",
+            "entry": "TerrainSelect",
+            "event_index": 0,
+            "action": "UIMapSelectHandling",
+            "params": {},
+            "explicit_layout_key_present": false
+          }
+        ],
+        "native_handler_key": "EventFlowSystemActor.EventFlowActionUIMapSelectHandling",
+        "native_callback": {
+          "source": "/workspace/acnh-re/output/binary/decomp/356f10.c",
+          "function": "FUN_00456f10",
+          "behavior": "Sets action result/status field to 0x2a; this method names no CharaMakeMap resource. Shared handler vtable roles remain partial."
+        },
+        "page_config_candidate": "chara_make_map",
+        "layout_candidate": "chara_make_map",
+        "join_status": "STRUCT_CANDIDATE; direct action-to-page/resource link OPEN"
+      },
+      {
+        "route": "village_name_keyboard",
+        "eventflow_nodes": [
+          {
+            "flow": "Tutorials_Prologue5_Campfire",
+            "flow_source": "output/gameplay/trees/Tutorials_Prologue5_Campfire.txt",
+            "entry": "Root",
+            "event_index": 7,
+            "action": "UISoftwareKeyboardHandling",
+            "params": {
+              "FormType": "cVillage",
+              "IsClearString": true
+            },
+            "explicit_layout_key_present": false
+          },
+          {
+            "flow": "Tutorials_Prologue1_Charactermaking",
+            "flow_source": "output/gameplay/trees/Tutorials_Prologue1_Charactermaking.txt",
+            "entry": "EnteringNameAndBday",
+            "event_index": 19,
+            "action": "UISoftwareKeyboardHandling",
+            "params": {
+              "FormType": "cName",
+              "IsClearString": true
+            },
+            "explicit_layout_key_present": false
+          }
+        ],
+        "native_handler_key": "EventFlowSystemActor.EventFlowActionUISoftwareKeyboardHandling",
+        "native_callback": {
+          "source": "/workspace/acnh-re/output/binary/decomp/362f30.c",
+          "function": "FUN_00462f30",
+          "behavior": "Matches FormType against a native string table and sends an internal UI event through FUN_0164a2e0; the handler does not name SwkbdTextAreaVillageName.bflyt."
+        },
+        "page_config_candidate": null,
+        "layout_candidate": "village_keyboard_text_area",
+        "join_status": "STRUCT_CANDIDATE by FormType/asset name; direct UI consumer OPEN"
+      },
+      {
+        "route": "money_ui",
+        "eventflow_nodes": [
+          {
+            "flow": "SNPC_rcm_01_Tent_1_Entries",
+            "flow_source": "output/gameplay/trees/SNPC_rcm_01_Tent_1_Entries.txt",
+            "entry": "Request",
+            "event_index": 25,
+            "action": "UIMoneyAppear",
+            "params": {},
+            "explicit_layout_key_present": false
+          },
+          {
+            "flow": "SNPC_rcm_01_Tent_1_Entries",
+            "flow_source": "output/gameplay/trees/SNPC_rcm_01_Tent_1_Entries.txt",
+            "entry": "Request",
+            "event_index": 24,
+            "action": "UIMoneyAppear",
+            "params": {},
+            "explicit_layout_key_present": false
+          },
+          {
+            "flow": "SNPC_rcm_01_Tent_1_Entries",
+            "flow_source": "output/gameplay/trees/SNPC_rcm_01_Tent_1_Entries.txt",
+            "entry": "RcmCmnGreeting",
+            "event_index": 44,
+            "action": "UIMoneyAppear",
+            "params": {},
+            "explicit_layout_key_present": false
+          },
+          {
+            "flow": "SNPC_rco_00_StartMainGame",
+            "flow_source": "output/gameplay/trees/SNPC_rco_00_StartMainGame.txt",
+            "entry": "Rco_TutorialGetBill",
+            "event_index": 32,
+            "action": "UIMoneyAppear",
+            "params": {},
+            "explicit_layout_key_present": false
+          }
+        ],
+        "native_handler_key": "EventFlowSystemActor.EventFlowActionUIMoneyAppear",
+        "native_callback": null,
+        "page_config_candidate": "bell_counter",
+        "layout_candidate": "bell_counter",
+        "join_status": "STRUCT_CANDIDATE by action/UI purpose and `BellCounter` configuration; direct action-to-page/resource link OPEN"
+      },
+      {
+        "route": "save_icon",
+        "eventflow_nodes": [
+          {
+            "flow": "System_GrowUp",
+            "flow_source": "output/gameplay/trees/System_GrowUp.txt",
+            "entry": "Save",
+            "event_index": 14,
+            "action": "UISaveIconAppear",
+            "params": {},
+            "explicit_layout_key_present": false
+          },
+          {
+            "flow": "System_GrowUp",
+            "flow_source": "output/gameplay/trees/System_GrowUp.txt",
+            "entry": "Save",
+            "event_index": 16,
+            "action": "UISaveIconDisappear",
+            "params": {},
+            "explicit_layout_key_present": false
+          }
+        ],
+        "native_handler_key": "EventFlowSystemActor.EventFlowActionUISaveIconAppear / EventFlowSystemActor.EventFlowActionUISaveIconDisappear",
+        "native_callback": null,
+        "page_config_candidate": null,
+        "layout_candidate": "save_icon",
+        "join_status": "STRUCT_CANDIDATE by matching class/resource name; direct consumer OPEN"
+      },
+      {
+        "route": "prologue_background",
+        "eventflow_nodes": [
+          {
+            "flow": "Tutorials_Prologue1_Charactermaking",
+            "flow_source": "output/gameplay/trees/Tutorials_Prologue1_Charactermaking.txt",
+            "entry": "Cut0",
+            "event_index": 68,
+            "action": "UIPrologueBGAppear",
+            "params": {},
+            "explicit_layout_key_present": false
+          },
+          {
+            "flow": "Tutorials_Prologue1_Charactermaking",
+            "flow_source": "output/gameplay/trees/Tutorials_Prologue1_Charactermaking.txt",
+            "entry": "Cut0",
+            "event_index": 69,
+            "action": "UIPrologueBGDisappear",
+            "params": {},
+            "explicit_layout_key_present": false
+          }
+        ],
+        "native_handler_key": "EventFlowSystemActor.EventFlowActionUIPrologueBGAppear / EventFlowSystemActor.EventFlowActionUIPrologueBGDisappear",
+        "native_callback": null,
+        "page_config_candidate": null,
+        "layout_candidate": "prologue_wipe",
+        "join_status": "STRUCT_CANDIDATE by scene/layout name; direct consumer OPEN"
+      },
+      {
+        "route": "demo_clock",
+        "eventflow_nodes": [
+          {
+            "flow": "Demo_PublicAnnouncement",
+            "flow_source": "output/gameplay/trees/Demo_PublicAnnouncement.txt",
+            "entry": "SzaPrepareAction",
+            "event_index": 57,
+            "action": "UIDemoClock",
+            "params": {
+              "DisplayFrame": 60
+            },
+            "explicit_layout_key_present": false
+          },
+          {
+            "flow": "Demo_PublicAnnouncement",
+            "flow_source": "output/gameplay/trees/Demo_PublicAnnouncement.txt",
+            "entry": "SzaPrepareAction",
+            "event_index": 60,
+            "action": "UIDemoClock",
+            "params": {
+              "DisplayFrame": 60
+            },
+            "explicit_layout_key_present": false
+          },
+          {
+            "flow": "Demo_PublicAnnouncement",
+            "flow_source": "output/gameplay/trees/Demo_PublicAnnouncement.txt",
+            "entry": "OutdoorDemoStart",
+            "event_index": 56,
+            "action": "UIDemoClock",
+            "params": {
+              "DisplayFrame": 60
+            },
+            "explicit_layout_key_present": false
+          },
+          {
+            "flow": "Demo_PublicAnnouncement",
+            "flow_source": "output/gameplay/trees/Demo_PublicAnnouncement.txt",
+            "entry": "Sza_NormalPreAction",
+            "event_index": 60,
+            "action": "UIDemoClock",
+            "params": {
+              "DisplayFrame": 60
+            },
+            "explicit_layout_key_present": false
+          }
+        ],
+        "native_handler_key": "EventFlowSystemActor.EventFlowActionUIDemoClock",
+        "native_callback": null,
+        "page_config_candidate": null,
+        "layout_candidate": "clock",
+        "join_status": "STRUCT_CANDIDATE by clock purpose only; direct consumer OPEN"
+      },
+      {
+        "route": "item_selection",
+        "eventflow_nodes": [
+          {
+            "flow": "SNPC_owl_01_Museum_Donation",
+            "flow_source": "output/gameplay/trees/SNPC_owl_01_Museum_Donation.txt",
+            "entry": "Root",
+            "event_index": 45,
+            "action": "UIItemSelectWindowHandling",
+            "params": {
+              "ItemUniqueID": 65534,
+              "ItemKindType": "",
+              "Mode": "cItemSelect",
+              "FilterType": "cItemFilter",
+              "ItemFilterType": "OwlTentDonation1"
+            },
+            "explicit_layout_key_present": false
+          },
+          {
+            "flow": "SNPC_owl_01_Museum_Donation",
+            "flow_source": "output/gameplay/trees/SNPC_owl_01_Museum_Donation.txt",
+            "entry": "Root",
+            "event_index": 85,
+            "action": "UIItemSelectWindowHandling",
+            "params": {
+              "ItemUniqueID": 65534,
+              "ItemKindType": "",
+              "Mode": "cItemSelect",
+              "ItemFilterType": "OwlDonation",
+              "FilterType": "cItemFilter"
+            },
+            "explicit_layout_key_present": false
+          },
+          {
+            "flow": "SNPC_owl_01_Museum_Donation",
+            "flow_source": "output/gameplay/trees/SNPC_owl_01_Museum_Donation.txt",
+            "entry": "Root",
+            "event_index": 68,
+            "action": "UIItemSelectWindowHandling",
+            "params": {
+              "ItemUniqueID": 65534,
+              "ItemKindType": "",
+              "Mode": "cItemSelect",
+              "FilterType": "cItemFilter",
+              "ItemFilterType": "OwlTentDonation0"
+            },
+            "explicit_layout_key_present": false
+          },
+          {
+            "flow": "SNPC_owl_01_Museum_Donation",
+            "flow_source": "output/gameplay/trees/SNPC_owl_01_Museum_Donation.txt",
+            "entry": "OwlTentDonationAgain",
+            "event_index": 45,
+            "action": "UIItemSelectWindowHandling",
+            "params": {
+              "ItemUniqueID": 65534,
+              "ItemKindType": "",
+              "Mode": "cItemSelect",
+              "FilterType": "cItemFilter",
+              "ItemFilterType": "OwlTentDonation1"
+            },
+            "explicit_layout_key_present": false
+          },
+          {
+            "flow": "SNPC_owl_01_Museum_Donation",
+            "flow_source": "output/gameplay/trees/SNPC_owl_01_Museum_Donation.txt",
+            "entry": "OwlTentDonationAgain",
+            "event_index": 85,
+            "action": "UIItemSelectWindowHandling",
+            "params": {
+              "ItemUniqueID": 65534,
+              "ItemKindType": "",
+              "Mode": "cItemSelect",
+              "ItemFilterType": "OwlDonation",
+              "FilterType": "cItemFilter"
+            },
+            "explicit_layout_key_present": false
+          },
+          {
+            "flow": "SNPC_owl_01_Museum_Donation",
+            "flow_source": "output/gameplay/trees/SNPC_owl_01_Museum_Donation.txt",
+            "entry": "OwlTentDonationAgain",
+            "event_index": 68,
+            "action": "UIItemSelectWindowHandling",
+            "params": {
+              "ItemUniqueID": 65534,
+              "ItemKindType": "",
+              "Mode": "cItemSelect",
+              "FilterType": "cItemFilter",
+              "ItemFilterType": "OwlTentDonation0"
+            },
+            "explicit_layout_key_present": false
+          }
+        ],
+        "native_handler_key": "EventFlowSystemActor.EventFlowActionUIItemSelectWindowHandling",
+        "native_callback": null,
+        "page_config_candidate": null,
+        "layout_candidate": null,
+        "join_status": "OPEN; the 523 parsed layout filenames contain no exact ItemSelect resource name, and no action key links a page."
+      }
+    ],
+    "baseline_page_config_candidates": [
+      {
+        "candidate_id": "menu_device",
+        "baseline_source": "B_data/Pack/StaticParam.pack!Param/Layout/MenuDevice.byml",
+        "baseline_manifest_id": 1786,
+        "baseline_source_sha256": "cbf5b2b18545085cbc73d84ccd73114062302e6e6b81b612645dc3976a5d958b",
+        "decoded_output": "/workspace/acnh-re/output/decoded/01786.json",
+        "page_identifier_node": "data.root.799b9ac4.4309561a",
+        "page_identifier_value": "UI_MenuDevice",
+        "related_node_values": [
+          {
+            "2c49113d": "DemoStart",
+            "8625d6ec": 0
+          },
+          {
+            "2c49113d": "DemoInstall",
+            "8625d6ec": 0
+          }
+        ],
+        "evidence_level": "BASELINE_STRUCT",
+        "candidate_for_action": "UIMenuDeviceAppear",
+        "flow_contexts": [
+          "SNPC_rco_00_StartMainGame",
+          "SNPC_rco_55_TkkFirstLive"
+        ],
+        "consumer_link_proven": false
+      },
+      {
+        "candidate_id": "chara_make",
+        "baseline_source": "B_data/Pack/StaticParam.pack!Param/Layout/CharaMake.byml",
+        "baseline_manifest_id": 936,
+        "baseline_source_sha256": "ea4e732051fb0ce166c2a49d63da29451cbbefd6b758a8d5f791cc69aba6e17d",
+        "decoded_output": "/workspace/acnh-re/output/decoded/00936.json",
+        "page_identifier_node": "data.root.799b9ac4.4309561a",
+        "page_identifier_value": "UI_CharaMake",
+        "related_node_values": [
+          {
+            "2c49113d": "FinishOut",
+            "8625d6ec": 0
+          }
+        ],
+        "evidence_level": "BASELINE_STRUCT",
+        "candidate_for_action": "UICharactermakingHandling",
+        "flow_contexts": [
+          "Tutorials_Prologue1_Charactermaking"
+        ],
+        "consumer_link_proven": false
+      },
+      {
+        "candidate_id": "chara_make_map",
+        "baseline_source": "B_data/Pack/StaticParam.pack!Param/Layout/CharaMakeMap.byml",
+        "baseline_manifest_id": 1652,
+        "baseline_source_sha256": "c46216c67b2bfe46641ce6981ddef4334a5c6f302a96d8e68b7e41708b9c0e56",
+        "decoded_output": "/workspace/acnh-re/output/decoded/01652.json",
+        "page_identifier_node": "data.root.799b9ac4.4309561a",
+        "page_identifier_value": "UI_CharaMakeMap",
+        "related_node_values": null,
+        "evidence_level": "BASELINE_STRUCT",
+        "candidate_for_action": "UIMapSelectHandling",
+        "flow_contexts": [
+          "Tutorials_Prologue1_Charactermaking"
+        ],
+        "consumer_link_proven": false
+      },
+      {
+        "candidate_id": "date_input",
+        "baseline_source": "B_data/Pack/StaticParam.pack!Param/Layout/DateInput.byml",
+        "baseline_manifest_id": 1603,
+        "baseline_source_sha256": "ff730d4be64baf5ed599414427f4000eb87262238eb066eb14cd30d56bc0c380",
+        "decoded_output": "/workspace/acnh-re/output/decoded/01603.json",
+        "page_identifier_node": "data.root.799b9ac4.4309561a",
+        "page_identifier_value": "UI_DateInput",
+        "related_node_values": null,
+        "evidence_level": "BASELINE_STRUCT",
+        "candidate_for_action": "UIDateHandling",
+        "flow_contexts": [
+          "Tutorials_Prologue1_Charactermaking"
+        ],
+        "consumer_link_proven": false
+      },
+      {
+        "candidate_id": "bell_counter",
+        "baseline_source": "B_data/Pack/StaticParam.pack!Param/Layout/Bell.byml",
+        "baseline_manifest_id": 1037,
+        "baseline_source_sha256": "4e6b4b3bf83753ad9d421d33c4f48ede506c1d23c6f92a4480d5c22e1086349a",
+        "decoded_output": "/workspace/acnh-re/output/decoded/01037.json",
+        "page_identifier_node": "data.root.799b9ac4.4309561a",
+        "page_identifier_value": "BellCounter",
+        "related_node_values": null,
+        "evidence_level": "BASELINE_STRUCT",
+        "candidate_for_action": "UIMoneyAppear",
+        "flow_contexts": [
+          "SNPC_rcm_01_Tent_1_Entries",
+          "SNPC_rco_00_StartMainGame"
+        ],
+        "consumer_link_proven": false
+      }
+    ],
+    "supplemental_bflyt_candidates": [
+      {
+        "candidate_id": "menu_device",
+        "archive_path": "Layout/MenuDevice.Nin_NX_NVN.zs",
+        "source_sha256": "eea921b7ba79d20c5d39647d77e89fd7d2257b6875c5d93225a274e1cafbbc03",
+        "original_B_data_status": "new_path",
+        "parsed_output": "/workspace/acnh-re/output/additional_romfs/ui/954a0c065cb116c1a60ff63fe66cd6399c7b6faf3dbfb4211df3790f2460bff8.json",
+        "parsed_source_member": "Layout/MenuDevice.Nin_NX_NVN.zs",
+        "parsed_resource_member": "MenuDevice.arc!blyt/MenuDevice.bflyt",
+        "related_eventflow_action": "UIMenuDeviceAppear",
+        "evidence_level": "STRUCT",
+        "exact_action_to_resource_consumer": false,
+        "version_confidence": "Supplemental archive member is new_path; exact 1.0.0 patch identity is not established."
+      },
+      {
+        "candidate_id": "chara_make",
+        "archive_path": "Layout/CharaMake.Nin_NX_NVN.zs",
+        "source_sha256": "183bab4e76aceee568323d436fe6c2d308cc48dbe2c7b904e3a9403c30c08e4a",
+        "original_B_data_status": "new_path",
+        "parsed_output": "/workspace/acnh-re/output/additional_romfs/ui/3a93f5fbebe2e98dabcc8ca01a51f94c210536759f631a476167b955f8db3b71.json",
+        "parsed_source_member": "Layout/CharaMake.Nin_NX_NVN.zs",
+        "parsed_resource_member": "CharaMake.arc!blyt/CharaMake.bflyt",
+        "related_eventflow_action": "UICharactermakingHandling",
+        "evidence_level": "STRUCT",
+        "exact_action_to_resource_consumer": false,
+        "version_confidence": "Supplemental archive member is new_path; exact 1.0.0 patch identity is not established."
+      },
+      {
+        "candidate_id": "chara_make_map",
+        "archive_path": "Layout/CharaMakeMap.Nin_NX_NVN.zs",
+        "source_sha256": "873d26ca41ba4b982cc96b55daf68adcdc657099be50626266615b3a9f2b6700",
+        "original_B_data_status": "new_path",
+        "parsed_output": "/workspace/acnh-re/output/additional_romfs/ui/4f6a3136252743811fef195cc6ab15ddbf3b942bf0b4c31666db5d36b4661df9.json",
+        "parsed_source_member": "Layout/CharaMakeMap.Nin_NX_NVN.zs",
+        "parsed_resource_member": "CharaMakeMap.arc!blyt/CharaMakeMap.bflyt",
+        "related_eventflow_action": "UIMapSelectHandling",
+        "evidence_level": "STRUCT",
+        "exact_action_to_resource_consumer": false,
+        "version_confidence": "Supplemental archive member is new_path; exact 1.0.0 patch identity is not established."
+      },
+      {
+        "candidate_id": "date_input",
+        "archive_path": "Layout/DateInput.Nin_NX_NVN.zs",
+        "source_sha256": "06539d7e67be35ad4561ae501adc16d19d5de5d7e636d8a67fc9fb739473e2cc",
+        "original_B_data_status": "new_path",
+        "parsed_output": "/workspace/acnh-re/output/additional_romfs/ui/a08574d3c8f8d8c7b2c4425a9febbd15c94d134ae93bc982a46bb64be8a58613.json",
+        "parsed_source_member": "Layout/DateInput.Nin_NX_NVN.zs",
+        "parsed_resource_member": "DateInput.arc!blyt/DateInput.bflyt",
+        "related_eventflow_action": "UIDateHandling",
+        "evidence_level": "STRUCT",
+        "exact_action_to_resource_consumer": false,
+        "version_confidence": "Supplemental archive member is new_path; exact 1.0.0 patch identity is not established."
+      },
+      {
+        "candidate_id": "bell_counter",
+        "archive_path": "Layout/Bell.Nin_NX_NVN.zs",
+        "source_sha256": "b2cd6445616485f236e7acec00d11bc0e88ea4ea64847555cdc72b02cf1f237e",
+        "original_B_data_status": "new_path",
+        "parsed_output": "/workspace/acnh-re/output/additional_romfs/ui/50e39d0c71c417c5bd6477fc82e29a4227d62fa71eaa1d418c1d8ecb9901876a.json",
+        "parsed_source_member": "Layout/Bell.Nin_NX_NVN.zs",
+        "parsed_resource_member": "Bell.arc!blyt/Bell.bflyt",
+        "related_eventflow_action": "UIMoneyAppear",
+        "evidence_level": "STRUCT",
+        "exact_action_to_resource_consumer": false,
+        "version_confidence": "Supplemental archive member is new_path; exact 1.0.0 patch identity is not established."
+      },
+      {
+        "candidate_id": "village_keyboard_text_area",
+        "archive_path": "Layout/SwkbdTextAreaVillageName.Nin_NX_NVN.zs",
+        "source_sha256": "fc282e7b23b6e1311ae31da2c513a801766a653c4d493aa25a6111fb094f76a0",
+        "original_B_data_status": "new_path",
+        "parsed_output": "/workspace/acnh-re/output/additional_romfs/ui/592f2331d52dcaa6c307f3ee9741f5b955115591fd38dfaea4e6d382b93c6e99.json",
+        "parsed_source_member": "Layout/SwkbdTextAreaVillageName.Nin_NX_NVN.zs",
+        "parsed_resource_member": "SwkbdTextAreaVillageName.arc!blyt/SwkbdTextAreaVillageName.bflyt",
+        "related_eventflow_action": "UISoftwareKeyboardHandling",
+        "evidence_level": "STRUCT",
+        "exact_action_to_resource_consumer": false,
+        "version_confidence": "Supplemental archive member is new_path; exact 1.0.0 patch identity is not established."
+      },
+      {
+        "candidate_id": "save_icon",
+        "archive_path": "Layout/SaveIcon.Nin_NX_NVN.zs",
+        "source_sha256": "460df41b54bba1beadc6341a7964c4336d97f07949efcc320e6f6cfd65c72914",
+        "original_B_data_status": "new_path",
+        "parsed_output": "/workspace/acnh-re/output/additional_romfs/ui/3ec1270ab74509858f6c01e144d3fa65ce33ebbb10a65d5c8b21da101ecac812.json",
+        "parsed_source_member": "Layout/SaveIcon.Nin_NX_NVN.zs",
+        "parsed_resource_member": "SaveIcon.arc!blyt/SaveIcon.bflyt",
+        "related_eventflow_action": "UISaveIconAppear/UISaveIconDisappear",
+        "evidence_level": "STRUCT",
+        "exact_action_to_resource_consumer": false,
+        "version_confidence": "Supplemental archive member is new_path; exact 1.0.0 patch identity is not established."
+      },
+      {
+        "candidate_id": "prologue_wipe",
+        "archive_path": "Layout/WipePrologue.Nin_NX_NVN.zs",
+        "source_sha256": "4e5a1ecc0ca01ff012a616be6dc9de0132c68eb043e43f95cb08f0f77508d0f4",
+        "original_B_data_status": "new_path",
+        "parsed_output": "/workspace/acnh-re/output/additional_romfs/ui/cf24b46f71b8138a629d77848112377cbe0405e6982833d6ac4f2bc5479127c8.json",
+        "parsed_source_member": "Layout/WipePrologue.Nin_NX_NVN.zs",
+        "parsed_resource_member": "WipePrologue.arc!blyt/WipePrologue.bflyt",
+        "related_eventflow_action": "UIPrologueBGAppear/UIPrologueBGDisappear",
+        "evidence_level": "STRUCT",
+        "exact_action_to_resource_consumer": false,
+        "version_confidence": "Supplemental archive member is new_path; exact 1.0.0 patch identity is not established."
+      },
+      {
+        "candidate_id": "clock",
+        "archive_path": "Layout/LClock.Nin_NX_NVN.zs",
+        "source_sha256": "237789d4f5fd26138b0ab80cd6716538f70b14ad65f174d761010969dad2b92f",
+        "original_B_data_status": "new_path",
+        "parsed_output": "/workspace/acnh-re/output/additional_romfs/ui/0f2f7ac20bb8afae00b3a61f2706dfed32b807c07f6eccb63bfb49984ff9ac12.json",
+        "parsed_source_member": "Layout/LClock.Nin_NX_NVN.zs",
+        "parsed_resource_member": "LClock.arc!blyt/LClock.bflyt",
+        "related_eventflow_action": "UIDemoClock",
+        "evidence_level": "STRUCT",
+        "exact_action_to_resource_consumer": false,
+        "version_confidence": "Supplemental archive member is new_path; exact 1.0.0 patch identity is not established."
+      }
+    ],
+    "exact_action_to_page_resource_consumer": false,
+    "status": "OPEN for all direct UI-action-to-page/resource links; action-specific generic UI manager routes are visible for sampled handlers, but they do not name the layout resource."
+  },
+  "catalogue_boundary": {
+    "model_catalogue_rows": 37459,
+    "audio_catalogue_rows": 17410,
+    "raw_model_source_directory": "absent per additional_romfs/summary.json limits",
+    "raw_sound_resource_directory": "absent per additional_romfs/summary.json limits",
+    "runtime_actor_model_load": false,
+    "runtime_audio_waveform_load": false,
+    "classification": "Model/audio references remain CAT; no raw model or audio assets are copied or claimed as loaded.",
+    "supplemental_summary_path": "/workspace/acnh-re/output/additional_romfs/summary.json"
+  },
+  "coverage": {
+    "npc_action_indices": 9,
+    "unique_action_indices": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "animation_info_byml_files": 55,
+    "asb_files": 83,
+    "asb_static_name_call_sites": 16,
+    "ui_action_nodes": 27,
+    "supplemental_bflyt_records": 523,
+    "native_function_sources": [
+      {
+        "source": "/workspace/acnh-re/output/binary/analysis_decomp/245e70.c",
+        "sha256": "3385181b4875414e9e1fdce32ffcdb18e28cb1d7ba3ad01d8adf243102c30a32",
+        "function": "FUN_00345e70"
+      },
+      {
+        "source": "/workspace/acnh-re/output/binary/analysis_decomp/bf7850.c",
+        "sha256": "558b1499791d7ca2cfea5bc276dd2981722f6208dbced5edf6af74f22f29c42b",
+        "function": "FUN_00cf7850"
+      },
+      {
+        "source": "/workspace/acnh-re/output/binary/analysis_decomp/bf8b40.c",
+        "sha256": "7d0d6a662ea672ce4764fe90dd35a996acf0f0cf0ae3c96a497c4e90d45070ee",
+        "function": "FUN_00cf8b40"
+      },
+      {
+        "source": "/workspace/acnh-re/output/binary/analysis_decomp/bf8b90.c",
+        "sha256": "1def58b1445ae6ec9aa4118a56f863cd1f9946dd06c710cd32f0bd47c008e555",
+        "function": "FUN_00cf8b90"
+      },
+      {
+        "source": "/workspace/acnh-re/output/binary/analysis_decomp/bf8890.c",
+        "sha256": "9ed35974d19ad1b20345e65c931296f7b8305124a476ed4dee57740b46b1f39a",
+        "function": "FUN_00cf8890"
+      },
+      {
+        "source": "/workspace/acnh-re/output/binary/analysis_decomp/bf7670.c",
+        "sha256": "82fbea9a5b8df2981455a78f21388b6fe9aa0b1fc0d396dbd3b714ab53e4d603",
+        "function": null
+      },
+      {
+        "source": "/workspace/acnh-re/output/binary/analysis_decomp/bf59c0.c",
+        "sha256": "37a4e91ba1a5f9e2c1278e0577a5302897de782bc2d3285507ca238d9b4dcdc3",
+        "function": "FUN_00cf59c0"
+      },
+      {
+        "source": "/workspace/acnh-re/output/binary/analysis_decomp/1f067b0.c",
+        "sha256": "be50b90e58095987703546ae51694d25900548d284833eeadbfa93a71173e81a",
+        "function": "FUN_020067b0"
+      },
+      {
+        "source": "/workspace/acnh-re/output/binary/analysis_decomp/357770.c",
+        "sha256": "452420ff56f0b1ac1b1f1adf0aa59e5d3b6d8f38e2139b13f708e41bb75c70f0",
+        "function": "FUN_00457770"
+      },
+      {
+        "source": "/workspace/acnh-re/output/binary/analysis_decomp/34ffa0.c",
+        "sha256": "0e5431768863640aac2f308b56ae180ea474e70b6762b5ad618a49617fce39e8",
+        "function": "FUN_0044ffa0"
+      },
+      {
+        "source": "/workspace/acnh-re/output/binary/analysis_decomp/362f30.c",
+        "sha256": "3cfe1e2e38344ff9d076f941ed06bf6acf6468bbb4f0bd8f3bc9cbb1269efe08",
+        "function": "FUN_00462f30"
+      },
+      {
+        "source": "/workspace/acnh-re/output/binary/analysis_decomp/34cb20.c",
+        "sha256": "b65a3d290ca3ad220cd0d1d421aa58099a9a35c0ec5c9da26e29693eb2c0cef4",
+        "function": "FUN_0044cb20"
+      },
+      {
+        "source": "/workspace/acnh-re/output/binary/analysis_decomp/356f10.c",
+        "sha256": "869070daeacf75cda3007e080d1eea73b87398ca243a9820228ffd92d6744d38",
+        "function": "FUN_00456f10"
+      }
+    ],
+    "additional_archive_build_status": "Compare content evidence; do not infer exact version from filenames."
+  },
+  "conversion_and_join_steps": [
+    {
+      "input": "B_data/EventFlow/*.bfevfl",
+      "output": "output/gameplay/trees/*.txt",
+      "operation": "Retain exact flow, entry, event index, action name, and serialized key/value."
+    },
+    {
+      "input": "EventFlowActionNpcRequestAction registration and vtable",
+      "output": "output/binary/analysis_decomp/245e70.c and related state helpers",
+      "operation": "Switch ActionIdx through native calls, then follow numeric state argument into the state-machine slot array; stop before ASB/clip-name resolution."
+    },
+    {
+      "input": "AnimationInfo/*.byml and AnimationSequence/*.asb",
+      "output": "parsed AnimationInfo and ASB JSON",
+      "operation": "Search action-index keys and compare only explicit AsCommand strings to ASB node names."
+    },
+    {
+      "input": "B_data/Pack/StaticParam.pack!Param/Layout/*.byml",
+      "output": "output/decoded/{id}.json",
+      "operation": "Record exact page identifier node path/value; compare to story action class/form by name and context only."
+    },
+    {
+      "input": "Layout/*.Nin_NX_NVN.zs",
+      "output": "output/additional_romfs/ui/*.json",
+      "operation": "Retain archive path and embedded BFLYT member; classify as supplemental resource presence only unless a consumer key proves the join."
+    }
+  ],
+  "open_joins": [
+    {
+      "join": "ActionIdx state-machine slot -> animation/ASB clip name",
+      "status": "OPEN",
+      "reason": "Native code reveals internal state indices 26, 27, and 19 for ActionIdx 1, 2, and 3; case 0 uses an unresolved global value. No source maps those state indices to named AnimationInfo or ASB clips."
+    },
+    {
+      "join": "UI action -> exact page config or BFLYT resource consumer",
+      "status": "OPEN",
+      "reason": "Native action code sends requests to shared UI manager APIs but exposes no candidate resource names; page config and BFLYT candidates match by names/context only."
+    },
+    {
+      "join": "Supplemental AnimationInfo, ASB, and BFLYT build identity",
+      "status": "OPEN",
+      "reason": "extracted_manifest marks the referenced members new_path; summary says do not infer exact version from filenames."
+    },
+    {
+      "join": "Actor model and sound playback in the scene",
+      "status": "CAT/OPEN",
+      "reason": "Only catalogues are supplied for model/audio association; no raw Model or Sound/Resource directory and no runtime execution."
+    }
+  ],
+  "validation": {
+    "json_parse": "passed"
+  }
+}

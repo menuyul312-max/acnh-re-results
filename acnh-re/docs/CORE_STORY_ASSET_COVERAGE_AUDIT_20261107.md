@@ -12,7 +12,7 @@ Struktur crosswalk sudah mencakup 28 beat dan 11 keluarga aset dengan 381 rujuka
 | Keluarga | Rujukan non-OPEN / katalog | OPEN | Makna praktis |
 |---|---:|---:|---|
 | UI | 25 (5 EF, 9 PSEUDO, 11 CAT) | 19 | Sejumlah handler dan nama layout tercatat; halaman aktual untuk banyak dialog, recipe, rating, dan placement belum ditautkan. |
-| Animasi | 21 (3 EF, 10 STRUCT, 2 TBL, 6 CAT) | 20 | BFLAN/ASB dan perintah aksi sebagian ada; `ActionIdx` ke clip/actor-state dan timing runtime belum terbukti. |
+| Animasi | 21 (3 EF, 10 STRUCT, 2 TBL, 6 CAT) | 20 | BFLAN/ASB dan perintah aksi sebagian ada; `ActionIdx` ke native state index 26/27/19 terbukti statis untuk nilai 1–3, tetapi state index ke clip/ASB node dan timing runtime belum terbukti. |
 | Model | 34 CAT | 18 | Semua yang tertaut ke cerita masih kandidat katalog; model mentah tidak tersedia. |
 | Audio | 23 (2 EF, 1 TBL, 20 CAT) | 21 | Musik api unggun punya sambungan numerik sampai tabel audio; kandidat lain belum menjadi pemutaran yang terbukti. |
 | Teks | 25 EF | 6 | EventFlow menyebut label/pesan; subset terpilih sudah diverifikasi ke MSBT/BDLI pada 14 locale, tetapi teks tidak membuktikan layar, substitusi, atau voice cue. |
@@ -31,7 +31,7 @@ Empat keluarga terakhir—tekstur, material/shader, efek, dan font—masing-masi
 
 Ini membuktikan kecocokan identifier/layout dalam data supplemental, **bukan** bahwa handler EventFlow membuat page itu. Pemindaian 135 page method menemukan 134 kecocokan nama layout, tetapi tidak menemukan site instruksi B/BL langsung ke getter; indirect call belum dikaitkan ke receiver/page tertentu. Empat kartu `CharaMakeMap` (`L_Btn_00`…`L_Btn_03`) juga belum menunjuk sumber gambar preview atau data preset. Sambungan `cVillage → preset/seed → record save → spawn` tetap `OPEN`.
 
-**Animasi UI dan actor.** `animation_semantics.json` memetakan section/target BFLAN secara struktural; prolog memiliki resource seperti `CharaMake_In/Out`, `CharaMakeMap_In/Out`, `DateInput_In/Out`, dan `WipePrologue_In/Out`. Itu cukup untuk mengetahui nama, layout, target pane, dan kurva terurai, tetapi pemanggil animasi dan timing perpindahan masih terbuka. Pada actor, EventFlow memberi aksi seperti `NpcCheers`, `NpcSpRhythm`, `TkkAGuitarPlayEnd`; sebagian nama cocok dengan node ASB yang diparse. Namun angka `NpcRequestAction.ActionIdx` belum terpetakan ke clip/state tertentu dan clip skeletal tidak bisa divalidasi ke rig karena arsip model tidak tersedia.
+**Animasi UI dan actor.** `animation_semantics.json` memetakan section/target BFLAN secara struktural; prolog memiliki resource seperti `CharaMake_In/Out`, `CharaMakeMap_In/Out`, `DateInput_In/Out`, dan `WipePrologue_In/Out`. Itu cukup untuk mengetahui nama, layout, target pane, dan kurva terurai, tetapi pemanggil animasi dan timing perpindahan masih terbuka. Pada actor, EventFlow memberi aksi seperti `NpcCheers`, `NpcSpRhythm`, `TkkAGuitarPlayEnd`; sebagian nama cocok dengan node ASB yang diparse. Follow-up native memetakan `NpcRequestAction.ActionIdx=1/2/3` ke internal state index `26/27/19` dan nilai `0` ke global yang belum diketahui, tetapi tidak ada join dari angka itu ke nama AnimationInfo/ASB; clip skeletal juga tidak bisa divalidasi ke rig karena arsip model tidak tersedia.
 
 **Teks dan musik.** [STORY_MESSAGE_CUE_FOLLOWUP_20261107.md](STORY_MESSAGE_CUE_FOLLOWUP_20261107.md) memverifikasi 460 referensi pesan dari 17 flow (16 flow berisi pesan), 425 key unik, pada 14 locale: 6.440 pasangan label/index MSBT dan 6.440 pasangan BDLI cocok tepat. Body dialog tidak disalin; versi arsip supplemental belum terautentikasi ke 1.0.0. Untuk api unggun, EventFlow `Tutorials_Prologue5_Campfire` event #140 memberi `MusicName=4318`; `ItemParam` row 1732 / `UniqueID=4318` adalah `FtrMjkMainTheme`, dan `SoundAudioMusic` row 94 / `UniqueID=103` menghubungkannya ke `AudioMusicID=95`, label `Minnaatsumare`. Itu join tabel yang tepat, bukan bukti waveform atau cue dimainkan. Katalog audio hanya mengandung kandidat nama.
 
@@ -41,7 +41,7 @@ Ini membuktikan kecocokan identifier/layout dalam data supplemental, **bukan** b
 
 1. **Pendaftaran ke pulau yang dimainkan:** gambar empat map card, ID card terpilih, `cVillage` ke field preset/seed, writer save pertama, stage handoff dan spawn pemain.
 2. **Aset UI yang benar-benar dibuka:** handler/page controller ke instance, layout dan BFLAN; banyak UI recipe, donation, placement, rating, public announcement, camper dan Island Designer masih `OPEN`.
-3. **Animasi actor:** numeric request/action index ke resource, clip/state, rig, waktu, dan perubahan stage. Nama command ke node ASB saja belum menyelesaikan ini.
+3. **Animasi actor:** internal native state index untuk `ActionIdx` 1–3 sudah ditemukan; join index 26/27/19 ke resource, clip/ASB state, rig, waktu, dan perubahan stage tetap belum terbukti. Nama command ke node ASB saja belum menyelesaikan ini.
 4. **Instance dunia:** keenam site-cell ke jenis bangunan/plot; cell-to-world origin/axis/unit/rotation/height; validator; model dan collider yang dimuat; mutasi instance dan save/day-change.
 5. **Model/audio sebagai katalog:** kandidat harus dihubungkan secara ID ke actor/parameter/consumer per beat. Sesuai kebijakan proyek, katalog cukup menjadi referensi; tanpa raw payload tidak boleh dinaikkan menjadi hasil konversi atau bukti pemutaran.
 6. **Tekstur, shader, efek dan font:** inventaris global bukan peta per beat. Perlu join dari BFLYT/BNTX/BFSHA/PTCL/font entry ke pane, material, actor, effect trigger dan flow tertentu; atau nyatakan kategori tidak berlaku untuk beat bila memang tidak dipakai.
@@ -51,7 +51,7 @@ Ini membuktikan kecocokan identifier/layout dalam data supplemental, **bukan** b
 
 1. Tautkan page handler ke factory/constructor/vtable dan page registry; mulai dari `UIMapSelectHandling`, `UICharactermakingHandling`, `UIDateHandling`, `MenuDevice`/`cConstructLicense`, recipe, dan structure preview. Simpan sumber handler, target VA, argumen, dan batas indirect dispatch.
 2. Ikat `CharaMakeMap` child panes dan texture/image refs ke empat preview record; ikuti ID hasil `cVillage` ke map/preset/seed/save memakai data 1.0.0, bukan kesamaan nama katalog.
-3. Ikuti actor request sampai dispatcher dan pemetaan `ActionIdx`; ikat hanya sejauh bukti ke `AnimationInfo`/ASB. Tandai kebutuhan rig/model mentah sebagai blocker bila tidak ada.
+3. Ikuti actor request dari state index `ActionIdx` sampai pemetaan bernama ke `AnimationInfo`/ASB. Tandai kebutuhan rig/model mentah sebagai blocker bila tidak ada.
 4. Selesaikan join placement cell/selector/pose/world coordinates, lalu struktur ID ke catalog candidate dan PBC/collider consumer. Jangan menyimpulkan role dari urutan enam cell.
 5. Buat tabel cue suara per EventFlow parameter dan table ID. Kasus 4318→95 menjadi pola untuk mencari BGM lain; hasil katalog tanpa numeric/resource consumer tetap `CAT`.
 6. Untuk tiap keluarga tekstur/shader/effect/font, gunakan consumer UI/actor yang sudah diikat dahulu, lalu cari key exact dalam archive/container; jangan mempromosikan kemiripan nama.
