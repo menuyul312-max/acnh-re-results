@@ -1,0 +1,838 @@
+{
+  "schema": "acnh-re/catalog-order-remainder/1",
+  "evidence_level": "STATIC_NATIVE_INDEX_AND_RESOLVED_TABLE_JOIN",
+  "scope": "Catalog app body-variant representative selection, ItemCatalogType/NotSee binding, and mail record insertion boundary.",
+  "inputs": [
+    {
+      "source": "B_data/Bcsv/ItemParam.bcsv",
+      "sha256": "89230e97fc877ff2b2b48ac1c707ef32b3a7760118839c307f19797e2553458c",
+      "size": 4104780
+    },
+    {
+      "source": "B_data/Bcsv/ItemRemake.bcsv",
+      "sha256": "132e2753f485073d0267aeb19f3ceb9d07ea5ddcb2d69960c508c4ba3a68ffde",
+      "size": 76340
+    },
+    {
+      "source": "B_data/Bcsv/ItemKind.bcsv",
+      "sha256": "4cac0178cc69519585528b24ceef022ccb1fefa12b23fc9a9e4280e40185ba7b",
+      "size": 17532
+    },
+    {
+      "source": "B_data/EventFlow/Obj_RcoMachine.bfevfl",
+      "sha256": "603c89e8f36995fee4aafc93fd4c7921cb5b5e61b901ec5dd50efd3baf953717",
+      "size": 25040
+    }
+  ],
+  "native_functions": [
+    {
+      "va": "0x11829d0",
+      "name": "FUN_012829d0",
+      "size": 1036,
+      "decomp_path": "binary/analysis_decomp/11829d0.c",
+      "decomp_sha256": "a01f32ef2a4f50f7de83277b3e754b81290c904efc96202dd38d6f3fb554765d"
+    },
+    {
+      "va": "0x118a3d0",
+      "name": "FUN_0128a3d0",
+      "size": 460,
+      "decomp_path": "binary/analysis_decomp/118a3d0.c",
+      "decomp_sha256": "ee9e2d7ea1affa2a72df871c47f9379fea9e39334cff7e43e560730a0c5987b1"
+    },
+    {
+      "va": "0x118a740",
+      "name": "FUN_0128a740",
+      "size": 344,
+      "decomp_path": "binary/analysis_decomp/118a740.c",
+      "decomp_sha256": "5d77e34f37fa2e6a0ae07d631ea0bf4c290ab38807d2f0e89e7c1d8eaf7acee4"
+    },
+    {
+      "va": "0xeecc70",
+      "name": "FUN_00fecc70",
+      "size": 316,
+      "decomp_path": "binary/analysis_decomp/eecc70.c",
+      "decomp_sha256": "050088cd5d41491d35c85eae4b9def886782835d14a7777539f45ff810309336"
+    },
+    {
+      "va": "0xa9c290",
+      "name": "FUN_00b9c290",
+      "size": 268,
+      "decomp_path": "binary/analysis_decomp/a9c290.c",
+      "decomp_sha256": "5a03c1c3b1520c552262d5ec5cf396ae60d9b1c1979ff2973c13030916858ced"
+    },
+    {
+      "va": "0xab2a50",
+      "name": "FUN_00bb2a50",
+      "size": 28,
+      "decomp_path": "binary/analysis_decomp/ab2a50.c",
+      "decomp_sha256": "4e7618aa2def5d610b3470a69d911f632695590d83ddecb273f528f24e55b1ec"
+    },
+    {
+      "va": "0xaac250",
+      "name": "FUN_00bac250",
+      "size": 492,
+      "decomp_path": "binary/analysis_decomp/aac250.c",
+      "decomp_sha256": "3ebf9ab25f0b59c48f684d8a55781d367268009e1096ac49b131417e62d38187"
+    },
+    {
+      "va": "0xaabf10",
+      "name": "FUN_00babf10",
+      "size": 104,
+      "decomp_path": "binary/analysis_decomp/aabf10.c",
+      "decomp_sha256": "25ff4644d88cc44b7aa7d6c596a778922a59f2e5fda07816c407bfc29d7b13ea"
+    },
+    {
+      "va": "0xab2940",
+      "name": "FUN_00bb2940",
+      "size": 268,
+      "decomp_path": "binary/analysis_decomp/ab2940.c",
+      "decomp_sha256": "2974cb0319aabba94aeb4fa2b9cff340cec22650a05d1524858246c8932a8c6c"
+    },
+    {
+      "va": "0xab0f50",
+      "name": "FUN_00bb0f50",
+      "size": 440,
+      "decomp_path": "binary/analysis_decomp/ab0f50.c",
+      "decomp_sha256": "da6ab91223b3006ab0d97c8f59dfa260edbf9f2f63836668cd00c9c2e2f9c137"
+    },
+    {
+      "va": "0xaa84f0",
+      "name": "FUN_00ba84f0",
+      "size": 416,
+      "decomp_path": "binary/analysis_decomp/aa84f0.c",
+      "decomp_sha256": "3042540c3836f2af325bc3658af1420f1c4e1fc7ce5b4e32cf5e232994583943"
+    },
+    {
+      "va": "0xa25760",
+      "name": "FUN_00b25760",
+      "size": 204,
+      "decomp_path": "binary/analysis_decomp/a25760.c",
+      "decomp_sha256": "3258cabbd16072575c61675b6c6bb9467bccd29e6d6e4516355c384860324fdd"
+    },
+    {
+      "va": "0xeec760",
+      "name": "FUN_00fec760",
+      "size": 412,
+      "decomp_path": "binary/analysis_decomp/eec760.c",
+      "decomp_sha256": "ff625f4d0b8def28c7f882e14f12e8692a8694828efe77d7486dccc5c499f071"
+    },
+    {
+      "va": "0x33a570",
+      "name": null,
+      "size": null,
+      "decomp_path": "binary/analysis_decomp/33a570.c",
+      "decomp_sha256": "5e366e3d5d480c5721cb677eaac705a8d2738a9df165f4c9abf01eb75c90c7ac"
+    },
+    {
+      "va": "0xf62e90",
+      "name": "FUN_01062e90",
+      "size": 280,
+      "decomp_path": "binary/analysis_decomp/f62e90.c",
+      "decomp_sha256": "ab2f79a1085e2ffeb271f60ac629301c63f8965262cb46b5a1772bd15a7f9279"
+    },
+    {
+      "va": "0xf62c00",
+      "name": "FUN_01062c00",
+      "size": 492,
+      "decomp_path": "binary/analysis_decomp/f62c00.c",
+      "decomp_sha256": "739f4ce7c6d3cb87959c4f1b63a6657e1566c3b0fd861cdb2e32019c1fa052e8"
+    },
+    {
+      "va": "0xf73ea0",
+      "name": "FUN_01073ea0",
+      "size": 112,
+      "decomp_path": "binary/analysis_decomp/f73ea0.c",
+      "decomp_sha256": "3187d81ef8a19613dfcc7f1d7ddfef30ce8f205b1aaa04a77bc8e6a77b363d20"
+    },
+    {
+      "va": "0x345890",
+      "name": null,
+      "size": null,
+      "decomp_path": "binary/analysis_decomp/345890.c",
+      "decomp_sha256": "1f619f6d5ae667d8b56a8b65afa1c077a94aa75652e87a5a96207ef9ea0c2b9e"
+    },
+    {
+      "va": "0xac77a0",
+      "name": "FUN_00bc77a0",
+      "size": 92,
+      "decomp_path": "binary/analysis_decomp/ac77a0.c",
+      "decomp_sha256": "2bb530751d484d07bbada5868eeee323de3efd45e575f2a2444b19294673303c"
+    },
+    {
+      "va": "0x27ccd0",
+      "name": "FUN_0037ccd0",
+      "size": 488,
+      "decomp_path": "binary/analysis_decomp/27ccd0.c",
+      "decomp_sha256": "f192f6cf52d7a5f10fedf09ef8b796f8b39f1e0888e8db89a9d72944eb060fa4"
+    },
+    {
+      "va": "0x346a50",
+      "name": "FUN_00446a50",
+      "size": 88,
+      "decomp_path": "binary/analysis_decomp/346a50.c",
+      "decomp_sha256": "8d0b9ac039d656c79dd96854bd2c6bb8507ce65645bc7a36024feaff35a85056"
+    },
+    {
+      "va": "0xabf6a0",
+      "name": "FUN_00bbf6a0",
+      "size": 144,
+      "decomp_path": "binary/analysis_decomp/abf6a0.c",
+      "decomp_sha256": "ea78f3a83e20c1f902efa9969c233864ffd6b06b2ea310c694cd7ffd80b91ab0"
+    },
+    {
+      "va": "0xabf730",
+      "name": "FUN_00bbf730",
+      "size": 12,
+      "decomp_path": "binary/analysis_decomp/abf730.c",
+      "decomp_sha256": "ac1b21dcafb19f02e7a9fe44229d859a31b0daf8e755fe82a0d8b070c4112897"
+    },
+    {
+      "va": "0xabf740",
+      "name": "FUN_00bbf740",
+      "size": 144,
+      "decomp_path": "binary/analysis_decomp/abf740.c",
+      "decomp_sha256": "ecdc971418c700fb4b2059ace2995dda793f3a043ca0cafcacc066d1d1d166de"
+    },
+    {
+      "va": "0xac1eb0",
+      "name": "FUN_00bc1eb0",
+      "size": 100,
+      "decomp_path": "binary/analysis_decomp/ac1eb0.c",
+      "decomp_sha256": "08b95537e44c124a25ceb3748d80c94413177c25970ecf04cc3ce62a8c3caad0"
+    },
+    {
+      "va": "0xfaabf0",
+      "name": "FUN_010aabf0",
+      "size": 380,
+      "decomp_path": "binary/analysis_decomp/faabf0.c",
+      "decomp_sha256": "1e9c2f2a6f66e81ea0babc4155213d07cd213afee70d0a3eb4e729ceb95fe0bd"
+    },
+    {
+      "va": "0xfaa3f0",
+      "name": "FUN_010aa3f0",
+      "size": 372,
+      "decomp_path": "binary/analysis_decomp/faa3f0.c",
+      "decomp_sha256": "26eb023c29b5dd862a24f46a32631851e161e9f058f57d758ba5608eac8fdb8d"
+    },
+    {
+      "va": "0xfaaeb0",
+      "name": "FUN_010aaeb0",
+      "size": 380,
+      "decomp_path": "binary/analysis_decomp/faaeb0.c",
+      "decomp_sha256": "2214199b7e8d3052090197dc355c09c2c0af59d635c3050b6e74f8bb39c20089"
+    }
+  ],
+  "direct_call_boundary_checks": {
+    "0x118a3d0": {
+      "actual_callers": [
+        {
+          "owner_va": "0x11829d0",
+          "owner_name": "FUN_012829d0",
+          "call_pc": "0x1182dc4"
+        }
+      ],
+      "expected_callers_for_this_index_snapshot": [
+        "0x11829d0"
+      ],
+      "matches_expected": true
+    },
+    "0x118a740": {
+      "actual_callers": [
+        {
+          "owner_va": "0x118a3d0",
+          "owner_name": "FUN_0128a3d0",
+          "call_pc": "0x118a4d0"
+        }
+      ],
+      "expected_callers_for_this_index_snapshot": [
+        "0x118a3d0"
+      ],
+      "matches_expected": true
+    },
+    "0xeecc70": {
+      "actual_callers": [
+        {
+          "owner_va": "0x1179dd0",
+          "owner_name": "FUN_01279dd0",
+          "call_pc": "0x1179e98"
+        },
+        {
+          "owner_va": "0x118a740",
+          "owner_name": "FUN_0128a740",
+          "call_pc": "0x118a804"
+        },
+        {
+          "owner_va": "0x1355440",
+          "owner_name": "FUN_01455440",
+          "call_pc": "0x1355984"
+        }
+      ],
+      "expected_callers_for_this_index_snapshot": [
+        "0x1179dd0",
+        "0x118a740",
+        "0x1355440"
+      ],
+      "matches_expected": true
+    }
+  },
+  "app_chain": {
+    "input_list_caller": "0x11829d0 passes its caller-supplied list to 0x118a3d0.",
+    "variant_resolution": [
+      "0x118a3d0 skips sentinel item records (short ID -2), validates each remaining record, then invokes 0x118a740.",
+      "0x118a740 asks 0xeecc70 for body-pattern candidates, in ascending ordinal order.",
+      "For each candidate, 0x118a740 copies it to its output, maps it with 0xab2940, and checks the page-associated 0x7d0-byte bit view with a 16,000-bit bound.",
+      "The first candidate whose mapped bit is set is retained as the representative. If none is set, the original input record is copied to the output.",
+      "This is a representative-variant lookup over the incoming list; it does not build the upstream category list itself."
+    ],
+    "candidate_builder": {
+      "function": "0xeecc70",
+      "itemparam_key": {
+        "field": "RemakeID",
+        "hash": "0xcb5eb33f"
+      },
+      "itemremake_join": "ItemParam.RemakeID == ItemRemake.UniqueID",
+      "pattern_count": {
+        "field": "ReBodyPatternNum",
+        "hash": "0xb0304b0d"
+      },
+      "ordinal_range": "0 through ReBodyPatternNum - 1 when count is positive; no candidates when count <= 0.",
+      "mutation": "0xaabf10 writes the ordinal into the low three bits while preserving the upper bits of the packed short.",
+      "not_read_here": [
+        "ItemCatalogType",
+        "ReFabricPatternNum"
+      ]
+    },
+    "bit_mapping": {
+      "function": "0xab2940",
+      "expression": "RemakeID * 8 + low_three_bits_of_remake_payload_when_ItemKind_gate_exposes_it",
+      "app_page_bit_view_size": "0x7d0 bytes / 16,000 bits"
+    },
+    "shared_eecc70_callers": [
+      {
+        "owner_va": "0x1179dd0",
+        "owner_name": "FUN_01279dd0",
+        "call_pc": "0x1179e98"
+      },
+      {
+        "owner_va": "0x118a740",
+        "owner_name": "FUN_0128a740",
+        "call_pc": "0x118a804"
+      },
+      {
+        "owner_va": "0x1355440",
+        "owner_name": "FUN_01455440",
+        "call_pc": "0x1355984"
+      }
+    ]
+  },
+  "item_catalog_type_binding": {
+    "field": "ItemParam.ItemCatalogType",
+    "hash": "0xdaf0238c",
+    "enum_values": {
+      "0": "Sale",
+      "1": "NotForSale",
+      "2": "NotSee"
+    },
+    "native_field_hash_references": [
+      {
+        "owner_va": "0xa25760",
+        "owner_name": "FUN_00b25760",
+        "pc": "0xa2577c"
+      }
+    ],
+    "references_from_catalog_app_variant_chain": [],
+    "conclusion": "No direct ItemCatalogType field read or enum comparison appears in the indexed 0x118a3d0 -> 0x118a740 -> 0xeecc70 candidate-selection chain or its listed helpers. The upstream list passed by 0x11829d0 remains a separate, unresolved source boundary; the generic integer value 2 passed to a caller helper is not enough to bind it to ItemCatalogType=NotSee.",
+    "separate_count_path": "0xeec760 is the FillCatalog achievement count path. Its selectors 0 and 1 correspond to Sale and NotForSale; this does not bind the catalog app's incoming list to those categories."
+  },
+  "table_candidate_census": {
+    "source_tables": {
+      "ItemParam": {
+        "rows": 8208,
+        "source": "B_data/Bcsv/ItemParam.bcsv",
+        "sha256": "89230e97fc877ff2b2b48ac1c707ef32b3a7760118839c307f19797e2553458c"
+      },
+      "ItemRemake": {
+        "rows": 654,
+        "source": "B_data/Bcsv/ItemRemake.bcsv",
+        "sha256": "132e2753f485073d0267aeb19f3ceb9d07ea5ddcb2d69960c508c4ba3a68ffde"
+      },
+      "ItemKind": {
+        "rows": 120,
+        "source": "B_data/Bcsv/ItemKind.bcsv",
+        "sha256": "4cac0178cc69519585528b24ceef022ccb1fefa12b23fc9a9e4280e40185ba7b"
+      }
+    },
+    "item_catalog_type_counts_all_itemparam_rows": {
+      "NotForSale": 1043,
+      "NotSee": 1387,
+      "Sale": 5778
+    },
+    "itemparam_rows_with_nonnegative_remake_id_by_catalog_type": {
+      "NotForSale": 283,
+      "NotSee": 413,
+      "Sale": 348
+    },
+    "distinct_remake_ids_by_catalog_type": {
+      "NotForSale": 283,
+      "NotSee": 23,
+      "Sale": 348
+    },
+    "body_pattern_count_distribution_by_itemremake_row": {
+      "-1": 24,
+      "1": 60,
+      "2": 93,
+      "3": 108,
+      "4": 108,
+      "5": 113,
+      "6": 54,
+      "7": 94
+    },
+    "body_pattern_count_distribution_by_catalog_type_distinct_remake_id": {
+      "NotForSale": {
+        "-1": 4,
+        "1": 40,
+        "2": 43,
+        "3": 46,
+        "4": 53,
+        "5": 48,
+        "6": 20,
+        "7": 29
+      },
+      "NotSee": {
+        "-1": 2,
+        "4": 1,
+        "7": 20
+      },
+      "Sale": {
+        "-1": 18,
+        "1": 20,
+        "2": 50,
+        "3": 62,
+        "4": 54,
+        "5": 65,
+        "6": 34,
+        "7": 45
+      }
+    },
+    "distinct_body_candidate_slots_by_catalog_type": {
+      "NotForSale": 1039,
+      "NotSee": 144,
+      "Sale": 1366
+    },
+    "distinct_body_candidate_slots_total": 2549,
+    "body_pattern_minus_one_rows_with_positive_fabric_pattern_count": 24,
+    "duplicate_remake_id_groups": [
+      {
+        "remake_id": 652,
+        "item_catalog_type": "NotSee",
+        "itemparam_rows": 391,
+        "body_pattern_count": 7,
+        "fabric_pattern_count": -1,
+        "item_remake_item_unique_id": 6426
+      }
+    ],
+    "fixtures": [
+      {
+        "item_catalog_type": "NotForSale",
+        "item_kind": "Ftr",
+        "item_remake_type": "Ftr",
+        "itemkind_can_ftr": 1,
+        "item_unique_id": 80,
+        "remake_id": 102,
+        "item_remake_item_unique_id": 80,
+        "res_name": "FtrKatakataToy",
+        "item_name": "ておしぐるま",
+        "body_pattern_count": 5,
+        "fabric_pattern_count": -1,
+        "candidate_ordinals": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "candidate_bit_indices_when_ftr_mapper_applies": [
+          816,
+          817,
+          818,
+          819,
+          820
+        ]
+      },
+      {
+        "item_catalog_type": "Sale",
+        "item_kind": "Ftr",
+        "item_remake_type": "Ftr",
+        "itemkind_can_ftr": 1,
+        "item_unique_id": 85,
+        "remake_id": 197,
+        "item_remake_item_unique_id": 85,
+        "res_name": "FtrRailroad",
+        "item_name": "てつどうもけい",
+        "body_pattern_count": 3,
+        "fabric_pattern_count": -1,
+        "candidate_ordinals": [
+          0,
+          1,
+          2
+        ],
+        "candidate_bit_indices_when_ftr_mapper_applies": [
+          1576,
+          1577,
+          1578
+        ]
+      },
+      {
+        "item_catalog_type": "NotSee",
+        "item_kind": "SmartPhone",
+        "item_remake_type": "Smartphone",
+        "itemkind_can_ftr": 1,
+        "item_unique_id": 5397,
+        "remake_id": 784,
+        "item_remake_item_unique_id": 5397,
+        "res_name": "ToolSmartphoneNormal",
+        "item_name": "スマホ（プレイヤー）",
+        "body_pattern_count": -1,
+        "fabric_pattern_count": 7,
+        "candidate_ordinals": [],
+        "candidate_bit_indices_when_ftr_mapper_applies": null
+      },
+      {
+        "item_catalog_type": "NotSee",
+        "item_kind": "Bromide",
+        "item_remake_type": "Ftr",
+        "itemkind_can_ftr": 1,
+        "item_unique_id": 6426,
+        "remake_id": 652,
+        "item_remake_item_unique_id": 6426,
+        "res_name": "Layout_NpcBromide_NpcNmlAnt00",
+        "item_name": "さくらじまのしゃしん",
+        "body_pattern_count": 7,
+        "fabric_pattern_count": -1,
+        "candidate_ordinals": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "candidate_bit_indices_when_ftr_mapper_applies": [
+          5216,
+          5217,
+          5218,
+          5219,
+          5220,
+          5221,
+          5222
+        ]
+      }
+    ]
+  },
+  "mail_insertion_boundaries": {
+    "event_action_inventory": {
+      "EventFlowActionCatalogMailSend": {
+        "uses": 1,
+        "distinct_flows": 1,
+        "routes": {
+          "<none>": 1
+        },
+        "flow_event_pairs": [
+          {
+            "flow": "Obj_RcoMachine",
+            "event_index": 66
+          }
+        ]
+      },
+      "EventFlowActionSystemMailSend": {
+        "uses": 50,
+        "distinct_flows": 13,
+        "routes": {
+          "cFastToday": 15,
+          "cFastTomorrow": 35
+        },
+        "flow_event_pairs": [
+          {
+            "flow": "Demo_PublicAnnouncement_03_Rco_Once",
+            "event_index": 59
+          },
+          {
+            "flow": "Demo_PublicAnnouncement_Process",
+            "event_index": 133
+          },
+          {
+            "flow": "Demo_PublicAnnouncement_Process",
+            "event_index": 167
+          },
+          {
+            "flow": "Demo_PublicAnnouncement_Process",
+            "event_index": 173
+          },
+          {
+            "flow": "Obj_Snowman",
+            "event_index": 164
+          },
+          {
+            "flow": "Obj_Snowman",
+            "event_index": 165
+          },
+          {
+            "flow": "Obj_Snowman",
+            "event_index": 166
+          },
+          {
+            "flow": "Obj_Snowman",
+            "event_index": 167
+          },
+          {
+            "flow": "Obj_Snowman",
+            "event_index": 168
+          },
+          {
+            "flow": "Obj_Snowman",
+            "event_index": 176
+          },
+          {
+            "flow": "SNPC_bey_daily",
+            "event_index": 109
+          },
+          {
+            "flow": "SNPC_boc",
+            "event_index": 74
+          },
+          {
+            "flow": "SNPC_chy_daily",
+            "event_index": 77
+          },
+          {
+            "flow": "SNPC_chy_daily",
+            "event_index": 120
+          },
+          {
+            "flow": "SNPC_gul",
+            "event_index": 236
+          },
+          {
+            "flow": "SNPC_gul",
+            "event_index": 238
+          },
+          {
+            "flow": "SNPC_gul",
+            "event_index": 239
+          },
+          {
+            "flow": "SNPC_gul",
+            "event_index": 240
+          },
+          {
+            "flow": "SNPC_gul",
+            "event_index": 241
+          },
+          {
+            "flow": "SNPC_gul",
+            "event_index": 242
+          },
+          {
+            "flow": "SNPC_hgc_01_NowQuest",
+            "event_index": 66
+          },
+          {
+            "flow": "SNPC_hgc_01_NowQuest",
+            "event_index": 71
+          },
+          {
+            "flow": "SNPC_hgc_01_NowQuest",
+            "event_index": 72
+          },
+          {
+            "flow": "SNPC_hgc_01_NowQuest",
+            "event_index": 80
+          },
+          {
+            "flow": "SNPC_hgc_01_NowQuest",
+            "event_index": 81
+          },
+          {
+            "flow": "SNPC_hgc_01_NowQuest",
+            "event_index": 82
+          },
+          {
+            "flow": "SNPC_hgc_01_NowQuest",
+            "event_index": 86
+          },
+          {
+            "flow": "SNPC_hgc_01_NowQuest",
+            "event_index": 87
+          },
+          {
+            "flow": "SNPC_hgc_01_NowQuest",
+            "event_index": 88
+          },
+          {
+            "flow": "SNPC_rco_10_Common_UpgradeMyhome",
+            "event_index": 45
+          },
+          {
+            "flow": "SNPC_rco_53_MigrantsQuest",
+            "event_index": 26
+          },
+          {
+            "flow": "SNPC_rco_53_MigrantsQuest",
+            "event_index": 184
+          },
+          {
+            "flow": "SNPC_rco_55_TkkFirstLive",
+            "event_index": 12
+          },
+          {
+            "flow": "SNPC_tkk_Live",
+            "event_index": 64
+          },
+          {
+            "flow": "SNPC_tkk_Live",
+            "event_index": 70
+          },
+          {
+            "flow": "SNPC_tkk_Live",
+            "event_index": 83
+          },
+          {
+            "flow": "SNPC_tkk_Live",
+            "event_index": 105
+          },
+          {
+            "flow": "SNPC_tkk_Live",
+            "event_index": 106
+          },
+          {
+            "flow": "SNPC_tkk_Live",
+            "event_index": 124
+          },
+          {
+            "flow": "System_AirlineNoveltySendCheck",
+            "event_index": 35
+          },
+          {
+            "flow": "System_AirlineNoveltySendCheck",
+            "event_index": 69
+          },
+          {
+            "flow": "System_AirlineNoveltySendCheck",
+            "event_index": 70
+          },
+          {
+            "flow": "System_AirlineNoveltySendCheck",
+            "event_index": 71
+          },
+          {
+            "flow": "System_AirlineNoveltySendCheck",
+            "event_index": 72
+          },
+          {
+            "flow": "System_AirlineNoveltySendCheck",
+            "event_index": 73
+          },
+          {
+            "flow": "System_AirlineNoveltySendCheck",
+            "event_index": 74
+          },
+          {
+            "flow": "System_AirlineNoveltySendCheck",
+            "event_index": 75
+          },
+          {
+            "flow": "System_AirlineNoveltySendCheck",
+            "event_index": 76
+          },
+          {
+            "flow": "System_AirlineNoveltySendCheck",
+            "event_index": 77
+          },
+          {
+            "flow": "System_AirlineNoveltySendCheck",
+            "event_index": 78
+          }
+        ]
+      }
+    },
+    "catalog_mail_send_handler_audit": {
+      "name": "EventFlowActionCatalogMailSend",
+      "event_uses": 1,
+      "parameters": {},
+      "factory": "0x450570",
+      "constructor": "0x33a510",
+      "vtable": "0x304c208",
+      "slots": [
+        "0x33a690",
+        "0x33a730",
+        "0x33a540",
+        "0x19679b0",
+        "0x33a560",
+        "0x238fd0",
+        "0x23c0c0",
+        "0x238ff0",
+        "0x23c0d0",
+        "0x23c0e0",
+        "0x23c0f0",
+        "0x33a570"
+      ],
+      "slot_span_evidence": "contiguous code pointers; later class-specific slot roles unresolved"
+    },
+    "catalog_mail_send_static_method_audit": {
+      "function": "0x33a570",
+      "string_references": [
+        "SendLetter"
+      ],
+      "calls": [
+        "0xf62e90",
+        "0xf73ea0"
+      ],
+      "limitation": "The resolver does not assign the method's vtable slot a semantic role; this is a static association only."
+    },
+    "catalog_mail_send_insertion_boundary": {
+      "function": "0xf62e90",
+      "player_view_offset": "0x169d0",
+      "view_size": "0x54a8",
+      "next_helper": "0xf62c00",
+      "count_member_offset_within_view": "0xe98",
+      "record_array_offset_within_view": "0x2298",
+      "record_stride": "0x18",
+      "other_copy_helper": "0xf73ea0",
+      "destination_view_size": "0x13418",
+      "copy_note": "0xf73ea0 copies selected fields into the destination view; the 0x13418 value is the view size passed to its accessor, not bytes copied by that helper.",
+      "evidence_limit": "Native mutation/copy boundary only; no proof of recipient inbox arrival or delivery time."
+    },
+    "system_mail_send_static_insertion_trace": {
+      "method": "0x345890",
+      "record_builder": "0xac77a0",
+      "route_mapper": "0x27ccd0",
+      "dispatcher": "0x346a50",
+      "routes": {
+        "cFastToday": {
+          "branch": "0xabf6a0 -> 0xac1eb0 -> virtual +0x30 / 0xac7070",
+          "mode": 1,
+          "slot_writer": "0xfaabf0"
+        },
+        "cFastTomorrow": {
+          "branch": "0xabf730 -> 0xac1eb0 -> virtual +0x30 / 0xac7070",
+          "mode": 2,
+          "slot_writer": "0xfaa3f0"
+        },
+        "cSlowRetry": {
+          "branch": "0xabf740 -> 0xac1eb0 -> virtual +0x30 / 0xac7070",
+          "mode": 3,
+          "fallback_writer": "0xfaaeb0",
+          "note": "The cNone path first tries the shared 0xac1ff0 handler."
+        }
+      },
+      "evidence_limit": "Route handlers reach save-backed record collections; this does not prove mailbox visibility, receipt, or delivery timing.",
+      "cross_reference": "acnh-re/docs/HOUSE_HHA_FOLLOWUP.md, SystemMailSend section"
+    }
+  },
+  "open_questions": [
+    "Which native producer/category query populates the list passed from 0x11829d0, and whether that query excludes ItemCatalogType=NotSee.",
+    "Which items are actually orderable, price/quantity limits, and whether the representative variant selected here affects a purchase payload.",
+    "Save serialization and mailbox consumer/arrival timing for both CatalogMailSend and SystemMailSend."
+  ]
+}
