@@ -1,6 +1,6 @@
 {
-  "schema": "acnh-re/hha-same-anchor-flag-successor/1",
-  "scope": "Static follow-up for HHA room-grid same-anchor overwrite policy and HHAGradeMailFlag reader/clearer discovery. It stops before claiming a particular save object's winner or any runtime mail delivery.",
+  "schema": "acnh-re/hha-same-anchor-flag-successor/2",
+  "scope": "Static follow-up for HHA room-grid same-anchor ordering, HHAGradeMailFlag reader/clearer xrefs, and the boundary between HHA report queuing and EventFlow SystemMailSend. It stops before claiming a particular save object's winner or runtime inbox delivery.",
   "source": {
     "main_nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
     "indexed_build_match": true,
@@ -844,8 +844,644 @@
       ],
       "limit": "This proves a room-grid update path over generated spatial rows, not the order in which saved furniture objects are initially loaded into a room grid."
     },
+    "construction_order_audit": {
+      "room_update_wrapper": {
+        "target": "0x63ca90",
+        "direct_callers": [
+          {
+            "call_pc": "0x600188",
+            "owner_va": "0x5ff7f0",
+            "owner_name": "FUN_006ff7f0",
+            "instruction": "BL"
+          }
+        ],
+        "callers_of_spatial_loop": [
+          {
+            "call_pc": "0x601098",
+            "owner_va": "0x600f30",
+            "owner_name": "FUN_00700f30",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x601218",
+            "owner_va": "0x6010b0",
+            "owner_name": "FUN_007010b0",
+            "instruction": "BL"
+          },
+          {
+            "call_pc": "0x601260",
+            "owner_va": "0x601230",
+            "owner_name": "FUN_00701230",
+            "instruction": "BL"
+          }
+        ],
+        "spatial_loop_callers": {
+          "0x600f30": [
+            {
+              "call_pc": "0xd8d1f0",
+              "owner_va": "0xd8d050",
+              "owner_name": "FUN_00e8d050",
+              "instruction": "BL"
+            }
+          ],
+          "0x6010b0": [
+            {
+              "call_pc": "0xd8d9b0",
+              "owner_va": "0xd8d810",
+              "owner_name": "FUN_00e8d810",
+              "instruction": "BL"
+            }
+          ],
+          "0x601230": [
+            {
+              "call_pc": "0x606bb8",
+              "owner_va": "0x606a90",
+              "owner_name": "FUN_00706a90",
+              "instruction": "BL"
+            },
+            {
+              "call_pc": "0x606c2c",
+              "owner_va": "0x606a90",
+              "owner_name": "FUN_00706a90",
+              "instruction": "B_to_function_entry"
+            },
+            {
+              "call_pc": "0xd8e1a4",
+              "owner_va": "0xd8dff0",
+              "owner_name": "FUN_00e8dff0",
+              "instruction": "BL"
+            }
+          ]
+        },
+        "pointer_array_hits_for_loop_and_setters": [],
+        "interpretation": "0x5ff7f0 is entered through coordinate/spatial-processing helpers and calls 0x63ca90 for generated 0x38-byte rows. Its ordered row counter establishes ordering for that generated update pass only; the index has no edge from a SavePlayerHouse furniture-list loader to this path."
+      },
+      "direct_grid_insert_callers": [
+        {
+          "call_pc": "0x4ad400",
+          "owner_va": "0x4ad3b0",
+          "owner_name": "FUN_005ad3b0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x4b3b4c",
+          "owner_va": "0x4b3490",
+          "owner_name": "FUN_005b3490",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x4b43d4",
+          "owner_va": "0x4b3490",
+          "owner_name": "FUN_005b3490",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x4b4bbc",
+          "owner_va": "0x4b3490",
+          "owner_name": "FUN_005b3490",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x4b4cc8",
+          "owner_va": "0x4b3490",
+          "owner_name": "FUN_005b3490",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x4b4ee0",
+          "owner_va": "0x4b3490",
+          "owner_name": "FUN_005b3490",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x55dc2c",
+          "owner_va": "0x55db00",
+          "owner_name": "FUN_0065db00",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x5603f8",
+          "owner_va": "0x5602a0",
+          "owner_name": "FUN_006602a0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x562004",
+          "owner_va": "0x5618e0",
+          "owner_name": "FUN_006618e0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x61f7cc",
+          "owner_va": "0x61f470",
+          "owner_name": "FUN_0071f470",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x621218",
+          "owner_va": "0x6210f0",
+          "owner_name": "FUN_007210f0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x63c8f4",
+          "owner_va": "0x63c8f0",
+          "owner_name": "FUN_0073c8f0",
+          "instruction": "B_to_function_entry"
+        },
+        {
+          "call_pc": "0x63c970",
+          "owner_va": "0x63c900",
+          "owner_name": "FUN_0073c900",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x63d6c4",
+          "owner_va": "0x63d670",
+          "owner_name": "FUN_0073d670",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xa14488",
+          "owner_va": "0xa143f0",
+          "owner_name": "FUN_00b143f0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xd7133c",
+          "owner_va": "0xd71170",
+          "owner_name": "FUN_00e71170",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xda11dc",
+          "owner_va": "0xda1150",
+          "owner_name": "FUN_00ea1150",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xf95eec",
+          "owner_va": "0xf95e60",
+          "owner_name": "FUN_01095e60",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xfccc50",
+          "owner_va": "0xfccbb0",
+          "owner_name": "FUN_010ccbb0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xfcd468",
+          "owner_va": "0xfcd180",
+          "owner_name": "FUN_010cd180",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xfd13cc",
+          "owner_va": "0xfd11d0",
+          "owner_name": "FUN_010d11d0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xfd1508",
+          "owner_va": "0xfd11d0",
+          "owner_name": "FUN_010d11d0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xfd1590",
+          "owner_va": "0xfd11d0",
+          "owner_name": "FUN_010d11d0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x10c3b04",
+          "owner_va": "0x10c38e0",
+          "owner_name": "FUN_011c38e0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x10e2b64",
+          "owner_va": "0x10e2ae0",
+          "owner_name": "FUN_011e2ae0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x10e3f28",
+          "owner_va": "0x10e3e40",
+          "owner_name": "FUN_011e3e40",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x10e3fc0",
+          "owner_va": "0x10e3e40",
+          "owner_name": "FUN_011e3e40",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x10e40d8",
+          "owner_va": "0x10e3ff0",
+          "owner_name": "FUN_011e3ff0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x10e4170",
+          "owner_va": "0x10e3ff0",
+          "owner_name": "FUN_011e3ff0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x10e41f4",
+          "owner_va": "0x10e3ff0",
+          "owner_name": "FUN_011e3ff0",
+          "instruction": "BL"
+        }
+      ],
+      "direct_grid_update_callers": [
+        {
+          "call_pc": "0x489760",
+          "owner_va": "0x4896e0",
+          "owner_name": "FUN_005896e0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x4ad308",
+          "owner_va": "0x4ad290",
+          "owner_name": "FUN_005ad290",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x4aea10",
+          "owner_va": "0x4ae640",
+          "owner_name": "FUN_005ae640",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x4aebc4",
+          "owner_va": "0x4ae640",
+          "owner_name": "FUN_005ae640",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x4afca8",
+          "owner_va": "0x4ae640",
+          "owner_name": "FUN_005ae640",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x4afd48",
+          "owner_va": "0x4ae640",
+          "owner_name": "FUN_005ae640",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x4afdf0",
+          "owner_va": "0x4ae640",
+          "owner_name": "FUN_005ae640",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x4b07d4",
+          "owner_va": "0x4ae640",
+          "owner_name": "FUN_005ae640",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x4b4ec4",
+          "owner_va": "0x4b3490",
+          "owner_name": "FUN_005b3490",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x4b4fc0",
+          "owner_va": "0x4b3490",
+          "owner_name": "FUN_005b3490",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x4b53ac",
+          "owner_va": "0x4b5280",
+          "owner_name": "FUN_005b5280",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x4b54ec",
+          "owner_va": "0x4b5400",
+          "owner_name": "FUN_005b5400",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x530db0",
+          "owner_va": "0x530a40",
+          "owner_name": "FUN_00630a40",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x5fd520",
+          "owner_va": "0x5fd370",
+          "owner_name": "FUN_006fd370",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x5fd73c",
+          "owner_va": "0x5fd5f0",
+          "owner_name": "FUN_006fd5f0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x5fd8e4",
+          "owner_va": "0x5fd5f0",
+          "owner_name": "FUN_006fd5f0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x5fd994",
+          "owner_va": "0x5fd5f0",
+          "owner_name": "FUN_006fd5f0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x5fda7c",
+          "owner_va": "0x5fda00",
+          "owner_name": "FUN_006fda00",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x5fe7e4",
+          "owner_va": "0x5fe690",
+          "owner_name": "FUN_006fe690",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x5fe894",
+          "owner_va": "0x5fe690",
+          "owner_name": "FUN_006fe690",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x5fe8f4",
+          "owner_va": "0x5fe690",
+          "owner_name": "FUN_006fe690",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x5ffd68",
+          "owner_va": "0x5ff7f0",
+          "owner_name": "FUN_006ff7f0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x6000f8",
+          "owner_va": "0x5ff7f0",
+          "owner_name": "FUN_006ff7f0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x6007b8",
+          "owner_va": "0x5ff7f0",
+          "owner_name": "FUN_006ff7f0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x61f064",
+          "owner_va": "0x61eda0",
+          "owner_name": "FUN_0071eda0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x621068",
+          "owner_va": "0x620f10",
+          "owner_name": "FUN_00720f10",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x64114c",
+          "owner_va": "0x641080",
+          "owner_name": "FUN_00741080",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x648b1c",
+          "owner_va": "0x648980",
+          "owner_name": "FUN_00748980",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x648bc4",
+          "owner_va": "0x648980",
+          "owner_name": "FUN_00748980",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x65bf6c",
+          "owner_va": "0x65bdc0",
+          "owner_name": "FUN_0075bdc0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x65bfdc",
+          "owner_va": "0x65bdc0",
+          "owner_name": "FUN_0075bdc0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x65c04c",
+          "owner_va": "0x65bdc0",
+          "owner_name": "FUN_0075bdc0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x65c0bc",
+          "owner_va": "0x65bdc0",
+          "owner_name": "FUN_0075bdc0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x65c12c",
+          "owner_va": "0x65bdc0",
+          "owner_name": "FUN_0075bdc0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x65c19c",
+          "owner_va": "0x65bdc0",
+          "owner_name": "FUN_0075bdc0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x65c20c",
+          "owner_va": "0x65bdc0",
+          "owner_name": "FUN_0075bdc0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x65c2b8",
+          "owner_va": "0x65bdc0",
+          "owner_name": "FUN_0075bdc0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x65c32c",
+          "owner_va": "0x65bdc0",
+          "owner_name": "FUN_0075bdc0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x65c370",
+          "owner_va": "0x65bdc0",
+          "owner_name": "FUN_0075bdc0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x65c78c",
+          "owner_va": "0x65c510",
+          "owner_name": "FUN_0075c510",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x65c8e0",
+          "owner_va": "0x65c510",
+          "owner_name": "FUN_0075c510",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x65ca24",
+          "owner_va": "0x65c510",
+          "owner_name": "FUN_0075c510",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x7adfe0",
+          "owner_va": "0x7adc80",
+          "owner_name": "FUN_008adc80",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xd712e8",
+          "owner_va": "0xd71170",
+          "owner_name": "FUN_00e71170",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xd71c98",
+          "owner_va": "0xd71b80",
+          "owner_name": "FUN_00e71b80",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xd73260",
+          "owner_va": "0xd73040",
+          "owner_name": "FUN_00e73040",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xd905cc",
+          "owner_va": "0xd90490",
+          "owner_name": "FUN_00e90490",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xd906d4",
+          "owner_va": "0xd90640",
+          "owner_name": "FUN_00e90640",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xd91328",
+          "owner_va": "0xd91170",
+          "owner_name": "FUN_00e91170",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xd91380",
+          "owner_va": "0xd91170",
+          "owner_name": "FUN_00e91170",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xd91d58",
+          "owner_va": "0xd91ba0",
+          "owner_name": "FUN_00e91ba0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xd91db0",
+          "owner_va": "0xd91ba0",
+          "owner_name": "FUN_00e91ba0",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xd92d08",
+          "owner_va": "0xd92b50",
+          "owner_name": "FUN_00e92b50",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xd92d60",
+          "owner_va": "0xd92b50",
+          "owner_name": "FUN_00e92b50",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xda11ac",
+          "owner_va": "0xda1150",
+          "owner_name": "FUN_00ea1150",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xda2ccc",
+          "owner_va": "0xda2c30",
+          "owner_name": "FUN_00ea2c30",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xee884c",
+          "owner_va": "0xee8640",
+          "owner_name": "FUN_00fe8640",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xf95ed0",
+          "owner_va": "0xf95e60",
+          "owner_name": "FUN_01095e60",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xfbc0c8",
+          "owner_va": "0xfbc020",
+          "owner_name": "FUN_010bc020",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0xfbc3b0",
+          "owner_va": "0xfbc320",
+          "owner_name": "FUN_010bc320",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x10c3bec",
+          "owner_va": "0x10c3b80",
+          "owner_name": "FUN_011c3b80",
+          "instruction": "BL"
+        },
+        {
+          "call_pc": "0x1104970",
+          "owner_va": "0x1104920",
+          "owner_name": "FUN_01204920",
+          "instruction": "BL"
+        }
+      ],
+      "save_house_update_callsite": {
+        "function": "0xf95e60",
+        "behavior": "Compares the selected incoming value against one member at +0x18, then calls 0xa144b0 followed by 0xa14320 for that one changed value. It contains no furniture-list traversal.",
+        "pseudocode_verified": true
+      },
+      "resolved": "The indexed direct-call inventory covers 30 insert-wrapper callsites and 62 update-wrapper callsites; only 0xf95e60 is visibly tied to the local SavePlayerHouse record, and it updates one selected value. No constructor/loader call chain that enumerates saved room furniture into 0xa14320 was identified. The potential same-anchor winner therefore remains last accepted writer, with initial object ordering unknown.",
+      "coverage_limit": "No code-pointer array targets 0x5ff7f0, its three direct callers, 0x63ca90, 0xa14320, or 0xa144b0 in the indexed array scan. This excludes those exact indexed function-pointer routes, not unresolved callbacks or code omitted from the dump/index."
+    },
     "resolved": "The cell is last-accepted-writer-wins on the traced setter paths when their gates pass; the data structure has no intrinsic score/priority comparison at the anchor.",
-    "unresolved": "Static evidence does not establish which saved furniture object is inserted last during room initialization. The 0x5ff7f0 loop writes generated spatial rows but is not tied to the initial saved-furniture loader sequence."
+    "unresolved": "Static evidence does not establish which saved furniture object is inserted last during room initialization. The 0x5ff7f0 loop writes generated spatial rows but is not tied to the initial saved-furniture loader sequence; constructor/loader identity and stable saved-object enumeration order require a matching runtime trace or additional loader data."
   },
   "saved_byte_descriptor_aliases": {
     "field": "SavePlayerHouse +0x263d0",
@@ -2217,12 +2853,138 @@
     "conclusion": "The exact-name indexed native reference remains only the setter call in 0x7b1fe0. The indexed EventFlow reader/writer lists and action-parameter search are empty, and the checked CRC32 values have no indexed references. Generic native get/set APIs exist and have many unrelated callers; the static corpus does not identify an indirect/dynamic caller that reads or clears this key.",
     "runtime_needed": "Trace generic flag getter/setter calls with their resolved key and value during one HHA evaluation on the matching build; record before/after state for the same player slot."
   },
+  "grade_flag_to_mail_route_audit": {
+    "hha_manager_direct_paths": {
+      "grade_report_builder_and_queue": {
+        "shortest_path_to_any_HHA_report_builder": [
+          "0x7b1dd0",
+          "0x7b29d0",
+          "0x7b5e60",
+          "0xac77a0"
+        ],
+        "shortest_path_to_any_HHA_queue_append": [
+          "0x7b1dd0",
+          "0x7b29d0",
+          "0x7b5e60",
+          "0xabf610"
+        ],
+        "rank_report_branch_path_to_builder": [
+          "0x7b1dd0",
+          "0x7b29d0",
+          "0x7b4fc0",
+          "0x7b6470",
+          "0xac77a0"
+        ],
+        "rank_report_branch_path_to_queue_append": [
+          "0x7b1dd0",
+          "0x7b29d0",
+          "0x7b4fc0",
+          "0x7b6470",
+          "0xabf610"
+        ]
+      },
+      "SystemMailSend_or_route_writers": {
+        "0x345890": null,
+        "0x346a50": null,
+        "0xac7070": null,
+        "0xfaabf0": null,
+        "0xfaa3f0": null,
+        "0xfaaeb0": null
+      },
+      "interpretation": "HHA evaluation reaches its own report record builder/queue. The indexed direct graph has no path from the evaluator manager to the EventFlow SystemMailSend action/dispatcher, the route virtual insertion method, or the three route-specific save writers. Existing HHA report formatter/consumer evidence is a distinct virtual record path and is not proof that HHAGradeMailFlag triggers SystemMailSend."
+    },
+    "flag_reader_clearer_coverage": {
+      "exact_native_name_xrefs": 1,
+      "exact_native_functions": [
+        "0x7b1fe0"
+      ],
+      "indexed_eventflow_readers": [],
+      "indexed_eventflow_writers": [],
+      "actions_mentioning_key": [],
+      "checked_crc32_xrefs": {
+        "HHAGradeMailFlag": 0,
+        "cPlayer:HHAGradeMailFlag": 0
+      },
+      "generic_accessor_direct_callsite_counts": {
+        "getter_0xf4aff0": 51,
+        "setter_0xf4b0d0": 145,
+        "low_level_writer_0xf4b170": 16
+      },
+      "conclusion": "The named key is set in the HHA evaluator using the byte read from SavePlayerHouse +0x263d0. The indexed corpus has no reader/clearer, EventFlow action, or direct route from that setter to SystemMailSend/mail-slot serialization. Dynamic generic flag API calls remain possible only if their key is resolved at runtime or the access route is absent from the indexed static corpus."
+    },
+    "system_mail_send_queue_when": {
+      "static_evidence_artifact": "output/gameplay/house_hha_followup/hha_overlap_mail_dispatch_static.json",
+      "eventflow_use_count": 50,
+      "route_counts": {
+        "cFastToday": 15,
+        "cFastTomorrow": 35
+      },
+      "routes": {
+        "fast_today_mode_1": {
+          "native_method": "0xac7070 via record virtual slot +0x30; both indexed record pointer-array candidates resolve to this method",
+          "save_lookup_key": "0x9610 (label unresolved in local schema)",
+          "slot_picker": "0xfad540 chooses the first available record among four slots",
+          "slot_offsets": [
+            "+0x7c58",
+            "+0x7f10",
+            "+0x81c8",
+            "+0x8480"
+          ],
+          "record_writer": "0xfaabf0 copies the formatted record; writes 0x0101 at destination +0x2b0",
+          "conclusion": "A save-backed mail record is copied into the four-slot route collection when the native eligibility/payload checks pass."
+        },
+        "fast_tomorrow_mode_2": {
+          "native_method": "0xac7070 via record virtual slot +0x30; both indexed record pointer-array candidates resolve to this method",
+          "save_lookup_key": "0x9610 (label unresolved in local schema)",
+          "slot_picker": "0xfad340 checks sixteen slots and returns the first available slot plus its ordinal",
+          "slot_offsets": [
+            "+0x5118",
+            "+0x53cc",
+            "+0x5680",
+            "+0x5934",
+            "+0x5be8",
+            "+0x5e9c",
+            "+0x6150",
+            "+0x6404",
+            "+0x66b8",
+            "+0x696c",
+            "+0x6c20",
+            "+0x6ed4",
+            "+0x7188",
+            "+0x743c",
+            "+0x76f0",
+            "+0x79a4"
+          ],
+          "slot_stride": "0x2b4",
+          "record_writer": "0xfaa3f0 copies the action's formatted record payload into the selected slot; follow-up code counts valid slots and updates related save state",
+          "conclusion": "The cFastTomorrow route reaches a native save-backed 16-slot record insertion path at action execution, subject to its validity and free-slot checks."
+        },
+        "slow_retry_mode_3_fallback": {
+          "native_method": "0xac7070 via record virtual slot +0x30 after 0xac1ff0 returns false",
+          "save_lookup_key": "0x9610 (label unresolved in local schema)",
+          "slot_picker": "0xfad540, same four-slot path",
+          "record_writer": "0xfaaeb0; writes 0x0103 at destination +0x2b0"
+        }
+      },
+      "HHA_specific_action": [
+        {
+          "flow": "SNPC_rco_10_Common_UpgradeMyhome",
+          "event_index": 45,
+          "name": "EventFlowActionSystemMailSend",
+          "params_json": "{\"FromType\": \"cHHA\", \"FileIndex\": \"MAIL_SP_HHA_BuildCelebration\", \"Present\": \"cReward\", \"Route\": \"cFastTomorrow\", \"LabelIndex\": 1, \"TagType\": \"cNone\", \"ToSharePlayer\": false}"
+        }
+      ],
+      "queue_semantics": "When the registered SystemMailSend action executes, it builds/formats a record and dispatches according to Route. cFastToday and cFastTomorrow reach their save-backed slot insertion methods if payload/eligibility checks pass and a free slot is selected. cSlowRetry first attempts the shared record handler and only uses its four-slot fallback if that handler returns false. This describes record insertion at action execution, not inbox delivery or clock/date arrival.",
+      "boundary": "The only indexed HHA action is BuildCelebration/cFastTomorrow, a separate house-upgrade event. No indexed grade-HHA action connects HHAGradeMailFlag or the HHA report record queue to SystemMailSend. Static evidence stops at saved collection insertion; inbox visibility and delivery timing are not asserted."
+    },
+    "runtime_capture_needed": "On the matching build and same player slot, trace the canonical flag key and get/set values around one HHA pass; record the evaluator result, each HHA report queue record and its virtual consumer target, and the save-mail collection slot before/after. To prove a flag-to-SystemMailSend route, also capture the EventFlow action invocation, route, selected writer and written slot in the same timeline; then separately observe inbox before/after across the relevant clock transition. No such synchronized trace is present."
+  },
   "exact_synchronized_capture_needed": {
     "build": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
     "save_scope": "Same SaveLand/player slot and SavePlayerHouse record before and after a single HHA pass; include bytes +0x263d0 and +0x263d1.",
-    "room_grid": "Capture room index, saved furniture record IDs and coordinates in loader order, then each write to the selected occupancy grid including writer VA, anchor, incoming short descriptor, prior cell value, and resulting cell value; capture the value returned by 0xa13fe0 for that same anchor.",
+    "room_grid": "Capture room index, constructor/loader function and saved furniture record IDs in enumerated order, plus coordinates; then every write to the selected occupancy grid with writer VA, anchor, incoming short descriptor, prior cell value, and resulting cell value. Capture the value returned by 0xa13fe0 for that same anchor. Repeat a two-item shared-anchor fixture with save/list order reversed while other state is fixed.",
     "same_anchor_fixture": "Two recognized furniture descriptors at one anchor, repeated with insertion order reversed while all other save state is fixed. This isolates whether scene/load ordering or item ownership influences the last accepted write.",
-    "flag_and_mail": "In the same timestamped pass, capture resolved HHAGradeMailFlag getter/setter keys and values, raw +0x263d0/+0x263d1 bytes, HHA report queue records, save-backed mail collection counts/slots, and inbox state before and after. Separate mail captures cannot prove a flag-to-mail edge.",
+    "flag_and_mail": "In the same timestamped pass, capture resolved HHAGradeMailFlag getter/setter keys and values, raw +0x263d0/+0x263d1 bytes, HHA report queue records, the virtual consumer target and each save-backed mail collection's counts/slots before and after. Record any SystemMailSend action invocation/route/writer in the same timeline. Capture inbox before/after across the applicable clock transition only as a separate delivery observation; separate mail captures cannot prove a flag-to-mail edge.",
     "runtime_status": "No synchronized room-grid/save/flag/mail capture is present in the static corpus; no runtime behavior is claimed."
   }
 }

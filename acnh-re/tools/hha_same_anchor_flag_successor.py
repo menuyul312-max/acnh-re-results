@@ -22,6 +22,7 @@ POINTER_ARRAYS = DATA / "output/binary/code_pointer_arrays.json"
 EVENT_HANDLERS = DATA / "output/binary/event_handlers_resolved.json"
 NATIVE_FLAGS = DATA / "output/gameplay/native_flag_refs.json"
 FLAG_INDEX = DATA / "output/gameplay/flag_index.json"
+MAIL_STATIC = ROOT / "output/gameplay/house_hha_followup/hha_overlap_mail_dispatch_static.json"
 SAVE_LAYOUT = ROOT / "output/gameplay/save_layout.json"
 SAVE_CROSSWALK = ROOT / "output/gameplay/save_layout_external_crosswalk.json"
 OUT = ROOT / "output/gameplay/house_hha_followup/hha_same_anchor_flag_successor.json"
@@ -76,6 +77,40 @@ def indexed_callers(db, target):
             "instruction": row["instruction"],
         })
     return rows
+
+
+def direct_call_graph(db):
+    """Build only the indexed direct BL/B call graph; virtual edges stay separate."""
+    graph = {}
+    for row in db.execute("SELECT pc,owner_va,target_va FROM direct_calls ORDER BY pc"):
+        owner = row["owner_va"]
+        if owner is None:
+            native = db.execute(
+                "SELECT va FROM native_functions WHERE va<=? AND span_end_va>? "
+                "ORDER BY va DESC LIMIT 1",
+                (row["pc"], row["pc"]),
+            ).fetchone()
+            owner = native["va"] if native else None
+        if owner is not None:
+            graph.setdefault(owner, set()).add(row["target_va"])
+    return graph
+
+
+def shortest_direct_path(graph, start, target):
+    """Return one shortest indexed direct-call path, or None."""
+    from collections import deque
+
+    todo = deque([(start, [start])])
+    seen = {start}
+    while todo:
+        current, path = todo.popleft()
+        if current == target:
+            return [hx(value) for value in path]
+        for callee in sorted(graph.get(current, ())):
+            if callee not in seen:
+                seen.add(callee)
+                todo.append((callee, path + [callee]))
+    return None
 
 
 def pointer_array_hits(targets):
@@ -184,6 +219,61 @@ def main():
         ],
         "limit": "This proves a room-grid update path over generated spatial rows, not the order in which saved furniture objects are initially loaded into a room grid.",
     }
+    graph = direct_call_graph(db)
+    spatial_parent_targets = (0x600F30, 0x6010B0, 0x601230)
+    spatial_parent_rows = {
+        hx(target): indexed_callers(db, target) for target in spatial_parent_targets
+    }
+    room_setter_pointer_hits = pointer_array_hits({
+        0x5FF7F0, 0x600F30, 0x6010B0, 0x601230, 0x63CA90, 0xA14320, 0xA144B0,
+    })
+    save_house_single_update = decomp("f95e60")
+    if "lVar3 + 0x263e0,param_3" not in save_house_single_update:
+        raise AssertionError("SavePlayerHouse update callsite changed")
+    insert_callers = hha_callsites["0xa14320"]
+    update_callers = hha_callsites["0xa144b0"]
+    if len(insert_callers) != 30 or len(update_callers) != 62:
+        raise AssertionError({"room_grid_setter_callers": [len(insert_callers), len(update_callers)]})
+    if len(hha_callsites["0x63ca90"]) != 1 or hha_callsites["0x63ca90"][0]["owner_va"] != "0x5ff7f0":
+        raise AssertionError("0x63ca90 caller inventory changed")
+    if [row["owner_va"] for row in indexed_callers(db, 0x5FF7F0)] != [
+        "0x600f30", "0x6010b0", "0x601230",
+    ]:
+        raise AssertionError("0x5ff7f0 direct caller inventory changed")
+
+    # Separate the HHA report queue from the EventFlow SystemMailSend route.
+    # The report producer is reached through direct native calls; the action's
+    # route-specific insertion is implemented by a virtual slot, so that edge
+    # is read from the already validated static route artifact below.
+    mail_static = json.loads(MAIL_STATIC.read_text())
+    mail_route = mail_static["system_mail_send"]
+    if mail_route["registration"]["event_uses"] != 50:
+        raise AssertionError("SystemMailSend EventFlow usage count changed")
+    hha_mail_direct_targets = (
+        0x345890, 0x346A50, 0xAC7070, 0xFAABF0, 0xFAA3F0, 0xFAAEB0,
+    )
+    hha_to_mail_paths = {
+        hx(target): shortest_direct_path(graph, 0x7B1DD0, target)
+        for target in hha_mail_direct_targets
+    }
+    if any(path is not None for path in hha_to_mail_paths.values()):
+        raise AssertionError({"unexpected_direct_HHA_to_mail_route": hha_to_mail_paths})
+    grade_queue_path = [0x7B1DD0, 0x7B29D0, 0x7B4FC0, 0x7B6470, 0xABF610]
+    if any(target not in graph.get(owner, set()) for owner, target in zip(grade_queue_path, grade_queue_path[1:])):
+        raise AssertionError("HHA grade report queue call path changed")
+    grade_builder_path = [0x7B1DD0, 0x7B29D0, 0x7B4FC0, 0x7B6470, 0xAC77A0]
+    if any(target not in graph.get(owner, set()) for owner, target in zip(grade_builder_path, grade_builder_path[1:])):
+        raise AssertionError("HHA grade report builder call path changed")
+    hha_action_events = [
+        dict(row) for row in db.execute(
+            "SELECT flow,event_index,name,params_json FROM event_calls "
+            "WHERE name='EventFlowActionSystemMailSend' "
+            "AND (params_json LIKE '%MAIL_SP_HHA%' OR params_json LIKE '%cHHA%') "
+            "ORDER BY flow,event_index"
+        )
+    ]
+    if len(hha_action_events) != 1 or "MAIL_SP_HHA_BuildCelebration" not in hha_action_events[0]["params_json"]:
+        raise AssertionError({"unexpected_HHA_SystemMailSend_actions": hha_action_events})
 
     save_layout = json.loads(SAVE_LAYOUT.read_text())
     crosswalk = json.loads(SAVE_CROSSWALK.read_text())
@@ -234,8 +324,8 @@ def main():
         "WHERE params_json LIKE '%HHAGradeMailFlag%' ORDER BY flow,event_index"
     )]
     result = {
-        "schema": "acnh-re/hha-same-anchor-flag-successor/1",
-        "scope": "Static follow-up for HHA room-grid same-anchor overwrite policy and HHAGradeMailFlag reader/clearer discovery. It stops before claiming a particular save object's winner or any runtime mail delivery.",
+        "schema": "acnh-re/hha-same-anchor-flag-successor/2",
+        "scope": "Static follow-up for HHA room-grid same-anchor ordering, HHAGradeMailFlag reader/clearer xrefs, and the boundary between HHA report queuing and EventFlow SystemMailSend. It stops before claiming a particular save object's winner or runtime inbox delivery.",
         "source": {
             "main_nso_sha256": NSO_SHA256,
             "indexed_build_match": True,
@@ -262,8 +352,27 @@ def main():
             },
             "setter_inventory": hha_callsites,
             "observed_room_update_loop": population_loop,
+            "construction_order_audit": {
+                "room_update_wrapper": {
+                    "target": "0x63ca90",
+                    "direct_callers": hha_callsites["0x63ca90"],
+                    "callers_of_spatial_loop": indexed_callers(db, 0x5FF7F0),
+                    "spatial_loop_callers": spatial_parent_rows,
+                    "pointer_array_hits_for_loop_and_setters": room_setter_pointer_hits,
+                    "interpretation": "0x5ff7f0 is entered through coordinate/spatial-processing helpers and calls 0x63ca90 for generated 0x38-byte rows. Its ordered row counter establishes ordering for that generated update pass only; the index has no edge from a SavePlayerHouse furniture-list loader to this path.",
+                },
+                "direct_grid_insert_callers": insert_callers,
+                "direct_grid_update_callers": update_callers,
+                "save_house_update_callsite": {
+                    "function": "0xf95e60",
+                    "behavior": "Compares the selected incoming value against one member at +0x18, then calls 0xa144b0 followed by 0xa14320 for that one changed value. It contains no furniture-list traversal.",
+                    "pseudocode_verified": True,
+                },
+                "resolved": "The indexed direct-call inventory covers 30 insert-wrapper callsites and 62 update-wrapper callsites; only 0xf95e60 is visibly tied to the local SavePlayerHouse record, and it updates one selected value. No constructor/loader call chain that enumerates saved room furniture into 0xa14320 was identified. The potential same-anchor winner therefore remains last accepted writer, with initial object ordering unknown.",
+                "coverage_limit": "No code-pointer array targets 0x5ff7f0, its three direct callers, 0x63ca90, 0xa14320, or 0xa144b0 in the indexed array scan. This excludes those exact indexed function-pointer routes, not unresolved callbacks or code omitted from the dump/index.",
+            },
             "resolved": "The cell is last-accepted-writer-wins on the traced setter paths when their gates pass; the data structure has no intrinsic score/priority comparison at the anchor.",
-            "unresolved": "Static evidence does not establish which saved furniture object is inserted last during room initialization. The 0x5ff7f0 loop writes generated spatial rows but is not tied to the initial saved-furniture loader sequence.",
+            "unresolved": "Static evidence does not establish which saved furniture object is inserted last during room initialization. The 0x5ff7f0 loop writes generated spatial rows but is not tied to the initial saved-furniture loader sequence; constructor/loader identity and stable saved-object enumeration order require a matching runtime trace or additional loader data.",
         },
         "saved_byte_descriptor_aliases": {
             "field": "SavePlayerHouse +0x263d0",
@@ -322,12 +431,48 @@ def main():
             "conclusion": "The exact-name indexed native reference remains only the setter call in 0x7b1fe0. The indexed EventFlow reader/writer lists and action-parameter search are empty, and the checked CRC32 values have no indexed references. Generic native get/set APIs exist and have many unrelated callers; the static corpus does not identify an indirect/dynamic caller that reads or clears this key.",
             "runtime_needed": "Trace generic flag getter/setter calls with their resolved key and value during one HHA evaluation on the matching build; record before/after state for the same player slot.",
         },
+        "grade_flag_to_mail_route_audit": {
+            "hha_manager_direct_paths": {
+                "grade_report_builder_and_queue": {
+                    "shortest_path_to_any_HHA_report_builder": shortest_direct_path(graph, 0x7B1DD0, 0xAC77A0),
+                    "shortest_path_to_any_HHA_queue_append": shortest_direct_path(graph, 0x7B1DD0, 0xABF610),
+                    "rank_report_branch_path_to_builder": [hx(value) for value in grade_builder_path],
+                    "rank_report_branch_path_to_queue_append": [hx(value) for value in grade_queue_path],
+                },
+                "SystemMailSend_or_route_writers": hha_to_mail_paths,
+                "interpretation": "HHA evaluation reaches its own report record builder/queue. The indexed direct graph has no path from the evaluator manager to the EventFlow SystemMailSend action/dispatcher, the route virtual insertion method, or the three route-specific save writers. Existing HHA report formatter/consumer evidence is a distinct virtual record path and is not proof that HHAGradeMailFlag triggers SystemMailSend.",
+            },
+            "flag_reader_clearer_coverage": {
+                "exact_native_name_xrefs": len(flag_string_refs),
+                "exact_native_functions": native_flag["referencing_functions"],
+                "indexed_eventflow_readers": indexed_flag["eventflow_readers"],
+                "indexed_eventflow_writers": indexed_flag["eventflow_writers"],
+                "actions_mentioning_key": event_rows,
+                "checked_crc32_xrefs": {label: len(info["refs"]) for label, info in flag_hash_refs.items()},
+                "generic_accessor_direct_callsite_counts": {
+                    "getter_0xf4aff0": len(generic_flag_accessors["0xf4aff0"]["direct_callsites"]),
+                    "setter_0xf4b0d0": len(generic_flag_accessors["0xf4b0d0"]["direct_callsites"]),
+                    "low_level_writer_0xf4b170": len(generic_flag_accessors["0xf4b170"]["direct_callsites"]),
+                },
+                "conclusion": "The named key is set in the HHA evaluator using the byte read from SavePlayerHouse +0x263d0. The indexed corpus has no reader/clearer, EventFlow action, or direct route from that setter to SystemMailSend/mail-slot serialization. Dynamic generic flag API calls remain possible only if their key is resolved at runtime or the access route is absent from the indexed static corpus.",
+            },
+            "system_mail_send_queue_when": {
+                "static_evidence_artifact": "output/gameplay/house_hha_followup/hha_overlap_mail_dispatch_static.json",
+                "eventflow_use_count": mail_route["registration"]["event_uses"],
+                "route_counts": mail_route["eventflow_route_counts"],
+                "routes": mail_route["record_paths"],
+                "HHA_specific_action": hha_action_events,
+                "queue_semantics": "When the registered SystemMailSend action executes, it builds/formats a record and dispatches according to Route. cFastToday and cFastTomorrow reach their save-backed slot insertion methods if payload/eligibility checks pass and a free slot is selected. cSlowRetry first attempts the shared record handler and only uses its four-slot fallback if that handler returns false. This describes record insertion at action execution, not inbox delivery or clock/date arrival.",
+                "boundary": "The only indexed HHA action is BuildCelebration/cFastTomorrow, a separate house-upgrade event. No indexed grade-HHA action connects HHAGradeMailFlag or the HHA report record queue to SystemMailSend. Static evidence stops at saved collection insertion; inbox visibility and delivery timing are not asserted.",
+            },
+            "runtime_capture_needed": "On the matching build and same player slot, trace the canonical flag key and get/set values around one HHA pass; record the evaluator result, each HHA report queue record and its virtual consumer target, and the save-mail collection slot before/after. To prove a flag-to-SystemMailSend route, also capture the EventFlow action invocation, route, selected writer and written slot in the same timeline; then separately observe inbox before/after across the relevant clock transition. No such synchronized trace is present.",
+        },
         "exact_synchronized_capture_needed": {
             "build": NSO_SHA256,
             "save_scope": "Same SaveLand/player slot and SavePlayerHouse record before and after a single HHA pass; include bytes +0x263d0 and +0x263d1.",
-            "room_grid": "Capture room index, saved furniture record IDs and coordinates in loader order, then each write to the selected occupancy grid including writer VA, anchor, incoming short descriptor, prior cell value, and resulting cell value; capture the value returned by 0xa13fe0 for that same anchor.",
+            "room_grid": "Capture room index, constructor/loader function and saved furniture record IDs in enumerated order, plus coordinates; then every write to the selected occupancy grid with writer VA, anchor, incoming short descriptor, prior cell value, and resulting cell value. Capture the value returned by 0xa13fe0 for that same anchor. Repeat a two-item shared-anchor fixture with save/list order reversed while other state is fixed.",
             "same_anchor_fixture": "Two recognized furniture descriptors at one anchor, repeated with insertion order reversed while all other save state is fixed. This isolates whether scene/load ordering or item ownership influences the last accepted write.",
-            "flag_and_mail": "In the same timestamped pass, capture resolved HHAGradeMailFlag getter/setter keys and values, raw +0x263d0/+0x263d1 bytes, HHA report queue records, save-backed mail collection counts/slots, and inbox state before and after. Separate mail captures cannot prove a flag-to-mail edge.",
+            "flag_and_mail": "In the same timestamped pass, capture resolved HHAGradeMailFlag getter/setter keys and values, raw +0x263d0/+0x263d1 bytes, HHA report queue records, the virtual consumer target and each save-backed mail collection's counts/slots before and after. Record any SystemMailSend action invocation/route/writer in the same timeline. Capture inbox before/after across the applicable clock transition only as a separate delivery observation; separate mail captures cannot prove a flag-to-mail edge.",
             "runtime_status": "No synchronized room-grid/save/flag/mail capture is present in the static corpus; no runtime behavior is claimed.",
         },
     }
