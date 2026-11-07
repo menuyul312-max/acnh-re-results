@@ -1,0 +1,166 @@
+{
+  "schema": "acnh-catalog-save-size-audit-v1",
+  "evidence_level": "LAYOUT_SIZE_CROSSCHECK",
+  "sources": {
+    "native_save_layout": "acnh-re/output/gameplay/save_layout.json",
+    "external_layout_crosswalk": "acnh-re/output/gameplay/save_layout_external_crosswalk.json",
+    "external_save_key_dictionary": "acnh-re/tools/external/CylindricalEarth/save_keys.json",
+    "catalog_setter_getter_view_length_bytes": 2000,
+    "catalog_setter_getter_view_length_hex": "0x7d0"
+  },
+  "local_layout": {
+    "selected_member_count": 88,
+    "unique_vtable_size_count": 151,
+    "exact_view_size_member_matches": [],
+    "exact_view_size_vtable_matches": []
+  },
+  "external_named_type_matches": [],
+  "external_save_key_dictionary_hits": [
+    {
+      "dictionary": "f",
+      "hash": "d50effae",
+      "name": "ItemRemakeCollectBit"
+    },
+    {
+      "dictionary": "t",
+      "hash": "dca1643d",
+      "name": "::Game::SaveItemRemakeCollectBit"
+    }
+  ],
+  "shop_catalog_crosswalk_rows": [
+    {
+      "section": "member_crosswalk",
+      "node": "0x2092f8",
+      "parent": "0x1f3e98",
+      "depth": 2,
+      "data": "0x4117fc",
+      "size": "0x200",
+      "local_name": "64-item list, shop block +0x2b14 (0xfc6300 -> 0xfc5d60)",
+      "status": "one_struct_type_candidate",
+      "depth_aligned_matches": [
+        {
+          "path": "SaveLand.Shop.ShopCatalog",
+          "type": "::Game::SaveShopCatalog",
+          "kind": "field_size"
+        },
+        {
+          "path": "SaveLand.Shop.ShopCatalog",
+          "type": "::Game::SaveShopCatalog",
+          "kind": "struct_size"
+        }
+      ],
+      "matches": [
+        {
+          "path": "SaveLand.Shop.ShopCatalog",
+          "type": "::Game::SaveShopCatalog",
+          "kind": "field_size"
+        },
+        {
+          "path": "SaveLand.Shop.ShopCatalog.ShopItem[0]",
+          "type": "::Game::SaveItemName",
+          "kind": "field_size"
+        },
+        {
+          "path": "SaveLand.Shop.ShopCatalog",
+          "type": "::Game::SaveShopCatalog",
+          "kind": "struct_size"
+        }
+      ],
+      "depth_aligned_named_type_candidates": [
+        "::Game::SaveShopCatalog"
+      ],
+      "depth_aligned_struct_type_candidates": [
+        "::Game::SaveShopCatalog"
+      ]
+    },
+    {
+      "section": "vtable_crosswalk",
+      "vtable": "0x30e9fc0",
+      "size": "0x200",
+      "sample_node": "0x2092f8",
+      "sample_data": "0x4117fc",
+      "instances": 1,
+      "status": "one_struct_type_candidate",
+      "depth_reference": {
+        "local_depth": 2,
+        "sample_node": "0x2092f8"
+      },
+      "depth_aligned_struct_type_candidates": [
+        "::Game::SaveShopCatalog"
+      ],
+      "depth_aligned_matches": [
+        {
+          "path": "SaveLand.Shop.ShopCatalog",
+          "type": "::Game::SaveShopCatalog",
+          "kind": "field_size"
+        },
+        {
+          "path": "SaveLand.Shop.ShopCatalog",
+          "type": "::Game::SaveShopCatalog",
+          "kind": "struct_size"
+        }
+      ],
+      "struct_type_candidates": [
+        "::Game::SaveShopCatalog"
+      ],
+      "field_type_candidates": [
+        "::Game::SaveItemName",
+        "::Game::SaveShopCatalog"
+      ],
+      "matches": [
+        {
+          "path": "SaveLand.Shop.ShopCatalog",
+          "type": "::Game::SaveShopCatalog",
+          "kind": "field_size"
+        },
+        {
+          "path": "SaveLand.Shop.ShopCatalog.ShopItem[0]",
+          "type": "::Game::SaveItemName",
+          "kind": "field_size"
+        },
+        {
+          "path": "SaveLand.Shop.ShopCatalog",
+          "type": "::Game::SaveShopCatalog",
+          "kind": "struct_size"
+        }
+      ]
+    },
+    {
+      "section": "vtable_crosswalk",
+      "vtable": "0x30ea020",
+      "size": "0x200",
+      "sample_node": "0x209330",
+      "sample_data": "0x4117fc",
+      "instances": 1,
+      "status": "one_struct_type_candidate",
+      "depth_reference": null,
+      "depth_aligned_struct_type_candidates": [],
+      "depth_aligned_matches": [],
+      "struct_type_candidates": [
+        "::Game::SaveShopCatalog"
+      ],
+      "field_type_candidates": [
+        "::Game::SaveItemName",
+        "::Game::SaveShopCatalog"
+      ],
+      "matches": [
+        {
+          "path": "SaveLand.Shop.ShopCatalog",
+          "type": "::Game::SaveShopCatalog",
+          "kind": "field_size"
+        },
+        {
+          "path": "SaveLand.Shop.ShopCatalog.ShopItem[0]",
+          "type": "::Game::SaveItemName",
+          "kind": "field_size"
+        },
+        {
+          "path": "SaveLand.Shop.ShopCatalog",
+          "type": "::Game::SaveShopCatalog",
+          "kind": "struct_size"
+        }
+      ]
+    }
+  ],
+  "interpretation": "The native catalog accessor requests a 2,000-byte (0x7d0) view, but the selected local save members and complete local vtable-size census contain no exact 0x7d0-byte object. The external key dictionary names SaveItemRemakeCollectBit, but the available structural crosswalk does not bind that name to a local node. SaveShopCatalog candidates are retained separately and must not be conflated with this bitset view. This does not exclude a 0x7d0 slice within a larger serialized object or runtime manager."
+}

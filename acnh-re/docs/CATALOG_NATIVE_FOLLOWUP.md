@@ -27,6 +27,8 @@ The resolved 1.0.0 `ItemParam` has 8,208 rows; 1,044 rows have nonnegative `Rema
 
 `tools/catalog_unique_id_bitset_native.py` executes `0xa0f440` membership and `0xa0f510` set-bit logic on a 0x754-byte synthetic buffer. Ten boundary cases match exactly, including the highest accepted ID 14999 and rejection of the first padded bit at 15000. The data-pointer vtable and item-ID normalization helpers are stubbed, so the run validates the original bit arithmetic and 15,000-ID bound, not the save-key binding.
 
+`tools/catalog_save_size_audit.py` compares the 2,000-byte (`0x7d0`) view requested by `0xeecad0`/`0xeecba0` with the local native save-layout census and the external schema crosswalk. None of the 88 selected save members or 151 local vtable-size entries is exactly `0x7d0`; the external key dictionary has both `ItemRemakeCollectBit` and `::Game::SaveItemRemakeCollectBit` names, but the current structural crosswalk has no matching local node for that type. The separate `SaveShopCatalog` candidate is a 0x200-byte, 64-item list at `SaveLand.Shop.ShopCatalog`, so it is not an exact-size match for the remake bitset view. This narrows the persistence question but does not exclude a 0x7d0 slice inside a larger serialized object or runtime manager. Reproduce with `python acnh-re/tools/catalog_save_size_audit.py`; output: `output/gameplay/catalog_save_size_audit.json`.
+
 Run it with:
 
 ```sh

@@ -97,6 +97,11 @@ Machine-readable output: [`open_donated_native.json`](../output/gameplay/museum_
 PYTHONPATH=/workspace/acnh-re/.deps python3 acnh-re/tools/open_donated_native.py
 ```
 
+The public-source pass found no 1.0.0 CFAD0 row keys or selector-to-player
+crosswalk beyond the local native audit. Its pinned candidate inventory and
+exact version/runtime limits are recorded in
+[`public_source_inventory.json`](../output/gameplay/museum_donation_followup/public_source_inventory.json).
+
 ## Evidence status
 
 | Area | Current evidence | Status |

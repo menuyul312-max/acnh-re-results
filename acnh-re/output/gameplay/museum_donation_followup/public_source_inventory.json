@@ -1,0 +1,158 @@
+{
+  "schema": "acnh-re/museum-public-source-inventory/1",
+  "checked_at": "2026-11-06",
+  "target": {
+    "game": "Animal Crossing: New Horizons",
+    "build": "1.0.0",
+    "main_build_id": "7FC1BAFF976AECA414520CB89F4616CB",
+    "unknowns": [
+      "Concrete CFAD0 runtime row u32 keys",
+      "Mapping from OwlDonationDone context selector/active row to saved donor-player number",
+      "A real-save donation-to-next-day museum expansion trace"
+    ]
+  },
+  "search_scope": {
+    "github_index_queries": [
+      "CFAD0",
+      "0xcfad0",
+      "GSaveMuseum",
+      "DonationItem[1024]",
+      "OwlDonationDone",
+      "MuseumDonationNumCheck"
+    ],
+    "repository_scoped_checks": [
+      "Nycolazs/ACNHRecomp",
+      "969981/ACNH_Resources",
+      "Treeki/CylindricalEarth",
+      "kwsch/NHSE",
+      "acnhmodding/HeavenTool",
+      "ShrineFox/ACNH-Tutorial-Skip",
+      "Rafacasari/acnh-eventflows"
+    ],
+    "limitation": "GitHub code search covers indexed public files/default branches and is not an exhaustive proof that no other public copy exists. Each listed source was checked directly at a pinned revision."
+  },
+  "supplemental_public_code_index": {
+    "service": "grep.app public-code index API",
+    "checked_at": "2026-11-07",
+    "limitation": "Search-index snapshot, not an exhaustive repository census; results are not commit-pinned. Exact ACNH source candidates remain cited by pinned revisions above.",
+    "queries": [
+      {
+        "term": "OwlDonationDone",
+        "hits": 10,
+        "pages_checked": 1,
+        "repositories": ["kwsch/NHSE"],
+        "result_paths": [
+          "NHSE.Core/Resources/text/*/internal_*.txt",
+          "NHSE.Core/Structures/Records/EventFlagPlayer.cs"
+        ],
+        "interpretation": "Indexed matches are localized internal flag labels and the NHSE flag record; no runtime CFAD0 rows or selector-to-player implementation appeared."
+      },
+      {
+        "term": "MuseumDonationNumCheck",
+        "hits": 0,
+        "pages_checked": 1,
+        "repositories": [],
+        "interpretation": "No indexed public source match."
+      },
+      {
+        "term": "GSaveMuseum",
+        "hits": 1,
+        "pages_checked": 1,
+        "repositories": ["kwsch/NHSE"],
+        "result_paths": ["NHSE.Core/Save/Offsets/MainSaveOffsets30.cs"],
+        "interpretation": "Only a later-version NHSE offset-map hit; the separate pinned MainSaveOffsets10.cs cross-check is listed above."
+      },
+      {
+        "term": "SaveMuseum",
+        "hits": 15,
+        "pages_checked": 2,
+        "repositories": ["kwsch/NHSE", "Soopyboo32/SoopyV2", "pret/pokeemerald", "pret/pokeruby", "haven1433/HexManiacAdvance", "mstan/EmeraldRecomp"],
+        "interpretation": "The only hit among the directly checked ACNH save-format sources is NHSE's later-version offset file; other hits are unrelated games or tools and publish no ACNH CFAD0 row values."
+      },
+      {
+        "term": "0xCFAD0",
+        "hits": 14,
+        "pages_checked": 2,
+        "repositories": ["cnjinhao/nana", "guanzhi/GmSSL", "openmv/openmv", "NVIDIA/open-gpu-kernel-modules", "mrnugget/dotfiles", "jgromes/RadioLib", "wx1183618058/HuaWei-Optical-Network-Terminal-Decoder", "leiradel/ImGuiAl", "EmberGL-org/EmberGL", "kirbystealer/WebOfShadowsTools", "google/enjarify"],
+        "interpretation": "All indexed matches are unrelated numeric/text occurrences; none is an ACNH native-code or runtime-data source."
+      }
+    ],
+    "conclusion": "This supplemental index check agrees with the repository-scoped audit: public code search exposes save-format names and event labels, but no concrete Museum CFAD0 runtime row keys or participant mapping."
+  },
+  "candidates": [
+    {
+      "repository": "Nycolazs/ACNHRecomp",
+      "revision": "6adabcb5cf30f8a7b3dfa8988159a5faa361442e",
+      "files": [
+        "https://github.com/Nycolazs/ACNHRecomp/blob/6adabcb5cf30f8a7b3dfa8988159a5faa361442e/games/acnh/versions.txt",
+        "https://github.com/Nycolazs/ACNHRecomp/blob/6adabcb5cf30f8a7b3dfa8988159a5faa361442e/README.md",
+        "https://github.com/Nycolazs/ACNHRecomp/blob/6adabcb5cf30f8a7b3dfa8988159a5faa361442e/docs/VERSIONS.md",
+        "https://github.com/Nycolazs/ACNHRecomp/blob/6adabcb5cf30f8a7b3dfa8988159a5faa361442e/tools/symbolize.py"
+      ],
+      "build_match": "versions.txt lists 1.0.0 with build ID 7FC1BAFF976AECA414520CB89F4616CB.",
+      "finding": "The project can recompile a user-supplied local game folder and can symbolize a locally generated hades.map. Its README says no game files are included; the 450-entry checked tree contains no generated hades.map, main.elf, profile, or museum output. Scoped searches for CFAD0 and OwlDonationDone returned no source hits.",
+      "runtime_rows_or_player_join": "Not present in the checked public revision. The local build/symbolization workflow may help locate static code, but does not publish BSS-backed active row values or a selector-to-player observation."
+    },
+    {
+      "repository": "969981/ACNH_Resources",
+      "revision": "fae492dad8e78667410e749180695ce62cc43f96",
+      "branch": "3.0.3_Unpack",
+      "files": [
+        "https://github.com/969981/ACNH_Resources/blob/fae492dad8e78667410e749180695ce62cc43f96/README.md",
+        "https://github.com/969981/ACNH_Resources/blob/fae492dad8e78667410e749180695ce62cc43f96/UnPack/1/Bcsv/MuseumFossilDonateInfo.csv",
+        "https://github.com/969981/ACNH_Resources/blob/fae492dad8e78667410e749180695ce62cc43f96/UnPack/1/EventFlow/SNPC_owl_01_Museum_Donation.json"
+      ],
+      "build_match": "The README labels the branch and decoded resource mirror as version 3.0.3, not 1.0.0.",
+      "finding": "The fossil BCSV is display/catalog data. The EventFlow exposes OwlDonationDone with MultiComplete and CompleteRoomType arguments, but neither the event nor checked museum tables contain CFAD0 row keys or a donor index. Scoped CFAD0 search returned no hits.",
+      "runtime_rows_or_player_join": "No; resource/EventFlow data only, and wrong game build for the 1.0.0 target."
+    },
+    {
+      "repository": "Treeki/CylindricalEarth",
+      "revision": "bb09c0ee71a4aa6011de088b88ea55fdee0bf6e9",
+      "files": [
+        "https://github.com/Treeki/CylindricalEarth/blob/bb09c0ee71a4aa6011de088b88ea55fdee0bf6e9/README.md",
+        "https://github.com/Treeki/CylindricalEarth/blob/bb09c0ee71a4aa6011de088b88ea55fdee0bf6e9/savefile/dump_save_io_structs.py",
+        "https://github.com/Treeki/CylindricalEarth/blob/bb09c0ee71a4aa6011de088b88ea55fdee0bf6e9/savefile/save_io_structure.json",
+        "https://github.com/Treeki/CylindricalEarth/blob/bb09c0ee71a4aa6011de088b88ea55fdee0bf6e9/savefile/save_schema_111_103_pseudoC.h"
+      ],
+      "build_match": "README identifies the pregenerated SaveIO hierarchy as v1.1.4 and says the RomFS /System/Smmh/ schema parser excludes v1.0.0.",
+      "finding": "The schema corroborates GSaveMuseum size 0x3404, DonationDate[1024], DonationItem[1024], and DonationUser[1024] at +0x3004. dump_save_io_structs.py connects to a running Switch under Noexes and emits SaveIO type/offset/vtable structure; the checked output is a hierarchy, not raw save values or CFAD0 runtime rows.",
+      "runtime_rows_or_player_join": "No checked 1.0.0 row data or selector/player mapping. Useful as later-version structure corroboration and as an example of the live-memory evidence needed."
+    },
+    {
+      "repository": "kwsch/NHSE",
+      "revision": "cb0745415945776f73375bf0a434a8babf059307",
+      "files": [
+        "https://github.com/kwsch/NHSE/blob/cb0745415945776f73375bf0a434a8babf059307/NHSE.Core/Structures/Misc/Museum.cs",
+        "https://github.com/kwsch/NHSE/blob/cb0745415945776f73375bf0a434a8babf059307/NHSE.Core/Structures/Misc/MuseumEditor.cs",
+        "https://github.com/kwsch/NHSE/blob/cb0745415945776f73375bf0a434a8babf059307/NHSE.Core/Save/Offsets/MainSaveOffsets10.cs"
+      ],
+      "build_match": "MainSaveOffsets10.cs is the version-1.0.0 offset map; Museum is at GSaveLandStart+0x411a80 with GSaveLandStart=0x108.",
+      "finding": "Museum.cs names the saved +0x3004 array Players; MuseumEditor renders 'Player {player} donated ...'. This independently labels the saved byte as a donor/player number and confirms save layout, not the game's runtime row keys.",
+      "runtime_rows_or_player_join": "No; this is the strongest 1.0.0 save-format cross-check, but it does not map an active CFAD0 row or event selector to the saved player number."
+    },
+    {
+      "repository": "acnhmodding/HeavenTool",
+      "revision": "e3ddf830a4ae360657917d3d598c79170273d056",
+      "file": "https://github.com/acnhmodding/HeavenTool/blob/e3ddf830a4ae360657917d3d598c79170273d056/HeavenTool.WinForms/extra/hashes/ACNHAdditional.txt",
+      "finding": "The project describes itself as a BCSV/RSTB/RSTC/PBC editor. ACNHAdditional.txt includes the SaveMuseum type-name hash and Museum-related names, but no code, runtime snapshot, concrete CFAD0 rows, or build-1.0.0 assertion.",
+      "runtime_rows_or_player_join": "No."
+    },
+    {
+      "repository": "ShrineFox/ACNH-Tutorial-Skip",
+      "revision": "e57a8862315f1ee777814fc29d5941860e964719",
+      "file": "https://github.com/ShrineFox/ACNH-Tutorial-Skip/blob/e57a8862315f1ee777814fc29d5941860e964719/functions.csv",
+      "finding": "The crosswalk labels EventFlow handler IDs 8F02DDD1 as OwlDonationDone and 3E5CFCA6 as MuseumDonationNumCheck. It supplies event-handler names/parameters, not native addresses, row values, or player mapping; the checked files do not identify the target as build 1.0.0.",
+      "runtime_rows_or_player_join": "No."
+    },
+    {
+      "repository": "Rafacasari/acnh-eventflows",
+      "revision": "78cbc66da4cfb7cb365be77651ed6acdc0b799e4",
+      "file": "https://github.com/Rafacasari/acnh-eventflows/blob/78cbc66da4cfb7cb365be77651ed6acdc0b799e4/SNPC_owl_01_Museum_Donation.evfl.txt",
+      "finding": "The textual EventFlow crosswalk calls OwlDonationDone with MultiComplete and CompleteRoomType, matching the captured event arguments. It contains no CFAD0 key or explicit donor/player index, and the checked file does not state the target game build.",
+      "runtime_rows_or_player_join": "No."
+    }
+  ],
+  "conclusion": "No checked public source provides concrete 1.0.0 CFAD0 runtime row u32 keys, the event-context-selector-to-player mapping, or a real-save donation/day-change trace. Public candidates provide build support, save schemas, handler-name crosswalks, or later-version resources only.",
+  "exact_blocker": "The local 1.0.0 native audit places the CFAD0/EAA8C0 state-manager pointer cells at 0x33d3cb0 and 0x33d4ff0 inside zero-fill BSS (0x333dec8–0x3ab7000); CFAD0 then traverses an object-owned dynamic row list. Static repository/binary artifacts therefore do not supply the live pointer contents and active row values. The EventFlow passes only MultiComplete and CompleteRoomType. Resolving the remaining join requires a 1.0.0 process memory capture (or a public source artifact generated from that same build) that records the active CFAD0 key and selector at OwlDonationDone together with the resulting SaveMuseum Players byte, plus a real save/day-change trace for the expansion boundary."
+}

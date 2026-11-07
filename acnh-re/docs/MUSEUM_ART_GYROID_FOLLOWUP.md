@@ -192,6 +192,58 @@ but does not show the full CFAD0 u32 keys, which active row is selected for a
 given donor, or which player-number values this build emits. The tool's editor
 allows 0–255, so that UI range is not a claim about in-game player slots.
 
+## Public-source search for runtime keys
+
+The pinned-source inventory is in
+[`public_source_inventory.json`](../output/gameplay/museum_donation_followup/public_source_inventory.json).
+It checks the public recompilation, resource, save-editor, memory-tool, and
+EventFlow/crosswalk projects most likely to expose the missing CFAD0 rows or
+participant join. None publishes concrete 1.0.0 row keys or a selector-to-player
+mapping:
+
+- [ACNHRecomp at `6adabcb`](https://github.com/Nycolazs/ACNHRecomp/tree/6adabcb5cf30f8a7b3dfa8988159a5faa361442e)
+  does list the exact 1.0.0 main build ID, but says game files are not included.
+  Its `symbolize.py` consumes a locally generated `hades.map`; the checked tree
+  contains no generated map or game output, and searches for `CFAD0` and
+  `OwlDonationDone` found no source hits. It can help label functions after a
+  local build, but it supplies no live CFAD0 row values.
+- [ACNH_Resources at `fae492d`](https://github.com/969981/ACNH_Resources/tree/fae492dad8e78667410e749180695ce62cc43f96)
+  identifies itself as the `3.0.3_Unpack` mirror. Its fossil BCSV is display
+  data, and its decoded `OwlDonationDone` events pass only `MultiComplete` and
+  `CompleteRoomType`.
+- [CylindricalEarth at `bb09c0e`](https://github.com/Treeki/CylindricalEarth/tree/bb09c0ee71a4aa6011de088b88ea55fdee0bf6e9)
+  independently corroborates the museum save layout. Its README says the
+  pre-generated SaveIO hierarchy is v1.1.4 and the RomFS save-schema parser
+  excludes v1.0.0. `dump_save_io_structs.py` reads a live Switch's SaveIO
+  hierarchy and emits layout metadata; the checked output does not contain
+  save payloads or CFAD0 runtime values.
+- [NHSE at `cb07454`](https://github.com/kwsch/NHSE/tree/cb0745415945776f73375bf0a434a8babf059307)
+  is the useful 1.0.0 save-format cross-check: it names the saved marker array
+  `Players` and maps the museum block. It does not expose runtime CFAD0 rows.
+- [HeavenTool](https://github.com/acnhmodding/HeavenTool/tree/e3ddf830a4ae360657917d3d598c79170273d056),
+  [ShrineFox's function index](https://github.com/ShrineFox/ACNH-Tutorial-Skip/blob/e57a8862315f1ee777814fc29d5941860e964719/functions.csv),
+  and [the textual EventFlow mirror](https://github.com/Rafacasari/acnh-eventflows/blob/78cbc66da4cfb7cb365be77651ed6acdc0b799e4/SNPC_owl_01_Museum_Donation.evfl.txt)
+  provide resource-editor names or EventFlow handler/parameter labels, not
+  native CFAD0 keys or participant values.
+
+The checked public sources therefore do not move the runtime boundary. CFAD0's
+state-manager pointers are in the local image's zero-fill BSS and its row array
+is object-owned and populated at runtime. A decisive join still needs a
+1.0.0 process capture pairing the selected context and full active-row key with
+the resulting `SaveMuseum.Players` byte; proving the day-change boundary also
+needs a real save before and after the expansion update. The inventory records
+the exact files, revisions, version checks, and search limitations.
+
+A supplemental `grep.app` public-code-index pass checked `OwlDonationDone`,
+`MuseumDonationNumCheck`, `GSaveMuseum`, `SaveMuseum`, and `0xCFAD0` on
+2026-11-07. The exact event-name hits were all NHSE localized flag labels or
+flag metadata; `MuseumDonationNumCheck` had no indexed hits. `GSaveMuseum`
+returned only NHSE's later-version offset file. `SaveMuseum` returned 15 hits
+across two pages, with other matches in unrelated games/tools, and the exact
+address query `0xCFAD0` returned 14 unrelated numeric/text hits. This index is
+not exhaustive or commit-pinned; it corroborates, but does not replace, the
+pinned repository checks in `public_source_inventory.json`.
+
 ## Save-to-expansion boundary
 
 The static path joins the writer, count, flag, and day-change code. Native
