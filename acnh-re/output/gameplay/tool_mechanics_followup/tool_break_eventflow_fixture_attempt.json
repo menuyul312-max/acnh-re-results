@@ -1,0 +1,634 @@
+{
+  "schema": "acnh-re/tool-break-eventflow-fixture-attempt/1",
+  "evidence_level": "STATIC_EVENTFLOW_FIXTURES_AND_NATIVE_SANDBOX_ATTEMPT",
+  "native_main": {
+    "path": "/workspace/acnh-re-github/acnh-re/inputs/additional_exefs/main",
+    "available": true,
+    "sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900"
+  },
+  "eventflow_fixture": {
+    "source": {
+      "source_id": 523,
+      "sha256": "5f2b1bb4a72cbed1e299c58b7de7eca8e08127b3a32d4102d613231141487033",
+      "size": 4112,
+      "format": "BFEVFL"
+    },
+    "entry_point_count": 6,
+    "entry_points": [
+      {
+        "entry_point": "ToolBreak_Axe",
+        "event_count": 7,
+        "operations": [
+          "SetTagFromSystem",
+          "MSG",
+          "IF",
+          "IF",
+          "IF",
+          "ReservePlayerMutterDemo",
+          "EventFlagSystemAdd"
+        ],
+        "conditions": [
+          {
+            "event_index": 4,
+            "op": "IF",
+            "params": null,
+            "text": "PlayerHasCraftRecipe {\"ItemUniqueId\": 9617, \"UnlockType\": \"\"}"
+          },
+          {
+            "event_index": 6,
+            "op": "IF",
+            "params": null,
+            "text": "EventFlagSystemInt {\"AccessKey\": \"cPlayer:GoldenAxeLearningCount\", \"FlagCheckType\": 3, \"Border\": 99}"
+          },
+          {
+            "event_index": 5,
+            "op": "IF",
+            "params": null,
+            "text": "EventFlagSystemBool {\"AccessKey\": \"cPlayer:MainmenuRecipe\"}"
+          }
+        ],
+        "durability_condition_count": 0,
+        "durability_conditions": [],
+        "events": [
+          {
+            "event_index": 2,
+            "op": "SetTagFromSystem",
+            "params": {
+              "TagType": "cPlayerGetItemName",
+              "SetTagType": "cDegit",
+              "TagID": 0,
+              "Value": 0,
+              "AccessKey": ""
+            },
+            "text": null
+          },
+          {
+            "event_index": 3,
+            "op": "MSG",
+            "params": null,
+            "text": "TalkSys/SYS_Player:290"
+          },
+          {
+            "event_index": 4,
+            "op": "IF",
+            "params": null,
+            "text": "PlayerHasCraftRecipe {\"ItemUniqueId\": 9617, \"UnlockType\": \"\"}"
+          },
+          {
+            "event_index": 6,
+            "op": "IF",
+            "params": null,
+            "text": "EventFlagSystemInt {\"AccessKey\": \"cPlayer:GoldenAxeLearningCount\", \"FlagCheckType\": 3, \"Border\": 99}"
+          },
+          {
+            "event_index": 5,
+            "op": "IF",
+            "params": null,
+            "text": "EventFlagSystemBool {\"AccessKey\": \"cPlayer:MainmenuRecipe\"}"
+          },
+          {
+            "event_index": 8,
+            "op": "ReservePlayerMutterDemo",
+            "params": {
+              "IsResistNpcCast": false,
+              "MutterStartTiming": "cNextDemoEnd_Simple",
+              "EventFileName": "Player_GetDemo_Recipe_DIY",
+              "EntryPointName": "GetRecipe_GoldenAxe"
+            },
+            "text": null
+          },
+          {
+            "event_index": 7,
+            "op": "EventFlagSystemAdd",
+            "params": {
+              "AccessKey": "cPlayer:GoldenAxeLearningCount",
+              "AddNum": 1
+            },
+            "text": null
+          }
+        ]
+      },
+      {
+        "entry_point": "ToolBreak_Scoop",
+        "event_count": 2,
+        "operations": [
+          "SetTagFromSystem",
+          "MSG"
+        ],
+        "conditions": [],
+        "durability_condition_count": 0,
+        "durability_conditions": [],
+        "events": [
+          {
+            "event_index": 0,
+            "op": "SetTagFromSystem",
+            "params": {
+              "TagType": "cPlayerGetItemName",
+              "SetTagType": "cDegit",
+              "TagID": 0,
+              "Value": 0,
+              "AccessKey": ""
+            },
+            "text": null
+          },
+          {
+            "event_index": 1,
+            "op": "MSG",
+            "params": null,
+            "text": "TalkSys/SYS_Player:290"
+          }
+        ]
+      },
+      {
+        "entry_point": "ToolBreak_Watering",
+        "event_count": 2,
+        "operations": [
+          "SetTagFromSystem",
+          "MSG"
+        ],
+        "conditions": [],
+        "durability_condition_count": 0,
+        "durability_conditions": [],
+        "events": [
+          {
+            "event_index": 0,
+            "op": "SetTagFromSystem",
+            "params": {
+              "TagType": "cPlayerGetItemName",
+              "SetTagType": "cDegit",
+              "TagID": 0,
+              "Value": 0,
+              "AccessKey": ""
+            },
+            "text": null
+          },
+          {
+            "event_index": 1,
+            "op": "MSG",
+            "params": null,
+            "text": "TalkSys/SYS_Player:290"
+          }
+        ]
+      },
+      {
+        "entry_point": "ToolBreak_Net",
+        "event_count": 2,
+        "operations": [
+          "SetTagFromSystem",
+          "MSG"
+        ],
+        "conditions": [],
+        "durability_condition_count": 0,
+        "durability_conditions": [],
+        "events": [
+          {
+            "event_index": 0,
+            "op": "SetTagFromSystem",
+            "params": {
+              "TagType": "cPlayerGetItemName",
+              "SetTagType": "cDegit",
+              "TagID": 0,
+              "Value": 0,
+              "AccessKey": ""
+            },
+            "text": null
+          },
+          {
+            "event_index": 1,
+            "op": "MSG",
+            "params": null,
+            "text": "TalkSys/SYS_Player:290"
+          }
+        ]
+      },
+      {
+        "entry_point": "ToolBreak_Slingshot",
+        "event_count": 2,
+        "operations": [
+          "SetTagFromSystem",
+          "MSG"
+        ],
+        "conditions": [],
+        "durability_condition_count": 0,
+        "durability_conditions": [],
+        "events": [
+          {
+            "event_index": 0,
+            "op": "SetTagFromSystem",
+            "params": {
+              "TagType": "cPlayerGetItemName",
+              "SetTagType": "cDegit",
+              "TagID": 0,
+              "Value": 0,
+              "AccessKey": ""
+            },
+            "text": null
+          },
+          {
+            "event_index": 1,
+            "op": "MSG",
+            "params": null,
+            "text": "TalkSys/SYS_Player:290"
+          }
+        ]
+      },
+      {
+        "entry_point": "ToolBreak_FishingRod",
+        "event_count": 2,
+        "operations": [
+          "SetTagFromSystem",
+          "MSG"
+        ],
+        "conditions": [],
+        "durability_condition_count": 0,
+        "durability_conditions": [],
+        "events": [
+          {
+            "event_index": 0,
+            "op": "SetTagFromSystem",
+            "params": {
+              "TagType": "cPlayerGetItemName",
+              "SetTagType": "cDegit",
+              "TagID": 0,
+              "Value": 0,
+              "AccessKey": ""
+            },
+            "text": null
+          },
+          {
+            "event_index": 1,
+            "op": "MSG",
+            "params": null,
+            "text": "TalkSys/SYS_Player:290"
+          }
+        ]
+      }
+    ],
+    "entry_flag_writes": {
+      "ToolBreak_Axe": [
+        {
+          "flag": "cPlayer:GoldenAxeLearningCount",
+          "op": "add",
+          "value": 1,
+          "event": 7
+        }
+      ]
+    },
+    "durability_condition_total": 0,
+    "finding": "The six entrypoints are tool-family message flows. Only ToolBreak_Axe contains conditions, and those query recipe ownership/MainmenuRecipe/GoldenAxeLearningCount (Border 99); its only EventFlow flag write adds one to GoldenAxeLearningCount. No entrypoint condition names ToolDamage, BreakDamage, remaining durability, or use count. This fixture cannot establish which native state selects an entrypoint."
+  },
+  "parameterized_native_state_handlers": {
+    "0xe37a50": {
+      "name": "FUN_00f37a50",
+      "string_refs": [
+        "PlayerToolBreak",
+        "PlayerToolBreakKeep",
+        "PlayerToolBreakKeep",
+        "PlayerToolBreakKeep",
+        "Player_ToolBreak",
+        "Player_ToolBreak",
+        "ToolBreak_%s"
+      ],
+      "direct_call_targets": [
+        "0x15bbbc0",
+        "0x15bbc00",
+        "0x1990820",
+        "0x220e430",
+        "0x7bc0b0",
+        "0x7be330",
+        "0x7cf9a0",
+        "0x7d3f60",
+        "0x7d5780",
+        "0x7d57a0",
+        "0x7d57c0",
+        "0x7d6970",
+        "0x7d6c60",
+        "0x7d6c90",
+        "0x7e30f0",
+        "0xa9c290",
+        "0xa9d0b0",
+        "0xda3fc0",
+        "0xda72e0",
+        "0xda7550",
+        "0xda7b10",
+        "0xda8ba0",
+        "0xdaa280",
+        "0xdaa970",
+        "0xdadfe0",
+        "0xdb1070",
+        "0xdb14d0",
+        "0xdc80a0",
+        "0xdc80b0",
+        "0xdd5f90",
+        "0xdd6b40",
+        "0xdfd7e0",
+        "0xe37950",
+        "0xe6fb50",
+        "0xf589e0",
+        "0xf58d00"
+      ],
+      "has_direct_wear_or_remaining_helper_edge": false,
+      "observed_state_fields": [
+        "+0x226 progression counter",
+        "+0x227 local gate",
+        "+0x409 state byte",
+        "+0x1024 outer branch byte",
+        "+0x898/+0x89c state bookkeeping"
+      ],
+      "fixture_requirements": [
+        "player-state `this` object and nested actor/context objects",
+        "valid vtables for several indirect calls at slot +0xf0",
+        "current item/name context and EventFlow/UI dispatcher state",
+        "animation/progression values needed to reach the branch under test"
+      ],
+      "static_result": "String references identify PlayerToolBreak/PlayerToolBreakKeep and Player_ToolBreak flow dispatch. The indexed function has no direct edge to ToolDamage, BreakDamage, remaining-value, or a wear writer."
+    },
+    "0xe37ed0": {
+      "name": "FUN_00f37ed0",
+      "string_refs": [
+        "ForceToolBreakDemo"
+      ],
+      "direct_call_targets": [
+        "0xda3fc0",
+        "0xda7b10",
+        "0xda8ba0",
+        "0xdadfe0",
+        "0xdb4470",
+        "0xdc80a0",
+        "0xe37950",
+        "0xf4e990"
+      ],
+      "has_direct_wear_or_remaining_helper_edge": false,
+      "fixture_requirements": [
+        "player-state `this` object and valid state-manager/flag-store context",
+        "ForceToolBreakDemo flag state and its native clear operation",
+        "state context required by the optional 0xe37950 counter path"
+      ],
+      "static_result": "The handler is gated through native state/flag helpers, clears ForceToolBreakDemo on the enabled path, and has no direct durability edge."
+    },
+    "runtime_attempt": {
+      "status": "BLOCKED_SANDBOX_INITIALIZATION",
+      "error_type": "ModuleNotFoundError",
+      "error": "No module named 'unicorn'",
+      "native_calls_attempted": [],
+      "existing_harness_attempt": {
+        "command": "python3 acnh-re/tools/tool_break_transition_native.py",
+        "status": "BLOCKED_BEFORE_ENTRYPOINT",
+        "error": "ModuleNotFoundError: No module named 'unicorn'",
+        "note": "The checked-in harness reached Sandbox construction for 0xe37830, then failed before executing ARM64 instructions. The same runtime dependency is required for 0xe37a50, 0xe37ed0, and SaveProc helpers."
+      }
+    },
+    "boundary": "No zero-filled or guessed object was passed to either callback. That would test invalid memory/layout rather than the state branch or six-entry selector."
+  },
+  "saveproc_synthetic_dirty_slot_attempt": {
+    "status": "BLOCKED_BEFORE_NATIVE_CALL; DIRTY_SLOT_SERIALIZER_ROUTE_UNRESOLVED",
+    "runtime_attempt": {
+      "status": "BLOCKED_SANDBOX_INITIALIZATION",
+      "error_type": "ModuleNotFoundError",
+      "error": "No module named 'unicorn'",
+      "native_calls_attempted": [],
+      "existing_harness_attempt": {
+        "command": "python3 acnh-re/tools/tool_break_transition_native.py",
+        "status": "BLOCKED_BEFORE_ENTRYPOINT",
+        "error": "ModuleNotFoundError: No module named 'unicorn'",
+        "note": "The checked-in harness reached Sandbox construction for 0xe37830, then failed before executing ARM64 instructions. The same runtime dependency is required for 0xe37a50, 0xe37ed0, and SaveProc helpers."
+      }
+    },
+    "candidate_worker": {
+      "pointer_array_candidate": [
+        {
+          "index": 11,
+          "pointer_va": "0x32ff930",
+          "target_va": "0xfafec0"
+        }
+      ],
+      "task_helper_targets": [
+        "0xfb1e10",
+        "0xfb1ff0",
+        "0xfb2200",
+        "0xfb23e0",
+        "0xfb25e0"
+      ],
+      "direct_task_filesystem_edges": [
+        {
+          "pc": "0xfafedc",
+          "owner_va": null,
+          "target_va": "0xfb1e10"
+        },
+        {
+          "pc": "0xfaff50",
+          "owner_va": null,
+          "target_va": "0xfb1ff0"
+        },
+        {
+          "pc": "0xfaffc8",
+          "owner_va": null,
+          "target_va": "0xfb2200"
+        },
+        {
+          "pc": "0xfafff0",
+          "owner_va": null,
+          "target_va": "0xfb23e0"
+        },
+        {
+          "pc": "0xfb0018",
+          "owner_va": null,
+          "target_va": "0xfb25e0"
+        },
+        {
+          "pc": "0xfb1f20",
+          "owner_va": "0xfb1e10",
+          "target_va": "0xf29600"
+        },
+        {
+          "pc": "0xfb1f5c",
+          "owner_va": "0xfb1e10",
+          "target_va": "0xf214a0"
+        },
+        {
+          "pc": "0xfb1f7c",
+          "owner_va": "0xfb1e10",
+          "target_va": "0xf214a0"
+        },
+        {
+          "pc": "0xfb211c",
+          "owner_va": "0xfb1ff0",
+          "target_va": "0xf29600"
+        },
+        {
+          "pc": "0xfb218c",
+          "owner_va": "0xfb1ff0",
+          "target_va": "0xf214a0"
+        },
+        {
+          "pc": "0xfb21ac",
+          "owner_va": "0xfb1ff0",
+          "target_va": "0xf214a0"
+        },
+        {
+          "pc": "0xfb2330",
+          "owner_va": "0xfb2200",
+          "target_va": "0xf29600"
+        },
+        {
+          "pc": "0xfb236c",
+          "owner_va": "0xfb2200",
+          "target_va": "0xf214a0"
+        },
+        {
+          "pc": "0xfb2518",
+          "owner_va": "0xfb23e0",
+          "target_va": "0xf29600"
+        },
+        {
+          "pc": "0xfb2554",
+          "owner_va": "0xfb23e0",
+          "target_va": "0xf214a0"
+        },
+        {
+          "pc": "0xfb2574",
+          "owner_va": "0xfb23e0",
+          "target_va": "0xf214a0"
+        },
+        {
+          "pc": "0xfb2710",
+          "owner_va": "0xfb25e0",
+          "target_va": "0xf29600"
+        },
+        {
+          "pc": "0xfb2760",
+          "owner_va": "0xfb25e0",
+          "target_va": "0xf214a0"
+        },
+        {
+          "pc": "0xfb2780",
+          "owner_va": "0xfb25e0",
+          "target_va": "0xf214a0"
+        },
+        {
+          "pc": "0xf214e4",
+          "owner_va": "0xf214a0",
+          "target_va": "0x220ee60"
+        },
+        {
+          "pc": "0xf21414",
+          "owner_va": "0xf21350",
+          "target_va": "0x220ee80"
+        },
+        {
+          "pc": "0xf21444",
+          "owner_va": "0xf21350",
+          "target_va": "0x220ee90"
+        },
+        {
+          "pc": "0xf21450",
+          "owner_va": "0xf21350",
+          "target_va": "0x220eea0"
+        }
+      ],
+      "sdk_filesystem_imports": [
+        {
+          "api": "MountDeviceSaveData",
+          "status": "unique_export_match",
+          "sdk_exports": [
+            "0x6ad00"
+          ],
+          "got_sites": [
+            "0x32cecf8"
+          ]
+        },
+        {
+          "api": "OpenFile",
+          "status": "unique_export_match",
+          "sdk_exports": [
+            "0x66300"
+          ],
+          "got_sites": [
+            "0x32ced08"
+          ]
+        },
+        {
+          "api": "SetFileSize",
+          "status": "unique_export_match",
+          "sdk_exports": [
+            "0x64e20"
+          ],
+          "got_sites": [
+            "0x32ced10"
+          ]
+        },
+        {
+          "api": "CloseFile",
+          "status": "unique_export_match",
+          "sdk_exports": [
+            "0x64860"
+          ],
+          "got_sites": [
+            "0x32ced18"
+          ]
+        },
+        {
+          "api": "WriteFile",
+          "status": "unique_export_match",
+          "sdk_exports": [
+            "0x64bf0"
+          ],
+          "got_sites": [
+            "0x32cf7a8"
+          ]
+        },
+        {
+          "api": "FlushFile",
+          "status": "unique_export_match",
+          "sdk_exports": [
+            "0x64d30"
+          ],
+          "got_sites": [
+            "0x32cf798"
+          ]
+        }
+      ]
+    },
+    "static_file_helper_contract": {
+      "0xf214a0": "Save-device/path helper: conditionally mounts save data, then calls 0xf21350; the arguments are path/name objects and a requested size.",
+      "0xf21350": "Builds a save path, opens the file, sets its size, and closes it. It does not read the player item-slot dirty marker or serialize a slot record.",
+      "candidate_helper_direct_operations": [
+        {
+          "pc": "0xf214e4",
+          "owner_va": "0xf214a0",
+          "target_va": "0x220ee60"
+        },
+        {
+          "pc": "0xf21414",
+          "owner_va": "0xf21350",
+          "target_va": "0x220ee80"
+        },
+        {
+          "pc": "0xf21444",
+          "owner_va": "0xf21350",
+          "target_va": "0x220ee90"
+        },
+        {
+          "pc": "0xf21450",
+          "owner_va": "0xf21350",
+          "target_va": "0x220eea0"
+        }
+      ],
+      "generic_main_filesystem_imports": [
+        "MountDeviceSaveData",
+        "OpenFile",
+        "SetFileSize",
+        "CloseFile",
+        "WriteFile",
+        "FlushFile"
+      ],
+      "write_flush_status": "The generic imports are present in main, but the saved static audit finds no direct WriteFile/FlushFile call from the SaveProc request, queue, or candidate task-helper spans; indirect reachability remains open."
+    },
+    "synthetic_manager_contract": {
+      "candidate_slot_dirty_word": "player-context+0x204+slot*8 = 0x4000",
+      "required_missing_edge": "No resolved callback/serializer connects this manager word to the SaveProc task object or to 0xf214a0/0xf21350.",
+      "result": "A fake dirty-slot manager alone would not reach these path/size helpers or test persistence. Supplying arbitrary object pointers would produce no valid serialization evidence."
+    }
+  },
+  "conclusion": "The static EventFlow fixtures rule out durability-named conditions inside the six break presentation entries, but they do not reveal the native entrypoint selector. Native callback execution is blocked by the missing Unicorn dependency and missing live actor/event object graph. SaveProc file helpers can be mapped to mount/open/size/close operations, but a synthetic dirty-slot manager cannot test serialization while the dirty-word-to-task/serializer edge is absent."
+}
