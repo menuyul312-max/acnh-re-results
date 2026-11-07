@@ -8,6 +8,8 @@ Rencana rinci untuk menghubungkan tiap beat cerita ke actor, penempatan dunia, U
 
 Ketersediaan sumber dan pipeline konversi per kelas dirinci di [STORY_ASSET_INVENTORY_CROSSWALK_20261107.md](STORY_ASSET_INVENTORY_CROSSWALK_20261107.md); manifest gabungan beat dan part ada di [`output/gameplay/story_asset_crosswalk.json`](../output/gameplay/story_asset_crosswalk.json).
 
+Bukti rinci gerak, ground, navigasi terrain, mutasi grid, dan urutan placement cerita ada di [WORLD_TERRAIN_MOVEMENT_PROOF_20261107.md](WORLD_TERRAIN_MOVEMENT_PROOF_20261107.md). Helper native terbatas dan urutan EventFlow sudah dipetakan; rantai kontrol pemain→collision→traversal→placement masih `OPEN`, termasuk query collider yang berhenti karena fixture world-root belum tersedia.
+
 ## Cara membaca status bukti
 
 | Label | Arti dan batas |
