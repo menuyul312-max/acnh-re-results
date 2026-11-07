@@ -87,6 +87,33 @@
       ],
       "indirect_branch_pc": "0xD1F88",
       "resolved_target": false
+    },
+    "manager_static_vtables": {
+      "manager_constructor": "0xFB40C0",
+      "manager_size": "0x48",
+      "root_vtable": {
+        "relocation_site": "0x32D52E8",
+        "resolved_table": "0x302E960",
+        "targets": [
+          "0xD40C0",
+          "0xD4200"
+        ],
+        "indexed_method_body_status": {
+          "0xD40C0": "recovered",
+          "0xD4200": "not separately recovered"
+        }
+      },
+      "nested_member": {
+        "object_offset": "+0x28",
+        "relocation_site": "0x32FF9D0",
+        "resolved_table": "0x30ED368",
+        "targets": [
+          "0xFB3FE0",
+          "0xFB4050"
+        ],
+        "indexed_method_body_status": "not separately recovered"
+      },
+      "relation_to_queued_task": "manager-side interfaces only; not the task object dequeued and invoked by 0x2201820"
     }
   },
   "commit_join": {
@@ -109,7 +136,7 @@
       },
       {
         "pc": "0xFB2F18",
-        "caller": "unknown small wrapper at 0xFB2F10"
+        "caller": "unindexed six-instruction routine at 0xFB2F10"
       }
     ],
     "saveproc_queue_to_state_path_proven": false
@@ -159,7 +186,11 @@
     "main_dynamic_relocations": "readelf relocation table including registry pointer slot and BSS bounds",
     "main_bss_initializers": "generated native decompilation searched for registry target; no static assignment found",
     "missing_needed_module": "multimedia.nss",
-    "runtime_execution_or_memory_capture": false
+    "runtime_execution_or_memory_capture": false,
+    "literal_scan_result": {
+      "SaveProc": "found in main/1.bin; absent from other 11 decompressed module segments",
+      "SaveDataMgr": "found in main/1.bin; absent from other 11 decompressed module segments"
+    }
   },
   "source_sha256": {
     "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/A_logic/main.elf": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
