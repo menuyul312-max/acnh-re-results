@@ -20,12 +20,34 @@ Audit ini menutup satu bagian terbatas dari `weather-beyond-day-pattern`: konver
 
 Indeks flow, hash sumber, pemakaian handler, serta kosakata enum tersimpan di [`sky_event_index.json`](../output/gameplay/ecology_weather_followup/sky_event_index.json). Teks dialog tidak dimasukkan.
 
+## Crosswalk nilai query EnvSpecialWeather
+
+Audit lanjutan mengikuti seluruh lima pemakaian `EventFlowQueryEnvSpecialWeather` sampai pesan pertama di setiap cabang. Slot evaluate native `0x3f62f0` mempunyai jalur hasil numerik **0–9** di pseudocode, dan EventFlow yang tersedia menguji kesepuluh nilai tersebut. Lihat [weather_special_crosswalk.json](../output/gameplay/ecology_weather_followup/weather_special_crosswalk.json); artefak menyimpan SHA-256 tiap BFEVFL dan pesan, ID pesan, serta tag topik hasil pencarian teks USen. Teks dialog tidak disalin ke artefak.
+
+Crosswalk yang dapat dibaca dari dialog:
+
+| Nilai query | Bukti cabang langsung | Tafsiran yang didukung |
+|---:|---|---|
+| 0 | Jalur normal pada pengumuman pulau; dialog Celeste memakai pesan umum | Cabang umum pada flow yang diperiksa; bukan label cuaca yang teridentifikasi |
+| 1 | `NNPC_FreeB` → `BO_FreeB_Weather:101` | Warga membicarakan kemungkinan hujan meteor malam itu |
+| 2 | `NNPC_FreeB` → `BO_FreeB_Weather:102` | Warga membicarakan kemungkinan melihat meteor |
+| 3 | `SNPC_ows` → `SP_ows:104_01`; `NNPC_FreeB` → `BO_FreeB_Weather:103` | Cabang Celeste secara eksplisit menyebut hujan meteor malam itu |
+| 4 | `NNPC_FreeB` → `BO_FreeB_Weather:104` | Pelangi |
+| 5 | `NNPC_FreeB` → `BO_FreeB_Weather:105` | Pelangi ganda |
+| 6 | `NNPC_FreeB` → `BO_FreeB_Weather:106` | Aurora diperkirakan malam itu |
+| 7 | `NNPC_FreeB` → `BO_FreeB_Weather:107` | Aurora sedang terlihat |
+| 8 | `NNPC_FreeB` → `BO_FreeB_Weather:108` | Dialog menyatakan pandangan sulit; label kabut belum terbukti |
+| 9 | `NNPC_FreeB` → `BO_FreeB_Weather:109` | Dialog menyebut langit keras dan berkilat; label badai/petir belum terbukti |
+
+Ini mengikat angka query ke **cabang dialog**, bukan ke jadwal atau renderer. String kondisi di `0x26b9c0` memuat `cBeforeMeteor`, `cMeteorShower`, `cRainbow`, `cWRainbow`, `cBeforeAurora`, dan `cAurora`; ordinal string tersebut belum dibuktikan sama dengan angka query 0–9. Karena itu hubungan numerik yang tepat antara kedua enum masih belum ditetapkan. Pesan pengumuman umum juga tidak membedakan seluruh tipe khusus; pemetaan nilai 4–9 terutama datang dari flow warga.
+
 ## Reproduksi uji native
 
 Jalankan dari root worktree:
 
 ```sh
 python3 acnh-re/output/gameplay/ecology_weather_followup/verify_weather_remap.py
+python3 acnh-re/tools/weather_special_crosswalk.py
 ```
 
 Runner menjalankan ulang 96 perbandingan, mencocokkan seluruh kasus dan matriks dengan [`weather_remap_native.json`](../output/gameplay/ecology_weather_followup/weather_remap_native.json), lalu memeriksa hash ExeFS `main` dan ELF. Ia memerlukan Python 3, Unicorn 2.1.4, pyelftools 0.33, dan input `acnh-re/inputs/additional_exefs/main`. Dependencies diambil dari `.deps` worktree, `/workspace/acnh-re/.deps`, atau path yang diberikan melalui `ACNH_RE_DEPS`; capstone tidak diperlukan.

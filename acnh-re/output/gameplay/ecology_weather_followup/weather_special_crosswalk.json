@@ -1,0 +1,1307 @@
+{
+  "artifact": "weather_special_crosswalk",
+  "game_version": "ACNH 1.0.0",
+  "native_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+  "sources": {
+    "eventflow_files": [
+      {
+        "file": "EventFlow/Demo_PublicAnnouncement_40_CmnNoNews.bfevfl",
+        "sha256": "2b5d3189df7e890862dff7fc054ab9aa6dda14f612ed67ca59636454d18cac97",
+        "query_uses": 2
+      },
+      {
+        "file": "EventFlow/NNPC_FreeB.bfevfl",
+        "sha256": "915d28fe06831a35aacf42c0687c9fe824ad4ba6e6ac481f1201d0a6b466b97a",
+        "query_uses": 1
+      },
+      {
+        "file": "EventFlow/SNPC_ows.bfevfl",
+        "sha256": "d9511f3619dbb76b46d02975d3facd98f1c444ba97d67f026c4c642b88219469",
+        "query_uses": 2
+      }
+    ],
+    "message_archives": {
+      "TalkNNpc": {
+        "path": "output/additional_romfs/messages/USen/TalkNNpc.json",
+        "sha256": "342a9507023e0b18805c11fd7762586f1cb8e671ff405a4493b5e1aaa6d8b8cc"
+      },
+      "TalkSNpc": {
+        "path": "output/additional_romfs/messages/USen/TalkSNpc.json",
+        "sha256": "7188dd7768d38ba5871646a25e55caff2a89d7261cbe6808786adfc32a1f3335"
+      }
+    },
+    "message_text_policy": "Only SHA-256 and conservative topic tags are emitted; message bodies are not copied."
+  },
+  "native_query": {
+    "eventflow_handler": "EventFlowQueryEnvSpecialWeather",
+    "registry": {
+      "factory": "0x456770",
+      "evaluate_slot": "0x3f62f0",
+      "vtable": "0x30559c8"
+    },
+    "decomp_numeric_return_values": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "decomp_path": "output/binary/analysis_decomp/3f62f0.c",
+    "decomp_sha256": "962699fefe9263648b7e26c4051d811b64a644e63ac7ae84242b0db9b788bf09",
+    "scope": "Static pseudocode return paths; no native runtime state fixture was supplied for this query."
+  },
+  "related_weather_condition_enum": {
+    "function": "0x26b9c0",
+    "values": [
+      "cNotSet",
+      "cWildCard",
+      "cSeason",
+      "cMenu",
+      "cFashion",
+      "cFineWeather",
+      "cCloudWeather",
+      "cRainWeather",
+      "cHardRainWeather",
+      "cSnowWeather",
+      "cHardSnowWeather",
+      "cBlossomShower",
+      "cBeforeMeteor",
+      "cMeteorShower",
+      "cRainbow",
+      "cWRainbow",
+      "cBeforeAurora",
+      "cAurora",
+      "cQuestions01",
+      "cQuestions02",
+      "cQuestions03",
+      "cQuestions04",
+      "cQuestions05",
+      "cAlways01",
+      "cAlways02",
+      "cAlways03",
+      "cAlways04",
+      "cAlways05",
+      "cAAlways01",
+      "cAAlways02",
+      "cAAlways03",
+      "cAAlways04",
+      "cAAlways05",
+      "cBAlways01",
+      "cBAlways02",
+      "cBAlways03",
+      "cBAlways04",
+      "cBAlways05",
+      "cEvent00",
+      "cEvent01",
+      "cEvent02"
+    ],
+    "string_source": "index.sqlite:string_refs",
+    "limit": "The enum vocabulary is recovered, but its ordinal values are not equated with EnvSpecialWeather query results."
+  },
+  "uses": [
+    {
+      "flowchart": "Demo_PublicAnnouncement_40_CmnNoNews",
+      "event_index": 69,
+      "event_name": "Event87",
+      "cases": [
+        {
+          "value": 0,
+          "event_index": 8,
+          "messages": []
+        },
+        {
+          "value": 1,
+          "event_index": 70,
+          "messages": [
+            {
+              "message_id": "TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_00_Rco:600",
+              "text_sha256": "c7121bb2074365e5f46c91f544530de7ec126185f1855bea094ab83280685247",
+              "topic_tags": [],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "value": 2,
+          "event_index": 70,
+          "messages": [
+            {
+              "message_id": "TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_00_Rco:600",
+              "text_sha256": "c7121bb2074365e5f46c91f544530de7ec126185f1855bea094ab83280685247",
+              "topic_tags": [],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "value": 3,
+          "event_index": 71,
+          "messages": [
+            {
+              "message_id": "TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_00_Rco:600",
+              "text_sha256": "c7121bb2074365e5f46c91f544530de7ec126185f1855bea094ab83280685247",
+              "topic_tags": [],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "value": 4,
+          "event_index": 77,
+          "messages": []
+        },
+        {
+          "value": 5,
+          "event_index": 77,
+          "messages": []
+        },
+        {
+          "value": 6,
+          "event_index": 77,
+          "messages": []
+        },
+        {
+          "value": 7,
+          "event_index": 77,
+          "messages": []
+        },
+        {
+          "value": 8,
+          "event_index": 77,
+          "messages": []
+        },
+        {
+          "value": 9,
+          "event_index": 77,
+          "messages": []
+        }
+      ]
+    },
+    {
+      "flowchart": "Demo_PublicAnnouncement_40_CmnNoNews",
+      "event_index": 78,
+      "event_name": "Event92",
+      "cases": [
+        {
+          "value": 0,
+          "event_index": 79,
+          "messages": []
+        },
+        {
+          "value": 1,
+          "event_index": 81,
+          "messages": [
+            {
+              "message_id": "TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_01_Sza:600",
+              "text_sha256": "c7121bb2074365e5f46c91f544530de7ec126185f1855bea094ab83280685247",
+              "topic_tags": [],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "value": 2,
+          "event_index": 81,
+          "messages": [
+            {
+              "message_id": "TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_01_Sza:600",
+              "text_sha256": "c7121bb2074365e5f46c91f544530de7ec126185f1855bea094ab83280685247",
+              "topic_tags": [],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "value": 3,
+          "event_index": 82,
+          "messages": [
+            {
+              "message_id": "TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_01_Sza:600",
+              "text_sha256": "c7121bb2074365e5f46c91f544530de7ec126185f1855bea094ab83280685247",
+              "topic_tags": [],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "value": 4,
+          "event_index": 80,
+          "messages": []
+        },
+        {
+          "value": 5,
+          "event_index": 80,
+          "messages": []
+        },
+        {
+          "value": 6,
+          "event_index": 80,
+          "messages": []
+        },
+        {
+          "value": 7,
+          "event_index": 80,
+          "messages": []
+        },
+        {
+          "value": 8,
+          "event_index": 80,
+          "messages": []
+        },
+        {
+          "value": 9,
+          "event_index": 80,
+          "messages": []
+        }
+      ]
+    },
+    {
+      "flowchart": "NNPC_FreeB",
+      "event_index": 0,
+      "event_name": "Event23",
+      "cases": [
+        {
+          "value": 1,
+          "event_index": 1,
+          "messages": [
+            {
+              "message_id": "TalkNNpc/B1_Bo/Free/BO_FreeB_Weather:101",
+              "text_sha256": "74b2922055952c7c5d7ccca50ce5f3c06f98f4470885131c77ffa24a631d5ccc",
+              "topic_tags": [
+                "meteor_or_stargazing"
+              ],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "value": 2,
+          "event_index": 7,
+          "messages": [
+            {
+              "message_id": "TalkNNpc/B1_Bo/Free/BO_FreeB_Weather:102",
+              "text_sha256": "ec3235feea28784a1d1f885e13384545560e442a9943d7ea818f0b21b2eb3e38",
+              "topic_tags": [
+                "meteor_or_stargazing"
+              ],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "value": 3,
+          "event_index": 6,
+          "messages": [
+            {
+              "message_id": "TalkNNpc/B1_Bo/Free/BO_FreeB_Weather:103",
+              "text_sha256": "8a52efe20990a49e87adcde1bd798355f3e74075b4a7c5d94bf8de5e2bf48571",
+              "topic_tags": [],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "value": 4,
+          "event_index": 5,
+          "messages": [
+            {
+              "message_id": "TalkNNpc/B1_Bo/Free/BO_FreeB_Weather:104",
+              "text_sha256": "85a474b0cd2945b6e10fd5229887ce9f2abe457b3ad637d23fd679b6a3423dd8",
+              "topic_tags": [
+                "rainbow"
+              ],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "value": 5,
+          "event_index": 4,
+          "messages": [
+            {
+              "message_id": "TalkNNpc/B1_Bo/Free/BO_FreeB_Weather:105",
+              "text_sha256": "e6afeff96e09b725fc505dd19212559ea5176ad4168920cee4dd7e7bf47bd6c3",
+              "topic_tags": [
+                "double_rainbow"
+              ],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "value": 6,
+          "event_index": 3,
+          "messages": [
+            {
+              "message_id": "TalkNNpc/B1_Bo/Free/BO_FreeB_Weather:106",
+              "text_sha256": "276a2c909a730261582a3f67d1128d3304319176c5c0f8e83be715460beb6b1c",
+              "topic_tags": [
+                "aurora"
+              ],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "value": 7,
+          "event_index": 2,
+          "messages": [
+            {
+              "message_id": "TalkNNpc/B1_Bo/Free/BO_FreeB_Weather:107",
+              "text_sha256": "f8bb0ea3623c35710b88ffde22bcfb856e342ab30c8e5e8590b3cb924bccfd06",
+              "topic_tags": [
+                "rainbow",
+                "aurora"
+              ],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "value": 8,
+          "event_index": 77,
+          "messages": [
+            {
+              "message_id": "TalkNNpc/B1_Bo/Free/BO_FreeB_Weather:108",
+              "text_sha256": "ab28467dc46d01260ad0adc891237b0aa23b1e87d6b0651820f2f8b8f2b4b392",
+              "topic_tags": [
+                "low_visibility"
+              ],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "value": 9,
+          "event_index": 78,
+          "messages": [
+            {
+              "message_id": "TalkNNpc/B1_Bo/Free/BO_FreeB_Weather:109",
+              "text_sha256": "f1a4752519428842e80db6da624dce2be0e4c5e102d696c625c04748074998c5",
+              "topic_tags": [
+                "loud_and_flashy_weather"
+              ],
+              "message_found_in_usen": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "flowchart": "SNPC_ows",
+      "event_index": 8,
+      "event_name": "Event0",
+      "cases": [
+        {
+          "value": 0,
+          "event_index": 3,
+          "messages": [
+            {
+              "message_id": "TalkSNpc/ows/SP_ows:104",
+              "text_sha256": "5be5a86281fb4c0f811d29e4c331c50b2786fb291571a48301b91fa872ba78ff",
+              "topic_tags": [
+                "meteor_or_stargazing"
+              ],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "value": 1,
+          "event_index": 3,
+          "messages": [
+            {
+              "message_id": "TalkSNpc/ows/SP_ows:104",
+              "text_sha256": "5be5a86281fb4c0f811d29e4c331c50b2786fb291571a48301b91fa872ba78ff",
+              "topic_tags": [
+                "meteor_or_stargazing"
+              ],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "value": 2,
+          "event_index": 3,
+          "messages": [
+            {
+              "message_id": "TalkSNpc/ows/SP_ows:104",
+              "text_sha256": "5be5a86281fb4c0f811d29e4c331c50b2786fb291571a48301b91fa872ba78ff",
+              "topic_tags": [
+                "meteor_or_stargazing"
+              ],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "value": 3,
+          "event_index": 9,
+          "messages": [
+            {
+              "message_id": "TalkSNpc/ows/SP_ows:104_01",
+              "text_sha256": "d0141d82dad2aea6f8a0da362ea65c209bd57ef43d31103f6553b23e8645431d",
+              "topic_tags": [
+                "meteor_or_stargazing"
+              ],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "value": 4,
+          "event_index": 3,
+          "messages": [
+            {
+              "message_id": "TalkSNpc/ows/SP_ows:104",
+              "text_sha256": "5be5a86281fb4c0f811d29e4c331c50b2786fb291571a48301b91fa872ba78ff",
+              "topic_tags": [
+                "meteor_or_stargazing"
+              ],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "value": 5,
+          "event_index": 3,
+          "messages": [
+            {
+              "message_id": "TalkSNpc/ows/SP_ows:104",
+              "text_sha256": "5be5a86281fb4c0f811d29e4c331c50b2786fb291571a48301b91fa872ba78ff",
+              "topic_tags": [
+                "meteor_or_stargazing"
+              ],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "value": 6,
+          "event_index": 3,
+          "messages": [
+            {
+              "message_id": "TalkSNpc/ows/SP_ows:104",
+              "text_sha256": "5be5a86281fb4c0f811d29e4c331c50b2786fb291571a48301b91fa872ba78ff",
+              "topic_tags": [
+                "meteor_or_stargazing"
+              ],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "value": 7,
+          "event_index": 3,
+          "messages": [
+            {
+              "message_id": "TalkSNpc/ows/SP_ows:104",
+              "text_sha256": "5be5a86281fb4c0f811d29e4c331c50b2786fb291571a48301b91fa872ba78ff",
+              "topic_tags": [
+                "meteor_or_stargazing"
+              ],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "value": 8,
+          "event_index": 3,
+          "messages": [
+            {
+              "message_id": "TalkSNpc/ows/SP_ows:104",
+              "text_sha256": "5be5a86281fb4c0f811d29e4c331c50b2786fb291571a48301b91fa872ba78ff",
+              "topic_tags": [
+                "meteor_or_stargazing"
+              ],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "value": 9,
+          "event_index": 3,
+          "messages": [
+            {
+              "message_id": "TalkSNpc/ows/SP_ows:104",
+              "text_sha256": "5be5a86281fb4c0f811d29e4c331c50b2786fb291571a48301b91fa872ba78ff",
+              "topic_tags": [
+                "meteor_or_stargazing"
+              ],
+              "message_found_in_usen": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "flowchart": "SNPC_ows",
+      "event_index": 27,
+      "event_name": "Event27",
+      "cases": [
+        {
+          "value": 0,
+          "event_index": 25,
+          "messages": [
+            {
+              "message_id": "TalkSNpc/ows/SP_ows:001",
+              "text_sha256": "c7121bb2074365e5f46c91f544530de7ec126185f1855bea094ab83280685247",
+              "topic_tags": [],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "value": 1,
+          "event_index": 25,
+          "messages": [
+            {
+              "message_id": "TalkSNpc/ows/SP_ows:001",
+              "text_sha256": "c7121bb2074365e5f46c91f544530de7ec126185f1855bea094ab83280685247",
+              "topic_tags": [],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "value": 2,
+          "event_index": 25,
+          "messages": [
+            {
+              "message_id": "TalkSNpc/ows/SP_ows:001",
+              "text_sha256": "c7121bb2074365e5f46c91f544530de7ec126185f1855bea094ab83280685247",
+              "topic_tags": [],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "value": 3,
+          "event_index": 26,
+          "messages": [
+            {
+              "message_id": "TalkSNpc/ows/SP_ows:002",
+              "text_sha256": "7d65553c450a2a62bc5231bc783ebb639808a67091146aee8757a6e011a7bbb8",
+              "topic_tags": [
+                "meteor_or_stargazing"
+              ],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "value": 4,
+          "event_index": 25,
+          "messages": [
+            {
+              "message_id": "TalkSNpc/ows/SP_ows:001",
+              "text_sha256": "c7121bb2074365e5f46c91f544530de7ec126185f1855bea094ab83280685247",
+              "topic_tags": [],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "value": 5,
+          "event_index": 25,
+          "messages": [
+            {
+              "message_id": "TalkSNpc/ows/SP_ows:001",
+              "text_sha256": "c7121bb2074365e5f46c91f544530de7ec126185f1855bea094ab83280685247",
+              "topic_tags": [],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "value": 6,
+          "event_index": 25,
+          "messages": [
+            {
+              "message_id": "TalkSNpc/ows/SP_ows:001",
+              "text_sha256": "c7121bb2074365e5f46c91f544530de7ec126185f1855bea094ab83280685247",
+              "topic_tags": [],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "value": 7,
+          "event_index": 25,
+          "messages": [
+            {
+              "message_id": "TalkSNpc/ows/SP_ows:001",
+              "text_sha256": "c7121bb2074365e5f46c91f544530de7ec126185f1855bea094ab83280685247",
+              "topic_tags": [],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "value": 8,
+          "event_index": 25,
+          "messages": [
+            {
+              "message_id": "TalkSNpc/ows/SP_ows:001",
+              "text_sha256": "c7121bb2074365e5f46c91f544530de7ec126185f1855bea094ab83280685247",
+              "topic_tags": [],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "value": 9,
+          "event_index": 25,
+          "messages": [
+            {
+              "message_id": "TalkSNpc/ows/SP_ows:001",
+              "text_sha256": "c7121bb2074365e5f46c91f544530de7ec126185f1855bea094ab83280685247",
+              "topic_tags": [],
+              "message_found_in_usen": true
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "cases_by_value": [
+    {
+      "value": 0,
+      "evidence": [
+        {
+          "flowchart": "Demo_PublicAnnouncement_40_CmnNoNews",
+          "event_index": 69,
+          "event_name": "Event87",
+          "messages": []
+        },
+        {
+          "flowchart": "Demo_PublicAnnouncement_40_CmnNoNews",
+          "event_index": 78,
+          "event_name": "Event92",
+          "messages": []
+        },
+        {
+          "flowchart": "SNPC_ows",
+          "event_index": 8,
+          "event_name": "Event0",
+          "messages": [
+            {
+              "message_id": "TalkSNpc/ows/SP_ows:104",
+              "text_sha256": "5be5a86281fb4c0f811d29e4c331c50b2786fb291571a48301b91fa872ba78ff",
+              "topic_tags": [
+                "meteor_or_stargazing"
+              ],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "flowchart": "SNPC_ows",
+          "event_index": 27,
+          "event_name": "Event27",
+          "messages": [
+            {
+              "message_id": "TalkSNpc/ows/SP_ows:001",
+              "text_sha256": "c7121bb2074365e5f46c91f544530de7ec126185f1855bea094ab83280685247",
+              "topic_tags": [],
+              "message_found_in_usen": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "value": 1,
+      "evidence": [
+        {
+          "flowchart": "Demo_PublicAnnouncement_40_CmnNoNews",
+          "event_index": 69,
+          "event_name": "Event87",
+          "messages": [
+            {
+              "message_id": "TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_00_Rco:600",
+              "text_sha256": "c7121bb2074365e5f46c91f544530de7ec126185f1855bea094ab83280685247",
+              "topic_tags": [],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "flowchart": "Demo_PublicAnnouncement_40_CmnNoNews",
+          "event_index": 78,
+          "event_name": "Event92",
+          "messages": [
+            {
+              "message_id": "TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_01_Sza:600",
+              "text_sha256": "c7121bb2074365e5f46c91f544530de7ec126185f1855bea094ab83280685247",
+              "topic_tags": [],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "flowchart": "NNPC_FreeB",
+          "event_index": 0,
+          "event_name": "Event23",
+          "messages": [
+            {
+              "message_id": "TalkNNpc/B1_Bo/Free/BO_FreeB_Weather:101",
+              "text_sha256": "74b2922055952c7c5d7ccca50ce5f3c06f98f4470885131c77ffa24a631d5ccc",
+              "topic_tags": [
+                "meteor_or_stargazing"
+              ],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "flowchart": "SNPC_ows",
+          "event_index": 8,
+          "event_name": "Event0",
+          "messages": [
+            {
+              "message_id": "TalkSNpc/ows/SP_ows:104",
+              "text_sha256": "5be5a86281fb4c0f811d29e4c331c50b2786fb291571a48301b91fa872ba78ff",
+              "topic_tags": [
+                "meteor_or_stargazing"
+              ],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "flowchart": "SNPC_ows",
+          "event_index": 27,
+          "event_name": "Event27",
+          "messages": [
+            {
+              "message_id": "TalkSNpc/ows/SP_ows:001",
+              "text_sha256": "c7121bb2074365e5f46c91f544530de7ec126185f1855bea094ab83280685247",
+              "topic_tags": [],
+              "message_found_in_usen": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "value": 2,
+      "evidence": [
+        {
+          "flowchart": "Demo_PublicAnnouncement_40_CmnNoNews",
+          "event_index": 69,
+          "event_name": "Event87",
+          "messages": [
+            {
+              "message_id": "TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_00_Rco:600",
+              "text_sha256": "c7121bb2074365e5f46c91f544530de7ec126185f1855bea094ab83280685247",
+              "topic_tags": [],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "flowchart": "Demo_PublicAnnouncement_40_CmnNoNews",
+          "event_index": 78,
+          "event_name": "Event92",
+          "messages": [
+            {
+              "message_id": "TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_01_Sza:600",
+              "text_sha256": "c7121bb2074365e5f46c91f544530de7ec126185f1855bea094ab83280685247",
+              "topic_tags": [],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "flowchart": "NNPC_FreeB",
+          "event_index": 0,
+          "event_name": "Event23",
+          "messages": [
+            {
+              "message_id": "TalkNNpc/B1_Bo/Free/BO_FreeB_Weather:102",
+              "text_sha256": "ec3235feea28784a1d1f885e13384545560e442a9943d7ea818f0b21b2eb3e38",
+              "topic_tags": [
+                "meteor_or_stargazing"
+              ],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "flowchart": "SNPC_ows",
+          "event_index": 8,
+          "event_name": "Event0",
+          "messages": [
+            {
+              "message_id": "TalkSNpc/ows/SP_ows:104",
+              "text_sha256": "5be5a86281fb4c0f811d29e4c331c50b2786fb291571a48301b91fa872ba78ff",
+              "topic_tags": [
+                "meteor_or_stargazing"
+              ],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "flowchart": "SNPC_ows",
+          "event_index": 27,
+          "event_name": "Event27",
+          "messages": [
+            {
+              "message_id": "TalkSNpc/ows/SP_ows:001",
+              "text_sha256": "c7121bb2074365e5f46c91f544530de7ec126185f1855bea094ab83280685247",
+              "topic_tags": [],
+              "message_found_in_usen": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "value": 3,
+      "evidence": [
+        {
+          "flowchart": "Demo_PublicAnnouncement_40_CmnNoNews",
+          "event_index": 69,
+          "event_name": "Event87",
+          "messages": [
+            {
+              "message_id": "TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_00_Rco:600",
+              "text_sha256": "c7121bb2074365e5f46c91f544530de7ec126185f1855bea094ab83280685247",
+              "topic_tags": [],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "flowchart": "Demo_PublicAnnouncement_40_CmnNoNews",
+          "event_index": 78,
+          "event_name": "Event92",
+          "messages": [
+            {
+              "message_id": "TalkSNpc/PublicAnnouncement/SP_PublicAnnouncement_01_Sza:600",
+              "text_sha256": "c7121bb2074365e5f46c91f544530de7ec126185f1855bea094ab83280685247",
+              "topic_tags": [],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "flowchart": "NNPC_FreeB",
+          "event_index": 0,
+          "event_name": "Event23",
+          "messages": [
+            {
+              "message_id": "TalkNNpc/B1_Bo/Free/BO_FreeB_Weather:103",
+              "text_sha256": "8a52efe20990a49e87adcde1bd798355f3e74075b4a7c5d94bf8de5e2bf48571",
+              "topic_tags": [],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "flowchart": "SNPC_ows",
+          "event_index": 8,
+          "event_name": "Event0",
+          "messages": [
+            {
+              "message_id": "TalkSNpc/ows/SP_ows:104_01",
+              "text_sha256": "d0141d82dad2aea6f8a0da362ea65c209bd57ef43d31103f6553b23e8645431d",
+              "topic_tags": [
+                "meteor_or_stargazing"
+              ],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "flowchart": "SNPC_ows",
+          "event_index": 27,
+          "event_name": "Event27",
+          "messages": [
+            {
+              "message_id": "TalkSNpc/ows/SP_ows:002",
+              "text_sha256": "7d65553c450a2a62bc5231bc783ebb639808a67091146aee8757a6e011a7bbb8",
+              "topic_tags": [
+                "meteor_or_stargazing"
+              ],
+              "message_found_in_usen": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "value": 4,
+      "evidence": [
+        {
+          "flowchart": "Demo_PublicAnnouncement_40_CmnNoNews",
+          "event_index": 69,
+          "event_name": "Event87",
+          "messages": []
+        },
+        {
+          "flowchart": "Demo_PublicAnnouncement_40_CmnNoNews",
+          "event_index": 78,
+          "event_name": "Event92",
+          "messages": []
+        },
+        {
+          "flowchart": "NNPC_FreeB",
+          "event_index": 0,
+          "event_name": "Event23",
+          "messages": [
+            {
+              "message_id": "TalkNNpc/B1_Bo/Free/BO_FreeB_Weather:104",
+              "text_sha256": "85a474b0cd2945b6e10fd5229887ce9f2abe457b3ad637d23fd679b6a3423dd8",
+              "topic_tags": [
+                "rainbow"
+              ],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "flowchart": "SNPC_ows",
+          "event_index": 8,
+          "event_name": "Event0",
+          "messages": [
+            {
+              "message_id": "TalkSNpc/ows/SP_ows:104",
+              "text_sha256": "5be5a86281fb4c0f811d29e4c331c50b2786fb291571a48301b91fa872ba78ff",
+              "topic_tags": [
+                "meteor_or_stargazing"
+              ],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "flowchart": "SNPC_ows",
+          "event_index": 27,
+          "event_name": "Event27",
+          "messages": [
+            {
+              "message_id": "TalkSNpc/ows/SP_ows:001",
+              "text_sha256": "c7121bb2074365e5f46c91f544530de7ec126185f1855bea094ab83280685247",
+              "topic_tags": [],
+              "message_found_in_usen": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "value": 5,
+      "evidence": [
+        {
+          "flowchart": "Demo_PublicAnnouncement_40_CmnNoNews",
+          "event_index": 69,
+          "event_name": "Event87",
+          "messages": []
+        },
+        {
+          "flowchart": "Demo_PublicAnnouncement_40_CmnNoNews",
+          "event_index": 78,
+          "event_name": "Event92",
+          "messages": []
+        },
+        {
+          "flowchart": "NNPC_FreeB",
+          "event_index": 0,
+          "event_name": "Event23",
+          "messages": [
+            {
+              "message_id": "TalkNNpc/B1_Bo/Free/BO_FreeB_Weather:105",
+              "text_sha256": "e6afeff96e09b725fc505dd19212559ea5176ad4168920cee4dd7e7bf47bd6c3",
+              "topic_tags": [
+                "double_rainbow"
+              ],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "flowchart": "SNPC_ows",
+          "event_index": 8,
+          "event_name": "Event0",
+          "messages": [
+            {
+              "message_id": "TalkSNpc/ows/SP_ows:104",
+              "text_sha256": "5be5a86281fb4c0f811d29e4c331c50b2786fb291571a48301b91fa872ba78ff",
+              "topic_tags": [
+                "meteor_or_stargazing"
+              ],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "flowchart": "SNPC_ows",
+          "event_index": 27,
+          "event_name": "Event27",
+          "messages": [
+            {
+              "message_id": "TalkSNpc/ows/SP_ows:001",
+              "text_sha256": "c7121bb2074365e5f46c91f544530de7ec126185f1855bea094ab83280685247",
+              "topic_tags": [],
+              "message_found_in_usen": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "value": 6,
+      "evidence": [
+        {
+          "flowchart": "Demo_PublicAnnouncement_40_CmnNoNews",
+          "event_index": 69,
+          "event_name": "Event87",
+          "messages": []
+        },
+        {
+          "flowchart": "Demo_PublicAnnouncement_40_CmnNoNews",
+          "event_index": 78,
+          "event_name": "Event92",
+          "messages": []
+        },
+        {
+          "flowchart": "NNPC_FreeB",
+          "event_index": 0,
+          "event_name": "Event23",
+          "messages": [
+            {
+              "message_id": "TalkNNpc/B1_Bo/Free/BO_FreeB_Weather:106",
+              "text_sha256": "276a2c909a730261582a3f67d1128d3304319176c5c0f8e83be715460beb6b1c",
+              "topic_tags": [
+                "aurora"
+              ],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "flowchart": "SNPC_ows",
+          "event_index": 8,
+          "event_name": "Event0",
+          "messages": [
+            {
+              "message_id": "TalkSNpc/ows/SP_ows:104",
+              "text_sha256": "5be5a86281fb4c0f811d29e4c331c50b2786fb291571a48301b91fa872ba78ff",
+              "topic_tags": [
+                "meteor_or_stargazing"
+              ],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "flowchart": "SNPC_ows",
+          "event_index": 27,
+          "event_name": "Event27",
+          "messages": [
+            {
+              "message_id": "TalkSNpc/ows/SP_ows:001",
+              "text_sha256": "c7121bb2074365e5f46c91f544530de7ec126185f1855bea094ab83280685247",
+              "topic_tags": [],
+              "message_found_in_usen": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "value": 7,
+      "evidence": [
+        {
+          "flowchart": "Demo_PublicAnnouncement_40_CmnNoNews",
+          "event_index": 69,
+          "event_name": "Event87",
+          "messages": []
+        },
+        {
+          "flowchart": "Demo_PublicAnnouncement_40_CmnNoNews",
+          "event_index": 78,
+          "event_name": "Event92",
+          "messages": []
+        },
+        {
+          "flowchart": "NNPC_FreeB",
+          "event_index": 0,
+          "event_name": "Event23",
+          "messages": [
+            {
+              "message_id": "TalkNNpc/B1_Bo/Free/BO_FreeB_Weather:107",
+              "text_sha256": "f8bb0ea3623c35710b88ffde22bcfb856e342ab30c8e5e8590b3cb924bccfd06",
+              "topic_tags": [
+                "rainbow",
+                "aurora"
+              ],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "flowchart": "SNPC_ows",
+          "event_index": 8,
+          "event_name": "Event0",
+          "messages": [
+            {
+              "message_id": "TalkSNpc/ows/SP_ows:104",
+              "text_sha256": "5be5a86281fb4c0f811d29e4c331c50b2786fb291571a48301b91fa872ba78ff",
+              "topic_tags": [
+                "meteor_or_stargazing"
+              ],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "flowchart": "SNPC_ows",
+          "event_index": 27,
+          "event_name": "Event27",
+          "messages": [
+            {
+              "message_id": "TalkSNpc/ows/SP_ows:001",
+              "text_sha256": "c7121bb2074365e5f46c91f544530de7ec126185f1855bea094ab83280685247",
+              "topic_tags": [],
+              "message_found_in_usen": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "value": 8,
+      "evidence": [
+        {
+          "flowchart": "Demo_PublicAnnouncement_40_CmnNoNews",
+          "event_index": 69,
+          "event_name": "Event87",
+          "messages": []
+        },
+        {
+          "flowchart": "Demo_PublicAnnouncement_40_CmnNoNews",
+          "event_index": 78,
+          "event_name": "Event92",
+          "messages": []
+        },
+        {
+          "flowchart": "NNPC_FreeB",
+          "event_index": 0,
+          "event_name": "Event23",
+          "messages": [
+            {
+              "message_id": "TalkNNpc/B1_Bo/Free/BO_FreeB_Weather:108",
+              "text_sha256": "ab28467dc46d01260ad0adc891237b0aa23b1e87d6b0651820f2f8b8f2b4b392",
+              "topic_tags": [
+                "low_visibility"
+              ],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "flowchart": "SNPC_ows",
+          "event_index": 8,
+          "event_name": "Event0",
+          "messages": [
+            {
+              "message_id": "TalkSNpc/ows/SP_ows:104",
+              "text_sha256": "5be5a86281fb4c0f811d29e4c331c50b2786fb291571a48301b91fa872ba78ff",
+              "topic_tags": [
+                "meteor_or_stargazing"
+              ],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "flowchart": "SNPC_ows",
+          "event_index": 27,
+          "event_name": "Event27",
+          "messages": [
+            {
+              "message_id": "TalkSNpc/ows/SP_ows:001",
+              "text_sha256": "c7121bb2074365e5f46c91f544530de7ec126185f1855bea094ab83280685247",
+              "topic_tags": [],
+              "message_found_in_usen": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "value": 9,
+      "evidence": [
+        {
+          "flowchart": "Demo_PublicAnnouncement_40_CmnNoNews",
+          "event_index": 69,
+          "event_name": "Event87",
+          "messages": []
+        },
+        {
+          "flowchart": "Demo_PublicAnnouncement_40_CmnNoNews",
+          "event_index": 78,
+          "event_name": "Event92",
+          "messages": []
+        },
+        {
+          "flowchart": "NNPC_FreeB",
+          "event_index": 0,
+          "event_name": "Event23",
+          "messages": [
+            {
+              "message_id": "TalkNNpc/B1_Bo/Free/BO_FreeB_Weather:109",
+              "text_sha256": "f1a4752519428842e80db6da624dce2be0e4c5e102d696c625c04748074998c5",
+              "topic_tags": [
+                "loud_and_flashy_weather"
+              ],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "flowchart": "SNPC_ows",
+          "event_index": 8,
+          "event_name": "Event0",
+          "messages": [
+            {
+              "message_id": "TalkSNpc/ows/SP_ows:104",
+              "text_sha256": "5be5a86281fb4c0f811d29e4c331c50b2786fb291571a48301b91fa872ba78ff",
+              "topic_tags": [
+                "meteor_or_stargazing"
+              ],
+              "message_found_in_usen": true
+            }
+          ]
+        },
+        {
+          "flowchart": "SNPC_ows",
+          "event_index": 27,
+          "event_name": "Event27",
+          "messages": [
+            {
+              "message_id": "TalkSNpc/ows/SP_ows:001",
+              "text_sha256": "c7121bb2074365e5f46c91f544530de7ec126185f1855bea094ab83280685247",
+              "topic_tags": [],
+              "message_found_in_usen": true
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "interpretation_limits": [
+    "A message topic identifies the dialogue branch selected for that query value; it does not prove when the query value is produced.",
+    "The weather-condition strings cBeforeMeteor/cMeteorShower/cRainbow/cWRainbow/cBeforeAurora/cAurora at 0x26b9c0 are not equated numerically with EnvSpecialWeather query values here.",
+    "The artifact does not resolve the calendar/flag scheduler, weather actor spawn, renderer inputs, or visual duration."
+  ]
+}
