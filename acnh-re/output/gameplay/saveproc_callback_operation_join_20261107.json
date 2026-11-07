@@ -1,0 +1,185 @@
+{
+  "schema": "acnh.saveproc_callback_operation_join.v1",
+  "game_version": "ACNH 1.0.0",
+  "evidence_status": "STATIC_NATIVE_CODE_AND_EVENTFLOW_TRACE",
+  "report": "acnh-re/docs/SAVEPROC_CALLBACK_OPERATION_JOIN_20261107.md",
+  "scope": "Resolve callback/operation join around SaveProc and conditional Commit; no save/game execution, synthetic fixtures, or Godot work.",
+  "conclusion": {
+    "save_simple_save_dispatch_operation_first_word": "0x108",
+    "operation_flag_match_to_conditional_commit_guard": true,
+    "queued_saveproc_to_operation_state_driver_edge_proven": false,
+    "exact_save_simple_save_commit_proven": false,
+    "saveproc_serializer_identity": "runtime_indirect_unresolved",
+    "craft_to_save_simple_save_direct_call": false
+  },
+  "eventflow_action": {
+    "flow": "System_SaveGameClose",
+    "event_index": 1,
+    "actor": "EventFlowSystemActor",
+    "kind": "actions",
+    "name": "EventFlowActionSaveSimpleSave",
+    "params": {
+      "Process": "cAll"
+    },
+    "request_stage_va": "0x337f00",
+    "request_stage_tail_branch_pc": "0x338060",
+    "process_dispatch_va": "0x338080",
+    "cAll_to_native_flag_dataflow": "not observed; the operation flag helpers receive literal zero arguments"
+  },
+  "operation_construction": {
+    "operation_object": "action object + 0xf0",
+    "steps": [
+      {
+        "pc": "0x3380a4",
+        "target": "0xfb35f0",
+        "input": "zero-initialized operation",
+        "effect": "first word and second word set to zero"
+      },
+      {
+        "pc": "0x3380cc",
+        "target": "0xfb3560",
+        "argument": 0,
+        "effect": "clear first-word bits 3..5 and set bit 3, producing 0x8"
+      },
+      {
+        "pc": "0x3380d8",
+        "target": "0xfb35d0",
+        "argument": 0,
+        "effect": "set first-word bit 8 (0x100), producing 0x108"
+      },
+      {
+        "pc": "0x3380f8",
+        "target": "0xfb3160",
+        "kind": "tail branch",
+        "effect": "pass operation to SaveProc request queue path"
+      }
+    ],
+    "bit_calculation": {
+      "fb3560_expression": "(param2 * 8 + 8) >> 3 & 7",
+      "fb3560_param2": 0,
+      "fb35d0_set_bit": "param2 + 8",
+      "fb35d0_param2": 0,
+      "result": "0x8 | 0x100 = 0x108",
+      "byte_plus_1_bit_4": "clear after initialization; these helpers modify only the first word"
+    },
+    "queue": {
+      "queue_request_va": "0xfb3160",
+      "operation_stored_at_manager_offset": "0x8",
+      "queue_record_size": "0x38",
+      "task_name": "SaveProc",
+      "enqueue_call_pc": "0xfb3234",
+      "enqueue_va": "0xfaf180"
+    }
+  },
+  "conditional_commit_compatibility": {
+    "sibling_state_driver_entry_va": "0xfb2f30",
+    "state_driver_va": "0xfb3010",
+    "state_driver_call_pc": "0xfb2fac",
+    "state_table_base_va": "0x30ed140",
+    "bit_8_selects_row": 1,
+    "selected_row_va": "0x30ed160",
+    "selected_row_callbacks": [
+      {
+        "relocation_site": "0x30ed160",
+        "target": "0xf2e970"
+      },
+      {
+        "relocation_site": "0x30ed170",
+        "target": "0xf2ea40"
+      }
+    ],
+    "state_step_call_pc": "0xfb30e4",
+    "state_step_va": "0xfaf360",
+    "state_machine_call_pc": "0xfaf374",
+    "state_machine_va": "0xfaf4e0",
+    "commit_guard": {
+      "flags_mask": "0x20f8",
+      "operation_flags": "0x108",
+      "masked_value": "0x8",
+      "mask_condition_satisfied": true,
+      "byte_plus_1_bit_4_must_be_clear": true,
+      "byte_plus_1_bit_4_clear_for_constructed_operation": true,
+      "save_path_manager_must_be_present": true,
+      "save_path_manager_runtime_presence_proven": false,
+      "helper_call_pc": "0xfaf86c",
+      "helper_va": "0xf21f30",
+      "sdk_commit_call_pc": "0xf22230",
+      "sdk_symbol": "nn::fs::Commit(const char *const *, int)"
+    },
+    "queue_to_state_driver": {
+      "direct_call_from_fb3160_to_fb2f30_or_fb3010": false,
+      "direct_static_bridge_found": false,
+      "possible_indirect_bridge": true,
+      "verdict": "The SaveSimpleSave operation flags satisfy the first two Commit guard terms if this operation is forwarded unchanged, but the queued SaveProc callback-to-state-driver join is not proven."
+    }
+  },
+  "callback_resolution": {
+    "saveproc_registration_va": "0xfb4150",
+    "registration_factory_va": "0xd4240",
+    "registered_name": "SaveProc",
+    "runtime_registry_global_slot": "0x32d08a0",
+    "registry_slot_relative_addend": "0x3a86b70",
+    "nso_mod0_bss_range": [
+      "0x333def8",
+      "0x3ab6a48"
+    ],
+    "registry_target_inside_bss": true,
+    "registry_callback_call_pc": "0xd4538",
+    "registry_dispatch": "virtual slot +0x10 on runtime registry object",
+    "generic_executor_object_size": "0x138",
+    "generic_executor_member_offset": "0x20",
+    "executor_setup_call_pc": "0xd4588",
+    "executor_setup_va": "0x2201d30",
+    "executor_dispatch_wrapper_va": "0xd45c0",
+    "generic_executor_va": "0x2201820",
+    "executor_indirect_task_call_pc": "0x22018e8",
+    "runtime_task_dispatch": "First virtual slot of task object popped from executor queue; target is runtime-dependent.",
+    "generic_delegate_sequence": {
+      "vtable_like_sequence_va": "0x302e710",
+      "status": "relocated code pointer sequence; not automatically asserted as a C++ vtable",
+      "first_target_va": "0xd1f60",
+      "thunk_indirect_branch_pc": "0xd1f88",
+      "effect": "Loads callable state from object offsets +8/+0x10 and branches through the payload; it does not identify a SaveProc serializer."
+    },
+    "identity_verdict": "The registry result and queued task object's vtable are not statically bound to SaveProc's serializer."
+  },
+  "unresolved_joins": [
+    "SaveProc name to a concrete runtime registry result",
+    "registry result to the queued task object's vtable and method",
+    "queued SaveProc operation to the sibling fb2f30/fb3010 state driver",
+    "runtime save-path manager presence at the Commit guard",
+    "serializer to a specific WriteFile/FlushFile caller",
+    "craft mutation to SaveSimpleSave request and durable reload"
+  ],
+  "related_prior_trace": {
+    "report": "docs/CRAFTING_SAVEPROC_FILEIO_TRACE_20261107.md",
+    "json": "output/gameplay/crafting_saveproc_fileio_trace_20261107.json",
+    "status": "Prior direct WriteFile/FlushFile caller inventory, SaveLand pocket naming boundary, and no craft-to-save direct call remain unchanged."
+  },
+  "provenance": {
+    "main_nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+    "code_segment_main_0_bin_sha256": "9c9b45d8e7a58706ca59e7244b3aebac2325ef98faa205e007974eeeb2f758e9",
+    "native_index_sha256": "a78c7af27d37b8fd931bba8bc611623dacf7685cb6e8b4f827effa0765340aad",
+    "code_pointer_arrays_json_sha256": "64d474068ca289f9146f7f32e6647a16a05e8f5be8e635615a478744b62ef822",
+    "prior_trace_markdown_sha256": "295297c3c8c68314cd5832a423f2776966f3fccffa71ea7343306110f5200552",
+    "prior_trace_json_sha256": "b738b34a84bc8aacb751461b965599b4a4fd71919bc3f15e769cd9d4b2a400a2",
+    "source_decomp_sha256": {
+      "337e30.c": "2c633cf65732dc19718df1d50773aede39d01297c711ed36cac2f94c2b5e37cc",
+      "337f00.c": "e792a56181753e17a089f5cf9bbb976f5a3537e935e728d25e8eadacb99dfdc3",
+      "338120.c": "d726eb4a455ecccfc932c0adaabec10b16291bdf3fb79555f08dcd801243a3af",
+      "fb35f0.c": "40dfbb041339a82c96d34d86af940bb94f534c2c697559e727fcd73cf39c525f",
+      "fb3560.c": "edc8761d8abfd8a441db63e54e64153e241fc4818edf43a098d54814ef8ee31c",
+      "fb35d0.c": "63c4e268c1314c897997258e56be62be6b4483a9a4123bcefe6901eaf4b9fd49",
+      "fb3160.c": "ba423c352409ee3c5b36400fb485f7b5e5773720a2852794cf2c0e081cf2efe9",
+      "fb4150.c": "132881bcf182674685e36aea39343571b66ee7b4db2541d29a1dc4e5c4a5e57c",
+      "fb2f30.c": "1386266e325e8ababdc16b67c4bf16d9db1fefd55bbbffb125eec5195d388814",
+      "fb3010.c": "c42f4bf5f7998ac60cb60d788e20147dff97980f9f97be2b4651d60e69a8987b",
+      "faf360.c": "bc75c4dad931d6b54c8586f76e448373b10406f4aaa96761a5d291d038e47b0e",
+      "faf4e0.c": "b8e6246a01f931021ae3e357df6a4de5abeaf8c566fbead13290293813fc4b9d",
+      "d4240.c": "140e3e6fc2b92ec494c561cbb7bc57db390b21e02ab06742befc85793b731c90",
+      "d45c0.c": "f45217aab6a77e5f4a0d7b1506e085d3bddcc1ed31748dfbb60004c653e3067e",
+      "2201820.c": "19d80e664008bad5a335d1b2dafad128d9fbe79193bf3be5e8d18548e05eb3a9",
+      "2201d30.c": "9d121bd1cf0272fd6d17d19b434c4c638279726ad0472dfe9a7908cf22d06b85"
+    }
+  }
+}
