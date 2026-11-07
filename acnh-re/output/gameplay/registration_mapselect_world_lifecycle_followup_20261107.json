@@ -1,0 +1,372 @@
+{
+  "schema": "acnh.registration-mapselect-world-lifecycle-followup/1",
+  "created_utc_date": "2026-11-07",
+  "scope": "Static ACNH 1.0.0 follow-up from MapSelect/cVillage result through the selected-UID save field and native world/LandMaking loader. Read-only; no game, save, or Godot project execution or modification.",
+  "status_legend": {
+    "PROVEN_EVENTFLOW": "Named EventFlow nodes and their branch/order are present in decoded BFEVFL.",
+    "PROVEN_NATIVE": "Direct instruction, callsite, or indexed native dataflow establishes the stated behavior.",
+    "PROVEN_STATIC_JOIN": "Producer and consumer use the same field/storage, but execution order in one run is not established.",
+    "OPEN": "A required controller, lifecycle, or runtime edge is not established by the bounded local static evidence."
+  },
+  "source_build": {
+    "game": "Animal Crossing: New Horizons",
+    "version": "1.0.0",
+    "build_id": "7FC1BAFF976AECA414520CB89F4616CB",
+    "main_nso_path": "/workspace/acnh-re-github/acnh-re/inputs/additional_exefs/main",
+    "main_nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+    "main_elf_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/A_logic/main.elf",
+    "main_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+    "raw_main_segment_path": "/workspace/acnh-re/work/exefs_modules/main/0.bin",
+    "raw_main_segment_sha256": "9c9b45d8e7a58706ca59e7244b3aebac2325ef98faa205e007974eeeb2f758e9",
+    "address_convention": "All PCs/VAs below are raw ELF VAs. Decompiled pseudonames may use a +0x100000 display bias; addresses in call-index records are raw VAs."
+  },
+  "source_artifacts": [
+    {
+      "path": "/workspace/acnh-re/output/index.sqlite",
+      "sha256": "a78c7af27d37b8fd931bba8bc611623dacf7685cb6e8b4f827effa0765340aad",
+      "role": "direct_calls, function/native-function extents, and string_refs"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/code_pointer_arrays.json",
+      "sha256": "64d474068ca289f9146f7f32e6647a16a05e8f5be8e635615a478744b62ef822",
+      "role": "relocated pointer sequences; not assumed to be vtables absent supporting evidence"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/event_handlers_resolved.json",
+      "sha256": "dfc298dfcb1b288b8fda9cd6a49c728fdad903b41f8fc1c9288df7d732ec92a5",
+      "role": "EventFlow native action/query factory records"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/334650.c",
+      "sha256": "4bbf7b4001899e8b2a936db150de77b92b2b24f3c19f5d499c0dd8a1ab339a2e",
+      "role": "SaveSetFromUIResult cVillage case"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/529e50.c",
+      "sha256": "7a457af49d5983e4de577dea448edf42c78f5f82cd383c57be263c1c92622165",
+      "role": "selected-index consumer and tail-branch body"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/529910.c",
+      "sha256": "60b968019ada35592ce5202d29ec1739be335c57c0a6a9ff6af578565afee324",
+      "role": "four-entry candidate container builder"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/529860.c",
+      "sha256": "6c06343608b47f3779cb477059dc5b00495837c3bffd4c193a86da8d36789dd1",
+      "role": "guarded entry-builder caller"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/528bf0.c",
+      "sha256": "cbc4ab8241ef929df5eae3294d136cc7e6bf3fb4c3ec4bfb86fb90263ae7cb45",
+      "role": "per-entry UID and preset assembly"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/565300.c",
+      "sha256": "4771e0d151246e2cc483f60fc01e06d7ef68a6738bb22cde4553c03e727aad39",
+      "role": "context consumer callsite at 0x565368"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/5651b0.c",
+      "sha256": "6834b80ca4e44c2c4a58a6f7e39bbf87d2eaa9670966505e6ef6fda3c2b66eda",
+      "role": "guarded candidate/context initialization method"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/565e30.c",
+      "sha256": "db88767b45c145cb4e69733121d459e72cccba7e6e52027a8e71d336673a1839",
+      "role": "saved-UID world setup consumer"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/5662e0.c",
+      "sha256": "5a4a1f6366d57e7d9ef94f5c130c57639f0dc88365c8d05fb0335c1d7da2f4e3",
+      "role": "separate randomized creator path"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/cd270.c",
+      "sha256": "eae0b0ea41b7797e9dd7f40edc45ccec8bc930f67294ea426ebd76e366efc837",
+      "role": "guarded ValidateVillageSave-associated route to world setup"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/ccd40.c",
+      "sha256": "49b0f43cd27bcf041bcf00fec8df54f55222f297290236ed2c5029757acd571b",
+      "role": "ValidateVillageSave string reference and caller dispatch"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/558ef0.c",
+      "sha256": "22cf7985c9ee2e1f01959f10dfde252d99c0095efa823a1872e1005534589dd0",
+      "role": "UID-keyed LandMaking loader wrapper"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/558f40.c",
+      "sha256": "97b470a1a21ce6f1cdf66b06dd6deda51a0a444896aa1002abd9ddc8a6a955d8",
+      "role": "FieldData lookup and LandMaking grid transfer"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/54e190.c",
+      "sha256": "69a6433e7e5ee19d9bd3388768419e102b26602faad2da2ac8066ce357c42593",
+      "role": "UID-indexed FieldMainFieldParam row lookup"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/5598c0.c",
+      "sha256": "ceda098c5d2f01cb0f23b03ba9ee8ee72f5275d9d372ac41476eed1c4ade1b2c",
+      "role": "EventPlaza side-data loader"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/559b80.c",
+      "sha256": "af4e0eccc9204f617a48f3b64ceda137c6d87ed504a22ec79e68cb6704d13924",
+      "role": "additional LandMaking-heap consumer"
+    },
+    {
+      "path": "/workspace/acnh-re/output/decoded/00661.json",
+      "sha256": "3d130018910659a5177009ff4e352217b535953e7ef6ea117dbc5d8fdfc6907d",
+      "role": "decoded Tutorials_Prologue1_Charactermaking eventflow"
+    },
+    {
+      "path": "/workspace/acnh-re/output/gameplay/trees/Tutorials_Prologue1_Charactermaking.txt",
+      "sha256": "ab80afbe18263519a0962291e30220cfbd2d05d235ef0075fb0ecb1e4c00122d",
+      "role": "readable EventFlow path used in this report"
+    },
+    {
+      "path": "/workspace/acnh-re/output/decoded/00645.json",
+      "sha256": "b32e8c6b74a77a04fbf84365442ad6a21c46ca7180f3c35b98b4ec9fe8834705",
+      "role": "decoded System_GrowUp eventflow"
+    },
+    {
+      "path": "/workspace/acnh-re/output/gameplay/trees/System_GrowUp.txt",
+      "sha256": "5a2e052f7da6f6ac2383db52d6db4d672c6c7f8089da2ca7ff400a36a9240383",
+      "role": "readable NewGame entry and cMainFieldDemoLanding request"
+    },
+    {
+      "path": "/workspace/acnh-re/output/decoded/00041.json",
+      "sha256": "9076a539025ae3deef0c6debe964544fa1be856fcf67d5bfc41e9672a87ff927",
+      "role": "decoded FieldMainFieldParam source row data"
+    },
+    {
+      "path": "/workspace/acnh-re/output/decoded/02442.json",
+      "sha256": "d2bede52ec7c574fe02762b41821c7d81bda0cf1624f57d0c46b229a3b1d8a8c",
+      "role": "decoded FieldPresetA00_LandMaking BYML"
+    },
+    {
+      "path": "/workspace/acnh-re-github/acnh-re/output/gameplay/save_layout_external_crosswalk.json",
+      "sha256": "2fea2dfb23c286c08d6a33f93e944cfccec4cd606bf43cab08c6eee96f7e0604",
+      "role": "SaveMainField name/offset crosswalk"
+    },
+    {
+      "path": "/workspace/acnh-re-github/acnh-re/output/gameplay/registration_c_village_context_followup_20261107.json",
+      "sha256": "55a6e1dd6a42a176f3868cd2b19f03c6e37703f36c0f4fb37f97a5bd1487f386",
+      "role": "prior result-context evidence and callback transfer trace"
+    },
+    {
+      "path": "/workspace/acnh-re-github/acnh-re/output/gameplay/registration_terrain_option_save_join_followup_20261107.json",
+      "sha256": "a41a0f45afba4e65874a81cc454ec9aede89c6a4e0ca372c472ed8270a4fa59d",
+      "role": "prior selected-entry save-write PCs and instruction bytes"
+    },
+    {
+      "path": "/workspace/acnh-re-github/acnh-re/output/gameplay/registration_uid_landmaking_world_builder_followup_20261107.json",
+      "sha256": "2e70bbe934e297c35e9d36fcd3eab2ae6113606ac15bbc7272c59a6c1ff5c5ce",
+      "role": "prior UID-to-LandMaking and world-loader evidence"
+    }
+  ],
+  "input_data_sources": [
+    {
+      "source_id": 661,
+      "path": "B_data/EventFlow/Tutorials_Prologue1_Charactermaking.bfevfl",
+      "format": "BFEVFL",
+      "sha256": "cbf8fc7e4f5df544398f8dfd4b401f558bf386862af1abac72b8ab57c1d8688d",
+      "decoded_output": "decoded/00661.json",
+      "finding": "New-village branch reaches TerrainSelect when ValidateVillageSave is OFF; UIMapSelectHandling is followed by SaveSetFromUIResult(cVillage). EndCharacterMaking then checks the flag again: ON calls PV; OFF takes a message/WaitFrame path. PV's ON case requests cOpeningMovie, while its OFF case sets MakeVillagePlayerFlag and IsFirstPrologue."
+    },
+    {
+      "source_id": 645,
+      "path": "B_data/EventFlow/System_GrowUp.bfevfl",
+      "format": "BFEVFL",
+      "sha256": "ff6c2241927e1f657e941b504dd99ac3a27ba0fee296afba47c144eddee0ecb7",
+      "decoded_output": "decoded/00645.json",
+      "finding": "NewGame runs SaveGrowUp(cStart) and requests stage cMainFieldDemoLanding."
+    },
+    {
+      "source_id": 41,
+      "path": "B_data/Bcsv/FieldMainFieldParam.bcsv",
+      "format": "BCSV",
+      "sha256": "3ebd1057e41b0666aa30c6d8beee9220b52d8fb5280c478e8eb13eaca5d27944",
+      "decoded_output": "decoded/00041.json",
+      "finding": "UniqueID keys FieldData; the FieldData stem supplies the LandMaking resource name."
+    },
+    {
+      "source_id": 2442,
+      "path": "B_data/Param/Field/MainFieldPreset/FieldPresetA00_LandMaking.byml",
+      "format": "BYML",
+      "sha256": "cba1ab90d21982b443e719e30a19c80fa9aa9ead86f03705f5ecbd3c821d4aca",
+      "decoded_output": "decoded/02442.json",
+      "finding": "Example data join for UID 0 / FieldData FieldPresetA00; not identified as the runtime-selected option."
+    }
+  ],
+  "eventflow_path": {
+    "status": "PROVEN_EVENTFLOW",
+    "prologue_flow": "Tutorials_Prologue1_Charactermaking",
+    "selection_entry": "TerrainSelect",
+    "ordered_nodes": [
+      "UIMapSelectHandling {}",
+      "SaveSetFromUIResult {SaveType:cVillage}",
+      "EndCharacterMaking checks cLand:ValidateVillageSave again: ON calls PV; OFF follows a message/WaitFrame path",
+      "PV's ON branch requests cOpeningMovie; PV's OFF branch sets MakeVillagePlayerFlag and IsFirstPrologue"
+    ],
+    "new_game_flow": "System_GrowUp:NewGame saves cStart and requests cMainFieldDemoLanding",
+    "limitations": [
+      "The cOpeningMovie-to-System_GrowUp:NewGame dispatcher is not established in these EventFlow records.",
+      "The EventFlow action factory for UIMapSelectHandling does not establish a native edge to MapSelectPage/cMapSelect or to the result callback owner.",
+      "ValidateVillageSave is tested both before and after TerrainSelect; the later test's result depends on flag state, and does not prove a world-loader handler ran there."
+    ]
+  },
+  "native_value_path": {
+    "status": "PROVEN_STATIC_JOIN",
+    "callback_result": {
+      "callback_va": "0x1243260",
+      "source_object_index_offset": "0x2cc",
+      "setter_wrapper_call_pc": "0x124338c",
+      "setter_wrapper_va": "0x154a100",
+      "result_context_child_offset": "0xae3c",
+      "owner_to_ui_action_edge": "OPEN"
+    },
+    "c_village_store": {
+      "method_va": "0x334650",
+      "save_type_case": 5,
+      "getter_wrapper_call_pc": "0x334d68",
+      "getter_wrapper_va": "0x154a130",
+      "result_load_pc": "0x334d70",
+      "result_load_offset": "returned_pointer+0x0c (child+0xae3c)",
+      "context_index_store_pc": "0x334d80",
+      "context_index_store": "*0x33d1ba8+0x45f0",
+      "stored_semantics": "u32 selection/result index"
+    },
+    "candidate_container": {
+      "container_init_va": "0x529810",
+      "candidate_builder_va": "0x529910",
+      "entry_count": 4,
+      "entry_stride_bytes": "0xe0",
+      "builder_invoker_va": "0x529860",
+      "context_method_va": "0x5651b0",
+      "context_to_builder_call_pc": "0x5651ec",
+      "guarded_builder_call_pc": "0x5298b4",
+      "entry_builder_call_pcs": ["0x529a80", "0x529b90", "0x529ca0", "0x529db0"],
+      "visible_card_to_entry_order": "OPEN",
+      "runtime_four_uids": "OPEN"
+    },
+    "selected_entry_consumer": {
+      "context_cleanup_va": "0x565300",
+      "cleanup_to_container_call_pc": "0x565368",
+      "container_consumer_va": "0x529e50",
+      "index_read_member_offset": "container+0x20",
+      "selected_entry_body_va": "0x529ea0",
+      "tail_branch_pc": "0x529e94",
+      "selected_uid_load_pc": "0x529f34",
+      "selected_uid_entry_offset": "entry+0x0c (u16)",
+      "save_uid_store_pc": "0x529f44",
+      "save_uid_destination": "SaveMainField+0xcfa2a / MainFieldParamUniqueID",
+      "execution_guarded": true,
+      "durable_save_commit": "OPEN"
+    }
+  },
+  "world_loader": {
+    "status": "PROVEN_NATIVE",
+    "setup_va": "0x565e30",
+    "setup_reads": "SaveMainField+0xcfa2a / MainFieldParamUniqueID",
+    "uid_wrapper_call_pc": "0x56620c",
+    "uid_wrapper_va": "0x558ea0",
+    "landmaking_wrapper_call_pc": "0x566220",
+    "landmaking_wrapper_va": "0x558ef0",
+    "wrapper_to_loader_call_pc": "0x558f28",
+    "landmaking_loader_va": "0x558f40",
+    "loader_row_lookup_pc": "0x558f84",
+    "loader_fielddata_name_pc": "0x558ff4",
+    "resource_suffix": "%s_LandMaking",
+    "grid_transfer": {
+      "width_cells": 112,
+      "height_cells": 96,
+      "source_stride_bytes": 14,
+      "scope": "LandMaking cells copied into runtime cell accessors; does not establish full collision/PBC/actor/spawn world construction."
+    },
+    "additional_setup_calls": [
+      {"pc": "0x566230", "target": "0x5598c0", "role": "EventPlaza preset side-data"},
+      {"pc": "0x56623c", "target": "0x559b80", "role": "additional LandMaking heap consumer"}
+    ],
+    "same_field_join": "The selected-entry writer at 0x529f44 and the setup reader in 0x565e30 use SaveMainField offset +0xcfa2a.",
+    "same_run_selection_loaded": "OPEN"
+  },
+  "world_setup_callers": [
+    {
+      "caller_va": "0x5662e0",
+      "call_pc": "0x5665c4",
+      "path": "0xfc3b00 calls 0x5662e0 at PC 0xfc3b08; this routine independently chooses/writes UID and OutsideField before calling 0x565e30.",
+      "c_village_relation": "No selected-index dataflow established; do not equate this independent creator draw with the chosen card."
+    },
+    {
+      "caller_va": "0xcd270",
+      "call_pc": "0xcd2c0",
+      "path": "0xccd40 has a ValidateVillageSave string reference and transfers to 0xcd270 at PC 0xccf1c; 0xcd270 calls 0x565e30 on guarded status branches.",
+      "c_village_relation": "EventFlow checks cLand:ValidateVillageSave after cVillage, but the EventFlow query-to-0xccd40 edge and ordering of the selected-entry save write before this loader are not established."
+    }
+  ],
+  "bounded_searches": [
+    {
+      "source": "/workspace/acnh-re/output/index.sqlite:direct_calls",
+      "query": "target_va=0x565e30",
+      "result": "Exactly two direct-call rows: 0x5665c4 from 0x5662e0 and 0xcd2c0 from 0xcd270.",
+      "limit": "Indirect calls and omitted/unindexed lifecycle paths are outside this negative result."
+    },
+    {
+      "source": "/workspace/acnh-re/output/index.sqlite:direct_calls",
+      "query": "target_va=0x529ea0",
+      "result": "Zero direct-call rows; recovered control transfer is a tail branch at 0x529e94 from 0x529e50.",
+      "limit": "The functions/native_functions inventories split the 0x529ea0 boundary differently."
+    },
+    {
+      "source": "/workspace/acnh-re/output/index.sqlite:direct_calls",
+      "query": "target_va=0x565300",
+      "result": "One callsite at 0xfe6070; the direct_calls owner is NULL. The newer native_functions range places it inside 0xfe5fe0, which has no local decompilation artifact.",
+      "limit": "This locates a caller body but does not recover its lifecycle ordering or relationship to MapSelect."
+    },
+    {
+      "source": "/workspace/acnh-re/output/index.sqlite:direct_calls",
+      "query": "owner_va=0x334650 and target_va in {0x565300,0x565e30}",
+      "result": "Zero direct calls from SaveSetFromUIResult(cVillage) to the selected-entry context consumer or world setup.",
+      "limit": "EventFlow/action/page execution can use indirect dispatch, so this only rules out direct BL edges in this index."
+    },
+    {
+      "source": "/workspace/acnh-re/output/index.sqlite:string_refs plus event_handlers_resolved.json",
+      "query": "ValidateVillageSave in 0xccd40; direct callers to 0xccd40; EventFlowQueryEventFlagSystemBool methods",
+      "result": "0xccd40 references ValidateVillageSave and is directly called by 0xcca60. No direct call from indexed query methods 0x4053d0/0x405410/0x405960 to 0xccd40 was found.",
+      "limit": "Does not rule out virtual/callback dispatch; therefore the flag check is not asserted to trigger this loader path."
+    }
+  ],
+  "claim_matrix": [
+    {
+      "claim": "TerrainSelect invokes UIMapSelectHandling then saves a cVillage result.",
+      "status": "PROVEN_EVENTFLOW"
+    },
+    {
+      "claim": "The cVillage result index is copied into the four-entry context and can select an entry whose UID is written to MainFieldParamUniqueID.",
+      "status": "PROVEN_STATIC_JOIN",
+      "condition": "The entry consumer runs only under its feature/status guards."
+    },
+    {
+      "claim": "World setup can read that saved UID and load its matching FieldData_LandMaking resource.",
+      "status": "PROVEN_NATIVE",
+      "condition": "Established from the shared SaveMainField field; the same-run invocation after the cVillage consumer is not established."
+    },
+    {
+      "claim": "The visible card selected by the user maps to the exact UID loaded on the new-game world-init path.",
+      "status": "OPEN"
+    },
+    {
+      "claim": "Loaded LandMaking data alone establishes final collision/PBC, actor/model construction, and player spawn.",
+      "status": "OPEN"
+    }
+  ],
+  "conclusion": "The field-value bridge is established: cVillage index -> conditional entry[index] UID write at SaveMainField+0xcfa2a -> saved-UID consumer -> UID-keyed LandMaking resource loader. The lifecycle bridge from a particular MapSelect result to execution of that loader remains OPEN. The specific blockers are the UI action/page/callback ownership and card-to-entry order, the missing scheduling edge from the selected-entry consumer to 0x565e30, and the uncertain ValidateVillageSave query-to-handler edge. The randomized creator path is a separate proven caller and is not evidence for the user's selection.",
+  "validation": {
+    "source_hashes": "PASS: 29/29 local source_artifacts verified by SHA-256; build hashes and all four source_id/path/hash rows match the shared index.sqlite files table.",
+    "json_parse": "PASS: python -m json.tool",
+    "git_diff_check": "PASS: git diff --check; both new untracked artifacts also passed trailing-whitespace/final-newline checks."
+  }
+}
