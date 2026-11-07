@@ -1,0 +1,167 @@
+{
+  "schema": "acnh-ui-map-select-page-binding-native/1",
+  "title": "ACNH 1.0.0 UIMapSelectHandling to MapSelectPage/CharaMakeMap bounded trace",
+  "address_contract": {
+    "binary": "A_logic/main.elf",
+    "address_kind": "ELF virtual address (VA)",
+    "instruction_encoding": "AArch64",
+    "important_limit": "Native direct calls, raw vtable entries, and ELF relative relocations were checked. A dynamic/indirect relationship between the request manager and page code is not ruled out."
+  },
+  "result": {
+    "status": "action_to_shared_request_state_proven; page_and_layout_chain_candidate; connecting_edge_unresolved",
+    "summary": "The EventFlow UIMapSelectHandling record resolves to an action factory and callback path that submits request ID 42 with context through the singleton getter called with index 8. A separate MapSelectPage construction candidate stores a page object and a callback candidate reaches a CharaMakeMap layout consumer. No direct static call or relocation edge was found from the ID-42 request-manager path to that page/layout chain.",
+    "terrain_preset_boundary": "SaveSetFromUIResult(cVillage) is an EventFlow result-save operation. This trace does not establish the selected terrain preset, map-card image generation, or the world-generation path."
+  },
+  "sources": [
+    {
+      "role": "main native image",
+      "path": "A_logic/main.elf",
+      "bytes": 53729580,
+      "sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74"
+    },
+    {
+      "role": "EventFlow action sequence",
+      "path": "B_data/EventFlow/Tutorials_Prologue1_Charactermaking.bfevfl",
+      "bytes": 29072,
+      "sha256": "cbf8fc7e4f5df544398f8dfd4b401f558bf386862af1abac72b8ab57c1d8688d"
+    },
+    {
+      "role": "EventFlow action-name registration table",
+      "path": "B_data/EventFlow/Info/BindInfo.byml",
+      "bytes": 7280,
+      "sha256": "d5867e0729d4d0eb222c27ff8a6b5cdc0ac401f34feadd3353f420c36368e999"
+    },
+    {
+      "role": "outer map-selection layout archive",
+      "path": "Layout/CharaMakeMap.Nin_NX_NVN.zs",
+      "bytes": 53194,
+      "sha256": "873d26ca41ba4b982cc96b55daf68adcdc657099be50626266615b3a9f2b6700"
+    },
+    {
+      "role": "map-card child layout archive",
+      "path": "Layout/LCharaMakeMapBtn.Nin_NX_NVN.zs",
+      "bytes": 43866,
+      "sha256": "04bb82e3cbd7c02109af61f3d76731b1188d32e6d748a044ccb78c5ce397fb34"
+    },
+    {
+      "role": "map-choice layout archive",
+      "path": "Layout/LMapChoice.Nin_NX_NVN.zs",
+      "bytes": 3210,
+      "sha256": "d53a3adecc2b6a30586f46fa62b3a59dee533110d70e9ccf3c69b68cb6108cc1"
+    }
+  ],
+  "proved_edges": [
+    {
+      "evidence": "[EF]",
+      "from": "Tutorials_Prologue1_Charactermaking.bfevfl: TerrainSelect, operation #0 UIMapSelectHandling {}",
+      "to": "Tutorials_Prologue1_Charactermaking.bfevfl: TerrainSelect, operation #1 SaveSetFromUIResult {SaveType:cVillage}",
+      "detail": "Parsed flow tree places these operations consecutively. EventFlowSystemActor action-array indices are 5 and 6 respectively; those indices are distinct from the flow-tree operation ordinals #0 and #1.",
+      "source": "output/gameplay/trees/Tutorials_Prologue1_Charactermaking.txt: TerrainSelect"
+    },
+    {
+      "evidence": "[NATIVE]",
+      "from": "BindInfo.byml action name EventFlowActionUIMapSelectHandling, registration hash 0x1a24f4b5",
+      "to": "main.elf VA 0x44cb30 factory via registration VA 0x3059bd8 and R_AARCH64_RELATIVE relocation at 0x3059be0",
+      "detail": "Registration bytes at 0x3059bd8 are b5f4241a000000000000000000000000; the relocation addend resolves to 0x44cb30. The exact BindInfo entry has no alias. Factory allocates 0xc0 bytes and BLs 0x356e90 at PC 0x44cb54."
+    },
+    {
+      "evidence": "[NATIVE]",
+      "from": "constructor 0x356e90",
+      "to": "action vtable address point 0x304e3e0; slot 14 at 0x304e450 targets 0x356f10",
+      "detail": "At PC 0x356eb0 the constructor stores the vptr. Vtable pointer source cell 0x32dd640 resolves to base 0x304e3d0, then constructor adds 0x10. Method 0x356f10 stores immediate 0x2a at action-object offset +0xb8 (PC 0x356f14), so the action callback's request ID is 42."
+    },
+    {
+      "evidence": "[NATIVE]",
+      "from": "base callback 0x34b700",
+      "to": "shared request path 0x158ff60",
+      "detail": "PC 0x34b710 loads vtable slot +0x70 and PC 0x34b718 invokes it; the callback then reads request ID from self+0xb8, obtains context, and tail-branches at PC 0x34b74c."
+    },
+    {
+      "evidence": "[NATIVE]",
+      "from": "0x158ff60",
+      "to": "singleton getter 0x15411b0 with argument 8, then manager candidate method 0x11eca30",
+      "detail": "PC 0x158ff74 sets index 8 and PC 0x158ff7c calls the singleton getter. On the active service branch, PC 0x1590004 passes the action ID, PC 0x1590008 passes context, and PC 0x159001c branches to 0x11eca30. This proves a shared index-8 request/result state path; its semantic class name is unresolved."
+    },
+    {
+      "evidence": "[NATIVE]",
+      "from": "manager candidate 0x11eca30",
+      "to": "manager fields +0x21c, +0x220, +0x224",
+      "detail": "The entry checks field +0x21c against -1. If free, its adjacent request path at 0x11eca44 stores the passed ID at +0x21c at PC 0x11eca6c, writes a status byte at +0x220, and clears +0x224 at PC 0x11eca88. This supports an active-request slot interpretation, without resolving the manager's public name."
+    },
+    {
+      "evidence": "[NATIVE]",
+      "from": "base action polling methods 0x34b760 and 0x34b7a0",
+      "to": "singleton-index-8 helpers 0x1590180 and 0x15903c0",
+      "detail": "0x34b760 directly calls 0x1590180; that helper requests singleton index 8 and calls 0x11ecbd0, which reads manager fields +0x21c and +0x228. The companion path reaches 0x15903c0, which also requests singleton index 8. These are request-state/result polling/service paths; exact external operation names remain unresolved."
+    },
+    {
+      "evidence": "[NATIVE candidate]",
+      "from": "function 0x12424c0 materializes string MapSelectPage at VA 0x29a2521",
+      "to": "creator candidate 0x1242550 at direct-call PC 0x124252c; result stored at object +0x210 at PC 0x1242530",
+      "detail": "The caller passes the MapSelectPage string and helper data in stack arguments. Creator candidate allocates 0x5c0 bytes and calls 0x12406d0 at PC 0x1242604, then attachment/initialization helpers 0x1da8210, 0x1144600, and 0x1da8220. Constructor vptr source cell 0x3307b48 resolves to vtable base 0x3110b28 and address point 0x3110b38."
+    },
+    {
+      "evidence": "[NATIVE candidate]",
+      "from": "R_AARCH64_RELATIVE function-pointer cell 0x3307bb8",
+      "to": "callback candidate 0x1242fa0",
+      "detail": "Function 0x1242fa0 tests page-object field +0x218 and directly calls 0x1243980 at PC 0x1242fc8. This pointer cell is separate from the page vtable: page vtable slot 14 at 0x3110ba8 resolves to 0x1da5680, while cell 0x3307bb8 resolves to 0x1242fa0. The cell's consumer/call site is unresolved."
+    },
+    {
+      "evidence": "[NATIVE candidate]",
+      "from": "function 0x1243980, with string CharaMakeMap at VA 0x294cbc3",
+      "to": "layout/resource helper chain 0xb1b690, 0xb1aa20, 0xb1af00, 0xb1a960",
+      "detail": "The code reads page-object fields +0x210, nested +0x3f8 and +0x218. At PCs 0x12439ec/0x1243a08 it supplies the CharaMakeMap string to the direct call at 0x1243a0c (target 0xb1aa20), with adjacent resource/layout setup and completion helpers. This is a strong string-and-call candidate for a CharaMakeMap BFLYT consumer, not a proved runtime binding to the EventFlow action."
+    }
+  ],
+  "no_proven_connection": {
+    "status": "unresolved",
+    "observed_static_callers": {
+      "0x11eca30": ["0x159001c from 0x158ff60"],
+      "0x1242550": ["0x124252c from 0x12424c0"],
+      "0x1243980": ["0x1242fc8 from 0x1242fa0"],
+      "0x1242fa0": []
+    },
+    "finding": "The indexed direct-call graph contains no edge from 0x158ff60, 0x11eca30, 0x1590180, or 0x15903c0 to 0x1242550, 0x1242fa0, or 0x1243980. A relocation points to 0x1242fa0, but its runtime consumer was not identified. No direct static call or relocation proves that the index-8 request manager creates MapSelectPage, invokes CharaMakeMap, populates card captures, or selects a terrain preset.",
+    "limit": "Generic indirect calls/manager callbacks may connect the systems dynamically. The static trace does not identify such an edge and must not be read as proof that the systems are unrelated."
+  },
+  "asset_observations": {
+    "evidence": "[ASSET] parsed BFLYT/BFLAN/BNTX metadata from the listed source archives",
+    "layouts": [
+      {
+        "member": "CharaMakeMap.arc!blyt/CharaMakeMap.bflyt",
+        "bytes": 4932,
+        "sha256": "b110eb4c09bb23ce89f3f7a32139a68d1cc6b37c615788d75284a113941ca6ea",
+        "observation": "Contains four reusable part panes L_Btn_00 through L_Btn_03 referencing LCharaMakeMapBtn, plus L_Dialog_00."
+      },
+      {
+        "member": "LCharaMakeMapBtn.arc!blyt/LCharaMakeMapBtn.bflyt",
+        "bytes": 9008,
+        "sha256": "cc947b0e738ed7fbbbb340e2a585f9fdb135825398a515052fda4ca9611b0f74",
+        "observation": "Contains N_Capture_00 sized 390x390, nested part L_MapChoice_00 referencing LMapChoice, and P_Capture_00."
+      },
+      {
+        "member": "LMapChoice.arc!blyt/LMapChoice.bflyt",
+        "bytes": 2496,
+        "sha256": "a4fe91a4abcc2d3bb84e7d88cf3753d14f8bd444be7435ab8bf61b0326a099aa",
+        "observation": "P_Map_00 uses material index 0, whose texture index 0 is Capture^t. P_Material_00 uses Noise^r. The same-source BNTX container SHA256 is 6cc500513685c399c42dc3ec3cdf8f68c8a2611aa76af3afeb3bd203da2648b9; Capture^t metadata is BC5_UNORM 8x8, one mip, 512-byte image. The existence/name of this texture is proved; whether runtime replaces or renders into it is not."
+      }
+    ],
+    "animations": [
+      {"member": "CharaMakeMap.arc!anim/CharaMakeMap_In.bflan", "bytes": 440, "sha256": "74381efa8a345b90bd27885f9fa97f3c053a82407422e605b1c583c2a005ab7f", "tag": "In", "frames": 8},
+      {"member": "CharaMakeMap.arc!anim/CharaMakeMap_Out.bflan", "bytes": 500, "sha256": "ee86e34f293db8b1fa03e77a31768ce9305ed4139620e00b2b26fe4de61e6876", "tag": "Out", "frames": 12},
+      {"member": "CharaMakeMap.arc!anim/CharaMakeMap_RegionLanguageType.bflan", "bytes": 252, "sha256": "dfa6efa25e2eaec60a8beb34f6c77e339d73fc4263dea865a990f3b84227022b", "tag": "RegionLanguageType", "frames": 15},
+      {"member": "LCharaMakeMapBtn.arc!anim/LCharaMakeMapBtn_Select.bflan", "bytes": 216, "sha256": "1b271f4c7fccfeaa4b95460a7d00f3df4d0ee2a70c838c018e7727b664827637", "tag": "Select", "frames": 1},
+      {"member": "LCharaMakeMapBtn.arc!anim/LCharaMakeMapBtn_Decide.bflan", "bytes": 204, "sha256": "85bb3595f922fd04ad0064746fcbe7d980049a0771c24e9a9247b93f52798e6b", "tag": "Decide", "frames": 5}
+    ],
+    "conversion_and_provenance_implications": [
+      "The static layout records establish reusable map-card structure and named texture bindings, but do not provide evidence for the pixels or runtime update path of map thumbnails. A layout-only conversion cannot establish dynamic card capture behavior.",
+      "Keep source .zs archive hashes and extracted BFLYT/BFLAN/BNTX member hashes with any converted asset set. Capture^t is present as an 8x8 BNTX texture; avoid treating its name alone as proof that it is a live render target.",
+      "Decoded animation tags, targets, and frame/key structure are evidence of resource data only; runtime trigger order and selected-card semantics are unresolved."
+    ]
+  },
+  "validation": {
+    "json": "Validated with python3 -m json.tool after writing.",
+    "hashes": "Physical SHA256 and byte counts for main.elf, BFEVFL, BindInfo.byml, and all three .zs archives were recomputed and match this report. BFLYT/BFLAN/BNTX member hashes match the existing parsed layout/animation provenance manifests.",
+    "no_repository_mutation": "Only the two new artifacts named here are added; no existing report was edited, and no commit or push was made."
+  }
+}
