@@ -1,0 +1,375 @@
+{
+  "schema": "acnh.registration-cvillage-context-followup/1",
+  "created_utc_date": "2026-11-07",
+  "scope": "Bounded ACNH 1.0.0 native follow-up on the cVillage result store, its owning global/context, initializer, consumers, and save/preset boundary. No Godot implementation or build.",
+  "status_legend": {
+    "NATIVE": "Direct evidence from original ELF relocations, instructions, or the generated native index.",
+    "PSEUDO": "Interpreted native structure/dataflow with exact references and limits stated.",
+    "OPEN": "Required runtime, persistence, or preset join is not established by local static evidence."
+  },
+  "source_build": {
+    "main_nso_path": "/workspace/acnh-re-github/acnh-re/inputs/additional_exefs/main",
+    "main_nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+    "main_elf_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/A_logic/main.elf",
+    "main_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+    "address_convention": "VAs in this JSON are raw ELF VAs as used by native_image.Image() and index.sqlite. Decomp global labels such as 0x33d1ba8 are pseudonames; the corresponding raw ELF slot is 0x32d1ba8 (subtract 0x100000)."
+  },
+  "source_artifacts": [
+    {
+      "path": "/workspace/acnh-re/output/index.sqlite",
+      "sha256": "a78c7af27d37b8fd931bba8bc611623dacf7685cb6e8b4f827effa0765340aad"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/code_pointer_arrays.json",
+      "sha256": "64d474068ca289f9146f7f32e6647a16a05e8f5be8e635615a478744b62ef822"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/96ef0.c",
+      "sha256": "faed2fadf7789aa6552dd2bac630f06d9e5771d7fc5ac0568a35209c27dc5084"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/334650.c",
+      "sha256": "4bbf7b4001899e8b2a936db150de77b92b2b24f3c19f5d499c0dd8a1ab339a2e"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/564da0.c",
+      "sha256": "78f4b855d8a1acd1dfe03210e9e79f3a1d0b7e8ac9d19b0f3fd3a004f6964830"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/564e30.c",
+      "sha256": "af9ef8c96e810a6f727bb0caf44f09e8e4eeadb8eaced7425c7b261576610f98"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/5650b0.c",
+      "sha256": "bfa879a4e60f9b10a9640e2229860c2c0d0df33d3f148f2ca7b50fc86c1a3d2f"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/5651b0.c",
+      "sha256": "6834b80ca4e44c2c4a58a6f7e39bbf87d2eaa9670966505e6ef6fda3c2b66eda"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/565300.c",
+      "sha256": "4771e0d151246e2cc483f60fc01e06d7ef68a6738bb22cde4553c03e727aad39"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/529810.c",
+      "sha256": "e115da00399097c6816c40be06be64d1a66d1931a743b193ecd48567b3d4b30c"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/529860.c",
+      "sha256": "6c06343608b47f3779cb477059dc5b00495837c3bffd4c193a86da8d36789dd1"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/529910.c",
+      "sha256": "60b968019ada35592ce5202d29ec1739be335c57c0a6a9ff6af578565afee324"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/529e50.c",
+      "sha256": "7a457af49d5983e4de577dea448edf42c78f5f82cd383c57be263c1c92622165"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/1541960.c",
+      "sha256": "9f77e76fbaaaa116aad2eb265a54bf57848b33b8adb5127b79c7db3e9fbe3227"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/1544de0.c",
+      "sha256": "d5ace08e1b4e6cf57ff8fd8832a5a5bea19c671f26b7f277cf499da0a0abdb8f"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/154a100.c",
+      "sha256": "084b64c1c4b17e4386ecf7a612c9091afe0b66cb08e7e5d9b3a43b1a92ab1585"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/154a130.c",
+      "sha256": "c7098f2c8e7e75a17e0b9d331148b1f84809a263d59e7d99fe57ac3729062ec3"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/1544dc0.c",
+      "sha256": "31d5690141f776049ff35c5b91fd801b70b7ee631fdf5452b64cf3db6b062751"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/1547590.c",
+      "sha256": "e19db6065cad2dfb1ce961e5c48a3fd364caf9b24faed0c7407431f36f3d7885"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/1547600.c",
+      "sha256": "72aabe1a29087a8176ca714be3aaeafab6afcf6b1dc1128984287cb01ad9c021"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/1242060.c",
+      "sha256": "4af58c9ffef9719e41f1e513c6fe43fe2020b9ba690e7ddc52f062311e6f22f8"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/1243540.c",
+      "sha256": "418ea3be568f3dfbb23876716b82833446182f88e4bd8fa8a2fb3b2a7ea73b6c"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/1243980.c",
+      "sha256": "2a7adac8e5238348cd7b2cd4bded49f6adeb280f642de1606a3028b76839f28d"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/4dd060.c",
+      "sha256": "2c71fdbd16325f57fe7a3500f34de7c6bfd49f6607f8a43ca101e1f6f193b6cf"
+    },
+    {
+      "path": "/workspace/acnh-re/output/gameplay/save_layout.json",
+      "sha256": "a326c84213faad1921bd7660c3e171a7b3af117ec55e2ca711a871ad637e51dc"
+    }
+  ],
+  "field_system_context": {
+    "status": "PSEUDO",
+    "global_pointer_cell": {
+      "decomp_pseudoname": "0x33d1ba8",
+      "raw_elf_slot_va": "0x32d1ba8",
+      "relocation": "R_AARCH64_RELATIVE",
+      "relocation_type_number": 1027,
+      "relocation_addend_raw_va": "0x345ff98",
+      "static_storage": "Target lies in memory-only tail of PT_LOAD raw VA 0x301c000: p_filesz 0x321ec8 ends at 0x333dec8; p_memsz 0xa9b000 ends at 0x3ab7000. It is zero-fill BSS storage.",
+      "target_field_va": "0x3464588",
+      "target_subobject_va": "0x3464568"
+    },
+    "identity": {
+      "description": "Large field-system context/singleton shape inferred from its accessor, startup use, and member offsets.",
+      "exact_native_class_name": null,
+      "name_evidence": "Constructor 0x564e30 references string FieldSystem at 0x29c150d for member offset +0x4658; this is not an aggregate C++ type name. No RTTI/class symbol recovered.",
+      "primary_vtable_address_point_va": "0x3066a00",
+      "primary_vtable_relocation_slot_va": "0x32e49c8",
+      "primary_vtable_relocation_target_va": "0x30669f0"
+    },
+    "initialization": {
+      "lazy_accessor_va": "0x564da0",
+      "lazy_accessor_behavior": "If *0x32d1ba8 is null, allocates 0x47d0 bytes, installs a secondary vptr at +0x47b0, calls 0x564e30, then stores the pointer. Otherwise returns existing pointer.",
+      "field_subobject_constructor_va": "0x529810",
+      "field_subobject_constructor_call_pc": "0x564ec0",
+      "subobject_offset": "0x45d0",
+      "startup_owner_va": "0x96ef0",
+      "startup_call_pcs": [
+        "0x972f0",
+        "0x972f8"
+      ],
+      "startup_sequence": "Startup calls 0x564da0 at 0x972f0 and then 0x5650b0 at 0x972f8 with the accessor result in x0.",
+      "construction_limit": "The relocation pre-seeds the global pointer with non-null BSS storage, so actual execution of the accessor null-branch constructor is not established. No relocations were found in the first 0x47d0 bytes of the BSS target. Explicit constructor effects are proven; root/subobject C++ vptr construction for this pre-pointed instance remains OPEN. The target bytes begin zero-filled."
+    }
+  },
+  "c_village_field": {
+    "status": "PSEUDO",
+    "save_type": "cVillage",
+    "save_type_case_index": 5,
+    "save_action_method_va": "0x334650",
+    "target": {
+      "global_decomp_pseudoname": "0x33d1ba8",
+      "global_raw_slot_va": "0x32d1ba8",
+      "field_offset": "0x45f0",
+      "native_width_bytes": 4,
+      "native_signedness": "unknown",
+      "containing_subobject_offset": "0x45d0",
+      "member_offset_in_subobject": "0x20",
+      "field_address_from_static_target": "0x3464588",
+      "initializer_va": "0x529810",
+      "initializer_effect": "Zeros subobject+0x20; also zeros status +8, count +0x10, and entry pointer +0x18.",
+      "subobject_vtable_address_point_va": "0x3063c48",
+      "subobject_vtable_relocation_slot_va": "0x32e4348",
+      "subobject_vtable_relocation_target_va": "0x3063c38",
+      "semantics": "A 32-bit option/result index in a native four-entry container; selected terrain/preset meaning is unresolved."
+    },
+    "option_container": {
+      "constructor_va": "0x529810",
+      "population_method_va": "0x529910",
+      "population_guard_va": "0x529860",
+      "count_offset": "0x10",
+      "entry_pointer_offset": "0x18",
+      "population_effect": "Sets entry count to four and constructs entries at indices 0–3, each 0xe0 bytes.",
+      "accessors": [
+        "0x52a040",
+        "0x52a080",
+        "0x52a0c0"
+      ]
+    },
+    "case_native_sequence": [
+      {
+        "pc": "0x334d64",
+        "instruction": "mov w0, #1"
+      },
+      {
+        "pc": "0x334d68",
+        "instruction": "bl 0x154a130"
+      },
+      {
+        "pc": "0x334d70",
+        "instruction": "ldr w8, [x0, #0xc]"
+      },
+      {
+        "pc": "0x334d80",
+        "instruction": "str w8, [x9, #0x45f0]"
+      }
+    ]
+  },
+  "source_result_context": {
+    "status": "PSEUDO",
+    "global_pointer_cell": {
+      "decomp_pseudoname": "0x33d07c0",
+      "raw_elf_slot_va": "0x32d07c0",
+      "relocation": "R_AARCH64_RELATIVE",
+      "relocation_addend_raw_va": "0x3715c40",
+      "target_storage": "BSS/zero-fill PT_LOAD storage"
+    },
+    "child_object": {
+      "parent_offset": "0x28",
+      "allocated_size_bytes": "0xb0c8",
+      "parent_constructor_va": "0x1541960",
+      "child_initializer_va": "0x1544de0",
+      "initializer_call_pc": "0x15419d0",
+      "startup_call_pc": "0x97664",
+      "source_field_offset_in_child": "0xae3c",
+      "source_field_width_bytes": 4,
+      "initialization": "0x1544de0 clears the storage including +0xae3c; parent constructor stores this child pointer at parent+0x28.",
+      "reader_wrapper_va": "0x154a130",
+      "reader_target_va": "0x1547590",
+      "reader_effect": "Returns child+0xae30; cVillage reads u32 at returned pointer+0xc, i.e. child+0xae3c.",
+      "setter_wrapper_va": "0x154a100",
+      "setter_va": "0x1547600",
+      "setter_effect": "Writes a 16-bit value from param3+8 at child+0xae38 and a 32-bit value from param3+0xc at child+0xae3c."
+    },
+    "map_callback_transfer": {
+      "status": "PSEUDO",
+      "callback_table_start_va": "0x3307ba0",
+      "callback_table_status": "Relocated callback pointer sequence, not assumed to be a C++ vtable.",
+      "registration_consumer_va": "0x1242ce0",
+      "callback_va": "0x1243260",
+      "native_function_name": "FUN_01343260",
+      "callback_table_index": 8,
+      "callback_pointer_slot_va": "0x3307be0",
+      "selection_index_object_offset": "0x2cc",
+      "selection_index_use": "Read as an index into the four-entry option container.",
+      "setter_call_pc": "0x124338c",
+      "transfer_sequence": [
+        {
+          "pc": "0x124335c",
+          "instruction": "mov x0, xzr"
+        },
+        {
+          "pc": "0x1243360",
+          "instruction": "bl 0x154a130"
+        },
+        {
+          "pc": "0x1243364",
+          "instruction": "ldrh w8, [x0, #8]"
+        },
+        {
+          "pc": "0x124337c",
+          "instruction": "ldr w8, [x19, #0x2cc]"
+        },
+        {
+          "pc": "0x1243388",
+          "instruction": "str w8, [sp, #0xc]"
+        },
+        {
+          "pc": "0x124338c",
+          "instruction": "bl 0x154a100"
+        }
+      ],
+      "conclusion": "Map-result callback copies its current option index at object+0x2cc into shared result context child+0xae3c. Its class and edge to UIMapSelectHandling/MapSelectPage remain unresolved."
+    },
+    "cross_action_dataflow": {
+      "status": "PSEUDO",
+      "trace": [
+        "Map-result callback 0x1243260 reads option index [x19+0x2cc].",
+        "Wrapper 0x154a100/setter 0x1547600 writes it into *0x33d07c0+0x28+0xae3c.",
+        "SaveSetFromUIResult method 0x334650 case 5 (cVillage) reads that u32 through 0x154a130.",
+        "The cVillage case stores it in *0x33d1ba8+0x45f0."
+      ],
+      "limit": "Selected option-index propagation is established. The index-to-FieldMainFieldParam.UniqueID or LandMaking row mapping is not."
+    }
+  },
+  "consumer_and_persistence_boundary": {
+    "status": "OPEN",
+    "recovered_consumer_path": {
+      "field_system_destructor_va": "0x565300",
+      "destructor_call_pc": "0x565368",
+      "container_cleanup_va": "0x529e50",
+      "field_read": "Reads subobject+0x20 and passes the index to 0x529ea0 when feature/status guards pass.",
+      "index_consumer_va": "0x529ea0",
+      "consumer_behavior": "Bounds-checks against count at +0x10, loads entry[index] from the pointer array at +0x18, then applies entry data through native runtime-object APIs; exact semantic destination is unnamed.",
+      "interpretation": "Recovered use is an option-entry selection/cleanup path, not a demonstrated durable save write."
+    },
+    "durable_save_writer": {
+      "status": "OPEN",
+      "proven_write_extent": "The value reaches *0x33d1ba8+0x45f0.",
+      "unresolved_edge": "No recovered serialization/save-commit call or named persistent save field is reached from this store or the recovered consumer."
+    },
+    "terrain_preset_selector": {
+      "status": "OPEN",
+      "known_table_context": "Prior work joins FieldMainFieldParam.bcsv source 41 (96 rows; example UniqueID 0 → FieldPresetA00) to FieldPresetA00_LandMaking.byml source 2442 by exact FieldData filename stem.",
+      "unresolved_edge": "No native join connects result index 0–3 or field +0x45f0 to FieldMainFieldParam.UniqueID/FieldData or a selected LandMaking BYML."
+    },
+    "bounded_negative_searches": [
+      {
+        "source": "/workspace/acnh-re/output/binary/analysis_decomp",
+        "query": "fixed-string + 0x45f0",
+        "result_count": 1,
+        "hit": "334650.c cVillage store",
+        "limit": "Aliased base/register expressions may not print the absolute object offset."
+      },
+      {
+        "source": "/workspace/acnh-re/output/binary/analysis_decomp",
+        "query": "fixed-string 0xae3c",
+        "result_count": 2,
+        "hits": [
+          "1544de0.c initializer clear",
+          "1547600.c setter write"
+        ]
+      },
+      {
+        "source": "/workspace/acnh-re/output/index.sqlite",
+        "query": "direct_calls into 0x1547600",
+        "result_count": 1,
+        "caller": "0x154a100"
+      },
+      {
+        "source": "/workspace/acnh-re/output/index.sqlite",
+        "query": "direct_calls into 0x154a100",
+        "result_count": 1,
+        "callsite": "0x124338c",
+        "limit": "Owner VA is null in generated index."
+      },
+      {
+        "source": "/workspace/acnh-re/output/index.sqlite",
+        "query": "direct_calls into 0x154a130",
+        "result_count": 2,
+        "callsites": [
+          "0x1243360",
+          "0x334d68"
+        ],
+        "limit": "Owner VA is null in generated index."
+      },
+      {
+        "source": "/workspace/acnh-re/output/index.sqlite",
+        "query": "direct_calls into 0x529e50",
+        "result_count": 1,
+        "caller": "0x565300"
+      },
+      {
+        "source": "/workspace/acnh-re/output/index.sqlite",
+        "query": "direct_calls into 0x564e30",
+        "result_count": 1,
+        "caller": "0x564da0",
+        "limit": "Constructor direct-caller only; accessor may skip its null branch due the non-null ELF relocation."
+      }
+    ]
+  },
+  "remaining_open_edges": [
+    "Whether the pre-pointed BSS field-system instance receives root/subobject C++ constructors before or after the observed startup accessor call.",
+    "The aggregate native class/type name at *0x33d1ba8; FieldSystem is only a member descriptor string at +0x4658.",
+    "The map callback object/controller edge to UIMapSelectHandling or MapSelectPage.",
+    "The cVillage option index field *0x33d1ba8+0x45f0 to a named durable save record and first save commit.",
+    "The option index 0–3 to FieldMainFieldParam.UniqueID/FieldData and the chosen LandMaking preset."
+  ],
+  "validation": {
+    "json_validation_command": "python -m json.tool output/gameplay/registration_c_village_context_followup_20261107.json",
+    "source_hashes_checked": true,
+    "new_isolated_artifacts": true,
+    "shared_files_or_prior_reports_edited": false,
+    "godot_or_build_performed": false,
+    "git_commit_or_push": false
+  }
+}
