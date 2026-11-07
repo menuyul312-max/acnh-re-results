@@ -777,6 +777,147 @@
       ],
       "claim": "The SaveSimpleSave handler stores/processes the Process parameter and tail-dispatches to 0x338080; that dispatcher calls 0xfb3160, which constructs a SaveProc operation and passes it to 0xfaf180. The action update path polls completion via 0xf1da80. The tail edge is from decompiler control flow because the indexed direct-call table omits the terminal branch."
     },
+    "worker_successor_trace": {
+      "worker_registration_parent_va": "0x96ef0",
+      "worker_registration_calls": [
+        {
+          "pc": "0x970ec",
+          "target": "0xfb4150"
+        }
+      ],
+      "worker_registration_va": "0xfb4150",
+      "worker_registration_strings": [
+        "SaveProc"
+      ],
+      "worker_registration_calls_to_thread_factory": [
+        {
+          "pc": "0xfb41a0",
+          "target": "0x19904f0"
+        },
+        {
+          "pc": "0xfb41ac",
+          "target": "0xd4240"
+        }
+      ],
+      "thread_factory_va": "0xd4240",
+      "worker_queue_enqueue_va": "0xfaf180",
+      "worker_queue_enqueue_calls": [
+        {
+          "pc": "0xfaf194",
+          "target": "0x19a25a0"
+        },
+        {
+          "pc": "0xfaf1f0",
+          "target": "0x19904f0"
+        },
+        {
+          "pc": "0xfaf200",
+          "target": "0x19a25c0"
+        }
+      ],
+      "worker_queue_poll_va": "0xfaf210",
+      "worker_queue_poll_calls": [
+        {
+          "pc": "0xfaf220",
+          "target": "0x19a25a0"
+        },
+        {
+          "pc": "0xfaf240",
+          "target": "0xd47a0"
+        },
+        {
+          "pc": "0xfaf274",
+          "target": "0xfb41c0"
+        },
+        {
+          "pc": "0xfaf2a4",
+          "target": "0x19a25c0"
+        }
+      ],
+      "worker_task_dispatcher_va": "0xfaf360",
+      "worker_task_dispatcher_calls": [
+        {
+          "pc": "0xfaf374",
+          "target": "0xfaf4e0"
+        },
+        {
+          "pc": "0xfaf410",
+          "target": "0x220e5c0"
+        },
+        {
+          "pc": "0xfaf4b0",
+          "target": "0x19a2f90"
+        }
+      ],
+      "worker_callback_slot_disassembly": {
+        "0xfaf388": "ldr x8, [x0, #0x10]!",
+        "0xfaf38c": "ldr x8, [x8, #0x10]",
+        "0xfaf390": "blr x8",
+        "0xfaf3a8": "ldr x8, [x0, #0x30]!",
+        "0xfaf3ac": "ldr x8, [x8, #0x10]",
+        "0xfaf3b0": "blr x8"
+      },
+      "worker_task_executor_va": "0xd45c0",
+      "worker_task_executor_calls": [
+        {
+          "pc": "0xd4654",
+          "target": "0x19904f0"
+        },
+        {
+          "pc": "0xd466c",
+          "target": "0x2201820"
+        }
+      ],
+      "claim": "SaveProc is registered as a named worker from 0x96ef0. The queue worker at 0xfaf210 dequeues 0x38-byte task records and reaches 0xd45c0; the task dispatcher at 0xfaf360 selects an indirect callback through the queued object at +0x10 or +0x30, then 0xd45c0 passes task data through 0x2201820. The callback identity and the serializer/file-write operation it performs remain unresolved."
+    },
+    "filesystem_import_audit": {
+      "sdk_imports": [
+        {
+          "name": "_ZN2nn2fs8OpenFileEPNS0_10FileHandleEPKci",
+          "status": "unique_export_match",
+          "sdk_export_va": "0x66300",
+          "import_got_sites": [
+            "0x32ced08"
+          ]
+        },
+        {
+          "name": "_ZN2nn2fs9WriteFileENS0_10FileHandleElPKvmRKNS0_11WriteOptionE",
+          "status": "unique_export_match",
+          "sdk_export_va": "0x64bf0",
+          "import_got_sites": [
+            "0x32cf7a8"
+          ]
+        },
+        {
+          "name": "_ZN2nn2fs9FlushFileENS0_10FileHandleE",
+          "status": "unique_export_match",
+          "sdk_export_va": "0x64d30",
+          "import_got_sites": [
+            "0x32cf798"
+          ]
+        },
+        {
+          "name": "_ZN2nn2fs6CommitEPKc",
+          "status": "unique_export_match",
+          "sdk_export_va": "0x66830",
+          "import_got_sites": [
+            "0x32cf7d0"
+          ]
+        }
+      ],
+      "main_only_sandbox_executed_sdk": false,
+      "direct_fs_wrapper_calls_in_indexed_worker_functions": [],
+      "indexed_worker_functions_checked": [
+        "0xfb3160",
+        "0xfaf180",
+        "0xfaf210",
+        "0xfb4150",
+        "0xd45c0",
+        "0xfaf360",
+        "0xfaf4e0"
+      ],
+      "claim": "OpenFile, WriteFile, FlushFile, and Commit uniquely resolve to sdk-module exports, but these are imports rather than main.elf implementations. None of the indexed direct calls in the SaveProc request/queue/dispatch functions targets the main import wrappers; the unresolved indirect worker callback could still reach them. The current Sandbox maps only main.elf and does not execute SDK or filesystem services."
+    },
     "craft_path_relation": {
       "cWorkCraft_save_event": {
         "flow": "Ftr_Working",
@@ -1047,7 +1188,7 @@
       "direct_save_request_calls_found": false,
       "claim": "The cWorkCraft handler and transaction mutate player-associated records but do not directly call the indexed SaveSimpleSave/SaveProc request path."
     },
-    "durable_flush_status": "OPEN; the SaveSimpleSave -> 338080 -> SaveProc handoff and completion path are mapped, but the serializer and durable file write/flush after SaveProc were not identified."
+    "durable_flush_status": "OPEN; SaveSimpleSave -> SaveProc request, queue worker, and indirect task-dispatch boundary are mapped. The worker callback, serializer, and durable file write/flush are not identified; the available native sandbox cannot execute the separate SDK filesystem imports."
   },
   "workbench_page_and_remake": {
     "page_refs": {
@@ -1414,6 +1555,8 @@
     "The WorkCraftBgPage function is a page initializer, not proof that the page itself commits a transaction.",
     "The remake handler passes a context-derived quantity for item 2513 into an inventory update, but the mapping from ItemRemake.RemakeKitNum=2 for item 3436 to that quantity was not executed in the game.",
     "A conditional pocket insertion follows the material-processing branch through 0xefbd30 -> 0xf99270; the object identity and its refund/rollback purpose are not established.",
+    "The SaveProc queue worker resolves an indirect callback from task-object fields; no indexed call edge identifies its serializer or durable write operation.",
+    "OpenFile/WriteFile/FlushFile/Commit imports resolve to the separate sdk module, but current main-only native fixtures do not load SDK/system-service implementations.",
     "The post-craft bitmap helper accepts only recipe keys below 0x800; high EventFlow MadeItemID values are converted through ItemParam.DiyRecipeID before query. See crafting_recipe_flow_native.json."
   ]
 }

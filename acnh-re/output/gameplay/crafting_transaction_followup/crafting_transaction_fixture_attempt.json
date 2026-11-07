@@ -1,0 +1,298 @@
+{
+  "schema": "acnh.crafting.transaction_fixture_attempt.v1",
+  "scope": "Bounded execution of original main.elf instructions using partial synthetic manager/player records. Neither probe reaches the intended pocket insertion call; this is a blocker report, not a completed craft runtime test.",
+  "provenance": {
+    "analysis_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+    "main_nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900"
+  },
+  "probes": {
+    "ee1420": {
+      "entry_va": "0xee1420",
+      "fixture": {
+        "manager_va": "0x70000000",
+        "requirement_va": "0x500d0000",
+        "context_va": "0x500e0000",
+        "recipe_id": 56,
+        "output_item_id": 975,
+        "material_slots": [
+          [
+            2213,
+            1
+          ],
+          [
+            2285,
+            1
+          ],
+          [
+            2287,
+            1
+          ],
+          [
+            2214,
+            1
+          ],
+          [
+            2286,
+            1
+          ],
+          [
+            65534,
+            0
+          ]
+        ],
+        "global_setup": [
+          {
+            "got_va": "0x32d4f90",
+            "cell_va": "0x35cefa0",
+            "fixture_value": "0x70000000"
+          },
+          {
+            "got_va": "0x32d4ff0",
+            "cell_va": "0x35c6b20",
+            "fixture_value": "0x50120000"
+          },
+          {
+            "got_va": "0x32d0df0",
+            "cell_va": "0x3563700",
+            "fixture_value": "0x50130000"
+          }
+        ],
+        "item_cache_global": {
+          "got_va": "0x32f3f78",
+          "cell_va": "0x354ce00",
+          "value_before_call": "0x0"
+        },
+        "limit": "partial synthetic Player/session state; no live item-table/cache/UI objects"
+      },
+      "executed_watchpoints": [
+        "0xee1420",
+        "0xee0ed0",
+        "0xeff060",
+        "0xa9e440",
+        "0xa774c0",
+        "0xab9400"
+      ],
+      "watch_entries": [
+        {
+          "va": "0xee1420",
+          "x0_x3": [
+            "0x70000000",
+            "0x500d0000",
+            "0x500e0000",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xee0ed0",
+          "x0_x3": [
+            "0x70000000",
+            "0x401fefc8",
+            "0x500d0000",
+            "0x500e0000"
+          ]
+        },
+        {
+          "va": "0xeff060",
+          "x0_x3": [
+            "0x500e0000",
+            "0x500d002c",
+            "0xffffffff",
+            "0x500e0000"
+          ]
+        },
+        {
+          "va": "0xa9e440",
+          "x0_x3": [
+            "0x401feef8",
+            "0x401feea0",
+            "0x1",
+            "0x1"
+          ]
+        },
+        {
+          "va": "0xa774c0",
+          "x0_x3": [
+            "0x0",
+            "0x1e",
+            "0x1",
+            "0x1"
+          ],
+          "manager_pointer_is_null": true
+        },
+        {
+          "va": "0xab9400",
+          "x0_x3": [
+            "0xa9023ff0f941b463",
+            "0x1e",
+            "0x1",
+            "0x1"
+          ]
+        }
+      ],
+      "target_helper_reached": false,
+      "return_value": null,
+      "exception": "UcError: Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "first_unmapped_access": {
+        "address": "0xa9023ff0f941b463",
+        "pc": "0xab941c",
+        "size": 4,
+        "x0_x3": [
+          "0xa9023ff0f941b463",
+          "0x1e",
+          "0x1",
+          "0x1"
+        ],
+        "last_pcs": [
+          "0xa774ec",
+          "0xa774f0",
+          "0xa774f4",
+          "0xa774f8",
+          "0xa774fc",
+          "0xa77500",
+          "0xa77504",
+          "0xa77508",
+          "0xa7750c",
+          "0xa77510",
+          "0xa9e4a4",
+          "0xa9e4a8",
+          "0xab9400",
+          "0xab9404",
+          "0xab9408",
+          "0xab940c",
+          "0xab9410",
+          "0xab9414",
+          "0xab9418",
+          "0xab941c"
+        ]
+      }
+    },
+    "efbd30": {
+      "entry_va": "0xefbd30",
+      "fixture": {
+        "manager_va": "0x70000000",
+        "player_records_va": "0x50120000",
+        "mode_context_va": "0x50010000",
+        "descriptor_va": "0x50020000",
+        "descriptor_item_id": 2213,
+        "global_setup": [
+          {
+            "got_va": "0x32d4f90",
+            "cell_va": "0x35cefa0",
+            "fixture_value": "0x70000000"
+          },
+          {
+            "got_va": "0x32d4ff0",
+            "cell_va": "0x35c6b20",
+            "fixture_value": "0x50120000"
+          },
+          {
+            "got_va": "0x32d0df0",
+            "cell_va": "0x3563700",
+            "fixture_value": "0x50130000"
+          }
+        ],
+        "world_service_global": {
+          "got_va": "0x32d3d78",
+          "cell_va": "0x35e7430",
+          "value_before_call": "0x0"
+        },
+        "limit": "0x33d3d78 world/player service object was not reconstructed"
+      },
+      "executed_watchpoints": [
+        "0xefbd30",
+        "0xeab1f0",
+        "0xeab210",
+        "0xe670b0"
+      ],
+      "watch_entries": [
+        {
+          "va": "0xefbd30",
+          "x0_x3": [
+            "0x50010000",
+            "0x50020000",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xeab1f0",
+          "x0_x3": [
+            "0x401fefd8",
+            "0x50010000",
+            "0x0",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xeab210",
+          "x0_x3": [
+            "0x70000000",
+            "0x401fefd8",
+            "0x1",
+            "0x0"
+          ]
+        },
+        {
+          "va": "0xe670b0",
+          "x0_x3": [
+            "0x50120000",
+            "0x0",
+            "0x1",
+            "0x0"
+          ]
+        }
+      ],
+      "target_helper_reached": false,
+      "return_value": "0x0",
+      "exception": null,
+      "first_unmapped_access": null
+    }
+  },
+  "blockers": {
+    "ee1420": {
+      "first_unmapped_access": {
+        "address": "0xa9023ff0f941b463",
+        "pc": "0xab941c",
+        "size": 4,
+        "x0_x3": [
+          "0xa9023ff0f941b463",
+          "0x1e",
+          "0x1",
+          "0x1"
+        ],
+        "last_pcs": [
+          "0xa774ec",
+          "0xa774f0",
+          "0xa774f4",
+          "0xa774f8",
+          "0xa774fc",
+          "0xa77500",
+          "0xa77504",
+          "0xa77508",
+          "0xa7750c",
+          "0xa77510",
+          "0xa9e4a4",
+          "0xa9e4a8",
+          "0xab9400",
+          "0xab9404",
+          "0xab9408",
+          "0xab940c",
+          "0xab9410",
+          "0xab9414",
+          "0xab9418",
+          "0xab941c"
+        ]
+      },
+      "path": "0xee1420 -> 0xee0ed0 -> 0xeff060 -> 0xa9e440 -> 0xa774c0 -> 0xab9400",
+      "dependency_global": "0x32f3f78 (cell 0x354ce00)",
+      "behavior": "The partial fixture leaves the manager/table pointer at this GOT null. The original path passes null through 0xa774c0, then 0xab9400 dereferences the invalid returned pointer at 0xab941c. The manager semantics are unnamed here; no material helper return, conditional insertion, or rollback result was observed."
+    },
+    "efbd30": {
+      "function": "0xe670b0",
+      "dependency_global": "0x33d3d78 (GOT 0x32d3d78)",
+      "behavior": "The player-context resolver loads the world/player manager from this global and returns null when it is zero; the partial fixture reproduces the early return before 0xf99270.",
+      "initializer_context": "World initialization 0x96ef0 invokes 0xf30220 with the object behind this global after broader engine setup; constructing the service vtable/state is outside the partial fixture."
+    }
+  },
+  "status": "ORIGINAL CODE PARTIALLY EXECUTED; target insertion path remains unexecuted; serializer/write-to-file remains static-only."
+}

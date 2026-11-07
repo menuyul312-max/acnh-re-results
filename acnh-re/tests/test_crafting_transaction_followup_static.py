@@ -63,6 +63,27 @@ class CraftingTransactionFollowupStaticTests(unittest.TestCase):
         self.assertFalse(save['craft_path_relation']['direct_save_request_calls_found'])
         self.assertIn('OPEN', save['durable_flush_status'])
 
+    def test_saveproc_successor_and_sdk_write_boundary_remain_bounded(self):
+        save = self.report['save_flush_boundary']
+        worker = save['worker_successor_trace']
+        self.assertEqual(worker['worker_registration_parent_va'], '0x96ef0')
+        self.assertEqual(worker['worker_registration_calls'][0]['target'], '0xfb4150')
+        self.assertIn('SaveProc', worker['worker_registration_strings'])
+        self.assertIn('0xd4240', [call['target'] for call in worker['worker_registration_calls_to_thread_factory']])
+        self.assertIn('0xfb41c0', [call['target'] for call in worker['worker_queue_poll_calls']])
+        self.assertIn('0x2201820', [call['target'] for call in worker['worker_task_executor_calls']])
+        callback_slots = worker['worker_callback_slot_disassembly']
+        self.assertEqual(callback_slots['0xfaf390'], 'blr x8')
+        self.assertEqual(callback_slots['0xfaf3b0'], 'blr x8')
+        self.assertIn('callback identity', worker['claim'])
+
+        fs = save['filesystem_import_audit']
+        self.assertFalse(fs['main_only_sandbox_executed_sdk'])
+        self.assertEqual(fs['direct_fs_wrapper_calls_in_indexed_worker_functions'], [])
+        self.assertEqual({entry['sdk_export_va'] for entry in fs['sdk_imports']},
+                         {'0x66300', '0x64bf0', '0x64d30', '0x66830'})
+        self.assertIn('could still reach them', fs['claim'])
+
     def test_remake_cost_is_table_evidence_and_rollback_remains_open(self):
         remake = self.report['workbench_page_and_remake']['remake_item']
         self.assertEqual(remake['tutorial_item_unique_id'], 3436)

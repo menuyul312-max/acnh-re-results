@@ -17,6 +17,7 @@ DECOMP = SHARED / 'output' / 'binary' / 'analysis_decomp'
 TABLES = SHARED / 'output' / 'tables_resolved'
 MANIFEST = SHARED / 'output' / 'manifest.json'
 HANDLERS = SHARED / 'output' / 'binary' / 'event_handlers_resolved.json'
+IMPORTS = SHARED / 'output' / 'native_modules' / 'import_resolution.json'
 PREVIOUS = OUTPUT / 'crafting_transaction_followup_native.json'
 ELF = REPO / 'inputs' / 'additional_exefs' / 'main'
 
@@ -129,6 +130,7 @@ def build_report():
     db = sqlite3.connect(DB)
     db.row_factory = sqlite3.Row
     manifest = json.loads(MANIFEST.read_text())
+    imports = json.loads(IMPORTS.read_text())
     analysis_elf = Path(manifest['source_root']) / 'A_logic' / 'main.elf'
     require(analysis_elf.is_file(), f'missing source ELF: {analysis_elf}')
     handlers = json.loads(HANDLERS.read_text())
@@ -240,6 +242,42 @@ def build_report():
     save_process_dispatch_calls = direct_calls(db, 0x338080)
     save_action_update_calls = direct_calls(db, 0x338120)
     saveproc_request_calls = direct_calls(db, 0xfb3160)
+    saveproc_queue_calls = direct_calls(db, 0xfaf180)
+    saveproc_worker_poll_calls = direct_calls(db, 0xfaf210)
+    saveproc_worker_init_calls = direct_calls(db, 0xfb4150)
+    saveproc_worker_dispatch_calls = direct_calls(db, 0xd45c0)
+    task_state_dispatch_calls = direct_calls(db, 0xfaf360)
+    saveproc_worker_init_parent_calls = calls_to(db, 0x96ef0, 0xfb4150)
+    task_callback_disasm = disassemble(
+        analysis_elf, (0xfaf388, 0xfaf38c, 0xfaf390,
+                       0xfaf3a8, 0xfaf3ac, 0xfaf3b0))
+    fs_import_names = [
+        '_ZN2nn2fs8OpenFileEPNS0_10FileHandleEPKci',
+        '_ZN2nn2fs9WriteFileENS0_10FileHandleElPKvmRKNS0_11WriteOptionE',
+        '_ZN2nn2fs9FlushFileENS0_10FileHandleE',
+        '_ZN2nn2fs6CommitEPKc',
+    ]
+    fs_import_audit = []
+    for name in fs_import_names:
+        binding = next((entry for entry in imports['main']['bindings']
+                        if entry['symbol']['name'] == name), None)
+        require(binding is not None, f'missing main SDK import binding for {name}')
+        candidate = next((entry for entry in binding['export_candidates']
+                          if entry['module'] == 'sdk'), None)
+        require(binding['status'] == 'unique_export_match' and candidate is not None,
+                f'{name} no longer uniquely resolves to sdk')
+        fs_import_audit.append({
+            'name': name,
+            'status': binding['status'],
+            'sdk_export_va': candidate['va'],
+            'import_got_sites': [entry['site'] for entry in binding['relocations']],
+        })
+    fs_wrapper_vas = {0x220ee80, 0x22103c0, 0x22103a0, 0x2210410}
+    save_worker_direct_calls = (saveproc_request_calls + saveproc_queue_calls
+                                + saveproc_worker_poll_calls + saveproc_worker_init_calls
+                                + saveproc_worker_dispatch_calls + task_state_dispatch_calls)
+    fs_direct_calls_from_worker = [call for call in save_worker_direct_calls
+                                   if int(call['target'], 16) in fs_wrapper_vas]
     require(len(save_simple_events) == 12
             and save_game_close_event['name'] == 'EventFlowActionSaveSimpleSave'
             and save_game_close_event['params'] == {'Process': 'cAll'},
@@ -416,13 +454,38 @@ def build_report():
                 'saveproc_request_calls': saveproc_request_calls,
                 'completion_stage_calls': save_action_update_calls,
                 'claim': 'The SaveSimpleSave handler stores/processes the Process parameter and tail-dispatches to 0x338080; that dispatcher calls 0xfb3160, which constructs a SaveProc operation and passes it to 0xfaf180. The action update path polls completion via 0xf1da80. The tail edge is from decompiler control flow because the indexed direct-call table omits the terminal branch.'},
+            'worker_successor_trace': {
+                'worker_registration_parent_va': '0x96ef0',
+                'worker_registration_calls': saveproc_worker_init_parent_calls,
+                'worker_registration_va': '0xfb4150',
+                'worker_registration_strings': [string_for_function(db, 0xfb4150, 'SaveProc')],
+                'worker_registration_calls_to_thread_factory': saveproc_worker_init_calls,
+                'thread_factory_va': '0xd4240',
+                'worker_queue_enqueue_va': '0xfaf180',
+                'worker_queue_enqueue_calls': saveproc_queue_calls,
+                'worker_queue_poll_va': '0xfaf210',
+                'worker_queue_poll_calls': saveproc_worker_poll_calls,
+                'worker_task_dispatcher_va': '0xfaf360',
+                'worker_task_dispatcher_calls': task_state_dispatch_calls,
+                'worker_callback_slot_disassembly': task_callback_disasm,
+                'worker_task_executor_va': '0xd45c0',
+                'worker_task_executor_calls': saveproc_worker_dispatch_calls,
+                'claim': 'SaveProc is registered as a named worker from 0x96ef0. The queue worker at 0xfaf210 dequeues 0x38-byte task records and reaches 0xd45c0; the task dispatcher at 0xfaf360 selects an indirect callback through the queued object at +0x10 or +0x30, then 0xd45c0 passes task data through 0x2201820. The callback identity and the serializer/file-write operation it performs remain unresolved.'},
+            'filesystem_import_audit': {
+                'sdk_imports': fs_import_audit,
+                'main_only_sandbox_executed_sdk': False,
+                'direct_fs_wrapper_calls_in_indexed_worker_functions': fs_direct_calls_from_worker,
+                'indexed_worker_functions_checked': [
+                    '0xfb3160', '0xfaf180', '0xfaf210', '0xfb4150',
+                    '0xd45c0', '0xfaf360', '0xfaf4e0'],
+                'claim': 'OpenFile, WriteFile, FlushFile, and Commit uniquely resolve to sdk-module exports, but these are imports rather than main.elf implementations. None of the indexed direct calls in the SaveProc request/queue/dispatch functions targets the main import wrappers; the unresolved indirect worker callback could still reach them. The current Sandbox maps only main.elf and does not execute SDK or filesystem services.'},
             'craft_path_relation': {
                 'cWorkCraft_save_event': craft_events[2],
                 'craft_handler_calls': craft_save_calls,
                 'transaction_calls': craft_transaction_calls,
                 'direct_save_request_calls_found': False,
                 'claim': 'The cWorkCraft handler and transaction mutate player-associated records but do not directly call the indexed SaveSimpleSave/SaveProc request path.'},
-            'durable_flush_status': 'OPEN; the SaveSimpleSave -> 338080 -> SaveProc handoff and completion path are mapped, but the serializer and durable file write/flush after SaveProc were not identified.'},
+            'durable_flush_status': 'OPEN; SaveSimpleSave -> SaveProc request, queue worker, and indirect task-dispatch boundary are mapped. The worker callback, serializer, and durable file write/flush are not identified; the available native sandbox cannot execute the separate SDK filesystem imports.'},
         'workbench_page_and_remake': {
             'page_refs': {name: f'0x{va:x}' for name, va in page_functions.items()},
             'workcraft_bg_page': {
@@ -468,6 +531,8 @@ def build_report():
             'The WorkCraftBgPage function is a page initializer, not proof that the page itself commits a transaction.',
             'The remake handler passes a context-derived quantity for item 2513 into an inventory update, but the mapping from ItemRemake.RemakeKitNum=2 for item 3436 to that quantity was not executed in the game.',
             'A conditional pocket insertion follows the material-processing branch through 0xefbd30 -> 0xf99270; the object identity and its refund/rollback purpose are not established.',
+            'The SaveProc queue worker resolves an indirect callback from task-object fields; no indexed call edge identifies its serializer or durable write operation.',
+            'OpenFile/WriteFile/FlushFile/Commit imports resolve to the separate sdk module, but current main-only native fixtures do not load SDK/system-service implementations.',
             'The post-craft bitmap helper accepts only recipe keys below 0x800; high EventFlow MadeItemID values are converted through ItemParam.DiyRecipeID before query. See crafting_recipe_flow_native.json.'
         ]
     }

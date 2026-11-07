@@ -120,6 +120,16 @@ Probe ini memaksa `0xaac730` bernilai benar karena konteks manager penuh untuk p
 
 `0xeff060` membuka member pocket pemain dan mengubah record yang ada di memori. `SaveSimpleSave` merupakan request terpisah: index menemukan 12 aksi tersebut, termasuk `System_SaveGameClose#1` dengan `Process=cAll`. Handler aksinya tail-dispatch ke `0x338080`, yang menjalankan `0xfb3160 → 0xfaf180` untuk memasukkan operasi `SaveProc`; jalur update memeriksa penyelesaiannya. Handler `cWorkCraft` dan `0xee1420` tidak memanggil jalur request itu secara langsung. Ini menetapkan batas antara mutasi inventory di memori dan request save eksplisit. Serializer serta write/flush ke file setelah `SaveProc` belum teridentifikasi, dan transaksi craft tetap belum diuji untuk atomicity/interupsi.
 
+### Batas lanjutan SaveProc dan uji fixture parsial
+
+**[NATIVE STATIC]** Caller inisialisasi `0x96ef0` mendaftarkan worker bernama `SaveProc` melalui `0xfb4150 → 0xd4240`. Operasi yang dikirim `0xfb3160 → 0xfaf180` masuk ke queue berrecord 0x38 byte. Poller `0xfaf210` mengambil record dan mencapai thunk `0xfb41c0 → 0xd45c0`. Dispatcher umum `0xfaf360` memanggil `0xfaf4e0`, lalu memilih callback tidak langsung dari object queue pada offset `+0x10` atau `+0x30`; `0xd45c0` meneruskan data task ke `0x2201820`. Pointer callback yang dipakai untuk `SaveProc` belum diidentifikasi, jadi call chain ini belum membuktikan serializer.
+
+Audit import menemukan `nn::fs::OpenFile`, `WriteFile`, `FlushFile`, dan `Commit` masing-masing cocok unik dengan export di modul terpisah `sdk`. Tidak ada call langsung ke wrapper filesystem itu dari fungsi request/queue/dispatch yang terindeks. Callback dinamis masih dapat memanggilnya. Sandbox native saat ini memetakan `main.elf` saja dan tidak menjalankan implementasi SDK atau filesystem, sehingga flush durable tidak dapat disimpulkan dari probe yang ada.
+
+**[UJI NATIVE PARSIAL; TIDAK MENCAPAI INSERTION]** Fixture `0xee1420` memakai ID bahan aktual resep 56, tetapi tidak membangun semua manager/cache dunia. Instruksi asli mencapai mutator pertama `0xeff060`, lalu gagal pada read `0xab941c`: jalur `0xa9e440 → 0xa774c0 → 0xab9400` menerima pointer manager/table null dari GOT `0x32f3f78` dan mendereferensikan pointer hasil yang tidak valid. Nama/semantik manager itu belum ditetapkan. Probe langsung `0xefbd30` mencapai resolver pemain `0xe670b0`, tetapi berhenti karena service dunia/player di GOT `0x32d3d78` bernilai null; `0xf99270` tidak dipanggil. Kedua percobaan tidak membuktikan item descriptor yang dipindah, tujuan refund, atau perilaku saat interupsi. Detail argumen, PC, dan batas fixture ada di [crafting_transaction_fixture_attempt.json](../output/gameplay/crafting_transaction_followup/crafting_transaction_fixture_attempt.json); jalankan `tools/crafting_transaction_fixture_attempt.py` untuk mengulanginya.
+
+Pemeriksa statik kini mencatat worker task dan import SDK di [crafting_transaction_followup_static.json](../output/gameplay/crafting_transaction_followup/crafting_transaction_followup_static.json). Status runtime tetap terbuka sampai manager item/cache dan service pemain dari inisialisasi dunia penuh direkonstruksi; setelah itu barulah identity descriptor dan jalur batalkan/interupsi dapat diuji.
+
 Reproduksi tahap 3 (argumen `--output-root` menunjuk ke index/tabel bersama yang valid dan dibuka read-only):
 
 ```sh
