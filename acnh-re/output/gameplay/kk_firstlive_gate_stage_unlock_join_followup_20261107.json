@@ -1,0 +1,159 @@
+{
+  "schema": "acnh-re/kk-firstlive-gate-stage-unlock-join-followup/1",
+  "game_version": "1.0.0",
+  "analysis_date": "2026-11-07",
+  "analysis_mode": "static EventFlow, decoded BYML, native registry and AArch64 callsite cross-check; no runtime execution",
+  "source_root_relative_to_deliverable_repo": "../../acnh-re",
+  "report_path": "docs/KK_FIRSTLIVE_GATE_STAGE_UNLOCK_JOIN_FOLLOWUP_20261107.md",
+  "scope": "Join island-rating result and first-live readiness through stage request, candidate actor and K.K. talk flow, first-live completion, credits boundary, and Island Designer application-install branches.",
+  "native_function_hash_basis": "Each native_functions.sha256 is SHA-256 over the function-span bytes mapped from A_logic/main.elf, using span addresses/sizes from output/index.sqlite. These values are not hashes of Ghidra pseudocode/decomp files.",
+  "source_identities": [
+    {"path": "inputs/additional_exefs/main", "sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900", "kind": "ACNH 1.0.0 main NSO used for raw AArch64 callsite checks"},
+    {"path": "A_logic/main.elf", "sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74", "kind": "ELF function-span hash basis; callsite bytes checked against supplied main"},
+    {"path": "output/index.sqlite", "sha256": "a78c7af27d37b8fd931bba8bc611623dacf7685cb6e8b4f827effa0765340aad", "kind": "native function and direct-call index"},
+    {"path": "output/binary/event_handlers_resolved.json", "sha256": "dfc298dfcb1b288b8fda9cd6a49c728fdad903b41f8fc1c9288df7d732ec92a5", "kind": "EventFlow action registration/factory/vtable inventory"},
+    {"path": "output/gameplay/flow_index.json", "sha256": "359f3a21a17a116902b0c8e1110c3892814b6fccbeb50b71d573c8ab3e1c68c5", "kind": "456-flow explicit entry/subflow caller index; parameterized flow destinations are not resolved"},
+    {"path": "output/binary/code_pointer_arrays.json", "sha256": "64d474068ca289f9146f7f32e6647a16a05e8f5be8e635615a478744b62ef822", "kind": "relocated code-pointer sequences; not ownership/dispatch proof"},
+    {"path": "output/stage/by_source/02909.json", "sha256": "2b003d9744649e7668585ff93df4dd17d0844e92ce86e5a06f7b094f1428bd28", "kind": "decoded MainFieldDemoFirstLive stage projection"},
+    {"path": "output/stage/by_source/02984.json", "sha256": "c8f1b99f215f4294aac674e7dba5f6f6ec7cbaa502a284e960b929b23c9cebed", "kind": "decoded commonOutdoor stage projection"},
+    {"path": "output/decoded/02982.json", "sha256": "6fde28a7e359083b2ce7f65b17cf17e4876a8987a732d95852c9f7de706425eb", "kind": "StageList BYML decoded projection"},
+    {"path": "output/stage/actor_type_registry.json", "sha256": "67439173a460ad49bb6cbc0086047eb192581f0cad36f4c936c4078a39d959be", "kind": "native stage actor type registry"}
+  ],
+  "prior_report_hashes": [
+    {"path": "docs/CORE_GAMEPLAY_PROOF_INDEX_20261107.md", "sha256": "6f2ee563fd69303b882ff7a3f645f1e3050bfdfe7b5e7b02975ee2629d578756", "role": "baseline core proof index at task start (commit b6fb376); this file was later integrated with parallel follow-ups"},
+    {"path": "docs/CORE_ISLAND_RATING_KK_GATE_FOLLOWUP_20261107.md", "sha256": "686a447245e834deafa44a278394a8a6aa446492c25687186f41be4e550cd620", "role": "score/rating/readiness gate evidence"},
+    {"path": "docs/CORE_STORY_FIRSTLIVE_STAGE_DISPATCH_FOLLOWUP_20261107.md", "sha256": "f3bfd076b0cb8350fbce3915c0ed67a4dfce04b450df42553d4c0d1fd3cee7a1", "role": "stage dispatch, actor candidate, and credits edge"},
+    {"path": "docs/CORE_STORY_FIRSTLIVE_TALK_ENTRY_PARAMETER_FOLLOWUP_20261107.md", "sha256": "b11df6472b1885a3219be8d3a49e6194d5fe131a51172d1339ecf7d1e11c7255", "role": "parameterized AI-to-talk flow binding"},
+    {"path": "docs/CORE_STORY_STAGE_CREDITS_JOIN_CHECK_20261107.md", "sha256": "d29ec5bbb488529e791ab1d973b6187a279aca50b7fbbfa70c603e51eb388675", "role": "StaffCredit callback boundary"},
+    {"path": "docs/ISLAND_DESIGNER_EDIT_LOOP.md", "sha256": "53995d9e3a64a3936314917f2324af26a37ce19c6a6ba11decf95bd56a143639", "role": "post-unlock app/edit-flow context"},
+    {"path": "docs/ISLAND_DESIGNER_ACTIONPARAM_ERROR_CONSUMERS_FOLLOWUP_20261107.md", "sha256": "d7490c31e39f7cc9a039db79acdaca67e1b8b39c8f313c5dc4f4da596fc51208", "role": "Island Designer native consumer boundary"},
+    {"path": "docs/POST_PROLOGUE_UI_RESOURCE_FAMILY_FOLLOWUP_20261107.md", "sha256": "43fdeac843fa95b5bf2e2d1ee9eee6bf016ccb3242bbce2949fc95ceaefff1be", "role": "MenuDevice/StaffCredit resource-family and page-load boundaries"}
+  ],
+  "eventflow_sources": [
+    {"source_id": 649, "path": "B_data/EventFlow/System_IslandEvaluationCheck.bfevfl", "sha256": "10c1339435504a0a49fc3547961e5a9734a5b313a69f18d0a31ba9b3b61d7ad2", "role": "score rank thresholds, house-count clamp, and result construction"},
+    {"source_id": 622, "path": "B_data/EventFlow/SNPC_sza_50_IslandEvaluation.bfevfl", "sha256": "c57c677d2d2f09290c0414f7a43c404bb28e8b8c126b6ce703df61c61ff3281e", "role": "Isabelle result branch and readiness flag"},
+    {"source_id": 279, "path": "B_data/EventFlow/Demo_PublicAnnouncement.bfevfl", "sha256": "7ec0d30107a1d40169b4455932f0f6853beb9ef7b7cf69ca2ee2f77958a12602", "role": "first-live reservation and cMainFieldFirstLive request"},
+    {"source_id": 295, "path": "B_data/EventFlow/Demo_PublicAnnouncement_Process.bfevfl", "sha256": "7b921fd4ef4b262169b3f9d445bf74437fcf913294607d20f8b29c6b65bb8077", "decoded_sha256": "b36dea6b05893ef6055e7566ca91aa6b898ad87bfa35d21168df51573c8a9d9c", "role": "phone-call scheduling entry path"},
+    {"source_id": 521, "path": "B_data/EventFlow/Player_StartGamePhoneCall.bfevfl", "sha256": "f14f415f0eb70050a2c7d731b0f38639d65cbd78fee54f45c666d8691241b842", "decoded_sha256": "b0aabf5e2e428f9adf8dd4609ffb776993895377367d6653064d423a6b3141c0", "role": "pending-call selection and Island Creator install dialogue"},
+    {"source_id": 514, "path": "B_data/EventFlow/Player_GetDemo_Once.bfevfl", "sha256": "191b49e0fcb1e2c116068b9e69d40c837031a28b9e579f83f19a1eeca999298b", "decoded_sha256": "79fb4d92c37bda4790c818a68da147c30350204824d2c287d7317f73fbe4d6c7", "role": "first-live follow-up invite auxiliary flow"},
+    {"source_id": 258, "path": "B_data/EventFlow/AI_NPC_Rco_FirstLiveInvite.bfevfl", "sha256": "f0b576c5d5f8b1877609b4a971f32aebed02a612f7aabad8e8c60cb8cd89da2c", "decoded_sha256": "f2e1b1090e049279c6c5ff22c7212e48c978e80ea7cca98a56f6986bd7b64eec", "role": "AI root for K.K. post-live invite"},
+    {"source_id": 606, "path": "B_data/EventFlow/SNPC_rco_55_TkkFirstLive.bfevfl", "sha256": "b3d6e9d359a19a744561d7b2c7f213b71513c3489ebee2c679b46e1540407905", "decoded_sha256": "4fb93e333d08fe1c5facd93250f38c01228e0fa922950149f795249e61596aa9", "role": "Island Designer invite reward branches"},
+    {"source_id": 272, "path": "B_data/EventFlow/AI_NPC_Tkk_FirstLive.bfevfl", "sha256": "5f7c36dba971c8c30f434b92085a8bb7e8bd677df39bcd008d0aa8950e02a9f8", "decoded_sha256": "cb7b9ac356314ad7501c2db2c520b6e62bf90737662e2575ab8ebbacb67bf7b4", "role": "K.K. actor AI root and parameterized ContinueSpeak arguments"},
+    {"source_id": 226, "path": "B_data/EventFlow/AI_NPC_Common.bfevfl", "sha256": "ae5068b0fed03c29c52a922333988f99c8cee6a4ea982ffda88a1e0e4cbc697f", "decoded_sha256": "e8ffec35a85e456eef163262071a503f0e1982587f70decb5cb41efaa93a43c6", "role": "ContinueSpeak and VisitSpeak argument consumers"},
+    {"source_id": 625, "path": "B_data/EventFlow/SNPC_tkk_Live.bfevfl", "sha256": "d1a9d0253d4ae6c1ed46e87d007f8924f4cba637589a3d0750ca07295794d316", "decoded_sha256": "f0ee4b9276527356ebffb8b4b083ce7d86625f4d0575ae5a8f0a00e05041d6ec", "role": "first concert, completion flags/counter, and return request"},
+    {"source_id": 18, "path": "B_data/Bcsv/EventFlagsLandParam.bcsv", "sha256": "f556f2209a849e9bbe1f46584f4aabb59c651614e0c9c6be06e1f7521509c43a", "role": "land story flags and defaults"},
+    {"source_id": 26, "path": "B_data/Bcsv/EventFlagsPlayerParam.bcsv", "sha256": "9d14ab9d9f78bd72c7b4d43a0db2cc3ff98a4608d3763d9b6f403b0815f5603e", "role": "player story flags and defaults"}
+  ],
+  "stage_resource_sources": [
+    {"source_id": 2909, "path": "B_data/Stage/Game/MainFieldDemoFirstLive.byml", "sha256": "0cf0898403df0b2eb8a47fae804a373ca6a7dcc8eb9680aac64360847b16bd12", "role": "candidate first-live stage resource"},
+    {"source_id": 2984, "path": "B_data/Stage/commonOutdoor.byml", "sha256": "5ab2a53a8b702782416576e7296724fe53a52580558c20500b4015449dec4503", "role": "candidate shared stage include and actor row"},
+    {"source_id": 2982, "path": "B_data/Stage/StageList.byml", "sha256": "9dd2757d7dad92fdf5724df38902a56a6b9445dca87defc06d3ee8e6adee9414", "role": "stage alias lookup negative bound"}
+  ],
+  "native_functions": [
+    {"va": "0x304f80", "size": "0x1500", "sha256": "f32f1ff7add0fb0b3c56efaf3d9b7b389e280177b36a1eafe82cb2f8e344e5db", "role": "SystemRequestChangeStage label dispatcher"},
+    {"va": "0x306910", "size": "0x244", "sha256": "49e403835d5a15e5b0d12eb4de8a73259b0f0ef04ad0ba44f1f704609aadf895", "role": "cMainFieldFirstLive specialized stage-request branch"},
+    {"va": "0xfefee0", "size": "0xfc", "sha256": "548b77caab8883bc00e89ebcaa01a40ebf8a6281fd7bf19a03a01c018438469d", "role": "generic request validator and manager dispatch"},
+    {"va": "0xffc200", "size": "0xc8", "sha256": "1b20c2d52f2b6da7fe3ba7b69f9120d1eb8a11f993746b996fe9cae1e29fd958", "role": "request validation helper"},
+    {"va": "0x11ef360", "size": "0x24", "sha256": "f3208c1f15273c5203279622c233c3909945c832cf727f7ed23fbdf38cfd8b86", "role": "branch to request-record copy routine"},
+    {"va": "0x11f0990", "size": "0x68", "sha256": "dd5accbcd5cbf3ef0ab222a06fd67a27883b9ab01214a88057bf79c9d41a6bbd", "role": "copies request fields into manager record slots"},
+    {"va": "0xfe6f10", "size": "0x254", "sha256": "cb2c4ab382c3cc12af9b15324bf23c22ca805fcf76574ef1e6b6ae972d29ca5c", "role": "separate stage loader entry/continuation candidate"},
+    {"va": "0xfef090", "size": "0x298", "sha256": "94d0e74fad68026c2807328970e985e05e7da5ad75280ec1fcc9e086144698d4", "role": "generic Stage/Game load loop"},
+    {"va": "0xc67fa0", "size": "0x48", "sha256": "46a2d1f36871fd71d77041d8fbe441f441f4a395fcff61d24bda2d7aeb80f06e", "role": "NpcActorMgr native factory"},
+    {"va": "0xc685a0", "size": "0x248", "sha256": "93474b1e401fc4708d43cb4227aae98854240a7b5086b44051d11268bc3d8cb9", "role": "NpcActorMgr method which calls first-live actor builder"},
+    {"va": "0xc70da0", "size": "0xdac", "sha256": "f4abe3e93b547dedead7035e5bf29073e60f746ff9e4fe5fa85522eb574bb4cb", "role": "builder containing E_FirstLive_NPC_0 and AI_NPC_Tkk_FirstLive strings"},
+    {"va": "0xfd8920", "size": "0x158", "sha256": "7c76d4c5454bb68b9eb85a69775437a8f9898042a0a9fdb587e65b8d429d26c3", "role": "elapsed-day/readiness/previous-live gate which sets TkkFirstLiveEnable"},
+    {"va": "0xf545f0", "size": "0x1cbc", "sha256": "b312bfd914b32006aedf67f74659e645a994dbeeeedc86f3b757fcd948375f79", "role": "day-change dispatcher; reads TotakekeLiveCount and updates first-live flags"},
+    {"va": "0x146f2c0", "size": "0xb8", "sha256": "ffe2ce450141d9c2ee74f7de9690d843801bb60d4453b209c28049881347c372", "role": "State::cPlay callback local body"},
+    {"va": "0x1470e90", "size": "0x474", "sha256": "5ce05dac17655fd3b7a5226eaf2d006a0200ec8dc8337f796ae119ad0c61dcb1", "role": "generic state callback helper which selects StaffCredit"}
+  ],
+  "native_action_registry": [
+    {"action": "EventFlowActionSystemRequestChangeStage", "registration_hash": "0x8e7af966", "registration_va": "0x305ac78", "factory": "0x450db0", "constructor": "0x304df0", "vtable": "0x3048cf0", "parameter": "TargetStage"},
+    {"action": "EventFlowActionSetNpcSpeakFlow", "registration_hash": "0x878212f7", "registration_va": "0x305aba8", "factory": "0x450a70", "constructor": "0x25eab0", "vtable": "0x303f518", "parameters": ["FlowName", "EntryName"]},
+    {"action": "EventFlowActionUIMenuDeviceAppear", "registration_hash": "0x49f7be22", "registration_va": "0x305a2d8", "factory": "0x44e730", "constructor": "0x357660", "vtable": "0x304e580", "parameters": ["EventType", "Application"]}
+  ],
+  "rating_and_readiness_gate": {
+    "score_member": {"descriptor_va": "0x24fdb0", "data_va": "0x4f8b34", "size": "0x250", "natural_offset": "0x240", "life_offset": "0x244"},
+    "aggregate_callsite": {"caller": "0xd50c0", "pc": "0xd50d4", "bytes_le": "47c45394", "target": "0x15c61f0"},
+    "save_copy_callsite": {"caller": "0xd4df0", "pc": "0xd4f34", "bytes_le": "63c65394", "target": "0x15c68c0", "member": "0x24fdb0", "member_bytes": "0x250"},
+    "minimum_authored_3_star_path": {"constructed_npc_houses": ">=8", "natural": ">=270", "life": ">=160", "result_index": 2, "message": "003_03 (3-star)"},
+    "rating_flow": {"score_source_id": 649, "isabelle_source_id": 622, "accepted_result_indices": [2, 3, 4], "readiness_conditions": ["IslandDevQuestComplete OFF", "MakeVillagePlayerFlag ON", "overall result index 2..4", "ClearTkkFirstLiveScore AddDay=1 case 0"]},
+    "readiness_write": {"flow_entry": "ClearTkkFirstLiveScore", "writes": {"IslandEvaluationClearTkkLive": true, "IslandDevQuestRunning": false, "IslandDevQuestComplete": true}},
+    "native_enable_gate": {"function": "0xfd8920", "caller": "0xf545f0", "call_pc": "0xf54fdc", "condition": "elapsed days >= 1 AND IslandEvaluationClearTkkLive ON AND TkkFirstLive OFF", "write": "TkkFirstLiveEnable ON"},
+    "limits": ["The aggregate and save-copy functions address the same score manager/member, but their runtime order and durable save commitment were not executed together.", "The score thresholds and EventFlow result branches are authored/static evidence, not a progressing save trace."]
+  },
+  "first_live_stage_request": {
+    "eventflow": {"flow": "Demo_PublicAnnouncement", "source_id": 279, "entry": "PAnnounceSza", "event_array_index": 41, "condition": "TkkFirstLiveReserved ON", "action": "SystemRequestChangeStage", "target_stage": "cMainFieldFirstLive"},
+    "label_dispatch": {"handler": "0x304f80", "table_builder": "0x306c80", "label_index": 26, "label": "cMainFieldFirstLive", "call_pc": "0x305adc", "call_bytes_le": "8d030094", "target": "0x306910"},
+    "request_handoff_calls": [
+      {"pc": "0x306afc", "from": "0x306910", "to": "0xfefee0", "bytes_le": "f9a43394", "meaning": "prepare/submit generic transition request"},
+      {"pc": "0xfeff30", "from": "0xfefee0", "to": "0xffc200", "bytes_le": "b4300094", "meaning": "validate request"},
+      {"pc": "0xfeffc0", "from": "0xfefee0", "to": "0x11ef360", "bytes_le": "e8fc0794", "meaning": "conditional request manager dispatch"},
+      {"pc": "0x11ef380", "from": "0x11ef360", "to": "0x11f0990", "instruction": "B_to_function_entry", "bytes_le": "84050014", "meaning": "copy six-field request into manager slots +0x258..+0x26c; this path passes mode 0, while the copier's mode-1 branch also writes +0x240..+0x254"}
+    ],
+    "separate_loader_path": {"from": "0xfe6f10", "call_pc": "0xfe7140", "bytes_le": "d41f0094", "to": "0xfef090", "status": "generic Stage/Game loader exists, request-manager consumer join unresolved"},
+    "actor_candidate": {"stage_resource": "MainFieldDemoFirstLive.byml", "include": "commonOutdoor", "actor_list_key_hash": "0x3cbaa541", "row": "/3cbaa541/2", "type_index": 5, "type": "NpcActorMgr", "factory": "0xc67fa0", "factory_method": "0xc685a0", "builder_call_pc": "0xc686ac", "builder_call_bytes_le": "bd210094", "builder": "0xc70da0", "actor_name": "E_FirstLive_NPC_0", "ai_name": "AI_NPC_Tkk_FirstLive"},
+    "open_joins": ["The generic request record is not statically joined to the Stage/Game loader at 0xfef090.", "StageList.byml does not provide an explicit cMainFieldFirstLive-to-MainFieldDemoFirstLive.byml alias mapping.", "The commonOutdoor actor row matches registered NpcActorMgr type/factory, but row-to-factory indirect dispatch and runtime actor creation are not proven."]
+  },
+  "concert_flow_and_completion": {
+    "ai_to_talk": {"ai_flow": "AI_NPC_Tkk_FirstLive", "entry": "Root", "source_id": 272, "event_array_index": 5, "subflow": "AI_NPC_Common:ContinueSpeak", "arguments": {"FlowName": "SNPC_tkk_Live", "EntryName": "Tkk_LandFirstLive"}, "common_action_event_array_index": 3, "action": "SetNpcSpeakFlow", "action_parameters": {"FlowName": "$arg(FlowName)", "EntryName": "$arg(EntryName)"}, "action_registration": "0x305aba8", "status": "authored parameterized flow selection confirmed; actor/root activation remains open"},
+    "talk_entry": {"flow": "SNPC_tkk_Live", "entry": "Tkk_LandFirstLive", "source_id": 625, "live_subflows": ["Tkk_1stLIveMC", "Tkk_LiveDemo", "Tkk_LiveAfter_Flag"], "completion_flags": ["TkkFirstLiveJoined", "TkkLiveToday", "TkkTalkToday", "StandByRcoVisitMyHomeAfterTkkFirstLive"], "completion_counter": "TotakekeLiveCount", "return_event_array_index": 94, "return_target_stage": "cMainFieldPlayerHouse"},
+    "day_change": {"function": "0xf545f0", "condition": "TotakekeLiveCount >= 1 in guarded day-change block", "writes": {"TkkFirstLive": true, "TkkFirstLiveEnable": false}},
+    "limits": ["Flow source establishes selected entry and authored completion/return actions, conditional on those flows running.", "No save trace establishes one continuous path from rating, stage load, actor creation, talk, and next-day flag update."]
+  },
+  "island_designer_app_install": {
+    "application_flag": "cPlayer:MainmenuConstructLicense",
+    "application_id": "cConstructLicense",
+    "native_action": "UIMenuDeviceAppear(EventType=cInstall, Application=cConstructLicense)",
+    "phone_call_route": {
+      "schedule_flow": "Demo_PublicAnnouncement_Process", "root_gate": {"event_array_index": 202, "condition": "TargetMode=0", "subflow_event_array_index": 203, "target_entry": "Process_Only_PAnnounce"}, "schedule_entry": "Process_Only_PAnnounce", "schedule_entry_main_event_array_index": 204, "subflow_event_array_index": 209, "subflow": "ChkStartGamePhoneCall", "phone_entry_main_event_array_index": 158, "phone_call_event_array_index": 158, "check_entry": "CheckPhoneCallIslandCreater", "check_entry_main_event_array_index": 159,
+      "conditions": ["TkkFirstLive ON", "MainmenuConstructLicense OFF", "EventBranch AddDay=0 case 0/1/2"],
+      "standby_flags": ["StandByPhoneCallIslandCreater", "StandByGameStartPhoneCall"],
+      "consumer_flow": "Player_StartGamePhoneCall", "consumer_entry": "Root", "selector": "ChkPhoneCall; selected pending Island Creator route reaches IslandCreaterTell or IslandCreaterTell_Continued", "install_entry": "IslandCreaterTell", "install_events": [{"event_array_index": 145, "event": "Event151", "action": "Set MainmenuConstructLicense ON"}, {"event_array_index": 146, "event": "Event152", "action": "UIMenuDeviceAppear(cInstall,cConstructLicense)"}],
+      "open_edges": ["The engine consumer that starts Player_StartGamePhoneCall and consumes its standby flags is not identified.", "The UIMenuDeviceAppear action is registered with EventType/Application parameters; the menu-page load/constructor consumer is not joined."]
+    },
+    "nook_invite_route": {
+      "ai_flow": "AI_NPC_Rco_FirstLiveInvite", "ai_entry": "Root", "talk_flow": "AI_NPC_Common:VisitSpeak", "selected_flow": "SNPC_rco_55_TkkFirstLive:InvitePlayerHouse", "source_id": 606,
+      "entry_events": [{"event": 31, "action": "clear StandByRcoVisitMyHomeAfterTkkFirstLive"}, {"event": 9, "action": "SystemHasBaggageSpace(CheckNum=1)"}],
+      "app_install_branch": {"baggage_query_case": 0, "condition": "TkkFirstLiveReserved ON", "reward": 4318, "events": [{"event": 16, "action": "Set MainmenuConstructLicense ON"}, {"event": 17, "action": "UIMenuDeviceAppear(cInstall,cConstructLicense)"}]},
+      "mail_branch": {"baggage_query_case": 1, "condition": "TkkFirstLiveReserved ON", "reward": 4318, "actions": ["SelectRewardItemDirect", "SystemMailSend"], "app_flag_write_or_install_action_in_this_entry": false},
+      "open_edges": ["The standby writer-to-AI activation edge is not resolved.", "EventFlow case numbers are retained as authored; no runtime branch choice is inferred.", "The native UIMenuDeviceAppear page consumer remains open."]
+    },
+    "unlock_consumer_boundary": "The Island Designer application flow Player_ConstructionLicenseApp.Root and post-unlock edit loop are covered by separate reports. This follow-up proves story-side install flag/action branches only; it does not prove a loaded MenuDevice page, app execution, or terrain edit/apply/save persistence."
+  },
+  "credits_boundary": {
+    "callback": "0x146f2c0",
+    "state": "State::cPlay",
+    "helper_callsite": {"pc": "0x146f34c", "bytes_le": "d1060094", "target": "0x1470e90"},
+    "helper_resource_case": "StaffCredit",
+    "pointer_sequence": {"sequence_va": "0x330db08", "slot_va": "0x330db20", "value": "0x146f2c0", "meaning": "relocated code-pointer occurrence; owner and dispatch role unresolved"},
+    "negative_search": {"flow_count": 456, "search_terms": ["StaffCredit", "StaffList"], "result": "no literal token found in indexed EventFlow JSON search; flow index excludes message text and cannot exclude engine-side dynamic dispatch"},
+    "status": "cPlay callback/helper/resource identified; first-live/return/phone-flow trigger not joined"
+  },
+  "bounded_negatives": [
+    {"search": "flow_index.json explicit subflow/caller graph", "bound": "456 extracted flows; parameterized SetNpcSpeakFlow destinations are omitted by this graph", "result": "No direct indexed caller for SNPC_tkk_Live:Tkk_LandFirstLive; the authored argument-forwarding chain proves the selected destination for the AI resource but not runtime actor activation."},
+    {"search": "StageList.byml decoded projection", "bound": "candidate stage alias lookup", "result": "No explicit cMainFieldFirstLive to MainFieldDemoFirstLive.byml mapping recovered."},
+    {"search": "direct-call index and pointer sequence inventory", "bound": "static direct BL/B edges and relocated pointer sequences; indirect dispatch can be missed", "result": "No proven request-record consumer to 0xfef090 loader edge; pointer sequences alone do not prove owner or invocation."},
+    {"search": "EventFlow JSON for StaffCredit or StaffList", "bound": "456 indexed flow graphs; extracted action/flow text only, no MSBT message text", "result": "No literal credit trigger found; this cannot exclude native or dynamic dispatch outside the indexed graph."},
+    {"search": "Island Designer install actions in the two identified story sources", "bound": "Player_StartGamePhoneCall Island Creator route and SNPC_rco_55_TkkFirstLive invite entry", "result": "Phone route and one Nook reward branch write/install the app. The alternate Nook mail branch has no app flag/action in that entry; absence here does not rule out other flows."}
+  ],
+  "validation": {
+    "source_hash_audit": "PASS: 26 corpus source identities and source_id rows matched the listed SHA-256 values; prior report hashes were checked, with the core index pinned to baseline commit b6fb376.",
+    "raw_callsite_checks": [
+      {"pc": "0x305adc", "bytes_le": "8d030094", "decoded": "BL 0x306910", "match": true},
+      {"pc": "0x306afc", "bytes_le": "f9a43394", "decoded": "BL 0xfefee0", "match": true},
+      {"pc": "0xfeff30", "bytes_le": "b4300094", "decoded": "BL 0xffc200", "match": true},
+      {"pc": "0xfeffc0", "bytes_le": "e8fc0794", "decoded": "BL 0x11ef360", "match": true},
+      {"pc": "0x11ef380", "bytes_le": "84050014", "decoded": "B 0x11f0990", "match": true},
+      {"pc": "0xfe7140", "bytes_le": "d41f0094", "decoded": "BL 0xfef090", "match": true},
+      {"pc": "0xc686ac", "bytes_le": "bd210094", "decoded": "BL 0xc70da0", "match": true},
+      {"pc": "0xf54fdc", "instruction": "BL 0xfd8920", "match": true},
+      {"pc": "0x146f34c", "bytes_le": "d1060094", "decoded": "BL 0x1470e90", "match": true}
+    ],
+    "json_validation": "PASS: python3 -m json.tool parsed the companion ledger",
+    "diff_check": "PASS: git diff --check and git diff --no-index --check completed without whitespace errors for both new files",
+    "game_execution": "none",
+    "save_mutation": "none",
+    "godot_changes": "none",
+    "stage_commit_push": "none"
+  }
+}
