@@ -1,0 +1,23 @@
+# Nook shop materials quest to construction kit
+
+**Scope:** ACNH 1.0.0 static trace from the tent's material-collection choice through the four required inventory checks, donation handlers, kit award, and the player's shop-kit placement flow. This does not claim that a save or game session was executed.
+
+## Story and inventory flow
+
+`SNPC_rcm_01_Tent_1_Entries:Root` routes general-talk choice 0 to `SNPC_rcm_21_MaterialCollecting:Root`; buy and sell are separate choices. The material flow refreshes progress and material-belonging subflows, then offers donation options according to which requirements are complete and which materials the pocket query says are available.
+
+The four requirements are 30 of each of wood `2768`, softwood `2767`, hardwood `2769`, and iron nugget `2511`. `EventFlowQueryHasTargetItem` is not merely a dialogue label: its native evaluate routine at raw ELF VA `0x426a20` obtains the pocket item list from the query context, iterates active slots, decodes each item ID, accumulates matching stack counts, and returns the comparison `count < NeedNum`. The EventFlow branches case 0 to the sufficient-material route and case 1 to the unable-to-give route. The query handles stackable quantities through native item-slot helper calls.
+
+After the selected donation command enters `SNPC_rcm_24_MaterialGiveProcess:Root`, its `DeleteWood`, `DeleteSoftWood`, `DeleteHardWood`, and `DeleteIron` entries each invoke `DeleteTargetItem` with the corresponding ID and `DeleteNum=30`, then turn on `cLand:RcmShopMaterial_Wood`, `_SoftWood`, `_HardWood`, or `_Iron`. The native action evaluator at `0x329360` reads the action's item-ID and count fields, gets the player's pocket list, and calls `0xffbdf0` with that list, a constructed item descriptor, and the requested count. This is stronger than a UI-only request: the main binary dispatches a native pocket-helper call with the exact material and quantity. The helper body is not present in the indexed decompilation, so the precise stack-debit result, failure handling, rollback, and atomicity remain unproven.
+
+`SNPC_rcm_22_MaterialProgressChk` counts the four completion flags and places the count in subflow result index 0; result 4 represents all four flags on. That branch in `GotReward` prepares delivery item `2756` via `SetDeliveryItemAtRandom` (`ApplyToSave=true`, `ItemRemakeDecideType=cVillageRemakePattern`, `RemakePatternIndex=0`), runs `NpcDelivery` commands 1 (`Keep`) and 2 (`Default`), then writes `cPlayer:Prologue4RcmGetTent`, `cLand:RcmShopMaterialComplete`, and `cLand:OpeningSeqBGMChangeCounter=10`.
+
+`ItemParam` row `UniqueID=2756` classifies the reward as `HousingKit` (Japanese item name `おみせのこうじかんばん`, “shop construction sign”), with price 0. In `Player_HousingKit:Root`, the `UIPocketMenuItemSelected(ItemUniqueID=2756)` branch enters `ShopReserveKit`. That entry starts the `cMarket` preview at `cPlayer`, checks `CanBuildHere`, and routes through the shared `HousingKitCommon` placement flow; its common entry delegates to `System_Structure_Common` preview/build/delete-preview subflows. The successful path reserves `Player_Demo_HousingFinish:HousingFinish_Shop_Built`, which writes `cLand:Prologue4BuiltShop`, `cLand:HghStayMarket`, and `cPlayer:DecideShopArea`. The flow-level kit-to-placement relationship is proven; a live placement or completed native transform/collision result is not.
+
+## Evidence boundary
+
+The material requirements, branch structure, requested item IDs/counts, flag writes, reward ID, kit use, and placement handoff are present in the supplied EventFlow data. Native `HasTargetItem` counting and `DeleteTargetItem` helper dispatch are present in the supplied `main.elf` analysis. The source action registry binds those EventFlow names to native factories/vtables. The exact body of the final pocket deletion helper, durable save/flush/reload, and native terrain/overlap/transform validation are not established by this trace. The `ApplyToSave=true` field is recorded as an authored action parameter; it does not by itself prove a completed durable save.
+
+The donation kit is separate from the ordinary buy/sell handlers. No item model or audio payload is used here; the existing policy keeps those as catalogue references. For downstream placement, see [the building-placement proof](BUILDING_PLACEMENT_PROOF_20261107.md) and [the coordinate-transform trace](BUILDING_SITE_WORLD_POSITION_TRANSFORM_FOLLOWUP_20261107.md).
+
+Input SHA-256 values, raw native VAs, EventFlow event indices, and the exact remaining joins are recorded in [`shop_material_quest_to_housing_kit_20261107.json`](../output/gameplay/shop_material_quest_to_housing_kit_20261107.json).

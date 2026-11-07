@@ -1,0 +1,721 @@
+{
+  "schema": "acnh-re.shop-material-quest-to-housing-kit/1",
+  "created_utc_date": "2026-11-07",
+  "game_version_scope": "ACNH 1.0.0 analysis corpus; raw EventFlow sources have no embedded version field",
+  "report": "acnh-re/docs/SHOP_MATERIAL_QUEST_TO_HOUSING_KIT_20261107.md",
+  "status": "eventflow_to_native_check_and_delete_dispatch_and_kit_placement_static;helper_effect_save_durability_and_live_placement_OPEN",
+  "scope": "Main-story Nook shop material quest, requested material checks/removal calls, completion kit UID, and kit-use placement flow; ordinary shop buy/sell excluded.",
+  "evidence_policy": {
+    "EF": "Decoded EventFlow source graph / entry / parameters.",
+    "NATIVE": "Raw-address native handler registry or decompilation; generic helper semantics are not inferred when its body is unavailable.",
+    "TBL": "Decoded ItemParam or flag table row.",
+    "OPEN": "Not proved by supplied static data."
+  },
+  "source_identity": {
+    "main_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+    "source_files": [
+      {
+        "path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/A_logic/main.elf",
+        "sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+        "bytes": 53729580,
+        "role": "main ELF, supplied ACNH 1.0.0 analysis corpus"
+      },
+      {
+        "path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/EventFlow/SNPC_rcm_01_Tent_1_Entries.bfevfl",
+        "sha256": "8bc8c91419d6a765196382ddf3c79ccd21def8a0dc2445ba3b94cc263ba283de",
+        "bytes": 8816,
+        "role": "raw tent menu EventFlow"
+      },
+      {
+        "path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/EventFlow/SNPC_rcm_21_MaterialCollecting.bfevfl",
+        "sha256": "982c1bd655bd1e70652f818d9ecc24b62bb1ebe874cf59fa29b1728c478ebcca",
+        "bytes": 50288,
+        "role": "raw material collection EventFlow"
+      },
+      {
+        "path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/EventFlow/SNPC_rcm_22_MaterialProgressChk.bfevfl",
+        "sha256": "5d842cdde3f1e3aa92a2bb81ffc2ff646148450ac572e308fbc73f4f9aafebcf",
+        "bytes": 10240,
+        "role": "raw material progress EventFlow"
+      },
+      {
+        "path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/EventFlow/SNPC_rcm_23_MaterialBelongingChk.bfevfl",
+        "sha256": "b7f3abb4c84fe9c0fad51ec2a0135e56bb534089d693c50e10275b619477840a",
+        "bytes": 13016,
+        "role": "raw material availability EventFlow"
+      },
+      {
+        "path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/EventFlow/SNPC_rcm_24_MaterialGiveProcess.bfevfl",
+        "sha256": "89a43dd613e70f41cdce4703830f27509593fa5b48f590dfc39ce2460a6e8d92",
+        "bytes": 9520,
+        "role": "raw material deletion/delivery EventFlow"
+      },
+      {
+        "path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/EventFlow/Player_HousingKit.bfevfl",
+        "sha256": "6b7e56629772c85053c44b399d9e1a9bdf1d8f147cceb8bb499cc8c8918a0383",
+        "bytes": 50104,
+        "role": "raw housing-kit placement EventFlow"
+      },
+      {
+        "path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/EventFlow/Player_Demo_HousingFinish.bfevfl",
+        "sha256": "0d985729c46942063a1e57aa33bd47d307ede97c2d195cfcee72f6034a3e8c4d",
+        "bytes": 43008,
+        "role": "raw shop-built story EventFlow"
+      },
+      {
+        "path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/EventFlow/System_Structure_Common.bfevfl",
+        "sha256": "e64c08ddc898616e354c6951ae891597726d78c4ca2c61e4257264d837033c12",
+        "bytes": 8368,
+        "role": "raw shared structure placement EventFlow"
+      },
+      {
+        "path": "/workspace/acnh-re/work/eventflow/SNPC_rcm_01_Tent_1_Entries.json",
+        "sha256": "8bf1ce134219207dadedd92be11ce016a592071f2902f9e9fb498a8403a258cc",
+        "bytes": 8075,
+        "role": "decoded tent menu EventFlow"
+      },
+      {
+        "path": "/workspace/acnh-re/work/eventflow/SNPC_rcm_21_MaterialCollecting.json",
+        "sha256": "dbf648aa51202109e3a36d6f9aca68aebe41f8c4b17d4458168d342b3788d85d",
+        "bytes": 43975,
+        "role": "decoded material collection EventFlow"
+      },
+      {
+        "path": "/workspace/acnh-re/work/eventflow/SNPC_rcm_22_MaterialProgressChk.json",
+        "sha256": "5e14de4c12b6eacd9fc42ae682cd191124e59404d2ba0238ce90d2e933eba63b",
+        "bytes": 7158,
+        "role": "decoded material progress EventFlow"
+      },
+      {
+        "path": "/workspace/acnh-re/work/eventflow/SNPC_rcm_23_MaterialBelongingChk.json",
+        "sha256": "551bc94a4ecbf0e9cee9c014bbd62a5bd78a6c60e108c649f16c3857e497ec0e",
+        "bytes": 8945,
+        "role": "decoded material availability EventFlow"
+      },
+      {
+        "path": "/workspace/acnh-re/work/eventflow/SNPC_rcm_24_MaterialGiveProcess.json",
+        "sha256": "463a57d3bff716114ab6db952bd0c758916a23fe78df20c291032db14beaf052",
+        "bytes": 9506,
+        "role": "decoded deletion/delivery EventFlow"
+      },
+      {
+        "path": "/workspace/acnh-re/work/eventflow/Player_HousingKit.json",
+        "sha256": "52034d36a43e9fd1f8a258ef87cd47fa75ce11d741a89018f711074261a1bf13",
+        "bytes": 36000,
+        "role": "decoded housing-kit placement EventFlow"
+      },
+      {
+        "path": "/workspace/acnh-re/work/eventflow/Player_Demo_HousingFinish.json",
+        "sha256": "b47ffa598f123a4e63290cf259cd899d4aac1019af0bdaf35fe7f19182247f75",
+        "bytes": 29096,
+        "role": "decoded shop-built EventFlow"
+      },
+      {
+        "path": "/workspace/acnh-re/work/eventflow/System_Structure_Common.json",
+        "sha256": "0067821f51dc3f104adf848598e3e8b980b70cc6aaea35c6a904406acf36fdfb",
+        "bytes": 5408,
+        "role": "decoded shared structure placement EventFlow"
+      },
+      {
+        "path": "/workspace/acnh-re/output/gameplay/flow_index.json",
+        "sha256": "359f3a21a17a116902b0c8e1110c3892814b6fccbeb50b71d573c8ab3e1c68c5",
+        "bytes": 2119148,
+        "role": "EventFlow entry/edge index"
+      },
+      {
+        "path": "/workspace/acnh-re/output/gameplay/trees/SNPC_rcm_01_Tent_1_Entries.txt",
+        "sha256": "ce5d5531f08a3350fbec3b856226b249a2b32cccfaf46b2f821f69768449cf8a",
+        "bytes": 4685,
+        "role": "readable tent menu tree"
+      },
+      {
+        "path": "/workspace/acnh-re/output/gameplay/trees/SNPC_rcm_21_MaterialCollecting.txt",
+        "sha256": "dcc7a2987e9ee0493cafcdb2a3136729c4c68d48033b113783a482eee82af18e",
+        "bytes": 29175,
+        "role": "readable material collection tree"
+      },
+      {
+        "path": "/workspace/acnh-re/output/gameplay/trees/SNPC_rcm_24_MaterialGiveProcess.txt",
+        "sha256": "d80201b65bc466b6484f57c96dfb8c2c5c9b959c0c88ca4463360e53ffb1e0af",
+        "bytes": 7078,
+        "role": "readable donation/deletion tree"
+      },
+      {
+        "path": "/workspace/acnh-re/output/gameplay/trees/Player_Demo_HousingFinish.txt",
+        "sha256": "55532c5d23b62a655986403cd35e5c13e095f90199cfdddd1a6e6659e2f1b99d",
+        "bytes": 13776,
+        "role": "readable housing completion tree"
+      },
+      {
+        "path": "/workspace/acnh-re/output/tables_resolved/ItemParam.json",
+        "sha256": "2934112d0cede6dc5e73ebafe74afcfbb9630de5c12eb58745e0cdbb5138006b",
+        "bytes": 22811861,
+        "role": "decoded item identity/type/name/price table"
+      },
+      {
+        "path": "/workspace/acnh-re/output/tables_resolved/EventFlagsPlayerParam.json",
+        "sha256": "964aad3dead62ffc74b8a8c8667f85cb70fa00706acf909892bbbbb85e1c1a3c",
+        "bytes": 69595,
+        "role": "decoded story flag table"
+      },
+      {
+        "path": "/workspace/acnh-re/output/binary/event_handlers_resolved.json",
+        "sha256": "dfc298dfcb1b288b8fda9cd6a49c728fdad903b41f8fc1c9288df7d732ec92a5",
+        "bytes": 1009896,
+        "role": "resolved EventFlow handler registry"
+      },
+      {
+        "path": "/workspace/analysis/acnh/project/generated/re/evfl_vtables.json",
+        "sha256": "f734a9d886d1e004c1abe41f50b3b620380d62eb7b34177008434a1c8cfe472b",
+        "bytes": 470311,
+        "role": "native EventFlow vtable/factory trace"
+      },
+      {
+        "path": "/workspace/analysis/acnh/project/generated/re/decomp/426a20.c",
+        "sha256": "a91794106e469305b92f00901eda6c2d3f645147efe6f1eb78e016fcd373c203",
+        "bytes": 1090,
+        "role": "native HasTargetItem query pseudocode"
+      },
+      {
+        "path": "/workspace/analysis/acnh/project/generated/re/decomp/329360.c",
+        "sha256": "aa18c18b752e17e9109561c6c99b4667ab935ddcf8e14e7b4e72d5f79ebb62c2",
+        "bytes": 292,
+        "role": "native DeleteTargetItem action pseudocode"
+      },
+      {
+        "path": "/workspace/analysis/acnh/project/generated/re/decomp/249c60.c",
+        "sha256": "98c9a6ee8e2f519b288d34ba3edb93ca201d6d2f81a395f86e0f4684d2006a13",
+        "bytes": 1997,
+        "role": "native SetDeliveryItemAtRandom action pseudocode"
+      }
+    ]
+  },
+  "story_flows": {
+    "tent_menu": {
+      "flow": "SNPC_rcm_01_Tent_1_Entries",
+      "source_id": 572,
+      "entry": "Root",
+      "choice_event": 36,
+      "case_0_subflow": {
+        "event": 40,
+        "flow": "SNPC_rcm_21_MaterialCollecting",
+        "entry": "Root"
+      },
+      "other_cases": {
+        "case_1": "SNPC_rcm_00_Common_Sell:Root",
+        "case_2": "SNPC_rcm_00_Common:Rcm_Common_Buy",
+        "case_3": "SNPC_rcm_00_Common:rcm_Common_End"
+      },
+      "distinction": "Material collection is a separate story-menu route, not ShopBuyDone/ShopSellDone commerce."
+    },
+    "material_collection": {
+      "flow": "SNPC_rcm_21_MaterialCollecting",
+      "source_id": 578,
+      "entry": "Root",
+      "initial_calls": [
+        {
+          "event": 9,
+          "flow": "SNPC_rcm_22_MaterialProgressChk",
+          "entry": "Root"
+        },
+        {
+          "event": 73,
+          "flow": "SNPC_rcm_23_MaterialBelongingChk",
+          "entry": "Root"
+        }
+      ],
+      "requirement": {
+        "count_each": 30,
+        "materials": [
+          {
+            "item_unique_id": 2768,
+            "english": "wood"
+          },
+          {
+            "item_unique_id": 2767,
+            "english": "softwood"
+          },
+          {
+            "item_unique_id": 2769,
+            "english": "hardwood"
+          },
+          {
+            "item_unique_id": 2511,
+            "english": "iron nugget"
+          }
+        ]
+      },
+      "requirement_query_events_in_DonateMaterials_Remain1": [
+        {
+          "event": 23,
+          "item_unique_id": 2768,
+          "need_num": 30,
+          "enough_case": 0,
+          "insufficient_case": 1
+        },
+        {
+          "event": 24,
+          "item_unique_id": 2769,
+          "need_num": 30,
+          "enough_case": 0,
+          "insufficient_case": 1
+        },
+        {
+          "event": 26,
+          "item_unique_id": 2767,
+          "need_num": 30,
+          "enough_case": 0,
+          "insufficient_case": 1
+        },
+        {
+          "event": 25,
+          "item_unique_id": 2511,
+          "need_num": 30,
+          "enough_case": 0,
+          "insufficient_case": 1
+        }
+      ],
+      "donation_subflow": "SNPC_rcm_24_MaterialGiveProcess:Root"
+    },
+    "progress_and_belonging": {
+      "progress_flow": "SNPC_rcm_22_MaterialProgressChk:Root",
+      "progress_behavior": "Checks cLand:RcmShopMaterial_{SoftWood,Iron,Wood,HardWood}; increments MaterialRemain for each ON flag; writes subflow result index 0 as the completed-material count 0..4.",
+      "all_four_complete_value": 4,
+      "belonging_flow": "SNPC_rcm_23_MaterialBelongingChk:Root",
+      "belonging_behavior": "Runs HasTargetItem for the four requested IDs at NeedNum=30 and uses the resulting count to form the donation-choice result indexes."
+    },
+    "material_give_process": {
+      "flow": "SNPC_rcm_24_MaterialGiveProcess",
+      "source_id": 581,
+      "entry": "Root",
+      "donation_ui_action": {
+        "event": 3,
+        "action": "NpcDelivery",
+        "params": {
+          "Command": 0,
+          "Option": "Default"
+        }
+      },
+      "delete_entries": [
+        {
+          "entry": "DeleteWood",
+          "events": [
+            16,
+            17
+          ],
+          "item_unique_id": 2768,
+          "delete_num": 30,
+          "flag": "cLand:RcmShopMaterial_Wood"
+        },
+        {
+          "entry": "DeleteSoftWood",
+          "events": [
+            19,
+            18
+          ],
+          "item_unique_id": 2767,
+          "delete_num": 30,
+          "flag": "cLand:RcmShopMaterial_SoftWood"
+        },
+        {
+          "entry": "DeleteHardWood",
+          "events": [
+            20,
+            21
+          ],
+          "item_unique_id": 2769,
+          "delete_num": 30,
+          "flag": "cLand:RcmShopMaterial_HardWood"
+        },
+        {
+          "entry": "DeleteIron",
+          "events": [
+            15,
+            22
+          ],
+          "item_unique_id": 2511,
+          "delete_num": 30,
+          "flag": "cLand:RcmShopMaterial_Iron"
+        }
+      ],
+      "event_order": "Each DeleteTargetItem action precedes its corresponding EventFlagSystemOn action in the named entry.",
+      "full_requirement_path": "The root selects one/two/three/four donation patterns using subflow results; material deletion entries are called for the selected IDs. The all-four route calls every Delete* entry."
+    },
+    "kit_completion": {
+      "flow": "SNPC_rcm_21_MaterialCollecting:GotReward",
+      "progress_refresh_event": 261,
+      "completion_branch": "SubflowResultChoice5(SetIndex=0)==4",
+      "kit_setup": {
+        "event": 271,
+        "action": "SetDeliveryItemAtRandom",
+        "params": {
+          "ItemUniqueID": 2756,
+          "ApplyToSave": true,
+          "ItemRemakeDecideType": "cVillageRemakePattern",
+          "RemakePatternIndex": 0
+        }
+      },
+      "npc_delivery_events": [
+        {
+          "event": 272,
+          "command": 1,
+          "option": "Keep"
+        },
+        {
+          "event": 273,
+          "command": 2,
+          "option": "Default"
+        }
+      ],
+      "completion_flags": [
+        {
+          "event": 274,
+          "key": "cPlayer:Prologue4RcmGetTent"
+        },
+        {
+          "event": 275,
+          "key": "cLand:RcmShopMaterialComplete"
+        },
+        {
+          "event": 281,
+          "key": "cLand:OpeningSeqBGMChangeCounter",
+          "value": 10
+        }
+      ],
+      "limit": "SetDeliveryItemAtRandom/NpcDelivery are authored reward handoff actions; the trace does not observe the live player bag or durable save."
+    },
+    "kit_item_table": {
+      "table": "ItemParam",
+      "source_id": 72,
+      "unique_id": 2756,
+      "item_kind": {
+        "hash": "e49d6bfb",
+        "labels": [
+          "HousingKit",
+          "\u30cf\u30a6\u30b8\u30f3\u30b0\u30ad\u30c3\u30c8"
+        ]
+      },
+      "name_ja": "\u304a\u307f\u305b\u306e\u3053\u3046\u3058\u304b\u3093\u3070\u3093",
+      "price": 0,
+      "name_interpretation": "Shop construction sign / HousingKit based on table labels."
+    },
+    "kit_use_and_placement": {
+      "flow": "Player_HousingKit",
+      "source_id": 516,
+      "root_selection_query": {
+        "event": 2,
+        "query": "UIPocketMenuItemSelected",
+        "ItemUniqueID": 2756,
+        "selected_case": 0,
+        "subflow_event": 45,
+        "entry": "ShopReserveKit",
+        "params": {
+          "BuildTiming": "cNew"
+        }
+      },
+      "shop_reserve_kit_entry": {
+        "main_event": 161,
+        "preview_action": "StructureStartPreviewGuide",
+        "params": {
+          "StructureType": "cMarket",
+          "StructureBuildPosType": "cPlayer",
+          "StructureBuildTiming": "$arg(BuildTiming)"
+        },
+        "can_build_query_event": 42,
+        "branch_routes": {
+          "case_0": [
+            41,
+            "HousingKitCommon",
+            "event112 ReservePlayerMutterDemo HousingFinish_Shop_Built"
+          ],
+          "case_1": [
+            43,
+            "HousingKitCommonError"
+          ]
+        },
+        "common_entry": "HousingKitCommon"
+      },
+      "common_structure_subflows": [
+        {
+          "flow": "System_Structure_Common",
+          "entry": "PreviewStructure"
+        },
+        {
+          "flow": "System_Structure_Common",
+          "entry": "DeletePreviewAndBuildStructure"
+        },
+        {
+          "flow": "System_Structure_Common",
+          "entry": "DeletePreviewStructure"
+        },
+        {
+          "flow": "System_Structure_Common",
+          "entry": "BuildStructure"
+        }
+      ],
+      "placement_completion_flow": {
+        "flow": "Player_Demo_HousingFinish",
+        "entry": "HousingFinish_Shop_Built",
+        "flag_writes": [
+          "cLand:Prologue4BuiltShop",
+          "cLand:HghStayMarket",
+          "cPlayer:DecideShopArea"
+        ]
+      },
+      "limit": "EventFlow identifies the native placement flows and completion action; no live placement, accepted cell, model/collider instance, or validated transform is observed."
+    }
+  },
+  "native_handler_bindings": {
+    "has_target_item_query": {
+      "handler": {
+        "name": "EventFlowSystemActor.EventFlowQueryHasTargetItem",
+        "registration_hash": "b85014ea",
+        "registration_va": "0x305d2d0",
+        "factory": "0x45b830",
+        "constructor": "0x426940",
+        "vtable": "0x3057cd0",
+        "parameters": {
+          "ItemUniqueId": "int",
+          "NeedNum": "int"
+        },
+        "slots": [
+          "0x426b10",
+          "0x426c90",
+          "0x4269e0",
+          "0x19679b0",
+          "0x426a10",
+          "0x238fd0",
+          "0x426a20"
+        ],
+        "status": "native_factory"
+      },
+      "evaluate_slot_index": 6,
+      "evaluate_raw_va": "0x426a20",
+      "parameters_instance_offsets": {
+        "ItemUniqueId": "param+0xd0",
+        "NeedNum": "param+0xf8"
+      },
+      "pocket_path": "query context pointer param+8; item container at context+0x2a8",
+      "native_counting": "Enumerates active pocket slots, extracts matching UID, sums stack counts via item-slot helper routines, returns count < NeedNum.",
+      "branch_reading": "In these EventFlow records case 0 proceeds to donation and case 1 routes to CantGive; thus case 0 is the false/inventory-sufficient branch for the native comparison."
+    },
+    "delete_target_item_action": {
+      "handler": {
+        "name": "EventFlowSystemActor.EventFlowActionDeleteTargetItem",
+        "registration_hash": "d47c0e73",
+        "registration_va": "0x305b688",
+        "factory": "0x4535f0",
+        "constructor": "0x329280",
+        "vtable": "0x304b100",
+        "parameters": {
+          "DeleteNum": "int",
+          "ItemUniqueId": "int"
+        },
+        "slots": [
+          "0x3293b0",
+          "0x329450",
+          "0x329320",
+          "0x19679b0",
+          "0x329350",
+          "0x238fd0",
+          "0x23c0c0",
+          "0x238ff0",
+          "0x23c0d0",
+          "0x23c0e0",
+          "0x23c0f0",
+          "0x329360"
+        ],
+        "status": "native_factory"
+      },
+      "execute_slot_index": 11,
+      "execute_raw_va": "0x329360",
+      "action_instance_offsets": {
+        "ItemUniqueId": "param+0xd8",
+        "DeleteNum": "param+0x100"
+      },
+      "native_dispatch": "Obtains player pocket context and calls 0xffbdf0(pocket_container, constructed_item_descriptor, DeleteNum).",
+      "helper_body_available": false,
+      "claim_limit": "Handler call arguments prove native deletion is requested; the final helper body and post-call item count are not available in this index."
+    },
+    "reward_and_placement_actions": [
+      {
+        "name": "MainNpc.EventFlowActionSetDeliveryItemAtRandom",
+        "registration_hash": "ab758cec",
+        "registration_va": "0x305b088",
+        "factory": "0x451df0",
+        "constructor": "0x249b20",
+        "vtable": "0x303e570",
+        "parameters": {
+          "ApplyToSave": "bool",
+          "ItemUniqueID": "int",
+          "ItemRemakeDecideType": "str",
+          "RemakePatternIndex": "int"
+        },
+        "slots": [
+          "0x24a0a0",
+          "0x24a140",
+          "0x249c20",
+          "0x19679b0",
+          "0x249c50",
+          "0x238fd0",
+          "0x23c0c0",
+          "0x238ff0",
+          "0x23c0d0",
+          "0x23c0e0",
+          "0x23c0f0",
+          "0x249c60"
+        ],
+        "status": "native_factory"
+      },
+      {
+        "name": "MainNpc.EventFlowActionNpcDelivery",
+        "registration_hash": "e9a74dc3",
+        "registration_va": "0x305b958",
+        "factory": "0x454130",
+        "constructor": "0x2421d0",
+        "vtable": "0x303dde8",
+        "parameters": {
+          "Command": "int",
+          "Option": "str"
+        },
+        "slots": [
+          "0x2427b0",
+          "0x242850",
+          "0x242280",
+          "0x19679b0",
+          "0x2422b0",
+          "0x238fd0",
+          "0x238fe0",
+          "0x238ff0",
+          "0x2422c0",
+          "0x2422d0",
+          "0x2427a0",
+          "0x239010"
+        ],
+        "status": "native_factory"
+      },
+      {
+        "name": "EventFlowSystemActor.EventFlowActionStructureStartPreviewGuide",
+        "registration_hash": "ceec247d",
+        "registration_va": "0x305b5a8",
+        "factory": "0x453270",
+        "constructor": "0x344490",
+        "vtable": "0x304cdf8",
+        "parameters": {
+          "StructureType": "str",
+          "StructureBuildPosType": "str",
+          "StructureBuildTiming": "arg"
+        },
+        "slots": [
+          "0x344e90",
+          "0x344f30",
+          "0x344570",
+          "0x19679b0",
+          "0x3445a0",
+          "0x238fd0",
+          "0x238fe0",
+          "0x238ff0",
+          "0x3445b0",
+          "0x344d20",
+          "0x344e80",
+          "0x239010"
+        ],
+        "status": "native_factory"
+      },
+      {
+        "name": "EventFlowSystemActor.EventFlowQueryCanBuildHere",
+        "registration_hash": "2e0432f3",
+        "registration_va": "0x305c170",
+        "factory": "0x4572b0",
+        "constructor": "0x408bc0",
+        "vtable": "0x3056760",
+        "parameters": {
+          "StructureBuildPosType": "str",
+          "StructureType": "str",
+          "StructureBuildTiming": "arg"
+        },
+        "slots": [
+          "0x408ed0",
+          "0x409050",
+          "0x408c90",
+          "0x19679b0",
+          "0x408cc0",
+          "0x238fd0",
+          "0x408cd0"
+        ],
+        "status": "native_factory"
+      },
+      {
+        "name": "EventFlowSystemActor.EventFlowActionReservePlayerMutterDemo",
+        "registration_hash": "cfb3ca3e",
+        "registration_va": "0x305b5e8",
+        "factory": "0x453370",
+        "constructor": "0x32e8f0",
+        "vtable": "0x304b810",
+        "parameters": {
+          "EventFileName": "str",
+          "MutterStartTiming": "str",
+          "EntryPointName": "str",
+          "IsResistNpcCast": "bool"
+        },
+        "slots": [
+          "0x32f000",
+          "0x32f0a0",
+          "0x32e9f0",
+          "0x19679b0",
+          "0x32ea20",
+          "0x238fd0",
+          "0x23c0c0",
+          "0x238ff0",
+          "0x23c0d0",
+          "0x23c0e0",
+          "0x23c0f0",
+          "0x32ea30"
+        ],
+        "status": "native_factory"
+      },
+      {
+        "name": "EventFlowSystemActor.EventFlowActionEventFlagSystemOn",
+        "registration_hash": "39daf2b1",
+        "registration_va": "0x305a098",
+        "factory": "0x44de30",
+        "constructor": "0x30b920",
+        "vtable": "0x3049260",
+        "parameters": {
+          "AccessKey": "str"
+        },
+        "slots": [
+          "0x30bf30",
+          "0x30bfd0",
+          "0x30b990",
+          "0x19679b0",
+          "0x30b9c0",
+          "0x238fd0",
+          "0x23c0c0",
+          "0x238ff0",
+          "0x23c0d0",
+          "0x23c0e0",
+          "0x23c0f0",
+          "0x30b9d0"
+        ],
+        "status": "native_factory"
+      }
+    ]
+  },
+  "open_edges": [
+    "The final 0xffbdf0 pocket helper body is absent; successful exact stack decrement, partial failure, and rollback/atomicity are not established.",
+    "No runtime observation confirms that the prepared UID 2756 delivery appears in the player pocket or remains after save/reload.",
+    "ApplyToSave=true is an EventFlow parameter and is not proof of durable file write/flush/round-trip.",
+    "No native live placement cell, transform, collision/terrain validation, preview cancel behavior, or model/collider instance is observed.",
+    "The item/model/audio asset payload is not used here; model and audio remain catalogue-only under repository policy."
+  ],
+  "validation": {
+    "json_schema": "acnh-re.shop-material-quest-to-housing-kit/1",
+    "evidence_file_count": 29,
+    "all_evidence_paths_present": true,
+    "all_sha256_recomputed": true,
+    "runtime_execution": false,
+    "save_mutation": false,
+    "godot_work": false
+  }
+}
