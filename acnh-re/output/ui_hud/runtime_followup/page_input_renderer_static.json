@@ -1,5 +1,5 @@
 {
-  "schema": "acnh.ui_hud_runtime_followup.page_input_renderer_static.v1",
+  "schema": "acnh.ui_hud_runtime_followup.page_input_renderer_static.v3",
   "source": {
     "game_build": "ACNH 1.0.0",
     "module": "ExeFS main",
@@ -110,6 +110,18 @@
         ],
         "allocation_size_bytes": "0x1c8",
         "owner_object_member_offset": "0x448",
+        "vptr_cell": "0x3321ed0",
+        "vptr_relocation_target": "0x31dcbf0",
+        "vptr_address_point": "0x31dcc00",
+        "slot_five_target_membership": [
+          {
+            "sequence_start": "0x31dcc00",
+            "slot_index": 5,
+            "pointer_va": "0x31dcc28",
+            "sequence_length": 22,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          }
+        ],
         "constructor_state_initialization": {
           "field_offset_bytes": "0x48",
           "instruction": {
@@ -172,15 +184,865 @@
           "address": "0x1da40b4",
           "mnemonic": "str",
           "operands": "w8, [x0, #0x48]"
+        },
+        {
+          "address": "0x1da5c60",
+          "mnemonic": "mov",
+          "operands": "w8, #3"
+        },
+        {
+          "address": "0x1da5c64",
+          "mnemonic": "str",
+          "operands": "w8, [x0, #0x48]"
+        },
+        {
+          "address": "0x1da47a4",
+          "mnemonic": "ldr",
+          "operands": "w8, [x0, #0x48]"
+        },
+        {
+          "address": "0x1da47b0",
+          "mnemonic": "cmp",
+          "operands": "w8, #3"
+        },
+        {
+          "address": "0x1da47b4",
+          "mnemonic": "b.ne",
+          "operands": "#0x1da47c0"
+        },
+        {
+          "address": "0x1da47b8",
+          "mnemonic": "mov",
+          "operands": "x0, x19"
+        },
+        {
+          "address": "0x1da47bc",
+          "mnemonic": "bl",
+          "operands": "#0x1da4890"
         }
       ],
       "observed_state_sequence": [
         0,
         1,
-        2
+        2,
+        3
       ],
-      "observation": "The method allocates 0x1c8 bytes, calls the constructor whose native string reference is RootPage, stores that object at +0x448, then calls helpers which write +0x48 values 1 and 2 in order. The state-2 helper also dispatches through the new object's vtable slot +0x28. This is a concrete construction transition; the three integers remain unnamed states.",
+      "slot_five_state_three_helper": {
+        "function": "0x1da5c60",
+        "sequence_membership": [
+          {
+            "sequence_start": "0x31dcc00",
+            "slot_index": 5,
+            "pointer_va": "0x31dcc28",
+            "sequence_length": 22,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          }
+        ],
+        "instructions": [
+          {
+            "address": "0x1da5c60",
+            "mnemonic": "mov",
+            "operands": "w8, #3"
+          },
+          {
+            "address": "0x1da5c64",
+            "mnemonic": "str",
+            "operands": "w8, [x0, #0x48]"
+          }
+        ],
+        "observation": "The RootPage constructor installs the relocated sequence at 0x31dcc00; its slot 5 (+0x28) target is this two-instruction helper, which stores 3 at +0x48. The existing state-2 helper branches through the same slot, completing 0→1→2→3."
+      },
+      "observation": "The method allocates 0x1c8 bytes, calls the constructor whose native string reference is RootPage, stores that object at +0x448, then calls helpers which write +0x48 values 1 and 2 in order. The state-2 helper dispatches through vtable slot +0x28 to the RootPage slot-5 helper, which stores 3. This is a concrete construction transition; the integers remain unnamed states.",
       "registration_limit": "This method calls the state-2 helper 0x1da40b0, but not the collection-inserting wrapper 0x1da8220. The available instructions do not show whether another path attaches this RootPage elsewhere."
+    },
+    "uimgr_precalc_callback": {
+      "manager_constructor": "0x1dd3bd0",
+      "constructor_string_refs": [
+        "UIMgr",
+        "UIMgr::PreCalc"
+      ],
+      "manager_vptr_cell": "0x3322938",
+      "manager_vptr_relocation_target": "0x31e0b90",
+      "manager_vptr_address_point": "0x31e0ba0",
+      "manager_slot_10_root_page_creator": {
+        "target": "0x1dd4090",
+        "membership": [
+          {
+            "sequence_start": "0x31e0ba0",
+            "slot_index": 10,
+            "pointer_va": "0x31e0bf0",
+            "sequence_length": 25,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          }
+        ],
+        "observation": "The relocated UIMgr address point places 0x1dd4090 in slot 10; this method constructs and stores RootPage. UIMgr::PreCalc is a separately stored callback member, not the slot-10 method."
+      },
+      "callback_global_cell": "0x3322948",
+      "callback_relocation_target": "0x1dd3e70",
+      "callback_pointer_stored_at_manager_offset": "0x390",
+      "callback_object_self_offset": "0x388",
+      "callback_label_field_offset": "0x378",
+      "constructor_instructions": [
+        {
+          "address": "0x1dd3bf8",
+          "mnemonic": "adrp",
+          "operands": "x8, #0x3322000"
+        },
+        {
+          "address": "0x1dd3c08",
+          "mnemonic": "str",
+          "operands": "x8, [x19]"
+        },
+        {
+          "address": "0x1dd3c54",
+          "mnemonic": "add",
+          "operands": "x22, x19, #0x370"
+        },
+        {
+          "address": "0x1dd3c5c",
+          "mnemonic": "str",
+          "operands": "x8, [x19, #0x378]"
+        },
+        {
+          "address": "0x1dd3d08",
+          "mnemonic": "bl",
+          "operands": "#0x197a080"
+        },
+        {
+          "address": "0x1dd3d10",
+          "mnemonic": "adrp",
+          "operands": "x8, #0x3322000"
+        },
+        {
+          "address": "0x1dd3d14",
+          "mnemonic": "ldr",
+          "operands": "x8, [x8, #0x948]"
+        },
+        {
+          "address": "0x1dd3d18",
+          "mnemonic": "str",
+          "operands": "x8, [x19, #0x390]"
+        },
+        {
+          "address": "0x1dd3d30",
+          "mnemonic": "str",
+          "operands": "x8, [x19, #0x380]"
+        },
+        {
+          "address": "0x1dd3d34",
+          "mnemonic": "bl",
+          "operands": "#0x197a0e0"
+        }
+      ],
+      "callback_instructions": [
+        {
+          "address": "0x1dd3e7c",
+          "mnemonic": "ldr",
+          "operands": "w8, [x0, #0x500]"
+        },
+        {
+          "address": "0x1dd3e80",
+          "mnemonic": "add",
+          "operands": "w8, w8, #1"
+        },
+        {
+          "address": "0x1dd3e84",
+          "mnemonic": "mov",
+          "operands": "x19, x0"
+        },
+        {
+          "address": "0x1dd3e88",
+          "mnemonic": "str",
+          "operands": "w8, [x0, #0x500]"
+        },
+        {
+          "address": "0x1dd3e8c",
+          "mnemonic": "ldr",
+          "operands": "x0, [x0, #0x448]"
+        },
+        {
+          "address": "0x1dd3e90",
+          "mnemonic": "bl",
+          "operands": "#0x1da4960"
+        },
+        {
+          "address": "0x1dd3e94",
+          "mnemonic": "ldr",
+          "operands": "x0, [x19, #0x418]"
+        },
+        {
+          "address": "0x1dd3e98",
+          "mnemonic": "bl",
+          "operands": "#0x1ef0990"
+        },
+        {
+          "address": "0x1dd3e9c",
+          "mnemonic": "ldr",
+          "operands": "x0, [x19, #0x448]"
+        },
+        {
+          "address": "0x1dd3ea0",
+          "mnemonic": "mov",
+          "operands": "w1, #1"
+        },
+        {
+          "address": "0x1dd3ea4",
+          "mnemonic": "bl",
+          "operands": "#0x1da4790"
+        },
+        {
+          "address": "0x1dd3ea8",
+          "mnemonic": "ldr",
+          "operands": "x0, [x19, #0x440]"
+        },
+        {
+          "address": "0x1dd3eac",
+          "mnemonic": "bl",
+          "operands": "#0x1d98200"
+        },
+        {
+          "address": "0x1dd3eb0",
+          "mnemonic": "ldr",
+          "operands": "x0, [x19, #0x448]"
+        },
+        {
+          "address": "0x1dd3eb4",
+          "mnemonic": "ldr",
+          "operands": "x1, [x19, #0x440]"
+        },
+        {
+          "address": "0x1dd3eb8",
+          "mnemonic": "mov",
+          "operands": "w2, wzr"
+        },
+        {
+          "address": "0x1dd3ebc",
+          "mnemonic": "bl",
+          "operands": "#0x1da4a20"
+        },
+        {
+          "address": "0x1dd3ec0",
+          "mnemonic": "ldr",
+          "operands": "x0, [x19, #0x448]"
+        },
+        {
+          "address": "0x1dd3ec4",
+          "mnemonic": "ldr",
+          "operands": "x1, [x19, #0x440]"
+        },
+        {
+          "address": "0x1dd3ec8",
+          "mnemonic": "mov",
+          "operands": "w2, wzr"
+        },
+        {
+          "address": "0x1dd3ecc",
+          "mnemonic": "bl",
+          "operands": "#0x1da4b20"
+        },
+        {
+          "address": "0x1dd3ed0",
+          "mnemonic": "ldr",
+          "operands": "x0, [x19, #0x448]"
+        },
+        {
+          "address": "0x1dd3edc",
+          "mnemonic": "b",
+          "operands": "#0x1da4c20"
+        }
+      ],
+      "callback_direct_call_count": 0,
+      "observed_behavior": "The UIMgr constructor builds a descriptor bearing the indexed string UIMgr::PreCalc, stores the relocated callback pointer at manager +0x390 and self at +0x388 under its callback lock. The callback increments manager +0x500, calls 0x1da4960 on RootPage +0x448, calls 0x1da4790(root, 1), then dispatches additional helpers over RootPage and tail-calls 0x1da4c20. In 0x1da4790, state 3 calls 0x1da4890, which stores state 4; the helper then performs its mask-gated +0x50/+0x54 work and recurses over child pages.",
+      "precalc_child_tree_callback_family": {
+        "callback_call_instructions": [
+          {
+            "address": "0x1dd3e7c",
+            "mnemonic": "ldr",
+            "operands": "w8, [x0, #0x500]"
+          },
+          {
+            "address": "0x1dd3e80",
+            "mnemonic": "add",
+            "operands": "w8, w8, #1"
+          },
+          {
+            "address": "0x1dd3e84",
+            "mnemonic": "mov",
+            "operands": "x19, x0"
+          },
+          {
+            "address": "0x1dd3e88",
+            "mnemonic": "str",
+            "operands": "w8, [x0, #0x500]"
+          },
+          {
+            "address": "0x1dd3e8c",
+            "mnemonic": "ldr",
+            "operands": "x0, [x0, #0x448]"
+          },
+          {
+            "address": "0x1dd3e90",
+            "mnemonic": "bl",
+            "operands": "#0x1da4960"
+          },
+          {
+            "address": "0x1dd3e94",
+            "mnemonic": "ldr",
+            "operands": "x0, [x19, #0x418]"
+          },
+          {
+            "address": "0x1dd3e98",
+            "mnemonic": "bl",
+            "operands": "#0x1ef0990"
+          },
+          {
+            "address": "0x1dd3e9c",
+            "mnemonic": "ldr",
+            "operands": "x0, [x19, #0x448]"
+          },
+          {
+            "address": "0x1dd3ea0",
+            "mnemonic": "mov",
+            "operands": "w1, #1"
+          },
+          {
+            "address": "0x1dd3ea4",
+            "mnemonic": "bl",
+            "operands": "#0x1da4790"
+          },
+          {
+            "address": "0x1dd3ea8",
+            "mnemonic": "ldr",
+            "operands": "x0, [x19, #0x440]"
+          },
+          {
+            "address": "0x1dd3eac",
+            "mnemonic": "bl",
+            "operands": "#0x1d98200"
+          },
+          {
+            "address": "0x1dd3eb0",
+            "mnemonic": "ldr",
+            "operands": "x0, [x19, #0x448]"
+          },
+          {
+            "address": "0x1dd3eb4",
+            "mnemonic": "ldr",
+            "operands": "x1, [x19, #0x440]"
+          },
+          {
+            "address": "0x1dd3eb8",
+            "mnemonic": "mov",
+            "operands": "w2, wzr"
+          },
+          {
+            "address": "0x1dd3ebc",
+            "mnemonic": "bl",
+            "operands": "#0x1da4a20"
+          },
+          {
+            "address": "0x1dd3ec0",
+            "mnemonic": "ldr",
+            "operands": "x0, [x19, #0x448]"
+          },
+          {
+            "address": "0x1dd3ec4",
+            "mnemonic": "ldr",
+            "operands": "x1, [x19, #0x440]"
+          },
+          {
+            "address": "0x1dd3ec8",
+            "mnemonic": "mov",
+            "operands": "w2, wzr"
+          },
+          {
+            "address": "0x1dd3ecc",
+            "mnemonic": "bl",
+            "operands": "#0x1da4b20"
+          },
+          {
+            "address": "0x1dd3ed0",
+            "mnemonic": "ldr",
+            "operands": "x0, [x19, #0x448]"
+          },
+          {
+            "address": "0x1dd3edc",
+            "mnemonic": "b",
+            "operands": "#0x1da4c20"
+          }
+        ],
+        "helper_facts": [
+          "0x1da4960 recursively visits children and sends states 5 through 7 to finish helper 0x1da43d0.",
+          "0x1da4790 changes state 3 through 0x1da4890 to 4, then uses the callback's input flag and a global mask against page +0x4c to update +0x50/+0x54 and recursively visit children.",
+          "0x1da4a20 returns at state 3; otherwise it recurses and invokes each page's vtable slot +0x48.",
+          "0x1da4b20 returns at state 3; otherwise it recurses and invokes each page's vtable slot +0x50.",
+          "0x1da4c20 checks byte +0x50; when set, it invokes vtable slots +0xa0 and +0x58, then recursively visits children."
+        ],
+        "instruction_rows": {
+          "cleanup_recursion": [
+            {
+              "address": "0x1da49dc",
+              "mnemonic": "ldr",
+              "operands": "w8, [x19, #0x48]"
+            },
+            {
+              "address": "0x1da49e0",
+              "mnemonic": "sub",
+              "operands": "w8, w8, #5"
+            },
+            {
+              "address": "0x1da49e4",
+              "mnemonic": "cmp",
+              "operands": "w8, #3"
+            },
+            {
+              "address": "0x1da49e8",
+              "mnemonic": "b.hs",
+              "operands": "#0x1da4a08"
+            },
+            {
+              "address": "0x1da4a04",
+              "mnemonic": "b",
+              "operands": "#0x1da43d0"
+            }
+          ],
+          "slot_plus_0x48": [
+            {
+              "address": "0x1da4a20",
+              "mnemonic": "ldr",
+              "operands": "w8, [x0, #0x48]"
+            },
+            {
+              "address": "0x1da4a24",
+              "mnemonic": "cmp",
+              "operands": "w8, #3"
+            },
+            {
+              "address": "0x1da4a28",
+              "mnemonic": "b.ne",
+              "operands": "#0x1da4a30"
+            },
+            {
+              "address": "0x1da4ac0",
+              "mnemonic": "bl",
+              "operands": "#0x1da4a20"
+            },
+            {
+              "address": "0x1da4ae4",
+              "mnemonic": "ldr",
+              "operands": "x8, [x20]"
+            },
+            {
+              "address": "0x1da4ae8",
+              "mnemonic": "ldr",
+              "operands": "x3, [x8, #0x48]"
+            },
+            {
+              "address": "0x1da4b10",
+              "mnemonic": "br",
+              "operands": "x3"
+            }
+          ],
+          "slot_plus_0x50": [
+            {
+              "address": "0x1da4b20",
+              "mnemonic": "ldr",
+              "operands": "w8, [x0, #0x48]"
+            },
+            {
+              "address": "0x1da4b24",
+              "mnemonic": "cmp",
+              "operands": "w8, #3"
+            },
+            {
+              "address": "0x1da4b28",
+              "mnemonic": "b.ne",
+              "operands": "#0x1da4b30"
+            },
+            {
+              "address": "0x1da4bc0",
+              "mnemonic": "bl",
+              "operands": "#0x1da4b20"
+            },
+            {
+              "address": "0x1da4be4",
+              "mnemonic": "ldr",
+              "operands": "x8, [x20]"
+            },
+            {
+              "address": "0x1da4be8",
+              "mnemonic": "ldr",
+              "operands": "x3, [x8, #0x50]"
+            },
+            {
+              "address": "0x1da4c10",
+              "mnemonic": "br",
+              "operands": "x3"
+            }
+          ],
+          "slot_plus_0xa0_and_plus_0x58": [
+            {
+              "address": "0x1da4c34",
+              "mnemonic": "ldrb",
+              "operands": "w8, [x0, #0x50]"
+            },
+            {
+              "address": "0x1da4c38",
+              "mnemonic": "cbz",
+              "operands": "w8, #0x1da4cbc"
+            },
+            {
+              "address": "0x1da4c3c",
+              "mnemonic": "ldr",
+              "operands": "x8, [x0]"
+            },
+            {
+              "address": "0x1da4c40",
+              "mnemonic": "ldr",
+              "operands": "x8, [x8, #0xa0]"
+            },
+            {
+              "address": "0x1da4c44",
+              "mnemonic": "mov",
+              "operands": "x20, x0"
+            },
+            {
+              "address": "0x1da4c48",
+              "mnemonic": "blr",
+              "operands": "x8"
+            },
+            {
+              "address": "0x1da4c4c",
+              "mnemonic": "ldr",
+              "operands": "x8, [x20]"
+            },
+            {
+              "address": "0x1da4c50",
+              "mnemonic": "ldr",
+              "operands": "x8, [x8, #0x58]"
+            },
+            {
+              "address": "0x1da4c54",
+              "mnemonic": "mov",
+              "operands": "x0, x20"
+            },
+            {
+              "address": "0x1da4c58",
+              "mnemonic": "blr",
+              "operands": "x8"
+            }
+          ]
+        },
+        "observation": "These calls prove the work performed by the registered PreCalc callback and its state/child callback fanout. They do not identify which external system invokes the callback or its cadence."
+      },
+      "limit": "The named UIMgr::PreCalc callback is the static producer path that can advance RootPage +0x48 from 3 to 4. Its callback has no indexed direct caller; the relocation cell and descriptor establish registration, not the external dispatcher, actual tick cadence, or ordering relative to draw events."
+    },
+    "draw_event_child_tree_lifecycle": {
+      "registration_constructor": "0x1c80330",
+      "shared_registration_target": "0x1a24ef0",
+      "direct_indexed_string_refs": [],
+      "constructor_string_literals": {
+        "drawLayout": "drawLayout",
+        "drawParticlePreLayout": "drawParticlePreLayout",
+        "drawParticlePostLayout": "drawParticlePostLayout",
+        "drawUser": "drawUser"
+      },
+      "constructor_string_addresses": {
+        "drawLayout": "0x29b87db",
+        "drawParticlePreLayout": "0x2995a7f",
+        "drawParticlePostLayout": "0x2949843",
+        "drawUser": "0x29b87e6"
+      },
+      "constructor_instructions": [
+        {
+          "address": "0x1c80364",
+          "mnemonic": "adrp",
+          "operands": "x11, #0x29b8000"
+        },
+        {
+          "address": "0x1c80368",
+          "mnemonic": "add",
+          "operands": "x11, x11, #0x7db"
+        },
+        {
+          "address": "0x1c803c4",
+          "mnemonic": "bl",
+          "operands": "#0x19904f0"
+        },
+        {
+          "address": "0x1c803d0",
+          "mnemonic": "adrp",
+          "operands": "x8, #0x2995000"
+        },
+        {
+          "address": "0x1c803d4",
+          "mnemonic": "add",
+          "operands": "x8, x8, #0xa7f"
+        },
+        {
+          "address": "0x1c80410",
+          "mnemonic": "bl",
+          "operands": "#0x19904f0"
+        },
+        {
+          "address": "0x1c80420",
+          "mnemonic": "adrp",
+          "operands": "x9, #0x2949000"
+        },
+        {
+          "address": "0x1c80424",
+          "mnemonic": "add",
+          "operands": "x9, x9, #0x843"
+        },
+        {
+          "address": "0x1c80460",
+          "mnemonic": "bl",
+          "operands": "#0x19904f0"
+        },
+        {
+          "address": "0x1c80470",
+          "mnemonic": "adrp",
+          "operands": "x8, #0x29b8000"
+        },
+        {
+          "address": "0x1c80474",
+          "mnemonic": "add",
+          "operands": "x8, x8, #0x7e6"
+        },
+        {
+          "address": "0x1c804b0",
+          "mnemonic": "bl",
+          "operands": "#0x19904f0"
+        },
+        {
+          "address": "0x1c804b8",
+          "mnemonic": "mov",
+          "operands": "w1, #1"
+        },
+        {
+          "address": "0x1c804c0",
+          "mnemonic": "str",
+          "operands": "w26, [x19, #0x1190]"
+        },
+        {
+          "address": "0x1c804c4",
+          "mnemonic": "bl",
+          "operands": "#0x1a24ef0"
+        },
+        {
+          "address": "0x1c804cc",
+          "mnemonic": "mov",
+          "operands": "w1, wzr"
+        },
+        {
+          "address": "0x1c804d4",
+          "mnemonic": "bl",
+          "operands": "#0x1a24ef0"
+        },
+        {
+          "address": "0x1c804dc",
+          "mnemonic": "mov",
+          "operands": "w1, #2"
+        },
+        {
+          "address": "0x1c804e4",
+          "mnemonic": "bl",
+          "operands": "#0x1a24ef0"
+        },
+        {
+          "address": "0x1c804ec",
+          "mnemonic": "mov",
+          "operands": "w1, #3"
+        },
+        {
+          "address": "0x1c804f4",
+          "mnemonic": "bl",
+          "operands": "#0x1a24ef0"
+        }
+      ],
+      "registrations": [
+        {
+          "event_index": 0,
+          "member_offset": "0x1040",
+          "label": "drawParticlePreLayout",
+          "callback_cell": "0x331d448",
+          "callback_relocation_target": "0x1c806b0"
+        },
+        {
+          "event_index": 1,
+          "member_offset": "0x10a0",
+          "label": "drawLayout",
+          "callback_cell": "0x331d438",
+          "callback_relocation_target": "0x1c805d0"
+        },
+        {
+          "event_index": 2,
+          "member_offset": "0x1100",
+          "label": "drawParticlePostLayout",
+          "callback_cell": "0x331d450",
+          "callback_relocation_target": "0x1c806c0"
+        },
+        {
+          "event_index": 3,
+          "member_offset": "0x1160",
+          "label": "drawUser",
+          "callback_cell": "0x331d458",
+          "callback_relocation_target": "0x1c806d0"
+        }
+      ],
+      "registration_call_order": [
+        1,
+        0,
+        2,
+        3
+      ],
+      "callback_instructions": {
+        "0x1c805d0": [
+          {
+            "address": "0x1c805e4",
+            "mnemonic": "adrp",
+            "operands": "x8, #0x331d000"
+          },
+          {
+            "address": "0x1c805f4",
+            "mnemonic": "ldrb",
+            "operands": "w8, [x0, #0x202]"
+          },
+          {
+            "address": "0x1c80604",
+            "mnemonic": "cmp",
+            "operands": "w8, #1"
+          },
+          {
+            "address": "0x1c80670",
+            "mnemonic": "bl",
+            "operands": "#0x1dd4560"
+          },
+          {
+            "address": "0x1c80688",
+            "mnemonic": "adrp",
+            "operands": "x8, #0x32d0000"
+          },
+          {
+            "address": "0x1c806a4",
+            "mnemonic": "mov",
+            "operands": "x2, xzr"
+          },
+          {
+            "address": "0x1c806ac",
+            "mnemonic": "b",
+            "operands": "#0x1dd44c0"
+          }
+        ],
+        "particle_event_thunks": {
+          "0x1c806b0": [
+            {
+              "address": "0x1c806b0",
+              "mnemonic": "mov",
+              "operands": "x2, x1"
+            },
+            {
+              "address": "0x1c806b4",
+              "mnemonic": "mov",
+              "operands": "w1, #0xa"
+            },
+            {
+              "address": "0x1c806b8",
+              "mnemonic": "b",
+              "operands": "#0x1c80850"
+            }
+          ],
+          "0x1c806c0": [
+            {
+              "address": "0x1c806c0",
+              "mnemonic": "mov",
+              "operands": "x2, x1"
+            },
+            {
+              "address": "0x1c806c4",
+              "mnemonic": "mov",
+              "operands": "w1, #0xb"
+            },
+            {
+              "address": "0x1c806c8",
+              "mnemonic": "b",
+              "operands": "#0x1c80850"
+            }
+          ],
+          "0x1c806d0": [
+            {
+              "address": "0x1c806e4",
+              "mnemonic": "ldr",
+              "operands": "x20, [x1, #0x50]"
+            },
+            {
+              "address": "0x1c806f4",
+              "mnemonic": "bl",
+              "operands": "#0x1a2b7d0"
+            },
+            {
+              "address": "0x1c8076c",
+              "mnemonic": "adrp",
+              "operands": "x8, #0x32d0000"
+            },
+            {
+              "address": "0x1c80778",
+              "mnemonic": "ldr",
+              "operands": "x8, [x0]"
+            },
+            {
+              "address": "0x1c8077c",
+              "mnemonic": "ldr",
+              "operands": "x8, [x8, #0xb8]"
+            },
+            {
+              "address": "0x1c80784",
+              "mnemonic": "blr",
+              "operands": "x8"
+            }
+          ]
+        }
+      },
+      "particle_draw_helper": {
+        "function": "0x1c80850",
+        "instructions": [
+          {
+            "address": "0x1c80874",
+            "mnemonic": "adrp",
+            "operands": "x8, #0x331d000"
+          },
+          {
+            "address": "0x1c8087c",
+            "mnemonic": "ldrb",
+            "operands": "w8, [x8]"
+          },
+          {
+            "address": "0x1c80a3c",
+            "mnemonic": "mov",
+            "operands": "w8, #1"
+          },
+          {
+            "address": "0x1c80a50",
+            "mnemonic": "bl",
+            "operands": "#0x1b52f80"
+          },
+          {
+            "address": "0x1c80dd0",
+            "mnemonic": "sub",
+            "operands": "x2, x29, #0x98"
+          },
+          {
+            "address": "0x1c80de4",
+            "mnemonic": "mov",
+            "operands": "w6, wzr"
+          }
+        ],
+        "observation": "The pre/post thunks set event IDs 10 and 11 and tail-branch here. This helper performs the particle draw/context path; it does not direct-call the RootPage event wrappers."
+      },
+      "user_draw_callback_observation": "The drawUser callback follows a distinct gated path and invokes a vtable slot +0xb8 on the global user-draw manager. Its dynamic target is not resolved to RootPage.",
+      "layout_draw_callback_observation": "Only drawLayout uses 0x1c805d0: it checks a global gate and input byte +0x202; values 1 and 2 build an event context and call 0x1dd4560, while other values tail-call 0x1dd44c0 with a null second context. Both manager methods reach 0x1da4db0 on RootPage +0x448.",
+      "child_tree_observation": "0x1da4db0 returns immediately for RootPage state 3; otherwise it recursively visits the child list and calls each page child's virtual slot +0x78 with the event context.",
+      "limit": "All four registration labels, relocation cells, and callback targets are mapped. Only drawLayout is statically connected to the RootPage child tree; draw-particle events use 0x1c80850, and drawUser calls an unresolved manager slot. The meaning of drawLayout input values 1/2 and the scheduler ordering/cadence are not established."
     },
     "root_page_dispatch_and_stop_methods": {
       "event_method_callers": {
@@ -257,7 +1119,7 @@
         },
         "target": "0x1da43d0"
       },
-      "limit": "The event callbacks are directly connected into the RootPage child tree, and the two manager methods have exact sequence-slot membership. Their external scheduler/open-close call routes and semantic labels are still unresolved."
+      "limit": "The event callbacks are directly connected into the RootPage child tree, and the manager methods have exact sequence-slot membership. The named UIMgr::PreCalc callback advances RootPage state 3→4, but external scheduler cadence/order, open-close call routes, and semantic labels for numeric states remain unresolved."
     },
     "numeric_page_state_handlers": {
       "field_offset_bytes": "0x48",
@@ -321,7 +1183,283 @@
             "mnemonic": "str",
             "operands": "w8, [x19, #0x48]"
           }
-        ]
+        ],
+        "root_page_virtual_slot_five_stores_three": [
+          {
+            "address": "0x1da5c60",
+            "mnemonic": "mov",
+            "operands": "w8, #3"
+          },
+          {
+            "address": "0x1da5c64",
+            "mnemonic": "str",
+            "operands": "w8, [x0, #0x48]"
+          }
+        ],
+        "precalc_transition_state_three_to_four": [
+          {
+            "address": "0x1da47a4",
+            "mnemonic": "ldr",
+            "operands": "w8, [x0, #0x48]"
+          },
+          {
+            "address": "0x1da47b0",
+            "mnemonic": "cmp",
+            "operands": "w8, #3"
+          },
+          {
+            "address": "0x1da47b4",
+            "mnemonic": "b.ne",
+            "operands": "#0x1da47c0"
+          },
+          {
+            "address": "0x1da47b8",
+            "mnemonic": "mov",
+            "operands": "x0, x19"
+          },
+          {
+            "address": "0x1da47bc",
+            "mnemonic": "bl",
+            "operands": "#0x1da4890"
+          }
+        ],
+        "precalc_recursive_state_work": [
+          {
+            "address": "0x1da47c0",
+            "mnemonic": "tbz",
+            "operands": "w20, #0, #0x1da47e4"
+          },
+          {
+            "address": "0x1da47d4",
+            "mnemonic": "ldr",
+            "operands": "w9, [x19, #0x4c]"
+          },
+          {
+            "address": "0x1da47dc",
+            "mnemonic": "tst",
+            "operands": "w8, w9"
+          },
+          {
+            "address": "0x1da47e0",
+            "mnemonic": "b.eq",
+            "operands": "#0x1da4864"
+          },
+          {
+            "address": "0x1da47e4",
+            "mnemonic": "mov",
+            "operands": "x21, x19"
+          },
+          {
+            "address": "0x1da47e8",
+            "mnemonic": "strb",
+            "operands": "wzr, [x21, #0x50]!"
+          },
+          {
+            "address": "0x1da47ec",
+            "mnemonic": "add",
+            "operands": "x20, x19, #0x110"
+          },
+          {
+            "address": "0x1da481c",
+            "mnemonic": "sub",
+            "operands": "x19, x19, x22"
+          },
+          {
+            "address": "0x1da4820",
+            "mnemonic": "ldrb",
+            "operands": "w1, [x21]"
+          },
+          {
+            "address": "0x1da4828",
+            "mnemonic": "bl",
+            "operands": "#0x1da4790"
+          },
+          {
+            "address": "0x1da4864",
+            "mnemonic": "ldr",
+            "operands": "w8, [x19, #0x48]"
+          },
+          {
+            "address": "0x1da486c",
+            "mnemonic": "cset",
+            "operands": "w8, ne"
+          },
+          {
+            "address": "0x1da4874",
+            "mnemonic": "strb",
+            "operands": "w8, [x19, #0x50]"
+          },
+          {
+            "address": "0x1da4878",
+            "mnemonic": "b.eq",
+            "operands": "#0x1da47ec"
+          },
+          {
+            "address": "0x1da487c",
+            "mnemonic": "ldr",
+            "operands": "w8, [x19, #0x54]"
+          },
+          {
+            "address": "0x1da4888",
+            "mnemonic": "b",
+            "operands": "#0x1da47ec"
+          }
+        ],
+        "precalc_child_callback_slots": {
+          "cleanup_recursion": [
+            {
+              "address": "0x1da49dc",
+              "mnemonic": "ldr",
+              "operands": "w8, [x19, #0x48]"
+            },
+            {
+              "address": "0x1da49e0",
+              "mnemonic": "sub",
+              "operands": "w8, w8, #5"
+            },
+            {
+              "address": "0x1da49e4",
+              "mnemonic": "cmp",
+              "operands": "w8, #3"
+            },
+            {
+              "address": "0x1da49e8",
+              "mnemonic": "b.hs",
+              "operands": "#0x1da4a08"
+            },
+            {
+              "address": "0x1da4a04",
+              "mnemonic": "b",
+              "operands": "#0x1da43d0"
+            }
+          ],
+          "slot_plus_0x48": [
+            {
+              "address": "0x1da4a20",
+              "mnemonic": "ldr",
+              "operands": "w8, [x0, #0x48]"
+            },
+            {
+              "address": "0x1da4a24",
+              "mnemonic": "cmp",
+              "operands": "w8, #3"
+            },
+            {
+              "address": "0x1da4a28",
+              "mnemonic": "b.ne",
+              "operands": "#0x1da4a30"
+            },
+            {
+              "address": "0x1da4ac0",
+              "mnemonic": "bl",
+              "operands": "#0x1da4a20"
+            },
+            {
+              "address": "0x1da4ae4",
+              "mnemonic": "ldr",
+              "operands": "x8, [x20]"
+            },
+            {
+              "address": "0x1da4ae8",
+              "mnemonic": "ldr",
+              "operands": "x3, [x8, #0x48]"
+            },
+            {
+              "address": "0x1da4b10",
+              "mnemonic": "br",
+              "operands": "x3"
+            }
+          ],
+          "slot_plus_0x50": [
+            {
+              "address": "0x1da4b20",
+              "mnemonic": "ldr",
+              "operands": "w8, [x0, #0x48]"
+            },
+            {
+              "address": "0x1da4b24",
+              "mnemonic": "cmp",
+              "operands": "w8, #3"
+            },
+            {
+              "address": "0x1da4b28",
+              "mnemonic": "b.ne",
+              "operands": "#0x1da4b30"
+            },
+            {
+              "address": "0x1da4bc0",
+              "mnemonic": "bl",
+              "operands": "#0x1da4b20"
+            },
+            {
+              "address": "0x1da4be4",
+              "mnemonic": "ldr",
+              "operands": "x8, [x20]"
+            },
+            {
+              "address": "0x1da4be8",
+              "mnemonic": "ldr",
+              "operands": "x3, [x8, #0x50]"
+            },
+            {
+              "address": "0x1da4c10",
+              "mnemonic": "br",
+              "operands": "x3"
+            }
+          ],
+          "slot_plus_0xa0_and_plus_0x58": [
+            {
+              "address": "0x1da4c34",
+              "mnemonic": "ldrb",
+              "operands": "w8, [x0, #0x50]"
+            },
+            {
+              "address": "0x1da4c38",
+              "mnemonic": "cbz",
+              "operands": "w8, #0x1da4cbc"
+            },
+            {
+              "address": "0x1da4c3c",
+              "mnemonic": "ldr",
+              "operands": "x8, [x0]"
+            },
+            {
+              "address": "0x1da4c40",
+              "mnemonic": "ldr",
+              "operands": "x8, [x8, #0xa0]"
+            },
+            {
+              "address": "0x1da4c44",
+              "mnemonic": "mov",
+              "operands": "x20, x0"
+            },
+            {
+              "address": "0x1da4c48",
+              "mnemonic": "blr",
+              "operands": "x8"
+            },
+            {
+              "address": "0x1da4c4c",
+              "mnemonic": "ldr",
+              "operands": "x8, [x20]"
+            },
+            {
+              "address": "0x1da4c50",
+              "mnemonic": "ldr",
+              "operands": "x8, [x8, #0x58]"
+            },
+            {
+              "address": "0x1da4c54",
+              "mnemonic": "mov",
+              "operands": "x0, x20"
+            },
+            {
+              "address": "0x1da4c58",
+              "mnemonic": "blr",
+              "operands": "x8"
+            }
+          ]
+        }
       },
       "handlers": [
         {
@@ -383,7 +1521,7 @@
       },
       "semantic_limit": "These are observed numeric transitions and callback effects only. No recovered string or runtime capture names the states as open, active, closing, or visible."
     },
-    "status": "Factory construction/insertion, the RootPage 0→1→2 construction route, its child callback path, and several numeric page-state transitions are statically mapped. Getter-to-layout-loader handoff, the semantic names of the states, outer scheduler reachability/cadence, modal order, focus restoration, and live instance behavior remain unresolved."
+    "status": "Factory construction/insertion, the RootPage 0→1→2→3 construction route, the UIMgr::PreCalc 3→4 transition, its draw-event child callback path, and several further numeric page-state transitions are statically mapped. Getter-to-layout-loader handoff, numeric state names, external scheduler cadence/order, modal order, focus restoration, and live instance behavior remain unresolved."
   },
   "npad_to_action_route": {
     "npad_update_function": "0x1968b80",
@@ -885,6 +2023,550 @@
         }
       ],
       "factory_to_base_call_observation": "Both allocation branches in the ScissorPane factory call the base Pane constructor. The subsequent auxiliary constructor at 0x14c8a90 initializes the auxiliary object; it is not the factory-to-base callsite.",
+      "factory_vptr_and_flag_writes": {
+        "global_cell": "0x330ee30",
+        "relocated_target": "0x313a388",
+        "address_point": "0x313a398",
+        "slot_20_target": "0x192fb20",
+        "slot_21_target": "0x14c8d30",
+        "instruction_rows": [
+          {
+            "address": "0x14c89f8",
+            "mnemonic": "adrp",
+            "operands": "x8, #0x330e000"
+          },
+          {
+            "address": "0x14c89fc",
+            "mnemonic": "ldr",
+            "operands": "x8, [x8, #0xe30]"
+          },
+          {
+            "address": "0x14c8a08",
+            "mnemonic": "add",
+            "operands": "x8, x8, #0x10"
+          },
+          {
+            "address": "0x14c8a10",
+            "mnemonic": "str",
+            "operands": "x8, [x21]"
+          },
+          {
+            "address": "0x14c8a14",
+            "mnemonic": "ldrb",
+            "operands": "w8, [x21, #0x58]"
+          },
+          {
+            "address": "0x14c8a18",
+            "mnemonic": "orr",
+            "operands": "w8, w8, #8"
+          },
+          {
+            "address": "0x14c8a20",
+            "mnemonic": "strb",
+            "operands": "w8, [x21, #0x58]"
+          },
+          {
+            "address": "0x14c8a3c",
+            "mnemonic": "adrp",
+            "operands": "x8, #0x330e000"
+          },
+          {
+            "address": "0x14c8a40",
+            "mnemonic": "ldr",
+            "operands": "x8, [x8, #0xe30]"
+          },
+          {
+            "address": "0x14c8a4c",
+            "mnemonic": "add",
+            "operands": "x8, x8, #0x10"
+          },
+          {
+            "address": "0x14c8a50",
+            "mnemonic": "stp",
+            "operands": "xzr, xzr, [x21, #0xf0]"
+          },
+          {
+            "address": "0x14c8a54",
+            "mnemonic": "str",
+            "operands": "x8, [x21]"
+          },
+          {
+            "address": "0x14c8a58",
+            "mnemonic": "str",
+            "operands": "xzr, [x21, #0xe8]"
+          },
+          {
+            "address": "0x14c8a78",
+            "mnemonic": "bl",
+            "operands": "#0x14c8a90"
+          }
+        ],
+        "branch_observation": "Both allocation branches install the same address point and initialize the +0xe0 bounds-enable byte and +0xf0..+0xfc bounds. The non-null-input branch ORs bit 3 into pane +0x58; the null-input branch does not. Base +0x58 begins at 0x11, so this bit-3 write alone does not meet the generic renderer's 0x81 mask gate."
+      },
+      "auxiliary_restore_object": {
+        "constructor": "0x14c8a90",
+        "vptr_cell": "0x330ee38",
+        "relocated_target": "0x313a478",
+        "address_point": "0x313a488",
+        "owner_member_offset": "0xd8",
+        "instruction_rows": [
+          {
+            "address": "0x14c8b00",
+            "mnemonic": "bl",
+            "operands": "#0x192d3d0"
+          },
+          {
+            "address": "0x14c8b04",
+            "mnemonic": "adrp",
+            "operands": "x8, #0x330e000"
+          },
+          {
+            "address": "0x14c8b08",
+            "mnemonic": "ldr",
+            "operands": "x8, [x8, #0xe38]"
+          },
+          {
+            "address": "0x14c8b0c",
+            "mnemonic": "add",
+            "operands": "x8, x8, #0x10"
+          },
+          {
+            "address": "0x14c8b10",
+            "mnemonic": "str",
+            "operands": "x8, [x20]"
+          },
+          {
+            "address": "0x14c8b34",
+            "mnemonic": "bl",
+            "operands": "#0x192d3d0"
+          },
+          {
+            "address": "0x14c8b38",
+            "mnemonic": "adrp",
+            "operands": "x8, #0x330e000"
+          },
+          {
+            "address": "0x14c8b3c",
+            "mnemonic": "ldr",
+            "operands": "x8, [x8, #0xe38]"
+          },
+          {
+            "address": "0x14c8b40",
+            "mnemonic": "add",
+            "operands": "x8, x8, #0x10"
+          },
+          {
+            "address": "0x14c8b44",
+            "mnemonic": "str",
+            "operands": "x8, [x20]"
+          },
+          {
+            "address": "0x14c8b50",
+            "mnemonic": "str",
+            "operands": "x20, [x19, #0xd8]"
+          },
+          {
+            "address": "0x14c8b58",
+            "mnemonic": "str",
+            "operands": "wzr, [x19, #0x100]"
+          }
+        ],
+        "observation": "The constructor creates the auxiliary object attached at parent +0xd8 with a distinct dispatch sequence; this is the restore child path, separate from the ScissorPane object's own slot-21 push callback."
+      },
+      "additional_ui_flag_producers": {
+        "swkbd_padding_nodes": {
+          "function": "0x14c81b0",
+          "direct_callers": [
+            {
+              "callsite": "0x15084a0",
+              "owner": "0x1508390",
+              "owner_evidence": "indexed_owner",
+              "instruction": "BL"
+            }
+          ],
+          "indexed_string_refs": [
+            "N_Padding"
+          ],
+          "instructions": [
+            {
+              "address": "0x14c81d0",
+              "mnemonic": "adrp",
+              "operands": "x1, #0x294c000"
+            },
+            {
+              "address": "0x14c81f0",
+              "mnemonic": "ldr",
+              "operands": "x0, [x0]"
+            },
+            {
+              "address": "0x14c81f8",
+              "mnemonic": "ldr",
+              "operands": "x8, [x8, #0x60]"
+            },
+            {
+              "address": "0x14c8200",
+              "mnemonic": "blr",
+              "operands": "x8"
+            },
+            {
+              "address": "0x14c82f0",
+              "mnemonic": "ldrb",
+              "operands": "w11, [x10, #0x58]"
+            },
+            {
+              "address": "0x14c82f8",
+              "mnemonic": "orr",
+              "operands": "w11, w11, #0x10"
+            },
+            {
+              "address": "0x14c82fc",
+              "mnemonic": "strb",
+              "operands": "w11, [x10, #0x58]"
+            },
+            {
+              "address": "0x14c833c",
+              "mnemonic": "ldrb",
+              "operands": "w10, [x9, #0x58]"
+            },
+            {
+              "address": "0x14c8340",
+              "mnemonic": "orr",
+              "operands": "w10, w10, #0x10"
+            },
+            {
+              "address": "0x14c834c",
+              "mnemonic": "strb",
+              "operands": "w10, [x9, #0x58]"
+            },
+            {
+              "address": "0x14c8378",
+              "mnemonic": "ldrb",
+              "operands": "w9, [x8, #0x58]"
+            },
+            {
+              "address": "0x14c837c",
+              "mnemonic": "orr",
+              "operands": "w9, w9, #0x10"
+            },
+            {
+              "address": "0x14c8388",
+              "mnemonic": "strb",
+              "operands": "w9, [x8, #0x58]"
+            }
+          ],
+          "observed_write": "The Swkbd page's N_Padding lookup walks three returned child nodes and ORs bit 4 into each node's +0x58 byte while also updating +0x30 position data. It does not write +0x5c or set bits 0/7 required by the generic renderer's 0x81 gate.",
+          "scissor_link": "This helper's only indexed direct caller is 0x1508390 in the Swkbd page path. No static call or pointer-sequence edge ties its N_Padding targets to either BFLYT SCR1 or the 0x14c89c0 ScissorPane factory."
+        },
+        "shared_ui_bit4_helper": {
+          "function": "0x14c8490",
+          "direct_callers": [
+            {
+              "callsite": "0x1496bf8",
+              "owner": "0x1496b60",
+              "owner_evidence": "smallest_enclosing_native_function_range",
+              "instruction": "BL"
+            },
+            {
+              "callsite": "0x1496d38",
+              "owner": "0x1496ca0",
+              "owner_evidence": "smallest_enclosing_native_function_range",
+              "instruction": "BL"
+            },
+            {
+              "callsite": "0x14970f8",
+              "owner": "0x1497060",
+              "owner_evidence": "smallest_enclosing_native_function_range",
+              "instruction": "BL"
+            },
+            {
+              "callsite": "0x14973b8",
+              "owner": "0x1497320",
+              "owner_evidence": "smallest_enclosing_native_function_range",
+              "instruction": "BL"
+            },
+            {
+              "callsite": "0x1497ca8",
+              "owner": "0x1497c10",
+              "owner_evidence": "smallest_enclosing_native_function_range",
+              "instruction": "BL"
+            }
+          ],
+          "helper_pointer_sequence_membership": [],
+          "caller_pointer_sequence_memberships": {
+            "0x1496b60": [
+              {
+                "sequence_start": "0x3137c48",
+                "slot_index": 7,
+                "pointer_va": "0x3137c80",
+                "sequence_length": 24,
+                "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+              }
+            ],
+            "0x1496ca0": [
+              {
+                "sequence_start": "0x3137830",
+                "slot_index": 7,
+                "pointer_va": "0x3137868",
+                "sequence_length": 12,
+                "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+              },
+              {
+                "sequence_start": "0x3137aa8",
+                "slot_index": 7,
+                "pointer_va": "0x3137ae0",
+                "sequence_length": 24,
+                "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+              },
+              {
+                "sequence_start": "0x3137b78",
+                "slot_index": 7,
+                "pointer_va": "0x3137bb0",
+                "sequence_length": 24,
+                "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+              },
+              {
+                "sequence_start": "0x3137f88",
+                "slot_index": 7,
+                "pointer_va": "0x3137fc0",
+                "sequence_length": 24,
+                "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+              }
+            ],
+            "0x1497060": [
+              {
+                "sequence_start": "0x3137900",
+                "slot_index": 7,
+                "pointer_va": "0x3137938",
+                "sequence_length": 25,
+                "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+              }
+            ],
+            "0x1497320": [
+              {
+                "sequence_start": "0x3137088",
+                "slot_index": 7,
+                "pointer_va": "0x31370c0",
+                "sequence_length": 24,
+                "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+              },
+              {
+                "sequence_start": "0x31379d8",
+                "slot_index": 7,
+                "pointer_va": "0x3137a10",
+                "sequence_length": 12,
+                "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+              },
+              {
+                "sequence_start": "0x3137d18",
+                "slot_index": 7,
+                "pointer_va": "0x3137d50",
+                "sequence_length": 24,
+                "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+              },
+              {
+                "sequence_start": "0x3137de8",
+                "slot_index": 7,
+                "pointer_va": "0x3137e20",
+                "sequence_length": 24,
+                "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+              }
+            ],
+            "0x1497c10": [
+              {
+                "sequence_start": "0x3137eb8",
+                "slot_index": 7,
+                "pointer_va": "0x3137ef0",
+                "sequence_length": 24,
+                "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+              }
+            ]
+          },
+          "instructions": [
+            {
+              "address": "0x14c8490",
+              "mnemonic": "ldr",
+              "operands": "x8, [x0]"
+            },
+            {
+              "address": "0x14c8494",
+              "mnemonic": "ldr",
+              "operands": "w8, [x8, #0x50]"
+            },
+            {
+              "address": "0x14c8498",
+              "mnemonic": "str",
+              "operands": "w8, [x1, #0x50]"
+            },
+            {
+              "address": "0x14c849c",
+              "mnemonic": "ldrb",
+              "operands": "w8, [x1, #0x58]"
+            },
+            {
+              "address": "0x14c84a0",
+              "mnemonic": "orr",
+              "operands": "w8, w8, #0x10"
+            },
+            {
+              "address": "0x14c84a4",
+              "mnemonic": "strb",
+              "operands": "w8, [x1, #0x58]"
+            }
+          ],
+          "observed_write": "Copies the low 32 bits of a source vtable slot at +0x50 into destination +0x50, then ORs bit 4 into destination +0x58.",
+          "limit": "Five direct callsites come from functions occupying slot 7 in relocated UI pointer sequences, but those sequence owners are unnamed. This helper only sets +0x58 bit 4, not the generic renderer's required bits 0/7, and no callsite is tied to the ScissorPane or SCR1 instance path."
+        },
+        "bounded_ui_method_store_scan": {
+          "search_scope": "Indexed native functions at 0x14c8000 <= entry < 0x14ca000; non-SP fixed-displacement stores to +0x58/+0x5c.",
+          "function_count": 9,
+          "store_count": 12,
+          "functions": [
+            "0x14c81b0",
+            "0x14c8490",
+            "0x14c8760",
+            "0x14c8890",
+            "0x14c89c0",
+            "0x14c8a90",
+            "0x14c8eb0",
+            "0x14c93b0",
+            "0x14c9ac0"
+          ],
+          "stores": [
+            {
+              "owner": "0x14c81b0",
+              "pc": "0x14c82fc",
+              "mnemonic": "strb",
+              "operands": "w11, [x10, #0x58]",
+              "field_offset_bytes": "0x58"
+            },
+            {
+              "owner": "0x14c81b0",
+              "pc": "0x14c834c",
+              "mnemonic": "strb",
+              "operands": "w10, [x9, #0x58]",
+              "field_offset_bytes": "0x58"
+            },
+            {
+              "owner": "0x14c81b0",
+              "pc": "0x14c8388",
+              "mnemonic": "strb",
+              "operands": "w9, [x8, #0x58]",
+              "field_offset_bytes": "0x58"
+            },
+            {
+              "owner": "0x14c8490",
+              "pc": "0x14c84a4",
+              "mnemonic": "strb",
+              "operands": "w8, [x1, #0x58]",
+              "field_offset_bytes": "0x58"
+            },
+            {
+              "owner": "0x14c8760",
+              "pc": "0x14c881c",
+              "mnemonic": "stp",
+              "operands": "x8, x9, [x19, #0x58]",
+              "field_offset_bytes": "0x58"
+            },
+            {
+              "owner": "0x14c8890",
+              "pc": "0x14c894c",
+              "mnemonic": "stp",
+              "operands": "x8, x9, [x19, #0x58]",
+              "field_offset_bytes": "0x58"
+            },
+            {
+              "owner": "0x14c89c0",
+              "pc": "0x14c8a20",
+              "mnemonic": "strb",
+              "operands": "w8, [x21, #0x58]",
+              "field_offset_bytes": "0x58"
+            },
+            {
+              "owner": "0x14c8a90",
+              "pc": "0x14c8b1c",
+              "mnemonic": "strb",
+              "operands": "w8, [x20, #0x58]",
+              "field_offset_bytes": "0x58"
+            },
+            {
+              "owner": "0x14c8eb0",
+              "pc": "0x14c8f6c",
+              "mnemonic": "stp",
+              "operands": "x8, x9, [x19, #0x58]",
+              "field_offset_bytes": "0x58"
+            },
+            {
+              "owner": "0x14c93b0",
+              "pc": "0x14c9468",
+              "mnemonic": "stp",
+              "operands": "x8, x9, [x19, #0x58]",
+              "field_offset_bytes": "0x58"
+            },
+            {
+              "owner": "0x14c9ac0",
+              "pc": "0x14c9e38",
+              "mnemonic": "stp",
+              "operands": "s2, s0, [x19, #0x58]",
+              "field_offset_bytes": "0x58"
+            },
+            {
+              "owner": "0x14c9ac0",
+              "pc": "0x14c9e64",
+              "mnemonic": "stp",
+              "operands": "w10, w8, [x19, #0x58]",
+              "field_offset_bytes": "0x58"
+            }
+          ],
+          "classification_limit": "This includes UI-pane candidates plus static configuration and derived-layout payload stores. Numeric offsets alone do not establish that every listed base is a Pane flag byte.",
+          "pane_flag_candidate_functions": [
+            "0x14c81b0",
+            "0x14c8490",
+            "0x14c89c0",
+            "0x14c8a90"
+          ],
+          "static_configuration_candidates": [
+            {
+              "function": "0x14c8760",
+              "base": "global 0x370f000"
+            },
+            {
+              "function": "0x14c8890",
+              "base": "global 0x370f000"
+            },
+            {
+              "function": "0x14c8eb0",
+              "base": "global 0x370f000"
+            },
+            {
+              "function": "0x14c93b0",
+              "base": "global 0x370f000"
+            }
+          ],
+          "derived_payload_candidate": {
+            "function": "0x14c9ac0",
+            "string_refs": [
+              "S_GradationAngle",
+              "S_GradationColor0",
+              "S_GradationColor1",
+              "S_GradationColor2",
+              "S_GradationColor3",
+              "S_GradationColorNum",
+              "S_GradationColorSelect0",
+              "S_GradationColorSelect1",
+              "S_GradationColorSelect2",
+              "S_GradationColorSelect3",
+              "S_GradationColorStop0",
+              "S_GradationColorStop1",
+              "S_GradationColorStop2",
+              "S_GradationColorStop3",
+              "S_GradationDrawMode",
+              "S_GradationVolume"
+            ],
+            "observation": "The matching +0x58 stores are paired float payload writes in the Gradation parameter loader; no evidence treats them as the base Pane flag byte."
+          }
+        },
+        "scope_limit": "The generic Pane family and these identified UI-range writers are classifiable. A whole-image exact-offset scan yields thousands of +0x58/+0x5c stores across unrelated structures; offsets alone cannot prove additional Pane/ScissorPane producers."
+      },
       "base_flag_initialization_instructions": [
         {
           "address": "0x192d3f8",
@@ -906,40 +2588,885 @@
         "+0x58": "0x11",
         "+0x5b..+0x5c": 0
       },
-      "gate_comparison": "The base defaults alone fail the generic renderer callback gate: +0x58 lacks bit 7 and +0x5c lacks bit 4. Later layout/runtime writes are needed before the ScissorPane callback can pass that gate.",
-      "unlinked_raw_pane_flag_copy_candidate": {
-        "function": "0x192d490",
-        "instructions": [
+      "gate_comparison": "The base defaults alone fail the generic renderer callback gate: +0x58 lacks bit 7 and +0x5c lacks bit 4. The BFLYT pane parser writes these fields from layout bytes, and the SCR1 render method has its own +0x58 bit-0 and +0x5a gates before clipping.",
+      "pane_layout_flag_conversion": {
+        "type_dispatcher": "0x19212e0",
+        "type_dispatcher_direct_callers": 0,
+        "scr1_case_instructions": [
           {
-            "address": "0x192d648",
-            "mnemonic": "ldrb",
-            "operands": "w8, [x23, #0xb]"
+            "address": "0x1921424",
+            "mnemonic": "mov",
+            "operands": "w8, #0x6373"
           },
           {
-            "address": "0x192d64c",
-            "mnemonic": "strb",
-            "operands": "w8, [x19, #0x5c]"
+            "address": "0x1921428",
+            "mnemonic": "movk",
+            "operands": "w8, #0x3172, lsl #16"
           },
           {
-            "address": "0x192d8b0",
-            "mnemonic": "ldrb",
-            "operands": "w8, [x23, #8]"
+            "address": "0x192142c",
+            "mnemonic": "cmp",
+            "operands": "w3, w8"
           },
           {
-            "address": "0x192d8b4",
-            "mnemonic": "strb",
-            "operands": "w8, [x19, #0x58]"
+            "address": "0x1921430",
+            "mnemonic": "b.ne",
+            "operands": "#0x1921590"
+          },
+          {
+            "address": "0x1921434",
+            "mnemonic": "mov",
+            "operands": "w0, #0xe0"
+          },
+          {
+            "address": "0x192143c",
+            "mnemonic": "bl",
+            "operands": "#0x19195e0"
+          },
+          {
+            "address": "0x1921448",
+            "mnemonic": "mov",
+            "operands": "x0, x20"
+          },
+          {
+            "address": "0x1921454",
+            "mnemonic": "bl",
+            "operands": "#0x1937280"
           }
         ],
-        "input_byte_+0x08_to_object_+0x58": true,
-        "input_byte_+0x0b_to_object_+0x5c": true,
-        "indexed_direct_caller_count": 0,
-        "relocated_pointer_sequence_membership": [],
+        "scr1_tag_ascii": "scr1",
+        "scr1_allocation_size_bytes": "0xe0",
+        "scr1_factory_callsite": "0x1921454",
+        "scr1_factory_target": "0x1937280",
+        "scr1_constructor_instructions": [
+          {
+            "address": "0x1937290",
+            "mnemonic": "bl",
+            "operands": "#0x192d450"
+          },
+          {
+            "address": "0x1937298",
+            "mnemonic": "ldr",
+            "operands": "x8, [x8, #0xe10]"
+          },
+          {
+            "address": "0x193729c",
+            "mnemonic": "add",
+            "operands": "x8, x8, #0x10"
+          },
+          {
+            "address": "0x19372a0",
+            "mnemonic": "str",
+            "operands": "x8, [x19]"
+          }
+        ],
+        "layout_flag_wrapper": {
+          "function": "0x192d450",
+          "direct_callers": [
+            {
+              "callsite": "0x1923514",
+              "owner": "0x1923500",
+              "owner_evidence": "indexed_owner",
+              "instruction": "BL"
+            },
+            {
+              "callsite": "0x1937290",
+              "owner": "0x1937280",
+              "owner_evidence": "indexed_owner",
+              "instruction": "BL"
+            },
+            {
+              "callsite": "0x1b60604",
+              "owner": "0x1b605f0",
+              "owner_evidence": "indexed_owner",
+              "instruction": "BL"
+            },
+            {
+              "callsite": "0x1b620c4",
+              "owner": "0x1b620b0",
+              "owner_evidence": "indexed_owner",
+              "instruction": "BL"
+            },
+            {
+              "callsite": "0x1b629c0",
+              "owner": "0x1b629b0",
+              "owner_evidence": "indexed_owner",
+              "instruction": "BL"
+            },
+            {
+              "callsite": "0x1b78dd0",
+              "owner": "0x1b78dc0",
+              "owner_evidence": "indexed_owner",
+              "instruction": "BL"
+            },
+            {
+              "callsite": "0x1b7910c",
+              "owner": "0x1b790f0",
+              "owner_evidence": "indexed_owner",
+              "instruction": "BL"
+            },
+            {
+              "callsite": "0x1b7941c",
+              "owner": "0x1b79400",
+              "owner_evidence": "indexed_owner",
+              "instruction": "BL"
+            }
+          ],
+          "direct_call_count": 8,
+          "instructions": [
+            {
+              "address": "0x192d460",
+              "mnemonic": "mov",
+              "operands": "x3, x1"
+            },
+            {
+              "address": "0x192d480",
+              "mnemonic": "b",
+              "operands": "#0x192d490"
+            }
+          ],
+          "observation": "This wrapper sets x3=x1 and tail-branches to the parser. The SCR1 constructor calls it directly, so its input layout record reaches the parser even though the parser itself is a tail target rather than a direct-call target."
+        },
+        "layout_flag_parser": {
+          "function": "0x192d490",
+          "instructions": [
+            {
+              "address": "0x192d648",
+              "mnemonic": "ldrb",
+              "operands": "w8, [x23, #0xb]"
+            },
+            {
+              "address": "0x192d64c",
+              "mnemonic": "strb",
+              "operands": "w8, [x19, #0x5c]"
+            },
+            {
+              "address": "0x192d8b0",
+              "mnemonic": "ldrb",
+              "operands": "w8, [x23, #8]"
+            },
+            {
+              "address": "0x192d8b4",
+              "mnemonic": "strb",
+              "operands": "w8, [x19, #0x58]"
+            }
+          ],
+          "input_byte_+0x08_to_object_+0x58": true,
+          "input_byte_+0x0b_to_object_+0x5c": true,
+          "conditional_edits": [
+            "The parser may replace +0x58 bit 1 from the layout/runtime halfword at context +0x42 when the context predicate passes.",
+            "The +0x5c bit-2 path can clear bit 2 while preserving other source bits.",
+            "Later in the same parser, bit 4 is ORed into +0x58."
+          ],
+          "indexed_direct_caller_count": 0,
+          "relocated_pointer_sequence_membership": [],
+          "observation": "This is a layout parser reached through the indexed wrapper's tail branch, not an unlinked copy candidate. The SCR1 type case calls the wrapper through constructor 0x1937280."
+        },
+        "runtime_pane_state_update_method": {
+          "function": "0x192edc0",
+          "direct_callers": [
+            {
+              "callsite": "0x149bdf4",
+              "owner": "0x149bd80",
+              "owner_evidence": "indexed_owner",
+              "instruction": "BL"
+            },
+            {
+              "callsite": "0x14c283c",
+              "owner": "0x14c2740",
+              "owner_evidence": "smallest_enclosing_native_function_range",
+              "instruction": "B_to_function_entry"
+            },
+            {
+              "callsite": "0x14c2afc",
+              "owner": "0x14c28b0",
+              "owner_evidence": "smallest_enclosing_native_function_range",
+              "instruction": "BL"
+            },
+            {
+              "callsite": "0x1920634",
+              "owner": "0x1920500",
+              "owner_evidence": "smallest_enclosing_native_function_range",
+              "instruction": "BL"
+            },
+            {
+              "callsite": "0x1923678",
+              "owner": "0x19235f0",
+              "owner_evidence": "smallest_enclosing_native_function_range",
+              "instruction": "BL"
+            },
+            {
+              "callsite": "0x1935648",
+              "owner": "0x1935620",
+              "owner_evidence": "indexed_owner",
+              "instruction": "BL"
+            },
+            {
+              "callsite": "0x193bc7c",
+              "owner": "0x193bc60",
+              "owner_evidence": "indexed_owner",
+              "instruction": "BL"
+            },
+            {
+              "callsite": "0x194b040",
+              "owner": "0x194b020",
+              "owner_evidence": "indexed_owner",
+              "instruction": "BL"
+            },
+            {
+              "callsite": "0x1b6153c",
+              "owner": "0x1b61410",
+              "owner_evidence": "smallest_enclosing_native_function_range",
+              "instruction": "BL"
+            },
+            {
+              "callsite": "0x1b62580",
+              "owner": "0x1b62470",
+              "owner_evidence": "smallest_enclosing_native_function_range",
+              "instruction": "BL"
+            },
+            {
+              "callsite": "0x1b63324",
+              "owner": "0x1b63320",
+              "owner_evidence": "smallest_enclosing_native_function_range",
+              "instruction": "B_to_function_entry"
+            },
+            {
+              "callsite": "0x1b79744",
+              "owner": "0x1b79630",
+              "owner_evidence": "smallest_enclosing_native_function_range",
+              "instruction": "B_to_function_entry"
+            },
+            {
+              "callsite": "0x1cd6498",
+              "owner": "0x1cd6480",
+              "owner_evidence": "smallest_enclosing_native_function_range",
+              "instruction": "BL"
+            }
+          ],
+          "vtable_memberships": [
+            {
+              "sequence_start": "0x3139e98",
+              "slot_index": 19,
+              "pointer_va": "0x3139f30",
+              "sequence_length": 28,
+              "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+            },
+            {
+              "sequence_start": "0x313a398",
+              "slot_index": 19,
+              "pointer_va": "0x313a430",
+              "sequence_length": 28,
+              "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+            },
+            {
+              "sequence_start": "0x313a488",
+              "slot_index": 19,
+              "pointer_va": "0x313a520",
+              "sequence_length": 28,
+              "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+            },
+            {
+              "sequence_start": "0x31a26e0",
+              "slot_index": 19,
+              "pointer_va": "0x31a2778",
+              "sequence_length": 28,
+              "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+            },
+            {
+              "sequence_start": "0x31a2ba0",
+              "slot_index": 19,
+              "pointer_va": "0x31a2c38",
+              "sequence_length": 28,
+              "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+            },
+            {
+              "sequence_start": "0x31a2cb8",
+              "slot_index": 19,
+              "pointer_va": "0x31a2d50",
+              "sequence_length": 28,
+              "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+            },
+            {
+              "sequence_start": "0x31a2ff8",
+              "slot_index": 19,
+              "pointer_va": "0x31a3090",
+              "sequence_length": 28,
+              "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+            },
+            {
+              "sequence_start": "0x31b6e50",
+              "slot_index": 19,
+              "pointer_va": "0x31b6ee8",
+              "sequence_length": 28,
+              "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+            },
+            {
+              "sequence_start": "0x31b7120",
+              "slot_index": 19,
+              "pointer_va": "0x31b71b8",
+              "sequence_length": 28,
+              "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+            },
+            {
+              "sequence_start": "0x31b78e0",
+              "slot_index": 19,
+              "pointer_va": "0x31b7978",
+              "sequence_length": 28,
+              "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+            },
+            {
+              "sequence_start": "0x31b9470",
+              "slot_index": 19,
+              "pointer_va": "0x31b9508",
+              "sequence_length": 28,
+              "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+            },
+            {
+              "sequence_start": "0x31b9560",
+              "slot_index": 19,
+              "pointer_va": "0x31b95f8",
+              "sequence_length": 28,
+              "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+            },
+            {
+              "sequence_start": "0x31ce110",
+              "slot_index": 19,
+              "pointer_va": "0x31ce1a8",
+              "sequence_length": 32,
+              "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+            },
+            {
+              "sequence_start": "0x31ce278",
+              "slot_index": 19,
+              "pointer_va": "0x31ce310",
+              "sequence_length": 31,
+              "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+            },
+            {
+              "sequence_start": "0x31d04e8",
+              "slot_index": 19,
+              "pointer_va": "0x31d0580",
+              "sequence_length": 33,
+              "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+            },
+            {
+              "sequence_start": "0x31d0658",
+              "slot_index": 19,
+              "pointer_va": "0x31d06f0",
+              "sequence_length": 32,
+              "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+            },
+            {
+              "sequence_start": "0x31d1058",
+              "slot_index": 19,
+              "pointer_va": "0x31d10f0",
+              "sequence_length": 34,
+              "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+            },
+            {
+              "sequence_start": "0x31d11d0",
+              "slot_index": 19,
+              "pointer_va": "0x31d1268",
+              "sequence_length": 32,
+              "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+            },
+            {
+              "sequence_start": "0x31d1338",
+              "slot_index": 19,
+              "pointer_va": "0x31d13d0",
+              "sequence_length": 31,
+              "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+            },
+            {
+              "sequence_start": "0x31d1498",
+              "slot_index": 19,
+              "pointer_va": "0x31d1530",
+              "sequence_length": 32,
+              "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+            },
+            {
+              "sequence_start": "0x31d1600",
+              "slot_index": 19,
+              "pointer_va": "0x31d1698",
+              "sequence_length": 31,
+              "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+            },
+            {
+              "sequence_start": "0x31d1888",
+              "slot_index": 19,
+              "pointer_va": "0x31d1920",
+              "sequence_length": 30,
+              "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+            },
+            {
+              "sequence_start": "0x31d1c90",
+              "slot_index": 19,
+              "pointer_va": "0x31d1d28",
+              "sequence_length": 30,
+              "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+            },
+            {
+              "sequence_start": "0x31d1f40",
+              "slot_index": 19,
+              "pointer_va": "0x31d1fd8",
+              "sequence_length": 30,
+              "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+            },
+            {
+              "sequence_start": "0x31d31b8",
+              "slot_index": 19,
+              "pointer_va": "0x31d3250",
+              "sequence_length": 30,
+              "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+            },
+            {
+              "sequence_start": "0x31dc1d8",
+              "slot_index": 19,
+              "pointer_va": "0x31dc270",
+              "sequence_length": 33,
+              "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+            },
+            {
+              "sequence_start": "0x31dc348",
+              "slot_index": 19,
+              "pointer_va": "0x31dc3e0",
+              "sequence_length": 30,
+              "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+            }
+          ],
+          "scissor_factory_slot_index": 19,
+          "scr1_slot_index": 19,
+          "instructions": [
+            {
+              "address": "0x192eddc",
+              "mnemonic": "ldrb",
+              "operands": "w9, [x0, #0x58]"
+            },
+            {
+              "address": "0x192edec",
+              "mnemonic": "tbnz",
+              "operands": "w9, #0, #0x192edf8"
+            },
+            {
+              "address": "0x192ee1c",
+              "mnemonic": "strb",
+              "operands": "w8, [x19, #0x5a]"
+            },
+            {
+              "address": "0x192ee34",
+              "mnemonic": "orr",
+              "operands": "w9, w9, #0x10"
+            },
+            {
+              "address": "0x192ee38",
+              "mnemonic": "strb",
+              "operands": "w9, [x19, #0x58]"
+            },
+            {
+              "address": "0x192ee3c",
+              "mnemonic": "and",
+              "operands": "w8, w9, #0x7f"
+            },
+            {
+              "address": "0x192ee40",
+              "mnemonic": "strb",
+              "operands": "w8, [x19, #0x58]"
+            },
+            {
+              "address": "0x192ee58",
+              "mnemonic": "tbnz",
+              "operands": "w9, #6, #0x192ef94"
+            },
+            {
+              "address": "0x192ee60",
+              "mnemonic": "and",
+              "operands": "w10, w9, #0x10"
+            },
+            {
+              "address": "0x192ee64",
+              "mnemonic": "orr",
+              "operands": "w10, w3, w10, lsr #4"
+            },
+            {
+              "address": "0x192ee68",
+              "mnemonic": "tbz",
+              "operands": "w10, #0, #0x192f04c"
+            },
+            {
+              "address": "0x192ee6c",
+              "mnemonic": "and",
+              "operands": "w8, w9, #0xffffffef"
+            },
+            {
+              "address": "0x192ee78",
+              "mnemonic": "strb",
+              "operands": "w8, [x19, #0x58]"
+            },
+            {
+              "address": "0x192f018",
+              "mnemonic": "ldrb",
+              "operands": "w8, [x19, #0x58]"
+            },
+            {
+              "address": "0x192f01c",
+              "mnemonic": "orr",
+              "operands": "w8, w8, #0x80"
+            },
+            {
+              "address": "0x192f024",
+              "mnemonic": "ldrb",
+              "operands": "w8, [x19, #0x5c]"
+            },
+            {
+              "address": "0x192f028",
+              "mnemonic": "orr",
+              "operands": "w8, w8, #0x10"
+            },
+            {
+              "address": "0x192f02c",
+              "mnemonic": "strb",
+              "operands": "w8, [x19, #0x5c]"
+            }
+          ],
+          "observation": "The typed ScissorPane and BFLYT SCR1 pointer sequences both place 0x192edc0 at slot 19 (+0x98). On its ordinary path it updates alpha +0x5a, recursively invokes child slot +0x98, then sets +0x58 bit 7 and +0x5c bit 4; an early branch can clear +0x58 bit 7 and return. The SCR1 renderer later tests +0x58 bit 0 and +0x5a; generic Pane rendering tests +0x58 mask 0x81 and +0x5c bit 4.",
+          "limit": "The type-specific constructor installs slot 19 and this function has indexed direct callers, but no recovered static edge establishes when slot 19 runs on an SCR1/ScissorPane instance or with which live inputs."
+        },
+        "other_generic_pane_writers": {
+          "clone_function": "0x192e290",
+          "clone_instructions": [
+            {
+              "address": "0x192e2d4",
+              "mnemonic": "ldr",
+              "operands": "x8, [x1, #0x50]"
+            },
+            {
+              "address": "0x192e2d8",
+              "mnemonic": "str",
+              "operands": "x8, [x0, #0x50]"
+            },
+            {
+              "address": "0x192e2dc",
+              "mnemonic": "ldrb",
+              "operands": "w8, [x1, #0x58]"
+            },
+            {
+              "address": "0x192e2e0",
+              "mnemonic": "strb",
+              "operands": "w8, [x0, #0x58]"
+            },
+            {
+              "address": "0x192e2fc",
+              "mnemonic": "ldrb",
+              "operands": "w8, [x1, #0x5c]"
+            },
+            {
+              "address": "0x192e300",
+              "mnemonic": "strb",
+              "operands": "w8, [x0, #0x5c]"
+            },
+            {
+              "address": "0x192e364",
+              "mnemonic": "ldrb",
+              "operands": "w8, [x19, #0x58]"
+            },
+            {
+              "address": "0x192e368",
+              "mnemonic": "and",
+              "operands": "w8, w8, #0xffffffdf"
+            },
+            {
+              "address": "0x192e36c",
+              "mnemonic": "orr",
+              "operands": "w8, w8, #0x10"
+            },
+            {
+              "address": "0x192e370",
+              "mnemonic": "strb",
+              "operands": "w8, [x19, #0x58]"
+            }
+          ],
+          "clone_observation": "The clone copies source +0x58/+0x5c bytes, then clears source-derived +0x58 bit 5 and ORs bit 4 into the new Pane.",
+          "user_data_function": "0x192f4c0",
+          "user_data_instructions": [
+            {
+              "address": "0x192f4e0",
+              "mnemonic": "ldrb",
+              "operands": "w8, [x19, #0x5c]"
+            },
+            {
+              "address": "0x192f4e4",
+              "mnemonic": "tst",
+              "operands": "w8, #0x44444444"
+            },
+            {
+              "address": "0x192f588",
+              "mnemonic": "orr",
+              "operands": "w8, w8, #0x40"
+            },
+            {
+              "address": "0x192f594",
+              "mnemonic": "strb",
+              "operands": "w8, [x19, #0x5c]"
+            },
+            {
+              "address": "0x192f5d0",
+              "mnemonic": "ldrb",
+              "operands": "w8, [x19, #0x5c]"
+            },
+            {
+              "address": "0x192f5d4",
+              "mnemonic": "orr",
+              "operands": "w8, w8, #0x40"
+            },
+            {
+              "address": "0x192f5d8",
+              "mnemonic": "strb",
+              "operands": "w8, [x19, #0x5c]"
+            }
+          ],
+          "user_data_observation": "This helper sets +0x5c bit 6 on its runtime attribute-data path; it does not set the generic callback gate's bit 4.",
+          "child_flag_function": "0x192fe30",
+          "child_flag_instructions": [
+            {
+              "address": "0x192fe40",
+              "mnemonic": "ldrb",
+              "operands": "w8, [x0, #0x58]"
+            },
+            {
+              "address": "0x192fe44",
+              "mnemonic": "and",
+              "operands": "w9, w8, #0x10"
+            },
+            {
+              "address": "0x192fe48",
+              "mnemonic": "orr",
+              "operands": "w21, w2, w9, lsr #4"
+            },
+            {
+              "address": "0x192fe54",
+              "mnemonic": "tbnz",
+              "operands": "w8, #6, #0x192fe70"
+            },
+            {
+              "address": "0x192fe58",
+              "mnemonic": "tbz",
+              "operands": "w21, #0, #0x192fe70"
+            },
+            {
+              "address": "0x192fe5c",
+              "mnemonic": "and",
+              "operands": "w8, w8, #0xffffffef"
+            },
+            {
+              "address": "0x192fe68",
+              "mnemonic": "strb",
+              "operands": "w8, [x20, #0x58]"
+            },
+            {
+              "address": "0x192fe74",
+              "mnemonic": "ldr",
+              "operands": "x20, [x20, #0x28]"
+            },
+            {
+              "address": "0x192fe84",
+              "mnemonic": "and",
+              "operands": "w2, w21, #1"
+            },
+            {
+              "address": "0x192fe8c",
+              "mnemonic": "bl",
+              "operands": "#0x192fe30"
+            }
+          ],
+          "child_flag_observation": "This recursive child helper may clear +0x58 bit 4 before recomputing child state; bit 4 is separate from generic callback gate mask 0x81."
+        },
+        "generic_pane_fixed_offset_store_inventory": {
+          "search_scope": "Indexed native functions at 0x192d000 <= entry < 0x1930000; stores through a non-SP base with fixed displacement +0x58 or +0x5c.",
+          "function_count": 6,
+          "store_count": 19,
+          "adjacent_overlap_store_count": 1,
+          "adjacent_overlap_stores": [
+            {
+              "owner": "0x192d3d0",
+              "pc": "0x192d3f8",
+              "mnemonic": "sturh",
+              "operands": "wzr, [x0, #0x5b]",
+              "store_range_bytes": [
+                "0x5b",
+                "0x5d"
+              ]
+            }
+          ],
+          "functions": [
+            "0x192d3d0",
+            "0x192d490",
+            "0x192e290",
+            "0x192edc0",
+            "0x192f4c0",
+            "0x192fe30"
+          ],
+          "stores": [
+            {
+              "owner": "0x192d3d0",
+              "pc": "0x192d440",
+              "mnemonic": "strb",
+              "operands": "w8, [x0, #0x58]",
+              "field_offset_bytes": "0x58",
+              "base_register": "x0"
+            },
+            {
+              "owner": "0x192d490",
+              "pc": "0x192d500",
+              "mnemonic": "strb",
+              "operands": "wzr, [x0, #0x58]",
+              "field_offset_bytes": "0x58",
+              "base_register": "x0"
+            },
+            {
+              "owner": "0x192d490",
+              "pc": "0x192d504",
+              "mnemonic": "strb",
+              "operands": "wzr, [x0, #0x5c]",
+              "field_offset_bytes": "0x5c",
+              "base_register": "x0"
+            },
+            {
+              "owner": "0x192d490",
+              "pc": "0x192d64c",
+              "mnemonic": "strb",
+              "operands": "w8, [x19, #0x5c]",
+              "field_offset_bytes": "0x5c",
+              "base_register": "x19"
+            },
+            {
+              "owner": "0x192d490",
+              "pc": "0x192d714",
+              "mnemonic": "strb",
+              "operands": "w8, [x19, #0x5c]",
+              "field_offset_bytes": "0x5c",
+              "base_register": "x19"
+            },
+            {
+              "owner": "0x192d490",
+              "pc": "0x192d8b4",
+              "mnemonic": "strb",
+              "operands": "w8, [x19, #0x58]",
+              "field_offset_bytes": "0x58",
+              "base_register": "x19"
+            },
+            {
+              "owner": "0x192d490",
+              "pc": "0x192d8cc",
+              "mnemonic": "strb",
+              "operands": "w8, [x19, #0x58]",
+              "field_offset_bytes": "0x58",
+              "base_register": "x19"
+            },
+            {
+              "owner": "0x192d490",
+              "pc": "0x192da0c",
+              "mnemonic": "strb",
+              "operands": "w8, [x19, #0x58]",
+              "field_offset_bytes": "0x58",
+              "base_register": "x19"
+            },
+            {
+              "owner": "0x192e290",
+              "pc": "0x192e2e0",
+              "mnemonic": "strb",
+              "operands": "w8, [x0, #0x58]",
+              "field_offset_bytes": "0x58",
+              "base_register": "x0"
+            },
+            {
+              "owner": "0x192e290",
+              "pc": "0x192e300",
+              "mnemonic": "strb",
+              "operands": "w8, [x0, #0x5c]",
+              "field_offset_bytes": "0x5c",
+              "base_register": "x0"
+            },
+            {
+              "owner": "0x192e290",
+              "pc": "0x192e370",
+              "mnemonic": "strb",
+              "operands": "w8, [x19, #0x58]",
+              "field_offset_bytes": "0x58",
+              "base_register": "x19"
+            },
+            {
+              "owner": "0x192edc0",
+              "pc": "0x192ee38",
+              "mnemonic": "strb",
+              "operands": "w9, [x19, #0x58]",
+              "field_offset_bytes": "0x58",
+              "base_register": "x19"
+            },
+            {
+              "owner": "0x192edc0",
+              "pc": "0x192ee40",
+              "mnemonic": "strb",
+              "operands": "w8, [x19, #0x58]",
+              "field_offset_bytes": "0x58",
+              "base_register": "x19"
+            },
+            {
+              "owner": "0x192edc0",
+              "pc": "0x192ee78",
+              "mnemonic": "strb",
+              "operands": "w8, [x19, #0x58]",
+              "field_offset_bytes": "0x58",
+              "base_register": "x19"
+            },
+            {
+              "owner": "0x192edc0",
+              "pc": "0x192f020",
+              "mnemonic": "strb",
+              "operands": "w8, [x19, #0x58]",
+              "field_offset_bytes": "0x58",
+              "base_register": "x19"
+            },
+            {
+              "owner": "0x192edc0",
+              "pc": "0x192f02c",
+              "mnemonic": "strb",
+              "operands": "w8, [x19, #0x5c]",
+              "field_offset_bytes": "0x5c",
+              "base_register": "x19"
+            },
+            {
+              "owner": "0x192f4c0",
+              "pc": "0x192f594",
+              "mnemonic": "strb",
+              "operands": "w8, [x19, #0x5c]",
+              "field_offset_bytes": "0x5c",
+              "base_register": "x19"
+            },
+            {
+              "owner": "0x192f4c0",
+              "pc": "0x192f5d8",
+              "mnemonic": "strb",
+              "operands": "w8, [x19, #0x5c]",
+              "field_offset_bytes": "0x5c",
+              "base_register": "x19"
+            },
+            {
+              "owner": "0x192fe30",
+              "pc": "0x192fe68",
+              "mnemonic": "strb",
+              "operands": "w8, [x20, #0x58]",
+              "field_offset_bytes": "0x58",
+              "base_register": "x20"
+            }
+          ],
+          "completeness_limit": "This exhausts fixed-displacement writes starting at the flag bytes and adjacent wide stores that overlap them within the generic Pane method family selected by the parser/render implementation. The sole adjacent overlap is the base constructor's halfword zero at +0x5b..+0x5c. The same numeric offsets occur in unrelated object layouts elsewhere in main; a whole-image offset-only scan cannot identify object type, and register-computed stores are outside this inventory."
+        },
         "pointer_inventory_coverage": {
           "sequence_count": 18348,
           "entry_count": 192637
         },
-        "limit": "The function body copies pane-like bytes into the renderer fields, but it has neither an indexed direct caller nor membership in the 18,348-sequence/192,637-entry relocated pointer inventory. Its connection to the ScissorPane layout-loader path is not established; callback or unindexed runtime routes remain possible."
+        "limit": "The native SCR1 type switch is identified and its constructor-to-parser flag conversion is direct. The switch itself has no indexed direct caller, so the outer resource-loader dispatch to this switch is not recovered. The family inventory exhausts fixed-displacement stores starting at +0x58/+0x5c and checks adjacent wide-store overlap in the generic Pane code range; whole-image offset-only matches include unrelated objects and cannot safely be treated as Pane writes."
       },
       "visible_label_strings": {
         "VisibleOn": [
@@ -1091,6 +3618,737 @@
       ],
       "callback": "The pane vtable slot +0xa8 (byte offset 168) is called after those raw gates; the child traversal later calls slot +0xa0 (offset 160). These raw object fields are not named active/visible flags by the disassembly."
     },
+    "bflty_scr1_scissor_render_path": {
+      "bflly_type_dispatcher": "0x19212e0",
+      "scr1_constructor": "0x1937280",
+      "scr1_render_method": "0x19372b0",
+      "scr1_slot_19_state_update": {
+        "target": "0x192edc0",
+        "membership": [
+          {
+            "sequence_start": "0x31a2ff8",
+            "slot_index": 19,
+            "pointer_va": "0x31a3090",
+            "sequence_length": 28,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          }
+        ],
+        "observation": "The SCR1 address point places shared Pane state/alpha update 0x192edc0 in slot 19 (+0x98), before its custom renderer at slot 20."
+      },
+      "scr1_render_vtable_membership": [
+        {
+          "sequence_start": "0x31a2ff8",
+          "slot_index": 20,
+          "pointer_va": "0x31a3098",
+          "sequence_length": 28,
+          "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+        }
+      ],
+      "scr1_vtable_address_point": "0x31a2ff8",
+      "scr1_vtable_relocation_source": {
+        "cell": "0x3318e10",
+        "relocated_value": "0x31a2fe8",
+        "address_point_adjustment": "+0x10",
+        "source": "R_AARCH64_RELATIVE resolution from additional ExeFS main.elf; the NSO file contains an unresolved relocation placeholder."
+      },
+      "scr1_slot_20_target": "0x19372b0",
+      "scr1_slot_21_target": "0x192fc90",
+      "render_instructions": [
+        {
+          "address": "0x19372c4",
+          "mnemonic": "ldrb",
+          "operands": "w8, [x0, #0x58]"
+        },
+        {
+          "address": "0x19372d4",
+          "mnemonic": "tbz",
+          "operands": "w8, #0, #0x19374f0"
+        },
+        {
+          "address": "0x19372d8",
+          "mnemonic": "ldrb",
+          "operands": "w8, [x21, #0x5a]"
+        },
+        {
+          "address": "0x1937494",
+          "mnemonic": "bl",
+          "operands": "#0x18faf70"
+        },
+        {
+          "address": "0x19374b4",
+          "mnemonic": "bl",
+          "operands": "#0x192fb20"
+        },
+        {
+          "address": "0x19374c8",
+          "mnemonic": "bl",
+          "operands": "#0x18faf70"
+        },
+        {
+          "address": "0x193750c",
+          "mnemonic": "b",
+          "operands": "#0x192fb20"
+        }
+      ],
+      "generic_child_traversal": {
+        "function": "0x192fb20",
+        "child_slot_call_instructions": [
+          {
+            "address": "0x192fb78",
+            "mnemonic": "blr",
+            "operands": "x8"
+          },
+          {
+            "address": "0x192fbe8",
+            "mnemonic": "ldr",
+            "operands": "x8, [x21, #-8]!"
+          },
+          {
+            "address": "0x192fbec",
+            "mnemonic": "ldr",
+            "operands": "x8, [x8, #0xa0]"
+          },
+          {
+            "address": "0x192fbfc",
+            "mnemonic": "blr",
+            "operands": "x8"
+          }
+        ],
+        "observation": "The generic Pane traversal calls each child object's vtable slot +0xa0; for the SCR1 address point this is slot 20, target 0x19372b0."
+      },
+      "scissor_context_dispatch": {
+        "function": "0x18faf70",
+        "instructions": [
+          {
+            "address": "0x18faf80",
+            "mnemonic": "cmp",
+            "operands": "w2, #1"
+          },
+          {
+            "address": "0x18fafc4",
+            "mnemonic": "adrp",
+            "operands": "x8, #0x3317000"
+          },
+          {
+            "address": "0x18fafc8",
+            "mnemonic": "ldr",
+            "operands": "x0, [x0, #0xb8]"
+          },
+          {
+            "address": "0x18fafd0",
+            "mnemonic": "ldr",
+            "operands": "x8, [x8]"
+          },
+          {
+            "address": "0x18fafd4",
+            "mnemonic": "mov",
+            "operands": "x3, sp"
+          }
+        ],
+        "indexed_direct_callers": [
+          {
+            "callsite": "0x1916e08",
+            "owner": "0x1916dd0",
+            "owner_evidence": "indexed_owner",
+            "instruction": "BL"
+          },
+          {
+            "callsite": "0x1937494",
+            "owner": "0x19372b0",
+            "owner_evidence": "indexed_owner",
+            "instruction": "BL"
+          },
+          {
+            "callsite": "0x19374c8",
+            "owner": "0x19372b0",
+            "owner_evidence": "indexed_owner",
+            "instruction": "BL"
+          }
+        ],
+        "observation": "The SCR1 render method calls this helper with one four-integer rectangle before invoking generic Pane rendering, then calls it again with saved context to restore. The helper forwards through a global context object at 0x3317bf8 to an indirect first-slot call; it does not itself contain direct NVN API calls."
+      },
+      "flag_to_render_observation": "For a parsed SCR1 pane, slot 20 checks pane +0x58 bit 0 and +0x5a nonzero before computing and submitting a clipped rectangle around the generic Pane render. If either test fails, it calls the generic Pane renderer without this wrapper's clip dispatch. The generic renderer separately tests +0x58 mask 0x81, +0x5c bit 4, +0x5a, and +0x62 bit 1 before its slot +0xa8 callback; the SCR1 slot 21 is a return-only thunk.",
+      "separate_scissor_factory_path": {
+        "factory": "0x14c89c0",
+        "factory_address_point": "0x313a398",
+        "factory_vptr_and_flag_write_instructions": [
+          {
+            "address": "0x14c89f8",
+            "mnemonic": "adrp",
+            "operands": "x8, #0x330e000"
+          },
+          {
+            "address": "0x14c89fc",
+            "mnemonic": "ldr",
+            "operands": "x8, [x8, #0xe30]"
+          },
+          {
+            "address": "0x14c8a08",
+            "mnemonic": "add",
+            "operands": "x8, x8, #0x10"
+          },
+          {
+            "address": "0x14c8a10",
+            "mnemonic": "str",
+            "operands": "x8, [x21]"
+          },
+          {
+            "address": "0x14c8a14",
+            "mnemonic": "ldrb",
+            "operands": "w8, [x21, #0x58]"
+          },
+          {
+            "address": "0x14c8a18",
+            "mnemonic": "orr",
+            "operands": "w8, w8, #8"
+          },
+          {
+            "address": "0x14c8a20",
+            "mnemonic": "strb",
+            "operands": "w8, [x21, #0x58]"
+          },
+          {
+            "address": "0x14c8a3c",
+            "mnemonic": "adrp",
+            "operands": "x8, #0x330e000"
+          },
+          {
+            "address": "0x14c8a40",
+            "mnemonic": "ldr",
+            "operands": "x8, [x8, #0xe30]"
+          },
+          {
+            "address": "0x14c8a4c",
+            "mnemonic": "add",
+            "operands": "x8, x8, #0x10"
+          },
+          {
+            "address": "0x14c8a50",
+            "mnemonic": "stp",
+            "operands": "xzr, xzr, [x21, #0xf0]"
+          },
+          {
+            "address": "0x14c8a54",
+            "mnemonic": "str",
+            "operands": "x8, [x21]"
+          },
+          {
+            "address": "0x14c8a58",
+            "mnemonic": "str",
+            "operands": "xzr, [x21, #0xe8]"
+          },
+          {
+            "address": "0x14c8a78",
+            "mnemonic": "bl",
+            "operands": "#0x14c8a90"
+          }
+        ],
+        "auxiliary_constructor_instructions": [
+          {
+            "address": "0x14c8b00",
+            "mnemonic": "bl",
+            "operands": "#0x192d3d0"
+          },
+          {
+            "address": "0x14c8b04",
+            "mnemonic": "adrp",
+            "operands": "x8, #0x330e000"
+          },
+          {
+            "address": "0x14c8b08",
+            "mnemonic": "ldr",
+            "operands": "x8, [x8, #0xe38]"
+          },
+          {
+            "address": "0x14c8b0c",
+            "mnemonic": "add",
+            "operands": "x8, x8, #0x10"
+          },
+          {
+            "address": "0x14c8b10",
+            "mnemonic": "str",
+            "operands": "x8, [x20]"
+          },
+          {
+            "address": "0x14c8b34",
+            "mnemonic": "bl",
+            "operands": "#0x192d3d0"
+          },
+          {
+            "address": "0x14c8b38",
+            "mnemonic": "adrp",
+            "operands": "x8, #0x330e000"
+          },
+          {
+            "address": "0x14c8b3c",
+            "mnemonic": "ldr",
+            "operands": "x8, [x8, #0xe38]"
+          },
+          {
+            "address": "0x14c8b40",
+            "mnemonic": "add",
+            "operands": "x8, x8, #0x10"
+          },
+          {
+            "address": "0x14c8b44",
+            "mnemonic": "str",
+            "operands": "x8, [x20]"
+          },
+          {
+            "address": "0x14c8b50",
+            "mnemonic": "str",
+            "operands": "x20, [x19, #0xd8]"
+          },
+          {
+            "address": "0x14c8b58",
+            "mnemonic": "str",
+            "operands": "wzr, [x19, #0x100]"
+          }
+        ],
+        "slot_19_state_update": {
+          "target": "0x192edc0",
+          "membership": [
+            {
+              "sequence_start": "0x313a398",
+              "slot_index": 19,
+              "pointer_va": "0x313a430",
+              "sequence_length": 28,
+              "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+            }
+          ]
+        },
+        "vtable_callback_membership": [
+          {
+            "sequence_start": "0x313a398",
+            "slot_index": 21,
+            "pointer_va": "0x313a440",
+            "sequence_length": 28,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          }
+        ],
+        "generic_renderer_membership": [
+          {
+            "sequence_start": "0x3138468",
+            "slot_index": 20,
+            "pointer_va": "0x3138508",
+            "sequence_length": 28,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x3139e98",
+            "slot_index": 20,
+            "pointer_va": "0x3139f38",
+            "sequence_length": 28,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x313a398",
+            "slot_index": 20,
+            "pointer_va": "0x313a438",
+            "sequence_length": 28,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x313a488",
+            "slot_index": 20,
+            "pointer_va": "0x313a528",
+            "sequence_length": 28,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31a26e0",
+            "slot_index": 20,
+            "pointer_va": "0x31a2780",
+            "sequence_length": 28,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31a2a30",
+            "slot_index": 20,
+            "pointer_va": "0x31a2ad0",
+            "sequence_length": 28,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31a2ba0",
+            "slot_index": 20,
+            "pointer_va": "0x31a2c40",
+            "sequence_length": 28,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31a2cb8",
+            "slot_index": 20,
+            "pointer_va": "0x31a2d58",
+            "sequence_length": 28,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31a2dc0",
+            "slot_index": 20,
+            "pointer_va": "0x31a2e60",
+            "sequence_length": 29,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31a3180",
+            "slot_index": 20,
+            "pointer_va": "0x31a3220",
+            "sequence_length": 41,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31a3810",
+            "slot_index": 20,
+            "pointer_va": "0x31a38b0",
+            "sequence_length": 28,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31b6798",
+            "slot_index": 20,
+            "pointer_va": "0x31b6838",
+            "sequence_length": 51,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31b6940",
+            "slot_index": 20,
+            "pointer_va": "0x31b69e0",
+            "sequence_length": 51,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31b6e50",
+            "slot_index": 20,
+            "pointer_va": "0x31b6ef0",
+            "sequence_length": 28,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31b7210",
+            "slot_index": 20,
+            "pointer_va": "0x31b72b0",
+            "sequence_length": 29,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31b7308",
+            "slot_index": 20,
+            "pointer_va": "0x31b73a8",
+            "sequence_length": 29,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31b7400",
+            "slot_index": 20,
+            "pointer_va": "0x31b74a0",
+            "sequence_length": 28,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31b7510",
+            "slot_index": 20,
+            "pointer_va": "0x31b75b0",
+            "sequence_length": 28,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31b7600",
+            "slot_index": 20,
+            "pointer_va": "0x31b76a0",
+            "sequence_length": 29,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31b76f8",
+            "slot_index": 20,
+            "pointer_va": "0x31b7798",
+            "sequence_length": 28,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31b77e8",
+            "slot_index": 20,
+            "pointer_va": "0x31b7888",
+            "sequence_length": 29,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31b78e0",
+            "slot_index": 20,
+            "pointer_va": "0x31b7980",
+            "sequence_length": 28,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31b7b00",
+            "slot_index": 20,
+            "pointer_va": "0x31b7ba0",
+            "sequence_length": 29,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31b9470",
+            "slot_index": 20,
+            "pointer_va": "0x31b9510",
+            "sequence_length": 28,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31b9560",
+            "slot_index": 20,
+            "pointer_va": "0x31b9600",
+            "sequence_length": 28,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31b9650",
+            "slot_index": 20,
+            "pointer_va": "0x31b96f0",
+            "sequence_length": 28,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31ccba0",
+            "slot_index": 20,
+            "pointer_va": "0x31ccc40",
+            "sequence_length": 52,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31ce550",
+            "slot_index": 20,
+            "pointer_va": "0x31ce5f0",
+            "sequence_length": 33,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31ce838",
+            "slot_index": 20,
+            "pointer_va": "0x31ce8d8",
+            "sequence_length": 33,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31ceb18",
+            "slot_index": 20,
+            "pointer_va": "0x31cebb8",
+            "sequence_length": 32,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31cedf8",
+            "slot_index": 20,
+            "pointer_va": "0x31cee98",
+            "sequence_length": 33,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31cf0d8",
+            "slot_index": 20,
+            "pointer_va": "0x31cf178",
+            "sequence_length": 32,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31cf468",
+            "slot_index": 20,
+            "pointer_va": "0x31cf508",
+            "sequence_length": 55,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31cf800",
+            "slot_index": 20,
+            "pointer_va": "0x31cf8a0",
+            "sequence_length": 33,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31cfae0",
+            "slot_index": 20,
+            "pointer_va": "0x31cfb80",
+            "sequence_length": 32,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31cfe78",
+            "slot_index": 20,
+            "pointer_va": "0x31cff18",
+            "sequence_length": 56,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31d02c8",
+            "slot_index": 20,
+            "pointer_va": "0x31d0368",
+            "sequence_length": 55,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31d0658",
+            "slot_index": 20,
+            "pointer_va": "0x31d06f8",
+            "sequence_length": 32,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31d0c10",
+            "slot_index": 20,
+            "pointer_va": "0x31d0cb0",
+            "sequence_length": 33,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31d0ef0",
+            "slot_index": 20,
+            "pointer_va": "0x31d0f90",
+            "sequence_length": 32,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31d1338",
+            "slot_index": 20,
+            "pointer_va": "0x31d13d8",
+            "sequence_length": 31,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31d1600",
+            "slot_index": 20,
+            "pointer_va": "0x31d16a0",
+            "sequence_length": 31,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31d1888",
+            "slot_index": 20,
+            "pointer_va": "0x31d1928",
+            "sequence_length": 30,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31d1de8",
+            "slot_index": 20,
+            "pointer_va": "0x31d1e88",
+            "sequence_length": 30,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31d1f40",
+            "slot_index": 20,
+            "pointer_va": "0x31d1fe0",
+            "sequence_length": 30,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31d2098",
+            "slot_index": 20,
+            "pointer_va": "0x31d2138",
+            "sequence_length": 31,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31d21f8",
+            "slot_index": 20,
+            "pointer_va": "0x31d2298",
+            "sequence_length": 31,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31d2358",
+            "slot_index": 20,
+            "pointer_va": "0x31d23f8",
+            "sequence_length": 31,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31d24b8",
+            "slot_index": 20,
+            "pointer_va": "0x31d2558",
+            "sequence_length": 31,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31d2618",
+            "slot_index": 20,
+            "pointer_va": "0x31d26b8",
+            "sequence_length": 31,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31d2778",
+            "slot_index": 20,
+            "pointer_va": "0x31d2818",
+            "sequence_length": 53,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31d2988",
+            "slot_index": 20,
+            "pointer_va": "0x31d2a28",
+            "sequence_length": 53,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31d2b98",
+            "slot_index": 20,
+            "pointer_va": "0x31d2c38",
+            "sequence_length": 54,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31d2db0",
+            "slot_index": 20,
+            "pointer_va": "0x31d2e50",
+            "sequence_length": 30,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31d2f08",
+            "slot_index": 20,
+            "pointer_va": "0x31d2fa8",
+            "sequence_length": 30,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31d3060",
+            "slot_index": 20,
+            "pointer_va": "0x31d3100",
+            "sequence_length": 30,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31d31b8",
+            "slot_index": 20,
+            "pointer_va": "0x31d3258",
+            "sequence_length": 30,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31dc1d8",
+            "slot_index": 20,
+            "pointer_va": "0x31dc278",
+            "sequence_length": 33,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          {
+            "sequence_start": "0x31dc348",
+            "slot_index": 20,
+            "pointer_va": "0x31dc3e8",
+            "sequence_length": 30,
+            "source_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          }
+        ],
+        "observation": "The separately string-referenced 0x14c89c0 factory installs address point 0x313a398 whose slot 20 is generic renderer 0x192fb20 and slot 21 is callback 0x14c8d30. The BFLYT SCR1 address point instead uses slot 20 0x19372b0 and slot 21 0x192fc90; the static files do not establish that every SCR1 pane is instantiated through 0x14c89c0."
+      },
+      "limits": [
+        "The layout-type switch has no indexed direct caller, so the outer archive/resource-loader edge is unresolved.",
+        "The indirect context callback in 0x18faf70 is not statically resolved to the separately mapped NVN setter path; the render wrapper and flag gates are proven, but exact GPU submission and pixel coverage for SCR1 are not.",
+        "The runtime values of source flags, pane transforms, parent clip state, display dimensions, and framebuffer origin were not captured."
+      ]
+    },
     "scissor_bounds_selector": {
       "setter_function": "0x14c8d00",
       "callback_function": "0x14c8d30",
@@ -1189,6 +4447,49 @@
     },
     "nested_scissor_submission": {
       "trace_artifact": "scissor_static_path.json",
+      "coordinate_conversion": {
+        "rect_transform": "0x19a9a80 applies coordinate-mode cases 1–5 from param1+0x18 to source bounds at param1+0x8..+0x14. It reads logical viewport dimensions from param3+0x8/+0xc and target pixel bounds from param3+0x10..+0x1c; the enum's native label is unknown.",
+        "pixel_mapping": "0x19a9960/0x19a9c60/0x19a9d50 scale the transformed origin and extent by logical viewport dimensions, map them into the target pixel bounds, then convert origin and size to integers by truncation.",
+        "limits": "Static native math only; framebuffer origin convention, GPU pixel coverage, and parity against a capture remain unverified."
+      },
+      "resolved_nvn_state_apis": {
+        "nvnCommandBufferSetScissor": {
+          "string_va": "0x297d8cd",
+          "resolver": "0x18fb3f0",
+          "resolver_callsite": "0x18fe1c4",
+          "resolver_got_cell": "0x3317c60",
+          "indirect_calls": [
+            {
+              "function": "0x19a9960",
+              "callsite": "0x19a9a24",
+              "loaded_got_cell": "0x3317c60"
+            },
+            {
+              "function": "0x19a9d50",
+              "callsite": "0x19a9e04",
+              "loaded_got_cell": "0x3317c60"
+            }
+          ]
+        },
+        "nvnCommandBufferSetViewport": {
+          "string_va": "0x29b2cfe",
+          "resolver": "0x18fb3f0",
+          "resolver_callsite": "0x18fe170",
+          "resolver_got_cell": "0x3318808",
+          "indirect_calls": [
+            {
+              "function": "0x19a9960",
+              "callsite": "0x19a9a50",
+              "loaded_got_cell": "0x3318808"
+            },
+            {
+              "function": "0x19a9c60",
+              "callsite": "0x19a9d18",
+              "loaded_got_cell": "0x3318808"
+            }
+          ]
+        }
+      },
       "native_observations": [
         "0x14c8fe0 intersects incoming left/top/right/bottom bounds with the current top entry; an inverted result becomes a four-zero rectangle. It applies in mode 1, then saves the rectangle if the prior count is at most five (six saved entries). At count six, a further push applies its intersection but exits without saving or incrementing.",
         "0x14c9250 decrements and reapplies the previous entry in mode 1. On an empty stack it applies a zero rectangle in mode 0.",
@@ -1196,7 +4497,7 @@
       ],
       "limits": [
         "The stack fixture uses synthetic memory and stubs rectangle application; it does not execute NVN or compare pixels.",
-        "An empty-stack zero rectangle passes through the runtime viewport/coordinate transform, so its actual target-pixel result and GPU coverage are unknown.",
+        "The native math maps logical bounds into target-pixel bounds only after runtime viewport dimensions and pixel bounds are supplied; framebuffer origin and GPU coverage for the resulting rectangle are unknown.",
         "The existing fixture does not exercise balanced traversal beyond six saved entries."
       ]
     },
@@ -1272,7 +4573,7 @@
     "The static Npad call graph does not establish indirect routes from HID state to the 13 UI action IDs.",
     "RootPage creation and numeric +0x48 transitions are statically mapped, but state names and the outer scheduler dispatch route/cadence are not.",
     "The parent-bound pointer used by hit testing is not named a render clip by native code; its geometric intersection is established, but visual clipping from that field is not.",
-    "The renderer's pane flag bytes and ScissorPane bounds-source byte have no recovered runtime active-state names; the only flag-copy candidate is unlinked in the direct-call and relocated-pointer indexes.",
+    "BFLYT SCR1 flag conversion and its custom clipping render wrapper are statically connected. The external call that enters the pane type switch, the indirect context handler target, live flags/transforms, and SCR1 pixel coverage remain unresolved; the separate 0x14c89c0 ScissorPane callback path is mapped independently.",
     "Scissor stack fixtures do not execute NVN or compare displayed pixels, so framebuffer origin and actual clip coverage remain unmeasured."
   ]
 }
