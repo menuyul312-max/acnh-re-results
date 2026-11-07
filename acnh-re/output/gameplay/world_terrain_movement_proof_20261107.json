@@ -1,0 +1,245 @@
+{
+  "title": "ACNH 1.0.0 movement, terrain, and story traversal evidence",
+  "date": "2026-11-07",
+  "build_scope": "Animal Crossing: New Horizons 1.0.0 reverse engineering only; no Godot or build work",
+  "overall_status": "OPEN",
+  "source_identity": {
+    "elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+    "additional_exefs_main_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+    "note": "Existing ADDITIONAL_EXEFS.md records identical main-code segments for the ELF and NSO inputs."
+  },
+  "status_legend": {
+    "EF": "EventFlow structure/order and referenced actions; not proof that an action handler's full behavior ran.",
+    "TBL": "Parsed table rows and values.",
+    "STRUCT": "Parsed binary/data layout or schema.",
+    "PSEUDO": "Static native disassembly/pseudocode reading.",
+    "NATIVE": "Bounded execution of original native instructions on reconstructed or synthetic fixture state; not a running game trace.",
+    "CAT": "Catalog candidate only.",
+    "OPEN": "Required source or runtime link is unproven."
+  },
+  "scope_finding": "Bounded native player-position, vertical-motion, ground, terrain-navigation, rectangle, and mutation helpers are documented. Story EventFlows order player-selected construction and later Island Designer unlock. There is no proven live HID-to-position-to-collision-to-player-traversal-to-placement path. Story progression checks placement flags/build counts, but available evidence does not show that crossing a bridge or climbing a ladder is required to advance.",
+  "trace": [
+    {
+      "step": 1,
+      "link": "Core story placement and progression",
+      "status": "EF",
+      "claims": [
+        "ShopReserveKit previews cMarket with StructureBuildPosType=cPlayer; a static next-day processor checks structure type 0 before the opening/quest announcement flow.",
+        "BridgeReserveKit previews cBridge with cPlayer. HousingFinish_Bridge maps selected kit UID 7211 to ImmQ_SetBridge. The quest subsequently grants plot kits 5827-5829 and ladder recipe UID 2615.",
+        "MigrateQuestA/B/C preview cReserveNpcHouse with cSettlerQuest and distinguish subjects 0, 1, and 2. Furnishing checks and daily plot completion follow in EventFlow.",
+        "Later story gates include constructed-house counts, campsite/first camper, island rating and K.K. first live. Post-concert InvitePlayerHouse sets MainmenuConstructLicense and requests the cConstructLicense application UI."
+      ],
+      "source_artifacts": [
+        "acnh-re/docs/GAMEPLAY_FLOW.md",
+        "acnh-re/output/gameplay/flow_index.json",
+        "acnh-re/output/gameplay/trees/Player_Demo_HousingFinish.txt",
+        "acnh-re/output/gameplay/trees/SNPC_rco_53_MigrantsQuest.txt",
+        "acnh-re/output/gameplay/trees/SNPC_rco_55_TkkFirstLive.txt",
+        "acnh-re/output/gameplay/story_asset_crosswalk.json"
+      ],
+      "limits": [
+        "Flow order and flags do not establish successful live placement, world transform, collision validation, or a physical route.",
+        "No EventFlow condition shown requires the player to cross the placed bridge or use the ladder before the plot kits are granted.",
+        "Island Designer evidence is an app/UI unlock request, not proof of editor input, preview, validation, mutation, or save behavior."
+      ]
+    },
+    {
+      "step": 2,
+      "link": "Stored movement components to actor position",
+      "status": "NATIVE",
+      "claims": [
+        "Helper 0xdac550 was executed over 3,205 finite reconstructed-state cases on a non-animation branch.",
+        "The bounded helper reads player+0xf58 and player+0xf50 as local movement components, yaw-rotates/scales them using context+0xd30, adds XYZ to actor+0x278, writes delta/history fields, and runs original callees without stubs."
+      ],
+      "source_artifacts": [
+        "acnh-re/output/mechanics/player_position_native.json",
+        "acnh-re/tools/player_position_native.py"
+      ],
+      "limits": [
+        "Controller/HID sample acquisition and the producer of these player fields are not traced; these are not proven raw stick inputs.",
+        "Animation/root-motion branch, gravity integration, collision resolution, full frame scheduler, and timing/units are not covered."
+      ]
+    },
+    {
+      "step": 3,
+      "link": "Vertical motion and Y correction",
+      "status": "NATIVE",
+      "claims": [
+        "Original fragments of 0xe17cb0 run timing/gravity/ballistic code and store velocity at player+0x574; a separate fragment adds X/Z velocity to actor position.",
+        "Eight composed finite cases pass across two selected instruction ranges with a reconstructed gap. Eleven controlled-state fixtures cover selected 0xda86b0 setter branches; twelve 0xdac780 fixtures cover early-return/branch/Y-sink edges."
+      ],
+      "source_artifacts": [
+        "acnh-re/output/mechanics/player_physics_remainder_20261107/player_xz_position_native.json",
+        "acnh-re/output/mechanics/ballistic_velocity_native.json",
+        "acnh-re/output/mechanics/collision_remainder_20261107/da86b0_vertical_branch_native.json",
+        "acnh-re/output/mechanics/player_postmotion_remainder_20261107/dac780_postmotion_native.json"
+      ],
+      "limits": [
+        "Time-record/target producers, duration meaning, complete 0xe17cb0 function, state producer 0xdacc40, and frame scheduling are unresolved.",
+        "The selected Y sink receives a supplied scalar in its fixture; it does not prove the live collider query supplies a landing value."
+      ]
+    },
+    {
+      "step": 4,
+      "link": "Collider candidate query to ground result",
+      "status": "OPEN",
+      "claims": [
+        "Static caller shape to 0x7bccf0 is mapped: X0=actor position pointer, X1=null optional output, W2=0, S0=0.0.",
+        "The native sandbox attempt did not complete: the world-root slot resolves to null and the code faults at PC 0x172780 while treating low mapped ELF bytes as a grid pointer."
+      ],
+      "source_artifacts": [
+        "acnh-re/output/mechanics/player_collider_query_remainder_20261107/player_7bccf0_boundary_native.json",
+        "acnh-re/output/mechanics/player_collider_query_remainder_20261107/player_7bccf0_boundary_native.py"
+      ],
+      "limits": [
+        "No candidate selection, ground/landing scalar, or live query result was produced.",
+        "This reproducible harness-context fault is not a gameplay fault or gameplay behavior claim."
+      ]
+    },
+    {
+      "step": 5,
+      "link": "Terrain ground sampling",
+      "status": "NATIVE",
+      "claims": [
+        "A reconstructed row-major ground grid uses x + width*z indexing and 52-byte runtime records; four tested sector attributes occupy bytes 48-51.",
+        "Base/overlay attribute reads, coordinate conversion, and 3 four-point aggregators pass bounded native cases. The tested WaterCheck aggregator uses all four points; PlayerNoEntry uses any point."
+      ],
+      "source_artifacts": [
+        "acnh-re/output/mechanics/terrain_native.json",
+        "acnh-re/tools/terrain_native.py",
+        "acnh-re/output/mechanics/terrain_collision_parameters.json"
+      ],
+      "limits": [
+        "The prepared world/grid and ground row caches are reconstructed; active dynamic object-ground overrides are not covered.",
+        "These flag aggregators do not cover every walking, burial, water, or collision rule."
+      ]
+    },
+    {
+      "step": 6,
+      "link": "Terrain flags to navigation",
+      "status": "NATIVE",
+      "claims": [
+        "Bounded tests cover terrain-height/flag decoding, node callbacks, cost categories, and eight height-to-word-to-node-to-A* chains on reconstructed grids.",
+        "Examples demonstrate how tested height differences and flags change directional masks and NPC route costs."
+      ],
+      "source_artifacts": [
+        "acnh-re/output/mechanics/terrain_nav_flags_native.json",
+        "acnh-re/output/mechanics/npc_navigation_kernel_map.json"
+      ],
+      "limits": [
+        "This is NPC pathfinding evidence, not a player traversal or player collider contract.",
+        "Only selected surface attributes and finite threshold cases are tested; live terrain edits, original PBC content, and complete player movement are not connected."
+      ]
+    },
+    {
+      "step": 7,
+      "link": "Region validation/mutation and water/terraform action data",
+      "status": ["TBL", "NATIVE"],
+      "claims": [
+        "A finite reconstructed-record rectangle predicate, region bit mutators, and a wrapper-to-release-to-rectangle-mutation path have bounded native fixtures.",
+        "FieldLandMakingActionParam contains 17 rows. Source rows 9 and 10 specify MakeFall and BreakFall with 3x3 range and layer No0."
+      ],
+      "source_artifacts": [
+        "acnh-re/output/mechanics/terrain_region_check_native.json",
+        "acnh-re/output/mechanics/terrain_region_mutation_native.json",
+        "acnh-re/output/ui_island/water_terraform_remainder_20261107/native_region_release_trace.json",
+        "acnh-re/output/ui_island/water_terraform_remainder_20261107/result.json"
+      ],
+      "limits": [
+        "The release fixture constructs its owner/list/world records; it is not a capture of a live Island Designer edit.",
+        "Field action rows are table configuration. The player action, validation callback, edit transaction, save/undo, and refresh caller are not linked.",
+        "The cleanup bit mutation is not evidence that MakeFall/BreakFall runs or succeeds."
+      ]
+    },
+    {
+      "step": 8,
+      "link": "Island preset loader to runtime collision/ground data",
+      "status": ["STRUCT", "PSEUDO"],
+      "claims": [
+        "Ninety-six decoded LandMaking presets use 112x96 row-major 14-byte cells with two unit/variation/rotation layers and a height byte.",
+        "Static native code maps generator 0x529910 to setup 0x528bf0 and transfer 0x558f40; transfer copies preset fields into destination accessors when required pointers are present.",
+        "A separate reconstructed runtime ground record is 52 bytes with height/material fields; its conversion from the 14-byte preset cell is not established."
+      ],
+      "source_artifacts": [
+        "acnh-re/output/ui_island/island_terrain_loader_native.json",
+        "acnh-re/output/ui_island/island_loader_remainder_20261107/result.json",
+        "acnh-re/output/ui_island/island_loader_remainder_20261107/source_inventory.json"
+      ],
+      "limits": [
+        "The generator/setup/resource loader were not executed with live objects; standalone RNG fixture does not reproduce gameplay selection or stream.",
+        "Destination allocation/chunk layout, PBC bootstrap, 14-to-52-byte transform, collision mesh, water mesh, and shoreline seam generation remain open.",
+        "No PBC-named payload was found in the available partial RomFS or indexed source corpus."
+      ]
+    }
+  ],
+  "story_progression": [
+    {
+      "order": 1,
+      "beat": "Shop placement",
+      "status": ["EF", "PSEUDO"],
+      "link": "cMarket/cPlayer preview -> selected placement result flow -> next-day structure check -> store-open announcement -> three-house quest",
+      "open": ["placement cell/transform", "live collision validation", "completed structure/save state"]
+    },
+    {
+      "order": 2,
+      "beat": "Bridge and ladder",
+      "status": ["EF", "TBL"],
+      "link": "recipe 7211 -> cBridge/cPlayer preview -> ImmQ_SetBridge flow result -> plot kits 5827-5829 and ladder recipe 2615",
+      "open": ["bridge endpoint cells and orientation", "bridge crossing requirement", "ladder placement/use and climb traversal", "selected bridge model and collision shape"]
+    },
+    {
+      "order": 3,
+      "beat": "Three housing plots",
+      "status": ["EF", "TBL"],
+      "link": "plot kits -> cReserveNpcHouse/cSettlerQuest previews -> furnishings -> daily completion and villager assignment -> office/campsite/evaluation progression",
+      "open": ["per-island plot transforms", "outside-furniture placement validity", "walkability and save integration", "end-to-end daily progression fixture"]
+    },
+    {
+      "order": 4,
+      "beat": "Island Designer unlock",
+      "status": ["EF"],
+      "link": "qualifying island rating -> first K.K. live -> post-concert Nook visit -> cConstructLicense app/UI request",
+      "open": ["editor control and preview", "terrain/water action handler", "validation/mutation/undo/save", "runtime asset and collision refresh"]
+    }
+  ],
+  "asset_families": [
+    {
+      "family": "items_and_structures",
+      "status": ["EF", "TBL"],
+      "links": ["bridge kit UID 7211", "ladder recipe UID 2615", "plot kit UIDs 5827-5829", "cBridge", "cReserveNpcHouse", "bridge structure namespace UID 26", "reserved bridge type UID 7", "reserved variants 26-31"],
+      "conversion_note": "IDs/classes identify flow or table namespaces; they do not identify a selected world instance, transform, or collision response. Bridge kit UID 7211 and reserved bridge label UID 6903 are distinct."
+    },
+    {
+      "family": "terrain_world_data",
+      "status": ["STRUCT", "PSEUDO", "OPEN"],
+      "links": ["96 LandMaking presets", "112x96 grid", "14-byte cell layout", "FieldLandMakingUnitModelParam", "FieldUnitParam variation cap"],
+      "conversion_note": "Static field transfer is documented. Exact transform/origin/rotation and expansion into 52-byte runtime ground/PBC records are open."
+    },
+    {
+      "family": "models_animation_audio_ui",
+      "status": ["CAT", "EF", "OPEN"],
+      "links": ["BridgeReserved/BridgeStone model candidates", "StructureBridge.root.asb candidate", "generic construction audio candidate", "bridge preview UI open", "cConstructLicense install UI request"],
+      "conversion_note": "Catalog candidates and EventFlow requests are not proof of asset consumer binding, playback, preview rendering, or selected model use."
+    },
+    {
+      "family": "collision_and_pbc",
+      "status": ["CAT", "OPEN"],
+      "links": ["ModelName + _pbc naming candidate", ".phive source family noted in coverage documentation"],
+      "conversion_note": "PBC payloads are absent from available sources; repo coverage notes raw model .phive is copied without decode and original model files are unavailable. Mesh/collider-to-instance transforms remain open."
+    }
+  ],
+  "fixture_limits": [
+    "All native results cited here are bounded helper/fragment executions with reconstructed or synthetic state, not a running ACNH game.",
+    "The 0x7bccf0 fault is a null-world-root sandbox limitation and must not be reported as a gameplay fault or result.",
+    "No tests, builds, or Godot changes were made for this report; prior fixture outputs were inspected and cited rather than rerun.",
+    "The local checkout index.sqlite is empty; prior loader/water reports identify the shared read-only index at /workspace/acnh-re/output/index.sqlite."
+  ],
+  "blockers": [
+    "HID/controller sample -> player movement-field producer -> complete frame update.",
+    "Full vertical motion schedule, jump/vault/ladder caller/state, timing units, and live position/target sources.",
+    "Initialized live world root/grid/candidate list and original collider query result; geometry/penetration/friction and landing integration.",
+    "Player-specific terrain/water/cliff/bridge/ladder traversal rules and their connection to story actions.",
+    "Placement preview -> validation -> world mutation -> refresh -> save/rollback for bridge, plots, and Island Designer.",
+    "LandMaking preset to PBC/ground/collision conversion and the missing source payloads needed to reproduce it."
+  ]
+}
