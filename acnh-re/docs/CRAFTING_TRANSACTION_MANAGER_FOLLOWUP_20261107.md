@@ -45,7 +45,7 @@ Analysis ELF SHA-256 is `5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d190
 
 ## Remaining open joins and asset notes
 
-- **OPEN:** Build the real native inventory count/cache manager and identify the A/B/C source-record producers before retrying the original material resolver with true player counts. The current one-word-per-item pocket fixture cannot supply that count context.
+- **OPEN:** The A/B/C cache constructor, component loaders, and source-record producer paths are now traced in [CRAFTING_INVENTORY_COUNT_CONTEXT_TRACE_20261107.md](CRAFTING_INVENTORY_COUNT_CONTEXT_TRACE_20261107.md). Bind those structural groups to named save members and combine the cold cache with the same original `0xee1420`/`0xee1060` transaction context and faithful pocket counts; the current one-word-per-item fixture does not do this.
 - **OPEN:** Run the full original `0xee1420`/`0xeff060` transaction with the real `0xedf8e0` UI payload and a valid active player/view plus count manager. Do not infer a reject from this bounded run or replace a failed predicate with success.
 - **OPEN:** Establish whether material deletions and result award are balanced under success, insufficient materials, cancellation, or interruption. No rollback/atomicity claim is supported here.
 - **OPEN:** Follow in-memory pocket/recipe changes through SaveProc serialization, file write/flush, and reload. This probe never writes or saves material changes.

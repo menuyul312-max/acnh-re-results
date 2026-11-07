@@ -1,0 +1,262 @@
+{
+  "schema": "acnh.crafting_inventory_count_context_trace.v1",
+  "evidence_status": "SOURCE_STATIC_AND_EXISTING_BOUNDED_NATIVE_FIXTURE_AUDIT",
+  "scope": "Trace A/B/C inventory counter construction/update and compare existing fixture contexts against 0xee1060 and 0xf9e410. No new native execution or live-save operation is claimed.",
+  "provenance": {
+    "analysis_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+    "main_nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+    "static_sources": [
+      "output/binary/analysis_decomp/96ef0.c",
+      "output/binary/analysis_decomp/ed87d0.c",
+      "output/binary/analysis_decomp/ed8870.c",
+      "output/binary/analysis_decomp/ed9c20.c",
+      "output/binary/analysis_decomp/eda040.c",
+      "output/binary/analysis_decomp/eda160.c",
+      "output/binary/analysis_decomp/eda280.c",
+      "output/binary/analysis_decomp/edc240.c",
+      "output/binary/analysis_decomp/ee0be0.c",
+      "output/binary/analysis_decomp/ee1060.c",
+      "output/binary/analysis_decomp/ee1420.c",
+      "output/binary/analysis_decomp/eff060.c",
+      "output/binary/analysis_decomp/f9e410.c",
+      "output/binary/analysis_decomp/f9e840.c",
+      "output/binary/analysis_decomp/aac730.c"
+    ],
+    "existing_artifacts": [
+      "tools/inventory_cache_native.py",
+      "output/mechanics/inventory_cache_native.json",
+      "tools/crafting_transaction_followup_native.py",
+      "output/gameplay/crafting_transaction_followup/crafting_transaction_followup_native.json",
+      "tools/crafting_transaction_manager_followup_native.py",
+      "output/gameplay/crafting_transaction_manager_followup_20261107.json",
+      "output/gameplay/crafting_transaction_followup/crafting_recipe_flow_native.json"
+    ],
+    "known_fixture_sha256": {
+      "inventory_cache_native_json": "964e4d5ed546d8339d61634b997921080bfd7e97311117da37c51adab938f430",
+      "crafting_transaction_followup_native_json": "17b2e6fba89306e5f3eddbc37c660c78e0fab89f991e70a8e42112d65a034eeb",
+      "crafting_transaction_branch_native_json": "f41f60944fc02543e7bc09011eb73d7898ae93757c0d4ae1a39e3a94ae72313c",
+      "crafting_pocket_manager_probe_json": "05d592271e325fb1f80e333e3842d5b9c5a747727a20e575e236d4ac2a3ea6fe"
+    }
+  },
+  "construction": {
+    "global_factory_va": "0xed87d0",
+    "factory_callsite": {
+      "caller": "0x96ef0",
+      "pc": "0x97694"
+    },
+    "singleton_global": "0x33d3ce0",
+    "allocation_size": "0x8f348",
+    "constructor_va": "0xed8870",
+    "constructor_callsite": {
+      "caller": "0xed87d0",
+      "pc": "0xed8848"
+    },
+    "ready_byte_offset": "0x8",
+    "constructor_fixture_status": "No existing bounded fixture calls 0xed87d0 or 0xed8870; fixtures reconstruct component layout/vtables directly.",
+    "component_layouts": [
+      {
+        "group": "A",
+        "manager_base_offset": "0x10",
+        "loader_va": "0xeda040",
+        "producer_va": "0xee72b0",
+        "producer_vtable_slot": "0x40",
+        "source_record_item_words": 20,
+        "source_record_count_offset": "0xa0",
+        "component_count_field_offset": "0xb0",
+        "source_record_metadata_starts": "0xa4",
+        "active_scan_limit": 20,
+        "counter_array_component_offset": "0x2f8",
+        "counter_array_manager_offset": "0x308"
+      },
+      {
+        "group": "B",
+        "manager_base_offset": "0x7838",
+        "loader_va": "0xeda160",
+        "producer_va": "0xee7550",
+        "producer_vtable_slot": "0x40",
+        "source_record_item_words": 20,
+        "source_record_count_offset": "0xa0",
+        "component_count_field_offset": "0xb0",
+        "source_record_metadata_starts": "0xa4",
+        "active_scan_limit": 20,
+        "counter_array_component_offset": "0x2f8",
+        "counter_array_manager_offset": "0x7b30"
+      },
+      {
+        "group": "C",
+        "manager_base_offset": "0xf060",
+        "loader_va": "0xeda280",
+        "producer_va": "0xee7800",
+        "producer_vtable_slot": "0x40",
+        "source_record_item_words": 5000,
+        "source_record_count_offset": "0x9c40",
+        "component_count_field_offset": "0x9c50",
+        "active_scan_limit": 1600,
+        "counter_array_component_offset": "0x13fc0",
+        "counter_array_manager_offset": "0x23020"
+      }
+    ],
+    "counter_array_length_per_group": 15000,
+    "counter_type": "u16",
+    "group_names": {
+      "status": "structural labels only; gameplay save-member names unresolved"
+    },
+    "factory_direct_caller_evidence": "96ef0.c line 238 maps the direct call at 0x97694 to 0xed87d0."
+  },
+  "cold_cache_update": {
+    "shared_ready_gate": "manager+0x8 is zero before first load and is set to 1 after the three member loaders complete.",
+    "ed9c20": {
+      "direct_caller": "0xedc240",
+      "pc": "0xedc688",
+      "player_member_offsets": [
+        "0xe0",
+        "0xa8",
+        "0x150"
+      ],
+      "loaders_in_order": [
+        "0xeda040",
+        "0xeda160",
+        "0xeda280"
+      ],
+      "behavior": "Resolves each player member wrapper and passes the contained source record bytes to the corresponding native loader."
+    },
+    "ee0be0": {
+      "direct_caller": "0xedc240",
+      "direct_call_sites": [
+        "0xedcca4",
+        "0xedcffc",
+        "0xedd240",
+        "0xedd488",
+        "0xedd6d0",
+        "0xedd914"
+      ],
+      "cold_loaders": [
+        "0xeda040",
+        "0xeda160",
+        "0xeda280"
+      ],
+      "consumer_behavior": "Reads A and B counters, and C when option bit 0 is set; writes the availability tuple and clears the sufficiency byte on shortage. It does not subtract materials."
+    },
+    "loader_direct_call_sites": {
+      "0xeda040": [
+        "0xed9d10",
+        "0xee0d2c"
+      ],
+      "0xeda160": [
+        "0xed9d50",
+        "0xee0d6c"
+      ],
+      "0xeda280": [
+        "0xed9d90",
+        "0xee0dac"
+      ]
+    },
+    "observed_normal_stack_rule_scope": "Existing native counter fixture selected unwrapped normal items. For MultiHoldMaxNum >= 2, quantity is ((low16(FreeParam)+1)&255), falling back to 1 above the max; MultiHoldMaxNum < 2 counts as 1. Counter accumulation wraps to u16. Remade/wrapped/special branches remain open."
+  },
+  "fixture_coverage": [
+    {
+      "fixture": "tools/inventory_cache_native.py",
+      "result": "output/mechanics/inventory_cache_native.json",
+      "evidence": "NATIVE",
+      "cases": {
+        "A": 264,
+        "B": 264,
+        "C": 98,
+        "producer_to_requirement": 96,
+        "total": 722,
+        "mismatches": 0
+      },
+      "setup": "Calls original loaders and producer vtables over reconstructed source records, counters, component fields and node pools; uses supplied ItemParam/ItemKind tables.",
+      "limits": [
+        "Does not call global factory or constructor.",
+        "Does not acquire a real save wrapper.",
+        "Does not invoke 0xee0be0 cold parent path.",
+        "Does not invoke 0xee1060, 0xeff060, or 0xf9e410."
+      ]
+    },
+    {
+      "fixture": "tools/crafting_transaction_followup_native.py",
+      "result": "output/gameplay/crafting_transaction_followup/crafting_transaction_followup_native.json",
+      "evidence": "NATIVE_WITH_RECONSTRUCTED_MEMBER_AND_PLAYER_FIXTURES",
+      "coverage": {
+        "recipe_id": 56,
+        "source_record_counts_A_B_C": [
+          2,
+          2,
+          1
+        ],
+        "all_materials_pass_with_C": true,
+        "Peach_insufficient_without_C": true,
+        "Peach_insufficient_when_omitted": true
+      },
+      "setup": "Calls the original cold 0xee0be0 parent path, which resolves reconstructed A/B/C member descriptors, calls original loaders/producers and checks the recipe-56 slots.",
+      "limits": [
+        "Source/member/player values are fixture data, not a live save.",
+        "Only SDK memset is supplied as a byte-accurate callback.",
+        "Does not call 0xee1060, 0xeff060, or 0xf9e410.",
+        "Does not remove materials or award output."
+      ]
+    },
+    {
+      "fixture": "tools/crafting_transaction_manager_followup_native.py",
+      "result": "output/gameplay/crafting_transaction_manager_followup_20261107.json",
+      "evidence": "NATIVE_WITH_SYNTHETIC_POCKET_AND_PARTIAL_PLAYER_VIEW",
+      "coverage": {
+        "original_ee1060_direct_material_calls": 5,
+        "A_B_C_cache_installed": false,
+        "shared_cache_and_scratch_context": false,
+        "f9e410_Apple_SaveCountMaxNum": 0,
+        "f9e410_Apple_writes": false
+      },
+      "limits": [
+        "One synthetic pocket record per required fruit does not establish true unit counts.",
+        "Two view-service virtual methods are success stubs.",
+        "Does not call 0xee1420 or combine its scratch region with a cold A/B/C manager."
+      ]
+    },
+    {
+      "fixture": "output/gameplay/crafting_transaction_followup/crafting_recipe_flow_native.json plus crafting_transaction_manager_followup_native.py Apple gate",
+      "evidence": "NATIVE_WITH_PATCHED_PREDICATE_FOR_SIGNED_LEAF_AND_ORIGINAL_ZERO_GATE_FOR_APPLE",
+      "coverage": {
+        "signed_delta_leaf_acceptance_predicate": "0xaac730 patched true in signed update cases",
+        "Apple_gate": "original 0xaac730 returns zero; 0xf9e410 returns before slot writes"
+      },
+      "limits": [
+        "Patched-predicate cases prove only the later signed write algorithm.",
+        "Apple early return is only this reconstructed item's SaveCountMaxNum path."
+      ]
+    }
+  ],
+  "transaction_context_comparison": {
+    "0xee1060": {
+      "direct_caller": "0xee1420",
+      "call_sites": [
+        "0xee15a0",
+        "0xee15c4",
+        "0xee15e8",
+        "0xee160c",
+        "0xee1630",
+        "0xee1654"
+      ],
+      "scratch_offset_from_param1": "0x2a550",
+      "cache_layout_relation": "The C component ends at manager+0x2a550. This matching numeric boundary does not prove the tested 0xee1420/0xee1060 parameter is the constructed cache singleton.",
+      "fixture_verdict": "No existing fixture executes 0xee1420/0xee1060 with cold A/B/C population and a shared source-authentic player/pocket context. Existing runs are separate."
+    },
+    "0xf9e410": {
+      "direct_caller": "0xeff060",
+      "callsite": "0xeff0e4",
+      "input_context": "Pocket-slot list, ItemParam object/descriptor and signed delta; 0xf9e840 gates its slot scan/count writes.",
+      "cache_relation": "No direct A/B/C argument or counter lookup appears in the indexed 0xf9e410/0xeff060 pseudocode path.",
+      "fixture_verdict": "No fixture combines an original accepting SaveCountMaxNum gate with a faithful player pocket list. The corrected Apple case proves a zero-gate early return only."
+    }
+  },
+  "open": [
+    "Bind the A/B/C member wrappers to named gameplay save members using a validated save-member map and real member data.",
+    "Combine cold A/B/C population with the actual 0xee1420/0xee1060 parameter root, scratch/list state, and a faithful player pocket count context.",
+    "Run 0xf9e410 with an item whose original SaveCountMaxNum gate accepts and a faithful pocket-slot list; do not patch the predicate.",
+    "Prove material deletion, result insertion balance, cancellation/rollback, SaveProc serialization, durable file write/flush, and reload."
+  ],
+  "conclusion": "The native A/B/C cache construction and cold availability-check path are source-backed and exercised with reconstructed records. The repository does not have a fixture that combines that cache path with the original 0xee1420/0xee1060 transaction context; the 0xf9e410 path is a separate pocket-list update gate and is not proven by A/B/C counters. No real-save consumption or durable transaction result is established.",
+  "source_root_note": "All static_sources and fixture paths are relative to the sibling ACNH analysis dataset /workspace/acnh-re unless a deliverable-repository file is named; this report and JSON are in /workspace/acnh-re-github/acnh-re.",
+  "report_path": "docs/CRAFTING_INVENTORY_COUNT_CONTEXT_TRACE_20261107.md"
+}
