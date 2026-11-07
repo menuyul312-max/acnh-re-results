@@ -1,0 +1,475 @@
+{
+  "schema": "acnh-re/catalog-notsee-gate/1",
+  "evidence_level": "NATIVE_INDEX_PLUS_RELOCATED_POINTER_AND_ELF_DISASSEMBLY",
+  "input_build_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+  "inputs": {
+    "index": "/workspace/acnh-re/output/index.sqlite",
+    "code_pointer_arrays": "/workspace/acnh-re/output/binary/code_pointer_arrays.json",
+    "code_pointer_arrays_sha256": "64d474068ca289f9146f7f32e6647a16a05e8f5be8e635615a478744b62ef822",
+    "main_elf": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/A_logic/main.elf",
+    "elf_manifest": "/workspace/acnh-re/output/binary/elf.json",
+    "elf_manifest_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+    "decomp_root": "/workspace/acnh-re/output/binary/analysis_decomp",
+    "callback_bytes_sha256": "62d2f026356d7bf141645ac1dafd96a8ea732f8d92a95f3e87667c28fa33d779"
+  },
+  "item_catalog_type": {
+    "field_hash": "0xdaf0238c",
+    "enum": {
+      "0": "Sale",
+      "1": "NotForSale",
+      "2": "NotSee"
+    },
+    "field_read": "0xa25760 materializes the ItemCatalogType field into a cache; 0xab3160 reads the cached value.",
+    "field_hash_references": [
+      {
+        "pc": "0xa2577c",
+        "owner_va": "0xa25760"
+      }
+    ],
+    "cache_writer": {
+      "va": "0xa25760",
+      "size": 204,
+      "span_end_va": "0xa2582b",
+      "name": "FUN_00b25760",
+      "evidence": "new_Ghidra_inventory"
+    },
+    "cache_reader": {
+      "va": "0xab3160",
+      "size": 108,
+      "span_end_va": "0xab31cb",
+      "name": "FUN_00bb3160",
+      "evidence": "new_Ghidra_inventory"
+    },
+    "cache_wrapper_resolver": {
+      "va": "0xa9c290",
+      "size": 268,
+      "span_end_va": "0xa9c39b",
+      "name": "FUN_00b9c290",
+      "evidence": "new_Ghidra_inventory"
+    }
+  },
+  "predicate": {
+    "filter": "0x293cd0",
+    "callback_constructor": "0xa0fdc0 stores code-pointer sequence 0x31c6398 and copies the requested selector into closure context.",
+    "relocated_callback_sequence": {
+      "start_va": "0x30c6398",
+      "status": "relocated code pointer sequence; not automatically a C++ vtable",
+      "entries": [
+        {
+          "pointer_va": "0x30c6398",
+          "target_va": "0xa105d0"
+        },
+        {
+          "pointer_va": "0x30c63a0",
+          "target_va": "0xa10610"
+        },
+        {
+          "pointer_va": "0x30c63a8",
+          "target_va": "0x277240"
+        }
+      ],
+      "callback_va": "0xa105d0"
+    },
+    "callback_function": {
+      "va": "0xa105d0",
+      "size": 60,
+      "span_end_va": "0xa1060b",
+      "name": "FUN_00b105d0",
+      "evidence": "new_Ghidra_inventory"
+    },
+    "callback_disassembly": [
+      {
+        "va": "0xa105d0",
+        "mnemonic": "sub",
+        "operands": "sp, sp, #0x40"
+      },
+      {
+        "va": "0xa105d4",
+        "mnemonic": "str",
+        "operands": "x19, [sp, #0x20]"
+      },
+      {
+        "va": "0xa105d8",
+        "mnemonic": "stp",
+        "operands": "x29, x30, [sp, #0x30]"
+      },
+      {
+        "va": "0xa105dc",
+        "mnemonic": "add",
+        "operands": "x29, sp, #0x30"
+      },
+      {
+        "va": "0xa105e0",
+        "mnemonic": "mov",
+        "operands": "x19, x0"
+      },
+      {
+        "va": "0xa105e4",
+        "mnemonic": "add",
+        "operands": "x0, sp, #8"
+      },
+      {
+        "va": "0xa105e8",
+        "mnemonic": "bl",
+        "operands": "#0xa9c290"
+      },
+      {
+        "va": "0xa105ec",
+        "mnemonic": "ldr",
+        "operands": "w1, [x19, #8]"
+      },
+      {
+        "va": "0xa105f0",
+        "mnemonic": "add",
+        "operands": "x0, sp, #8"
+      },
+      {
+        "va": "0xa105f4",
+        "mnemonic": "bl",
+        "operands": "#0xab3160"
+      },
+      {
+        "va": "0xa105f8",
+        "mnemonic": "ldp",
+        "operands": "x29, x30, [sp, #0x30]"
+      },
+      {
+        "va": "0xa105fc",
+        "mnemonic": "ldr",
+        "operands": "x19, [sp, #0x20]"
+      },
+      {
+        "va": "0xa10600",
+        "mnemonic": "and",
+        "operands": "w0, w0, #1"
+      },
+      {
+        "va": "0xa10604",
+        "mnemonic": "add",
+        "operands": "sp, sp, #0x40"
+      },
+      {
+        "va": "0xa10608",
+        "mnemonic": "ret",
+        "operands": ""
+      }
+    ],
+    "callback_semantics": "Resolves the candidate item with 0xa9c290, passes the candidate wrapper and closure selector to 0xab3160, and returns its boolean result.",
+    "comparison_semantics": "0xab3160 compares the cached ItemCatalogType value with the closure selector. It normalizes cached values above 2 to 0; an unresolved wrapper defaults to value 2."
+  },
+  "producer_gate": {
+    "selector_field": "object + 0x568a4",
+    "category_filter_value": 2,
+    "selector_branches": {
+      "1_to_3": "0x11829d0 calls the 0x293cd0 filter with literal 2, then dispatches through 0x118a2e0 before building the final list.",
+      "4": "0x11829d0 also calls the same filter with literal 2; afterward it adds up to 64 stored entries and calls 0x1189c70 to collect additional runtime entries.",
+      "0": "The indexed pseudocode has an unresolved jump-table branch; this audit does not claim its output behavior."
+    },
+    "bitset_filter": {
+      "function": "0x293cd0",
+      "range": "indices 0..14999",
+      "behavior": "For each set bit, an invalid item handle is cleared. Otherwise the callback is evaluated and the bit is cleared when the candidate ItemCatalogType equals selector 2.",
+      "callers": [
+        {
+          "owner_va": "0x2937f0",
+          "pc": "0x293830"
+        },
+        {
+          "owner_va": "0xae1010",
+          "pc": "0xae1684"
+        },
+        {
+          "owner_va": "0xfb69a0",
+          "pc": "0xfb6a38"
+        },
+        {
+          "owner_va": "0x11829d0",
+          "pc": "0x1182a80"
+        },
+        {
+          "owner_va": "0x11829d0",
+          "pc": "0x1182b28"
+        },
+        {
+          "owner_va": "0x11883c0",
+          "pc": "0x1188450"
+        }
+      ],
+      "catalog_call_sites": [
+        "0x1182a80",
+        "0x1182b28"
+      ],
+      "constructor_call_site": "0x293cf4"
+    },
+    "post_filter_routes": {
+      "selectors_1_to_3": {
+        "dispatcher": "0x118a2e0",
+        "specialized_helpers": [
+          "0x1188cc0",
+          "0x1188fe0",
+          "0x11896d0"
+        ],
+        "disassembly_audit": {
+          "0x1188cc0": {
+            "function": {
+              "va": "0x1188cc0",
+              "size": 788,
+              "span_end_va": "0x1188fd3",
+              "name": "FUN_01288cc0",
+              "evidence": "new_Ghidra_inventory"
+            },
+            "function_bytes_sha256": "491a5a4f29b0e0a9542823ef87938d185f3aa4473f6a8b0403b3e65059046eeb",
+            "bitmap_write_sites": [
+              {
+                "clear_pc": "0x1188d8c",
+                "store_pc": "0x1188d90",
+                "operation": "bitmap_word &= ~candidate_bit"
+              },
+              {
+                "clear_pc": "0x1188e60",
+                "store_pc": "0x1188e64",
+                "operation": "bitmap_word &= ~candidate_bit"
+              },
+              {
+                "clear_pc": "0x1188f04",
+                "store_pc": "0x1188f08",
+                "operation": "bitmap_word &= ~candidate_bit"
+              },
+              {
+                "clear_pc": "0x1188fa8",
+                "store_pc": "0x1188fac",
+                "operation": "bitmap_word &= ~candidate_bit"
+              }
+            ],
+            "other_direct_calls": [
+              "#0x157f090",
+              "#0xf58d00",
+              "#0x157ef60",
+              "#0xf58d00",
+              "#0x157ef70",
+              "#0xf58d00",
+              "#0x157f0a0",
+              "#0xf58d00"
+            ],
+            "result": "The helper's explicit bitmap write sites clear matched bits; they do not set bitmap bits."
+          },
+          "0x1188fe0": {
+            "function": {
+              "va": "0x1188fe0",
+              "size": 1772,
+              "span_end_va": "0x11896cb",
+              "name": "FUN_01288fe0",
+              "evidence": "new_Ghidra_inventory"
+            },
+            "function_bytes_sha256": "aeb845b00533395b7423a3410b1b9ac4403b2a4b3554de9d5cd63f8c42e449ac",
+            "bitmap_write_sites": [
+              {
+                "clear_pc": "0x11890ac",
+                "store_pc": "0x11890b0",
+                "operation": "bitmap_word &= ~candidate_bit"
+              },
+              {
+                "clear_pc": "0x1189180",
+                "store_pc": "0x1189184",
+                "operation": "bitmap_word &= ~candidate_bit"
+              },
+              {
+                "clear_pc": "0x1189224",
+                "store_pc": "0x1189228",
+                "operation": "bitmap_word &= ~candidate_bit"
+              },
+              {
+                "clear_pc": "0x11892c8",
+                "store_pc": "0x11892cc",
+                "operation": "bitmap_word &= ~candidate_bit"
+              },
+              {
+                "clear_pc": "0x118936c",
+                "store_pc": "0x1189370",
+                "operation": "bitmap_word &= ~candidate_bit"
+              },
+              {
+                "clear_pc": "0x1189410",
+                "store_pc": "0x1189414",
+                "operation": "bitmap_word &= ~candidate_bit"
+              },
+              {
+                "clear_pc": "0x11894b4",
+                "store_pc": "0x11894b8",
+                "operation": "bitmap_word &= ~candidate_bit"
+              },
+              {
+                "clear_pc": "0x1189558",
+                "store_pc": "0x118955c",
+                "operation": "bitmap_word &= ~candidate_bit"
+              },
+              {
+                "clear_pc": "0x11895fc",
+                "store_pc": "0x1189600",
+                "operation": "bitmap_word &= ~candidate_bit"
+              },
+              {
+                "clear_pc": "0x11896a0",
+                "store_pc": "0x11896a4",
+                "operation": "bitmap_word &= ~candidate_bit"
+              }
+            ],
+            "other_direct_calls": [
+              "#0x157efd0",
+              "#0xf58d00",
+              "#0x157eff0",
+              "#0xf58d00",
+              "#0x157f000",
+              "#0xf58d00",
+              "#0x157f010",
+              "#0xf58d00",
+              "#0x157f020",
+              "#0xf58d00",
+              "#0x157f030",
+              "#0xf58d00",
+              "#0x157f040",
+              "#0xf58d00",
+              "#0x157f050",
+              "#0xf58d00",
+              "#0x157f060",
+              "#0xf58d00",
+              "#0x157f0b0",
+              "#0xf58d00"
+            ],
+            "result": "The helper's explicit bitmap write sites clear matched bits; they do not set bitmap bits."
+          },
+          "0x11896d0": {
+            "function": {
+              "va": "0x11896d0",
+              "size": 1116,
+              "span_end_va": "0x1189b2b",
+              "name": "FUN_012896d0",
+              "evidence": "new_Ghidra_inventory"
+            },
+            "function_bytes_sha256": "d2697e1c56d874ac951d1f2e9fa9a046f9fac7134574c680cf5335141190beab",
+            "bitmap_write_sites": [
+              {
+                "clear_pc": "0x118979c",
+                "store_pc": "0x11897a0",
+                "operation": "bitmap_word &= ~candidate_bit"
+              },
+              {
+                "clear_pc": "0x1189870",
+                "store_pc": "0x1189874",
+                "operation": "bitmap_word &= ~candidate_bit"
+              },
+              {
+                "clear_pc": "0x1189914",
+                "store_pc": "0x1189918",
+                "operation": "bitmap_word &= ~candidate_bit"
+              },
+              {
+                "clear_pc": "0x11899b8",
+                "store_pc": "0x11899bc",
+                "operation": "bitmap_word &= ~candidate_bit"
+              },
+              {
+                "clear_pc": "0x1189a5c",
+                "store_pc": "0x1189a60",
+                "operation": "bitmap_word &= ~candidate_bit"
+              },
+              {
+                "clear_pc": "0x1189b00",
+                "store_pc": "0x1189b04",
+                "operation": "bitmap_word &= ~candidate_bit"
+              }
+            ],
+            "other_direct_calls": [
+              "#0x157f0c0",
+              "#0xf58d00",
+              "#0x157ef90",
+              "#0xf58d00",
+              "#0x157efa0",
+              "#0xf58d00",
+              "#0x157efb0",
+              "#0xf58d00",
+              "#0x157f0d0",
+              "#0xf58d00",
+              "#0x157f0e0",
+              "#0xf58d00"
+            ],
+            "result": "The helper's explicit bitmap write sites clear matched bits; they do not set bitmap bits."
+          }
+        },
+        "result": "Each specialized helper scans the existing 15,000-bit set and its explicit bitmap writes only clear bits. The common tail enumerates that set into item records, then resolves variants; it does not add new base item IDs. Thus selectors 1–3 retain the NotSee exclusion through final list construction."
+      },
+      "selector_4": {
+        "additional_item_scan": "0x40 records are checked and accepted entries are added to the bitset after the category-2 filter.",
+        "runtime_collection": "0x1189c70 adds entries from two runtime collections and a state-flag branch after the category-2 filter.",
+        "limitation": "The category of each post-filter addition and whether it survives later masks is unresolved."
+      },
+      "common_tail": [
+        "0x1189e80",
+        "0x1adeb0",
+        "0x11433d0",
+        "0x118a3d0"
+      ]
+    }
+  },
+  "conclusion": "The literal 2 in the catalog bitset filter is proven to mean ItemCatalogType=NotSee, resolving the previous ambiguity. For selectors 1–3, the later selector-specific helpers only clear additional bitmap entries, so those final lists retain the NotSee exclusion. Selector 4 receives post-filter item additions whose category/final mask behavior remains unresolved, and selector 0 follows an unresolved jump-table branch.",
+  "source_pseudocode": {
+    "0x11829d0": {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/11829d0.c",
+      "available": true,
+      "sha256": "a01f32ef2a4f50f7de83277b3e754b81290c904efc96202dd38d6f3fb554765d",
+      "bytes": 4368
+    },
+    "0x293cd0": {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/293cd0.c",
+      "available": true,
+      "sha256": "b980ae3571b93a323aae273b532baad2f5023e098f45f0edd230181b6f7a7972",
+      "bytes": 1043
+    },
+    "0xa0fdc0": {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/a0fdc0.c",
+      "available": true,
+      "sha256": "c9cf3d40b25b0c416a22f866fd4784876b3b31b938340e8171794baf990c44c2",
+      "bytes": 183
+    },
+    "0xab3160": {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/ab3160.c",
+      "available": true,
+      "sha256": "c253649315b5954e091af8b1433dffa13e73c9a9b1bbd839e75bf1f618d23861",
+      "bytes": 447
+    },
+    "0xa25760": {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/a25760.c",
+      "available": true,
+      "sha256": "3258cabbd16072575c61675b6c6bb9467bccd29e6d6e4516355c384860324fdd",
+      "bytes": 809
+    },
+    "0x118a2e0": {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/118a2e0.c",
+      "available": true,
+      "sha256": "e0d2a56012a89396ee74f39b19c480502ab57ae7edc3c048e4beafd05394c0b4",
+      "bytes": 498
+    },
+    "0x1189c70": {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/1189c70.c",
+      "available": true,
+      "sha256": "361f4dd9b37fcd0ffaf5d280fc7d5a5f1e1b169b0d4d15f9f06568f90caec088",
+      "bytes": 2505
+    },
+    "0xa105d0": {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/a105d0.c",
+      "available": false
+    },
+    "0xa9c290": {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/a9c290.c",
+      "available": true,
+      "sha256": "5a03c1c3b1520c552262d5ec5cf396ae60d9b1c1979ff2973c13030916858ced",
+      "bytes": 1269
+    },
+    "0x1189e80": {
+      "path": "/workspace/acnh-re/output/binary/analysis_decomp/1189e80.c",
+      "available": true,
+      "sha256": "bfc7f4fce7edfe7cd4f6527780c8da69cb038207941a0f42d2dc30c8eb48624e",
+      "bytes": 5845
+    }
+  }
+}

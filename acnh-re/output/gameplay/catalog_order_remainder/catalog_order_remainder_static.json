@@ -118,8 +118,8 @@
     },
     {
       "va": "0x33a570",
-      "name": null,
-      "size": null,
+      "name": "FUN_0043a570",
+      "size": 284,
       "decomp_path": "binary/analysis_decomp/33a570.c",
       "decomp_sha256": "5e366e3d5d480c5721cb677eaac705a8d2738a9df165f4c9abf01eb75c90c7ac"
     },
@@ -146,8 +146,8 @@
     },
     {
       "va": "0x345890",
-      "name": null,
-      "size": null,
+      "name": "FUN_00445890",
+      "size": 2756,
       "decomp_path": "binary/analysis_decomp/345890.c",
       "decomp_sha256": "1f619f6d5ae667d8b56a8b65afa1c077a94aa75652e87a5a96207ef9ea0c2b9e"
     },
@@ -220,6 +220,62 @@
       "size": 380,
       "decomp_path": "binary/analysis_decomp/faaeb0.c",
       "decomp_sha256": "2214199b7e8d3052090197dc355c09c2c0af59d635c3050b6e74f8bb39c20089"
+    },
+    {
+      "va": "0x293cd0",
+      "name": "FUN_00393cd0",
+      "size": 216,
+      "decomp_path": "binary/analysis_decomp/293cd0.c",
+      "decomp_sha256": "b980ae3571b93a323aae273b532baad2f5023e098f45f0edd230181b6f7a7972"
+    },
+    {
+      "va": "0xa0fdc0",
+      "name": "FUN_00b0fdc0",
+      "size": 24,
+      "decomp_path": "binary/analysis_decomp/a0fdc0.c",
+      "decomp_sha256": "c9cf3d40b25b0c416a22f866fd4784876b3b31b938340e8171794baf990c44c2"
+    },
+    {
+      "va": "0xa105d0",
+      "name": "FUN_00b105d0",
+      "size": 60,
+      "decomp_path": null,
+      "decomp_sha256": null
+    },
+    {
+      "va": "0xab3160",
+      "name": "FUN_00bb3160",
+      "size": 108,
+      "decomp_path": "binary/analysis_decomp/ab3160.c",
+      "decomp_sha256": "c253649315b5954e091af8b1433dffa13e73c9a9b1bbd839e75bf1f618d23861"
+    },
+    {
+      "va": "0x118a2e0",
+      "name": "FUN_0128a2e0",
+      "size": 80,
+      "decomp_path": "binary/analysis_decomp/118a2e0.c",
+      "decomp_sha256": "e0d2a56012a89396ee74f39b19c480502ab57ae7edc3c048e4beafd05394c0b4"
+    },
+    {
+      "va": "0x1189c70",
+      "name": "FUN_01289c70",
+      "size": 520,
+      "decomp_path": "binary/analysis_decomp/1189c70.c",
+      "decomp_sha256": "361f4dd9b37fcd0ffaf5d280fc7d5a5f1e1b169b0d4d15f9f06568f90caec088"
+    },
+    {
+      "va": "0x1189e80",
+      "name": "FUN_01289e80",
+      "size": 1108,
+      "decomp_path": "binary/analysis_decomp/1189e80.c",
+      "decomp_sha256": "bfc7f4fce7edfe7cd4f6527780c8da69cb038207941a0f42d2dc30c8eb48624e"
+    },
+    {
+      "va": "0x11433d0",
+      "name": "FUN_012433d0",
+      "size": 448,
+      "decomp_path": "binary/analysis_decomp/11433d0.c",
+      "decomp_sha256": "d7fbe2feefe828718a277e0227f50fc0ff26f6bf6918834235bb648b4e574ea0"
     }
   ],
   "direct_call_boundary_checks": {
@@ -341,7 +397,13 @@
       }
     ],
     "references_from_catalog_app_variant_chain": [],
-    "conclusion": "No direct ItemCatalogType field read or enum comparison appears in the indexed 0x118a3d0 -> 0x118a740 -> 0xeecc70 candidate-selection chain or its listed helpers. The upstream list passed by 0x11829d0 remains a separate, unresolved source boundary; the generic integer value 2 passed to a caller helper is not enough to bind it to ItemCatalogType=NotSee.",
+    "notsee_gate_audit": {
+      "artifact": "catalog_notsee_gate_static.json",
+      "schema": "acnh-re/catalog-notsee-gate/1",
+      "input_build_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+      "conclusion": "The literal 2 in the catalog bitset filter is proven to mean ItemCatalogType=NotSee, resolving the previous ambiguity. For selectors 1–3, the later selector-specific helpers only clear additional bitmap entries, so those final lists retain the NotSee exclusion. Selector 4 receives post-filter item additions whose category/final mask behavior remains unresolved, and selector 0 follows an unresolved jump-table branch."
+    },
+    "conclusion": "The 0x118a3d0 -> 0x118a740 -> 0xeecc70 variant-selection chain still does not read ItemCatalogType. A separate gate in the producer at 0x11829d0 applies a literal-2 predicate that is statically bound to ItemCatalogType=NotSee and clears matching base-bitmap entries. Selector-specific helpers for selectors 1-3 only clear more bits, preserving exclusion through item-list construction. Selector 4 receives post-filter additions whose category/final-mask behavior is unresolved.",
     "separate_count_path": "0xeec760 is the FillCatalog achievement count path. Its selectors 0 and 1 correspond to Sale and NotForSale; this does not bind the catalog app's incoming list to those categories."
   },
   "table_candidate_census": {
@@ -831,7 +893,7 @@
     }
   },
   "open_questions": [
-    "Which native producer/category query populates the list passed from 0x11829d0, and whether that query excludes ItemCatalogType=NotSee.",
+    "Which selector-4 additions run after the ItemCatalogType=NotSee base-bitmap gate, and whether they can reintroduce NotSee rows into the final visible list.",
     "Which items are actually orderable, price/quantity limits, and whether the representative variant selected here affects a purchase payload.",
     "Save serialization and mailbox consumer/arrival timing for both CatalogMailSend and SystemMailSend."
   ]

@@ -43,6 +43,10 @@ def function_record(db: sqlite3.Connection, va: int) -> dict[str, Any]:
     func = db.execute(
         "select ghidra_name,size from functions where va=?", (va,)
     ).fetchone()
+    if func is None:
+        func = db.execute(
+            "select name,size from native_functions where va=?", (va,)
+        ).fetchone()
     return {
         "va": hx(va),
         "name": func[0] if func else None,
@@ -267,7 +271,8 @@ def mail_evidence(db: sqlite3.Connection, catalog_audit_path: Path) -> dict[str,
     }
 
 
-def build_report(index_path: Path, tables_root: Path, catalog_audit_path: Path) -> dict[str, Any]:
+def build_report(index_path: Path, tables_root: Path, catalog_audit_path: Path,
+                 notsee_gate_path: Path) -> dict[str, Any]:
     db = sqlite3.connect(f"file:{index_path}?mode=ro", uri=True)
     db.row_factory = sqlite3.Row
     try:
@@ -296,6 +301,16 @@ def build_report(index_path: Path, tables_root: Path, catalog_audit_path: Path) 
         item_catalog_refs = hash_references(db, item_catalog_type_hash)
         app_refs = [row for row in item_catalog_refs
                     if int(row["owner_va"], 16) in set(app_path_owners)]
+        if notsee_gate_path.is_file():
+            gate_artifact = json.loads(notsee_gate_path.read_text(encoding="utf-8"))
+            notsee_gate = {
+                "artifact": notsee_gate_path.name,
+                "schema": gate_artifact.get("schema"),
+                "input_build_sha256": gate_artifact.get("input_build_sha256"),
+                "conclusion": gate_artifact.get("conclusion"),
+            }
+        else:
+            notsee_gate = None
         source_names = [
             "B_data/Bcsv/ItemParam.bcsv",
             "B_data/Bcsv/ItemRemake.bcsv",
@@ -311,6 +326,8 @@ def build_report(index_path: Path, tables_root: Path, catalog_audit_path: Path) 
                 0xA25760, 0xEEC760, 0x33A570, 0xF62E90, 0xF62C00, 0xF73EA0,
                 0x345890, 0xAC77A0, 0x27CCD0, 0x346A50, 0xABF6A0, 0xABF730,
                 0xABF740, 0xAC1EB0, 0xFAABF0, 0xFAA3F0, 0xFAAEB0,
+                0x293CD0, 0xA0FDC0, 0xA105D0, 0xAB3160, 0x118A2E0,
+                0x1189C70, 0x1189E80, 0x11433D0,
             ]],
             "direct_call_boundary_checks": call_boundary,
             "app_chain": {
@@ -344,13 +361,14 @@ def build_report(index_path: Path, tables_root: Path, catalog_audit_path: Path) 
                 "enum_values": {"0": "Sale", "1": "NotForSale", "2": "NotSee"},
                 "native_field_hash_references": item_catalog_refs,
                 "references_from_catalog_app_variant_chain": app_refs,
-                "conclusion": "No direct ItemCatalogType field read or enum comparison appears in the indexed 0x118a3d0 -> 0x118a740 -> 0xeecc70 candidate-selection chain or its listed helpers. The upstream list passed by 0x11829d0 remains a separate, unresolved source boundary; the generic integer value 2 passed to a caller helper is not enough to bind it to ItemCatalogType=NotSee.",
+                "notsee_gate_audit": notsee_gate,
+                "conclusion": "The 0x118a3d0 -> 0x118a740 -> 0xeecc70 variant-selection chain still does not read ItemCatalogType. A separate gate in the producer at 0x11829d0 applies a literal-2 predicate that is statically bound to ItemCatalogType=NotSee and clears matching base-bitmap entries. Selector-specific helpers for selectors 1-3 only clear more bits, preserving exclusion through item-list construction. Selector 4 receives post-filter additions whose category/final-mask behavior is unresolved.",
                 "separate_count_path": "0xeec760 is the FillCatalog achievement count path. Its selectors 0 and 1 correspond to Sale and NotForSale; this does not bind the catalog app's incoming list to those categories.",
             },
             "table_candidate_census": item_fixtures(tables_root),
             "mail_insertion_boundaries": mail_evidence(db, catalog_audit_path),
             "open_questions": [
-                "Which native producer/category query populates the list passed from 0x11829d0, and whether that query excludes ItemCatalogType=NotSee.",
+                "Which selector-4 additions run after the ItemCatalogType=NotSee base-bitmap gate, and whether they can reintroduce NotSee rows into the final visible list.",
                 "Which items are actually orderable, price/quantity limits, and whether the representative variant selected here affects a purchase payload.",
                 "Save serialization and mailbox consumer/arrival timing for both CatalogMailSend and SystemMailSend.",
             ],
@@ -365,11 +383,14 @@ def main() -> int:
     parser.add_argument("--tables-root", type=Path, required=True, help="Directory containing resolved ItemParam/ItemRemake/ItemKind JSON")
     parser.add_argument("--catalog-audit", type=Path,
                         default=ROOT / "output/gameplay/catalog_order_flow_audit.json")
+    parser.add_argument("--notsee-gate", type=Path,
+                        default=ROOT / "output/gameplay/catalog_order_remainder/catalog_notsee_gate_static.json")
     parser.add_argument("--output", type=Path,
                         default=ROOT / "output/gameplay/catalog_order_remainder/catalog_order_remainder_static.json")
     args = parser.parse_args()
 
-    report = build_report(args.index.resolve(), args.tables_root.resolve(), args.catalog_audit.resolve())
+    report = build_report(args.index.resolve(), args.tables_root.resolve(), args.catalog_audit.resolve(),
+                          args.notsee_gate.resolve())
     failed = [target for target, result in report["direct_call_boundary_checks"].items()
               if not result["matches_expected"]]
     args.output.parent.mkdir(parents=True, exist_ok=True)

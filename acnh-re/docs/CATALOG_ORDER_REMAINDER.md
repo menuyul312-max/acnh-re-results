@@ -25,13 +25,15 @@ The table join gives concrete candidate fixtures:
 
 The 413 `NotSee` rows are highly concentrated: 391 `Bromide` records share `RemakeID=652`, whose joined `ItemRemake` row has seven body patterns and `ItemUniqueID=6426`. Their `ItemKind` is `Bromide` (`ItemRemakeType=Ftr`, `CanFtr=1`); the mapper key ignores their distinct `ItemParam.UniqueID` values and uses `RemakeID` plus the low-three-bit ordinal. Consequently these rows map to the same seven candidate-bit positions, 5216–5222. This is a native key-alias result, not evidence that the 391 records occur in the app's incoming list.
 
-## `ItemCatalogType` and `NotSee` boundary
+## `ItemCatalogType` and the `NotSee` gate
 
-**[NATIVE]** The resolved enum values are `Sale=0`, `NotForSale=1`, and `NotSee=2`; the field hash is `0xdaf0238c`. Its direct native field read is in `0xa25760`, where ItemParam rows are materialized into a derived cache. There is no direct `ItemCatalogType` hash reference or enum comparison in the indexed `0x118a3d0 → 0x118a740 → 0xeecc70` chain or the candidate helpers it calls.
+**[NATIVE]** The resolved enum values are `Sale=0`, `NotForSale=1`, and `NotSee=2`; the field hash is `0xdaf0238c`. Function `0xa25760` reads that ItemParam field into a derived cache. The variant-selection path `0x118a3d0 → 0x118a740 → 0xeecc70` does not read `ItemCatalogType`, but the upstream page builder does have a separate category gate.
 
-The item sequence arrives from `0x11829d0`, which builds its page state and then calls `0x118a3d0`. The candidate resolver sees only the records it receives. The caller also passes an integer value `2` to a generic bitset helper; the indexed pseudocode does not tie that value to the `ItemCatalogType` field, so it cannot be read as `NotSee=2`. The separate `0xeec760` FillCatalog achievement path uses selectors `0` and `1` for the `Sale` and `NotForSale` count; that is not proof of the Nook catalog app's list or its purchase eligibility.
+**[NATIVE]** `0x11829d0` passes literal `2` to bitset filter `0x293cd0` for page selectors 1–3 and 4. The filter builds a callback through `0xa0fdc0`; the relocated code-pointer sequence at `0x30c6398` resolves to `0xa105d0`. That callback resolves each candidate with `0xa9c290` and calls `0xab3160`, which compares the cached `ItemCatalogType` against the closure selector. Therefore the filter's literal `2` is proven to mean `NotSee`, and matching set bits are cleared from the base bitmap. Invalid item handles are also cleared. The callback disassembly, source hashes, and call boundaries are in [the focused gate artifact](../output/gameplay/catalog_order_remainder/catalog_notsee_gate_static.json).
 
-**[LIMIT]** The upstream producer/query that populates the list passed to `0x118a3d0` is still the category boundary to resolve. The current evidence proves neither that `NotSee` rows are admitted to that list nor that the catalog app filters them out. It also does not establish item price, order limits, or whether the chosen representative variant becomes the purchase payload.
+**[NATIVE]** Selectors 1–3 dispatch through `0x118a2e0` to `0x1188cc0`, `0x1188fe0`, or `0x11896d0`. Their ELF disassembly scans the existing 15,000-bit set and the explicit bitmap writes are clear-only (`word &= ~bit`); the common tail enumerates the surviving bits into records before resolving variants. This preserves the `NotSee` exclusion through final item-list construction for selectors 1–3.
+
+**[LIMIT]** Selector 4 scans up to 64 stored item records and calls `0x1189c70` to add runtime entries after the `NotSee` gate. The category of those additions and the final mask behavior remain unresolved, so final-list exclusion is not proven for selector 4. Selector 0 uses an unresolved jump-table path. Item price, order limits, and whether the selected representative variant becomes the purchase payload also remain unknown.
 
 ## Mail record insertion boundaries
 
@@ -51,4 +53,4 @@ python3 acnh-re/tools/catalog_order_remainder_audit.py \
   --tables-root /workspace/acnh-re/output/tables_resolved
 ```
 
-The next evidence needed to close catalog eligibility is the native producer of the list passed from `0x11829d0`, including the underlying ItemParam query or filter predicate. Order-price/quantity rules, save serialization, mailbox consumption, and actual delivery timing remain open. The artifact also records the mail action inventories and exact static boundaries found so far.
+Before rebuilding the aggregate artifact, regenerate the focused NotSee-gate trace with `PYTHONPATH=/workspace/acnh-re/.deps python3 acnh-re/tools/catalog_notsee_gate_audit.py`; it reads the matching 1.0.0 `main.elf`, native index, and relocated code-pointer inventory. Remaining catalog evidence includes the post-filter helper composition, exact order-price/quantity rules, purchase payload handling, save serialization, mailbox consumption, and actual delivery timing. The aggregate artifact also records the mail action inventories and exact static boundaries found so far.
