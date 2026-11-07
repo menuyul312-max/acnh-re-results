@@ -1,0 +1,839 @@
+{
+  "schema": "acnh-re/1",
+  "title": "ACNH 1.0.0 building-placement validator chain",
+  "created_utc": "2026-11-07",
+  "scope": {
+    "source_binary": "ACNH 1.0.0 main.elf",
+    "source_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+    "analysis": "static raw AArch64 callsite and relocated code-pointer inspection; existing bounded decompilation snapshots and indexed EventFlow/BCSV records used as supporting evidence",
+    "excluded": [
+      "Ghidra rebuild",
+      "runtime/game execution",
+      "Godot changes",
+      "index/crosswalk edits",
+      "commit or push",
+      "NpcActor+0x68 component-writer search"
+    ],
+    "bounded_scan": "EventFlow query/build/preview handler bodies, the shared strategy dispatcher, five installed strategy entries and their +0x20/+0x28 slots, their direct helper routines, selected build-site coordinate chain, selected BCSV schemas, and direct-call string-reference reachability to depth 3."
+  },
+  "source_files": [
+    {
+      "source": "B_data/EventFlow/Info/BindInfo.byml",
+      "sha256": "d5867e0729d4d0eb222c27ff8a6b5cdc0ac401f34feadd3353f420c36368e999"
+    },
+    {
+      "source": "B_data/EventFlow/Player_HousingKit.bfevfl",
+      "format": "BFEVFL",
+      "size_bytes": 50104,
+      "sha256": "6b7e56629772c85053c44b399d9e1a9bdf1d8f147cceb8bb499cc8c8918a0383",
+      "decoded_path": "decoded/00516.json",
+      "decoded_sha256": "03a5f418bed1ecf7257b3a1ba9b631cf6e5e7050aed0fcb7046e2e7226a19acd",
+      "row_count": null,
+      "row_size": null
+    },
+    {
+      "source": "B_data/EventFlow/System_Structure_Common.bfevfl",
+      "format": "BFEVFL",
+      "size_bytes": 8368,
+      "sha256": "e64c08ddc898616e354c6951ae891597726d78c4ca2c61e4257264d837033c12",
+      "decoded_path": "decoded/00658.json",
+      "decoded_sha256": "43f0fe4fde04fbd8714a0915909055ae7415f3e5b2c4b1de337976b34b29f72c",
+      "row_count": null,
+      "row_size": null
+    }
+  ],
+  "registered_eventflow_candidates": [
+    {
+      "event": "EventFlowQueryCanBuildHere",
+      "source": "B_data/EventFlow/Player_HousingKit.bfevfl",
+      "examples": [
+        16,
+        25,
+        30,
+        36,
+        42,
+        47,
+        57,
+        61,
+        120,
+        121,
+        122,
+        133,
+        146
+      ],
+      "parameters": [
+        "StructureType",
+        "StructureBuildPosType",
+        "StructureBuildTiming"
+      ],
+      "factory": "0x4572b0",
+      "constructor": "0x408bc0",
+      "vtable": "0x3056760",
+      "slot_list_index": 6,
+      "body": "0x408cd0",
+      "registration_evidence_sha256": "dfc298dfcb1b288b8fda9cd6a49c728fdad903b41f8fc1c9288df7d732ec92a5",
+      "event_examples": [
+        "cBridge",
+        "cReserveNpcHouse",
+        "cPlayerHouse",
+        "cMuseum",
+        "cMarket",
+        "cNormalNpcHouse",
+        "cTailor",
+        "cSlope",
+        "cCampSite"
+      ]
+    },
+    {
+      "event": "EventFlowActionBuildStructure",
+      "source": "B_data/EventFlow/System_Structure_Common.bfevfl",
+      "examples": [
+        9,
+        12,
+        23
+      ],
+      "parameters": [
+        "StructureType",
+        "StructureBuildPosType",
+        "StructureBuildTiming"
+      ],
+      "factory": "0x44ce70",
+      "constructor": "0x369c10",
+      "vtable": "0x304fd90",
+      "slot_list_index": 8,
+      "body": "0x369d50",
+      "registration_evidence_sha256": "dfc298dfcb1b288b8fda9cd6a49c728fdad903b41f8fc1c9288df7d732ec92a5"
+    },
+    {
+      "event": "EventFlowActionPreviewStructure",
+      "source": "B_data/EventFlow/System_Structure_Common.bfevfl",
+      "examples": [
+        0
+      ],
+      "factory": "0x453970",
+      "constructor": "0x36e010",
+      "vtable": "0x3050190",
+      "slot_list_index": 8,
+      "body": "0x36e140",
+      "registration_evidence_sha256": "dfc298dfcb1b288b8fda9cd6a49c728fdad903b41f8fc1c9288df7d732ec92a5"
+    },
+    {
+      "event": "EventFlowActionStructureStartPreviewGuide",
+      "source": "B_data/EventFlow/Player_HousingKit.bfevfl",
+      "examples": [
+        151,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160,
+        161,
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170
+      ],
+      "factory": "0x453270",
+      "constructor": "0x344490",
+      "vtable": "0x304cdf8",
+      "slot_list_index": 8,
+      "body": "0x3445b0",
+      "registration_evidence_sha256": "dfc298dfcb1b288b8fda9cd6a49c728fdad903b41f8fc1c9288df7d732ec92a5"
+    }
+  ],
+  "direct_chain": [
+    {
+      "path": "QueryCanBuildHere / BuildStructure \u2192 pose \u2192 strategy query",
+      "edges": [
+        {
+          "from": "0x408cd0",
+          "pc": "0x408e5c",
+          "to": "0x3771d0",
+          "evidence": "direct BL; raw bytes recorded in call_sites"
+        },
+        {
+          "from": "0x408cd0",
+          "pc": "0x408e84",
+          "to": "0x10dfea0",
+          "evidence": "direct BL"
+        },
+        {
+          "from": "0x369d50",
+          "pc": "0x369ef0",
+          "to": "0x3771d0",
+          "evidence": "direct BL"
+        },
+        {
+          "from": "0x369d50",
+          "pc": "0x369f18",
+          "to": "0x10dfea0",
+          "evidence": "direct BL; the BuildStructure body checks the status before continuing to the site-list path"
+        },
+        {
+          "from": "0x10dfea0",
+          "pc": "0x10dfebc",
+          "to": "0x10d85a0",
+          "evidence": "direct tail B; wrapper supplies main-world structure query manager subobject at global+0x17f0"
+        },
+        {
+          "from": "0x10d85a0",
+          "pc": "0x10d8604",
+          "to": "indirect vtable slot +0x20",
+          "evidence": "BLR x8 after loading [object.vptr+0x20]"
+        },
+        {
+          "from": "0x10d85a0",
+          "pc": "0x10d8628",
+          "to": "indirect vtable slot +0x28",
+          "evidence": "BR x3 after loading [object.vptr+0x28]; receives status/result and descriptor"
+        }
+      ],
+      "status_behavior": "0x10e4eb0 clears the result status mask; 0x10e4ef0 sets one of up to 22 status bits. Query body 0x408cd0 returns a boolean equal to (result field at stack+8 != 0). The user-facing polarity of that query is not inferred from its label alone."
+    },
+    {
+      "path": "BuildStructure selected site record \u2192 coordinate vector \u2192 actor context",
+      "edges": [
+        {
+          "from": "0x369d50",
+          "pc": "0x36a37c",
+          "to": "0x4e1670",
+          "evidence": "direct BL after strategy dispatch and site-index selection"
+        },
+        {
+          "from": "0x4e1670",
+          "pc": "0x4e1758",
+          "to": "0x568360",
+          "evidence": "direct BL; helper writes X and Z as adjusted signed unit*10+5 and leaves Y lane untouched"
+        },
+        {
+          "from": "0x369d50",
+          "pc": "0x36a3ac",
+          "to": "0xbe6480",
+          "evidence": "direct BL with parsed pose and separate scalar"
+        },
+        {
+          "from": "0xbe6480",
+          "evidence": "coordinate-dependent branches call field-grid predicate candidates 0xd3fd30 and 0xd40840, and common path 0xbe6340; these do not establish complete footprint validation"
+        }
+      ],
+      "separation": "The pose descriptor sent through the strategy dispatcher is prepared by 0x3771d0 from StructureBuildPosType. The selected saved/site-list pair is parsed later at 0x36a37c. Current evidence does not prove the strategy dispatch validates that selected site pair."
+    }
+  ],
+  "structure_type_strategy_map": {
+    "evidence": "0x3771d0 calls raw 0x376eb0 with the parsed StructureType ordinal; 0x376eb0 stores the strategy-table index at descriptor+8.",
+    "label_join": "The EventFlow enumerant labels are proven in BFEVFL use sites, but this scan does not bind each cBridge/cPlayerHouse/etc string to an ordinal. Do not assign story-building names to strategy indexes from this map alone.",
+    "raw_enum_case_behavior": {
+      "0": "strategy 1",
+      "1": "strategy 2",
+      "2": "strategy 3 (subtype field 2)",
+      "3": "strategy 3 (subtype field 0)",
+      "4": "strategy 2",
+      "5": "strategy 4 if its secondary lookups succeed; otherwise falls through case 6, then strategy 3 (subtype field 2) if that lookup also fails",
+      "6": "strategy 5 if its secondary lookup succeeds; otherwise strategy 3 (subtype field 2)",
+      "7": "strategy 3 (subtype field 5)",
+      "8": "strategy 3 (subtype field 6)"
+    }
+  },
+  "manager_and_strategies": {
+    "dispatcher": "0x10d85a0",
+    "manager_constructor": "0x10d8360 (called from 0x1089110)",
+    "strategy_slots": [
+      {
+        "index": 1,
+        "manager_offset": "0x10",
+        "constructor": "0x10e36c0",
+        "vtable_address_point": "0x30f69a0",
+        "slot_20": "0x10e3790",
+        "slot_28": "0x10e38d0"
+      },
+      {
+        "index": 2,
+        "manager_offset": "0x18",
+        "constructor": "0x10e2130",
+        "vtable_address_point": "0x30f6940",
+        "slot_20": "0x10e2200",
+        "slot_28": "0x10e2490"
+      },
+      {
+        "index": 3,
+        "manager_offset": "0x20",
+        "constructor": "0x10de580",
+        "vtable_address_point": "0x30f67d8",
+        "slot_20": "0x10de640",
+        "slot_28": "0x10de670"
+      },
+      {
+        "index": 4,
+        "manager_offset": "0x28",
+        "constructor": "0x10da6c0",
+        "vtable_address_point": "0x30f6758",
+        "slot_20": "0x10da7c0",
+        "slot_28": "0x10da7d0"
+      },
+      {
+        "index": 5,
+        "manager_offset": "0x30",
+        "constructor": "0x10e4ff0",
+        "vtable_address_point": "0x30f6a40",
+        "slot_20": "0x10e5100",
+        "slot_28": "0x10e5110"
+      }
+    ],
+    "direct_dispatch_behavior": "0x10d85a0 indexes (manager+8)+8*descriptor_type, invokes +0x20, then tail-calls +0x28. Null handler path calls 0x10e4ef0 with status code 0x15. Constructor initializes five child objects at indexes 1\u20135; it does not show child construction for 0 or 6.",
+    "pointer_evidence": "Each address point and slot target is present in code_pointer_arrays.json; the constructor decompilation stores child pointers at offsets listed above."
+  },
+  "validator_scan": [
+    {
+      "strategy_index": 1,
+      "setup": "0x10e3790",
+      "result_method": "0x10e38d0",
+      "directly_observed": "regional query preparation; shared routines 0x10e0db0, 0x10e0620, 0x10e0b00, 0x10e0fb0, 0x10e1120; result mask/status writes via 0x10e4ef0",
+      "semantics": "specific error categories and water/terrain/overlap meaning unresolved"
+    },
+    {
+      "strategy_index": 2,
+      "setup": "0x10e2200",
+      "result_method": "0x10e2490",
+      "directly_observed": "same shared query family with additional type/state branches and result metadata writes",
+      "semantics": "specific error categories and water/terrain/overlap meaning unresolved"
+    },
+    {
+      "strategy_index": 3,
+      "setup": "0x10de640",
+      "result_method": "0x10de670",
+      "directly_observed": "pose/field descriptor setup, regional query candidates, status-bit writes, and world/field coordinate helpers",
+      "semantics": "specific error categories and water/terrain/overlap meaning unresolved"
+    },
+    {
+      "strategy_index": 4,
+      "setup": "0x10da7c0",
+      "result_method": "0x10da7d0",
+      "directly_observed": "5-unit X/Z grid quantization at 0x52b280, field/state predicates including 0x187180 and 0x187f00, directional/neighbor probing and result writes",
+      "semantics": "candidate terrain/field suitability checks; water, slope rule names, and all rejection meanings unproven"
+    },
+    {
+      "strategy_index": 5,
+      "setup": "0x10e5100",
+      "result_method": "0x10e5110",
+      "directly_observed": "calls 0x10e52f0 to process cell indexes 0 through 7; each calls 0x10e5940 to derive rotated per-cell X/Z positions and applies shared regional checks",
+      "semantics": "direct evidence for an eight-cell footprint-like geometry path for this strategy only; exact structure class, cell layout semantics and rejection labels unresolved"
+    }
+  ],
+  "eight_cell_path": {
+    "caller": "0x10e5110 at PC 0x10e5184 calls 0x10e52f0",
+    "loop": "0x10e52f0 starts cell index at 0, calls 0x10e5940 at PC 0x10e5334, increments index, and terminates after index 7 (8 iterations).",
+    "per_cell": "0x10e5940 selects relative offset data by cell index, combines it with the structure orientation/angle, updates X/Z grid coordinates, then derives a field-query object. 0x10e52f0 routes each cell through shared checks (0x10e0db0, 0x10e0620, 0x10e0b00, 0x10e0fb0).",
+    "confidence": "The loop and coordinate math are direct raw-code evidence. \u201cFootprint-like\u201d is a cautious semantic label; the exact type-to-label join and represented footprint shape are not resolved."
+  },
+  "geometry_helpers": {
+    "direct_strategy_dispatch": "The registered EventFlow query and BuildStructure candidate handlers invoke the strategy dispatcher; vtable targets +0x28 are direct algorithm bodies from relocated code-pointer arrays.",
+    "candidate_helpers": [
+      {
+        "va": "0x10e0db0",
+        "basis": "iterates two query ranges and compares entries; called by strategy result methods"
+      },
+      {
+        "va": "0x10e0620",
+        "basis": "iterates candidate field entries, applies several category predicates, returns numeric outcomes; called by strategy result methods"
+      },
+      {
+        "va": "0x10e0b00",
+        "basis": "collects candidate category bits and selects a candidate; called by strategy result methods"
+      },
+      {
+        "va": "0x10e0fb0",
+        "basis": "iterates query entries and invokes geometry/object predicates; returns tri-state-like outcomes; candidate spatial/overlap helper"
+      },
+      {
+        "va": "0x10e1120",
+        "basis": "regional record/property scan; called as a post-check"
+      },
+      {
+        "va": "0x52b280",
+        "basis": "maps X/Z world coordinate to 5-unit grid indexes; used by strategy 4 and earlier build-position field helpers"
+      },
+      {
+        "va": "0x187180",
+        "basis": "boolean predicate on a constructed field/grid object in strategy 4; semantic label unresolved"
+      },
+      {
+        "va": "0x52c170",
+        "basis": "constructs/query-grid data used per cell and in strategies 1\u20133"
+      }
+    ],
+    "not_proven": [
+      "named water test",
+      "named terrain height or cliff-height rule",
+      "complete building-vs-building overlap semantics",
+      "which object/layer classes each shared iterator selects",
+      "how the result status bits map to localized error text"
+    ]
+  },
+  "placement_tables": [
+    {
+      "table": {
+        "source": "B_data/Bcsv/StructureInfoParam.bcsv",
+        "format": "BCSV",
+        "size_bytes": 896,
+        "sha256": "a16b03ec38869a015faa5dbaddde03ea3865db88c91ea40d32d9c7e2fa6904ef",
+        "decoded_path": "decoded/00153.json",
+        "decoded_sha256": "2b53bf562fc54aa2dde1981be8a090941d81a8600fb0f6d030bc72d52aa0e4e4",
+        "row_count": 29,
+        "row_size": 28
+      },
+      "resolved_columns": [
+        "StructureInfoType",
+        "ModelType",
+        "HousePartsType",
+        "StructureInfoHouseType",
+        "Door0",
+        "UniqueID"
+      ],
+      "unresolved_columns": [
+        "h_fec3548b"
+      ],
+      "footprint_dimensions_column_found": false
+    },
+    {
+      "table": {
+        "source": "B_data/Bcsv/StructureFacilityModel.bcsv",
+        "format": "BCSV",
+        "size_bytes": 1540,
+        "sha256": "b29acfe910d54b39b90d2f5f6c04b092ef037706cd9e929656f6104aa8adae9d",
+        "decoded_path": "decoded/00148.json",
+        "decoded_sha256": "ff46116c82ef5a837ca5f5e24f3c0e770cc453473a4770320f9734a9d4461404",
+        "row_count": 19,
+        "row_size": 72
+      },
+      "resolved_columns": [
+        "FloorHeight",
+        "FacilityModelVariation",
+        "Door0Angle",
+        "StructureInfoUniqueID",
+        "Door0",
+        "RoofMaterial",
+        "DoorMaterial",
+        "UniqueID",
+        "UseChimneySmoke",
+        "HasNightLight",
+        "HasEigyoLight",
+        "UseMyDesign",
+        "Construction",
+        "GrowLevel",
+        "ModelName",
+        "HasDoorEigyoLight"
+      ],
+      "unresolved_columns": [
+        "h_85a0fa49",
+        "h_9c2d6dc6"
+      ],
+      "footprint_dimensions_column_found": false
+    },
+    {
+      "table": {
+        "source": "B_data/Bcsv/StructureBridgeParam.bcsv",
+        "format": "BCSV",
+        "size_bytes": 2436,
+        "sha256": "a55822eabae52e11918a9e75c0c4b487bda4f74055f8e046647c64dd5a255531",
+        "decoded_path": "decoded/00145.json",
+        "decoded_sha256": "b2ff42107dea2ad7bbed630043edb5b8dce46ebb9be9a23447e33241c63b04bb",
+        "row_count": 54,
+        "row_size": 44
+      },
+      "resolved_columns": [
+        "BridgePattern",
+        "BridgeTypeUniqueID",
+        "UniqueID",
+        "ModelName"
+      ],
+      "footprint_dimensions_column_found": false
+    },
+    {
+      "table": {
+        "source": "B_data/Bcsv/StructureSlopeParam.bcsv",
+        "format": "BCSV",
+        "size_bytes": 708,
+        "sha256": "bc06a14b00c6553cfbeceb529447f21de27b943221497ddceff8a8fb562ab9a6",
+        "decoded_path": "decoded/00154.json",
+        "decoded_sha256": "3f8b8bc63337734bbb1647a20bb7010756c911c192f1a2f165f6cb5f7fdc8e1d",
+        "row_count": 9,
+        "row_size": 72
+      },
+      "resolved_columns": [
+        "UniqueID",
+        "ItemNameUniqueID",
+        "ModelName",
+        "JpName"
+      ],
+      "footprint_dimensions_column_found": false
+    },
+    {
+      "table": {
+        "source": "B_data/Bcsv/StructureHouseShapeParam.bcsv",
+        "format": "BCSV",
+        "size_bytes": 1352,
+        "sha256": "46db0f7663f5c57ef45963886881ff366a67d4545baf40ad66666d4d5c9219ba",
+        "decoded_path": "decoded/00151.json",
+        "decoded_sha256": "ead60fe4966a852ee11d37f32416c9fe8735d565f5b7c1ce6390f41077ccc920",
+        "row_count": 15,
+        "row_size": 84
+      },
+      "resolved_columns": [
+        "AppearanceLevel",
+        "HousePartsType",
+        "UniqueID",
+        "DefaultWallUniqueID",
+        "DefaultDoorUniqueID",
+        "DefaultRoofUniqueID",
+        "Name",
+        "DoorBellName"
+      ],
+      "unresolved_columns": [],
+      "footprint_dimensions_column_found": false
+    }
+  ],
+  "actor_and_collider_boundary": {
+    "preview_guide": "Registered StructureStartPreviewGuide body 0x3445b0 calls 0x490f0 at PC 0x344818. 0x490f0 builds a generic request and calls 0x49360/actor-manager routines. This is a preview actor creation candidate; the actor class/resource, model, collider, and exact spawn destination are not bound in this scan.",
+    "preview_structure": "Registered PreviewStructure body 0x36e140 goes through the strategy dispatcher and copies resulting pose/metadata into the actor-context object at +0x288; no static PBC/collider constructor is resolved here.",
+    "build_structure": "After validation, BuildStructure parses a selected saved site pair and passes coordinates to 0xbe6480; its dynamic actor-component path and durable building-instantiation path remain unresolved.",
+    "bounded_string_search": "Searched indexed string_refs for direct-call descendants (maximum 3 direct BL edges) from the four EventFlow bodies and all five strategy setup/result method pairs: 1,029 known function bodies, 0 references to pbc, collider/collision, StructurePreview/StructureActor, ModelName, .bfres or .sarc. This is bounded to indexed strings and direct BL edges; indirect calls/resource tables can still bind those assets."
+  },
+  "open_edges": [
+    "Map each StructureType string enumerant (cBridge, cPlayerHouse, etc.) to the raw ordinal and strategy index; numeric case map is proven but label join remains open.",
+    "Resolve exact helper predicates and status-bit/error-text meanings, including whether particular branches are water, cliff, ground, actor occupancy, or clearance checks.",
+    "Show that the selected saved BuildingSiteIndex cell pair is fed into the same validator, rather than merely into the later actor-context handoff.",
+    "Recover complete footprint dimensions/rotation for every strategy; the eight-cell loop is proven only for strategy index 5.",
+    "Join EventFlow preview/build state to concrete actor factory, model, animation, collider/PBC resources, final transform, and persistence.",
+    "Verify dynamic water/terrain/collision/actor callbacks and runtime behavior; this report contains static code evidence only."
+  ],
+  "call_sites": [
+    {
+      "pc": "0x408e5c",
+      "mnemonic": "BL",
+      "target": "0x3771d0",
+      "bytes_le": "ddb8fd97",
+      "role": "pose descriptor from EventFlowQueryCanBuildHere"
+    },
+    {
+      "pc": "0x408e84",
+      "mnemonic": "BL",
+      "target": "0x10dfea0",
+      "bytes_le": "075c3394",
+      "role": "type-strategy dispatch wrapper from EventFlowQueryCanBuildHere"
+    },
+    {
+      "pc": "0x369ef0",
+      "mnemonic": "BL",
+      "target": "0x3771d0",
+      "bytes_le": "b8340094",
+      "role": "pose descriptor from BuildStructure"
+    },
+    {
+      "pc": "0x369f18",
+      "mnemonic": "BL",
+      "target": "0x10dfea0",
+      "bytes_le": "e2d73594",
+      "role": "type-strategy dispatch wrapper from BuildStructure"
+    },
+    {
+      "pc": "0x36a37c",
+      "mnemonic": "BL",
+      "target": "0x4e1670",
+      "bytes_le": "bddc0594",
+      "role": "selected BuildStructure site-record parser"
+    },
+    {
+      "pc": "0x4e1758",
+      "mnemonic": "BL",
+      "target": "0x568360",
+      "bytes_le": "021b0294",
+      "role": "coordinate pair to X/Z vector helper"
+    },
+    {
+      "pc": "0x36a3ac",
+      "mnemonic": "BL",
+      "target": "0xbe6480",
+      "bytes_le": "35f02194",
+      "role": "coordinate-bearing actor-context handoff"
+    },
+    {
+      "pc": "0x10dfebc",
+      "mnemonic": "B",
+      "target": "0x10d85a0",
+      "bytes_le": "b9e1ff17",
+      "role": "world structure-query manager dispatcher"
+    },
+    {
+      "pc": "0x10d8604",
+      "mnemonic": "BLR",
+      "target": "vtable[+0x20]",
+      "bytes_le": "00013fd6",
+      "role": "per-type context/setup method"
+    },
+    {
+      "pc": "0x10d8628",
+      "mnemonic": "BR",
+      "target": "vtable[+0x28]",
+      "bytes_le": "60001fd6",
+      "role": "per-type result/query method"
+    },
+    {
+      "pc": "0x10e5184",
+      "mnemonic": "BL",
+      "target": "0x10e52f0",
+      "bytes_le": "5b000094",
+      "role": "type-5 strategy footprint-like validation routine"
+    },
+    {
+      "pc": "0x10e5334",
+      "mnemonic": "BL",
+      "target": "0x10e5940",
+      "bytes_le": "83010094",
+      "role": "per-cell coordinate/offset routine within 8-entry loop"
+    },
+    {
+      "pc": "0x10de7f0",
+      "mnemonic": "BL",
+      "target": "0x10e0db0",
+      "bytes_le": "70090094",
+      "role": "shared query helper representative: strategy index 3"
+    },
+    {
+      "pc": "0x10de85c",
+      "mnemonic": "BL",
+      "target": "0x10e0620",
+      "bytes_le": "71070094",
+      "role": "shared query helper representative: strategy index 3"
+    },
+    {
+      "pc": "0x10de8b4",
+      "mnemonic": "BL",
+      "target": "0x10e0b00",
+      "bytes_le": "93080094",
+      "role": "shared query helper representative: strategy index 3"
+    },
+    {
+      "pc": "0x10de908",
+      "mnemonic": "BL",
+      "target": "0x10e0fb0",
+      "bytes_le": "aa090094",
+      "role": "shared query helper representative: strategy index 3"
+    },
+    {
+      "pc": "0x10de984",
+      "mnemonic": "BL",
+      "target": "0x10e1120",
+      "bytes_le": "e7090094",
+      "role": "shared query helper representative: strategy index 3"
+    },
+    {
+      "pc": "0x10da818",
+      "mnemonic": "BL",
+      "target": "0x52b280",
+      "bytes_le": "9a42d197",
+      "role": "strategy index 4: X/Z grid conversion"
+    },
+    {
+      "pc": "0x10da820",
+      "mnemonic": "BL",
+      "target": "0x187180",
+      "bytes_le": "58b2c297",
+      "role": "strategy index 4: candidate field/grid predicate"
+    },
+    {
+      "pc": "0x344818",
+      "mnemonic": "BL",
+      "target": "0x490f0",
+      "bytes_le": "3612f497",
+      "role": "preview-guide request helper; actor creation candidate"
+    }
+  ],
+  "function_range_hashes": [
+    {
+      "elf_va": "0x369d50",
+      "bytes": 6038,
+      "sha256": "44447430641e0882032c6ac8c6e5ba7bb8342598767605e5719ff47a3786cdd7"
+    },
+    {
+      "elf_va": "0x36e140",
+      "bytes": 1860,
+      "sha256": "7d16c53866bdb13f2b0c8db2eebb78c9916b409f1e9f31089b58bf01fa9bdf43"
+    },
+    {
+      "elf_va": "0x3445b0",
+      "bytes": 4470,
+      "sha256": "1546125a91554b9a3ba1505bbd75f109408dea9c30cd7aca6bdcac07156131d7"
+    },
+    {
+      "elf_va": "0x408cd0",
+      "bytes": 1298,
+      "sha256": "21ae8943176de268303e426842833213b709c3bfd82028ae6b524b8c77f538ca"
+    },
+    {
+      "elf_va": "0x10dfea0",
+      "bytes": 50,
+      "sha256": "496ffe093fa9dacc23a8b9021e778219682d2c3e64c7d00de24204ad4710cb28"
+    },
+    {
+      "elf_va": "0x10d85a0",
+      "bytes": 384,
+      "sha256": "7a52deaf8831a5d9ae58ce38d21737b4b1d29e2540a66c24ef27e899685c6699"
+    },
+    {
+      "elf_va": "0x10d8360",
+      "bytes": 804,
+      "sha256": "65b217b7b10585bc17ccbee995d371345e360ae49f3cdd8958890d24f7afe144"
+    },
+    {
+      "elf_va": "0x1089110",
+      "bytes": 72,
+      "sha256": "7d422603284c9aa9fd7c658ce7e839e7c72eb180e1ea72421b7bb97cc18c03c4"
+    },
+    {
+      "elf_va": "0x339030",
+      "bytes": 4872,
+      "sha256": "65c9ac36e4b0a0a4a0b5c03988df161e2d1d74ebbc2cba63471082e01b96d9a3"
+    },
+    {
+      "elf_va": "0x339550",
+      "bytes": 1160,
+      "sha256": "dfef6babed692b6f78a89c52dc56d9f544bc9cb560f5833c54e7a0a9b5c5f5ec"
+    },
+    {
+      "elf_va": "0x376eb0",
+      "bytes": 2048,
+      "sha256": "82b765eec71f12742f528f2bf4e1a2dc9e4c4863001ec070ffa648d073214a64"
+    },
+    {
+      "elf_va": "0x3771d0",
+      "bytes": 1316,
+      "sha256": "d45c0da232ab8b2cea84c65af52df168b4d3fda4d512fc26a3e903b02cd3c4c4"
+    },
+    {
+      "elf_va": "0x10de640",
+      "bytes": 72,
+      "sha256": "b4e9be8f05eb9f553eed5af986bd08d96bf16c2835bd4f20571cec3917c780e5"
+    },
+    {
+      "elf_va": "0x10de670",
+      "bytes": 4178,
+      "sha256": "699ff626cdeef0326d46e373f2f457ef869379eab540f547675636bb343b6858"
+    },
+    {
+      "elf_va": "0x10e2200",
+      "bytes": 1046,
+      "sha256": "25f504adc9ceda3c7e958ed4d61a95fcfe2d02f54e83df848b3e476a96218ab7"
+    },
+    {
+      "elf_va": "0x10e2490",
+      "bytes": 1920,
+      "sha256": "fce15e3700d54e8ff224ccd06030d6439ac935e51f7c94d0000b86edcdfdee2c"
+    },
+    {
+      "elf_va": "0x10e3790",
+      "bytes": 800,
+      "sha256": "367b9538a2b2d30c1f0a41e008ad04dfb4c555755dc0da993b71a60a2fff48d3"
+    },
+    {
+      "elf_va": "0x10e38d0",
+      "bytes": 1590,
+      "sha256": "135ad5a796011c1c1d9ea0e02a28972a81440ebc702d6425caa5cff2f461c75c"
+    },
+    {
+      "elf_va": "0x10da7c0",
+      "bytes": 8,
+      "sha256": "43993692e4d3b3d7879d967de16ecc918ac6d07bff19d62226d13242f28f8b5a"
+    },
+    {
+      "elf_va": "0x10da7d0",
+      "bytes": 4726,
+      "sha256": "6cc55315b5e5c9fe8b7820b282090cbab5aa23b9c6f2873dd94365e90cf10240"
+    },
+    {
+      "elf_va": "0x10e5100",
+      "bytes": 8,
+      "sha256": "33c35e786d3e30a65a6df72e674932379aa510e484f7bce716f380afee52220c"
+    },
+    {
+      "elf_va": "0x10e5110",
+      "bytes": 1142,
+      "sha256": "8a789a0240bd9e40e011ca7988f64603c3070a2ea0205ffaa425000d339869e9"
+    },
+    {
+      "elf_va": "0x10e52f0",
+      "bytes": 832,
+      "sha256": "42648416e6a42d6189d5f6ddcf76c858e4e1c201bbf4b1a3074c6738d4eb88ae"
+    },
+    {
+      "elf_va": "0x10e5940",
+      "bytes": 1042,
+      "sha256": "bd712167a088c9d442c77ae0f510811b4eda08128f502885fd8eaffb1dcf2976"
+    },
+    {
+      "elf_va": "0x10e0620",
+      "bytes": 4680,
+      "sha256": "2dc5b92488fa853aa6e1d7d8214a3f98c4e72aa908f62c04a7affd0f57ccd3fa"
+    },
+    {
+      "elf_va": "0x10e0db0",
+      "bytes": 1280,
+      "sha256": "3c1d882e5afc1493b9d4f5b5f6ede437d152629f4116ea8c083184df8fd9e771"
+    },
+    {
+      "elf_va": "0x10e0b00",
+      "bytes": 1664,
+      "sha256": "48837a12c47154227115e346e1d8e1dafc9d22fbcb43a2f41001a5cf3a5e5c5f"
+    },
+    {
+      "elf_va": "0x10e0fb0",
+      "bytes": 872,
+      "sha256": "81a9ceee4d9228369a5c710000785ea152df5418e287bcc6211808408b5974f5"
+    },
+    {
+      "elf_va": "0x10e1120",
+      "bytes": 1056,
+      "sha256": "67753b680dd2d489b79597b0f69f0dbbff08795cb2ee93337e8f3d265c9d0215"
+    },
+    {
+      "elf_va": "0xbe6480",
+      "bytes": 808,
+      "sha256": "ea69cc2c341228586745a3f7aea18eea26f6ba42a64fcf760b86d89a78db49c0"
+    },
+    {
+      "elf_va": "0x4e1670",
+      "bytes": 882,
+      "sha256": "c5d7e26029ebbf372156d919009ae86ada4b57343c688b4612a4a7fffd31b27a"
+    },
+    {
+      "elf_va": "0x568360",
+      "bytes": 86,
+      "sha256": "725e2f52066d8dfa3d7ca89bad69b53bc4130ca2eb485dedf32e1a49ab00bbf3"
+    }
+  ],
+  "artifact_hashes": {
+    "main_elf": {
+      "path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/A_logic/main.elf",
+      "sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74"
+    },
+    "index_sqlite": {
+      "path": "/workspace/acnh-re/output/index.sqlite",
+      "sha256": "a78c7af27d37b8fd931bba8bc611623dacf7685cb6e8b4f827effa0765340aad"
+    },
+    "event_handler_registry": {
+      "path": "/workspace/acnh-re/output/binary/event_handlers_resolved.json",
+      "sha256": "dfc298dfcb1b288b8fda9cd6a49c728fdad903b41f8fc1c9288df7d732ec92a5"
+    },
+    "code_pointer_arrays": {
+      "path": "/workspace/acnh-re/output/binary/code_pointer_arrays.json",
+      "sha256": "64d474068ca289f9146f7f32e6647a16a05e8f5be8e635615a478744b62ef822"
+    }
+  },
+  "report": "acnh-re/docs/BUILDING_PLACEMENT_VALIDATOR_CHAIN_FOLLOWUP_20261107.md"
+}
