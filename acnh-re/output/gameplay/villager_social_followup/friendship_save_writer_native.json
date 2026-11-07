@@ -8,6 +8,20 @@
     "field_getter": "0xf486c0",
     "save_root_getter": "0xeecf20"
   },
+  "table_descriptor_seed": {
+    "table": "EventFlagsNpcMemoryParam",
+    "key": "Friendship",
+    "UniqueID": 10,
+    "MaxValue": 255,
+    "DefaultValue": 25,
+    "source_id": 22
+  },
+  "field_selector": {
+    "source": "EventFlagsNpcMemoryParam.UniqueID",
+    "table_value": 10,
+    "tested_synthetic_view_offset": "0xa",
+    "limit": "The extracted table row is real 1.0.0 data, but the native table-to-descriptor lookup is controlled; this is not a live save-field offset proof."
+  },
   "cases_data": [
     {
       "name": "local_first_record",
@@ -18,6 +32,10 @@
       "network_mode_arg": 0,
       "record_address": 2147498488,
       "read_back_byte": 42,
+      "synthetic_view_size": 256,
+      "synthetic_view_changed_offsets": [
+        10
+      ],
       "expected_writer_calls": 1,
       "writer_calls": [
         {
@@ -40,6 +58,10 @@
       "network_mode_arg": 2,
       "record_address": 2148132520,
       "read_back_byte": 255,
+      "synthetic_view_size": 256,
+      "synthetic_view_changed_offsets": [
+        10
+      ],
       "expected_writer_calls": 1,
       "writer_calls": [
         {
@@ -62,6 +84,10 @@
       "network_mode_arg": 0,
       "record_address": 2147769584,
       "read_back_byte": 0,
+      "synthetic_view_size": 256,
+      "synthetic_view_changed_offsets": [
+        10
+      ],
       "expected_writer_calls": 1,
       "writer_calls": [
         {
@@ -84,6 +110,10 @@
       "network_mode_arg": 1,
       "record_address": 2147484096,
       "read_back_byte": 60,
+      "synthetic_view_size": 256,
+      "synthetic_view_changed_offsets": [
+        10
+      ],
       "expected_writer_calls": 1,
       "writer_calls": [
         {
@@ -106,6 +136,10 @@
       "network_mode_arg": 3,
       "record_address": 2148103960,
       "read_back_byte": 255,
+      "synthetic_view_size": 256,
+      "synthetic_view_changed_offsets": [
+        10
+      ],
       "expected_writer_calls": 1,
       "writer_calls": [
         {
@@ -128,6 +162,8 @@
       "network_mode_arg": 1,
       "record_address": 2147826872,
       "read_back_byte": 15,
+      "synthetic_view_size": 256,
+      "synthetic_view_changed_offsets": [],
       "expected_writer_calls": 1,
       "writer_calls": [
         {
@@ -150,6 +186,8 @@
       "network_mode_arg": 0,
       "record_address": null,
       "read_back_byte": null,
+      "synthetic_view_size": null,
+      "synthetic_view_changed_offsets": [],
       "expected_writer_calls": 0,
       "writer_calls": [],
       "native_friendship_key_hashes": []
@@ -163,6 +201,8 @@
       "network_mode_arg": 0,
       "record_address": null,
       "read_back_byte": null,
+      "synthetic_view_size": null,
+      "synthetic_view_changed_offsets": [],
       "expected_writer_calls": 0,
       "writer_calls": [],
       "native_friendship_key_hashes": []
@@ -176,6 +216,8 @@
       "network_mode_arg": 1,
       "record_address": null,
       "read_back_byte": null,
+      "synthetic_view_size": null,
+      "synthetic_view_changed_offsets": [],
       "expected_writer_calls": 0,
       "writer_calls": [],
       "native_friendship_key_hashes": []
@@ -189,6 +231,8 @@
       "network_mode_arg": 1,
       "record_address": null,
       "read_back_byte": null,
+      "synthetic_view_size": null,
+      "synthetic_view_changed_offsets": [],
       "expected_writer_calls": 0,
       "writer_calls": [],
       "native_friendship_key_hashes": []
@@ -218,15 +262,15 @@
     },
     {
       "va": "0xcc5e20",
-      "purpose": "maps the native Friendship hash to a synthetic field descriptor"
+      "purpose": "maps the native Friendship hash to a synthetic descriptor seeded from the extracted Friendship table row"
     },
     {
       "va": "0xf48190",
-      "purpose": "maps the synthetic descriptor to the independently observed byte offset +0x38"
+      "purpose": "returns the table-derived UniqueID selector 10 for the synthetic 0x100-byte field view"
     },
     {
       "va": "0x1665e80 / 0x1665e60 / 0x1665e50",
-      "purpose": "supplies a synthetic type-metadata row whose maximum-byte descriptor resolves to 255"
+      "purpose": "supplies synthetic type metadata seeded from the table MaxValue 255"
     },
     {
       "va": "0xef2720",
@@ -240,8 +284,8 @@
   "limits": [
     "The backing save bytes and field descriptor are synthetic; no player save was read or changed.",
     "The key wrapper has the same vtable and literal pointer as the d34f80 Friendship caller, but the wrapper object is synthetic.",
-    "The key-hash map and field-index descriptor are controlled; this does not independently prove the real metadata table resolves Friendship to +0x38.",
-    "The original 0xf48840 writer enforces the supplied descriptor and mutates the synthetic byte; the descriptor maximum 255 is a test fixture, not a proved table value.",
+    "EventFlagsNpcMemoryParam supplies Friendship UniqueID=10 and MaxValue=255, and the original writer uses those table-derived values on the synthetic descriptor. The actual native table-manager lookup and save-view backing remain stubbed.",
+    "The tested +0x0a offset is relative to the synthetic 0x100-byte field view, not a proven absolute byte offset in a player save.",
     "It does not prove that the daily -3 candidate is reachable during ordinary play."
   ],
   "elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",

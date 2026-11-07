@@ -8,6 +8,7 @@ keeps candidate source attribution separate from verified native execution.
 import argparse
 import hashlib
 import json
+import re
 import sqlite3
 from pathlib import Path
 
@@ -44,6 +45,42 @@ def main():
     def calls(va):
         return list(dict.fromkeys(row[0] for row in db.execute(
             'SELECT target_va FROM direct_calls WHERE owner_va=? ORDER BY pc', (va,))))
+
+    def unowned_direct_call_sites(target_va):
+        """Resolve call-site owners omitted by the decomp-only direct-call index."""
+        result = []
+        for pc, owner_va in db.execute(
+                'SELECT pc, owner_va FROM direct_calls WHERE target_va=? ORDER BY pc',
+                (target_va,)):
+            owner = owner_va
+            method_name = None
+            evidence = 'direct_calls.owner_va'
+            if owner is None:
+                row = db.execute(
+                    'SELECT va,name,size FROM native_functions '
+                    'WHERE va<=? AND span_end_va>? ORDER BY size LIMIT 1',
+                    (pc, pc)).fetchone()
+                if row:
+                    owner, method_name, size = row
+                    evidence = 'pc contained in native_functions span'
+                else:
+                    size = None
+            else:
+                row = db.execute(
+                    'SELECT name,size FROM native_functions WHERE va=?',
+                    (owner,)).fetchone()
+                if row:
+                    method_name, size = row
+                else:
+                    size = None
+            result.append({
+                'callsite_pc': hex(pc),
+                'owner_va': hex(owner) if owner is not None else None,
+                'owner_name': method_name,
+                'owner_size': hex(size) if size is not None else None,
+                'owner_resolution': evidence,
+            })
+        return result
 
     def hexes(values):
         return [hex(value) for value in values]
@@ -185,6 +222,46 @@ def main():
             'event_index': event_index, 'action': name,
             'params': json.loads(params) if params else {},
         })
+    mail_related_rows = db.execute(
+        "SELECT flow,actor,kind,name,count(*) FROM event_calls "
+        "WHERE lower(name) LIKE '%mail%' OR lower(name) LIKE '%letter%' "
+        "OR lower(name) LIKE '%present%' OR lower(name) LIKE '%attach%' "
+        "OR lower(name) LIKE '%receive%' "
+        "GROUP BY flow,actor,kind,name ORDER BY flow,actor,kind,name").fetchall()
+    mail_related_flows = {}
+    mail_related_usage = {}
+    for flow_name, actor, kind, name, count in mail_related_rows:
+        mail_related_flows.setdefault(flow_name, []).append({
+            'actor': actor, 'kind': kind, 'name': name, 'event_count': count,
+        })
+        mail_related_usage[name] = mail_related_usage.get(name, 0) + count
+    mail_related_flow_inventory = {
+        flow_name: {
+            'mail_present_related_nodes': nodes,
+            'npc_add_friendship_event_count': db.execute(
+                "SELECT count(*) FROM event_calls WHERE flow=? "
+                "AND name='EventFlowActionNpcAddFriendship'", (flow_name,)
+            ).fetchone()[0],
+        }
+        for flow_name, nodes in sorted(mail_related_flows.items())
+    }
+    mailbox_receive_action = native_handlers[
+        'EventFlowSystemActor.EventFlowActionUIWaitReceivingMailAppear']
+    mailbox_native_action_trace = {
+        'registration_va': mailbox_receive_action.get('registration_va'),
+        'factory': mailbox_receive_action.get('factory'),
+        'constructor': mailbox_receive_action.get('constructor'),
+        'object_size': mailbox_receive_action.get('object_size'),
+        'vtable': mailbox_receive_action.get('vtable'),
+        'slots': mailbox_receive_action.get('slots'),
+        'specific_method_call': unowned_direct_call_sites(0x367c20),
+        'specific_method_direct_callees': hexes(calls(0x367c20)),
+        'specific_method_direct_writer_edges': {
+            'calls_f48840': 0xf48840 in calls(0x367c20),
+            'calls_ef2c70': 0xef2c70 in calls(0x367c20),
+        },
+        'limit': 'The EventFlow slot roles are not fully named; the native trace reaches a receive-mail UI wait/status path and does not expose a recipient Friendship write. An indirect or later save callback remains possible.',
+    }
     mail_processor_edges = {
         '0xf53a70': [hex(x) for x in calls(0xf53a70)
                      if x in (0xaba970, 0xabff90)],
@@ -213,6 +290,42 @@ def main():
                      if name.startswith('NNPC_Select_')}
     birthday_flows = {name: values for name, values in gift_flows.items()
                       if 'Birthday' in name}
+
+    # Exact actor-context counter access scan. The native code writes this
+    # field through a pointer-array index (0x1595 * 8 == 0xaca8), so scan both
+    # the explicit offset and the decompiler's indexed form.
+    analysis_decomp = analysis/'binary/analysis_decomp'
+    context_counter_accesses = []
+    decomp_file_count = 0
+    counter_access_pattern = re.compile(
+        r'0xaca8\b|(?:\[|\+)\s*0x1595\b')
+    for source_path in analysis_decomp.glob('*.c'):
+        decomp_file_count += 1
+        for line_number, line in enumerate(source_path.read_text(errors='ignore').splitlines(), 1):
+            if counter_access_pattern.search(line.lower()):
+                context_counter_accesses.append({
+                    'file': source_path.name,
+                    'line': line_number,
+                    'text': line.strip(),
+                })
+
+    timer_call_sites = unowned_direct_call_sites(0xc1e2e0)
+    pointer_arrays_path = analysis/'binary/code_pointer_arrays.json'
+    timer_owner_array = None
+    if pointer_arrays_path.exists():
+        for pointer_array in json.loads(pointer_arrays_path.read_text()):
+            for slot_index, entry in enumerate(pointer_array['entries']):
+                if entry.get('target_va') == '0xbec1f0':
+                    timer_owner_array = {
+                        'start_va': pointer_array['start_va'],
+                        'pointer_va': entry['pointer_va'],
+                        'target_va': entry['target_va'],
+                        'slot_index': slot_index,
+                        'sequence_status': pointer_array.get('status'),
+                    }
+                    break
+            if timer_owner_array:
+                break
 
     refs_friendship = refs('Friendship')
     callsite_notes = {
@@ -353,6 +466,23 @@ def main():
                 },
                 'finding': 'The save/edit flows query for an attached present and can return it to baggage. The send-to-villager flow posts cSaveMailUserInfo through a native serializer that can include an item. No recipient-side Friendship write has been found in the traced path.',
             },
+            'mail_present_eventflow_inventory': {
+                'source': 'Complete indexed event_calls table from decoded BFEVFLs in this build.',
+                'distinct_flow_count': len(mail_related_flow_inventory),
+                'action_query_use_count': sum(mail_related_usage.values()),
+                'action_query_usage_counts': mail_related_usage,
+                'flows': mail_related_flow_inventory,
+                'receiver_paths': {
+                    'Ftr_MailBox': {
+                        'finding': 'One EventFlowActionUIWaitReceivingMailAppear node and Ftr.IsMyPost query; no NpcAddFriendship action in the flow.',
+                        'native_handler': mailbox_native_action_trace,
+                    },
+                    'System_GrowUp': 'Four EventFlowActionNetReceiveMail nodes are in the online/network startup flow, not the player-to-villager letter delivery path; no NpcAddFriendship action in the flow.',
+                    'Obj_MessageCardRack_02_SendFuture': 'Only future-mail reservation/edit/delete/return-present actions and queries; it is not a recipient delivery flow and has no NpcAddFriendship action.',
+                },
+                'same_flow_caveat': 'Some villager-to-player outgoing mail EventFlows also contain friendship actions for gifts or quests. Co-location in a flow does not show that sending or receiving mail caused those separate deltas.',
+                'limit': 'This exhausts decoded EventFlow action/query names containing mail, letter, present, attachment, or receive. Native indirect callbacks, omitted modules, and later save processing remain outside the inventory.',
+            },
             'villager_generated_mail_eventflows': {
                 'action_use_count': sum(len(x) for x in npc_mail_sends.values()),
                 'flows': npc_mail_sends,
@@ -362,13 +492,51 @@ def main():
         },
         'save_and_runtime_descriptor': {
             'table_row': friendship,
+            'native_field_mapping': {
+                'key_to_table_row': {
+                    'function': '0xdc5e20',
+                    'key_field_hash': '0x45f320f2',
+                    'meaning': 'The generic native descriptor lookup selects a row by Key; the Friendship table row joins by literal Key="Friendship".',
+                },
+                'field_selector': {
+                    'function': '0xf48190',
+                    'field_hash': '0x54706054',
+                    'field_name': 'UniqueID',
+                    'Friendship_table_value': friendship['UniqueID'],
+                    'interpretation': 'The native setter uses the selected descriptor UniqueID as its selector in the requested field view; a controlled fixture now tests the extracted value 10.',
+                },
+                'value_ceiling': {
+                    'function': '0xf48840',
+                    'field_hash': '0xbd7682f5',
+                    'field_name': 'MaxValue',
+                    'Friendship_table_value': friendship['MaxValue'],
+                    'interpretation': 'The writer reads the selected descriptor MaxValue for clamping; fixture metadata is seeded with the table value 255.',
+                },
+                'view_request': {
+                    'function': '0xef2c70 -> typed-view virtual slot',
+                    'requested_size': '0x100',
+                    'crosswalk_candidate': 'SaveEventFlagNpcMemory has external size 0x100 and a Flags.ValueArray member.',
+                },
+                'local_native_type_candidate': {
+                    'vtable': '0x30e8680',
+                    'size': '0x100',
+                    'sample_node': '0x1c0',
+                    'sample_data': '0x44',
+                    'instances': 2352,
+                    'crosswalk_status': 'multiple_struct_type_candidates',
+                    'type_candidates': ['::Game::SaveEventFlagNpcMemory', 's_33a3f71b'],
+                    'external_candidate_path': 'SaveLand.Npc.NpcVillager.Animal[0].Memory[0].EventFlag.Flags.ValueArray[0]',
+                    'version_limit': 'Crosswalk source is the public save_schema_111_103 schema; local executable is 1.0.0.',
+                },
+                'evidence_limit': 'Table row selection and the native table-manager lookup remain controlled by the fixture; the tested +0x0a is relative to a synthetic 0x100-byte view, not a proven absolute player-save byte offset.',
+            },
             'local_save_member': {
                 'node': npc_villager_node,
                 'local_layout_member': next(x for x in save_layout['members'] if x['node'] == '0xa8'),
                 'interpretation': 'The native-selected save tree contains the large SaveLand.Npc.NpcVillager candidate region; the external schema name is cross-version corroboration, and neither source names the Friendship byte locally.',
             },
             'record_selection_fixture': json.loads(NATIVE_WRITER_ARTIFACT.read_text())['record_formulas'],
-            'runtime_descriptor_limit': 'The native 0xef2c70/0xf48840 setter test uses a synthetic save root and controlled hash/field-index/max descriptor. It proves record-slot arithmetic and writer behavior after those lookups, not the live Friendship descriptor mapping or a player save write.',
+            'runtime_descriptor_limit': 'The native 0xef2c70/0xf48840 setter test uses a synthetic save root and controlled hash-to-row lookup; the selector and ceiling are seeded from the exact Friendship table row (UniqueID=10, MaxValue=255). It proves record-slot arithmetic and mutation at synthetic view+0x0a, not the live descriptor-manager lookup or absolute player-save offset.',
         },
         'eventflow_gift_related_actions': {
             'source_artifact': 'eventflow_friendship_action_native.json',
@@ -415,6 +583,18 @@ def main():
                     },
                     'flag_offset_caveat': 'NpcIsHitByNet 0x389c50 reads byte +0xacb0; NpcClearHitParam clears adjacent byte +0xacb1. These are distinct offsets and the evidence does not equate them.',
                     'counter_increment_search': 'The available decomp and analysis_decomp corpus exposes the +0xaca8 clear and NpcHitNum read, but no counter increment write. This bounded corpus search is not proof that no indirect or un-decompiled writer exists.',
+                    'counter_access_scan': {
+                        'analysis_decomp_c_files_scanned': decomp_file_count,
+                        'offset_equivalence': '0xaca8 == 0x1595 * sizeof(u64); scan covers both explicit offset and pointer-array-index forms.',
+                        'accesses': context_counter_accesses,
+                        'finding': 'The only exact field accesses in the available analysis_decomp are generic subobject construction, NpcClearHitParam zeroing the field, and NpcHitNum reading it; no increment or other nonzero writer is present in this corpus.',
+                    },
+                    'timer_update_call_owner': {
+                        'decrementer_method': '0xc1e2e0',
+                        'direct_call_sites': timer_call_sites,
+                        'pointer_sequence_membership': timer_owner_array,
+                        'interpretation': 'The decrementer is called from the unlabelled native function at 0xbec1f0, present in slot 13 of an untyped relocated-code-pointer sequence. The sequence has no indexed caller/xref evidence proving that it is a vtable or exposing the runtime dispatcher and cadence.',
+                    },
                     'limit': 'The native test proves Timer*30 storage in a synthetic context; static update pseudocode bounds countdown to one unit per eligible method invocation. The real update dispatch rate and the hit-counter incrementer remain unknown, so exact seconds, hits-per-window, and hits-per-day are not established.',
                 },
                 'hit_entry_friendship_action_event_indices': hit_entry_event_indices,
@@ -443,15 +623,15 @@ def main():
                         '0xab9dc0_callers': hexes(callers(0xab9dc0)),
                     },
                     'calc_minus_three_branches': [
-                        'First conditional return stores -3 after an opaque date/task helper result check.',
-                        'Second conditional return stores -3 if any of six opaque key/property lookups (0x3a, 0x62, 0x65, 0x5f, 0x31, 0x2a) reports the guarded condition.',
+                        'First conditional return stores -3 when an async task result is greater than 2. The task result lives at wrapper+0x20 and is read only once its status at +0x50 equals 2; the task/worker result enum is not named.',
+                        'Second conditional return stores -3 when any of six descriptor category checks matches 0x3a, 0x62, 0x65, 0x5f, 0x31, or 0x2a. Helper 0xb9cb60 maps descriptor+0x10 through a runtime u16 category map before comparison; these constants are category codes, not proven EventFlags UniqueIDs.',
                     ],
                     'other_caller_caveat': '0xac0200 also has direct caller 0xabfcf0; that function has no indexed direct caller, so the writer is not proven to be day-change-exclusive.',
                     'bounded_native_run_attempt': {
                         'status': 'blocked_before_candidate_branch',
                         'setup': 'Executed 0xab9dc0 from the matching main.nso with synthetic output/input buffers and controlled date conversion/range helpers.',
-                        'stop': 'The path reached an uninitialized manager/task object access at PC 0x22019d8 before either -3 assignment.',
-                        'interpretation': 'No candidate branch was exercised; this is not negative evidence about the -3 result.',
+                        'stop': 'The path reached an uninitialized task/manager object access at PC 0x22019d8 before the async result or six category comparisons could be controlled.',
+                        'interpretation': 'No candidate branch was exercised; static helpers name the first guard as async result>2 and the second as mapped-category membership, but neither runtime condition nor normal-day occurrence is verified.',
                     },
                     'status': 'Static candidate only. No controlled execution with live manager/save/table dependencies and no ordinary-day occurrence evidence.',
                     'finding': 'This candidate is separate from the net-hit EventFlow and quest-timeout penalties; it cannot yet be labelled normal daily decay.',
@@ -461,7 +641,7 @@ def main():
             }
         },
         'open': [
-            'Run the day-change 0xab9dc0 -3 candidate with the real manager/save/table dependencies and establish ordinary-day reachability; its two return guards are still opaque.',
+            'Run the day-change 0xab9dc0 -3 candidate with the real task/manager/save/table dependencies and establish ordinary-day reachability; async worker result and category-code names remain unresolved.',
             'Trace delivery/receipt of cToNpc mail and its attached-present handler through a Friendship write; sender-side item serialization and return-to-baggage paths are now mapped, but recipient effect is unproved.',
             'Execute with the real runtime save root and Friendship descriptor table; current setter fixtures control both descriptor lookup and field offset.',
             'Find the +0xaca8 hit-counter incrementer and runtime dispatch rate of indexed actor-update method 0xc1e2e0 to establish exact net-hit cadence.',

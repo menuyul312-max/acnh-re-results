@@ -31,9 +31,9 @@ save_base + resident_slot*0x10798 + player_slot*0xa8 + 0x39f8
 
 Mode network memakai `save_base + resident_slot*0x10798 + player_slot*0x700 +
 0x1c0`. Sesudah memilih record, setter meneruskan key ke `0xf48840` untuk
-memilih field dari record. Karena reproducer berhenti sebelum badan `0xef2c70`,
-field-selector dan mutasi byte save ini masih bukti pseudocode/disassembly;
-eksekusi native di bawah mengikat perhitungan ke entry setter serta key-nya.
+memilih field dari record. Fixture native terpisah menjalankan badan setter dan
+field writer setelah resolver descriptor dikendalikan; batas pemetaan live
+descriptor dijelaskan di bawah.
 
 ## Verifikasi native
 
@@ -66,9 +66,13 @@ memakai `save_base + resident*0x10798 + player*0x700 + 0x1c0`. Enam kombinasi
 slot valid mencakup resident 0/9 dan player 0/159 lokal atau 0/7 network; empat
 kasus di luar batas ditolak sebelum writer. Pada valid path, hash Murmur dari
 literal `Friendship` di NSO `main` yang dihitung native adalah `0x8a80b4d9`, lalu
-`0xf48840` benar-benar mengubah byte record sintetis pada offset `+0x38`.
-Writer juga mempertahankan nilai yang sama, meng-clamp `0xffffffff` menjadi 0,
-dan meng-clamp 256 menjadi 255. Sepuluh kasus lulus tanpa mismatch.
+`0xf48840` benar-benar mengubah byte record sintetis pada indeks field yang
+disuplai descriptor. Fixture memakai `UniqueID=10` dan `MaxValue=255` dari baris
+`EventFlagsNpcMemoryParam.Key=Friendship`. Untuk view sintetis 0x100 byte,
+perubahan berada tepat di `view + 0x0a`; getter asli membaca hasil yang sama.
+Writer mempertahankan nilai yang sama, meng-clamp `0xffffffff` menjadi 0, dan
+meng-clamp 256 menjadi 255. Sepuluh kasus lulus tanpa mismatch; enam slot valid
+menjalankan writer dan empat slot di luar batas ditolak.
 
 Reproduksi:
 
@@ -79,10 +83,10 @@ PYTHONPATH=/workspace/acnh-re/.deps:tools python3 tools/npc_friendship_save_writ
 
 Data: [friendship_save_writer_native.json](../output/gameplay/villager_social_followup/friendship_save_writer_native.json).
 Fixture mengontrol save-root getter, constructor view, lookup hash ke descriptor,
-lookup descriptor ke field byte `+0x38`, serta metadata maksimum byte 255.
-Karena tabel descriptor asli tidak dijalankan dan fixture save sintetis,
-temuan ini membuktikan efek native setter/getter setelah descriptor diberikan;
-ia belum membuktikan bahwa save pemain nyata memakai nilai tabel tersebut.
+lookup descriptor ke selector `UniqueID`, dan metadata `MaxValue`. Nilai 10 dan
+255 berasal dari baris game 1.0.0, tetapi table-manager lookup tetap dikendalikan;
+`view + 0x0a` adalah indeks dalam fixture 0x100 byte, bukan offset absolut yang
+terbukti pada save pemain.
 
 ## Batas klaim dan pekerjaan tersisa
 
@@ -92,17 +96,30 @@ ia belum membuktikan bahwa save pemain nyata memakai nilai tabel tersebut.
   `0xf48840`, getter asli `0xf486c0`, rumus alamat record lokal/network, dan
   batas byte setelah lookup descriptor yang dikendalikan.
 - **Masih [PSEUDO/fixture]:** save-root nyata, table lookup `Friendship` ke
-  descriptor field, descriptor ke offset `+0x38`, dan persistensi pada save
-  permainan. Tidak ada save pemain yang dibaca atau ditulis.
+  descriptor field, pengikatan view 0x100-byte ke raw save aktif, dan persistensi
+  pada save permainan. Tidak ada save pemain yang dibaca atau ditulis.
 
 Layout save lokal mempunyai node `0xa8` pada data `+0x8`, ukuran `0x1d6d48`,
 dan bukti fungsi untuk wilayah villager/NPC. Crosswalk eksternal lintas versi
 mencocokkannya dengan kandidat `SaveLand.Npc.NpcVillager`; nama tersebut bukan
-RTTI lokal. Tabel `EventFlagsNpcMemoryParam` memberi `Friendship` `UniqueID=10`,
-default 25, maksimum 255, tetapi tidak membuktikan indeks byte runtime. Fixture
-setter mengarahkan hash Friendship ke descriptor sintetis pada offset `+0x38`
-dan maksimum 255. Karena lookup map/index/metadata dikontrol, byte runtime
-nyata dan kaitannya dengan record SaveLand masih belum terbukti. Rujukan:
+RTTI lokal. Ada kandidat type yang lebih spesifik: vtable native `0x30e8680`
+berukuran `0x100` muncul 2.352 kali; crosswalk mencocokkannya dengan
+`SaveLand.Npc.NpcVillager.Animal[0].Memory[0].EventFlag`, yang memuat
+`Flags.ValueArray`. Namun crosswalk mencatat dua kandidat struct
+(`SaveEventFlagNpcMemory` dan `s_33a3f71b`) dan memakai schema publik lintas
+versi, sementara build lokal adalah 1.0.0. Ini menguatkan kandidat view byte
+0x100, tetapi belum mengidentifikasi descriptor manager lokal.
+
+Tabel `EventFlagsNpcMemoryParam` memberi `Friendship` `UniqueID=10`, default 25,
+dan maksimum 255. Setter native memakai field hash `UniqueID` (`0x54706054`)
+sebagai selector, dan `MaxValue` (`0xbd7682f5`) untuk clamp. Native table lookup
+`Key=Friendship` dilalui helper generik `0xdc5e20`, tetapi object table dan
+record save aktif tidak tersedia pada fixture. Dua rumus record yang sudah
+terbukti adalah jalur local `save_base + resident*0x10798 + player*0xa8 +
+0x39f8` dan network `save_base + resident*0x10798 + player*0x700 + 0x1c0`;
+field `UniqueID=10` berada relatif pada view 0x100-byte yang dipilih. Jadi field
+mapping sekarang memiliki kandidat tabel dan schema yang kuat, tetapi lookup
+live dan offset absolut dalam data save masih belum terbukti. Rujukan:
 [`save_layout.json`](../output/gameplay/save_layout.json),
 [`save_layout_external_crosswalk.json`](../output/gameplay/save_layout_external_crosswalk.json),
 dan [`friendship_reference_inventory.json`](../output/gameplay/villager_social_followup/friendship_reference_inventory.json).
@@ -208,6 +225,23 @@ descriptor save attachment yang live, dan hubungan item mail dengan writer
 Friendship masih terbuka. Rincian callback, key serialisasi, dan batas bukti
 tersimpan di [`friendship_reference_inventory.json`](../output/gameplay/villager_social_followup/friendship_reference_inventory.json).
 
+**[EF inventory lengkap]** Pemindaian semua action/query EventFlow yang namanya
+mencakup mail, letter, present, attachment, atau receive mencatat 125 pemakaian
+di 35 flow. `Ftr_MailBox` hanya menunggu UI receiving-mail dan memeriksa apakah
+furnitur adalah mailbox pemain; flow itu tidak mengonfigurasi
+`NpcAddFriendship`. Empat aksi `NetReceiveMail` ada di `System_GrowUp` untuk
+jalur network, bukan kiriman pemain ke villager. `Obj_MessageCardRack_02_SendFuture`
+hanya mengelola surat terjadwal dan hadiah yang dapat dikembalikan ke pocket.
+Sejumlah flow villager-to-player seperti birthday dan quest juga memuat aksi
+Friendship, tetapi kedekatan event dalam satu flow tidak membuktikan bahwa
+pengiriman atau penerimaan surat menyebabkan delta tersebut.
+
+Jalur native `EventFlowActionUIWaitReceivingMailAppear` terdaftar pada
+`0x305b978`; code path per-object `0x367bd0` memanggil helper `0x367c20` untuk
+status/pengantrian UI. Direct-call set helper itu tidak mencakup
+`0xf48840` atau `0xef2c70`. Ini mempersempit aksi mailbox yang tersedia menjadi
+jalur UI, tetapi receiver effect setelah mail dibuka masih belum terbukti.
+
 Fungsi proses mail hari-ganti mengikuti
 `0xf53a70 → 0xaba970 → 0xaba9d0 → 0xabb250 → 0xabbf00`. `0xabbf00` membaca
 Friendship lewat `0xf486c0`, mengubahnya ke band 1–6 lewat `0xd34a20`, lalu
@@ -219,6 +253,17 @@ ini belum terlihat. Inventaris `NpcMailSend` dan `NpcMailSendRandom` pada 10
 flow `NNPC_*` mencatat surat villager-ke-pemain (ulang tahun, quest, onboarding,
 overflow), bukan surat pemain-ke-villager; rinciannya ada di
 `friendship_reference_inventory.json` tanpa teks dialog.
+
+**Bukti writer:** direct caller `0xef2c70` hanya `0xd34f80`, `0xf12fe0`, dan
+`0xfba210`; pemeriksaan key menunjukkan hanya `0xd34f80` memakai `Friendship`,
+sedangkan dua lainnya memakai `SameLand`, `SickQuestGossip`, dan
+`TalkedDuringSick`. Writer langsung lain yang memakai literal `Friendship`
+adalah `0xac0200`, dipanggil kandidat proses harian `0xabff90` dan helper
+`0xabfcf0`. Jalur reader reply mail `0xabbf00`, post-office serializer, dan
+EventFlow mailbox tidak muncul sebagai pemanggil langsung writer tersebut.
+Dengan data lokal, belum ada jalur yang membuktikan incoming letter atau present
+terlampir mengubah Friendship; callback tak langsung atau modul yang tidak ada
+tetap belum tercakup.
 
 ### Pukulan jaring, pengabaian, dan batas harian
 
@@ -249,9 +294,11 @@ frekuensi dispatch per frame/detik belum terbukti.
 Handler `NpcClearHitParam` `0x258b10` mengosongkan counter u32 `+0xaca8` dan byte
 `+0xacb1`; `NpcHitNum` membaca counter tersebut. Query `NpcIsHitByNet`
 `0x389c50` membaca byte berbeda, `+0xacb0`, jadi kedua byte tidak disamakan.
-Pencarian decomp yang tersedia menemukan clear dan read counter, tetapi belum
-menemukan writer increment `+0xaca8`. Hitungan dapat dibangun kembali setelah
-clear; penambah counter serta dispatch interval masih terbuka. Ini bukti
+Pemindaian 64.475 file `analysis_decomp` menemukan akses field melalui
+`puVar[0x1595]` (sama dengan byte offset `+0xaca8`): constructor umum
+`0x1025080` membangun subobject di alamat itu, `NpcClearHitParam` menulis nol,
+dan `NpcHitNum` membaca u32. Tidak ada writer increment eksplisit di corpus
+terdekompilasi; penambah counter masih belum ditemukan. Ini bukti
 pukulan jaring dapat memulai penalti bersyarat, bukan bahwa setiap pukulan
 langsung mengurangi poin. Callback aksi meneruskan nilai EventFlow 72/72; query
 dan transisi AI masih bukti pseudocode. Empat aksi
@@ -259,6 +306,14 @@ dan transisi AI masih bukti pseudocode. Empat aksi
 net-hit. Kasus native dan batas fixture ada di
 [`hit_timer_native.json`](../output/gameplay/villager_social_followup/hit_timer_native.json)
 dan [`npc_hit_timer_native.py`](../tools/npc_hit_timer_native.py).
+
+Pemanggil langsung decrementer `0xc1e2e0` juga sudah dipersempit: callsite
+`0xbec314` berada di dalam fungsi native `0xbec1f0` (`FUN_00cec1f0`, ukuran
+`0x2b8`), yang menjadi slot 13 pada relocated pointer sequence `0x30d58a0`
+(entry `0x30d5908`). Badan fungsi pemilik itu tidak tersedia di decomp. Sequence
+ditandai sebagai code-pointer array yang belum terklasifikasi, jadi ia belum
+membuktikan nama kelas, scheduler, atau interval per frame. Yang terbukti hanya
+satu call owner langsung; frekuensi dispatch timer tetap runtime blocker.
 
 **[PSEUDO]** percakapan pertama per villager pada hari itu memberi
 `min(ContinuousTalkDays, 3)`, jadi bonus talk harian berhenti naik setelah +3.
@@ -384,18 +439,33 @@ memanggil `0xabff90` setelah processor mail recipient `0xaba970`; indeks direct
 call memberi `0xf53a70` sebagai caller langsung `0xabff90`. Salah satu cabangnya
 memanggil `0xac0200`, yang membaca `Friendship` lewat `0xf486c0`, memanggil
 kalkulator `0xab9dc0`, lalu menyiapkan `nilai_lama + iStack_a0` untuk
-`0xf48840`. Kalkulator memiliki dua assignment -3 yang tampak statik: satu
-setelah helper date/task opaque, satu lagi setelah enam lookup key/property
-opaque (`0x3a`, `0x62`, `0x65`, `0x5f`, `0x31`, `0x2a`). Makna guard belum
-pulih. Selain jalur `0xabff90`, `0xac0200` juga memiliki caller langsung
+`0xf48840`. Kalkulator memiliki dua assignment -3 yang tampak statik. Guard
+pertama menunggu task asynchronous sampai status wrapper `+0x50` bernilai 2,
+lalu mengambil result u32 dari `+0x20`; branch memberi -3 bila result itu lebih
+besar dari 2. Hasil ini belum dapat diberi nama domain: task worker bergantung
+pada manager global yang tidak tersedia di harness.
+
+Guard kedua hanya berlaku bila input ushort bukan sentinel `-2`. Fungsi
+`0xb9c290` membentuk descriptor dari input tersebut; `0xb9cb60` membaca
+descriptor `+0x10`, memetakan indeks lewat tabel kategori u16 runtime, lalu
+membandingkan hasilnya dengan enam kode `0x3a`, `0x62`, `0x65`, `0x5f`, `0x31`,
+dan `0x2a`. Satu kecocokan mana pun menulis -3. Nama kategori dan tabel runtime
+belum ada di dump. Kode tersebut bukan `UniqueID` dari
+`EventFlagsNpcMemoryParam`; kecocokan angka dengan flag table tidak memberi
+semantik tanpa jalur lookup yang sama.
+
+Jalur `0xf53a70 → 0xabff90 → 0xac0200` memberi caller statik dari siklus
+perubahan hari, tetapi tidak membuktikan kedua guard terpenuhi pada hari normal.
+Selain jalur `0xabff90`, `0xac0200` juga memiliki caller langsung
 `0xabfcf0`; fungsi ini tidak punya parent direct-call terindeks. Writer karena
 itu belum terbukti khusus dipanggil saat day-change.
 
-Eksekusi bounded kalkulator dengan date helper terkontrol masih berhenti pada
-akses manager/task global yang belum dibangun, sebelum mencapai cabang hasil.
-Tidak ada fixture native untuk dua cabang -3 dan belum ada pengamatan hari
-normal. Ini jalur kandidat yang dapat mengurangi field, belum cukup untuk
-menyebutnya decay normal. Rute, xref, dan batasnya tercatat di
+Eksekusi bounded kalkulator dengan helper tanggal terkontrol masih berhenti di
+akses object task/manager global pada PC `0x22019d8`, sebelum task result atau
+enam category check bisa dikendalikan. Tidak ada fixture native untuk dua
+cabang -3 dan belum ada pengamatan hari normal. Ini jalur kandidat yang dapat
+mengurangi field, belum cukup untuk menyebutnya decay normal. Rute, xref, dan
+batasnya tercatat di
 [`friendship_reference_inventory.json`](../output/gameplay/villager_social_followup/friendship_reference_inventory.json).
 
 `0xd26b70` juga memanggil `0xd34c20`, tetapi helper `0xf48740` yang dipanggilnya
@@ -404,9 +474,10 @@ tidak menghitungnya sebagai writer tambahan. Daftar pembaca/penulis dan rantai
 candidate disimpan di
 [`friendship_source_candidates.json`](../output/gameplay/villager_social_followup/friendship_source_candidates.json).
 
-**Terbuka:** konteks yang memicu dua cabang -3 pada `0xab9dc0` dan apakah salah
-satunya terjadi pada hari normal; efek penerimaan surat/present terlampir pada
-Friendship; bukti descriptor save runtime yang asli; serta penambah counter dan
+**Terbuka:** worker result apa yang memicu guard pertama, nama kategori runtime
+yang dibandingkan oleh guard kedua, dan apakah salah satunya terjadi pada hari
+normal; efek penerimaan surat/present terlampir pada Friendship; table-manager
+lookup serta offset absolut Friendship pada save runtime; penambah counter dan
 frekuensi dispatch timer net-hit.
 Penurunan -3 dari net-hit dan timeout quest adalah aksi bersyarat yang
 dikonfigurasi, bukan bukti decay pasif. Batas total Friendship harian juga belum

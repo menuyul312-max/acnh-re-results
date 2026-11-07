@@ -641,6 +641,601 @@
       },
       "finding": "The save/edit flows query for an attached present and can return it to baggage. The send-to-villager flow posts cSaveMailUserInfo through a native serializer that can include an item. No recipient-side Friendship write has been found in the traced path."
     },
+    "mail_present_eventflow_inventory": {
+      "source": "Complete indexed event_calls table from decoded BFEVFLs in this build.",
+      "distinct_flow_count": 35,
+      "action_query_use_count": 125,
+      "action_query_usage_counts": {
+        "EventFlowActionSystemMailSend": 50,
+        "EventFlowActionUIWaitReceivingMailAppear": 1,
+        "EventFlowActionNpcMailSend": 15,
+        "EventFlowActionNpcMailSendRandom": 9,
+        "EventFlowActionSetBirthdayPresentFlag": 4,
+        "EventFlowActionNpcDecideVisitPresent": 2,
+        "EventFlowQueryDeliveryQuestReceiveNpcLook": 2,
+        "EventFlowQueryIsDeliveryQuestReceiver": 4,
+        "EventFlowActionDeleteUnfinishMail": 2,
+        "EventFlowActionReturnAttachedPresentToBaggage": 3,
+        "EventFlowQueryExistUnfinishMail": 6,
+        "EventFlowQueryHasAttachedPresent": 3,
+        "EventFlowActionChangeAddressUnfinishMail": 2,
+        "EventFlowActionDeleteFutureMail": 2,
+        "EventFlowActionReserveFutureMail": 1,
+        "EventFlowActionReturnToPocketFutureMailPresent": 1,
+        "EventFlowQueryCanReturnToPocketFutureMailPresent": 1,
+        "EventFlowQueryReservedFutureMail": 1,
+        "EventFlowQueryReservedFutureMailWithPresent": 1,
+        "EventFlowActionCreateChoiceMailDestination": 1,
+        "EventFlowActionSetTagNameUnfinishMail": 2,
+        "EventFlowQueryIsValidUnfinishMailTo": 1,
+        "EventFlowQueryUnfinishMailToType": 2,
+        "EventFlowActionCatalogMailSend": 1,
+        "EventFlowActionNetReceiveBcat": 2,
+        "EventFlowActionNetReceiveMail": 4,
+        "EventFlowActionSystemMailSendDirect": 2
+      },
+      "flows": {
+        "Demo_PublicAnnouncement_03_Rco_Once": {
+          "mail_present_related_nodes": [
+            {
+              "actor": "EventFlowSystemActor",
+              "kind": "actions",
+              "name": "EventFlowActionSystemMailSend",
+              "event_count": 1
+            }
+          ],
+          "npc_add_friendship_event_count": 0
+        },
+        "Demo_PublicAnnouncement_Process": {
+          "mail_present_related_nodes": [
+            {
+              "actor": "EventFlowSystemActor",
+              "kind": "actions",
+              "name": "EventFlowActionSystemMailSend",
+              "event_count": 3
+            }
+          ],
+          "npc_add_friendship_event_count": 0
+        },
+        "Ftr_MailBox": {
+          "mail_present_related_nodes": [
+            {
+              "actor": "EventFlowSystemActor",
+              "kind": "actions",
+              "name": "EventFlowActionUIWaitReceivingMailAppear",
+              "event_count": 1
+            }
+          ],
+          "npc_add_friendship_event_count": 0
+        },
+        "NNPC_ApproachE_WelcomeMigrants": {
+          "mail_present_related_nodes": [
+            {
+              "actor": "MainNpc",
+              "kind": "actions",
+              "name": "EventFlowActionNpcMailSend",
+              "event_count": 2
+            }
+          ],
+          "npc_add_friendship_event_count": 0
+        },
+        "NNPC_GEvent_BirthdayN_H": {
+          "mail_present_related_nodes": [
+            {
+              "actor": "MainNpc",
+              "kind": "actions",
+              "name": "EventFlowActionNpcMailSendRandom",
+              "event_count": 2
+            }
+          ],
+          "npc_add_friendship_event_count": 7
+        },
+        "NNPC_GEvent_BirthdayP": {
+          "mail_present_related_nodes": [
+            {
+              "actor": "MainNpc",
+              "kind": "actions",
+              "name": "EventFlowActionNpcMailSendRandom",
+              "event_count": 1
+            },
+            {
+              "actor": "MainNpc",
+              "kind": "actions",
+              "name": "EventFlowActionSetBirthdayPresentFlag",
+              "event_count": 2
+            }
+          ],
+          "npc_add_friendship_event_count": 0
+        },
+        "NNPC_GEvent_BirthdayP_H": {
+          "mail_present_related_nodes": [
+            {
+              "actor": "MainNpc",
+              "kind": "actions",
+              "name": "EventFlowActionNpcMailSendRandom",
+              "event_count": 2
+            },
+            {
+              "actor": "MainNpc",
+              "kind": "actions",
+              "name": "EventFlowActionSetBirthdayPresentFlag",
+              "event_count": 2
+            }
+          ],
+          "npc_add_friendship_event_count": 0
+        },
+        "NNPC_Quest_AllReward": {
+          "mail_present_related_nodes": [
+            {
+              "actor": "MainNpc",
+              "kind": "actions",
+              "name": "EventFlowActionNpcDecideVisitPresent",
+              "event_count": 2
+            }
+          ],
+          "npc_add_friendship_event_count": 5
+        },
+        "NNPC_Quest_Delivery_Report": {
+          "mail_present_related_nodes": [
+            {
+              "actor": "MainNpc",
+              "kind": "queries",
+              "name": "EventFlowQueryDeliveryQuestReceiveNpcLook",
+              "event_count": 2
+            }
+          ],
+          "npc_add_friendship_event_count": 1
+        },
+        "NNPC_Quest_Sick_End": {
+          "mail_present_related_nodes": [
+            {
+              "actor": "MainNpc",
+              "kind": "actions",
+              "name": "EventFlowActionNpcMailSendRandom",
+              "event_count": 1
+            }
+          ],
+          "npc_add_friendship_event_count": 1
+        },
+        "NNPC_Quest_VisitN_End": {
+          "mail_present_related_nodes": [
+            {
+              "actor": "MainNpc",
+              "kind": "actions",
+              "name": "EventFlowActionNpcMailSendRandom",
+              "event_count": 2
+            }
+          ],
+          "npc_add_friendship_event_count": 0
+        },
+        "NNPC_Quest_VisitN_Home": {
+          "mail_present_related_nodes": [
+            {
+              "actor": "MainNpc",
+              "kind": "actions",
+              "name": "EventFlowActionNpcMailSend",
+              "event_count": 1
+            }
+          ],
+          "npc_add_friendship_event_count": 0
+        },
+        "NNPC_Quest_VisitP_Layout": {
+          "mail_present_related_nodes": [
+            {
+              "actor": "MainNpc",
+              "kind": "actions",
+              "name": "EventFlowActionNpcMailSend",
+              "event_count": 10
+            }
+          ],
+          "npc_add_friendship_event_count": 0
+        },
+        "NNPC_Reaction_1P_LifeStart": {
+          "mail_present_related_nodes": [
+            {
+              "actor": "MainNpc",
+              "kind": "actions",
+              "name": "EventFlowActionNpcMailSend",
+              "event_count": 2
+            }
+          ],
+          "npc_add_friendship_event_count": 0
+        },
+        "NNPC_Reaction_Sitting": {
+          "mail_present_related_nodes": [
+            {
+              "actor": "MainNpc",
+              "kind": "queries",
+              "name": "EventFlowQueryIsDeliveryQuestReceiver",
+              "event_count": 2
+            }
+          ],
+          "npc_add_friendship_event_count": 0
+        },
+        "NNPC_Select_Sell_Gift": {
+          "mail_present_related_nodes": [
+            {
+              "actor": "MainNpc",
+              "kind": "actions",
+              "name": "EventFlowActionNpcMailSendRandom",
+              "event_count": 1
+            }
+          ],
+          "npc_add_friendship_event_count": 6
+        },
+        "NNPC_Talk_General": {
+          "mail_present_related_nodes": [
+            {
+              "actor": "MainNpc",
+              "kind": "queries",
+              "name": "EventFlowQueryIsDeliveryQuestReceiver",
+              "event_count": 2
+            }
+          ],
+          "npc_add_friendship_event_count": 0
+        },
+        "Obj_MessageCardRack": {
+          "mail_present_related_nodes": [
+            {
+              "actor": "EventFlowSystemActor",
+              "kind": "actions",
+              "name": "EventFlowActionDeleteUnfinishMail",
+              "event_count": 1
+            },
+            {
+              "actor": "EventFlowSystemActor",
+              "kind": "actions",
+              "name": "EventFlowActionReturnAttachedPresentToBaggage",
+              "event_count": 2
+            },
+            {
+              "actor": "EventFlowSystemActor",
+              "kind": "queries",
+              "name": "EventFlowQueryExistUnfinishMail",
+              "event_count": 1
+            },
+            {
+              "actor": "EventFlowSystemActor",
+              "kind": "queries",
+              "name": "EventFlowQueryHasAttachedPresent",
+              "event_count": 2
+            }
+          ],
+          "npc_add_friendship_event_count": 0
+        },
+        "Obj_MessageCardRack_01_SendVillage": {
+          "mail_present_related_nodes": [
+            {
+              "actor": "EventFlowSystemActor",
+              "kind": "actions",
+              "name": "EventFlowActionChangeAddressUnfinishMail",
+              "event_count": 1
+            },
+            {
+              "actor": "EventFlowSystemActor",
+              "kind": "queries",
+              "name": "EventFlowQueryExistUnfinishMail",
+              "event_count": 1
+            }
+          ],
+          "npc_add_friendship_event_count": 0
+        },
+        "Obj_MessageCardRack_02_SendFuture": {
+          "mail_present_related_nodes": [
+            {
+              "actor": "EventFlowSystemActor",
+              "kind": "actions",
+              "name": "EventFlowActionChangeAddressUnfinishMail",
+              "event_count": 1
+            },
+            {
+              "actor": "EventFlowSystemActor",
+              "kind": "actions",
+              "name": "EventFlowActionDeleteFutureMail",
+              "event_count": 2
+            },
+            {
+              "actor": "EventFlowSystemActor",
+              "kind": "actions",
+              "name": "EventFlowActionReserveFutureMail",
+              "event_count": 1
+            },
+            {
+              "actor": "EventFlowSystemActor",
+              "kind": "actions",
+              "name": "EventFlowActionReturnToPocketFutureMailPresent",
+              "event_count": 1
+            },
+            {
+              "actor": "EventFlowSystemActor",
+              "kind": "queries",
+              "name": "EventFlowQueryCanReturnToPocketFutureMailPresent",
+              "event_count": 1
+            },
+            {
+              "actor": "EventFlowSystemActor",
+              "kind": "queries",
+              "name": "EventFlowQueryExistUnfinishMail",
+              "event_count": 4
+            },
+            {
+              "actor": "EventFlowSystemActor",
+              "kind": "queries",
+              "name": "EventFlowQueryReservedFutureMail",
+              "event_count": 1
+            },
+            {
+              "actor": "EventFlowSystemActor",
+              "kind": "queries",
+              "name": "EventFlowQueryReservedFutureMailWithPresent",
+              "event_count": 1
+            }
+          ],
+          "npc_add_friendship_event_count": 0
+        },
+        "Obj_MessageCardRack_05_EditingCardResume": {
+          "mail_present_related_nodes": [
+            {
+              "actor": "EventFlowSystemActor",
+              "kind": "actions",
+              "name": "EventFlowActionCreateChoiceMailDestination",
+              "event_count": 1
+            },
+            {
+              "actor": "EventFlowSystemActor",
+              "kind": "actions",
+              "name": "EventFlowActionDeleteUnfinishMail",
+              "event_count": 1
+            },
+            {
+              "actor": "EventFlowSystemActor",
+              "kind": "actions",
+              "name": "EventFlowActionReturnAttachedPresentToBaggage",
+              "event_count": 1
+            },
+            {
+              "actor": "EventFlowSystemActor",
+              "kind": "actions",
+              "name": "EventFlowActionSetTagNameUnfinishMail",
+              "event_count": 2
+            },
+            {
+              "actor": "EventFlowSystemActor",
+              "kind": "queries",
+              "name": "EventFlowQueryHasAttachedPresent",
+              "event_count": 1
+            },
+            {
+              "actor": "EventFlowSystemActor",
+              "kind": "queries",
+              "name": "EventFlowQueryIsValidUnfinishMailTo",
+              "event_count": 1
+            },
+            {
+              "actor": "EventFlowSystemActor",
+              "kind": "queries",
+              "name": "EventFlowQueryUnfinishMailToType",
+              "event_count": 2
+            }
+          ],
+          "npc_add_friendship_event_count": 0
+        },
+        "Obj_RcoMachine": {
+          "mail_present_related_nodes": [
+            {
+              "actor": "EventFlowSystemActor",
+              "kind": "actions",
+              "name": "EventFlowActionCatalogMailSend",
+              "event_count": 1
+            }
+          ],
+          "npc_add_friendship_event_count": 0
+        },
+        "Obj_Snowman": {
+          "mail_present_related_nodes": [
+            {
+              "actor": "EventFlowSystemActor",
+              "kind": "actions",
+              "name": "EventFlowActionSystemMailSend",
+              "event_count": 6
+            }
+          ],
+          "npc_add_friendship_event_count": 0
+        },
+        "SNPC_bey_daily": {
+          "mail_present_related_nodes": [
+            {
+              "actor": "EventFlowSystemActor",
+              "kind": "actions",
+              "name": "EventFlowActionSystemMailSend",
+              "event_count": 1
+            }
+          ],
+          "npc_add_friendship_event_count": 0
+        },
+        "SNPC_boc": {
+          "mail_present_related_nodes": [
+            {
+              "actor": "EventFlowSystemActor",
+              "kind": "actions",
+              "name": "EventFlowActionSystemMailSend",
+              "event_count": 1
+            }
+          ],
+          "npc_add_friendship_event_count": 0
+        },
+        "SNPC_chy_daily": {
+          "mail_present_related_nodes": [
+            {
+              "actor": "EventFlowSystemActor",
+              "kind": "actions",
+              "name": "EventFlowActionSystemMailSend",
+              "event_count": 2
+            }
+          ],
+          "npc_add_friendship_event_count": 0
+        },
+        "SNPC_gul": {
+          "mail_present_related_nodes": [
+            {
+              "actor": "EventFlowSystemActor",
+              "kind": "actions",
+              "name": "EventFlowActionSystemMailSend",
+              "event_count": 6
+            }
+          ],
+          "npc_add_friendship_event_count": 0
+        },
+        "SNPC_hgc_01_NowQuest": {
+          "mail_present_related_nodes": [
+            {
+              "actor": "EventFlowSystemActor",
+              "kind": "actions",
+              "name": "EventFlowActionSystemMailSend",
+              "event_count": 9
+            }
+          ],
+          "npc_add_friendship_event_count": 0
+        },
+        "SNPC_rco_10_Common_UpgradeMyhome": {
+          "mail_present_related_nodes": [
+            {
+              "actor": "EventFlowSystemActor",
+              "kind": "actions",
+              "name": "EventFlowActionSystemMailSend",
+              "event_count": 1
+            }
+          ],
+          "npc_add_friendship_event_count": 0
+        },
+        "SNPC_rco_53_MigrantsQuest": {
+          "mail_present_related_nodes": [
+            {
+              "actor": "EventFlowSystemActor",
+              "kind": "actions",
+              "name": "EventFlowActionSystemMailSend",
+              "event_count": 2
+            }
+          ],
+          "npc_add_friendship_event_count": 0
+        },
+        "SNPC_rco_55_TkkFirstLive": {
+          "mail_present_related_nodes": [
+            {
+              "actor": "EventFlowSystemActor",
+              "kind": "actions",
+              "name": "EventFlowActionSystemMailSend",
+              "event_count": 1
+            }
+          ],
+          "npc_add_friendship_event_count": 0
+        },
+        "SNPC_tkk_Live": {
+          "mail_present_related_nodes": [
+            {
+              "actor": "EventFlowSystemActor",
+              "kind": "actions",
+              "name": "EventFlowActionSystemMailSend",
+              "event_count": 6
+            }
+          ],
+          "npc_add_friendship_event_count": 0
+        },
+        "System_AirlineNoveltySendCheck": {
+          "mail_present_related_nodes": [
+            {
+              "actor": "EventFlowSystemActor",
+              "kind": "actions",
+              "name": "EventFlowActionSystemMailSend",
+              "event_count": 11
+            }
+          ],
+          "npc_add_friendship_event_count": 0
+        },
+        "System_GrowUp": {
+          "mail_present_related_nodes": [
+            {
+              "actor": "EventFlowSystemActor",
+              "kind": "actions",
+              "name": "EventFlowActionNetReceiveBcat",
+              "event_count": 2
+            },
+            {
+              "actor": "EventFlowSystemActor",
+              "kind": "actions",
+              "name": "EventFlowActionNetReceiveMail",
+              "event_count": 4
+            }
+          ],
+          "npc_add_friendship_event_count": 0
+        },
+        "Tutorials_Prologue_Tkk": {
+          "mail_present_related_nodes": [
+            {
+              "actor": "EventFlowSystemActor",
+              "kind": "actions",
+              "name": "EventFlowActionSystemMailSendDirect",
+              "event_count": 2
+            }
+          ],
+          "npc_add_friendship_event_count": 0
+        }
+      },
+      "receiver_paths": {
+        "Ftr_MailBox": {
+          "finding": "One EventFlowActionUIWaitReceivingMailAppear node and Ftr.IsMyPost query; no NpcAddFriendship action in the flow.",
+          "native_handler": {
+            "registration_va": "0x305b978",
+            "factory": "0x4541b0",
+            "constructor": "0x367930",
+            "object_size": 192,
+            "vtable": "0x304faf0",
+            "slots": [
+              "0x367e60",
+              "0x367f00",
+              "0x367b20",
+              "0x367b70",
+              "0x367bc0",
+              "0x238fd0",
+              "0x238fe0",
+              "0x238ff0",
+              "0x367bd0",
+              "0x367e00",
+              "0x367e50",
+              "0x239010"
+            ],
+            "specific_method_call": [
+              {
+                "callsite_pc": "0x367bec",
+                "owner_va": "0x367bd0",
+                "owner_name": "FUN_00467bd0",
+                "owner_size": "0x4c",
+                "owner_resolution": "pc contained in native_functions span"
+              }
+            ],
+            "specific_method_direct_callees": [
+              "0xda3fc0",
+              "0xef62f0",
+              "0xf2df90",
+              "0xda4020",
+              "0x1f067b0",
+              "0xda3fb0",
+              "0x19904f0",
+              "0x11e6520"
+            ],
+            "specific_method_direct_writer_edges": {
+              "calls_f48840": false,
+              "calls_ef2c70": false
+            },
+            "limit": "The EventFlow slot roles are not fully named; the native trace reaches a receive-mail UI wait/status path and does not expose a recipient Friendship write. An indirect or later save callback remains possible."
+          }
+        },
+        "System_GrowUp": "Four EventFlowActionNetReceiveMail nodes are in the online/network startup flow, not the player-to-villager letter delivery path; no NpcAddFriendship action in the flow.",
+        "Obj_MessageCardRack_02_SendFuture": "Only future-mail reservation/edit/delete/return-present actions and queries; it is not a recipient delivery flow and has no NpcAddFriendship action."
+      },
+      "same_flow_caveat": "Some villager-to-player outgoing mail EventFlows also contain friendship actions for gifts or quests. Co-location in a flow does not show that sending or receiving mail caused those separate deltas.",
+      "limit": "This exhausts decoded EventFlow action/query names containing mail, letter, present, attachment, or receive. Native indirect callbacks, omitted modules, and later save processing remain outside the inventory."
+    },
     "villager_generated_mail_eventflows": {
       "action_use_count": 24,
       "flows": {
@@ -954,6 +1549,47 @@
       "h_5f77b61a": 0,
       "h_8d401df7": 0
     },
+    "native_field_mapping": {
+      "key_to_table_row": {
+        "function": "0xdc5e20",
+        "key_field_hash": "0x45f320f2",
+        "meaning": "The generic native descriptor lookup selects a row by Key; the Friendship table row joins by literal Key=\"Friendship\"."
+      },
+      "field_selector": {
+        "function": "0xf48190",
+        "field_hash": "0x54706054",
+        "field_name": "UniqueID",
+        "Friendship_table_value": 10,
+        "interpretation": "The native setter uses the selected descriptor UniqueID as its selector in the requested field view; a controlled fixture now tests the extracted value 10."
+      },
+      "value_ceiling": {
+        "function": "0xf48840",
+        "field_hash": "0xbd7682f5",
+        "field_name": "MaxValue",
+        "Friendship_table_value": 255,
+        "interpretation": "The writer reads the selected descriptor MaxValue for clamping; fixture metadata is seeded with the table value 255."
+      },
+      "view_request": {
+        "function": "0xef2c70 -> typed-view virtual slot",
+        "requested_size": "0x100",
+        "crosswalk_candidate": "SaveEventFlagNpcMemory has external size 0x100 and a Flags.ValueArray member."
+      },
+      "local_native_type_candidate": {
+        "vtable": "0x30e8680",
+        "size": "0x100",
+        "sample_node": "0x1c0",
+        "sample_data": "0x44",
+        "instances": 2352,
+        "crosswalk_status": "multiple_struct_type_candidates",
+        "type_candidates": [
+          "::Game::SaveEventFlagNpcMemory",
+          "s_33a3f71b"
+        ],
+        "external_candidate_path": "SaveLand.Npc.NpcVillager.Animal[0].Memory[0].EventFlag.Flags.ValueArray[0]",
+        "version_limit": "Crosswalk source is the public save_schema_111_103 schema; local executable is 1.0.0."
+      },
+      "evidence_limit": "Table row selection and the native table-manager lookup remain controlled by the fixture; the tested +0x0a is relative to a synthetic 0x100-byte view, not a proven absolute player-save byte offset."
+    },
     "local_save_member": {
       "node": {
         "node": "0xa8",
@@ -1009,7 +1645,7 @@
       "local": "save_base + resident*0x10798 + player*0xa8 + 0x39f8",
       "network": "save_base + resident*0x10798 + player*0x700 + 0x1c0"
     },
-    "runtime_descriptor_limit": "The native 0xef2c70/0xf48840 setter test uses a synthetic save root and controlled hash/field-index/max descriptor. It proves record-slot arithmetic and writer behavior after those lookups, not the live Friendship descriptor mapping or a player save write."
+    "runtime_descriptor_limit": "The native 0xef2c70/0xf48840 setter test uses a synthetic save root and controlled hash-to-row lookup; the selector and ceiling are seeded from the exact Friendship table row (UniqueID=10, MaxValue=255). It proves record-slot arithmetic and mutation at synthetic view+0x0a, not the live descriptor-manager lookup or absolute player-save offset."
   },
   "eventflow_gift_related_actions": {
     "source_artifact": "eventflow_friendship_action_native.json",
@@ -1441,6 +2077,48 @@
         },
         "flag_offset_caveat": "NpcIsHitByNet 0x389c50 reads byte +0xacb0; NpcClearHitParam clears adjacent byte +0xacb1. These are distinct offsets and the evidence does not equate them.",
         "counter_increment_search": "The available decomp and analysis_decomp corpus exposes the +0xaca8 clear and NpcHitNum read, but no counter increment write. This bounded corpus search is not proof that no indirect or un-decompiled writer exists.",
+        "counter_access_scan": {
+          "analysis_decomp_c_files_scanned": 64475,
+          "offset_equivalence": "0xaca8 == 0x1595 * sizeof(u64); scan covers both explicit offset and pointer-array-index forms.",
+          "accesses": [
+            {
+              "file": "1025080.c",
+              "line": 22,
+              "text": "FUN_01125fc0(param_1 + 0xaca8);"
+            },
+            {
+              "file": "388660.c",
+              "line": 29,
+              "text": "((ulong)puVar3 & 1) != 0)) && (*(uint *)(param_1 + 0x1a) <= *(uint *)(puVar5 + 0x1595))) {"
+            },
+            {
+              "file": "258b10.c",
+              "line": 28,
+              "text": "puVar4[0x1595] = 0;"
+            }
+          ],
+          "finding": "The only exact field accesses in the available analysis_decomp are generic subobject construction, NpcClearHitParam zeroing the field, and NpcHitNum reading it; no increment or other nonzero writer is present in this corpus."
+        },
+        "timer_update_call_owner": {
+          "decrementer_method": "0xc1e2e0",
+          "direct_call_sites": [
+            {
+              "callsite_pc": "0xbec314",
+              "owner_va": "0xbec1f0",
+              "owner_name": "FUN_00cec1f0",
+              "owner_size": "0x2b8",
+              "owner_resolution": "pc contained in native_functions span"
+            }
+          ],
+          "pointer_sequence_membership": {
+            "start_va": "0x30d58a0",
+            "pointer_va": "0x30d5908",
+            "target_va": "0xbec1f0",
+            "slot_index": 13,
+            "sequence_status": "relocated code pointer sequence; not automatically a C++ vtable"
+          },
+          "interpretation": "The decrementer is called from the unlabelled native function at 0xbec1f0, present in slot 13 of an untyped relocated-code-pointer sequence. The sequence has no indexed caller/xref evidence proving that it is a vtable or exposing the runtime dispatcher and cadence."
+        },
         "limit": "The native test proves Timer*30 storage in a synthetic context; static update pseudocode bounds countdown to one unit per eligible method invocation. The real update dispatch rate and the hit-counter incrementer remain unknown, so exact seconds, hits-per-window, and hits-per-day are not established."
       },
       "hit_entry_friendship_action_event_indices": [
@@ -1508,15 +2186,15 @@
           ]
         },
         "calc_minus_three_branches": [
-          "First conditional return stores -3 after an opaque date/task helper result check.",
-          "Second conditional return stores -3 if any of six opaque key/property lookups (0x3a, 0x62, 0x65, 0x5f, 0x31, 0x2a) reports the guarded condition."
+          "First conditional return stores -3 when an async task result is greater than 2. The task result lives at wrapper+0x20 and is read only once its status at +0x50 equals 2; the task/worker result enum is not named.",
+          "Second conditional return stores -3 when any of six descriptor category checks matches 0x3a, 0x62, 0x65, 0x5f, 0x31, or 0x2a. Helper 0xb9cb60 maps descriptor+0x10 through a runtime u16 category map before comparison; these constants are category codes, not proven EventFlags UniqueIDs."
         ],
         "other_caller_caveat": "0xac0200 also has direct caller 0xabfcf0; that function has no indexed direct caller, so the writer is not proven to be day-change-exclusive.",
         "bounded_native_run_attempt": {
           "status": "blocked_before_candidate_branch",
           "setup": "Executed 0xab9dc0 from the matching main.nso with synthetic output/input buffers and controlled date conversion/range helpers.",
-          "stop": "The path reached an uninitialized manager/task object access at PC 0x22019d8 before either -3 assignment.",
-          "interpretation": "No candidate branch was exercised; this is not negative evidence about the -3 result."
+          "stop": "The path reached an uninitialized task/manager object access at PC 0x22019d8 before the async result or six category comparisons could be controlled.",
+          "interpretation": "No candidate branch was exercised; static helpers name the first guard as async result>2 and the second as mapped-category membership, but neither runtime condition nor normal-day occurrence is verified."
         },
         "status": "Static candidate only. No controlled execution with live manager/save/table dependencies and no ordinary-day occurrence evidence.",
         "finding": "This candidate is separate from the net-hit EventFlow and quest-timeout penalties; it cannot yet be labelled normal daily decay."
@@ -1526,7 +2204,7 @@
     }
   },
   "open": [
-    "Run the day-change 0xab9dc0 -3 candidate with the real manager/save/table dependencies and establish ordinary-day reachability; its two return guards are still opaque.",
+    "Run the day-change 0xab9dc0 -3 candidate with the real task/manager/save/table dependencies and establish ordinary-day reachability; async worker result and category-code names remain unresolved.",
     "Trace delivery/receipt of cToNpc mail and its attached-present handler through a Friendship write; sender-side item serialization and return-to-baggage paths are now mapped, but recipient effect is unproved.",
     "Execute with the real runtime save root and Friendship descriptor table; current setter fixtures control both descriptor lookup and field offset.",
     "Find the +0xaca8 hit-counter incrementer and runtime dispatch rate of indexed actor-update method 0xc1e2e0 to establish exact net-hit cadence.",
