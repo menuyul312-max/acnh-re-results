@@ -1,0 +1,239 @@
+{
+  "scope": "ACNH 1.0.0 HID-to-player movement and world-root/grid initialization static follow-up",
+  "status": "OPEN",
+  "source_identity": {
+    "main_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+    "code_pointer_arrays_sha256": "64d474068ca289f9146f7f32e6647a16a05e8f5be8e635615a478744b62ef822",
+    "address_convention": "Raw ELF VAs/PCs; Ghidra display labels in this corpus often add 0x100000."
+  },
+  "evidence": {
+    "static_native_code": "PSEUDO",
+    "runtime_execution": "not performed",
+    "synthetic_gameplay_claims": false,
+    "new_fixture_run": false
+  },
+  "hid_scheduler_player": {
+    "startup": {
+      "entry": "0x1535ad0",
+      "scheduler_group_init_call_pc": "0x1535e90",
+      "scheduler_group_init_target": "0x15369c0",
+      "controller_task_register_call_pc": "0x1535eec",
+      "controller_task_register_target": "0x14cef10",
+      "hid_manager_init_call_pc": "0x1535f10",
+      "hid_manager_init_target": "0x14ced30",
+      "npad_initialize": {"call_pc": "0x14ced44", "target": "0x220f040"},
+      "touchscreen_initialize": {"call_pc": "0x14ced48", "target": "0x220f050"}
+    },
+    "task_registration": {
+      "function": "0x14cef10",
+      "task_object_offset": "manager+0x288",
+      "owner_pointer_offset": "+0x2e8",
+      "callback_pointer_offset": "+0x2f0",
+      "callback_source_slot": "0x330ee90",
+      "callback_source_relocated_target": "0x14ceed0",
+      "task_context_pointer_offset": "+0x2e0",
+      "task_context_source_slot": "0x330ee98",
+      "task_label_string_va": "0x293ba29",
+      "task_label": "sys::ControllerManager::update()",
+      "scheduler_group_offset": "+0x5a0",
+      "scheduler_link_call_pc": "0x14cef94",
+      "scheduler_link_target": "0x1979ff0",
+      "scheduler_link_semantics": "List registration only; no task iteration or dispatch is shown."
+    },
+    "registered_body": {
+      "va": "0x14ceed0",
+      "indexed_function_row": false,
+      "subobject_load": "[manager+0x210]",
+      "helper_call_pc": "0x14ceee4",
+      "helper_target": "0x14cf380",
+      "helper_effect": "Copies subobject field +0x60 to +0xdc.",
+      "manager_state_test_pc": "0x14ceee8",
+      "manager_state_offset": "+0x208",
+      "exit_target": "0x14cf390",
+      "movement_or_hid_calls": [],
+      "interpretation": "Task record receives this pointer, but scheduler invocation and callback ABI are not established."
+    },
+    "npad_poll_method": {
+      "va": "0x1968b80",
+      "indexed_function_row": false,
+      "object_controller_count_offset": "+0x28",
+      "style_set_call": {"pc": "0x1968bd4", "target": "0x2210240"},
+      "style_dependent_state_calls": [
+        {"pc": "0x1968c14", "target": "0x2210250", "state_family": "NpadHandheldState"},
+        {"pc": "0x1968c2c", "target": "0x2210260", "state_family": "NpadJoyDualState"},
+        {"pc": "0x1968c44", "target": "0x2210270", "state_family": "NpadFullKeyState"},
+        {"pc": "0x1968c5c", "target": "0x2210280", "state_family": "NpadJoyLeftState"},
+        {"pc": "0x1968c74", "target": "0x2210290", "state_family": "NpadJoyRightState"}
+      ],
+      "ancillary_hid_calls": [
+        {"pc": "0x1968cd4", "target": "0x22102a0", "operation": "GetSixAxisSensorHandles"},
+        {"pc": "0x1968cfc", "target": "0x22102b0", "operation": "GetVibrationDeviceHandles"},
+        {"pc": "0x1968d20", "target": "0x22102c0", "operation": "StartSixAxisSensor"},
+        {"pc": "0x1968d5c", "target": "0x22102d0", "operation": "InitializeVibrationDevice"},
+        {"pc": "0x1968da8", "target": "0x22102e0", "operation": "GetSixAxisSensorStates"}
+      ],
+      "pointer_sequence": {
+        "start": "0x31a4020",
+        "method_pointer_va": "0x31a4040",
+        "method_target": "0x1968b80",
+        "method_offset": "+0x20",
+        "constructor_va": "0x1968a60",
+        "vptr_source_global": "0x33190068",
+        "caveat": "Recognized pointer sequence is not automatically a C++ vtable; constructor assignment supports this update-entry association."
+      },
+      "runtime_caller_or_scheduler": "OPEN"
+    },
+    "movement_join": {
+      "mapped_player_helpers": ["0xe17cb0", "0xe42b30", "0xdac550", "0xdac780", "0xda86b0"],
+      "direct_calls_from_registered_body": [],
+      "direct_calls_from_npad_poll_body": [],
+      "queue_reader": {
+        "function": "0x14cf070",
+        "direct_caller": "0x14ce8a0",
+        "writes": ["manager+0x278", "manager+0x27c"],
+        "source_record_fields": ["record+0x18", "record+0x1c"],
+        "producer_and_player_join": "OPEN"
+      },
+      "input_to_frame_to_player": "OPEN"
+    }
+  },
+  "world_root_grid": {
+    "singleton_global_reference": "0x32d0de8",
+    "singleton_storage_slot": "0x33728b0",
+    "root_constructor": "0x197740",
+    "root_constructor_direct_callsite": {"pc": "0x97200", "owner": "0x96ef0"},
+    "root_size": "0xf88",
+    "query_context_offset": "+0x28",
+    "query_context_constructor": "0x156840",
+    "query_context_defaults": {
+      "query_list_sentinel": ["+0x48", "+0x50"],
+      "candidate_count": "+0x58 = 0",
+      "candidate_link_bias": "+0x5c = 8",
+      "grid_pointer": "+0x78 (root+0xa0) = null",
+      "ready_byte": "+0xee8 (root+0xf10) = 0",
+      "separate_registry_head": "+0xef0"
+    },
+    "lifecycle_static_edge": {
+      "unindexed_body": "0xfe5a00",
+      "pointer_sequence_references": ["0x30ed830", "0x30edad0"],
+      "root_singleton_load_instructions": ["0xfe5ab0", "0xfe5ab4", "0xfe5ab8"],
+      "root_grid_initializer_call_pc": "0xfe5abc",
+      "root_grid_initializer": "0x1978a0",
+      "root_grid_initializer_action": "Clears root+0xf60 then tail-branches to 0x156e30 with root+0x28.",
+      "grid_init_tail_branch_pc": "0x1978a8",
+      "grid_init_target": "0x156e30",
+      "runtime_invocation": "OPEN; relocated pointer membership does not establish dispatch."
+    },
+    "grid_initializer": {
+      "function": "0x156e30",
+      "direct_caller": "0x1978a0",
+      "grid_constructor": "0x172090",
+      "grid_backing_initializer": "0x1725f0",
+      "defaults": {
+        "default_dimensions": [64, 64],
+        "configured_dimension_fields": ["context+0xf24", "context+0xf28"],
+        "alternate_dimension_path_observed": [160, 160],
+        "default_backing_slab_size_formula": "width*height*0x80",
+        "alternate_backing_slab_bytes": "0x300000",
+        "context_grid_pointer": "context+0x78 (root+0xa0)"
+      },
+      "grid_memory_layout": {
+        "width": "grid+0x30",
+        "height": "grid+0x34",
+        "base_record_count": "grid+0x40",
+        "base_records": "grid+0x48, count*0x34 bytes",
+        "overlay_count": "grid+0x50",
+        "overlay_records": "grid+0x58, count*0x34 bytes when enabled",
+        "flag_count": "grid+0x60",
+        "flags": "grid+0x68, count*4 bytes",
+        "record_defaults": "0x172280 fills base floats with 0, sector attrs with 7, initializes flags; optional overlays use -500.0 floats and attrs 7."
+      },
+      "query_candidate_insert": {
+        "insertion_call_pc": "0x156e94",
+        "insertion_helper": "0x1967c40",
+        "list_lock_call_pc": "0x156e84",
+        "list_head": "context+0x48",
+        "candidate_pointer_formula": "grid + *(s32*)(context+0x5c)",
+        "count_increment": "context+0x58 at PCs 0x156e9c-0x156ea4",
+        "unlocks_at_pc": "0x156ea8",
+        "static_candidate_producer_proven": true,
+        "runtime_population": "OPEN"
+      },
+      "candidate_dispatch": {
+        "iterator": "0x157270",
+        "indirect_call_pcs": ["0x157308", "0x157350"],
+        "candidate_slot": "+0x30",
+        "pointer_sequence_start": "0x30376a8",
+        "grid_accessor_pointer_va": "0x30376d8",
+        "grid_accessor_target": "0x172740",
+        "direct_grid_query_call_pc": "0x1577f0",
+        "direct_grid_query_owner": "0x1577a0",
+        "runtime_dispatch": "OPEN"
+      }
+    },
+    "readiness": {
+      "predicate": "0x18ba40",
+      "required_conditions": ["singleton root != null", "root+0xa0 grid != null", "byte(root+0xf10) != 0"],
+      "constructor_clears_ready": true,
+      "grid_initializer_sets_ready": false,
+      "verified_nonzero_writer": null,
+      "status": "OPEN"
+    }
+  },
+  "fixtures": [
+    {
+      "artifact": "tools/terrain_native.py / output/mechanics/terrain_native.json",
+      "status": "NATIVE; isolated contract only",
+      "world_shape": "Supplied singleton->world and world+0xa0->grid.",
+      "missing": ["full root constructor", "root readiness", "query candidate list", "authentic candidate vtables"],
+      "live_gameplay_result": false
+    },
+    {
+      "artifact": "tools/ground_context_gate_native.py / output/mechanics/ground_context_gate_native.json",
+      "status": "NATIVE; prepared guard branch",
+      "missing": ["loaded island grid", "full query candidate list", "live input/movement path"],
+      "live_gameplay_result": false
+    },
+    {
+      "artifact": "tools/player_7bccf0_boundary_native.py / output/mechanics/player_collider_query_remainder_20261107/player_7bccf0_boundary_native.json",
+      "status": "NATIVE; null singleton boundary",
+      "result_classification": "Sandbox setup fault at 0x172780, not a gameplay query result.",
+      "live_gameplay_result": false
+    },
+    {
+      "artifact": "tools/world_registry_release_native.py / output/mechanics/world_registry_release_native.json",
+      "status": "NATIVE; separate registry list",
+      "live_gameplay_result": false
+    }
+  ],
+  "blockers": [
+    "Scheduler frame/update iteration and indirect invocation of registered task are not identified.",
+    "Runtime dispatch path for Npad poll method 0x1968b80 is not identified.",
+    "No Npad state-to-player command/movement data-flow join is proven.",
+    "Queue producer and semantic join for controller fields +0x278/+0x27c remain unknown.",
+    "Runtime execution of world lifecycle body 0xfe5a00 is not shown.",
+    "Writer that makes root readiness byte +0xf10 nonzero is unknown.",
+    "Live island grid/backing data, candidate-list contents, and authentic candidate vtables are unavailable in existing fixtures.",
+    "No faithful native fixture produces a live 0x7bccf0 ground/collision result."
+  ],
+  "source_refs": [
+    "output/binary/analysis_decomp/1535ad0.c",
+    "output/binary/analysis_decomp/14cef10.c",
+    "output/binary/analysis_decomp/14ced30.c",
+    "output/binary/analysis_decomp/14cf070.c",
+    "output/binary/analysis_decomp/197740.c",
+    "output/binary/analysis_decomp/156840.c",
+    "output/binary/analysis_decomp/156e30.c",
+    "output/binary/analysis_decomp/172090.c",
+    "output/binary/analysis_decomp/1725f0.c",
+    "output/binary/analysis_decomp/172280.c",
+    "output/binary/analysis_decomp/157270.c",
+    "output/binary/analysis_decomp/1577a0.c",
+    "output/binary/analysis_decomp/18ba40.c",
+    "output/binary/code_pointer_arrays.json",
+    "docs/PLAYER_INPUT_TRAVERSAL_INDIRECT_FOLLOWUP_20261107.md",
+    "docs/PLAYER_COLLIDER_QUERY_INIT_FOLLOWUP_20261107.md",
+    "docs/WORLD_TERRAIN_MOVEMENT_PROOF_20261107.md"
+  ],
+  "report": "docs/PLAYER_INPUT_WORLD_INIT_NATIVE_FOLLOWUP_20261107.md"
+}
