@@ -7757,7 +7757,7 @@
     "required_asset_family_count": 11,
     "all_beats_have_all_asset_families": true,
     "full_semantic_coverage_proven": false,
-    "supplemental_proof_count": 54,
+    "supplemental_proof_count": 55,
     "supplemental_proof_files_exist": true
   },
   "full_semantic_coverage_proven": false,
@@ -8019,7 +8019,7 @@
       "report": "acnh-re/docs/SAVEPROC_CALLBACK_OPERATION_JOIN_20261107.md",
       "data": "acnh-re/output/gameplay/saveproc_callback_operation_join_20261107.json",
       "scope": "System_SaveGameClose SaveSimpleSave operation flags, compatibility with conditional Commit guard, and unresolved runtime SaveProc delegate/executor callback join.",
-      "status": "save_simple_save_flag_word_STATIC;queue_to_commit_and_serializer_persistence_OPEN"
+      "status": "SaveSimpleSave_flag_word_STATIC;registry_callback_is_in_unfiled_BSS;queue_to_Commit_serializer_WriteFile_FlushFile_and_named_pocket_member_OPEN"
     },
     {
       "id": "map_select_pending_dispatch_callback_followup",
@@ -8139,6 +8139,13 @@
       "data": "acnh-re/output/gameplay/world_item_pickup_source_actor_side_effects_followup_20261107.json",
       "scope": "Player+0x1018 item descriptor to Pickup state context and insertion bridge, player-side bookkeeping, and conditional PickUpFirst property write.",
       "status": "descriptor_to_guarded_insert_and_conditional_pickup_property_STATIC;source_world_actor_delete_respawn_trigger_and_save_OPEN"
+    },
+    {
+      "id": "saveproc_runtime_callback_closure",
+      "report": "acnh-re/docs/SAVEPROC_RUNTIME_CALLBACK_CLOSURE_20261107.md",
+      "data": "acnh-re/output/gameplay/saveproc_runtime_callback_closure_20261107.json",
+      "scope": "SaveProc worker label, generic registry/executor dispatch, MOD0 BSS target, conditional Commit and direct file-I/O boundaries.",
+      "status": "name_to_generic_registry_and_executor_STATIC;runtime_callback_BSS_target_serializer_commit_queue_and_pocket_save_identity_OPEN"
     }
   ]
 }
