@@ -3,7 +3,7 @@
   "game_version": "1.0.0",
   "date": "2026-11-07",
   "scope": "Bounded read-only trace of native EventFlow registrations/call references for CanBuildHere, StartPreviewStructureGuide, PreviewStructure, BuildStructure, mSiteList, selected site entry, pose helper, and PBC/model references. No runtime execution.",
-  "summary": "The full resolved EventFlow handler registry supplies factory/constructor/vtable mappings for the placement query and actions. Vtable slot candidates for CanBuildHere, StartPreviewStructureGuide, PreviewStructure, and BuildStructure call a shared pose helper. The BuildStructure method candidate reads a six-entry list at structure-heap offset +0x3a50, chooses an entry using a field read from an actor object, reads that entry, and passes it to a pair parser. This aligns statically with the mSiteList descriptor and six cells, but the selected actor field is not resolved to BuildingSiteIndex, and the selected cell pair is not joined to the pose helper's transform input or to a world-space conversion.",
+  "summary": "The full resolved EventFlow handler registry supplies factory/constructor/vtable mappings for the placement query and actions. Vtable slot candidates for CanBuildHere, StartPreviewStructureGuide, PreviewStructure, and BuildStructure call a shared pose helper. The BuildStructure candidate reads a six-entry list at +0x3a50, selects an available index, writes it under the exact actor AI blackboard key BuildingSiteIndex, parses the selected pair, and passes it into actor-context handling. This statically joins the list index to the EventFlow key and context handoff; runtime preset identity, story-object-to-index role, world transform, validator, model/collider, and save remain OPEN.",
   "labels": {
     "EF": "Raw EventFlow graph or exact flow-index call values; does not by itself prove runtime semantics.",
     "BIND": "BindInfo/ELF factory-constructor-vtable registration evidence; factories are not behavior implementations and slot roles may be partial.",
@@ -64,7 +64,7 @@
       "registration_va":"0x3059ca8", "factory":"0x44ce70", "constructor_va":"0x369c10", "object_size":352, "vtable":"0x304fd90",
       "vtable_slots_raw":["0x36a510","0x36a5b0","0x369ce0","0x369d00","0x369d40","0x238fd0","0x238fe0","0x238ff0","0x369d50","0x36a460","0x36a500","0x239010"],
       "behavior_candidate":{"slot_index":8,"va":"0x369d50","pseudocode":"/workspace/acnh-re/output/binary/analysis_decomp/369d50.c","sha256":"b52478377f3cd7d9d9702bcbc474589b0435e48eb699938c67a08e753cbf11c8","observed":"Reads StructureType/StructureBuildPosType args; calls pose helper VA 0x3771d0 at PC 0x369ef0; accesses structure-like list offsets +0x3a50/+0x3a58/+0x3a60 and selects a cell-list entry using an actor-side field."},
-      "claim_limit":"The registration/vtable membership and data access are exact static joins. The vtable slot role, identity of the object at +0x3a50, actor-side key, and relationship of the selected list entry to the pose helper remain unresolved."
+      "claim_limit":"The registration/vtable membership, selected-index key, list-record parser, and actor-context handoff are static joins. EventFlow invocation is not executed; runtime list/preset identity, story-object role, final transform, validation, and model/collider remain unresolved."
     }
   ],
   "native_structure_list_trace": {
@@ -77,11 +77,12 @@
     "build_consumer_observations":[
       "BuildStructure slot candidate uses structure-like member +0x3a50 and companion count/data fields +0x3a58/+0x3a60.",
       "It walks candidate indices 0..5 and uses helper VA 0x4e1d80 to bounds-check index, fetch array[index], and pass the cell object into VA 0x4e1430.",
-      "The selected actor-side integer is obtained through VA 0x176ab70 from actor field +0x51; if nonnegative and below the member count, the consumer reads the corresponding pointer from +0x3a60[index].",
+      "VA 0x176ab70 selects an available bitset index; its call receives the address actor+0x288 as the rank input. When the returned index is in range, the consumer reads the corresponding pointer from +0x3a60[index].",
+      "The selected index is written under the exact native key BuildingSiteIndex through actor-blackboard setter VA 0xc756a0; the parsed pair is passed to actor-context helper VA 0xce6480 and scalar-copy helper VA 0xcf9520.",
       "The selected BYML-like child is passed to VA 0x4e1670, whose pseudocode parses a two-component record and writes a pair using observed arithmetic iStack_170+(iVar1>>1), iStack_15c+1. Field names, units, and semantic meaning of this adjustment are not recoverable from that function's string refs."
     ],
     "list_cells_from_source":[[61,66],[78,77],[49,79],[88,80],[97,84],[69,90]],
-    "claim_limit":"The six-cell source, generic descriptor loader, and BuildStructure vtable candidate share array length/member layout and are a strong static alignment. No proof establishes that the loaded global object is the StructurePresetA00 instance for the observed run, or that the actor field is BuildingSiteIndex. No story object is assigned to a specific index."
+    "claim_limit":"The six-cell source, generic descriptor loader, and BuildStructure candidate share array length/member layout; the selected index is confirmed as BuildingSiteIndex and its record pair reaches actor-context handling. The runtime list's identity as StructurePresetA00 and each story object's assigned index are not proven."
   },
   "shared_pose_helper": {
     "label":"PSEUDO",
@@ -102,8 +103,8 @@
   },
   "building_site_index_trace": {
     "eventflow_evidence":"The AN/HA prologue flows initialize BuildingSiteIndex=-1; common flow queries that key with Border=0; orientation flows reset it to -1. These nodes contain no 0..5 assignment and no mSiteList parameter.",
-    "native_key_boundary":"string_refs exact/prefix query for BuildingSiteIndex returns 0 records. BuildStructure pseudocode's actor-side pointer remains UNK_02a80082; the native key cannot be identified as BuildingSiteIndex from the indexed artifacts. CRC32 searches for the literal among hash_refs also returned zero, which is only a bounded negative.",
-    "status":"OPEN"
+    "native_key_boundary":"The exact/prefix string_refs index returned zero, a bounded false negative caused by pseudocode display VA normalization. Direct segment inspection maps UNK_02a80082 to ELF VA 0x2980082, whose bytes are BuildingSiteIndex\\0. BuildStructure writes the selected index through VA 0xc756a0; EventFlow register/set/query handlers use the same actor+0x2f8 table shape and hash key.",
+    "status":"STATIC_CONFIRMED_KEY_AND_SELECTED_INDEX"
   },
   "corrected_address_note": {
     "correction":"An earlier follow-up conflated two VAs due the observed +0x100000 pseudocode-label display offset. The BuildStructure call is ELF VA 0x4e1d80 / label FUN_005e1d80 / file analysis_decomp/4e1d80.c, a real 48-byte array accessor. It is not ELF VA 0x5e1d80 / FUN_006e1d80 / file 5e1d80.c, the separate four-byte empty stub.",
@@ -112,13 +113,13 @@
   },
   "bounded_negative_search": {
     "registry_scope_correction":"The earlier 221-entry focus7 handler report was partial. This pass uses the full 1,057-entry event_handlers_resolved.json. The earlier no-match within focus7 should not be interpreted as absence of native factories.",
-    "native_string_refs_zero_for":["EventFlowQueryCanBuildHere","EventFlowActionStructureStartPreviewGuide","PreviewStructure","DeletePreviewStructure","BuildingSiteIndex"],
+    "native_string_refs_zero_for":["EventFlowQueryCanBuildHere","EventFlowActionStructureStartPreviewGuide","PreviewStructure","DeletePreviewStructure"],
+    "building_site_index_string_ref_caveat":"The indexed string_refs absence is superseded by direct raw segment bytes and corrected pseudocode VA normalization; see BUILDING_SITE_INDEX_BLACKBOARD_NATIVE_FOLLOWUP_20261107.md.",
     "direct_pose_helper_callers":"Seven indexed direct-call PCs are listed above; no corresponding mSiteList cell input appears in helper 0x3771d0's function body or string_refs.",
     "model_pbc_check":"The query/action/pose/structure-list helper functions above have no indexed string_refs. Their direct-call target sets do not include the indexed named PBC resource-reference functions at VAs 0x15fa20, 0x170480, or 0x1700d0. This rules out only a direct named reference in the checked functions; indirect resource dispatch remains OPEN.",
     "preview_actor_boundary":"StructurePreviewActor, StructurePreviewGuideActor, and StructurePreviewSwapActor strings occur in generic actor/module initialization references. The bounded direct-call table shows no direct call from the listed EventFlow method candidates to those actor-module initializer addresses; dynamic registration/actor creation remains OPEN."
   },
   "open_joins": [
-    {"id":"selected_actor_field_to_BuildingSiteIndex","status":"OPEN","why":"Native field +0x51 key pointer is UNK_02a80082, with no exact string/hash match to the EventFlow blackboard key."},
     {"id":"StructurePresetA00_instance_to_runtime_member","status":"OPEN","why":"Loader and consumer share +0x3a50/+0x3a58/+0x3a60 layout, but exact global object identity and selected preset instance are not proven."},
     {"id":"story_structure_to_site_index","status":"OPEN","why":"No mapping from cPlayerHouse/cBridge/cReserveNpcHouse or plot A/B/C to one of indices 0..5."},
     {"id":"cell_pair_to_pose_helper","status":"OPEN","why":"BuildStructure reads/adjusts a selected list record, while the shared pose helper separately uses player/NPC/quest actor transforms; no exact argument carries the selected pair into the helper."},
@@ -126,5 +127,5 @@
     {"id":"query_validation_geometry","status":"OPEN","why":"Query method candidate calls shared pose helper, but overlap/terrain/footprint validators are delegated through unresolved helpers and indirect calls."},
     {"id":"model_mesh_and_pbc_collider","status":"OPEN","why":"No named model or PBC resource is joined to the registered action methods, preview actor class, or selected list record."}
   ],
-  "validation": {"json_syntax_checked":true,"registered_actions":4,"native_pose_helper_call_sites":7,"site_list_cell_count":6,"open_join_count":7,"no_build_or_game_execution":true}
+  "validation": {"json_syntax_checked":true,"registered_actions":4,"native_pose_helper_call_sites":7,"site_list_cell_count":6,"open_join_count":6,"no_build_or_game_execution":true,"selected_site_index_to_BuildingSiteIndex_followup":"BUILDING_SITE_INDEX_BLACKBOARD_NATIVE_FOLLOWUP_20261107.md"}
 }

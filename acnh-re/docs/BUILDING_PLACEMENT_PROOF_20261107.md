@@ -43,6 +43,8 @@ The existing loader analysis in `acnh-re/docs/ISLAND_LOADER_FOLLOWUP.md` statica
 
 `B_data/Param/Field/MainFieldPreset/StructurePresetA00.byml`, key `root.@StructurePresetA00.@mSiteList[]`, contains six `@mUnitX.s32`/`@mUnitZ.s32` cell pairs: `(61,66)`, `(78,77)`, `(49,79)`, `(88,80)`, `(97,84)`, `(69,90)`. These are **STRUCT** cell indices in one source preset. Their slot purpose and mapping to a player home, villager homes, facility, bridge or plot are **OPEN**. No conversion from cell indices to world axes, units, origin, rotation, elevation, footprint origin, model transform, or collider is claimed.
 
+The native follow-up [BuildingSiteIndex trace](BUILDING_SITE_INDEX_BLACKBOARD_NATIVE_FOLLOWUP_20261107.md) resolves a static consumer: the registered `BuildStructure` candidate selects an available index from a six-entry list, writes it to the actor AI blackboard as `BuildingSiteIndex`, and passes the parsed selected pair into actor-context code. This establishes a list-index/key/handoff relation, but not that the runtime list instance is `StructurePresetA00`, which story structure owns each index, or the final world transform.
+
 The player movement collider query at `0x7bccf0` is documented in `acnh-re/docs/PLAYER_COLLIDER_QUERY_REMAINDER_20261107.md`; the sandbox probe stops at an uninitialized world root. That query does not identify placement validation, building footprint geometry or a structure PBC consumer. All building-placement collision joins remain **OPEN**.
 
 ## Raw source anchors

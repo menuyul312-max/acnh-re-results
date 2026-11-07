@@ -3,7 +3,7 @@
   "game_version": "1.0.0",
   "date": "2026-11-07",
   "scope": "Exact-source reverse-engineering of story placement selection for the player tent, first bridge, and three settler plots; StructurePresetA00 site-list loading; native transform/consumer join search. No Godot, build, or game execution.",
-  "finding": "EventFlow passes explicit StructureType and StructureBuildPosType values to generic preview/build actions. FieldMainFieldParam row UniqueID 0 selects StructurePresetA00, which contains six ordered mSiteList s32 cell pairs. Native analysis pseudocode statically shows a descriptor/load path for mSiteList and six child slots, but no source join assigns a slot to the player tent, bridge, or a plot, or converts a cell to world position, rotation, footprint, model instance, save record, or collider.",
+  "finding": "EventFlow passes explicit StructureType and StructureBuildPosType values to generic preview/build actions. FieldMainFieldParam row UniqueID 0 selects StructurePresetA00, which contains six ordered mSiteList s32 cell pairs. A later native follow-up confirms that the registered BuildStructure candidate selects an available six-list index, writes it under the actor AI blackboard key BuildingSiteIndex, parses the cell pair, and passes it to actor-context handling. No source assigns a specific story building to an index or establishes the runtime preset instance, world transform, footprint, model, save record, or collider.",
   "labels": {
     "EF": "EventFlow graph evidence only; runtime handler behavior is not proven.",
     "TBL": "BCSV row/column evidence; identifiers are table-local absent an explicit join.",
@@ -405,10 +405,10 @@
     "sha256": "b52478377f3cd7d9d9702bcbc474589b0435e48eb699938c67a08e753cbf11c8",
     "observations": [
       "Pseudocode accesses global structure-like members +0x3a50/+0x3a58/+0x3a60, traverses six candidate indices, and indexes an array using a value obtained from actor-side field +0x51.",
-      "The actor lookup key remains UNK_02a80082; this does not prove it is the EventFlow key BuildingSiteIndex.",
+      "The former UNK_02a80082 unresolved claim is superseded: after removing the pseudocode +0x100000 display bias, ELF VA 0x2980082 is the raw BuildingSiteIndex string, and BuildStructure writes its selected list index through the matching actor blackboard setter. See BUILDING_SITE_INDEX_BLACKBOARD_NATIVE_FOLLOWUP_20261107.md.",
       "The BuildStructure method calls ELF VA 0x4e1d80 (display label FUN_005e1d80; file analysis_decomp/4e1d80.c), a 48-byte list accessor that rejects indices above 5 and bounds-checks against the list count. A separate ELF VA 0x5e1d80 / FUN_006e1d80 / analysis_decomp/5e1d80.c is a four-byte empty stub, but it is not the call target."
     ],
-    "claim_limit": "No exact action/query registration, story selector, blackboard-key equality, or caller edge to Player_HousingKit's placement actions is proven. Search lead only."
+    "claim_limit": "The native site-index-to-blackboard key/record handoff is statically proven. No exact story structure-to-index assignment or live caller edge from Player_HousingKit placement actions is proven; runtime and world-transform semantics remain OPEN."
   },
   "eventflow_building_site_index": {
     "label": "EF",

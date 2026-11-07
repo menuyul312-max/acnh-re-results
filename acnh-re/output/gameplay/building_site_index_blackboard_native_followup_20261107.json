@@ -1,0 +1,256 @@
+{
+  "schema": "acnh-re/building-site-index-blackboard-native-followup/1",
+  "game_version": "1.0.0",
+  "date": "2026-11-07",
+  "scope": "Read-only static trace of EventFlow BuildStructure site-index selection, BuildingSiteIndex blackboard insert/set/query, selected mSiteList pair parsing, and actor-context handoff. No game, save, Godot, or build execution.",
+  "correction": {
+    "supersedes": "BUILDING_PLACEMENT_NATIVE_HANDLER_FOLLOWUP_20261107.md claims that UNK_02a80082 is unresolved and has no exact native string match.",
+    "reason": "Pseudocode display labels are offset +0x100000 from the actual ELF VAs in this analysis database. The actual ELF VA 0x2980082 contains the exact key string.",
+    "raw_key": "BuildingSiteIndex",
+    "raw_key_nul_terminated": true,
+    "actual_elf_va": "0x2980082",
+    "display_label": "UNK_02a80082",
+    "segment": 1,
+    "segment_va_start": "0x2212000",
+    "segment_file_offset": "0x76e082",
+    "raw_bytes_hex": "4275696c64696e6753697465496e64657800",
+    "raw_bytes_sha256": "8090fd35b35abefe5109cb4520043c857ceabf971c83fedea143ae8b887389c3",
+    "main_nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+    "segment_sha256": "ed2a3e8fff6192db71f758150488cde6581c8963ddd355e9f0f10041e469c6ef",
+    "index_limitation": "The earlier string_refs no-result is superseded by direct raw segment bytes; it is not evidence that this literal is absent."
+  },
+  "evidence_labels": {
+    "EF": "Raw EventFlow key/value/query nodes.",
+    "BIND": "BindInfo to native factory/constructor/vtable registration; candidate slot role is static.",
+    "PSEUDO": "Static decompilation and indexed direct-call PC; not a live game execution.",
+    "STRUCT": "Decoded BYML data shape; not a runtime instance identity or world transform.",
+    "OPEN": "Unresolved source, runtime consumer, semantics, transform, or persistence boundary.",
+    "CAT": "Catalog candidate only; not a raw asset/consumer join."
+  },
+  "provenance": {
+    "main_nso": {
+      "path": "acnh-re/inputs/additional_exefs/main",
+      "sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900"
+    },
+    "main_elf": {
+      "analysis_metadata_path": "/workspace/acnh-re/output/binary/elf.json",
+      "elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+      "machine": "AArch64"
+    },
+    "decompressed_segment_1": {
+      "analysis_path": "/workspace/acnh-re/work/exefs_modules/main/1.bin",
+      "va_start": "0x2212000",
+      "file_size": 14718844,
+      "sha256": "ed2a3e8fff6192db71f758150488cde6581c8963ddd355e9f0f10041e469c6ef"
+    },
+    "eventflow_sources": [
+      {"path": "B_data/EventFlow/AI_NPC_Prologue_AN.bfevfl", "manifest_id": 245, "sha256": "c99b80854ecdcd976c1fde46f3cb5c5178283f422b339de4e027f603a70e936a"},
+      {"path": "B_data/EventFlow/AI_NPC_Prologue_Common.bfevfl", "manifest_id": 246, "sha256": "8f0efd84327fb4741b6f80a39ae1df70fe49070d9b645a8b122b49f8a42a998b"},
+      {"path": "B_data/EventFlow/AI_NPC_Prologue_HA.bfevfl", "manifest_id": 247, "sha256": "5f9590eeb6d5aadadb66d014bac43f2726ca51ad8ce14034559350156082842f"},
+      {"path": "B_data/EventFlow/Player_HousingKit.bfevfl", "manifest_id": 516, "sha256": "6b7e56629772c85053c44b399d9e1a9bdf1d8f147cceb8bb499cc8c8918a0383"},
+      {"path": "B_data/EventFlow/System_Structure_Common.bfevfl", "manifest_id": 658, "sha256": "e64c08ddc898616e354c6951ae891597726d78c4ca2c61e4257264d837033c12"},
+      {"path": "B_data/EventFlow/Tutorials_Prologue4_Orientation2_AN.bfevfl", "manifest_id": 665, "sha256": "7ff6650eda5f30d0bcd2251ba0c112a881959becd07f15f338a09366c84433a2"},
+      {"path": "B_data/EventFlow/Tutorials_Prologue4_Orientation2_HA.bfevfl", "manifest_id": 666, "sha256": "46725f5022bfb4319cc67ae8290b200aecb320a0d5dc165b0f23cd6a27123ebc"}
+    ],
+    "event_handler_registry": {
+      "path": "/workspace/acnh-re/output/binary/event_handlers_resolved.json",
+      "sha256": "dfc298dfcb1b288b8fda9cd6a49c728fdad903b41f8fc1c9288df7d732ec92a5",
+      "bind_info": {"path": "B_data/EventFlow/Info/BindInfo.byml", "manifest_id": 307, "sha256": "d5867e0729d4d0eb222c27ff8a6b5cdc0ac401f34feadd3353f420c36368e999"}
+    },
+    "structure_preset": {
+      "path": "B_data/Param/Field/MainFieldPreset/StructurePresetA00.byml",
+      "manifest_id": 2729,
+      "sha256": "2a0be5f7a0904fe09c5ead536802749696e317bf1261d22327811aafb036436e",
+      "six_mSiteList_pairs": [[61, 66], [78, 77], [49, 79], [88, 80], [97, 84], [69, 90]],
+      "runtime_instance_join": "OPEN"
+    },
+    "analysis_index": {
+      "path": "/workspace/acnh-re/output/index.sqlite",
+      "sha256": "a78c7af27d37b8fd931bba8bc611623dacf7685cb6e8b4f827effa0765340aad",
+      "elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74"
+    }
+  },
+  "address_normalization": {
+    "rule": "For cited decomp files, pseudocode function/global labels display +0x100000 relative to ELF VAs used by the analysis DB and file names.",
+    "examples": [
+      {"elf_va": "0x369d50", "file": "analysis_decomp/369d50.c", "display_label": "FUN_00469d50"},
+      {"elf_va": "0x4e1d80", "file": "analysis_decomp/4e1d80.c", "display_label": "FUN_005e1d80"},
+      {"elf_va": "0xc756a0", "file": "analysis_decomp/c756a0.c", "display_label": "FUN_00d756a0"},
+      {"elf_va": "0x2980082", "display_label": "UNK_02a80082", "raw_string": "BuildingSiteIndex"}
+    ]
+  },
+  "decomp_sources": [
+    {"elf_va": "0x369d50", "file": "analysis_decomp/369d50.c", "sha256": "b52478377f3cd7d9d9702bcbc474589b0435e48eb699938c67a08e753cbf11c8"},
+    {"elf_va": "0xc754a0", "file": "analysis_decomp/c754a0.c", "sha256": "1d34df451b4ebbf2c5ba6e4c44db1f809a9c8766f0f14b2646bdd92918108117"},
+    {"elf_va": "0xc756a0", "file": "analysis_decomp/c756a0.c", "sha256": "772d40326449dc77c448aec3460a465f751b572a275f96d8058fc9b3cdf29672"},
+    {"elf_va": "0xc75850", "file": "analysis_decomp/c75850.c", "sha256": "f32b9968b6253e8d61f59f9ade12f10feeb3fef75bd3419ef073f49cb31d5120"},
+    {"elf_va": "0x1bf0", "file": "analysis_decomp/1bf0.c", "sha256": "3018343a7ad382842d73c079f4788079d6c9cf424d9a9d89ab963dfb96d23ac5"},
+    {"elf_va": "0x25b560", "file": "analysis_decomp/25b560.c", "sha256": "9f4cfc839957b27fa40565582235cfa9eb4b5fb4d28d54f4f4b2b486a116c8a8"},
+    {"elf_va": "0x25bdf0", "file": "analysis_decomp/25bdf0.c", "sha256": "a79007649568795b1cfec875b71c790c741c4d0cf3e149f088eec8beca50446d"},
+    {"elf_va": "0x386470", "file": "analysis_decomp/386470.c", "sha256": "80d7cb0dda3b089476cdca5faa428cbcb2545aa0c2113925d0e5314b8955399c"},
+    {"elf_va": "0x166ab70", "file": "analysis_decomp/166ab70.c", "sha256": "9da61cab7ef9b93cb2de5c505dbd675ed49daabcad19c25423249d3d14c2c876"},
+    {"elf_va": "0x4e1db0", "file": "analysis_decomp/4e1db0.c", "sha256": "4a17909774882f113dcc2e69efa953606b04624041b77fd45bbf8c044a7cbacb"},
+    {"elf_va": "0x4e1670", "file": "analysis_decomp/4e1670.c", "sha256": "d3e36c3b8787af81268fd26e1bc9da826805969b9acb2882355c03591445ebe4"},
+    {"elf_va": "0xbe6480", "file": "analysis_decomp/be6480.c", "sha256": "7dc3b77a1564525ca6d0874af403bdd6008a392d97775eea5e7e749e79a9aec9"},
+    {"elf_va": "0xbe6340", "file": "analysis_decomp/be6340.c", "sha256": "5817cf57fdb01962c95c5ace9fb5129d2384a1dc60f067ffb4459ab21b34ff40"},
+    {"elf_va": "0xbf9520", "file": "analysis_decomp/bf9520.c", "sha256": "5073214dcb42b79010fb7e9b6e02a77c52668b0b9c103d7f7746930f818610a2"},
+    {"elf_va": "0xd3fd30", "file": "analysis_decomp/d3fd30.c", "sha256": "ed734059234c6d0b9e7080ac6e8edc3866caf189c71e2a39d8dbc78ae72a75a9"},
+    {"elf_va": "0xd40840", "file": "analysis_decomp/d40840.c", "sha256": "3ef8959a973590d62314695959181f1395b247724932b13bd360372224cf44bd"}
+  ],
+  "blackboard_handlers": [
+    {
+      "label": "BIND/PSEUDO",
+      "name": "MainNpc.EventFlowActionNpcRegistAIBlackBoard",
+      "registration_hash": "c2d5d4ad",
+      "factory": "0x452a70",
+      "constructor": "0x25b480",
+      "candidate_vtable_va": "0x303f278",
+      "candidate_slot_index": 11,
+      "candidate_method_elf_va": "0x25b560",
+      "method_display_label": "FUN_0035b560",
+      "method_sha256": "9f4cfc839957b27fa40565582235cfa9eb4b5fb4d28d54f4f4b2b486a116c8a8",
+      "helper_elf_va": "0xc754a0",
+      "helper_display_label": "FUN_00d754a0",
+      "helper_sha256": "1d34df451b4ebbf2c5ba6e4c44db1f809a9c8766f0f14b2646bdd92918108117",
+      "helper_effect": "Hashes the exact Key string, inserts the provided initial Value and key hash into the actor state table at [actor+0x2f8]+0x20, then sorts the entries."
+    },
+    {
+      "label": "BIND/PSEUDO",
+      "name": "MainNpc.EventFlowActionNpcSetAIBlackBoard",
+      "registration_hash": "3a5555df",
+      "factory": "0x44de70",
+      "constructor": "0x25bd10",
+      "candidate_vtable_va": "0x303f2e8",
+      "candidate_slot_index": 11,
+      "candidate_method_elf_va": "0x25bdf0",
+      "method_display_label": "FUN_0035bdf0",
+      "method_sha256": "a79007649568795b1cfec875b71c790c741c4d0cf3e149f088eec8beca50446d",
+      "helper_elf_va": "0xc756a0",
+      "helper_display_label": "FUN_00d756a0",
+      "helper_sha256": "772d40326449dc77c448aec3460a465f751b572a275f96d8058fc9b3cdf29672",
+      "helper_effect": "Hashes the key and searches the actor state table at [actor+0x2f8]+0x20; on a matching entry it overwrites the stored value."
+    },
+    {
+      "label": "BIND/PSEUDO",
+      "name": "MainNpc.EventFlowQueryNpcBlackBoard",
+      "registration_hash": "7f9d36f0",
+      "factory": "0x459770",
+      "constructor": "0x386390",
+      "candidate_vtable_va": "0x3051368",
+      "candidate_slot_index": 6,
+      "candidate_method_elf_va": "0x386470",
+      "method_display_label": "FUN_00486470",
+      "method_sha256": "80d7cb0dda3b089476cdca5faa428cbcb2545aa0c2113925d0e5314b8955399c",
+      "getter_elf_va": "0xc75850",
+      "getter_display_label": "FUN_00d75850",
+      "getter_sha256": "f32b9968b6253e8d61f59f9ade12f10feeb3fef75bd3419ef073f49cb31d5120",
+      "method_effect": "Reads from the same actor state table at [actor+0x2f8]+0x20 via the key hash, then returns whether the retrieved value is less than the configured Border."
+    }
+  ],
+  "eventflow_key_uses": [
+    {"label": "EF", "flow": "AI_NPC_Prologue_AN", "operation": "NpcRegistAIBlackBoard", "key": "BuildingSiteIndex", "value": -1},
+    {"label": "EF", "flow": "AI_NPC_Prologue_HA", "operation": "NpcRegistAIBlackBoard", "key": "BuildingSiteIndex", "value": -1},
+    {"label": "EF", "flow": "AI_NPC_Prologue_Common", "operation": "NpcQueryBlackBoard", "key": "BuildingSiteIndex", "border": 0},
+    {"label": "EF", "flow": "Tutorials_Prologue4_Orientation2_AN", "operation": "NpcSetAIBlackBoard", "key": "BuildingSiteIndex", "value": -1},
+    {"label": "EF", "flow": "Tutorials_Prologue4_Orientation2_HA", "operation": "NpcSetAIBlackBoard", "key": "BuildingSiteIndex", "value": -1}
+  ],
+  "build_structure_site_trace": {
+    "label": "BIND/PSEUDO",
+    "action_name": "EventFlowSystemActor.EventFlowActionBuildStructure",
+    "registration_hash": "202e4467",
+    "constructor_elf_va": "0x369c10",
+    "candidate_method_elf_va": "0x369d50",
+    "method_display_label": "FUN_00469d50",
+    "method_decomp_sha256": "b52478377f3cd7d9d9702bcbc474589b0435e48eb699938c67a08e753cbf11c8",
+    "direct_call_pcs": [
+      {"pc": "0x36a0f4", "target": "0xc756a0", "effect": "Writes the -1 sentinel to BuildingSiteIndex on the method's separate ineligible branch."},
+      {"pc": "0x36a14c", "target": "0x4e1d80", "effect": "Tests site-list index 0."},
+      {"pc": "0x36a15c", "target": "0x4e1d80", "effect": "Tests site-list index 1."},
+      {"pc": "0x36a16c", "target": "0x4e1d80", "effect": "Tests site-list index 2."},
+      {"pc": "0x36a17c", "target": "0x4e1d80", "effect": "Tests site-list index 3."},
+      {"pc": "0x36a18c", "target": "0x4e1d80", "effect": "Tests site-list index 4."},
+      {"pc": "0x36a19c", "target": "0x4e1d80", "effect": "Tests site-list index 5."},
+      {"pc": "0x36a33c", "target": "0x166ab70", "effect": "Selects a set-bit index from the availability bitset."},
+      {"pc": "0x36a36c", "target": "0xc756a0", "effect": "Writes selected index to BuildingSiteIndex."},
+      {"pc": "0x36a37c", "target": "0x4e1670", "effect": "Parses the selected site-list pair."},
+      {"pc": "0x36a3ac", "target": "0xbe6480", "effect": "Passes the parsed pair and scalar to actor-context handling."},
+      {"pc": "0x36a3c0", "target": "0xbf9520", "effect": "Copies scalar to the selected actor subobject fields."},
+      {"pc": "0x36a3cc", "target": "0x166ac40", "effect": "Removes the selected index from the available set."}
+    ],
+    "structure_list": {
+      "manager_global": "0x33d1ba8",
+      "member_base": "*0x33d1ba8+0x3a50",
+      "count_offset": "0x3a58",
+      "entry_pointer_array_offset": "0x3a60",
+      "enumerated_indices": [0, 1, 2, 3, 4, 5],
+      "list_accessor_elf_va": "0x4e1d80",
+      "list_accessor_display_label": "FUN_005e1d80",
+      "list_accessor_sha256": "648e46a2364143720465e3567d6fab2dca0fb091a05762022c5a6bfcbad755f2",
+      "availability_rule": "Checks each index through the accessor and adds available indices to a six-bit set. Exact runtime parameter/preset instance remains OPEN."
+    },
+    "selection": {
+      "selector_elf_va": "0x166ab70",
+      "selector_display_label": "FUN_0176ab70",
+      "selector_sha256": "9da61cab7ef9b93cb2de5c505dbd675ed49daabcad19c25423249d3d14c2c876",
+      "call_pc": "0x36a33c",
+      "behavior": "Returns the rank-th set bit from the availability bitset. Caller passes the address of actor field +0x288 as the selector argument; the decomp uses its low 32 bits as rank input and does not load the field contents.",
+      "selected_index_range": "0..5 when count/list bounds pass"
+    },
+    "selected_index_and_key_write": {
+      "key": "BuildingSiteIndex",
+      "key_actual_elf_va": "0x2980082",
+      "write_helper_elf_va": "0xc756a0",
+      "write_pc": "0x36a36c",
+      "value": "selected index 0..5, or -1 on the method's separate ineligible path",
+      "blackboard_member": "[actor+0x2f8]+0x20"
+    },
+    "pair_parser": {
+      "elf_va": "0x4e1670",
+      "display_label": "FUN_005e1670",
+      "call_pc": "0x36a37c",
+      "sha256": "d3e36c3b8787af81268fd26e1bc9da826805969b9acb2882355c03591445ebe4",
+      "observed_pair_arithmetic": "first + (other_value >> 1), second + 1",
+      "coordinate_semantics": "OPEN: component names, axes, units, origin, elevation, rotation, and footprint meaning are not recovered."
+    },
+    "actor_context_handoff": {
+      "position_consumer_elf_va": "0xbe6480",
+      "position_consumer_display_label": "FUN_00ce6480",
+      "handoff_pc": "0x36a3ac",
+      "position_consumer_sha256": "7dc3b77a1564525ca6d0874af403bdd6008a392d97775eea5e7e749e79a9aec9",
+      "branches": [
+        {"condition": "actor byte +0x5ad flag", "coordinate_helpers": ["0xd3fd30", "0xd40840"], "semantics": "OPEN; both consume the pair and inspect additional state, but named placement meaning is unresolved."},
+        {"condition": "common path", "function_elf_va": "0xbe6340", "sha256": "5817cf57fdb01962c95c5ace9fb5129d2384a1dc60f067ffb4459ab21b34ff40", "effect": "Dispatches selected scalar to an actor component virtual slot +0x158, copies scalar to actor +0x610 and linked subobject fields, and notifies linked observers. The component helper's decomp uses a coordinate parameter at virtual slot +0x128, but the caller pseudocode omits explicit argument forwarding; final pose assignment remains OPEN."}
+      ],
+      "post_handoff_scalar_copy": {
+        "elf_va": "0xbf9520",
+        "display_label": "FUN_00cf9520",
+        "call_pc": "0x36a3c0",
+        "sha256": "5073214dcb42b79010fb7e9b6e02a77c52668b0b9c103d7f7746930f818610a2",
+        "flag_argument": 0,
+        "writes": ["subobject +0x4dc = scalar", "if subobject +0x370 < 31: +0x39c = scalar"],
+        "not_written_on_this_call": ["+0x320", "*+0x348", "*+0x340"],
+        "scalar_semantics": "OPEN"
+      },
+      "candidate_set_update_pc": "0x36a3cc",
+      "candidate_set_effect": "Removes selected index from the availability bitset after handoff, preventing reuse within this invocation."
+    }
+  },
+  "open_joins": [
+    {"id": "eventflow_runtime_dispatch", "status": "OPEN", "why": "Factory, constructor, and vtable candidate are resolved statically; a live EventFlow invocation has not been traced."},
+    {"id": "story_structure_to_site_index", "status": "OPEN", "why": "No mapping assigns player house, bridge, museum, market, plot A/B/C, slope, or campsite to a particular mSiteList index."},
+    {"id": "runtime_list_to_structurepreset_instance", "status": "OPEN", "why": "The six-entry native list and StructurePresetA00.mSiteList share shape and count; runtime identity and selected preset instance remain unproven."},
+    {"id": "pair_to_world_transform", "status": "OPEN", "why": "No proved cell-to-world axes/units/origin/elevation/orientation/footprint conversion or final transform write."},
+    {"id": "placement_validation", "status": "OPEN", "why": "The query handler's full overlap, terrain, footprint, endpoint, and collider validation chain is unresolved."},
+    {"id": "model_and_collision_consumer", "status": "OPEN", "why": "No model resource or PBC/collider instance is joined to the selected site pair; model catalogue entries remain CAT."},
+    {"id": "durable_structure_save", "status": "OPEN", "why": "No structure-instance serialization, file write/flush/reload, or story day-change completion boundary is traced here."}
+  ],
+  "validation": {
+    "segment_offset_verified": true,
+    "raw_key_bytes_verified": true,
+    "native_source_hashes_verified": true,
+    "json_syntax_verified": true,
+    "native_game_execution": false,
+    "save_mutation": false,
+    "godot_or_build_execution": false
+  }
+}
