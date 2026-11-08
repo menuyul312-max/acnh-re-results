@@ -1,0 +1,415 @@
+{
+  "schema": "acnh.island_designer_app_install_page_consumer_followup.v1",
+  "generated_date_utc": "2026-11-08",
+  "scope": "Static ACNH 1.0.0 trace from UIMenuDeviceAppear(cInstall,cConstructLicense) to the shared UI-event request/result record, the MenuDevice code-group consumer, and matching page/layout/static-param/BFLAN keys. No game or save was run.",
+  "source_build": {
+    "main_nso_sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+    "main_text_segment_sha256": "9c9b45d8e7a58706ca59e7244b3aebac2325ef98faa205e007974eeeb2f758e9",
+    "text_segment_bytes": 35723872,
+    "main_elf_sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74",
+    "address_convention": "Normalized NSO/ELF VAs; function hashes cover exact raw main text spans."
+  },
+  "source_artifacts": [
+    {
+      "path": "/workspace/acnh-re/inputs/additional_exefs/main",
+      "sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900",
+      "bytes": 24990531,
+      "role": "ACNH 1.0.0 main NSO source"
+    },
+    {
+      "path": "/workspace/acnh-re/inputs/additional_exefs/main",
+      "sha256": "9c9b45d8e7a58706ca59e7244b3aebac2325ef98faa205e007974eeeb2f758e9",
+      "bytes": 35723872,
+      "role": "decompressed NSO text segment",
+      "segment": "text",
+      "range_va": "0x0-0x21ff9a0",
+      "evidence": "decompressed NSO text segment; segment SHA-256, not whole-file SHA-256"
+    },
+    {
+      "path": "/workspace/acnh-re/work/eventflow/SNPC_rco_55_TkkFirstLive.json",
+      "sha256": "4fb93e333d08fe1c5facd93250f38c01228e0fa922950149f795249e61596aa9",
+      "bytes": 6509,
+      "role": "EventFlow working source: InvitePlayerHouse"
+    },
+    {
+      "path": "/workspace/acnh-re/work/eventflow/Player_StartGamePhoneCall.json",
+      "sha256": "b0aabf5e2e428f9adf8dd4609ffb776993895377367d6653064d423a6b3141c0",
+      "bytes": 23506,
+      "role": "EventFlow working source: Island Creator call"
+    },
+    {
+      "path": "/workspace/acnh-re/work/eventflow/Demo_PublicAnnouncement_Process.json",
+      "sha256": "b36dea6b05893ef6055e7566ca91aa6b898ad87bfa35d21168df51573c8a9d9c",
+      "bytes": 37032,
+      "role": "EventFlow working source: daily call scheduling"
+    },
+    {
+      "path": "/workspace/acnh-re/output/byml_resolved/01786.json",
+      "sha256": "04c0d290387dde6aa7012a902797aad4ed3e9be4d00466fa75735b50080052c3",
+      "bytes": 1053,
+      "role": "resolved StaticParam record",
+      "source_path": "B_data/Pack/StaticParam.pack!Param/Layout/MenuDevice.byml",
+      "source_sha256": "cbf5b2b18545085cbc73d84ccd73114062302e6e6b81b612645dc3976a5d958b"
+    },
+    {
+      "path": "/workspace/acnh-re/output/additional_romfs/ui/954a0c065cb116c1a60ff63fe66cd6399c7b6faf3dbfb4211df3790f2460bff8.json",
+      "sha256": "7a5fd628378bd6e3882546c0d821da9b5ba3b467fb480ed400f822329ccd59f0",
+      "bytes": 17348,
+      "role": "decoded MenuDevice BFLYT record",
+      "source_path": "Layout/MenuDevice.Nin_NX_NVN.zs",
+      "container_sha256": "eea921b7ba79d20c5d39647d77e89fd7d2257b6875c5d93225a274e1cafbbc03",
+      "member": "MenuDevice.arc!blyt/MenuDevice.bflyt",
+      "member_sha256": "4a241584f43ecc1e0e28449bccce710346eec748cd569c1149276f74bfd11b69"
+    },
+    {
+      "path": "/workspace/acnh-re/output/mechanics/systems_research_ledger.json",
+      "sha256": "435c7a6adf3aef0ef2005c39c127ca32d77491db094444a5c06a563694032500",
+      "bytes": 546529,
+      "role": "native action enum vocabulary cross-reference"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/analyzed_functions.tsv",
+      "sha256": "38455b8aaef240037d2f45d53db9b4a1473dfd938cb52d5e6e0087a2ba26b288",
+      "bytes": 6138583,
+      "role": "function span index"
+    },
+    {
+      "path": "/workspace/acnh-re/output/binary/code_pointer_arrays.json",
+      "sha256": "64d474068ca289f9146f7f32e6647a16a05e8f5be8e635615a478744b62ef822",
+      "bytes": 11768450,
+      "role": "relocated code-pointer sequence index"
+    },
+    {
+      "path": "/workspace/acnh-re-github/acnh-re/output/gameplay/kk_firstlive_gate_stage_unlock_join_followup_20261107.json",
+      "sha256": "8918d7808910f204f48e751699abc91c824283d0313e0e5910d766ec67e82ee4",
+      "bytes": 24130,
+      "role": "prior progression and authored unlock evidence"
+    },
+    {
+      "path": "/workspace/acnh-re-github/acnh-re/output/gameplay/ui_action_page_handoff_detail_20261107.json",
+      "sha256": "28bdc5415dc44a8b1b823648134fc61b78f3494d032b659867957df3cadc60a7",
+      "bytes": 107882,
+      "role": "prior native request/result and page-resource evidence"
+    },
+    {
+      "path": "/workspace/acnh-re-github/acnh-re/output/ui_hud/page_layout_method_bindings.json",
+      "sha256": "8b55f0a1dbc810b71573444707bdd1ab2a891d3a9b3577be556c9da74c07716a",
+      "bytes": 141031,
+      "role": "page slot-46 layout getter index"
+    }
+  ],
+  "authored_unlock_entries": [
+    {
+      "flow": "SNPC_rco_55_TkkFirstLive",
+      "entry": "InvitePlayerHouse",
+      "events": [
+        {
+          "event_index": 16,
+          "action": "EventFlagsSet",
+          "flag": "cPlayer:MainmenuConstructLicense",
+          "value": true
+        },
+        {
+          "event_index": 17,
+          "action": "UIMenuDeviceAppear",
+          "EventType": "cInstall",
+          "Application": "cConstructLicense"
+        }
+      ],
+      "branch_condition": "baggage-space query case 0 and TkkFirstLiveReserved ON; authored branch only, no runtime selection asserted"
+    },
+    {
+      "flow": "Player_StartGamePhoneCall",
+      "entry": "IslandCreaterTell",
+      "events": [
+        {
+          "event_index": 145,
+          "action": "EventFlagsSet",
+          "flag": "cPlayer:MainmenuConstructLicense",
+          "value": true
+        },
+        {
+          "event_index": 146,
+          "action": "UIMenuDeviceAppear",
+          "EventType": "cInstall",
+          "Application": "cConstructLicense"
+        }
+      ],
+      "entry_selection": "Island Creator standby-call branch; engine start of this EventFlow remains unjoined"
+    }
+  ],
+  "native_action_translation": {
+    "registry": {
+      "key": "EventFlowSystemActor.EventFlowActionUIMenuDeviceAppear",
+      "registration_hash": "49f7be22",
+      "parameters": [
+        "EventType:string",
+        "Application:string"
+      ],
+      "callback_va": "0x357770",
+      "callback_code_sha256": "afef951773c77b150e178a1c10d1838b037b229238da3743a2072ce817c5dfb1"
+    },
+    "event_type_mapping": {
+      "cBoot": "0x2d",
+      "cInstall": "0x2e",
+      "evidence": "callback branches assign 0x2d for boot and 0x2e for install; these are action/page event codes, distinct from manager record +0x8 pending marker"
+    },
+    "application_mapping": {
+      "accepted_application_names_in_native_enum_order": [
+        "cNone",
+        "cEncyclopedia",
+        "cRecipe",
+        "cCatalog",
+        "cMyDesign",
+        "cCallVillager",
+        "cFriendList",
+        "cNookMileage",
+        "cNookMileagePlus",
+        "cConstructLicense"
+      ],
+      "cConstructLicense_parser_index": 9,
+      "callback_case_9_manager_application_id": "0x0000000c",
+      "parser_va": "0x357990",
+      "parser_code_sha256": "311e4f9392fc69c0c9eb01ad989bcab8ab0ad9b5b1f55b24d95fd79cb4239b83",
+      "interpretation": "The callback parses the Application string to enum index 9 and its switch writes native application ID 12 into the packet field at +0xc."
+    },
+    "writer_callsite": {
+      "pc": "0x357984",
+      "target_va": "0x154a040",
+      "instruction_bytes_le": "afc94794"
+    },
+    "manager_packet": {
+      "initializer_va": "0x15409d0",
+      "packet_offset_0x8_initial_value": "0x0100",
+      "packet_offset_0xc_initial_value": "0xffffffff",
+      "handler_overwrites_offset_0xc_with": "0x0000000c",
+      "setter_copies": [
+        {
+          "from_packet_offset": "0x8",
+          "to_manager_offset": "0xb038",
+          "width_bytes": 2
+        },
+        {
+          "from_packet_offset": "0xc",
+          "to_manager_offset": "0xb03c",
+          "width_bytes": 4
+        }
+      ]
+    }
+  },
+  "shared_ui_event_channel": {
+    "writer": {
+      "wrapper_va": "0x154a040",
+      "wrapper_code_sha256": "5490f76ee59cceeb1e919679b11eae85b4e5a18aa19431c2229c2498eb728b79",
+      "chain": [
+        "0x1544dc0",
+        "0x15479b0"
+      ],
+      "manager_accessor_sha256": "6c955f0b9f868a4e066e5ac45901dbfecafd241513be0dede1320667118b5b0a",
+      "packet_copier_sha256": "a66389deab3b654b50a6f0b96df1e8d67aef03981943666f55a10aac1cbbf91b"
+    },
+    "reader": {
+      "wrapper_va": "0x154a070",
+      "wrapper_code_sha256": "ec33b1959947183fac3a872ab5f10edc421f76f10c32f560a311fedd241d5b3e",
+      "chain": [
+        "0x1544dc0",
+        "0x1547940"
+      ],
+      "reader_code_sha256": "1c5d39107d0e57360e8d51698a09af45652f7f1df3d81713539099be5419e071",
+      "record_behavior": "reader checks pending byte manager+0xb038, invokes its callback through vtable+0x18 if set, clears the pending byte, writes status at +0xb039, and returns the manager record base manager+0xb030; caller +0xc therefore reads manager+0xb03c application ID"
+    },
+    "identity": "Writer and reader wrappers call the same singleton accessor and operate on one shared record."
+  },
+  "menu_device_app_manager_consumer": {
+    "function_va": "0x125bcd0",
+    "function_bytes": 1588,
+    "function_code_sha256": "a97da8c71c20bb25723109494af3c6700d5779eb1f387e580212549a211e91ac",
+    "event_gate": {
+      "object_offset": "0x1fc",
+      "cInstall_value": "0x2e"
+    },
+    "direct_reader_calls": [
+      {
+        "pc": "0x125bd4c",
+        "target_va": "0x154a070",
+        "instruction_bytes_le": "c9b80b94"
+      },
+      {
+        "pc": "0x125be04",
+        "target_va": "0x154a070",
+        "instruction_bytes_le": "9bb80b94"
+      }
+    ],
+    "direct_writer_call": {
+      "pc": "0x125c1cc",
+      "target_va": "0x154a040",
+      "instruction_bytes_le": "9db70b94"
+    },
+    "payload_use": {
+      "source": "reader return pointer + 0xc = shared manager record +0xb03c",
+      "operation": "cInstall branch reads the returned native application ID, searches the page-owned app-entry vector, and stores a matching vector index at object+0x280",
+      "runtime_limit": "Static control/data flow proves the read/search/store logic; no runtime list state was executed to confirm a specific cConstructLicense match."
+    },
+    "page_attribution": {
+      "status": "MENUDEVICE_CODE_GROUP_CANDIDATE",
+      "evidence": "the 19-entry relocated code-pointer sequence beginning at 0x3308100 contains 0x125bcd0 at pointer slot 0x3308118; nearby MenuDevicePage factory/constructor/getter are independently identified",
+      "boundary": "sequence owner and C++ type are unresolved, so the consumer function is not claimed as a proven MenuDevicePage virtual method"
+    },
+    "source_dump": {
+      "path": "/workspace/acnh-re/output/ui_hud/menu_device_candidate_125bcd0.asm",
+      "sha256": "6d4ab967490616e604ac4c00a1a6fbcc8b08387d0fed2ad8e74220fcd3a92e0d"
+    }
+  },
+  "page_resource_keys": {
+    "page": {
+      "class_name": "MenuDevicePage",
+      "factory_va": "0x125ae40",
+      "factory_code_sha256": "8ed1669408edd0fd6d4036ed01a8545e40380eb4c397caa853026390497b1abe",
+      "constructor_va": "0x1258460",
+      "constructor_code_sha256": "447b1c841c58128d465928dc19208536de58fa40cf91cde453859b0ee3a8b5a4",
+      "constructor_vptr_relocation_slot": "0x3308098",
+      "vtable_address_point": "0x3112a18",
+      "registry_name_candidate": "MenuDevice",
+      "registry_raw_integer_argument": 22,
+      "registry_factory_status": "normalized-name candidate only; dispatch to this factory is unproven"
+    },
+    "layout_identifier": {
+      "getter_va": "0x12595f0",
+      "method_slot_index": 46,
+      "returned_identifier": "MenuDevice",
+      "returned_string_va": "0x295bfe8",
+      "exact_bflyt_member_name_match": true,
+      "getter_direct_B_or_BL_call_count": 0
+    },
+    "native_code_string_references": [
+      {
+        "pc": "0x1258eac",
+        "instruction_bytes_le": "4ad51691",
+        "string": "DemoStart",
+        "string_va": "0x298e5b5",
+        "function_va": "0x1258d10",
+        "function_code_sha256": "cde5b77aa9110a72bdeb87c211108620283ae7981db361b619355bbca87c4290"
+      },
+      {
+        "pc": "0x1258ec0",
+        "instruction_bytes_le": "4a712e91",
+        "string": "DemoInstall",
+        "string_va": "0x2976b9c",
+        "function_va": "0x1258d10",
+        "function_code_sha256": "cde5b77aa9110a72bdeb87c211108620283ae7981db361b619355bbca87c4290"
+      },
+      {
+        "pc": "0x1259344",
+        "instruction_bytes_le": "29fd1691",
+        "string": "DemoInstall00",
+        "string_va": "0x298e5bf",
+        "function_va": "0x1259170",
+        "function_code_sha256": "c2dce2116b4e6c35c2220f0583fc106653bf36920fa9f36893da7c1050f1ed1c"
+      },
+      {
+        "pc": "0x12595f4",
+        "instruction_bytes_le": "00a03f91",
+        "string": "MenuDevice",
+        "string_va": "0x295bfe8",
+        "function_va": "0x12595f0",
+        "function_code_sha256": "c03775db147af46a3d24a7b9b6b3346b0ab9b8f70c9d2a17926a4f94d40cbb61"
+      }
+    ],
+    "static_param": {
+      "source_path": "B_data/Pack/StaticParam.pack!Param/Layout/MenuDevice.byml",
+      "source_sha256": "cbf5b2b18545085cbc73d84ccd73114062302e6e6b81b612645dc3976a5d958b",
+      "root_user_name": "UI_MenuDevice",
+      "root_animation_tags": [
+        "DemoStart",
+        "DemoInstall"
+      ],
+      "part_group": "Button",
+      "part_path": "Btn",
+      "part_animation_operation_tag": "DemoInstall00"
+    },
+    "bflyt": {
+      "source_container": "Layout/MenuDevice.Nin_NX_NVN.zs",
+      "container_sha256": "eea921b7ba79d20c5d39647d77e89fd7d2257b6875c5d93225a274e1cafbbc03",
+      "version_status": "supplemental new_path archive; exact update patch unpinned",
+      "member": "MenuDevice.arc!blyt/MenuDevice.bflyt",
+      "sha256": "4a241584f43ecc1e0e28449bccce710346eec748cd569c1149276f74bfd11b69"
+    },
+    "bflan": [
+      {
+        "member": "MenuDevice.arc!anim/MenuDevice_DemoInstall.bflan",
+        "tag": "DemoInstall",
+        "sha256": "c65a41017e1e3945914ba1d8e8a9099419c05e199063d85f847a6171734de58c",
+        "bytes": 3692,
+        "frame_count": 130,
+        "key_count": 184,
+        "runtime_trigger": "OPEN"
+      },
+      {
+        "member": "MenuDevice.arc!anim/MenuDevice_In.bflan",
+        "tag": "In",
+        "sha256": "d09b051098317121bb2739702e7c62df0c60339d393b0043f4c297639ed8c18e",
+        "bytes": 7700,
+        "frame_count": 8,
+        "key_count": 322,
+        "runtime_trigger": "OPEN"
+      },
+      {
+        "member": "MenuDevice.arc!anim/MenuDevice_Out.bflan",
+        "tag": "Out",
+        "sha256": "91ed742a9557635070f5f2257c6f0df715447055e5270dc51d994932abe247d5",
+        "bytes": 1516,
+        "frame_count": 6,
+        "key_count": 38,
+        "runtime_trigger": "OPEN"
+      }
+    ],
+    "animation_join_status": "resource keys and exact DemoInstall BFLAN member are present; the cInstall/app-result path to a specific animation call/trigger remains OPEN"
+  },
+  "bounded_negative_scans": {
+    "direct_bl_method": "4-byte-aligned scan of the full 0x0-0x21ff9a0 main text segment; detects AArch64 BL only, not B, indirect dispatch, vtable calls, or generated dispatch",
+    "main_text_segment_bytes": 35723872,
+    "main_text_segment_sha256": "9c9b45d8e7a58706ca59e7244b3aebac2325ef98faa205e007974eeeb2f758e9",
+    "direct_calls_to_shared_writer": [
+      {
+        "pc": "0x357984",
+        "target": "0x154a040",
+        "owner": "0x357770"
+      },
+      {
+        "pc": "0x125c1cc",
+        "target": "0x154a040",
+        "owner": "0x125bcd0"
+      }
+    ],
+    "direct_calls_to_shared_reader": [
+      {
+        "pc": "0x125bd4c",
+        "target": "0x154a070",
+        "owner": "0x125bcd0"
+      },
+      {
+        "pc": "0x125be04",
+        "target": "0x154a070",
+        "owner": "0x125bcd0"
+      }
+    ],
+    "direct_B_or_BL_to_layout_getter_0x12595f0": 0,
+    "interpretation": "The action and MenuDevice code-group are the only direct writer/reader sites in this bounded full-text scan. This does not rule out indirect page dispatch."
+  },
+  "open_runtime_edges": [
+    "EventFlow action to the concrete MenuDevicePage instance and the factory/registry dispatch that opens it.",
+    "The 0x3308100 pointer sequence owner/type and whether 0x125bcd0 is a MenuDevicePage virtual method.",
+    "Runtime population and contents of the app-entry vector; whether this save/runtime returns native application ID 0x0c as a matching page entry.",
+    "The cInstall result to MenuDevice_DemoInstall BFLAN trigger, including whether DemoInstall00 is invoked through the Button/Btn part operation.",
+    "Exact update patch/build identity of supplemental MenuDevice layout/BFLAN archive.",
+    "Execution of the phone-call or Nook-invite branch, installation persistence, save commitment, and user-visible app appearance."
+  ],
+  "local_analysis_index": "/workspace/acnh-re/output/ui_hud/island_designer_app_install_page_consumer_followup_20261108.index.json",
+  "validation": {
+    "json_schema": "acnh.island_designer_app_install_page_consumer_followup.v1",
+    "function_hashes": "SHA-256 over exact raw NSO main text spans indexed by analyzed_functions.tsv; source build hash recorded above",
+    "callsite_bytes": "little-endian instruction bytes read from same main NSO text segment",
+    "resource_hashes": "BFLYT/BFLAN member hashes and StaticParam BYML source hash carried from decoded source records",
+    "runtime": "no game, save, or Godot execution"
+  }
+}

@@ -1,0 +1,407 @@
+{
+  "schema": "acnh.re.ground_query_traversal_runtime_edge_followup.v1",
+  "date": "2026-11-08",
+  "build": {
+    "game": "Animal Crossing: New Horizons",
+    "version": "1.0.0",
+    "address_convention": "Raw main-module ELF VAs/PCs; decompressed main text begins at VA 0."
+  },
+  "scope": {
+    "question": "Do root/grid readiness and query callback results statically reach player traversal branches for bridge, ladder, water, or collision?",
+    "method": "Static inspection of main.elf text, current native direct-call index, relocated code-pointer sequences, prior bounded query/readiness reports, and traversal-state reports.",
+    "runtime_execution": false,
+    "new_native_fixture": false,
+    "fixture_extrapolation": false,
+    "godot_work": false,
+    "save_mutation": false,
+    "ghidra_rebuild": false
+  },
+  "status": "ROOT_TO_GRID_SETUP_EDGE_STATIC; ROOT_READY_WRITER_OPEN; QUERY_TO_SELECTED_Y_CORRECTION_AND_TOOL_CHECKS_STATIC; LIVE_QUERY_AND_PLAYER_TRAVERSAL_OPEN",
+  "conclusion": "0xfe5a00 loads the same singleton slot 0x32d0de8 used by the query readiness predicate and directly calls 0x1978a0, which initializes/inserts a spatial grid under root+0xa0. This initializer does not set the separate root+0xf10 readiness byte; its constructor sets that byte to zero, and no nonzero writer to this exact root byte is resolved. Grid callback 0x172740 is statically connected to 0x7bccf0 and selected movement Y-correction branches. Ladder state readers and ladder/river-maker tool checks also exist, but no Npad-to-player-state edge, live query result, bridge crossing path, successful climb/swim/collision result, or end-to-end traversal is proven.",
+  "evidence_policy": {
+    "static_native_code": "PSEUDO / raw AArch64 instruction evidence",
+    "pointer_arrays": "Relocated code-pointer sequence evidence is not automatically typed as a C++ vtable; the 0x8445d0 slot association is recorded as a vptr-like callback candidate.",
+    "live_invocation": "Not established by function registration, direct calls, constructor stores, or pointer sequences alone.",
+    "fixture_policy": "Prior prepared-grid and movement fixtures are described only within their recorded bounds; no fixture result is extended to live traversal."
+  },
+  "source_identity": {
+    "main_elf": {
+      "path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/A_logic/main.elf",
+      "sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74"
+    },
+    "main_nso": {
+      "path": "/workspace/acnh-re/inputs/additional_exefs/main",
+      "sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900"
+    },
+    "main_text": {
+      "path": "/workspace/acnh-re/work/exefs_modules/main/0.bin",
+      "sha256": "9c9b45d8e7a58706ca59e7244b3aebac2325ef98faa205e007974eeeb2f758e9"
+    },
+    "native_index": {
+      "path": "/workspace/acnh-re/output/index.sqlite",
+      "sha256": "a78c7af27d37b8fd931bba8bc611623dacf7685cb6e8b4f827effa0765340aad"
+    },
+    "recognized_code_pointer_sequences": {
+      "path": "/workspace/acnh-re/output/binary/code_pointer_arrays.json",
+      "sha256": "64d474068ca289f9146f7f32e6647a16a05e8f5be8e635615a478744b62ef822"
+    }
+  },
+  "root_grid_lifecycle": {
+    "root": {
+      "singleton_global": "0x32d0de8",
+      "singleton_storage_slot": "0x33728b0",
+      "constructor": "0x197740",
+      "constructor_direct_callers": ["0x96ef0"],
+      "allocation_size": "0xf88",
+      "query_context": "root+0x28",
+      "query_context_constructor": "0x156840",
+      "constructor_readiness_clear": {
+        "pc": "0x156938",
+        "instruction": "strb wzr, [x19,#0xee8]",
+        "root_relative_offset": "+0xf10",
+        "value": 0
+      }
+    },
+    "setup_owner": {
+      "native_function": "0xfe5a00",
+      "native_span_bytes": 580,
+      "indexed_direct_callers": [],
+      "root_load": {
+        "pc": "0xfe5ab0",
+        "global_slot": "0x32d0de8",
+        "load_object_pc": "0xfe5ab8"
+      },
+      "lifecycle_call": {
+        "pc": "0xfe5abc",
+        "target": "0x1978a0",
+        "instruction": "BL",
+        "indexed_owner_va": null,
+        "containing_native_span": "0xfe5a00..0xfe5c43"
+      },
+      "invocation_status": "OPEN: setup owner has no indexed direct caller; no runtime cadence is known"
+    },
+    "grid_lifecycle": {
+      "function": "0x1978a0",
+      "direct_callers": ["0xfe5abc"],
+      "operations": [
+        {"operation": "clear byte", "offset": "root+0xf60", "pc": "0x1978a0"},
+        {"operation": "call grid initializer", "target": "0x156e30", "argument": "root+0x28"}
+      ],
+      "grid_initializer": {
+        "function": "0x156e30",
+        "object_size": "0x118",
+        "writes_grid_pointer": "context+0x78 = root+0xa0",
+        "initializes_spatial_index": "0x172090 / 0x1725f0",
+        "registers_spatial_index_in_query_list": true,
+        "writes_root_f10_readiness": false,
+        "direct_callers": ["0x1978a0"]
+      }
+    },
+    "function_slice_sha256": {
+      "0x197740": "d6975db33d93350a34ab8747091f2745e417e755723ff276fa54d84228e7272c",
+      "0x156840": "d20032c8e2f5da66d7a108c2abca4bbbee12950f72c845c2c59877e01209473e",
+      "0x156e30": "4f6fe7daba026a7211c0064015da328b9738ded085c5b02b7352c3ed7280e9d2",
+      "0x1978a0": "eda8bbd49771c73fe91bd576d677738e5e956423b0cd804efb83cf678cbfe26c",
+      "0xfe5a00": "c881390f10e42d5cb377913117c4f90bfc4bd954c8b99bbc803689d4887556bd"
+    }
+  },
+  "root_readiness": {
+    "predicate": "0x18ba40",
+    "conditions": [
+      "singleton root at 0x32d0de8 is non-null",
+      "root+0xa0 grid pointer is non-null",
+      "byte root+0xf10 is nonzero"
+    ],
+    "known_root_f10_writer": "0x156840 constructor clear only",
+    "verified_nonzero_writer": null,
+    "raw_scan": {
+      "scope": ["main", "rtld", "subsdk0", "sdk"],
+      "main_immediate_store_counts": {
+        "0xee8/width1": 4,
+        "0xee8/width4": 53,
+        "0xee8/width8": 22,
+        "0xf10/width4": 8,
+        "0xf10/width8": 34
+      },
+      "direct_byte_stores_at_context_ee8": [
+        {"pc": "0x156938", "value": 0, "receiver": "query context under root constructor"},
+        {"pc": "0x110c58c", "value": 0, "receiver": "not joined to root"},
+        {"pc": "0x11196bc", "value": 1, "receiver": "separate BSS/global object; root join open"},
+        {"pc": "0x1c7e4cc", "value": 0, "receiver": "not joined to root"}
+      ],
+      "nonzero_candidate": {
+        "function": "0x1119610",
+        "store_pc": "0x11196bc",
+        "incoming_direct_call": {"owner": "0x967e0", "call_pc": "0x969f8", "target": "0x1119510"},
+        "receiver_global_cell": "0x32d29f0",
+        "cell_relocation_addend": "0x361a5f8",
+        "root_identity": "not established"
+      },
+      "negative_scope": "Receiver identity for all wider +0xee8/+0xf10 stores, computed-address writes, atomic writes, runtime-generated setters, and indirect writes is not exhaustively proven."
+    },
+    "predicate_function_slice_sha256": "188cfe27e6fbc8574d0ed14018e88b6e360307292356093c32144a0464d17d24",
+    "status": "OPEN: a nonzero writer to this root's +0xf10 readiness byte is not identified"
+  },
+  "state_gated_base_grid_writer": {
+    "function": "0x8445d0",
+    "native_span_bytes": 1036,
+    "direct_callers": [],
+    "state_reader": {
+      "getter": "0x878b60",
+      "getter_effect": "returns *(u32 *)(argument+0xa8)",
+      "argument": "state-bearing object+0x998",
+      "branches": [
+        {"state": 1, "branch_pc": "0x844674", "target": "0x8306c0", "grid_write": false},
+        {"state": 2, "compare_pc": "0x844684", "branch_pc": "0x844688", "continues_to_predicate": true},
+        {"state": 3, "compare_pc": "0x844698", "branch_pc": "0x84469c", "continues_to_predicate": true},
+        {"state": "other", "branch_pc": "0x84469c", "grid_write": false}
+      ],
+      "predicate": {"function": "0x84fdf0", "call_pc": "0x8446a4", "must_pass": true}
+    },
+    "region": {
+      "endpoint_fields": ["object+0x978", "object+0x988"],
+      "bounds_builder": "0x52bc00",
+      "bounds_builder_call_pc": "0x8446e0"
+    },
+    "root_and_writes": {
+      "singleton_global": "0x32d0de8",
+      "context_argument": "loaded root+0x28",
+      "combined_grid_offset": "root+0xa0",
+      "calls": [
+        {"pc": "0x8446fc", "wrapper": "0x163780", "writer": "0x185960", "write": "byte 6 to record+0x30..+0x33"},
+        {"pc": "0x844710", "wrapper": "0x163760", "writer": "0x185800", "write": "float 0.0 to record+0x00..+0x2c"}
+      ]
+    },
+    "callback_table_candidate": {
+      "sequence_start": "0x308ce28",
+      "sequence_entries": 31,
+      "slot_pointer_va": "0x308ce60",
+      "slot_offset_from_sequence_start": "0x38",
+      "target": "0x8445d0",
+      "constructor_like_vptr_store": {
+        "function": "0x8301a0",
+        "load_pc": "0x8301b0",
+        "relocation_cell": "0x32e9e28",
+        "relocation_addend": "0x308ce18",
+        "add_addresspoint_pc": "0x8301b8",
+        "addresspoint": "0x308ce28",
+        "store_pc": "0x8301bc"
+      },
+      "classification": "vptr-like callback candidate only; pointer sequence is not independently typed and no indirect callsite resolving to this slot is indexed"
+    },
+    "function_slice_sha256": {
+      "0x8445d0": "c7e5b0c2bf1672208f4d55c92f4c0ee00027baa23a470783130c87f30f4488d8",
+      "0x878b60": "595b85b87245f2f64eaf88141afe23f798a11c43af91115876ee4f30c507f082",
+      "0x84fdf0": "d6ab2b15b0410a1108ca3b9eec77f9c8b55cfe8f663393ba9295c64bb2bda64f",
+      "0x8301a0": "f81a0ee06a4b61c28beb9bbea43b1ab9422b36ca959f7e8657a188a2575ccb59",
+      "0x82fe00": "19970bd2b8028a822908e7859707b09a50b2d2af9985aa97c04269b87c003a6c"
+    }
+  },
+  "grid_query_and_movement": {
+    "grid_callback": {
+      "function": "0x172740",
+      "grid_dimensions": ["grid+0x30", "grid+0x34"],
+      "record_stride_bytes": 52,
+      "plane_triplets": ["+0x00", "+0x0c", "+0x18", "+0x24"],
+      "attribute_bytes": ["+0x30", "+0x31", "+0x32", "+0x33"],
+      "base_mode_wrapper": {"function": "0x1577a0", "callback_pc": "0x1577f0", "mode": 1},
+      "candidate_list_wrapper": {"function": "0x157270", "dispatch": "candidate vtable+0x30(candidate, position, status, 0)"},
+      "relocated_callback_pointer": {"sequence_start": "0x30376a8", "pointer_va": "0x30376d8", "offset": "+0x30", "target": "0x172740"}
+    },
+    "ground_query": {
+      "function": "0x7bccf0",
+      "subqueries": [
+        {"pc": "0x7bcd40", "target": "0x1577a0"},
+        {"pc": "0x7bcd58", "target": "0x157270"}
+      ],
+      "return": "adjusted scalar after status/mode/environment comparisons; not necessarily raw grid height",
+      "indexed_direct_callers": 223
+    },
+    "movement_consumers": [
+      {
+        "function": "0xdac780",
+        "query_calls": ["0xdac8bc", "0xdac9bc"],
+        "paired_query": {"function": "0x7c5570", "call_pc": "0xdac808", "subqueries": ["0x7c55a4", "0x7c55bc"]},
+        "write": "selected scalar is sent through actor vtable+0xf8 and stored at transform+4 (Y)",
+        "incoming_call_pcs": ["0xda8560"]
+      },
+      {
+        "function": "0xda86b0",
+        "query_calls": ["0xda8748", "0xda87b0"],
+        "selected_effect": "actor vtable+0x110 call on a selected comparison branch",
+        "incoming_call_pcs": ["0xdac9a4", "0xdac9e4"]
+      },
+      {
+        "function": "0xe42b30",
+        "query_call": "0xe42ba0",
+        "write": "result to temporary movement-vector Y",
+        "incoming_call_pcs": ["0xdf59d8"],
+        "scheduler_or_input_source": "OPEN"
+      },
+      {
+        "function": "0xe17cb0",
+        "effect": "writes velocity at player+0x574 and movement components at +0xf58 from supplied timing/target values",
+        "incoming_call_pcs": ["0xde2dd8"],
+        "input_producer_and_cadence": "OPEN"
+      }
+    ],
+    "function_slice_sha256": {
+      "0x172740": "56d3c682d1115b79b5f42ed30d458d57e59638dbdc253e32b0de6b3c41a3a61e",
+      "0x1577a0": "af6c7f1dad7562d34a6735b5a42e346103f82d301c5d1dd2040914c131331385",
+      "0x157270": "83756acbc062f8f61eb3bd1522d7de396bfff4cd0d48bcf1714f42467a204671",
+      "0x7bccf0": "6e917b040777027bcbb14e469afc37d8c2cb949c356b7b9969c18550b0134476",
+      "0x7c5570": "0db76cf9b6efb66e2ddbf0df64b135054d5a9a7e5dd5a0454090a9d8623d6c73",
+      "0xdac780": "2a566dafe1ac9d612f51b09583e5075ebb8058b18db00ce7f2e3506aa8f59c3d",
+      "0xda86b0": "460d2768dafa67f188633c91d034fb56af21f726ce6ae426c16e352b217f6dd3",
+      "0xe42b30": "ef27fadea8d0e3163c267eddb442bbd95a125c653d49b14058d2f686ff9efc6f",
+      "0xe17cb0": "ed30fb48f7ba91951d1cdeeeb65166a1f459e460c92d4f070077b235070cbe99"
+    }
+  },
+  "input_independent_traversal_state_readers": {
+    "qualification": "These bodies do not directly read the Npad sample record. Their parameter producers may still be input-driven and remain unresolved.",
+    "ladder_state_transition": {
+      "reader_a": {
+        "function": "0xe40b70",
+        "direct_caller": {"pc": "0xdf0584", "containing_native_function": "0xdf0560"},
+        "state_read": "compares selected value with player state at actor+0x2b4",
+        "position_read": ["actor+0x278", "actor+0x280"],
+        "branch": "both X/Z deltas under threshold calls 0xe409c0 at 0xe40cac; otherwise calls 0xe40450",
+        "ground_query_call": false
+      },
+      "reader_b": {
+        "function": "0xe40ce0",
+        "direct_caller": {"pc": "0xdf05d8", "containing_native_function": "0xdf05a0"},
+        "branch": "gated object/result path calls 0xe409c0 at 0xe40ee0",
+        "ground_query_call": false
+      },
+      "transition_writer": {
+        "function": "0xe409c0",
+        "direct_callers": ["0xe40cac", "0xe40ee0"],
+        "writes": "player+0xefc |= 6",
+        "string_refs": ["PlayerLadderIsSkew", "PlayerLadderToUp"]
+      }
+    },
+    "ladder_tool_checker": {
+      "dispatcher": "0xdaf680",
+      "dispatcher_case": "0x10",
+      "dispatcher_incoming": {"function": "0xdae8c0", "call_pc": "0xdae998"},
+      "checker": "0xe3f100",
+      "checker_call_pc": "0xdafb9c",
+      "checker_ground_query_call_pcs": [
+        "0xe3f2e8", "0xe3f480", "0xe3f4ec", "0xe3f6b8", "0xe3f6d0", "0xe3f744", "0xe3f9e0", "0xe3fae0", "0xe3faf8"
+      ],
+      "string_refs": ["DisableLadder", "Player_ToolActionError"],
+      "meaning_limit": "Ladder-related tool/action validation using ground queries; not a successful climb or proven input edge."
+    },
+    "initializer_only_state_labels": {
+      "ladder": {"function": "0xe41170", "labels": ["PlayerLadderReadyWait", "PlayerLadderAction"], "runtime_reader_proven": false},
+      "river_swim_drift": {"function": "0x585c80", "labels": ["State::cSwimRiver", "State::cDriftRiver"], "runtime_reader_proven": false}
+    },
+    "river_maker_tool_actions": [
+      {"function": "0xe49f90", "query_call_pc": "0xe4a078", "direct_caller": "0xde5d84", "labels": ["PlayerRiverMakerDig", "PlayerRiverMakerFallDig"]},
+      {"function": "0xe4a500", "query_call_pc": "0xe4a654", "direct_caller": "0xde5f84", "labels": ["PlayerRiverMakerBury", "PlayerRiverMakerFallBury", "PlayerRiverMakerFallBuryFromLower"]}
+    ],
+    "bridge": {
+      "evidence": "Prior traversal review found EventFlow recipe/placement progression only.",
+      "ground_query_to_bridge_crossing_edge": "not identified",
+      "bridge_endpoint_or_crossing_result": "not identified"
+    },
+    "collision": {
+      "evidence": "Ground callback and selected Y-correction branches are static; no complete collision solver/penetration/landing traversal result is executed.",
+      "live_collision_result": "OPEN"
+    },
+    "function_slice_sha256": {
+      "0xe40b70": "23fb29bd567727786edd48bba80a44123d3874fd59c05fd07775adc30d61ca56",
+      "0xe40ce0": "46155fb03ed86b7622090710344b9fb5fbd375d5395187ee8a5a01de38f8eff4",
+      "0xe409c0": "16d1142b674c881b8588bde2cc80584506f7caf83790493e38f3d42038cf7429",
+      "0xe3f100": "9c632fd988d9c6c20db41c6e57644c62e5059f1c007956c2659519d9f7fc67e8",
+      "0xdaf680": "ae3b94f727640b0abdf2935455316cfaf09599bcd02206c18cde40bd1462b514",
+      "0xe49f90": "c1bfec83017000aee31f4e0031d23d819eb3ee0fa6d75d50e258f1b50036f38d",
+      "0xe4a500": "17d122de1e33925a1578084591fcf23e9a73feddac3b28c632a2075aab94e567",
+      "0xe41170": "b21be4521de6e008bbd2ea146dd1a4a1bddbd1c39b81e19952aecbddc5290b95",
+      "0x585c80": "d4b147009dbf4489f2121993194eb54301eca3bd7448585c010c3f57a38d7fdb"
+    }
+  },
+  "bounded_search": {
+    "native_index": {
+      "direct_calls_rows": 663262,
+      "functions_rows": 60515,
+      "native_functions_rows": 149425,
+      "target_counts": {
+        "0x1978a0": 1,
+        "0x8445d0": 0,
+        "0x172740": 5,
+        "0x7bccf0": 223,
+        "0xe40b70": 1,
+        "0xe40ce0": 1,
+        "0xe409c0": 2,
+        "0xe3f100": 1,
+        "0xe49f90": 1,
+        "0xe4a500": 1
+      },
+      "queries": "Exact target_va incoming direct-call rows; dynamic calls are not included."
+    },
+    "pointer_sequences": {
+      "sequence_count": 18348,
+      "entry_count": 192637,
+      "target_observations": {
+        "0x8445d0": [{"sequence_start": "0x308ce28", "pointer_va": "0x308ce60", "entry_count": 31}],
+        "0x172740": [{"sequence_start": "0x30376a8", "pointer_va": "0x30376d8", "entry_count": 12}]
+      },
+      "limitations": "Recognized relocated code-pointer sequences only; not every sequence is a typed vtable and runtime-built pointers are not excluded."
+    },
+    "raw_readiness_store_scan": {
+      "inherited_report": "player_collider_query_remainder_20261107/world_ready_multimodule_raw_scan_followup_20261107.json",
+      "module_scope": ["main", "rtld", "subsdk0", "sdk"],
+      "limitation": "Immediate-offset aligned text scan only; exact receivers for all wider stores are unresolved."
+    }
+  },
+  "reviewed_reports": [
+    {
+      "path": "docs/PLAYER_INPUT_COMMAND_MOVEMENT_CALLCHAIN_FOLLOWUP_20261107.md",
+      "sha256": "7310fa79d5e7b43acc1a02b4feca1a6fca6d4b26ef45960bc9f71d584abb3295"
+    },
+    {
+      "path": "docs/PLAYER_INPUT_TRAVERSAL_INDIRECT_FOLLOWUP_20261107.md",
+      "sha256": "9a9c3e75982947bff5bf0c921d84ff4294fa53e08406b3c3831904cdfd221598"
+    },
+    {
+      "path": "docs/PLAYER_GRID_GROUND_MOVEMENT_RESULT_FOLLOWUP_20261107.md",
+      "sha256": "c229e1ee5ce93ae3ef0de4d4970f62d69e33c8b6f8a8a7707afb2bf5c282106d"
+    },
+    {
+      "path": "docs/TERRAIN_CANONICAL_GRID_COLLISION_JOIN_FOLLOWUP_20261107.md",
+      "sha256": "d3e41a348d648c7d04102c6310ca723b04088109817f8762b8b3e976927621f9"
+    },
+    {
+      "path": "output/mechanics/player_collider_query_remainder_20261107/player_input_command_movement_callchain_followup_20261107.json",
+      "sha256": "eef69f2b8327136157bf5d7ae50d29e06f345b4fb88d6dbce396dba94cc57e95"
+    },
+    {
+      "path": "output/mechanics/player_collider_query_remainder_20261107/query_candidate_producer_followup_20261107.json",
+      "sha256": "e9d378c2da5cc807dafd8e1310d8caf6e985835f74ca710000675d2f2004c41c"
+    },
+    {
+      "path": "output/mechanics/player_collider_query_remainder_20261107/grid_ground_movement_result_followup_20261107.json",
+      "sha256": "e973de4501362ec19087cd69cd7720cd026419ce9c6fa743e4f9caca692db2a2"
+    },
+    {
+      "path": "output/mechanics/player_collider_query_remainder_20261107/world_ready_multimodule_raw_scan_followup_20261107.json",
+      "sha256": "86eb3874f4f3262416339f24558a6e7fb819e9a019bbd72685b7d057897541ef"
+    },
+    {
+      "path": "output/mechanics/terrain_canonical_grid_collision_join_followup_20261107.json",
+      "sha256": "7565daf1cb48f0b066f214e3334db290d59f91cb591ca677d68e07dd0fff6d1a"
+    }
+  ],
+  "limits": [
+    "0xfe5a00 -> 0x1978a0 is a static setup edge; invocation/cadence of 0xfe5a00 is unresolved.",
+    "Grid installation is separate from the nonzero root+0xf10 readiness write; a faithful writer is not identified.",
+    "0x8445d0's function-table slot and constructor-like pointer store do not prove runtime callback dispatch.",
+    "No faithful initialized root, ready byte, island grid records, populated live query list, candidate set, or resulting 0x7bccf0 scalar is available.",
+    "No Npad sample reader is joined to the ladder state at player+0x2b4, movement fields, action dispatcher, or traversal result.",
+    "Bridge evidence is EventFlow placement/progression; ladder and river query branches are action/state fragments; swim/drift labels are initializer-only references.",
+    "No end-to-end collision solver, landing, bridge crossing, ladder climb, swim/drift, river crossing, or cliff traversal result is proven.",
+    "LandMaking 14-byte cell conversion to the runtime 52-byte ground grid remains open; prepared terrain fixtures do not prove this conversion or live bootstrap."
+  ]
+}

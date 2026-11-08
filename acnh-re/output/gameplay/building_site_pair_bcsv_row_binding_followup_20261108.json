@@ -1,0 +1,161 @@
+{
+  "schema": "acnh-re/building-site-pair-bcsv-row-binding-followup/1",
+  "game_version": "1.0.0",
+  "date": "2026-11-08",
+  "title": "Building site-pair to BCSV row binding follow-up",
+  "scope": {
+    "method": "Read-only static trace using the existing index.sqlite, native pseudocode snapshots, resolved BYML/BCSV views, EventFlow index, and prior placement reports.",
+    "excluded": ["game/save execution", "Godot changes", "Ghidra rebuild", "index/crosswalk edits", "model/PBC payload inspection", "reproduction of the prior 19-key ModelName catalogue", "staging/commit/push"],
+    "address_convention": "Raw ELF VAs; Ghidra pseudocode display labels use a +0x100000 bias."
+  },
+  "artifacts": {
+    "main_elf": {"path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/A_logic/main.elf", "sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74"},
+    "main_nso": {"path": "acnh-re/inputs/additional_exefs/main", "sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900"},
+    "index_sqlite": {"path": "acnh-re/output/index.sqlite", "sha256": "a78c7af27d37b8fd931bba8bc611623dacf7685cb6e8b4f827effa0765340aad", "tables_queried": ["direct_calls", "event_calls", "decomp", "native_functions", "files"]},
+    "event_handler_registry_sha256": "dfc298dfcb1b288b8fda9cd6a49c728fdad903b41f8fc1c9288df7d732ec92a5",
+    "code_pointer_arrays_sha256": "64d474068ca289f9146f7f32e6647a16a05e8f5be8e635615a478744b62ef822",
+    "eventflows": [
+      {"source": "B_data/EventFlow/Player_HousingKit.bfevfl", "source_id": 516, "sha256": "6b7e56629772c85053c44b399d9e1a9bdf1d8f147cceb8bb499cc8c8918a0383", "decoded_view_sha256": "52034d36a43e9fd1f8a258ef87cd47fa75ce11d741a89018f711074261a1bf13"},
+      {"source": "B_data/EventFlow/System_Structure_Common.bfevfl", "source_id": 658, "sha256": "e64c08ddc898616e354c6951ae891597726d78c4ca2c61e4257264d837033c12", "decoded_view_sha256": "0067821f51dc3f104adf848598e3e8b980b70cc6aaea35c6a904406acf36fdfb"}
+    ],
+    "structure_preset": {"source": "B_data/Param/Field/MainFieldPreset/StructurePresetA00.byml", "source_id": 2729, "source_sha256": "2a0be5f7a0904fe09c5ead536802749696e317bf1261d22327811aafb036436e", "decoded_view_sha256": "f7c70408f116600c78efb101a4c7642026e45fd29dfeebe521469bcb768b9ae5"},
+    "bcsv_sources": [
+      {"source": "B_data/Bcsv/StructureInfoParam.bcsv", "source_id": 153, "sha256": "a16b03ec38869a015faa5dbaddde03ea3865db88c91ea40d32d9c7e2fa6904ef", "row_count": 29, "resolved_view_sha256": "c57c63a25e79275f89b458c25123935c09f1320521ac55aa85dcc9d68602124f"},
+      {"source": "B_data/Bcsv/StructureFacilityModel.bcsv", "source_id": 148, "sha256": "b29acfe910d54b39b90d2f5f6c04b092ef037706cd9e929656f6104aa8adae9d", "row_count": 19, "resolved_view_sha256": "6813cfabbbd674ddd05f309d9ef558dbf7c1a220aefcde4a7bcec123cf3c1f78"},
+      {"source": "B_data/Bcsv/StructureBridgeParam.bcsv", "source_id": 145, "sha256": "a55822eabae52e11918a9e75c0c4b487bda4f74055f8e046647c64dd5a255531", "row_count": 54, "resolved_view_sha256": "def9fde1b9b40f040d091db7e365ebd18547bbaf0c4a7f5434ec5ad2c4065ade"},
+      {"source": "B_data/Bcsv/StructureSlopeParam.bcsv", "source_id": 154, "sha256": "bc06a14b00c6553cfbeceb529447f21de27b943221497ddceff8a8fb562ab9a6", "row_count": 9, "resolved_view_sha256": "246f8d9da354546a0715db1c2e90effd49c9cb7c19c67fd0a5a07314e4890b6c"}
+    ],
+    "decompilation_snapshots": [
+      {"path": "output/binary/analysis_decomp/369d50.c", "elf_va": "0x369d50", "sha256": "b52478377f3cd7d9d9702bcbc474589b0435e48eb699938c67a08e753cbf11c8"},
+      {"path": "output/binary/analysis_decomp/408cd0.c", "elf_va": "0x408cd0", "sha256": "58bc3846e7a5629b1a4b1acaa6d33113256fbbd1cce2cc617a24f7019ac5bec6"},
+      {"path": "output/binary/analysis_decomp/3771d0.c", "elf_va": "0x3771d0", "sha256": "e142f8e6276bdf59cc349190b12d0b95b001b88d09bca7eb0f8d89b9ae1cafbf"},
+      {"path": "output/binary/analysis_decomp/376eb0.c", "elf_va": "0x376eb0", "sha256": "c88ef9a8f79acb57ec905bb5a756327d13811b9395ffb60ebdd6df991d65e538"},
+      {"path": "output/binary/analysis_decomp/10dfea0.c", "elf_va": "0x10dfea0", "sha256": "0cfcc6b679ac8aab22261697669a704b2abe4fa8f26acb475d201cadbae71216"},
+      {"path": "output/binary/analysis_decomp/10d85a0.c", "elf_va": "0x10d85a0", "sha256": "5eaa6b59551a9c033e24484997ad8b00140732cdf83baf37db3231e577c1c4d9"},
+      {"path": "output/binary/analysis_decomp/4e1670.c", "elf_va": "0x4e1670", "sha256": "d3e36c3b8787af81268fd26e1bc9da826805969b9acb2882355c03591445ebe4"},
+      {"path": "output/binary/analysis_decomp/568360.c", "elf_va": "0x568360", "sha256": "3f687ca028bf6ad8befe98fdf25b76f2ced88c6da54b6a1344a3e2a22ab57f80"},
+      {"path": "output/binary/analysis_decomp/4e1db0.c", "elf_va": "0x4e1db0", "sha256": "4a17909774882f113dcc2e69efa953606b04624041b77fd45bbf8c044a7cbacb"},
+      {"path": "output/binary/analysis_decomp/55dfd0.c", "elf_va": "0x55dfd0", "sha256": "9d1f91df09702094ef72ad160bd6d5f04d1dcbd3af36bda5df74192abe29f05e"},
+      {"path": "output/binary/analysis_decomp/5651b0.c", "elf_va": "0x5651b0", "sha256": "6834b80ca4e44c2c4a58a6f7e39bbf87d2eaa9670966505e6ef6fda3c2b66eda"},
+      {"path": "output/binary/analysis_decomp/4e1d80.c", "elf_va": "0x4e1d80", "sha256": "648e46a2364143720465e3567d6fab2dca0fb091a05762022c5a6bfcbad755f2"},
+      {"path": "output/binary/analysis_decomp/be6480.c", "elf_va": "0xbe6480", "sha256": "7dc3b77a1564525ca6d0874af403bdd6008a392d97775eea5e7e749e79a9aec9"}
+    ]
+  },
+  "index_checks": {
+    "event_calls": {
+      "Player_HousingKit_type_labels": ["cBridge", "cReserveNpcHouse", "cPlayerHouse", "cMuseum", "cMarket", "cNormalNpcHouse", "cTailor", "cSlope", "cCampSite"],
+      "settler_quest_reserve_house_query_event_indices": [120, 121, 122],
+      "preview_guide_selector_examples": [151, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170],
+      "System_Structure_Common_BuildStructure_event_indices": [9, 12, 23],
+      "BuildStructure_arguments": {"StructureType": "$arg:StructureType", "StructureBuildPosType": "$arg:StructurePosType", "StructureBuildTiming": "$arg:BuildTiming"}
+    },
+    "direct_calls": [
+      {"pc": "0x408e5c", "target": "0x3771d0", "instruction": "BL", "bytes_little_endian": "ddb8fd97", "role": "CanBuildHere pose/type descriptor"},
+      {"pc": "0x408e84", "target": "0x10dfea0", "instruction": "BL", "bytes_little_endian": "075c3394", "role": "CanBuildHere strategy dispatch"},
+      {"pc": "0x369ef0", "target": "0x3771d0", "instruction": "BL", "bytes_little_endian": "b8340094", "role": "BuildStructure pose/type descriptor"},
+      {"pc": "0x369f18", "target": "0x10dfea0", "instruction": "BL", "bytes_little_endian": "e2d73594", "role": "BuildStructure validator before site selection"},
+      {"pc": "0x37721c", "target": "0x376eb0", "instruction": "BL", "role": "StructureType ordinal to strategy index"},
+      {"pc": "0x10dfebc", "target": "0x10d85a0", "instruction": "B", "bytes_little_endian": "b9e1ff17", "role": "World structure-query manager dispatcher"},
+      {"pc": "0x36a14c", "target": "0x4e1d80", "instruction": "BL", "role": "Checks site-list index 0"},
+      {"pc": "0x36a15c", "target": "0x4e1d80", "instruction": "BL", "role": "Checks site-list index 1"},
+      {"pc": "0x36a16c", "target": "0x4e1d80", "instruction": "BL", "role": "Checks site-list index 2"},
+      {"pc": "0x36a17c", "target": "0x4e1d80", "instruction": "BL", "role": "Checks site-list index 3"},
+      {"pc": "0x36a18c", "target": "0x4e1d80", "instruction": "BL", "role": "Checks site-list index 4"},
+      {"pc": "0x36a19c", "target": "0x4e1d80", "instruction": "BL", "role": "Checks site-list index 5"},
+      {"pc": "0x36a33c", "target": "0x166ab70", "instruction": "BL", "role": "Selects a rank-th available index"},
+      {"pc": "0x36a36c", "target": "0xc756a0", "instruction": "BL", "role": "Writes BuildingSiteIndex"},
+      {"pc": "0x36a37c", "target": "0x4e1670", "instruction": "BL", "role": "Parses selected pair after validator result check"},
+      {"pc": "0x4e1758", "target": "0x568360", "instruction": "BL", "bytes_little_endian": "021b0294", "role": "Pair to X/Z conversion"},
+      {"pc": "0x36a3ac", "target": "0xbe6480", "instruction": "BL", "bytes_little_endian": "35f02194", "role": "Coordinate-bearing actor-context handoff"}
+    ],
+    "function_range_hashes_from_prior_validator_report": [
+      {"elf_va": "0x369d50", "bytes": 6038, "sha256": "44447430641e0882032c6ac8c6e5ba7bb8342598767605e5719ff47a3786cdd7"},
+      {"elf_va": "0x408cd0", "bytes": 1298, "sha256": "21ae8943176de268303e426842833213b709c3bfd82028ae6b524b8c77f538ca"},
+      {"elf_va": "0x376eb0", "bytes": 2048, "sha256": "82b765eec71f12742f528f2bf4e1a2dc9e4c4863001ec070ffa648d073214a64"},
+      {"elf_va": "0x3771d0", "bytes": 1316, "sha256": "d45c0da232ab8b2cea84c65af52df168b4d3fda4d512fc26a3e903b02cd3c4c4"},
+      {"elf_va": "0x10dfea0", "bytes": 50, "sha256": "496ffe093fa9dacc23a8b9021e778219682d2c3e64c7d00de24204ad4710cb28"},
+      {"elf_va": "0x10d85a0", "bytes": 384, "sha256": "7a52deaf8831a5d9ae58ce38d21737b4b1d29e2540a66c24ef27e899685c6699"},
+      {"elf_va": "0x4e1670", "bytes": 882, "sha256": "c5d7e26029ebbf372156d919009ae86ada4b57343c688b4612a4a7fffd31b27a"},
+      {"elf_va": "0x568360", "bytes": 86, "sha256": "725e2f52066d8dfa3d7ca89bad69b53bc4130ca2eb485dedf32e1a49ab00bbf3"}
+    ],
+    "ownership_caveat": "Some EventFlow candidate-body direct-call rows have owner_va=0; ownership is corroborated by handler registration and hashed pseudocode snapshots."
+  },
+  "site_pair_trace": {
+    "build_structure_candidate": {"constructor_va": "0x369c10", "method_va": "0x369d50", "pseudocode_sha256": "b52478377f3cd7d9d9702bcbc474589b0435e48eb699938c67a08e753cbf11c8"},
+    "list_layout": {"object_source": "global *0x33d1ba8", "member_base": "+0x3a50", "count_offset": "+0x3a58", "entry_pointer_array_offset": "+0x3a60", "indices_checked": [0, 1, 2, 3, 4, 5], "accessor_va": "0x4e1d80"},
+    "preset": {"descriptor_va": "0x55dfd0", "pairs": [[61, 66], [78, 77], [49, 79], [88, 80], [97, 84], [69, 90]], "loader_va": "0x4e1db0", "validate_village_save_caller_va": "0x5651b0", "runtime_instance_join": "OPEN"},
+    "selection": {"selector_va": "0x166ab70", "pc": "0x36a33c", "behavior": "Returns rank-th set bit; caller supplies actor+0x288 and low 32 bits are used as rank.", "selected_index_range": "0..5", "blackboard_key": "BuildingSiteIndex", "key_va": "0x2980082", "write_helper_va": "0xc756a0", "write_pc": "0x36a36c"},
+    "pair_parse": {"parser_va": "0x4e1670", "pc": "0x36a37c", "adjustment": "first + (other_value >> 1), second + 1", "conversion_va": "0x568360", "conversion_pc": "0x4e1758", "conversion": "X = 10*n+5 and Z = 10*n+5; caller Y lane untouched", "actor_handoff_va": "0xbe6480", "actor_handoff_pc": "0x36a3ac"}
+  },
+  "structure_type_strategy": {
+    "enum_va": "0x2969f28",
+    "ordinal_rule": "Enum value is list position.",
+    "builder_va": "0x3771d0",
+    "switch_va": "0x376eb0",
+    "switch_call_pc": "0x37721c",
+    "strategy_index_descriptor_offset": "+0x8",
+    "routes": [
+      {"ordinal": 0, "name": "cPlayerHouse", "strategy": 1},
+      {"ordinal": 1, "name": "cNormalNpcHouse", "strategy": 2},
+      {"ordinal": 2, "name": "cMuseum", "strategy": 3, "subtype": 2},
+      {"ordinal": 3, "name": "cMarket", "strategy": 3, "subtype": 0},
+      {"ordinal": 4, "name": "cReserveNpcHouse", "strategy": 2},
+      {"ordinal": 5, "name": "cBridge", "route": "Strategy 4 on secondary lookup success; otherwise can fall through case 6 to strategy 5 or strategy 3 / subtype 2."},
+      {"ordinal": 6, "name": "cSlope", "route": "Strategy 5 on secondary lookup success; otherwise strategy 3 / subtype 2."},
+      {"ordinal": 7, "name": "cTailor", "strategy": 3, "subtype": 5},
+      {"ordinal": 8, "name": "cCampSite", "strategy": 3, "subtype": 6}
+    ],
+    "installed_strategy_indices": [1, 2, 3, 4, 5],
+    "secondary_lookup_table_identity_for_ordinals_5_6": "OPEN"
+  },
+  "validator_pair_order": {
+    "same_build_structure_activation": true,
+    "steps": [
+      {"pc": "0x369ef0", "target": "0x3771d0", "role": "Prepares descriptor from StructureType and position/timing selectors."},
+      {"pc": "0x369f18", "target": "0x10dfea0", "role": "Runs strategy validation."},
+      {"after": "0x369f18", "check": "Site-list path is entered on iStack_130 == 0."},
+      {"pc": "0x36a33c", "target": "0x166ab70", "role": "Selects available index."},
+      {"pc": "0x36a37c", "target": "0x4e1670", "role": "Parses selected pair."},
+      {"pc": "0x36a3ac", "target": "0xbe6480", "role": "Passes pair to actor-context handling."}
+    ],
+    "finding": "The newly selected pair is parsed after validation and is not an argument to that earlier dispatcher call in this activation.",
+    "limit": "Does not rule out a prior pair in hidden state, a separate validator invocation, or indirect consumers."
+  },
+  "tested_joins": {
+    "site_index_to_pair": {"status": "PARTIAL_STATIC_JOIN", "result": "Six preset pairs and six native list slots align by count/layout; selected native index reads the corresponding list entry.", "runtime_list_identity": "OPEN", "story_assignment_by_index": "OPEN"},
+    "structure_type_to_strategy": {"status": "PROVEN", "result": "Enum ordinal enters 0x376eb0 via 0x3771d0; switch output is stored at descriptor+8."},
+    "facility_model_to_structure_info": {"status": "PROVEN", "join": "StructureFacilityModel.StructureInfoUniqueID = StructureInfoParam.UniqueID", "matched_rows": 19, "rows_per_structure_info_uid": {"19": 4, "20": 2, "21": 4, "22": 1, "23": 1, "24": 3, "25": 3, "29": 1}, "limit": "This FK does not assign StructureType or mSiteList indices."},
+    "structure_type_to_bcsv_row": {"status": "OPEN", "result": "No direct StructureType or site-index field in inspected structure tables. Categories House/Facility/Bridge/Slope are broader than the nine-value enum. Ordinal equality is not a general key."},
+    "site_pair_to_validator_arguments": {"status": "BOUNDED_NEGATIVE_FOR_THIS_ACTIVATION", "evidence": "0x369f18 and result gate precede 0x36a33c selection and 0x36a37c parse."},
+    "story_type_to_site_index": {"status": "OPEN", "evidence": "HousingKit supplies StructureType labels; the common BuildStructure flow forwards StructureType/position/timing, with no mSiteList index or BCSV UID argument."}
+  },
+  "bcsv_schema_observations": {
+    "StructureInfoParam": {"rows": 29, "columns": ["h_fec3548b", "StructureInfoType", "ModelType", "HousePartsType", "StructureInfoHouseType", "Door0", "UniqueID"], "category_uids": {"House": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18], "Facility": [19, 20, 21, 22, 23, 24, 25, 29], "Bridge": [26], "Slope": [27]}, "missing_uid": 28},
+    "StructureFacilityModel": {"rows": 19, "key_fields": ["UniqueID", "StructureInfoUniqueID", "ModelName"], "referenced_structure_info_uids": [19, 20, 21, 22, 23, 24, 25, 29]},
+    "StructureBridgeParam": {"rows": 54, "key_fields": ["BridgeTypeUniqueID", "UniqueID"], "direct_structure_type_or_site_index_field": false},
+    "StructureSlopeParam": {"rows": 9, "unique_id_values": [0, 1, 2, 3, 4, 5, 29, 30, 31], "direct_structure_type_or_site_index_field": false},
+    "scope_limit": "Inspected schemas are bounded; another placement table may exist."
+  },
+  "story_mapping": {
+    "Player_HousingKit_type_labels": ["cBridge", "cReserveNpcHouse", "cPlayerHouse", "cMuseum", "cMarket", "cNormalNpcHouse", "cTailor", "cSlope", "cCampSite"],
+    "settler_quest_cases": "Three CanBuildHere queries and three preview-guide actions use cReserveNpcHouse with StructureBuildPosType=cSettlerQuest.",
+    "System_Structure_Common_BuildStructure_event_indices": [9, 12, 23],
+    "arguments_forwarded": ["StructureType", "StructurePosType", "BuildTiming"],
+    "blackboard_uses": [
+      {"flow": "AI_NPC_Prologue_AN", "operation": "NpcRegistAIBlackBoard", "key": "BuildingSiteIndex", "value": -1},
+      {"flow": "AI_NPC_Prologue_HA", "operation": "NpcRegistAIBlackBoard", "key": "BuildingSiteIndex", "value": -1},
+      {"flow": "AI_NPC_Prologue_Common", "operation": "NpcQueryBlackBoard", "key": "BuildingSiteIndex", "border": 0},
+      {"flow": "Tutorials_Prologue4_Orientation2_AN", "operation": "NpcSetAIBlackBoard", "key": "BuildingSiteIndex", "value": -1},
+      {"flow": "Tutorials_Prologue4_Orientation2_HA", "operation": "NpcSetAIBlackBoard", "key": "BuildingSiteIndex", "value": -1}
+    ],
+    "story_structure_to_site_pair": "OPEN"
+  },
+  "bounded_negatives": [
+    {"test": "BuildStructure local call order", "result": "Validator/result gate precedes selected index and pair parse; pair is not an argument to that earlier call.", "limit": "Other invocations, prior hidden state, and indirect dispatch remain possible."},
+    {"test": "Inspected structure BCSV schemas", "result": "No StructureType/site-index/site-pair fields; table keys are independent UIDs.", "limit": "Inspected table set may omit another placement input."},
+    {"test": "SQLite direct-call ownership", "result": "Call PCs/targets are indexed, but some EventFlow candidate-body rows have owner_va=0.", "limit": "Ownership is corroborated by registration and pseudocode; indirect calls are not ruled out."}
+  ],
+  "open_edges": ["Runtime StructurePresetA00 instance identity for the six-entry native object.", "mSiteList index/pair to story building and StructureType.", "StructureType ordinal/label to exact BCSV row.", "Identity of secondary lookup data for cBridge/cSlope strategy cases.", "Other or indirect validator paths for the selected pair.", "Final transform, model/resource, PBC/collider binding, and durable structure save."],
+  "validation": {"json_syntax": "PASS after parse", "git_diff_check": "PASS after diff check", "game_or_save_execution": false, "godot_or_build_execution": false, "index_or_crosswalk_modified": false},
+  "report": "acnh-re/docs/BUILDING_SITE_PAIR_BCSV_ROW_BINDING_FOLLOWUP_20261108.md"
+}
