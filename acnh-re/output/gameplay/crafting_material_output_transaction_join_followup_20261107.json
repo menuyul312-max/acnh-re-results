@@ -1,0 +1,328 @@
+{
+  "schema": "acnh.crafting_material_output_transaction_join_followup.v1",
+  "game_version": "ACNH 1.0.0",
+  "evidence_status": "STATIC_CONTROL_FLOW_AND_CALLGRAPH_JOIN_WITH_PRIOR_BOUNDED_FIXTURE_AUDIT",
+  "scope": "Join the Recipe 56 material-removal candidate, result pocket insertion, return gates, made-recipe marker, indexed quest readers, rollback boundary, and prior fixture limits. No new native execution or save mutation.",
+  "address_convention": {
+    "addresses": "Raw main ELF virtual addresses.",
+    "decompiler_note": "Available pseudocode snapshots print addresses 0x100000 above raw ELF VAs; e.g. raw 0xee1420 appears as FUN_00fe1420.",
+    "raw_return_gate_check": "ELF instruction words were read at the mapped executable VA window 0xee17bc-0xee17cc and the efab90/efac20 windows; no decompiler return-value inference is used for the unguarded marker-call finding."
+  },
+  "provenance": {
+    "analysis_elf": {
+      "path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/A_logic/main.elf",
+      "sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74"
+    },
+    "main_nso": {
+      "path": "/workspace/acnh-re/inputs/additional_exefs/main",
+      "sha256": "f8d248109ff72999b4600ae3749f8c7397fb960f7ad3ab8dee3018ae9e14e900"
+    },
+    "shared_index": {
+      "path": "/workspace/acnh-re/output/index.sqlite",
+      "sha256": "a78c7af27d37b8fd931bba8bc611623dacf7685cb6e8b4f827effa0765340aad"
+    },
+    "flow_index": {
+      "path": "/workspace/acnh-re/output/gameplay/flow_index.json",
+      "sha256": "359f3a21a17a116902b0c8e1110c3892814b6fccbeb50b71d573c8ab3e1c68c5"
+    },
+    "eventflow_source": {
+      "path": "/workspace/acnh-re/work/eventflow/Ftr_Working.json",
+      "sha256": "d9b94d6c44cd54ba59be2d4cc2c0def5ea54abf10fadb9b4a82c8f37c1f96bc6"
+    },
+    "tables": {
+      "RecipeCraftParam": {
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Bcsv/RecipeCraftParam.bcsv",
+        "raw_sha256": "97fe6d73e183dab43dad7358627a0a1a43f5764f0a18fa044a63a9ecf56ba919",
+        "resolved_path": "/workspace/acnh-re/output/tables_resolved/RecipeCraftParam.json",
+        "resolved_sha256": "41efd9393380dd2c0b90e0c99aec9246b7058791bad14335d4e0e7920009cc09"
+      },
+      "ItemParam": {
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Bcsv/ItemParam.bcsv",
+        "raw_sha256": "89230e97fc877ff2b2b48ac1c707ef32b3a7760118839c307f19797e2553458c",
+        "resolved_path": "/workspace/acnh-re/output/tables_resolved/ItemParam.json",
+        "resolved_sha256": "2934112d0cede6dc5e73ebafe74afcfbb9630de5c12eb58745e0cdbb5138006b"
+      },
+      "ItemKind": {
+        "raw_path": "/workspace/downloads/ACNH_island_RE/ACNH_island_RE/B_data/Bcsv/ItemKind.bcsv",
+        "raw_sha256": "4cac0178cc69519585528b24ceef022ccb1fefa12b23fc9a9e4280e40185ba7b",
+        "resolved_path": "/workspace/acnh-re/output/tables_resolved/ItemKind.json",
+        "resolved_sha256": "08e5360de83a3ac6aba2ed50e26d539f20365500598fdc942db3b95371978abd"
+      }
+    },
+    "decomp_source_hashes": {
+      "output/binary/analysis_decomp/ee1420.c": "7d408bcfab2ea59d4de502360e3f10b160cc416fe507a00f8b555309f01f77ee",
+      "output/binary/analysis_decomp/ee1060.c": "04832c7f689c9530dec5825a5b0ce31b12c3d355d34ca9a1157987780eac72ac",
+      "output/binary/analysis_decomp/eff060.c": "07e50377ddbfb10fa5f9229f28ca588246d462d0d78ace63566af3b50b70349b",
+      "output/binary/analysis_decomp/efbf80.c": "0cd301b9b54639134a3bbb0d1dc8f1585460b757452a145fe6587a5d259a8c3d",
+      "output/binary/analysis_decomp/efbec0.c": "9103b98c7bb52db587188015281184810b271ad74c23a00a686075e697e02674",
+      "output/binary/analysis_decomp/f99e40.c": "2d7096f7515e26371bbf7f67211d8a8d64cfc3d8842ff1fb44699d81823bc883",
+      "output/binary/analysis_decomp/f99fe0.c": "97ea9a2e33794a57950cfe3fdda4408882da394ee5499943fbfd0497eb3ddd4e",
+      "output/binary/analysis_decomp/f99b10.c": "4a9aafe0d8886131c0997bf35241f440cbe34df9044834afb2585803a1362eb1",
+      "output/binary/analysis_decomp/efab90.c": "81bf581ba03828dd6b5618d92cb13b25222a6f32d2a86a76eaafbbdbe333f6b6",
+      "output/binary/analysis_decomp/efac20.c": "9d4690536e0fb3049b53394a05deb6defe37bb335b6827176f19a82a750c926d",
+      "output/binary/analysis_decomp/f987c0.c": "bf8b3e2dfe2ed222a95e9a3ea5d63be921552271c28ad4a7bba08cdf848732ae",
+      "output/binary/analysis_decomp/f98650.c": "9624f68f63a0d8d0150e49be9185d038f31bf77d9e5081b905661f430d1328d3",
+      "output/binary/analysis_decomp/ee17e0.c": "461e4e3794372a36e5dae8f89db66525521959753dd0645ea53ba5dfc61eb03d",
+      "output/binary/analysis_decomp/f29080.c": "71661efb1700940306cad4c1f0ec1562e72b704cd3b5b5bb978d09262216c7e1",
+      "output/binary/analysis_decomp/f29010.c": "18222a7e24f3d6eb61c551ef5ad419b2f95f06708d1c31a72238c14c6ae5abaf",
+      "output/binary/analysis_decomp/edbd00.c": "8e786d0807c8fc9ae8abad8442d3e7b6166faa9b2200dfb79aecafd3a121fd20",
+      "output/binary/analysis_decomp/edbe00.c": "e86dc0fddb5e6ff40c1421dd473080f155d0b43329ff0d4230e169449205c586",
+      "output/binary/analysis_decomp/edf8e0.c": "c5cdc458ff359a724202ea2e95eebd887aa9e15dca13ce60daef99aea534f73c",
+      "output/binary/analysis_decomp/edc240.c": "263031e9759e6c62b271a8168302a3a2883b7d5d63ff7f582d79563968ce0549",
+      "output/binary/analysis_decomp/42d3b0.c": "4bd8e6e306925b0d3edc7dc04062f2e7b033434e674b92d44a7deb1417f856af",
+      "output/binary/analysis_decomp/f29050.c": "edb07fb97cf8c686e70df44b8473b8d2e832ba4d157b3e1f5063fa90e2f1ce51",
+      "output/binary/analysis_decomp/f28fd0.c": "7e0380ca7dd4267b95340afe35b08e3f37d829c7a98f7ad97d660cd76544fb43",
+      "output/binary/analysis_decomp/ee0ed0.c": "3bc992a64e848792cbb99783e2e95734c85533d351e1d84689147279613c0bca",
+      "output/binary/analysis_decomp/efbd30.c": "86439f5a2c1685950649d323df838e4a55e8f009df68caf3be909727d9d38a22",
+      "output/binary/analysis_decomp/f99270.c": "99fb9b3e0b4321aecc23eb05fefd413ab04730f8c1c460f67281a7559d9f92ad",
+      "output/binary/analysis_decomp/eec280.c": "90580ae8671bf3706fe9a831e45ec0d8a1f186b6e624f74e081dcffa2b5f4853",
+      "output/binary/analysis_decomp/efadc0.c": "eaafdeec0cc8879e22cb4c905a6b57f2dfcef0689011a0e03edd8a3e4347e4b3",
+      "output/binary/analysis_decomp/efb090.c": "d193e201efbd5652b9edebc53671d0bfd1124f7e50a69f62163c1dd8f9ac3a7f",
+      "output/binary/analysis_decomp/f9e410.c": "63c0e817c916e8bfa953919c42a20d97f017ec0c0f946a767dd79dbff12f1b57"
+    },
+    "prior_artifact_sha256": {
+      "docs/CRAFTING_PAYLOAD_BUILDER_CALLSITE_FOLLOWUP_20261107.md": "78a99878930e62191b2f9b693969c3d3460c86de6ce2f183c803d4706f30161e",
+      "docs/CRAFTING_INVENTORY_COUNT_CONTEXT_TRACE_20261107.md": "9618f9fecbc1fce8d36288c25de607b9b2c5d1aa6229c93c0387e82b9f6b2119",
+      "docs/CRAFTING_PERSISTENCE_TRANSACTION_BOUNDARY_20261107.md": "4e7c44eac3fd2a41650692c5356ee10cfa623bf768af9da25b1653079ec4502b",
+      "docs/CRAFTING_SAVEPROC_FILEIO_TRACE_20261107.md": "295297c3c8c68314cd5832a423f2776966f3fccffa71ea7343306110f5200552",
+      "docs/CRAFTING_TRANSACTION_MANAGER_FOLLOWUP_20261107.md": "d1ce099f0e78b7058d093f00c52ac0ef5c4b60a79bc8b95ec15de41a0d69b5ce",
+      "docs/CRAFTING_TRANSACTION_REMAINDER_20261107.md": "ff9d72ba325b484b4d8ab903ff0fe078a56fac573a157a78ae10d7157ceb2687",
+      "docs/CRAFTING_MATERIAL_REMOVAL_REMAINDER_20261107.md": "c36b532fe0c249e7aebe647e9ad522365583350c02a1a4abddc6030574eae1f2",
+      "output/gameplay/crafting_transaction_remainder_20261107/crafting_transaction_branch_native.json": "f41f60944fc02543e7bc09011eb73d7898ae93757c0d4ae1a39e3a94ae72313c",
+      "output/gameplay/crafting_transaction_remainder_20261107/next_boundary_audit.json": "8f814fc9635e488d956ba91e968dc17c6cdd431832831340571cd05fb6298394",
+      "output/gameplay/crafting_transaction_manager_followup_20261107.json": "442bd876f072f2dcbe6b7a188318b3bdebf1677382b2dd95ea2c045f504560b9",
+      "output/gameplay/crafting_inventory_count_context_trace_20261107.json": "e8caed5c0b36ca8cad97bf6248369ac9617821a5cd03ff5d8a874abeed4d4435",
+      "output/gameplay/crafting_persistence_transaction_boundary_20261107.json": "d0e52a7ef9592029d32adb4dfe40d102ae13d62f07d1b85f2c82dae9b031a7c4",
+      "output/gameplay/crafting_saveproc_fileio_trace_20261107.json": "b738b34a84bc8aacb751461b965599b4a4fd71919bc3f15e769cd9d4b2a400a2",
+      "output/gameplay/crafting_transaction_followup/crafting_recipe_flow_native.json": "b404014a185a1b2d0451fc3f40f772b58d7e2cc5a6ae3b043ad07a9ab1272764"
+    }
+  },
+  "recipe_56": {
+    "recipe_unique_id": 56,
+    "result_item_id": 975,
+    "result_label": "FtrFruitbasket",
+    "craft_unlock": "None",
+    "materials": [
+      {"slot": 0, "item_id": 2213, "label": "Apple", "amount": 1},
+      {"slot": 1, "item_id": 2285, "label": "Pear", "amount": 1},
+      {"slot": 2, "item_id": 2287, "label": "Cherry", "amount": 1},
+      {"slot": 3, "item_id": 2214, "label": "Orange", "amount": 1},
+      {"slot": 4, "item_id": 2286, "label": "Peach", "amount": 1},
+      {"slot": 5, "item_id": 65534, "label": "sentinel", "amount": 0}
+    ],
+    "caller": {
+      "payload_builder_va": "0xedf8e0",
+      "transaction_handler_va": "0xee1420",
+      "builder_success_gate_pc": "0x335a64",
+      "transaction_call_pc": "0x335aa8"
+    }
+  },
+  "static_transaction_join": {
+    "selector": {
+      "payload_offset": "0x3c",
+      "default_branch_when_zero": {
+        "target": "0xee1060",
+        "call_pcs": ["0xee15a0", "0xee15c4", "0xee15e8", "0xee160c", "0xee1630", "0xee1654"],
+        "context_argument": "transaction param3 at each call"
+      },
+      "alternate_branch_when_nonzero": {
+        "target": "0xeff060",
+        "call_pcs": ["0xee14dc", "0xee14fc", "0xee151c", "0xee153c", "0xee155c", "0xee157c"],
+        "context_view_offset": "0x1c0",
+        "view_length": "0x140",
+        "quantity_helper": "0xf9e410",
+        "recipe56_live_selector_values_tested": false
+      }
+    },
+    "default_material_pocket_path": {
+      "handler": "0xee1060",
+      "pocket_wrapper_calls": [
+        {"pc": "0xee1284", "target": "0xefbf80"},
+        {"pc": "0xee12c0", "target": "0xefbec0"},
+        {"pc": "0xee136c", "target": "0xefbf80"},
+        {"pc": "0xee13ac", "target": "0xefbec0"}
+      ],
+      "wrapper_view_contract": {
+        "context_resolution": "Direct helper call 0xda3fc0 followed by a thunk/context-resolution path whose raw callee is not resolved in the direct-call index.",
+        "view_offset": "0x70",
+        "view_length": "0x17c"
+      },
+      "mutation_leaf_routes": [
+        {"path": "0xefbf80 -> 0xf99e40 -> 0xf98650", "operation": "pocket-record update/compaction path"},
+        {"path": "0xefbec0 -> 0xf99fe0 -> 0xf99b10 -> 0xf98650", "operation": "pocket-record update/compaction path"}
+      ],
+      "return_handling": {
+        "ee1060_checks_wrapper_results": false,
+        "ee1420_checks_ee1060_result": false,
+        "optional_material_status_pointer_for_recipe_calls": "null at mode-0 callsites",
+        "interpretation": "Static path reaches pocket mutation helpers, but the inspected callers do not gate subsequent work on their boolean outcomes. Successful material debit has not been established."
+      }
+    },
+    "same_view_as_result_insert": {
+      "material_view": {"context_offset": "0x70", "length": "0x17c"},
+      "result_chain": [
+        {"caller": "0xee1420", "pc": "0xee17bc", "target": "0xefab90"},
+        {"caller": "0xefab90", "pc": "0xefabf8", "target": "0xefac20"},
+        {"caller": "0xefac20", "pc": "0xefad2c", "target": "0xf987c0"}
+      ],
+      "result_view": {"context_offset": "0x70", "length": "0x17c"},
+      "join_verdict": "The default debit candidate and result insertion resolve the same transaction context/view shape. This is a static view join, not a source-authentic live player/save test."
+    },
+    "result_return_gates": {
+      "insert_return_test": {
+        "pc": "0xefad40",
+        "instruction": "TBZ w22,#0,0xefad84 after moving f987c0 w0 into w22 at 0xefad30",
+        "interpretation": "efac20 branches on the f987c0 insertion result."
+      },
+      "efab90_return_correction": {
+        "decompiler_hazard": "The generated efab90 pseudocode does not faithfully express the result register through the call wrapper.",
+        "raw_call_pc": "0xefabf8",
+        "raw_target": "0xefac20",
+        "raw_return_behavior": "The call is followed by an unconditional branch to the epilogue; no instruction overwrites w0, so efab90 returns efac20's status.",
+        "correction": "efab90 propagates efac20's insertion status."
+      },
+      "ee1420_marker_gate": {
+        "raw_sequence": [
+          {"pc": "0xee17bc", "instruction": "BL 0xefab90"},
+          {"pc": "0xee17c0", "instruction": "LDRH w1,[x21] (recipe key load)"},
+          {"pc": "0xee17c4", "instruction": "MOV x0,x20"},
+          {"pc": "0xee17c8", "instruction": "MOV x2,x19"},
+          {"pc": "0xee17cc", "instruction": "BL 0xee17e0"},
+          {"pc": "0xee17d0", "instruction": "B 0xee1700 (function epilogue)"}
+        ],
+        "status_test_between_insert_and_marker": false,
+        "scope": "The maker marker setter is called without testing the efab90/efac20 insertion status on this post-material/result path. Earlier validation/eligibility exits can bypass this block; this does not claim every rejected craft calls the marker."
+      }
+    },
+    "post_insert_side_effects": {
+      "efac20_success_calls": [
+        {"pc": "0xefad5c", "target": "0xeec280"},
+        {"pc": "0xefad7c", "target": "0xefadc0", "condition": "mode 1"},
+        {"pc": "0xefad90", "target": "0xefaf00", "condition": "mode 2"},
+        {"pc": "0xefad98", "target": "0xefb090"}
+      ],
+      "semantics": "Additional state/counter-like effects are present after insertion; exact named quest/flag semantics are unresolved."
+    },
+    "full_pocket_candidate": {
+      "route": ["0xee0ed0", "0xefbd30", "0xf99270"],
+      "fixture_observation": "The prior 20/20 synthetic pocket case copied Material1 Apple 2213 into a temporary descriptor before compaction handling.",
+      "semantic_verdict": "Unknown; not established as rollback, refund, or compensation."
+    }
+  },
+  "made_recipe_and_quest_join": {
+    "writer": {
+      "caller": "0xee1420",
+      "caller_pc": "0xee17cc",
+      "function": "0xee17e0",
+      "bit_writer": "0xf29080",
+      "bit_writer_call_pc": "0xee185c",
+      "writer_direct_callers_in_index": ["0xee17e0"],
+      "writer_view_member_selector_index": "0x65f from resolved player context (long-pointer indexing)",
+      "view_length": "0x1400",
+      "bit_lane_offset": "0x100",
+      "recipe_key_source": "first u16 of recipe payload; 56 for row 56",
+      "status_gate": "No insertion-status gate in ee1420 before the ee17e0 call. The ee17e0 context resolver can still prevent the bit write."
+    },
+    "reader": {
+      "function": "0xf29010",
+      "bit_lane_offset": "0x100",
+      "direct_callers": ["0xedbd00", "0xedbe00", "0xedc240"],
+      "edbd00_pc": "0xedbdc8",
+      "mapping": "edbd00 maps ItemParam.UniqueID to DiyRecipeID before testing the made-recipe bit.",
+      "event_query_dispatcher": {
+        "function": "0x42d3b0",
+        "reader_call_pcs_for_eight_item_slots": ["0x42d4dc", "0x42d554", "0x42d5bc", "0x42d624", "0x42d68c", "0x42d6f4", "0x42d75c", "0x42d7c4"]
+      }
+    },
+    "eventflow_references": [
+      {
+        "flow": "Ftr_Working",
+        "event_index": 69,
+        "query": "EventFlowQueryPlayerIsMadeCraftRecipe",
+        "check_mode": "cAND",
+        "made_item_id0": 7211,
+        "other_slots": 65534,
+        "itemparam_diy_recipe_id": 458,
+        "recipe_label": "WoodBridge CraftUnlock"
+      },
+      {
+        "flow": "Ftr_Working",
+        "event_index": 74,
+        "query": "EventFlowQueryPlayerIsMadeCraftRecipe",
+        "check_mode": "cAND",
+        "made_item_id0": 5166,
+        "other_slots": 65534,
+        "itemparam_diy_recipe_id": 461,
+        "recipe_label": "CampSite"
+      }
+    ],
+    "recipe56_separation": {
+      "recipe56_result_item_id": 975,
+      "recipe56_diy_recipe_id": 56,
+      "recipe56_craft_unlock": "None",
+      "recipe56_made_recipe_query_occurrences_in_indexed_flow_corpus": 0,
+      "learned_recipe_marker": "Separate lane from PlayerIsMadeCraftRecipe; its readers/writers include 0xf29050 and 0xf28fd0.",
+      "limits": "Static EventFlow/query references do not establish runtime CheckMode polarity, quest completion, or event execution. The recipe 458/461 quest markers must not be attributed to recipe 56."
+    }
+  },
+  "prior_fixture_audit": [
+    {
+      "artifact": "output/gameplay/crafting_transaction_remainder_20261107/crafting_transaction_branch_native.json",
+      "sha256": "f41f60944fc02543e7bc09011eb73d7898ae93757c0d4ae1a39e3a94ae72313c",
+      "observed": "Original ee1420 result path reached f987c0 on synthetic pocket data; 19/20 case inserted result 975 into slot 19; 20/20 case compacted then inserted at slot 4.",
+      "limits": [
+        "ee1060 and eff060 material mutators were stubbed/no-op.",
+        "ee17e0 maker marker writer was stubbed.",
+        "Synthetic payload, player, pocket, and actor-registry responses; live payload builder/UI path bypassed.",
+        "No material debit, rollback, save, or live runtime behavior tested."
+      ]
+    },
+    {
+      "artifact": "output/gameplay/crafting_transaction_manager_followup_20261107.json",
+      "sha256": "442bd876f072f2dcbe6b7a188318b3bdebf1677382b2dd95ea2c045f504560b9",
+      "observed": "Direct ee1060 calls for recipe 56's five fruit rows returned 1; synthetic pocket bytes did not change.",
+      "limits": [
+        "No A/B/C count cache in the same run.",
+        "Synthetic player/view records and success-return view-method stubs.",
+        "Successful handler return is not treated as material consumption."
+      ]
+    },
+    {
+      "artifact": "output/gameplay/crafting_transaction_followup/crafting_recipe_flow_native.json",
+      "sha256": "b404014a185a1b2d0451fc3f40f772b58d7e2cc5a6ae3b043ad07a9ab1272764",
+      "observed": "f29080/f29010 leaf bitmap behavior was exercised for synthetic recipe IDs including 56, 458, and 461.",
+      "limits": ["No ee17e0 player/save resolver, real SaveLand context, or quest EventFlow execution."]
+    },
+    {
+      "artifact": "output/gameplay/crafting_inventory_count_context_trace_20261107.json",
+      "sha256": "e8caed5c0b36ca8cad97bf6248369ac9617821a5cd03ff5d8a874abeed4d4435",
+      "observed": "Cold ee0be0 availability checks were exercised on reconstructed A/B/C source records.",
+      "limits": ["Requirement counting does not subtract materials and does not share a tested end-to-end transaction fixture."]
+    },
+    {
+      "artifact": "output/gameplay/crafting_persistence_transaction_boundary_20261107.json",
+      "sha256": "d0e52a7ef9592029d32adb4dfe40d102ae13d62f07d1b85f2c82dae9b031a7c4",
+      "observed": "Generic SaveSimpleSave/SaveProc boundaries were mapped; no direct craft-to-save serializer/write/flush/reload join.",
+      "limits": ["No durable craft persistence established."]
+    }
+  ],
+  "tested_boundaries": [
+    "Static callsites and view layouts were inspected in the supplied ACNH 1.0.0 main ELF/index/decomp sources.",
+    "Prior branch fixture executed result insertion through f987c0 on reconstructed synthetic pocket state.",
+    "Prior direct ee1060 fixture executed each recipe-56 fruit handler with stubbed view methods and observed return 1 with unchanged pocket bytes.",
+    "Prior synthetic bitmap leaf fixture exercised f29080/f29010; it did not run the player/save wrapper.",
+    "EventFlow SQLite query over the hashed flow corpus returned exactly two MadeCraftRecipe query entries, for item IDs 7211 and 5166."
+  ],
+  "untested_boundaries": [
+    "Successful debit for each recipe-56 material under faithful A/B/C caches and a source-authentic pocket/player context.",
+    "Which material route the real recipe-56 payload selects at runtime.",
+    "Same-run material debit plus result insertion with the same source-authentic context.",
+    "Failed insertion's resulting maker marker state; static code calls the setter without gating on insertion status, but no failed-insert runtime execution was made.",
+    "Insufficient-material, individual handler-failure, cancellation, interruption, concurrent mutation, rollback, or refund outcomes.",
+    "Meaning of the full-pocket temporary-descriptor branch; no rollback semantics proven.",
+    "Runtime EventFlow query polarity and quest progression effects; the 458/461 marker examples are distinct from recipe 56.",
+    "Named local 1.0.0 SaveLand pocket member identity, craft serializer binding, file write/flush, durable commit, or reload.",
+    "Any end-to-end gameplay result in a live game process or real player save."
+  ],
+  "verdict": "Static evidence ties the default material mutation route and result insertion to the same +0x70/0x17c pocket view. Material helper outcomes are not checked at the inspected caller boundaries. Result insertion is checked inside efac20 and its status propagates through efab90, but ee1420 calls ee17e0 afterward without testing that status. The maker marker attempt is therefore not success-gated in this path. This is not proof of successful debit, atomicity, rollback, quest completion, or durable save."
+}

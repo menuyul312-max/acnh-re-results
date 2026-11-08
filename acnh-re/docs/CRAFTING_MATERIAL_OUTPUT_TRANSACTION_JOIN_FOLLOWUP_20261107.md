@@ -1,0 +1,42 @@
+# Craft material/output transaction join follow-up
+
+**Build:** Animal Crossing: New Horizons 1.0.0. **Date:** 2026-11-07. **Status:** static raw-ELF call/control-flow join, plus audit of earlier bounded fixtures. No new native execution, live save, or save mutation was performed.
+
+## Finding
+
+Recipe 56's default material handlers and result insertion resolve the same transaction context to the same pocket view: context `+0x70`, length `0x17c`. The static chain is `0xee1420 → 0xee1060 → 0xefbf80/0xefbec0 → 0xf99e40/0xf99fe0 → 0xf98650` for the default material route, and `0xee1420 → 0xefab90 → 0xefac20 → 0xf987c0` for result insertion. This joins the debit candidate and output insertion to one view shape; it does not prove that a material record was successfully debited in a source-authentic player context.
+
+The return handling is asymmetric. The `0xee1060` default handler does not use the boolean results from its `0xefbf80` / `0xefbec0` pocket helpers, and `0xee1420` does not gate later work on a material-handler return. The output helper does check its insertion result: `0xefac20` saves `0xf987c0`'s status and branches on it at `0xefad40`. A correction to the earlier decompiler reading is important here: raw instructions show `0xefab90` preserves and returns `0xefac20`'s `w0` result. But at the caller, `0xee1420` does not test that result. At `0xee17bc` it calls `0xefab90`; then it prepares the recipe key and calls `0xee17e0` at `0xee17cc`, with no conditional branch on the insertion status between those calls. Thus the made-recipe marker attempt is not success-gated by result insertion along this path. This says the setter is called, not that its context lookup or bit write necessarily succeeds.
+
+There is no proven rollback. The full-pocket branch `0xee0ed0 → 0xefbd30 → 0xf99270` processes a temporary descriptor copied from Material1 in the earlier synthetic branch fixture; its purpose is unresolved. It cannot be labeled a refund or compensation path. No inspected `0xee1420` branch reverses the material work based on the result-insert status, and no cancellation/interruption matrix has been executed. The evidence does not establish atomicity or its absence across all callees and runtime states.
+
+## Recipe 56 and material routes
+
+`RecipeCraftParam.UniqueID=56` is `FtrFruitbasket`, output item `975`, with one each of Apple `2213`, Pear `2285`, Cherry `2287`, Orange `2214`, and Peach `2286`. The caller `0x3358c0` builds the `cWorkCraft` payload through `0xedf8e0` and reaches `0xee1420` only after the builder succeeds. The payload selector at `+0x3c` chooses between six `0xee1060` calls and six `0xeff060` signed-delta calls. The default call PCs are `0xee15a0`, `0xee15c4`, `0xee15e8`, `0xee160c`, `0xee1630`, and `0xee1654`; the alternate calls are `0xee14dc` through `0xee157c`. The live builder's selector/marker values were not executed here, so the recipe-56 route remains conditional at this level.
+
+For the default route, all six `0xee1420` calls pass the same transaction context as argument three. `0xee1060` makes pocket operations through `0xefbf80` at `0xee1284` / `0xee136c` and `0xefbec0` at `0xee12c0` / `0xee13ac`. Both wrappers resolve the supplied context and open `+0x70` with length `0x17c`; their mutation leaves reach `0xf98650` through `0xf99e40` or `0xf99fe0 → 0xf99b10`. The helper return values are not consumed by `0xee1060`; with the transaction call tuple, its optional per-material status output pointer is null. The caller also discards `0xee1060`'s return. This is a source-backed route to pocket mutation code, not a tested successful debit.
+
+The alternate `0xeff060` path instead uses context `+0x1c0`, view length `0x140`, and `0xf9e410`. It is a distinct helper and should not be inferred active for row 56 from the current fixture data. The older Apple `0xf9e410` probe hit a `SaveCountMaxNum=0` early return in its reconstructed object; it does not establish Apple rejection or consumption in the default route.
+
+## Result insertion and marker gate
+
+The result descriptor for item `975` reaches `0xefab90` at `0xee17bc`, then `0xefac20` at `0xefabf8`, and `0xf987c0` at `0xefad2c`. `0xefac20` checks the insert return at `0xefad40`; its post-insert helper calls include `0xeec280`, mode-dependent `0xefadc0` / `0xefaf00`, and `0xefb090`. Their exact quest/flag semantics remain unresolved. The result wrapper opens the same `+0x70` / `0x17c` view as the default material wrappers.
+
+The raw caller sequence is decisive for the marker gate: `BL 0xefab90` at `0xee17bc`; `LDRH` recipe key at `0xee17c0`; argument moves at `0xee17c4` and `0xee17c8`; `BL 0xee17e0` at `0xee17cc`; then an unconditional branch to the function epilogue. No status test or conditional branch sits between insertion and the marker call. The decompiler's `0xefab90` output obscures the result register; the raw call/return path preserves the `0xefac20` `w0` value, which `0xee1420` then leaves unchecked.
+
+`0xee17e0` resolves the player context and calls `0xf29080` at `0xee185c`, writing the `PlayerIsMadeCraftRecipe` bit selected by the payload's first u16 (56 for this recipe) in the `+0x100` lane. `0xf29080` has one indexed direct caller, `0xee17e0`. The corresponding read helper `0xf29010` reads that lane; direct callers include `0xedbd00`, `0xedbe00`, and `0xedc240`. `0xedbd00` maps an `ItemParam.UniqueID` to `DiyRecipeID` before reading the made-recipe bit. The learned-recipe bit lane handled by `0xf28fd0` / `0xf29050` is separate from this made-recipe lane.
+
+The indexed `Ftr_Working` EventFlow corpus has two `EventFlowQueryPlayerIsMadeCraftRecipe` entries: event 69 uses `MadeItemID0=7211`, and event 74 uses `MadeItemID0=5166` (other slots are sentinel `65534`; both specify `CheckMode=cAND`). `ItemParam.DiyRecipeID` maps those item IDs to recipes 458 and 461, the WoodBridge CraftUnlock and CampSite markers. They are separate from recipe 56 (`975`, `DiyRecipeID=56`, CraftUnlock None). No recipe-56 query was found in this indexed EventFlow corpus. The EventFlow query records and native reader path are a static join; they do not establish runtime query polarity, quest progression outcomes, or that the maker bit was set after a failed insert.
+
+## Tested boundaries and open work
+
+Earlier artifacts provide narrow fixture observations, not an end-to-end craft:
+
+- The branch fixture executes `0xee1420` and the real result path through `0xf987c0` on synthetic pocket/player/registry data. It covers a 19/20 pocket insert into slot 19 and a 20/20 compaction-and-insert into slot 4. It stubs `0xee1060`, `0xeff060`, and `0xee17e0`, bypasses the live payload builder/UI path, and does not test debit, maker-marker state, rollback, or save.
+- The transaction-manager fixture invokes `0xee1060` directly for each of recipe 56's five fruit materials. Each helper returns `1`; the synthetic pocket bytes remain unchanged, and the fixture lacks the A/B/C count context. This is not evidence of consumption.
+- The bitmap leaf fixture exercises `0xf29080` / `0xf29010` against synthetic arrays for recipe IDs including 56, 458, and 461. It does not execute `0xee17e0`, the player/save resolver, or EventFlow quest logic.
+- The cold availability fixture tests requirement counting on reconstructed A/B/C records; it does not debit materials. The SaveProc/file helper evidence stops before a craft serializer, direct file write/flush, or reload join.
+
+Untested boundaries are: a successful debit for the five row-56 materials with faithful count caches and pocket context; the builder-selected route on a source-authentic player; same-run debit plus insertion; failed-insert marker state; insufficient material and partial-failure outcomes; cancellation/interruption and rollback/refund; quest query evaluation in runtime; named local SaveLand member identity; craft serialization, file write/flush, and reload. The prior [persistence boundary](CRAFTING_PERSISTENCE_TRANSACTION_BOUNDARY_20261107.md) and [SaveProc trace](CRAFTING_SAVEPROC_FILEIO_TRACE_20261107.md) remain the limit for durable-save claims.
+
+Raw ELF VAs are used below. The available decompiler snapshots print a `0x100000` higher image base (for example, raw `0xee1420` appears as `FUN_00fe1420`). Source and prior-artifact hashes, call PCs, fixture boundaries, and the exact static/native distinction are recorded in the [JSON ledger](../output/gameplay/crafting_material_output_transaction_join_followup_20261107.json).
