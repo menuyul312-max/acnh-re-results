@@ -1,0 +1,248 @@
+{
+  "artifact": "pickup_world_actor_removal_respawn_join_followup_20261108",
+  "build": "Animal Crossing: New Horizons 1.0.0",
+  "address_convention": "Raw ELF virtual addresses/offsets in ExeFS main/0.bin. Decompiled Ghidra labels shown in prior reports use an image base +0x100000; all addresses below are raw.",
+  "scope": "Static trace from the Player pickup descriptor through both the guarded pocket writer and the type-0x280 side branch; bounded search for source-actor identity, actor removal/update/respawn, and SaveProc persistence. No runtime pickup or save fixture.",
+  "result": {
+    "joined": [
+      "PlayerPickupWait carries a player-side item descriptor at Player+0x1018 into pickup-state context+0x1c.",
+      "The Pickup update passes that descriptor to 0xdb0450.",
+      "The normal guarded branch can reach the 20-record item-view writer 0xf987c0, whose success bit is checked by 0xefac20 and propagated through 0xefab90/0xdb0450.",
+      "A separate branch resolves a runtime object and writes the descriptor through 0xf6a450 into a type-0x280 component's 80-entry, 8-byte descriptor list; this branch does not call 0xf987c0 and does not use the list-writer return as an acceptance gate.",
+      "The outer 0xe21e40 pickup update ignores 0xdb0450's return. No source actor handle/UID-to-actor join or explicit world-object removal/respawn/tombstone call was recovered in the inspected direct graph."
+    ],
+    "not_proven": [
+      "A particular field item's accepted insertion into the player's pocket.",
+      "That the type-0x280 component belongs to the source world-item actor.",
+      "Any source actor destroy/remove/detach request, retained-state update, respawn schedule, or persistence transition.",
+      "That PickUpFirst is selected for an ordinary field pickup or committed to durable save data."
+    ]
+  },
+  "findings": [
+    {
+      "id": "pickup_descriptor_consumer",
+      "evidence_level": "native-static",
+      "producer": {
+        "function": "0xe20f00",
+        "player_field": "Player+0x1018",
+        "state_context_field": "context+0x1c",
+        "copies": [
+          {
+            "call_pc": "0xe21000",
+            "target": "0xe07ae0",
+            "write_pc": "0xe07b1c"
+          },
+          {
+            "write_pc": "0xe211e0",
+            "effect": "Stores the constructed descriptor in the next state context."
+          }
+        ]
+      },
+      "consumer": {
+        "pickup_update": "0xe21490",
+        "call_pc": "0xe21688",
+        "callee": "0xe21e40",
+        "context_read_pc": "0xe21e68",
+        "prepare_call_pc": "0xe21e7c",
+        "prepare_callee": "0xdb0450"
+      },
+      "identity_limit": "The copied value is an item descriptor. The traced producer does not supply a resolved source actor handle, and no direct descriptor-to-source-actor lookup was recovered. The item UniqueID therefore cannot be treated as an actor UID or proof of source ownership."
+    },
+    {
+      "id": "normal_pocket_insert_acceptance_gate",
+      "evidence_level": "native-static-reachability",
+      "path": [
+        {"from": "0xe21e40", "pc": "0xe21e7c", "to": "0xdb0450", "guarded": true},
+        {"from": "0xdb0450", "pc": "0xdb0608", "to": "0xefab90", "guarded": true},
+        {"from": "0xefab90", "pc": "0xefabf8", "to": "0xefac20", "guarded": true},
+        {"from": "0xefac20", "pc": "0xefad2c", "to": "0xf987c0"}
+      ],
+      "acceptance": "0xefac20 checks the return bit from 0xf987c0 and reports success only on its success path; 0xefab90 propagates that result, and 0xdb0450 propagates the guarded normal-path result. 0xf987c0 scans a 20-record view and can return failure when validation, slot, or write conditions fail.",
+      "caller_limit": "0xe21e40 calls 0xdb0450 at 0xe21e7c without testing or storing its return before continuing through the pickup update. Static reachability is not an accepted pickup result, and the outer state update is not acceptance-gated by this return.",
+      "fixture_limit": "Existing 0xf987c0 execution evidence covers controlled craft-result fixtures, not an ordinary ground-item pickup through the Player guards and source actor."
+    },
+    {
+      "id": "type_0x280_descriptor_list_branch",
+      "evidence_level": "native-static",
+      "branch": {
+        "function": "0xdb0450",
+        "manager_lookup_pc": "0xdb0540",
+        "lookup_helper": "0xeecf60",
+        "component_offset": "0x2d8",
+        "component_type": "0x280",
+        "list_writer_pc": "0xdb05a0",
+        "list_writer": "0xf6a450",
+        "next_call_pc": "0xdb04bc",
+        "next_call": "0xeebe80"
+      },
+      "list_writer": {
+        "wrapper": "0xf6a450",
+        "callee_pc": "0xf6a458",
+        "callee": "0xf6a2f0",
+        "shape": "The helper scans up to 80 entries at 8-byte stride, recognizes item-empty UID -2, and may copy the supplied item descriptor into an available slot.",
+        "return_behavior": "0xf6a450 is void and discards 0xf6a2f0's success bit. The 0xdb0450 caller does not gate this branch on a list-write result.",
+        "branch_limit": "The type-0x280 branch does not call the 20-record pocket writer 0xf987c0. 0xeebe80's return is also ignored by 0xdb0450 before the branch reports 1. This branch must not be counted as accepted pocket insertion."
+      },
+      "component_identity": "The component is not identified as the source world-item actor. The same type-0x280 accessor and 0xf6a2e0 descriptor-list helper are used in other resident lifecycle paths: 0xf8c2d0 is called from 0xf847f0 (which references ForceMoveOut/AbandonedHouse), and 0xf8de90 is called from 0xf8c540/0xf8d210 (which reference MoveInOrder/MoveInCompletion). These are evidence of shared component use, not a semantic name or source-item removal join."
+    },
+    {
+      "id": "post_helper_and_world_actor_removal_scan",
+      "evidence_level": "bounded-negative",
+      "inspected_functions": [
+        "0xe20f00", "0xe07ae0", "0xe21490", "0xe21e40", "0xdb0450",
+        "0xefab90", "0xefac20", "0xeebe80", "0xf6a450", "0xf6a2f0",
+        "0xeecf60", "0xdafee0", "0xf8c2d0", "0xf8de90"
+      ],
+      "source_actor_request": "No direct argument or recovered lookup in this graph binds the item descriptor to a source actor handle/ID. The 0xeecf60/type-0x280 path remains an unresolved runtime-manager/component path.",
+      "removal_respawn": "No direct named source-world actor destroy, remove, detach, despawn, tombstone, or respawn scheduling call was identified in the listed direct graph. This is bounded to recovered direct calls and the inspected decompilation; indirect virtual dispatch, another actor lifecycle callback, or external runtime-manager code may own the effect.",
+      "eventflow": {
+        "flow": "Player_GetDemo",
+        "entry": "Get_Pickup",
+        "reachable_ui": {
+          "event_index": 7,
+          "action": "EventFlowActionUIItemSelectWindowHandling",
+          "params": {
+            "FilterType": "cPickupFull",
+            "ItemUniqueID": 65534,
+            "ItemKindType": "",
+            "ItemFilterType": "",
+            "Mode": "cExchangeByPickup"
+          }
+        },
+        "delete_target_item_action_found": false,
+        "set_item_to_pocket_action_found": false,
+        "meaning": "The decoded route is post-get collection/full-pocket feedback. It does not bind successful insertion to deletion of a target world actor."
+      }
+    },
+    {
+      "id": "pickup_first_and_counter",
+      "evidence_level": "native-static-key-and-setter",
+      "pickup_update_edge": {"from": "0xe21490", "pc": "0xe21a94", "to": "0xda4370"},
+      "conditional_write": {
+        "function": "0xda4370",
+        "pc": "0xda4454",
+        "setter": "0xf4a8f0",
+        "key": "PickUpFirst",
+        "key_string_va": "0x029d183a",
+        "value": 1
+      },
+      "limit": "This is a conditional in-memory property assignment. The predicate is type-dependent and shared by neighboring action handlers; no evidence shows it is selected for every ordinary field pickup, increments a counter, waits on the pocket-writer result, or commits to durable save data."
+    },
+    {
+      "id": "saveproc_persistence_boundary",
+      "evidence_level": "cross_report_static-boundary",
+      "state_flag": "PickupWait, Pickup, and PickupGetDemo carry stop_auto_save=1 in PlayerStateParam; that field is not a serializer or persistence result.",
+      "saveproc": "The named SaveProc request uses runtime registry/task virtual dispatch whose concrete callback remains unresolved. SaveSimpleSave builds operation word 0x108, compatible with a sibling conditional Commit guard, but the queued request is not statically joined to that state driver.",
+      "fileio": "No SaveProc-linked serializer, direct WriteFile/FlushFile call, named 1.0.0 pocket member, durable write, or reload result is joined to this pickup path.",
+      "sources": [
+        "docs/SAVEPROC_RUNTIME_CALLBACK_CLOSURE_20261107.md",
+        "docs/SAVEPROC_CALLBACK_OPERATION_JOIN_20261107.md",
+        "docs/CRAFTING_SAVEPROC_FILEIO_TRACE_20261107.md"
+      ]
+    }
+  ],
+  "raw_instruction_checks": [
+    {
+      "pc": "0xdb05a0",
+      "word": "0x9406e7ac",
+      "decode": "BL 0xf6a450",
+      "return_handling": {
+        "next_pc": "0xdb05a4",
+        "next_word": "0x910003e0",
+        "decode": "ADD X0, SP, #0",
+        "followup_call_pc": "0xdb05a8",
+        "followup_call_word": "0x9404e38a",
+        "followup_target": "0xee93d0",
+        "conclusion": "The f6a450 return in X0 is overwritten before cleanup; the list writer wrapper is void and its helper result is not consumed by db0450."
+      }
+    },
+    {
+      "pc": "0xdb04bc",
+      "word": "0x9404ee71",
+      "decode": "BL 0xeebe80",
+      "return_handling": {
+        "next_pc": "0xdb04c0",
+        "next_word": "0x320003f4",
+        "decode": "MOV W20, #1",
+        "conclusion": "The eebe80 result is overwritten by the constant branch result before db0450 returns."
+      }
+    },
+    {
+      "pc": "0xe21e7c",
+      "word": "0x97fe3975",
+      "decode": "BL 0xdb0450",
+      "return_handling": {
+        "next_pc": "0xe21e80",
+        "next_word": "0xaa1303e0",
+        "decode": "MOV X0, X19",
+        "next_pair_pc": "0xe21e84",
+        "next_pair_word": "0xaa1403e1",
+        "next_pair_decode": "MOV X1, X20",
+        "following_call_pc": "0xe21e88",
+        "following_call_word": "0x97fe9dde",
+        "following_target": "0xdc9600",
+        "conclusion": "The db0450 result is overwritten before the subsequent dc9600 call and later branch; e21e40 does not gate its continuation on that result."
+      }
+    },
+    {
+      "pc": "0xefad2c",
+      "word": "0x940276a5",
+      "decode": "BL 0xf987c0",
+      "return_handling": {
+        "next_pc": "0xefad30",
+        "next_word": "0x2a0003f6",
+        "decode": "MOV W22, W0",
+        "cleanup_call_pc": "0xefad38",
+        "cleanup_call_word": "0x97ffb9a6",
+        "cleanup_target": "0xee93d0",
+        "gate_pc": "0xefad40",
+        "gate_word": "0x36000316",
+        "decode": "TBZ W22, #0, ...",
+        "conclusion": "The f987c0 result bit is preserved across cleanup and tested before the success-only side effects in efac20."
+      }
+    }
+  ],
+  "remaining_gaps": [
+    "Resolve which actor/request supplies Player+0x1018 and whether its descriptor includes any stable source actor identity.",
+    "Resolve the runtime object returned/selected through 0xeecf60 and identify the owner of its +0x2d8/type-0x280 component.",
+    "Obtain a native or runtime fixture that reaches the guarded normal pocket branch for a specific field-item descriptor, records the 0xf987c0 result, and observes the source actor afterward.",
+    "Trace source actor removal, retained/update state, respawn/tombstone scheduling, and any save fields beyond the current direct graph.",
+    "Join the pocket mutation and any actor lifecycle update to a named SaveProc serializer, durable file write/flush, and reload."
+  ],
+  "source_hashes": [
+    {"input": "ExeFS main/0.bin", "sha256": "9c9b45d8e7a58706ca59e7244b3aebac2325ef98faa205e007974eeeb2f758e9"},
+    {"input": "A_logic/main.elf (hash recorded by existing 1.0.0 reports; ELF not present in current worktree)", "sha256": "5bf707c3dc5dac0ad9635af7d336ec580f81c3f7876d0f55400d1900e3415d74"},
+    {"input": "B_data/EventFlow/Player_GetDemo.bfevfl", "sha256": "b5ac3c44b5161615ed6b245fce3e9289c2f6d7b9ec186941ce9790ea624703fa"},
+    {"input": "Decoded Player_GetDemo.json", "sha256": "e937aee95d923bfbdde2e923e1783f5a9001a3d716768e06bde8f1212cd96052"},
+    {"input": "B_data/EventFlow/Player_PickupFullItem.bfevfl", "sha256": "757f28163719419d7fb606793c256d52bc42396676518933e442fe9a60175911"},
+    {"input": "Decoded Player_PickupFullItem.json", "sha256": "df828fe11607a563db8dce060b38407d5a24cd8357890e8027037ca438a0b481"},
+    {"input": "B_data/Bcsv/PlayerStateParam.bcsv", "sha256": "746619914744a62365b7b4cc74fd5b7fad169e78dffe74c3c03c726d3ea49b0d"},
+    {"input": "Existing index.sqlite", "sha256": "a78c7af27d37b8fd931bba8bc611623dacf7685cb6e8b4f827effa0765340aad"},
+    {"input": "Existing pickup interaction JSON", "sha256": "34a8dc252c20fa9f22bf7c5f76d8e8a601150a419431caa805f37c7509126b99"},
+    {"input": "Existing pickup source-actor-side-effects JSON", "sha256": "d00bcf320feb75129174edbda9b0becf473e8f2ddb9770cbd09f5e5253b0c7bf"},
+    {"input": "Existing core item/crafting proof JSON", "sha256": "52faab49d312fe0c3e0a4f7d344155686fbe6f58d6f3ca51155109c2a68ee5ec"},
+    {"input": "Existing crafting inventory context JSON", "sha256": "e8caed5c0b36ca8cad97bf6248369ac9617821a5cd03ff5d8a874abeed4d4435"},
+    {"input": "Existing SaveProc runtime callback JSON", "sha256": "c76c3acf07424cecb7e519e7b9f2ee077aaa56184f5833f79e1d10312e7df28d"},
+    {"input": "Existing SaveProc operation-join JSON", "sha256": "3b0879a5e668bdf66078d3fa23d408135cb42d4eb954f92e4879bf68c6881658"},
+    {"input": "Decompilation e20f00.c", "sha256": "87ea1aa4dd0d8a1ca2a6c3e6786eef78500f2f5e7f84334e41826eea8245a328"},
+    {"input": "Decompilation e21e40.c", "sha256": "aadb0f56359440872311a3b59f99d281622870233f112263d9b1aa6673fe7815"},
+    {"input": "Decompilation db0450.c", "sha256": "8228b048d9f7a4d13fc5e7b90265c5abff7a68e5084e50e9f21977c941c18d66"},
+    {"input": "Decompilation efac20.c", "sha256": "9d4690536e0fb3049b53394a05deb6defe37bb335b6827176f19a82a750c926d"},
+    {"input": "Decompilation f987c0.c", "sha256": "bf8b3e2dfe2ed222a95e9a3ea5d63be921552271c28ad4a7bba08cdf848732ae"},
+    {"input": "Decompilation eebe80.c", "sha256": "789d464db2ed4cd61e236f13d22424f235d6ed264ec970c1a1b0c6017f061cf8"},
+    {"input": "Decompilation f6a2f0.c", "sha256": "61dbc952b2e85983686bb672d14a25f645fec75e46fd221982cdb565cf7a022f"},
+    {"input": "Decompilation f8c2d0.c", "sha256": "ae616e8c34f23dc6bad36cc324e02afdabcaf3cb319068c2ffe6357b984a03d7"},
+    {"input": "Decompilation f8de90.c", "sha256": "c46ee1217de1238407fef483e35b03cc2186a43c3e13d8c58be33857a059e772"}
+  ],
+  "method": "Read-only queries against existing index.sqlite (direct_calls, native_functions, string_refs, event_calls), existing decompilation snapshots and decoded EventFlow/report outputs. No Ghidra rebuild or native/runtime fixture was run.",
+  "change_scope": {
+    "new_files_only": [
+      "docs/PICKUP_WORLD_ACTOR_REMOVAL_RESPAWN_JOIN_FOLLOWUP_20261108.md",
+      "output/gameplay/pickup_world_actor_removal_respawn_join_followup_20261108.json"
+    ],
+    "index_or_crosswalk_modified": false,
+    "godot_edited": false,
+    "staged_or_committed_or_pushed": false
+  },
+  "report": "acnh-re/docs/PICKUP_WORLD_ACTOR_REMOVAL_RESPAWN_JOIN_FOLLOWUP_20261108.md"
+}
